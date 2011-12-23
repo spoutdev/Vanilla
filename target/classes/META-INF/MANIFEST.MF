@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Built-By: Kylegar
+Build-Jdk: 1.6.0_26
+Created-By: Maven Integration for Eclipse
+

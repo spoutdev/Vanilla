@@ -2,7 +2,7 @@ package org.getspout.vanilla;
 
 import org.getspout.api.plugin.CommonPlugin;
 
-public class MinecraftPlugin extends CommonPlugin {
+public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {

@@ -1,8 +1,8 @@
 package org.getspout.vanilla.entities.hostile;
 
-import org.getspout.vanilla.entities.MinecraftEntityController;
+import org.getspout.vanilla.entities.HostileEntityController;
 
-public class SilverfishEntityController extends MinecraftEntityController {
+public class SilverfishEntityController extends HostileEntityController {
 
 	@Override
 	public void onAttached() {

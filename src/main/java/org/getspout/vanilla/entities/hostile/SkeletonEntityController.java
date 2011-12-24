@@ -1,8 +1,8 @@
 package org.getspout.vanilla.entities.hostile;
 
-import org.getspout.vanilla.entities.MinecraftEntityController;
+import org.getspout.vanilla.entities.HostileEntityController;
 
-public class SkeletonEntityController extends MinecraftEntityController {
+public class SkeletonEntityController extends HostileEntityController {
 
 	@Override
 	public void onAttached() {

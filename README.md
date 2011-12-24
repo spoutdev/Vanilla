@@ -1,16 +1,16 @@
 [![Spout][Project Logo]][Website]
-What is MinecraftPlugin?
+What is Vanilla?
 ----------------------
-Plugin for the Spout server and Spoutcraft client that provides vanilla Minecraft functionality.
+Vanilla is a plugin for the Spout server and Spoutcraft client that provides vanilla Minecraft functionality.
 
 Copyright &copy; 2011, SpoutDev <http://www.getspout.org>  
-MinecraftPlugin is licensed under [GNU LESSER GENERAL PUBLIC LICENSE Version 3][License],
+Vanilla is licensed under [GNU LESSER GENERAL PUBLIC LICENSE Version 3][License],
 but with a provision that files are released under the MIT license
 180 days after theyare published. Please see the `LICENSE.txt` file for details.
 
 Who is SpoutDev?
 ----------------
-SpoutDev is the team behind Spout, SpoutAPI, Spoutcraft, SpoutcraftAPI, Spoutcraft Launcher, SpoutPlugin, SpoutPluginAPI, and MinecraftPlugin.  
+SpoutDev is the team behind Spout, SpoutAPI, Spoutcraft, SpoutcraftAPI, Spoutcraft Launcher, SpoutPlugin, SpoutPluginAPI, and Vanilla.  
 [![Afforess](https://secure.gravatar.com/avatar/ea0be49e1e4deac42ed9204ffd95b56c?d=mm&r=pg&s=48)](http://forums.getspout.org/members/afforess.2/) 
 [![alta189](https://secure.gravatar.com/avatar/7a087430b2bf9456b8879c5469aadb95?d=mm&r=pg&s=48)](http://forums.getspout.org/members/alta189.3/) 
 [![Wulfspider](https://secure.gravatar.com/avatar/6f2a0dcb60cd1ebee57875f9326bc98c?d=mm&r=pg&s=48)](http://forums.getspout.org/members/wulfspider.1/) 
@@ -34,7 +34,7 @@ Download the latest builds from [Jenkins].
 
 Compiling
 ---------
-MinecraftPlugin uses Maven to handle its dependencies.
+Vanilla uses Maven to handle its dependencies.
 
 * Install [Maven 2 or 3](http://maven.apache.org/download.html)  
 * Checkout this repo and run: `mvn clean install`
@@ -57,12 +57,12 @@ Coding and Pull Request Formatting
 [License]: http://www.gnu.org/licenses/lgpl.html
 [Website]: http://www.getspout.org
 [Forums]: http://forums.getspout.org
-[GitHub]: https://github.com/SpoutDev/MinecraftPlugin
+[GitHub]: https://github.com/SpoutDev/Vanilla
 [Jenkins]: http://spout.in/ci
 [Issues]: http://spout.in/issues
 [Twitter]: http://spout.in/twitter
 [Twitter Logo]: http://cdn.getspout.org/img/button/twitter_follow_us.png
 [Facebook]: http://spout.in/facebook
 [Facebook Logo]: http://cdn.getspout.org/img/button/facebook_like_us.png
-[Donate]: https://www.paypal.com/cgi-bin/webscr?hosted_button_id=QNJH72R72TZ64&item_name=MinecraftPlugin+donation+%28from+github.com%29&cmd=_s-xclick
+[Donate]: https://www.paypal.com/cgi-bin/webscr?hosted_button_id=QNJH72R72TZ64&item_name=Vanilla+donation+%28from+github.com%29&cmd=_s-xclick
 [Donate Logo]: http://cdn.getspout.org/img/button/donate_paypal_96x96.png

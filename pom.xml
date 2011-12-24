@@ -1,18 +1,55 @@
+<!--
+	Maven build file for Vanilla
+
+	Copyright (c) 2011 SpoutDev <http://www.getspout.org>
+	Vanilla is licensed under GNU LESSER GENERAL PUBLIC LICENSE Version 3
+-->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>MinecraftPlugin</groupId>
-  <artifactId>MinecraftPlugin</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>Minecraft Plugin</name>
-  <description>Spout Plugin that implements Minecraft
-</description>
-<!-- Repository locations -->
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Project information -->
+	<groupId>org.getspout</groupId>
+	<artifactId>vanilla</artifactId>
+	<version>dev-SNAPSHOT</version>
+	<name>Vanilla</name>
+	<url>http://www.getspout.org</url>
+	<description></description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<!-- License -->
+	<licenses>
+		<license>
+			<name>GNU LESSER GENERAL PUBLIC LICENSE Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<!-- Source code -->
+	<scm>
+		<developerConnection>scm:git:git@github.com:SpoutDev/${project.name}.git</developerConnection>
+		<connection>scm:git:git://github.com/SpoutDev/${project.name}.git</connection>
+		<url>https://github.com/SpoutDev/${project.name}</url>
+	</scm>
+
+	<!-- Continuous integration -->
+	<ciManagement>
+		<system>jenkins</system>
+		<url>http://ci.getspout.org</url>
+	</ciManagement>
+
+	<!-- Repository locations -->
 	<repositories>
 		<repository>
 			<id>spout-repo</id>
 			<url>http://repo.getspout.org</url>
 		</repository>
 	</repositories>
+
 	<!-- Dependencies -->
 	<dependencies>
 		<dependency>
@@ -20,7 +57,42 @@
 			<artifactId>spoutapi</artifactId>
 			<version>dev-SNAPSHOT</version>
 			<type>jar</type>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<defaultGoal>clean install</defaultGoal>
+		<!-- Resources -->
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}</directory>
+				<includes>
+					<include>LICENSE.txt</include>
+				</includes>
+			</resource>
+		</resources>
+		<!-- Plugins -->
+		<plugins>
+			<!-- Compile plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<!-- JAR creation plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>

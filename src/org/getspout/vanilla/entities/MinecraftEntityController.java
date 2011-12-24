@@ -1,6 +1,6 @@
 package org.getspout.vanilla.entities;
 
-import org.getspout.api.indev.entity.Controller;
+import org.getspout.api.entity.Controller;
 
 public class MinecraftEntityController extends Controller {
 

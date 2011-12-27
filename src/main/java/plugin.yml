@@ -1,0 +1,7 @@
+name: Vanilla Plugin
+main: org.getspout.vanilla.VanillaPlugin
+version: 0
+platform: BOTH
+author: SpoutDev
+descripton: This plugin provides support for the standard server
+load: startup

@@ -73,6 +73,14 @@
 					<include>LICENSE.txt</include>
 				</includes>
 			</resource>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}/src/main/java</directory>
+				<includes>
+					<include>plugin.yml</include>
+				</includes>
+			</resource>
 		</resources>
 		<!-- Plugins -->
 		<plugins>

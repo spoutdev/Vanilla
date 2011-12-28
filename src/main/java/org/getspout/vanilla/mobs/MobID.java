@@ -28,6 +28,8 @@ public enum MobID {
 	
 	public final int id;
 	
+	public static final String KEY = "MobID";
+	
 	private MobID(byte data){
 		this.id = data;
 	}

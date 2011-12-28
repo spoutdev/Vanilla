@@ -8,7 +8,7 @@ public class CreeperEC extends MonsterEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.Creeper.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Creeper.id));
 	}
 
 	@Override

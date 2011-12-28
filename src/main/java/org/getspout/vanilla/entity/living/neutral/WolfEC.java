@@ -9,7 +9,7 @@ public class WolfEC extends AnimalEC implements NeutralEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.Wolf.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Wolf.id));
 	}
 
 	@Override

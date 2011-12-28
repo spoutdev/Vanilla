@@ -9,7 +9,7 @@ public class VillagerEC extends HumanEC implements PassiveEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.Villager.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Villager.id));
 	}
 
 	@Override

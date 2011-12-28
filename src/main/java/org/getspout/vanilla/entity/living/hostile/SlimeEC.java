@@ -10,7 +10,7 @@ public class SlimeEC extends LivingEC implements HostileEC, LandEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.Slime.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Slime.id));
 	}
 
 	@Override

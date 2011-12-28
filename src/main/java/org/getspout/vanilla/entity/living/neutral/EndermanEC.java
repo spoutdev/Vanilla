@@ -9,7 +9,7 @@ public class EndermanEC extends MonsterEC implements NeutralEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.Enderman.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Enderman.id));
 	}
 
 	@Override

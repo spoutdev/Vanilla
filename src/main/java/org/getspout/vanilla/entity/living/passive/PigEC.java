@@ -9,7 +9,7 @@ public class PigEC extends AnimalEC implements PassiveEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.Pig.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Pig.id));
 	}
 
 	@Override

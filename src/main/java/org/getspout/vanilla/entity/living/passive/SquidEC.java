@@ -9,7 +9,7 @@ public class SquidEC extends WaterEC implements PassiveEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.Squid.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Squid.id));
 	}
 
 	@Override

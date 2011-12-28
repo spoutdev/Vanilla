@@ -9,7 +9,7 @@ public class CaveSpiderEC extends SpiderEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();//Again, without the metadata.
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.CaveSpider.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.CaveSpider.id));
 	}
 
 	@Override

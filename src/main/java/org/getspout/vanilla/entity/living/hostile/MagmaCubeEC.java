@@ -9,7 +9,7 @@ public class MagmaCubeEC extends SlimeEC {
 	@Override
 	public void onAttached() {
 		super.onAttached(); //Without the metadata setting...
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.MagmaCube.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.MagmaCube.id));
 	}
 
 	@Override

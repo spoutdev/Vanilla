@@ -8,7 +8,7 @@ import org.getspout.api.geo.cuboid.Chunk;
 
 public class StrongholdPopulator implements Populator {
 
-	public void Populate(Chunk c, World w, Random rng) {
+	public void populate(Chunk c, World w, Random rng) {
 		// TODO Auto-generated method stub
 
 	}

@@ -1,7 +1,13 @@
 package org.getspout.vanilla.entity.living.player;
 
-public class SurvivalPC extends MinecraftPC {
+import org.getspout.api.player.Player;
 
+public class SurvivalPC extends MinecraftPC {
+	
+	public SurvivalPC(Player p){
+		super(p);
+	}
+	
 	@Override
 	public void onAttached() {
 		// TODO Auto-generated method stub

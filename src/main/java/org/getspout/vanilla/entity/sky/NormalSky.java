@@ -18,7 +18,7 @@ public class NormalSky extends Controller {
 	
 	
 	Weather currentWeather;
-	Weather forcast;
+	Weather forecast;
 	float timeUntilWeatherChange = 0.0f;
 	
 	
@@ -27,7 +27,7 @@ public class NormalSky extends Controller {
 	@Override
 	public void onAttached() {
 		currentWeather = Weather.CLEAR;
-		forcast = Weather.CLEAR;
+		forecast = Weather.CLEAR;
 		timeUntilWeatherChange = rng.nextFloat() * 300; //Max 5min till pattern change
 	}
 
@@ -41,16 +41,16 @@ public class NormalSky extends Controller {
 		
 		timeUntilWeatherChange -= dt;
 		if(timeUntilWeatherChange <= 0.0f){
-			changeWeatherPattern(forcast);
+			changeWeatherPattern(forecast);
 			switch(rng.nextInt(3)){
 			case 0:
-				forcast = Weather.CLEAR;
+				forecast = Weather.CLEAR;
 				break;
 			case 1:
-				forcast = Weather.RAIN;
+				forecast = Weather.RAIN;
 				break;
 			case 2:
-				forcast = Weather.THUNDERSTORM;
+				forecast = Weather.THUNDERSTORM;
 				break;
 			}
 		}

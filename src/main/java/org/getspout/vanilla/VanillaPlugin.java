@@ -11,6 +11,9 @@ public class VanillaPlugin extends CommonPlugin {
 		// TODO - do we need a protocol manager ?
 		// getGame().getProtocolManager().register ...
 		Protocol.registerProtocol(0, new VanillaProtocol());
+		
+		//getGame().getEventManager().registerEvent(ChunkObservableEvent.class, Order.MONITOR, executor, owner)
+		
 		getLogger().info("Vanilla loaded");
 	}
 

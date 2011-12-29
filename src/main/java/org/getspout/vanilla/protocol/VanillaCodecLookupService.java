@@ -1,17 +1,17 @@
 package org.getspout.vanilla.protocol;
 
 import org.getspout.api.protocol.CodecLookupService;
-import org.getspout.vanilla.protocol.codec.VanillaHandshakeCodec;
-import org.getspout.vanilla.protocol.codec.VanillaIdentificationCodec;
-import org.getspout.vanilla.protocol.codec.VanillaPingCodec;
+import org.getspout.vanilla.protocol.codec.HandshakeCodec;
+import org.getspout.vanilla.protocol.codec.IdentificationCodec;
+import org.getspout.vanilla.protocol.codec.PingCodec;
 
 public class VanillaCodecLookupService extends CodecLookupService {
 
 	public VanillaCodecLookupService() {
 	try {
-		/* 0x01 */bind(VanillaIdentificationCodec.class);
-		/* 0x02 */bind(VanillaHandshakeCodec.class);
-		/* 0xFE */bind(VanillaPingCodec.class);
+		/* 0x01 */bind(IdentificationCodec.class);
+		/* 0x02 */bind(HandshakeCodec.class);
+		/* 0xFE */bind(PingCodec.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

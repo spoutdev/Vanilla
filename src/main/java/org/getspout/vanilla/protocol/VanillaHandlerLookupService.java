@@ -2,12 +2,12 @@ package org.getspout.vanilla.protocol;
 
 import org.getspout.api.protocol.Message;
 import org.getspout.api.protocol.MessageHandler;
-import org.getspout.vanilla.protocol.handler.VanillaHandshakeMessageHandler;
-import org.getspout.vanilla.protocol.handler.VanillaIdentificationMessageHandler;
-import org.getspout.vanilla.protocol.handler.VanillaPingMessageHandler;
-import org.getspout.vanilla.protocol.msg.VanillaHandshakeMessage;
-import org.getspout.vanilla.protocol.msg.VanillaIdentificationMessage;
-import org.getspout.vanilla.protocol.msg.VanillaPingMessage;
+import org.getspout.vanilla.protocol.handler.HandshakeMessageHandler;
+import org.getspout.vanilla.protocol.handler.IdentificationMessageHandler;
+import org.getspout.vanilla.protocol.handler.PingMessageHandler;
+import org.getspout.vanilla.protocol.msg.HandshakeMessage;
+import org.getspout.vanilla.protocol.msg.IdentificationMessage;
+import org.getspout.vanilla.protocol.msg.PingMessage;
 
 public class VanillaHandlerLookupService extends org.getspout.api.protocol.HandlerLookupService {
 
@@ -17,9 +17,9 @@ public class VanillaHandlerLookupService extends org.getspout.api.protocol.Handl
 		
 		static {
 			try {
-				bind(VanillaIdentificationMessage.class, VanillaIdentificationMessageHandler.class);
-				bind(VanillaHandshakeMessage.class, VanillaHandshakeMessageHandler.class);
-				bind(VanillaPingMessage.class, VanillaPingMessageHandler.class);
+				bind(IdentificationMessage.class, IdentificationMessageHandler.class);
+				bind(HandshakeMessage.class, HandshakeMessageHandler.class);
+				bind(PingMessage.class, PingMessageHandler.class);
 			} catch (Exception ex) {
 				throw new ExceptionInInitializerError(ex);
 			}

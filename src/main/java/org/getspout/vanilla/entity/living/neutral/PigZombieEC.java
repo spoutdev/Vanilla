@@ -9,7 +9,7 @@ public class PigZombieEC extends ZombieEC implements NeutralEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.ZombiePigman.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.ZombiePigman.id));
 	}
 
 	@Override

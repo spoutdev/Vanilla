@@ -10,7 +10,7 @@ public class SkeletonEC extends MonsterEC implements HostileEC, LandEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.Skeleton.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Skeleton.id));
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public class GhastEC extends FlyingEC implements HostileEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.Ghast.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Ghast.id));
 	}
 
 	@Override

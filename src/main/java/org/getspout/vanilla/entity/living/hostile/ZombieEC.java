@@ -10,7 +10,7 @@ public class ZombieEC extends MonsterEC implements HostileEC, LandEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.Zombie.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Zombie.id));
 	}
 
 	@Override

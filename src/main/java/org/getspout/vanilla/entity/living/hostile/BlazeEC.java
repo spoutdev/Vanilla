@@ -8,7 +8,7 @@ public class BlazeEC extends MonsterEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.Blaze.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Blaze.id));
 	}
 
 	@Override

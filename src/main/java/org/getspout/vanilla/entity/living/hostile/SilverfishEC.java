@@ -8,7 +8,7 @@ public class SilverfishEC extends MonsterEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.Silverfish.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Silverfish.id));
 	}
 
 	@Override

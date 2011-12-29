@@ -10,7 +10,7 @@ public class SnowGolemEC extends CreatureEC implements PassiveEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.SnowGolem.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.SnowGolem.id));
 	}
 
 	@Override

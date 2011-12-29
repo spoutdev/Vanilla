@@ -9,7 +9,7 @@ public class EnderdragonEC extends FlyingEC implements BossEC {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata("MobID", new MetadataStringValue(MobID.EnderDragon.id));
+		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.EnderDragon.id));
 	}
 
 	@Override

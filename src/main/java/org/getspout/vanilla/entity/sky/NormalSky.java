@@ -7,7 +7,7 @@ import org.getspout.vanilla.world.Weather;
 
 public class NormalSky extends Controller {
 
-	final String weatherID = "weatherID";
+	final String weatherKey = "weather";
 	final String timeKey = "worldTime";
 	
 	final float maxTime = 12000;
@@ -55,7 +55,8 @@ public class NormalSky extends Controller {
 			}
 		}
 		
-		
+		parent.setMetadata(timeKey, time);
+		parent.setMetadata(weatherKey, currentWeather.getId());
 	}
 	
 	public void changeWeatherPattern(Weather pattern){

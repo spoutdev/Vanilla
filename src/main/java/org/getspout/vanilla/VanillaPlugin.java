@@ -1,7 +1,11 @@
 package org.getspout.vanilla;
 
+import org.getspout.api.Spout;
 import org.getspout.api.plugin.CommonPlugin;
 import org.getspout.api.protocol.Protocol;
+import org.getspout.vanilla.generator.nether.NetherGenerator;
+import org.getspout.vanilla.generator.normal.NormalGenerator;
+import org.getspout.vanilla.generator.theend.TheEndGenerator;
 import org.getspout.vanilla.protocol.VanillaProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
@@ -25,7 +29,9 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
-		// TODO Auto-generated method stub
+		Spout.getGame().loadWorld("world", new NormalGenerator());
+		Spout.getGame().loadWorld("world_nether", new NetherGenerator());
+		Spout.getGame().loadWorld("world_end", new TheEndGenerator());
 		
 	}
 

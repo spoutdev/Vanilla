@@ -1,4 +1,28 @@
+/*
+ * This file is part of Vanilla (http://www.getspout.org/).
+ *
+ * Vanilla is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Vanilla is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.getspout.vanilla.protocol;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.getspout.api.io.nbt.CompoundTag;
 import org.getspout.api.io.nbt.NBTInputStream;
@@ -9,15 +33,8 @@ import org.getspout.api.math.Vector3;
 import org.getspout.api.util.Color;
 import org.getspout.api.util.Parameter;
 import org.getspout.unchecked.api.inventory.ItemStack;
-import org.jboss.netty.buffer.ChannelBuffer;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import org.jboss.netty.buffer.ChannelBuffer;
 
 /**
  * Contains several {@link org.jboss.netty.buffer.ChannelBuffer}-related utility methods.

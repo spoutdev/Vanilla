@@ -20,16 +20,17 @@ import java.util.Random;
 
 import org.getspout.api.generator.Populator;
 import org.getspout.api.generator.WorldGenerator;
-import org.getspout.api.geo.World;
-import org.getspout.api.geo.cuboid.Block;
+import org.getspout.api.util.cuboid.CuboidShortBuffer;
 
 public class TheEndGenerator implements WorldGenerator {
-	public Block[][] generate(World w, Random rng, int x, int z) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	private final Populator[] populators = new Populator[] {new SpirePopulator()};
+
+	public CuboidShortBuffer generate(CuboidShortBuffer blockData, Random rng) {
+		return blockData;
 	}
 
 	public Populator[] getPopulators() {
-		return new Populator[]{new SpirePopulator()};
+		return populators;
 	}
 }

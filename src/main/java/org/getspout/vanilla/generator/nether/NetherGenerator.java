@@ -20,16 +20,16 @@ import java.util.Random;
 
 import org.getspout.api.generator.Populator;
 import org.getspout.api.generator.WorldGenerator;
-import org.getspout.api.geo.World;
-import org.getspout.api.geo.cuboid.Block;
+import org.getspout.api.util.cuboid.CuboidShortBuffer;
 
 public class NetherGenerator implements WorldGenerator {
-	public Block[][] generate(World w, Random rng, int x, int z) {
-		// TODO Auto-generated method stub
-		return null;
+	public CuboidShortBuffer generate(CuboidShortBuffer blockData, Random rng) {
+		return blockData;
 	}
+	
+	private final Populator[] populators = new Populator[] {new FortressPopulator()};
 
 	public Populator[] getPopulators() {
-		return new Populator[]{new FortressPopulator()};
+		return populators;
 	}
 }

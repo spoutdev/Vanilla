@@ -268,7 +268,7 @@ public final class ChannelBufferUtils {
 		buf.writeFloat(vec.getX());
 		buf.writeFloat(vec.getY());
 	}
-	
+
 	public static Color readColor(ChannelBuffer buf) {
 		int red = buf.readInt();
 		int green = buf.readInt();
@@ -294,4 +294,3 @@ public final class ChannelBufferUtils {
 	private ChannelBufferUtils() {
 	}
 }
-

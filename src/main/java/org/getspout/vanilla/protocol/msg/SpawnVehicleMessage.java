@@ -1,3 +1,19 @@
+/*
+ * This file is part of Vanilla (http://www.getspout.org/).
+ *
+ * Vanilla is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Vanilla is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.getspout.vanilla.protocol.msg;
 
 import org.getspout.api.protocol.Message;
@@ -65,8 +81,10 @@ public final class SpawnVehicleMessage extends Message {
 		StringBuilder build = new StringBuilder("SpawnVehicleMessage{id=");
 		build.append(id).append(",type=").append(type).append(",x=").append(x).append(",y=").append(y);
 		build.append(",z=").append(z).append(",fireballId=").append(fireballId);
+
 		if (hasFireball()) build.append(",fireballX=").append(fireballX).append(",fireballY=").append(fireballY).
 				append(",fireballZ=").append(fireballZ);
+
 		build.append("}");
 		return build.toString();
 	}

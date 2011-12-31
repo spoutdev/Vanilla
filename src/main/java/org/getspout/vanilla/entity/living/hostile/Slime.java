@@ -17,16 +17,16 @@
 package org.getspout.vanilla.entity.living.hostile;
 
 import org.getspout.api.metadata.MetadataStringValue;
+import org.getspout.vanilla.Entity;
 import org.getspout.vanilla.entity.HostileEntity;
 import org.getspout.vanilla.entity.living.Land;
 import org.getspout.vanilla.entity.living.Living;
-import org.getspout.vanilla.mobs.EntityID;
 
 public class Slime extends Living implements HostileEntity, Land {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(EntityID.KEY, new MetadataStringValue(EntityID.Slime.id));
+		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.Slime.id));
 	}
 
 	@Override

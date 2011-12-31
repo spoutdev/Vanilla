@@ -14,52 +14,58 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.entity;
+package org.getspout.vanilla.event.entity;
 
-import org.getspout.api.event.Cancellable;
+import java.util.List;
+
 import org.getspout.api.event.HandlerList;
 import org.getspout.api.event.entity.EntityEvent;
+import org.getspout.unchecked.api.inventory.ItemStack;
 
 /**
- * Called when an entity is damaged.
+ * Called when an entity dies.
  */
-public class EntityDamageEvent extends EntityEvent implements Cancellable {
+public class EntityDeathEvent extends EntityEvent {
 	private static HandlerList handlers = new HandlerList();
 
-	private int damage;
+	private int dropExp;
 
-	private DamageCause cause;
+	private List<ItemStack> drops;
 
 	/**
-	 * Gets the damage amount
+	 * Gets the amount of experience to drop.
 	 *
-	 * @return The damage amount
+	 * @return The amount of experience to drop.
 	 */
-	public int getDamage() {
-		return damage;
+	public int getDropExp() {
+		return dropExp;
 	}
 
 	/**
-	 * Sets the damage amount
+	 * Sets the amount of experience to drop.
 	 *
-	 * @param damage The damage amount to set
+	 * @param dropExp The experience to set.
 	 */
-	public void setDamage(int damage) {
-		this.damage = damage;
+	public void setDropExp(int dropExp) {
+		this.dropExp = dropExp;
 	}
 
 	/**
-	 * Gets the cause of the damage.
+	 * The drops to drop.
 	 *
-	 * @return A DamageCause value detailing the cause of the damage.
+	 * @return The drops to drop.
 	 */
-	public DamageCause getCause() {
-		return cause;
+	public List<ItemStack> getDrops() {
+		return drops;
 	}
 
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
+	/**
+	 * Sets the drops to drop.
+	 *
+	 * @param drops The drops to set.
+	 */
+	public void setDrops(List<ItemStack> drops) {
+		this.drops = drops;
 	}
 
 	@Override
@@ -69,27 +75,5 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
 
 	public static HandlerList getHandlerList() {
 		return handlers;
-	}
-
-	/**
-	 * Specifies the cause of damage.
-	 */
-	public enum DamageCause {
-		CONTACT,
-		ENTITY_ATTACK,
-		PROJECTILE,
-		SUFFOCATION,
-		FALL,
-		FIRE,
-		FIRE_TICK,
-		LAVA,
-		DROWNING,
-		BLOCK_EXPLOSION,
-		ENTITY_EXPLOSION,
-		VOID,
-		LIGHTNING,
-		SUICIDE,
-		STARVATION,
-		CUSTOM
 	}
 }

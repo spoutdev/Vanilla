@@ -14,32 +14,31 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.entity;
+package org.getspout.vanilla.event.entity;
 
-import org.bukkit.block.BlockFace;
 import org.getspout.api.geo.cuboid.Block;
 
 /**
- * Called when a projectile hits a block.
+ * Called when an entity is damaged by a block.
  */
-public class ProjectileHitBlockEvent extends ProjectileHitEvent {
-	private Block block;
+public class EntityDamageByBlockEvent extends EntityDamageEvent {
+	private Block damager;
 
-	private BlockFace face;
-
-	public Block getBlock() {
-		return block;
+	/**
+	 * Gets the block that damaged the entity.
+	 *
+	 * @return The block that damaged the entity
+	 */
+	public Block getDamager() {
+		return damager;
 	}
 
-	public void setBlock(Block block) {
-		this.block = block;
-	}
-
-	public BlockFace getFace() {
-		return face;
-	}
-
-	public void setFace(BlockFace face) {
-		this.face = face;
+	/**
+	 * Sets the block that damaged the entity.
+	 *
+	 * @param damager The block to set
+	 */
+	public void setDamager(Block damager) {
+		this.damager = damager;
 	}
 }

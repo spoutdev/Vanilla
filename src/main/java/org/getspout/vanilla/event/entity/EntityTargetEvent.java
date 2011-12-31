@@ -14,46 +14,55 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.entity;
+package org.getspout.vanilla.event.entity;
 
+import org.getspout.api.entity.Entity;
 import org.getspout.api.event.Cancellable;
 import org.getspout.api.event.HandlerList;
 import org.getspout.api.event.entity.EntityEvent;
 
 /**
- * Called when a slime is split.
+ * Called when an entity targets or untargets another entity.
  */
-public class SlimeSplitEvent extends EntityEvent implements Cancellable {
+public class EntityTargetEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
-	private int amount = 0;
+	private Entity target;
 
-	private int size = 0;
+	private TargetReason reason;
+
+	public TargetReason getReason() {
+		return reason;
+	}
+
+	public void setReason(TargetReason reason) {
+		this.reason = reason;
+	}
+
+	public Entity getTarget() {
+		return target;
+	}
+
+	public void setTarget(Entity target) {
+		this.target = target;
+	}
 
 	/**
-	 * Gets the amount of slimes to spawn.
+	 * Returns true if the entity has targeted.
 	 *
 	 * @return
 	 */
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public boolean isTarget() {
+		return reason.isTarget();
 	}
 
 	/**
-	 * Gets the size of slimes to spawn.
+	 * Returns true if the entity has untargeted.
 	 *
 	 * @return
 	 */
-	public int getSize() {
-		return size;
-	}
-
-	public void setSize(int size) {
-		this.size = size;
+	public boolean isUntarget() {
+		return !reason.isTarget();
 	}
 
 	@Override
@@ -68,5 +77,27 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
 	public static HandlerList getHandlerList() {
 		return handlers;
+	}
+
+	public enum TargetReason {
+		TARGET_DIED(false),
+		CLOSEST_PLAYER(true),
+		TARGET_ATTTACKED_ENTITY(true),
+		PIG_ZOMBIE_MASSACRE(true),
+		FORGOT_TARGET(false),
+		OWNER_ATTACKED(true),
+		RANDOM_TARGET(true),
+		CUSTOM_TARGET(true),
+		CUSTOM_UNTARGET(false);
+
+		private boolean target;
+
+		private TargetReason(boolean target) {
+			this.target = target;
+		}
+
+		public boolean isTarget() {
+			return target;
+		}
 	}
 }

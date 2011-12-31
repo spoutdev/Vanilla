@@ -14,15 +14,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.entity;
+package org.getspout.vanilla.event.entity;
 
+import org.bukkit.block.BlockFace;
 import org.getspout.api.geo.cuboid.Block;
 
 /**
- * Called when an entity combusts from a block.
+ * Called when a projectile hits a block.
  */
-public class EntityCombustByBlockEvent extends EntityCombustEvent {
+public class ProjectileHitBlockEvent extends ProjectileHitEvent {
 	private Block block;
+
+	private BlockFace face;
 
 	public Block getBlock() {
 		return block;
@@ -30,5 +33,13 @@ public class EntityCombustByBlockEvent extends EntityCombustEvent {
 
 	public void setBlock(Block block) {
 		this.block = block;
+	}
+
+	public BlockFace getFace() {
+		return face;
+	}
+
+	public void setFace(BlockFace face) {
+		this.face = face;
 	}
 }

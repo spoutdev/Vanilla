@@ -14,56 +14,60 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.player;
+package org.getspout.vanilla.event.entity;
+
+import java.util.List;
 
 import org.getspout.api.event.Cancellable;
 import org.getspout.api.event.HandlerList;
-import org.getspout.api.event.player.PlayerEvent;
+import org.getspout.api.event.entity.EntityEvent;
 import org.getspout.api.geo.cuboid.Block;
+import org.getspout.api.geo.discrete.Point;
 
 /**
- * This event is fired when the player is almost about to enter the bed.
+ * Called when an entity explodes.
  */
-public class PlayerBedEvent extends PlayerEvent implements Cancellable {
+public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
-	private Block bed;
+	private List<Block> blocks;
 
-	private boolean entered;
+	private Point epicenter;
 
-	/**
-	 * Returns the bed block involved in this event.
-	 *
-	 * @return the bed block involved in this event
-	 */
-	public Block getBed() {
-		return bed;
+	private float yield;
+
+	private boolean incendiary;
+
+	public List<Block> getBlocks() {
+		return blocks;
 	}
 
-	public void setBed(Block bed) {
-		this.bed = bed;
+	public void setBlocks(List<Block> blocks) {
+		this.blocks = blocks;
 	}
 
-	/**
-	 * Gets if the player entered the bed.
-	 *
-	 * @return True if the bed was entered.
-	 */
-	public boolean isEntered() {
-		return entered;
+	public Point getEpicenter() {
+		return epicenter;
 	}
 
-	/**
-	 * Gets if the player left the bed.
-	 *
-	 * @return False if the bed was left.
-	 */
-	public boolean isLeft() {
-		return !entered;
+	public void setEpicenter(Point epicenter) {
+		this.epicenter = epicenter;
 	}
 
-	public void setEntered(boolean entered) {
-		this.entered = entered;
+	public boolean isIncendiary() {
+		return incendiary;
+	}
+
+	public void setIncendiary(boolean incendiary) {
+		this.incendiary = incendiary;
+	}
+
+	public float getYield() {
+		return yield;
+	}
+
+	public void setYield(float yield) {
+		this.yield = yield;
 	}
 
 	@Override

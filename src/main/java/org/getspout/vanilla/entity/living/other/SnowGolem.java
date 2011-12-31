@@ -17,15 +17,15 @@
 package org.getspout.vanilla.entity.living.other;
 
 import org.getspout.api.metadata.MetadataStringValue;
+import org.getspout.vanilla.Entity;
 import org.getspout.vanilla.entity.PassiveEntity;
 import org.getspout.vanilla.entity.living.Creature;
-import org.getspout.vanilla.mobs.EntityID;
 
 public class SnowGolem extends Creature implements PassiveEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(EntityID.KEY, new MetadataStringValue(EntityID.SnowGolem.id));
+		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.SnowGolem.id));
 	}
 
 	@Override

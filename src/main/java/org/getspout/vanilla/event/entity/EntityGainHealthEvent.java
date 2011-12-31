@@ -14,31 +14,41 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.entity;
+package org.getspout.vanilla.event.entity;
 
-import org.getspout.api.entity.Entity;
+import org.getspout.api.event.Cancellable;
 import org.getspout.api.event.HandlerList;
-import org.getspout.api.event.entity.EntityTeleportEvent;
-import org.getspout.unchecked.api.TravelAgent;
+import org.getspout.api.event.entity.EntityEvent;
 
 /**
- * Called when a player teleports via a portal.
+ * Called when an entity gains health.
  */
-public class PlayerPortalEvent extends EntityTeleportEvent {
+public class EntityGainHealthEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
-	protected TravelAgent travelAgent;
+	private int amount;
 
-	public Entity getPlayer() {
-		return (Entity) getEntity();
+	private GainHealthReason reason;
+
+	public int getAmount() {
+		return amount;
 	}
 
-	public TravelAgent getTravelAgent() {
-		return travelAgent;
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 
-	public void setTravelAgent(TravelAgent travelAgent) {
-		this.travelAgent = travelAgent;
+	public GainHealthReason getReason() {
+		return reason;
+	}
+
+	public void setReason(GainHealthReason reason) {
+		this.reason = reason;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		this.cancelled = cancelled;
 	}
 
 	@Override
@@ -48,5 +58,12 @@ public class PlayerPortalEvent extends EntityTeleportEvent {
 
 	public static HandlerList getHandlerList() {
 		return handlers;
+	}
+
+	public enum GainHealthReason {
+		PEACEFUL,
+		HUNGER,
+		EATING,
+		CUSTOM;
 	}
 }

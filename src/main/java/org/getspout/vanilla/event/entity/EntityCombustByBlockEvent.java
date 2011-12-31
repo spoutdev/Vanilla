@@ -14,31 +14,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.entity;
+package org.getspout.vanilla.event.entity;
 
 import org.getspout.api.geo.cuboid.Block;
 
 /**
- * Called when an entity is damaged by a block.
+ * Called when an entity combusts from a block.
  */
-public class EntityDamageByBlockEvent extends EntityDamageEvent {
-	private Block damager;
+public class EntityCombustByBlockEvent extends EntityCombustEvent {
+	private Block block;
 
-	/**
-	 * Gets the block that damaged the entity.
-	 *
-	 * @return The block that damaged the entity
-	 */
-	public Block getDamager() {
-		return damager;
+	public Block getBlock() {
+		return block;
 	}
 
-	/**
-	 * Sets the block that damaged the entity.
-	 *
-	 * @param damager The block to set
-	 */
-	public void setDamager(Block damager) {
-		this.damager = damager;
+	public void setBlock(Block block) {
+		this.block = block;
 	}
 }

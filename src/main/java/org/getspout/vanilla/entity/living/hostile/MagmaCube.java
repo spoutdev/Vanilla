@@ -17,13 +17,13 @@
 package org.getspout.vanilla.entity.living.hostile;
 
 import org.getspout.api.metadata.MetadataStringValue;
-import org.getspout.vanilla.mobs.EntityID;
+import org.getspout.vanilla.Entity;
 
 public class MagmaCube extends Slime {
 	@Override
 	public void onAttached() {
 		super.onAttached(); //Without the metadata setting...
-		parent.setMetadata(EntityID.KEY, new MetadataStringValue(EntityID.MagmaCube.id));
+		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.MagmaCube.id));
 	}
 
 	@Override

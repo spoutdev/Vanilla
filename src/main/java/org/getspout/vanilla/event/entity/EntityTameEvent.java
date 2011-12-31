@@ -14,26 +14,37 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.entity;
+package org.getspout.vanilla.event.entity;
 
+import org.getspout.api.entity.Entity;
 import org.getspout.api.event.Cancellable;
 import org.getspout.api.event.HandlerList;
 import org.getspout.api.event.entity.EntityEvent;
 
 /**
- * Called when a projectile hits something.
+ * Called when an entity is tamed.
  */
-public class ProjectileHitEvent extends EntityEvent implements Cancellable {
+public class EntityTameEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
+	private Entity owner;
+
+	public Entity getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Entity owner) {
+		this.owner = owner;
 	}
 
 	@Override
 	public void setCancelled(boolean cancelled) {
 		super.setCancelled(cancelled);
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 
 	public static HandlerList getHandlerList() {

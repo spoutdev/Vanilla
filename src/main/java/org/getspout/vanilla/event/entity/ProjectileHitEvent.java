@@ -14,38 +14,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.entity;
+package org.getspout.vanilla.event.entity;
 
-import org.getspout.api.entity.Entity;
 import org.getspout.api.event.Cancellable;
 import org.getspout.api.event.HandlerList;
 import org.getspout.api.event.entity.EntityEvent;
 
 /**
- * Called when a pig is zapped.
+ * Called when a projectile hits something.
  */
-public class PigZapEvent extends EntityEvent implements Cancellable {
+public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-
-	private Entity pigZombie;
-
-	private Entity lightning;
-
-	public Entity getLightning() {
-		return lightning;
-	}
-
-	public void setLightning(Entity lightning) {
-		this.lightning = lightning;
-	}
-
-	public Entity getPigZombie() {
-		return pigZombie;
-	}
-
-	public void setPigZombie(Entity pigZombie) {
-		this.pigZombie = pigZombie;
-	}
 
 	@Override
 	public HandlerList getHandlers() {

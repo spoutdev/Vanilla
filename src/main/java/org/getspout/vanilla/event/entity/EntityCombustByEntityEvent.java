@@ -14,22 +14,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.entity.living.passive;
+package org.getspout.vanilla.event.entity;
 
-import org.getspout.api.metadata.MetadataStringValue;
-import org.getspout.vanilla.Entity;
-import org.getspout.vanilla.entity.AnimalEntity;
-import org.getspout.vanilla.entity.PassiveEntity;
+import org.getspout.api.entity.Entity;
 
-public class Cow extends AnimalEntity implements PassiveEntity {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.Cow.id));
+/**
+ * Called when an entity causes another to combust.
+ */
+public class EntityCombustByEntityEvent extends EntityCombustEvent {
+	private Entity combuster;
+
+	public Entity getCombuster() {
+		return combuster;
 	}
 
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
+	public void setCombuster(Entity combuster) {
+		this.combuster = combuster;
 	}
 }

@@ -14,41 +14,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.entity;
+package org.getspout.vanilla.event.entity;
 
-import org.getspout.api.event.Cancellable;
 import org.getspout.api.event.HandlerList;
 import org.getspout.api.event.entity.EntityEvent;
 
 /**
- * Called when an entity gains health.
+ * Called when an entity combusts.
  */
-public class EntityGainHealthEvent extends EntityEvent implements Cancellable {
+public class EntityCombustEvent extends EntityEvent {
 	private static HandlerList handlers = new HandlerList();
 
-	private int amount;
+	private int duration;
 
-	private GainHealthReason reason;
-
-	public int getAmount() {
-		return amount;
+	/**
+	 * Gets the time that the entity should burn for.
+	 *
+	 * @return The time in seconds
+	 */
+	public int getDuration() {
+		return duration;
 	}
 
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
-	public GainHealthReason getReason() {
-		return reason;
-	}
-
-	public void setReason(GainHealthReason reason) {
-		this.reason = reason;
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
 	@Override
@@ -56,14 +45,12 @@ public class EntityGainHealthEvent extends EntityEvent implements Cancellable {
 		return handlers;
 	}
 
-	public static HandlerList getHandlerList() {
-		return handlers;
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
 	}
 
-	public enum GainHealthReason {
-		PEACEFUL,
-		HUNGER,
-		EATING,
-		CUSTOM;
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

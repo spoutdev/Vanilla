@@ -14,63 +14,56 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.entity;
+package org.getspout.vanilla.event.entity;
 
-import java.util.List;
-
+import org.getspout.api.event.Cancellable;
 import org.getspout.api.event.HandlerList;
 import org.getspout.api.event.entity.EntityEvent;
-import org.getspout.unchecked.api.inventory.ItemStack;
 
 /**
- * Called when an entity dies.
+ * Called when a slime is split.
  */
-public class EntityDeathEvent extends EntityEvent {
+public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
-	private int dropExp;
+	private int amount = 0;
 
-	private List<ItemStack> drops;
+	private int size = 0;
 
 	/**
-	 * Gets the amount of experience to drop.
+	 * Gets the amount of slimes to spawn.
 	 *
-	 * @return The amount of experience to drop.
+	 * @return
 	 */
-	public int getDropExp() {
-		return dropExp;
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 
 	/**
-	 * Sets the amount of experience to drop.
+	 * Gets the size of slimes to spawn.
 	 *
-	 * @param dropExp The experience to set.
+	 * @return
 	 */
-	public void setDropExp(int dropExp) {
-		this.dropExp = dropExp;
+	public int getSize() {
+		return size;
 	}
 
-	/**
-	 * The drops to drop.
-	 *
-	 * @return The drops to drop.
-	 */
-	public List<ItemStack> getDrops() {
-		return drops;
-	}
-
-	/**
-	 * Sets the drops to drop.
-	 *
-	 * @param drops The drops to set.
-	 */
-	public void setDrops(List<ItemStack> drops) {
-		this.drops = drops;
+	public void setSize(int size) {
+		this.size = size;
 	}
 
 	@Override
 	public HandlerList getHandlers() {
 		return handlers;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
 	}
 
 	public static HandlerList getHandlerList() {

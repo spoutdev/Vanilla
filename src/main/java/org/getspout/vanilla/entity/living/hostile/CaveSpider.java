@@ -17,13 +17,13 @@
 package org.getspout.vanilla.entity.living.hostile;
 
 import org.getspout.api.metadata.MetadataStringValue;
-import org.getspout.vanilla.mobs.EntityID;
+import org.getspout.vanilla.Entity;
 
 public class CaveSpider extends Spider {
 	@Override
 	public void onAttached() {
 		super.onAttached();//Again, without the metadata.
-		parent.setMetadata(EntityID.KEY, new MetadataStringValue(EntityID.CaveSpider.id));
+		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.CaveSpider.id));
 	}
 
 	@Override

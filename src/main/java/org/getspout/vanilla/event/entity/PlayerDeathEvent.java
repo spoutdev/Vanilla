@@ -14,40 +14,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.entity;
+package org.getspout.vanilla.event.entity;
 
+import org.getspout.api.entity.Entity;
 import org.getspout.api.event.HandlerList;
-import org.getspout.api.event.entity.EntityEvent;
 
 /**
- * Called when an entity combusts.
+ * Called when a player dies.
  */
-public class EntityCombustEvent extends EntityEvent {
+public class PlayerDeathEvent extends EntityDeathEvent {
 	private static HandlerList handlers = new HandlerList();
 
-	private int duration;
-
-	/**
-	 * Gets the time that the entity should burn for.
-	 *
-	 * @return The time in seconds
-	 */
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
+	public Entity getPlayer() {
+		return (Entity) getEntity();
 	}
 
 	@Override
 	public HandlerList getHandlers() {
 		return handlers;
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
 	}
 
 	public static HandlerList getHandlerList() {

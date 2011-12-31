@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.mobs;
+package org.getspout.vanilla;
 
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-public enum EntityID {
+public enum Entity {
 	DroppedItem(1),
 	XPOrb(2),
 	ShotArrow(10),
@@ -61,9 +61,9 @@ public enum EntityID {
 
 	public static final String KEY = "EntityID";
 	
-	final static TIntObjectHashMap<EntityID> map = new TIntObjectHashMap<EntityID>();
+	final static TIntObjectHashMap<Entity> map = new TIntObjectHashMap<Entity>();
 
-	private EntityID(int data){
+	private Entity(int data){
 		this.id = (byte)data;
 	}
 
@@ -71,12 +71,12 @@ public enum EntityID {
 		return id;
 	}
 	
-	public static EntityID getByID(int id){
+	public static Entity getByID(int id){
 		return map.get(id);
 	}
 	
 	static{
-		for(EntityID m : EntityID.values()){
+		for(Entity m : Entity.values()){
 			map.put(m.getID(), m);
 		}
 		

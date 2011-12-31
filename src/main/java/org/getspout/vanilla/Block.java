@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.getspout.vanilla.block;
+package org.getspout.vanilla;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-public enum Blocks {
+public enum Block {
 	Stone(1),
 	Grass(2),
 	Dirt(3),
@@ -206,12 +206,12 @@ public enum Blocks {
 	final short id;
 	final byte data;
 	
-	final static TIntObjectHashMap<Blocks> map = new TIntObjectHashMap<Blocks>();
+	final static TIntObjectHashMap<Block> map = new TIntObjectHashMap<Block>();
 	
-	private Blocks(int id){
+	private Block(int id){
 		this(id, 0);
 	}
-	private Blocks(int id, int data){
+	private Block(int id, int data){
 		this.id = (short)id;
 		this.data = (byte)data;
 	}
@@ -220,13 +220,13 @@ public enum Blocks {
 		return id;
 	}
 	
-	public static Blocks fromID(int id){
+	public static Block fromID(int id){
 		return map.get(id);
 	}
 	
 	
 	static{
-		for(Blocks m : Blocks.values()){
+		for(Block m : Block.values()){
 			map.put(m.getID(), m);
 		}
 		

@@ -14,21 +14,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.getspout.vanilla.events.entity;
+package org.getspout.vanilla.event.entity;
 
 import org.getspout.api.entity.Entity;
 
 /**
- * Called when an entity causes another to combust.
+ * Called when an entity is damaged by a projectile.
  */
-public class EntityCombustByEntityEvent extends EntityCombustEvent {
-	private Entity combuster;
-
-	public Entity getCombuster() {
-		return combuster;
-	}
-
-	public void setCombuster(Entity combuster) {
-		this.combuster = combuster;
+public class EntityDamageByProjectileEvent extends EntityDamageByEntityEvent {
+	/**
+	 * Gets the projectile that damaged the entity.
+	 *
+	 * @return The projectile that damaged the entity.
+	 */
+	@Override
+	public Entity getDamager() {
+		return (Entity) super.getDamager();
 	}
 }

@@ -17,15 +17,15 @@
 package org.getspout.vanilla.entity.living.neutral;
 
 import org.getspout.api.metadata.MetadataStringValue;
+import org.getspout.vanilla.Entity;
 import org.getspout.vanilla.entity.NeutralEntity;
 import org.getspout.vanilla.entity.living.hostile.Zombie;
-import org.getspout.vanilla.mobs.EntityID;
 
 public class PigZombie extends Zombie implements NeutralEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(EntityID.KEY, new MetadataStringValue(EntityID.ZombiePigman.id));
+		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.ZombiePigman.id));
 	}
 
 	@Override

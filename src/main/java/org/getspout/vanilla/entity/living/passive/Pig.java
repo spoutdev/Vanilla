@@ -29,7 +29,7 @@ public class Pig extends AnimalEntity implements PassiveEntity {
 	}
 
 	@Override
-	public void onTick(long dt) {
+	public void onTick(float dt) {
 		super.onTick(dt);
 	}
 }

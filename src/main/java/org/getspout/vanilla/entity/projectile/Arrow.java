@@ -35,7 +35,7 @@ public class Arrow extends Projectile {
 	}
 
 	@Override
-	public void onTick(long dt) {
+	public void onTick(float dt) {
 		super.onTick(dt);
 		//Do Gravity here?
 	}

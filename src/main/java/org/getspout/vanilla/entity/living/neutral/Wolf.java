@@ -29,7 +29,7 @@ public class Wolf extends AnimalEntity implements NeutralEntity {
 	}
 
 	@Override
-	public void onTick(long dt) {
+	public void onTick(float dt) {
 		super.onTick(dt);
 	}
 }

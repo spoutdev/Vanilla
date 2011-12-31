@@ -27,7 +27,7 @@ public class Creature extends Living {
 	}
 
 	@Override
-	public void onTick(long dt) {
+	public void onTick(float dt) {
 		super.onTick(dt);
 	}
 }

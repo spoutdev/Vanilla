@@ -30,7 +30,7 @@ public class CreativePlayer extends MinecraftPlayer {
 	}
 
 	@Override
-	public void onTick(long dt) {
+	public void onTick(float dt) {
 		// TODO Auto-generated method stub
 
 	}

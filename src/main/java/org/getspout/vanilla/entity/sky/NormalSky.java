@@ -43,7 +43,7 @@ public class NormalSky extends Controller {
 	}
 
 	@Override
-	public void onTick(long dt) {
+	public void onTick(float dt) {
 		time = (time + gameSecondsPerSecond * dt) % maxTime;
 
 		timeUntilWeatherChange -= dt;

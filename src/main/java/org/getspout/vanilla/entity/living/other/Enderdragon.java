@@ -29,7 +29,7 @@ public class Enderdragon extends Flying implements BossEntity {
 	}
 
 	@Override
-	public void onTick(long dt) {
+	public void onTick(float dt) {
 		super.onTick(dt);
 	}
 }

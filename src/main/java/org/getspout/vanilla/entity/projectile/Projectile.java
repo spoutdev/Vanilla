@@ -46,7 +46,7 @@ public class Projectile extends Controller {
 	}
 
 	@Override
-	public void onTick(long dt) {
+	public void onTick(float dt) {
 		Transform t = parent.getTransform();
 		//position += velocity.transform(rotation) * dt;
 		t.setPosition(t.getPosition().add(velocity.transform(t.getRotation()).scale(dt)));

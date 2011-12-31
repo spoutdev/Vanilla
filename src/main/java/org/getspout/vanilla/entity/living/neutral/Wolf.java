@@ -19,13 +19,13 @@ package org.getspout.vanilla.entity.living.neutral;
 import org.getspout.api.metadata.MetadataStringValue;
 import org.getspout.vanilla.entity.AnimalEntity;
 import org.getspout.vanilla.entity.NeutralEntity;
-import org.getspout.vanilla.mobs.MobID;
+import org.getspout.vanilla.mobs.EntityID;
 
 public class Wolf extends AnimalEntity implements NeutralEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Wolf.id));
+		parent.setMetadata(EntityID.KEY, new MetadataStringValue(EntityID.Wolf.id));
 	}
 
 	@Override

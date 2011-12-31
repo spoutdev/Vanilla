@@ -19,13 +19,13 @@ package org.getspout.vanilla.entity.living.other;
 import org.getspout.api.metadata.MetadataStringValue;
 import org.getspout.vanilla.entity.BossEntity;
 import org.getspout.vanilla.entity.living.Flying;
-import org.getspout.vanilla.mobs.MobID;
+import org.getspout.vanilla.mobs.EntityID;
 
 public class Enderdragon extends Flying implements BossEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.EnderDragon.id));
+		parent.setMetadata(EntityID.KEY, new MetadataStringValue(EntityID.EnderDragon.id));
 	}
 
 	@Override

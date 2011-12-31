@@ -19,13 +19,13 @@ package org.getspout.vanilla.entity.living.hostile;
 import org.getspout.api.metadata.MetadataStringValue;
 import org.getspout.vanilla.entity.HostileEntity;
 import org.getspout.vanilla.entity.living.Flying;
-import org.getspout.vanilla.mobs.MobID;
+import org.getspout.vanilla.mobs.EntityID;
 
 public class Ghast extends Flying implements HostileEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(MobID.KEY, new MetadataStringValue(MobID.Ghast.id));
+		parent.setMetadata(EntityID.KEY, new MetadataStringValue(EntityID.Ghast.id));
 	}
 
 	@Override

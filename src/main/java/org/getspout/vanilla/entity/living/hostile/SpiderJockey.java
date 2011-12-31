@@ -25,7 +25,7 @@ public class SpiderJockey extends Monster {
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public void onTick(long dt) {
 		super.onTick(dt);
 	}
 }

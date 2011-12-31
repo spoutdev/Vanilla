@@ -25,7 +25,7 @@ public class MinecraftEntity extends Controller {
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public void onTick(long dt) {
 		// TODO Auto-generated method stub
 	}
 }

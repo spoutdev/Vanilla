@@ -29,7 +29,7 @@ public class Ghast extends Flying implements HostileEntity {
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public void onTick(long dt) {
 		super.onTick(dt);
 	}
 }

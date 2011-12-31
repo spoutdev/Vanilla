@@ -30,7 +30,7 @@ public class Skeleton extends Monster implements HostileEntity, Land {
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public void onTick(long dt) {
 		super.onTick(dt);
 	}
 }

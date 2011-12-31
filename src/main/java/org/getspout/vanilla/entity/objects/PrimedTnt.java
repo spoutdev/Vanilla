@@ -36,7 +36,7 @@ public class PrimedTnt extends Controller {
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public void onTick(long dt) {
 		timeToExplode -= dt;
 
 		if(timeToExplode <= 0.f){

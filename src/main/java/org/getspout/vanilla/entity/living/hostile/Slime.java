@@ -30,7 +30,7 @@ public class Slime extends Living implements HostileEntity, Land {
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public void onTick(long dt) {
 		super.onTick(dt);
 	}
 }

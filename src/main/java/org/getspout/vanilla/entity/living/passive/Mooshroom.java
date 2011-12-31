@@ -28,7 +28,7 @@ public class Mooshroom extends Cow implements PassiveEntity {
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public void onTick(long dt) {
 		super.onTick(dt);
 	}
 }

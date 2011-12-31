@@ -27,7 +27,7 @@ public class CaveSpider extends Spider {
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public void onTick(long dt) {
 		super.onTick(dt);
 	}
 }

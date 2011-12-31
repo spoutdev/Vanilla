@@ -29,7 +29,7 @@ public class Squid extends Water implements PassiveEntity {
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public void onTick(long dt) {
 		super.onTick(dt);
 	}
 }

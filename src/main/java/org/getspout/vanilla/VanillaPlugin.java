@@ -30,7 +30,9 @@ import org.getspout.vanilla.generator.theend.TheEndGenerator;
 import org.getspout.vanilla.protocol.VanillaProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
-
+	private final String version = "Minecraft 1.0.1";
+	
+	
 	@Override
 	public void onLoad() {
 		// TODO - do we need a protocol manager ?
@@ -59,6 +61,6 @@ public class VanillaPlugin extends CommonPlugin {
 		World end = Spout.getGame().loadWorld("world_end", new TheEndGenerator());
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), new TheEndSky());
 
-
+		getLogger().info("Vanilla enabled! Version: "+ version);
 	}
 }

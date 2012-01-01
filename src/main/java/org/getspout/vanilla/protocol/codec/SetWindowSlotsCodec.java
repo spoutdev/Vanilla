@@ -19,9 +19,10 @@ package org.getspout.vanilla.protocol.codec;
 import java.io.IOException;
 import java.util.Map;
 
+import org.getspout.api.inventory.ItemStack;
 import org.getspout.api.io.nbt.Tag;
+import org.getspout.api.material.MaterialData;
 import org.getspout.api.protocol.MessageCodec;
-import org.getspout.unchecked.api.inventory.ItemStack;
 import org.getspout.vanilla.protocol.ChannelBufferUtils;
 import org.getspout.vanilla.protocol.msg.SetWindowSlotsMessage;
 
@@ -49,7 +50,7 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 				if (ChannelBufferUtils.hasNbtData(item)) {
 					nbtData = ChannelBufferUtils.readCompound(buffer);
 				}
-				items[slot] = new ItemStack(item, itemCount, (short) damage, null, nbtData);
+				items[slot] = new ItemStack(MaterialData.getMaterial(id, (short) damage), itemCount, (short) damage).setAuxData(nbtData);
 			}
 		}
 		return new SetWindowSlotsMessage(id, items);
@@ -67,11 +68,11 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 			if (item == null) {
 				buffer.writeShort(-1);
 			} else {
-				buffer.writeShort(item.getTypeId());
+				buffer.writeShort(item.getMaterial().getRawId());
 				buffer.writeByte(item.getAmount());
-				buffer.writeByte(item.getDurability());
-				if (ChannelBufferUtils.hasNbtData(item.getTypeId())) {
-					ChannelBufferUtils.writeCompound(buffer, item.getNbtData());
+				buffer.writeByte(item.getDamage());
+				if (ChannelBufferUtils.hasNbtData(item.getMaterial().getRawData())) {
+					ChannelBufferUtils.writeCompound(buffer, item.getAuxData());
 				}
 			}
 		}

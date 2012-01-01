@@ -18,8 +18,8 @@ package org.getspout.vanilla.protocol.msg;
 
 import java.util.Arrays;
 
+import org.getspout.api.inventory.ItemStack;
 import org.getspout.api.protocol.Message;
-import org.getspout.unchecked.api.inventory.ItemStack;
 
 public final class SetWindowSlotsMessage extends Message {
 	private final int id;

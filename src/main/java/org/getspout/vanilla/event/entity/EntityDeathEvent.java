@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.getspout.api.event.HandlerList;
 import org.getspout.api.event.entity.EntityEvent;
-import org.getspout.unchecked.api.inventory.ItemStack;
+import org.getspout.api.inventory.ItemStack;
 
 /**
  * Called when an entity dies.

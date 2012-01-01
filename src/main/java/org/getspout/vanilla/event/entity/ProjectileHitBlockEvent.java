@@ -16,7 +16,6 @@
  */
 package org.getspout.vanilla.event.entity;
 
-import org.bukkit.block.BlockFace;
 import org.getspout.api.geo.cuboid.Block;
 
 /**

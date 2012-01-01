@@ -21,6 +21,7 @@ import org.getspout.api.event.HandlerList;
 import org.getspout.api.event.player.PlayerEvent;
 import org.getspout.api.geo.cuboid.Block;
 import org.getspout.api.inventory.ItemStack;
+import org.getspout.api.material.block.BlockFace;
 
 /**
  * Called when a bucket is used.

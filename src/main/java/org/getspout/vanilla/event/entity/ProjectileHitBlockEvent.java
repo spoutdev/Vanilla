@@ -17,6 +17,7 @@
 package org.getspout.vanilla.event.entity;
 
 import org.getspout.api.geo.cuboid.Block;
+import org.getspout.api.material.block.BlockFace;
 
 /**
  * Called when a projectile hits a block.

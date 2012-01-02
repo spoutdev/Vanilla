@@ -26,18 +26,8 @@ import org.getspout.api.event.entity.EntityTeleportEvent;
 public class PlayerPortalEvent extends EntityTeleportEvent {
 	private static HandlerList handlers = new HandlerList();
 
-	protected TravelAgent travelAgent;
-
 	public Entity getPlayer() {
 		return (Entity) getEntity();
-	}
-
-	public TravelAgent getTravelAgent() {
-		return travelAgent;
-	}
-
-	public void setTravelAgent(TravelAgent travelAgent) {
-		this.travelAgent = travelAgent;
 	}
 
 	@Override

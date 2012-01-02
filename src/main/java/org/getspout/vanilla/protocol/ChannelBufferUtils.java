@@ -19,6 +19,7 @@ package org.getspout.vanilla.protocol;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,11 +153,12 @@ public final class ChannelBufferUtils {
 	 * Writes a UTF-8 string to the buffer.
 	 * @param buf The buffer.
 	 * @param str The string.
+	 * @throws UnsupportedEncodingException 
 	 * @throws IllegalArgumentException if the string is too long
 	 * <em>after</em> it is encoded.
 	 */
-	public static void writeUtf8String(ChannelBuffer buf, String str) {
-		byte[] bytes = str.getBytes(CHARSET_UTF8);
+	public static void writeUtf8String(ChannelBuffer buf, String str) throws UnsupportedEncodingException {
+		byte[] bytes = str.getBytes(CHARSET_UTF8.name());
 		if (bytes.length >= 65536) {
 			throw new IllegalArgumentException("Encoded UTF-8 string too long.");
 		}
@@ -186,14 +188,15 @@ public final class ChannelBufferUtils {
 	 * Reads a UTF-8 encoded string from the buffer.
 	 * @param buf The buffer.
 	 * @return The string.
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static String readUtf8String(ChannelBuffer buf) {
+	public static String readUtf8String(ChannelBuffer buf) throws UnsupportedEncodingException {
 		int len = buf.readUnsignedShort();
 
 		byte[] bytes = new byte[len];
 		buf.readBytes(bytes);
 
-		return new String(bytes, CHARSET_UTF8);
+		return new String(bytes, CHARSET_UTF8.name());
 	}
 
 	public static Map<String, Tag> readCompound(ChannelBuffer buf) {

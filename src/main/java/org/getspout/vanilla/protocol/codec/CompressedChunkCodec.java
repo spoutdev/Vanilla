@@ -59,7 +59,8 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 				throw new IOException("Not all bytes uncompressed.");
 			}
 		} catch (DataFormatException e) {
-			throw new IOException("Bad compressed data.", e);
+			e.printStackTrace();
+			throw new IOException("Bad compressed data.");
 		} finally {
 			inflater.end();
 		}

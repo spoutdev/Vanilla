@@ -17,10 +17,35 @@
 package org.getspout.vanilla.entity.living.player;
 
 import org.getspout.api.entity.PlayerController;
+import org.getspout.api.geo.cuboid.Chunk;
 import org.getspout.api.player.Player;
+import org.getspout.vanilla.VanillaPlugin;
 
 public abstract class MinecraftPlayer extends PlayerController {
 	public MinecraftPlayer(Player p){
 		super(p);
 	}
+	
+	@Override
+	public void onAttached() {
+		parent.setTransform(VanillaPlugin.spawnWorld.getSpawnPoint());
+	}
+	
+	@Override
+	public void onTick(float dt) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	@Override
+	public void freeChunk(Chunk c) {
+		System.out.println("Free chunk: " + c);
+	}
+
+	@Override
+	public void sendChunk(Chunk c) {
+		System.out.println("Send chunk: " + c);
+	}
+
+	
 }

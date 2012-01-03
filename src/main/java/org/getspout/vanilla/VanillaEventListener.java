@@ -1,10 +1,12 @@
 package org.getspout.vanilla;
 
+import org.getspout.api.entity.Entity;
 import org.getspout.api.event.EventHandler;
 import org.getspout.api.event.Listener;
 import org.getspout.api.event.Order;
 import org.getspout.api.event.player.PlayerConnectEvent;
 import org.getspout.api.event.player.PlayerJoinEvent;
+import org.getspout.api.geo.discrete.Transform;
 import org.getspout.vanilla.entity.living.player.SurvivalPlayer;
 
 public class VanillaEventListener implements Listener {
@@ -23,6 +25,8 @@ public class VanillaEventListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		// Set the player's controller
 		// For now, only create Survival Players
-		event.getPlayer().getEntity().setController(new SurvivalPlayer(event.getPlayer()));
+		System.out.println("Vanilla join event triggered");
+		Entity playerEntity = event.getPlayer().getEntity();
+		playerEntity.setController(new SurvivalPlayer(event.getPlayer()));
 	}
 }

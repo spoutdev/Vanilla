@@ -28,4 +28,9 @@ public class MinecraftEntity extends Controller {
 	public void onTick(float dt) {
 		// TODO Auto-generated method stub
 	}
+	
+	@Override
+	public void snapshotStart() {
+		
+	}
 }

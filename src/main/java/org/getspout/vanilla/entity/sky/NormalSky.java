@@ -70,4 +70,7 @@ public class NormalSky extends Controller {
 		currentWeather = pattern;
 		//Throw the event here
 	}
+	
+	public void preSnapshot() {
+	}
 }

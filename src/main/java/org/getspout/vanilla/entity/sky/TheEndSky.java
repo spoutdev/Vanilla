@@ -30,4 +30,7 @@ public class TheEndSky extends Controller {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public void preSnapshot() {
+	}
 }

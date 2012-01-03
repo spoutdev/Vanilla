@@ -49,4 +49,7 @@ public class PrimedTnt extends Controller {
 		t.setPosition(t.getPosition().add(velocity.scale(dt)).add(gravity.scale(dt)));
 
 	}
+	
+	public void preSnapshot() {
+	}
 }

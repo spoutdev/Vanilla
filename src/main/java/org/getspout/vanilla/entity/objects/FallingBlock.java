@@ -30,4 +30,7 @@ public class FallingBlock extends Controller {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public void preSnapshot() {
+	}
 }

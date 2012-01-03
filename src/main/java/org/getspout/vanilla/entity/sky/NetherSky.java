@@ -30,4 +30,7 @@ public class NetherSky extends Controller {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public void preSnapshot() {
+	}
 }

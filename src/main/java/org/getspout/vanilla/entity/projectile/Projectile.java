@@ -51,4 +51,7 @@ public class Projectile extends Controller {
 		//position += velocity.transform(rotation) * dt;
 		t.setPosition(t.getPosition().add(velocity.transform(t.getRotation()).scale(dt)));
 	}
+	
+	public void preSnapshot() {
+	}
 }

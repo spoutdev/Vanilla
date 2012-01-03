@@ -25,7 +25,6 @@ public class VanillaEventListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		// Set the player's controller
 		// For now, only create Survival Players
-		System.out.println("Vanilla join event triggered");
 		Entity playerEntity = event.getPlayer().getEntity();
 		playerEntity.setController(new SurvivalPlayer(event.getPlayer()));
 	}

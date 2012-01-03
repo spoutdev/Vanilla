@@ -19,6 +19,7 @@ package org.getspout.vanilla;
 import org.getspout.api.Spout;
 import org.getspout.api.event.Order;
 import org.getspout.api.event.player.PlayerConnectEvent;
+import org.getspout.api.event.player.PlayerJoinEvent;
 import org.getspout.api.geo.World;
 import org.getspout.api.geo.discrete.Point;
 import org.getspout.api.plugin.CommonPlugin;
@@ -27,6 +28,7 @@ import org.getspout.vanilla.entity.sky.NetherSky;
 import org.getspout.vanilla.entity.sky.NormalSky;
 import org.getspout.vanilla.entity.sky.TheEndSky;
 import org.getspout.vanilla.executor.PlayerConnectExecutor;
+import org.getspout.vanilla.executor.PlayerJoinExecutor;
 import org.getspout.vanilla.generator.nether.NetherGenerator;
 import org.getspout.vanilla.generator.normal.NormalGenerator;
 import org.getspout.vanilla.generator.theend.TheEndGenerator;
@@ -34,7 +36,9 @@ import org.getspout.vanilla.protocol.VanillaProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
 	private final String version = "Minecraft 1.0.1";
+	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
 	
+	public static World spawnWorld;
 	
 	@Override
 	public void onLoad() {
@@ -45,6 +49,8 @@ public class VanillaPlugin extends CommonPlugin {
 		//getGame().getEventManager().registerEvent(ChunkObservableEvent.class, Order.MONITOR, executor, owner)
 
 		getGame().getEventManager().registerEvent(PlayerConnectEvent.class, Order.DEFAULT, new PlayerConnectExecutor(this), this);
+		//Handle join earliest so that other plugins can override what we do.  
+		getGame().getEventManager().registerEvent(PlayerJoinEvent.class, Order.EARLIEST, new PlayerJoinExecutor(this), this);
 		
 		getLogger().info("Vanilla loaded");
 	}
@@ -57,8 +63,8 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
-		World normal = Spout.getGame().loadWorld("world", new NormalGenerator());
-		normal.createAndSpawnEntity(new Point(normal,0.f, 0.f, 0.f), new NormalSky());
+		spawnWorld = Spout.getGame().loadWorld("world", new NormalGenerator());
+		spawnWorld.createAndSpawnEntity(new Point(spawnWorld,0.f, 0.f, 0.f), new NormalSky());
 
 		World nether = Spout.getGame().loadWorld("world_nether", new NetherGenerator());
 		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), new NetherSky());

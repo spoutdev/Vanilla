@@ -16,7 +16,9 @@
  */
 package org.getspout.vanilla.entity.living.player;
 
+import org.getspout.api.geo.discrete.Point;
 import org.getspout.api.player.Player;
+import org.getspout.vanilla.VanillaPlugin;
 
 public class SurvivalPlayer extends MinecraftPlayer {
 	public SurvivalPlayer(Player p){
@@ -25,7 +27,7 @@ public class SurvivalPlayer extends MinecraftPlayer {
 
 	@Override
 	public void onAttached() {
-		// TODO Auto-generated method stub
+		parent.getTransform().setPosition(new Point(VanillaPlugin.spawnWorld, 0.f, 5.f, 0.f));
 
 	}
 

@@ -16,6 +16,7 @@ public class PlayerConnectExecutor implements EventExecutor {
 
 	public void execute(PlayerConnectEvent event) throws EventException {
 		plugin.getGame().getLogger().info("Player connected: " + event.getPlayerName());
+		
 	}
 
 	public void execute(Event event) throws EventException {

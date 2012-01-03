@@ -39,7 +39,7 @@ public class NormalSky extends Controller {
 	public void onAttached() {
 		currentWeather = Weather.CLEAR;
 		forecast = Weather.CLEAR;
-		timeUntilWeatherChange = rng.nextFloat() * 300; //Max 5min till pattern change
+		timeUntilWeatherChange = rng.nextFloat() * (5 * 60); //Max 5min till pattern change
 	}
 
 	@Override
@@ -68,5 +68,6 @@ public class NormalSky extends Controller {
 
 	public void changeWeatherPattern(Weather pattern){
 		currentWeather = pattern;
+		//Throw the event here
 	}
 }

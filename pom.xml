@@ -78,7 +78,7 @@
 				<filtering>false</filtering>
 				<directory>${basedir}/src/main/java</directory>
 				<includes>
-					<include>spout.yml</include>
+					<include>spoutplugin.yml</include>
 				</includes>
 			</resource>
 		</resources>

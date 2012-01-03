@@ -17,9 +17,6 @@
 package org.getspout.vanilla;
 
 import org.getspout.api.Spout;
-import org.getspout.api.event.Order;
-import org.getspout.api.event.player.PlayerConnectEvent;
-import org.getspout.api.event.player.PlayerJoinEvent;
 import org.getspout.api.geo.World;
 import org.getspout.api.geo.discrete.Point;
 import org.getspout.api.plugin.CommonPlugin;
@@ -27,8 +24,6 @@ import org.getspout.api.protocol.Protocol;
 import org.getspout.vanilla.entity.sky.NetherSky;
 import org.getspout.vanilla.entity.sky.NormalSky;
 import org.getspout.vanilla.entity.sky.TheEndSky;
-import org.getspout.vanilla.executor.PlayerConnectExecutor;
-import org.getspout.vanilla.executor.PlayerJoinExecutor;
 import org.getspout.vanilla.generator.nether.NetherGenerator;
 import org.getspout.vanilla.generator.normal.NormalGenerator;
 import org.getspout.vanilla.generator.theend.TheEndGenerator;
@@ -48,9 +43,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 		//getGame().getEventManager().registerEvent(ChunkObservableEvent.class, Order.MONITOR, executor, owner)
 
-		getGame().getEventManager().registerEvent(PlayerConnectEvent.class, Order.DEFAULT, new PlayerConnectExecutor(this), this);
-		//Handle join earliest so that other plugins can override what we do.  
-		getGame().getEventManager().registerEvent(PlayerJoinEvent.class, Order.EARLIEST, new PlayerJoinExecutor(this), this);
+		getGame().getEventManager().registerEvents(new VanillaEventListener(this), this);
 		
 		getLogger().info("Vanilla loaded");
 	}

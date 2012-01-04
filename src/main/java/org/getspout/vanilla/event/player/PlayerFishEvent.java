@@ -20,6 +20,7 @@ import org.getspout.api.entity.Entity;
 import org.getspout.api.event.Cancellable;
 import org.getspout.api.event.HandlerList;
 import org.getspout.api.event.player.PlayerEvent;
+import org.getspout.api.player.Player;
 
 /**
  * Called when a player fishes for something.
@@ -29,7 +30,12 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 
 	private Entity caught = null;
 
-	private FishingStatus status = null;
+	private FishingStatus status;
+
+	public PlayerFishEvent(Player p, FishingStatus status) {
+		super(p);
+		this.status = status;
+	}
 
 	/**
 	 * Gets the entity caught by the player

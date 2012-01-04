@@ -20,6 +20,7 @@ import org.getspout.api.event.Cancellable;
 import org.getspout.api.event.HandlerList;
 import org.getspout.api.event.player.PlayerEvent;
 import org.getspout.api.geo.cuboid.Block;
+import org.getspout.api.player.Player;
 
 /**
  * This event is fired when the player is almost about to enter the bed.
@@ -30,6 +31,10 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 	private Block bed;
 
 	private boolean entered;
+
+	public PlayerBedEvent(Player p) {
+		super(p);
+	}
 
 	/**
 	 * Returns the bed block involved in this event.

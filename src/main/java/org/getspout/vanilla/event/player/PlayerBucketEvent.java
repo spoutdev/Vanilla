@@ -22,6 +22,7 @@ import org.getspout.api.event.player.PlayerEvent;
 import org.getspout.api.geo.cuboid.Block;
 import org.getspout.api.inventory.ItemStack;
 import org.getspout.api.material.block.BlockFace;
+import org.getspout.api.player.Player;
 
 /**
  * Called when a bucket is used.
@@ -36,6 +37,10 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 	private BlockFace blockFace;
 
 	private boolean filled = false;
+
+	public PlayerBucketEvent(Player p) {
+		super(p);
+	}
 
 	/**
 	 * Get the resulting bucket in hand after the bucket event

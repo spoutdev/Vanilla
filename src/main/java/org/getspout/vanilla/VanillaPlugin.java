@@ -61,7 +61,7 @@ public class VanillaPlugin extends CommonPlugin {
 	public void onEnable() {
 		spawnWorld = Spout.getGame().loadWorld("world", new NormalGenerator());
 		// TODO - Should probably be auto-set by generator
-		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0, 80, 0), new Quaternion(1, 0, 0, 0), new Vector3(1, 1, 1)));
+		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0, 80, 0), Quaternion.identity , Vector3.ONE));
 		spawnWorld.createAndSpawnEntity(new Point(spawnWorld,0.f, 0.f, 0.f), new NormalSky());
 
 		World nether = Spout.getGame().loadWorld("world_nether", new NetherGenerator());

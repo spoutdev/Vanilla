@@ -31,12 +31,14 @@ import org.getspout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.getspout.vanilla.protocol.msg.EntityEquipmentMessage;
 import org.getspout.vanilla.protocol.msg.IdentificationMessage;
 import org.getspout.vanilla.protocol.msg.LoadChunkMessage;
+import org.getspout.vanilla.protocol.msg.PingMessage;
 import org.getspout.vanilla.protocol.msg.PositionRotationMessage;
 import org.getspout.vanilla.protocol.msg.SpawnPositionMessage;
 
 public abstract class MinecraftPlayer extends PlayerController {
 	
-	private static double STANCE = 1.6D;
+	private final static double STANCE = 1.6D;
+	private final static int TIMEOUT = 30000;
 	
 	public MinecraftPlayer(Player p){
 		super(p);
@@ -155,5 +157,16 @@ public abstract class MinecraftPlayer extends PlayerController {
 		owner.getSession().send(SPMsg);
 	}
 
+	long lastKeepAlive = System.currentTimeMillis();
+	
+	public void snapshotStart() {
+		long currentTime = System.currentTimeMillis();
+		if (currentTime > lastKeepAlive + TIMEOUT) {
+			PingMessage PingMsg = new PingMessage((int)currentTime);
+			lastKeepAlive = currentTime;
+			owner.getSession().send(PingMsg);
+		}
+		super.snapshotStart();
+	}
 	
 }

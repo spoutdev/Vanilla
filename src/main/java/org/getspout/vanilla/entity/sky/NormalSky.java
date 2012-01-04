@@ -62,8 +62,9 @@ public class NormalSky extends Controller {
 			}
 		}
 
-		parent.setMetadata(timeKey, time);
-		parent.setMetadata(weatherKey, currentWeather.getId());
+		//TODO: parent is null here... what to do?
+		//parent.setMetadata(timeKey, time);
+		//parent.setMetadata(weatherKey, currentWeather.getId());
 	}
 
 	public void changeWeatherPattern(Weather pattern){

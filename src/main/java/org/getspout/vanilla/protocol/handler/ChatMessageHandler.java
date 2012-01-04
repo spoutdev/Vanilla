@@ -31,10 +31,10 @@ public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
 		String text = message.getMessage();
 		text = text.trim();
 
-		/*if (text.length() > 100) {
+		if (text.length() > 100) {
 			session.disconnect("Chat message is too long.");
 		} else {
 			player.chat(text);
-		}*/
+		}
 	}
 }

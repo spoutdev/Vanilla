@@ -40,6 +40,9 @@ public abstract class MinecraftPlayer extends PlayerController {
 	private final static double STANCE = 1.6D;
 	private final static int TIMEOUT = 30000;
 	
+	public final static float SEALEVEL = 64;
+	public final static int SEALEVEL_CHUNK = 4;
+	
 	public MinecraftPlayer(Player p){
 		super(p);
 	}
@@ -59,10 +62,10 @@ public abstract class MinecraftPlayer extends PlayerController {
 	@Override
 	protected void freeChunk(Chunk c) {
 		int x = c.getX();
-		int y = c.getY();
+		int y = c.getY() + SEALEVEL_CHUNK;
 		int z = c.getZ();
 		
-		if (y < 0 || y > 15) {
+		if (y < 0 || y > 7) {
 			return;
 		}
 		
@@ -80,10 +83,10 @@ public abstract class MinecraftPlayer extends PlayerController {
 	@Override
 	protected void initChunk(Chunk c) {
 		int x = c.getX();
-		int y = c.getY();
+		int y = c.getY() + SEALEVEL_CHUNK;
 		int z = c.getZ();
 		
-		if (y < 0 || y > 15) {
+		if (y < 0 || y > 7) {
 			return;
 		}
 		
@@ -91,7 +94,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 		if (column == null) {
 			column = new TIntHashSet();
 			activeChunks.put(x, z, column);
-			LoadChunkMessage loadChunk = new LoadChunkMessage(c.getX(), c.getZ(), true);
+			LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
 			owner.getSession().send(loadChunk);
 		}
 		column.add(y);
@@ -100,23 +103,12 @@ public abstract class MinecraftPlayer extends PlayerController {
 	@Override
 	protected void sendChunk(Chunk c) {
 		int x = c.getX();
-		int y = c.getY();
+		int y = c.getY() + SEALEVEL_CHUNK;
 		int z = c.getZ();
 		
 		if (y < 0 || y > 7) {
 			return;
 		}
-		
-		TIntHashSet column = activeChunks.get(x, z);
-		
-		if (column == null) {
-			column = new TIntHashSet();
-			System.out.println("Chunk not properly initialized");
-			activeChunks.put(x, z, column);
-			LoadChunkMessage loadChunk = new LoadChunkMessage(c.getX(), c.getZ(), true);
-			owner.getSession().send(loadChunk);
-		}
-		column.add(y);
 		
 		CuboidShortBuffer buffer = c.getBlockCuboidBufferLive();
 		short[] rawBlockIdArray = buffer.getRawArray();
@@ -135,7 +127,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 	protected void sendPosition(Transform t) {
 		System.out.println("Sending position");
 		Point p = t.getPosition();
-		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), 0, 0, true);
+		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE + SEALEVEL, p.getZ(), p.getY(), 0, 0, true);
 		owner.getSession().send(PRMsg);
 	}
 	
@@ -153,7 +145,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 			}
 		}
 		Point spawn = world.getSpawnPoint().getPosition();
-		SpawnPositionMessage SPMsg = new SpawnPositionMessage((int)spawn.getX(), (int)spawn.getY(), (int)spawn.getZ());
+		SpawnPositionMessage SPMsg = new SpawnPositionMessage((int)spawn.getX(), (int)(spawn.getY() + SEALEVEL), (int)spawn.getZ());
 		owner.getSession().send(SPMsg);
 	}
 

@@ -16,29 +16,45 @@
  */
 package org.getspout.vanilla.protocol.handler;
 
+import org.getspout.api.entity.Entity;
+import org.getspout.api.geo.World;
+import org.getspout.api.geo.discrete.Point;
+import org.getspout.api.geo.discrete.Transform;
+import org.getspout.api.math.Quaternion;
+import org.getspout.api.math.Vector3;
 import org.getspout.api.player.Player;
 import org.getspout.api.protocol.MessageHandler;
 import org.getspout.api.protocol.Session;
+import org.getspout.vanilla.entity.living.player.MinecraftPlayer;
 import org.getspout.vanilla.protocol.msg.PositionMessage;
+import org.getspout.vanilla.protocol.msg.PositionRotationMessage;
 
 public final class PositionMessageHandler extends MessageHandler<PositionMessage> {
+
 	@Override
-	public void handle(Session session, Player player, PositionMessage message) {
-		/*if (player == null) {
+	public void handleServer(Session session, Player player, PositionMessage message) {
+		if (player == null) {
 			return;
 		}
-
-		PlayerMoveEvent event = EventFactory.onPlayerMove(player, player.getLocation(), new Location(player.getWorld(), message.getX(), message.getY(), message.getZ(), player.getLocation().getYaw(), player.getLocation().getPitch()));
-
-		if (event.isCancelled()) {
+		
+		Entity entity = player.getEntity();
+		
+		if (entity == null) {
 			return;
 		}
-
-		Location l = event.getTo();
-		l.setYaw(player.getLocation().getYaw());
-		l.setPitch(player.getLocation().getPitch());
-
-		player.setRawLocation(l);
-		*/
+		
+		// Stance and Y swapped for server
+		double stance = message.getStance();
+		double x = message.getX();
+		double y = message.getY();
+		double z = message.getZ();
+		
+		Transform liveTransform = entity.getLiveTransform();
+		World w = liveTransform.getPosition().getWorld();
+		// TODO - include rotation
+		entity.setTransform(new Transform(new Point(w, (float)x, ((float)y) - MinecraftPlayer.SEALEVEL, (float)z), Quaternion.identity, Vector3.Forward));
+	}
+	
+	public void handleClient(Session session, Player player, PositionRotationMessage message) {
 	}
 }

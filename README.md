@@ -1,7 +1,7 @@
 [![Spout][Project Logo]][Website]
 What is Vanilla?
 ----------------------
-Vanilla is a plugin for the Spout server and Spoutcraft client that provides vanilla Minecraft functionality.
+Vanilla is a plugin for the Spout server that provides vanilla Minecraft functionality.
 
 Copyright &copy; 2011, SpoutDev <http://www.getspout.org>  
 Vanilla is licensed under [GNU LESSER GENERAL PUBLIC LICENSE Version 3][License],

@@ -16,12 +16,12 @@ public class VanillaEventListener implements Listener {
 		this.plugin = plugin;
 	}
 
-	@EventHandler(event = PlayerConnectEvent.class, priority = Order.DEFAULT)
+	@EventHandler(event = PlayerConnectEvent.class)
 	public void onPlayerConnect(PlayerConnectEvent event) {
 		plugin.getGame().getLogger().info("Player connected: " + event.getPlayerName());
 	}
 
-	@EventHandler(event = PlayerJoinEvent.class, priority = Order.EARLIEST)
+	@EventHandler(event = PlayerJoinEvent.class, order = Order.EARLIEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		// Set the player's controller
 		// For now, only create Survival Players

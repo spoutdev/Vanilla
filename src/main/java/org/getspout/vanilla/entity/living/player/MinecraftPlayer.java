@@ -19,6 +19,7 @@ package org.getspout.vanilla.entity.living.player;
 import gnu.trove.set.hash.TIntHashSet;
 
 import org.getspout.api.entity.PlayerController;
+import org.getspout.api.geo.World;
 import org.getspout.api.geo.cuboid.Chunk;
 import org.getspout.api.geo.discrete.Point;
 import org.getspout.api.geo.discrete.Transform;
@@ -27,8 +28,11 @@ import org.getspout.api.util.cuboid.CuboidShortBuffer;
 import org.getspout.api.util.map.TIntPairObjectHashMap;
 import org.getspout.vanilla.VanillaPlugin;
 import org.getspout.vanilla.protocol.msg.CompressedChunkMessage;
+import org.getspout.vanilla.protocol.msg.EntityEquipmentMessage;
+import org.getspout.vanilla.protocol.msg.IdentificationMessage;
 import org.getspout.vanilla.protocol.msg.LoadChunkMessage;
 import org.getspout.vanilla.protocol.msg.PositionRotationMessage;
+import org.getspout.vanilla.protocol.msg.SpawnPositionMessage;
 
 public abstract class MinecraftPlayer extends PlayerController {
 	
@@ -70,9 +74,9 @@ public abstract class MinecraftPlayer extends PlayerController {
 			}
 		}
 	}
-
+	
 	@Override
-	protected void sendChunk(Chunk c) {
+	protected void initChunk(Chunk c) {
 		int x = c.getX();
 		int y = c.getY();
 		int z = c.getZ();
@@ -82,17 +86,39 @@ public abstract class MinecraftPlayer extends PlayerController {
 		}
 		
 		TIntHashSet column = activeChunks.get(x, z);
-		
 		if (column == null) {
 			column = new TIntHashSet();
 			activeChunks.put(x, z, column);
 			LoadChunkMessage loadChunk = new LoadChunkMessage(c.getX(), c.getZ(), true);
 			owner.getSession().send(loadChunk);
 		}
+		column.add(y);
+	}
+
+	@Override
+	protected void sendChunk(Chunk c) {
+		int x = c.getX();
+		int y = c.getY();
+		int z = c.getZ();
+		
+		if (y < 0 || y > 7) {
+			return;
+		}
+		
+		TIntHashSet column = activeChunks.get(x, z);
+		
+		if (column == null) {
+			column = new TIntHashSet();
+			System.out.println("Chunk not properly initialized");
+			activeChunks.put(x, z, column);
+			LoadChunkMessage loadChunk = new LoadChunkMessage(c.getX(), c.getZ(), true);
+			owner.getSession().send(loadChunk);
+		}
+		column.add(y);
 		
 		CuboidShortBuffer buffer = c.getBlockCuboidBufferLive();
 		short[] rawBlockIdArray = buffer.getRawArray();
-		byte[] fullChunkData = new byte[5 * 16 * 16 * 128 / 2];
+		byte[] fullChunkData = new byte[5 * 16 * 16 * 16 / 2];
 		for (int i = 0; i < fullChunkData.length; i++) {
 			fullChunkData[i] = (byte)0xFF;
 		}
@@ -102,13 +128,31 @@ public abstract class MinecraftPlayer extends PlayerController {
 		}
 		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x << Chunk.CHUNK_SIZE_BITS, y << Chunk.CHUNK_SIZE_BITS, z << Chunk.CHUNK_SIZE_BITS, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, fullChunkData);
 		owner.getSession().send(CCMsg);
-		column.add(y);
 	}
 	
 	protected void sendPosition(Transform t) {
+		System.out.println("Sending position");
 		Point p = t.getPosition();
 		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), 0, 0, true);
 		owner.getSession().send(PRMsg);
+	}
+	
+	boolean first = true;
+	protected void worldChanged(World world) {
+		System.out.println("World changed");
+		if (first) {
+			first = false;
+			int entityId = owner.getEntity().getId();
+			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), world.getSeed(), 0, 0, 0, 128, 20);
+			owner.getSession().send(idMsg);
+			for (int slot = 0; slot < 5; slot++) {
+				EntityEquipmentMessage EEMsg = new EntityEquipmentMessage(entityId, slot, -1, 0);
+				owner.getSession().send(EEMsg);
+			}
+		}
+		Point spawn = world.getSpawnPoint().getPosition();
+		SpawnPositionMessage SPMsg = new SpawnPositionMessage((int)spawn.getX(), (int)spawn.getY(), (int)spawn.getZ());
+		owner.getSession().send(SPMsg);
 	}
 
 	

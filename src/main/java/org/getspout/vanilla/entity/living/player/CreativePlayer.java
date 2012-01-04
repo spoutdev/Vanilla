@@ -16,6 +16,7 @@
  */
 package org.getspout.vanilla.entity.living.player;
 
+import org.getspout.api.geo.cuboid.Chunk;
 import org.getspout.api.player.Player;
 
 public class CreativePlayer extends MinecraftPlayer {

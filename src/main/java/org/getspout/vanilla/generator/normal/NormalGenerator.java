@@ -28,6 +28,6 @@ public class NormalGenerator implements WorldGenerator {
 		return populators;
 	}
 
-	public void generate(CuboidShortBuffer blockData) {
+	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
 	}
 }

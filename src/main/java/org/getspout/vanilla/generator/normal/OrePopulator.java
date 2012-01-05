@@ -20,7 +20,7 @@ import org.getspout.api.generator.Populator;
 import org.getspout.api.geo.cuboid.Chunk;
 
 public class OrePopulator implements Populator {
-
+	
 	public void populate(Chunk c) {
 	}
 

@@ -20,6 +20,7 @@ import org.getspout.api.generator.Populator;
 import org.getspout.api.geo.cuboid.Chunk;
 
 public class DungeonPopulator implements Populator {
+
 	public void populate(Chunk c) {
 	}
 }

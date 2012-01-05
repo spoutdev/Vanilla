@@ -16,12 +16,10 @@
  */
 package org.getspout.vanilla.generator.theend;
 
-import java.util.Random;
-
 import org.getspout.api.generator.Populator;
 import org.getspout.api.geo.cuboid.Chunk;
 
 public class SpirePopulator implements Populator {
-	public void populate(Chunk c, Random rng) {
+	public void populate(Chunk c) {
 	}
 }

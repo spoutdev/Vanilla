@@ -16,8 +16,6 @@
  */
 package org.getspout.vanilla.generator.normal;
 
-import java.util.Random;
-
 import org.getspout.api.generator.Populator;
 import org.getspout.api.generator.WorldGenerator;
 import org.getspout.api.util.cuboid.CuboidShortBuffer;
@@ -30,6 +28,6 @@ public class NormalGenerator implements WorldGenerator {
 		return populators;
 	}
 
-	public void generate(CuboidShortBuffer blockData, Random rng) {
+	public void generate(CuboidShortBuffer blockData) {
 	}
 }

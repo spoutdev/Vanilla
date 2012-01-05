@@ -16,8 +16,6 @@
  */
 package org.getspout.vanilla.generator.normal;
 
-import java.util.Random;
-
 import org.getspout.api.generator.Populator;
 import org.getspout.api.geo.cuboid.Chunk;
 import org.getspout.api.geo.discrete.Point;
@@ -38,6 +36,6 @@ public class TreePopulator implements Populator {
 	public void generateBirchTree(Chunk c, Point p){
 	}
 
-	public void populate(Chunk c, Random rng) {
+	public void populate(Chunk c) {
 	}
 }

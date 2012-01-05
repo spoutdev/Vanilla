@@ -30,7 +30,6 @@ public class NormalGenerator implements WorldGenerator {
 		return populators;
 	}
 
-	public CuboidShortBuffer generate(CuboidShortBuffer blockData, Random rng) {
-		return blockData;
+	public void generate(CuboidShortBuffer blockData, Random rng) {
 	}
 }

@@ -26,8 +26,8 @@ public class TheEndGenerator implements WorldGenerator {
 	
 	private final Populator[] populators = new Populator[] {new SpirePopulator()};
 
-	public CuboidShortBuffer generate(CuboidShortBuffer blockData, Random rng) {
-		return blockData;
+	public void generate(CuboidShortBuffer blockData, Random rng) {
+		
 	}
 
 	public Populator[] getPopulators() {

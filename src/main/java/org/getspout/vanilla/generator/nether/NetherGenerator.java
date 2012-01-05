@@ -23,8 +23,8 @@ import org.getspout.api.generator.WorldGenerator;
 import org.getspout.api.util.cuboid.CuboidShortBuffer;
 
 public class NetherGenerator implements WorldGenerator {
-	public CuboidShortBuffer generate(CuboidShortBuffer blockData, Random rng) {
-		return blockData;
+	public void generate(CuboidShortBuffer blockData, Random rng) {
+		
 	}
 	
 	private final Populator[] populators = new Populator[] {new FortressPopulator()};

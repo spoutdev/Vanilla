@@ -18,8 +18,8 @@ package org.getspout.vanilla.entity;
 
 import org.getspout.api.geo.discrete.Point;
 import org.getspout.api.geo.discrete.Transform;
-import org.getspout.api.material.MaterialData;
 import org.getspout.api.math.Vector3;
+import org.getspout.vanilla.VanillaBlocks;
 
 /**
  * Moving entity controller
@@ -51,7 +51,7 @@ public class MovingEntity extends MinecraftEntity {
 
 	private void checkWeb() {
 		Point pos = parent.getTransform().getPosition();
-		if (pos.getWorld().getBlock(pos).getBlockMaterial().equals(MaterialData.web)) {
+		if (pos.getWorld().getBlock(pos).getBlockMaterial().equals(VanillaBlocks.web)) {
 			velocity = Vector3.ZERO;
 		}
 	}

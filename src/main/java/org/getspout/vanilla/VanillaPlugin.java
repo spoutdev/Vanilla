@@ -58,6 +58,8 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
+		VanillaBlocks.initialize();
+		
 		getGame().setDefaultGenerator(new NormalGenerator());
 		
 		spawnWorld = getGame().loadWorld("world", new NormalGenerator());

@@ -121,7 +121,7 @@ public final class ChannelBufferUtils {
 				int id = buf.readShort();
 				int count = buf.readByte();
 				short damage = buf.readShort();
-				ItemStack item = new ItemStack(MaterialData.getMaterial(id, damage), count, damage);
+				ItemStack item = new ItemStack(MaterialData.getMaterial((short)id, (byte)damage), count, damage);
 				parameters.add(new Parameter<ItemStack>(type, index, item));
 				break;
 			}

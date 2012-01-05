@@ -6,8 +6,8 @@ import org.getspout.api.event.Listener;
 import org.getspout.api.event.Order;
 import org.getspout.api.event.player.PlayerConnectEvent;
 import org.getspout.api.event.player.PlayerJoinEvent;
-import org.getspout.api.geo.discrete.Transform;
 import org.getspout.vanilla.entity.living.player.SurvivalPlayer;
+import org.getspout.vanilla.protocol.VanillaProtocol;
 
 public class VanillaEventListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -19,6 +19,7 @@ public class VanillaEventListener implements Listener {
 	@EventHandler(event = PlayerConnectEvent.class)
 	public void onPlayerConnect(PlayerConnectEvent event) {
 		plugin.getGame().getLogger().info("Player connected: " + event.getPlayerName());
+		event.getSession().setProtocol(new VanillaProtocol());
 	}
 
 	@EventHandler(event = PlayerJoinEvent.class, order = Order.EARLIEST)

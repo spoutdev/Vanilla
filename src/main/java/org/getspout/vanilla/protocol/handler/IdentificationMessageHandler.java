@@ -16,6 +16,9 @@
  */
 package org.getspout.vanilla.protocol.handler;
 
+import org.getspout.api.Commons;
+import org.getspout.api.event.Event;
+import org.getspout.api.event.player.PlayerConnectEvent;
 import org.getspout.api.player.Player;
 import org.getspout.api.protocol.MessageHandler;
 import org.getspout.api.protocol.Session;
@@ -24,6 +27,8 @@ import org.getspout.vanilla.protocol.msg.IdentificationMessage;
 public final class IdentificationMessageHandler extends MessageHandler<IdentificationMessage> {
 	@Override
 	public void handle(Session session, Player player, IdentificationMessage message) {
+		Event event = new PlayerConnectEvent(session, message.getName());
+		session.getGame().getEventManager().callEvent(event);
 		/*SpoutSession.State state = session.getState();
 
 		// Are we at the proper stage?

@@ -24,6 +24,6 @@ import org.getspout.vanilla.protocol.msg.KickMessage;
 public final class KickMessageHandler extends MessageHandler<KickMessage> {
 	@Override
 	public void handle(Session session, Player player, KickMessage message) {
-		//session.disconnect("Goodbye!", true);
+		session.disconnect(message.getReason());
 	}
 }

@@ -60,10 +60,10 @@ public abstract class MinecraftPlayer extends PlayerController {
 	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();
 	
 	@Override
-	protected void freeChunk(Chunk c) {
-		int x = c.getX();
-		int y = c.getY() + SEALEVEL_CHUNK;
-		int z = c.getZ();
+	protected void freeChunk(Point p) {
+		int x = ((int)p.getX() >> Chunk.CHUNK_SIZE_BITS);
+		int y = ((int)p.getY() >> Chunk.CHUNK_SIZE_BITS) + SEALEVEL_CHUNK;
+		int z = ((int)p.getZ() >> Chunk.CHUNK_SIZE_BITS);
 		
 		if (y < 0 || y > 7) {
 			return;
@@ -81,10 +81,10 @@ public abstract class MinecraftPlayer extends PlayerController {
 	}
 	
 	@Override
-	protected void initChunk(Chunk c) {
-		int x = c.getX();
-		int y = c.getY() + SEALEVEL_CHUNK;
-		int z = c.getZ();
+	protected void initChunk(Point p) {
+		int x = ((int)p.getX() >> Chunk.CHUNK_SIZE_BITS);
+		int y = ((int)p.getY() >> Chunk.CHUNK_SIZE_BITS) + SEALEVEL_CHUNK;
+		int z = ((int)p.getZ() >> Chunk.CHUNK_SIZE_BITS);
 		
 		if (y < 0 || y > 7) {
 			return;
@@ -125,7 +125,6 @@ public abstract class MinecraftPlayer extends PlayerController {
 	}
 	
 	protected void sendPosition(Transform t) {
-		System.out.println("Sending position");
 		Point p = t.getPosition();
 		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE + SEALEVEL, p.getZ(), p.getY(), 0, 0, true);
 		owner.getSession().send(PRMsg);
@@ -133,7 +132,6 @@ public abstract class MinecraftPlayer extends PlayerController {
 	
 	boolean first = true;
 	protected void worldChanged(World world) {
-		System.out.println("World changed");
 		if (first) {
 			first = false;
 			int entityId = owner.getEntity().getId();

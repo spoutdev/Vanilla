@@ -8,10 +8,11 @@ public class GenericItemMaterial implements ItemMaterial {
 	private final int data;
 	private final boolean subtypes;
 	private final String name;
-	private String customName;
+	private String displayName;
 
 	public GenericItemMaterial(String name, int id, int data, boolean subtypes) {
 		this.name = name;
+		this.displayName = name;
 		this.id = id;
 		this.data = data;
 		this.subtypes = subtypes;
@@ -38,17 +39,14 @@ public class GenericItemMaterial implements ItemMaterial {
 	}
 
 	public String getName() {
-		if (customName != null) {
-			return customName;
-		}
 		return name;
 	}
 
-	public String getNotchianName() {
-		return name;
+	public String getDisplayName() {
+		return displayName;
 	}
 
-	public void setName(String name) {
-		customName = name;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 }

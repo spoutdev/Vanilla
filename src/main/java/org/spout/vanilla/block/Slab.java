@@ -24,7 +24,6 @@ public class Slab extends GenericBlockMaterial implements SolidBlock {
 		super(name, id, data);
 	}
 
-	@Override
 	public boolean isFallingBlock() {
 		return false;
 	}

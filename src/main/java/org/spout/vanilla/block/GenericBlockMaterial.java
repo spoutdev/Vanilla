@@ -21,7 +21,6 @@ import org.getspout.api.render.BlockDesign;
 import org.spout.vanilla.item.GenericItemMaterial;
 
 public class GenericBlockMaterial extends GenericItemMaterial implements BlockMaterial {
-
 	private BlockDesign design;
 
 	private GenericBlockMaterial(String name, int id, int data, boolean subtypes) {
@@ -36,42 +35,34 @@ public class GenericBlockMaterial extends GenericItemMaterial implements BlockMa
 		this(name, id, 0, false);
 	}
 
-	@Override
 	public float getFriction() {
 		return 0;
 	}
 
-	@Override
 	public BlockMaterial setFriction(float friction) {
 		return this;
 	}
 
-	@Override
 	public float getHardness() {
 		return 0;
 	}
 
-	@Override
 	public BlockMaterial setHardness(float hardness) {
 		return this;
 	}
 
-	@Override
 	public boolean isOpaque() {
 		return false;
 	}
 
-	@Override
 	public BlockMaterial setOpaque(boolean opaque) {
 		return this;
 	}
 
-	@Override
 	public int getLightLevel() {
 		return 0;
 	}
 
-	@Override
 	public BlockMaterial setLightLevel(int level) {
 		return this;
 	}

@@ -19,12 +19,10 @@ package org.spout.vanilla.block;
 import org.spout.vanilla.material.SolidBlock;
 
 public class DoubleSlabs extends GenericBlockMaterial implements SolidBlock {
-
 	public DoubleSlabs(String name, int id, int data) {
 		super(name, id, data);
 	}
 
-	@Override
 	public boolean isFallingBlock() {
 		return false;
 	}

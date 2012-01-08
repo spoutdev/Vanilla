@@ -96,7 +96,6 @@ public enum Art {
 		return id;
 	}
 
-	@Override
 	public String toString() {
 		String name = name();
 		String start = "" + name.charAt(0);

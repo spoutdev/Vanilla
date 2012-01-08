@@ -40,8 +40,7 @@ public class Solid extends GenericBlockMaterial implements SolidBlock {
 		super(name, id, data);
 		falling = false;
 	}
-
-	@Override
+	
 	public boolean isFallingBlock() {
 		return falling;
 	}

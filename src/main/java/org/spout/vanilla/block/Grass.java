@@ -24,17 +24,14 @@ public class Grass extends GenericBlockMaterial implements Plant {
 		super(name, 2);
 	}
 
-	@Override
 	public boolean hasGrowthStages() {
 		return false;
 	}
 
-	@Override
 	public int getNumGrowthStages() {
 		return 0;
 	}
 
-	@Override
 	public int getMinimumLightToGrow() {
 		return 9;
 	}

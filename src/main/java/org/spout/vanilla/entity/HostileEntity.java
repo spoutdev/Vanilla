@@ -20,5 +20,4 @@ package org.spout.vanilla.entity;
  * Equivalent to IMob.
  */
 public interface HostileEntity {
-
 }

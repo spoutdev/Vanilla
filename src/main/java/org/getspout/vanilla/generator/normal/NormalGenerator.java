@@ -71,7 +71,7 @@ public class NormalGenerator implements WorldGenerator {
 					if (dy == 64) {
 						blockData.set(dx, dy, dz, VanillaBlocks.grass.getId());
 					}
-					else if (dy < 64 & dy >= 60) {
+					else if (dy < 64 && dy >= 60) {
 						blockData.set(dx, dy, dz, VanillaBlocks.dirt.getId());
 					}
 					else if (dy < 60) {

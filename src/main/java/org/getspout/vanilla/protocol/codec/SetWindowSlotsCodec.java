@@ -68,10 +68,10 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 			if (item == null) {
 				buffer.writeShort(-1);
 			} else {
-				buffer.writeShort(item.getMaterial().getRawId());
+				buffer.writeShort(item.getMaterial().getId());
 				buffer.writeByte(item.getAmount());
 				buffer.writeByte(item.getDamage());
-				if (ChannelBufferUtils.hasNbtData(item.getMaterial().getRawData())) {
+				if (ChannelBufferUtils.hasNbtData(item.getMaterial().getData())) {
 					ChannelBufferUtils.writeCompound(buffer, item.getAuxData());
 				}
 			}

@@ -16,11 +16,33 @@
  */
 package org.getspout.vanilla.generator.normal;
 
+import java.util.Random;
+
+import net.royawesome.jlibnoise.module.source.Perlin;
+
 import org.getspout.api.generator.Populator;
 import org.getspout.api.generator.WorldGenerator;
 import org.getspout.api.util.cuboid.CuboidShortBuffer;
 
 public class NormalGenerator implements WorldGenerator {
+	int seed = 42;
+	Perlin noiseHeight = new Perlin();
+	Perlin noiseJitter = new Perlin();
+	Perlin noiseType = new Perlin();
+	Random random = new Random();
+	
+	public NormalGenerator() {
+		noiseHeight.setOctaveCount(5);
+		noiseHeight.setSeed(seed);
+
+		noiseJitter.setOctaveCount(5);
+		noiseJitter.setSeed(seed);
+		
+		noiseType.setOctaveCount(5);
+		noiseType.setSeed(seed);
+		
+		random.setSeed(seed);
+	}
 
 	private final Populator[] populators = new Populator[]{new TreePopulator(), new PondPopulator(), new StrongholdPopulator(), new VillagePopulator(), new AbandonedMineshaftPopulator(), new DungeonPopulator()};
 	
@@ -29,5 +51,6 @@ public class NormalGenerator implements WorldGenerator {
 	}
 
 	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+
 	}
 }

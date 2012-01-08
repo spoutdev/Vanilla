@@ -4,8 +4,8 @@ import org.getspout.api.material.ItemMaterial;
 
 public class GenericItemMaterial implements ItemMaterial {
 
-	private final int id;
-	private final int data;
+	private final short id;
+	private final short data;
 	private final boolean subtypes;
 	private final String name;
 	private String displayName;
@@ -13,8 +13,8 @@ public class GenericItemMaterial implements ItemMaterial {
 	public GenericItemMaterial(String name, int id, int data, boolean subtypes) {
 		this.name = name;
 		this.displayName = name;
-		this.id = id;
-		this.data = data;
+		this.id = (short) id;
+		this.data = (short) data;
 		this.subtypes = subtypes;
 	}
 
@@ -26,11 +26,11 @@ public class GenericItemMaterial implements ItemMaterial {
 		this(name, id, 0, false);
 	}
 
-	public int getRawId() {
+	public short getId() {
 		return id;
 	}
 
-	public int getRawData() {
+	public short getData() {
 		return data;
 	}
 

@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla (http://www.getspout.org/).
+ * This file is part of Vanilla (http://www.spout.org/).
  *
  * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -15,7 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.getspout.vanilla;
-
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
@@ -45,7 +44,7 @@ public enum Entity {
 	Silverfish(60),
 	Blaze(61),
 	MagmaCube(62),
-	EnderDragon(64),
+	EnderDragon(64), //Macho Dragon, YEAHHHH!
 	Pig(90),
 	Sheep(91),
 	Cow(92),
@@ -79,6 +78,5 @@ public enum Entity {
 		for(Entity m : Entity.values()){
 			map.put(m.getID(), m);
 		}
-		
 	}
 }

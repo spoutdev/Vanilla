@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla (http://www.getspout.org/).
+ * This file is part of Vanilla (http://www.spout.org/).
  *
  * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -49,11 +49,13 @@ public enum Art {
 	POINTER(22, 4, 4),
 	PIGSCENE(23, 4, 4),
 	BURNINGSKULL(24, 4, 4), ;
+	
 	private final int id;
 	private final int width;
 	private final int height;
-	private static HashMap<String, Art> names = new HashMap<String, Art>();
-	private static TIntObjectHashMap<Art> ids = new TIntObjectHashMap<Art>();
+	private static final HashMap<String, Art> names = new HashMap<String, Art>();
+	private static final TIntObjectHashMap<Art> ids = new TIntObjectHashMap<Art>();
+	
 	static {
 		for (Art art : Art.values()) {
 			ids.put(art.id, art);

@@ -1,11 +1,46 @@
+/*
+ * This file is part of Vanilla (http://www.spout.org/).
+ *
+ * Vanilla is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Vanilla is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.getspout.vanilla;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-import org.getspout.api.material.*;
-import org.getspout.vanilla.item.*;
-import org.getspout.vanilla.block.*;
+import org.getspout.api.material.BlockMaterial;
+import org.getspout.api.material.ItemMaterial;
+import org.getspout.api.material.Material;
+import org.getspout.api.material.MaterialData;
+import org.getspout.vanilla.block.Air;
+import org.getspout.vanilla.block.DoubleSlabs;
+import org.getspout.vanilla.block.GenericLiquid;
+import org.getspout.vanilla.block.Grass;
+import org.getspout.vanilla.block.LongGrass;
+import org.getspout.vanilla.block.Sapling;
+import org.getspout.vanilla.block.Slab;
+import org.getspout.vanilla.block.Solid;
+import org.getspout.vanilla.block.StoneBricks;
+import org.getspout.vanilla.block.Tree;
+import org.getspout.vanilla.block.Wool;
+import org.getspout.vanilla.item.Coal;
+import org.getspout.vanilla.item.Dye;
+import org.getspout.vanilla.item.GenericArmor;
+import org.getspout.vanilla.item.GenericFood;
+import org.getspout.vanilla.item.GenericItemMaterial;
+import org.getspout.vanilla.item.GenericTool;
+import org.getspout.vanilla.item.GenericWeapon;
 
 public final class VanillaBlocks {
 	public static final BlockMaterial air = new Air("Air");
@@ -309,7 +344,6 @@ public final class VanillaBlocks {
 	public static final ItemMaterial brewingStand = new GenericItemMaterial("Brewing Stand", 379);
 	public static final ItemMaterial cauldron = new GenericItemMaterial("Cauldron", 380);
 	public static final ItemMaterial eyeOfEnder = new GenericItemMaterial("Eye of Ender", 381);
-
 	public static final ItemMaterial goldMusicDisc = new GenericItemMaterial("Music Disc", 2256);
 	public static final ItemMaterial greenMusicDisc = new GenericItemMaterial("Music Disc", 2257);
 	public static final ItemMaterial orangeMusicDisc = new GenericItemMaterial("Music Disc", 2258);
@@ -337,5 +371,4 @@ public final class VanillaBlocks {
 			}
 		}
 	}
-
 }

@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla (http://www.getspout.org/).
+ * This file is part of Vanilla (http://www.spout.org/).
  *
  * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package org.getspout.vanilla;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
@@ -203,32 +202,32 @@ public enum Block {
 	EndStone(121),
 	DragonEgg(122),	
 	;
+	
 	final short id;
 	final byte data;
 	
 	final static TIntObjectHashMap<Block> map = new TIntObjectHashMap<Block>();
 	
-	private Block(int id){
+	private Block(int id) {
 		this(id, 0);
 	}
-	private Block(int id, int data){
+	
+	private Block(int id, int data) {
 		this.id = (short)id;
 		this.data = (byte)data;
 	}
 	
-	public short getID(){
+	public short getID() {
 		return id;
 	}
 	
-	public static Block fromID(int id){
+	public static Block fromID(int id) {
 		return map.get(id);
 	}
-	
-	
-	static{
-		for(Block m : Block.values()){
-			map.put(m.getID(), m);
-		}
 		
+	static {
+		for (Block m : Block.values()) {
+			map.put(m.getID(), m);
+		}		
 	}
 }

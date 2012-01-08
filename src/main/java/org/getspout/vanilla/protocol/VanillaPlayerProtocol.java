@@ -1,5 +1,5 @@
 /*
- * This file is part of vanilla (http://www.getspout.org/).
+ * This file is part of vanilla (http://www.spout.org/).
  *
  * The vanilla is licensed under the SpoutDev license version 1.
  *

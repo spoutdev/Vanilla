@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla (http://www.getspout.org/).
+ * This file is part of Vanilla (http://www.spout.org/).
  *
  * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -32,9 +32,11 @@ import org.getspout.vanilla.generator.theend.TheEndGenerator;
 import org.getspout.vanilla.protocol.VanillaProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
+	private final String prefix = "[Vanilla] ";
 	private final String version = "Minecraft 1.0.1";
+
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
-	
+
 	public static World spawnWorld;
 	
 	@Override
@@ -47,13 +49,12 @@ public class VanillaPlugin extends CommonPlugin {
 
 		getGame().getEventManager().registerEvents(new VanillaEventListener(this), this);
 		
-		getLogger().info("Vanilla loaded");
+		getLogger().info(prefix + "loaded.");
 	}
 
 	@Override
 	public void onDisable() {
-		// TODO Auto-generated method stub
-
+		getLogger().info(prefix + "disabled.");
 	}
 
 	@Override
@@ -63,6 +64,7 @@ public class VanillaPlugin extends CommonPlugin {
 		getGame().setDefaultGenerator(new NormalGenerator());
 		
 		spawnWorld = getGame().loadWorld("world", new NormalGenerator());
+		
 		// TODO - Should probably be auto-set by generator
 		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0.5F, 0.5F, 0.5F), Quaternion.identity , Vector3.ONE));
 		spawnWorld.createAndSpawnEntity(new Point(spawnWorld,0.f, 0.f, 0.f), new NormalSky());
@@ -73,6 +75,14 @@ public class VanillaPlugin extends CommonPlugin {
 		World end = getGame().loadWorld("world_end", new TheEndGenerator());
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), new TheEndSky());
 
-		getLogger().info("Vanilla enabled! Version: "+ version);
+		getLogger().info(prefix + "enabled. Version: "+ version);
+	}
+	
+	/**
+	 * Helper method to simply get the prefix for console formatting.
+	 * @return String object representing the prefix.
+	 */
+	public String getPrefix() {
+		return prefix;
 	}
 }

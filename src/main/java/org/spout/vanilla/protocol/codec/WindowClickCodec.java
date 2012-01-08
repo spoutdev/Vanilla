@@ -1,0 +1,76 @@
+/*
+ * This file is part of Vanilla (http://www.spout.org/).
+ *
+ * Vanilla is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Vanilla is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package org.spout.vanilla.protocol.codec;
+
+import java.io.IOException;
+import java.util.Map;
+
+import org.getspout.api.io.nbt.Tag;
+import org.getspout.api.protocol.MessageCodec;
+import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.msg.WindowClickMessage;
+
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
+
+public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
+	public WindowClickCodec() {
+		super(WindowClickMessage.class, 0x66);
+	}
+
+	@Override
+	public WindowClickMessage decode(ChannelBuffer buffer) throws IOException {
+		int id = buffer.readUnsignedByte();
+		int slot = buffer.readUnsignedShort();
+		boolean rightClick = buffer.readUnsignedByte() != 0;
+		int transaction = buffer.readUnsignedShort();
+		boolean shift = buffer.readUnsignedByte() != 0;
+		int item = buffer.readUnsignedShort();
+		if (item == 0xFFFF) {
+			return new WindowClickMessage(id, slot, rightClick, transaction, shift);
+		} else {
+			int count = buffer.readUnsignedByte();
+			int damage = buffer.readUnsignedShort();
+			Map<String, Tag> nbtData = null;
+			if (ChannelBufferUtils.hasNbtData(item)) {
+				nbtData = ChannelBufferUtils.readCompound(buffer);
+			}
+			return new WindowClickMessage(id, slot, rightClick, transaction, shift, item, count, damage, nbtData);
+		}
+	}
+
+	@Override
+	public ChannelBuffer encode(WindowClickMessage message) throws IOException {
+		int item = message.getItem();
+
+		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		buffer.writeByte(message.getId());
+		buffer.writeShort(message.getSlot());
+		buffer.writeByte(message.isRightClick() ? 1 : 0);
+		buffer.writeShort(message.getTransaction());
+		buffer.writeByte(message.isShift() ? 1 : 0);
+		buffer.writeShort(item);
+		if (item != -1) {
+			buffer.writeByte(message.getCount());
+			buffer.writeShort(message.getDamage());
+			if (ChannelBufferUtils.hasNbtData(message.getId())) {
+				ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
+			}
+		}
+		return buffer;
+	}
+}

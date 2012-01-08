@@ -9,7 +9,7 @@ public class GenericBlockMaterial extends GenericItemMaterial implements BlockMa
 	private BlockDesign design;
 
 	private GenericBlockMaterial(String name, int id, int data, boolean subtypes) {
-		super(name, data, data, subtypes);
+		super(name, id, data, subtypes);
 	}
 
 	protected GenericBlockMaterial(String name, int id, int data) {

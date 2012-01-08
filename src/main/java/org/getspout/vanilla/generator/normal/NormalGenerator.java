@@ -23,6 +23,7 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 import org.getspout.api.generator.Populator;
 import org.getspout.api.generator.WorldGenerator;
 import org.getspout.api.util.cuboid.CuboidShortBuffer;
+import org.getspout.vanilla.VanillaBlocks;
 
 public class NormalGenerator implements WorldGenerator {
 	int seed = 42;
@@ -51,6 +52,33 @@ public class NormalGenerator implements WorldGenerator {
 	}
 
 	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+		int x = chunkX * 16;
+		int y = chunkY * 16;
+		int z = chunkZ * 16;
+		
+		if (y > 127) {
+			blockData.flood((short)0);
+			//return;
+		}
+		if (chunkY < 0) {
+			blockData.flood(VanillaBlocks.bedrock.getId());
+			//return;
+		}
 
+		for (int dx = x; dx < (x+16); dx++) {
+			for (int dy = y; dy < (y+16); dy++) {
+				for (int dz = z; dz < (z+16); dz++) {
+					if (dy == 64) {
+						blockData.set(dx, dy, dz, VanillaBlocks.grass.getId());
+					}
+					else if (dy < 64 & dy >= 60) {
+						blockData.set(dx, dy, dz, VanillaBlocks.dirt.getId());
+					}
+					else if (dy < 60) {
+						blockData.set(dx, dy, dz, VanillaBlocks.stone.getId());
+					}
+				}
+			}
+		}
 	}
 }

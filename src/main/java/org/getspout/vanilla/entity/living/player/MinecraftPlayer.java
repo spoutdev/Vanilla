@@ -40,8 +40,8 @@ public abstract class MinecraftPlayer extends PlayerController {
 	private final static double STANCE = 1.6D;
 	private final static int TIMEOUT = 30000;
 	
-	public final static float SEALEVEL = 64;
-	public final static int SEALEVEL_CHUNK = 4;
+	//public final static float SEALEVEL = 64;
+	//public final static int SEALEVEL_CHUNK = 4;
 	
 	public MinecraftPlayer(Player p){
 		super(p);
@@ -62,7 +62,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 	@Override
 	protected void freeChunk(Point p) {
 		int x = ((int)p.getX() >> Chunk.CHUNK_SIZE_BITS);
-		int y = ((int)p.getY() >> Chunk.CHUNK_SIZE_BITS) + SEALEVEL_CHUNK;
+		int y = ((int)p.getY() >> Chunk.CHUNK_SIZE_BITS);// + SEALEVEL_CHUNK;
 		int z = ((int)p.getZ() >> Chunk.CHUNK_SIZE_BITS);
 		
 		if (y < 0 || y > 7) {
@@ -83,7 +83,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 	@Override
 	protected void initChunk(Point p) {
 		int x = ((int)p.getX() >> Chunk.CHUNK_SIZE_BITS);
-		int y = ((int)p.getY() >> Chunk.CHUNK_SIZE_BITS) + SEALEVEL_CHUNK;
+		int y = ((int)p.getY() >> Chunk.CHUNK_SIZE_BITS);// + SEALEVEL_CHUNK;
 		int z = ((int)p.getZ() >> Chunk.CHUNK_SIZE_BITS);
 		
 		if (y < 0 || y > 7) {
@@ -103,8 +103,10 @@ public abstract class MinecraftPlayer extends PlayerController {
 	@Override
 	protected void sendChunk(Chunk c) {
 		int x = c.getX();
-		int y = c.getY() + SEALEVEL_CHUNK;
+		int y = c.getY();// + SEALEVEL_CHUNK;
 		int z = c.getZ();
+		
+		//System.out.println("Sending chunk (" + x + ", " + y + ", " + z + ") " + c);
 		
 		if (y < 0 || y > 7) {
 			return;
@@ -120,13 +122,13 @@ public abstract class MinecraftPlayer extends PlayerController {
 			// TODO - conversion code
 			fullChunkData[i] = (byte)(rawBlockIdArray[i] & 0xFF);
 		}
-		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x << Chunk.CHUNK_SIZE_BITS, y << Chunk.CHUNK_SIZE_BITS, z << Chunk.CHUNK_SIZE_BITS, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, fullChunkData);
+		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x * Chunk.CHUNK_SIZE, y * Chunk.CHUNK_SIZE, z * Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, fullChunkData);
 		owner.getSession().send(CCMsg);
 	}
 	
 	protected void sendPosition(Transform t) {
 		Point p = t.getPosition();
-		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE + SEALEVEL, p.getZ(), p.getY(), 0, 0, true);
+		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), 0, 0, true);
 		owner.getSession().send(PRMsg);
 	}
 	
@@ -135,7 +137,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 		if (first) {
 			first = false;
 			int entityId = owner.getEntity().getId();
-			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), world.getSeed(), 0, 0, 0, 128, 20);
+			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), world.getSeed(), 1, 0, 0, 128, 20);
 			owner.getSession().send(idMsg);
 			for (int slot = 0; slot < 5; slot++) {
 				EntityEquipmentMessage EEMsg = new EntityEquipmentMessage(entityId, slot, -1, 0);
@@ -143,7 +145,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 			}
 		}
 		Point spawn = world.getSpawnPoint().getPosition();
-		SpawnPositionMessage SPMsg = new SpawnPositionMessage((int)spawn.getX(), (int)(spawn.getY() + SEALEVEL), (int)spawn.getZ());
+		SpawnPositionMessage SPMsg = new SpawnPositionMessage((int)spawn.getX(), (int)(spawn.getY()), (int)spawn.getZ());
 		owner.getSession().send(SPMsg);
 	}
 

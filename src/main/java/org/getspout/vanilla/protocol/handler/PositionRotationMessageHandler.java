@@ -53,7 +53,7 @@ public final class PositionRotationMessageHandler extends MessageHandler<Positio
 		Transform liveTransform = entity.getLiveTransform();
 		World w = liveTransform.getPosition().getWorld();
 		// TODO - include rotation
-		entity.setTransform(new Transform(new Point(w, (float)x, ((float)y) - MinecraftPlayer.SEALEVEL, (float)z), Quaternion.identity, Vector3.Forward));
+		entity.setTransform(new Transform(new Point(w, (float)x, ((float)y), (float)z), Quaternion.identity, Vector3.Forward));
 	}
 	
 	public void handleClient(Session session, Player player, PositionRotationMessage message) {

@@ -68,42 +68,14 @@ public class MovingEntity extends MinecraftEntity {
 		}
 	}
 	
-	/**
-	 * Checks if this entity has moved this cycle.
-	 * @return {@code true} if so, {@code false} if not.
-	 */
-	public boolean hasMoved() {
-		Point old = parent.getTransform().getPosition();
-		Point current = parent.getLiveTransform().getPosition();
-		return Math.abs(old.getMahattanDistance(current)) > 0.01D;
-	}
-	
-	/**
-	 * Checks if this entity has moved farther than 128 blocks in this cycle.
-	 * @return {@code true} if so, {@code false} if not.
-	 */
-	public boolean hasTeleported() {
-		Point old = parent.getTransform().getPosition();
-		Point current = parent.getLiveTransform().getPosition();
-		return Math.abs(old.getMahattanDistance(current)) > 128D;
-	}
-
-	/**
-	 * Checks if this entity has rotated this cycle.
-	 * @return {@code true} if so, {@code false} if not.
-	 */
-	public boolean hasRotated() {
-		Quaternion old = parent.getTransform().getRotation();
-		Quaternion current = parent.getTransform().getRotation();
-		Vector3 oldAngles = old.getAxisAngles();
-		Vector3 currentAngles = current.getAxisAngles();
-		return Math.abs(oldAngles.getX() - currentAngles.getX()) + Math.abs(oldAngles.getY() - currentAngles.getY()) + Math.abs(oldAngles.getZ() - currentAngles.getZ()) > 0.01D;
-	}
-	
 	public Message createUpdateMessage() {
 		boolean teleport = hasTeleported();
 		boolean moved = hasMoved();
 		boolean rotated = hasRotated();
+		
+		if (parent.getLiveTransform() == null) {
+			return null;
+		}
 
 		// TODO - is this rotation correct?
 		int pitch = (int)(parent.getLiveTransform().getRotation().getAxisAngles().getZ() * 256.0F / 360.0F);

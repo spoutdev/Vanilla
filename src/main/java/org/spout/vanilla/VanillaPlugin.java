@@ -48,12 +48,12 @@ public class VanillaPlugin extends CommonPlugin {
 
 		getGame().getEventManager().registerEvents(new VanillaEventListener(this), this);
 		
-		getLogger().info(prefix + " loaded");
+		getLogger().info(prefix + "loaded");
 	}
 
 	@Override
 	public void onDisable() {
-		getLogger().info(prefix + " disabled.");
+		getLogger().info(prefix + "disabled.");
 
 	}
 
@@ -74,7 +74,7 @@ public class VanillaPlugin extends CommonPlugin {
 		World end = getGame().loadWorld("world_end", new TheEndGenerator());
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), new TheEndSky());
 
-		getLogger().info(prefix + " enabled. Version: " + version);
+		getLogger().info(prefix + "enabled. Version: " + version);
 	}
 	
 	/**

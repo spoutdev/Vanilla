@@ -25,7 +25,7 @@ public class Arrow extends Projectile {
 	public Arrow(Point start, Quaternion rotation, float charge){
 		super(start, rotation, maxArrowSpeed);
 
-		velocity = velocity.scale(charge);
+		velocity = velocity.multiply(charge);
 	}
 
 	@Override

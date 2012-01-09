@@ -46,7 +46,7 @@ public class PrimedTnt extends Controller {
 
 		//Move in a random direction and apply gravity.
 		Transform t = parent.getTransform();
-		t.setPosition(t.getPosition().add(velocity.scale(dt)).add(gravity.scale(dt)));
+		t.setPosition(t.getPosition().add(velocity.multiply(dt)).add(gravity.multiply(dt)));
 
 	}
 	

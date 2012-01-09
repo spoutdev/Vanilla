@@ -3,7 +3,7 @@ version: ${build.number}
 descripton: Vanilla is a plugin for the Spout server that provides vanilla Minecraft functionality.
 author: SpoutDev
 
-main: org.getspout.vanilla.VanillaPlugin
+main: org.spout.vanilla.VanillaPlugin
 load: startup
 
 platform: BOTH

@@ -185,9 +185,15 @@ public abstract class MinecraftPlayer extends PlayerController {
 	 * @return {@code true} if so, {@code false} if not.
 	 */
 	public boolean hasMoved() {
-		Point old = parent.getTransform().getPosition();
-		Point current = parent.getLiveTransform().getPosition();
-		return Math.abs(old.getMahattanDistance(current)) > 0.01D;
+		Transform old = parent.getTransform();
+		Transform current= parent.getLiveTransform();
+		if (current == null) {
+			return false;
+		} else if (old == null) {
+			return true;
+		} else {
+			return Math.abs(old.getPosition().getMahattanDistance(current.getPosition())) > 0.01D;
+		}
 	}
 	
 	/**
@@ -195,9 +201,15 @@ public abstract class MinecraftPlayer extends PlayerController {
 	 * @return {@code true} if so, {@code false} if not.
 	 */
 	public boolean hasTeleported() {
-		Point old = parent.getTransform().getPosition();
-		Point current = parent.getLiveTransform().getPosition();
-		return Math.abs(old.getMahattanDistance(current)) > 128D;
+		Transform old = parent.getTransform();
+		Transform current= parent.getLiveTransform();
+		if (current == null) {
+			return false;
+		} else if (old == null) {
+			return true;
+		} else {
+			return Math.abs(old.getPosition().getMahattanDistance(current.getPosition())) > 128D;
+		}
 	}
 
 	/**
@@ -205,17 +217,29 @@ public abstract class MinecraftPlayer extends PlayerController {
 	 * @return {@code true} if so, {@code false} if not.
 	 */
 	public boolean hasRotated() {
-		Quaternion old = parent.getTransform().getRotation();
-		Quaternion current = parent.getTransform().getRotation();
-		Vector3 oldAngles = old.getAxisAngles();
-		Vector3 currentAngles = current.getAxisAngles();
-		return Math.abs(oldAngles.getX() - currentAngles.getX()) + Math.abs(oldAngles.getY() - currentAngles.getY()) + Math.abs(oldAngles.getZ() - currentAngles.getZ()) > 0.01D;
+		Transform old = parent.getTransform();
+		Transform current= parent.getLiveTransform();
+		if (current == null) {
+			return false;
+		} else if (old == null) {
+			return false;
+		} else {
+			Quaternion oldQ = old.getRotation();
+			Quaternion currentQ = current.getRotation();
+			Vector3 oldAngles = oldQ.getAxisAngles();
+			Vector3 currentAngles = currentQ.getAxisAngles();
+			return Math.abs(oldAngles.getX() - currentAngles.getX()) + Math.abs(oldAngles.getY() - currentAngles.getY()) + Math.abs(oldAngles.getZ() - currentAngles.getZ()) > 0.01D;
+		}
 	}
 	
 	public Message createUpdateMessage() {
 		boolean teleport = hasTeleported();
 		boolean moved = hasMoved();
 		boolean rotated = hasRotated();
+		
+		if (parent.getLiveTransform() == null) {
+			return null;
+		}
 
 		// TODO - is this rotation correct?
 		int pitch = (int)(parent.getLiveTransform().getRotation().getAxisAngles().getZ() * 256.0F / 360.0F);

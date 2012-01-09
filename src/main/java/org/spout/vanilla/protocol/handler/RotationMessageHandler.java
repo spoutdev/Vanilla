@@ -40,7 +40,7 @@ public final class RotationMessageHandler extends MessageHandler<RotationMessage
 		
 		float pitch = message.getPitch();
 		float rot = message.getRotation();
-		
+		// TODO - is this rotation correct?
 		entity.setTransform(new Transform(entity.getLiveTransform().getPosition(), new Quaternion(pitch, Vector3.UNIT_Z).rotate(rot, Vector3.UNIT_Y), Vector3.Forward));
 	}
 }

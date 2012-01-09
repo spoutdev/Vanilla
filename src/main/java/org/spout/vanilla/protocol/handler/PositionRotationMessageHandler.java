@@ -51,7 +51,7 @@ public final class PositionRotationMessageHandler extends MessageHandler<Positio
 		
 		Transform liveTransform = entity.getLiveTransform();
 		World w = liveTransform.getPosition().getWorld();
-		// TODO - include rotation
+		// TODO - is this rotation correct?
 		entity.setTransform(new Transform(new Point(w, (float)x, ((float)y), (float)z), new Quaternion(pitch, Vector3.UNIT_Z).rotate(rot, Vector3.UNIT_Y), Vector3.Forward));
 	}
 	

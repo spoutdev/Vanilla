@@ -16,10 +16,18 @@
  */
 package org.spout.vanilla.entity;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
+import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
+import org.spout.api.protocol.Message;
 import org.spout.vanilla.VanillaBlocks;
+import org.spout.vanilla.entity.living.player.MinecraftPlayer;
+import org.spout.vanilla.protocol.msg.EntityRotationMessage;
+import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
+import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
+import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
 
 /**
  * Moving entity controller
@@ -47,6 +55,82 @@ public class MovingEntity extends MinecraftEntity {
 		Transform t = parent.getTransform();
 		t.setPosition(t.getPosition().add(velocity));
 		//TODO: collision
+	}
+	
+	@Override
+	public void snapshotStart() {
+		Message update = createUpdateMessage();
+		if (update != null) {
+			for (Entity e : parent.getWorld().getAll(MinecraftPlayer.class)){
+				MinecraftPlayer player = (MinecraftPlayer)e;
+				player.getPlayer().getSession().send(update);
+			}
+		}
+	}
+	
+	/**
+	 * Checks if this entity has moved this cycle.
+	 * @return {@code true} if so, {@code false} if not.
+	 */
+	public boolean hasMoved() {
+		Point old = parent.getTransform().getPosition();
+		Point current = parent.getLiveTransform().getPosition();
+		return Math.abs(old.getMahattanDistance(current)) > 0.01D;
+	}
+	
+	/**
+	 * Checks if this entity has moved farther than 128 blocks in this cycle.
+	 * @return {@code true} if so, {@code false} if not.
+	 */
+	public boolean hasTeleported() {
+		Point old = parent.getTransform().getPosition();
+		Point current = parent.getLiveTransform().getPosition();
+		return Math.abs(old.getMahattanDistance(current)) > 128D;
+	}
+
+	/**
+	 * Checks if this entity has rotated this cycle.
+	 * @return {@code true} if so, {@code false} if not.
+	 */
+	public boolean hasRotated() {
+		Quaternion old = parent.getTransform().getRotation();
+		Quaternion current = parent.getTransform().getRotation();
+		Vector3 oldAngles = old.getAxisAngles();
+		Vector3 currentAngles = current.getAxisAngles();
+		return Math.abs(oldAngles.getX() - currentAngles.getX()) + Math.abs(oldAngles.getY() - currentAngles.getY()) + Math.abs(oldAngles.getZ() - currentAngles.getZ()) > 0.01D;
+	}
+	
+	public Message createUpdateMessage() {
+		boolean teleport = hasTeleported();
+		boolean moved = hasMoved();
+		boolean rotated = hasRotated();
+
+		// TODO - is this rotation correct?
+		int pitch = (int)(parent.getLiveTransform().getRotation().getAxisAngles().getZ() * 256.0F / 360.0F);
+		int yaw = (int)(parent.getLiveTransform().getRotation().getAxisAngles().getY() * 256.0F / 360.0F);
+		
+		int id = this.parent.getId();
+		Vector3 pos = Vector3.floor(parent.getLiveTransform().getPosition());
+		Vector3 old = Vector3.floor(parent.getTransform().getPosition());
+		int x = (int)pos.getX();
+		int y = (int)pos.getY();
+		int z = (int)pos.getZ();
+		
+		int dx = (int)(x - old.getX());
+		int dy = (int)(y - old.getY());
+		int dz = (int)(z - old.getZ());
+
+		if (moved && teleport) {
+			return new EntityTeleportMessage(id, x, y, z, yaw, pitch);
+		} else if (moved && rotated) {
+			return new RelativeEntityPositionRotationMessage(id, dx, dy, dz, yaw, pitch);
+		} else if (moved) {
+			return new RelativeEntityPositionMessage(id, dx, dy, dz);
+		} else if (rotated) {
+			return new EntityRotationMessage(id, yaw, pitch);
+		}
+
+		return null;
 	}
 
 	private void checkWeb() {

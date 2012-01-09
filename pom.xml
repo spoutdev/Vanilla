@@ -1,8 +1,8 @@
 <!--
 	Maven build file for Vanilla
 
-	Copyright (c) 2011 SpoutDev <http://www.getspout.org>
-	Vanilla is licensed under GNU LESSER GENERAL PUBLIC LICENSE Version 3
+	Copyright (c) 2011-2012 SpoutDev <http://www.spout.org>
+	Vanilla is licensed under GNU LESSER GENERAL PUBLIC LICENSE Version 3, but with a provision that files are released under the MIT license 180 days after they are published. Please see the `LICENSE.txt` file for details.
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -14,7 +14,7 @@
 	<version>dev-SNAPSHOT</version>
 	<name>Vanilla</name>
 	<url>http://www.spout.org</url>
-	<description></description>
+	<description>Vanilla is a plugin for the Spout server that provides vanilla Minecraft functionality.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

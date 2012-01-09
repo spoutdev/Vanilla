@@ -22,7 +22,10 @@ import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.player.Player;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
+import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
 public class VanillaEventListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -42,5 +45,14 @@ public class VanillaEventListener implements Listener {
 		// For now, only create Survival Players
 		Entity playerEntity = event.getPlayer().getEntity();
 		playerEntity.setController(new SurvivalPlayer(event.getPlayer()));
+		
+		Point point = playerEntity.getLiveTransform().getPosition();
+		float pitch = playerEntity.getLiveTransform().getRotation().getAxisAngles().getZ();
+		float yaw = playerEntity.getLiveTransform().getRotation().getAxisAngles().getY();
+		for (Player p : plugin.getGame().getOnlinePlayers()) {
+			p.getSession().send(new SpawnPlayerMessage(playerEntity.getId(), event.getPlayer().getName(), 
+					(int)(point.getX() * 32), (int)(point.getY() * 32), (int)(point.getZ() * 32), 
+					(int)(yaw  * 256.0F / 360.0F), (int)(pitch * 256.0F / 360.0F), 0));
+		}
 	}
 }

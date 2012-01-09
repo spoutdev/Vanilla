@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla (http://www.getspout.org/).
  *
  * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,6 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.entity.living.player.MinecraftPlayer;
 import org.spout.vanilla.protocol.msg.PositionRotationMessage;
 
 public final class PositionRotationMessageHandler extends MessageHandler<PositionRotationMessage> {
@@ -53,7 +52,7 @@ public final class PositionRotationMessageHandler extends MessageHandler<Positio
 		Transform liveTransform = entity.getLiveTransform();
 		World w = liveTransform.getPosition().getWorld();
 		// TODO - include rotation
-		entity.setTransform(new Transform(new Point(w, (float)x, ((float)y), (float)z), Quaternion.identity, Vector3.Forward));
+		entity.setTransform(new Transform(new Point(w, (float)x, ((float)y), (float)z), new Quaternion(pitch, Vector3.UNIT_Z).rotate(rot, Vector3.UNIT_Y), Vector3.Forward));
 	}
 	
 	public void handleClient(Session session, Player player, PositionRotationMessage message) {

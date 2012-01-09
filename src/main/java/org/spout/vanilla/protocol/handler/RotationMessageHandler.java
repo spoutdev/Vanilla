@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla (http://www.getspout.org/).
  *
  * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,6 +16,10 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Transform;
+import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -24,18 +28,19 @@ import org.spout.vanilla.protocol.msg.RotationMessage;
 public final class RotationMessageHandler extends MessageHandler<RotationMessage> {
 	@Override
 	public void handle(Session session, Player player, RotationMessage message) {
-		/*if (player == null) {
+		if (player == null) {
 			return;
 		}
-
-		Location loc = player.getLocation();
-		loc.setYaw(message.getRotation());
-		float rot = (message.getRotation() - 90) % 360;
-		if (rot < 0) {
-			rot += 360.0;
+		
+		Entity entity = player.getEntity();
+		
+		if (entity == null) {
+			return;
 		}
-		loc.setPitch(rot);
-		player.setRawLocation(loc);
-		*/
+		
+		float pitch = message.getPitch();
+		float rot = message.getRotation();
+		
+		entity.setTransform(new Transform(entity.getLiveTransform().getPosition(), new Quaternion(pitch, Vector3.UNIT_Z).rotate(rot, Vector3.UNIT_Y), Vector3.Forward));
 	}
 }

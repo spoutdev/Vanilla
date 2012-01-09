@@ -16,7 +16,7 @@
  */
 package org.spout.vanilla.entity.living.hostile;
 
-import org.spout.api.metadata.MetadataStringValue;
+
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.HostileEntity;
 import org.spout.vanilla.entity.living.Flying;
@@ -25,7 +25,7 @@ public class Ghast extends Flying implements HostileEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.Ghast.id));
+		parent.setData(Entity.KEY, Entity.Ghast.id);
 	}
 
 	@Override

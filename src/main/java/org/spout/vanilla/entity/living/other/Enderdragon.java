@@ -16,7 +16,6 @@
  */
 package org.spout.vanilla.entity.living.other;
 
-import org.spout.api.metadata.MetadataStringValue;
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.BossEntity;
 import org.spout.vanilla.entity.living.Flying;
@@ -25,7 +24,7 @@ public class Enderdragon extends Flying implements BossEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.EnderDragon.id));
+		parent.setData(Entity.KEY, Entity.EnderDragon.id);
 	}
 
 	@Override

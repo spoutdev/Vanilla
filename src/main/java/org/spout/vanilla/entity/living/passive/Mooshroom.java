@@ -16,7 +16,6 @@
  */
 package org.spout.vanilla.entity.living.passive;
 
-import org.spout.api.metadata.MetadataStringValue;
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.PassiveEntity;
 
@@ -24,7 +23,7 @@ public class Mooshroom extends Cow implements PassiveEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.Mooshroom.id));
+		parent.setData(Entity.KEY, Entity.Mooshroom.id);
 	}
 
 	@Override

@@ -16,7 +16,7 @@
  */
 package org.spout.vanilla.entity.living.other;
 
-import org.spout.api.metadata.MetadataStringValue;
+
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.PassiveEntity;
 import org.spout.vanilla.entity.living.Creature;
@@ -25,7 +25,7 @@ public class SnowGolem extends Creature implements PassiveEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.SnowGolem.id));
+		parent.setData(Entity.KEY, Entity.SnowGolem.id);
 	}
 
 	@Override

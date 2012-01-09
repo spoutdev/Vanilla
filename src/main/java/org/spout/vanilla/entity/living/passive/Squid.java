@@ -16,7 +16,6 @@
  */
 package org.spout.vanilla.entity.living.passive;
 
-import org.spout.api.metadata.MetadataStringValue;
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.PassiveEntity;
 import org.spout.vanilla.entity.living.Water;
@@ -25,7 +24,7 @@ public class Squid extends Water implements PassiveEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.Squid.id));
+		parent.setData(Entity.KEY, Entity.Squid.id);
 	}
 
 	@Override

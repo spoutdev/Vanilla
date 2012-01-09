@@ -16,7 +16,7 @@
  */
 package org.spout.vanilla.entity.living.hostile;
 
-import org.spout.api.metadata.MetadataStringValue;
+
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.living.Monster;
 
@@ -24,7 +24,7 @@ public class Silverfish extends Monster {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.Silverfish.id));
+		parent.setData(Entity.KEY, Entity.Silverfish.id);
 	}
 
 	@Override

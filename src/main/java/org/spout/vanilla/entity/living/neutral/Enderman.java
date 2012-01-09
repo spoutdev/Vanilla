@@ -16,7 +16,7 @@
  */
 package org.spout.vanilla.entity.living.neutral;
 
-import org.spout.api.metadata.MetadataStringValue;
+
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.NeutralEntity;
 import org.spout.vanilla.entity.living.Monster;
@@ -25,7 +25,7 @@ public class Enderman extends Monster implements NeutralEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.Enderman.id));
+		parent.setData(Entity.KEY, Entity.Enderman.id);
 	}
 
 	@Override

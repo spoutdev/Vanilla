@@ -16,7 +16,7 @@
  */
 package org.spout.vanilla.entity.living.hostile;
 
-import org.spout.api.metadata.MetadataStringValue;
+
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.HostileEntity;
 import org.spout.vanilla.entity.living.Land;
@@ -26,7 +26,7 @@ public class Slime extends Living implements HostileEntity, Land {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.Slime.id));
+		parent.setData(Entity.KEY, Entity.Slime.id);
 	}
 
 	@Override

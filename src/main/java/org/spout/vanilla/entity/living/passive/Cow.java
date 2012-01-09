@@ -16,7 +16,6 @@
  */
 package org.spout.vanilla.entity.living.passive;
 
-import org.spout.api.metadata.MetadataStringValue;
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.AnimalEntity;
 import org.spout.vanilla.entity.PassiveEntity;
@@ -25,7 +24,7 @@ public class Cow extends AnimalEntity implements PassiveEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.Cow.id));
+		parent.setData(Entity.KEY, Entity.Cow.id);
 	}
 
 	@Override

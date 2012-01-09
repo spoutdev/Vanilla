@@ -16,7 +16,6 @@
  */
 package org.spout.vanilla.entity.living.neutral;
 
-import org.spout.api.metadata.MetadataStringValue;
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.AnimalEntity;
 import org.spout.vanilla.entity.NeutralEntity;
@@ -25,7 +24,7 @@ public class Wolf extends AnimalEntity implements NeutralEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMetadata(Entity.KEY, new MetadataStringValue(Entity.Wolf.id));
+		parent.setData(Entity.KEY, Entity.Wolf.id);
 	}
 
 	@Override

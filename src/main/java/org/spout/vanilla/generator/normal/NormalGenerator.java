@@ -66,19 +66,46 @@ public class NormalGenerator implements WorldGenerator {
 		}
 
 		for (int dx = x; dx < (x+16); dx++) {
-			for (int dy = y; dy < (y+16); dy++) {
+			//for (int dy = y; dy < (y+16); dy++) {
 				for (int dz = z; dz < (z+16); dz++) {
-					if (dy == 64) {
-						blockData.set(dx, dy, dz, VanillaBlocks.grass.getId());
+					short id = 0;
+					double top = (noiseHeight.GetValue(dx / 16.0 + 0.005, 0.05, dz / 16.0 + 0.005) + 1.0) * 4.0 + 60.0;
+					
+					for(int dy = y + 15; dy >= y && dy < y + 16;dy--) {
+						if(dy - 1 == top && dy > 64 && random.nextInt(100) < 40) {
+							//Set a flower
+							if(random.nextBoolean()) {
+								id = VanillaBlocks.dandelion.getId();
+							} else {
+								id = VanillaBlocks.rose.getId();
+							}
+						} else if(dy > top && dy > 64) {
+							id = VanillaBlocks.air.getId();
+						} else if (dy <= 64 && dy > top) {
+							id = VanillaBlocks.water.getId();
+						} else if(dy == (int)top && dy >= 64) {
+							id = VanillaBlocks.grass.getId();
+						} else if(dy + 4 >=(int)top) {
+							id = VanillaBlocks.dirt.getId();
+						} else if(dy != 0){
+							id = VanillaBlocks.stone.getId();
+						} else {
+							id = VanillaBlocks.bedrock.getId();
+						}
+						blockData.set(dx, dy, dz, id);
 					}
-					else if (dy < 64 && dy >= 60) {
-						blockData.set(dx, dy, dz, VanillaBlocks.dirt.getId());
-					}
-					else if (dy < 60) {
-						blockData.set(dx, dy, dz, VanillaBlocks.stone.getId());
-					}
+					
+//					if (dy == 64) {
+//						blockData.set(dx, dy, dz, VanillaBlocks.grass.getId());
+//					}
+//					else if (dy < 64 && dy >= 60) {
+//						blockData.set(dx, dy, dz, VanillaBlocks.dirt.getId());
+//					}
+//					else if (dy < 60) {
+//						blockData.set(dx, dy, dz, VanillaBlocks.stone.getId());
+//					}
 				}
-			}
+			//}
 		}
 	}
 }

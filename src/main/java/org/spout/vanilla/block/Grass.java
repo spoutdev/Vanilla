@@ -16,6 +16,7 @@
  */
 package org.spout.vanilla.block;
 
+import org.spout.api.material.GenericBlockMaterial;
 import org.spout.vanilla.material.Plant;
 
 public class Grass extends GenericBlockMaterial implements Plant {

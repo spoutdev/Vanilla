@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */package org.spout.vanilla.block;
 
+import org.spout.api.material.GenericBlockMaterial;
 import org.spout.vanilla.material.SolidBlock;
 
 public class Wool extends GenericBlockMaterial implements SolidBlock {

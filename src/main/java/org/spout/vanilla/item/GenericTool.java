@@ -1,6 +1,7 @@
 package org.spout.vanilla.item;
 
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.GenericItemMaterial;
 import org.spout.vanilla.material.Tool;
 
 public class GenericTool extends GenericItemMaterial implements Tool {

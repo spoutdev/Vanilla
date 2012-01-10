@@ -16,6 +16,8 @@
  */
 package org.spout.vanilla.block;
 
+import org.spout.api.material.GenericBlockMaterial;
+
 public class StoneBricks extends GenericBlockMaterial {
 
 	public StoneBricks(String name, int id, int data) {

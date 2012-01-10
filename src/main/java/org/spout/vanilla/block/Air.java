@@ -17,6 +17,7 @@
 package org.spout.vanilla.block;
 
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.GenericBlockMaterial;
 
 public class Air extends GenericBlockMaterial implements BlockMaterial {
 

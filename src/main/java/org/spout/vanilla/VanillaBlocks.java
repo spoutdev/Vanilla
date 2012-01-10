@@ -20,6 +20,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.GenericItemMaterial;
 import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialData;
@@ -38,7 +39,6 @@ import org.spout.vanilla.item.Coal;
 import org.spout.vanilla.item.Dye;
 import org.spout.vanilla.item.GenericArmor;
 import org.spout.vanilla.item.GenericFood;
-import org.spout.vanilla.item.GenericItemMaterial;
 import org.spout.vanilla.item.GenericTool;
 import org.spout.vanilla.item.GenericWeapon;
 

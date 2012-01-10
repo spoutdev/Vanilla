@@ -24,8 +24,6 @@ import org.spout.vanilla.protocol.msg.PingMessage;
 public class PingMessageHandler extends MessageHandler<PingMessage> {
 	@Override
 	public void handle(Session session, Player player, PingMessage message) {
-		if (session.getPingMessageId() == message.getPingId()) {
-			session.pong();
-		}
+
 	}
 }

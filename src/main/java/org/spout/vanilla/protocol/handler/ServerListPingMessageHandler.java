@@ -16,9 +16,12 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.Spout;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.event.game.ServerListPingEvent;
+import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 
 /**
@@ -29,9 +32,10 @@ import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 public class ServerListPingMessageHandler extends MessageHandler<ServerListPingMessage> {
 	@Override
 	public void handle(Session session, Player player, ServerListPingMessage message) {
-		//ServerListPingEvent event = EventFactory.onServerListPing(session.getAddress().getAddress(), session.getServer().getMotd(), session.getServer().getOnlinePlayers().length, session.getServer().getMaxPlayers());
-		//String text = event.getMotd() + "\u00A7" + event.getNumPlayers();
-		//text += "\u00A7" + event.getMaxPlayers() + "\u00A7" + SpoutServer.PROTOCOL_VERSION;
-		//session.send(new KickMessage(text));
+		//TODO this is not called - why?
+		System.out.println("Server list ping event");
+		ServerListPingEvent event = new ServerListPingEvent(session.getAddress().getAddress(), "Default MOTD", Spout.getGame().getOnlinePlayers().length, Spout.getGame().getMaxPlayers());
+		Spout.getGame().getEventManager().callEvent(event);
+		session.send(new KickMessage(event.getMessage()));
 	}
 }

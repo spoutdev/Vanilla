@@ -18,13 +18,12 @@ package org.spout.vanilla.entity.living.player;
 
 import gnu.trove.set.hash.TIntHashSet;
 
-import org.spout.api.entity.Entity;
+import org.spout.api.Spout;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
@@ -45,8 +44,10 @@ import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 
 public abstract class MinecraftPlayer extends PlayerController {
 	
+	private final static int POSITION_UPDATE_TICKS = 20;
 	private final static double STANCE = 1.6D;
 	private final static int TIMEOUT = 30000;
+	private int positionUpdate = POSITION_UPDATE_TICKS;
 	
 	//public final static float SEALEVEL = 64;
 	//public final static int SEALEVEL_CHUNK = 4;
@@ -169,11 +170,11 @@ public abstract class MinecraftPlayer extends PlayerController {
 		}
 		
 		Message update = createUpdateMessage();
+		World world = owner.getEntity().getWorld();
 		if (update != null) {
-			for (Entity e : parent.getWorld().getAll(MinecraftPlayer.class)){
-				if (!e.equals(this)) {
-					MinecraftPlayer player = (MinecraftPlayer)e;
-					player.getPlayer().getSession().send(update);
+			for (Player p : Spout.getGame().getOnlinePlayers()) {
+				if (!p.equals(owner) && p.getEntity().getWorld().equals(world)) {
+					p.getSession().send(update);
 				}
 			}
 		}
@@ -187,6 +188,11 @@ public abstract class MinecraftPlayer extends PlayerController {
 		
 		if (parent.getLiveTransform() == null) {
 			return null;
+		}
+		
+		if (--positionUpdate == 0) {
+			positionUpdate = POSITION_UPDATE_TICKS;
+			teleport = moved = true;
 		}
 
 		// TODO - is this rotation correct?
@@ -203,14 +209,17 @@ public abstract class MinecraftPlayer extends PlayerController {
 		int dx = (int)(x - old.getX());
 		int dy = (int)(y - old.getY());
 		int dz = (int)(z - old.getZ());
-
+		
 		if (moved && teleport) {
 			return new EntityTeleportMessage(id, x, y, z, yaw, pitch);
-		} else if (moved && rotated) {
+		}
+		if (moved && rotated) {
 			return new RelativeEntityPositionRotationMessage(id, dx, dy, dz, yaw, pitch);
-		} else if (moved) {
+		}
+		if (moved) {
 			return new RelativeEntityPositionMessage(id, dx, dy, dz);
-		} else if (rotated) {
+		}
+		if (rotated) {
 			return new EntityRotationMessage(id, yaw, pitch);
 		}
 

@@ -16,6 +16,7 @@
  */
 package org.spout.vanilla;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -42,6 +43,8 @@ public class VanillaEventListener implements Listener {
 
 	@EventHandler(event = PlayerJoinEvent.class, order = Order.EARLIEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
+		
+		plugin.getGame().broadcastMessage(event.getPlayer().getName() + " has joined the game");
 		// Set the player's controller
 		// For now, only create Survival Players
 		Entity playerEntity = event.getPlayer().getEntity();
@@ -61,17 +64,31 @@ public class VanillaEventListener implements Listener {
 				p.getSession().send(update);
 		}
 		
-		//Inform the new player of existing players
-		for (Player p : plugin.getGame().getOnlinePlayers()) {
-			if (!p.equals(event.getPlayer())) {
-				Point playerPoint = playerEntity.getLiveTransform().getPosition();
-				float playerPitch = playerEntity.getLiveTransform().getRotation().getAxisAngles().getZ();
-				float playerYaw = playerEntity.getLiveTransform().getRotation().getAxisAngles().getY();
-				
-				event.getPlayer().getSession().send(
-					new SpawnPlayerMessage(p.getEntity().getId(), p.getName(), (int)(playerPoint.getX() * 32),
-					(int)(playerPoint.getY() * 32), (int)(playerPoint.getZ() * 32), 
-					(int)(playerYaw  * 256.0F / 360.0F), (int)(playerPitch * 256.0F / 360.0F), 0));
+		plugin.getGame().getScheduler().scheduleSyncDelayedTask(plugin, new LoginRunnable(event.getPlayer()), 1L);
+	}
+}
+
+//Can not do this immediately, player has not been sent world yet. :/
+class LoginRunnable implements Runnable {
+	Player player;
+	public LoginRunnable(Player player) {
+		this.player = player;
+	}
+	
+	public void run() {
+		if (player.isOnline()){
+			//Inform the new player of existing players
+			for (Player p : Spout.getGame().getOnlinePlayers()) {
+				if (!p.equals(player)) {
+					Point playerPoint = p.getEntity().getLiveTransform().getPosition();
+					float playerPitch = p.getEntity().getLiveTransform().getRotation().getAxisAngles().getZ();
+					float playerYaw = p.getEntity().getLiveTransform().getRotation().getAxisAngles().getY();
+					
+					player.getSession().send(
+						new SpawnPlayerMessage(p.getEntity().getId(), p.getName(), (int)(playerPoint.getX() * 32),
+						(int)(playerPoint.getY() * 32), (int)(playerPoint.getZ() * 32), 
+						(int)(playerYaw  * 256.0F / 360.0F), (int)(playerPitch * 256.0F / 360.0F), 0));
+				}
 			}
 		}
 	}

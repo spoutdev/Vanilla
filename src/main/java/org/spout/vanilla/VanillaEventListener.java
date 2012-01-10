@@ -50,12 +50,29 @@ public class VanillaEventListener implements Listener {
 		Point point = playerEntity.getLiveTransform().getPosition();
 		float pitch = playerEntity.getLiveTransform().getRotation().getAxisAngles().getZ();
 		float yaw = playerEntity.getLiveTransform().getRotation().getAxisAngles().getY();
+		
+		//Inform existing players of the new player
 		Message update = new SpawnPlayerMessage(playerEntity.getId(), event.getPlayer().getName(), 
-				(int)(point.getX() * 32), (int)(point.getY() * 32), (int)(point.getZ() * 32), 
-				(int)(yaw  * 256.0F / 360.0F), (int)(pitch * 256.0F / 360.0F), 0);
+			(int)(point.getX() * 32), (int)(point.getY() * 32), (int)(point.getZ() * 32), 
+			(int)(yaw  * 256.0F / 360.0F), (int)(pitch * 256.0F / 360.0F), 0);
+		
 		for (Player p : plugin.getGame().getOnlinePlayers()) {
 			if (!p.equals(event.getPlayer()))
 				p.getSession().send(update);
+		}
+		
+		//Inform the new player of existing players
+		for (Player p : plugin.getGame().getOnlinePlayers()) {
+			if (!p.equals(event.getPlayer())) {
+				Point playerPoint = playerEntity.getLiveTransform().getPosition();
+				float playerPitch = playerEntity.getLiveTransform().getRotation().getAxisAngles().getZ();
+				float playerYaw = playerEntity.getLiveTransform().getRotation().getAxisAngles().getY();
+				
+				event.getPlayer().getSession().send(
+					new SpawnPlayerMessage(p.getEntity().getId(), p.getName(), (int)(playerPoint.getX() * 32),
+					(int)(playerPoint.getY() * 32), (int)(playerPoint.getZ() * 32), 
+					(int)(playerYaw  * 256.0F / 360.0F), (int)(playerPitch * 256.0F / 360.0F), 0));
+			}
 		}
 	}
 }

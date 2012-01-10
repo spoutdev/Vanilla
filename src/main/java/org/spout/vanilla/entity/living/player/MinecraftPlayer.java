@@ -46,7 +46,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 	
 	private final static int POSITION_UPDATE_TICKS = 20;
 	private final static double STANCE = 1.6D;
-	private final static int TIMEOUT = 30000;
+	private final static int TIMEOUT = 15000;
 	private int positionUpdate = POSITION_UPDATE_TICKS;
 	
 	//public final static float SEALEVEL = 64;

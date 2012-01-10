@@ -161,7 +161,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 	long lastKeepAlive = System.currentTimeMillis();
 	
 	@Override
-	public void snapshotStart() {
+	public void preSnapshot() {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime > lastKeepAlive + TIMEOUT) {
 			PingMessage PingMsg = new PingMessage((int)currentTime);
@@ -178,7 +178,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 				}
 			}
 		}
-		super.snapshotStart();
+		super.preSnapshot();
 	}
 
 	public Message createUpdateMessage() {

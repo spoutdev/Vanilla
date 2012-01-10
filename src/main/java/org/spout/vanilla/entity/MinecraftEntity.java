@@ -30,7 +30,7 @@ public class MinecraftEntity extends Controller {
 	}
 	
 	@Override
-	public void snapshotStart() {
+	public void preSnapshot() {
 		
 	}
 	

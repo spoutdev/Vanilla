@@ -58,7 +58,7 @@ public class MovingEntity extends MinecraftEntity {
 	}
 	
 	@Override
-	public void snapshotStart() {
+	public void preSnapshot() {
 		Message update = createUpdateMessage();
 		if (update != null) {
 			for (Entity e : parent.getWorld().getAll(MinecraftPlayer.class)){

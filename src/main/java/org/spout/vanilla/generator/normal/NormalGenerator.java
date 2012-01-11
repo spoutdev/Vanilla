@@ -28,13 +28,16 @@ import org.spout.vanilla.VanillaBlocks;
 
 public class NormalGenerator implements WorldGenerator {
 	int seed = 42;
-	Perlin layerCount = new Perlin();
+	Perlin layerCount = new Perlin(), heightMap = new Perlin();
 	ArrayList<Perlin> layers = new ArrayList<Perlin>();
-	
-	
+
+
 	public NormalGenerator() {
-		layerCount.setSeed(seed);
+		layerCount.setSeed(seed + 10);
 		layerCount.setOctaveCount(5);
+		
+		heightMap.setSeed(seed);
+		heightMap.setOctaveCount(5);
 	}
 
 	public Perlin getLayer(int layer) {
@@ -52,9 +55,9 @@ public class NormalGenerator implements WorldGenerator {
 			return null;
 		}
 	}
-	
+
 	private final Populator[] populators = new Populator[]{new TreePopulator(), new PondPopulator(), new StrongholdPopulator(), new VillagePopulator(), new AbandonedMineshaftPopulator(), new DungeonPopulator()};
-	
+
 	public Populator[] getPopulators() {
 		return populators;
 	}
@@ -63,7 +66,7 @@ public class NormalGenerator implements WorldGenerator {
 		int x = chunkX * 16;
 		int y = chunkY * 16;
 		int z = chunkZ * 16;
-		
+
 		if (y > 127) {
 			blockData.flood((short)0);
 			//return;
@@ -75,32 +78,46 @@ public class NormalGenerator implements WorldGenerator {
 
 		for (int dx = x; dx < (x+16); dx++) {
 			for (int dz = z; dz < (z+16); dz++) {
-				int layers = (int) ((layerCount.GetValue(dx / 16.0 + 0.05, 0.05, dz / 16.0 + 0.05) + 1.0) * 10.0 + 2);
 				
+				int height = (int) ((heightMap.GetValue(dx / 16.0 + 0.005, 0.05, dz / 16.0 + 0.005) + 1.0) * 4.0 + 60.0);
+				
+				boolean wateredStack = height < 64;
+				
+				for(int dy = y; dy < y + 16; dy++) {
+					short id = VanillaBlocks.air.getId();
+					
+					id = getBlockId(height, dy);
+					
+					blockData.set(dx, dy, dz, id);
+				}
+				int layers = (int) ((layerCount.GetValue(dx / 16.0 + 0.05, 0.05, dz / 16.0 + 0.05) + 1.0) * 5.0 + 2);
+
 				if(layers <= 0) {
 					layers = 2;
 				}
-				
-				int heightPerLayer = 128/layers;
-				
+
+				int heightPerLayer = 59/layers;
+
 				for (int layer = 0; layer < layers; layer+=2) {
 					Perlin bottom = getLayer(layer);
 					Perlin top = getLayer(layer+1);
-					int min = heightPerLayer * layer;
-					int max = heightPerLayer * (layer + 1);
+					int min = 3 + heightPerLayer * layer;
+					int max = 3 + heightPerLayer * (layer + 1);
 					int b = (int) ((getPerlinValueXZ(bottom, dx, dz) + 1.0) * heightPerLayer / 3.0 + min);
 					int t = (int) ((getPerlinValueXZ(top, dx, dz) + 1.0) * heightPerLayer / 3.0 + max);
-					if(b < t) {
-						for(int dy = y; dy < y + 16; dy++) {
-							short id = VanillaBlocks.air.getId();
-							if(dy <= b || dy >= t) {
-								id = VanillaBlocks.stone.getId();
-							}
-							
-							if(dy < 66 && dy > 62 && dx < 16 && dx > -16 && dz < 16 && dz > -16) {
-								id = 0;
-							}
-							blockData.set(dx, dy, dz, id);
+					for(int dy = y; dy < y + 16; dy++) {
+						if(dy > b && dy < t) {
+							blockData.set(dx, dy, dz, VanillaBlocks.air.getId());
+						}
+					}
+				}
+
+				if(wateredStack) {
+					for(int dy = y + 15; dy >= y; dy--) {
+						if(dy < 64 && blockData.get(dx, dy, dz) == VanillaBlocks.air.getId()) {
+							blockData.set(dx, dy, dz, VanillaBlocks.water.getId());
+						} else {
+							break;
 						}
 					}
 				}
@@ -108,18 +125,16 @@ public class NormalGenerator implements WorldGenerator {
 			}
 		}
 	}
-	
+
 	public static double getPerlinValueXZ(Perlin perlin, int x, int z) {
 		return perlin.GetValue(x / 16.0 + 0.05, 0.05, z / 16.0 + 0.05);
 	}
- 
+
 	private short getBlockId(int top, int dy) {
 		short id;
-		if(dy > top && dy > 64) {
+		if(dy > top) {
 			id = VanillaBlocks.air.getId();
-		} else if (dy <= 64 && dy > top) {
-			id = VanillaBlocks.water.getId();
-		} else if(dy == (int)top && dy >= 64) {
+		} else if(dy == (int)top && dy >= 63) {
 			id = VanillaBlocks.grass.getId();
 		} else if(dy + 4 >=(int)top) {
 			id = VanillaBlocks.dirt.getId();

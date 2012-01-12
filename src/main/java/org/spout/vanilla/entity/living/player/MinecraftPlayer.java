@@ -146,7 +146,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 		if (first) {
 			first = false;
 			int entityId = owner.getEntity().getId();
-			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), world.getSeed(), 1, 0, 0, 128, 20);
+			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), world.getSeed(), 1, 0, 0, 128, 20, "DEFAULT");
 			owner.getSession().send(idMsg);
 			for (int slot = 0; slot < 5; slot++) {
 				EntityEquipmentMessage EEMsg = new EntityEquipmentMessage(entityId, slot, -1, 0);

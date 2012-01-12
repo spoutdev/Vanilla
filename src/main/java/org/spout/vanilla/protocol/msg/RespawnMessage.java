@@ -22,13 +22,15 @@ public final class RespawnMessage extends Message {
 	private final byte dimension, difficulty, mode;
 	private final int worldHeight;
 	private final long seed;
+	private final String worldType;
 
-	public RespawnMessage(byte dimension, byte difficulty, byte mode, int worldHeight, long seed) {
+	public RespawnMessage(byte dimension, byte difficulty, byte mode, int worldHeight, long seed, String worldType) {
 		this.dimension = dimension;
 		this.difficulty = difficulty;
 		this.mode = mode;
 		this.worldHeight = worldHeight;
 		this.seed = seed;
+		this.worldType = worldType;
 	}
 
 	public byte getDimension() {
@@ -50,9 +52,13 @@ public final class RespawnMessage extends Message {
 	public long getSeed() {
 		return seed;
 	}
+	
+	public String getWorldType() {
+		return worldType;
+	}
 
 	@Override
 	public String toString() {
-		return "RespawnMessage{dimension=" + dimension + ",difficulty=" + difficulty + ",gameMode=" + mode + ",worldHeight=" + worldHeight + ",seed=" + seed + "}";
+		return "RespawnMessage{dimension=" + dimension + ",difficulty=" + difficulty + ",gameMode=" + mode + ",worldHeight=" + worldHeight + ",seed=" + seed + ",worldType=" + worldType + "}";
 	}
 }

@@ -27,6 +27,7 @@ import org.spout.vanilla.protocol.codec.CloseWindowCodec;
 import org.spout.vanilla.protocol.codec.CollectItemCodec;
 import org.spout.vanilla.protocol.codec.CompressedChunkCodec;
 import org.spout.vanilla.protocol.codec.CreateEntityCodec;
+import org.spout.vanilla.protocol.codec.CustomDataCodec;
 import org.spout.vanilla.protocol.codec.DestroyEntityCodec;
 import org.spout.vanilla.protocol.codec.DiggingCodec;
 import org.spout.vanilla.protocol.codec.EnchantItemCodec;
@@ -145,6 +146,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
             /* 0x83 */ bind(MapDataCodec.class);
             /* 0xC8 */ bind(StatisticCodec.class);
             /* 0xC9 */ bind(UserListItemCodec.class);
+			/* 0xFA */ bind(CustomDataCodec.class);
             /* 0xFE */ bind(ServerListPingCodec.class);
             /* 0xFF */ bind(KickCodec.class);
 		} catch (Exception ex) {

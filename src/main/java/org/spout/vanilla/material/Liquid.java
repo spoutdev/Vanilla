@@ -1,8 +1,6 @@
 package org.spout.vanilla.material;
 
-import org.spout.api.material.BlockMaterial;
-
-public interface Liquid extends BlockMaterial {
+public interface Liquid extends VanillaBlockMaterial {
 
 	public boolean isFlowing();
 }

@@ -54,6 +54,8 @@ public abstract class MinecraftPlayer extends PlayerController {
 	
 	public MinecraftPlayer(Player p){
 		super(p);
+		p.getEntity().setInventorySize(45);
+		p.getEntity().getInventory().setCurrentSlot(36);
 	}
 	
 	@Override

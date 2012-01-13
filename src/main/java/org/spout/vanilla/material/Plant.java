@@ -1,8 +1,6 @@
 package org.spout.vanilla.material;
 
-import org.spout.api.material.BlockMaterial;
-
-public interface Plant extends BlockMaterial {
+public interface Plant extends VanillaBlockMaterial {
 
 	public boolean hasGrowthStages();
 

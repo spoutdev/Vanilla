@@ -16,13 +16,14 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.inventory.Inventory;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.protocol.msg.ActivateItemMessage;
 
 /**
- * A {@link MessageHandler} which processes digging messages.
+ * A {@link MessageHandler} which processes held item messages.
  */
 public final class ActivateItemMessageHandler extends MessageHandler<ActivateItemMessage> {
 	@Override
@@ -31,10 +32,11 @@ public final class ActivateItemMessageHandler extends MessageHandler<ActivateIte
 			return;
 		}
 
-		if (message.getSlot() < 0 || message.getSlot() > 8) {
+		int newSlot = message.getSlot();
+		if (newSlot < 0 || newSlot > 8) {
 			return;
 		}
 
-		//player.getInventory().setHeldItemSlot(message.getSlot());
+		player.getEntity().getInventory().setCurrentSlot(newSlot + 36);
 	}
 }

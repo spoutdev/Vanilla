@@ -16,13 +16,24 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.event.EventManager;
+import org.spout.api.event.player.PlayerInteractEvent;
+import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.VanillaMessageHandlerUtils;
+import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
 
 /**
- * A {@link MessageHandler} which processes digging messages.
+ * A {@link MessageHandler} which processes placement messages.
  */
 public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlacementMessage> {
 	@Override
@@ -31,6 +42,10 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		//	return;
 		//}
 
+		EventManager eventManager = player.getSession().getGame().getEventManager();
+		World world = player.getEntity().getWorld();
+		Inventory inventory = player.getEntity().getInventory();
+		ItemStack holding = inventory.getCurrentItem();
 		/**
 		 * The notch client's packet sending is weird. Here's how it works: If
 		 * the client is clicking a block not in range, sends a packet with
@@ -41,83 +56,94 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		 * usually happens. Sometimes it doesn't happen like that. Therefore, a
 		 * hacky workaround.
 		 */
-		/*if (message.getDirection() == 255) {
+		if (message.getDirection() == 255) {
 			// Right-clicked air. Note that the client doesn't send this if they are holding nothing.
-			BlockPlacementMessage previous = session.getPreviousPlacement();
-			if (previous == null || previous.getCount() != message.getCount() && previous.getId() != message.getId() && previous.getDamage() != message.getDamage()) {
-				EventFactory.onPlayerInteract(player, Action.RIGHT_CLICK_AIR);
-			}
-			session.setPreviousPlacement(null);
+			//BlockPlacementMessage previous = session.getPreviousPlacement();
+			//if (previous == null || previous.getCount() != message.getCount() && previous.getId() != message.getId() && previous.getDamage() != message.getDamage()) {
+				eventManager.callEvent(new PlayerInteractEvent(player, null, inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, true));
+			//}
+			//session.setPreviousPlacement(null);
 			return;
 		}
-		session.setPreviousPlacement(message);
+		//session.setPreviousPlacement(message);
 
-		SpoutBlock against = player.getWorld().getBlockAt(message.getX(), message.getY(), message.getZ());
-		BlockFace face = MessageHandlerUtils.messageToBlockFace(message.getDirection());
-		if (face == BlockFace.SELF) {
+		Point pos = new Point(world, message.getX(), message.getY(), message.getZ());
+
+		BlockFace face = VanillaMessageHandlerUtils.messageToBlockFace(message.getDirection());
+		if (face == BlockFace.THIS) {
 			return;
 		}
 
-		SpoutBlock target = against.getRelative(face);
-		SpoutItemStack holding = player.getItemInHand();
-		if (target.getY() >= player.getWorld().getMaxHeight()) {
+		pos = pos.add(face.getOffset());
+		org.spout.api.geo.cuboid.Block target = world.getBlock(pos);
+
+		if (pos.getY() >= world.getHeight() || pos.getY() < 0) {
 			return;
 		}
 		boolean sendRevert = false;
-		PlayerInteractEvent interactEvent = EventFactory.onPlayerInteract(player, Action.RIGHT_CLICK_BLOCK, against, face);
-		if (interactEvent.useInteractedBlock() != Event.Result.DENY) {
-			if (!BlockProperties.get(against.getTypeId()).getPhysics().interact(player, against, true, face)) {
-				sendRevert = true;
-			}
-		}
+
+		PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, new Point(pos.add(face.getOffset()), world), inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, false);
+		eventManager.callEvent(interactEvent);
 		if (interactEvent.isCancelled()) {
 			sendRevert = true;
 		}
-		if (holding != null) {
-			if (interactEvent.useItemInHand() != Event.Result.DENY) {
-				if (holding.getTypeId() > 255 && !ItemProperties.get(holding.getTypeId()).getPhysics().interact(player, against, holding, Action.RIGHT_CLICK_BLOCK, face)) {
+
+		if (holding != null && !sendRevert) {
+			/*if (interactEvent.useItemInHand() != Event.Result.DENY) { //TODO: Implement items (they are not in yet!)
+				if (holding.getMaterial().getId() > 255 &&  (holding.getTypeId()).getPhysics().interact(player, against, holding, PlayerInteractEvent.Action.RIGHT_CLICK, face)) {
 					sendRevert = true;
 				}
+			}*/
+			Material placedId = holding.getMaterial();
+			if (placedId.getId() > 255) {
+				//placedId = ItemProperties.get(placedId.getItemTypeId()).getPhysics().getPlacedBlock(face, holding.getDurability()); //TODO: Implement items (they are not in yet!)
+				return;
 			}
-			MaterialData placedId = new MaterialData(holding.getTypeId(), (byte) holding.getDurability());
-			if (placedId.getItemTypeId() > 255) {
-				placedId = ItemProperties.get(placedId.getItemTypeId()).getPhysics().getPlacedBlock(face, holding.getDurability());
-			}
-			if (placedId.getItemTypeId() == -1) {
+			if (placedId.getId() < 0) {
 				sendRevert = true;
 			}
-			if (!sendRevert && placedId.getItemTypeId() < 256) {
-				if (target.isEmpty() || target.isLiquid()) {
-					if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {
-						SpoutBlockState newState = BlockProperties.get(placedId.getItemTypeId()).getPhysics().placeAgainst(player, target.getState(), placedId, face);
-						BlockPlaceEvent event = EventFactory.onBlockPlace(target, newState, against, player);
 
-						if (!event.isCancelled() && event.canBuild()) {
-							newState.update(true);
-							if (newState.getX() != target.getX() || newState.getY() != target.getY() || newState.getZ() != target.getZ()) {
-								sendRevert = true;
-							}
+			VanillaBlockMaterial newBlock = (VanillaBlockMaterial)placedId;
+			VanillaBlockMaterial oldBlock = target != null ? (VanillaBlockMaterial)target.getBlockMaterial() : null;
 
-							if (player.getGameMode() != GameMode.CREATIVE) {
-								holding.setAmount(holding.getAmount() - 1);
-								if (holding.getAmount() == 0) {
-									player.setItemInHand(null);
-								} else {
-									player.setItemInHand(holding);
-								}
-							}
-						} else {
+			if (!sendRevert && (oldBlock == null || oldBlock.isLiquid() || oldBlock.getId() == 0)) {
+				//if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {
+					//SpoutBlockState newState = BlockProperties.get(placedId.getItemTypeId()).getPhysics().placeAgainst(player, target.getState(), placedId, face);
+					//BlockPlaceEvent event = EventFactory.onBlockPlace(target, newState, against, player);
+
+					//if (!event.isCancelled() && event.canBuild()) {
+						/*newState.update(true);
+						if (newState.getX() != target.getX() || newState.getY() != target.getY() || newState.getZ() != target.getZ()) {
 							sendRevert = true;
+						}*/
+
+						if(!sendRevert) {
+							world.setBlockMaterial((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), newBlock);
+							world.setBlockData((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), holding.getDamage());
+							player.getSession().send(new BlockChangeMessage((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), holding.getMaterial().getId(), world.getBlockData((int)pos.getX(), (int)pos.getY(), (int)pos.getZ())));
 						}
-					} else {
-						sendRevert = true;
-					}
-				}
+
+						/*if(player.getGameMode() != GameMode.CREATIVE) { //TODO: Gamemode is currently not changeable
+							holding.setAmount(holding.getAmount() - 1);
+							if (holding.getAmount() == 0) {
+								player.setItemInHand(null);
+							} else {
+								player.setItemInHand(holding);
+							}
+						}*/
+					//} else {
+					//	sendRevert = true;
+					//}
+				//} else {
+				//	sendRevert = true;
+				//}
+			} else {
+				sendRevert = true;
 			}
 		}
 		if (sendRevert) {
-			player.getSession().send(new BlockChangeMessage(target.getX(), target.getY(), target.getZ(), target.getTypeId(), target.getData()));
-			player.setItemInHand(holding);
-		}*/
+			player.getSession().send(new BlockChangeMessage((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), target != null ? target.getBlockId() : 0, world.getBlockData((int)pos.getX(), (int)pos.getY(), (int)pos.getZ())));
+			//TODO: Send potential amount change/whatever!
+		}
 	}
 }

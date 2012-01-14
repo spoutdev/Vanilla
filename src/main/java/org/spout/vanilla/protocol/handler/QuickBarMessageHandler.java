@@ -16,37 +16,43 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
+import org.spout.api.material.MaterialData;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.Block;
 import org.spout.vanilla.protocol.msg.QuickBarMessage;
 
 public class QuickBarMessageHandler extends MessageHandler<QuickBarMessage> {
 	@Override
 	public void handle(Session session, Player player, QuickBarMessage message) {
-		/*if (player.getGameMode() != GameMode.CREATIVE) {
-			player.kickPlayer("Now now, don't try that here. Won't work.");
+		/*if (player.getData("gamemode") != GameMode.CREATIVE) { //TODO: Gamemode is currently not changeable
+			player.kick("Now now, don't try that here. Won't work.");
+			return;
+		}*/
+		int slot = message.getSlot();
+		if (slot < 0 || slot >= player.getEntity().getInventorySize()) {
 			return;
 		}
-		SpoutInventory inv = player.getInventory();
-		int slot = inv.getItemSlot(message.getSlot());
-
-		if (slot < 0 || slot > 8 || !checkValidId(message.getSlot())) {
-			player.onSlotSet(inv, slot, inv.getItem(slot));
+		ItemStack newItem = null;
+		if(checkValidId(message.getId())) {
+			newItem = new ItemStack(MaterialData.getMaterial(message.getId()), message.getAmount(), message.getDamage());
+		} else if(message.getId() != -1) {
+			player.kick("Unknown item ID: " + message.getId());
+			return;
 		}
-		SpoutItemStack newItem = new SpoutItemStack(message.getId(), message.getAmount(), message.getDamage(), message.getNbtData());
-		SpoutItemStack currentItem = inv.getItem(slot);
-
-		inv.setItem(slot, newItem);
-		if (currentItem != null) {
+		player.getEntity().getInventory().setItem(newItem, slot);
+		/*if (currentItem != null) {
 			player.setItemOnCursor(currentItem);
 		} else {
 			player.setItemOnCursor(null);
-		}
-		*/
+		}*/
 	}
 
-	/*public boolean checkValidId(int id) {
-		return BlockProperties.get(id) == null && ItemProperties.get(id) == null;
-	}*/
+	public boolean checkValidId(short id) {
+		return MaterialData.getMaterial(id) != null;
+	}
 }

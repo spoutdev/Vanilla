@@ -16,9 +16,18 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.event.EventManager;
+import org.spout.api.event.player.PlayerInteractEvent;
+import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.VanillaMessageHandlerUtils;
+import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
 
 /**
@@ -31,28 +40,35 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			return;
 		}
 
-		/*boolean blockBroken = false;
+		boolean blockBroken = false;
 
-		SpoutWorld world = player.getWorld();
+		EventManager eventManager = player.getSession().getGame().getEventManager();
+		World world = player.getEntity().getWorld();
 
 		int x = message.getX();
 		int y = message.getY();
 		int z = message.getZ();
 
-		SpoutBlock block = world.getBlockAt(x, y, z);
+		Block block = world.getBlock(x, y, z);
 
 		// Need to have some sort of verification to deal with malicious clients.
 		if (message.getState() == DiggingMessage.STATE_START_DIGGING) {
-			Action act = Action.LEFT_CLICK_BLOCK;
-			if (player.getLocation().distanceSquared(block.getLocation()) > 36 || block.getTypeId() == BlockID.AIR) {
-				act = Action.LEFT_CLICK_AIR;
+			boolean isAir = false;
+			if (block == null || block.getBlockId() == 0 || block.getBlockMaterial() == null) {
+				isAir = true;
 			}
-			BlockFace face = MessageHandlerUtils.messageToBlockFace(message.getFace());
-			PlayerInteractEvent interactEvent = EventFactory.onPlayerInteract(player, act, block, face);
+			PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, new Point(world, x, y, z), player.getEntity().getInventory().getCurrentItem(), PlayerInteractEvent.Action.LEFT_CLICK, isAir);
+			eventManager.callEvent(interactEvent);
 			if (interactEvent.isCancelled()) {
 				return;
 			}
-			if (interactEvent.useItemInHand() != Event.Result.DENY) {
+
+			BlockFace face = VanillaMessageHandlerUtils.messageToBlockFace(message.getFace());
+
+			if(isAir || ((VanillaBlockMaterial)block.getBlockMaterial()).isLiquid()) {
+				return;
+			}
+			/*if (interactEvent.useItemInHand() != Event.Result.DENY) { //TODO: Interactivity!
 				SpoutItemStack heldItem = player.getItemInHand();
 				if (heldItem != null && heldItem.getTypeId() > 255) {
 					ItemProperties props = ItemProperties.get(heldItem.getTypeId());
@@ -67,26 +83,28 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 				if (!BlockProperties.get(block.getTypeId()).getPhysics().interact(player, block, false, face)) {
 					return;
 				}
-			}
-			BlockDamageEvent event = EventFactory.onBlockDamage(player, block);
-			if (!event.isCancelled()) {
-				blockBroken = event.getInstaBreak() || player.getGameMode() == GameMode.CREATIVE;
-			}
-		} else if (message.getState() == DiggingMessage.STATE_DONE_DIGGING) {
-			BlockBreakEvent event = EventFactory.onBlockBreak(block, player);
-			if (!event.isCancelled()) {
+			}*/
+			//if(player.getGamemode() == GameMode.CREATIVE) { //TODO: Gamemodes!
 				blockBroken = true;
-			}
+			//}
+		} else if (message.getState() == DiggingMessage.STATE_DONE_DIGGING) {
+			//TODO: Timing checks!
+			blockBroken = true;
 		}
 
-		if (blockBroken) {
-			if (!block.isEmpty() && !block.isLiquid()) {
+		System.out.print(message + "|" + blockBroken);
+
+		if (blockBroken) { //TODO: We *drop* the block, dont add it >.<
+			world.setBlockId(x, y, z, (short)0);
+			world.setBlockData(x, y, z, (byte) 0);
+			player.getSession().send(new BlockChangeMessage(x, y, z, (short)0, (byte)0));
+			/*if (!block.isEmpty() && !block.isLiquid()) {
 				if (!player.getInventory().contains(block.getTypeId()) || player.getGameMode() != GameMode.CREATIVE) {
 					player.getInventory().addItem(BlockProperties.get(block.getTypeId()).getDrops(block.getData()));
 				}
 			}
 			world.playEffectExceptTo(block.getLocation(), Effect.STEP_SOUND, block.getTypeId(), 64, player);
-			block.setTypeId(BlockID.AIR);
-		}*/
+			block.setTypeId(BlockID.AIR);*/
+		}
 	}
 }

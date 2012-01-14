@@ -119,7 +119,6 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 
 						if(!sendRevert) {
 							world.setBlockMaterial((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), newBlock);
-							world.setBlockData((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), holding.getDamage());
 							player.getSession().send(new BlockChangeMessage((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), holding.getMaterial().getId(), world.getBlockData((int)pos.getX(), (int)pos.getY(), (int)pos.getZ())));
 						}
 

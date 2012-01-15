@@ -59,6 +59,12 @@ public class MovingEntity extends MinecraftEntity {
 	
 	@Override
 	public void preSnapshot() {
+	
+	}
+	
+	@Override
+	public void onSync(){
+		//Why is this here?
 		Message update = createUpdateMessage();
 		if (update != null) {
 			for (Entity e : parent.getWorld().getAll(MinecraftPlayer.class)){

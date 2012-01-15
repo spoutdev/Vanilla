@@ -213,15 +213,19 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		int yaw = (int)(entity.getLiveTransform().getRotation().getAxisAngles().getY() * 256.0F / 360.0F);
 		
 		int id = this.entity.getId();
-		Vector3 pos = Vector3.floor(entity.getLiveTransform().getPosition());
-		Vector3 old = Vector3.floor(entity.getTransform().getPosition());
-		int x = (int)pos.getX();
-		int y = (int)pos.getY();
-		int z = (int)pos.getZ();
+		Vector3 pos = entity.getLiveTransform().getPosition();
+		Vector3 old = entity.getTransform().getPosition();
+		int x = (int)(pos.getX() * 32.0);
+		int y = (int)(pos.getY() * 32.0);
+		int z = (int)(pos.getZ() * 32.0);
 		
-		int dx = (int)(x - old.getX());
-		int dy = (int)(y - old.getY());
-		int dz = (int)(z - old.getZ());
+		int ox = (int)(old.getX() * 32.0);
+		int oy = (int)(old.getY() * 32.0);
+		int oz = (int)(old.getZ() * 32.0);
+		
+		int dx = (x - ox);
+		int dy = (y - oy);
+		int dz = (z - oz);
 		
 		if (moved && teleport) {
 			return new EntityTeleportMessage(id, x, y, z, yaw, pitch);

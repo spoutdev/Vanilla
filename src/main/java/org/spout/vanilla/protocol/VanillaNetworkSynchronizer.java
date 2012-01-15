@@ -6,15 +6,18 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
+import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.EntityRotationMessage;
@@ -89,7 +92,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	}
 
 	@Override
-	protected void sendChunk(Chunk c) {
+	public void sendChunk(Chunk c) {
 		int x = c.getX();
 		int y = c.getY();// + SEALEVEL_CHUNK;
 		int z = c.getZ();
@@ -158,6 +161,27 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			}
 		}
 		super.preSnapshot();
+	}
+	
+	@Override
+	public void updateBlock(Chunk chunk, Block block) {
+		BlockMaterial material = chunk.getBlockMaterial(block.getX(), block.getY(), block.getZ());
+		short id = material.getId();
+		short data = material.getData();
+		// TODO - proper translation
+		if ((id & 0xFF) > 255) {
+			id = 1;
+		}
+		if ((data & 0xF) > 15) {
+			data = 0;
+		}
+		int x = (chunk.getX() << Chunk.CHUNK_SIZE_BITS) + block.getX();
+		int y = (chunk.getY() << Chunk.CHUNK_SIZE_BITS) + block.getY();
+		int z = (chunk.getZ() << Chunk.CHUNK_SIZE_BITS) + block.getZ();
+		if (y >= 0 && y < 128) {
+			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id & 0xFF, data & 0xF);
+			session.send(BCM);
+		}
 	}
 
 	public Message createUpdateMessage() {

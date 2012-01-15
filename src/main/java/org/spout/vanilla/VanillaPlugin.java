@@ -16,6 +16,8 @@
  */
 package org.spout.vanilla;
 
+import org.spout.api.Game;
+import org.spout.api.Server;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
@@ -30,6 +32,9 @@ import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.generator.theend.TheEndGenerator;
 import org.spout.vanilla.protocol.VanillaProtocol;
+import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
+
+import java.net.InetSocketAddress;
 
 public class VanillaPlugin extends CommonPlugin {
 	private final String prefix = "[Vanilla] ";
@@ -43,6 +48,18 @@ public class VanillaPlugin extends CommonPlugin {
 		// TODO - do we need a protocol manager ?
 		// getGame().getProtocolManager().register ...
 		Protocol.registerProtocol(0, new VanillaProtocol());
+		Game game = getGame();
+		if (game instanceof Server) {
+			int port = 25565;
+			String[] split = getGame().getAddress().split(":");
+			if (split.length > 1) {
+				try {
+					port = Integer.parseInt(split[1]);
+				} catch (NumberFormatException e) { }
+			}
+
+			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
+		}
 
 		//getGame().getEventManager().registerEvent(ChunkObservableEvent.class, Order.MONITOR, executor, owner)
 

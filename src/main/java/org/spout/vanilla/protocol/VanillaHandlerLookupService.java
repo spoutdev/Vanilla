@@ -36,7 +36,6 @@ import org.spout.vanilla.protocol.handler.PositionRotationMessageHandler;
 import org.spout.vanilla.protocol.handler.QuickBarMessageHandler;
 import org.spout.vanilla.protocol.handler.RespawnMessageHandler;
 import org.spout.vanilla.protocol.handler.RotationMessageHandler;
-import org.spout.vanilla.protocol.handler.ServerListPingMessageHandler;
 import org.spout.vanilla.protocol.handler.WindowClickMessageHandler;
 import org.spout.vanilla.protocol.msg.ActivateItemMessage;
 import org.spout.vanilla.protocol.msg.AnimateEntityMessage;
@@ -80,7 +79,6 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
             bind(ActivateItemMessage.class, ActivateItemMessageHandler.class);
             bind(EntityActionMessage.class, EntityActionMessageHandler.class);
             bind(AnimateEntityMessage.class, AnimateEntityMessageHandler.class);
-            bind(ServerListPingMessage.class, ServerListPingMessageHandler.class);
             bind(PingMessage.class, PingMessageHandler.class);
             bind(QuickBarMessage.class, QuickBarMessageHandler.class);
             bind(RespawnMessage.class, RespawnMessageHandler.class);

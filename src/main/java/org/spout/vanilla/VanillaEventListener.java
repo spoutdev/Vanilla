@@ -27,6 +27,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
 public class VanillaEventListener implements Listener {
@@ -49,6 +50,7 @@ public class VanillaEventListener implements Listener {
 		// For now, only create Survival Players
 		Entity playerEntity = event.getPlayer().getEntity();
 		playerEntity.setController(new SurvivalPlayer(event.getPlayer()));
+		event.getPlayer().setNetworkSynchronizer(new VanillaNetworkSynchronizer(event.getPlayer(), playerEntity));
 		
 		Point point = playerEntity.getLiveTransform().getPosition();
 		float pitch = playerEntity.getLiveTransform().getRotation().getAxisAngles().getZ();

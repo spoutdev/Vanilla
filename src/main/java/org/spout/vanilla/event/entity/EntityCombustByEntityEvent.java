@@ -31,6 +31,11 @@ import org.spout.api.entity.Entity;
  * Called when an entity causes another to combust.
  */
 public class EntityCombustByEntityEvent extends EntityCombustEvent {
+	public EntityCombustByEntityEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	private Entity combuster;
 
 	public Entity getCombuster() {

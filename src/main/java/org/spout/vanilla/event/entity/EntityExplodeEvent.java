@@ -27,6 +27,7 @@ package org.spout.vanilla.event.entity;
 
 import java.util.List;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
@@ -37,6 +38,11 @@ import org.spout.api.geo.discrete.Point;
  * Called when an entity explodes.
  */
 public class EntityExplodeEvent extends EntityEvent implements Cancellable {
+	public EntityExplodeEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static HandlerList handlers = new HandlerList();
 
 	private List<Block> blocks;

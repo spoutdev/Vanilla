@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.event.entity;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
@@ -33,6 +34,11 @@ import org.spout.api.event.entity.EntityEvent;
  * Called when an entity is damaged.
  */
 public class EntityDamageEvent extends EntityEvent implements Cancellable {
+	public EntityDamageEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static HandlerList handlers = new HandlerList();
 
 	private int damage;

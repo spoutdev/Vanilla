@@ -33,6 +33,11 @@ import org.spout.api.event.entity.EntityTeleportEvent;
  * Called when a player teleports via a portal.
  */
 public class PlayerPortalEvent extends EntityTeleportEvent {
+	public PlayerPortalEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static HandlerList handlers = new HandlerList();
 
 	public Entity getPlayer() {

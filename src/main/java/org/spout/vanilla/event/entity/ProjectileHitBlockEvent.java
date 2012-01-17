@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.event.entity;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
@@ -32,6 +33,11 @@ import org.spout.api.material.block.BlockFace;
  * Called when a projectile hits a block.
  */
 public class ProjectileHitBlockEvent extends ProjectileHitEvent {
+	public ProjectileHitBlockEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	private Block block;
 
 	private BlockFace face;

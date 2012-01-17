@@ -31,6 +31,11 @@ import org.spout.api.entity.Entity;
  * Called when an entity is damaged by another entity.
  */
 public class EntityDamageByEntityEvent extends EntityDamageEvent {
+	public EntityDamageByEntityEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	private Entity damager;
 
 	/**

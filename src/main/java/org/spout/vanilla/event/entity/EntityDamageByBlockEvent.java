@@ -25,12 +25,18 @@
  */
 package org.spout.vanilla.event.entity;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 
 /**
  * Called when an entity is damaged by a block.
  */
 public class EntityDamageByBlockEvent extends EntityDamageEvent {
+	public EntityDamageByBlockEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	private Block damager;
 
 	/**

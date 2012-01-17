@@ -28,11 +28,17 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntitySpawnEvent;
+import org.spout.api.geo.discrete.Point;
 
 /**
  * Called when a player respawns.
  */
 public class PlayerRespawnEvent extends EntitySpawnEvent {
+	public PlayerRespawnEvent(Entity e, Point point) {
+		super(e, point);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static HandlerList handlers = new HandlerList();
 
 	private boolean bedRespawn;

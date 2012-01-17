@@ -25,12 +25,18 @@
  */
 package org.spout.vanilla.event.entity;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 
 /**
  * Called when an entity combusts from a block.
  */
 public class EntityCombustByBlockEvent extends EntityCombustEvent {
+	public EntityCombustByBlockEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	private Block block;
 
 	public Block getBlock() {

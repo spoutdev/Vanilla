@@ -31,6 +31,11 @@ import org.spout.api.entity.Entity;
  * Called when an entity is damaged by a projectile.
  */
 public class EntityDamageByProjectileEvent extends EntityDamageByEntityEvent {
+	public EntityDamageByProjectileEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Gets the projectile that damaged the entity.
 	 *

@@ -34,6 +34,11 @@ import org.spout.api.event.entity.EntityEvent;
  * Called when an entity targets or untargets another entity.
  */
 public class EntityTargetEvent extends EntityEvent implements Cancellable {
+	public EntityTargetEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static HandlerList handlers = new HandlerList();
 
 	private Entity target;

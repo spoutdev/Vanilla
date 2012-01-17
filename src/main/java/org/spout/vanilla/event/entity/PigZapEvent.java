@@ -34,6 +34,11 @@ import org.spout.api.event.entity.EntityEvent;
  * Called when a pig is zapped.
  */
 public class PigZapEvent extends EntityEvent implements Cancellable {
+	public PigZapEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static HandlerList handlers = new HandlerList();
 
 	private Entity pigZombie;

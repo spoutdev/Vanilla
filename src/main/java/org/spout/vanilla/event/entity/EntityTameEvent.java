@@ -34,6 +34,11 @@ import org.spout.api.event.entity.EntityEvent;
  * Called when an entity is tamed.
  */
 public class EntityTameEvent extends EntityEvent implements Cancellable {
+	public EntityTameEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static HandlerList handlers = new HandlerList();
 
 	private Entity owner;

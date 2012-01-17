@@ -32,6 +32,11 @@ import org.spout.api.event.HandlerList;
  * Called when a player dies.
  */
 public class PlayerDeathEvent extends EntityDeathEvent {
+	public PlayerDeathEvent(Entity e) {
+		super(e);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static HandlerList handlers = new HandlerList();
 
 	public Entity getPlayer() {

@@ -48,7 +48,6 @@ Coding and Pull Request Formatting
 * Pull requests must be formatted properly.
 * Number of commits in a pull request should be kept to a minimum.
 * No merges should be included in pull requests unless the pull request's purpose is a merge.
-* If you change a packet or widget's read/write/number of bytes, be sure to increment the version on both the server and client.
 
 **Please follow the above conventions if you want your pull request(s) accepted.**
 

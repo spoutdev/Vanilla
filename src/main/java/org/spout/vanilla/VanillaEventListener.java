@@ -46,12 +46,12 @@ public class VanillaEventListener implements Listener {
 		this.plugin = plugin;
 	}
 
-	@EventHandler(event = PlayerConnectEvent.class)
+	@EventHandler
 	public void onPlayerConnect(PlayerConnectEvent event) {
 		plugin.getGame().getLogger().info(plugin.getPrefix() + "Player connected: " + event.getPlayerName());
 	}
 
-	@EventHandler(event = PlayerJoinEvent.class, order = Order.EARLIEST)
+	@EventHandler(order = Order.EARLIEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		
 		plugin.getGame().broadcastMessage(event.getPlayer().getName() + " has joined the game");

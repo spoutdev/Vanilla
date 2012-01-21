@@ -19,7 +19,7 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.Transform;
+import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;

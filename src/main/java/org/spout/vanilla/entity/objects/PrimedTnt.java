@@ -28,7 +28,7 @@ package org.spout.vanilla.entity.objects;
 import java.util.Random;
 
 import org.spout.api.entity.Controller;
-import org.spout.api.geo.discrete.Transform;
+import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.math.Vector3;
 
 public class PrimedTnt extends Controller {

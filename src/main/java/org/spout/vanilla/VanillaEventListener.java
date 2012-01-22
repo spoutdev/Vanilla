@@ -1,14 +1,14 @@
 /*
  * This file is part of Vanilla (http://www.spout.org/).
  *
- * Vanilla is licensed under the SpoutDev License Version 1.  
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * In addition, 180 days after any changes are published, you can use the 
+ * In addition, 180 days after any changes are published, you can use the
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
@@ -18,9 +18,9 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.  
+ * the MIT license and the SpoutDev license version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
- * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license, 
+ * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla;
@@ -41,40 +41,40 @@ import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
 public class VanillaEventListener implements Listener {
 	private final VanillaPlugin plugin;
-	
+
 	public VanillaEventListener(VanillaPlugin plugin) {
 		this.plugin = plugin;
 	}
 
 	@EventHandler
 	public void onPlayerConnect(PlayerConnectEvent event) {
-		plugin.getGame().getLogger().info(plugin.getPrefix() + "Player connected: " + event.getPlayerName());
+		plugin.getGame().getLogger().info("Player connected: " + event.getPlayerName());
 	}
 
 	@EventHandler(order = Order.EARLIEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		
+
 		plugin.getGame().broadcastMessage(event.getPlayer().getName() + " has joined the game");
 		// Set the player's controller
 		// For now, only create Survival Players
 		Entity playerEntity = event.getPlayer().getEntity();
 		playerEntity.setController(new SurvivalPlayer(event.getPlayer()));
 		event.getPlayer().setNetworkSynchronizer(new VanillaNetworkSynchronizer(event.getPlayer(), playerEntity));
-		
+
 		Point point = playerEntity.getLiveTransform().getPosition();
 		float pitch = playerEntity.getLiveTransform().getRotation().getAxisAngles().getZ();
 		float yaw = playerEntity.getLiveTransform().getRotation().getAxisAngles().getY();
-		
+
 		//Inform existing players of the new player
-		Message update = new SpawnPlayerMessage(playerEntity.getId(), event.getPlayer().getName(), 
-			(int)(point.getX() * 32), (int)(point.getY() * 32), (int)(point.getZ() * 32), 
+		Message update = new SpawnPlayerMessage(playerEntity.getId(), event.getPlayer().getName(),
+			(int)(point.getX() * 32), (int)(point.getY() * 32), (int)(point.getZ() * 32),
 			(int)(yaw  * 256.0F / 360.0F), (int)(pitch * 256.0F / 360.0F), 0);
-		
+
 		for (Player p : plugin.getGame().getOnlinePlayers()) {
 			if (!p.equals(event.getPlayer()))
 				p.getSession().send(update);
 		}
-		
+
 		plugin.getGame().getScheduler().scheduleSyncDelayedTask(plugin, new LoginRunnable(event.getPlayer()), 1L);
 	}
 }
@@ -85,7 +85,7 @@ class LoginRunnable implements Runnable {
 	public LoginRunnable(Player player) {
 		this.player = player;
 	}
-	
+
 	public void run() {
 		if (player.isOnline()){
 			//Inform the new player of existing players
@@ -94,10 +94,10 @@ class LoginRunnable implements Runnable {
 					Point playerPoint = p.getEntity().getLiveTransform().getPosition();
 					float playerPitch = p.getEntity().getLiveTransform().getRotation().getAxisAngles().getZ();
 					float playerYaw = p.getEntity().getLiveTransform().getRotation().getAxisAngles().getY();
-					
+
 					player.getSession().send(
 						new SpawnPlayerMessage(p.getEntity().getId(), p.getName(), (int)(playerPoint.getX() * 32),
-						(int)(playerPoint.getY() * 32), (int)(playerPoint.getZ() * 32), 
+						(int)(playerPoint.getY() * 32), (int)(playerPoint.getZ() * 32),
 						(int)(playerYaw  * 256.0F / 360.0F), (int)(playerPitch * 256.0F / 360.0F), 0));
 				}
 			}

@@ -1,14 +1,14 @@
 /*
  * This file is part of Vanilla (http://www.spout.org/).
  *
- * Vanilla is licensed under the SpoutDev License Version 1.  
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * In addition, 180 days after any changes are published, you can use the 
+ * In addition, 180 days after any changes are published, you can use the
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
@@ -18,9 +18,9 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.  
+ * the MIT license and the SpoutDev license version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
- * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license, 
+ * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla;
@@ -46,12 +46,11 @@ import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 import java.net.InetSocketAddress;
 
 public class VanillaPlugin extends CommonPlugin {
-	private final String prefix = "[Vanilla] ";
 	private final String version = "Minecraft 1.0.1";
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
-	
+
 	public static World spawnWorld;
-	
+
 	@Override
 	public void onLoad() {
 		// TODO - do we need a protocol manager ?
@@ -73,22 +72,21 @@ public class VanillaPlugin extends CommonPlugin {
 		//getGame().getEventManager().registerEvent(ChunkObservableEvent.class, Order.MONITOR, executor, owner)
 
 		getGame().getEventManager().registerEvents(new VanillaEventListener(this), this);
-		
-		getLogger().info(prefix + "loaded");
+
+		getLogger().info("loaded");
 	}
 
 	@Override
 	public void onDisable() {
-		getLogger().info(prefix + "disabled.");
-
+		getLogger().info("disabled.");
 	}
 
 	@Override
 	public void onEnable() {
 		VanillaBlocks.initialize();
-		
+
 		getGame().setDefaultGenerator(new NormalGenerator());
-		
+
 		spawnWorld = getGame().loadWorld("world", new NormalGenerator());
 		// TODO - Should probably be auto-set by generator
 		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0.5F, 64.5F, 0.5F), Quaternion.identity , Vector3.ONE));
@@ -100,15 +98,6 @@ public class VanillaPlugin extends CommonPlugin {
 		World end = getGame().loadWorld("world_end", new TheEndGenerator());
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), new TheEndSky());
 
-		getLogger().info(prefix + "enabled. Version: " + version);
-	}
-	
-	/**
-	 * This method gets the prefix of this plugin in use for chat formatting
-	 * 
-	 * @return String object representing the prefix
-	 */
-	public String getPrefix() {
-		return prefix;
+		getLogger().info("enabled. Version: " + version);
 	}
 }

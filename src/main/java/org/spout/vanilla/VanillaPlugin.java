@@ -46,7 +46,7 @@ import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 import java.net.InetSocketAddress;
 
 public class VanillaPlugin extends CommonPlugin {
-	private final String version = "Minecraft 1.0.1";
+	public static final String VERSION = "Minecraft 1.0.1";
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
 
 	public static World spawnWorld;
@@ -78,7 +78,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onDisable() {
-		getLogger().info("disabled.");
+		getLogger().info("disabled");
 	}
 
 	@Override
@@ -98,6 +98,6 @@ public class VanillaPlugin extends CommonPlugin {
 		World end = getGame().loadWorld("world_end", new TheEndGenerator());
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), new TheEndSky());
 
-		getLogger().info("enabled. Version: " + version);
+		getLogger().info("enabled. Version: " + VERSION);
 	}
 }

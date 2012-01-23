@@ -32,8 +32,17 @@ import org.spout.api.event.entity.EntityEvent;
 
 //Called when a creeper gains or looses a powered state.
 public class CreeperPowerEvent extends EntityEvent implements Cancellable {
-	public CreeperPowerEvent(Entity e) {
+	public CreeperPowerEvent(Entity e, Entity lightning) {
 		super(e);
+		this.reason = PoweredReason.LIGHTNING;
+		this.lightning = lightning;
+		// TODO Auto-generated constructor stub
+	}
+	
+	public CreeperPowerEvent(Entity e, Entity lightning, PoweredReason reason) {
+		super(e);
+		this.reason = reason;
+		this.lightning = lightning;
 		// TODO Auto-generated constructor stub
 	}
 	

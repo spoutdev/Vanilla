@@ -34,8 +34,10 @@ import org.spout.api.event.entity.EntityEvent;
  * Called when a pig is zapped.
  */
 public class PigZapEvent extends EntityEvent implements Cancellable {
-	public PigZapEvent(Entity e) {
+	public PigZapEvent(Entity e, Entity lightning, Entity pigZombie) {
 		super(e);
+		this.lightning = lightning;
+		this.pigZombie = pigZombie;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -45,18 +47,34 @@ public class PigZapEvent extends EntityEvent implements Cancellable {
 
 	private Entity lightning;
 
+	/**
+	 * This gets the entity that represents the lightning that caused the transformation of a pig.
+	 * @return an Entity that represents the lightning.
+	 */	
 	public Entity getLightning() {
 		return lightning;
 	}
 
+	/**
+	 * This sets the entity that represents the lightning that caused the transformation of a pig.
+	 * @param lightning an Entity that represents the lightning.
+	 */	
 	public void setLightning(Entity lightning) {
 		this.lightning = lightning;
 	}
 
+	/**
+	 * This gets the entity that represents the newly created pig zombie
+	 * @return an Entity that represents the pig zombie.
+	 */
 	public Entity getPigZombie() {
 		return pigZombie;
 	}
 
+	/**
+	 * This sets the entity that represents the newly created pig zombie
+	 * @param pigzombie an Entity that represents the newly created pig zombie.
+	 */	
 	public void setPigZombie(Entity pigZombie) {
 		this.pigZombie = pigZombie;
 	}

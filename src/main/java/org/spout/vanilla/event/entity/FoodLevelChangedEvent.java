@@ -32,8 +32,9 @@ import org.spout.api.event.entity.EntityEvent;
 
 //Called when the food level changes
 public class FoodLevelChangedEvent extends EntityEvent implements Cancellable {
-	public FoodLevelChangedEvent(Entity e) {
+	public FoodLevelChangedEvent(Entity e, int foodLevel) {
 		super(e);
+		this.foodLevel = foodLevel;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -53,7 +54,7 @@ public class FoodLevelChangedEvent extends EntityEvent implements Cancellable {
 	 * This sets the food level to a custom value when the event fired.
 	 * @param foodLevel an int that is the number which will be the new food level.
 	 */
-	private void setFoodLevel(int foodLevel) {
+	public void setFoodLevel(int foodLevel) {
 		this.foodLevel = foodLevel;
 	}
 

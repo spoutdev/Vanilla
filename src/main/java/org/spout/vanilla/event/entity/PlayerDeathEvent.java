@@ -29,7 +29,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 
-/**
+/*
  * Called when a player dies.
  */
 public class PlayerDeathEvent extends VanillaEntityDeathEvent implements Cancellable {

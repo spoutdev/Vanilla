@@ -30,7 +30,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
-/**
+/*
  * Called when a slime is split.
  */
 public class SlimeSplitEvent extends EntityEvent implements Cancellable {
@@ -45,7 +45,7 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
 	private int size = 0;
 
-	/**
+	/*
 	 * Gets the amount of slimes to spawn.
 	 *
 	 * @return
@@ -58,7 +58,7 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 		this.amount = amount;
 	}
 
-	/**
+	/*
 	 * Gets the size of slimes to spawn.
 	 *
 	 * @return

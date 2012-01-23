@@ -30,7 +30,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityHealthChangedEvent;
 
-/**
+/*
  * Called when an entity gains health.
  */
 public class VanillaEntityHealthChangedEvent extends EntityHealthChangedEvent implements Cancellable {
@@ -43,7 +43,7 @@ public class VanillaEntityHealthChangedEvent extends EntityHealthChangedEvent im
 
 	private GainHealthReason reason;
 
-	/**
+	/*
 	 * Gets the reason for the gain of health.
 	 *
 	 * @return A GainHealthReason that is the reason for the gained health.
@@ -52,7 +52,7 @@ public class VanillaEntityHealthChangedEvent extends EntityHealthChangedEvent im
 		return reason;
 	}
 
-	/**
+	/*
 	 * Sets the reason for the gain of health.
 	 *
 	 * @param reason A GainedHealthReason that sets the reason for the gained health.

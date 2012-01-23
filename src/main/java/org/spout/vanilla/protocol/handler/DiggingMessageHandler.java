@@ -104,7 +104,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 		System.out.print(message + "|" + blockBroken);
 
 		if (blockBroken) { //TODO: We *drop* the block, dont add it >.<
-			world.setBlockIdAndData(x, y, z, (short)0, (short)0);
+			world.setBlockIdAndData(x, y, z, (short)0, (short)0, player);
 			player.getSession().send(new BlockChangeMessage(x, y, z, (short)0, (byte)0));
 			/*if (!block.isEmpty() && !block.isLiquid()) {
 				if (!player.getInventory().contains(block.getTypeId()) || player.getGameMode() != GameMode.CREATIVE) {

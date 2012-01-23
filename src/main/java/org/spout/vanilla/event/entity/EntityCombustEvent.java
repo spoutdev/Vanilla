@@ -26,10 +26,9 @@
 package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.event.EventSource;
+import org.spout.api.Source;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
-import org.spout.api.geo.cuboid.Block;
 
 /*
  * Called when an entity combusts.
@@ -44,13 +43,13 @@ public class EntityCombustEvent extends EntityEvent {
 
 	private int duration;
 
-	private EventSource source;
+	private Source source;
 
 	/*
 	 * Gets the source of this event.
-	 * @return An EventSource that is the source of the event.
+	 * @return An Source that is the source of the event.
 	 */
-	public EventSource getSource() {
+	public Source getSource() {
 		return source;
 	}
 
@@ -58,7 +57,7 @@ public class EntityCombustEvent extends EntityEvent {
 	 * Sets the source of this event.
 	 * @param source The source of this event.
 	 */
-	public void setSource(EventSource source) {
+	public void setSource(Source source) {
 		this.source = source;
 	}
 

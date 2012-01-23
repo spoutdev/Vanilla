@@ -30,55 +30,60 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
-/**
- * Called when a pig is zapped.
- */
-public class PigZapEvent extends EntityEvent implements Cancellable {
-	public PigZapEvent(Entity e, Entity lightning, Entity pigZombie) {
+//Called when a creeper gains or looses a powered state.
+public class CreeperPowerEvent extends EntityEvent implements Cancellable {
+	public CreeperPowerEvent(Entity e, Entity lightning) {
 		super(e);
+		this.reason = PoweredReason.LIGHTNING;
 		this.lightning = lightning;
-		this.pigZombie = pigZombie;
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	public CreeperPowerEvent(Entity e, Entity lightning, PoweredReason reason) {
+		super(e);
+		this.reason = reason;
+		this.lightning = lightning;
+		// TODO Auto-generated constructor stub
+	}
+	
 	private static HandlerList handlers = new HandlerList();
-
-	private Entity pigZombie;
-
+	
+	private PoweredReason reason;
+	
 	private Entity lightning;
-
+	
 	/**
-	 * This gets the entity that represents the lightning that caused the transformation of a pig.
+	 * This gets the entity that represents the lightning that caused the change in the creeper's state.
 	 * @return an Entity that represents the lightning.
-	 */	
+	 */
 	public Entity getLightning() {
 		return lightning;
 	}
 
 	/**
-	 * This sets the entity that represents the lightning that caused the transformation of a pig.
-	 * @param lightning an Entity that represents the lightning.
-	 */	
+	 * This sets the entity that represents the lightning that caused the change in the creeper's state.
+	 * @param lightning an Entity that represents the new cause of the change in the creeper's state.
+	 */
 	public void setLightning(Entity lightning) {
 		this.lightning = lightning;
 	}
-
+	
 	/**
-	 * This gets the entity that represents the newly created pig zombie
-	 * @return an Entity that represents the pig zombie.
+	 * This gets the reason behind the change in the creeper's state.
+	 * @return a PoweredReason that represents the change in the creeper's state.
 	 */
-	public Entity getPigZombie() {
-		return pigZombie;
+	public PoweredReason getReason() {
+		return reason;
 	}
-
+	
 	/**
-	 * This sets the entity that represents the newly created pig zombie
-	 * @param pigzombie an Entity that represents the newly created pig zombie.
-	 */	
-	public void setPigZombie(Entity pigZombie) {
-		this.pigZombie = pigZombie;
+	 * This sets the reason for the change in the creeper's state.
+	 * @param reason a PoweredReason that is the reason for the change in the creeper's state.
+	 */
+	public void setReason(PoweredReason reason) {
+		this.reason = reason;
 	}
-
+	
 	@Override
 	public void setCancelled(boolean cancelled) {
 		super.setCancelled(cancelled);
@@ -91,5 +96,11 @@ public class PigZapEvent extends EntityEvent implements Cancellable {
 
 	public static HandlerList getHandlerList() {
 		return handlers;
+	}
+	
+	public enum PoweredReason {
+		LIGHTNING,
+		CUSTOM_ON,
+		CUSTOM_OFF;
 	}
 }

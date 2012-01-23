@@ -30,53 +30,32 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
-/**
- * Called when a pig is zapped.
- */
-public class PigZapEvent extends EntityEvent implements Cancellable {
-	public PigZapEvent(Entity e, Entity lightning, Entity pigZombie) {
+//Called when the food level changes
+public class FoodLevelChangedEvent extends EntityEvent implements Cancellable {
+	public FoodLevelChangedEvent(Entity e, int foodLevel) {
 		super(e);
-		this.lightning = lightning;
-		this.pigZombie = pigZombie;
+		this.foodLevel = foodLevel;
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	private static HandlerList handlers = new HandlerList();
-
-	private Entity pigZombie;
-
-	private Entity lightning;
+	
+	private int foodLevel;
 
 	/**
-	 * This gets the entity that represents the lightning that caused the transformation of a pig.
-	 * @return an Entity that represents the lightning.
-	 */	
-	public Entity getLightning() {
-		return lightning;
-	}
-
-	/**
-	 * This sets the entity that represents the lightning that caused the transformation of a pig.
-	 * @param lightning an Entity that represents the lightning.
-	 */	
-	public void setLightning(Entity lightning) {
-		this.lightning = lightning;
-	}
-
-	/**
-	 * This gets the entity that represents the newly created pig zombie
-	 * @return an Entity that represents the pig zombie.
+	 * This gets the current food level changed in the event
+	 * @return an int that is the food level.
 	 */
-	public Entity getPigZombie() {
-		return pigZombie;
+	public int getFoodLevel() {
+		return foodLevel;
 	}
-
+	
 	/**
-	 * This sets the entity that represents the newly created pig zombie
-	 * @param pigzombie an Entity that represents the newly created pig zombie.
-	 */	
-	public void setPigZombie(Entity pigZombie) {
-		this.pigZombie = pigZombie;
+	 * This sets the food level to a custom value when the event fired.
+	 * @param foodLevel an int that is the number which will be the new food level.
+	 */
+	public void setFoodLevel(int foodLevel) {
+		this.foodLevel = foodLevel;
 	}
 
 	@Override

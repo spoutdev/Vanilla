@@ -31,17 +31,18 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityTeleportEvent;
 
 /**
- * Called when a player teleports via a portal.
+ * Called when a entity teleports via a portal.
  */
-public class PlayerPortalEvent extends EntityTeleportEvent implements Cancellable {
-	public PlayerPortalEvent(Entity e) {
+public class EntityPortalEvent extends EntityTeleportEvent implements Cancellable {
+	public EntityPortalEvent(Entity e) {
 		super(e);
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	private static HandlerList handlers = new HandlerList();
 
-	public Entity getPlayer() {
+	@Override
+	public Entity getEntity() {
 		return (Entity) getEntity();
 	}
 

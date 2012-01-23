@@ -34,7 +34,7 @@ import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
-/**
+/*
  * Called when an entity explodes.
  */
 public class EntityExplodeEvent extends EntityEvent implements Cancellable {

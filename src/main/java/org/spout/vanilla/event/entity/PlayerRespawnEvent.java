@@ -31,7 +31,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.geo.discrete.Point;
 
-/**
+/*
  * Called when a player respawns.
  */
 public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable {
@@ -48,7 +48,7 @@ public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable 
 		return getEntity();
 	}
 
-	/**
+	/*
 	 * Returns true if the respawn location is a bed.
 	 *
 	 * @return True if the respawn location is a bed.

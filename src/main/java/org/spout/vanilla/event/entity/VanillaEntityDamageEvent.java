@@ -30,7 +30,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityDamageEvent;
 
-/**
+/*
  * Called when an entity is damaged.
  */
 public class VanillaEntityDamageEvent extends EntityDamageEvent implements Cancellable {
@@ -43,7 +43,7 @@ public class VanillaEntityDamageEvent extends EntityDamageEvent implements Cance
 
 	private DamageCause cause;
 
-	/**
+	/*
 	 * Gets the cause of the damage.
 	 *
 	 * @return A DamageCause value detailing the cause of the damage.

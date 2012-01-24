@@ -61,7 +61,7 @@ public class VanillaEventListener implements Listener {
 		playerEntity.setController(new SurvivalPlayer(event.getPlayer()));
 		event.getPlayer().setNetworkSynchronizer(new VanillaNetworkSynchronizer(event.getPlayer(), playerEntity));
 
-		Point point = playerEntity.getLiveTransform().getPosition();
+		/*Point point = playerEntity.getLiveTransform().getPosition();
 		float pitch = playerEntity.getLiveTransform().getRotation().getAxisAngles().getZ();
 		float yaw = playerEntity.getLiveTransform().getRotation().getAxisAngles().getY();
 
@@ -73,7 +73,7 @@ public class VanillaEventListener implements Listener {
 		for (Player p : plugin.getGame().getOnlinePlayers()) {
 			if (!p.equals(event.getPlayer()))
 				p.getSession().send(update);
-		}
+		}*/
 
 		plugin.getGame().getScheduler().scheduleSyncDelayedTask(plugin, new LoginRunnable(event.getPlayer()), 1L);
 	}
@@ -95,10 +95,10 @@ class LoginRunnable implements Runnable {
 					float playerPitch = p.getEntity().getLiveTransform().getRotation().getAxisAngles().getZ();
 					float playerYaw = p.getEntity().getLiveTransform().getRotation().getAxisAngles().getY();
 
-					player.getSession().send(
+					/*player.getSession().send(
 						new SpawnPlayerMessage(p.getEntity().getId(), p.getName(), (int)(playerPoint.getX() * 32),
 						(int)(playerPoint.getY() * 32), (int)(playerPoint.getZ() * 32),
-						(int)(playerYaw  * 256.0F / 360.0F), (int)(playerPitch * 256.0F / 360.0F), 0));
+						(int)(playerYaw  * 256.0F / 360.0F), (int)(playerPitch * 256.0F / 360.0F), 0));*/
 				}
 			}
 		}

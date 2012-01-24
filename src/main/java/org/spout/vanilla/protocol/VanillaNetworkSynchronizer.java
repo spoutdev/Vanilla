@@ -152,16 +152,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			lastKeepAlive = currentTime;
 			owner.getSession().send(PingMsg);
 		}
-		
-		Message update = createUpdateMessage();
-		World world = owner.getEntity().getWorld();
-		if (update != null) {
-			for (Player p : Spout.getGame().getOnlinePlayers()) {
-				if (!p.equals(owner) && p.getEntity().getWorld().equals(world)) {
-					p.getSession().send(update);
-				}
-			}
-		}
 		super.preSnapshot();
 	}
 	

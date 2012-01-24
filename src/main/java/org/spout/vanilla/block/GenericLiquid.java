@@ -36,7 +36,13 @@ public class GenericLiquid extends GenericBlockMaterial implements Liquid {
 		this.flowing = flowing;
 	}
 
+	@Override
 	public boolean isFlowing() {
 		return flowing;
+	}
+	
+	@Override
+	public boolean isLiquid() {
+		return true;
 	}
 }

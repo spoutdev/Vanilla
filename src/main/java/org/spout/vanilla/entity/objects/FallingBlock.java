@@ -37,7 +37,6 @@ import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
 public class FallingBlock extends MovingEntity {
 	private final BlockMaterial block;
-	private int fallTicks = 0;
 	public FallingBlock(BlockMaterial block) {
 		this.block = block;
 	}
@@ -49,21 +48,24 @@ public class FallingBlock extends MovingEntity {
 
 	@Override
 	public void onTick(float dt) {
-		fallTicks++;
-		if (fallTicks > 1){
-			Point position = parent.getTransform().getPosition();
-			World world = position.getWorld();
-			int x = MathHelper.floor(position.getX());
-			int y = MathHelper.floor(position.getY());
-			int z = MathHelper.floor(position.getZ());
-			Block pos = world.getBlock(x, y-1, z);
-			if (pos.getBlockMaterial() == VanillaBlocks.air){
-				getVelocity().add(0, -0.04F, 0);
-			}
-			else {
-				world.setBlockMaterial(x, y, z, block, world);
-				this.parent.kill();
-			}
+		if (parent == null || parent.getTransform() == null) {
+			return;
+		}
+		Point position = parent.getTransform().getPosition();
+		if (position == null) {
+			return;
+		}
+		World world = position.getWorld();
+		int x = MathHelper.floor(position.getX());
+		int y = MathHelper.floor(position.getY());
+		int z = MathHelper.floor(position.getZ());
+		Block pos = world.getBlock(x, y-1, z);
+		if (pos.getBlockMaterial() == VanillaBlocks.air){
+			getVelocity().add(0, -0.04F, 0);
+		}
+		else {
+			world.setBlockMaterial(x, y, z, block, world);
+			this.parent.kill();
 		}
 		super.onTick(dt);
 	}

@@ -28,8 +28,8 @@ package org.spout.vanilla.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.atomic.Transform;
-import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
+import org.spout.api.math.Vector3m;
 import org.spout.api.protocol.Message;
 import org.spout.vanilla.VanillaBlocks;
 import org.spout.vanilla.entity.living.player.MinecraftPlayer;
@@ -43,7 +43,7 @@ import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
  */
 public class MovingEntity extends MinecraftEntity {
 
-	protected Vector3 velocity = Vector3.ZERO;
+	protected final Vector3m velocity = new Vector3m(Vector3.ZERO);
 	private int fireTicks;
 	private boolean flammable;
 
@@ -123,7 +123,7 @@ public class MovingEntity extends MinecraftEntity {
 	private void checkWeb() {
 		Point pos = parent.getTransform().getPosition();
 		if (pos.getWorld().getBlock(pos).getBlockMaterial().equals(VanillaBlocks.web)) {
-			velocity = Vector3.ZERO;
+			velocity.set(Vector3.ZERO);
 		}
 	}
 
@@ -167,9 +167,5 @@ public class MovingEntity extends MinecraftEntity {
 
 	public Vector3 getVelocity() {
 		return velocity;
-	}
-
-	public void setVelocity(Vector3 velocity) {
-		this.velocity = velocity;
 	}
 }

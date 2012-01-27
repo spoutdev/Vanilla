@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.block;
 
+import org.spout.api.geo.World;
 import org.spout.api.material.GenericBlockMaterial;
 import org.spout.vanilla.material.SolidBlock;
 
@@ -53,5 +54,9 @@ public class Solid extends GenericBlockMaterial implements SolidBlock {
 
 	public boolean isFallingBlock() {
 		return falling;
+	}
+
+	public void onUpdate(World world, int x, int y, int z) {
+		
 	}
 }

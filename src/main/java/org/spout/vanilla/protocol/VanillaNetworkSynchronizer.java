@@ -234,5 +234,15 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 		return null;
 	}
+	
+	@Override
+	public void spawnEntity(Entity e){
+		
+	}
+	
+	@Override
+	public void destroyEntity(Entity e) {
+		
+	}
 
 }

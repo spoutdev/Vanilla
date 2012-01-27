@@ -41,7 +41,7 @@ import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
 /**
  * Moving entity controller
  */
-public class MovingEntity extends MinecraftEntity {
+public abstract class MovingEntity extends MinecraftEntity {
 
 	protected final Vector3m velocity = new Vector3m(Vector3.ZERO);
 	private int fireTicks;

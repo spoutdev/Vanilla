@@ -30,39 +30,21 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
-import org.spout.api.player.Player;
+import org.spout.api.protocol.Message;
 import org.spout.vanilla.VanillaBlocks;
 import org.spout.vanilla.entity.MovingEntity;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
 public class FallingBlock extends MovingEntity {
 	private final BlockMaterial block;
-	private final Point start;
 	private int fallTicks = 0;
-	public FallingBlock(BlockMaterial block, Point position) {
-		if (position == null) throw new NullPointerException("Position can not be null");
+	public FallingBlock(BlockMaterial block) {
 		this.block = block;
-		start = new Point(position);
 	}
 	
 	@Override
 	public void onAttached() {
-		this.parent.getTransform().setPosition(start);
 		super.onAttached();
-		int spawnId = -1; //TODO: support for other falling block types?
-		if (block == VanillaBlocks.sand){
-			spawnId = 70;
-		}
-		if (block == VanillaBlocks.gravel){
-			spawnId = 71;
-		}
-		if (spawnId > 0) {
-			int x = MathHelper.floor(start.getX());
-			int y = MathHelper.floor(start.getY());
-			int z = MathHelper.floor(start.getZ());
-			SpawnVehicleMessage message = new SpawnVehicleMessage(parent.getId(), spawnId, x, y, z);
-			for (Player player : start.getWorld().p
-		}
 	}
 
 	@Override
@@ -84,5 +66,23 @@ public class FallingBlock extends MovingEntity {
 			}
 		}
 		super.onTick(dt);
+	}
+	
+	public Message getSpawnMessage(){
+		int spawnId = -1; //TODO: support for other falling block types?
+		if (block == VanillaBlocks.sand){
+			spawnId = 70;
+		}
+		if (block == VanillaBlocks.gravel){
+			spawnId = 71;
+		}
+		if (spawnId > 0) {
+			Point position = parent.getTransform().getPosition();
+			int x = MathHelper.floor(position.getX());
+			int y = MathHelper.floor(position.getY());
+			int z = MathHelper.floor(position.getZ());
+			return new SpawnVehicleMessage(parent.getId(), spawnId, x, y, z);
+		}
+		return null;
 	}
 }

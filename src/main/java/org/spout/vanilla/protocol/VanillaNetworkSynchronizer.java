@@ -17,6 +17,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
+import org.spout.vanilla.entity.MinecraftEntity;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
@@ -49,6 +50,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	}
 	
 	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();
+	
+	//TODO: track entities as they come into range and untrack entities as they move out of range
+	private TIntHashSet activeEntities = new TIntHashSet();
 	
 	@Override
 	protected void freeChunk(Point p) {
@@ -237,12 +241,55 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	
 	@Override
 	public void spawnEntity(Entity e){
+		if (e == null) {
+			return;
+		}
 		
+		Controller c = entity.getController();
+		
+		if (c == null) {
+			return;
+		}
+		
+		if (e.getTransform().getPosition().getManhattanDistance(this.entity.getTransform().getPosition()) > e.getViewDistance()) {
+			return;
+		}
+		
+		if (c instanceof MinecraftEntity) {
+			MinecraftEntity controller = (MinecraftEntity)c;
+			Message spawn = controller.getSpawnMessage();
+			if (spawn != null) {
+				activeEntities.add(e.getId());
+				this.session.send(spawn);
+			}
+		}
+		super.spawnEntity(e);
 	}
 	
 	@Override
 	public void destroyEntity(Entity e) {
+		if (e == null) {
+			return;
+		}
 		
+		if (!activeEntities.contains(e.getId())) {
+			return;
+		}
+		
+		Controller c = entity.getController();
+		
+		if (c == null) {
+			return;
+		}
+		
+		if (c instanceof MinecraftEntity) {
+			MinecraftEntity controller = (MinecraftEntity)c;
+			Message death = controller.getDeathMessage();
+			if (death != null) {
+				this.session.send(death);
+			}
+		}
+		super.destroyEntity(e);
 	}
 
 }

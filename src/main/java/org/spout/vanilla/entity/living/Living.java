@@ -32,7 +32,7 @@ import org.spout.vanilla.entity.MovingEntity;
 /**
  * Represents a living entity controller that moves.
  */
-public class Living extends MovingEntity {
+public abstract class Living extends MovingEntity {
 	private static float GRAVITY_MULTIPLIER = 23.31f;
 
 	private boolean gravity = true;

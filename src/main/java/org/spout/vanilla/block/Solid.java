@@ -26,7 +26,9 @@
 package org.spout.vanilla.block;
 
 import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.GenericBlockMaterial;
+import org.spout.vanilla.entity.objects.FallingBlock;
 import org.spout.vanilla.material.SolidBlock;
 
 public class Solid extends GenericBlockMaterial implements SolidBlock {
@@ -57,6 +59,12 @@ public class Solid extends GenericBlockMaterial implements SolidBlock {
 	}
 
 	public void onUpdate(World world, int x, int y, int z) {
-		
+		if (falling){
+			if (world.getBlockId(x, y - 1, z) == 0) {
+				if (world.setBlockId(x, y, z, (short)0, world)) {
+					world.createAndSpawnEntity(new Point(world, x, y, z), new FallingBlock(this));
+				}
+			}
+		}
 	}
 }

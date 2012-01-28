@@ -25,12 +25,103 @@
  */
 package org.spout.vanilla.generator.normal;
 
+import java.util.Random;
 import org.spout.api.generator.Populator;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
+import org.spout.vanilla.VanillaBlocks;
 
 public class OrePopulator implements Populator {
-	
+
+	@Override
 	public void populate(Chunk c) {
+		Random ra = new Random();
+		int chance;
+		chance = ra.nextInt(10000);
+		if (chance <= 500) {
+			generateCoal(c, ra);
+		}
+		chance = ra.nextInt(10000);
+		if (chance <= 500 && c.getY() <= 4) {
+			generateIron(c, ra);
+		}
+		chance = ra.nextInt(10000);
+		if (chance <= 400 && c.getY() <= 2) {
+			generateLapis(c, ra);
+		}
+		chance = ra.nextInt(10000);
+		if (chance <= 390 && c.getY() <= 2) {
+			generateGold(c, ra);
+		}
+		chance = ra.nextInt(10000);
+		if (chance <= 350 && c.getY() <= 1) {
+			generateDiamond(c, ra);
+		}
+		chance = ra.nextInt(10000);
+		if (chance <= 370 && c.getY() <= 1) {
+			generateRedstone(c, ra);
+		}
 	}
 
+	private void generateCoal(Chunk c, Random ra) {
+		generateOre(c, ra, VanillaBlocks.coalOre, 30);
+	}
+
+	private void generateIron(Chunk c, Random ra) {
+		generateOre(c, ra, VanillaBlocks.ironOre, 15);
+	}
+
+	private void generateLapis(Chunk c, Random ra) {
+		generateOre(c, ra, VanillaBlocks.lapisOre, 8);
+
+	}
+
+	private void generateGold(Chunk c, Random ra) {
+		generateOre(c, ra, VanillaBlocks.goldOre, 9);
+
+	}
+
+	private void generateDiamond(Chunk c, Random ra) {
+		generateOre(c, ra, VanillaBlocks.diamondOre, 9);
+
+	}
+
+	private void generateRedstone(Chunk c, Random ra) {
+		generateOre(c, ra, VanillaBlocks.redstoneOre, 10);
+	}
+
+	private void generateOre(Chunk c, Random ra, BlockMaterial material, int maxNumber) {
+		int number = ra.nextInt(maxNumber);
+		int pozx = c.getX() * 16 + ra.nextInt(16);
+		int pozy = c.getY() * 16 + ra.nextInt(16);
+		int pozz = c.getZ() * 16 + ra.nextInt(16);
+		for (int i = 1; i <= number;) {
+			if (c.getWorld().getBlock(pozx, pozy, pozz).getBlockMaterial() != VanillaBlocks.air) {
+				c.getWorld().setBlockMaterial(pozx, pozy, pozz, material, c.getWorld());
+			}
+			i++;
+			int newDir = ra.nextInt(6);
+			switch (newDir) {
+				case 0:
+					pozx++;
+					break;
+				case 1:
+					pozx--;
+					break;
+				case 2:
+					pozy++;
+					break;
+				case 3:
+					pozy--;
+					break;
+				case 4:
+					pozz++;
+					break;
+				case 5:
+					pozz--;
+					break;
+			}
+
+		}
+	}
 }

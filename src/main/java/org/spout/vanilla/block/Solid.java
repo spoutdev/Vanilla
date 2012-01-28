@@ -57,7 +57,13 @@ public class Solid extends GenericBlockMaterial implements SolidBlock {
 	public boolean isFallingBlock() {
 		return falling;
 	}
+	
+	@Override
+	public boolean hasPhysics() {
+		return isFallingBlock();
+	}
 
+	@Override
 	public void onUpdate(World world, int x, int y, int z) {
 		if (falling){
 			if (world.getBlockId(x, y - 1, z) == 0) {

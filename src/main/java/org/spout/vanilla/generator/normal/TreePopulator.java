@@ -33,10 +33,10 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.vanilla.VanillaBlocks;
 
 public class TreePopulator implements Populator {
-
+    
     private Random random = new Random();
     
-	public void generateNormalTree(Chunk c, Point point) {
+    public void generateNormalTree(Chunk c, Point point) {
         int x = (int) point.getX();
         int y = (int) point.getY();
         int z = (int) point.getZ();
@@ -122,21 +122,21 @@ public class TreePopulator implements Populator {
         c.setBlockId(x+1, y+4, z+2, leaves, world);
         c.setBlockId(x+2, y+4, z+1, leaves, world);
 	}
-
-	public void generateBigTree(Chunk c, Point p) {
+    
+    public void generateBigTree(Chunk c, Point p) {
         
-	}
-
-	public void generateRedwoodTree(Chunk c, Point p) {
-
-	}
-
-	public void generateBirchTree(Chunk c, Point point) {
-        
-	}
-
+    }
+    
+    public void generateRedwoodTree(Chunk c, Point p) {
+    
+    }
+    
+    public void generateBirchTree(Chunk c, Point point) {
+    
+    }
+    
     @Override
-	public void populate(Chunk c) {
+    public void populate(Chunk c) {
         for (int a = 0; a < random.nextInt(20); a++) {
             int x = random.nextInt(16);
             int z = random.nextInt(16);
@@ -147,6 +147,7 @@ public class TreePopulator implements Populator {
                     break;
                 }
             }
+            
             if (c.getBlockId(x, y, z) == 2) {
                 this.generateNormalTree(c, new Point(c.getWorld(), x, y, z));
             }

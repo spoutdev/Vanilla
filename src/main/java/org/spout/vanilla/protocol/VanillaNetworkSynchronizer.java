@@ -2,7 +2,6 @@ package org.spout.vanilla.protocol;
 
 import gnu.trove.set.hash.TIntHashSet;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.World;
@@ -18,6 +17,7 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 import org.spout.vanilla.entity.MinecraftEntity;
+import org.spout.vanilla.entity.living.player.MinecraftPlayer;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
@@ -244,14 +244,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (e == null) {
 			return;
 		}
+		System.out.println("Spawning: " + owner.getName() + ":" + e.getId() + ":" + e.getTransform().getPosition());
 		
 		Controller c = entity.getController();
-		
 		if (c == null) {
-			return;
-		}
-		
-		if (e.getTransform().getPosition().getManhattanDistance(this.entity.getTransform().getPosition()) > e.getViewDistance()) {
 			return;
 		}
 		
@@ -271,13 +267,14 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (e == null) {
 			return;
 		}
+		System.out.println("Destroying: " + owner.getName() + ":" + e.getId() + ":" + e.getTransform().getPosition());
 		
 		if (!activeEntities.contains(e.getId())) {
 			return;
 		}
 		
 		Controller c = entity.getController();
-		
+
 		if (c == null) {
 			return;
 		}
@@ -287,6 +284,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			Message death = controller.getDeathMessage();
 			if (death != null) {
 				this.session.send(death);
+				activeEntities.remove(e.getId());
 			}
 		}
 		super.destroyEntity(e);

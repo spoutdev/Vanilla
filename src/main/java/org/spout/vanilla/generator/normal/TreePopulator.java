@@ -33,8 +33,8 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.vanilla.VanillaBlocks;
 
 public class TreePopulator implements Populator {
-	
-	private Random random = new Random();
+    
+    private Random random = new Random();
     
     public void generateNormalTree(Chunk c, Point point) {
     	int x = (int) point.getX();

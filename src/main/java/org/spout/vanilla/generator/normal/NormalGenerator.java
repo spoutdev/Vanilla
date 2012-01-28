@@ -65,7 +65,7 @@ public class NormalGenerator implements WorldGenerator {
 		}
 	}
 
-	private final Populator[] populators = new Populator[]{new TreePopulator(), new PondPopulator(), new StrongholdPopulator(), new VillagePopulator(), new AbandonedMineshaftPopulator(), new DungeonPopulator()};
+	private final Populator[] populators = new Populator[]{new OrePopulator(), new TreePopulator(), new PondPopulator(), new StrongholdPopulator(), new VillagePopulator(), new AbandonedMineshaftPopulator(), new DungeonPopulator()};
 
 	public Populator[] getPopulators() {
 		return populators;
@@ -93,21 +93,21 @@ public class NormalGenerator implements WorldGenerator {
 				boolean wateredStack = height < 64;
 				
 				for(int dy = y; dy < y + 16; dy++) {
-					short id = VanillaBlocks.air.getId();
+					short id;
 					
 					id = getBlockId(height, dy);
 					
 					blockData.set(dx, dy, dz, id);
 				}
-				int layers = (int) ((layerCount.GetValue(dx / 16.0 + 0.05, 0.05, dz / 16.0 + 0.05) + 1.0) * 5.0 + 2);
+				int ilayers = (int) ((layerCount.GetValue(dx / 16.0 + 0.05, 0.05, dz / 16.0 + 0.05) + 1.0) * 5.0 + 2);
 
-				if(layers <= 0) {
-					layers = 2;
+				if(ilayers <= 0) {
+					ilayers = 2;
 				}
 
-				int heightPerLayer = 59/layers;
+				int heightPerLayer = 59/ilayers;
 
-				for (int layer = 0; layer < layers; layer+=2) {
+				for (int layer = 0; layer < ilayers; layer+=2) {
 					Perlin bottom = getLayer(layer);
 					Perlin top = getLayer(layer+1);
 					int min = 3 + heightPerLayer * layer;

@@ -28,8 +28,10 @@ package org.spout.vanilla.block;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.GenericBlockMaterial;
+import org.spout.vanilla.VanillaBlocks;
 import org.spout.vanilla.entity.objects.FallingBlock;
 import org.spout.vanilla.material.SolidBlock;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class Solid extends GenericBlockMaterial implements SolidBlock {
 	private final boolean falling;
@@ -54,6 +56,7 @@ public class Solid extends GenericBlockMaterial implements SolidBlock {
 		falling = false;
 	}
 
+	@Override
 	public boolean isFallingBlock() {
 		return falling;
 	}
@@ -66,7 +69,8 @@ public class Solid extends GenericBlockMaterial implements SolidBlock {
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
 		if (falling){
-			if (world.getBlockId(x, y - 1, z) == 0) {
+			VanillaBlockMaterial material =(VanillaBlockMaterial) world.getBlockMaterial(x, y - 1, z);
+			if (material == VanillaBlocks.air || material.isLiquid()) {
 				if (world.setBlockId(x, y, z, (short)0, world)) {
 					world.createAndSpawnEntity(new Point(world, x, y, z), new FallingBlock(this));
 				}

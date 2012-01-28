@@ -26,13 +26,14 @@
 package org.spout.vanilla.entity.objects;
 
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.vanilla.VanillaBlocks;
 import org.spout.vanilla.entity.MovingEntity;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
 public class FallingBlock extends MovingEntity {
@@ -59,9 +60,9 @@ public class FallingBlock extends MovingEntity {
 		int x = MathHelper.floor(position.getX());
 		int y = MathHelper.floor(position.getY());
 		int z = MathHelper.floor(position.getZ());
-		Block pos = world.getBlock(x, y-1, z);
-		if (pos.getBlockMaterial() == VanillaBlocks.air){
-			getVelocity().add(0, -0.04F, 0);
+		VanillaBlockMaterial material = (VanillaBlockMaterial) world.getBlock(x, y-1, z).getBlockMaterial();
+		if (material == VanillaBlocks.air || material.isLiquid()){
+			getVelocity().add(new Vector3(0, -0.04F, 0));
 		}
 		else {
 			world.setBlockMaterial(x, y, z, block, world);
@@ -70,6 +71,7 @@ public class FallingBlock extends MovingEntity {
 		super.onTick(dt);
 	}
 	
+	@Override
 	public Message getSpawnMessage(){
 		int spawnId = -1; //TODO: support for other falling block types?
 		if (block == VanillaBlocks.sand){

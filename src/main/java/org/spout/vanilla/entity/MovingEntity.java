@@ -61,7 +61,7 @@ public abstract class MovingEntity extends MinecraftEntity {
 	}
 
 	private void updateMovement(float dt) {
-		Transform t = parent.getTransform();
+		Transform t = parent.getLiveTransform();
 		t.setPosition(t.getPosition().add(velocity));
 		//TODO: collision
 	}

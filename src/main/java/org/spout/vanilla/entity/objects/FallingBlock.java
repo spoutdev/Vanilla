@@ -60,7 +60,7 @@ public class FallingBlock extends MovingEntity {
 		int y = MathHelper.floor(position.getY());
 		int z = MathHelper.floor(position.getZ());
 		VanillaBlockMaterial material = (VanillaBlockMaterial) world.getBlock(x, y-1, z).getBlockMaterial();
-		if (material == VanillaBlocks.air || material.isLiquid()){
+		if (material == VanillaBlocks.AIR || material.isLiquid()){
 			getVelocity().add(0, -0.004, 0);
 		}
 		else {
@@ -72,10 +72,10 @@ public class FallingBlock extends MovingEntity {
 	
 	public Message getSpawnMessage(){
 		int spawnId = -1; //TODO: support for other falling block types?
-		if (block == VanillaBlocks.sand){
+		if (block == VanillaBlocks.SAND){
 			spawnId = 70;
 		}
-		if (block == VanillaBlocks.gravel){
+		if (block == VanillaBlocks.GRAVEL){
 			spawnId = 71;
 		}
 		if (spawnId > 0) {

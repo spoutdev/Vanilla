@@ -70,7 +70,7 @@ public class Solid extends GenericBlockMaterial implements SolidBlock {
 	public void onUpdate(World world, int x, int y, int z) {
 		if (falling){
 			VanillaBlockMaterial material =(VanillaBlockMaterial) world.getBlockMaterial(x, y - 1, z);
-			if (material == VanillaBlocks.air || material.isLiquid()) {
+			if (material == VanillaBlocks.AIR || material.isLiquid()) {
 				if (world.setBlockId(x, y, z, (short)0, world)) {
 					world.createAndSpawnEntity(new Point(world, x, y, z), new FallingBlock(this));
 				}

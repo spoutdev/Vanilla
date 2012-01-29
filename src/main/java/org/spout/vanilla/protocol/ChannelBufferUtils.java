@@ -46,6 +46,7 @@ import org.spout.api.util.Color;
 import org.spout.api.util.Parameter;
 
 import org.jboss.netty.buffer.ChannelBuffer;
+import org.spout.vanilla.VanillaBlocks;
 
 /**
  * Contains several {@link org.jboss.netty.buffer.ChannelBuffer}-related utility methods.
@@ -315,7 +316,53 @@ public final class ChannelBufferUtils {
 	}
 
 	public static boolean hasNbtData(int id) {
-		return id > 255;
+		return id == VanillaBlocks.IRON_SHOVEL.getId() ||
+				id == VanillaBlocks.IRON_PICKAXE.getId() ||
+				id == VanillaBlocks.IRON_AXE.getId() ||
+				id == VanillaBlocks.IRON_SWORD.getId() ||
+				id == VanillaBlocks.WOODEN_SWORD.getId() ||
+				id == VanillaBlocks.WOODEN_SHOVEL.getId() ||
+				id == VanillaBlocks.WOODEN_PICKAXE.getId() ||
+				id == VanillaBlocks.WOODEN_AXE.getId() ||
+				id == VanillaBlocks.STONE_SWORD.getId() ||
+				id == VanillaBlocks.STONE_SHOVEL.getId() ||
+				id == VanillaBlocks.STONE_PICKAXE.getId() ||
+				id == VanillaBlocks.STONE_AXE.getId() ||
+				id == VanillaBlocks.DIAMOND_SWORD.getId() ||
+				id == VanillaBlocks.DIAMOND_SHOVEL.getId() ||
+				id == VanillaBlocks.DIAMOND_PICKAXE.getId() ||
+				id == VanillaBlocks.DIAMOND_AXE.getId() ||
+				id == VanillaBlocks.GOLD_SWORD.getId() ||
+				id == VanillaBlocks.GOLD_SHOVEL.getId() ||
+				id == VanillaBlocks.GOLD_PICKAXE.getId() ||
+				id == VanillaBlocks.GOLD_AXE.getId() ||
+				id == VanillaBlocks.WOODEN_HOE.getId() ||
+				id == VanillaBlocks.STONE_HOE.getId() ||
+				id == VanillaBlocks.IRON_HOE.getId() ||
+				id == VanillaBlocks.DIAMOND_HOE.getId() ||
+				id == VanillaBlocks.GOLD_HOE.getId() ||
+				id == VanillaBlocks.LEATHER_CAP.getId() ||
+				id == VanillaBlocks.LEATHER_TUNIC.getId() ||
+				id == VanillaBlocks.LEATHER_PANTS.getId() ||
+				id == VanillaBlocks.LEATHER_BOOTS.getId() ||
+				id == VanillaBlocks.CHAIN_HELMET.getId() ||
+				id == VanillaBlocks.CHAIN_CHESTPLATE.getId() ||
+				id == VanillaBlocks.CHAIN_LEGGINGS.getId() ||
+				id == VanillaBlocks.CHAIN_BOOTS.getId() ||
+				id == VanillaBlocks.IRON_HELMET.getId() ||
+				id == VanillaBlocks.IRON_CHESTPLATE.getId() ||
+				id == VanillaBlocks.IRON_LEGGINGS.getId() ||
+				id == VanillaBlocks.IRON_BOOTS.getId() ||
+				id == VanillaBlocks.DIAMOND_HELMET.getId() ||
+				id == VanillaBlocks.DIAMOND_CHESTPLATE.getId() ||
+				id == VanillaBlocks.DIAMOND_LEGGINGS.getId() ||
+				id == VanillaBlocks.DIAMOND_BOOTS.getId() ||
+				id == VanillaBlocks.GOLD_HELMET.getId() ||
+				id == VanillaBlocks.GOLD_CHESTPLATE.getId() ||
+				id == VanillaBlocks.GOLD_LEGGINGS.getId() ||
+				id == VanillaBlocks.GOLD_BOOTS.getId() ||
+				id == VanillaBlocks.FISHING_ROD.getId() ||
+				id == VanillaBlocks.SHEARS.getId();
 	}
 
 	/**

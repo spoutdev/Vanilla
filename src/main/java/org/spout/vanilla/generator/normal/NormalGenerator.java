@@ -26,7 +26,6 @@
 package org.spout.vanilla.generator.normal;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import net.royawesome.jlibnoise.module.source.Perlin;
 
@@ -81,7 +80,7 @@ public class NormalGenerator implements WorldGenerator {
 			//return;
 		}
 		if (chunkY < 0) {
-			blockData.flood(VanillaBlocks.bedrock.getId());
+			blockData.flood(VanillaBlocks.BEDROCK.getId());
 			//return;
 		}
 
@@ -116,15 +115,15 @@ public class NormalGenerator implements WorldGenerator {
 					int t = (int) ((getPerlinValueXZ(top, dx, dz) + 1.0) * heightPerLayer / 3.0 + max);
 					for(int dy = y; dy < y + 16; dy++) {
 						if(dy > b && dy < t) {
-							blockData.set(dx, dy, dz, VanillaBlocks.air.getId());
+							blockData.set(dx, dy, dz, VanillaBlocks.AIR.getId());
 						}
 					}
 				}
 
 				if(wateredStack) {
 					for(int dy = y + 15; dy >= y; dy--) {
-						if(dy < 64 && blockData.get(dx, dy, dz) == VanillaBlocks.air.getId()) {
-							blockData.set(dx, dy, dz, VanillaBlocks.water.getId());
+						if(dy < 64 && blockData.get(dx, dy, dz) == VanillaBlocks.AIR.getId()) {
+							blockData.set(dx, dy, dz, VanillaBlocks.WATER.getId());
 						} else {
 							break;
 						}
@@ -142,15 +141,15 @@ public class NormalGenerator implements WorldGenerator {
 	private short getBlockId(int top, int dy) {
 		short id;
 		if(dy > top) {
-			id = VanillaBlocks.air.getId();
+			id = VanillaBlocks.AIR.getId();
 		} else if(dy == (int)top && dy >= 63) {
-			id = VanillaBlocks.grass.getId();
+			id = VanillaBlocks.GRASS.getId();
 		} else if(dy + 4 >=(int)top) {
-			id = VanillaBlocks.dirt.getId();
+			id = VanillaBlocks.DIRT.getId();
 		} else if(dy != 0){
-			id = VanillaBlocks.stone.getId();
+			id = VanillaBlocks.STONE.getId();
 		} else {
-			id = VanillaBlocks.bedrock.getId();
+			id = VanillaBlocks.BEDROCK.getId();
 		}
 		return id;
 	}

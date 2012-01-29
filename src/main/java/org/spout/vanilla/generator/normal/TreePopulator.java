@@ -40,8 +40,8 @@ public class TreePopulator implements Populator {
 		int x = (int) point.getX();
 		int y = (int) point.getY();
 		int z = (int) point.getZ();
-		short wood = VanillaBlocks.log.getId();
-		short leaves = VanillaBlocks.leaves.getId();
+		short wood = VanillaBlocks.LOG.getId();
+		short leaves = VanillaBlocks.LEAVES.getId();
 		World world = c.getWorld();
 		
 		// Trunk
@@ -100,8 +100,8 @@ public class TreePopulator implements Populator {
 		int x = (int) point.getX();
 		int y = (int) point.getY();
 		int z = (int) point.getZ();
-		short wood = VanillaBlocks.log.getId();
-		short leaves = VanillaBlocks.leaves.getId();
+		short wood = VanillaBlocks.LOG.getId();
+		short leaves = VanillaBlocks.LEAVES.getId();
 		World world = c.getWorld();
 		
 		// Trunk

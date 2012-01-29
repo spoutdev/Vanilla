@@ -26,8 +26,6 @@
 package org.spout.vanilla.entity;
 
 import org.spout.api.entity.Controller;
-import org.spout.api.protocol.Message;
-import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 
 public abstract class MinecraftEntity extends Controller {
 	@Override
@@ -44,26 +42,4 @@ public abstract class MinecraftEntity extends Controller {
 	public void preSnapshot() {
 		
 	}
-	
-	/**
-	 * Gets the message that will inform players that this entity has been spawned
-	 * 
-	 * @return spawn message
-	 */
-	public Message getSpawnMessage() {
-		return null;
-	}
-	
-	/**
-	 * Gets the message that will inform players that this entity has been killed
-	 * 
-	 * @return death message
-	 */
-	public Message getDeathMessage() {
-		if (this.parent == null) {
-			return null;
-		}
-		return new DestroyEntityMessage(this.parent.getId());
-	}
-	
 }

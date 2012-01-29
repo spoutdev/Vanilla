@@ -6,6 +6,7 @@ import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.vanilla.entity.living.player.MinecraftPlayer;
+import org.spout.vanilla.entity.objects.FallingBlock;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
@@ -15,6 +16,7 @@ public class VanillaEntityProtocol implements EntityProtocol {
 	@Override
 	public Message getSpawnMessage(Entity entity) {
 		Controller c = entity.getLiveController();
+		//TODO: this if-else structure is terrible and not OO. Fix!
 		if (c instanceof MinecraftPlayer) {
 			MinecraftPlayer mcp = (MinecraftPlayer)c;
 			int id = entity.getId();
@@ -27,7 +29,11 @@ public class VanillaEntityProtocol implements EntityProtocol {
 			int p = 0;
 			int item = 0;
 			return new SpawnPlayerMessage(id, name, x, y, z, r, p, item);
-		} else {
+		} 
+		else if (c instanceof FallingBlock) {
+			return ((FallingBlock)c).getSpawnMessage();
+		}
+		else {
 			return null;
 		}
 	}

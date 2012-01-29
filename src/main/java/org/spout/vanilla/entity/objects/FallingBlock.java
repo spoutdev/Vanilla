@@ -29,7 +29,6 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
-import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.vanilla.VanillaBlocks;
 import org.spout.vanilla.entity.MovingEntity;
@@ -62,7 +61,7 @@ public class FallingBlock extends MovingEntity {
 		int z = MathHelper.floor(position.getZ());
 		VanillaBlockMaterial material = (VanillaBlockMaterial) world.getBlock(x, y-1, z).getBlockMaterial();
 		if (material == VanillaBlocks.air || material.isLiquid()){
-			getVelocity().add(new Vector3(0, -0.04F, 0));
+			getVelocity().add(0, -0.004, 0);
 		}
 		else {
 			world.setBlockMaterial(x, y, z, block, world);
@@ -71,7 +70,6 @@ public class FallingBlock extends MovingEntity {
 		super.onTick(dt);
 	}
 	
-	@Override
 	public Message getSpawnMessage(){
 		int spawnId = -1; //TODO: support for other falling block types?
 		if (block == VanillaBlocks.sand){

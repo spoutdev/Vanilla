@@ -28,7 +28,7 @@ package org.spout.vanilla.block;
 import org.spout.api.material.GenericBlockMaterial;
 import org.spout.vanilla.material.Plant;
 
-public class Tree extends GenericBlockMaterial implements Plant {
+public class Tree extends GenericVanillaBlockMaterial implements Plant {
 	public Tree(String name, int id, int data) {
 		super(name, id, data);
 	}

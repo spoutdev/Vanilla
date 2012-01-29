@@ -28,7 +28,7 @@ package org.spout.vanilla.block;
 import org.spout.api.material.GenericBlockMaterial;
 import org.spout.vanilla.material.SolidBlock;
 
-public class Slab extends GenericBlockMaterial implements SolidBlock {
+public class Slab extends GenericVanillaBlockMaterial implements SolidBlock {
 	public Slab(String name, int id, int data) {
 		super(name, id, data);
 	}

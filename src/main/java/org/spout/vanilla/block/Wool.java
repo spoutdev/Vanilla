@@ -28,7 +28,7 @@ package org.spout.vanilla.block;
 import org.spout.api.material.GenericBlockMaterial;
 import org.spout.vanilla.material.SolidBlock;
 
-public class Wool extends GenericBlockMaterial implements SolidBlock {
+public class Wool extends GenericVanillaBlockMaterial implements SolidBlock {
 	public Wool(String name, int id, int data) {
 		super(name, id, data);
 	}

@@ -7,7 +7,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.VanillaBlocks;
 
-public abstract class AbstractAttachable extends GenericBlockMaterial implements Attachable {
+public abstract class AbstractAttachable extends GenericVanillaBlockMaterial implements Attachable {
 
 	protected AbstractAttachable(String name, int id) {
 		super(name, id);

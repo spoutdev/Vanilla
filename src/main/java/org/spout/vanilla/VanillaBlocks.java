@@ -39,6 +39,8 @@ import org.spout.vanilla.block.GenericLiquid;
 import org.spout.vanilla.block.Grass;
 import org.spout.vanilla.block.GroundAttachable;
 import org.spout.vanilla.block.LongGrass;
+import org.spout.vanilla.block.RedstoneTorch;
+import org.spout.vanilla.block.RedstoneWire;
 import org.spout.vanilla.block.Sapling;
 import org.spout.vanilla.block.Slab;
 import org.spout.vanilla.block.Solid;
@@ -142,7 +144,7 @@ public final class VanillaBlocks {
 	public static final BlockMaterial MONSTER_SPAWNER = new Solid("Monster Spawner", 52);
 	public static final BlockMaterial WOODEN_STAIRS = new Solid("Wooden Stairs", 53);
 	public static final BlockMaterial CHEST = new Solid("Chest", 54);
-	public static final BlockMaterial REDSTONE_WIRE = new Solid("Redstone Wire", 55);
+	public static final BlockMaterial REDSTONE_WIRE = new RedstoneWire("Redstone Wire", 55, 0);
 	public static final BlockMaterial DIAMOND_ORE = new Solid("Diamond Ore", 56);
 	public static final BlockMaterial DIAMOND_BLOCK = new Solid("Diamond Block", 57);
 	public static final BlockMaterial CRAFTING_TABLE = new Solid("Crafting Table", 58);
@@ -162,8 +164,8 @@ public final class VanillaBlocks {
 	public static final BlockMaterial WOODEN_PRESSURE_PLATE = new Solid("Wooden Pressure Plate", 72);
 	public static final BlockMaterial REDSTONE_ORE = new Solid("Redstone Ore", 73);
 	public static final BlockMaterial GLOWING_REDSTONE_ORE = new Solid("Glowing Redstone Ore", 74);
-	public static final BlockMaterial REDSTONE_TORCH_OFF = new Solid("Redstone Torch", 75);
-	public static final BlockMaterial REDSTONE_TORCH_ON = new Solid("Redstone Torch (On)", 76);
+	public static final BlockMaterial REDSTONE_TORCH_OFF = new RedstoneTorch("Redstone Torch", 75, false);
+	public static final BlockMaterial REDSTONE_TORCH_ON = new RedstoneTorch("Redstone Torch (On)", 76, true);
 	public static final BlockMaterial STONE_BUTTON = new Solid("Stone Button", 77);
 	public static final BlockMaterial SNOW = new Solid("Snow", 78);
 	public static final BlockMaterial ICE = new Solid("Ice", 79);

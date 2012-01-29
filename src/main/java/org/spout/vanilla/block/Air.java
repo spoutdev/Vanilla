@@ -29,7 +29,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.GenericBlockMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
-public class Air extends GenericBlockMaterial implements VanillaBlockMaterial {
+public class Air extends GenericVanillaBlockMaterial implements VanillaBlockMaterial {
 	public Air(String name) {
 		super(name, 0);
 	}

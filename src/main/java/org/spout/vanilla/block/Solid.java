@@ -33,7 +33,7 @@ import org.spout.vanilla.entity.objects.FallingBlock;
 import org.spout.vanilla.material.SolidBlock;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
-public class Solid extends GenericBlockMaterial implements SolidBlock {
+public class Solid extends GenericVanillaBlockMaterial implements SolidBlock {
 	private final boolean falling;
 
 	public Solid(String name, int id, int data, boolean falling) {

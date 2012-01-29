@@ -195,7 +195,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	public void updateBlock(Chunk chunk, Block block) {
 		BlockMaterial material = chunk.getBlockMaterial(block.getX(), block.getY(), block.getZ());
 		short id = material.getId();
-		short data = material.getData();
+		short data = block.getWorld().getBlockData(block.getX(), block.getY(), block.getZ());
 		// TODO - proper translation
 		if ((id & 0xFF) > 255) {
 			id = 1;

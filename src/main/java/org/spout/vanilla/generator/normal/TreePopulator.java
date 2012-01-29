@@ -175,7 +175,7 @@ public class TreePopulator implements Populator {
 			int z = random.nextInt(16);
 			int y = 0;
 			for (int yy = 128; yy > 0; yy--) {
-				if (c.getBlockId(y, yy, z) != 0) {
+				if (c.getBlockId(x, yy, z) != 0) {
 					y = yy;
 					break;
 				}

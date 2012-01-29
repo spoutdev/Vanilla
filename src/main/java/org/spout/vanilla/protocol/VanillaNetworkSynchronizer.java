@@ -179,65 +179,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		}
 	}
 
-	public Message createUpdateMessage() {
-		if (entity == null) {
-			return null;
-		}
-		
-		Controller controller = entity.getController();
-		
-		if (controller == null) {
-			return null;
-		}
-		
-		boolean teleport = controller.hasTeleported();
-		boolean moved = controller.hasMoved();
-		boolean rotated = controller.hasRotated();
-		
-		if (entity.getLiveTransform() == null) {
-			return null;
-		}
-		
-		if (--positionUpdate == 0) {
-			positionUpdate = POSITION_UPDATE_TICKS;
-			teleport = moved = true;
-		}
-
-		// TODO - is this rotation correct?
-		int pitch = (int)(entity.getLiveTransform().getRotation().getAxisAngles().getZ() * 256.0F / 360.0F);
-		int yaw = (int)(entity.getLiveTransform().getRotation().getAxisAngles().getY() * 256.0F / 360.0F);
-		
-		int id = this.entity.getId();
-		Vector3 pos = entity.getLiveTransform().getPosition();
-		Vector3 old = entity.getTransform().getPosition();
-		int x = (int)(pos.getX() * 32.0);
-		int y = (int)(pos.getY() * 32.0);
-		int z = (int)(pos.getZ() * 32.0);
-		
-		int ox = (int)(old.getX() * 32.0);
-		int oy = (int)(old.getY() * 32.0);
-		int oz = (int)(old.getZ() * 32.0);
-		
-		int dx = (x - ox);
-		int dy = (y - oy);
-		int dz = (z - oz);
-		
-		if (moved && teleport) {
-			return new EntityTeleportMessage(id, x, y, z, yaw, pitch);
-		}
-		if (moved && rotated) {
-			return new RelativeEntityPositionRotationMessage(id, dx, dy, dz, yaw, pitch);
-		}
-		if (moved) {
-			return new RelativeEntityPositionMessage(id, dx, dy, dz);
-		}
-		if (rotated) {
-			return new EntityRotationMessage(id, yaw, pitch);
-		}
-
-		return null;
-	}
-	
 	@Override
 	public void spawnEntity(Entity e){
 		if (e == null) {

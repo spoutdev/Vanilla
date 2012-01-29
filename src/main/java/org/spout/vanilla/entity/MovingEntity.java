@@ -71,55 +71,6 @@ public abstract class MovingEntity extends MinecraftEntity {
 	
 	}
 	
-	@Override
-	public void onSync(){
-		//Why is this here?
-		Message update = createUpdateMessage();
-		if (update != null) {
-			for (Entity e : parent.getWorld().getAll(MinecraftPlayer.class)){
-				MinecraftPlayer player = (MinecraftPlayer)e;
-				player.getPlayer().getSession().send(update);
-			}
-		}
-	}
-	
-	public Message createUpdateMessage() {
-		boolean teleport = hasTeleported();
-		boolean moved = hasMoved();
-		boolean rotated = hasRotated();
-		
-		if (parent.getLiveTransform() == null) {
-			return null;
-		}
-
-		// TODO - is this rotation correct?
-		int pitch = (int)(parent.getLiveTransform().getRotation().getAxisAngles().getZ() * 256.0F / 360.0F);
-		int yaw = (int)(parent.getLiveTransform().getRotation().getAxisAngles().getY() * 256.0F / 360.0F);
-		
-		int id = this.parent.getId();
-		Vector3 pos = Vector3.floor(parent.getLiveTransform().getPosition());
-		Vector3 old = Vector3.floor(parent.getTransform().getPosition());
-		int x = (int)pos.getX();
-		int y = (int)pos.getY();
-		int z = (int)pos.getZ();
-		
-		int dx = (int)(x - old.getX());
-		int dy = (int)(y - old.getY());
-		int dz = (int)(z - old.getZ());
-
-		if (moved && teleport) {
-			return new EntityTeleportMessage(id, x, y, z, yaw, pitch);
-		} else if (moved && rotated) {
-			return new RelativeEntityPositionRotationMessage(id, dx, dy, dz, yaw, pitch);
-		} else if (moved) {
-			return new RelativeEntityPositionMessage(id, dx, dy, dz);
-		} else if (rotated) {
-			return new EntityRotationMessage(id, yaw, pitch);
-		}
-
-		return null;
-	}
-
 	private void checkWeb() {
 		Point pos = parent.getTransform().getPosition();
 		if (pos.getWorld().getBlock(pos).getBlockMaterial().equals(VanillaBlocks.WEB)) {

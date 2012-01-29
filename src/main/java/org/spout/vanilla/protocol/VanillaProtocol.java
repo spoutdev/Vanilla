@@ -26,9 +26,14 @@
 package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.Protocol;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.entity.living.player.MinecraftPlayer;
+import org.spout.vanilla.entity.living.player.MinecraftPlayerEntityProtocol;
 
 public class VanillaProtocol extends Protocol {
 	public VanillaProtocol() {
 		super("Vanilla", new VanillaCodecLookupService(), new VanillaHandlerLookupService(), new VanillaPlayerProtocol());
+		
+		MinecraftPlayer.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new MinecraftPlayerEntityProtocol());
 	}
 }

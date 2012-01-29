@@ -10,28 +10,24 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
+import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
-import org.spout.vanilla.protocol.msg.EntityRotationMessage;
-import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.IdentificationMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.PositionRotationMessage;
-import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
-import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	
-	private final static VanillaEntityProtocol entityProtocol = new VanillaEntityProtocol();
 	private final static int POSITION_UPDATE_TICKS = 20;
 	private final static double STANCE = 1.6D;
 	private final static int TIMEOUT = 15000;
@@ -185,10 +181,16 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			return;
 		}
 
-		Message spawn = entityProtocol.getSpawnMessage(e);
-		if (spawn != null) {
-			activeEntities.add(e.getId());
-			this.session.send(spawn);
+		Controller c = e.getLiveController();
+		if (c != null) {
+			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
+			if (ep != null) {
+				Message spawn = ep.getSpawnMessage(e);
+				if (spawn != null) {
+					activeEntities.add(e.getId());
+					this.session.send(spawn);
+				}
+			}
 		}
 		super.spawnEntity(e);
 	}
@@ -202,10 +204,16 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			return;
 		}
 
-		Message death = entityProtocol.getDestroyMessage(e);
-		if (death != null) {
-			this.session.send(death);
-			activeEntities.remove(e.getId());
+		Controller c = e.getController();
+		if (c != null) {
+			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
+			if (ep != null) {
+				Message death = ep.getDestroyMessage(e);
+				if (death != null) {
+					this.session.send(death);
+					activeEntities.remove(e.getId());
+				}
+			}
 		}
 		super.destroyEntity(e);
 	}
@@ -219,10 +227,15 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (!activeEntities.contains(e.getId())) {
 			return;
 		}
-		
-		Message sync = entityProtocol.getUpdateMessage(e);
-		if (sync != null) {
-			this.session.send(sync);
+		Controller c = e.getLiveController();
+		if (c != null) {
+			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
+			if (ep != null) {
+				Message sync = ep.getUpdateMessage(e);
+				if (sync != null) {
+					this.session.send(sync);
+				}
+			}
 		}
 		super.syncEntity(e);
 		

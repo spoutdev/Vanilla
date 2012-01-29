@@ -27,6 +27,7 @@ package org.spout.vanilla;
 
 import org.spout.api.Game;
 import org.spout.api.Server;
+import org.spout.api.entity.Controller;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.atomic.Transform;
@@ -48,7 +49,8 @@ import java.net.InetSocketAddress;
 public class VanillaPlugin extends CommonPlugin {
 	public static final String VERSION = "Minecraft 1.1.1";
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
-
+	public static int vanillaProtocolId;
+	
 	public static World spawnWorld;
 
 	@Override
@@ -84,6 +86,7 @@ public class VanillaPlugin extends CommonPlugin {
 	@Override
 	public void onEnable() {
 		VanillaBlocks.initialize();
+		vanillaProtocolId = Controller.getProtocolId("org.spout.vanilla.protocol");
 
 		getGame().setDefaultGenerator(new NormalGenerator());
 

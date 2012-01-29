@@ -27,9 +27,21 @@ package org.spout.vanilla.entity.living.player;
 
 import org.spout.api.entity.PlayerController;
 import org.spout.api.player.Player;
+import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.VanillaPlugin;
 
 public abstract class MinecraftPlayer extends PlayerController {
+	
+	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
+	
+	public EntityProtocol getEntityProtocol(int protocolId) {
+		return entityProtocolStore.getEntityProtocol(protocolId);
+	}
+	
+	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
+		entityProtocolStore.setEntityProtocol(protocolId, protocol);
+	}
 	
 	public MinecraftPlayer(Player p){
 		super(p);

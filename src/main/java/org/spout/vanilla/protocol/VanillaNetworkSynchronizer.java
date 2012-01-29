@@ -33,6 +33,7 @@ import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	
+	private final static VanillaEntityProtocol entityProtocol = new VanillaEntityProtocol();
 	private final static int POSITION_UPDATE_TICKS = 20;
 	private final static double STANCE = 1.6D;
 	private final static int TIMEOUT = 15000;
@@ -244,50 +245,48 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (e == null) {
 			return;
 		}
-		System.out.println("Spawning: " + owner.getName() + ":" + e.getId() + ":" + e.getTransform().getPosition());
-		
-		Controller c = entity.getController();
-		if (c == null) {
-			return;
-		}
-		
-		if (c instanceof MinecraftEntity) {
-			MinecraftEntity controller = (MinecraftEntity)c;
-			Message spawn = controller.getSpawnMessage();
-			if (spawn != null) {
-				activeEntities.add(e.getId());
-				this.session.send(spawn);
-			}
+
+		Message spawn = entityProtocol.getSpawnMessage(e);
+		if (spawn != null) {
+			activeEntities.add(e.getId());
+			this.session.send(spawn);
 		}
 		super.spawnEntity(e);
 	}
-	
+
 	@Override
 	public void destroyEntity(Entity e) {
 		if (e == null) {
 			return;
 		}
-		System.out.println("Destroying: " + owner.getName() + ":" + e.getId() + ":" + e.getTransform().getPosition());
-		
+		if (!activeEntities.contains(e.getId())) {
+			return;
+		}
+
+		Message death = entityProtocol.getDestroyMessage(e);
+		if (death != null) {
+			this.session.send(death);
+			activeEntities.remove(e.getId());
+		}
+		super.destroyEntity(e);
+	}
+	
+	public void syncEntity(Entity e) {
+		if (e == null) {
+			return;
+		}
+
+		// TODO - is this really worth checking?
 		if (!activeEntities.contains(e.getId())) {
 			return;
 		}
 		
-		Controller c = entity.getController();
-
-		if (c == null) {
-			return;
+		Message sync = entityProtocol.getUpdateMessage(e);
+		if (sync != null) {
+			this.session.send(sync);
 		}
+		super.syncEntity(e);
 		
-		if (c instanceof MinecraftEntity) {
-			MinecraftEntity controller = (MinecraftEntity)c;
-			Message death = controller.getDeathMessage();
-			if (death != null) {
-				this.session.send(death);
-				activeEntities.remove(e.getId());
-			}
-		}
-		super.destroyEntity(e);
 	}
 
 }

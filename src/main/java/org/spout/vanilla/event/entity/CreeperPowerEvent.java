@@ -29,31 +29,36 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.exception.InvalidControllerException;
+import org.spout.vanilla.entity.living.hostile.Creeper;
 
 /*
  * Called when a creeper gains or looses a powered state.
  */
 public class CreeperPowerEvent extends EntityEvent implements Cancellable {
-	public CreeperPowerEvent(Entity e, Entity lightning) {
+	private static HandlerList handlers = new HandlerList();
+
+	private PoweredReason reason;
+
+	private Entity lightning;
+
+	public CreeperPowerEvent(Entity e, Entity lightning) throws InvalidControllerException {
 		super(e);
+		if (!(e.getController() instanceof Creeper))
+			throw new InvalidControllerException();
 		this.reason = PoweredReason.LIGHTNING;
 		this.lightning = lightning;
-		// TODO Auto-generated constructor stub
 	}
-	
-	public CreeperPowerEvent(Entity e, Entity lightning, PoweredReason reason) {
+
+	public CreeperPowerEvent(Entity e, Entity lightning, PoweredReason reason) throws InvalidControllerException {
 		super(e);
+		if (!(e.getController() instanceof Creeper))
+			throw new InvalidControllerException();
 		this.reason = reason;
 		this.lightning = lightning;
 		// TODO Auto-generated constructor stub
 	}
-	
-	private static HandlerList handlers = new HandlerList();
-	
-	private PoweredReason reason;
-	
-	private Entity lightning;
-	
+
 	/*
 	 * This gets the entity that represents the lightning that caused the change in the creeper's state.
 	 * @return an Entity that represents the lightning.
@@ -69,7 +74,7 @@ public class CreeperPowerEvent extends EntityEvent implements Cancellable {
 	public void setLightning(Entity lightning) {
 		this.lightning = lightning;
 	}
-	
+
 	/*
 	 * This gets the reason behind the change in the creeper's state.
 	 * @return a PoweredReason that represents the change in the creeper's state.
@@ -77,7 +82,7 @@ public class CreeperPowerEvent extends EntityEvent implements Cancellable {
 	public PoweredReason getReason() {
 		return reason;
 	}
-	
+
 	/*
 	 * This sets the reason for the change in the creeper's state.
 	 * @param reason a PoweredReason that is the reason for the change in the creeper's state.
@@ -85,7 +90,7 @@ public class CreeperPowerEvent extends EntityEvent implements Cancellable {
 	public void setReason(PoweredReason reason) {
 		this.reason = reason;
 	}
-	
+
 	@Override
 	public void setCancelled(boolean cancelled) {
 		super.setCancelled(cancelled);
@@ -99,10 +104,25 @@ public class CreeperPowerEvent extends EntityEvent implements Cancellable {
 	public static HandlerList getHandlerList() {
 		return handlers;
 	}
-	
+
+	/**
+	 * An enum to specify the reason behind the change in the creeper's status.
+	 */
 	public enum PoweredReason {
+		/**
+		 * Powered by lightning.
+		 */
 		LIGHTNING,
+		/**
+		 * Powered by a custom reason (normally a plugin).
+		 */
 		CUSTOM_ON,
+		/**
+		 * Powered removed by a custom reason (normally a plugin).
+		 */
 		CUSTOM_OFF;
+
+		private PoweredReason() {
+		}
 	}
 }

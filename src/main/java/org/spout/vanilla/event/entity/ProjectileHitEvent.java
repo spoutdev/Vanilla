@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.event.entity;
 
+import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
-import org.spout.api.Source;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
@@ -35,14 +35,14 @@ import org.spout.api.event.entity.EntityEvent;
  * Called when a projectile hits something.
  */
 public class ProjectileHitEvent extends EntityEvent implements Cancellable {
-	public ProjectileHitEvent(Entity e) {
-		super(e);
-		// TODO Auto-generated constructor stub
-	}
-
 	private static HandlerList handlers = new HandlerList();
 
 	private Source source;
+
+	public ProjectileHitEvent(Entity e, Source source) {
+		super(e);
+		this.source = source;
+	}
 
 	/*
 	 * Gets the source of this event.
@@ -59,7 +59,7 @@ public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 	public void setSource(Source source) {
 		this.source = source;
 	}
-	
+
 	@Override
 	public void setCancelled(boolean cancelled) {
 		super.setCancelled(cancelled);

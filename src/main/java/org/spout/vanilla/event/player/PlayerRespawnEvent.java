@@ -1,4 +1,4 @@
-/*
+/**
  * This file is part of Vanilla (http://www.spout.org/).
  *
  * Vanilla is licensed under the SpoutDev License Version 1.
@@ -23,47 +23,48 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.entity;
+package org.spout.vanilla.event.player;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityHealthChangedEvent;
+import org.spout.api.event.entity.EntitySpawnEvent;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.player.Player;
 
-/*
- * Called when an entity gains health.
+/**
+ * Called when a player respawns.
  */
-public class VanillaEntityHealthChangedEvent extends EntityHealthChangedEvent implements Cancellable {
-	public VanillaEntityHealthChangedEvent(Entity e) {
-		super(e);
-		// TODO Auto-generated constructor stub
-	}
-
+public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
-	private GainHealthReason reason;
+	private boolean bedRespawn;
 
-	/*
-	 * Gets the reason for the gain of health.
-	 *
-	 * @return A GainHealthReason that is the reason for the gained health.
+	public PlayerRespawnEvent(Entity e, Point point, boolean bedRespawn) {
+		super(e, point);
+		this.bedRespawn = bedRespawn;
+	}
+
+	/**
+	 * Gets the player associated in this event.
+	 * @return a Player object representing the player.
 	 */
-	public GainHealthReason getReason() {
-		return reason;
+	public Player getPlayer() {
+		return (Player) getEntity();
 	}
 
 	/*
-	 * Sets the reason for the gain of health.
+	 * Returns true if the respawn location is a bed.
 	 *
-	 * @param reason A GainedHealthReason that sets the reason for the gained health.
+	 * @return True if the respawn location is a bed.
 	 */
-	public void setReason(GainHealthReason reason) {
-		this.reason = reason;
+	public boolean isBedRespawn() {
+		return bedRespawn;
 	}
 
 	@Override
 	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
+		super.setCancelled(cancelled);
 	}
 
 	@Override
@@ -73,12 +74,5 @@ public class VanillaEntityHealthChangedEvent extends EntityHealthChangedEvent im
 
 	public static HandlerList getHandlerList() {
 		return handlers;
-	}
-
-	public enum GainHealthReason {
-		PEACEFUL,
-		HUNGER,
-		EATING,
-		CUSTOM;
 	}
 }

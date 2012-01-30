@@ -28,8 +28,11 @@ package org.spout.vanilla.entity.projectile;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
 
-public class ThrownEgg extends Projectile {
-	public ThrownEgg(Point start, Quaternion rotation, int maxSpeed) {
+/**
+ * Represents a thrown potion
+ */
+public class ThrownPotion extends Projectile {
+	public ThrownPotion(Point start, Quaternion rotation, int maxSpeed) {
 		super(start, rotation, maxSpeed);
 	}
 }

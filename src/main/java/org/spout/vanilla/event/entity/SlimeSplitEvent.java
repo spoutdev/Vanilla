@@ -29,31 +29,38 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.exception.InvalidControllerException;
+import org.spout.vanilla.entity.living.hostile.Slime;
 
 /*
  * Called when a slime is split.
  */
 public class SlimeSplitEvent extends EntityEvent implements Cancellable {
-	public SlimeSplitEvent(Entity e) {
-		super(e);
-		// TODO Auto-generated constructor stub
-	}
-
 	private static HandlerList handlers = new HandlerList();
 
-	private int amount = 0;
+	private int amount, size;
 
-	private int size = 0;
+	public SlimeSplitEvent(Entity e) throws InvalidControllerException {
+		super(e);
+		if (!(e.getController() instanceof Slime))
+			throw new InvalidControllerException();
+		amount = 0;
+		size = 0;
+	}
 
 	/*
 	 * Gets the amount of slimes to spawn.
 	 *
-	 * @return
+	 * @return The amount of slimes to spawn.
 	 */
 	public int getAmount() {
 		return amount;
 	}
 
+	/**
+	 * Sets the amount of slimes to spawn
+	 * @param amount The amount of slimes to spawn.
+	 */
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
@@ -61,12 +68,16 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 	/*
 	 * Gets the size of slimes to spawn.
 	 *
-	 * @return
+	 * @return The size of the slimes to spawn.
 	 */
 	public int getSize() {
 		return size;
 	}
 
+	/**
+	 * Sets the size of slimes to spawn.
+	 * @param size The size of the slimes to spawn.
+	 */
 	public void setSize(int size) {
 		this.size = size;
 	}

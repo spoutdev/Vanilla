@@ -28,57 +28,65 @@ package org.spout.vanilla.event.player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.player.Player;
 
-/**
- * This event is fired when the player is almost about to enter the bed.
+/*
+ * Called when a player's level changes (either food, exp, or custom).
  */
-public class PlayerBedEvent extends PlayerEvent implements Cancellable {
+public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
-	private Block bed;
+	private LevelChangeReason reason;
 
-	private boolean entered;
+	private int previousLevel,newLevel;
 
-	public PlayerBedEvent(Player p) {
+	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {
 		super(p);
-		entered = false;
+		this.reason = reason;
+		this.previousLevel = previousLevel;
+		this.newLevel = newLevel;
 	}
 
-	/**
-	 * Returns the bed block involved in this event.
+	/*
+	 * Gets the reason for the change of level.
 	 *
-	 * @return the bed block involved in this event
+	 * @return A LevelChangeReason that is the reason for the change in level.
 	 */
-	public Block getBed() {
-		return bed;
+	public LevelChangeReason getReason() {
+		return reason;
 	}
 
-	public void setBed(Block bed) {
-		this.bed = bed;
-	}
-
-	/**
-	 * Gets if the player entered the bed.
+	/*
+	 * Sets the reason for the change of level.
 	 *
-	 * @return True if the bed was entered.
+	 * @param reason A LevelChangeReason that sets the reason for the change of level.
 	 */
-	public boolean isEntered() {
-		return entered;
+	public void setReason(LevelChangeReason reason) {
+		this.reason = reason;
 	}
 
-	/**
-	 * Gets if the player left the bed.
-	 *
-	 * @return False if the bed was left.
+	/*
+	 * Gets the previous level before the level change occurred.
+	 * @return an int that is the number of the last level.
 	 */
-	public boolean isLeft() {
-		return !entered;
+	public int getPreviousLevel() {
+		return previousLevel;
 	}
 
-	public void setEntered(boolean entered) {
-		this.entered = entered;
+	/*
+	 * Gets the new level after the level change occurred.
+	 * @return an int that is the number of the new level.
+	 */
+	public int getNewLevel() {
+		return newLevel;
+	}
+
+	/*
+	 * Sets the level of the player regardless of what level was set in the event.
+	 * @param an int that is the custom number of the level to set.
+	 */
+	public void setLevel(int customLevel) {
+		this.newLevel = customLevel;
 	}
 
 	@Override
@@ -93,5 +101,23 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 
 	public static HandlerList getHandlerList() {
 		return handlers;
+	}
+
+	/**
+	 * An enum to specify the reason behind the level change
+	 */
+	public enum LevelChangeReason {
+		/**
+		 * Change in food level
+		 */
+		FOOD,
+		/**
+		 * Change in experience level
+		 */
+		EXP,
+		/**
+		 * A custom reason (normally a plugin)
+		 */
+		CUSTOM;
 	}
 }

@@ -34,14 +34,13 @@ import org.spout.api.event.entity.EntityDeathEvent;
  * Called when an entity dies with Vanilla characteristics.
  */
 public class VanillaEntityDeathEvent extends EntityDeathEvent implements Cancellable {
-	public VanillaEntityDeathEvent(Entity e) {
-		super(e);
-		// TODO Auto-generated constructor stub
-	}
-
 	private static HandlerList handlers = new HandlerList();
 
 	private int dropExp;
+
+	public VanillaEntityDeathEvent(Entity e) {
+		super(e);
+	}
 
 	/*
 	 * Gets the amount of experience to drop.

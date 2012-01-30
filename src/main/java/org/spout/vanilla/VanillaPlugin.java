@@ -47,10 +47,10 @@ import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 import java.net.InetSocketAddress;
 
 public class VanillaPlugin extends CommonPlugin {
-	public static final String VERSION = "Minecraft 1.1.1";
+	public static final String VERSION = "Minecraft 1.1";
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
 	public static int vanillaProtocolId;
-	
+
 	public static World spawnWorld;
 
 	@Override

@@ -23,33 +23,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.entity;
+package org.spout.vanilla.event.player;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityDamageEvent;
+import org.spout.api.player.Player;
+import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
 
-/*
- * Called when an entity is damaged.
+/**
+ * Called when a player dies.
  */
-public class VanillaEntityDamageEvent extends EntityDamageEvent implements Cancellable {
-	public VanillaEntityDamageEvent(Entity e) {
-		super(e);
-		// TODO Auto-generated constructor stub
-	}
-
+public class PlayerDeathEvent extends VanillaEntityDeathEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
-	private DamageCause cause;
+	public PlayerDeathEvent(Entity e) {
+		super(e);
+	}
 
-	/*
-	 * Gets the cause of the damage.
-	 *
-	 * @return A DamageCause value detailing the cause of the damage.
+	/**
+	 * Gets the player associated in this event.
+	 * @return a Player object representing the player.
 	 */
-	public DamageCause getCause() {
-		return cause;
+	public Player getPlayer() {
+		return (Player) getEntity();
 	}
 
 	@Override
@@ -64,27 +61,5 @@ public class VanillaEntityDamageEvent extends EntityDamageEvent implements Cance
 
 	public static HandlerList getHandlerList() {
 		return handlers;
-	}
-
-	/**
-	 * Specifies the cause of damage.
-	 */
-	public enum DamageCause {
-		CONTACT,
-		ENTITY_ATTACK,
-		PROJECTILE,
-		SUFFOCATION,
-		FALL,
-		FIRE,
-		FIRE_TICK,
-		LAVA,
-		DROWNING,
-		BLOCK_EXPLOSION,
-		ENTITY_EXPLOSION,
-		VOID,
-		LIGHTNING,
-		SUICIDE,
-		STARVATION,
-		CUSTOM
 	}
 }

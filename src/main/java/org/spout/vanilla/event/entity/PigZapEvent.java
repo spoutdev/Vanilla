@@ -29,28 +29,31 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.exception.InvalidControllerException;
+import org.spout.vanilla.entity.living.passive.Pig;
 
 /*
  * Called when a pig is zapped.
  */
 public class PigZapEvent extends EntityEvent implements Cancellable {
-	public PigZapEvent(Entity e, Entity lightning, Entity pigZombie) {
-		super(e);
-		this.lightning = lightning;
-		this.pigZombie = pigZombie;
-		// TODO Auto-generated constructor stub
-	}
-
 	private static HandlerList handlers = new HandlerList();
 
 	private Entity pigZombie;
 
 	private Entity lightning;
 
+	public PigZapEvent(Entity e, Entity lightning, Entity pigZombie) throws InvalidControllerException {
+		super(e);
+		if (!(e.getController() instanceof Pig))
+			throw new InvalidControllerException();
+		this.lightning = lightning;
+		this.pigZombie = pigZombie;
+	}
+
 	/*
 	 * This gets the entity that represents the lightning that caused the transformation of a pig.
 	 * @return an Entity that represents the lightning.
-	 */	
+	 */
 	public Entity getLightning() {
 		return lightning;
 	}
@@ -58,7 +61,7 @@ public class PigZapEvent extends EntityEvent implements Cancellable {
 	/*
 	 * This sets the entity that represents the lightning that caused the transformation of a pig.
 	 * @param lightning an Entity that represents the lightning.
-	 */	
+	 */
 	public void setLightning(Entity lightning) {
 		this.lightning = lightning;
 	}
@@ -74,7 +77,7 @@ public class PigZapEvent extends EntityEvent implements Cancellable {
 	/*
 	 * This sets the entity that represents the newly created pig zombie
 	 * @param pigzombie an Entity that represents the newly created pig zombie.
-	 */	
+	 */
 	public void setPigZombie(Entity pigZombie) {
 		this.pigZombie = pigZombie;
 	}

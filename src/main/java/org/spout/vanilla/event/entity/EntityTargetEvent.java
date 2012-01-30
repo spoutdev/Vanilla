@@ -34,19 +34,27 @@ import org.spout.api.event.entity.EntityEvent;
  * Called when an entity targets or untargets another entity.
  */
 public class EntityTargetEvent extends EntityEvent implements Cancellable {
-	public EntityTargetEvent(Entity e) {
-		super(e);
-		// TODO Auto-generated constructor stub
-	}
-
 	private static HandlerList handlers = new HandlerList();
 
 	private TargetReason reason;
 
+	public EntityTargetEvent(Entity e, TargetReason reason) {
+		super(e);
+		this.reason = reason;
+	}
+
+	/**
+	 * Gets the reason for the targeting.
+	 * @return
+	 */
 	public TargetReason getReason() {
 		return reason;
 	}
 
+	/**
+	 * Sets the reason for the targeting.
+	 * @param reason The reason for the targeting.
+	 */
 	public void setReason(TargetReason reason) {
 		this.reason = reason;
 	}
@@ -54,7 +62,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 	/*
 	 * Returns true if the entity has targeted.
 	 *
-	 * @return
+	 * @return True it the entity has targeted, false if not.
 	 */
 	public boolean isTarget() {
 		return reason.isTarget();
@@ -63,7 +71,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 	/*
 	 * Returns true if the entity has untargeted.
 	 *
-	 * @return
+	 * @return True is the entity has untargeted, false if not.
 	 */
 	public boolean isUntarget() {
 		return !reason.isTarget();

@@ -42,6 +42,7 @@ import org.spout.vanilla.block.Sapling;
 import org.spout.vanilla.block.Slab;
 import org.spout.vanilla.block.Solid;
 import org.spout.vanilla.block.StoneBricks;
+import org.spout.vanilla.block.TorchAttachable;
 import org.spout.vanilla.block.Tree;
 import org.spout.vanilla.block.Wool;
 import org.spout.vanilla.item.Coal;
@@ -135,7 +136,7 @@ public final class VanillaBlocks {
 	public static final BlockMaterial BOOKSHELF = new Solid("Bookshelf", 47);
 	public static final BlockMaterial MOSS_STONE = new Solid("Moss Stone", 48);
 	public static final BlockMaterial OBSIDIAN = new Solid("Obsidian", 49);
-	public static final BlockMaterial TORCH = new Solid("Torch", 50);
+	public static final BlockMaterial TORCH = new TorchAttachable("Torch", 50);
 	public static final BlockMaterial FIRE = new Solid("Fire", 51);
 	public static final BlockMaterial MONSTER_SPAWNER = new Solid("Monster Spawner", 52);
 	public static final BlockMaterial WOODEN_STAIRS = new Solid("Wooden Stairs", 53);

@@ -37,6 +37,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
+import org.spout.vanilla.block.Attachable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
@@ -79,6 +80,11 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		Point pos = new Point(world, message.getX(), message.getY(), message.getZ());
 
 		BlockFace face = VanillaMessageHandlerUtils.messageToBlockFace(message.getDirection());
+		
+		System.out.println(face + " for " + message.getDirection());
+		
+		
+		
 		if (face == BlockFace.THIS) {
 			return;
 		}
@@ -111,6 +117,15 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			if (placedId.getId() < 0) {
 				sendRevert = true;
 			}
+			
+			short placedData = placedId.getData();
+			
+			if(placedId instanceof Attachable) {
+				Attachable attachable = (Attachable) placedId;
+				placedData = attachable.getDataForFace(face.getOpposite());
+				
+				System.out.println("got "+placedData + " for face");
+			}
 
 			VanillaBlockMaterial newBlock = (VanillaBlockMaterial)placedId;
 			VanillaBlockMaterial oldBlock = target != null ? (VanillaBlockMaterial)target.getBlockMaterial() : null;
@@ -127,8 +142,8 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 						}*/
 
 						if(!sendRevert) {
-							world.setBlockMaterial((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), newBlock, player);
-							player.getSession().send(new BlockChangeMessage((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), holding.getMaterial().getId(), world.getBlockData((int)pos.getX(), (int)pos.getY(), (int)pos.getZ())));
+							world.setBlockIdAndData((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), newBlock.getId(), placedData, player);
+							player.getSession().send(new BlockChangeMessage((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), holding.getMaterial().getId(), placedData));
 						}
 
 						/*if(player.getGameMode() != GameMode.CREATIVE) { //TODO: Gamemode is currently not changeable

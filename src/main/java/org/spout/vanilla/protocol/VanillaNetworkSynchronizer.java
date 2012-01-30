@@ -7,6 +7,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.material.BlockMaterial;
@@ -102,15 +103,29 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			return;
 		}
 		
-		CuboidShortBuffer buffer = c.getBlockCuboidBufferLive();
-		short[] rawBlockIdArray = buffer.getRawArray();
+		ChunkSnapshot snapshot = c.getSnapshot(false);
+		short[] rawBlockIdArray = snapshot.getBlockIds();
+		short[] rawBlockData = snapshot.getBlockData();
 		byte[] fullChunkData = new byte[5 * 16 * 16 * 16 / 2];
+		final int maxIdIndex = 16 * 16 * 16;
+		final int maxDataIndex = maxIdIndex + 16 * 16 * 16 / 2;
 		for (int i = 0; i < fullChunkData.length; i++) {
-			fullChunkData[i] = (byte)0xFF;
+			if (i < maxIdIndex) {
+				fullChunkData[i] = (byte)0x00;
+			}
+			else if (i < maxDataIndex) {
+				fullChunkData[i] = (byte)0x00;
+			}
+			else {
+				fullChunkData[i] = (byte)0xFF;
+			}
 		}
 		for (int i = 0; i < rawBlockIdArray.length; i++) {
 			// TODO - conversion code
 			fullChunkData[i] = (byte)(rawBlockIdArray[i] & 0xFF);
+		}
+		for (int i = 0; i < rawBlockData.length / 2; i++) {
+			fullChunkData[i + maxIdIndex] = (byte)((rawBlockData[i + 1] & 0xF << 4) | (rawBlockData[i] & 0xF));
 		}
 		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x * Chunk.CHUNK_SIZE, y * Chunk.CHUNK_SIZE, z * Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, fullChunkData);
 		owner.getSession().send(CCMsg);

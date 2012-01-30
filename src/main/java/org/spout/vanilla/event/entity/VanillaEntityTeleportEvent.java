@@ -29,21 +29,35 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityTeleportEvent;
+import org.spout.api.geo.discrete.Point;
 
 /*
- * Called when a entity teleports via a portal.
+ * Called when a entity teleports.
  */
-public class EntityPortalEvent extends EntityTeleportEvent implements Cancellable {
-	public EntityPortalEvent(Entity e) {
-		super(e);
-		// TODO Auto-generated constructor stub
-	}
-	
+public class VanillaEntityTeleportEvent extends EntityTeleportEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
-	@Override
-	public Entity getEntity() {
-		return (Entity) getEntity();
+	private TeleportReason reason;
+
+	public VanillaEntityTeleportEvent(Entity e, Point from, Point to, TeleportReason reason) {
+		super(e, from, to);
+		this.reason = reason;
+	}
+
+	/**
+	 * Gets the reason behind the teleport of the entity.
+	 * @return The reason behind the teleport.
+	 */
+	public TeleportReason getReason() {
+		return reason;
+	}
+
+	/**
+	 * Sets the reason for the teleport of the entity.
+	 * @param reason The new reason for the teleport of the entity.
+	 */
+	public void setReason(TeleportReason reason) {
+		this.reason = reason;
 	}
 
 	@Override
@@ -58,5 +72,19 @@ public class EntityPortalEvent extends EntityTeleportEvent implements Cancellabl
 
 	public static HandlerList getHandlerList() {
 		return handlers;
+	}
+
+	/**
+	 * An enum to specify the reason behind teleports.
+	 */
+	public enum TeleportReason {
+		/**
+		 * Teleportation via a portal
+		 */
+		PORTAL,
+		/**
+		 * Teleportation due to a custom reason (normally a plugin).
+		 */
+		CUSTOM
 	}
 }

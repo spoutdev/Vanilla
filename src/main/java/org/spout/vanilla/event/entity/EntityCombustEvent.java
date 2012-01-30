@@ -34,16 +34,16 @@ import org.spout.api.event.entity.EntityEvent;
  * Called when an entity combusts.
  */
 public class EntityCombustEvent extends EntityEvent {
-	public EntityCombustEvent(Entity e) {
-		super(e);
-		// TODO Auto-generated constructor stub
-	}
-
 	private static HandlerList handlers = new HandlerList();
 
 	private int duration;
 
 	private Source source;
+
+	public EntityCombustEvent(Entity e, Source source) {
+		super(e);
+		this.source = source;
+	}
 
 	/*
 	 * Gets the source of this event.
@@ -64,12 +64,16 @@ public class EntityCombustEvent extends EntityEvent {
 	/*
 	 * Gets the time that the entity should burn for.
 	 *
-	 * @return The time in seconds
+	 * @return The time in seconds.
 	 */
 	public int getDuration() {
 		return duration;
 	}
 
+	/**
+	 * Sets the time that the entity should burn for.
+	 * @param duration The time in seconds.
+	 */
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}

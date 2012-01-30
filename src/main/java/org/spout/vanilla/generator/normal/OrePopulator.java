@@ -32,10 +32,10 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.VanillaBlocks;
 
 public class OrePopulator implements Populator {
-
+	private	Random ra = new Random();
+	
 	@Override
 	public void populate(Chunk c) {
-		Random ra = new Random();
 		int chance;
 		chance = ra.nextInt(10000);
 		if (chance <= 500) {

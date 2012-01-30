@@ -27,6 +27,7 @@ package org.spout.vanilla.generator.normal;
 
 import java.util.ArrayList;
 
+import net.royawesome.jlibnoise.module.modifier.Exponent;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.Populator;
@@ -64,7 +65,7 @@ public class NormalGenerator implements WorldGenerator {
 		}
 	}
 
-	private final Populator[] populators = new Populator[]{new OrePopulator(), new TreePopulator(), new PondPopulator(), new StrongholdPopulator(), new VillagePopulator(), new AbandonedMineshaftPopulator(), new DungeonPopulator()};
+	private final Populator[] populators = new Populator[]{new CavePopulator(), new OrePopulator(), new TreePopulator(), new PondPopulator(), new StrongholdPopulator(), new VillagePopulator(), new AbandonedMineshaftPopulator(), new DungeonPopulator()};
 
 	public Populator[] getPopulators() {
 		return populators;
@@ -97,27 +98,6 @@ public class NormalGenerator implements WorldGenerator {
 					id = getBlockId(height, dy);
 					
 					blockData.set(dx, dy, dz, id);
-				}
-				int ilayers = (int) ((layerCount.GetValue(dx / 16.0 + 0.05, 0.05, dz / 16.0 + 0.05) + 1.0) * 5.0 + 2);
-
-				if(ilayers <= 0) {
-					ilayers = 2;
-				}
-
-				int heightPerLayer = 59/ilayers;
-
-				for (int layer = 0; layer < ilayers; layer+=2) {
-					Perlin bottom = getLayer(layer);
-					Perlin top = getLayer(layer+1);
-					int min = 3 + heightPerLayer * layer;
-					int max = 3 + heightPerLayer * (layer + 1);
-					int b = (int) ((getPerlinValueXZ(bottom, dx, dz) + 1.0) * heightPerLayer / 3.0 + min);
-					int t = (int) ((getPerlinValueXZ(top, dx, dz) + 1.0) * heightPerLayer / 3.0 + max);
-					for(int dy = y; dy < y + 16; dy++) {
-						if(dy > b && dy < t) {
-							blockData.set(dx, dy, dz, VanillaBlocks.AIR.getId());
-						}
-					}
 				}
 
 				if(wateredStack) {

@@ -23,172 +23,88 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license, 
  * including the MIT license.
  */
+
+
 package org.spout.vanilla.generator.normal;
 
 import java.util.Random;
 import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.geo.discrete.Point;
 import org.spout.vanilla.VanillaBlocks;
 
 public class TreePopulator implements Populator {
-	
-	private Random random = new Random();
-	
-	public void generateNormalTree(Chunk c, Point point) {
-		int x = (int) point.getX();
-		int y = (int) point.getY();
-		int z = (int) point.getZ();
-		short wood = VanillaBlocks.LOG.getId();
-		short leaves = VanillaBlocks.LEAVES.getId();
-		World world = c.getWorld();
-		
-		// Trunk
-		for (int yy = 1; yy <= 6; yy++) {
-			c.setBlockId(x, y+yy, z, wood, world);
-		}
-		
-		// Top leaves layer
-		c.setBlockId(x, y+7, z, leaves, world);
-		c.setBlockId(x+1, y+7, z, leaves, world);
-		c.setBlockId(x, y+7, z-1, leaves, world);
-		c.setBlockId(x-1, y+7, z, leaves, world);
-		c.setBlockId(x, y+7, z+1, leaves, world);
-		
-		// Second leaves layer
-		c.setBlockId(x+1, y+6, z, leaves, world);
-		c.setBlockId(x+1, y+6, z-1, leaves, world);
-		c.setBlockId(x, y+6, z-1, leaves, world);
-		c.setBlockId(x-1, y+6, z-1, leaves, world);
-		c.setBlockId(x-1, y+6, z, leaves, world);
-		c.setBlockId(x-1, y+6, z+1, leaves, world);
-		c.setBlockId(x, y+6, z+1, leaves, world);
-		c.setBlockId(x+1, y+6, z+1, leaves, world);
-		
-		// Third and fourth leaves layer
-		for (int off = 4; off <= 5; off++) {
-			c.setBlockId(x+1, y+off, z, leaves, world);
-			c.setBlockId(x+1, y+off, z-1, leaves, world);
-			c.setBlockId(x, y+off, z-1, leaves, world);
-			c.setBlockId(x-1, y+off, z-1, leaves, world);
-			c.setBlockId(x-1, y+off, z, leaves, world);
-			c.setBlockId(x-1, y+off, z+1, leaves, world);
-			c.setBlockId(x, y+off, z+1, leaves, world);
-			c.setBlockId(x+1, y+off, z+1, leaves, world);
-			
-			c.setBlockId(x+2, y+off, z, leaves, world);
-			c.setBlockId(x+2, y+off, z-1, leaves, world);
-			c.setBlockId(x+2, y+off, z-2, leaves, world);
-			c.setBlockId(x+1, y+off, z-2, leaves, world);
-			c.setBlockId(x, y+off, z-2, leaves, world);
-			c.setBlockId(x-1, y+off, z-2, leaves, world);
-			c.setBlockId(x-2, y+off, z-2, leaves, world);
-			c.setBlockId(x-2, y+off, z-1, leaves, world);
-			c.setBlockId(x-2, y+off, z, leaves, world);
-			c.setBlockId(x-2, y+off, z+1, leaves, world);
-			c.setBlockId(x-2, y+off, z+2, leaves, world);
-			c.setBlockId(x-1, y+off, z+2, leaves, world);
-			c.setBlockId(x, y+off, z+2, leaves, world);
-			c.setBlockId(x+1, y+off, z+2, leaves, world);
-			c.setBlockId(x+2, y+off, z+2, leaves, world);
-			c.setBlockId(x+2, y+off, z+1, leaves, world);
-		}
-	}
-	
-	public void generateSmallTree(Chunk c, Point point) {
-		int x = (int) point.getX();
-		int y = (int) point.getY();
-		int z = (int) point.getZ();
-		short wood = VanillaBlocks.LOG.getId();
-		short leaves = VanillaBlocks.LEAVES.getId();
-		World world = c.getWorld();
-		
-		// Trunk
-		for (int yy = 1; yy <= 4; yy++) {
-			c.setBlockId(x, y+yy, z, wood, world);
-		}
-		
-		// Top leaves layer
-		c.setBlockId(x, y+5, z, leaves, world);
-		c.setBlockId(x+1, y+5, z, leaves, world);
-		c.setBlockId(x, y+5, z-1, leaves, world);
-		c.setBlockId(x-1, y+5, z, leaves, world);
-		c.setBlockId(x, y+5, z+1, leaves, world);
-		
-		// Second leaves layer
-		c.setBlockId(x+1, y+4, z, leaves, world);
-		c.setBlockId(x+1, y+4, z-1, leaves, world);
-		c.setBlockId(x, y+4, z-1, leaves, world);
-		c.setBlockId(x-1, y+4, z-1, leaves, world);
-		c.setBlockId(x-1, y+4, z, leaves, world);
-		c.setBlockId(x-1, y+4, z+1, leaves, world);
-		c.setBlockId(x, y+4, z+1, leaves, world);
-		c.setBlockId(x+1, y+4, z+1, leaves, world);
-		
-		// Third and fourth leaves layer
-		for (int off = 2; off <= 3; off++) {
-			c.setBlockId(x+1, y+off, z, leaves, world);
-			c.setBlockId(x+1, y+off, z-1, leaves, world);
-			c.setBlockId(x, y+off, z-1, leaves, world);
-			c.setBlockId(x-1, y+off, z-1, leaves, world);
-			c.setBlockId(x-1, y+off, z, leaves, world);
-			c.setBlockId(x-1, y+off, z+1, leaves, world);
-			c.setBlockId(x, y+off, z+1, leaves, world);
-			c.setBlockId(x+1, y+off, z+1, leaves, world);
-			
-			c.setBlockId(x+2, y+off, z, leaves, world);
-			c.setBlockId(x+2, y+off, z-1, leaves, world);
-			c.setBlockId(x+2, y+off, z-2, leaves, world);
-			c.setBlockId(x+1, y+off, z-2, leaves, world);
-			c.setBlockId(x, y+off, z-2, leaves, world);
-			c.setBlockId(x-1, y+off, z-2, leaves, world);
-			c.setBlockId(x-2, y+off, z-2, leaves, world);
-			c.setBlockId(x-2, y+off, z-1, leaves, world);
-			c.setBlockId(x-2, y+off, z, leaves, world);
-			c.setBlockId(x-2, y+off, z+1, leaves, world);
-			c.setBlockId(x-2, y+off, z+2, leaves, world);
-			c.setBlockId(x-1, y+off, z+2, leaves, world);
-			c.setBlockId(x, y+off, z+2, leaves, world);
-			c.setBlockId(x+1, y+off, z+2, leaves, world);
-			c.setBlockId(x+2, y+off, z+2, leaves, world);
-			c.setBlockId(x+2, y+off, z+1, leaves, world);
-		}
-	}
-	
-	public void generateBigTree(Chunk c, Point p) {
-		
-	}
-	
-	public void generateRedwoodTree(Chunk c, Point p) {
-		
-	}
-	
-	public void generateBirchTree(Chunk c, Point point) {
-		
-	}
-	
+
 	@Override
 	public void populate(Chunk c) {
-		for (int a = 0; a < random.nextInt(20); a++) {
-			int x = random.nextInt(16);
-			int z = random.nextInt(16);
-			int y = 0;
-			for (int yy = 128; yy > 0; yy--) {
-				if (c.getBlockId(x, yy, z) != 0) {
-					y = yy;
-					break;
-				}
-			}
-			
-			if (c.getBlockId(x, y, z) == 2) {
-				Point point = new Point(c.getWorld(), x, y, z);
-				if (random.nextInt(100) < 50) {
-					this.generateNormalTree(c, point);
-				} else {
-					this.generateSmallTree(c, point);
+		if(c.getY()!=4) return;
+		Random ra = new Random();
+		int genInChunk = ra.nextInt(100);
+		if (genInChunk<=30) {
+			return;
+		}
+		int px = ra.nextInt(16);
+		int pz = ra.nextInt(16);
+		int py = getHighestWorkableBlock(c, px, pz);
+		px = c.getX() * 16 + px;
+		pz = c.getZ() * 16 + pz;
+		if (py == -1) {
+			return;
+		}
+		generateSmallTree(c, ra, px, py, pz);
+	}
+
+	private void generateSmallTree(Chunk c, Random ra, int cx, int cy, int cz) {
+		int height = 4+ra.nextInt(2),oneWidth,twoWidth ;
+		if (height == 0) {
+			return;
+		}
+		switch(height) {
+			case 4:
+				oneWidth =1;
+				twoWidth=2;
+				break;
+			case 5:
+				oneWidth=2;
+				twoWidth=2;
+				break;
+			default:
+				oneWidth=1;
+				twoWidth=1;
+		}
+		World w = c.getWorld();
+		w.setBlockMaterial(cx, cy + height, cz,VanillaBlocks.LEAVES,c.getWorld());
+		
+		for (int k = 1; k <= oneWidth; k++) {
+			for (int i = -1; i <= 1; i++) {
+				for (int j = -1; j <= 1; j++) {
+					w.setBlockMaterial(cx + i, cy+height-k, cz + j,VanillaBlocks.LEAVES,c.getWorld());
 				}
 			}
 		}
+		for (int k = oneWidth+1; k <= oneWidth+twoWidth; k++) {
+			for (int i = -2; i <= 2; i++) {
+				for (int j = -2; j <= 2; j++) {
+					w.setBlockMaterial(cx + i, cy+height-k, cz + j,VanillaBlocks.LEAVES,c.getWorld());
+				}
+			}
+		}
+		for(int i=0;i<height;i++)
+			w.setBlockMaterial(cx, cy+i, cz, VanillaBlocks.LOG,  w);
+
+	}
+
+	private int getHighestWorkableBlock(Chunk c, int px, int pz) {
+		int y = 128;
+		int pozx = c.getX() * 16 + px;
+		int pozz = c.getZ() * 16 + pz;
+		while (c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaBlocks.DIRT && c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaBlocks.GRASS) {
+			y--;
+			if (y == 0||c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial()==VanillaBlocks.WATER) {
+				return -1;
+			}
+		}
+		y++;
+		return y;
 	}
 }

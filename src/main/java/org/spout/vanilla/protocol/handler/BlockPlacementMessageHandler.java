@@ -81,8 +81,6 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 
 		BlockFace face = VanillaMessageHandlerUtils.messageToBlockFace(message.getDirection());
 		
-		System.out.println(face + " for " + message.getDirection());
-		
 		
 		
 		if (face == BlockFace.THIS) {
@@ -123,8 +121,6 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			if(placedId instanceof Attachable) {
 				Attachable attachable = (Attachable) placedId;
 				placedData = attachable.getDataForFace(face.getOpposite());
-				
-				System.out.println("got "+placedData + " for face");
 			}
 
 			VanillaBlockMaterial newBlock = (VanillaBlockMaterial)placedId;

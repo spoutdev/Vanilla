@@ -48,7 +48,7 @@ public class QuickBarMessageHandler extends MessageHandler<QuickBarMessage> {
 		}
 		ItemStack newItem = null;
 		if(checkValidId(message.getId())) {
-			newItem = new ItemStack(MaterialData.getMaterial(message.getId()), message.getAmount(), message.getDamage());
+			newItem = new ItemStack(MaterialData.getMaterial(message.getId(), message.getDamage()), message.getAmount(), message.getDamage());
 		} else if(message.getId() != -1) {
 			player.kick("Unknown item ID: " + message.getId());
 			return;

@@ -26,6 +26,7 @@
 package org.spout.vanilla.protocol.bootstrap;
 
 import org.spout.api.protocol.CodecLookupService;
+import org.spout.vanilla.protocol.codec.KickCodec;
 import org.spout.vanilla.protocol.codec.HandshakeCodec;
 import org.spout.vanilla.protocol.codec.IdentificationCodec;
 import org.spout.vanilla.protocol.codec.ServerListPingCodec;
@@ -41,6 +42,7 @@ public class VanillaBootstrapCodecLookupService extends CodecLookupService {
 			/* 0x01 */ bind(IdentificationCodec.class);
 			/* 0x02 */ bind(HandshakeCodec.class);
 			/* 0xFE */ bind(ServerListPingCodec.class);
+			/* 0xFF */ bind(KickCodec.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

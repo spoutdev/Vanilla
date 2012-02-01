@@ -26,7 +26,7 @@
 package org.spout.vanilla;
 
 /**
- * Is a representation of the different game modes that {@link Player}s may
+ * Is a representation of the different game modes that {@link org.spout.vanilla.entity.living.player.MinecraftPlayer}s may
  * have. <br/> {@link GameMode#CREATIVE} implies that the player has no restrictions
  * on flight, has infinite health, instant break, and can use any blocks.
  * {@link GameMode#SURVIVAL} implies that the player is subject to standard game
@@ -63,7 +63,7 @@ public enum GameMode {
 	/**
 	 * Gets the GameMode represented by the specified value
 	 *
-	 * @param value Value to check
+	 * @param id Value to check
 	 * @return Associative {@link GameMode} with the given value, or null if it
 	 *         doesn't exist
 	 */

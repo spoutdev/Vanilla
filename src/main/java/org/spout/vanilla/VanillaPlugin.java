@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla;
 
+import java.net.InetSocketAddress;
 import org.spout.api.Game;
 import org.spout.api.Server;
 import org.spout.api.entity.Controller;
@@ -43,8 +44,6 @@ import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.generator.theend.TheEndGenerator;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
-
-import java.net.InetSocketAddress;
 
 public class VanillaPlugin extends CommonPlugin {
 	public static final String VERSION = "Minecraft 1.1";
@@ -65,7 +64,9 @@ public class VanillaPlugin extends CommonPlugin {
 			if (split.length > 1) {
 				try {
 					port = Integer.parseInt(split[1]);
-				} catch (NumberFormatException e) { }
+				} catch (NumberFormatException e) {
+					System.out.println(split[1]+" is not a valid port number! Defaulting to "+port+"!");
+				}
 			}
 
 			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());

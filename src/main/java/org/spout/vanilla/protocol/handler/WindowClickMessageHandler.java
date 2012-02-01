@@ -34,11 +34,11 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 
 	@Override
 	public void handle(Session session, Player player, WindowClickMessage message) {
-		if (player == null) {
+		/*if (player == null) {
 			return;
 		}
 
-		/*SpoutInventory inv = player.getInventory();
+		SpoutInventory inv = player.getInventory();
 		int slot = inv.getItemSlot(message.getSlot());
 
 		// Modify slot if needed

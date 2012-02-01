@@ -163,7 +163,7 @@ public final class ChannelBufferUtils {
 	 * Writes a UTF-8 string to the buffer.
 	 * @param buf The buffer.
 	 * @param str The string.
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException if the encoding isn't supported.
 	 * @throws IllegalArgumentException if the string is too long
 	 * <em>after</em> it is encoded.
 	 */
@@ -198,7 +198,7 @@ public final class ChannelBufferUtils {
 	 * Reads a UTF-8 encoded string from the buffer.
 	 * @param buf The buffer.
 	 * @return The string.
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException if the encoding isn't supported.
 	 */
 	public static String readUtf8String(ChannelBuffer buf) throws UnsupportedEncodingException {
 		int len = buf.readUnsignedShort();

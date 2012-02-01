@@ -44,6 +44,7 @@ public abstract class BaseGenerator implements WorldGenerator {
 	/**
 	 * Create a new byte[] buffer of the proper size.
 	 *
+	 * @param world The world.
 	 * @param fill The Material to fill with.
 	 * @return A new filled byte[16 * 16 * 128];
 	 */
@@ -61,6 +62,7 @@ public abstract class BaseGenerator implements WorldGenerator {
 	 * @param y The Y coordinate.
 	 * @param z The chunk Z coordinate.
 	 * @param id The block type.
+	 * @param world The world.
 	 */
 	protected void set(byte[] data, World world, int x, int y, int z, int id) {
 		if (data == null) {

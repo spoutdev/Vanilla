@@ -23,8 +23,6 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license, 
  * including the MIT license.
  */
-
-
 package org.spout.vanilla.generator.normal;
 
 import java.util.Random;
@@ -37,10 +35,12 @@ public class TreePopulator implements Populator {
 
 	@Override
 	public void populate(Chunk c) {
-		if(c.getY()!=4) return;
+		if (c.getY() != 4) {
+			return;
+		}
 		Random ra = new Random();
 		int genInChunk = ra.nextInt(100);
-		if (genInChunk<=30) {
+		if (genInChunk <= 30) {
 			return;
 		}
 		int px = ra.nextInt(16);
@@ -55,43 +55,37 @@ public class TreePopulator implements Populator {
 	}
 
 	private void generateSmallTree(Chunk c, Random ra, int cx, int cy, int cz) {
-		int height = 4+ra.nextInt(2),oneWidth,twoWidth ;
+		int height = 5 + ra.nextInt(2), oneWidth, twoWidth;
 		if (height == 0) {
 			return;
 		}
-		switch(height) {
-			case 4:
-				oneWidth =1;
-				twoWidth=2;
-				break;
-			case 5:
-				oneWidth=2;
-				twoWidth=2;
-				break;
-			default:
-				oneWidth=1;
-				twoWidth=1;
-		}
+		oneWidth = 1;
+		twoWidth = 2;
 		World w = c.getWorld();
-		w.setBlockMaterial(cx, cy + height, cz,VanillaBlocks.LEAVES,c.getWorld());
-		
+		w.setBlockMaterial(cx, cy + height, cz, VanillaBlocks.LEAVES, c.getWorld());
+		w.setBlockMaterial(cx - 1, cy + height, cz, VanillaBlocks.LEAVES, c.getWorld());
+		w.setBlockMaterial(cx + 1, cy + height, cz, VanillaBlocks.LEAVES, c.getWorld());
+		w.setBlockMaterial(cx, cy + height, cz - 1, VanillaBlocks.LEAVES, c.getWorld());
+		w.setBlockMaterial(cx, cy + height, cz + 1, VanillaBlocks.LEAVES, c.getWorld());
+
+
 		for (int k = 1; k <= oneWidth; k++) {
 			for (int i = -1; i <= 1; i++) {
 				for (int j = -1; j <= 1; j++) {
-					w.setBlockMaterial(cx + i, cy+height-k, cz + j,VanillaBlocks.LEAVES,c.getWorld());
+					w.setBlockMaterial(cx + i, cy + height - k, cz + j, VanillaBlocks.LEAVES, c.getWorld());
 				}
 			}
 		}
-		for (int k = oneWidth+1; k <= oneWidth+twoWidth; k++) {
+		for (int k = oneWidth + 1; k <= oneWidth + twoWidth; k++) {
 			for (int i = -2; i <= 2; i++) {
 				for (int j = -2; j <= 2; j++) {
-					w.setBlockMaterial(cx + i, cy+height-k, cz + j,VanillaBlocks.LEAVES,c.getWorld());
+					w.setBlockMaterial(cx + i, cy + height - k, cz + j, VanillaBlocks.LEAVES, c.getWorld());
 				}
 			}
 		}
-		for(int i=0;i<height;i++)
-			w.setBlockMaterial(cx, cy+i, cz, VanillaBlocks.LOG,  w);
-
+		for (int i = 0; i < height; i++) {
+			w.setBlockMaterial(cx, cy + i, cz, VanillaBlocks.LOG, w);
+		}
 	}
 
 	private int getHighestWorkableBlock(Chunk c, int px, int pz) {
@@ -100,7 +94,7 @@ public class TreePopulator implements Populator {
 		int pozz = c.getZ() * 16 + pz;
 		while (c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaBlocks.DIRT && c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaBlocks.GRASS) {
 			y--;
-			if (y == 0||c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial()==VanillaBlocks.WATER) {
+			if (y == 0 || c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() == VanillaBlocks.WATER) {
 				return -1;
 			}
 		}

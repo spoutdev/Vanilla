@@ -32,7 +32,7 @@ import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.exception.InvalidControllerException;
 import org.spout.vanilla.entity.living.hostile.Slime;
 
-/*
+/**
  * Called when a slime is split.
  */
 public class SlimeSplitEvent extends EntityEvent implements Cancellable {
@@ -42,15 +42,28 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
 	public SlimeSplitEvent(Entity e) throws InvalidControllerException {
 		super(e);
-		if (!(e.getController() instanceof Slime))
+		if (!(e.getController() instanceof Slime)) {
 			throw new InvalidControllerException();
+		}
 		amount = 0;
 		size = 0;
 	}
 
-	/*
+	/**
+	 * Overrides setEntity from the parent to make sure the proper entity is set.
+	 * @param e The new entity to be set.
+	 * @throws InvalidControllerException Only thrown if the controller trying to be set is invalid.
+	 */
+	@Override
+	public void setEntity(Entity e) throws InvalidControllerException {
+		if (!(e.getController() instanceof Slime)) {
+			throw new InvalidControllerException();
+		}
+		super.setEntity(e);
+	}
+
+	/**
 	 * Gets the amount of slimes to spawn.
-	 *
 	 * @return The amount of slimes to spawn.
 	 */
 	public int getAmount() {
@@ -65,9 +78,8 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 		this.amount = amount;
 	}
 
-	/*
+	/**
 	 * Gets the size of slimes to spawn.
-	 *
 	 * @return The size of the slimes to spawn.
 	 */
 	public int getSize() {

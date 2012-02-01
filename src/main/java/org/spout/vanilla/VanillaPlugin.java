@@ -26,6 +26,7 @@
 package org.spout.vanilla;
 
 import java.net.InetSocketAddress;
+
 import org.spout.api.Game;
 import org.spout.api.Server;
 import org.spout.api.entity.Controller;
@@ -46,7 +47,6 @@ import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
-	public static final String VERSION = "Minecraft 1.1";
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
 	public static int vanillaProtocolId;
 
@@ -102,6 +102,6 @@ public class VanillaPlugin extends CommonPlugin {
 		World end = getGame().loadWorld("world_end", new TheEndGenerator());
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), new TheEndSky());
 
-		getLogger().info("enabled. Version: " + VERSION);
+		getLogger().info("enabled. Protocol: " + this.getDescription().getProtocol());
 	}
 }

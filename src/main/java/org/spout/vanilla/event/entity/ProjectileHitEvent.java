@@ -31,7 +31,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
-/*
+/**
  * Called when a projectile hits something.
  */
 public class ProjectileHitEvent extends EntityEvent implements Cancellable {
@@ -44,7 +44,7 @@ public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 		this.source = source;
 	}
 
-	/*
+	/**
 	 * Gets the source of this event.
 	 * @return An Source that is the source of the event.
 	 */
@@ -52,7 +52,7 @@ public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 		return source;
 	}
 
-	/*
+	/**
 	 * Sets the source of this event.
 	 * @param source The source of this event.
 	 */

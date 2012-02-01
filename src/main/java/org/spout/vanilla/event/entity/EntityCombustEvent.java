@@ -25,12 +25,12 @@
  */
 package org.spout.vanilla.event.entity;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.Source;
+import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
-/*
+/**
  * Called when an entity combusts.
  */
 public class EntityCombustEvent extends EntityEvent {
@@ -45,7 +45,7 @@ public class EntityCombustEvent extends EntityEvent {
 		this.source = source;
 	}
 
-	/*
+	/**
 	 * Gets the source of this event.
 	 * @return An Source that is the source of the event.
 	 */
@@ -53,7 +53,7 @@ public class EntityCombustEvent extends EntityEvent {
 		return source;
 	}
 
-	/*
+	/**
 	 * Sets the source of this event.
 	 * @param source The source of this event.
 	 */
@@ -61,9 +61,8 @@ public class EntityCombustEvent extends EntityEvent {
 		this.source = source;
 	}
 
-	/*
+	/**
 	 * Gets the time that the entity should burn for.
-	 *
 	 * @return The time in seconds.
 	 */
 	public int getDuration() {

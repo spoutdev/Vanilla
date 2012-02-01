@@ -31,8 +31,8 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityTeleportEvent;
 import org.spout.api.geo.discrete.Point;
 
-/*
- * Called when a entity teleports.
+/**
+ * Called when a entity teleports with Vanilla characteristics.
  */
 public class VanillaEntityTeleportEvent extends EntityTeleportEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();

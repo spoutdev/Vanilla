@@ -47,7 +47,7 @@ public enum Entity {
 	Zombie(54),
 	Slime(55),
 	Ghast(56),
-	ZombiePigman(57),
+	PigZombie(57),
 	Enderman(58),
 	CaveSpider(59),
 	Silverfish(60),

@@ -31,7 +31,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.protocol.msg.AnimateEntityMessage;
 
 /**
- * A {@link MessageHandler} which handles {@link org.bukkit.entity.Entity}
+ * A {@link MessageHandler} which handles {@link org.spout.vanilla.entity.MinecraftEntity}
  * animation messages.
  */
 public final class AnimateEntityMessageHandler extends MessageHandler<AnimateEntityMessage> {

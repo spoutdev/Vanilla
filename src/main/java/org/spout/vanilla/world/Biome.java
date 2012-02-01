@@ -38,5 +38,5 @@ public enum Biome {
 	RIVER,
 	MUSHROOM,
 	NETHER,
-	THEEND;
+	THEEND
 }

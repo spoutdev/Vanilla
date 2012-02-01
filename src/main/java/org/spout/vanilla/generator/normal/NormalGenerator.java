@@ -122,9 +122,9 @@ public class NormalGenerator implements WorldGenerator {
 		short id;
 		if(dy > top) {
 			id = VanillaBlocks.AIR.getId();
-		} else if(dy == (int)top && dy >= 63) {
+		} else if(dy == top && dy >= 63) {
 			id = VanillaBlocks.GRASS.getId();
-		} else if(dy + 4 >=(int)top) {
+		} else if(dy + 4 >=top) {
 			id = VanillaBlocks.DIRT.getId();
 		} else if(dy != 0){
 			id = VanillaBlocks.STONE.getId();

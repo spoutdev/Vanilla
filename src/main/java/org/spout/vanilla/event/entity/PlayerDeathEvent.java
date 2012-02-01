@@ -28,6 +28,7 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
+import org.spout.api.player.Player;
 
 /*
  * Called when a player dies.
@@ -40,8 +41,8 @@ public class PlayerDeathEvent extends VanillaEntityDeathEvent implements Cancell
 
 	private static HandlerList handlers = new HandlerList();
 
-	public Entity getPlayer() {
-		return (Entity) getEntity();
+	public Player getPlayer() {
+		return (Player) getEntity();
 	}
 
 	@Override

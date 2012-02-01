@@ -30,7 +30,7 @@ import java.util.HashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 /**
- * Represents the painting on a {@link Painting}.
+ * Represents the painting on a Painting.
  */
 public enum Art {
 	KEBAB(0, 1, 1),

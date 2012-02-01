@@ -1,14 +1,14 @@
 /*
  * This file is part of Vanilla (http://www.spout.org/).
  *
- * Vanilla is licensed under the SpoutDev License Version 1.  
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * In addition, 180 days after any changes are published, you can use the 
+ * In addition, 180 days after any changes are published, you can use the
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
@@ -18,14 +18,14 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.  
+ * the MIT license and the SpoutDev license version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
- * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license, 
+ * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla.event.player;
 
-import org.spout.api.entity.Entity;
+import org.spout.api.entity.Controller;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
@@ -37,38 +37,51 @@ import org.spout.api.player.Player;
 public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
-	private Entity caught = null;
+	private Controller caught = null;
 
 	private FishingStatus status;
 
 	public PlayerFishEvent(Player p, FishingStatus status) {
 		super(p);
+		this.caught = null;
 		this.status = status;
 	}
 
-	/**
-	 * Gets the entity caught by the player
-	 *
-	 * @return Entity caught by the player, null if fishing, bobber has gotten
-	 *         stuck in the ground or nothing has been caught
-	 */
-	public Entity getCaught() {
-		return caught;
-	}
-
-	public void setCaught(Entity caught) {
+	public PlayerFishEvent(Player p, FishingStatus status, Controller caught) {
+		super(p);
+		this.status = status;
 		this.caught = caught;
 	}
 
 	/**
-	 * Gets the status of fishing
-	 *
-	 * @return A FishingStatus corresponding with the status of fishing.
+	 * Gets the controller of the entity caught by the player
+	 * @return Controller of the entity caught by the player, null if fishing,
+	 * bobber has gotten stuck in the ground or nothing has been caught
+	 */
+	public Controller getCaught() {
+		return caught;
+	}
+
+	/**
+	 * Sets the controller of the entity that as caught.
+	 * @param caught Controller of the entity that was caught.
+	 */
+	public void setCaught(Controller caught) {
+		this.caught = caught;
+	}
+
+	/**
+	 * Gets the status of the fishing event
+	 * @return The status of fishing.
 	 */
 	public FishingStatus getStatus() {
 		return status;
 	}
 
+	/**
+	 * Sets the status of the fishing event.
+	 * @param status Sets the status of fishing.
+	 */
 	public void setStatus(FishingStatus status) {
 		this.status = status;
 	}
@@ -96,10 +109,6 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 		 */
 		FISHING,
 		/**
-		 * When a player has successfully caught a fish
-		 */
-		CAUGHT_FISH,
-		/**
 		 * When a player has successfully caught an entity
 		 */
 		CAUGHT_ENTITY,
@@ -111,6 +120,6 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 		 * When a player fails to catch anything while fishing usually due to
 		 * poor aiming or timing
 		 */
-		FAILED_ATTEMPT,
+		FAILED_ATTEMPT
 	}
 }

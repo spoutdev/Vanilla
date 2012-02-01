@@ -30,7 +30,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
-/*
+/**
  * Called when an entity targets or untargets another entity.
  */
 public class EntityTargetEvent extends EntityEvent implements Cancellable {
@@ -59,18 +59,16 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 		this.reason = reason;
 	}
 
-	/*
+	/**
 	 * Returns true if the entity has targeted.
-	 *
 	 * @return True it the entity has targeted, false if not.
 	 */
 	public boolean isTarget() {
 		return reason.isTarget();
 	}
 
-	/*
+	/**
 	 * Returns true if the entity has untargeted.
-	 *
 	 * @return True is the entity has untargeted, false if not.
 	 */
 	public boolean isUntarget() {

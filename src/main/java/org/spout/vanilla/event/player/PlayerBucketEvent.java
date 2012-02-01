@@ -56,7 +56,6 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Get the resulting bucket in hand after the bucket event.
-	 *
 	 * @return Bucket held in hand after the event.
 	 */
 	public ItemStack getBucket() {
@@ -74,7 +73,6 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Return the block clicked.
-	 *
 	 * @return the clicked block.
 	 */
 	public Block getBlockClicked() {
@@ -91,7 +89,6 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Get the face on the clicked block
-	 *
 	 * @return the clicked face
 	 */
 	public BlockFace getBlockFace() {
@@ -108,7 +105,6 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Returns true if the bucket was filled.
-	 *
 	 * @return True if the bucket was filled.
 	 */
 	public boolean isFilled() {
@@ -117,7 +113,6 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Returns true if the bucket was emptied.
-	 *
 	 * @return True if the bucket was emptied.
 	 */
 	public boolean isEmptied() {

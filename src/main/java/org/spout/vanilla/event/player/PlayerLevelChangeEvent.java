@@ -30,15 +30,15 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.player.Player;
 
-/*
+/**
  * Called when a player's level changes (either food, exp, or custom).
  */
 public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
-	private LevelChangeReason reason;
-
 	private int previousLevel,newLevel;
+	
+	private LevelChangeReason reason;
 
 	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {
 		super(p);
@@ -47,25 +47,23 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 		this.newLevel = newLevel;
 	}
 
-	/*
+	/**
 	 * Gets the reason for the change of level.
-	 *
 	 * @return A LevelChangeReason that is the reason for the change in level.
 	 */
 	public LevelChangeReason getReason() {
 		return reason;
 	}
 
-	/*
+	/**
 	 * Sets the reason for the change of level.
-	 *
 	 * @param reason A LevelChangeReason that sets the reason for the change of level.
 	 */
 	public void setReason(LevelChangeReason reason) {
 		this.reason = reason;
 	}
 
-	/*
+	/**
 	 * Gets the previous level before the level change occurred.
 	 * @return an int that is the number of the last level.
 	 */
@@ -73,7 +71,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 		return previousLevel;
 	}
 
-	/*
+	/**
 	 * Gets the new level after the level change occurred.
 	 * @return an int that is the number of the new level.
 	 */
@@ -81,7 +79,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 		return newLevel;
 	}
 
-	/*
+	/**
 	 * Sets the level of the player regardless of what level was set in the event.
 	 * @param an int that is the custom number of the level to set.
 	 */

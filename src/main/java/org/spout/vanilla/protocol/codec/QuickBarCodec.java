@@ -63,7 +63,9 @@ public class QuickBarCodec extends MessageCodec<QuickBarMessage> {
 			short amount = buffer.readByte();
 			short damage = buffer.readShort();
 			Map<String, Tag> nbtData = null;
-			if (ChannelBufferUtils.hasNbtData(id)) nbtData = ChannelBufferUtils.readCompound(buffer);
+			if (ChannelBufferUtils.hasNbtData(id)) {
+				nbtData = ChannelBufferUtils.readCompound(buffer);
+			}
 			return new QuickBarMessage(slot, id, amount, damage, nbtData);
 		} else {
 			return new QuickBarMessage(slot, id, (short)0, (short)0, null);

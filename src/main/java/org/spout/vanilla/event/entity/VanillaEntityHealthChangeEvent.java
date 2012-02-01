@@ -150,6 +150,6 @@ public class VanillaEntityHealthChangeEvent extends EntityHealthChangeEvent impl
 		 * Health changed due to a custom reason (normally specified by another
 		 * plugin).
 		 */
-		CUSTOM;
+		CUSTOM
 	}
 }

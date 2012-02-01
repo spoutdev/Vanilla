@@ -45,7 +45,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the reason for the targeting.
-	 * @return
+	 * @return The target reason.
 	 */
 	public TargetReason getReason() {
 		return reason;
@@ -94,7 +94,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 	public enum TargetReason {
 		TARGET_DIED(false),
 		CLOSEST_PLAYER(true),
-		TARGET_ATTTACKED_ENTITY(true),
+		TARGET_ATTACKED_ENTITY(true),
 		PIG_ZOMBIE_MASSACRE(true),
 		FORGOT_TARGET(false),
 		OWNER_ATTACKED(true),

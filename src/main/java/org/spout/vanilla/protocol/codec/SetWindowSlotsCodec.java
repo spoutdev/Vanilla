@@ -72,8 +72,7 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeByte(message.getId());
 		buffer.writeShort(items.length);
-		for (int slot = 0; slot < items.length; slot++) {
-			ItemStack item = items[slot];
+		for(ItemStack item : items) {
 			if (item == null) {
 				buffer.writeShort(-1);
 			} else {
@@ -85,7 +84,6 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 				}
 			}
 		}
-
 		return buffer;
 	}
 }

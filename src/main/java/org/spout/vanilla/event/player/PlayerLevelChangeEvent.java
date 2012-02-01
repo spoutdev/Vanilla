@@ -118,6 +118,6 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 		/**
 		 * A custom reason (normally a plugin)
 		 */
-		CUSTOM;
+		CUSTOM
 	}
 }

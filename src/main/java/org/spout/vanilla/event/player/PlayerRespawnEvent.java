@@ -26,9 +26,11 @@
 package org.spout.vanilla.event.player;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.PlayerController;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntitySpawnEvent;
+import org.spout.api.exception.InvalidControllerException;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 
@@ -46,16 +48,28 @@ public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable 
 	}
 
 	/**
+	 * Overrides setEntity from the parent to make sure the proper entity is set.
+	 * @param e The new entity to be set.
+	 * @throws InvalidControllerException Only thrown if the controller trying to be set is invalid.
+	 */
+	@Override
+	public void setEntity(Entity e) throws InvalidControllerException {
+		if (!(e.getController() instanceof PlayerController)) {
+			throw new InvalidControllerException();
+		}
+		super.setEntity(e);
+	}
+
+	/**
 	 * Gets the player associated in this event.
-	 * @return a Player object representing the player.
+	 * @return The player of the event.
 	 */
 	public Player getPlayer() {
 		return (Player) getEntity();
 	}
 
-	/*
+	/**
 	 * Returns true if the respawn location is a bed.
-	 *
 	 * @return True if the respawn location is a bed.
 	 */
 	public boolean isBedRespawn() {

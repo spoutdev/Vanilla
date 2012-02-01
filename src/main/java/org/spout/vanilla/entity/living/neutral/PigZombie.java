@@ -29,11 +29,11 @@ import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.NeutralEntity;
 import org.spout.vanilla.entity.living.hostile.Zombie;
 
-public class ZombiePigman extends Zombie implements NeutralEntity {
+public class PigZombie extends Zombie implements NeutralEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setData(Entity.KEY, Entity.ZombiePigman.id);
+		parent.setData(Entity.KEY, Entity.PigZombie.id);
 	}
 
 	@Override

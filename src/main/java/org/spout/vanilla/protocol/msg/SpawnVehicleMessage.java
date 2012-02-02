@@ -91,8 +91,9 @@ public final class SpawnVehicleMessage extends Message {
 		build.append(id).append(",type=").append(type).append(",x=").append(x).append(",y=").append(y);
 		build.append(",z=").append(z).append(",fireballId=").append(fireballId);
 
-		if (hasFireball()) {build.append(",fireballX=").append(fireballX).append(",fireballY=").append(fireballY).
-				append(",fireballZ=").append(fireballZ);
+		if (hasFireball()) {
+			build.append(",fireballX=").append(fireballX).append(",fireballY=").append(fireballY).append(",fireballZ=").append(fireballZ);
+		}
 
 		build.append("}");
 		return build.toString();

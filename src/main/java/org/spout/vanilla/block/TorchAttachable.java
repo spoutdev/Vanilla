@@ -25,10 +25,9 @@
  */
 package org.spout.vanilla.block;
 
-import org.spout.api.material.GenericBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-public class TorchAttachable extends GenericBlockMaterial implements Attachable {
+public class TorchAttachable extends AbstractAttachable {
 	public TorchAttachable(String name, int id) {
 		super(name, id);
 	}
@@ -50,7 +49,7 @@ public class TorchAttachable extends GenericBlockMaterial implements Attachable 
 	}
 
 	@Override
-	public BlockFace getAttachedTo(short data) {
+	public BlockFace getFaceAttachedTo(short data) {
 		switch(data) {
 			case 0x2:
 				return BlockFace.EAST;

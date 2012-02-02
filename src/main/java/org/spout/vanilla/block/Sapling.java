@@ -25,10 +25,10 @@
  */
 package org.spout.vanilla.block;
 
-import org.spout.api.material.GenericBlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.Plant;
 
-public class Sapling extends GenericBlockMaterial implements Plant {
+public class Sapling extends GroundAttachable implements Plant {
 	public Sapling(String name, int data) {
 		super(name, 6, data);
 	}

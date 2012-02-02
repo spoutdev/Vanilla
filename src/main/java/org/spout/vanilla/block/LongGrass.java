@@ -25,10 +25,9 @@
  */
 package org.spout.vanilla.block;
 
-import org.spout.api.material.GenericBlockMaterial;
 import org.spout.vanilla.material.Plant;
 
-public class LongGrass extends GenericBlockMaterial implements Plant {
+public class LongGrass extends GroundAttachable implements Plant {
 	public LongGrass(String name, int id, int data) {
 		super(name, id, data);
 	}

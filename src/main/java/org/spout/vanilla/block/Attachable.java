@@ -25,7 +25,8 @@
  */
 package org.spout.vanilla.block;
 
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
@@ -42,5 +43,15 @@ public interface Attachable extends VanillaBlockMaterial {
 	 * @param data that the block has
 	 * @return to which face the block is attached to
 	 */
-	public BlockFace getAttachedTo(short data);
+	public BlockFace getFaceAttachedTo(short data);
+	
+	/**
+	 * Returns the block that the attachable at x,y,z is attached to.
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
+	public Block getBlockAttachedTo(World world, int x, int y, int z);
 }

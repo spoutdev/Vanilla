@@ -57,7 +57,7 @@ public final class SpawnVehicleCodec extends MessageCodec<SpawnVehicleMessage> {
 
 	@Override
 	public ChannelBuffer encode(SpawnVehicleMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(message.hasFireball() ? 28 : 22);
+		ChannelBuffer buffer = ChannelBuffers.buffer(message.hasFireball() ? 27 : 21);
 		buffer.writeInt(message.getId());
 		buffer.writeByte(message.getType());
 		buffer.writeInt(message.getX());

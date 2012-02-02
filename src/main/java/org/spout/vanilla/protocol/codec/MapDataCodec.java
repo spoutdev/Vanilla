@@ -43,12 +43,8 @@ public final class MapDataCodec extends MessageCodec<MapDataMessage> {
 		short type = buffer.readShort();
 		short id = buffer.readShort();
 		short size = buffer.readUnsignedByte();
-
 		byte[] data = new byte[size];
-		for (int i = 0; i < data.length; ++i) {
-			data[i] = buffer.readByte();
-		}
-
+		buffer.readBytes(data);
 		return new MapDataMessage(type, id, data);
 	}
 

@@ -39,17 +39,6 @@ public class ExperienceOrbCodec extends MessageCodec<ExperienceOrbMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(ExperienceOrbMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(19);
-		buffer.writeInt(message.getId());
-		buffer.writeInt(message.getX());
-		buffer.writeInt(message.getY());
-		buffer.writeInt(message.getZ());
-		buffer.writeShort(message.getCount());
-		return buffer;
-	}
-
-	@Override
 	public ExperienceOrbMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
 		int x = buffer.readInt();
@@ -57,5 +46,16 @@ public class ExperienceOrbCodec extends MessageCodec<ExperienceOrbMessage> {
 		int z = buffer.readInt();
 		short count = buffer.readShort();
 		return new ExperienceOrbMessage(id, x, y, z, count);
+	}
+
+	@Override
+	public ChannelBuffer encode(ExperienceOrbMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.buffer(18);
+		buffer.writeInt(message.getId());
+		buffer.writeInt(message.getX());
+		buffer.writeInt(message.getY());
+		buffer.writeInt(message.getZ());
+		buffer.writeShort(message.getCount());
+		return buffer;
 	}
 }

@@ -39,17 +39,17 @@ public class EnchantItemCodec extends MessageCodec<EnchantItemMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(EnchantItemMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(3);
-		buffer.writeShort(message.getTransaction());
-		buffer.writeByte(message.getEnchantment());
-		return buffer;
+	public EnchantItemMessage decode(ChannelBuffer buffer) throws IOException {
+		int transaction = buffer.readByte();
+		int enchantment = buffer.readByte();
+		return new EnchantItemMessage(transaction, enchantment);
 	}
 
 	@Override
-	public EnchantItemMessage decode(ChannelBuffer buffer) throws IOException {
-		int transaction = buffer.readShort();
-		int enchantment = buffer.readByte();
-		return new EnchantItemMessage(transaction, enchantment);
+	public ChannelBuffer encode(EnchantItemMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.buffer(2);
+		buffer.writeByte(message.getTransaction());
+		buffer.writeByte(message.getEnchantment());
+		return buffer;
 	}
 }

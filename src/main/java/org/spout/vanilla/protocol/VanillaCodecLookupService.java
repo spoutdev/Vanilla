@@ -88,6 +88,7 @@ import org.spout.vanilla.protocol.codec.StatisticCodec;
 import org.spout.vanilla.protocol.codec.TimeCodec;
 import org.spout.vanilla.protocol.codec.TransactionCodec;
 import org.spout.vanilla.protocol.codec.UpdateSignCodec;
+import org.spout.vanilla.protocol.codec.UseBedCodec;
 import org.spout.vanilla.protocol.codec.UserListItemCodec;
 import org.spout.vanilla.protocol.codec.WindowClickCodec;
 
@@ -111,6 +112,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x0E */ bind(DiggingCodec.class);
 			/* 0x0F */ bind(BlockPlacementCodec.class);
 			/* 0x10 */ bind(ActivateItemCodec.class);
+			/* 0x11 */ bind(UseBedCodec.class);
 			/* 0x12 */ bind(AnimateEntityCodec.class);
 			/* 0x13 */ bind(EntityActionCodec.class);
 			/* 0x14 */ bind(SpawnPlayerCodec.class);

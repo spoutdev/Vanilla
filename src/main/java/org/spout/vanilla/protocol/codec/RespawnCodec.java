@@ -52,7 +52,7 @@ public final class RespawnCodec extends MessageCodec<RespawnMessage> {
 
 	@Override
 	public ChannelBuffer encode(RespawnMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(14);
+		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeByte(message.getDimension());
 		buffer.writeByte(message.getDifficulty());
 		buffer.writeByte(message.getGameMode());

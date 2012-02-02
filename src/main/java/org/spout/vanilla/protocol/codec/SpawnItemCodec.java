@@ -55,7 +55,7 @@ public final class SpawnItemCodec extends MessageCodec<SpawnItemMessage> {
 
 	@Override
 	public ChannelBuffer encode(SpawnItemMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(22);
+		ChannelBuffer buffer = ChannelBuffers.buffer(24);
 		buffer.writeInt(message.getId());
 		buffer.writeShort(message.getItemId());
 		buffer.writeByte(message.getCount());

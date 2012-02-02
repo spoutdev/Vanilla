@@ -41,12 +41,12 @@ public class ServerListPingCodec extends MessageCodec<ServerListPingMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(ServerListPingMessage message) throws IOException {
-		return ChannelBuffers.EMPTY_BUFFER;
+	public ServerListPingMessage decode(ChannelBuffer buffer) throws IOException {
+		return LIST_PING_MESSAGE;
 	}
 
 	@Override
-	public ServerListPingMessage decode(ChannelBuffer buffer) throws IOException {
-		return LIST_PING_MESSAGE;
+	public ChannelBuffer encode(ServerListPingMessage message) throws IOException {
+		return ChannelBuffers.EMPTY_BUFFER;
 	}
 }

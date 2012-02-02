@@ -48,7 +48,7 @@ public final class HealthCodec extends MessageCodec<HealthMessage> {
 
 	@Override
 	public ChannelBuffer encode(HealthMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(9);
+		ChannelBuffer buffer = ChannelBuffers.buffer(8);
 		buffer.writeShort(message.getHealth());
 		buffer.writeShort(message.getFood());
 		buffer.writeFloat(message.getFoodSaturation());

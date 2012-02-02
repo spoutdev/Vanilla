@@ -1,4 +1,4 @@
-/**
+/*
  * This file is part of Vanilla (http://www.spout.org/).
  *
  * Vanilla is licensed under the SpoutDev License Version 1.
@@ -37,7 +37,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
 	private int previousLevel,newLevel;
-	
+
 	private LevelChangeReason reason;
 
 	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {

@@ -5,7 +5,7 @@ author: SpoutDev
 website: http://www.spout.org
 
 main: org.spout.vanilla.VanillaPlugin
-protocol: Minecraft 1.1
+protocol: Minecraft ${minecraft.version}
 load: startup
 
 platform: BOTH

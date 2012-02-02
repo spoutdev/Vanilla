@@ -1,4 +1,4 @@
-/**
+/*
  * This file is part of Vanilla (http://www.spout.org/).
  *
  * Vanilla is licensed under the SpoutDev License Version 1.

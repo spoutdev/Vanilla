@@ -1,3 +1,28 @@
+/*
+ * This file is part of Vanilla (http://www.spout.org/).
+ *
+ * Vanilla is licensed under the SpoutDev License Version 1.
+ *
+ * Vanilla is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * In addition, 180 days after any changes are published, you can use the
+ * software, incorporating those changes, under the terms of the MIT license,
+ * as described in the SpoutDev License Version 1.
+ *
+ * Vanilla is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License,
+ * the MIT license and the SpoutDev license version 1 along with this program.
+ * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
+ * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
+ * including the MIT license.
+ */
 package org.spout.vanilla.protocol;
 
 import gnu.trove.set.hash.TIntHashSet;
@@ -28,38 +53,37 @@ import org.spout.vanilla.protocol.msg.PositionRotationMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
-	
 	private final static int POSITION_UPDATE_TICKS = 20;
 	private final static double STANCE = 1.6D;
 	private final static int TIMEOUT = 15000;
 	private int positionUpdate = POSITION_UPDATE_TICKS;
-	
+
 	//public final static float SEALEVEL = 64;
 	//public final static int SEALEVEL_CHUNK = 4;
-	
+
 	public VanillaNetworkSynchronizer(Player player) {
 		this(player, null);
 	}
-	
+
 	public VanillaNetworkSynchronizer(Player player, Entity entity) {
 		super(player, entity);
 	}
-	
+
 	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();
-	
+
 	//TODO: track entities as they come into range and untrack entities as they move out of range
 	private TIntHashSet activeEntities = new TIntHashSet();
-	
+
 	@Override
 	protected void freeChunk(Point p) {
 		int x = ((int)p.getX() >> Chunk.CHUNK_SIZE_BITS);
 		int y = ((int)p.getY() >> Chunk.CHUNK_SIZE_BITS);// + SEALEVEL_CHUNK;
 		int z = ((int)p.getZ() >> Chunk.CHUNK_SIZE_BITS);
-		
+
 		if (y < 0 || y > 7) {
 			return;
 		}
-		
+
 		TIntHashSet column = activeChunks.get(x, z);
 		if (column != null) {
 			column.remove(y);
@@ -70,17 +94,17 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			}
 		}
 	}
-	
+
 	@Override
 	protected void initChunk(Point p) {
 		int x = ((int)p.getX() >> Chunk.CHUNK_SIZE_BITS);
 		int y = ((int)p.getY() >> Chunk.CHUNK_SIZE_BITS);// + SEALEVEL_CHUNK;
 		int z = ((int)p.getZ() >> Chunk.CHUNK_SIZE_BITS);
-		
+
 		if (y < 0 || y > 7) {
 			return;
 		}
-		
+
 		TIntHashSet column = activeChunks.get(x, z);
 		if (column == null) {
 			column = new TIntHashSet();
@@ -96,13 +120,13 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		int x = c.getX();
 		int y = c.getY();// + SEALEVEL_CHUNK;
 		int z = c.getZ();
-		
+
 		//System.out.println("Sending chunk (" + x + ", " + y + ", " + z + ") " + c);
-		
+
 		if (y < 0 || y > 7) {
 			return;
 		}
-		
+
 		ChunkSnapshot snapshot = c.getSnapshot(false);
 		short[] rawBlockIdArray = snapshot.getBlockIds();
 		short[] rawBlockData = snapshot.getBlockData();
@@ -112,11 +136,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		for (int i = 0; i < fullChunkData.length; i++) {
 			if (i < maxIdIndex) {
 				fullChunkData[i] = (byte)0x00;
-			}
-			else if (i < maxDataIndex) {
+			} else if (i < maxDataIndex) {
 				fullChunkData[i] = (byte)0x00;
-			}
-			else {
+			} else {
 				fullChunkData[i] = (byte)0xFF;
 			}
 		}
@@ -130,13 +152,13 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x * Chunk.CHUNK_SIZE, y * Chunk.CHUNK_SIZE, z * Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, fullChunkData);
 		owner.getSession().send(CCMsg);
 	}
-	
+
 	protected void sendPosition(Transform t) {
 		Point p = t.getPosition();
 		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), 0, 0, true);
 		owner.getSession().send(PRMsg);
 	}
-	
+
 	boolean first = true;
 	protected void worldChanged(World world) {
 		if (first) {
@@ -157,7 +179,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	}
 
 	long lastKeepAlive = System.currentTimeMillis();
-	
+
 	@Override
 	public void preSnapshot() {
 		long currentTime = System.currentTimeMillis();
@@ -168,7 +190,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		}
 		super.preSnapshot();
 	}
-	
+
 	@Override
 	public void updateBlock(Chunk chunk, Block block) {
 		BlockMaterial material = chunk.getBlockMaterial(block.getX(), block.getY(), block.getZ());
@@ -232,7 +254,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		}
 		super.destroyEntity(e);
 	}
-	
+
 	public void syncEntity(Entity e) {
 		if (e == null) {
 			return;
@@ -253,7 +275,5 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			}
 		}
 		super.syncEntity(e);
-		
 	}
-
 }

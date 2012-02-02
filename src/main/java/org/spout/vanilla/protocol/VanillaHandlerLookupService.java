@@ -1,14 +1,14 @@
 /*
  * This file is part of Vanilla (http://www.spout.org/).
  *
- * Vanilla is licensed under the SpoutDev License Version 1.  
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * In addition, 180 days after any changes are published, you can use the 
+ * In addition, 180 days after any changes are published, you can use the
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
@@ -18,9 +18,9 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.  
+ * the MIT license and the SpoutDev license version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
- * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license, 
+ * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla.protocol;
@@ -73,24 +73,24 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 
 	static {
 		try {
-            bind(IdentificationMessage.class, IdentificationMessageHandler.class);
-            bind(HandshakeMessage.class, HandshakeMessageHandler.class);
-            bind(ChatMessage.class, ChatMessageHandler.class);
-            bind(GroundMessage.class, GroundMessageHandler.class);
-            bind(PositionMessage.class, PositionMessageHandler.class);
-            bind(RotationMessage.class, RotationMessageHandler.class);
-            bind(PositionRotationMessage.class, PositionRotationMessageHandler.class);
-            bind(KickMessage.class, KickMessageHandler.class);
-            bind(DiggingMessage.class, DiggingMessageHandler.class);
-            bind(BlockPlacementMessage.class, BlockPlacementMessageHandler.class);
-            bind(WindowClickMessage.class, WindowClickMessageHandler.class);
-            bind(CloseWindowMessage.class, CloseWindowMessageHandler.class);
-            bind(ActivateItemMessage.class, ActivateItemMessageHandler.class);
-            bind(EntityActionMessage.class, EntityActionMessageHandler.class);
-            bind(AnimateEntityMessage.class, AnimateEntityMessageHandler.class);
-            bind(PingMessage.class, PingMessageHandler.class);
-            bind(QuickBarMessage.class, QuickBarMessageHandler.class);
-            bind(RespawnMessage.class, RespawnMessageHandler.class);
+			bind(IdentificationMessage.class, IdentificationMessageHandler.class);
+			bind(HandshakeMessage.class, HandshakeMessageHandler.class);
+			bind(ChatMessage.class, ChatMessageHandler.class);
+			bind(GroundMessage.class, GroundMessageHandler.class);
+			bind(PositionMessage.class, PositionMessageHandler.class);
+			bind(RotationMessage.class, RotationMessageHandler.class);
+			bind(PositionRotationMessage.class, PositionRotationMessageHandler.class);
+			bind(KickMessage.class, KickMessageHandler.class);
+			bind(DiggingMessage.class, DiggingMessageHandler.class);
+			bind(BlockPlacementMessage.class, BlockPlacementMessageHandler.class);
+			bind(WindowClickMessage.class, WindowClickMessageHandler.class);
+			bind(CloseWindowMessage.class, CloseWindowMessageHandler.class);
+			bind(ActivateItemMessage.class, ActivateItemMessageHandler.class);
+			bind(EntityActionMessage.class, EntityActionMessageHandler.class);
+			bind(AnimateEntityMessage.class, AnimateEntityMessageHandler.class);
+			bind(PingMessage.class, PingMessageHandler.class);
+			bind(QuickBarMessage.class, QuickBarMessageHandler.class);
+			bind(RespawnMessage.class, RespawnMessageHandler.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

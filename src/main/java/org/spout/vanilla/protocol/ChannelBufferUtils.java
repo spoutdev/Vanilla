@@ -1,14 +1,14 @@
 /*
  * This file is part of Vanilla (http://www.spout.org/).
  *
- * Vanilla is licensed under the SpoutDev License Version 1.  
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * In addition, 180 days after any changes are published, you can use the 
+ * In addition, 180 days after any changes are published, you can use the
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
@@ -18,9 +18,9 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.  
+ * the MIT license and the SpoutDev license version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
- * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license, 
+ * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla.protocol;
@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.netty.buffer.ChannelBuffer;
+
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.io.nbt.CompoundTag;
 import org.spout.api.io.nbt.NBTInputStream;
@@ -44,8 +46,6 @@ import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Color;
 import org.spout.api.util.Parameter;
-
-import org.jboss.netty.buffer.ChannelBuffer;
 import org.spout.vanilla.VanillaBlocks;
 
 /**
@@ -72,27 +72,27 @@ public final class ChannelBufferUtils {
 			buf.writeByte((type << 5) | index);
 
 			switch (type) {
-			case Parameter.TYPE_BYTE:
-				buf.writeByte(((Parameter<Byte>) parameter).getValue());
-				break;
-			case Parameter.TYPE_SHORT:
-				buf.writeShort(((Parameter<Short>) parameter).getValue());
-				break;
-			case Parameter.TYPE_INT:
-				buf.writeInt(((Parameter<Integer>) parameter).getValue());
-				break;
-			case Parameter.TYPE_FLOAT:
-				buf.writeFloat(((Parameter<Float>) parameter).getValue());
-				break;
-			case Parameter.TYPE_STRING:
-				writeString(buf, ((Parameter<String>) parameter).getValue());
-				break;
-			case Parameter.TYPE_ITEM:
-				ItemStack item = ((Parameter<ItemStack>) parameter).getValue();
-				buf.writeShort(item.getMaterial().getData());
-				buf.writeByte(item.getAmount());
-				buf.writeShort(item.getDamage());
-				break;
+				case Parameter.TYPE_BYTE:
+					buf.writeByte(((Parameter<Byte>) parameter).getValue());
+					break;
+				case Parameter.TYPE_SHORT:
+					buf.writeShort(((Parameter<Short>) parameter).getValue());
+					break;
+				case Parameter.TYPE_INT:
+					buf.writeInt(((Parameter<Integer>) parameter).getValue());
+					break;
+				case Parameter.TYPE_FLOAT:
+					buf.writeFloat(((Parameter<Float>) parameter).getValue());
+					break;
+				case Parameter.TYPE_STRING:
+					writeString(buf, ((Parameter<String>) parameter).getValue());
+					break;
+				case Parameter.TYPE_ITEM:
+					ItemStack item = ((Parameter<ItemStack>) parameter).getValue();
+					buf.writeShort(item.getMaterial().getData());
+					buf.writeByte(item.getAmount());
+					buf.writeShort(item.getDamage());
+					break;
 			}
 		}
 
@@ -112,28 +112,28 @@ public final class ChannelBufferUtils {
 			int index = b & 0x1F;
 
 			switch (type) {
-			case Parameter.TYPE_BYTE:
-				parameters.add(new Parameter<Byte>(type, index, buf.readByte()));
-				break;
-			case Parameter.TYPE_SHORT:
-				parameters.add(new Parameter<Short>(type, index, buf.readShort()));
-				break;
-			case Parameter.TYPE_INT:
-				parameters.add(new Parameter<Integer>(type, index, buf.readInt()));
-				break;
-			case Parameter.TYPE_FLOAT:
-				parameters.add(new Parameter<Float>(type, index, buf.readFloat()));
-				break;
-			case Parameter.TYPE_STRING:
-				parameters.add(new Parameter<String>(type, index, readString(buf)));
-				break;
-			case Parameter.TYPE_ITEM:
-				int id = buf.readShort();
-				int count = buf.readByte();
-				short damage = buf.readShort();
-				ItemStack item = new ItemStack(MaterialData.getMaterial((short)id, (byte)damage), count, damage);
-				parameters.add(new Parameter<ItemStack>(type, index, item));
-				break;
+				case Parameter.TYPE_BYTE:
+					parameters.add(new Parameter<Byte>(type, index, buf.readByte()));
+					break;
+				case Parameter.TYPE_SHORT:
+					parameters.add(new Parameter<Short>(type, index, buf.readShort()));
+					break;
+				case Parameter.TYPE_INT:
+					parameters.add(new Parameter<Integer>(type, index, buf.readInt()));
+					break;
+				case Parameter.TYPE_FLOAT:
+					parameters.add(new Parameter<Float>(type, index, buf.readFloat()));
+					break;
+				case Parameter.TYPE_STRING:
+					parameters.add(new Parameter<String>(type, index, readString(buf)));
+					break;
+				case Parameter.TYPE_ITEM:
+					int id = buf.readShort();
+					int count = buf.readByte();
+					short damage = buf.readShort();
+					ItemStack item = new ItemStack(MaterialData.getMaterial((short)id, (byte)damage), count, damage);
+					parameters.add(new Parameter<ItemStack>(type, index, item));
+					break;
 			}
 		}
 
@@ -317,68 +317,68 @@ public final class ChannelBufferUtils {
 
 	public static boolean hasNbtData(int id) {
 		return
-				id == VanillaBlocks.FLINT_AND_STEEL.getId() ||
-				id == VanillaBlocks.BOW.getId() ||
-				id == VanillaBlocks.FISHING_ROD.getId() ||
-				id == VanillaBlocks.SHEARS.getId() ||
+			id == VanillaBlocks.FLINT_AND_STEEL.getId() ||
+			id == VanillaBlocks.BOW.getId() ||
+			id == VanillaBlocks.FISHING_ROD.getId() ||
+			id == VanillaBlocks.SHEARS.getId() ||
 
-				/**
-				 * Tools
-				 */
-				id == VanillaBlocks.WOODEN_SWORD.getId() ||
-				id == VanillaBlocks.WOODEN_SHOVEL.getId() ||
-				id == VanillaBlocks.WOODEN_PICKAXE.getId() ||
-				id == VanillaBlocks.WOODEN_AXE.getId() ||
-				id == VanillaBlocks.WOODEN_HOE.getId() ||
-				id == VanillaBlocks.STONE_SWORD.getId() ||
-				id == VanillaBlocks.STONE_SHOVEL.getId() ||
-				id == VanillaBlocks.STONE_PICKAXE.getId() ||
-				id == VanillaBlocks.STONE_AXE.getId() ||
-				id == VanillaBlocks.STONE_HOE.getId() ||
-				id == VanillaBlocks.IRON_SWORD.getId() ||
-				id == VanillaBlocks.IRON_SHOVEL.getId() ||
-				id == VanillaBlocks.IRON_PICKAXE.getId() ||
-				id == VanillaBlocks.IRON_AXE.getId() ||
-				id == VanillaBlocks.IRON_HOE.getId() ||
-				id == VanillaBlocks.IRON_SWORD.getId() ||
-				id == VanillaBlocks.IRON_SHOVEL.getId() ||
-				id == VanillaBlocks.IRON_PICKAXE.getId() ||
-				id == VanillaBlocks.IRON_AXE.getId() ||
-				id == VanillaBlocks.IRON_HOE.getId() ||
-				id == VanillaBlocks.DIAMOND_SWORD.getId() ||
-				id == VanillaBlocks.DIAMOND_SHOVEL.getId() ||
-				id == VanillaBlocks.DIAMOND_PICKAXE.getId() ||
-				id == VanillaBlocks.DIAMOND_AXE.getId() ||
-				id == VanillaBlocks.DIAMOND_HOE.getId() ||
-				id == VanillaBlocks.GOLD_SWORD.getId() ||
-				id == VanillaBlocks.GOLD_SHOVEL.getId() ||
-				id == VanillaBlocks.GOLD_PICKAXE.getId() ||
-				id == VanillaBlocks.GOLD_AXE.getId() ||
-				id == VanillaBlocks.GOLD_HOE.getId() ||
-				
-				/**
-				 * Armour
-				 */
-				id == VanillaBlocks.LEATHER_CAP.getId() ||
-				id == VanillaBlocks.LEATHER_TUNIC.getId() ||
-				id == VanillaBlocks.LEATHER_PANTS.getId() ||
-				id == VanillaBlocks.LEATHER_BOOTS.getId() ||
-				id == VanillaBlocks.CHAIN_HELMET.getId() ||
-				id == VanillaBlocks.CHAIN_CHESTPLATE.getId() ||
-				id == VanillaBlocks.CHAIN_LEGGINGS.getId() ||
-				id == VanillaBlocks.CHAIN_BOOTS.getId() ||
-				id == VanillaBlocks.IRON_HELMET.getId() ||
-				id == VanillaBlocks.IRON_CHESTPLATE.getId() ||
-				id == VanillaBlocks.IRON_LEGGINGS.getId() ||
-				id == VanillaBlocks.IRON_BOOTS.getId() ||
-				id == VanillaBlocks.DIAMOND_HELMET.getId() ||
-				id == VanillaBlocks.DIAMOND_CHESTPLATE.getId() ||
-				id == VanillaBlocks.DIAMOND_LEGGINGS.getId() ||
-				id == VanillaBlocks.DIAMOND_BOOTS.getId() ||
-				id == VanillaBlocks.GOLD_HELMET.getId() ||
-				id == VanillaBlocks.GOLD_CHESTPLATE.getId() ||
-				id == VanillaBlocks.GOLD_LEGGINGS.getId() ||
-				id == VanillaBlocks.GOLD_BOOTS.getId();
+			/**
+			 * Tools
+			 */
+			id == VanillaBlocks.WOODEN_SWORD.getId() ||
+			id == VanillaBlocks.WOODEN_SHOVEL.getId() ||
+			id == VanillaBlocks.WOODEN_PICKAXE.getId() ||
+			id == VanillaBlocks.WOODEN_AXE.getId() ||
+			id == VanillaBlocks.WOODEN_HOE.getId() ||
+			id == VanillaBlocks.STONE_SWORD.getId() ||
+			id == VanillaBlocks.STONE_SHOVEL.getId() ||
+			id == VanillaBlocks.STONE_PICKAXE.getId() ||
+			id == VanillaBlocks.STONE_AXE.getId() ||
+			id == VanillaBlocks.STONE_HOE.getId() ||
+			id == VanillaBlocks.IRON_SWORD.getId() ||
+			id == VanillaBlocks.IRON_SHOVEL.getId() ||
+			id == VanillaBlocks.IRON_PICKAXE.getId() ||
+			id == VanillaBlocks.IRON_AXE.getId() ||
+			id == VanillaBlocks.IRON_HOE.getId() ||
+			id == VanillaBlocks.IRON_SWORD.getId() ||
+			id == VanillaBlocks.IRON_SHOVEL.getId() ||
+			id == VanillaBlocks.IRON_PICKAXE.getId() ||
+			id == VanillaBlocks.IRON_AXE.getId() ||
+			id == VanillaBlocks.IRON_HOE.getId() ||
+			id == VanillaBlocks.DIAMOND_SWORD.getId() ||
+			id == VanillaBlocks.DIAMOND_SHOVEL.getId() ||
+			id == VanillaBlocks.DIAMOND_PICKAXE.getId() ||
+			id == VanillaBlocks.DIAMOND_AXE.getId() ||
+			id == VanillaBlocks.DIAMOND_HOE.getId() ||
+			id == VanillaBlocks.GOLD_SWORD.getId() ||
+			id == VanillaBlocks.GOLD_SHOVEL.getId() ||
+			id == VanillaBlocks.GOLD_PICKAXE.getId() ||
+			id == VanillaBlocks.GOLD_AXE.getId() ||
+			id == VanillaBlocks.GOLD_HOE.getId() ||
+
+			/**
+			 * Armour
+			 */
+			id == VanillaBlocks.LEATHER_CAP.getId() ||
+			id == VanillaBlocks.LEATHER_TUNIC.getId() ||
+			id == VanillaBlocks.LEATHER_PANTS.getId() ||
+			id == VanillaBlocks.LEATHER_BOOTS.getId() ||
+			id == VanillaBlocks.CHAIN_HELMET.getId() ||
+			id == VanillaBlocks.CHAIN_CHESTPLATE.getId() ||
+			id == VanillaBlocks.CHAIN_LEGGINGS.getId() ||
+			id == VanillaBlocks.CHAIN_BOOTS.getId() ||
+			id == VanillaBlocks.IRON_HELMET.getId() ||
+			id == VanillaBlocks.IRON_CHESTPLATE.getId() ||
+			id == VanillaBlocks.IRON_LEGGINGS.getId() ||
+			id == VanillaBlocks.IRON_BOOTS.getId() ||
+			id == VanillaBlocks.DIAMOND_HELMET.getId() ||
+			id == VanillaBlocks.DIAMOND_CHESTPLATE.getId() ||
+			id == VanillaBlocks.DIAMOND_LEGGINGS.getId() ||
+			id == VanillaBlocks.DIAMOND_BOOTS.getId() ||
+			id == VanillaBlocks.GOLD_HELMET.getId() ||
+			id == VanillaBlocks.GOLD_CHESTPLATE.getId() ||
+			id == VanillaBlocks.GOLD_LEGGINGS.getId() ||
+			id == VanillaBlocks.GOLD_BOOTS.getId();
 	}
 
 	/**

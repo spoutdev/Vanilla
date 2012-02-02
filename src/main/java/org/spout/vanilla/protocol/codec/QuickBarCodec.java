@@ -42,19 +42,6 @@ public class QuickBarCodec extends MessageCodec<QuickBarMessage> {
 	}
 
 	@Override
-	public ChannelBuffer encode(QuickBarMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeShort(message.getSlot());
-		buffer.writeShort(message.getId());
-		buffer.writeByte(message.getAmount());
-		buffer.writeShort(message.getDamage());
-		if (ChannelBufferUtils.hasNbtData(message.getId())) {
-			ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
-		}
-		return buffer;
-	}
-
-	@Override
 	public QuickBarMessage decode(ChannelBuffer buffer) throws IOException {
 		short slot = buffer.readShort();
 		short id = buffer.readShort();
@@ -70,5 +57,18 @@ public class QuickBarCodec extends MessageCodec<QuickBarMessage> {
 		} else {
 			return new QuickBarMessage(slot, id, (short)0, (short)0, null);
 		}
+	}
+
+	@Override
+	public ChannelBuffer encode(QuickBarMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		buffer.writeShort(message.getSlot());
+		buffer.writeShort(message.getId());
+		buffer.writeByte(message.getAmount());
+		buffer.writeShort(message.getDamage());
+		if (ChannelBufferUtils.hasNbtData(message.getId())) {
+			ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
+		}
+		return buffer;
 	}
 }

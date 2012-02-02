@@ -23,37 +23,44 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec;
+package org.spout.vanilla.protocol.msg;
 
-import java.io.IOException;
+import org.spout.api.protocol.Message;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+public final class UseBedMessage extends Message {
+	// TODO: find a better name then used and possably rename this whole class
+	private final int id, used, x, y, z;
 
-import org.spout.api.protocol.MessageCodec;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.CustomDataMessage;
+	public UseBedMessage(int id, int used, int x, int y, int z) {
+		this.id = id;
+		this.used = used;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
 
-public class CustomDataCodec extends MessageCodec<CustomDataMessage> {
-	public CustomDataCodec() {
-		super(CustomDataMessage.class, 0xFA);
+	public int getId() {
+		return id;
+	}
+
+	public int getUsed() {
+		return used;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getZ() {
+		return z;
 	}
 
 	@Override
-	public CustomDataMessage decode(ChannelBuffer buffer) throws IOException {
-		String type = ChannelBufferUtils.readString(buffer);
-		int length = buffer.readUnsignedShort();
-		byte[] data = new byte[length];
-		buffer.readBytes(data);
-		return new CustomDataMessage(type, data);
-	}
-
-	@Override
-	public ChannelBuffer encode(CustomDataMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		ChannelBufferUtils.writeString(buffer, message.getType());
-		buffer.writeShort(message.getData().length);
-		buffer.writeBytes(message.getData());
-		return buffer;
+	public String toString() {
+		return "UseBedMessage{id=" + id + ",used=" + used + ",x=" + x + ",y=" + y + ",z=" + z + "}";
 	}
 }

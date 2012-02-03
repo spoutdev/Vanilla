@@ -26,12 +26,31 @@
 
 package org.spout.vanilla.biome;
 
-public class BiomeMap {
+import org.spout.api.io.store.map.MemoryStoreMap;
+import org.spout.api.io.store.map.SimpleStoreMap;
 
+public class BiomeMap {
+	SimpleStoreMap<Integer, BiomeType> map;
 	
+	public BiomeMap(){
+		//Todo: Make this saveable
+		map = new MemoryStoreMap<Integer, BiomeType>();
+		
+			
+		
+	}
 	
+	public void addBiome(BiomeType biome){
+		map.set(map.getSize(), biome);
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
 	public BiomeType getBiome(int x, int z){
-		//TODO this
+		//TODO This needs to generate a noise function relying on x and z to generate a map that is [0-map.getSize()] so that we can select
+		//Biomes for the biome generator
 		return null;
 	}
 	

@@ -37,48 +37,47 @@ import org.spout.vanilla.biome.BiomeType;
 
 public abstract class BiomeGenerator implements WorldGenerator {
 	BiomeMap biomes = new BiomeMap();
-	
+
 	ArrayList<Populator> populators = new ArrayList<Populator>();
-	public BiomeGenerator(){
-		
-		
+
+	public BiomeGenerator() {
+
 		register(new BiomePopulator(biomes));
-		registerBiomes();		
-		
+		registerBiomes();
 	}
-	
-	protected void setSelector(BiomeSelector selector){
+
+	protected void setSelector(BiomeSelector selector) {
 		biomes.setSelector(selector);
 	}
-	
-	
+
+
 	/**
 	 * Called during biome generatator's construction phase
-	 * 
+	 *
 	 */
 	public abstract void registerBiomes();
-	
+
 	/**
 	 * Register a new Biome Type to be generatated by this generator
 	 * @param biome
 	 */
-	public void register(BiomeType biome){
+	public void register(BiomeType biome) {
 		biomes.addBiome(biome);
 	}
+
 	/**
 	 * Register a new Populator to be used by this Generator
 	 * @param populator
 	 */
-	public void register(Populator populator){
+	public void register(Populator populator) {
 		populators.add(populator);
 	}
-	
-	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ){		
-		biomes.getBiome(chunkX, chunkZ).generateTerrain(blockData, chunkX, chunkY, chunkZ);		
-	}
-	
-	public final Populator[] getPopulators(){
-		return (Populator[])populators.toArray();
+
+	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+		biomes.getBiome(chunkX, chunkZ).generateTerrain(blockData, chunkX, chunkY, chunkZ);
 	}
 
+	public final Populator[] getPopulators() {
+		return populators.toArray(new Populator[populators.size()]);
+	}
 }

@@ -32,6 +32,7 @@ import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.biome.BiomeMap;
+import org.spout.vanilla.biome.BiomeSelector;
 import org.spout.vanilla.biome.BiomeType;
 
 public abstract class BiomeGenerator implements WorldGenerator {
@@ -45,6 +46,11 @@ public abstract class BiomeGenerator implements WorldGenerator {
 		registerBiomes();		
 		
 	}
+	
+	protected void setSelector(BiomeSelector selector){
+		biomes.setSelector(selector);
+	}
+	
 	
 	/**
 	 * Called during biome generatator's construction phase

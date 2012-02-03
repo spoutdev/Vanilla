@@ -30,15 +30,21 @@ import org.spout.api.io.store.map.MemoryStoreMap;
 import org.spout.api.io.store.map.SimpleStoreMap;
 
 public class BiomeMap {
-	SimpleStoreMap<Integer, BiomeType> map;
+	final SimpleStoreMap<Integer, BiomeType> map;
+	BiomeSelector selector;
+	
 	
 	public BiomeMap(){
 		//Todo: Make this saveable
 		map = new MemoryStoreMap<Integer, BiomeType>();
 		
-			
 		
 	}
+	
+	public void setSelector(BiomeSelector selector){
+		this.selector = selector;
+	}
+	
 	
 	public void addBiome(BiomeType biome){
 		map.set(map.getSize(), biome);
@@ -51,13 +57,10 @@ public class BiomeMap {
 	public BiomeType getBiome(int x, int z){
 		//TODO This needs to generate a noise function relying on x and z to generate a map that is [0-map.getSize()] so that we can select
 		//Biomes for the biome generator
-		int biomeX = (x/16) % map.getSize();
-		int biomeZ = (z/16) % map.getSize();
 		
-		int biome = (biomeX ^ biomeZ) % map.getSize();
+		return map.get(selector.pickBiome(x, z, map.getSize()));
 		
-		
-		return map.get(biome);
+	
 	}
 	
 }

@@ -23,21 +23,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.generator.normal;
+package org.spout.vanilla.biome;
 
-import org.spout.vanilla.biome.selectors.SquareSelector;
-import org.spout.vanilla.generator.BiomeGenerator;
-import org.spout.vanilla.generator.normal.biomes.NormalBiome;
+public abstract class BiomeSelector {
 
-public class NormalGenerator extends BiomeGenerator {
-
-	@Override
-	public void registerBiomes() {
-		setSelector(new SquareSelector());
-		
-		
-		register(new NormalBiome());
-		//TODO: Create the Vanilla biomes;
+	public final int pickBiome(int x, int z, int maxBiomes){
+		return pickBiome(x,0,z, maxBiomes);
 	}
-	
+
+	public abstract int pickBiome(int x, int y, int z, int maxBiomes);
 }

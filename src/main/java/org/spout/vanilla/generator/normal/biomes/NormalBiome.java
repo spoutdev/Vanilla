@@ -44,6 +44,8 @@ public class NormalBiome extends BiomeType {
 
 		heightMap.setSeed(seed);
 		heightMap.setOctaveCount(5);
+		
+		
 	}
 	
 	@Override

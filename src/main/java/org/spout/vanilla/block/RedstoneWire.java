@@ -2,8 +2,6 @@ package org.spout.vanilla.block;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.GenericBlockMaterial;
-import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
@@ -18,10 +16,6 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSourceBloc
 		new Vector3( 0, 1, 1),
 		new Vector3(-1, 1, 0),
 		new Vector3( 0, 1,-1),
-		new Vector3( 1,-1, 0),
-		new Vector3( 0,-1, 1),
-		new Vector3(-1,-1, 0),
-		new Vector3( 0,-1,-1),
 		new Vector3( 0, 1, 0), //Redstone torch from above
 	};
 	

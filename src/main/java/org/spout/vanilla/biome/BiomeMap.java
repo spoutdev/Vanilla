@@ -51,7 +51,13 @@ public class BiomeMap {
 	public BiomeType getBiome(int x, int z){
 		//TODO This needs to generate a noise function relying on x and z to generate a map that is [0-map.getSize()] so that we can select
 		//Biomes for the biome generator
-		return null;
+		int biomeX = (x/16) % map.getSize();
+		int biomeZ = (z/16) % map.getSize();
+		
+		int biome = (biomeX ^ biomeZ) % map.getSize();
+		
+		
+		return map.get(biome);
 	}
 	
 }

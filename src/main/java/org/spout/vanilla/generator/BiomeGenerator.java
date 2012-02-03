@@ -32,6 +32,7 @@ import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.biome.BiomeMap;
+import org.spout.vanilla.biome.BiomeType;
 
 public abstract class BiomeGenerator implements WorldGenerator {
 	BiomeMap biomes = new BiomeMap();
@@ -48,8 +49,16 @@ public abstract class BiomeGenerator implements WorldGenerator {
 	public abstract void registerBiomes();
 	
 	
+	public void register(BiomeType biome){
+		biomes.addBiome(biome);
+	}
+	
 	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ){		
 		biomes.getBiome(chunkX, chunkZ).generateTerrain(blockData, chunkX, chunkY, chunkZ);		
+	}
+	
+	public Populator[] getPopulators(){
+		return (Populator[])populators.toArray();
 	}
 
 }

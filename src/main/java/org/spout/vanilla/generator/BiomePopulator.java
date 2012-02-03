@@ -31,7 +31,7 @@ import org.spout.api.generator.Populator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.biome.BiomeMap;
 
-public class BiomePopulator implements Populator {
+public final class BiomePopulator implements Populator {
 
 	final BiomeMap map;
 	
@@ -42,7 +42,7 @@ public class BiomePopulator implements Populator {
 	
 	
 	@Override
-	public void populate(Chunk c) {
+	public final void populate(Chunk c) {
 		map.getBiome(c.getX(), c.getZ()).decorate(c);		
 	}
 

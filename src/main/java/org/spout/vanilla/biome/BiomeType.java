@@ -36,7 +36,6 @@ public abstract class BiomeType {
 	
 	public BiomeType(){
 		
-		
 		this.registerDecorators();
 	}
 	
@@ -45,6 +44,10 @@ public abstract class BiomeType {
 		decorators.add(decorator);
 	}
 	
+	/**
+	 * Called during the Biome's construction.
+	 * Registers all decorators to be called during the populate stage of world generation
+	 */
 	public abstract void registerDecorators();
 	
 	
@@ -52,7 +55,7 @@ public abstract class BiomeType {
 	
 	
 	
-	public void decorate(Chunk c){
+	public final void decorate(Chunk c){
 		for(BiomeDecorator b : decorators){
 			b.decorate(c);
 		}

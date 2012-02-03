@@ -41,23 +41,37 @@ public abstract class BiomeGenerator implements WorldGenerator {
 	public BiomeGenerator(){
 		
 		
-		populators.add(new BiomePopulator(biomes));
+		register(new BiomePopulator(biomes));
 		registerBiomes();		
 		
 	}
 	
+	/**
+	 * Called during biome generatator's construction phase
+	 * 
+	 */
 	public abstract void registerBiomes();
 	
-	
+	/**
+	 * Register a new Biome Type to be generatated by this generator
+	 * @param biome
+	 */
 	public void register(BiomeType biome){
 		biomes.addBiome(biome);
+	}
+	/**
+	 * Register a new Populator to be used by this Generator
+	 * @param populator
+	 */
+	public void register(Populator populator){
+		populators.add(populator);
 	}
 	
 	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ){		
 		biomes.getBiome(chunkX, chunkZ).generateTerrain(blockData, chunkX, chunkY, chunkZ);		
 	}
 	
-	public Populator[] getPopulators(){
+	public final Populator[] getPopulators(){
 		return (Populator[])populators.toArray();
 	}
 

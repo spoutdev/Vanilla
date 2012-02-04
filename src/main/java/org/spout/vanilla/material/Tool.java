@@ -26,12 +26,12 @@
 package org.spout.vanilla.material;
 
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.ItemMaterial;
 
-public interface Tool extends ItemMaterial {
+public interface Tool extends VanillaItemMaterial {
+
 	public short getDurability();
 
-	public Tool setDurability(short durability);
+    public Tool setDurability(short durability);
 
 	public float getStrengthModifier(BlockMaterial block);
 

@@ -25,11 +25,11 @@
  */
 package org.spout.vanilla.item;
 
-import org.spout.api.material.GenericItemMaterial;
 import org.spout.vanilla.material.Weapon;
 
-public class GenericWeapon extends GenericItemMaterial implements Weapon {
-	public GenericWeapon(String name, int id) {
-		super(name, id);
-	}
+public class GenericWeapon extends GenericVanillaItemMaterial implements Weapon {
+
+    public GenericWeapon(String name, int id) {
+        super(name, id);
+    }
 }

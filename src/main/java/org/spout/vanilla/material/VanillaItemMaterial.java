@@ -23,11 +23,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.item;
+package org.spout.vanilla.material;
 
-public class Coal extends GenericVanillaItemMaterial {
+import org.spout.api.material.ItemMaterial;
+import org.spout.api.material.Material;
 
-    public Coal(String name, int id, int data) {
-        super(name, id, data);
-    }
+public interface VanillaItemMaterial extends ItemMaterial {
+
+    public Material getBlock();
 }

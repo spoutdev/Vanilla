@@ -26,6 +26,12 @@
 package org.spout.vanilla.material;
 
 public interface Food extends VanillaItemMaterial {
-
-	public int getHungerRestored();
+	
+	public enum FoodRestoreType {
+		HEALTH, HUNGER, CUSTOM
+	} 
+	
+	public int getAmountRestored();
+	
+	public FoodRestoreType getRestoreType();
 }

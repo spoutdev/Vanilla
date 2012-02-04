@@ -258,6 +258,9 @@ public final class ChannelBufferUtils {
 	}
 
 	public static int getShifts(int height) {
+		if (height == 0) {
+			return 0;
+		}
 		int shifts = 0;
 		int tempVal = height;
 		while (tempVal != 1) {

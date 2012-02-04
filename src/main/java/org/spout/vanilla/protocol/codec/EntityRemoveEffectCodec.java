@@ -39,17 +39,17 @@ public class EntityRemoveEffectCodec extends MessageCodec<EntityRemoveEffectMess
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityRemoveEffectMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(6);
-		buffer.writeInt(message.getId());
-		buffer.writeByte(message.getEffect());
-		return buffer;
-	}
-
-	@Override
 	public EntityRemoveEffectMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
 		byte effect = buffer.readByte();
 		return new EntityRemoveEffectMessage(id, effect);
+	}
+
+	@Override
+	public ChannelBuffer encode(EntityRemoveEffectMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.buffer(5);
+		buffer.writeInt(message.getId());
+		buffer.writeByte(message.getEffect());
+		return buffer;
 	}
 }

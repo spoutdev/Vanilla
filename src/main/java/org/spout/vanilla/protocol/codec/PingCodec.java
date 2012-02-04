@@ -44,7 +44,7 @@ public final class PingCodec extends MessageCodec<PingMessage> {
 
 	@Override
 	public ChannelBuffer encode(PingMessage message) {
-		ChannelBuffer buffer = ChannelBuffers.buffer(5);
+		ChannelBuffer buffer = ChannelBuffers.buffer(4);
 		buffer.writeInt(message.getPingId());
 		return buffer;
 	}

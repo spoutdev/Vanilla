@@ -47,7 +47,7 @@ public final class StatisticCodec extends MessageCodec<StatisticMessage> {
 
 	@Override
 	public ChannelBuffer encode(StatisticMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(1);
+		ChannelBuffer buffer = ChannelBuffers.buffer(5);
 		buffer.writeInt(message.getId());
 		buffer.writeByte(message.getAmount());
 		return buffer;

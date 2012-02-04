@@ -47,7 +47,7 @@ public final class StateChangeCodec extends MessageCodec<StateChangeMessage> {
 
 	@Override
 	public ChannelBuffer encode(StateChangeMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(3);
+		ChannelBuffer buffer = ChannelBuffers.buffer(2);
 		buffer.writeByte(message.getState());
 		buffer.writeByte(message.getGameMode());
 		return buffer;

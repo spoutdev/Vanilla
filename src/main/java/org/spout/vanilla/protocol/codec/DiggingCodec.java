@@ -55,7 +55,7 @@ public final class DiggingCodec extends MessageCodec<DiggingMessage> {
 		buffer.writeInt(message.getX());
 		buffer.writeByte(message.getY());
 		buffer.writeInt(message.getZ());
-		buffer.writeInt(message.getFace());
+		buffer.writeByte(message.getFace());
 		return buffer;
 	}
 }

@@ -108,7 +108,7 @@ public final class ChannelBufferUtils {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
 		for (int b = buf.readUnsignedByte(); b != 127; ) {
-			int type  = (b & 0x0E) >> 5;
+			int type  = (b & 0xE0) >> 5;
 			int index = b & 0x1F;
 
 			switch (type) {
@@ -304,18 +304,12 @@ public final class ChannelBufferUtils {
 	}
 
 	public static Color readColor(ChannelBuffer buf) {
-		int red = buf.readInt();
-		int green = buf.readInt();
-		int blue = buf.readInt();
-		int alpha = buf.readInt();
-		return new Color(red, green, blue, alpha);
+		int argb = buf.readInt();
+		return new Color(argb);
 	}
 
 	public static void writeColor(Color color, ChannelBuffer buf) {
-		buf.writeInt(color.getRedI());
-		buf.writeInt(color.getGreenI());
-		buf.writeInt(color.getBlueI());
-		buf.writeInt(color.getAlphaI());
+		buf.writeInt(color.toInt());
 	}
 
 	public static boolean hasNbtData(int id) {

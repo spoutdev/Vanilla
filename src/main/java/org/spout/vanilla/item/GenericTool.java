@@ -26,36 +26,36 @@
 package org.spout.vanilla.item;
 
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.GenericItemMaterial;
 import org.spout.vanilla.material.Tool;
 
-public class GenericTool extends GenericItemMaterial implements Tool {
-	public GenericTool(String name, int id) {
-		super(name, id);
-	}
+public class GenericTool extends GenericVanillaItemMaterial implements Tool {
 
-	public short getDurability() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    public GenericTool(String name, int id) {
+        super(name, id);
+    }
 
-	public Tool setDurability(short durability) {
-		// TODO Auto-generated method stub
-		return this;
-	}
+    public short getDurability() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-	public float getStrengthModifier(BlockMaterial block) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    public Tool setDurability(short durability) {
+        // TODO Auto-generated method stub
+        return this;
+    }
 
-	public Tool setStrengthModifier(BlockMaterial block, float modifier) {
-		// TODO Auto-generated method stub
-		return this;
-	}
+    public float getStrengthModifier(BlockMaterial block) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-	public BlockMaterial[] getStrengthModifiedBlocks() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Tool setStrengthModifier(BlockMaterial block, float modifier) {
+        // TODO Auto-generated method stub
+        return this;
+    }
+
+    public BlockMaterial[] getStrengthModifiedBlocks() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

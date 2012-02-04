@@ -152,7 +152,7 @@ public class VanillaProtocolTest {
 			new EntityRemoveEffectMessage(1, EntityEffect.BLINDNESS.getId()),
 			new ExperienceMessage(1.2F, (short) 2, (short) 3),
 			new LoadChunkMessage(0, -2, true),
-			new CompressedChunkMessage(1, 2, 3, 1, 2, 1, new byte[] {1,2}),
+			new CompressedChunkMessage(1, 2, 3, 1, 2, 1, new byte[] {1,2, 33, 44, 55}),
 			new MultiBlockChangeMessage(2, 3, new short[] {2, 3, 4}, new byte[] {1, 2, 3}, new byte[] {3, 4, 5}),
 			new BlockChangeMessage(1, 2, 3, 87, 2),
 			new PlayNoteMessage(1, 2, 3, 4, 5),

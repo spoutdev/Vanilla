@@ -59,7 +59,7 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 				if (ChannelBufferUtils.hasNbtData(item)) {
 					nbtData = ChannelBufferUtils.readCompound(buffer);
 				}
-				items[slot] = new ItemStack(MaterialData.getMaterial((short)id, (byte) damage), itemCount, (short) damage).setAuxData(nbtData);
+				items[slot] = new ItemStack(MaterialData.getMaterial((short)item, (byte) damage), itemCount, (short) damage).setAuxData(nbtData);
 			}
 		}
 		return new SetWindowSlotsMessage(id, items);

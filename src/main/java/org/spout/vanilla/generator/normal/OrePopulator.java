@@ -30,7 +30,7 @@ import java.util.Random;
 import org.spout.api.generator.Populator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
-import org.spout.vanilla.VanillaBlocks;
+import org.spout.vanilla.VanillaMaterials;
 
 public class OrePopulator implements Populator {
 	private	Random ra = new Random();
@@ -65,27 +65,27 @@ public class OrePopulator implements Populator {
 	}
 
 	private void generateCoal(Chunk c, Random ra) {
-		generateOre(c, ra, VanillaBlocks.COAL_ORE, 30);
+		generateOre(c, ra, VanillaMaterials.COAL_ORE, 30);
 	}
 
 	private void generateIron(Chunk c, Random ra) {
-		generateOre(c, ra, VanillaBlocks.IRON_ORE, 15);
+		generateOre(c, ra, VanillaMaterials.IRON_ORE, 15);
 	}
 
 	private void generateLapis(Chunk c, Random ra) {
-		generateOre(c, ra, VanillaBlocks.LAPIS_ORE, 8);
+		generateOre(c, ra, VanillaMaterials.LAPIS_ORE, 8);
 	}
 
 	private void generateGold(Chunk c, Random ra) {
-		generateOre(c, ra, VanillaBlocks.GOLD_ORE, 9);
+		generateOre(c, ra, VanillaMaterials.GOLD_ORE, 9);
 	}
 
 	private void generateDiamond(Chunk c, Random ra) {
-		generateOre(c, ra, VanillaBlocks.DIAMOND_ORE, 9);
+		generateOre(c, ra, VanillaMaterials.DIAMOND_ORE, 9);
 	}
 
 	private void generateRedstone(Chunk c, Random ra) {
-		generateOre(c, ra, VanillaBlocks.REDSTONE_ORE, 10);
+		generateOre(c, ra, VanillaMaterials.REDSTONE_ORE, 10);
 	}
 
 	private void generateOre(Chunk c, Random ra, BlockMaterial material, int maxNumber) {
@@ -94,7 +94,7 @@ public class OrePopulator implements Populator {
 		int pozy = c.getY() * 16 + ra.nextInt(16);
 		int pozz = c.getZ() * 16 + ra.nextInt(16);
 		for (int i = 1; i <= number;) {
-			if (c.getWorld().getBlock(pozx, pozy, pozz).getBlockMaterial() != VanillaBlocks.AIR) {
+			if (c.getWorld().getBlock(pozx, pozy, pozz).getBlockMaterial() != VanillaMaterials.AIR) {
 				c.getWorld().setBlockMaterial(pozx, pozy, pozz, material, c.getWorld());
 			}
 			i++;

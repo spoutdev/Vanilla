@@ -86,7 +86,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
-		VanillaBlocks.initialize();
+		VanillaMaterials.initialize();
 		vanillaProtocolId = Controller.getProtocolId("org.spout.vanilla.protocol");
 
 		spawnWorld = getGame().loadWorld("world", new NormalGenerator());

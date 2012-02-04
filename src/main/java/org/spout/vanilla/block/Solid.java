@@ -28,7 +28,7 @@ package org.spout.vanilla.block;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.GenericBlockMaterial;
-import org.spout.vanilla.VanillaBlocks;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.objects.FallingBlock;
 import org.spout.vanilla.material.SolidBlock;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -70,7 +70,7 @@ public class Solid extends GenericVanillaBlockMaterial implements SolidBlock {
 	public void onUpdate(World world, int x, int y, int z) {
 		if (falling){
 			VanillaBlockMaterial material =(VanillaBlockMaterial) world.getBlockMaterial(x, y - 1, z);
-			if (material == VanillaBlocks.AIR || material.isLiquid()) {
+			if (material == VanillaMaterials.AIR || material.isLiquid()) {
 				if (world.setBlockId(x, y, z, (short)0, world)) {
 					world.createAndSpawnEntity(new Point(world, x, y, z), new FallingBlock(this));
 				}

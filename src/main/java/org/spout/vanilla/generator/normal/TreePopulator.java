@@ -30,7 +30,7 @@ import java.util.Random;
 import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.vanilla.VanillaBlocks;
+import org.spout.vanilla.VanillaMaterials;
 
 public class TreePopulator implements Populator {
 	@Override
@@ -62,29 +62,29 @@ public class TreePopulator implements Populator {
 		oneWidth = 1;
 		twoWidth = 2;
 		World w = c.getWorld();
-		w.setBlockMaterial(cx, cy + height, cz, VanillaBlocks.LEAVES, c.getWorld());
-		w.setBlockMaterial(cx - 1, cy + height, cz, VanillaBlocks.LEAVES, c.getWorld());
-		w.setBlockMaterial(cx + 1, cy + height, cz, VanillaBlocks.LEAVES, c.getWorld());
-		w.setBlockMaterial(cx, cy + height, cz - 1, VanillaBlocks.LEAVES, c.getWorld());
-		w.setBlockMaterial(cx, cy + height, cz + 1, VanillaBlocks.LEAVES, c.getWorld());
+		w.setBlockMaterial(cx, cy + height, cz, VanillaMaterials.LEAVES, c.getWorld());
+		w.setBlockMaterial(cx - 1, cy + height, cz, VanillaMaterials.LEAVES, c.getWorld());
+		w.setBlockMaterial(cx + 1, cy + height, cz, VanillaMaterials.LEAVES, c.getWorld());
+		w.setBlockMaterial(cx, cy + height, cz - 1, VanillaMaterials.LEAVES, c.getWorld());
+		w.setBlockMaterial(cx, cy + height, cz + 1, VanillaMaterials.LEAVES, c.getWorld());
 
 
 		for (int k = 1; k <= oneWidth; k++) {
 			for (int i = -1; i <= 1; i++) {
 				for (int j = -1; j <= 1; j++) {
-					w.setBlockMaterial(cx + i, cy + height - k, cz + j, VanillaBlocks.LEAVES, c.getWorld());
+					w.setBlockMaterial(cx + i, cy + height - k, cz + j, VanillaMaterials.LEAVES, c.getWorld());
 				}
 			}
 		}
 		for (int k = oneWidth + 1; k <= oneWidth + twoWidth; k++) {
 			for (int i = -2; i <= 2; i++) {
 				for (int j = -2; j <= 2; j++) {
-					w.setBlockMaterial(cx + i, cy + height - k, cz + j, VanillaBlocks.LEAVES, c.getWorld());
+					w.setBlockMaterial(cx + i, cy + height - k, cz + j, VanillaMaterials.LEAVES, c.getWorld());
 				}
 			}
 		}
 		for (int i = 0; i < height; i++) {
-			w.setBlockMaterial(cx, cy + i, cz, VanillaBlocks.LOG, w);
+			w.setBlockMaterial(cx, cy + i, cz, VanillaMaterials.LOG, w);
 		}
 	}
 
@@ -92,9 +92,9 @@ public class TreePopulator implements Populator {
 		int y = 128;
 		int pozx = c.getX() * 16 + px;
 		int pozz = c.getZ() * 16 + pz;
-		while (c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaBlocks.DIRT && c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaBlocks.GRASS) {
+		while (c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaMaterials.DIRT && c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaMaterials.GRASS) {
 			y--;
-			if (y == 0 || c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() == VanillaBlocks.WATER) {
+			if (y == 0 || c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() == VanillaMaterials.WATER) {
 				return -1;
 			}
 		}

@@ -89,8 +89,6 @@ public class VanillaPlugin extends CommonPlugin {
 		VanillaBlocks.initialize();
 		vanillaProtocolId = Controller.getProtocolId("org.spout.vanilla.protocol");
 
-		getGame().setDefaultGenerator(new NormalGenerator());
-
 		spawnWorld = getGame().loadWorld("world", new NormalGenerator());
 		// TODO - Should probably be auto-set by generator
 		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0.5F, 64.5F, 0.5F), Quaternion.identity , Vector3.ONE));

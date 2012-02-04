@@ -30,7 +30,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 import org.spout.api.protocol.Message;
-import org.spout.vanilla.VanillaBlocks;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.MovingEntity;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
@@ -60,7 +60,7 @@ public class FallingBlock extends MovingEntity {
 		int y = MathHelper.floor(position.getY());
 		int z = MathHelper.floor(position.getZ());
 		VanillaBlockMaterial material = (VanillaBlockMaterial) world.getBlock(x, y-1, z).getBlockMaterial();
-		if (material == VanillaBlocks.AIR || material.isLiquid()){
+		if (material == VanillaMaterials.AIR || material.isLiquid()){
 			getVelocity().add(0, -0.004, 0);
 		} else {
 			world.setBlockMaterial(x, y, z, block, world);
@@ -71,10 +71,10 @@ public class FallingBlock extends MovingEntity {
 
 	public Message getSpawnMessage(){
 		int spawnId = -1; //TODO: support for other falling block types?
-		if (block == VanillaBlocks.SAND){
+		if (block == VanillaMaterials.SAND){
 			spawnId = 70;
 		}
-		if (block == VanillaBlocks.GRAVEL){
+		if (block == VanillaMaterials.GRAVEL){
 			spawnId = 71;
 		}
 		if (spawnId > 0) {

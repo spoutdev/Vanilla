@@ -90,7 +90,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSourceBloc
 	
 	
 	/**
-	 * Sets the wire at x,y,z to the given power and iniciates an update process that will recalculate the wire.
+	 * Sets the wire at x,y,z to the given power and initiates an update process that will recalculate the wire.
 	 * @param world
 	 * @param x
 	 * @param y

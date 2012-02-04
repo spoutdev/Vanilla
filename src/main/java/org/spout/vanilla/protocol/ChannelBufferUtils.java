@@ -68,8 +68,11 @@ public final class ChannelBufferUtils {
 		for (Parameter<?> parameter : parameters) {
 			int type  = parameter.getType();
 			int index = parameter.getIndex();
+			if (index > 0x1F) {
+				throw new IllegalArgumentException("Index has a maximum of 0x1F!");
+			}
 
-			buf.writeByte((type << 5) | index);
+			buf.writeByte(type << 5 | index & 0x1F);
 
 			switch (type) {
 				case Parameter.TYPE_BYTE:
@@ -89,7 +92,7 @@ public final class ChannelBufferUtils {
 					break;
 				case Parameter.TYPE_ITEM:
 					ItemStack item = ((Parameter<ItemStack>) parameter).getValue();
-					buf.writeShort(item.getMaterial().getData());
+					buf.writeShort(item.getMaterial().getId());
 					buf.writeByte(item.getAmount());
 					buf.writeShort(item.getDamage());
 					break;
@@ -107,7 +110,7 @@ public final class ChannelBufferUtils {
 	public static List<Parameter<?>> readParameters(ChannelBuffer buf) {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
-		for (int b = buf.readUnsignedByte(); b != 127; ) {
+		for (int b = buf.readUnsignedByte(); b != 127; b = buf.readUnsignedByte()) {
 			int type  = (b & 0xE0) >> 5;
 			int index = b & 0x1F;
 

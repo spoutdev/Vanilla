@@ -32,7 +32,7 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 import org.spout.api.generator.Populator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
-import org.spout.vanilla.VanillaBlocks;
+import org.spout.vanilla.VanillaMaterials;
 
 public class CavePopulator implements Populator {
 	private Perlin p;
@@ -55,7 +55,7 @@ public class CavePopulator implements Populator {
 			for(int dz = z; dz < z+16; dz++) {
 				for(int dy = y; dy < y+16; dy++) {
 					if(Math.sqrt(Math.pow(dx-pt.getX(),2) + Math.pow(dy-pt.getY(),2) + Math.pow(dz-pt.getZ(),2)) > 6) continue;
-					if(p.GetValue(dx/5.0 + 0.005, dy/5.0 + 0.005, dz/5.0 + 0.005) > 0 && c.getBlockId(dx, dy, dz) == VanillaBlocks.STONE.getId()) c.setBlockId(dx, dy, dz, VanillaBlocks.AIR.getId(),c.getWorld());
+					if(p.GetValue(dx/5.0 + 0.005, dy/5.0 + 0.005, dz/5.0 + 0.005) > 0 && c.getBlockId(dx, dy, dz) == VanillaMaterials.STONE.getId()) c.setBlockId(dx, dy, dz, VanillaMaterials.AIR.getId(),c.getWorld());
 				}
 			}
 		}

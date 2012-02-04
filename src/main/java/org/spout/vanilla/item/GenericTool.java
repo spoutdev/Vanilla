@@ -26,10 +26,9 @@
 package org.spout.vanilla.item;
 
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.GenericItemMaterial;
 import org.spout.vanilla.material.Tool;
 
-public class GenericTool extends GenericItemMaterial implements Tool {
+public class GenericTool extends GenericVanillaItemMaterial implements Tool {
 	public GenericTool(String name, int id) {
 		super(name, id);
 	}

@@ -31,7 +31,7 @@ import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector3m;
 import org.spout.api.protocol.Message;
-import org.spout.vanilla.VanillaBlocks;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.living.player.MinecraftPlayer;
 import org.spout.vanilla.protocol.msg.EntityRotationMessage;
 import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
@@ -72,7 +72,7 @@ public abstract class MovingEntity extends MinecraftEntity {
 
 	private void checkWeb() {
 		Point pos = parent.getTransform().getPosition();
-		if (pos.getWorld().getBlock(pos).getBlockMaterial().equals(VanillaBlocks.WEB)) {
+		if (pos.getWorld().getBlock(pos).getBlockMaterial().equals(VanillaMaterials.WEB)) {
 			velocity.set(Vector3.ZERO);
 		}
 	}

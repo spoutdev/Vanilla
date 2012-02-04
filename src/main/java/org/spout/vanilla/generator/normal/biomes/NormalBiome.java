@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
-import org.spout.vanilla.VanillaBlocks;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeType;
 
 public class NormalBiome extends BiomeType {
@@ -82,7 +82,7 @@ public class NormalBiome extends BiomeType {
 			//return;
 		}
 		if (chunkY < 0) {
-			blockData.flood(VanillaBlocks.BEDROCK.getId());
+			blockData.flood(VanillaMaterials.BEDROCK.getId());
 			//return;
 		}
 
@@ -103,8 +103,8 @@ public class NormalBiome extends BiomeType {
 
 				if(wateredStack) {
 					for(int dy = y + 15; dy >= y; dy--) {
-						if(dy < 64 && blockData.get(dx, dy, dz) == VanillaBlocks.AIR.getId()) {
-							blockData.set(dx, dy, dz, VanillaBlocks.WATER.getId());
+						if(dy < 64 && blockData.get(dx, dy, dz) == VanillaMaterials.AIR.getId()) {
+							blockData.set(dx, dy, dz, VanillaMaterials.WATER.getId());
 						} else {
 							break;
 						}
@@ -121,15 +121,15 @@ public class NormalBiome extends BiomeType {
 	private short getBlockId(int top, int dy) {
 		short id;
 		if(dy > top) {
-			id = VanillaBlocks.AIR.getId();
+			id = VanillaMaterials.AIR.getId();
 		} else if(dy == top && dy >= 63) {
-			id = VanillaBlocks.GRASS.getId();
+			id = VanillaMaterials.GRASS.getId();
 		} else if(dy + 4 >=top) {
-			id = VanillaBlocks.DIRT.getId();
+			id = VanillaMaterials.DIRT.getId();
 		} else if(dy != 0){
-			id = VanillaBlocks.STONE.getId();
+			id = VanillaMaterials.STONE.getId();
 		} else {
-			id = VanillaBlocks.BEDROCK.getId();
+			id = VanillaMaterials.BEDROCK.getId();
 		}
 		return id;
 	}

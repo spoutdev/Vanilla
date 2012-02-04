@@ -36,7 +36,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Color;
 import org.spout.api.util.Parameter;
-import org.spout.vanilla.VanillaBlocks;
+import org.spout.vanilla.VanillaMaterials;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -59,7 +59,7 @@ public class ChannelBufferUtilsTest {
 			new Parameter<Integer>(Parameter.TYPE_INT, 3, 22),
 			new Parameter<Float>(Parameter.TYPE_FLOAT, 4, 1.23F),
 			new Parameter<String>(Parameter.TYPE_STRING, 5, "Hello World"),
-			new Parameter<ItemStack>(Parameter.TYPE_ITEM, 6, new ItemStack(VanillaBlocks.BEDROCK, 5)));
+			new Parameter<ItemStack>(Parameter.TYPE_ITEM, 6, new ItemStack(VanillaMaterials.BEDROCK, 5)));
 	@Test
 	public void testParameters() throws Exception {
 		ChannelBuffer buf = ChannelBuffers.dynamicBuffer();

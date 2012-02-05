@@ -32,9 +32,9 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.io.nbt.Tag;
 import org.spout.api.material.MaterialData;
 import org.spout.api.protocol.MessageCodec;
+import org.spout.nbt.Tag;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 

@@ -27,8 +27,8 @@ package org.spout.vanilla.protocol.msg;
 
 import java.util.Map;
 
-import org.spout.api.io.nbt.Tag;
 import org.spout.api.protocol.Message;
+import org.spout.nbt.Tag;
 
 public final class BlockPlacementMessage extends Message {
 	private final int id, x, y, z, direction, count, damage;

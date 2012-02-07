@@ -33,10 +33,11 @@ public class SquareSelector extends BiomeSelector {
 
 	@Override
 	public int pickBiome(int x, int y, int z, int maxBiomes) {
-		int biomeX = (x/16) % maxBiomes;
-		int biomeZ = (z/16) % maxBiomes;
-		
-		return (biomeX ^ biomeZ) % maxBiomes;
+		int index = (x/8^z/8) % maxBiomes;
+		if (index < 0) {
+			index = -index;
+		}
+		return index;
 	}
 
 }

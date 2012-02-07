@@ -27,6 +27,7 @@ package org.spout.vanilla.generator.normal;
 
 import org.spout.vanilla.biome.selectors.SquareSelector;
 import org.spout.vanilla.generator.BiomeGenerator;
+import org.spout.vanilla.generator.normal.biomes.DesertBiome;
 import org.spout.vanilla.generator.normal.biomes.NormalBiome;
 
 public class NormalGenerator extends BiomeGenerator {
@@ -36,6 +37,7 @@ public class NormalGenerator extends BiomeGenerator {
 		setSelector(new SquareSelector());
 
 		register(new NormalBiome());
+		register(new DesertBiome());
 		//TODO: Create the Vanilla biomes;
 	}
 	

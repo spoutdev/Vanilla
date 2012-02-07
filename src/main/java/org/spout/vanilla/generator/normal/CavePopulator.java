@@ -29,12 +29,12 @@ import java.util.Random;
 
 import net.royawesome.jlibnoise.module.source.Perlin;
 
-import org.spout.api.generator.Populator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.biome.BiomeDecorator;
 
-public class CavePopulator implements Populator {
+public class CavePopulator extends BiomeDecorator{
 	private Perlin p;
 	private Random r = new Random();
 
@@ -46,7 +46,7 @@ public class CavePopulator implements Populator {
 	}
 
 	@Override
-	public void populate(Chunk c) {
+	public void decorate(Chunk c) {
 		int x = c.getX() * 16;
 		int y = c.getY() * 16;
 		int z = c.getZ() * 16;

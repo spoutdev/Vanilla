@@ -27,14 +27,14 @@ package org.spout.vanilla.generator.normal;
 
 import java.util.Random;
 
-import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.biome.BiomeDecorator;
 
-public class TreePopulator implements Populator {
+public class TreePopulator extends BiomeDecorator {
 	@Override
-	public void populate(Chunk c) {
+	public void decorate(Chunk c) {
 		if (c.getY() != 4) {
 			return;
 		}
@@ -89,7 +89,7 @@ public class TreePopulator implements Populator {
 	}
 
 	private int getHighestWorkableBlock(Chunk c, int px, int pz) {
-		int y = 128;
+		int y = c.getWorld().getHeight();
 		int pozx = c.getX() * 16 + px;
 		int pozz = c.getZ() * 16 + pz;
 		while (c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaMaterials.DIRT && c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaMaterials.GRASS) {

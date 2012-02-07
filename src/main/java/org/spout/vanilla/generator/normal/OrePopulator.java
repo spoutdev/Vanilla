@@ -27,16 +27,16 @@ package org.spout.vanilla.generator.normal;
 
 import java.util.Random;
 
-import org.spout.api.generator.Populator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.biome.BiomeDecorator;
 
-public class OrePopulator implements Populator {
+public class OrePopulator extends BiomeDecorator {
 	private	Random ra = new Random();
 
 	@Override
-	public void populate(Chunk c) {
+	public void decorate(Chunk c) {
 		int chance;
 		chance = ra.nextInt(10000);
 		if (chance <= 500) {

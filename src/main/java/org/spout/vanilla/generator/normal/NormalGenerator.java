@@ -34,8 +34,7 @@ public class NormalGenerator extends BiomeGenerator {
 	@Override
 	public void registerBiomes() {
 		setSelector(new SquareSelector());
-		
-		
+
 		register(new NormalBiome());
 		//TODO: Create the Vanilla biomes;
 	}

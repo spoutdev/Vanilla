@@ -29,9 +29,14 @@ import java.util.ArrayList;
 
 import net.royawesome.jlibnoise.module.source.Perlin;
 
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.biome.BiomeDecorator;
 import org.spout.vanilla.biome.BiomeType;
+import org.spout.vanilla.generator.normal.CavePopulator;
+import org.spout.vanilla.generator.normal.OrePopulator;
+import org.spout.vanilla.generator.normal.TreePopulator;
 
 public class NormalBiome extends BiomeType {
 	int seed = 42;
@@ -50,8 +55,9 @@ public class NormalBiome extends BiomeType {
 	
 	@Override
 	public void registerDecorators() {
-		// TODO Auto-generated method stub
-
+        register(new CavePopulator());
+        register(new OrePopulator());
+        register(new TreePopulator());
 	}
 	
 	public Perlin getLayer(int layer) {

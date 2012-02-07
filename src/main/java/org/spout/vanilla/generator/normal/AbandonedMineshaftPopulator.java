@@ -25,10 +25,10 @@
  */
 package org.spout.vanilla.generator.normal;
 
-import org.spout.api.generator.Populator;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.vanilla.biome.BiomeDecorator;
 
-public class AbandonedMineshaftPopulator implements Populator {
-	public void populate(Chunk c) {
+public class AbandonedMineshaftPopulator extends BiomeDecorator {
+	public void decorate(Chunk c) {
 	}
 }

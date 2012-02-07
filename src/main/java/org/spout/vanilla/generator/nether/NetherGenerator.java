@@ -28,9 +28,15 @@ package org.spout.vanilla.generator.nether;
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.VanillaMaterials;
 
 public class NetherGenerator implements WorldGenerator {
 	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+        if (chunkY <= 4) {
+            blockData.flood(VanillaMaterials.NETHERRACK.getId());
+        } else {
+            blockData.flood((short)0);
+        }
 	}
 
 	private final Populator[] populators = new Populator[] {new FortressPopulator()};

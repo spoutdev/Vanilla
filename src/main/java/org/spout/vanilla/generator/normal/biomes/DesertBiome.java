@@ -46,8 +46,8 @@ public class DesertBiome extends BiomeType {
 	@Override
 	public void registerDecorators() {
 		register(new CactusPopulator());
-		register(new CavePopulator());
 		register(new OrePopulator());
+		register(new CavePopulator());
 	}
 
 	@Override

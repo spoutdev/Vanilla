@@ -38,27 +38,27 @@ public class OrePopulator extends BiomeDecorator {
 	@Override
 	public void decorate(Chunk c) {
 		int chance;
-		chance = ra.nextInt(10000);
+		chance = ra.nextInt(1000);
 		if (chance <= 500) {
 			generateCoal(c, ra);
 		}
-		chance = ra.nextInt(10000);
+		chance = ra.nextInt(1000);
 		if (chance <= 500 && c.getY() <= 4) {
 			generateIron(c, ra);
 		}
-		chance = ra.nextInt(10000);
+		chance = ra.nextInt(1000);
 		if (chance <= 400 && c.getY() <= 2) {
 			generateLapis(c, ra);
 		}
-		chance = ra.nextInt(10000);
+		chance = ra.nextInt(1000);
 		if (chance <= 390 && c.getY() <= 2) {
 			generateGold(c, ra);
 		}
-		chance = ra.nextInt(10000);
+		chance = ra.nextInt(1000);
 		if (chance <= 350 && c.getY() <= 1) {
 			generateDiamond(c, ra);
 		}
-		chance = ra.nextInt(10000);
+		chance = ra.nextInt(1000);
 		if (chance <= 370 && c.getY() <= 1) {
 			generateRedstone(c, ra);
 		}
@@ -94,7 +94,7 @@ public class OrePopulator extends BiomeDecorator {
 		int pozy = c.getY() * 16 + ra.nextInt(16);
 		int pozz = c.getZ() * 16 + ra.nextInt(16);
 		for (int i = 1; i <= number;) {
-			if (c.getWorld().getBlock(pozx, pozy, pozz).getBlockMaterial() != VanillaMaterials.AIR) {
+			if (c.getWorld().getBlock(pozx, pozy, pozz).getBlockMaterial().equals(VanillaMaterials.STONE)) {
 				c.getWorld().setBlockMaterial(pozx, pozy, pozz, material, c.getWorld());
 			}
 			i++;

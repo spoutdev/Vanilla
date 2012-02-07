@@ -55,8 +55,8 @@ public class NormalBiome extends BiomeType {
 	
 	@Override
 	public void registerDecorators() {
+		register(new OrePopulator());
         register(new CavePopulator());
-        register(new OrePopulator());
         register(new TreePopulator());
 	}
 	

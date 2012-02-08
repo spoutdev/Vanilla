@@ -27,6 +27,7 @@ package org.spout.vanilla.item;
 
 import org.spout.api.material.GenericItemMaterial;
 import org.spout.api.material.Material;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.VanillaItemMaterial;
 
 public class GenericVanillaItemMaterial extends GenericItemMaterial implements VanillaItemMaterial {
@@ -45,6 +46,15 @@ public class GenericVanillaItemMaterial extends GenericItemMaterial implements V
 
 	@Override
 	public Material getBlock() {
+		if (this == VanillaMaterials.REDSTONE) {
+			return VanillaMaterials.REDSTONE_WIRE;
+		}
+		if (this == VanillaMaterials.WATER_BUCKET) {
+			return VanillaMaterials.WATER;
+		}
+		if (this == VanillaMaterials.LAVA_BUCKET) {
+			return VanillaMaterials.LAVA;
+		}
 		return null;
 	}
 }

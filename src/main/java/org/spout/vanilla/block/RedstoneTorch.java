@@ -101,7 +101,7 @@ public class RedstoneTorch extends TorchAttachable implements RedstoneSourceBloc
 				world.setBlockIdAndData(x, y, z, updateId, data, false, world);
 				
 				//Update other redstone inputs
-				for(Vector3 offset2:possibleOutgoing) {//TODO changed the values below from offset to offset2
+				for(Vector3 offset2:possibleOutgoing) {
 					tx = (int) (x + offset2.getX());
 					ty = (int) (y + offset2.getY());
 					tz = (int) (z + offset2.getZ());

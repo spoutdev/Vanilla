@@ -39,6 +39,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.block.Attachable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaItemMaterial;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
 
@@ -46,6 +47,7 @@ import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
  * A {@link MessageHandler} which processes placement messages.
  */
 public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlacementMessage> {
+
 	@Override
 	public void handle(Session session, Player player, BlockPlacementMessage message) {
 		//if (player == null) {
@@ -57,20 +59,19 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		Inventory inventory = player.getEntity().getInventory();
 		ItemStack holding = inventory.getCurrentItem();
 		/**
-		 * The notch client's packet sending is weird. Here's how it works: If
-		 * the client is clicking a block not in range, sends a packet with
-		 * x=-1,y=255,z=-1 If the client is clicking a block in range with an
-		 * item in hand (id > 255) Sends both the normal block placement packet
-		 * and a (-1,255,-1) one If the client is placing a block in range with
-		 * a block in hand, only one normal packet is sent That is how it
-		 * usually happens. Sometimes it doesn't happen like that. Therefore, a
-		 * hacky workaround.
+		 * The notch client's packet sending is weird. Here's how it works: If the
+		 * client is clicking a block not in range, sends a packet with
+		 * x=-1,y=255,z=-1 If the client is clicking a block in range with an item
+		 * in hand (id > 255) Sends both the normal block placement packet and a
+		 * (-1,255,-1) one If the client is placing a block in range with a block in
+		 * hand, only one normal packet is sent That is how it usually happens.
+		 * Sometimes it doesn't happen like that. Therefore, a hacky workaround.
 		 */
 		if (message.getDirection() == 255) {
 			// Right-clicked air. Note that the client doesn't send this if they are holding nothing.
 			//BlockPlacementMessage previous = session.getPreviousPlacement();
 			//if (previous == null || previous.getCount() != message.getCount() && previous.getId() != message.getId() && previous.getDamage() != message.getDamage()) {
-				eventManager.callEvent(new PlayerInteractEvent(player, null, inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, true));
+			eventManager.callEvent(new PlayerInteractEvent(player, null, inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, true));
 			//}
 			//session.setPreviousPlacement(null);
 			return;
@@ -102,15 +103,23 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		}
 
 		if (holding != null && !sendRevert) {
-			/*if (interactEvent.useItemInHand() != Event.Result.DENY) { //TODO: Implement items (they are not in yet!)
-				if (holding.getMaterial().getId() > 255 &&  (holding.getTypeId()).getPhysics().interact(player, against, holding, PlayerInteractEvent.Action.RIGHT_CLICK, face)) {
-					sendRevert = true;
-				}
-			}*/
+			/*
+			 * if (interactEvent.useItemInHand() != Event.Result.DENY) { //TODO:
+			 * Implement items (they are not in yet!) if
+			 * (holding.getMaterial().getId() > 255 &&
+			 * (holding.getTypeId()).getPhysics().interact(player, against, holding,
+			 * PlayerInteractEvent.Action.RIGHT_CLICK, face)) { sendRevert = true; } }
+			 */
 			Material placedId = holding.getMaterial();
 			if (placedId.getId() > 255) {
+				if (!(placedId instanceof VanillaItemMaterial)) {
+					return;
+				}
+				placedId = ((VanillaItemMaterial) placedId).getBlock();
+				if (placedId == null) {
+					return;
+				}
 				//placedId = ItemProperties.get(placedId.getItemTypeId()).getPhysics().getPlacedBlock(face, holding.getDurability()); //TODO: Implement items (they are not in yet!)
-				return;
 			}
 			if (placedId.getId() < 0) {
 				sendRevert = true;
@@ -118,41 +127,40 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 
 			short placedData = placedId.getData();
 
-			if(placedId instanceof Attachable) {
+			if (placedId instanceof Attachable) {
 				Attachable attachable = (Attachable) placedId;
 				placedData = attachable.getDataForFace(face.getOpposite());
 			}
 
-			VanillaBlockMaterial newBlock = (VanillaBlockMaterial)placedId;
-			VanillaBlockMaterial oldBlock = target != null ? (VanillaBlockMaterial)target.getBlockMaterial() : null;
+			VanillaBlockMaterial newBlock = (VanillaBlockMaterial) placedId;
+			VanillaBlockMaterial oldBlock = target != null ? (VanillaBlockMaterial) target.getBlockMaterial() : null;
 
 			if (!sendRevert && (oldBlock == null || oldBlock.isLiquid() || oldBlock.getId() == 0)) {
 				//if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {
-					//SpoutBlockState newState = BlockProperties.get(placedId.getItemTypeId()).getPhysics().placeAgainst(player, target.getState(), placedId, face);
-					//BlockPlaceEvent event = EventFactory.onBlockPlace(target, newState, against, player);
+				//SpoutBlockState newState = BlockProperties.get(placedId.getItemTypeId()).getPhysics().placeAgainst(player, target.getState(), placedId, face);
+				//BlockPlaceEvent event = EventFactory.onBlockPlace(target, newState, against, player);
 
-					//if (!event.isCancelled() && event.canBuild()) {
-						/*newState.update(true);
-						if (newState.getX() != target.getX() || newState.getY() != target.getY() || newState.getZ() != target.getZ()) {
-							sendRevert = true;
-						}*/
+				//if (!event.isCancelled() && event.canBuild()) {
+						/*
+				 * newState.update(true); if (newState.getX() != target.getX() ||
+				 * newState.getY() != target.getY() || newState.getZ() != target.getZ())
+				 * { sendRevert = true; }
+				 */
 
-						if(!sendRevert) {
-							world.setBlockIdAndData((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), newBlock.getId(), placedData, player);
-							player.getSession().send(new BlockChangeMessage((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), holding.getMaterial().getId(), placedData));
-						}
+				if (!sendRevert) {
+					world.setBlockIdAndData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), newBlock.getId(), placedData, player);
+					player.getSession().send(new BlockChangeMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), holding.getMaterial().getId(), placedData));
+				}
 
-						/*if(player.getGameMode() != GameMode.CREATIVE) { //TODO: Gamemode is currently not changeable
-							holding.setAmount(holding.getAmount() - 1);
-							if (holding.getAmount() == 0) {
-								player.setItemInHand(null);
-							} else {
-								player.setItemInHand(holding);
-							}
-						}*/
-					//} else {
-					//	sendRevert = true;
-					//}
+				/*
+				 * if(player.getGameMode() != GameMode.CREATIVE) { //TODO: Gamemode is
+				 * currently not changeable holding.setAmount(holding.getAmount() - 1);
+				 * if (holding.getAmount() == 0) { player.setItemInHand(null); } else {
+				 * player.setItemInHand(holding); } }
+				 */
+				//} else {
+				//	sendRevert = true;
+				//}
 				//} else {
 				//	sendRevert = true;
 				//}
@@ -161,7 +169,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			}
 		}
 		if (sendRevert) {
-			player.getSession().send(new BlockChangeMessage((int)pos.getX(), (int)pos.getY(), (int)pos.getZ(), target != null ? target.getBlockId() : 0, world.getBlockData((int)pos.getX(), (int)pos.getY(), (int)pos.getZ())));
+			player.getSession().send(new BlockChangeMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), target != null ? target.getBlockId() : 0, world.getBlockData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ())));
 			//TODO: Send potential amount change/whatever!
 		}
 	}

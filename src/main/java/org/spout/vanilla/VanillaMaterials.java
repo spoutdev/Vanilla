@@ -27,6 +27,7 @@ package org.spout.vanilla;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.Material;

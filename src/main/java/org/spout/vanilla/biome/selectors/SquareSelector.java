@@ -27,10 +27,7 @@ package org.spout.vanilla.biome.selectors;
 
 import org.spout.vanilla.biome.BiomeSelector;
 
-
-
 public class SquareSelector extends BiomeSelector {
-
 	@Override
 	public int pickBiome(int x, int y, int z, int maxBiomes) {
 		int index = (x/8^z/8) % maxBiomes;
@@ -39,5 +36,4 @@ public class SquareSelector extends BiomeSelector {
 		}
 		return index;
 	}
-
 }

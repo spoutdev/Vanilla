@@ -57,7 +57,9 @@ public class VanillaPlugin extends CommonPlugin {
 		// TODO - do we need a protocol manager ?
 		// getGame().getProtocolManager().register ...
 		Protocol.registerProtocol(0, new VanillaProtocol());
+
 		Game game = getGame();
+
 		if (game instanceof Server) {
 			int port = 25565;
 			String[] split = getGame().getAddress().split(":");
@@ -65,14 +67,12 @@ public class VanillaPlugin extends CommonPlugin {
 				try {
 					port = Integer.parseInt(split[1]);
 				} catch (NumberFormatException e) {
-					System.out.println(split[1]+" is not a valid port number! Defaulting to "+port+"!");
+					System.out.println(split[1]+" is not a valid port number! Defaulting to " + port + "!");
 				}
 			}
 
 			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
 		}
-
-		//getGame().getEventManager().registerEvent(ChunkObservableEvent.class, Order.MONITOR, executor, owner)
 
 		getGame().getEventManager().registerEvents(new VanillaEventListener(this), this);
 
@@ -90,6 +90,7 @@ public class VanillaPlugin extends CommonPlugin {
 		vanillaProtocolId = Controller.getProtocolId("org.spout.vanilla.protocol");
 
 		spawnWorld = getGame().loadWorld("world", new NormalGenerator());
+
 		// TODO - Should probably be auto-set by generator
 		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0.5F, 64.5F, 0.5F), Quaternion.identity , Vector3.ONE));
 		spawnWorld.createAndSpawnEntity(new Point(spawnWorld,0.f, 0.f, 0.f), new NormalSky());

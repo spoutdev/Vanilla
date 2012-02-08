@@ -1,9 +1,9 @@
 /*
- * This file is part of vanilla (http://www.spout.org/).
+ * This file is part of Vanilla (http://www.spout.org/).
  *
- * vanilla is licensed under the SpoutDev License Version 1.
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
- * vanilla is free software: you can redistribute it and/or modify
+ * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -23,31 +23,56 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.generator.normal.biomes;
+package org.spout.vanilla.generator.normal.biome;
 
 import net.royawesome.jlibnoise.module.source.Perlin;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeType;
-import org.spout.vanilla.generator.normal.CactusPopulator;
-import org.spout.vanilla.generator.normal.CavePopulator;
-import org.spout.vanilla.generator.normal.OrePopulator;
+import org.spout.vanilla.generator.normal.decorator.*;
+
+import java.util.ArrayList;
 
 /**
- * @author zml2008
+ * Biome consisting of flat terrain with flowers, tall grass, few trees, and ponds.
  */
-public class DesertBiome extends BiomeType {
-	private int seed = -42;
-	private Perlin heightMap = new Perlin();
-	public DesertBiome() {
+public class PlainBiome extends BiomeType {
+	//TODO set a proper seed...42 isn't the answer to everything :p.
+	int seed = 42;
+	Perlin layerCount = new Perlin(), heightMap = new Perlin();
+	ArrayList<Perlin> layers = new ArrayList<Perlin>();
+	
+	public PlainBiome(){
+		layerCount.setSeed(seed + 10);
+		layerCount.setOctaveCount(5);
+
 		heightMap.setSeed(seed);
 		heightMap.setOctaveCount(5);
 	}
+	
 	@Override
 	public void registerDecorators() {
-		register(new CactusPopulator());
-		register(new OrePopulator());
-		register(new CavePopulator());
+		register(new CaveDecorator());
+		register(new FlowerDecorator());
+		register(new GrassDecorator());
+		register(new PondDecorator());
+		register(new TreeDecorator());
+	}
+	
+	public Perlin getLayer(int layer) {
+		if(layer >= 0) {
+			if(layer < layers.size()) {
+				return layers.get(layer);
+			} else {
+				Perlin p = new Perlin();
+				p.setSeed(seed + layer);
+				p.setOctaveCount(5);
+				layers.add(p);
+				return p;
+			}
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -58,35 +83,51 @@ public class DesertBiome extends BiomeType {
 
 		if (y > 127) {
 			blockData.flood((short)0);
-			//return;
 		}
 		if (chunkY < 0) {
 			blockData.flood(VanillaMaterials.BEDROCK.getId());
-			//return;
 		}
 
 		for (int dx = x; dx < (x+16); dx++) {
 			for (int dz = z; dz < (z+16); dz++) {
 
-				int height = (int) ((heightMap.GetValue(dx / 32.0 + 0.005, 0.05, dz / 32.0 + 0.005) + 1.0) * 2.0 + 60.0);
+				int height = (int) ((heightMap.GetValue(dx / 16.0 + 0.005, 0.05, dz / 16.0 + 0.005) + 1.0) * 4.0 + 60.0);
+
+				boolean wateredStack = height < 64;
 
 				for(int dy = y; dy < y + 16; dy++) {
-					short id = getBlockId(height, dy);
+					short id;
+
+					id = getBlockId(height, dy);
 
 					blockData.set(dx, dy, dz, id);
 				}
+
+				if(wateredStack) {
+					for(int dy = y + 15; dy >= y; dy--) {
+						if(dy < 64 && blockData.get(dx, dy, dz) == VanillaMaterials.AIR.getId()) {
+							blockData.set(dx, dy, dz, VanillaMaterials.WATER.getId());
+						} else {
+							break;
+						}
+					}
+				}
 			}
 		}
+	}
+
+	public static double getPerlinValueXZ(Perlin perlin, int x, int z) {
+		return perlin.GetValue(x / 16.0 + 0.05, 0.05, z / 16.0 + 0.05);
 	}
 
 	private short getBlockId(int top, int dy) {
 		short id;
 		if(dy > top) {
 			id = VanillaMaterials.AIR.getId();
-		} else if (dy + 4 >=top) {
-			id = VanillaMaterials.SAND.getId();
-		}  else if (dy + 5 == top) {
-			id = VanillaMaterials.SANDSTONE.getId();
+		} else if(dy == top && dy >= 63) {
+			id = VanillaMaterials.GRASS.getId();
+		} else if(dy + 4 >=top) {
+			id = VanillaMaterials.DIRT.getId();
 		} else if(dy != 0){
 			id = VanillaMaterials.STONE.getId();
 		} else {

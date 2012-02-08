@@ -1,9 +1,9 @@
 /*
- * This file is part of vanilla (http://www.spout.org/).
+ * This file is part of Vanilla (http://www.spout.org/).
  *
- * vanilla is licensed under the SpoutDev License Version 1.
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
- * vanilla is free software: you can redistribute it and/or modify
+ * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -23,7 +23,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.generator.normal;
+package org.spout.vanilla.generator.normal.decorator;
 
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.VanillaMaterials;
@@ -31,13 +31,16 @@ import org.spout.vanilla.biome.BiomeDecorator;
 
 import java.util.Random;
 
-public class CactusPopulator extends BiomeDecorator {
+/**
+ * Decorator that decorates a biome with cacti.
+ */
+public class CactusDecorator extends BiomeDecorator {
 	@Override
 	public void decorate(Chunk c) {
+		Random ra = new Random();
 		if (c.getY() != 4) {
 			return;
 		}
-		Random ra = new Random();
 		int genInChunk = ra.nextInt(100);
 		if (genInChunk <= 20) {
 			return;

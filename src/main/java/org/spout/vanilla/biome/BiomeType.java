@@ -23,19 +23,17 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.biome;
-
-import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
+import java.util.ArrayList;
 
 public abstract class BiomeType {
 	ArrayList<BiomeDecorator> decorators = new ArrayList<BiomeDecorator>();
 	
 	public BiomeType(){
-		
 		this.registerDecorators();
 	}
 	
@@ -52,8 +50,6 @@ public abstract class BiomeType {
 	
 	
 	public abstract void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ);
-	
-	
 	
 	public final void decorate(Chunk c){
 		for(BiomeDecorator b : decorators){

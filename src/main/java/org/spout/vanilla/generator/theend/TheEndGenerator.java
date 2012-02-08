@@ -25,17 +25,21 @@
  */
 package org.spout.vanilla.generator.theend;
 
-import org.spout.api.generator.Populator;
-import org.spout.api.generator.WorldGenerator;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.biome.selectors.SquareSelector;
+import org.spout.vanilla.generator.BiomeGenerator;
+import org.spout.vanilla.generator.theend.biome.EndStoneBiome;
 
-public class TheEndGenerator implements WorldGenerator {
-	private final Populator[] populators = new Populator[] {new SpirePopulator()};
-
-	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
-	}
-
-	public Populator[] getPopulators() {
-		return populators;
+/**
+ * Generator that generates The End-like worlds.
+ */
+public class TheEndGenerator extends BiomeGenerator {
+	/**
+	 * Called during biome generatator's construction phase
+	 */
+	@Override
+	public void registerBiomes() {
+		setSelector(new SquareSelector());
+		register(new EndStoneBiome());
+		//TODO: Create The End's biome(s);
 	}
 }

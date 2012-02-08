@@ -23,44 +23,33 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.biome;
 
 import org.spout.api.io.store.map.MemoryStoreMap;
 import org.spout.api.io.store.map.SimpleStoreMap;
 
 public class BiomeMap {
-	final SimpleStoreMap<Integer, BiomeType> map;
-	BiomeSelector selector;
-	
+	private final SimpleStoreMap<Integer, BiomeType> map;
+	private BiomeSelector selector;
 	
 	public BiomeMap(){
 		//Todo: Make this saveable
 		map = new MemoryStoreMap<Integer, BiomeType>();
-		
-		
 	}
 	
 	public void setSelector(BiomeSelector selector){
 		this.selector = selector;
 	}
-	
-	
+
 	public void addBiome(BiomeType biome){
 		map.set(map.getSize(), biome);
 	}
-	
-	/**
-	 * 
-	 * 
-	 */
-	public BiomeType getBiome(int x, int z){
-		//TODO This needs to generate a noise function relying on x and z to generate a map that is [0-map.getSize()] so that we can select
-		//Biomes for the biome generator
 
+	public BiomeType getBiome(int x, int z){
+		/**
+		 * TODO This needs to generate a noise function relying on x and z to generate a map that is [0-map.getSize()] so that we can select
+		 * Biomes for the biome generator
+		 */
 		return map.get(selector.pickBiome(x, z, map.getSize()));
-		
-	
 	}
-	
 }

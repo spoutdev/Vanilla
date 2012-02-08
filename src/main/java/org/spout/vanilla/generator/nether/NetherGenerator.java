@@ -25,23 +25,18 @@
  */
 package org.spout.vanilla.generator.nether;
 
-import org.spout.api.generator.Populator;
-import org.spout.api.generator.WorldGenerator;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.biome.selectors.SquareSelector;
+import org.spout.vanilla.generator.BiomeGenerator;
+import org.spout.vanilla.generator.nether.biome.NetherrackBiome;
 
-public class NetherGenerator implements WorldGenerator {
-	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
-        if (chunkY <= 4) {
-            blockData.flood(VanillaMaterials.NETHERRACK.getId());
-        } else {
-            blockData.flood((short)0);
-        }
-	}
-
-	private final Populator[] populators = new Populator[] {new FortressPopulator()};
-
-	public Populator[] getPopulators() {
-		return populators;
+/**
+ * Generator that generates Nether-like worlds.
+ */
+public class NetherGenerator extends BiomeGenerator {
+	@Override
+	public void registerBiomes() {
+		setSelector(new SquareSelector());
+		register(new NetherrackBiome());
+		//TODO: Create Nether's biome(s);
 	}
 }

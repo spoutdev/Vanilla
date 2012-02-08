@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.material;
 
-public interface Food extends VanillaItemMaterial {
+public interface Food extends Item {
 
 	public int getHungerRestored();
 }

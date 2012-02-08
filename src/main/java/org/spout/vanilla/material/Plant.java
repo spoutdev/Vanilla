@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.material;
 
-public interface Plant extends VanillaBlockMaterial {
+public interface Plant extends Block {
 	public boolean hasGrowthStages();
 
 	public int getNumGrowthStages();

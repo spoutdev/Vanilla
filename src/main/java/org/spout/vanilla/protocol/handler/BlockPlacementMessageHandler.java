@@ -37,8 +37,8 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
-import org.spout.vanilla.block.Attachable;
-import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.Block;
+import org.spout.vanilla.material.attachable.Attachable;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
 
@@ -123,8 +123,8 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 				placedData = attachable.getDataForFace(face.getOpposite());
 			}
 
-			VanillaBlockMaterial newBlock = (VanillaBlockMaterial)placedId;
-			VanillaBlockMaterial oldBlock = target != null ? (VanillaBlockMaterial)target.getBlockMaterial() : null;
+			Block newBlock = (Block)placedId;
+			Block oldBlock = target != null ? (Block)target.getBlockMaterial() : null;
 
 			if (!sendRevert && (oldBlock == null || oldBlock.isLiquid() || oldBlock.getId() == 0)) {
 				//if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {

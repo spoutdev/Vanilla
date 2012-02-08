@@ -25,6 +25,6 @@
  */
 package org.spout.vanilla.material;
 
-public interface Weapon extends VanillaItemMaterial {
+public interface Weapon extends Item {
 
 }

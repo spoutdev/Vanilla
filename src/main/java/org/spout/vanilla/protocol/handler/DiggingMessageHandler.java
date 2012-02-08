@@ -28,14 +28,13 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
-import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.Block;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
 
@@ -58,7 +57,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 		int y = message.getY();
 		int z = message.getZ();
 
-		Block block = world.getBlock(x, y, z);
+		org.spout.api.geo.cuboid.Block block = world.getBlock(x, y, z);
 
 		// Need to have some sort of verification to deal with malicious clients.
 		if (message.getState() == DiggingMessage.STATE_START_DIGGING) {
@@ -74,7 +73,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 
 			BlockFace face = VanillaMessageHandlerUtils.messageToBlockFace(message.getFace());
 
-			if(isAir || ((VanillaBlockMaterial)block.getBlockMaterial()).isLiquid()) {
+			if(isAir || ((Block)block.getBlockMaterial()).isLiquid()) {
 				return;
 			}
 			/*if (interactEvent.useItemInHand() != Event.Result.DENY) { //TODO: Interactivity!

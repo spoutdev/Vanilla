@@ -27,7 +27,7 @@ package org.spout.vanilla.material;
 
 import org.spout.api.material.BlockMaterial;
 
-public interface Tool extends VanillaItemMaterial {
+public interface Tool extends Item {
 	public short getDurability();
 
 	public Tool setDurability(short durability);

@@ -32,7 +32,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.protocol.Message;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.MovingEntity;
-import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.Block;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
 public class FallingBlock extends MovingEntity {
@@ -59,7 +59,7 @@ public class FallingBlock extends MovingEntity {
 		int x = MathHelper.floor(position.getX());
 		int y = MathHelper.floor(position.getY());
 		int z = MathHelper.floor(position.getZ());
-		VanillaBlockMaterial material = (VanillaBlockMaterial) world.getBlock(x, y-1, z).getBlockMaterial();
+		Block material = (Block) world.getBlock(x, y-1, z).getBlockMaterial();
 		if (material == VanillaMaterials.AIR || material.isLiquid()){
 			getVelocity().add(0, -0.004, 0);
 		} else {

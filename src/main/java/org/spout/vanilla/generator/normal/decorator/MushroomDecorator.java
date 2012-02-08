@@ -33,9 +33,9 @@ import java.util.Random;
 /**
  * Decorator that decorates a biome with mushrooms.
  */
-public class MushroomDecorator extends BiomeDecorator {
+public class MushroomDecorator implements BiomeDecorator {
 	@Override
-	public void decorate(Chunk c) {
+	public void populate(Chunk chunk, Random random) {
 		//TODO Determine biome, then generate accordingly.
 	}
 

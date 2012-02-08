@@ -29,11 +29,7 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeType;
-import org.spout.vanilla.generator.normal.decorator.CaveDecorator;
-import org.spout.vanilla.generator.normal.decorator.FlowerDecorator;
-import org.spout.vanilla.generator.normal.decorator.GrassDecorator;
-import org.spout.vanilla.generator.normal.decorator.PondDecorator;
-import org.spout.vanilla.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.generator.normal.decorator.*;
 
 import java.util.ArrayList;
 
@@ -41,10 +37,10 @@ import java.util.ArrayList;
  * Biome consisting of flat terrain with flowers, tall grass, few trees, and ponds.
  */
 public class PlainBiome extends BiomeType {
-	//TODO set a proper seed...can we get this from the world yet?
-	private final int seed = 42;
-	private final Perlin layerCount = new Perlin(), heightMap = new Perlin();
-	private final ArrayList<Perlin> layers = new ArrayList<Perlin>();
+	//TODO set a proper seed...42 isn't the answer to everything :p.
+	int seed = 42;
+	Perlin layerCount = new Perlin(), heightMap = new Perlin();
+	ArrayList<Perlin> layers = new ArrayList<Perlin>();
 	
 	public PlainBiome(){
 		layerCount.setSeed(seed + 10);
@@ -87,9 +83,11 @@ public class PlainBiome extends BiomeType {
 
 		if (y > 127) {
 			blockData.flood((short)0);
+			//return;
 		}
 		if (chunkY < 0) {
 			blockData.flood(VanillaMaterials.BEDROCK.getId());
+			//return;
 		}
 
 		for (int dx = x; dx < (x+16); dx++) {

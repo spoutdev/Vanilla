@@ -25,8 +25,7 @@
  */
 package org.spout.vanilla.biome;
 
-import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.generator.Populator;
 
-public abstract class BiomeDecorator {
-	public abstract void decorate(Chunk c);
+public interface BiomeDecorator extends Populator {
 }

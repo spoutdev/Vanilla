@@ -28,12 +28,14 @@ package org.spout.vanilla.generator.nether.decorator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.biome.BiomeDecorator;
 
+import java.util.Random;
+
 /**
  * Decorator that decorates a biome with lava falls. TODO May not be needed...
  */
-public class LavaFallDecorator extends BiomeDecorator {
+public class LavaFallDecorator implements BiomeDecorator {
 	@Override
-	public void decorate(Chunk c) {
+	public void populate(Chunk chunk, Random random) {
 		/**
 		 * TODO determine what biome this is in then generate differently
 		 * (as lava falls happen in normal worlds but quite a bit differently.

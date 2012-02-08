@@ -29,16 +29,17 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random; 
 
 public abstract class BiomeType {
-	ArrayList<BiomeDecorator> decorators = new ArrayList<BiomeDecorator>();
+	List<BiomeDecorator> decorators = new ArrayList<BiomeDecorator>();
 	
-	public BiomeType(){
+	public BiomeType() {
 		this.registerDecorators();
 	}
 	
-	
-	public void register(BiomeDecorator decorator){
+	public void register(BiomeDecorator decorator) {
 		decorators.add(decorator);
 	}
 	
@@ -48,12 +49,11 @@ public abstract class BiomeType {
 	 */
 	public abstract void registerDecorators();
 	
-	
 	public abstract void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ);
 	
-	public final void decorate(Chunk c){
-		for(BiomeDecorator b : decorators){
-			b.decorate(c);
+	public final void decorate(Chunk chunk, Random random) {
+		for (BiomeDecorator b : decorators) {
+			b.populate(chunk, random);
 		}
 	}
 }

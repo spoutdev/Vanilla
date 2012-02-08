@@ -32,24 +32,24 @@ public class BiomeMap {
 	private final SimpleStoreMap<Integer, BiomeType> map;
 	private BiomeSelector selector;
 	
-	public BiomeMap(){
+	public BiomeMap() {
 		//Todo: Make this saveable
 		map = new MemoryStoreMap<Integer, BiomeType>();
 	}
 	
-	public void setSelector(BiomeSelector selector){
+	public void setSelector(BiomeSelector selector) {
 		this.selector = selector;
 	}
 
-	public void addBiome(BiomeType biome){
+	public void addBiome(BiomeType biome) {
 		map.set(map.getSize(), biome);
 	}
 
-	public BiomeType getBiome(int x, int z){
-		/**
-		 * TODO This needs to generate a noise function relying on x and z to generate a map that is [0-map.getSize()] so that we can select
-		 * Biomes for the biome generator
-		 */
+	/**
+	 * TODO This needs to generate a noise function relying on x and z to generate a map that is [0-map.getSize()] so that we can select
+	 * Biomes for the biome generator
+	 */
+	public BiomeType getBiome(int x, int z) {
 		return map.get(selector.pickBiome(x, z, map.getSize()));
 	}
 }

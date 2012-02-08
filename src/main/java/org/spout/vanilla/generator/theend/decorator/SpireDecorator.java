@@ -28,11 +28,13 @@ package org.spout.vanilla.generator.theend.decorator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.biome.BiomeDecorator;
 
+import java.util.Random;
+
 /**
  * Decorator that decorates a biome with obsidian spires.
  */
-public class SpireDecorator extends BiomeDecorator {
+public class SpireDecorator implements BiomeDecorator {
 	@Override
-	public void decorate(Chunk c) {
+	public void populate(Chunk chunk, Random random) {
 	}
 }

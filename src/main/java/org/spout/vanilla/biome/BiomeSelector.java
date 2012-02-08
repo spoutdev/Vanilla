@@ -26,7 +26,7 @@
 package org.spout.vanilla.biome;
 
 public abstract class BiomeSelector {
-	public final int pickBiome(int x, int z, int maxBiomes){
+	public final int pickBiome(int x, int z, int maxBiomes) {
 		return pickBiome(x,0,z, maxBiomes);
 	}
 

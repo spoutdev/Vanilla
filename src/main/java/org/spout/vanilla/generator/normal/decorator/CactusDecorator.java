@@ -34,28 +34,27 @@ import java.util.Random;
 /**
  * Decorator that decorates a biome with cacti.
  */
-public class CactusDecorator extends BiomeDecorator {
+public class CactusDecorator implements BiomeDecorator {
 	@Override
-	public void decorate(Chunk c) {
-		Random ra = new Random();
-		if (c.getY() != 4) {
+	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() < 4) {
 			return;
 		}
-		int genInChunk = ra.nextInt(100);
+		int genInChunk = random.nextInt(100);
 		if (genInChunk <= 20) {
 			return;
 		}
-		int px = ra.nextInt(16);
-		int pz = ra.nextInt(16);
-		int py = getHighestWorkableBlock(c, px, pz);
-		px = c.getX() * 16 + px;
-		pz = c.getZ() * 16 + pz;
+		int px = random.nextInt(16);
+		int pz = random.nextInt(16);
+		int py = getHighestWorkableBlock(chunk, px, pz);
+		px = chunk.getX() * 16 + px;
+		pz = chunk.getZ() * 16 + pz;
 		if (py == -1) {
 			return;
 		}
-		int height = ra.nextInt(4) + 1;
+		int height = random.nextInt(4) + 1;
 		for (int i = py; i < py + height; ++i) {
-			c.getWorld().setBlockId(px, i, pz, VanillaMaterials.CACTUS.getId(), c.getWorld());
+			chunk.getWorld().setBlockId(px, i, pz, VanillaMaterials.CACTUS.getId(), chunk.getWorld());
 		}
 	}
 

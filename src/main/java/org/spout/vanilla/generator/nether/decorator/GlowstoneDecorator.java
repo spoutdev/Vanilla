@@ -28,11 +28,13 @@ package org.spout.vanilla.generator.nether.decorator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.biome.BiomeDecorator;
 
+import java.util.Random;
+
 /**
  * Decorator that produces glowstone structures in a biome.
  */
-public class GlowstoneDecorator extends BiomeDecorator {
+public class GlowstoneDecorator implements BiomeDecorator {
 	@Override
-	public void decorate(Chunk c) {
+	public void populate(Chunk chunk, Random ra) {
 	}
 }

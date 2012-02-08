@@ -25,45 +25,41 @@
  */
 package org.spout.vanilla.generator.normal.decorator;
 
+import java.util.Random;
+
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeDecorator;
 
-import java.util.Random;
-
-/**
- * Decorator that decorates a biome with ore.
- */
-public class OreDecorator extends BiomeDecorator{
-	private	Random ra = new Random();
+public class OreDecorator implements BiomeDecorator {
 
 	@Override
-	public void decorate(Chunk c) {
+	public void populate(Chunk chunk, Random random) {
 		int chance;
-		chance = ra.nextInt(10000);
+		chance = random.nextInt(1000);
 		if (chance <= 500) {
-			generateCoal(c, ra);
+			generateCoal(chunk, random);
 		}
-		chance = ra.nextInt(10000);
-		if (chance <= 500 && c.getY() <= 4) {
-			generateIron(c, ra);
+		chance = random.nextInt(1000);
+		if (chance <= 500 && chunk.getY() <= 4) {
+			generateIron(chunk, random);
 		}
-		chance = ra.nextInt(10000);
-		if (chance <= 400 && c.getY() <= 2) {
-			generateLapis(c, ra);
+		chance = random.nextInt(1000);
+		if (chance <= 400 && chunk.getY() <= 2) {
+			generateLapis(chunk, random);
 		}
-		chance = ra.nextInt(10000);
-		if (chance <= 390 && c.getY() <= 2) {
-			generateGold(c, ra);
+		chance = random.nextInt(1000);
+		if (chance <= 390 && chunk.getY() <= 2) {
+			generateGold(chunk, random);
 		}
-		chance = ra.nextInt(10000);
-		if (chance <= 350 && c.getY() <= 1) {
-			generateDiamond(c, ra);
+		chance = random.nextInt(1000);
+		if (chance <= 350 && chunk.getY() <= 1) {
+			generateDiamond(chunk, random);
 		}
-		chance = ra.nextInt(10000);
-		if (chance <= 370 && c.getY() <= 1) {
-			generateRedstone(c, ra);
+		chance = random.nextInt(1000);
+		if (chance <= 370 && chunk.getY() <= 1) {
+			generateRedstone(chunk, random);
 		}
 	}
 
@@ -91,17 +87,17 @@ public class OreDecorator extends BiomeDecorator{
 		generateOre(c, ra, VanillaMaterials.REDSTONE_ORE, 10);
 	}
 
-	private void generateOre(Chunk c, Random ra, BlockMaterial material, int maxNumber) {
-		int number = ra.nextInt(maxNumber);
-		int pozx = c.getX() * 16 + ra.nextInt(16);
-		int pozy = c.getY() * 16 + ra.nextInt(16);
-		int pozz = c.getZ() * 16 + ra.nextInt(16);
+	private void generateOre(Chunk chunk, Random random, BlockMaterial material, int maxNumber) {
+		int number = random.nextInt(maxNumber);
+		int pozx = chunk.getX() * 16 + random.nextInt(16);
+		int pozy = chunk.getY() * 16 + random.nextInt(16);
+		int pozz = chunk.getZ() * 16 + random.nextInt(16);
 		for (int i = 1; i <= number;) {
-			if (c.getWorld().getBlock(pozx, pozy, pozz).getBlockMaterial() != VanillaMaterials.AIR) {
-				c.getWorld().setBlockMaterial(pozx, pozy, pozz, material, c.getWorld());
+			if (chunk.getWorld().getBlock(pozx, pozy, pozz).getBlockMaterial().equals(VanillaMaterials.STONE)) {
+				chunk.getWorld().setBlockMaterial(pozx, pozy, pozz, material, chunk.getWorld());
 			}
 			i++;
-			int newDir = ra.nextInt(6);
+			int newDir = random.nextInt(6);
 			switch (newDir) {
 				case 0:
 					pozx++;

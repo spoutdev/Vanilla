@@ -29,15 +29,17 @@ import org.spout.api.generator.Populator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.biome.BiomeMap;
 
+import java.util.Random;
+
 public final class BiomePopulator implements Populator {
-	private final BiomeMap map;
+	final BiomeMap map;
 	
-	public BiomePopulator(BiomeMap map){
+	public BiomePopulator(BiomeMap map) {
 		this.map = map;
 	}
 
 	@Override
-	public final void populate(Chunk c) {
-		map.getBiome(c.getX(), c.getZ()).decorate(c);		
+	public final void populate(Chunk chunk, Random random) {
+		map.getBiome(chunk.getX(), chunk.getZ()).decorate(chunk, random);		
 	}
 }

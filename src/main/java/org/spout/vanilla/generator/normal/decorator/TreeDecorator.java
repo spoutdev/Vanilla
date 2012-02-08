@@ -35,26 +35,25 @@ import java.util.Random;
 /**
  * Decorator that decorates a biome with trees.
  */
-public class TreeDecorator extends BiomeDecorator {
+public class TreeDecorator implements BiomeDecorator {
 	@Override
-	public void decorate(Chunk c) {
-		if (c.getY() != 4) {
+	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() != 4) {
 			return;
 		}
-		Random ra = new Random();
-		int genInChunk = ra.nextInt(100);
+		int genInChunk = random.nextInt(100);
 		if (genInChunk <= 30) {
 			return;
 		}
-		int px = ra.nextInt(16);
-		int pz = ra.nextInt(16);
-		int py = getHighestWorkableBlock(c, px, pz);
-		px = c.getX() * 16 + px;
-		pz = c.getZ() * 16 + pz;
+		int px = random.nextInt(16);
+		int pz = random.nextInt(16);
+		int py = getHighestWorkableBlock(chunk, px, pz);
+		px = chunk.getX() * 16 + px;
+		pz = chunk.getZ() * 16 + pz;
 		if (py == -1) {
 			return;
 		}
-		generateSmallTree(c, ra, px, py, pz);
+		generateSmallTree(chunk, random, px, py, pz);
 	}
 
 	private void generateSmallTree(Chunk c, Random ra, int cx, int cy, int cz) {

@@ -25,30 +25,22 @@
  */
 package org.spout.vanilla.biome;
 
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random; 
 
 public abstract class BiomeType {
 	List<BiomeDecorator> decorators = new ArrayList<BiomeDecorator>();
 	
-	public BiomeType() {
-		this.registerDecorators();
+	public BiomeType(BiomeDecorator ... decorators) {
+		this.decorators.addAll(Arrays.asList(decorators));
 	}
-	
-	public void register(BiomeDecorator decorator) {
-		decorators.add(decorator);
-	}
-	
-	/**
-	 * Called during the Biome's construction.
-	 * Registers all decorators to be called during the populate stage of world generation
-	 */
-	public abstract void registerDecorators();
-	
+
 	public abstract void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ);
 	
 	public final void decorate(Chunk chunk, Random random) {

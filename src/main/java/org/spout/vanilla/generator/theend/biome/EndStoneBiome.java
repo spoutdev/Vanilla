@@ -33,13 +33,8 @@ import org.spout.vanilla.generator.theend.decorator.SpireDecorator;
  * Biome consisting of only end stone. Found only in The End.
  */
 public class EndStoneBiome extends BiomeType {
-	/**
-	 * Called during the Biome's construction.
-	 * Registers all decorators to be called during the populate stage of world generation
-	 */
-	@Override
-	public void registerDecorators() {
-		register(new SpireDecorator());
+	public EndStoneBiome() {
+		super(new SpireDecorator());
 	}
 
 	@Override

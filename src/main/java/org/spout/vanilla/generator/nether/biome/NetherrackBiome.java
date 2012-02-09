@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.generator.nether.biome;
 
+import org.spout.api.geo.World;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.biome.BiomeType;
 
@@ -32,14 +33,6 @@ import org.spout.vanilla.biome.BiomeType;
  * Biome consisting of netherrack. Found only in the Nether.
  */
 public class NetherrackBiome extends BiomeType {
-	/**
-	 * Called during the Biome's construction.
-	 * Registers all decorators to be called during the populate stage of world generation
-	 */
-	@Override
-	public void registerDecorators() {
-	}
-
 	@Override
 	public void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
 	}

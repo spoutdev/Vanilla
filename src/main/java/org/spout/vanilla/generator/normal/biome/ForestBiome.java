@@ -32,13 +32,6 @@ import org.spout.vanilla.biome.BiomeType;
  * Biome consisting of forest-like generation of Oak and Birch trees.
  */
 public class ForestBiome extends BiomeType {
-	/**
-	 * Called during the Biome's construction.
-	 * Registers all decorators to be called during the populate stage of world generation
-	 */
-	@Override
-	public void registerDecorators() {
-	}
 
 	@Override
 	public void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {

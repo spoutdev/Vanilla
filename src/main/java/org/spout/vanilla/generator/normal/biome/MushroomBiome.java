@@ -31,15 +31,7 @@ import org.spout.vanilla.biome.BiomeType;
 /**
  * Biome consisting of flat landscapes and high hills covered in Mycelium. Huge mushrooms are present.
  */
-public class MushroomBiome extends BiomeType{
-	/**
-	 * Called during the Biome's construction.
-	 * Registers all decorators to be called during the populate stage of world generation
-	 */
-	@Override
-	public void registerDecorators() {
-	}
-
+public class MushroomBiome extends BiomeType {
 	@Override
 	public void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
 	}

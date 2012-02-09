@@ -37,29 +37,21 @@ import java.util.ArrayList;
  * Biome consisting of flat terrain with flowers, tall grass, few trees, and ponds.
  */
 public class PlainBiome extends BiomeType {
-	//TODO set a proper seed...42 isn't the answer to everything :p.
-	int seed = 42;
 	Perlin layerCount = new Perlin(), heightMap = new Perlin();
 	ArrayList<Perlin> layers = new ArrayList<Perlin>();
 	
-	public PlainBiome(){
-		layerCount.setSeed(seed + 10);
-		layerCount.setOctaveCount(5);
+	public PlainBiome() {
+		super(new CaveDecorator(), 
+				new FlowerDecorator(), 
+				new GrassDecorator(), 
+				new PondDecorator(), 
+				new TreeDecorator());
 
-		heightMap.setSeed(seed);
+		layerCount.setOctaveCount(5);
 		heightMap.setOctaveCount(5);
 	}
 	
-	@Override
-	public void registerDecorators() {
-		register(new CaveDecorator());
-		register(new FlowerDecorator());
-		register(new GrassDecorator());
-		register(new PondDecorator());
-		register(new TreeDecorator());
-	}
-	
-	public Perlin getLayer(int layer) {
+	public Perlin getLayer(int seed, int layer) {
 		if(layer >= 0) {
 			if(layer < layers.size()) {
 				return layers.get(layer);
@@ -77,6 +69,9 @@ public class PlainBiome extends BiomeType {
 
 	@Override
 	public void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+		layerCount.setSeed((int)blockData.getWorld().getSeed() + 10);
+		heightMap.setSeed((int) blockData.getWorld().getSeed());
+		
 		int x = chunkX * 16;
 		int y = chunkY * 16;
 		int z = chunkZ * 16;

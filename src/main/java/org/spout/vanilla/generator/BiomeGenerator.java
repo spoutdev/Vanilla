@@ -28,6 +28,7 @@ package org.spout.vanilla.generator;
 
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGenerator;
+import org.spout.api.geo.World;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.biome.BiomeMap;
 import org.spout.vanilla.biome.BiomeSelector;

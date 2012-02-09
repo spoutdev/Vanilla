@@ -32,14 +32,6 @@ import org.spout.vanilla.biome.BiomeType;
  *  Biome consisting of pine/spruce trees and dull grey-blue grass. May have snow or not.
  */
 public class TaigaBiome extends BiomeType {
-	/**
-	 * Called during the Biome's construction.
-	 * Registers all decorators to be called during the populate stage of world generation
-	 */
-	@Override
-	public void registerDecorators() {
-	}
-
 	@Override
 	public void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
 	}

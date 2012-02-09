@@ -3,7 +3,7 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.World;
 import org.spout.vanilla.material.Block;
 
-public interface RedstoneSourceBlock extends Block {
+public interface RedstoneSource extends Block {
 	/**
 	 * Gets how much redstone power the block at x, y, z provides to block tx, ty, tz
 	 * @param world world the blocks are in

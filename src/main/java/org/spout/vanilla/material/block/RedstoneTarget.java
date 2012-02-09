@@ -3,7 +3,7 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.World;
 import org.spout.vanilla.material.Block;
 
-public interface RedstoneTargetBlock extends Block {
+public interface RedstoneTarget extends Block {
 	/**
 	 * Gets if the block provides an attach point for redstone wire.
 	 * @param world the blocks are in

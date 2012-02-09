@@ -236,6 +236,5 @@ public enum Block {
 		for(Block m : Block.values()){
 			map.put(m.getID(), m);
 		}
-
 	}
 }

@@ -37,9 +37,9 @@ import org.spout.vanilla.generator.normal.decorator.OreDecorator;
  * Biome consisting of desert-like terrain.
  */
 public class DesertBiome extends BiomeType {
-	//TODO set a proper seed...42 isn't the answer to everything :p (nor its' inverse).
-	private int seed = -42;
-	private Perlin heightMap = new Perlin();
+	//TODO set a proper seed...can we get this from the world yet?
+	private final int seed = 42;
+	private final Perlin heightMap = new Perlin();
 
 	public DesertBiome() {
 		heightMap.setSeed(seed);
@@ -67,8 +67,8 @@ public class DesertBiome extends BiomeType {
 			blockData.flood(VanillaMaterials.BEDROCK.getId());
 		}
 
-		for (int dx = x; dx < (x+16); dx++) {
-			for (int dz = z; dz < (z+16); dz++) {
+		for (int dx = x; dx < (x + 16); dx++) {
+			for (int dz = z; dz < (z + 16); dz++) {
 				int height = (int) ((heightMap.GetValue(dx / 32.0 + 0.005, 0.05, dz / 32.0 + 0.005) + 1.0) * 2.0 + 60.0);
 
 				for (int dy = y; dy < y + 16; dy++) {

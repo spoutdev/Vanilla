@@ -23,8 +23,6 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
-
 package org.spout.vanilla.generator;
 
 import org.spout.api.generator.Populator;
@@ -32,21 +30,14 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.biome.BiomeMap;
 
 public final class BiomePopulator implements Populator {
-
-	final BiomeMap map;
-	
+	private final BiomeMap map;
 	
 	public BiomePopulator(BiomeMap map){
 		this.map = map;
 	}
-	
-	
+
 	@Override
 	public final void populate(Chunk c) {
 		map.getBiome(c.getX(), c.getZ()).decorate(c);		
 	}
-
-	
-	
-	
 }

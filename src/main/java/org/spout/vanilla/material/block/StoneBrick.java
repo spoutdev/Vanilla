@@ -25,15 +25,10 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;
 
-public class DoubleSlabs extends GenericBlock implements MovingBlock {
-	public DoubleSlabs(String name, int id, int data) {
+public class StoneBrick extends GenericBlock {
+	public StoneBrick(String name, int id, int data) {
 		super(name, id, data);
-	}
-
-	public boolean isMoving() {
-		return false;
 	}
 }

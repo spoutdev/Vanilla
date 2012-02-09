@@ -30,8 +30,7 @@ public enum Instrument {
 	SNARE_DRUM(1),
 	CLICKS(2),
 	BASS_DRUM(3),
-	PIANO(4),
-	;
+	PIANO(4);
 
 	private final byte id;
 	private final String name;

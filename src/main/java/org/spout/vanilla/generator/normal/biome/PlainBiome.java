@@ -41,10 +41,10 @@ import java.util.ArrayList;
  * Biome consisting of flat terrain with flowers, tall grass, few trees, and ponds.
  */
 public class PlainBiome extends BiomeType {
-	//TODO set a proper seed...42 isn't the answer to everything :p.
-	int seed = 42;
-	Perlin layerCount = new Perlin(), heightMap = new Perlin();
-	ArrayList<Perlin> layers = new ArrayList<Perlin>();
+	//TODO set a proper seed...can we get this from the world yet?
+	private final int seed = 42;
+	private final Perlin layerCount = new Perlin(), heightMap = new Perlin();
+	private final ArrayList<Perlin> layers = new ArrayList<Perlin>();
 	
 	public PlainBiome(){
 		layerCount.setSeed(seed + 10);

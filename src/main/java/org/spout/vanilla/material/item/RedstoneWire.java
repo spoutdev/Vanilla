@@ -5,11 +5,11 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.attachable.GroundAttachable;
-import org.spout.vanilla.material.block.RedstoneSourceBlock;
-import org.spout.vanilla.material.block.RedstoneTargetBlock;
+import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.material.block.Solid;
 
-public class RedstoneWire extends GroundAttachable implements RedstoneSourceBlock, RedstoneTargetBlock {
+public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget {
 	
 	private final Vector3[] possibleIncoming = {
 		new Vector3( 1, 0, 0),
@@ -79,8 +79,8 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSourceBloc
 			tz = (int) (z + vec.getZ());
 			BlockMaterial block = world.getBlockMaterial(tx, ty, tz);
 			short power = 0;
-			if(block instanceof RedstoneSourceBlock) {
-				RedstoneSourceBlock source = (RedstoneSourceBlock) block;
+			if(block instanceof RedstoneSource) {
+				RedstoneSource source = (RedstoneSource) block;
 				power = source.getRedstonePower(world, tx, ty, tz, x, y, z);
 			} else if(block instanceof Block) {
 				Block vanilla = (Block) block;
@@ -174,8 +174,8 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSourceBloc
 	
 	public boolean attachesTo(World world, int x, int y, int z, int tx, int ty, int tz) {
 		BlockMaterial target = world.getBlockMaterial(tx, ty, tz);
-		if(target instanceof RedstoneTargetBlock) {
-			return ((RedstoneTargetBlock) target).providesAttachPoint(world, tx, ty, tz, x, y, z);
+		if(target instanceof RedstoneTarget) {
+			return ((RedstoneTarget) target).providesAttachPoint(world, tx, ty, tz, x, y, z);
 		}
 		return false;
 	}

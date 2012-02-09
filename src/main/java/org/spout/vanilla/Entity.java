@@ -87,6 +87,5 @@ public enum Entity {
 		for(Entity m : Entity.values()){
 			map.put(m.getID(), m);
 		}
-
 	}
 }

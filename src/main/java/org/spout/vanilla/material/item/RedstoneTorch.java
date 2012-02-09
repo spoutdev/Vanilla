@@ -32,10 +32,10 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.attachable.WallAttachable;
-import org.spout.vanilla.material.block.RedstoneSourceBlock;
-import org.spout.vanilla.material.block.RedstoneTargetBlock;
+import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.material.block.RedstoneTarget;
 
-public class RedstoneTorch extends WallAttachable implements RedstoneSourceBlock, RedstoneTargetBlock{
+public class RedstoneTorch extends WallAttachable implements RedstoneSource, RedstoneTarget {
 
 	public static final short REDSTONE_POWER = 15;
 	private static final Vector3 possibleOutgoing[] = {
@@ -109,7 +109,7 @@ public class RedstoneTorch extends WallAttachable implements RedstoneSourceBlock
 					ty = (int) (y + offset2.getY());
 					tz = (int) (z + offset2.getZ());
 					mat = world.getBlockMaterial(tx, ty, tz);
-					if(mat instanceof RedstoneTargetBlock) {
+					if(mat instanceof RedstoneTarget) {
 						world.updatePhysics(tx, ty, tz);
 						//mat.updatePhysics(world, tx, ty, tz);
 					}

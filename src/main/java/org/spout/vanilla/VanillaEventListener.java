@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla;
 
+import org.spout.api.Game;
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
@@ -34,32 +35,34 @@ import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
-import org.spout.api.protocol.Message;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
-import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
 public class VanillaEventListener implements Listener {
 	private final VanillaPlugin plugin;
-
+	private final Game game;
+	
 	public VanillaEventListener(VanillaPlugin plugin) {
 		this.plugin = plugin;
+		game = this.plugin.getGame();
 	}
 
+	//TODO Any reason to broadcast a player connects besides for debug? Perhaps only to the console and not players.
 	@EventHandler
 	public void onPlayerConnect(PlayerConnectEvent event) {
-		plugin.getGame().getLogger().info("Player connected: " + event.getPlayerName());
+		game.getLogger().info("Player connected: " + event.getPlayerName());
 	}
 
 	@EventHandler(order = Order.EARLIEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
+		Player player = event.getPlayer();
 
-		plugin.getGame().broadcastMessage(event.getPlayer().getName() + " has joined the game");
+		game.broadcastMessage(player.getName() + " has joined the game");
 		// Set the player's controller
 		// For now, only create Survival Players
-		Entity playerEntity = event.getPlayer().getEntity();
-		playerEntity.setController(new SurvivalPlayer(event.getPlayer()));
-		event.getPlayer().setNetworkSynchronizer(new VanillaNetworkSynchronizer(event.getPlayer(), playerEntity));
+		Entity playerEntity = player.getEntity();
+		playerEntity.setController(new SurvivalPlayer(player));
+		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
 
 		/*Point point = playerEntity.getLiveTransform().getPosition();
 		float pitch = playerEntity.getLiveTransform().getRotation().getAxisAngles().getZ();
@@ -75,13 +78,14 @@ public class VanillaEventListener implements Listener {
 				p.getSession().send(update);
 		}*/
 
-		plugin.getGame().getScheduler().scheduleSyncDelayedTask(plugin, new LoginRunnable(event.getPlayer()), 1L);
+		game.getScheduler().scheduleSyncDelayedTask(plugin, new LoginRunnable(player), 1L);
 	}
 }
 
 //Can not do this immediately, player has not been sent world yet. :/
 class LoginRunnable implements Runnable {
 	Player player;
+	
 	public LoginRunnable(Player player) {
 		this.player = player;
 	}

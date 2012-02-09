@@ -26,8 +26,6 @@
 
 package org.spout.vanilla.generator;
 
-import java.util.ArrayList;
-
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
@@ -35,27 +33,26 @@ import org.spout.vanilla.biome.BiomeMap;
 import org.spout.vanilla.biome.BiomeSelector;
 import org.spout.vanilla.biome.BiomeType;
 
-public abstract class BiomeGenerator implements WorldGenerator {
-	BiomeMap biomes = new BiomeMap();
+import java.util.ArrayList;
 
-	ArrayList<Populator> populators = new ArrayList<Populator>();
+public abstract class BiomeGenerator implements WorldGenerator {
+	private BiomeMap biomes = new BiomeMap();
+
+	private ArrayList<Populator> populators = new ArrayList<Populator>();
 
 	public BiomeGenerator() {
-
 		register(new BiomePopulator(biomes));
 		registerBiomes();
 	}
 
+	/**
+	 * Called during biome generatator's construction phase
+	 */
+	public abstract void registerBiomes();
+
 	protected void setSelector(BiomeSelector selector) {
 		biomes.setSelector(selector);
 	}
-
-
-	/**
-	 * Called during biome generatator's construction phase
-	 *
-	 */
-	public abstract void registerBiomes();
 
 	/**
 	 * Register a new Biome Type to be generatated by this generator

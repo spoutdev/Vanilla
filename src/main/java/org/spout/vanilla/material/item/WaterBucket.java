@@ -23,15 +23,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material;
+package org.spout.vanilla.material.item;
 
-public interface Food extends Item {
+import org.spout.api.material.Material;
+import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.generic.GenericItem;
 
-	public enum FoodEffectType {
-		HEALTH, HUNGER, CUSTOM
+public class WaterBucket extends GenericItem{
+	public WaterBucket(String name, int id) {
+		super(name, id);
 	}
-	
-	public int getAmountRestored();
-	
-	public FoodEffectType getEffectType();
+
+	@Override
+	public Material getBlock() {
+		return VanillaMaterials.WATER;
+	}
 }

@@ -27,6 +27,10 @@ package org.spout.vanilla;
 
 import org.spout.api.Game;
 import org.spout.api.Server;
+import org.spout.api.command.CommandRegistrationsFactory;
+import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
+import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
+import org.spout.api.command.annotated.SimpleInjector;
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
@@ -35,6 +39,7 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
+import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.entity.sky.NetherSky;
 import org.spout.vanilla.entity.sky.NormalSky;
 import org.spout.vanilla.entity.sky.TheEndSky;
@@ -74,6 +79,12 @@ public class VanillaPlugin extends CommonPlugin {
 			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
 		}
 
+		//Register commands
+		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
+
+		game.getRootCommand().addSubCommands(game, AdministrationCommands.class, commandRegFactory);
+
+		//Register events
 		game.getEventManager().registerEvents(new VanillaEventListener(this), this);
 
 		getLogger().info("loaded");

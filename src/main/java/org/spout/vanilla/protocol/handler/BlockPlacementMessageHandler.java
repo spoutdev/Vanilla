@@ -38,6 +38,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.material.Block;
+import org.spout.vanilla.material.Item;
 import org.spout.vanilla.material.attachable.Attachable;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
@@ -109,8 +110,11 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			}*/
 			Material placedId = holding.getMaterial();
 			if (placedId.getId() > 255) {
-				//placedId = ItemProperties.get(placedId.getItemTypeId()).getPhysics().getPlacedBlock(face, holding.getDurability()); //TODO: Implement items (they are not in yet!)
-				return;
+				if(!(placedId instanceof Item))
+					return;
+				placedId = ((Item) placedId).getBlock();
+				if(placedId==null)
+					return;
 			}
 			if (placedId.getId() < 0) {
 				sendRevert = true;

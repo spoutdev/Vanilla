@@ -28,14 +28,22 @@ package org.spout.vanilla.material.generic;
 import org.spout.vanilla.material.Food;
 
 public class GenericFood extends GenericItem implements Food {
-	private final int hunger;
+	private final int amount;
+	private final FoodEffectType type;
 
-	public GenericFood(String name, int id, int hunger) {
+	public GenericFood(String name, int id, int amount, FoodEffectType type) {
 		super(name, id);
-		this.hunger = hunger;
+		this.amount=amount;
+		this.type=type;
 	}
 
-	public int getHungerRestored() {
-		return hunger;
+	@Override
+	public int getAmountRestored() {
+		return amount;
+	}
+
+	@Override
+	public FoodEffectType getEffectType() {
+		return type;
 	}
 }

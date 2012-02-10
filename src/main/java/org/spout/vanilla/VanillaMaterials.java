@@ -54,6 +54,10 @@ import org.spout.vanilla.material.item.RedstoneWire;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import org.spout.vanilla.material.Food.FoodEffectType;
+import org.spout.vanilla.material.item.LavaBucket;
+import org.spout.vanilla.material.item.RedstoneDust;
+import org.spout.vanilla.material.item.WaterBucket;
 
 public final class VanillaMaterials {
 
@@ -219,7 +223,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial IRON_PICKAXE = new GenericTool("Iron Pickaxe", 257);
 	public static final ItemMaterial IRON_AXE = new GenericTool("Iron Axe", 258);
 	public static final ItemMaterial FLINT_AND_STEEL = new GenericTool("Flint and Steel", 259);
-	public static final ItemMaterial RED_APPLE = new GenericFood("Apple", 260, 4);
+	public static final ItemMaterial RED_APPLE = new GenericFood("Apple", 260, 4, FoodEffectType.HUNGER);
 	public static final ItemMaterial BOW = new GenericWeapon("Bow", 261);
 	public static final ItemMaterial ARROW = new GenericItem("Arrow", 262);
 	public static final ItemMaterial COAL = new Coal("Coal", 263, 0);
@@ -242,7 +246,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial DIAMOND_AXE = new GenericTool("Diamond Axe", 279);
 	public static final ItemMaterial STICK = new GenericItem("Stick", 280);
 	public static final ItemMaterial BOWL = new GenericItem("Bowl", 281);
-	public static final ItemMaterial MUSHROOM_SOUP = new GenericFood("Mushroom Soup", 282, 8);
+	public static final ItemMaterial MUSHROOM_SOUP = new GenericFood("Mushroom Soup", 282, 8, FoodEffectType.HUNGER);
 	public static final ItemMaterial GOLD_SWORD = new GenericWeapon("Gold Sword", 283);
 	public static final ItemMaterial GOLD_SHOVEL = new GenericTool("Gold Shovel", 284);
 	public static final ItemMaterial GOLD_PICKAXE = new GenericTool("Gold Pickaxe", 285);
@@ -257,7 +261,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial GOLD_HOE = new GenericTool("Gold Hoe", 294);
 	public static final ItemMaterial SEEDS = new GenericItem("Seeds", 295);
 	public static final ItemMaterial WHEAT = new GenericItem("Wheat", 296);
-	public static final ItemMaterial BREAD = new GenericFood("Bread", 297, 5);
+	public static final ItemMaterial BREAD = new GenericFood("Bread", 297, 5, FoodEffectType.HUNGER);
 	public static final ItemMaterial LEATHER_CAP = new GenericArmor("Leather Cap", 298);
 	public static final ItemMaterial LEATHER_TUNIC = new GenericArmor("Leather Tunic", 299);
 	public static final ItemMaterial LEATHER_PANTS = new GenericArmor("Leather Pants", 300);
@@ -279,19 +283,19 @@ public final class VanillaMaterials {
 	public static final ItemMaterial GOLD_LEGGINGS = new GenericArmor("Gold Leggings", 316);
 	public static final ItemMaterial GOLD_BOOTS = new GenericArmor("Gold Boots", 317);
 	public static final ItemMaterial FLINT = new GenericItem("Flint", 318, 0, true);
-	public static final ItemMaterial RAW_PORKCHOP = new GenericFood("Raw Porkchop", 319, 3);
-	public static final ItemMaterial COOKED_PORKCHOP = new GenericFood("Cooked Porkchop", 320, 8);
+	public static final ItemMaterial RAW_PORKCHOP = new GenericFood("Raw Porkchop", 319, 3, FoodEffectType.HUNGER);
+	public static final ItemMaterial COOKED_PORKCHOP = new GenericFood("Cooked Porkchop", 320, 8, FoodEffectType.HUNGER);
 	public static final ItemMaterial PAINTINGS = new GenericItem("Paintings", 321);
-	public static final ItemMaterial GOLDEN_APPLE = new GenericFood("Golden Apple", 322, 10);
+	public static final ItemMaterial GOLDEN_APPLE = new GenericFood("Golden Apple", 322, 10, FoodEffectType.HUNGER);
 	public static final ItemMaterial SIGN = new GenericItem("Sign", 323);
 	public static final ItemMaterial WOODEN_DOOR = new GenericItem("Wooden Door", 324);
 	public static final ItemMaterial BUCKET = new GenericItem("Bucket", 325);
-	public static final ItemMaterial WATER_BUCKET = new GenericItem("Water Bucket", 326);
-	public static final ItemMaterial LAVA_BUCKET = new GenericItem("Lava Bucket", 327);
+	public static final ItemMaterial WATER_BUCKET = new WaterBucket("Water Bucket", 326);
+	public static final ItemMaterial LAVA_BUCKET = new LavaBucket("Lava Bucket", 327);
 	public static final ItemMaterial MINECART = new GenericItem("Minecart", 328);
 	public static final ItemMaterial SADDLE = new GenericItem("Saddle", 329);
 	public static final ItemMaterial IRON_DOOR = new GenericItem("Iron Door", 330);
-	public static final ItemMaterial REDSTONE = new GenericItem("Redstone", 331);
+	public static final ItemMaterial REDSTONE_DUST = new RedstoneDust("Redstone", 331);
 	public static final ItemMaterial SNOWBALL = new GenericItem("Snowball", 332);
 	public static final ItemMaterial BOAT = new GenericItem("Boat", 333);
 	public static final ItemMaterial LEATHER = new GenericItem("Leather", 334);
@@ -309,8 +313,8 @@ public final class VanillaMaterials {
 	public static final ItemMaterial FISHING_ROD = new GenericTool("Fishing Rod", 346);
 	public static final ItemMaterial CLOCK = new GenericItem("Clock", 347);
 	public static final ItemMaterial GLOWSTONE_DUST = new GenericItem("Glowstone Dust", 348);
-	public static final ItemMaterial RAW_FISH = new GenericFood("Raw Fish", 349, 2);
-	public static final ItemMaterial COOKED_FISH = new GenericFood("Cooked Fish", 350, 5);
+	public static final ItemMaterial RAW_FISH = new GenericFood("Raw Fish", 349, 2, FoodEffectType.HUNGER);
+	public static final ItemMaterial COOKED_FISH = new GenericFood("Cooked Fish", 350, 5, FoodEffectType.HUNGER);
 	public static final ItemMaterial INK_SAC = new Dye("Ink Sac", 351, 0);
 	public static final ItemMaterial ROSE_RED = new Dye("Rose Red", 351, 1);
 	public static final ItemMaterial CACTUS_GREEN = new Dye("Cactus Green", 351, 2);
@@ -332,17 +336,17 @@ public final class VanillaMaterials {
 	public static final ItemMaterial CAKE = new GenericItem("Cake", 354);
 	public static final ItemMaterial BED = new GenericItem("Bed", 355);
 	public static final ItemMaterial REDSTONE_REPEATER = new GenericItem("Redstone Repeater", 356);
-	public static final ItemMaterial COOKIE = new GenericFood("Cookie", 357, 1);
+	public static final ItemMaterial COOKIE = new GenericFood("Cookie", 357, 1, FoodEffectType.HUNGER);
 	public static final ItemMaterial MAP = new GenericItem("Map", 358);
 	public static final ItemMaterial SHEARS = new GenericTool("Shears", 359);
-	public static final ItemMaterial MELON_SLICE = new GenericFood("Melon Slice", 360, 2);
+	public static final ItemMaterial MELON_SLICE = new GenericFood("Melon Slice", 360, 2, FoodEffectType.HUNGER);
 	public static final ItemMaterial PUMPKIN_SEEDS = new GenericItem("Pumpkin Seeds", 361);
 	public static final ItemMaterial MELON_SEEDS = new GenericItem("Melon Seeds", 362);
-	public static final ItemMaterial RAW_BEEF = new GenericFood("Raw Beef", 363, 3);
-	public static final ItemMaterial STEAK = new GenericFood("Steak", 364, 8);
-	public static final ItemMaterial RAW_CHICKEN = new GenericFood("Raw Chicken", 365, 2);
-	public static final ItemMaterial COOKED_CHICKEN = new GenericFood("Cooked Chicken", 366, 6);
-	public static final ItemMaterial ROTTEN_FLESH = new GenericFood("Rotten Flesh", 367, 4);
+	public static final ItemMaterial RAW_BEEF = new GenericFood("Raw Beef", 363, 3, FoodEffectType.HUNGER);
+	public static final ItemMaterial STEAK = new GenericFood("Steak", 364, 8, FoodEffectType.HUNGER);
+	public static final ItemMaterial RAW_CHICKEN = new GenericFood("Raw Chicken", 365, 2, FoodEffectType.HUNGER);
+	public static final ItemMaterial COOKED_CHICKEN = new GenericFood("Cooked Chicken", 366, 6, FoodEffectType.HUNGER);
+	public static final ItemMaterial ROTTEN_FLESH = new GenericFood("Rotten Flesh", 367, 4, FoodEffectType.HUNGER);
 	public static final ItemMaterial ENDER_PEARL = new GenericItem("Ender Pearl", 368);
 	public static final ItemMaterial BLAZE_ROD = new GenericItem("Blaze Rod", 369);
 	public static final ItemMaterial GHAST_TEAR = new GenericItem("Ghast Tear", 370);
@@ -350,7 +354,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial NETHER_WART = new GenericItem("Nether Wart", 372);
 	public static final ItemMaterial POTION = new GenericItem("Potion", 373);
 	public static final ItemMaterial GLASS_BOTTLE = new GenericItem("Glass Bottle", 374);
-	public static final ItemMaterial SPIDER_EYE = new GenericFood("Spider Eye", 375, 2);
+	public static final ItemMaterial SPIDER_EYE = new GenericFood("Spider Eye", 375, 2, FoodEffectType.HUNGER);
 	public static final ItemMaterial FERMENTED_SPIDER_EYE = new GenericItem("Fermented Spider Eye", 376);
 	public static final ItemMaterial BLAZE_POWDER = new GenericItem("Blaze Powder", 377);
 	public static final ItemMaterial MAGMA_CREAM = new GenericItem("Magma Cream", 378);

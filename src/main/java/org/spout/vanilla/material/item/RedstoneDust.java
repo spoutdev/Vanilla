@@ -27,12 +27,19 @@
 package org.spout.vanilla.material.item;
 
 
+import org.spout.api.material.Material;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class RedstoneDust extends GenericItem {
 
 	public RedstoneDust(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public Material getBlock() {
+		return VanillaMaterials.REDSTONE_WIRE;
 	}
 
 }

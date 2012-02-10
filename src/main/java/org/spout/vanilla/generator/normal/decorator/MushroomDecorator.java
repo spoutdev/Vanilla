@@ -38,4 +38,10 @@ public class MushroomDecorator implements BiomeDecorator {
 	public void populate(Chunk chunk, Random random) {
 		//TODO Determine biome, then generate accordingly.
 	}
+	
+	private void generateMushroom(Chunk c, Random ra, int cx, int cy, int cz) {
+	}
+	
+	private void generateHugeMushroom(Chunk c, Random ra, int cx, int cy, int cz) {
+	}
 }

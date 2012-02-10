@@ -38,12 +38,12 @@ public class Solid extends GenericBlock implements MovingBlock {
 
 	public Solid(String name, int id, int data, boolean falling) {
 		super(name, id, data);
-		this.moving = falling;
+		moving = falling;
 	}
 
 	public Solid(String name, int id, boolean falling) {
 		super(name, id, 0);
-		this.moving = falling;
+		moving = falling;
 	}
 
 	public Solid(String name, int id) {
@@ -68,10 +68,10 @@ public class Solid extends GenericBlock implements MovingBlock {
 
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
-		if (moving){
-			Block material =(Block) world.getBlockMaterial(x, y - 1, z);
+		if (moving) {
+			Block material = (Block) world.getBlockMaterial(x, y - 1, z);
 			if (material == VanillaMaterials.AIR || material.isLiquid()) {
-				if (world.setBlockId(x, y, z, (short)0, world)) {
+				if (world.setBlockId(x, y, z, (short) 0, world)) {
 					world.createAndSpawnEntity(new Point(world, x, y, z), new FallingBlock(this));
 				}
 			}

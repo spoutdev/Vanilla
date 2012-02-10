@@ -25,10 +25,10 @@
  */
 package org.spout.vanilla.generator.normal.decorator;
 
+import java.util.Random;
+
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.biome.BiomeDecorator;
-
-import java.util.Random;
 
 /**
  * Decorator that decorates a biome with mushrooms.
@@ -37,11 +37,5 @@ public class MushroomDecorator implements BiomeDecorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		//TODO Determine biome, then generate accordingly.
-	}
-
-	private void generateMushroom(Chunk c, Random ra, int cx, int cy, int cz) {
-	}
-
-	private void generateHugeMushroom(Chunk c, Random ra, int cx, int cy, int cz) {
 	}
 }

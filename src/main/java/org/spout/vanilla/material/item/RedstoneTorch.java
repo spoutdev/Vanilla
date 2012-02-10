@@ -38,16 +38,9 @@ import org.spout.vanilla.material.block.RedstoneTarget;
 public class RedstoneTorch extends WallAttachable implements RedstoneSource, RedstoneTarget {
 
 	public static final short REDSTONE_POWER = 15;
-	private static final Vector3 possibleOutgoing[] = {
-		new Vector3( 1, 0, 0),
-		new Vector3(-1, 0, 0),
-		new Vector3( 0, 0, 1),
-		new Vector3( 0, 0,-1),
-		new Vector3( 0,-1, 0),
-		new Vector3( 0, 2, 0),
-	};
+	private static final Vector3 possibleOutgoing[] = {new Vector3(1, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, -1), new Vector3(0, -1, 0), new Vector3(0, 2, 0),};
 	private boolean powered;
-	
+
 	public RedstoneTorch(String name, int id, boolean powered) {
 		super(name, id);
 		this.powered = powered;
@@ -60,7 +53,7 @@ public class RedstoneTorch extends WallAttachable implements RedstoneSource, Red
 
 	@Override
 	public short getRedstonePower(World world, int x, int y, int z, int tx, int ty, int tz) {
-		if(providesPowerTo(world, x, y, z, tx, ty, tz)) {
+		if (providesPowerTo(world, x, y, z, tx, ty, tz)) {
 			return (short) (powered ? 16 : 0);
 		}
 		return 0;
@@ -68,10 +61,10 @@ public class RedstoneTorch extends WallAttachable implements RedstoneSource, Red
 
 	@Override
 	public boolean providesPowerTo(World world, int x, int y, int z, int tx, int ty, int tz) {
-		if(y == ty) {
+		if (y == ty) {
 			return true;
 		}
-		if(tx == x && tz == z) {
+		if (tx == x && tz == z) {
 			return tx - x == -2 || tx - x == 1;
 		}
 		return false;
@@ -89,27 +82,27 @@ public class RedstoneTorch extends WallAttachable implements RedstoneSource, Red
 		Vector3 offset = face.getOffset();
 		int tx = (int) (x + offset.getX()), ty = (int) (y + offset.getY()), tz = (int) (z + offset.getZ());
 		BlockMaterial mat = world.getBlockMaterial(tx, ty, tz);
-		if(mat instanceof Block) {
+		if (mat instanceof Block) {
 			short updateId = getId();
-			Block va = (Block)mat;
-			if(va.getIndirectRedstonePower(world, tx, ty, tz) > 0) {
+			Block va = (Block) mat;
+			if (va.getIndirectRedstonePower(world, tx, ty, tz) > 0) {
 				//Power off.
 				updateId = VanillaMaterials.REDSTONE_TORCH_OFF.getId();
 			} else {
 				//Seems to be no incoming power, turn on!
 				updateId = VanillaMaterials.REDSTONE_TORCH_ON.getId();
 			}
-			if(updateId != getId()) {
+			if (updateId != getId()) {
 				short data = world.getBlockData(x, y, z);
 				world.setBlockIdAndData(x, y, z, updateId, data, false, world);
-				
+
 				//Update other redstone inputs
-				for(Vector3 offset2:possibleOutgoing) {//TODO changed the values below from offset to offset2
+				for (Vector3 offset2 : possibleOutgoing) {//TODO changed the values below from offset to offset2
 					tx = (int) (x + offset2.getX());
 					ty = (int) (y + offset2.getY());
 					tz = (int) (z + offset2.getZ());
 					mat = world.getBlockMaterial(tx, ty, tz);
-					if(mat instanceof RedstoneTarget) {
+					if (mat instanceof RedstoneTarget) {
 						world.updatePhysics(tx, ty, tz);
 						//mat.updatePhysics(world, tx, ty, tz);
 					}

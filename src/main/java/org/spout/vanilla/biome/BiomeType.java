@@ -25,24 +25,23 @@
  */
 package org.spout.vanilla.biome;
 
-import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random; 
+import java.util.Random;
+
+import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 public abstract class BiomeType {
 	List<BiomeDecorator> decorators = new ArrayList<BiomeDecorator>();
-	
-	public BiomeType(BiomeDecorator ... decorators) {
+
+	public BiomeType(BiomeDecorator... decorators) {
 		this.decorators.addAll(Arrays.asList(decorators));
 	}
 
 	public abstract void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ);
-	
+
 	public final void decorate(Chunk chunk, Random random) {
 		for (BiomeDecorator b : decorators) {
 			b.populate(chunk, random);

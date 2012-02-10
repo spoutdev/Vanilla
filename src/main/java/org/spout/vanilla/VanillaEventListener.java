@@ -33,7 +33,6 @@ import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
@@ -41,7 +40,7 @@ import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 public class VanillaEventListener implements Listener {
 	private final VanillaPlugin plugin;
 	private final Game game;
-	
+
 	public VanillaEventListener(VanillaPlugin plugin) {
 		this.plugin = plugin;
 		game = this.plugin.getGame();
@@ -85,19 +84,19 @@ public class VanillaEventListener implements Listener {
 //Can not do this immediately, player has not been sent world yet. :/
 class LoginRunnable implements Runnable {
 	Player player;
-	
+
 	public LoginRunnable(Player player) {
 		this.player = player;
 	}
 
 	public void run() {
-		if (player.isOnline()){
+		if (player.isOnline()) {
 			//Inform the new player of existing players
 			for (Player p : Spout.getGame().getOnlinePlayers()) {
 				if (!p.equals(player)) {
-					Point playerPoint = p.getEntity().getLiveTransform().getPosition();
-					float playerPitch = p.getEntity().getLiveTransform().getRotation().getAxisAngles().getZ();
-					float playerYaw = p.getEntity().getLiveTransform().getRotation().getAxisAngles().getY();
+					p.getEntity().getLiveTransform().getPosition();
+					p.getEntity().getLiveTransform().getRotation().getAxisAngles().getZ();
+					p.getEntity().getLiveTransform().getRotation().getAxisAngles().getY();
 
 					/*player.getSession().send(
 						new SpawnPlayerMessage(p.getEntity().getId(), p.getName(), (int)(playerPoint.getX() * 32),

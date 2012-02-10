@@ -26,7 +26,6 @@
 package org.spout.vanilla.entity.living;
 
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
 import org.spout.vanilla.entity.MovingEntity;
 
 /**

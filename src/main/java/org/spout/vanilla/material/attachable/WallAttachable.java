@@ -34,7 +34,7 @@ public class WallAttachable extends AbstractAttachable {
 
 	@Override
 	public short getDataForFace(BlockFace face) {
-		switch(face) {
+		switch (face) {
 			case EAST:
 				return 0x2;
 			case WEST:
@@ -50,7 +50,7 @@ public class WallAttachable extends AbstractAttachable {
 
 	@Override
 	public BlockFace getFaceAttachedTo(short data) {
-		switch(data) {
+		switch (data) {
 			case 0x2:
 				return BlockFace.EAST;
 			case 0x1:

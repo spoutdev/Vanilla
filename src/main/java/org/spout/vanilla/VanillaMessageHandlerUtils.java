@@ -29,7 +29,7 @@ import org.spout.api.material.block.BlockFace;
 
 public class VanillaMessageHandlerUtils {
 	public static BlockFace messageToBlockFace(int messageFace) {
-		switch(messageFace) {
+		switch (messageFace) {
 			case 0:
 				return BlockFace.BOTTOM;
 			case 1:

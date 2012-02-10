@@ -50,7 +50,7 @@ public final class SpawnItemCodec extends MessageCodec<SpawnItemMessage> {
 		int rotation = buffer.readUnsignedByte();
 		int pitch = buffer.readUnsignedByte();
 		int roll = buffer.readUnsignedByte();
-		return new SpawnItemMessage(id, itemId, count, (short)damage, x, y, z, rotation, pitch, roll);
+		return new SpawnItemMessage(id, itemId, count, (short) damage, x, y, z, rotation, pitch, roll);
 	}
 
 	@Override

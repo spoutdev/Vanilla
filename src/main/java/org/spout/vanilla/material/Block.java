@@ -30,14 +30,14 @@ import org.spout.api.material.BlockMaterial;
 
 public interface Block extends BlockMaterial {
 	public boolean isLiquid();
-	
+
 	/**
 	 * Represents power that comes into the block from a redstone wire or a torch that is below the block
 	 * Indirect power from below powers redstone wire, but level indirect power just inverts adjacent redstone torches.
 	 * @return the indirect redstone power.
 	 */
 	public short getIndirectRedstonePower(World world, int x, int y, int z);
-	
+
 	/**
 	 * Represents power that comes from a repeater that points to this block.
 	 * This power can be used by all neighbors that are redstone targets, even if they wouldn't attach.

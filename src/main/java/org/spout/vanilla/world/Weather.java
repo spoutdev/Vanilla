@@ -37,20 +37,20 @@ public enum Weather {
 
 	private final static TIntObjectMap<Weather> weathers = new TIntObjectHashMap<Weather>();
 
-	private Weather(int id){
+	private Weather(int id) {
 		this.id = id;
 	}
 
-	public int getId(){
+	public int getId() {
 		return id;
 	}
 
-	public static Weather fromID(int id){
+	public static Weather fromID(int id) {
 		return weathers.get(id);
 	}
 
 	static {
-		for(Weather w : Weather.values()) {
+		for (Weather w : Weather.values()) {
 			weathers.put(w.getId(), w);
 		}
 	}

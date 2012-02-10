@@ -36,7 +36,7 @@ import org.spout.api.player.Player;
 public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
-	private int previousLevel,newLevel;
+	private int previousLevel, newLevel;
 
 	private LevelChangeReason reason;
 
@@ -84,7 +84,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 	 * @param an int that is the custom number of the level to set.
 	 */
 	public void setLevel(int customLevel) {
-		this.newLevel = customLevel;
+		newLevel = customLevel;
 	}
 
 	@Override

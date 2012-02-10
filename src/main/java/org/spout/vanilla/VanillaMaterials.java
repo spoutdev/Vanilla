@@ -25,6 +25,9 @@
  */
 package org.spout.vanilla;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.Material;
@@ -51,9 +54,6 @@ import org.spout.vanilla.material.item.Coal;
 import org.spout.vanilla.material.item.Dye;
 import org.spout.vanilla.material.item.RedstoneTorch;
 import org.spout.vanilla.material.item.RedstoneWire;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 public final class VanillaMaterials {
 
@@ -358,26 +358,26 @@ public final class VanillaMaterials {
 	public static final ItemMaterial CAULDRON = new GenericItem("Cauldron", 380);
 	public static final ItemMaterial EYE_OF_ENDER = new GenericItem("Eye of Ender", 381);
 	public static final ItemMaterial GLISTERING_MELON = new GenericItem("Glistering Melon", 382);
-	public static final ItemMaterial CREEPER_SPAWN_EGG = new GenericItem("Spawn Creeper", 383,50);
-	public static final ItemMaterial SKELETON_SPAWN_EGG = new GenericItem("Spawn Skeleton", 383,51);
-	public static final ItemMaterial SPIDER_SPAWN_EGG = new GenericItem("Spawn Spider", 383,52);
-	public static final ItemMaterial ZOMBIE_SPAWN_EGG = new GenericItem("Spawn Zombie", 383,54);
-	public static final ItemMaterial SLIME_SPAWN_EGG = new GenericItem("Spawn Slime", 383,55);
-	public static final ItemMaterial GHAST_SPAWN_EGG = new GenericItem("Spawn Ghast", 383,56);
-	public static final ItemMaterial PIGMAN_SPAWN_EGG = new GenericItem("Spawn Pigman", 383,57);
-	public static final ItemMaterial ENDERMAN_SPAWN_EGG = new GenericItem("Spawn Enderman", 383,58);
-	public static final ItemMaterial CAVESPIDER_SPAWN_EGG = new GenericItem("Spawn Cavespider", 383,59);
-	public static final ItemMaterial SILVERFISH_SPAWN_EGG = new GenericItem("Spawn Silverfish", 383,60);
-	public static final ItemMaterial BLAZE_SPAWN_EGG = new GenericItem("Spawn Blaze", 383,61);
-	public static final ItemMaterial MAGMACUBE_SPAWN_EGG = new GenericItem("Spawn Magmacube", 383,62);
-	public static final ItemMaterial PIG_SPAWN_EGG = new GenericItem("Spawn Pig", 383,90);
-	public static final ItemMaterial SHEEP_SPAWN_EGG = new GenericItem("Spawn Sheep", 383,91);
-	public static final ItemMaterial COW_SPAWN_EGG = new GenericItem("Spawn Cow", 383,92);
-	public static final ItemMaterial CHICKEN_SPAWN_EGG = new GenericItem("Spawn Chicken", 383,93);
-	public static final ItemMaterial SQUID_SPAWN_EGG = new GenericItem("Spawn Squid", 383,94);
-	public static final ItemMaterial WOLF_SPAWN_EGG = new GenericItem("Spawn Wolf", 383,95);
-	public static final ItemMaterial MOOSHROOM_SPAWN_EGG = new GenericItem("Spawn Mooshroom", 383,96);
-	public static final ItemMaterial VILLAGER_SPAWN_EGG = new GenericItem("Spawn Villager", 383,120);
+	public static final ItemMaterial CREEPER_SPAWN_EGG = new GenericItem("Spawn Creeper", 383, 50);
+	public static final ItemMaterial SKELETON_SPAWN_EGG = new GenericItem("Spawn Skeleton", 383, 51);
+	public static final ItemMaterial SPIDER_SPAWN_EGG = new GenericItem("Spawn Spider", 383, 52);
+	public static final ItemMaterial ZOMBIE_SPAWN_EGG = new GenericItem("Spawn Zombie", 383, 54);
+	public static final ItemMaterial SLIME_SPAWN_EGG = new GenericItem("Spawn Slime", 383, 55);
+	public static final ItemMaterial GHAST_SPAWN_EGG = new GenericItem("Spawn Ghast", 383, 56);
+	public static final ItemMaterial PIGMAN_SPAWN_EGG = new GenericItem("Spawn Pigman", 383, 57);
+	public static final ItemMaterial ENDERMAN_SPAWN_EGG = new GenericItem("Spawn Enderman", 383, 58);
+	public static final ItemMaterial CAVESPIDER_SPAWN_EGG = new GenericItem("Spawn Cavespider", 383, 59);
+	public static final ItemMaterial SILVERFISH_SPAWN_EGG = new GenericItem("Spawn Silverfish", 383, 60);
+	public static final ItemMaterial BLAZE_SPAWN_EGG = new GenericItem("Spawn Blaze", 383, 61);
+	public static final ItemMaterial MAGMACUBE_SPAWN_EGG = new GenericItem("Spawn Magmacube", 383, 62);
+	public static final ItemMaterial PIG_SPAWN_EGG = new GenericItem("Spawn Pig", 383, 90);
+	public static final ItemMaterial SHEEP_SPAWN_EGG = new GenericItem("Spawn Sheep", 383, 91);
+	public static final ItemMaterial COW_SPAWN_EGG = new GenericItem("Spawn Cow", 383, 92);
+	public static final ItemMaterial CHICKEN_SPAWN_EGG = new GenericItem("Spawn Chicken", 383, 93);
+	public static final ItemMaterial SQUID_SPAWN_EGG = new GenericItem("Spawn Squid", 383, 94);
+	public static final ItemMaterial WOLF_SPAWN_EGG = new GenericItem("Spawn Wolf", 383, 95);
+	public static final ItemMaterial MOOSHROOM_SPAWN_EGG = new GenericItem("Spawn Mooshroom", 383, 96);
+	public static final ItemMaterial VILLAGER_SPAWN_EGG = new GenericItem("Spawn Villager", 383, 120);
 	//public static final ItemMaterial OCELOT_SPAWN_EGG = new GenericItem("Spawn Ocelot", 383,98);
 	public static final ItemMaterial GOLD_MUSIC_DISC = new GenericItem("Music Disc", 2256);
 	public static final ItemMaterial GREEN_MUSIC_DISC = new GenericItem("Music Disc", 2257);

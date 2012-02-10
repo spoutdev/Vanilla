@@ -65,7 +65,7 @@ public final class MultiBlockChangeCodec extends MessageCodec<MultiBlockChangeMe
 		buffer.writeShort(message.getChanges());
 
 		short[] coordinates = message.getCoordinates();
-		for(short coordinate : coordinates) {
+		for (short coordinate : coordinates) {
 			buffer.writeShort(coordinate);
 		}
 

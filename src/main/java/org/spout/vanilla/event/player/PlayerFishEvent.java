@@ -43,7 +43,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 
 	public PlayerFishEvent(Player p, FishingStatus status) {
 		super(p);
-		this.caught = null;
+		caught = null;
 		this.status = status;
 	}
 

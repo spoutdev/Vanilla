@@ -35,19 +35,19 @@ public class PrimedTnt extends Controller {
 	float timeToExplode = 4.f;
 
 	Vector3 velocity;
-	Vector3 gravity = new Vector3(0,-5, 0);
+	Vector3 gravity = new Vector3(0, -5, 0);
 	Random rng = new Random();
 
 	@Override
 	public void onAttached() {
-		velocity = new Vector3(rng.nextFloat() * 5, rng.nextFloat()*5, rng.nextFloat() * 5);
+		velocity = new Vector3(rng.nextFloat() * 5, rng.nextFloat() * 5, rng.nextFloat() * 5);
 	}
 
 	@Override
 	public void onTick(float dt) {
 		timeToExplode -= dt;
 
-		if(timeToExplode <= 0.f){
+		if (timeToExplode <= 0.f) {
 			//Explode
 			System.out.print("tnt goes boom");
 		}
@@ -58,6 +58,7 @@ public class PrimedTnt extends Controller {
 
 	}
 
+	@Override
 	public void preSnapshot() {
 	}
 }

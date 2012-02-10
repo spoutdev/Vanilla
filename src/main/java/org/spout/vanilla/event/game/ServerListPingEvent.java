@@ -70,7 +70,9 @@ public class ServerListPingEvent extends Event {
 	 * @param motd message of the day to set, can not be null.
 	 */
 	public void setMotd(String motd) {
-		if (motd == null) throw new NullPointerException("Message of the day can not be null");
+		if (motd == null) {
+			throw new NullPointerException("Message of the day can not be null");
+		}
 		this.motd = motd;
 	}
 

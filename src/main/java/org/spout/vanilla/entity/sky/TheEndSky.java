@@ -40,6 +40,7 @@ public class TheEndSky extends Controller {
 
 	}
 
+	@Override
 	public void preSnapshot() {
 	}
 }

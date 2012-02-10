@@ -31,7 +31,7 @@ import org.spout.api.math.Quaternion;
 public class Arrow extends Projectile {
 	final static int maxArrowSpeed = 10;
 
-	public Arrow(Point start, Quaternion rotation, float charge){
+	public Arrow(Point start, Quaternion rotation, float charge) {
 		super(start, rotation, maxArrowSpeed);
 
 		velocity = velocity.multiply(charge);

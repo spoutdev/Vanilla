@@ -26,7 +26,6 @@
 
 package org.spout.vanilla.material.item;
 
-
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class RedstoneDust extends GenericItem {

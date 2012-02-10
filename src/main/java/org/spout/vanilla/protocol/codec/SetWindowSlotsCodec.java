@@ -59,7 +59,7 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 				if (ChannelBufferUtils.hasNbtData(item)) {
 					nbtData = ChannelBufferUtils.readCompound(buffer);
 				}
-				items[slot] = new ItemStack(MaterialData.getMaterial((short)item, (byte) damage), itemCount, (short) damage).setAuxData(nbtData);
+				items[slot] = new ItemStack(MaterialData.getMaterial((short) item, (byte) damage), itemCount, (short) damage).setAuxData(nbtData);
 			}
 		}
 		return new SetWindowSlotsMessage(id, items);
@@ -72,7 +72,7 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeByte(message.getId());
 		buffer.writeShort(items.length);
-		for(ItemStack item : items) {
+		for (ItemStack item : items) {
 			if (item == null) {
 				buffer.writeShort(-1);
 			} else {

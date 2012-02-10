@@ -52,8 +52,7 @@ public final class PositionRotationMessageHandler extends MessageHandler<Positio
 		float pitch = message.getPitch();
 		float rot = message.getRotation();
 
-		// Stance and Y swapped for server
-		double stance = message.getStance();
+		message.getStance();
 		double x = message.getX();
 		double y = message.getY();
 		double z = message.getZ();
@@ -61,9 +60,10 @@ public final class PositionRotationMessageHandler extends MessageHandler<Positio
 		Transform liveTransform = entity.getLiveTransform();
 		World w = liveTransform.getPosition().getWorld();
 		// TODO - is this rotation correct?
-		entity.setTransform(new Transform(new Point(w, (float)x, ((float)y), (float)z), new Quaternion(pitch, Vector3.UNIT_Z).rotate(rot, Vector3.UNIT_Y), Vector3.Forward));
+		entity.setTransform(new Transform(new Point(w, (float) x, ((float) y), (float) z), new Quaternion(pitch, Vector3.UNIT_Z).rotate(rot, Vector3.UNIT_Y), Vector3.Forward));
 	}
 
+	@Override
 	public void handleClient(Session session, Player player, PositionRotationMessage message) {
 	}
 }

@@ -31,12 +31,12 @@ import org.spout.api.io.store.map.SimpleStoreMap;
 public class BiomeMap {
 	private final SimpleStoreMap<Integer, BiomeType> map;
 	private BiomeSelector selector;
-	
+
 	public BiomeMap() {
 		//Todo: Make this saveable
 		map = new MemoryStoreMap<Integer, BiomeType>();
 	}
-	
+
 	public void setSelector(BiomeSelector selector) {
 		this.selector = selector;
 	}

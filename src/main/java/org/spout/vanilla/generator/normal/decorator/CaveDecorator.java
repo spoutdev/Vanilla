@@ -25,13 +25,14 @@
  */
 package org.spout.vanilla.generator.normal.decorator;
 
+import java.util.Random;
+
 import net.royawesome.jlibnoise.module.source.Perlin;
+
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeDecorator;
-
-import java.util.Random;
 
 /**
  * Decorator that decorates a biome with caves.
@@ -52,12 +53,13 @@ public class CaveDecorator implements BiomeDecorator {
 		int y = chunk.getY() * 16;
 		int z = chunk.getZ() * 16;
 		Point pt = new Point(chunk.getWorld(), x + random.nextInt(16), y + random.nextInt(16), z + random.nextInt(16));
-		for(int dx = x; dx < x+16; dx++) {
-			for(int dz = z; dz < z+16; dz++) {
-				for(int dy = y; dy < y+16; dy++) {
-					if(Math.sqrt(Math.pow(dx-pt.getX(),2) + Math.pow(dy-pt.getY(),2) + Math.pow(dz-pt.getZ(),2)) > 6) continue;
-					if(p.GetValue(dx/5.0 + 0.005, dy/5.0 + 0.005, dz/5.0 + 0.005) > 0 
-							&& chunk.getBlockId(dx, dy, dz) == VanillaMaterials.STONE.getId()) {
+		for (int dx = x; dx < x + 16; dx++) {
+			for (int dz = z; dz < z + 16; dz++) {
+				for (int dy = y; dy < y + 16; dy++) {
+					if (Math.sqrt(Math.pow(dx - pt.getX(), 2) + Math.pow(dy - pt.getY(), 2) + Math.pow(dz - pt.getZ(), 2)) > 6) {
+						continue;
+					}
+					if (p.GetValue(dx / 5.0 + 0.005, dy / 5.0 + 0.005, dz / 5.0 + 0.005) > 0 && chunk.getBlockId(dx, dy, dz) == VanillaMaterials.STONE.getId()) {
 						chunk.setBlockId(dx, dy, dz, VanillaMaterials.AIR.getId(), chunk.getWorld());
 					}
 				}

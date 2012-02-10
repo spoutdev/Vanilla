@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.generator.nether.biome;
 
-import org.spout.api.geo.World;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.biome.BiomeType;
 

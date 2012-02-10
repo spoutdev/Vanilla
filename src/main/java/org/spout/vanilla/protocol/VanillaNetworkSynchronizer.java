@@ -40,7 +40,6 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
@@ -56,10 +55,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	private final static int POSITION_UPDATE_TICKS = 20;
 	private final static double STANCE = 1.6D;
 	private final static int TIMEOUT = 15000;
-	private int positionUpdate = POSITION_UPDATE_TICKS;
-
-	//public final static float SEALEVEL = 64;
-	//public final static int SEALEVEL_CHUNK = 4;
 
 	public VanillaNetworkSynchronizer(Player player) {
 		this(player, null);
@@ -76,9 +71,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 	@Override
 	protected void freeChunk(Point p) {
-		int x = ((int)p.getX() >> Chunk.CHUNK_SIZE_BITS);
-		int y = ((int)p.getY() >> Chunk.CHUNK_SIZE_BITS);// + SEALEVEL_CHUNK;
-		int z = ((int)p.getZ() >> Chunk.CHUNK_SIZE_BITS);
+		int x = (int) p.getX() >> Chunk.CHUNK_SIZE_BITS;
+		int y = (int) p.getY() >> Chunk.CHUNK_SIZE_BITS;// + SEALEVEL_CHUNK;
+		int z = (int) p.getZ() >> Chunk.CHUNK_SIZE_BITS;
 
 		if (y < 0 || y > 7) {
 			return;
@@ -97,9 +92,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 	@Override
 	protected void initChunk(Point p) {
-		int x = ((int)p.getX() >> Chunk.CHUNK_SIZE_BITS);
-		int y = ((int)p.getY() >> Chunk.CHUNK_SIZE_BITS);// + SEALEVEL_CHUNK;
-		int z = ((int)p.getZ() >> Chunk.CHUNK_SIZE_BITS);
+		int x = (int) p.getX() >> Chunk.CHUNK_SIZE_BITS;
+		int y = (int) p.getY() >> Chunk.CHUNK_SIZE_BITS;// + SEALEVEL_CHUNK;
+		int z = (int) p.getZ() >> Chunk.CHUNK_SIZE_BITS;
 
 		if (y < 0 || y > 7) {
 			return;
@@ -135,24 +130,25 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		final int maxDataIndex = maxIdIndex + 16 * 16 * 16 / 2;
 		for (int i = 0; i < fullChunkData.length; i++) {
 			if (i < maxIdIndex) {
-				fullChunkData[i] = (byte)0x00;
+				fullChunkData[i] = (byte) 0x00;
 			} else if (i < maxDataIndex) {
-				fullChunkData[i] = (byte)0x00;
+				fullChunkData[i] = (byte) 0x00;
 			} else {
-				fullChunkData[i] = (byte)0xFF;
+				fullChunkData[i] = (byte) 0xFF;
 			}
 		}
 		for (int i = 0; i < rawBlockIdArray.length; i++) {
 			// TODO - conversion code
-			fullChunkData[i] = (byte)(rawBlockIdArray[i] & 0xFF);
+			fullChunkData[i] = (byte) (rawBlockIdArray[i] & 0xFF);
 		}
 		for (int i = 0; i < rawBlockData.length / 2; i++) {
-			fullChunkData[i + maxIdIndex] = (byte)((rawBlockData[i + 1] & 0xF << 4) | (rawBlockData[i] & 0xF));
+			fullChunkData[i + maxIdIndex] = (byte) (rawBlockData[i + 1] & 0xF << 4 | rawBlockData[i] & 0xF);
 		}
 		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x * Chunk.CHUNK_SIZE, y * Chunk.CHUNK_SIZE, z * Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, fullChunkData);
 		owner.getSession().send(CCMsg);
 	}
 
+	@Override
 	protected void sendPosition(Transform t) {
 		Point p = t.getPosition();
 		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), 0, 0, true);
@@ -160,6 +156,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	}
 
 	boolean first = true;
+
+	@Override
 	protected void worldChanged(World world) {
 		if (first) {
 			first = false;
@@ -173,7 +171,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		}
 		if (world != null) {
 			Point spawn = world.getSpawnPoint().getPosition();
-			SpawnPositionMessage SPMsg = new SpawnPositionMessage((int)spawn.getX(), (int)(spawn.getY()), (int)spawn.getZ());
+			SpawnPositionMessage SPMsg = new SpawnPositionMessage((int) spawn.getX(), (int) spawn.getY(), (int) spawn.getZ());
 			owner.getSession().send(SPMsg);
 		}
 	}
@@ -184,7 +182,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	public void preSnapshot() {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime > lastKeepAlive + TIMEOUT) {
-			PingMessage PingMsg = new PingMessage((int)currentTime);
+			PingMessage PingMsg = new PingMessage((int) currentTime);
 			lastKeepAlive = currentTime;
 			owner.getSession().send(PingMsg);
 		}
@@ -213,7 +211,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	}
 
 	@Override
-	public void spawnEntity(Entity e){
+	public void spawnEntity(Entity e) {
 		if (e == null) {
 			return;
 		}
@@ -225,7 +223,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 				Message spawn = ep.getSpawnMessage(e);
 				if (spawn != null) {
 					activeEntities.add(e.getId());
-					this.session.send(spawn);
+					session.send(spawn);
 				}
 			}
 		}
@@ -247,7 +245,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			if (ep != null) {
 				Message death = ep.getDestroyMessage(e);
 				if (death != null) {
-					this.session.send(death);
+					session.send(death);
 					activeEntities.remove(e.getId());
 				}
 			}
@@ -255,6 +253,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		super.destroyEntity(e);
 	}
 
+	@Override
 	public void syncEntity(Entity e) {
 		if (e == null) {
 			return;
@@ -270,7 +269,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			if (ep != null) {
 				Message sync = ep.getUpdateMessage(e);
 				if (sync != null) {
-					this.session.send(sync);
+					session.send(sync);
 				}
 			}
 		}

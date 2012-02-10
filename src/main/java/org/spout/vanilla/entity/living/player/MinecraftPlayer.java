@@ -34,6 +34,7 @@ import org.spout.vanilla.VanillaPlugin;
 public abstract class MinecraftPlayer extends PlayerController {
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
 
+	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
 		return entityProtocolStore.getEntityProtocol(protocolId);
 	}
@@ -42,7 +43,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 		entityProtocolStore.setEntityProtocol(protocolId, protocol);
 	}
 
-	public MinecraftPlayer(Player p){
+	public MinecraftPlayer(Player p) {
 		super(p);
 		p.getEntity().setInventorySize(45);
 		p.getEntity().getInventory().setCurrentSlot(36);

@@ -25,12 +25,12 @@
  */
 package org.spout.vanilla.generator.normal.decorator;
 
+import java.util.Random;
+
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeDecorator;
-
-import java.util.Random;
 
 /**
  * Decorator that decorates a biome with trees.
@@ -69,7 +69,6 @@ public class TreeDecorator implements BiomeDecorator {
 		w.setBlockMaterial(cx + 1, cy + height, cz, VanillaMaterials.LEAVES, c.getWorld());
 		w.setBlockMaterial(cx, cy + height, cz - 1, VanillaMaterials.LEAVES, c.getWorld());
 		w.setBlockMaterial(cx, cy + height, cz + 1, VanillaMaterials.LEAVES, c.getWorld());
-
 
 		for (int k = 1; k <= oneWidth; k++) {
 			for (int i = -1; i <= 1; i++) {

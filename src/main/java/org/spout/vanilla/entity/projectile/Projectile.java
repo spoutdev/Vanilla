@@ -39,7 +39,7 @@ public class Projectile extends Controller {
 
 	protected Vector3 velocity;
 
-	public Projectile(Point start, Quaternion rotation, int maxSpeed){
+	public Projectile(Point start, Quaternion rotation, int maxSpeed) {
 		this.maxSpeed = maxSpeed;
 		this.start = start;
 		this.rotation = rotation;
@@ -60,6 +60,7 @@ public class Projectile extends Controller {
 		t.setPosition(t.getPosition().add(velocity.transform(t.getRotation()).multiply(dt)));
 	}
 
+	@Override
 	public void preSnapshot() {
 	}
 }

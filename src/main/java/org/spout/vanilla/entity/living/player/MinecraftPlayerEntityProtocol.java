@@ -40,13 +40,13 @@ public class MinecraftPlayerEntityProtocol implements EntityProtocol {
 		Controller c = entity.getLiveController();
 		//TODO: this if-else structure is terrible and not OO. Fix!
 		if (c != null) {
-			MinecraftPlayer mcp = (MinecraftPlayer)c;
+			MinecraftPlayer mcp = (MinecraftPlayer) c;
 			int id = entity.getId();
 			String name = mcp.getPlayer().getName();
 			Transform t = entity.getTransform();
-			int x = (int)(t.getPosition().getX() * 32);
-			int y = (int)(t.getPosition().getY() * 32);
-			int z = (int)(t.getPosition().getZ() * 32);
+			int x = (int) (t.getPosition().getX() * 32);
+			int y = (int) (t.getPosition().getY() * 32);
+			int z = (int) (t.getPosition().getZ() * 32);
 			int r = 0;
 			int p = 0;
 			int item = 0;
@@ -65,9 +65,9 @@ public class MinecraftPlayerEntityProtocol implements EntityProtocol {
 	public Message getUpdateMessage(Entity entity) {
 		Transform t = entity.getLiveTransform();
 		int id = entity.getId();
-		int x = (int)(t.getPosition().getX() * 32);
-		int y = (int)(t.getPosition().getY() * 32);
-		int z = (int)(t.getPosition().getZ() * 32);
+		int x = (int) (t.getPosition().getX() * 32);
+		int y = (int) (t.getPosition().getY() * 32);
+		int z = (int) (t.getPosition().getZ() * 32);
 		int r = 0;
 		int p = 0;
 		// TODO - improve efficiency

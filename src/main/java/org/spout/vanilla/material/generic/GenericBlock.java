@@ -10,13 +10,8 @@ import org.spout.vanilla.material.item.RedstoneTorch;
 import org.spout.vanilla.material.item.RedstoneWire;
 
 public class GenericBlock extends GenericBlockMaterial implements Block {
-	
-	private static BlockFace indirectSourcesWire[] = {
-			BlockFace.EAST,
-			BlockFace.SOUTH,
-			BlockFace.WEST,
-			BlockFace.NORTH
-	};
+
+	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
 
 	public GenericBlock(String name, int id) {
 		super(name, id);
@@ -29,17 +24,17 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 	@Override
 	public short getIndirectRedstonePower(World world, int x, int y, int z) {
 		short indirect = 0;
-		for(BlockFace face:indirectSourcesWire) {
+		for (BlockFace face : indirectSourcesWire) {
 			Vector3 offset = face.getOffset();
 			int tx = (int) (x + offset.getX()), ty = (int) (y + offset.getY()), tz = (int) (z + offset.getZ());
 			BlockMaterial material = world.getBlockMaterial(tx, ty, tz);
-			if(material instanceof RedstoneWire) {
+			if (material instanceof RedstoneWire) {
 				indirect = (short) Math.max(indirect, world.getBlockData(tx, ty, tz));
 			}
 		}
-		
+
 		BlockMaterial material = world.getBlockMaterial(x, y - 1, z); //Check for redstone torch below
-		if(material instanceof RedstoneTorch) {
+		if (material instanceof RedstoneTorch) {
 			RedstoneTorch torch = (RedstoneTorch) material;
 			indirect = (short) Math.max(indirect, torch.getRedstonePower(world, x, y - 1, z, x, y, z));
 		}

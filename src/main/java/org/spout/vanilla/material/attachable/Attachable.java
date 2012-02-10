@@ -43,7 +43,7 @@ public interface Attachable extends Block {
 	 * @return to which face the block is attached to
 	 */
 	public BlockFace getFaceAttachedTo(short data);
-	
+
 	/**
 	 * Returns the block that the attachable at x,y,z is attached to.
 	 * @param world

@@ -29,7 +29,7 @@ public interface RedstoneSource extends Block {
 	 * @return if the source block provides power to the target block
 	 */
 	boolean providesPowerTo(World world, int x, int y, int z, int tx, int ty, int tz);
-	
+
 	/**
 	 * Gets if the block provides an attach point for redstone wire.
 	 * @param world the blocks are in

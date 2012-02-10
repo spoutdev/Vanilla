@@ -28,7 +28,7 @@ package org.spout.vanilla.entity.living.player;
 import org.spout.api.player.Player;
 
 public class SurvivalPlayer extends MinecraftPlayer {
-	public SurvivalPlayer(Player p){
+	public SurvivalPlayer(Player p) {
 		super(p);
 	}
 }

@@ -25,11 +25,10 @@
  */
 package org.spout.vanilla.entity.living.player;
 
-import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.player.Player;
 
 public class CreativePlayer extends MinecraftPlayer {
-	public CreativePlayer(Player p){
+	public CreativePlayer(Player p) {
 		super(p);
 	}
 }

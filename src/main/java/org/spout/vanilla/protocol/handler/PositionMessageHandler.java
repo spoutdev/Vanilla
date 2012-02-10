@@ -49,8 +49,7 @@ public final class PositionMessageHandler extends MessageHandler<PositionMessage
 			return;
 		}
 
-		// Stance and Y swapped for server
-		double stance = message.getStance();
+		message.getStance();
 		double x = message.getX();
 		double y = message.getY();
 		double z = message.getZ();
@@ -58,7 +57,7 @@ public final class PositionMessageHandler extends MessageHandler<PositionMessage
 		Transform liveTransform = entity.getLiveTransform();
 		World w = liveTransform.getPosition().getWorld();
 		// TODO - include rotation
-		entity.setTransform(new Transform(new Point(w, (float)x, ((float)y), (float)z), liveTransform.getRotation(), Vector3.Forward));
+		entity.setTransform(new Transform(new Point(w, (float) x, ((float) y), (float) z), liveTransform.getRotation(), Vector3.Forward));
 	}
 
 	public void handleClient(Session session, Player player, PositionRotationMessage message) {

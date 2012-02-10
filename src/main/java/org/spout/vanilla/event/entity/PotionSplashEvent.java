@@ -46,10 +46,11 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	public PotionSplashEvent(Entity e, Source source, Map<Entity, Double> entitiesAffected) throws InvalidControllerException {
 		super(e, source);
-		if (!(e.getController() instanceof ThrownPotion))
+		if (!(e.getController() instanceof ThrownPotion)) {
 			throw new InvalidControllerException();
+		}
 		this.entitiesAffected = entitiesAffected;
-		this.potion = (ThrownPotion) e.getController();
+		potion = (ThrownPotion) e.getController();
 	}
 
 	/**
@@ -83,8 +84,9 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 	 */
 	public double getIntensityFor(Entity entity) {
 		Double temp = entitiesAffected.get(entity);
-		if (temp == null)
+		if (temp == null) {
 			return 0.0;
+		}
 		return temp;
 	}
 

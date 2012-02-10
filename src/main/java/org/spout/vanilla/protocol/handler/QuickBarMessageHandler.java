@@ -25,14 +25,11 @@
  */
 package org.spout.vanilla.protocol.handler;
 
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 import org.spout.api.material.MaterialData;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.Block;
 import org.spout.vanilla.protocol.msg.QuickBarMessage;
 
 public class QuickBarMessageHandler extends MessageHandler<QuickBarMessage> {
@@ -47,9 +44,9 @@ public class QuickBarMessageHandler extends MessageHandler<QuickBarMessage> {
 			return;
 		}
 		ItemStack newItem = null;
-		if(checkValidId(message.getId())) {
+		if (checkValidId(message.getId())) {
 			newItem = new ItemStack(MaterialData.getMaterial(message.getId(), message.getDamage()), message.getAmount(), message.getDamage());
-		} else if(message.getId() != -1) {
+		} else if (message.getId() != -1) {
 			player.kick("Unknown item ID: " + message.getId());
 			return;
 		}

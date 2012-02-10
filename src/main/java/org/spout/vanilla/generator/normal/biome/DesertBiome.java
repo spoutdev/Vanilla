@@ -26,6 +26,7 @@
 package org.spout.vanilla.generator.normal.biome;
 
 import net.royawesome.jlibnoise.module.source.Perlin;
+
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeType;
@@ -40,9 +41,7 @@ public class DesertBiome extends BiomeType {
 	private Perlin heightMap = new Perlin();
 
 	public DesertBiome() {
-		super(new CactusDecorator(), 
-				new OreDecorator(), 
-				new CaveDecorator());
+		super(new CactusDecorator(), new OreDecorator(), new CaveDecorator());
 		heightMap.setOctaveCount(5);
 	}
 
@@ -53,7 +52,7 @@ public class DesertBiome extends BiomeType {
 		int z = chunkZ * 16;
 
 		if (y > 127) {
-			blockData.flood((short)0);
+			blockData.flood((short) 0);
 		}
 
 		if (chunkY < 0) {
@@ -61,8 +60,8 @@ public class DesertBiome extends BiomeType {
 		}
 
 		heightMap.setSeed((int) blockData.getWorld().getSeed());
-		for (int dx = x; dx < (x + 16); dx++) {
-			for (int dz = z; dz < (z + 16); dz++) {
+		for (int dx = x; dx < x + 16; dx++) {
+			for (int dz = z; dz < z + 16; dz++) {
 				int height = (int) ((heightMap.GetValue(dx / 32.0 + 0.005, 0.05, dz / 32.0 + 0.005) + 1.0) * 2.0 + 60.0);
 
 				for (int dy = y; dy < y + 16; dy++) {
@@ -75,13 +74,13 @@ public class DesertBiome extends BiomeType {
 
 	private short getBlockId(int top, int dy) {
 		short id;
-		if(dy > top) {
+		if (dy > top) {
 			id = VanillaMaterials.AIR.getId();
 		} else if (dy + 4 >= top) {
 			id = VanillaMaterials.SAND.getId();
-		}  else if (dy + 5 == top) {
+		} else if (dy + 5 == top) {
 			id = VanillaMaterials.SANDSTONE.getId();
-		} else if(dy != 0) {
+		} else if (dy != 0) {
 			id = VanillaMaterials.STONE.getId();
 		} else {
 			id = VanillaMaterials.BEDROCK.getId();

@@ -55,7 +55,7 @@ public class QuickBarCodec extends MessageCodec<QuickBarMessage> {
 			}
 			return new QuickBarMessage(slot, id, amount, damage, nbtData);
 		} else {
-			return new QuickBarMessage(slot, id, (short)0, (short)0, null);
+			return new QuickBarMessage(slot, id, (short) 0, (short) 0, null);
 		}
 	}
 

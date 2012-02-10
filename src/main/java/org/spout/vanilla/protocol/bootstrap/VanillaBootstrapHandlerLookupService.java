@@ -40,9 +40,9 @@ import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 public class VanillaBootstrapHandlerLookupService extends HandlerLookupService {
 	public VanillaBootstrapHandlerLookupService() {
 		try {
-		bind(HandshakeMessage.class, BootstrapHandshakeMessageHandler.class);
-		bind(IdentificationMessage.class, BootstrapIdentificationMessageHandler.class);
-		bind(ServerListPingMessage.class, BootstrapPingMessageHandler.class);
+			bind(HandshakeMessage.class, BootstrapHandshakeMessageHandler.class);
+			bind(IdentificationMessage.class, BootstrapIdentificationMessageHandler.class);
+			bind(ServerListPingMessage.class, BootstrapPingMessageHandler.class);
 		} catch (Exception e) {
 			throw new ExceptionInInitializerError(e);
 		}

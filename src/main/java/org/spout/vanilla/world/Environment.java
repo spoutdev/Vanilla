@@ -32,11 +32,11 @@ public enum Environment {
 
 	final int dim;
 
-	private Environment(int dim){
+	private Environment(int dim) {
 		this.dim = dim;
 	}
 
-	public int getDimension(){
+	public int getDimension() {
 		return dim;
 	}
 }

@@ -62,7 +62,7 @@ public enum Entity {
 	Wolf(95),
 	Mooshroom(96),
 	SnowGolem(97),
-	Villager(120),//Squidward
+	Villager(120), //Squidward
 	EnderCrystal(200);
 
 	public final int id;
@@ -71,20 +71,20 @@ public enum Entity {
 
 	final static TIntObjectHashMap<Entity> map = new TIntObjectHashMap<Entity>();
 
-	private Entity(int data){
-		this.id = (byte)data;
+	private Entity(int data) {
+		id = (byte) data;
 	}
 
-	public int getID(){
+	public int getID() {
 		return id;
 	}
 
-	public static Entity getByID(int id){
+	public static Entity getByID(int id) {
 		return map.get(id);
 	}
 
-	static{
-		for(Entity m : Entity.values()){
+	static {
+		for (Entity m : Entity.values()) {
 			map.put(m.getID(), m);
 		}
 	}

@@ -40,7 +40,7 @@ public final class HandshakeMessageHandler extends MessageHandler<HandshakeMessa
 			//if (session.getGame().getOnlineMode()) {
 			//	session.send(new HandshakeMessage(session.getSessionId()));
 			//} else {
-				session.send(new HandshakeMessage("-"));
+			session.send(new HandshakeMessage("-"));
 			//}
 		} else {
 			session.disconnect("Handshake already exchanged.");

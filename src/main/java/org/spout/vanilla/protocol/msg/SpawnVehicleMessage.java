@@ -1,14 +1,14 @@
 /*
  * This file is part of Vanilla (http://www.spout.org/).
  *
- * Vanilla is licensed under the SpoutDev License Version 1.  
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * In addition, 180 days after any changes are published, you can use the 
+ * In addition, 180 days after any changes are published, you can use the
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
@@ -18,9 +18,9 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.  
+ * the MIT license and the SpoutDev license version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
- * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license, 
+ * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla.protocol.msg;
@@ -28,21 +28,23 @@ package org.spout.vanilla.protocol.msg;
 import org.spout.api.protocol.Message;
 
 public final class SpawnVehicleMessage extends Message {
-	private final int id, type, x, y, z, fireballId, fireballX, fireballY, fireballZ;
+	private final int id, type, x, y, z, fireballId, fireballX, fireballY,
+			fireballZ;
 
 	public SpawnVehicleMessage(int id, int type, int x, int y, int z) {
 		this(id, type, x, y, z, 0, 0, 0, 0);
 	}
+
 	public SpawnVehicleMessage(int id, int type, int x, int y, int z, int fbId, int fbX, int fbY, int fbZ) {
 		this.id = id;
 		this.type = type;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.fireballId = fbId;
-		this.fireballX = fbX;
-		this.fireballY = fbY;
-		this.fireballZ = fbZ;
+		fireballId = fbId;
+		fireballX = fbX;
+		fireballY = fbY;
+		fireballZ = fbZ;
 	}
 
 	public int getId() {

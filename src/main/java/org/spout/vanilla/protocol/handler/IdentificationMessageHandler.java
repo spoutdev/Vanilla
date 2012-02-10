@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.protocol.handler;
 
-import org.spout.api.Commons;
 import org.spout.api.event.Event;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.player.Player;

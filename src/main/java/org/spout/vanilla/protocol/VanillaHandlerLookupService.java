@@ -63,7 +63,6 @@ import org.spout.vanilla.protocol.msg.PositionRotationMessage;
 import org.spout.vanilla.protocol.msg.QuickBarMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.RotationMessage;
-import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
 
 public class VanillaHandlerLookupService extends HandlerLookupService {
@@ -101,6 +100,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 		handlers.put(clazz, handler);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends Message> MessageHandler<T> find(Class<T> clazz) {
 		return (MessageHandler<T>) handlers.get(clazz);

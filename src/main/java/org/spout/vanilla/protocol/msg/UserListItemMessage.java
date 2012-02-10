@@ -52,6 +52,6 @@ public class UserListItemMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "UserListItemMessage{name=" + name + ",addOrRemove=" + addOrRemove +  ",ping=" + ping + "}";
+		return "UserListItemMessage{name=" + name + ",addOrRemove=" + addOrRemove + ",ping=" + ping + "}";
 	}
 }

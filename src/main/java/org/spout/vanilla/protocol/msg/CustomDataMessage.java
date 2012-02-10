@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import org.spout.api.protocol.Message;
-
 import java.util.Arrays;
+
+import org.spout.api.protocol.Message;
 
 /**
  * This packet allows transfer of custom data for mods to the Notchian client.

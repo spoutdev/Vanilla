@@ -66,7 +66,7 @@ public final class ChannelBufferUtils {
 	@SuppressWarnings("unchecked")
 	public static void writeParameters(ChannelBuffer buf, List<Parameter<?>> parameters) {
 		for (Parameter<?> parameter : parameters) {
-			int type  = parameter.getType();
+			int type = parameter.getType();
 			int index = parameter.getIndex();
 			if (index > 0x1F) {
 				throw new IllegalArgumentException("Index has a maximum of 0x1F!");
@@ -111,7 +111,7 @@ public final class ChannelBufferUtils {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
 		for (int b = buf.readUnsignedByte(); b != 127; b = buf.readUnsignedByte()) {
-			int type  = (b & 0xE0) >> 5;
+			int type = (b & 0xE0) >> 5;
 			int index = b & 0x1F;
 
 			switch (type) {
@@ -134,7 +134,7 @@ public final class ChannelBufferUtils {
 					int id = buf.readShort();
 					int count = buf.readByte();
 					short damage = buf.readShort();
-					ItemStack item = new ItemStack(MaterialData.getMaterial((short)id, (byte)damage), count, damage);
+					ItemStack item = new ItemStack(MaterialData.getMaterial((short) id, (byte) damage), count, damage);
 					parameters.add(new Parameter<ItemStack>(type, index, item));
 					break;
 			}
@@ -196,7 +196,6 @@ public final class ChannelBufferUtils {
 		return new String(characters);
 	}
 
-
 	/**
 	 * Reads a UTF-8 encoded string from the buffer.
 	 * @param buf The buffer.
@@ -229,7 +228,8 @@ public final class ChannelBufferUtils {
 				if (str != null) {
 					try {
 						str.close();
-					} catch (IOException e) {}
+					} catch (IOException e) {
+					}
 				}
 			}
 		}
@@ -255,7 +255,8 @@ public final class ChannelBufferUtils {
 			if (str != null) {
 				try {
 					str.close();
-				} catch (IOException e) {}
+				} catch (IOException e) {
+				}
 			}
 		}
 	}
@@ -316,69 +317,17 @@ public final class ChannelBufferUtils {
 	}
 
 	public static boolean hasNbtData(int id) {
-		return
-			id == VanillaMaterials.FLINT_AND_STEEL.getId() ||
-			id == VanillaMaterials.BOW.getId() ||
-			id == VanillaMaterials.FISHING_ROD.getId() ||
-			id == VanillaMaterials.SHEARS.getId() ||
+		return id == VanillaMaterials.FLINT_AND_STEEL.getId() || id == VanillaMaterials.BOW.getId() || id == VanillaMaterials.FISHING_ROD.getId() || id == VanillaMaterials.SHEARS.getId() ||
 
-			/**
-			 * Tools
-			 */
-			id == VanillaMaterials.WOODEN_SWORD.getId() ||
-			id == VanillaMaterials.WOODEN_SHOVEL.getId() ||
-			id == VanillaMaterials.WOODEN_PICKAXE.getId() ||
-			id == VanillaMaterials.WOODEN_AXE.getId() ||
-			id == VanillaMaterials.WOODEN_HOE.getId() ||
-			id == VanillaMaterials.STONE_SWORD.getId() ||
-			id == VanillaMaterials.STONE_SHOVEL.getId() ||
-			id == VanillaMaterials.STONE_PICKAXE.getId() ||
-			id == VanillaMaterials.STONE_AXE.getId() ||
-			id == VanillaMaterials.STONE_HOE.getId() ||
-			id == VanillaMaterials.IRON_SWORD.getId() ||
-			id == VanillaMaterials.IRON_SHOVEL.getId() ||
-			id == VanillaMaterials.IRON_PICKAXE.getId() ||
-			id == VanillaMaterials.IRON_AXE.getId() ||
-			id == VanillaMaterials.IRON_HOE.getId() ||
-			id == VanillaMaterials.IRON_SWORD.getId() ||
-			id == VanillaMaterials.IRON_SHOVEL.getId() ||
-			id == VanillaMaterials.IRON_PICKAXE.getId() ||
-			id == VanillaMaterials.IRON_AXE.getId() ||
-			id == VanillaMaterials.IRON_HOE.getId() ||
-			id == VanillaMaterials.DIAMOND_SWORD.getId() ||
-			id == VanillaMaterials.DIAMOND_SHOVEL.getId() ||
-			id == VanillaMaterials.DIAMOND_PICKAXE.getId() ||
-			id == VanillaMaterials.DIAMOND_AXE.getId() ||
-			id == VanillaMaterials.DIAMOND_HOE.getId() ||
-			id == VanillaMaterials.GOLD_SWORD.getId() ||
-			id == VanillaMaterials.GOLD_SHOVEL.getId() ||
-			id == VanillaMaterials.GOLD_PICKAXE.getId() ||
-			id == VanillaMaterials.GOLD_AXE.getId() ||
-			id == VanillaMaterials.GOLD_HOE.getId() ||
+		/**
+		 * Tools
+		 */
+		id == VanillaMaterials.WOODEN_SWORD.getId() || id == VanillaMaterials.WOODEN_SHOVEL.getId() || id == VanillaMaterials.WOODEN_PICKAXE.getId() || id == VanillaMaterials.WOODEN_AXE.getId() || id == VanillaMaterials.WOODEN_HOE.getId() || id == VanillaMaterials.STONE_SWORD.getId() || id == VanillaMaterials.STONE_SHOVEL.getId() || id == VanillaMaterials.STONE_PICKAXE.getId() || id == VanillaMaterials.STONE_AXE.getId() || id == VanillaMaterials.STONE_HOE.getId() || id == VanillaMaterials.IRON_SWORD.getId() || id == VanillaMaterials.IRON_SHOVEL.getId() || id == VanillaMaterials.IRON_PICKAXE.getId() || id == VanillaMaterials.IRON_AXE.getId() || id == VanillaMaterials.IRON_HOE.getId() || id == VanillaMaterials.IRON_SWORD.getId() || id == VanillaMaterials.IRON_SHOVEL.getId() || id == VanillaMaterials.IRON_PICKAXE.getId() || id == VanillaMaterials.IRON_AXE.getId() || id == VanillaMaterials.IRON_HOE.getId() || id == VanillaMaterials.DIAMOND_SWORD.getId() || id == VanillaMaterials.DIAMOND_SHOVEL.getId() || id == VanillaMaterials.DIAMOND_PICKAXE.getId() || id == VanillaMaterials.DIAMOND_AXE.getId() || id == VanillaMaterials.DIAMOND_HOE.getId() || id == VanillaMaterials.GOLD_SWORD.getId() || id == VanillaMaterials.GOLD_SHOVEL.getId() || id == VanillaMaterials.GOLD_PICKAXE.getId() || id == VanillaMaterials.GOLD_AXE.getId() || id == VanillaMaterials.GOLD_HOE.getId() ||
 
-			/**
-			 * Armour
-			 */
-			id == VanillaMaterials.LEATHER_CAP.getId() ||
-			id == VanillaMaterials.LEATHER_TUNIC.getId() ||
-			id == VanillaMaterials.LEATHER_PANTS.getId() ||
-			id == VanillaMaterials.LEATHER_BOOTS.getId() ||
-			id == VanillaMaterials.CHAIN_HELMET.getId() ||
-			id == VanillaMaterials.CHAIN_CHESTPLATE.getId() ||
-			id == VanillaMaterials.CHAIN_LEGGINGS.getId() ||
-			id == VanillaMaterials.CHAIN_BOOTS.getId() ||
-			id == VanillaMaterials.IRON_HELMET.getId() ||
-			id == VanillaMaterials.IRON_CHESTPLATE.getId() ||
-			id == VanillaMaterials.IRON_LEGGINGS.getId() ||
-			id == VanillaMaterials.IRON_BOOTS.getId() ||
-			id == VanillaMaterials.DIAMOND_HELMET.getId() ||
-			id == VanillaMaterials.DIAMOND_CHESTPLATE.getId() ||
-			id == VanillaMaterials.DIAMOND_LEGGINGS.getId() ||
-			id == VanillaMaterials.DIAMOND_BOOTS.getId() ||
-			id == VanillaMaterials.GOLD_HELMET.getId() ||
-			id == VanillaMaterials.GOLD_CHESTPLATE.getId() ||
-			id == VanillaMaterials.GOLD_LEGGINGS.getId() ||
-			id == VanillaMaterials.GOLD_BOOTS.getId();
+		/**
+		 * Armour
+		 */
+		id == VanillaMaterials.LEATHER_CAP.getId() || id == VanillaMaterials.LEATHER_TUNIC.getId() || id == VanillaMaterials.LEATHER_PANTS.getId() || id == VanillaMaterials.LEATHER_BOOTS.getId() || id == VanillaMaterials.CHAIN_HELMET.getId() || id == VanillaMaterials.CHAIN_CHESTPLATE.getId() || id == VanillaMaterials.CHAIN_LEGGINGS.getId() || id == VanillaMaterials.CHAIN_BOOTS.getId() || id == VanillaMaterials.IRON_HELMET.getId() || id == VanillaMaterials.IRON_CHESTPLATE.getId() || id == VanillaMaterials.IRON_LEGGINGS.getId() || id == VanillaMaterials.IRON_BOOTS.getId() || id == VanillaMaterials.DIAMOND_HELMET.getId() || id == VanillaMaterials.DIAMOND_CHESTPLATE.getId() || id == VanillaMaterials.DIAMOND_LEGGINGS.getId() || id == VanillaMaterials.DIAMOND_BOOTS.getId() || id == VanillaMaterials.GOLD_HELMET.getId() || id == VanillaMaterials.GOLD_CHESTPLATE.getId() || id == VanillaMaterials.GOLD_LEGGINGS.getId() || id == VanillaMaterials.GOLD_BOOTS.getId();
 	}
 
 	/**

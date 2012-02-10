@@ -36,30 +36,24 @@ import org.spout.vanilla.VanillaPlugin;
  * Commands to emulate core Minecraft admin functions.
  */
 public class AdministrationCommands {
-	private final VanillaPlugin plugin;
-	
 	public AdministrationCommands(VanillaPlugin plugin) {
-		this.plugin = plugin;
 	}
 
-	@Command(aliases = {"gamemode", "gm"}, usage = "[player 1/survival or 2/creative] or [1/survival or 2/creative] (if source is a player)",
-			desc = "Change a player's gamemode", max = 2)
+	@Command(aliases = {"gamemode", "gm"}, usage = "[player 1/survival or 2/creative] or [1/survival or 2/creative] (if source is a player)", desc = "Change a player's gamemode", max = 2)
 	@CommandPermissions("vanilla.command.gamemode")
 	public void gamemode(CommandContext args, CommandSource source) throws CommandException {
 		source.sendMessage("Gamemode worked.");
 		//TODO implement gamemode.
 	}
 
-	@Command(aliases = "xp", usage = "[amount]",
-			desc = "Give/take experience from a player", max = 1)
+	@Command(aliases = "xp", usage = "[amount]", desc = "Give/take experience from a player", max = 1)
 	@CommandPermissions("vanilla.command.xp")
 	public void xp(CommandContext args, CommandSource source) throws CommandException {
 		source.sendMessage("Xp worked.");
 		//TODO implement xp.
 	}
 
-	@Command(aliases = "weather", usage = "[weather] (1/rain, 2/lightning, 3/snow)",
-			desc = "Toggles weather on/off", max = 1)
+	@Command(aliases = "weather", usage = "[weather] (1/rain, 2/lightning, 3/snow)", desc = "Toggles weather on/off", max = 1)
 	@CommandPermissions("vanilla.command.weather")
 	public void weather(CommandContext args, CommandSource source) throws CommandException {
 		source.sendMessage("Weather worked.");

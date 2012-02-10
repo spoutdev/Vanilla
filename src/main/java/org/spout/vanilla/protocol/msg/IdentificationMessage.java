@@ -82,8 +82,6 @@ public final class IdentificationMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "IdentificationMessage{id=" + id + ",name=" + name + ",seed=" + seed +
-			",gameMode=" + mode + ",dimension=" + dimension + ",difficulty=" +
-			difficulty + ",worldHeight=" + worldHeight + ",maxPlayers=" + maxPlayers + ",worldtype=" + worldType + "}";
+		return "IdentificationMessage{id=" + id + ",name=" + name + ",seed=" + seed + ",gameMode=" + mode + ",dimension=" + dimension + ",difficulty=" + difficulty + ",worldHeight=" + worldHeight + ",maxPlayers=" + maxPlayers + ",worldtype=" + worldType + "}";
 	}
 }

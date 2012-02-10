@@ -25,6 +25,8 @@
  */
 package org.spout.vanilla;
 
+import java.net.InetSocketAddress;
+
 import org.spout.api.Game;
 import org.spout.api.Server;
 import org.spout.api.command.CommandRegistrationsFactory;
@@ -49,8 +51,6 @@ import org.spout.vanilla.generator.theend.TheEndGenerator;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 
-import java.net.InetSocketAddress;
-
 public class VanillaPlugin extends CommonPlugin {
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
 	public static int vanillaProtocolId;
@@ -72,7 +72,7 @@ public class VanillaPlugin extends CommonPlugin {
 				try {
 					port = Integer.parseInt(split[1]);
 				} catch (NumberFormatException e) {
-					System.out.println(split[1]+" is not a valid port number! Defaulting to " + port + "!");
+					System.out.println(split[1] + " is not a valid port number! Defaulting to " + port + "!");
 				}
 			}
 
@@ -103,8 +103,8 @@ public class VanillaPlugin extends CommonPlugin {
 		spawnWorld = getGame().loadWorld("world", new NormalGenerator());
 
 		// TODO - Should probably be auto-set by generator
-		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0.5F, 64.5F, 0.5F), Quaternion.identity , Vector3.ONE));
-		spawnWorld.createAndSpawnEntity(new Point(spawnWorld,0.f, 0.f, 0.f), new NormalSky());
+		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
+		spawnWorld.createAndSpawnEntity(new Point(spawnWorld, 0.f, 0.f, 0.f), new NormalSky());
 
 		World nether = getGame().loadWorld("world_nether", new NetherGenerator());
 		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), new NetherSky());
@@ -112,6 +112,6 @@ public class VanillaPlugin extends CommonPlugin {
 		World end = getGame().loadWorld("world_end", new TheEndGenerator());
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), new TheEndSky());
 
-		getLogger().info("enabled. Protocol: " + this.getDescription().getProtocol());
+		getLogger().info("enabled. Protocol: " + getDescription().getProtocol());
 	}
 }

@@ -35,7 +35,7 @@ public class NormalSky extends Controller {
 	final String timeKey = "worldTime";
 
 	final float maxTime = 12000;
-	final float gameSecondsPerSecond = 1.f/0.013f; // ~0.013 MCseconds per RL second.
+	final float gameSecondsPerSecond = 1.f / 0.013f; // ~0.013 MCseconds per RL second.
 	float time = 0;
 
 	Weather currentWeather;
@@ -48,7 +48,7 @@ public class NormalSky extends Controller {
 	public void onAttached() {
 		currentWeather = Weather.CLEAR;
 		forecast = Weather.CLEAR;
-		timeUntilWeatherChange = rng.nextFloat() * (5 * 60); //Max 5min till pattern change
+		timeUntilWeatherChange = rng.nextFloat() * 5 * 60; //Max 5min till pattern change
 	}
 
 	@Override
@@ -56,18 +56,18 @@ public class NormalSky extends Controller {
 		time = (time + gameSecondsPerSecond * dt) % maxTime;
 
 		timeUntilWeatherChange -= dt;
-		if(timeUntilWeatherChange <= 0.0f){
+		if (timeUntilWeatherChange <= 0.0f) {
 			changeWeatherPattern(forecast);
-			switch(rng.nextInt(3)){
-			case 0:
-				forecast = Weather.CLEAR;
-				break;
-			case 1:
-				forecast = Weather.RAIN;
-				break;
-			case 2:
-				forecast = Weather.THUNDERSTORM;
-				break;
+			switch (rng.nextInt(3)) {
+				case 0:
+					forecast = Weather.CLEAR;
+					break;
+				case 1:
+					forecast = Weather.RAIN;
+					break;
+				case 2:
+					forecast = Weather.THUNDERSTORM;
+					break;
 			}
 		}
 
@@ -76,11 +76,12 @@ public class NormalSky extends Controller {
 		//parent.setMetadata(weatherKey, currentWeather.getId());
 	}
 
-	public void changeWeatherPattern(Weather pattern){
+	public void changeWeatherPattern(Weather pattern) {
 		currentWeather = pattern;
 		//Throw the event here
 	}
 
+	@Override
 	public void preSnapshot() {
 	}
 }

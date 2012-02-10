@@ -49,6 +49,7 @@ public final class HandlerLookupService extends org.spout.api.protocol.HandlerLo
 		handlers.put(clazz, handler);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends Message> MessageHandler<T> find(Class<T> clazz) {
 		return (MessageHandler<T>) handlers.get(clazz);

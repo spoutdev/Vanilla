@@ -37,7 +37,7 @@ public abstract class AbstractAttachable extends GenericBlock implements Attacha
 	protected AbstractAttachable(String name, int id) {
 		super(name, id);
 	}
-	
+
 	protected AbstractAttachable(String name, int id, int data) {
 		super(name, id, data);
 	}
@@ -46,19 +46,19 @@ public abstract class AbstractAttachable extends GenericBlock implements Attacha
 	public boolean hasPhysics() {
 		return true;
 	}
-	
+
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
-		if(getBlockAttachedTo(world, x, y, z).getBlockMaterial().equals(VanillaMaterials.AIR)) {
+		if (getBlockAttachedTo(world, x, y, z).getBlockMaterial().equals(VanillaMaterials.AIR)) {
 			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, world);
 		}
 	}
-	
+
 	@Override
 	public Block getBlockAttachedTo(World world, int x, int y, int z) {
 		BlockFace base = getFaceAttachedTo(world.getBlockData(x, y, z));
 		Vector3 offset = base.getOffset();
 		return world.getBlock((int) (x + offset.getX()), (int) (y + offset.getY()), (int) (z + offset.getZ()));
 	}
-	
+
 }

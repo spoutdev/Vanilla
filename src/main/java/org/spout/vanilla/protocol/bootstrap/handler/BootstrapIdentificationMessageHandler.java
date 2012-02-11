@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.protocol.bootstrap.handler;
 
-import org.spout.api.Commons;
 import org.spout.api.event.Event;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.player.Player;
@@ -36,9 +35,7 @@ import org.spout.vanilla.protocol.msg.IdentificationMessage;
 public class BootstrapIdentificationMessageHandler extends MessageHandler<IdentificationMessage> {
 	@Override
 	public void handle(Session session, Player player, IdentificationMessage message) {
-		if (Commons.isSpout) {
-			Event event = new PlayerConnectEvent(session, message.getName());
-			session.getGame().getEventManager().callEvent(event);
-		}
+		Event event = new PlayerConnectEvent(session, message.getName());
+		session.getGame().getEventManager().callEvent(event);
 	}
 }

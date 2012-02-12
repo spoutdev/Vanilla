@@ -26,6 +26,7 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -46,13 +47,11 @@ public final class PositionMessageHandler extends MessageHandler<PositionMessage
 		}
 
 		message.getStance();
-		double x = message.getX();
-		double y = message.getY();
-		double z = message.getZ();
-
-		entity.setX((float) x);
-		entity.setY((float) y);
-		entity.setZ((float) z);
+		float x = (float)message.getX();
+		float y = (float)message.getY();
+		float z = (float) message.getZ();
+		entity.setPosition(new Point(entity.getWorld(),x,y,z));
+		
 	}
 
 	public void handleClient(Session session, Player player, PositionRotationMessage message) {

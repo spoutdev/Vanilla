@@ -148,7 +148,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		owner.getSession().send(CCMsg);
 	}
 
-	@Override
 	protected void sendPosition(Transform t) {
 		Point p = t.getPosition();
 		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), 0, 0, true);

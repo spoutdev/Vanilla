@@ -44,21 +44,13 @@ public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable 
 
 	public PlayerRespawnEvent(Entity e, Point point, boolean bedRespawn) {
 		super(e, point);
-		this.bedRespawn = bedRespawn;
-	}
-
-	/**
-	 * Overrides setEntity from the parent to make sure the proper entity is set.
-	 * @param e The new entity to be set.
-	 * @throws InvalidControllerException Only thrown if the controller trying to be set is invalid.
-	 */
-	@Override
-	public void setEntity(Entity e) throws InvalidControllerException {
 		if (!(e.getController() instanceof PlayerController)) {
 			throw new InvalidControllerException();
 		}
-		super.setEntity(e);
+		this.bedRespawn = bedRespawn;
 	}
+
+	
 
 	/**
 	 * Gets the player associated in this event.

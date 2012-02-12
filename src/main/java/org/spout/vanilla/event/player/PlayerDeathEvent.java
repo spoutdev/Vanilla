@@ -41,20 +41,11 @@ public class PlayerDeathEvent extends VanillaEntityDeathEvent implements Cancell
 
 	public PlayerDeathEvent(Entity e) {
 		super(e);
-	}
-
-	/**
-	 * Overrides setEntity from the parent to make sure the proper entity is set.
-	 * @param e The new entity to be set.
-	 * @throws InvalidControllerException Only thrown if the controller trying to be set is invalid.
-	 */
-	@Override
-	public void setEntity(Entity e) throws InvalidControllerException {
 		if (!(e.getController() instanceof PlayerController)) {
 			throw new InvalidControllerException();
 		}
-		super.setEntity(e);
 	}
+
 
 	/**
 	 * Gets the player associated in this event.

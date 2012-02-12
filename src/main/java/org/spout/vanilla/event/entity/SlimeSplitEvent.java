@@ -50,19 +50,6 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 	}
 
 	/**
-	 * Overrides setEntity from the parent to make sure the proper entity is set.
-	 * @param e The new entity to be set.
-	 * @throws InvalidControllerException Only thrown if the controller trying to be set is invalid.
-	 */
-	@Override
-	public void setEntity(Entity e) throws InvalidControllerException {
-		if (!(e.getController() instanceof Slime)) {
-			throw new InvalidControllerException();
-		}
-		super.setEntity(e);
-	}
-
-	/**
 	 * Gets the amount of slimes to spawn.
 	 * @return The amount of slimes to spawn.
 	 */

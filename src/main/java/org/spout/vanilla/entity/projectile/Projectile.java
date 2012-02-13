@@ -49,14 +49,15 @@ public class Projectile extends Controller {
 
 	@Override
 	public void onAttached() {
-		//parent.setRotation(rotation);
-		parent.setPosition(start);
+		parent.getTransform().setRotation(rotation);
+		parent.getTransform().setPosition(start);
 	}
 
 	@Override
 	public void onTick(float dt) {
+		Transform t = parent.getTransform();
 		//position += velocity.transform(rotation) * dt;
-		//parent.setPosition(parent.getPosition().add(velocity.transform(t.getRotation()).multiply(dt)));
+		t.setPosition(t.getPosition().add(velocity.transform(t.getRotation()).multiply(dt)));
 	}
 
 	@Override

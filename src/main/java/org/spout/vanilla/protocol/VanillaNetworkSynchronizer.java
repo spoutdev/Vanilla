@@ -216,7 +216,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			return;
 		}
 
-		Controller c = e.getController();
+		Controller c = e.getLiveController();
 		if (c != null) {
 			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
 			if (ep != null) {
@@ -263,7 +263,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (!activeEntities.contains(e.getId())) {
 			return;
 		}
-		Controller c = e.getController();
+		Controller c = e.getLiveController();
 		if (c != null) {
 			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
 			if (ep != null) {

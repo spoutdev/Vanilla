@@ -26,6 +26,10 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.geo.discrete.atomic.Transform;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -50,9 +54,10 @@ public final class PositionMessageHandler extends MessageHandler<PositionMessage
 		double y = message.getY();
 		double z = message.getZ();
 
-		entity.setX((float) x);
-		entity.setY((float) y);
-		entity.setZ((float) z);
+		Transform liveTransform = entity.getLiveTransform();
+		World w = liveTransform.getPosition().getWorld();
+		// TODO - include rotation
+		entity.setTransform(new Transform(new Point(w, (float) x, ((float) y), (float) z), liveTransform.getRotation(), Vector3.Forward));
 	}
 
 	public void handleClient(Session session, Player player, PositionRotationMessage message) {

@@ -28,6 +28,7 @@ package org.spout.vanilla.entity.objects;
 import java.util.Random;
 
 import org.spout.api.entity.Controller;
+import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.math.Vector3;
 
 public class PrimedTnt extends Controller {
@@ -52,7 +53,8 @@ public class PrimedTnt extends Controller {
 		}
 
 		//Move in a random direction and apply gravity.
-		parent.setPosition(parent.getPosition().add(velocity.multiply(dt)).add(gravity.multiply(dt)));
+		Transform t = parent.getTransform();
+		t.setPosition(t.getPosition().add(velocity.multiply(dt)).add(gravity.multiply(dt)));
 
 	}
 

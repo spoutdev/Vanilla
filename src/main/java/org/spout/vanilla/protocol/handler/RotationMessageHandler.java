@@ -26,6 +26,9 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.atomic.Transform;
+import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -46,7 +49,7 @@ public final class RotationMessageHandler extends MessageHandler<RotationMessage
 
 		float pitch = message.getPitch();
 		float rot = message.getRotation();
-		
-		entity.setYaw(rot);
-		entity.setPitch(pitch);	}
+		// TODO - is this rotation correct?
+		entity.setTransform(new Transform(entity.getLiveTransform().getPosition(), new Quaternion(pitch, Vector3.UNIT_Z).rotate(rot, Vector3.UNIT_Y), Vector3.Forward));
+	}
 }

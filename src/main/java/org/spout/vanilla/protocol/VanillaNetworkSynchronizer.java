@@ -34,7 +34,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
@@ -149,9 +148,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	}
 
 	@Override
-	protected void sendPosition(Transform t) {
-		Point p = t.getPosition();
-		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), 0, 0, true);
+	protected void sendPosition(Point p, float yaw, float pitch) {
+		//TODO: Implement Spout Protocol
+		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), yaw, pitch, true);
 		owner.getSession().send(PRMsg);
 	}
 

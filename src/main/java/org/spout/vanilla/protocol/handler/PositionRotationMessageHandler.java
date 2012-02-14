@@ -26,11 +26,6 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.geo.World;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.atomic.Transform;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -57,14 +52,9 @@ public final class PositionRotationMessageHandler extends MessageHandler<Positio
 		double y = message.getY();
 		double z = message.getZ();
 
-		Transform liveTransform = entity.getLiveTransform();
-		
-		liveTransform.getPosition().setX((float) x);
-		liveTransform.getPosition().setX((float) y);
-		liveTransform.getPosition().setX((float) z);
-		
-		// TODO - is this rotation correct?
-		liveTransform.getRotation().rotate(rot, Vector3.UNIT_Y);
+		entity.setPosition((float) x, (float) y, (float) z);
+		entity.setYaw(rot);
+		entity.setPitch(pitch);
 	}
 
 	@Override

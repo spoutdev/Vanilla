@@ -26,7 +26,6 @@
 package org.spout.vanilla;
 
 import org.spout.api.Game;
-import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -62,48 +61,5 @@ public class VanillaEventListener implements Listener {
 		Entity playerEntity = player.getEntity();
 		playerEntity.setController(new SurvivalPlayer(player));
 		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
-
-		/*Point point = playerEntity.getLiveTransform().getPosition();
-		float pitch = playerEntity.getLiveTransform().getRotation().getAxisAngles().getZ();
-		float yaw = playerEntity.getLiveTransform().getRotation().getAxisAngles().getY();
-
-		//Inform existing players of the new player
-		Message update = new SpawnPlayerMessage(playerEntity.getId(), event.getPlayer().getName(),
-			(int)(point.getX() * 32), (int)(point.getY() * 32), (int)(point.getZ() * 32),
-			(int)(yaw  * 256.0F / 360.0F), (int)(pitch * 256.0F / 360.0F), 0);
-
-		for (Player p : plugin.getGame().getOnlinePlayers()) {
-			if (!p.equals(event.getPlayer()))
-				p.getSession().send(update);
-		}*/
-
-		game.getScheduler().scheduleSyncDelayedTask(plugin, new LoginRunnable(player), 1L);
-	}
-}
-
-//Can not do this immediately, player has not been sent world yet. :/
-class LoginRunnable implements Runnable {
-	Player player;
-
-	public LoginRunnable(Player player) {
-		this.player = player;
-	}
-
-	public void run() {
-		if (player.isOnline()) {
-			//Inform the new player of existing players
-			for (Player p : Spout.getGame().getOnlinePlayers()) {
-				if (!p.equals(player)) {
-					p.getEntity().getLiveTransform().getPosition();
-					p.getEntity().getLiveTransform().getRotation().getAxisAngles().getZ();
-					p.getEntity().getLiveTransform().getRotation().getAxisAngles().getY();
-
-					/*player.getSession().send(
-						new SpawnPlayerMessage(p.getEntity().getId(), p.getName(), (int)(playerPoint.getX() * 32),
-						(int)(playerPoint.getY() * 32), (int)(playerPoint.getZ() * 32),
-						(int)(playerYaw  * 256.0F / 360.0F), (int)(playerPitch * 256.0F / 360.0F), 0));*/
-				}
-			}
-		}
 	}
 }

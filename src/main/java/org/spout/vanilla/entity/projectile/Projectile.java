@@ -27,7 +27,6 @@ package org.spout.vanilla.entity.projectile;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
@@ -49,15 +48,17 @@ public class Projectile extends Controller {
 
 	@Override
 	public void onAttached() {
-		parent.getTransform().setRotation(rotation);
-		parent.getTransform().setPosition(start);
+		Vector3 rotation = this.rotation.getAxisAngles();
+		parent.setRoll(rotation.getX());
+		parent.setYaw(rotation.getY());
+		parent.setPitch(rotation.getZ());
+		parent.setPosition(start);
 	}
 
 	@Override
 	public void onTick(float dt) {
-		Transform t = parent.getTransform();
 		//position += velocity.transform(rotation) * dt;
-		t.setPosition(t.getPosition().add(velocity.transform(t.getRotation()).multiply(dt)));
+		//parent.setPosition(parent.getPosition().add(velocity.transform(t.getRotation()).multiply(dt)));
 	}
 
 	@Override

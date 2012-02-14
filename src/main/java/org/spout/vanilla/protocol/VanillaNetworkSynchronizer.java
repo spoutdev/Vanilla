@@ -51,6 +51,7 @@ import org.spout.vanilla.protocol.msg.PositionRotationMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
+	@SuppressWarnings("unused")
 	private final static int POSITION_UPDATE_TICKS = 20;
 	private final static double STANCE = 1.6D;
 	private final static int TIMEOUT = 15000;
@@ -215,7 +216,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			return;
 		}
 
-		Controller c = e.getLiveController();
+		Controller c = e.getController();
 		if (c != null) {
 			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
 			if (ep != null) {
@@ -262,7 +263,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (!activeEntities.contains(e.getId())) {
 			return;
 		}
-		Controller c = e.getLiveController();
+		Controller c = e.getController();
 		if (c != null) {
 			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
 			if (ep != null) {

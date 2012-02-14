@@ -25,18 +25,10 @@
  */
 package org.spout.vanilla.entity;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector3m;
-import org.spout.api.protocol.Message;
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.entity.living.player.MinecraftPlayer;
-import org.spout.vanilla.protocol.msg.EntityRotationMessage;
-import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
-import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
-import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
 
 /**
  * Moving entity controller
@@ -60,8 +52,7 @@ public abstract class MovingEntity extends MinecraftEntity {
 	}
 
 	private void updateMovement(float dt) {
-		Transform t = parent.getLiveTransform();
-		t.setPosition(t.getPosition().add(velocity));
+		parent.setPosition(parent.getPosition().add(velocity));
 		//TODO: collision
 	}
 
@@ -71,7 +62,7 @@ public abstract class MovingEntity extends MinecraftEntity {
 	}
 
 	private void checkWeb() {
-		Point pos = parent.getTransform().getPosition();
+		Point pos = parent.getPosition();
 		if (pos.getWorld().getBlock(pos).getBlockMaterial().equals(VanillaMaterials.WEB)) {
 			velocity.set(Vector3.ZERO);
 		}

@@ -49,10 +49,10 @@ public class FallingBlock extends MovingEntity {
 
 	@Override
 	public void onTick(float dt) {
-		if (parent == null || parent.getTransform() == null) {
+		if (parent == null || parent.getWorld() == null) {
 			return;
 		}
-		Point position = parent.getTransform().getPosition();
+		Point position = parent.getPosition();
 		if (position == null) {
 			return;
 		}
@@ -79,7 +79,7 @@ public class FallingBlock extends MovingEntity {
 			spawnId = 71;
 		}
 		if (spawnId > 0) {
-			Point position = parent.getTransform().getPosition();
+			Point position = parent.getPosition();
 			int x = MathHelper.floor(position.getX());
 			int y = MathHelper.floor(position.getY());
 			int z = MathHelper.floor(position.getZ());

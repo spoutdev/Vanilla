@@ -26,6 +26,8 @@
 package org.spout.vanilla.entity.living.player;
 
 import org.spout.api.entity.PlayerController;
+import org.spout.api.geo.discrete.atomic.Transform;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
@@ -51,7 +53,13 @@ public abstract class MinecraftPlayer extends PlayerController {
 
 	@Override
 	public void onAttached() {
-		parent.setTransform(VanillaPlugin.spawnWorld.getSpawnPoint());
+		Transform spawn = VanillaPlugin.spawnWorld.getSpawnPoint();
+		parent.setPosition(spawn.getPosition());
+		Vector3 rotation = spawn.getRotation().getAxisAngles();
+		parent.setRoll(rotation.getX());
+		parent.setYaw(rotation.getY());
+		parent.setPitch(rotation.getZ());
+		parent.setScale(spawn.getScale());
 	}
 
 	@Override

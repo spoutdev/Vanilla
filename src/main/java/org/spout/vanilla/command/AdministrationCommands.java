@@ -25,11 +25,17 @@
  */
 package org.spout.vanilla.command;
 
+import java.util.Set;
+
+import org.spout.api.Spout;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.exception.CommandException;
+import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.player.Player;
+import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
 
 /**
@@ -58,5 +64,33 @@ public class AdministrationCommands {
 	public void weather(CommandContext args, CommandSource source) throws CommandException {
 		source.sendMessage("Weather worked.");
 		//TODO implement weather.
+	}
+	
+	@Command(aliases = "debug", usage = "[type] (/resend /resendall)", desc = "Debug commands", max = 1)
+	//@CommandPermissions("vanilla.command.debug")
+	public void debug(CommandContext args, CommandSource source) throws CommandException {
+		Player player = null;
+		if (source instanceof Player) {
+			player = (Player)source;
+		}
+		else {
+			player = Spout.getGame().getPlayer(args.getString(1, ""), true);
+			if (player == null) {
+				source.sendMessage("Must be a player or send player name in arguments");
+				return;
+			}
+		}
+		if (args.getString(0, "").contains("resendall")) {
+			NetworkSynchronizer network = player.getNetworkSynchronizer();
+			Set<Chunk> chunks = network.getActiveChunks();
+			for (Chunk c : chunks) {
+				network.sendChunk(c);
+			}
+			source.sendMessage("All chunks resent");
+		}
+		else if (args.getString(0, "").contains("resend")) {
+			player.getNetworkSynchronizer().sendChunk(player.getEntity().getChunk());
+			source.sendMessage("Chunk resent");
+		}
 	}
 }

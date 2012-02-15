@@ -47,7 +47,7 @@ public class PlainBiome extends BiomeType {
 	ArrayList<Perlin> layers = new ArrayList<Perlin>();
 
 	public PlainBiome() {
-		super(new CaveDecorator(), new FlowerDecorator(), new GrassDecorator(), new PondDecorator(), new TreeDecorator(), new BeachDecorator());
+		super(new CaveDecorator(), new FlowerDecorator(), new GrassDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator());
 
 		layerCount.setOctaveCount(5);
 		heightMap.setOctaveCount(5);

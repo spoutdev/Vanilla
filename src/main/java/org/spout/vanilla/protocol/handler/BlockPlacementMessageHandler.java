@@ -31,6 +31,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
@@ -105,23 +106,27 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 					sendRevert = true;
 				}
 			}*/
-			Material placedId = holding.getMaterial();
-			if (placedId.getId() > 255) {
+			Material placedMaterial = holding.getMaterial();
+			if (placedMaterial instanceof ItemMaterial) {
+				((ItemMaterial)placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK);
+				return;
+			}
+			if (placedMaterial.getId() > 255) {
 				//placedId = ItemProperties.get(placedId.getItemTypeId()).getPhysics().getPlacedBlock(face, holding.getDurability()); //TODO: Implement items (they are not in yet!)
 				return;
 			}
-			if (placedId.getId() < 0) {
+			if (placedMaterial.getId() < 0) {
 				sendRevert = true;
 			}
 
-			short placedData = placedId.getData();
+			short placedData = placedMaterial.getData();
 
-			if (placedId instanceof Attachable) {
-				Attachable attachable = (Attachable) placedId;
+			if (placedMaterial instanceof Attachable) {
+				Attachable attachable = (Attachable) placedMaterial;
 				placedData = attachable.getDataForFace(face.getOpposite());
 			}
 
-			Block newBlock = (Block) placedId;
+			Block newBlock = (Block) placedMaterial;
 			Block oldBlock = target != null ? (Block) target.getBlockMaterial() : null;
 
 			if (!sendRevert && (oldBlock == null || oldBlock.isLiquid() || oldBlock.getId() == 0)) {

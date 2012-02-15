@@ -23,22 +23,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.generic;
+package org.spout.vanilla.material;
 
-import org.spout.api.material.GenericItemMaterial;
-import org.spout.vanilla.material.Item;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.ItemMaterial;
 
-public class GenericItem extends GenericItemMaterial implements Item {
-
-	public GenericItem(String name, int id) {
-		super(name, id);
-	}
-
-	public GenericItem(String name, int id, int data, boolean subtypes) {
-		super(name, id, data, subtypes);
-	}
-
-	public GenericItem(String name, int id, int data) {
-		super(name, id, data);
-	}
+public interface BlockItem extends ItemMaterial {
+	
+	public BlockMaterial getBlock();
 }

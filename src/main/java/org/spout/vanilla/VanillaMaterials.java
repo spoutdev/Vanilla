@@ -45,6 +45,7 @@ import org.spout.vanilla.material.block.StoneBrick;
 import org.spout.vanilla.material.block.Tree;
 import org.spout.vanilla.material.block.Wool;
 import org.spout.vanilla.material.generic.GenericArmor;
+import org.spout.vanilla.material.generic.GenericBlockItem;
 import org.spout.vanilla.material.generic.GenericFood;
 import org.spout.vanilla.material.generic.GenericItem;
 import org.spout.vanilla.material.generic.GenericLiquid;
@@ -278,7 +279,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial GOLD_CHESTPLATE = new GenericArmor("Gold Chestplate", 315);
 	public static final ItemMaterial GOLD_LEGGINGS = new GenericArmor("Gold Leggings", 316);
 	public static final ItemMaterial GOLD_BOOTS = new GenericArmor("Gold Boots", 317);
-	public static final ItemMaterial FLINT = new GenericItem("Flint", 318, 0, true);
+	public static final ItemMaterial FLINT = new GenericItem("Flint", 318, 0);
 	public static final ItemMaterial RAW_PORKCHOP = new GenericFood("Raw Porkchop", 319, 3);
 	public static final ItemMaterial COOKED_PORKCHOP = new GenericFood("Cooked Porkchop", 320, 8);
 	public static final ItemMaterial PAINTINGS = new GenericItem("Paintings", 321);
@@ -291,7 +292,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial MINECART = new GenericItem("Minecart", 328);
 	public static final ItemMaterial SADDLE = new GenericItem("Saddle", 329);
 	public static final ItemMaterial IRON_DOOR = new GenericItem("Iron Door", 330);
-	public static final ItemMaterial REDSTONE = new GenericItem("Redstone", 331);
+	public static final ItemMaterial REDSTONE = new GenericBlockItem("Redstone", 331, VanillaMaterials.REDSTONE_WIRE);
 	public static final ItemMaterial SNOWBALL = new GenericItem("Snowball", 332);
 	public static final ItemMaterial BOAT = new GenericItem("Boat", 333);
 	public static final ItemMaterial LEATHER = new GenericItem("Leather", 334);

@@ -30,11 +30,9 @@ import gnu.trove.set.hash.TIntHashSet;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
@@ -190,10 +188,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	}
 
 	@Override
-	public void updateBlock(Chunk chunk, Block block) {
-		BlockMaterial material = chunk.getBlockMaterial(block.getX(), block.getY(), block.getZ());
-		short id = material.getId();
-		short data = block.getWorld().getBlockData(block.getX(), block.getY(), block.getZ());
+	public void updateBlock(Chunk chunk, int x, int y, int z, short id, short data) {
 		// TODO - proper translation
 		if ((id & 0xFF) > 255) {
 			id = 1;
@@ -201,9 +196,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if ((data & 0xF) > 15) {
 			data = 0;
 		}
-		int x = (chunk.getX() << Chunk.CHUNK_SIZE_BITS) + block.getX();
-		int y = (chunk.getY() << Chunk.CHUNK_SIZE_BITS) + block.getY();
-		int z = (chunk.getZ() << Chunk.CHUNK_SIZE_BITS) + block.getZ();
+		x = (chunk.getX() << Chunk.CHUNK_SIZE_BITS) + x;
+		y = (chunk.getY() << Chunk.CHUNK_SIZE_BITS) + y;
+		z = (chunk.getZ() << Chunk.CHUNK_SIZE_BITS) + z;
 		if (y >= 0 && y < 128) {
 			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id & 0xFF, data & 0xF);
 			session.send(BCM);

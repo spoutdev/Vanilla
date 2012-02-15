@@ -94,7 +94,7 @@ public class RedstoneTorch extends WallAttachable implements RedstoneSource, Red
 			}
 			if (updateId != getId()) {
 				short data = world.getBlockData(x, y, z);
-				world.setBlockIdAndData(x, y, z, updateId, data, false, world);
+				world.setBlockIdAndData(x, y, z, updateId, data, false, true, world);
 
 				//Update other redstone inputs
 				for (Vector3 offset2 : possibleOutgoing) {//TODO changed the values below from offset to offset2

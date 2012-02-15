@@ -35,6 +35,7 @@ import org.spout.api.material.MaterialData;
 import org.spout.vanilla.material.attachable.GroundAttachable;
 import org.spout.vanilla.material.attachable.WallAttachable;
 import org.spout.vanilla.material.block.Air;
+import org.spout.vanilla.material.block.Cactus;
 import org.spout.vanilla.material.block.DoubleSlab;
 import org.spout.vanilla.material.block.Grass;
 import org.spout.vanilla.material.block.LongGrass;
@@ -172,7 +173,7 @@ public final class VanillaMaterials {
 	public static final BlockMaterial SNOW = new Solid("Snow", 78);
 	public static final BlockMaterial ICE = new Solid("Ice", 79);
 	public static final BlockMaterial SNOW_BLOCK = new Solid("Snow Block", 80);
-	public static final BlockMaterial CACTUS = new Solid("Cactus", 81);
+	public static final BlockMaterial CACTUS = new Cactus("Cactus", 81);
 	public static final BlockMaterial CLAY_BLOCK = new Solid("Clay Block", 82);
 	public static final BlockMaterial SUGAR_CANE_BLOCK = new Solid("Sugar Cane", 83);
 	public static final BlockMaterial JUKEBOX = new Solid("Jukebox", 84);

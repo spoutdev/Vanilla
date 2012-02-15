@@ -32,6 +32,7 @@ import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeType;
 import org.spout.vanilla.generator.normal.decorator.CactusDecorator;
 import org.spout.vanilla.generator.normal.decorator.CaveDecorator;
+import org.spout.vanilla.generator.normal.decorator.DungeonDecorator;
 import org.spout.vanilla.generator.normal.decorator.OreDecorator;
 
 /**
@@ -41,7 +42,7 @@ public class DesertBiome extends BiomeType {
 	private Perlin heightMap = new Perlin();
 
 	public DesertBiome() {
-		super(new CactusDecorator(), new OreDecorator(), new CaveDecorator());
+		super(new CactusDecorator(), new OreDecorator(), new CaveDecorator(), new DungeonDecorator());
 		heightMap.setOctaveCount(5);
 	}
 

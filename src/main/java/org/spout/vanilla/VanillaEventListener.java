@@ -49,14 +49,12 @@ public class VanillaEventListener implements Listener {
 	//TODO Any reason to broadcast a player connects besides for debug? Perhaps only to the console and not players.
 	@EventHandler
 	public void onPlayerConnect(PlayerConnectEvent event) {
-		game.getLogger().info("Player connected: " + event.getPlayerName());
+		
 	}
 
 	@EventHandler(order = Order.EARLIEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-
-		game.broadcastMessage(player.getName() + " has joined the game");
 		// Set the player's controller
 		// For now, only create Creative Players
 		Entity playerEntity = player.getEntity();

@@ -33,6 +33,7 @@ import org.spout.api.event.Order;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.player.Player;
+import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 
@@ -57,9 +58,9 @@ public class VanillaEventListener implements Listener {
 
 		game.broadcastMessage(player.getName() + " has joined the game");
 		// Set the player's controller
-		// For now, only create Survival Players
+		// For now, only create Creative Players
 		Entity playerEntity = player.getEntity();
-		playerEntity.setController(new SurvivalPlayer(player));
+		playerEntity.setController(new CreativePlayer(player));
 		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
 	}
 }

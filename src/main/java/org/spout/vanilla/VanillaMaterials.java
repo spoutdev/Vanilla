@@ -217,6 +217,9 @@ public final class VanillaMaterials {
 	public static final BlockMaterial END_PORTAL_FRAME = new Solid("End Portal Frame", 120);
 	public static final BlockMaterial END_STONE = new Solid("End Stone", 121);
 	public static final BlockMaterial DRAGON_EGG = new Solid("Dragon Egg", 122);
+	
+	/* Items */
+	
 	public static final ItemMaterial IRON_SHOVEL = new GenericTool("Iron Shovel", 256);
 	public static final ItemMaterial IRON_PICKAXE = new GenericTool("Iron Pickaxe", 257);
 	public static final ItemMaterial IRON_AXE = new GenericTool("Iron Axe", 258);
@@ -331,7 +334,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial BONE_MEAL = new Dye("Bone Meal", 351, 15);
 	public static final ItemMaterial BONE = new GenericItem("Bone", 352);
 	public static final ItemMaterial SUGAR = new GenericItem("Sugar", 353);
-	public static final ItemMaterial CAKE = new GenericItem("Cake", 354);
+	public static final ItemMaterial CAKE = new GenericBlockItem("Cake", 354, VanillaMaterials.CAKE_BLOCK);
 	public static final ItemMaterial BED = new GenericItem("Bed", 355);
 	public static final ItemMaterial REDSTONE_REPEATER = new GenericItem("Redstone Repeater", 356);
 	public static final ItemMaterial COOKIE = new GenericFood("Cookie", 357, 1);
@@ -356,8 +359,8 @@ public final class VanillaMaterials {
 	public static final ItemMaterial FERMENTED_SPIDER_EYE = new GenericItem("Fermented Spider Eye", 376);
 	public static final ItemMaterial BLAZE_POWDER = new GenericItem("Blaze Powder", 377);
 	public static final ItemMaterial MAGMA_CREAM = new GenericItem("Magma Cream", 378);
-	public static final ItemMaterial BREWING_STAND = new GenericItem("Brewing Stand", 379);
-	public static final ItemMaterial CAULDRON = new GenericItem("Cauldron", 380);
+	public static final ItemMaterial BREWING_STAND = new GenericBlockItem("Brewing Stand", 379, VanillaMaterials.BREWING_STAND_BLOCK);
+	public static final ItemMaterial CAULDRON = new GenericBlockItem("Cauldron", 380, VanillaMaterials.CAULDRON_BLOCK);
 	public static final ItemMaterial EYE_OF_ENDER = new GenericItem("Eye of Ender", 381);
 	public static final ItemMaterial GLISTERING_MELON = new GenericItem("Glistering Melon", 382);
 	public static final ItemMaterial CREEPER_SPAWN_EGG = new GenericItem("Spawn Creeper", 383, 50);

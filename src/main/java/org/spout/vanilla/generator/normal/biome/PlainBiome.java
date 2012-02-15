@@ -34,6 +34,7 @@ import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeType;
 import org.spout.vanilla.generator.normal.decorator.BeachDecorator;
 import org.spout.vanilla.generator.normal.decorator.CaveDecorator;
+import org.spout.vanilla.generator.normal.decorator.DungeonDecorator;
 import org.spout.vanilla.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.generator.normal.decorator.GrassDecorator;
 import org.spout.vanilla.generator.normal.decorator.PondDecorator;
@@ -47,7 +48,7 @@ public class PlainBiome extends BiomeType {
 	ArrayList<Perlin> layers = new ArrayList<Perlin>();
 
 	public PlainBiome() {
-		super(new CaveDecorator(), new FlowerDecorator(), new GrassDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator());
+		super(new CaveDecorator(), new FlowerDecorator(), new GrassDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
 
 		layerCount.setOctaveCount(5);
 		heightMap.setOctaveCount(5);

@@ -28,13 +28,55 @@ package org.spout.vanilla.generator.normal.decorator;
 import java.util.Random;
 
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeDecorator;
 
 /**
  * Decorator that decorates a biome with dungeons.
  */
 public class DungeonDecorator implements BiomeDecorator {
+
+	private final static int HEIGHT = 6;
+	private final static int PROBABILITY = 2000;
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
+		if (random.nextInt(PROBABILITY) == 0) {
+			final int width = random.nextBoolean()?9:7;
+			final int height = random.nextBoolean()?9:7;
+			
+			int cx = chunk.getX() * 16 + random.nextInt(16);
+			int cy = chunk.getY() * 16 + random.nextInt(16);
+			int cz = chunk.getZ() * 16 + random.nextInt(16);
+
+			if(chunk.getWorld().getBlockId(cx, cy, cz) == 0) {
+				return; //No dungeons in the air, plox!
+			}
+			
+			for (int x = cx; x < cx + width; x++) {
+				for (int y = cy; y < cy + HEIGHT; y++) {
+					for(int z = cz; z < cz + height; z++) {
+						short id = 0;
+						if(x == cx || x == cx + width - 1 || z == cz || z == cz + height - 1) {
+							id = VanillaMaterials.COBBLESTONE.getId();
+						}
+						if(y == cy || y == cy + HEIGHT - 1) {
+							id = random.nextBoolean()?VanillaMaterials.COBBLESTONE.getId():VanillaMaterials.MOSS_STONE.getId();
+						}
+						chunk.getWorld().setBlockId(x, y, z, id, chunk.getWorld());
+					}
+				}
+			}
+			
+			chunk.getWorld().setBlockMaterial(cx + width / 2, cy + 1, cz + height / 2, VanillaMaterials.MONSTER_SPAWNER, chunk.getWorld());
+			
+			
+			chunk.getWorld().setBlockMaterial(cx + 1, cy + 1, cz + height / 2, VanillaMaterials.CHEST, chunk.getWorld());
+			
+			
+			chunk.getWorld().setBlockMaterial(cx + width / 2, cy + 1, cz + 1, VanillaMaterials.CHEST, chunk.getWorld());
+			
+			//TODO Fill Chests with stuff, kinda waiting for inventories in worlds.
+		}
 	}
 }

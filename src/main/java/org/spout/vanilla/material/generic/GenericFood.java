@@ -35,6 +35,7 @@ public class GenericFood extends GenericItem implements Food {
 		this.hunger = hunger;
 	}
 
+	@Override
 	public int getHungerRestored() {
 		return hunger;
 	}

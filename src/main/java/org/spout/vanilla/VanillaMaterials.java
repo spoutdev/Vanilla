@@ -47,7 +47,9 @@ import org.spout.vanilla.material.block.Tree;
 import org.spout.vanilla.material.block.Wool;
 import org.spout.vanilla.material.generic.GenericArmor;
 import org.spout.vanilla.material.generic.GenericBlockItem;
+import org.spout.vanilla.material.generic.GenericEmptyBlockContainerItem;
 import org.spout.vanilla.material.generic.GenericFood;
+import org.spout.vanilla.material.generic.GenericFullBlockContainerItem;
 import org.spout.vanilla.material.generic.GenericItem;
 import org.spout.vanilla.material.generic.GenericLiquid;
 import org.spout.vanilla.material.generic.GenericTool;
@@ -217,9 +219,9 @@ public final class VanillaMaterials {
 	public static final BlockMaterial END_PORTAL_FRAME = new Solid("End Portal Frame", 120);
 	public static final BlockMaterial END_STONE = new Solid("End Stone", 121);
 	public static final BlockMaterial DRAGON_EGG = new Solid("Dragon Egg", 122);
-	
+
 	/* Items */
-	
+
 	public static final ItemMaterial IRON_SHOVEL = new GenericTool("Iron Shovel", 256);
 	public static final ItemMaterial IRON_PICKAXE = new GenericTool("Iron Pickaxe", 257);
 	public static final ItemMaterial IRON_AXE = new GenericTool("Iron Axe", 258);
@@ -290,9 +292,9 @@ public final class VanillaMaterials {
 	public static final ItemMaterial GOLDEN_APPLE = new GenericFood("Golden Apple", 322, 10);
 	public static final ItemMaterial SIGN = new GenericItem("Sign", 323);
 	public static final ItemMaterial WOODEN_DOOR = new GenericItem("Wooden Door", 324);
-	public static final ItemMaterial BUCKET = new GenericItem("Bucket", 325);
-	public static final ItemMaterial WATER_BUCKET = new GenericItem("Water Bucket", 326);
-	public static final ItemMaterial LAVA_BUCKET = new GenericItem("Lava Bucket", 327);
+	public static final ItemMaterial BUCKET = new GenericEmptyBlockContainerItem("Bucket", 325);
+	public static final ItemMaterial WATER_BUCKET = new GenericFullBlockContainerItem("Water Bucket", 326, VanillaMaterials.WATER, VanillaMaterials.BUCKET);
+	public static final ItemMaterial LAVA_BUCKET = new GenericFullBlockContainerItem("Lava Bucket", 327, VanillaMaterials.LAVA, VanillaMaterials.BUCKET);
 	public static final ItemMaterial MINECART = new GenericItem("Minecart", 328);
 	public static final ItemMaterial SADDLE = new GenericItem("Saddle", 329);
 	public static final ItemMaterial IRON_DOOR = new GenericItem("Iron Door", 330);

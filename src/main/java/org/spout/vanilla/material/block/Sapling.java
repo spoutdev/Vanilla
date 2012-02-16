@@ -33,14 +33,17 @@ public class Sapling extends GroundAttachable implements Plant {
 		super(name, 6, data);
 	}
 
+	@Override
 	public boolean hasGrowthStages() {
 		return true;
 	}
 
+	@Override
 	public int getNumGrowthStages() {
 		return 3;
 	}
 
+	@Override
 	public int getMinimumLightToGrow() {
 		return 8;
 	}

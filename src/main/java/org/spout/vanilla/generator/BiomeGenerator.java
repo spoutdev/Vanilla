@@ -70,10 +70,12 @@ public abstract class BiomeGenerator implements WorldGenerator {
 		populators.add(populator);
 	}
 
+	@Override
 	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
 		biomes.getBiome(chunkX, chunkZ).generateTerrain(blockData, chunkX, chunkY, chunkZ);
 	}
 
+	@Override
 	public final Populator[] getPopulators() {
 		return populators.toArray(new Populator[populators.size()]);
 	}

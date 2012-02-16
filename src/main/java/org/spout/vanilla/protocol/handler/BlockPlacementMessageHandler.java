@@ -38,6 +38,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
+import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.Item;
 import org.spout.vanilla.material.attachable.Attachable;
@@ -152,14 +153,12 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 					player.getSession().send(new BlockChangeMessage(x, y, z, holding.getMaterial().getId(), placedData));
 				}
 
-				/*if(player.getGameMode() != GameMode.CREATIVE) { //TODO: Gamemode is currently not changeable
+				if(player.getEntity().getController() instanceof SurvivalPlayer) { //TODO: Gamemode is currently not changeable
 					holding.setAmount(holding.getAmount() - 1);
 					if (holding.getAmount() == 0) {
-						player.setItemInHand(null);
-					} else {
-						player.setItemInHand(holding);
+						inventory.setItem(null, inventory.getCurrentSlot());
 					}
-				}*/
+				}
 				//} else {
 				//	sendRevert = true;
 				//}

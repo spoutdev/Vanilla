@@ -52,7 +52,7 @@ public abstract class MovingEntity extends MinecraftEntity {
 	}
 
 	private void updateMovement(float dt) {
-		parent.setPosition(parent.getPosition().add(velocity));
+		parent.setPoint(parent.getPoint().add(velocity));
 		//TODO: collision
 	}
 
@@ -62,7 +62,7 @@ public abstract class MovingEntity extends MinecraftEntity {
 	}
 
 	private void checkWeb() {
-		Point pos = parent.getPosition();
+		Point pos = parent.getPoint();
 		if (pos.getWorld().getBlock(pos).getBlockMaterial().equals(VanillaMaterials.WEB)) {
 			velocity.set(Vector3.ZERO);
 		}

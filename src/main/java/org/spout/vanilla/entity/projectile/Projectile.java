@@ -52,7 +52,7 @@ public class Projectile extends Controller {
 		parent.setRoll(rotation.getX());
 		parent.setYaw(rotation.getY());
 		parent.setPitch(rotation.getZ());
-		parent.setPosition(start);
+		parent.setPoint(start);
 	}
 
 	@Override

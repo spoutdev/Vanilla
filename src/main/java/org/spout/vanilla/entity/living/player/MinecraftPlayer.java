@@ -54,11 +54,8 @@ public abstract class MinecraftPlayer extends PlayerController {
 	@Override
 	public void onAttached() {
 		Transform spawn = VanillaPlugin.spawnWorld.getSpawnPoint();
-		parent.setPosition(spawn.getPosition());
 		Vector3 rotation = spawn.getRotation().getAxisAngles();
-		parent.setRoll(rotation.getX());
-		parent.setYaw(rotation.getY());
-		parent.setPitch(rotation.getZ());
+		parent.setPosition(spawn.getPosition(), rotation.getZ(), rotation.getY(), rotation.getX());
 		parent.setScale(spawn.getScale());
 	}
 

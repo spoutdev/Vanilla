@@ -52,7 +52,7 @@ public class PrimedTnt extends Controller {
 		}
 
 		//Move in a random direction and apply gravity.
-		parent.setPosition(parent.getPosition().add(velocity.multiply(dt)).add(gravity.multiply(dt)));
+		parent.setPoint(parent.getPoint().add(velocity.multiply(dt)).add(gravity.multiply(dt)));
 
 	}
 

@@ -52,7 +52,7 @@ public class FallingBlock extends MovingEntity {
 		if (parent == null || parent.getWorld() == null) {
 			return;
 		}
-		Point position = parent.getPosition();
+		Point position = parent.getPoint();
 		if (position == null) {
 			return;
 		}
@@ -79,7 +79,7 @@ public class FallingBlock extends MovingEntity {
 			spawnId = 71;
 		}
 		if (spawnId > 0) {
-			Point position = parent.getPosition();
+			Point position = parent.getPoint();
 			int x = MathHelper.floor(position.getX());
 			int y = MathHelper.floor(position.getY());
 			int z = MathHelper.floor(position.getZ());

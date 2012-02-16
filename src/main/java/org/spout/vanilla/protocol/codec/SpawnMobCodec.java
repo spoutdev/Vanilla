@@ -48,10 +48,11 @@ public final class SpawnMobCodec extends MessageCodec<SpawnMobMessage> {
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
-		int rotation = buffer.readUnsignedByte();
+		int yaw = buffer.readUnsignedByte();
 		int pitch = buffer.readUnsignedByte();
+		int headYaw = buffer.readUnsignedByte();
 		List<Parameter<?>> parameters = ChannelBufferUtils.readParameters(buffer);
-		return new SpawnMobMessage(id, type, x, y, z, rotation, pitch, parameters);
+		return new SpawnMobMessage(id, type, x, y, z, yaw, pitch, headYaw, parameters);
 	}
 
 	@Override
@@ -62,8 +63,9 @@ public final class SpawnMobCodec extends MessageCodec<SpawnMobMessage> {
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());
 		buffer.writeInt(message.getZ());
-		buffer.writeByte(message.getRotation());
+		buffer.writeByte(message.getYaw());
 		buffer.writeByte(message.getPitch());
+		buffer.writeByte(message.getHeadYaw());
 		ChannelBufferUtils.writeParameters(buffer, message.getParameters());
 		return buffer;
 	}

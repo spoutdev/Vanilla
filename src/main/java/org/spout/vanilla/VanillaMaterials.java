@@ -222,6 +222,9 @@ public final class VanillaMaterials {
 	public static final BlockMaterial END_PORTAL_FRAME = new Solid("End Portal Frame", 120).setHardness(-1.0F);
 	public static final BlockMaterial END_STONE = new Solid("End Stone", 121).setHardness(3.0F).setResistance(15.0F);
 	public static final BlockMaterial DRAGON_EGG = new Solid("Dragon Egg", 122).setHardness(3.0F).setResistance(15.0F);
+	public static final BlockMaterial REDSTONE_LAMP_OFF = new Solid("Redstone Lamp", 123);
+	public static final BlockMaterial REDSTONE_LAMP_ON = new Solid("Redstone Lamp", 124).setLightLevel(15);
+
 	/*
 	 * Items
 	 */
@@ -388,7 +391,9 @@ public final class VanillaMaterials {
 	public static final ItemMaterial WOLF_SPAWN_EGG = new GenericItem("Spawn Wolf", 383, 95);
 	public static final ItemMaterial MOOSHROOM_SPAWN_EGG = new GenericItem("Spawn Mooshroom", 383, 96);
 	public static final ItemMaterial VILLAGER_SPAWN_EGG = new GenericItem("Spawn Villager", 383, 120);
-	//public static final ItemMaterial OCELOT_SPAWN_EGG = new GenericItem("Spawn Ocelot", 383,98);
+	public static final ItemMaterial OCELOT_SPAWN_EGG = new GenericItem("Spawn Ocelot", 383,98);
+	public static final ItemMaterial BOTTLE_O_ENCHANTING = new GenericItem("Bottle o' Enchanting", 384);
+	public static final ItemMaterial FIRE_CHARGE = new GenericItem("Fire Charge", 385);
 	public static final ItemMaterial GOLD_MUSIC_DISC = new GenericItem("Music Disc", 2256);
 	public static final ItemMaterial GREEN_MUSIC_DISC = new GenericItem("Music Disc", 2257);
 	public static final ItemMaterial ORANGE_MUSIC_DISC = new GenericItem("Music Disc", 2258);

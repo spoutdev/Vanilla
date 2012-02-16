@@ -31,17 +31,18 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 public final class SpawnMobMessage extends Message {
-	private final int id, type, x, y, z, rotation, pitch;
+	private final int id, type, x, y, z, yaw, pitch, headYaw;
 	private final List<Parameter<?>> parameters;
 
-	public SpawnMobMessage(int id, int type, int x, int y, int z, int rotation, int pitch, List<Parameter<?>> parameters) {
+	public SpawnMobMessage(int id, int type, int x, int y, int z, int yaw, int pitch, int headYaw, List<Parameter<?>> parameters) {
 		this.id = id;
 		this.type = type;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.rotation = rotation;
+		this.yaw = yaw;
 		this.pitch = pitch;
+		this.headYaw = headYaw;
 		this.parameters = parameters;
 	}
 
@@ -65,12 +66,16 @@ public final class SpawnMobMessage extends Message {
 		return z;
 	}
 
-	public int getRotation() {
-		return rotation;
+	public int getYaw() {
+		return yaw;
 	}
 
 	public int getPitch() {
 		return pitch;
+	}
+	
+	public int getHeadYaw() {
+		return headYaw;
 	}
 
 	public List<Parameter<?>> getParameters() {
@@ -79,7 +84,7 @@ public final class SpawnMobMessage extends Message {
 
 	@Override
 	public String toString() {
-		StringBuilder build = new StringBuilder("SpawnMobMessage{id=").append(id).append(",type=").append(type).append(",x=").append(x).append(",y=").append(y).append(",z=").append(z).append(",rotation=").append(rotation).append(",pitch=").append(pitch).append(",parameters=[");
+		StringBuilder build = new StringBuilder("SpawnMobMessage{id=").append(id).append(",type=").append(type).append(",x=").append(x).append(",y=").append(y).append(",z=").append(z).append(",yaw=").append(yaw).append(",pitch=").append(pitch).append(",parameters=[");
 
 		for (Parameter<?> parm : parameters) {
 			build.append(parm).append(",");

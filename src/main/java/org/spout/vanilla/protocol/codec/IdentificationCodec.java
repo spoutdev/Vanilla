@@ -44,9 +44,9 @@ public final class IdentificationCodec extends MessageCodec<IdentificationMessag
 		long seed = buffer.readLong();
 		String worldType = ChannelBufferUtils.readString(buffer);
 		int mode = buffer.readInt();
-		int dimension = buffer.readByte();
+		int dimension = buffer.readInt();
 		int difficulty = buffer.readByte();
-		int worldHeight = ChannelBufferUtils.getExpandedHeight(buffer.readByte());
+		int worldHeight = ChannelBufferUtils.getExpandedHeight(buffer.readUnsignedByte());
 		int maxPlayers = buffer.readByte();
 		return new IdentificationMessage(version, name, seed, mode, dimension, difficulty, worldHeight, maxPlayers, worldType);
 	}
@@ -59,7 +59,7 @@ public final class IdentificationCodec extends MessageCodec<IdentificationMessag
 		buffer.writeLong(message.getSeed());
 		ChannelBufferUtils.writeString(buffer, message.getWorldType());
 		buffer.writeInt(message.getGameMode());
-		buffer.writeByte(message.getDimension());
+		buffer.writeInt(message.getDimension());
 		buffer.writeByte(message.getDifficulty());
 		buffer.writeByte(ChannelBufferUtils.getShifts(message.getWorldHeight()) - 1);
 		buffer.writeByte(message.getMaxPlayers());

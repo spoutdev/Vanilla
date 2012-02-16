@@ -28,12 +28,12 @@ package org.spout.vanilla.protocol.msg;
 import org.spout.api.protocol.Message;
 
 public final class RespawnMessage extends Message {
-	private final byte dimension, difficulty, mode;
-	private final int worldHeight;
+	private final byte difficulty, mode;
+	private final int worldHeight, dimension;
 	private final long seed;
 	private final String worldType;
 
-	public RespawnMessage(byte dimension, byte difficulty, byte mode, int worldHeight, long seed, String worldType) {
+	public RespawnMessage(int dimension, byte difficulty, byte mode, int worldHeight, long seed, String worldType) {
 		this.dimension = dimension;
 		this.difficulty = difficulty;
 		this.mode = mode;
@@ -42,7 +42,7 @@ public final class RespawnMessage extends Message {
 		this.worldType = worldType;
 	}
 
-	public byte getDimension() {
+	public int getDimension() {
 		return dimension;
 	}
 

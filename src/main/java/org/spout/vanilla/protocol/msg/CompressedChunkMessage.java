@@ -27,19 +27,24 @@ package org.spout.vanilla.protocol.msg;
 
 import org.spout.api.protocol.Message;
 
+import java.util.Arrays;
+
 public final class CompressedChunkMessage extends Message {
 	private final int x, z;
-	private final int y;
-	private final int width, height, depth;
-	private final byte[] data;
+	private final boolean contiguous;
+	private final boolean[] hasAhhitionalData;
+	private final int unused;
+	private final byte[][] data;
 
-	public CompressedChunkMessage(int x, int y, int z, int width, int height, int depth, byte[] data) {
+	public CompressedChunkMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, int unused, byte[][] data) {
+		if (hasAdditionalData.length != data.length || data.length != 16) {
+			throw new IllegalArgumentException("Data and hasAdditionalDta must have a length of 16");
+		}
 		this.x = x;
 		this.z = z;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-		this.depth = depth;
+		this.contiguous = contiguous;
+		this.hasAhhitionalData = hasAdditionalData;
+		this.unused = unused;
 		this.data = data;
 	}
 
@@ -51,28 +56,24 @@ public final class CompressedChunkMessage extends Message {
 		return z;
 	}
 
-	public int getY() {
-		return y;
+	public boolean[] hasAdditionalData() {
+		return hasAhhitionalData;
 	}
 
-	public int getWidth() {
-		return width;
+	public boolean isContiguous() {
+		return contiguous;
+	}
+	
+	public int getUnused() {
+		return unused;
 	}
 
-	public int getHeight() {
-		return height;
-	}
-
-	public int getDepth() {
-		return depth;
-	}
-
-	public byte[] getData() {
+	public byte[][] getData() {
 		return data;
 	}
 
 	@Override
 	public String toString() {
-		return "CompressedChunkMessage{x=" + x + ",y=" + y + ",z=" + z + ",width=" + width + ",height=" + height + ",depth=" + depth + ",data=" + (data == null ? null : data.length) + "}";
+		return "CompressedChunkMessage{x=" + x + ",z=" + z + ",hasAdditionalData=" + Arrays.toString(hasAhhitionalData) + ",contiguous=" + contiguous + ",unused=" + unused + ",data=" + (data == null ? null : data.length) + "}";
 	}
 }

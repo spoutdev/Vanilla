@@ -39,7 +39,6 @@ import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.entity.objects.Pickup;
 import org.spout.vanilla.material.Block;
-import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
 
 /**
@@ -96,7 +95,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 					return;
 				}
 			}*/
-			if(player.getEntity().getController() instanceof CreativePlayer) {
+			if (player.getEntity().getController() instanceof CreativePlayer) {
 				blockBroken = true;
 			}
 		} else if (message.getState() == DiggingMessage.STATE_DONE_DIGGING) {

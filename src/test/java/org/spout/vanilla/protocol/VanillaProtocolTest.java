@@ -51,6 +51,7 @@ import org.spout.vanilla.protocol.msg.EnchantItemMessage;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.EntityEffectMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
+import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.EntityRemoveEffectMessage;
@@ -93,6 +94,7 @@ import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
 import org.spout.vanilla.protocol.msg.StatisticMessage;
+import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
 import org.spout.vanilla.protocol.msg.TimeMessage;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
@@ -112,7 +114,7 @@ public class VanillaProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
 	private static final Message[] TEST_MESSAGES = new Message[] {
 			new PingMessage(42),
-			new IdentificationMessage(0, "Tester", 244888L, 0, -1, 0, 128, 20, "MAGICAL"),
+			new IdentificationMessage(0, "Tester", 244888L, 0, -1, 0, 256, 20, "MAGICAL"),
 			new HandshakeMessage("Player"),
 			new ChatMessage("<Spouty> This is a thing called a chat message"),
 			new TimeMessage(666L),
@@ -120,7 +122,7 @@ public class VanillaProtocolTest {
 			new SpawnPositionMessage(42, 42, 42),
 			new EntityInteractionMessage(1123, 4455, true),
 			new HealthMessage(1, 2, 3.4F),
-			new RespawnMessage((byte) -1, (byte) 0, (byte) 1, 128, 435556L, "VERYFANCY"),
+			new RespawnMessage(89, (byte) 0, (byte) 1, 128, 435556L, "VERYFANCY"),
 			new GroundMessage(true),
 			new PositionMessage(128, 256, 512, 3.4D, true),
 			new RotationMessage(1F, 2F, false),
@@ -135,7 +137,7 @@ public class VanillaProtocolTest {
 			new SpawnItemMessage(1234, 89, 3, (short) 4, 1, 2, 3, 34, 56, 55),
 			new CollectItemMessage(1234, 5678),
 			new SpawnVehicleMessage(1, 3, 3, 654, 1234, 778, 656, 4354, 6564),
-			new SpawnMobMessage(123, 255, 1, 2, 4, 34, 55, TEST_PARAMS),
+			new SpawnMobMessage(123, 255, 1, 2, 4, 34, 55, 33, TEST_PARAMS),
 			new SpawnPaintingMessage(4, "KEBAB", 2, 3, 4, 56),
 			new ExperienceOrbMessage(34, 1, 2, 3, (short)34),
 			new EntityVelocityMessage(1, 2, 3, 4),
@@ -145,14 +147,17 @@ public class VanillaProtocolTest {
 			new EntityRotationMessage(1234, 34, 5),
 			new RelativeEntityPositionRotationMessage(1, 2, 3, 4, 45, 54),
 			new EntityTeleportMessage(1, 2, 3, 4, 5, 6),
-			new EntityStatusMessage(1,(byte) 2),
+			new EntityHeadYawMessage(45, 3),
+			new EntityStatusMessage(1, 2),
 			new AttachEntityMessage(1, 2),
 			new EntityMetadataMessage(1, TEST_PARAMS),
 			new EntityEffectMessage(1, EntityEffect.BLINDNESS.getId(), (byte) 1, (short) 34),
 			new EntityRemoveEffectMessage(1, EntityEffect.BLINDNESS.getId()),
 			new ExperienceMessage(1.2F, (short) 2, (short) 3),
 			new LoadChunkMessage(0, -2, true),
-			new CompressedChunkMessage(1, 2, 3, 1, 2, 1, new byte[] {1,2, 33, 44, 55}),
+			new CompressedChunkMessage(1, 2, true, new boolean[16], 1, new byte[][] {new byte[16 * 16 * 16 * 5 / 2],
+					null, null, null, null, null, null, null, null, null,
+					new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null}),
 			new MultiBlockChangeMessage(2, 3, new short[] {2, 3, 4}, new byte[] {1, 2, 3}, new byte[] {3, 4, 5}),
 			new BlockChangeMessage(1, 2, 3, 87, 2),
 			new BlockActionMessage(1, 2, 3, (byte) 4, (byte) 5),
@@ -160,7 +165,7 @@ public class VanillaProtocolTest {
 			new PlayEffectMessage(34566, 1, 2, 34, 5),
 			new StateChangeMessage((byte) 3, (byte) 1),
 			new SpawnLightningStrikeMessage(34, 1, 23, 45, 55),
-			new OpenWindowMessage(1, 2, "Furnace", 42),
+			new OpenWindowMessage(1, 2, "container.furnace", 42),
 			new CloseWindowMessage(23),
 			new WindowClickMessage(1, 2, false, 34, true, 5, 5, 12, null),
 			new SetWindowSlotMessage(1, 2, 45, 5, 5, null),
@@ -171,6 +176,7 @@ public class VanillaProtocolTest {
 			new EnchantItemMessage(2, 3),
 			new UpdateSignMessage(1, 2, 3, new String[] {"This", "is", "a", "sign"}),
 			new MapDataMessage((short)1, (short)2, new byte[] {2, 3, 8, 127, 123}),
+			new TileEntityDataMessage(23, 45, 903, 1, 98, 0, 0),
 			new StatisticMessage(1, (byte) 5),
 			new UserListItemMessage("Player", true, (short)23),
 			new CustomDataMessage("EMERGENCY_SERVICES", new byte[] {0, 1, 1, 8, 9, 9, 8, 8, 8, 1, 9, 9, 9, 1, 1, 9, 7, 2, 5, 3}),

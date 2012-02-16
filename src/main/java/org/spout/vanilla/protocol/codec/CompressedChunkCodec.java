@@ -38,6 +38,8 @@ import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 
 public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMessage> {
 	private static final int COMPRESSION_LEVEL = Deflater.BEST_SPEED;
+	private static final int MAX_SECTIONS = 16;
+	private static final int SIXTEEN_CUBED = 16 * 16 * 16;
 
 	public CompressedChunkCodec() {
 		super(CompressedChunkMessage.class, 0x33);
@@ -46,24 +48,40 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 	@Override
 	public CompressedChunkMessage decode(ChannelBuffer buffer) throws IOException {
 		int x = buffer.readInt();
-		int y = buffer.readShort();
 		int z = buffer.readInt();
+		boolean contiguous = buffer.readByte() == 1;
 
-		int width = buffer.readByte() + 1;
-		int depth = buffer.readByte() + 1;
-		int height = buffer.readByte() + 1;
-
+		short primaryBitMap = buffer.readShort();
+		short addBitMap = buffer.readShort();
 		int compressedSize = buffer.readInt();
+		int unused = buffer.readInt();
 		byte[] compressedData = new byte[compressedSize];
 		buffer.readBytes(compressedData);
 
-		byte[] data = new byte[width * depth * height * 5 / 2];
+		boolean[] hasAdditionalData = new boolean[MAX_SECTIONS];
+		byte[][] data = new byte[MAX_SECTIONS][];
+
+		int size = 0;
+		for (int i = 0; i < MAX_SECTIONS; ++i) {
+			if ((primaryBitMap & 1 << i) != 0) { // This chunk exists! Let's initialize the data for it.
+				int sectionSize = SIXTEEN_CUBED * 5 / 2;
+				if ((addBitMap & 1 << i) != 0) {
+					hasAdditionalData[i] = true;
+					sectionSize += SIXTEEN_CUBED / 2;
+				}
+
+				data[i] = new byte[sectionSize];
+				size += sectionSize;
+			}
+		}
+
+		byte[] uncompressedData = new byte[size];
 
 		Inflater inflater = new Inflater();
 		inflater.setInput(compressedData);
 
 		try {
-			int uncompressed = inflater.inflate(data);
+			int uncompressed = inflater.inflate(uncompressedData);
 			if (uncompressed == 0) {
 				throw new IOException("Not all bytes uncompressed.");
 			}
@@ -74,7 +92,15 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 			inflater.end();
 		}
 
-		return new CompressedChunkMessage(x, y, z, width, height, depth, data);
+		size = 0;
+		for (byte[] sectionData : data) {
+			if (sectionData != null && sectionData.length + size < uncompressedData.length) {
+				System.arraycopy(uncompressedData, size, sectionData, 0, sectionData.length);
+				size += sectionData.length;
+			}
+		}
+
+		return new CompressedChunkMessage(x, z, contiguous, hasAdditionalData, unused, data);
 	}
 
 	@Override
@@ -82,19 +108,41 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 
 		buffer.writeInt(message.getX());
-		buffer.writeShort(message.getY());
 		buffer.writeInt(message.getZ());
+		buffer.writeByte(message.isContiguous() ? 1 : 0);
+		short sectionsSentBitmap = 0;
+		short additionalDataBitMap = 0;
 
-		buffer.writeByte(message.getWidth() - 1);
-		buffer.writeByte(message.getDepth() - 1);
-		buffer.writeByte(message.getHeight() - 1);
+		byte[][] data = message.getData();
 
-		byte[] data = message.getData();
-		byte[] compressedData = new byte[message.getWidth() * message.getDepth() * message.getHeight() * 5 / 2];
+		int uncompressedSize = 0;
+		for (int i = 0; i < MAX_SECTIONS; ++i) {
+			if (data[i] != null) { // This chunk exists! Let's initialize the data for it.
+				sectionsSentBitmap |= 1 << i;
+				if (message.hasAdditionalData()[i]) {
+					additionalDataBitMap |= 1 << i;
+				}
+				uncompressedSize += data[i].length;
+			}
+		}
+
+		buffer.writeShort(sectionsSentBitmap);
+		buffer.writeShort(additionalDataBitMap);
+		byte[] uncompressedData = new byte[uncompressedSize];
+		int index = 0;
+		for (byte[] sectionData : data) {
+			if (sectionData != null) {
+				System.arraycopy(sectionData, 0, uncompressedData, index, sectionData.length);
+				index += sectionData.length;
+			}
+		}
+
+		byte[] compressedData = new byte[uncompressedSize];
 
 		Deflater deflater = new Deflater(COMPRESSION_LEVEL);
-		deflater.setInput(data);
+		deflater.setInput(uncompressedData);
 		deflater.finish();
+
 
 		int compressed = deflater.deflate(compressedData);
 		try {
@@ -106,6 +154,7 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		}
 
 		buffer.writeInt(compressed);
+		buffer.writeInt(message.getUnused());
 		buffer.writeBytes(compressedData, 0, compressed);
 
 		return buffer;

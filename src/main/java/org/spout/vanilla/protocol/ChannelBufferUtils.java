@@ -280,7 +280,7 @@ public final class ChannelBufferUtils {
 		} else if (shift >= 32) {
 			return shift;
 		}
-		return 128;
+		return 256;
 	}
 
 	public static Vector3 readVector3(ChannelBuffer buf) {

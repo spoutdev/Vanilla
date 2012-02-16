@@ -39,6 +39,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.material.Block;
+import org.spout.vanilla.material.Item;
 import org.spout.vanilla.material.attachable.Attachable;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
@@ -107,8 +108,8 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 				}
 			}*/
 			Material placedMaterial = holding.getMaterial();
-			if (placedMaterial instanceof ItemMaterial) {
-				((ItemMaterial)placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK);
+			if (placedMaterial instanceof Item) {
+				((Item)placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK);
 				return;
 			}
 			if (placedMaterial.getId() > 255) {

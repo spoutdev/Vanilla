@@ -72,7 +72,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		short current = world.getBlockData(x, y, z);
 		if (current != power) {
 			System.out.println("Old: " + current + " new: " + power);
-			world.setBlockIdAndData(x, y, z, getId(), power, false, true, world);
+			world.setBlockIdAndData(x, y, z, getId(), power, false, world);
 			//Trace signal
 			for (int j = 0; j < 3; j++) {
 				int ty = y;

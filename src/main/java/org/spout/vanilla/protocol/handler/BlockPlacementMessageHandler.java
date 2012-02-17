@@ -31,9 +31,9 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.MathHelper;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -94,6 +94,10 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			return;
 		}
 		boolean sendRevert = false;
+		
+		int x = MathHelper.floor(pos.getX());
+		int y = MathHelper.floor(pos.getY());
+		int z = MathHelper.floor(pos.getZ());
 
 		PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, new Point(pos.add(face.getOffset()), world), inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, false);
 		eventManager.callEvent(interactEvent);
@@ -129,6 +133,8 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 
 			Block newBlock = (Block) placedMaterial;
 			Block oldBlock = target != null ? (Block) target.getBlockMaterial() : null;
+			
+			
 
 			if (!sendRevert && (oldBlock == null || oldBlock.isLiquid() || oldBlock.getId() == 0)) {
 				//if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {
@@ -142,8 +148,8 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 				}*/
 
 				if (!sendRevert) {
-					world.setBlockIdAndData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), newBlock.getId(), placedData, player);
-					player.getSession().send(new BlockChangeMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), holding.getMaterial().getId(), placedData));
+					world.setBlockIdAndData(x, y, z, newBlock.getId(), placedData, player);
+					player.getSession().send(new BlockChangeMessage(x, y, z, holding.getMaterial().getId(), placedData));
 				}
 
 				/*if(player.getGameMode() != GameMode.CREATIVE) { //TODO: Gamemode is currently not changeable
@@ -165,7 +171,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			}
 		}
 		if (sendRevert) {
-			player.getSession().send(new BlockChangeMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), target != null ? target.getBlockId() : 0, world.getBlockData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ())));
+			player.getSession().send(new BlockChangeMessage(x, y, z, target != null ? target.getBlockId() : 0, world.getBlockData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ())));
 			//TODO: Send potential amount change/whatever!
 		}
 	}

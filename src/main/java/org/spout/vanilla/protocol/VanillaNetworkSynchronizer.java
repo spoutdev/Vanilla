@@ -139,7 +139,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			// TODO - conversion code
 			fullChunkData[i] = (byte) (rawBlockIdArray[i] & 0xFF);
 		}
-		for (int i = 0; i < rawBlockData.length / 2; i += 2) {
+		for (int i = 0; i < rawBlockData.length; i += 2) {
 			fullChunkData[i + maxIdIndex] = (byte) (rawBlockData[i + 1] & 0xF << 4 | rawBlockData[i] & 0xF);
 		}
 		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x * Chunk.CHUNK_SIZE, y * Chunk.CHUNK_SIZE, z * Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, Chunk.CHUNK_SIZE, fullChunkData);

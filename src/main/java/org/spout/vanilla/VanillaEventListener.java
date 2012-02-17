@@ -34,7 +34,6 @@ import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.player.Player;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
-import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 
 public class VanillaEventListener implements Listener {
@@ -49,7 +48,6 @@ public class VanillaEventListener implements Listener {
 	//TODO Any reason to broadcast a player connects besides for debug? Perhaps only to the console and not players.
 	@EventHandler
 	public void onPlayerConnect(PlayerConnectEvent event) {
-		
 	}
 
 	@EventHandler(order = Order.EARLIEST)

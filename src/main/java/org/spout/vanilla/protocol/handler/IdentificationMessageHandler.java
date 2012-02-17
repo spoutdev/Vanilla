@@ -45,7 +45,7 @@ public final class IdentificationMessageHandler extends MessageHandler<Identific
 		String playerName = player.getName();
 		Server s = (Server) session.getGame();
 		
-		
+		System.out.println("OMG SHU ICI");
 		//We check if the player is banned
 		Iterator<Player> bannedPlayerList = s.getBannedPlayers().iterator();
 		while(bannedPlayerList.hasNext())

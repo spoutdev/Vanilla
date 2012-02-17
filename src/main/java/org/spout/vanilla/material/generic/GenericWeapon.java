@@ -29,7 +29,15 @@ import org.spout.vanilla.material.Weapon;
 
 public class GenericWeapon extends GenericItem implements Weapon {
 
-	public GenericWeapon(String name, int id) {
+	private int damage;
+	
+	public GenericWeapon(String name, int id, int damage) {
 		super(name, id);
+		this.damage=damage;
+	}
+
+	@Override
+	public int getDamage() {
+		return damage;
 	}
 }

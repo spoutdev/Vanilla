@@ -25,12 +25,7 @@
  */
 package org.spout.vanilla;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-
 import org.spout.api.Game;
-import org.spout.api.Server;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -39,7 +34,6 @@ import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.player.Player;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
-import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 
 public class VanillaEventListener implements Listener {
@@ -54,33 +48,6 @@ public class VanillaEventListener implements Listener {
 	//TODO Any reason to broadcast a player connects besides for debug? Perhaps only to the console and not players.
 	@EventHandler
 	public void onPlayerConnect(PlayerConnectEvent event) {
-		String playerName = event.getPlayerName();
-		Server s = (Server) event.getSession().getGame();
-		
-		
-		//We check if the player is banned
-		Iterator<Player> bannedPlayerList = s.getBannedPlayers().iterator();
-		while(bannedPlayerList.hasNext())
-		{
-			if (bannedPlayerList.next().getName().equalsIgnoreCase(playerName)) {
-				event.getSession().disconnect("You are banned from this server!");
-				event.getSession().dispose(false);
-				return;
-			}
-		}
-		if (s.isWhitelist())
-		{
-			//We check if the player is in the whitelist
-			Iterator<String> whiteList = Arrays.asList(s.getWhitelistedPlayers()).iterator();
-			while(whiteList.hasNext())
-			{
-				if (whiteList.next().equalsIgnoreCase(playerName)) {
-					return;
-				}
-			}
-			event.getSession().disconnect("You are not whitelisted!");
-			event.getSession().dispose(false);
-		}
 	}
 
 	@EventHandler(order = Order.EARLIEST)

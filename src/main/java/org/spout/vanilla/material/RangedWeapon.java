@@ -23,28 +23,9 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.generic;
+package org.spout.vanilla.material;
 
-import org.spout.vanilla.material.Food;
+public interface RangedWeapon extends Weapon {
 
-public class GenericFood extends GenericItem implements Food {
-
-	private final int amount;
-	private final FoodEffectType type;
-
-	public GenericFood(String name, int id, int amount, FoodEffectType type) {
-		super(name, id);
-		this.amount = amount;
-		this.type = type;
-	}
-
-	@Override
-	public int getAmount() {
-		return amount;
-	}
-
-	@Override
-	public FoodEffectType getEffectType() {
-		return type;
-	}
+	public int getRangedDamage();
 }

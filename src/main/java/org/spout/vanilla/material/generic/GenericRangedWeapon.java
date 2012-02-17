@@ -25,26 +25,19 @@
  */
 package org.spout.vanilla.material.generic;
 
-import org.spout.vanilla.material.Food;
+import org.spout.vanilla.material.RangedWeapon;
 
-public class GenericFood extends GenericItem implements Food {
-
-	private final int amount;
-	private final FoodEffectType type;
-
-	public GenericFood(String name, int id, int amount, FoodEffectType type) {
-		super(name, id);
-		this.amount = amount;
-		this.type = type;
+public class GenericRangedWeapon extends GenericWeapon implements RangedWeapon {
+	
+	private int rangedDamage;
+	
+	public GenericRangedWeapon(String name, int id, int damage, int rangedDamage) {
+		super(name, id, damage);
+		this.rangedDamage=rangedDamage;
 	}
 
 	@Override
-	public int getAmount() {
-		return amount;
-	}
-
-	@Override
-	public FoodEffectType getEffectType() {
-		return type;
+	public int getRangedDamage() {
+		return rangedDamage;
 	}
 }

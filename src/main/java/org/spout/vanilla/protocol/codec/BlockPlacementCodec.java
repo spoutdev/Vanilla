@@ -57,6 +57,7 @@ public final class BlockPlacementCodec extends MessageCodec<BlockPlacementMessag
 			if (ChannelBufferUtils.hasNbtData(id)) {
 				nbtData = ChannelBufferUtils.readCompound(buffer);
 			}
+
 			return new BlockPlacementMessage(x, y, z, direction, id, count, damage, nbtData);
 		}
 	}

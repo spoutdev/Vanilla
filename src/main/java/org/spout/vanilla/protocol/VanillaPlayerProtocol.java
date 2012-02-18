@@ -34,10 +34,12 @@ import org.spout.vanilla.protocol.msg.KickMessage;
  * A protocol wrapper for vanilla packets
  */
 public class VanillaPlayerProtocol implements PlayerProtocol {
+	@Override
 	public Message getChatMessage(String message) {
 		return new ChatMessage(message);
 	}
 
+	@Override
 	public Message getKickMessage(String reason) {
 		return new KickMessage(reason);
 	}

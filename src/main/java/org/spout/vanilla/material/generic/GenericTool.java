@@ -33,26 +33,31 @@ public class GenericTool extends GenericItem implements Tool {
 		super(name, id);
 	}
 
+	@Override
 	public short getDurability() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public Tool setDurability(short durability) {
 		// TODO Auto-generated method stub
 		return this;
 	}
 
+	@Override
 	public float getStrengthModifier(BlockMaterial block) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
 	public Tool setStrengthModifier(BlockMaterial block, float modifier) {
 		// TODO Auto-generated method stub
 		return this;
 	}
 
+	@Override
 	public BlockMaterial[] getStrengthModifiedBlocks() {
 		// TODO Auto-generated method stub
 		return null;

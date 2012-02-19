@@ -26,7 +26,6 @@
 package org.spout.vanilla.protocol.bootstrap.handler;
 
 import java.util.Arrays;
-import java.util.Iterator;
 
 import org.spout.api.Server;
 import org.spout.api.event.Event;
@@ -45,29 +44,15 @@ public class BootstrapIdentificationMessageHandler extends MessageHandler<Identi
 		
 		Server s = (Server) session.getGame();	
 		
-		Iterator<Player> bannedPlayerList = s.getBannedPlayers().iterator();
-		
-		while(bannedPlayerList.hasNext())
-		{
-			if (bannedPlayerList.next().getName().equalsIgnoreCase(playerName)) {
-				session.disconnect("You are banned from this server!");
-				session.dispose(false);
-				return;
-			}
+		if (s.getBannedPlayers().contains(playerName)) {
+			session.disconnect("You are banned from this server!");
+			return;
 		}
 		if (s.isWhitelist())
 		{
 			//We check if the player is in the whitelist
-			boolean isWhiteListed = false;
-			Iterator<String> whiteList = Arrays.asList(s.getWhitelistedPlayers()).iterator();
-			while(whiteList.hasNext()) {
-				if (whiteList.next().equalsIgnoreCase(playerName)) {
-					isWhiteListed = true;
-				}
-			}
-			if (!isWhiteListed) {
+			if (!Arrays.asList(s.getWhitelistedPlayers()).contains(playerName)) {
 				session.disconnect("You are not whitelisted!");
-				session.dispose(false);
 				return;
 			}
 			

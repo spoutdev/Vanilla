@@ -25,11 +25,15 @@
  */
 package org.spout.vanilla.entity.living.passive;
 
+import java.util.Random;
+
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.AnimalEntity;
 import org.spout.vanilla.entity.PassiveEntity;
 
 public class Sheep extends AnimalEntity implements PassiveEntity {
+	private int countdown = 0;
+	private final Random rand = new Random();
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -38,6 +42,13 @@ public class Sheep extends AnimalEntity implements PassiveEntity {
 
 	@Override
 	public void onTick(float dt) {
+		if (--countdown <= 0) {
+			countdown = rand.nextInt(7) + 3;
+			float x = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
+			float y = rand.nextFloat();
+			float z = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
+			this.velocity.add(x, y, z);
+		}
 		super.onTick(dt);
 	}
 }

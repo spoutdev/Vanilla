@@ -27,47 +27,36 @@ package org.spout.vanilla.entity.living.player;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
-import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
-import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
-public class MinecraftPlayerEntityProtocol implements EntityProtocol {
+public class MinecraftPlayerEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
 	@Override
 	public Message getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
-		//TODO: this if-else structure is terrible and not OO. Fix!
-		if (c != null) {
-			MinecraftPlayer mcp = (MinecraftPlayer) c;
-			int id = entity.getId();
-			String name = mcp.getPlayer().getName();
-			int x = (int) (entity.getX() * 32);
-			int y = (int) (entity.getY() * 32);
-			int z = (int) (entity.getZ() * 32);
-			int r = (int) (entity.getYaw() * 32);
-			int p = (int) (entity.getPitch() * 32);
-			int item = 0;
-			return new SpawnPlayerMessage(id, name, x, y, z, r, p, item);
-		} else {
+		if (c == null) {
 			return null;
 		}
-	}
-
-	@Override
-	public Message getDestroyMessage(Entity entity) {
-		return new DestroyEntityMessage(entity.getId());
-	}
-
-	@Override
-	public Message getUpdateMessage(Entity entity) {
 		int id = entity.getId();
 		int x = (int) (entity.getX() * 32);
 		int y = (int) (entity.getY() * 32);
 		int z = (int) (entity.getZ() * 32);
 		int r = (int) (entity.getYaw() * 32);
 		int p = (int) (entity.getPitch() * 32);
-		// TODO - improve efficiency
-		return new EntityTeleportMessage(id, x, y, z, r, p);
+		
+		if (c instanceof MinecraftPlayer) {
+			MinecraftPlayer mcp = (MinecraftPlayer) c;
+			String name = mcp.getPlayer().getName();
+			int item = 0;
+			ItemStack hand = entity.getInventory().getCurrentItem();
+			if (hand != null) {
+				item = hand.getMaterial().getId();
+			}
+			return new SpawnPlayerMessage(id, name, x, y, z, r, p, item);
+		}
+		
+		return null;
 	}
 }

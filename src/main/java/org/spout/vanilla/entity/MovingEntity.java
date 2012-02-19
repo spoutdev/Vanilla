@@ -25,7 +25,16 @@
  */
 package org.spout.vanilla.entity;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.spout.api.collision.BoundingBox;
+import org.spout.api.collision.CollisionHelper;
+import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.geo.discrete.Pointm;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector3m;
 import org.spout.vanilla.VanillaMaterials;
@@ -34,6 +43,7 @@ import org.spout.vanilla.VanillaMaterials;
  * Moving entity controller
  */
 public abstract class MovingEntity extends MinecraftEntity {
+	protected final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	protected final Vector3m velocity = new Vector3m(Vector3.ZERO);
 	private int fireTicks;
 	private boolean flammable;
@@ -45,15 +55,54 @@ public abstract class MovingEntity extends MinecraftEntity {
 
 	@Override
 	public void onTick(float dt) {
-		super.onTick(dt);
-		//checkWeb();
+		checkWeb();
 		updateMovement(dt);
 		checkFireTicks();
+		super.onTick(dt);
 	}
 
 	private void updateMovement(float dt) {
-		parent.setPoint(parent.getPoint().add(velocity));
-		//TODO: collision
+		final Pointm location = parent.getPoint();
+		List<BoundingBox> colliding = this.getCollidingBoundingBoxes();
+		final BoundingBox position = area.clone().offset(location);
+		
+		Vector3m offset = velocity.clone();
+		for (BoundingBox box : colliding) {
+			Vector3 collision = CollisionHelper.getCollision(position, box);
+			if (collision != null) {
+				collision = collision.subtract(location);
+				//System.out.println("Collision: " + collision);
+				if (collision.getX() != 0F) {
+					offset.setX(collision.getX());
+				}
+				if (collision.getY() != 0F) {
+					offset.setY(collision.getY());
+				}
+				if (collision.getZ() != 0F) {
+					offset.setZ(collision.getZ());
+				}
+			}
+		}
+
+		//if (colliding.size() > 0)
+		//	System.out.println("Old: " + velocity + " New: " + offset + " Colliding: " + colliding.size());
+		
+		
+		if (offset.getX() != velocity.getX()) {
+			velocity.setX(0);
+		}
+		if (offset.getY() != velocity.getY()) {
+			velocity.setY(0);
+		}
+		if (offset.getZ() != velocity.getZ()) {
+			velocity.setZ(0);
+		}
+		
+		location.add(offset);
+		Point old = parent.getPoint();
+		parent.setPoint(location);
+		//if (colliding.size() > 0)
+		//	System.out.println("Moved from " + old + " to " + parent.getPoint() + ". Expected: " + location);
 	}
 
 	@Override
@@ -63,8 +112,8 @@ public abstract class MovingEntity extends MinecraftEntity {
 
 	private void checkWeb() {
 		Point pos = parent.getPoint();
-		if (pos.getWorld().getBlock(pos).getBlockMaterial().equals(VanillaMaterials.WEB)) {
-			velocity.set(Vector3.ZERO);
+		if (pos.getWorld().getBlock(pos).getBlockMaterial() == VanillaMaterials.WEB) {
+			velocity.multiply(0.25F, 0.05F, 0.25F);
 		}
 	}
 
@@ -108,5 +157,37 @@ public abstract class MovingEntity extends MinecraftEntity {
 
 	public Vector3 getVelocity() {
 		return velocity;
+	}
+	
+	public List<BoundingBox> getCollidingBoundingBoxes() {
+		final int minX = MathHelper.floor(parent.getX());
+		final int minY = MathHelper.floor(parent.getY());
+		final int minZ = MathHelper.floor(parent.getZ());
+		final int maxX = minX + 1;
+		final int maxY = minY + 1;
+		final int maxZ = minZ + 1;
+		
+		final LinkedList<BoundingBox> colliding = new LinkedList<BoundingBox>();
+		
+		final BoundingBox mutable = new BoundingBox(0, 0, 0, 0, 0, 0);
+		final BoundingBox position = new BoundingBox(area);
+		position.offset(minX, minY, minZ);
+		
+		final World world = parent.getWorld();
+		for (int dx = minX; dx < maxX; dx++) {
+			for (int dy = minY - 1; dy < maxY; dy++) {
+				for (int dz = minZ; dz < maxZ; dz++) {
+					BlockMaterial material = world.getBlockMaterial(dx, dy, dz);
+					mutable.set(material.getBoundingArea());
+					mutable.offset(dx, dy, dz);
+					if (mutable.intersects(position)) {
+						colliding.add(mutable.clone());
+					}
+				}
+			}
+		}
+		
+		//TODO: colliding entities
+		return colliding;
 	}
 }

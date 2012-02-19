@@ -25,20 +25,30 @@
  */
 package org.spout.vanilla;
 
+import java.util.HashSet;
+
 import org.spout.api.Game;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
+import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
+import org.spout.api.event.world.RegionLoadEvent;
+import org.spout.api.geo.cuboid.Region;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.player.Player;
+import org.spout.vanilla.entity.RegionEntitySpawner;
+import org.spout.vanilla.entity.living.passive.Sheep;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
-import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 
 public class VanillaEventListener implements Listener {
 	private final VanillaPlugin plugin;
+	@SuppressWarnings("unused")
 	private final Game game;
 
 	public VanillaEventListener(VanillaPlugin plugin) {
@@ -60,5 +70,30 @@ public class VanillaEventListener implements Listener {
 		Entity playerEntity = player.getEntity();
 		playerEntity.setController(new CreativePlayer(player));
 		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
+	}
+	
+	@EventHandler()
+	public void onRegionLoad(RegionLoadEvent event) {
+		Region region = event.getRegion();
+		if (region.getAll(RegionEntitySpawner.class).size() == 0) {
+			region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE), new RegionEntitySpawner(region));
+		}
+	}
+	
+	@EventHandler(order = Order.MONITOR)
+	public void onEntitySpawn(EntitySpawnEvent event) {
+		if (event.isCancelled()) {
+			return;
+		}
+		Entity entity = event.getEntity();
+		Controller c = entity.getController();
+		if (c != null) {
+			if (c instanceof RegionEntitySpawner) {
+				RegionEntitySpawner spawner = (RegionEntitySpawner)c;
+				HashSet<BlockMaterial> spawnable = new HashSet<BlockMaterial>();
+				spawnable.add(VanillaMaterials.GRASS);
+				spawner.addSpawnableType(Sheep.class, spawnable, 5);
+			}
+		}
 	}
 }

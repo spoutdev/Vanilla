@@ -171,7 +171,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			}
 		}
 		if (sendRevert) {
-			player.getSession().send(new BlockChangeMessage(x, y, z, target != null ? target.getBlockId() : 0, world.getBlockData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ())));
+			player.getSession().send(new BlockChangeMessage(x, y, z, target != null ? target.getBlockId() : 0, world.getBlockData(x, y, z)));
 			//TODO: Send potential amount change/whatever!
 		}
 	}

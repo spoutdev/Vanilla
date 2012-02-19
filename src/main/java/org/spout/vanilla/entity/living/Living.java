@@ -43,11 +43,10 @@ public abstract class Living extends MovingEntity {
 
 	@Override
 	public void onTick(float dt) {
-		super.onTick(dt);
-
 		if (gravity) {
 			updateGravity(dt);
 		}
+		super.onTick(dt);
 	}
 
 	protected void updateGravity(float dt) {

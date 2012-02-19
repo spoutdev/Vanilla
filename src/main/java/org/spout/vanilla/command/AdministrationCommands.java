@@ -90,7 +90,7 @@ public class AdministrationCommands {
 							player.sendMessage("Your gamemode has been switched to SURVIVAL."); 
 							break; // TODO: Switch player to survival
 						case 2: 
-							source.sendMessage(player.getName() + "'s gamemode has been switched to SURVIVAL.");
+							source.sendMessage(player.getName() + "'s gamemode has been switched to CREATIVE.");
 							player.sendMessage("Your gamemode has been switched to CREATIVE."); 
 							break; // TODO: Switch player to creative
 						default: 

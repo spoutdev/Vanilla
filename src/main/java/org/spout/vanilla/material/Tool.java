@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.material;
 
+import java.util.Set;
 import org.spout.api.material.BlockMaterial;
 
 public interface Tool extends Item {
@@ -36,5 +37,5 @@ public interface Tool extends Item {
 
 	public Tool setStrengthModifier(BlockMaterial block, float modifier);
 
-	public BlockMaterial[] getStrengthModifiedBlocks();
+	public Set<BlockMaterial> getStrengthModifiedBlocks();
 }

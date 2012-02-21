@@ -31,8 +31,8 @@ public class GenericRangedWeapon extends GenericWeapon implements RangedWeapon {
 
 	private int rangedDamage;
 
-	public GenericRangedWeapon(String name, int id, int damage, int rangedDamage) {
-		super(name, id, damage);
+	public GenericRangedWeapon(String name, int id, int damage, int rangedDamage, short durability) {
+		super(name, id, damage, durability);
 		this.rangedDamage = rangedDamage;
 	}
 

@@ -23,39 +23,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec;
+package org.spout.vanilla.protocol.msg;
 
-import java.io.IOException;
+import org.spout.api.protocol.Message;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+public final class BlockActionMessage extends Message {
 
-import org.spout.api.protocol.MessageCodec;
-import org.spout.vanilla.protocol.msg.PlayNoteMessage;
+	private final int x, y, z;
+	byte firstByte, secondByte;
 
-public final class PlayNoteCodec extends MessageCodec<PlayNoteMessage> {
-	public PlayNoteCodec() {
-		super(PlayNoteMessage.class, 0x36);
+	public BlockActionMessage(int x, int y, int z, byte firstByte, byte secondByte) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.firstByte = firstByte;
+		this.secondByte = secondByte;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getZ() {
+		return z;
+	}
+
+	public int getFirstByte() {
+		return firstByte;
+	}
+
+	public int getSecondByte() {
+		return secondByte;
 	}
 
 	@Override
-	public PlayNoteMessage decode(ChannelBuffer buffer) throws IOException {
-		int x = buffer.readInt();
-		int y = buffer.readUnsignedShort();
-		int z = buffer.readInt();
-		int instrument = buffer.readUnsignedByte();
-		int pitch = buffer.readUnsignedByte();
-		return new PlayNoteMessage(x, y, z, instrument, pitch);
-	}
-
-	@Override
-	public ChannelBuffer encode(PlayNoteMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(12);
-		buffer.writeInt(message.getX());
-		buffer.writeShort(message.getY());
-		buffer.writeInt(message.getZ());
-		buffer.writeByte(message.getInstrument());
-		buffer.writeByte(message.getPitch());
-		return buffer;
+	public String toString() {
+		return "PlayNoteMessage{x=" + x + ",y=" + y + ",z=" + z + ",firstByte=" + firstByte + ",secondByte=" + secondByte + "}";
 	}
 }

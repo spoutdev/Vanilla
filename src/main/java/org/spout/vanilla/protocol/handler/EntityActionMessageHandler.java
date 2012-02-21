@@ -35,18 +35,24 @@ import org.spout.vanilla.protocol.msg.EntityActionMessage;
  * A {@link MessageHandler} which handles {@link Entity} action messages.
  */
 public final class EntityActionMessageHandler extends MessageHandler<EntityActionMessage> {
+
 	@Override
 	public void handle(Session session, Player player, EntityActionMessage message) {
-		/*switch (message.getAction()) {
+		switch (message.getAction()) {
 			case EntityActionMessage.ACTION_SNEAKING:
-				player.setSneaking(true);
+				//player.setSneaking(true);
 				break;
 			case EntityActionMessage.ACTION_STOP_SNEAKING:
-				player.setSneaking(false);
+				//player.setSneaking(false);
+				break;
+			case EntityActionMessage.ACTION_LEAVE_BED:
+				break;
+			case EntityActionMessage.ACTION_START_SPRINTING:
+				break;
+			case EntityActionMessage.ACTION_STOP_SPRINTING:
 				break;
 			default:
-				// TODO: bed support
-				return;
-		}*/
+				break;
+		}
 	}
 }

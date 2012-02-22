@@ -79,13 +79,8 @@ public class VanillaPlugin extends CommonPlugin {
 			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
 		}
 
-		//Register commands
-		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
+		VanillaMaterials.initialize();
 
-		game.getRootCommand().addSubCommands(game, AdministrationCommands.class, commandRegFactory);
-
-		//Register events
-		game.getEventManager().registerEvents(new VanillaEventListener(this), this);
 
 		getLogger().info("loaded");
 	}
@@ -97,10 +92,19 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
-		VanillaMaterials.initialize();
+		Game game = getGame();
+
+		//Register commands
+		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
+
+		game.getRootCommand().addSubCommands(game, AdministrationCommands.class, commandRegFactory);
+
+		//Register events
+		game.getEventManager().registerEvents(new VanillaEventListener(this), this);
+		
 		vanillaProtocolId = Controller.getProtocolId("org.spout.vanilla.protocol");
 
-		spawnWorld = getGame().loadWorld("world", new NormalGenerator());
+		spawnWorld = game.loadWorld("world", new NormalGenerator());
 
 		// TODO - Should probably be auto-set by generator
 		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));

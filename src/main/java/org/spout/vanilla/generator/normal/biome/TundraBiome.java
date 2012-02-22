@@ -32,7 +32,9 @@ import org.spout.vanilla.biome.BiomeType;
  * Biome consisting of flat snowy terrain with frozen rivers and lakes.
  */
 public class TundraBiome extends BiomeType {
+
 	@Override
-	public void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

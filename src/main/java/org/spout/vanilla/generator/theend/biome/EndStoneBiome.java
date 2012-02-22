@@ -25,7 +25,9 @@
  */
 package org.spout.vanilla.generator.theend.biome;
 
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeType;
 import org.spout.vanilla.generator.theend.decorator.SpireDecorator;
 
@@ -38,6 +40,11 @@ public class EndStoneBiome extends BiomeType {
 	}
 
 	@Override
-	public void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		if (chunkY <= 4) {
+			for (int y = 0; y < (chunkY << Chunk.CHUNK_SIZE_BITS) + 16; ++y) {
+				blockData.set(x, y, z, VanillaMaterials.END_STONE.getId());
+			}
+		}
 	}
 }

@@ -33,7 +33,9 @@ import org.spout.vanilla.biome.BiomeType;
  */
 public class MountainBiome extends BiomeType {
 
+
 	@Override
-	public void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

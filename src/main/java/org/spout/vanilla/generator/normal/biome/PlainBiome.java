@@ -69,48 +69,29 @@ public class PlainBiome extends BiomeType {
 			return null;
 		}
 	}
-
+	
 	@Override
-	public void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
 		layerCount.setSeed((int) blockData.getWorld().getSeed() + 10);
 		heightMap.setSeed((int) blockData.getWorld().getSeed());
+		
+		final int y = chunkY * 16;
+		int height = (int) ((heightMap.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 4.0 + 60.0);
+		boolean wateredStack = height < 64;
 
-		int x = chunkX * 16;
-		int y = chunkY * 16;
-		int z = chunkZ * 16;
+		for (int dy = y; dy < y + 16; dy++) {
+			short id;
+			id = getBlockId(height, dy);
 
-		if (y > 127) {
-			blockData.flood((short) 0);
-			//return;
-		}
-		if (chunkY < 0) {
-			blockData.flood(VanillaMaterials.BEDROCK.getId());
-			//return;
+			blockData.set(x, dy, z, id);
 		}
 
-		for (int dx = x; dx < x + 16; dx++) {
-			for (int dz = z; dz < z + 16; dz++) {
-
-				int height = (int) ((heightMap.GetValue(dx / 16.0 + 0.005, 0.05, dz / 16.0 + 0.005) + 1.0) * 4.0 + 60.0);
-
-				boolean wateredStack = height < 64;
-
-				for (int dy = y; dy < y + 16; dy++) {
-					short id;
-
-					id = getBlockId(height, dy);
-
-					blockData.set(dx, dy, dz, id);
-				}
-
-				if (wateredStack) {
-					for (int dy = y + 15; dy >= y; dy--) {
-						if (dy < 64 && blockData.get(dx, dy, dz) == VanillaMaterials.AIR.getId()) {
-							blockData.set(dx, dy, dz, VanillaMaterials.WATER.getId());
-						} else {
-							break;
-						}
-					}
+		if (wateredStack) {
+			for (int dy = y + 15; dy >= y; dy--) {
+				if (dy < 64 && blockData.get(x, dy, z) == VanillaMaterials.AIR.getId()) {
+					blockData.set(x, dy, z, VanillaMaterials.WATER.getId());
+				} else {
+					break;
 				}
 			}
 		}

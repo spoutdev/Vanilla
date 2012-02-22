@@ -32,7 +32,9 @@ import org.spout.vanilla.biome.BiomeType;
  *  Biome consisting of pine/spruce trees and dull grey-blue grass. May have snow or not.
  */
 public class TaigaBiome extends BiomeType {
+
 	@Override
-	public void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

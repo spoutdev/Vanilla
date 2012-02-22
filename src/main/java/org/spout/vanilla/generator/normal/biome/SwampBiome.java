@@ -32,7 +32,9 @@ import org.spout.vanilla.biome.BiomeType;
  * Biome consisting of flat swamp-like areas with swamp-like trees and pools of clay.
  */
 public class SwampBiome extends BiomeType {
+
 	@Override
-	public void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

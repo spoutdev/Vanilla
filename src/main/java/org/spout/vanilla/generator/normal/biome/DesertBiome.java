@@ -47,29 +47,15 @@ public class DesertBiome extends BiomeType {
 	}
 
 	@Override
-	public void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
-		int x = chunkX * 16;
+	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
 		int y = chunkY * 16;
-		int z = chunkZ * 16;
-
-		if (y > 127) {
-			blockData.flood((short) 0);
-		}
-
-		if (chunkY < 0) {
-			blockData.flood(VanillaMaterials.BEDROCK.getId());
-		}
-
 		heightMap.setSeed((int) blockData.getWorld().getSeed());
-		for (int dx = x; dx < x + 16; dx++) {
-			for (int dz = z; dz < z + 16; dz++) {
-				int height = (int) ((heightMap.GetValue(dx / 32.0 + 0.005, 0.05, dz / 32.0 + 0.005) + 1.0) * 2.0 + 60.0);
+
+				int height = (int) ((heightMap.GetValue(x / 32.0 + 0.005, 0.05, z / 32.0 + 0.005) + 1.0) * 2.0 + 60.0);
 
 				for (int dy = y; dy < y + 16; dy++) {
 					short id = getBlockId(height, dy);
-					blockData.set(dx, dy, dz, id);
-				}
-			}
+					blockData.set(x, dy, z, id);
 		}
 	}
 

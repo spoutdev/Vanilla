@@ -40,6 +40,6 @@ public final class BiomePopulator implements Populator {
 
 	@Override
 	public final void populate(Chunk chunk, Random random) {
-		map.getBiome(chunk.getX(), chunk.getZ()).decorate(chunk, random);
+		map.getBiome(chunk.getX(), chunk.getZ(), chunk.getWorld().getSeed()).decorate(chunk, random);
 	}
 }

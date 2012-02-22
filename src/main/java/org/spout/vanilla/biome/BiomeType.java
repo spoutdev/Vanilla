@@ -40,7 +40,7 @@ public abstract class BiomeType {
 		this.decorators.addAll(Arrays.asList(decorators));
 	}
 
-	public abstract void generateTerrain(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ);
+	public abstract void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z);
 
 	public final void decorate(Chunk chunk, Random random) {
 		for (BiomeDecorator b : decorators) {

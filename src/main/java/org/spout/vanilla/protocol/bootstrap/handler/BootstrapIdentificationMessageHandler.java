@@ -25,6 +25,9 @@
  */
 package org.spout.vanilla.protocol.bootstrap.handler;
 
+import java.util.Arrays;
+
+import org.spout.api.Server;
 import org.spout.api.event.Event;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.player.Player;
@@ -35,6 +38,26 @@ import org.spout.vanilla.protocol.msg.IdentificationMessage;
 public class BootstrapIdentificationMessageHandler extends MessageHandler<IdentificationMessage> {
 	@Override
 	public void handle(Session session, Player player, IdentificationMessage message) {
+		
+		//We check if the player is banned
+		String playerName = message.getName();
+		
+		Server s = (Server) session.getGame();	
+		
+		if (s.getBannedPlayers().contains(playerName)) {
+			session.disconnect("You are banned from this server!");
+			return;
+		}
+		if (s.isWhitelist())
+		{
+			//We check if the player is in the whitelist
+			if (!Arrays.asList(s.getWhitelistedPlayers()).contains(playerName)) {
+				session.disconnect("You are not whitelisted!");
+				return;
+			}
+			
+		}
+		
 		Event event = new PlayerConnectEvent(session, message.getName());
 		session.getGame().getEventManager().callEvent(event);
 	}

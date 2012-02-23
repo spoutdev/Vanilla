@@ -23,43 +23,40 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.protocol.codec;
 
-import org.spout.api.protocol.Message;
+import java.io.IOException;
 
-public final class PlayNoteMessage extends Message {
-	private final int x, y, z, instrument, pitch;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 
-	public PlayNoteMessage(int x, int y, int z, int instrument, int pitch) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.instrument = instrument;
-		this.pitch = pitch;
-	}
+import org.spout.api.protocol.MessageCodec;
+import org.spout.vanilla.protocol.msg.BlockActionMessage;
 
-	public int getX() {
-		return x;
-	}
+public final class BlockActionCodec extends MessageCodec<BlockActionMessage> {
 
-	public int getY() {
-		return y;
-	}
-
-	public int getZ() {
-		return z;
-	}
-
-	public int getInstrument() {
-		return instrument;
-	}
-
-	public int getPitch() {
-		return pitch;
+	public BlockActionCodec() {
+		super(BlockActionMessage.class, 0x36);
 	}
 
 	@Override
-	public String toString() {
-		return "PlayNoteMessage{x=" + x + ",y=" + y + ",z=" + z + ",instrument=" + instrument + ",pitch=" + pitch + "}";
+	public BlockActionMessage decode(ChannelBuffer buffer) throws IOException {
+		int x = buffer.readInt();
+		int y = buffer.readUnsignedShort();
+		int z = buffer.readInt();
+		byte firstByte = buffer.readByte();
+		byte secondByte = buffer.readByte();
+		return new BlockActionMessage(x, y, z, firstByte, secondByte);
+	}
+
+	@Override
+	public ChannelBuffer encode(BlockActionMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.buffer(12);
+		buffer.writeInt(message.getX());
+		buffer.writeShort(message.getY());
+		buffer.writeInt(message.getZ());
+		buffer.writeByte(message.getFirstByte());
+		buffer.writeByte(message.getSecondByte());
+		return buffer;
 	}
 }

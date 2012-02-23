@@ -25,36 +25,48 @@
  */
 package org.spout.vanilla.material.generic;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.Tool;
 
 public class GenericTool extends GenericItem implements Tool {
-	public GenericTool(String name, int id) {
+
+	private short durability;
+	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
+
+	public GenericTool(String name, int id, short durability) {
 		super(name, id);
+		this.durability = durability;
 	}
 
+	@Override
 	public short getDurability() {
-		// TODO Auto-generated method stub
-		return 0;
+		return durability;
 	}
 
+	@Override
 	public Tool setDurability(short durability) {
-		// TODO Auto-generated method stub
+		this.durability = durability;
 		return this;
 	}
 
+	@Override
 	public float getStrengthModifier(BlockMaterial block) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(!(strengthModifiers.containsKey(block)))
+			return (float) 1.0;
+		return strengthModifiers.get(block);
 	}
 
+	@Override
 	public Tool setStrengthModifier(BlockMaterial block, float modifier) {
-		// TODO Auto-generated method stub
+		strengthModifiers.put(block, modifier);
 		return this;
 	}
 
-	public BlockMaterial[] getStrengthModifiedBlocks() {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public Set<BlockMaterial> getStrengthModifiedBlocks() {
+		return strengthModifiers.keySet();
 	}
 }

@@ -27,21 +27,14 @@
 package org.spout.vanilla.generator;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
-import gnu.trove.map.TIntIntMap;
-import gnu.trove.map.hash.TIntIntHashMap;
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.MathHelper;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
-import org.spout.api.util.map.TIntPairIntHashMap;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeMap;
 import org.spout.vanilla.biome.BiomeSelector;
-import org.spout.vanilla.biome.BiomeSmoothingPopulator;
 import org.spout.vanilla.biome.BiomeType;
 
 public abstract class BiomeGenerator implements WorldGenerator {

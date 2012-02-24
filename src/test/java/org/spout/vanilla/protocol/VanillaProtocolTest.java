@@ -155,7 +155,7 @@ public class VanillaProtocolTest {
 			new CompressedChunkMessage(1, 2, 3, 1, 2, 1, new byte[] {1,2, 33, 44, 55}),
 			new MultiBlockChangeMessage(2, 3, new short[] {2, 3, 4}, new byte[] {1, 2, 3}, new byte[] {3, 4, 5}),
 			new BlockChangeMessage(1, 2, 3, 87, 2),
-			new BlockActionMessage(1, 2, 3, 4, 5),
+			new BlockActionMessage(1, 2, 3, (byte) 4, (byte) 5),
 			new ExplosionMessage(3, 4, 5, 24, new byte[] {1, 2, 3, 1, 1, 2, 1, 1, 1}),
 			new PlayEffectMessage(34566, 1, 2, 34, 5),
 			new StateChangeMessage((byte) 3, (byte) 1),

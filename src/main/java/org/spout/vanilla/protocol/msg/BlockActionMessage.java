@@ -27,15 +27,17 @@ package org.spout.vanilla.protocol.msg;
 
 import org.spout.api.protocol.Message;
 
-public final class PlayNoteMessage extends Message {
-	private final int x, y, z, instrument, pitch;
+public final class BlockActionMessage extends Message {
 
-	public PlayNoteMessage(int x, int y, int z, int instrument, int pitch) {
+	private final int x, y, z;
+	byte firstByte, secondByte;
+
+	public BlockActionMessage(int x, int y, int z, byte firstByte, byte secondByte) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.instrument = instrument;
-		this.pitch = pitch;
+		this.firstByte = firstByte;
+		this.secondByte = secondByte;
 	}
 
 	public int getX() {
@@ -50,16 +52,16 @@ public final class PlayNoteMessage extends Message {
 		return z;
 	}
 
-	public int getInstrument() {
-		return instrument;
+	public int getFirstByte() {
+		return firstByte;
 	}
 
-	public int getPitch() {
-		return pitch;
+	public int getSecondByte() {
+		return secondByte;
 	}
 
 	@Override
 	public String toString() {
-		return "PlayNoteMessage{x=" + x + ",y=" + y + ",z=" + z + ",instrument=" + instrument + ",pitch=" + pitch + "}";
+		return "BlockActionMessage{x=" + x + ",y=" + y + ",z=" + z + ",firstByte=" + firstByte + ",secondByte=" + secondByte + "}";
 	}
 }

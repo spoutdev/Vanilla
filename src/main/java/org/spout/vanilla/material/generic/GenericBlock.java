@@ -13,6 +13,8 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
 
+	private float resistance;
+	
 	public GenericBlock(String name, int id) {
 		super(name, id);
 	}
@@ -45,6 +47,35 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 	public short getDirectRedstonePower(World world, int x, int y, int z) {
 		// TODO Waiting for repeaters
 		return 0;
+	}
+	
+	public GenericBlock setResistance(Float newResistance) {
+		resistance = newResistance;
+		return this;
+	}
+	
+	public float getResistance() {
+		return resistance;
+	}
+
+	@Override
+	public GenericBlock setFriction(float friction) {
+		return (GenericBlock) super.setFriction(friction);
+	}
+
+	@Override
+	public GenericBlock setHardness(float hardness) {
+		return (GenericBlock) super.setHardness(hardness);
+	}
+
+	@Override
+	public GenericBlock setLightLevel(int level) {
+		return (GenericBlock) super.setLightLevel(level);
+	}
+
+	@Override
+	public GenericBlock setOpaque(boolean opaque) {
+		return (GenericBlock) super.setOpaque(opaque);
 	}
 
 }

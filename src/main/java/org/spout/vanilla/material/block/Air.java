@@ -40,7 +40,7 @@ public class Air extends GenericBlock implements Block {
 	}
 
 	@Override
-	public BlockMaterial setFriction(float slip) {
+	public GenericBlock setFriction(float slip) {
 		return this;
 	}
 
@@ -50,7 +50,7 @@ public class Air extends GenericBlock implements Block {
 	}
 
 	@Override
-	public BlockMaterial setHardness(float hardness) {
+	public GenericBlock setHardness(float hardness) {
 		return this;
 	}
 
@@ -60,7 +60,7 @@ public class Air extends GenericBlock implements Block {
 	}
 
 	@Override
-	public BlockMaterial setOpaque(boolean opaque) {
+	public GenericBlock setOpaque(boolean opaque) {
 		return this;
 	}
 
@@ -70,7 +70,7 @@ public class Air extends GenericBlock implements Block {
 	}
 
 	@Override
-	public BlockMaterial setLightLevel(int level) {
+	public GenericBlock setLightLevel(int level) {
 		return this;
 	}
 }

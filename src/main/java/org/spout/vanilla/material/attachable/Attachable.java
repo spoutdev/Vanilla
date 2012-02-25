@@ -50,7 +50,7 @@ public interface Attachable extends Block {
 	 * @param x
 	 * @param y
 	 * @param z
-	 * @return
+	 * @return the block the attachable at those coordinates is attached to.
 	 */
 	public org.spout.api.geo.cuboid.Block getBlockAttachedTo(World world, int x, int y, int z);
 }

@@ -81,7 +81,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Sets the level of the player regardless of what level was set in the event.
-	 * @param an int that is the custom number of the level to set.
+	 * @param customLevel an int that is the custom number of the level to set.
 	 */
 	public void setLevel(int customLevel) {
 		newLevel = customLevel;

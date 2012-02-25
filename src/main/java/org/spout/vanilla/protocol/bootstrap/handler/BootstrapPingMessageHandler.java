@@ -36,7 +36,6 @@ import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 public class BootstrapPingMessageHandler extends MessageHandler<ServerListPingMessage> {
 	@Override
 	public void handle(Session session, Player player, ServerListPingMessage message) {
-		System.out.println("Server list ping event");
 		ServerListPingEvent event = new ServerListPingEvent(session.getAddress().getAddress(), "Spout Server", Spout.getGame().getOnlinePlayers().length, Spout.getGame().getMaxPlayers());
 		Spout.getGame().getEventManager().callEvent(event);
 		session.send(new KickMessage(event.getMessage()));

@@ -47,28 +47,36 @@ public class FlowerDecorator implements BiomeDecorator {
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
-		if (chunk.getY() != 4) {
+		if (chunk.getY() < 4) {
 			return;
 		}
-		int howMany = random.nextInt(10);
+		int howMany = random.nextInt(15);
 		BlockMaterial flower = getRandomFlower(random);
-		for (int i = 0; i < 16; i++) {
-			for (int j = 0; j < 16; j++) {
-				for (int k = 0; k < 16; k++) {
-					if (chunk.getBlockMaterial(i, j, k) == VanillaMaterials.GRASS && chunk.getBlockMaterial(i, j + 1, k) == VanillaMaterials.AIR) {
-						if (random.nextInt(10) == 2) {
-							howMany--;
-							chunk.setBlockMaterial(i, j + 1, k, flower, chunk.getWorld());
-						}
-					}
-				}
+		for (int i = 0; i < howMany; i++) {
+			int dx = random.nextInt(16);
+			int dz = random.nextInt(16);
+			int dy = getHighestWorkableBlock(chunk, dx, dz);
+			if (dy == -1) {
+				continue;
 			}
+			chunk.setBlockMaterial(dx, dy, dz, flower, chunk.getWorld());
 		}
 	}
 
 	private BlockMaterial getRandomFlower(Random random) {
 		int which = random.nextInt(flowers.size());
 		return flowers.get(which);
+	}
 
+	private int getHighestWorkableBlock(Chunk c, int px, int pz) {
+		int y = 15;
+		while (c.getBlockMaterial(px, y, pz) != VanillaMaterials.GRASS) {
+			y--;
+			if (y == 0 || c.getBlockMaterial(px, y, pz) == VanillaMaterials.WATER) {
+				return -1;
+			}
+		}
+		y++;
+		return y;
 	}
 }

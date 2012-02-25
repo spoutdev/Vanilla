@@ -38,7 +38,7 @@ import org.spout.vanilla.biome.BiomeDecorator;
 public class TreeDecorator implements BiomeDecorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
-		if (chunk.getY() != 4) {
+		if (chunk.getY() < 4) {
 			return;
 		}
 		int genInChunk = random.nextInt(100);
@@ -90,7 +90,7 @@ public class TreeDecorator implements BiomeDecorator {
 	}
 
 	private int getHighestWorkableBlock(Chunk c, int px, int pz) {
-		int y = 128;
+		int y = c.getY()*16 + 15;
 		int pozx = c.getX() * 16 + px;
 		int pozz = c.getZ() * 16 + pz;
 		while (c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaMaterials.DIRT && c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaMaterials.GRASS) {

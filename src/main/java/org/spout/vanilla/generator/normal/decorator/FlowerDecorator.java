@@ -25,16 +25,50 @@
  */
 package org.spout.vanilla.generator.normal.decorator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeDecorator;
 
 /**
  * Decorator that decorates a biome with flowers.
  */
 public class FlowerDecorator implements BiomeDecorator {
+
+	private static final List<BlockMaterial> flowers = new ArrayList<BlockMaterial>();
+
+	static {
+		flowers.add(VanillaMaterials.DANDELION);
+		flowers.add(VanillaMaterials.ROSE);
+	}
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() != 4) {
+			return;
+		}
+		int howMany = random.nextInt(10);
+		BlockMaterial flower = getRandomFlower(random);
+		for (int i = 0; i < 16; i++) {
+			for (int j = 0; j < 16; j++) {
+				for (int k = 0; k < 16; k++) {
+					if (chunk.getBlockMaterial(i, j, k) == VanillaMaterials.GRASS && chunk.getBlockMaterial(i, j + 1, k) == VanillaMaterials.AIR) {
+						if (random.nextInt(10) == 2) {
+							howMany--;
+							chunk.setBlockMaterial(i, j + 1, k, flower, chunk.getWorld());
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private BlockMaterial getRandomFlower(Random random) {
+		int which = random.nextInt(flowers.size());
+		return flowers.get(which);
+
 	}
 }

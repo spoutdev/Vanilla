@@ -25,13 +25,17 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
-import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.generator.VanillaBiomeType;
 
 /**
  * Biome consisting of flat landscapes and high hills covered in Mycelium. Huge mushrooms are present.
  */
-public class MushroomBiome extends BiomeType {
+public class MushroomBiome extends VanillaBiomeType {
+
+	protected MushroomBiome() {
+		super(14);
+	}
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {

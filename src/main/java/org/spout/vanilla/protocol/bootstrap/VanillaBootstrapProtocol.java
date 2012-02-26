@@ -40,10 +40,9 @@ public class VanillaBootstrapProtocol extends BootstrapProtocol {
 
 	@Override
 	public long detectProtocolDefinition(Message message) {
-		System.out.println("Testing for protocol in message: " + message);
 		if (message instanceof IdentificationMessage) {
 			IdentificationMessage idMessage = (IdentificationMessage) message;
-			return idMessage.getSeed();
+			return idMessage.getDimension();
 		}
 		return -1L;
 	}

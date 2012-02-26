@@ -68,7 +68,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 <<<<<<< HEAD
 		p.getEntity().getInventory().setCurrentSlot(36);
 		Inventory inv = p.getEntity().getInventory();
-		for(int i=0;i<=8;i++) 
+		for(int i=0;i<=8;i++)
 			inv.setHiddenSlot(i, true);
 =======
 		p.getEntity().getInventory().setCurrentSlot(0);
@@ -97,9 +97,9 @@ public abstract class MinecraftPlayer extends PlayerController {
 			player.getEntity().getInventory().setDirty(false);
 			SetWindowSlotsMessage message = new SetWindowSlotsMessage((byte)0, player.getEntity().getInventory().getContents());
 			player.getSession().send(message);
-		} 
+		}
 	}
-	
+
 	public void resetTimeoutTicks() {
 		unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
 =======

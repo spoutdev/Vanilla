@@ -27,9 +27,9 @@ package org.spout.vanilla.generator.normal.biome;
 
 import net.royawesome.jlibnoise.module.source.Perlin;
 
-import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.normal.decorator.CactusDecorator;
 import org.spout.vanilla.generator.normal.decorator.CaveDecorator;
 import org.spout.vanilla.generator.normal.decorator.DungeonDecorator;
@@ -38,11 +38,11 @@ import org.spout.vanilla.generator.normal.decorator.OreDecorator;
 /**
  * Biome consisting of desert-like terrain.
  */
-public class DesertBiome extends BiomeType {
+public class DesertBiome extends VanillaBiomeType {
 	private Perlin heightMap = new Perlin();
 
 	public DesertBiome() {
-		super(new CactusDecorator(), new OreDecorator(), new CaveDecorator(), new DungeonDecorator());
+		super(2, new CactusDecorator(), new OreDecorator(), new CaveDecorator(), new DungeonDecorator());
 		heightMap.setOctaveCount(5);
 	}
 

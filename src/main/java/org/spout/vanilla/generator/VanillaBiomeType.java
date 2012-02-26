@@ -25,30 +25,22 @@
  */
 package org.spout.vanilla.generator;
 
-import net.royawesome.jlibnoise.module.modifier.Turbulence;
-import net.royawesome.jlibnoise.module.source.Voronoi;
-
-import org.spout.api.generator.biome.BiomeSelector;
+import org.spout.api.generator.biome.BiomeDecorator;
+import org.spout.api.generator.biome.BiomeType;
 
 /**
+ *
  * @author zml2008
  */
-public class NoiseSelector extends BiomeSelector {
-	private Turbulence noise = new Turbulence();
-	private Voronoi base = new Voronoi();
+public abstract class VanillaBiomeType extends BiomeType {
+	private final int biomeId;
 
-	public NoiseSelector() {
-		base.setFrequency(Math.PI);
-		noise.SetSourceModule(0, base);
-		noise.setRoughness(4);
-		noise.setFrequency(0.8);
-		noise.setPower(1.3);
+	protected VanillaBiomeType(int biomeId, BiomeDecorator... decorators) {
+		super(decorators);
+		this.biomeId = biomeId;
 	}
 
-	@Override
-	public int pickBiome(int x, int y, int z, long seed) {
-		base.setSeed((int) seed);
-		noise.setSeed((int) seed);
-		return (int)(noise.GetValue(x / 256.0 + 0.05, y + 0.05, z / 256.0 + 0.05) * 32);
+	public int getBiomeId() {
+		return biomeId;
 	}
 }

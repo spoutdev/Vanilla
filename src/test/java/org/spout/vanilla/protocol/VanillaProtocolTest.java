@@ -114,7 +114,7 @@ public class VanillaProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
 	private static final Message[] TEST_MESSAGES = new Message[] {
 			new PingMessage(42),
-			new IdentificationMessage(0, "Tester", 244888L, 0, -1, 0, 256, 20, "MAGICAL"),
+			new IdentificationMessage(0, "Tester", 0, -1, 0, 256, 20, "MAGICAL"),
 			new HandshakeMessage("Player"),
 			new ChatMessage("<Spouty> This is a thing called a chat message"),
 			new TimeMessage(666L),
@@ -122,7 +122,7 @@ public class VanillaProtocolTest {
 			new SpawnPositionMessage(42, 42, 42),
 			new EntityInteractionMessage(1123, 4455, true),
 			new HealthMessage(1, 2, 3.4F),
-			new RespawnMessage(89, (byte) 0, (byte) 1, 128, 435556L, "VERYFANCY"),
+			new RespawnMessage(89, (byte) 0, (byte) 1, 128, "VERYFANCY"),
 			new GroundMessage(true),
 			new PositionMessage(128, 256, 512, 3.4D, true),
 			new RotationMessage(1F, 2F, false),
@@ -157,8 +157,8 @@ public class VanillaProtocolTest {
 			new LoadChunkMessage(0, -2, true),
 			new CompressedChunkMessage(1, 2, true, new boolean[16], 1, new byte[][] {new byte[16 * 16 * 16 * 5 / 2],
 					null, null, null, null, null, null, null, null, null,
-					new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null}),
-			new MultiBlockChangeMessage(2, 3, new short[] {2, 3, 4}, new byte[] {1, 2, 3}, new byte[] {3, 4, 5}),
+					new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null}, new byte[16 * 16]),
+			new MultiBlockChangeMessage(2, 3, new short[] {2, 3, 4, /**/ 3, 6, 4, /**/ 8, 5, 5}, new byte[] {1, 2, 3}, new byte[] {3, 4, 5}),
 			new BlockChangeMessage(1, 2, 3, 87, 2),
 			new BlockActionMessage(1, 2, 3, (byte) 4, (byte) 5),
 			new ExplosionMessage(3, 4, 5, 24, new byte[] {1, 2, 3, 1, 1, 2, 1, 1, 1}),

@@ -25,10 +25,18 @@
  */
 package org.spout.vanilla.generator.normal;
 
+<<<<<<< HEAD
 
 import org.spout.vanilla.generator.NoiseSelector;
 import org.spout.vanilla.generator.VanillaBiomes;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
+=======
+import org.spout.vanilla.biome.BiomeGenerator;
+import org.spout.vanilla.biome.selectors.NoiseSelector;
+import org.spout.vanilla.generator.normal.biome.DesertBiome;
+import org.spout.vanilla.generator.normal.biome.TundraBiome;
+import org.spout.vanilla.generator.normal.biome.PlainBiome;
+>>>>>>> Added support for 12w08a
 
 /**
  * Generator that generates default Minecraft-like worlds.
@@ -37,7 +45,14 @@ public class NormalGenerator extends VanillaGeneratorBase {
 	@Override
 	public void registerBiomes() {
 		setSelector(new NoiseSelector());
+<<<<<<< HEAD
 		register(VanillaBiomes.PLAIN);
 		register(VanillaBiomes.DESERT);
+=======
+		register(new PlainBiome());
+		register(new DesertBiome());
+		register(new TundraBiome());
+		//TODO: Create Normal's biome(s);
+>>>>>>> Added support for 12w08a
 	}
 }

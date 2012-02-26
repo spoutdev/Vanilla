@@ -49,7 +49,7 @@ public class VanillaBootstrapProtocolTest {
 	private static final TIntSet testedOpcodes = new TIntHashSet();
 	private static final VanillaBootstrapCodecLookupService CODEC_LOOKUP = new VanillaBootstrapCodecLookupService();
 	private static final Message[] TEST_MESSAGES = new Message[] {
-			new IdentificationMessage(0, "Tester", 244888L, 0, -1, 0, 128, 20, "MAGICAL"),
+			new IdentificationMessage(0, "Tester", 0, -1, 0, 128, 20, "MAGICAL"),
 			new HandshakeMessage("Player"),
 			new ServerListPingMessage(),
 			new KickMessage("This is a test")
@@ -71,9 +71,10 @@ public class VanillaBootstrapProtocolTest {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testMessageEncoding() throws IOException {
 		for (Message message : TEST_MESSAGES) {
-			MessageCodec codec = CODEC_LOOKUP.find(message.getClass());
+			MessageCodec<Message> codec = (MessageCodec<Message>)CODEC_LOOKUP.find(message.getClass());
 			ChannelBuffer encoded = codec.encode(message);
 			Message decoded = codec.decode(encoded);
 			assertEquals(message.toString(), decoded.toString());

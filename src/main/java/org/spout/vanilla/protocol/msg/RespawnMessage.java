@@ -30,15 +30,13 @@ import org.spout.api.protocol.Message;
 public final class RespawnMessage extends Message {
 	private final byte difficulty, mode;
 	private final int worldHeight, dimension;
-	private final long seed;
 	private final String worldType;
 
-	public RespawnMessage(int dimension, byte difficulty, byte mode, int worldHeight, long seed, String worldType) {
+	public RespawnMessage(int dimension, byte difficulty, byte mode, int worldHeight, String worldType) {
 		this.dimension = dimension;
 		this.difficulty = difficulty;
 		this.mode = mode;
 		this.worldHeight = worldHeight;
-		this.seed = seed;
 		this.worldType = worldType;
 	}
 
@@ -58,16 +56,12 @@ public final class RespawnMessage extends Message {
 		return worldHeight;
 	}
 
-	public long getSeed() {
-		return seed;
-	}
-
 	public String getWorldType() {
 		return worldType;
 	}
 
 	@Override
 	public String toString() {
-		return "RespawnMessage{dimension=" + dimension + ",difficulty=" + difficulty + ",gameMode=" + mode + ",worldHeight=" + worldHeight + ",seed=" + seed + ",worldType=" + worldType + "}";
+		return "RespawnMessage{dimension=" + dimension + ",difficulty=" + difficulty + ",gameMode=" + mode + ",worldHeight=" + worldHeight + ",worldType=" + worldType + "}";
 	}
 }

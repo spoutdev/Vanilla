@@ -40,15 +40,36 @@ public final class MultiBlockChangeCodec extends MessageCodec<MultiBlockChangeMe
 
 	@Override
 	public MultiBlockChangeMessage decode(ChannelBuffer buffer) throws IOException {
+		/*int chunkX = buffer.readInt();
+		int chunkZ = buffer.readInt();
+		int changes = buffer.readUnsignedShort();
+		short[] coordinates = new short[changes * 3];
+		short[] types = new short[changes];
+		byte[] metadata = new byte[changes];
+
+
+		byte[] rawChanges = new byte[changes * 4];
+		buffer.readBytes(rawChanges);
+		int coordsIndex = 0, rawChangesIndex = 0;
+		for (int i = 0; i < changes; ++i) {
+			metadata[i] = (byte)(rawChanges[rawChangesIndex] & 0xf);
+			types[i] = (short)(rawChanges[rawChangesIndex + 1] >> 1 |  rawChanges[rawChangesIndex] & 0xf0);
+			coordinates[++coordsIndex] = rawChanges[rawChangesIndex++]; // y
+			coordinates[coordsIndex + 1] = (short)(rawChanges[rawChangesIndex] & 0xf); // z
+			coordinates[coordsIndex - 1] = (short)(rawChanges[rawChangesIndex] << 2 );// x
+		}
+
+		return new MultiBlockChangeMessage(chunkX, chunkZ, coordinates, types, metadata);*/
+
 		int chunkX = buffer.readInt();
 		int chunkZ = buffer.readInt();
 		int changes = buffer.readUnsignedShort();
 
-		short[] coordinates = new short[changes];
+		short[] coordinates = new short[changes * 3];
 		byte[] types = new byte[changes];
 		byte[] metadata = new byte[changes];
 
-		for (int i = 0; i < changes; i++) {
+		for (int i = 0; i < coordinates.length; i++) {
 			coordinates[i] = buffer.readShort();
 		}
 		buffer.readBytes(types);
@@ -59,7 +80,25 @@ public final class MultiBlockChangeCodec extends MessageCodec<MultiBlockChangeMe
 
 	@Override
 	public ChannelBuffer encode(MultiBlockChangeMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		/*ChannelBuffer buffer = ChannelBuffers.dynamicBuffer(10 + message.getChanges() * 4);
+		buffer.writeInt(message.getChunkX());
+		buffer.writeInt(message.getChunkZ());
+		buffer.writeShort(message.getChanges());
+		byte[] data = new byte[message.getChanges() * 4];
+		for (int i = 0, coordsIndex = 0; i < message.getChanges(); ++i) {
+			data[i] = (byte)(message.getTypes()[i] & 0x0F << 2 | message.getMetadata()[i]);
+			data[i + 1] = (byte)(message.getTypes()[i] & 0x0ff << 1);
+			data[i + 2] = (byte)message.getCoordinates()[coordsIndex + 1];
+			data[i + 3] = (byte)(message.getCoordinates()[coordsIndex + 2] & 0xF << 4 | (message.getCoordinates()[coordsIndex] & 0x0F));
+			coordsIndex += 3;
+		}
+
+		buffer.writeInt(data.length);
+		buffer.writeBytes(data);
+
+		return buffer;*/
+
+		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer(10 + message.getChanges() * 4);
 		buffer.writeInt(message.getChunkX());
 		buffer.writeInt(message.getChunkZ());
 		buffer.writeShort(message.getChanges());

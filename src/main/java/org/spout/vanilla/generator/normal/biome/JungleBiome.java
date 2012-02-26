@@ -25,13 +25,17 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
-import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.generator.VanillaBiomeType;
 
 /**
  * Biome consisting of jungle-like structures. Minecraft 1.2 only.
  */
-public class JungleBiome extends BiomeType {
+public class JungleBiome extends VanillaBiomeType {
+
+	public JungleBiome() {
+		super(21);
+	}
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {

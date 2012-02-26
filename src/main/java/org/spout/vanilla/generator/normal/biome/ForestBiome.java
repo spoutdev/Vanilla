@@ -25,13 +25,17 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
-import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.generator.VanillaBiomeType;
 
 /**
  * Biome consisting of forest-like generation of Oak and Birch trees.
  */
-public class ForestBiome extends BiomeType {
+public class ForestBiome extends VanillaBiomeType {
+
+	protected ForestBiome() {
+		super(4);
+	}
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {

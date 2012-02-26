@@ -31,6 +31,9 @@ import gnu.trove.set.hash.TIntHashSet;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.generator.WorldGenerator;
+import org.spout.api.generator.biome.BiomeGenerator;
+import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
@@ -41,6 +44,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
+import org.spout.api.util.map.TIntPairHashSet;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.VanillaPlugin;
@@ -54,6 +58,7 @@ import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.PositionRotationMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
+import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 
 import static org.spout.vanilla.VanillaMessageHandlerUtils.getInventoryId;
@@ -73,6 +78,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	}
 
 	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();
+	private TIntPairHashSet biomesSentChunks = new TIntPairHashSet();
 
 	//TODO: track entities as they come into range and untrack entities as they move out of range
 	private TIntHashSet activeEntities = new TIntHashSet();
@@ -85,7 +91,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		int y = (int) p.getY() >> Chunk.CHUNK_SIZE_BITS;// + SEALEVEL_CHUNK;
 		int z = (int) p.getZ() >> Chunk.CHUNK_SIZE_BITS;
 
-		if (y < 0 || y > 7) {
+		if (y < 0 || y > p.getWorld().getHeight() >> 4) {
 			return;
 		}
 
@@ -93,6 +99,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (column != null) {
 			column.remove(y);
 			if (column.isEmpty()) {
+				biomesSentChunks.remove(x, z);
 				activeChunks.remove(x, z);
 				LoadChunkMessage unLoadChunk = new LoadChunkMessage(x, z, false);
 				owner.getSession().send(unLoadChunk);
@@ -106,7 +113,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		int y = (int) p.getY() >> Chunk.CHUNK_SIZE_BITS;// + SEALEVEL_CHUNK;
 		int z = (int) p.getZ() >> Chunk.CHUNK_SIZE_BITS;
 
-		if (y < 0 || y > 7) {
+		if (y < 0 || y > p.getWorld().getHeight() >> 4) {
 			return;
 		}
 
@@ -128,12 +135,13 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 		//System.out.println("Sending chunk (" + x + ", " + y + ", " + z + ") " + c);
 
-		if (y < 0 || y * 16 > c.getWorld().getHeight()) {
+		if (y < 0 || y > c.getWorld().getHeight() >> 4) {
 			return;
 		}
 
 		ChunkSnapshot snapshot = c.getSnapshot(false);
 		short[] rawBlockIdArray = snapshot.getBlockIds();
+
 		short[] rawBlockData = snapshot.getBlockData();
 		byte[] fullChunkData = new byte[16 * 16 * 16 * 5 / 2];
 		final int maxIdIndex = 16 * 16 * 16;
@@ -156,9 +164,27 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			fullChunkData[i + maxIdIndex] = (byte) (rawBlockData[i + 1] & 0xF << 4 | rawBlockData[i] & 0xF);
 		}
 
+		final boolean sendBiomes = !biomesSentChunks.contains(c.getX(), c.getZ());
+		byte[] biomeData = sendBiomes ? new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE] : null;
+		if (sendBiomes) {
+			biomesSentChunks.add(c.getX(), c.getZ());
+			WorldGenerator gen = c.getWorld().getGenerator();
+			final long seed = c.getWorld().getSeed();
+			if (gen instanceof BiomeGenerator) {
+				for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
+					for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
+						BiomeType biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
+						if (biome instanceof VanillaBiomeType) {
+							biomeData[(dz & Chunk.CHUNK_SIZE - 1) << 4 | (dx & Chunk.CHUNK_SIZE - 1)] = (byte) ((VanillaBiomeType) biome).getBiomeId();
+						}
+					}
+				}
+			}
+		}
+
 		byte[][] packetChunkData = new byte[16][];
 		packetChunkData[y] = fullChunkData;
-		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], 0, packetChunkData);
+		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, sendBiomes, new boolean[16], 0, packetChunkData, biomeData);
 		owner.getSession().send(CCMsg);
 	}
 
@@ -176,7 +202,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (first) {
 			first = false;
 			int entityId = owner.getEntity().getId();
-			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), world.getSeed(), owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1, 0, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
+			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1, 0, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
 			owner.getSession().send(idMsg);
 			for (int slot = 0; slot < 5; slot++) {
 				ItemStack slotItem = owner.getEntity().getInventory().getItem(5 + slot);
@@ -189,7 +215,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 				owner.getSession().send(EEMsg);
 			}
 			entity.getInventory().addViewer(this);
+		} else {
+			owner.getSession().send(new RespawnMessage(0, (byte)0, (byte)0, world == null ? 0: world.getHeight(), "DEFAULT"));
 		}
+
 		if (world != null) {
 			Point spawn = world.getSpawnPoint().getPosition();
 			SpawnPositionMessage SPMsg = new SpawnPositionMessage((int) spawn.getX(), (int) spawn.getY(), (int) spawn.getZ());
@@ -227,7 +256,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		x = (chunk.getX() << Chunk.CHUNK_SIZE_BITS) + x;
 		y = (chunk.getY() << Chunk.CHUNK_SIZE_BITS) + y;
 		z = (chunk.getZ() << Chunk.CHUNK_SIZE_BITS) + z;
-		if (y >= 0 && y < 128) {
+		if (y >= 0 && y < chunk.getWorld().getHeight()) {
 			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id & 0xFF, data & 0xF);
 			session.send(BCM);
 		}

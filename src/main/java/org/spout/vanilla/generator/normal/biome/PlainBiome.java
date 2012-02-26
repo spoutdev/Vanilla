@@ -29,9 +29,9 @@ import java.util.ArrayList;
 
 import net.royawesome.jlibnoise.module.source.Perlin;
 
-import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.normal.decorator.BeachDecorator;
 import org.spout.vanilla.generator.normal.decorator.CaveDecorator;
 import org.spout.vanilla.generator.normal.decorator.DungeonDecorator;
@@ -43,15 +43,18 @@ import org.spout.vanilla.generator.normal.decorator.TreeDecorator;
 /**
  * Biome consisting of flat terrain with flowers, tall grass, few trees, and ponds.
  */
-public class PlainBiome extends BiomeType {
+public class PlainBiome extends VanillaBiomeType {
 	Perlin layerCount = new Perlin(), heightMap = new Perlin();
 	ArrayList<Perlin> layers = new ArrayList<Perlin>();
 
-	public PlainBiome() {
-		super(new CaveDecorator(), new FlowerDecorator(), new GrassDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
-
+	protected PlainBiome(int id) {
+		super(id, new CaveDecorator(), new FlowerDecorator(), new GrassDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
 		layerCount.setOctaveCount(5);
 		heightMap.setOctaveCount(5);
+	}
+
+	public PlainBiome() {
+		this(1);
 	}
 
 	public Perlin getLayer(int seed, int layer) {
@@ -69,39 +72,35 @@ public class PlainBiome extends BiomeType {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
 		layerCount.setSeed((int) blockData.getWorld().getSeed() + 10);
 		heightMap.setSeed((int) blockData.getWorld().getSeed());
-		
+
 		final int y = chunkY * 16;
-		int height = (int) ((heightMap.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 4.0 + 60.0);
-		boolean wateredStack = height < 64;
+		final int height = (int) ((heightMap.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 4.0 + 60.0);
 
 		for (int dy = y; dy < y + 16; dy++) {
-			short id;
-			id = getBlockId(height, dy);
-
-			blockData.set(x, dy, z, id);
+			blockData.set(x, dy, z, getBlockId(height, dy));
 		}
 
-		if (wateredStack) {
-			for (int dy = y + 15; dy >= y; dy--) {
-				if (dy < 64 && blockData.get(x, dy, z) == VanillaMaterials.AIR.getId()) {
-					blockData.set(x, dy, z, VanillaMaterials.WATER.getId());
-				} else {
-					break;
-				}
+		if (height < 64) {
+			generateWateredStack(blockData, x, y, z, 64);
+		}
+	}
+
+	protected void generateWateredStack(CuboidShortBuffer blockData, int x, int y, int z, int maxSeaLevel) {
+		for (int dy = y + 15; dy >= y; dy--) {
+			if (dy < maxSeaLevel && blockData.get(x, dy, z) == VanillaMaterials.AIR.getId()) {
+				blockData.set(x, dy, z, VanillaMaterials.WATER.getId());
+			} else {
+				break;
 			}
 		}
 	}
 
-	public static double getPerlinValueXZ(Perlin perlin, int x, int z) {
-		return perlin.GetValue(x / 16.0 + 0.05, 0.05, z / 16.0 + 0.05);
-	}
-
-	private short getBlockId(int top, int dy) {
+	protected short getBlockId(int top, int dy) {
 		short id;
 		if (dy > top) {
 			id = VanillaMaterials.AIR.getId();

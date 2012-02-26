@@ -25,15 +25,17 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
-import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.generator.VanillaBiomeType;
 
 /**
  * Biome consisting of mountain-like structures.
  */
-public class MountainBiome extends BiomeType {
+public class MountainBiome extends VanillaBiomeType {
 
-
+	public MountainBiome() {
+		super(3);
+	}
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
 		throw new UnsupportedOperationException("Not supported yet.");

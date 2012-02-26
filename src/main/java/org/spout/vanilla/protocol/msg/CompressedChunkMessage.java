@@ -32,20 +32,22 @@ import java.util.Arrays;
 public final class CompressedChunkMessage extends Message {
 	private final int x, z;
 	private final boolean contiguous;
-	private final boolean[] hasAhhitionalData;
+	private final boolean[] hasAdditionalData;
 	private final int unused;
 	private final byte[][] data;
+	private final byte[] biomeData;
 
-	public CompressedChunkMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, int unused, byte[][] data) {
+	public CompressedChunkMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, int unused, byte[][] data, byte[] biomeData) {
 		if (hasAdditionalData.length != data.length || data.length != 16) {
 			throw new IllegalArgumentException("Data and hasAdditionalDta must have a length of 16");
 		}
 		this.x = x;
 		this.z = z;
 		this.contiguous = contiguous;
-		this.hasAhhitionalData = hasAdditionalData;
+		this.hasAdditionalData = hasAdditionalData;
 		this.unused = unused;
 		this.data = data;
+		this.biomeData = biomeData;
 	}
 
 	public int getX() {
@@ -57,7 +59,7 @@ public final class CompressedChunkMessage extends Message {
 	}
 
 	public boolean[] hasAdditionalData() {
-		return hasAhhitionalData;
+		return hasAdditionalData;
 	}
 
 	public boolean isContiguous() {
@@ -72,8 +74,12 @@ public final class CompressedChunkMessage extends Message {
 		return data;
 	}
 
+	public byte[] getBiomeData() {
+		return biomeData;
+	}
+
 	@Override
 	public String toString() {
-		return "CompressedChunkMessage{x=" + x + ",z=" + z + ",hasAdditionalData=" + Arrays.toString(hasAhhitionalData) + ",contiguous=" + contiguous + ",unused=" + unused + ",data=" + (data == null ? null : data.length) + "}";
+		return "CompressedChunkMessage{x=" + x + ",z=" + z + ",hasAdditionalData=" + Arrays.toString(hasAdditionalData) + ",contiguous=" + contiguous + ",unused=" + unused + ",data=" + (data == null ? null : data.length) + "}";
 	}
 }

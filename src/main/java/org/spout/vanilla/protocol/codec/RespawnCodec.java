@@ -45,9 +45,8 @@ public final class RespawnCodec extends MessageCodec<RespawnMessage> {
 		byte difficulty = buffer.readByte();
 		byte mode = buffer.readByte();
 		int worldHeight = ChannelBufferUtils.getExpandedHeight(buffer.readShort());
-		long seed = buffer.readLong();
 		String worldType = ChannelBufferUtils.readString(buffer);
-		return new RespawnMessage(dimension, difficulty, mode, worldHeight, seed, worldType);
+		return new RespawnMessage(dimension, difficulty, mode, worldHeight, worldType);
 	}
 
 	@Override
@@ -57,7 +56,6 @@ public final class RespawnCodec extends MessageCodec<RespawnMessage> {
 		buffer.writeByte(message.getDifficulty());
 		buffer.writeByte(message.getGameMode());
 		buffer.writeShort(ChannelBufferUtils.getShifts(message.getWorldHeight()) - 1);
-		buffer.writeLong(message.getSeed());
 		ChannelBufferUtils.writeString(buffer, message.getWorldType());
 		return buffer;
 	}

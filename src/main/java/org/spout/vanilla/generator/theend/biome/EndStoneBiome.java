@@ -25,18 +25,18 @@
  */
 package org.spout.vanilla.generator.theend.biome;
 
-import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.theend.decorator.SpireDecorator;
 
 /**
  * Biome consisting of only end stone. Found only in The End.
  */
-public class EndStoneBiome extends BiomeType {
+public class EndStoneBiome extends VanillaBiomeType {
 	public EndStoneBiome() {
-		super(new SpireDecorator());
+		super(9, new SpireDecorator());
 	}
 
 	@Override

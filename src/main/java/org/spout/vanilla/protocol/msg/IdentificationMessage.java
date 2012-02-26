@@ -30,12 +30,10 @@ import org.spout.api.protocol.Message;
 public final class IdentificationMessage extends Message {
 	private final int id, dimension, mode, difficulty, worldHeight, maxPlayers;
 	private final String name, worldType;
-	private final long seed;
 
-	public IdentificationMessage(int id, String name, long seed, int mode, int dimension, int difficulty, int worldHeight, int maxPlayers, String worldType) {
+	public IdentificationMessage(int id, String name, int mode, int dimension, int difficulty, int worldHeight, int maxPlayers, String worldType) {
 		this.id = id;
 		this.name = name;
-		this.seed = seed;
 		this.mode = mode;
 		this.dimension = dimension;
 		this.difficulty = difficulty;
@@ -50,10 +48,6 @@ public final class IdentificationMessage extends Message {
 
 	public String getName() {
 		return name;
-	}
-
-	public long getSeed() {
-		return seed;
 	}
 
 	public int getGameMode() {
@@ -82,6 +76,6 @@ public final class IdentificationMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "IdentificationMessage{id=" + id + ",name=" + name + ",seed=" + seed + ",gameMode=" + mode + ",dimension=" + dimension + ",difficulty=" + difficulty + ",worldHeight=" + worldHeight + ",maxPlayers=" + maxPlayers + ",worldtype=" + worldType + "}";
+		return "IdentificationMessage{id=" + id + ",name=" + name + ",gameMode=" + mode + ",dimension=" + dimension + ",difficulty=" + difficulty + ",worldHeight=" + worldHeight + ",maxPlayers=" + maxPlayers + ",worldtype=" + worldType + "}";
 	}
 }

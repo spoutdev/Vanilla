@@ -25,13 +25,17 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
-import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.generator.VanillaBiomeType;
 
 /**
  *  Biome consisting of pine/spruce trees and dull grey-blue grass. May have snow or not.
  */
-public class TaigaBiome extends BiomeType {
+public class TaigaBiome extends VanillaBiomeType {
+
+	public TaigaBiome() {
+		super(5);
+	}
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {

@@ -33,6 +33,7 @@ import java.util.zip.Inflater;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 
@@ -75,11 +76,15 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 			}
 		}
 
+		if (contiguous) {
+			size += Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE;
+		}
+
 		byte[] uncompressedData = new byte[size];
 
 		Inflater inflater = new Inflater();
 		inflater.setInput(compressedData);
-
+		inflater.getRemaining();
 		try {
 			int uncompressed = inflater.inflate(uncompressedData);
 			if (uncompressed == 0) {
@@ -99,8 +104,14 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 				size += sectionData.length;
 			}
 		}
+		byte[] biomeData = new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
+		
+		if (contiguous) {
+			System.arraycopy(uncompressedData, size, biomeData, 0, biomeData.length);
+			size += biomeData.length;
+		}
 
-		return new CompressedChunkMessage(x, z, contiguous, hasAdditionalData, unused, data);
+		return new CompressedChunkMessage(x, z, contiguous, hasAdditionalData, unused, data, biomeData);
 	}
 
 	@Override
@@ -125,6 +136,10 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 				uncompressedSize += data[i].length;
 			}
 		}
+		
+		if (message.isContiguous()) {
+			uncompressedSize += message.getBiomeData().length;
+		}
 
 		buffer.writeShort(sectionsSentBitmap);
 		buffer.writeShort(additionalDataBitMap);
@@ -135,6 +150,11 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 				System.arraycopy(sectionData, 0, uncompressedData, index, sectionData.length);
 				index += sectionData.length;
 			}
+		}
+		
+		if (message.isContiguous()) {
+			System.arraycopy(message.getBiomeData(), 0, uncompressedData, index, message.getBiomeData().length);
+			index += message.getBiomeData().length;
 		}
 
 		byte[] compressedData = new byte[uncompressedSize];

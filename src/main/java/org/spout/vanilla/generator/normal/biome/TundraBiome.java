@@ -1,9 +1,9 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of vanilla (http://www.spout.org/).
  *
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * vanilla is licensed under the SpoutDev License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
+ * vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -25,16 +25,38 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
-import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.VanillaMaterials;
 
 /**
- * Biome consisting of flat snowy terrain with frozen rivers and lakes.
+ * A simple biome based on PlainBiome which covers everything with snow and ice
  */
-public class TundraBiome extends BiomeType {
+public class TundraBiome extends PlainBiome {
+	public TundraBiome() {
+		super(12);
+	}
 
-	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		throw new UnsupportedOperationException("Not supported yet.");
+	protected void generateWateredStack(CuboidShortBuffer blockData, int x, int y, int z, int maxSeaLevel) {
+		boolean first = true;
+		for (int dy = y + 15; dy >= y; dy--) {
+			if (dy < maxSeaLevel && blockData.get(x, dy, z) == VanillaMaterials.AIR.getId()) {
+				if (first) {
+					blockData.set(x, dy, z, VanillaMaterials.ICE.getId());
+					first = false;
+				} else {
+					blockData.set(x, dy, z, VanillaMaterials.WATER.getId());
+				}
+			} else {
+				break;
+			}
+		}
+	}
+
+	protected short getBlockId(int top, int dy) {
+		if (dy == top + 1) {
+			return VanillaMaterials.SNOW.getId();
+		} else {
+			return super.getBlockId(top, dy);
+		}
 	}
 }

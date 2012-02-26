@@ -25,13 +25,17 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
-import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.generator.VanillaBiomeType;
 
 /**
  * Biome consisting of flat swamp-like areas with swamp-like trees and pools of clay.
  */
-public class SwampBiome extends BiomeType {
+public class SwampBiome extends VanillaBiomeType {
+
+	protected SwampBiome() {
+		super(6);
+	}
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {

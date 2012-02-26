@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionHelper;
+import org.spout.api.collision.CollisionModel;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Pointm;
@@ -48,6 +49,11 @@ public abstract class MovingEntity extends MinecraftEntity {
 	private int fireTicks;
 	private boolean flammable;
 
+	public MovingEntity(){
+		parent.setCollision(new CollisionModel(area));
+		
+	}
+	
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -62,8 +68,9 @@ public abstract class MovingEntity extends MinecraftEntity {
 	}
 
 	private void updateMovement(float dt) {
+		/*
 		final Pointm location = parent.getPoint();
-		List<BoundingBox> colliding = this.getCollidingBoundingBoxes();
+		//List<BoundingBox> colliding = this.getCollidingBoundingBoxes();
 		final BoundingBox position = area.clone().offset(location);
 		
 		Vector3m offset = velocity.clone();
@@ -103,6 +110,8 @@ public abstract class MovingEntity extends MinecraftEntity {
 		parent.setPoint(location);
 		//if (colliding.size() > 0)
 		//	System.out.println("Moved from " + old + " to " + parent.getPoint() + ". Expected: " + location);
+		 * */
+		 
 	}
 
 	@Override
@@ -159,35 +168,5 @@ public abstract class MovingEntity extends MinecraftEntity {
 		return velocity;
 	}
 	
-	public List<BoundingBox> getCollidingBoundingBoxes() {
-		final int minX = MathHelper.floor(parent.getX());
-		final int minY = MathHelper.floor(parent.getY());
-		final int minZ = MathHelper.floor(parent.getZ());
-		final int maxX = minX + 1;
-		final int maxY = minY + 1;
-		final int maxZ = minZ + 1;
-		
-		final LinkedList<BoundingBox> colliding = new LinkedList<BoundingBox>();
-		
-		final BoundingBox mutable = new BoundingBox(0, 0, 0, 0, 0, 0);
-		final BoundingBox position = new BoundingBox(area);
-		position.offset(minX, minY, minZ);
-		
-		final World world = parent.getWorld();
-		for (int dx = minX; dx < maxX; dx++) {
-			for (int dy = minY - 1; dy < maxY; dy++) {
-				for (int dz = minZ; dz < maxZ; dz++) {
-					BlockMaterial material = world.getBlockMaterial(dx, dy, dz);
-					mutable.set(material.getBoundingArea());
-					mutable.offset(dx, dy, dz);
-					if (mutable.intersects(position)) {
-						colliding.add(mutable.clone());
-					}
-				}
-			}
-		}
-		
-		//TODO: colliding entities
-		return colliding;
-	}
+
 }

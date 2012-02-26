@@ -84,7 +84,7 @@ public class RegionEntitySpawner extends Controller {
 			for (int dy = 0; dy < Region.REGION_SIZE; dy++) {
 				for (int dz = 0; dz < Region.REGION_SIZE; dz++) {
 					Chunk chunk = region.getChunk(dx, dy, dz, false);
-					if (chunk != null && !chunk.isUnloaded() && chunk.isPopulated()) {
+					if (chunk != null && chunk.isLoaded() && chunk.isPopulated()) {
 						spawn(chunk);
 					}
 				}

@@ -33,14 +33,17 @@ public class LongGrass extends GroundAttachable implements Plant {
 		super(name, id, data);
 	}
 
+	@Override
 	public int getNumGrowthStages() {
 		return 0;
 	}
 
+	@Override
 	public int getMinimumLightToGrow() {
 		return 0;
 	}
 
+	@Override
 	public boolean hasGrowthStages() {
 		return false;
 	}

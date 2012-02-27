@@ -33,6 +33,7 @@ public class Slab extends GenericBlock implements MovingBlock {
 		super(name, id, data);
 	}
 
+	@Override
 	public boolean isMoving() {
 		return false;
 	}

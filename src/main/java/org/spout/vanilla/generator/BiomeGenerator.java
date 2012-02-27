@@ -64,6 +64,7 @@ public abstract class BiomeGenerator implements WorldGenerator {
 		biomes.addBiome(biome);
 	}
 
+	@Override
 	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
 		final int x = chunkX << Chunk.CHUNK_SIZE_BITS;
 		final int z = chunkZ << Chunk.CHUNK_SIZE_BITS;
@@ -73,7 +74,7 @@ public abstract class BiomeGenerator implements WorldGenerator {
 			blockData.flood((short) 0);
 			return;
 		}
-		
+
 		if (chunkY < 0) {
 			blockData.flood(VanillaMaterials.BEDROCK.getId());
 			return;
@@ -86,6 +87,7 @@ public abstract class BiomeGenerator implements WorldGenerator {
 		}
 	}
 
+	@Override
 	public final Populator[] getPopulators() {
 		return populators.toArray(new Populator[populators.size()]);
 	}

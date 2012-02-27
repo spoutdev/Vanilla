@@ -37,6 +37,10 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.entity.living.player.CreativePlayer;
+import org.spout.vanilla.entity.living.player.MinecraftPlayer;
+import org.spout.vanilla.entity.living.player.SurvivalPlayer;
+import org.spout.vanilla.protocol.msg.StateChangeMessage;
 
 /**
  * Commands to emulate core Minecraft admin functions.
@@ -45,71 +49,66 @@ public class AdministrationCommands {
 	public AdministrationCommands(VanillaPlugin plugin) {
 	}
 
-	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <1|2> (1 = SURVIVAL, 2 = CREATIVE)", desc = "Change a player's gamemode", max = 2)
+	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <1|2> (1 = SURVIVAL, 2 = CREATIVE)", desc = "Change a player's game mode", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.gamemode")
 	public void gamemode(CommandContext args, CommandSource source) throws CommandException {
-		// If source is player
-		if (args.length() == 1) {
-			if (source instanceof Player) {
-				Player sender = (Player) source;
-				if (this.isInteger(args.getString(0))) {
-					int mode = args.getInteger(0);
-					switch (mode) {
-						case 1:
-							source.sendMessage("Your gamemode has been switched to SURVIVAL."); 
-							break; // TODO: Switch sender to survival
-						case 2:
-							source.sendMessage("Your gamemode has been switched to CREATIVE."); 
-							break; // TODO: Switch sender to creative
-						default:
-							throw new CommandException("You must be a player to toggle your gamemode.");
-					}
-				} else if (args.getString(0).equalsIgnoreCase("creative")) {
-					source.sendMessage("Your gamemode has been switched to CREATIVE.");
-					// TODO: Switch sender to creative
-				} else if (args.getString(0).equalsIgnoreCase("survival")) {
-					source.sendMessage("Your gamemode has been switched to SURVIVAL.");
-					// TODO: Switch sender to survival
-				} else {
-					throw new CommandException("A gamemode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
-				}
-			} else {
-				throw new CommandException("You must be a player to toggle your gamemode.");
-			}
-		}
-		
-		// If source is not player
+
+		int index = 0;
+		Player player;
+
 		if (args.length() == 2) {
-			Player player = Spout.getGame().getPlayer(args.getString(0), true);
-			if (player != null) {
-				if (this.isInteger(args.getString(1))) {
-					int mode = args.getInteger(1);
-					switch (mode) {
-						case 1: 
-							source.sendMessage(player.getName() + "'s gamemode has been switched to SURVIVAL.");
-							player.sendMessage("Your gamemode has been switched to SURVIVAL."); 
-							break; // TODO: Switch player to survival
-						case 2: 
-							source.sendMessage(player.getName() + "'s gamemode has been switched to CREATIVE.");
-							player.sendMessage("Your gamemode has been switched to CREATIVE."); 
-							break; // TODO: Switch player to creative
-						default: 
-							throw new CommandException("A gamemode must be between 1 and 2.");
-					}
-				} else if (args.getString(1).equalsIgnoreCase("creative")) {
-					source.sendMessage(player.getName() + "'s gamemode has been switched to CREATIVE.");
-					player.sendMessage("Your gamemode has been switched to CREATIVE.");
-					// TODO: Switch player to creative
-				} else if (args.getString(1).equalsIgnoreCase("survival")) {
-					source.sendMessage(player.getName() + "'s gamemode has been switched to SURVIVAL.");
-					player.sendMessage("Your gamemode has been switched to SURVIVAL.");
-					// TODO: Switch player to survival
-				} else {
-					throw new CommandException("A gamemode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
-				}
-			} else {
+			player = Spout.getGame().getPlayer(args.getString(index++), true);
+
+			if (player == null) {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
+		} else {
+			if (!(source instanceof Player)) {
+				throw new CommandException("You must be a player to toggle your game mode.");
+			}
+
+			player = (Player)source;
+		}
+
+		int mode;
+
+		if (args.isInteger(index)) {
+			mode = args.getInteger(index);
+		} else if (args.getString(index).equalsIgnoreCase("survival")) {
+			mode = 1;
+		} else if (args.getString(index).equalsIgnoreCase("creative")) {
+			mode = 2;
+		} else {
+			throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
+		}
+
+		MinecraftPlayer controller;
+		String message;
+
+		switch (mode) {
+			case 1:
+				controller = new SurvivalPlayer(player);
+				message = "SURVIVAL.";
+				break;
+			case 2:
+				controller = new CreativePlayer(player);
+				message = "CREATIVE.";
+				break;
+			default:
+				throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
+		}
+
+		if (player.getEntity().getController().getClass().isInstance(controller)) {
+			source.sendMessage(player.getName() + " is already in the choosen game mode.");
+			return;
+		}
+
+		player.sendMessage("Your game mode has been changed to " + message);
+		player.getEntity().setController(controller);
+		player.getSession().send(new StateChangeMessage((byte)3, (byte)--mode));
+
+		if (!player.equals(source)) {
+			source.sendMessage(player.getName() + "'s game mode has been changed to " + message);
 		}
 	}
 
@@ -127,7 +126,7 @@ public class AdministrationCommands {
 				throw new CommandException("You must be a player to give yourself xp.");
 			}
 		}
-		
+
 		// If source is not player
 		if (args.length() == 2) {
 			Player player = Spout.getGame().getPlayer(args.getString(0), true);
@@ -145,19 +144,19 @@ public class AdministrationCommands {
 	@CommandPermissions("vanilla.command.weather")
 	public void weather(CommandContext args, CommandSource source) throws CommandException {
 		if (args.length() == 1) {
-			if (this.isInteger(args.getString(0))) {
+			if (args.isInteger(0)) {
 				int mode = args.getInteger(0);
 				switch (mode) {
-					case 1: 
-						source.sendMessage("Weather set to RAIN."); 
+					case 1:
+						source.sendMessage("Weather set to RAIN.");
 						break; // TODO: Switch weather to rain
-					case 2: 
-						source.sendMessage("Weather set to SNOW."); 
+					case 2:
+						source.sendMessage("Weather set to SNOW.");
 						break; // TODO: Switch weather to snow
-					case 3: 
-						source.sendMessage("Weather set to LIGHTNING."); 
+					case 3:
+						source.sendMessage("Weather set to LIGHTNING.");
 						break; // TODO: Start a storm
-					default: 
+					default:
 						throw new CommandException("Weather must be between 1 and 3.");
 				}
 			} else if (args.getString(0).equalsIgnoreCase("rain")) {
@@ -174,16 +173,7 @@ public class AdministrationCommands {
 			}
 		}
 	}
-	
-	public boolean isInteger(String arg) {
-		try {
-			Integer.parseInt(arg);
-		} catch (NumberFormatException e) {
-			return false;
-		}
-		return true;
-	}
-	
+
 	@Command(aliases = "debug", usage = "[type] (/resend /resendall)", desc = "Debug commands", max = 1)
 	//@CommandPermissions("vanilla.command.debug")
 	public void debug(CommandContext args, CommandSource source) throws CommandException {

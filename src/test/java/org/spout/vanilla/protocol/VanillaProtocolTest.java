@@ -185,13 +185,13 @@ public class VanillaProtocolTest {
 			assertNotNull("Message " + message + " did not have a codec!", codec);
 			int opcode = codec.getOpcode();
 			if (!codec.isExpanded()) {
-				opcode = opcode << 8;
+				opcode <<= 8;
 			}
 			MessageCodec idCodec = CODEC_LOOKUP.find(opcode);
 			assertNotNull("No codec for opcode "+ opcode + " in codec lookup!", idCodec);
 		}
 	}
-	
+
 	@Test
 	public void testMessageEncoding() throws IOException {
 		for (Message message : TEST_MESSAGES) {
@@ -201,7 +201,7 @@ public class VanillaProtocolTest {
 		assertEquals("Failed for : " + message.getClass(), message.toString(), decoded.toString());
 		}
 	}
-	
+
 	@Test
 	public void testTestCompleteness() {
 		final TIntSet testedOpcodes = new TIntHashSet();
@@ -210,7 +210,7 @@ public class VanillaProtocolTest {
 			if (codec != null) {
 				int opcode = codec.getOpcode();
 				if (!codec.isExpanded()) {
-					opcode = opcode << 8;
+					opcode <<= 8;
 				}
 				testedOpcodes.add(opcode);
 			}
@@ -218,7 +218,7 @@ public class VanillaProtocolTest {
 		for (MessageCodec<?> codec : CODEC_LOOKUP.getCodecs()) {
 			int opcode = codec.getOpcode();
 			if (!codec.isExpanded()) {
-				opcode = opcode << 8;
+				opcode <<= 8;
 			}
 			assertTrue("Opcode "+ opcode + " (non-expanded: " + (opcode >> 8) + ") not tested", testedOpcodes.contains(opcode));
 		}

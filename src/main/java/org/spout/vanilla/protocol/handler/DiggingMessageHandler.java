@@ -33,6 +33,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
+import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
@@ -91,9 +92,9 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 					return;
 				}
 			}*/
-			//if(player.getGamemode() == GameMode.CREATIVE) { //TODO: Gamemodes!
-			blockBroken = true;
-			//}
+			if(player.getEntity().getController() instanceof CreativePlayer) {
+				blockBroken = true;
+			}
 		} else if (message.getState() == DiggingMessage.STATE_DONE_DIGGING) {
 			//TODO: Timing checks!
 			blockBroken = true;

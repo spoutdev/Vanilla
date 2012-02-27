@@ -49,14 +49,10 @@ public abstract class MovingEntity extends MinecraftEntity {
 	private int fireTicks;
 	private boolean flammable;
 
-	public MovingEntity(){
-		parent.setCollision(new CollisionModel(area));
-		
-	}
-	
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent.setCollision(new CollisionModel(area));
 	}
 
 	@Override
@@ -72,7 +68,7 @@ public abstract class MovingEntity extends MinecraftEntity {
 		final Pointm location = parent.getPoint();
 		//List<BoundingBox> colliding = this.getCollidingBoundingBoxes();
 		final BoundingBox position = area.clone().offset(location);
-		
+
 		Vector3m offset = velocity.clone();
 		for (BoundingBox box : colliding) {
 			Vector3 collision = CollisionHelper.getCollision(position, box);
@@ -93,8 +89,8 @@ public abstract class MovingEntity extends MinecraftEntity {
 
 		//if (colliding.size() > 0)
 		//	System.out.println("Old: " + velocity + " New: " + offset + " Colliding: " + colliding.size());
-		
-		
+
+
 		if (offset.getX() != velocity.getX()) {
 			velocity.setX(0);
 		}
@@ -104,14 +100,14 @@ public abstract class MovingEntity extends MinecraftEntity {
 		if (offset.getZ() != velocity.getZ()) {
 			velocity.setZ(0);
 		}
-		
+
 		location.add(offset);
 		Point old = parent.getPoint();
 		parent.setPoint(location);
 		//if (colliding.size() > 0)
 		//	System.out.println("Moved from " + old + " to " + parent.getPoint() + ". Expected: " + location);
 		 * */
-		 
+
 	}
 
 	@Override
@@ -167,6 +163,6 @@ public abstract class MovingEntity extends MinecraftEntity {
 	public Vector3 getVelocity() {
 		return velocity;
 	}
-	
+
 
 }

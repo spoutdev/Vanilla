@@ -55,7 +55,7 @@ public class RegionEntitySpawner extends Controller {
 			spawnableTypes.put(type, new SpawnInformation(amount, canSpawnOn));
 		}
 		else {
-			throw new IllegalStateException("Class " + type + " is does not have a default constructor");
+			throw new IllegalStateException("Class " + type + " does not have a default constructor!");
 		}
 	}
 	

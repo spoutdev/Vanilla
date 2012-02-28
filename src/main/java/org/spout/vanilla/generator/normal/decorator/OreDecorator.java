@@ -26,97 +26,82 @@
 package org.spout.vanilla.generator.normal.decorator;
 
 import java.util.Random;
-
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeDecorator;
 
+/**
+ * Populates the world with ores.
+ *
+ */
 public class OreDecorator implements BiomeDecorator {
 
 	@Override
-	public void populate(Chunk chunk, Random random) {
-		int chance;
-		chance = random.nextInt(1000);
-		if (chance <= 500) {
-			generateCoal(chunk, random);
-		}
-		chance = random.nextInt(1000);
-		if (chance <= 500 && chunk.getY() <= 4) {
-			generateIron(chunk, random);
-		}
-		chance = random.nextInt(1000);
-		if (chance <= 400 && chunk.getY() <= 2) {
-			generateLapis(chunk, random);
-		}
-		chance = random.nextInt(1000);
-		if (chance <= 390 && chunk.getY() <= 2) {
-			generateGold(chunk, random);
-		}
-		chance = random.nextInt(1000);
-		if (chance <= 350 && chunk.getY() <= 1) {
-			generateDiamond(chunk, random);
-		}
-		chance = random.nextInt(1000);
-		if (chance <= 370 && chunk.getY() <= 1) {
-			generateRedstone(chunk, random);
-		}
-	}
+	public void populate(Chunk source, Random random) {
+		World world = source.getWorld();
+		int[] iterations = new int[]{10, 20, 20, 2, 8, 1, 1, 1};
+		int[] amount = new int[]{32, 16, 8, 8, 7, 7, 6};
+		BlockMaterial[] type = new BlockMaterial[]{VanillaMaterials.GRAVEL, VanillaMaterials.COAL_ORE,
+			VanillaMaterials.IRON_ORE, VanillaMaterials.GOLD_ORE, VanillaMaterials.REDSTONE_ORE,
+			VanillaMaterials.DIAMOND_ORE, VanillaMaterials.LAPIS_ORE};
 
-	private void generateCoal(Chunk c, Random ra) {
-		generateOre(c, ra, VanillaMaterials.COAL_ORE, 30);
-	}
+		int[] maxHeight = new int[]{128, 128, 128, 128, 128, 64, 32, 16, 16,
+			32};
 
-	private void generateIron(Chunk c, Random ra) {
-		generateOre(c, ra, VanillaMaterials.IRON_ORE, 15);
-	}
-
-	private void generateLapis(Chunk c, Random ra) {
-		generateOre(c, ra, VanillaMaterials.LAPIS_ORE, 8);
-	}
-
-	private void generateGold(Chunk c, Random ra) {
-		generateOre(c, ra, VanillaMaterials.GOLD_ORE, 9);
-	}
-
-	private void generateDiamond(Chunk c, Random ra) {
-		generateOre(c, ra, VanillaMaterials.DIAMOND_ORE, 9);
-	}
-
-	private void generateRedstone(Chunk c, Random ra) {
-		generateOre(c, ra, VanillaMaterials.REDSTONE_ORE, 10);
-	}
-
-	private void generateOre(Chunk chunk, Random random, BlockMaterial material, int maxNumber) {
-		int number = random.nextInt(maxNumber);
-		int pozx = chunk.getX() * 16 + random.nextInt(16);
-		int pozy = chunk.getY() * 16 + random.nextInt(16);
-		int pozz = chunk.getZ() * 16 + random.nextInt(16);
-		for (int i = 1; i <= number;) {
-			if (chunk.getWorld().getBlock(pozx, pozy, pozz).getBlockMaterial().equals(VanillaMaterials.STONE)) {
-				chunk.getWorld().setBlockMaterial(pozx, pozy, pozz, material, chunk.getWorld());
+		for (int i = 0; i < type.length; i++) {
+			for (int j = 0; j < iterations[i]; j++) {
+				generateOre(world, random, source.getX() * 16 + random.nextInt(16), random.nextInt(maxHeight[i]), source.getZ()
+								* 16 + random.nextInt(16), amount[i], type[i]);
 			}
-			i++;
-			int newDir = random.nextInt(6);
-			switch (newDir) {
-				case 0:
-					pozx++;
-					break;
-				case 1:
-					pozx--;
-					break;
-				case 2:
-					pozy++;
-					break;
-				case 3:
-					pozy--;
-					break;
-				case 4:
-					pozz++;
-					break;
-				case 5:
-					pozz--;
-					break;
+		}
+	}
+
+	private void generateOre(World world, Random random, int originX,
+					int originY, int originZ, int amount, BlockMaterial type) {
+		double angle = random.nextDouble() * Math.PI;
+		double x1 = ((originX + 8) + Math.sin(angle) * amount / 8);
+		double x2 = ((originX + 8) - Math.sin(angle) * amount / 8);
+		double z1 = ((originZ + 8) + Math.cos(angle) * amount / 8);
+		double z2 = ((originZ + 8) - Math.cos(angle) * amount / 8);
+		double y1 = (originY + random.nextInt(3) + 2);
+		double y2 = (originY + random.nextInt(3) + 2);
+
+		for (int i = 0; i <= amount; i++) {
+			double seedX = x1 + (x2 - x1) * i / amount;
+			double seedY = y1 + (y2 - y1) * i / amount;
+			double seedZ = z1 + (z2 - z1) * i / amount;
+			double size = ((Math.sin(i * Math.PI / amount) + 1)
+							* random.nextDouble() * amount / 16 + 1) / 2;
+
+			int startX = (int) (seedX - size);
+			int startY = (int) (seedY - size);
+			int startZ = (int) (seedZ - size);
+			int endX = (int) (seedX + size);
+			int endY = (int) (seedY + size);
+			int endZ = (int) (seedZ + size);
+
+			for (int x = startX; x <= endX; x++) {
+				double sizeX = (x + 0.5 - seedX) / size;
+				sizeX *= sizeX;
+
+				if (sizeX < 1) {
+					for (int y = startY; y <= endY; y++) {
+						double sizeY = (y + 0.5 - seedY) / size;
+						sizeY *= sizeY;
+
+						if (sizeX + sizeY < 1) {
+							for (int z = startZ; z <= endZ; z++) {
+								double sizeZ = (z + 0.5 - seedZ) / size;
+								sizeZ *= sizeZ;
+								if (sizeX + sizeY + sizeZ < 1 && world.getBlockMaterial(x, y, z) == VanillaMaterials.STONE) {
+									world.setBlockMaterial(x, y, z, type, world);
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}

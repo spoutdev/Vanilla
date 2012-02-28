@@ -26,15 +26,47 @@
 package org.spout.vanilla.generator.normal.decorator;
 
 import java.util.Random;
-
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.biome.BiomeDecorator;
 
 /**
  * Decorator that decorates a biome with tall grass.
  */
 public class GrassDecorator implements BiomeDecorator {
+
+	private int minSteps = 7, maxSteps = 20, chance = 30;
+
 	@Override
-	public void populate(Chunk chunk, Random random) {
+	public void populate(Chunk source, Random random) {
+
+		if (source.getY() < 4) {
+			return;
+		}
+		if (random.nextInt(100) > chance) {
+			return;
+		}
+
+		int x = (source.getX() << Chunk.CHUNK_SIZE_BITS);
+		int z = (source.getZ() << Chunk.CHUNK_SIZE_BITS);
+		int y;
+		int numSteps = random.nextInt(maxSteps - minSteps + 1) + minSteps;
+		for (int i = 0; i < numSteps; i++) {
+			x += random.nextInt(3) - 1;
+			z += random.nextInt(3) - 1;
+			y = (source.getY() << Chunk.CHUNK_SIZE_BITS) + 15;
+			Block b = source.getWorld().getBlock(x, y, z);
+			while (b.getBlockMaterial() == VanillaMaterials.AIR && y >= 0) {
+				y--;
+				b = source.getWorld().getBlock(x, y, z);
+			}
+			if (y == -1) {
+				return;
+			}
+			if (b.getBlockMaterial() == VanillaMaterials.GRASS) {
+				source.getWorld().setBlockMaterial(x, y + 1, z, VanillaMaterials.TALL_GRASS, source.getWorld());
+			}
+		}
 	}
 }

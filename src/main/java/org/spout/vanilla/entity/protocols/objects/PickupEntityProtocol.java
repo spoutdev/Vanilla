@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
@@ -23,28 +23,35 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.entity.protocols.objects;
 
-import org.spout.vanilla.material.Plant;
-import org.spout.vanilla.material.attachable.GroundAttachable;
+import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
+import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.protocol.Message;
+import org.spout.vanilla.entity.objects.Pickup;
+import org.spout.vanilla.entity.protocols.BasicEntityProtocol;
+import org.spout.vanilla.protocol.msg.SpawnItemMessage;
 
-public class Sapling extends GroundAttachable implements Plant {
-	public Sapling(String name, int data) {
-		super(name, 6, data);
-	}
-
-	@Override
-	public boolean hasGrowthStages() {
-		return true;
-	}
+public class PickupEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
 
 	@Override
-	public int getNumGrowthStages() {
-		return 3;
-	}
+	public Message getSpawnMessage(Entity entity) {
+		Controller c = entity.getController();
+		if (c == null) {
+			return null;
+		}
+		int id = entity.getId();
+		int x = (int) (entity.getX() * 32);
+		int y = (int) (entity.getY() * 32);
+		int z = (int) (entity.getZ() * 32);
+		int r = (int) (entity.getYaw() * 32);
+		int p = (int) (entity.getPitch() * 32);
+		if (c instanceof Pickup) {
+			Pickup pi = (Pickup) c;
+			return new SpawnItemMessage(id, (int) pi.getMaterial().getId(), pi.getAmount(), pi.getDamage(), x, y, z, r, p, pi.getRoll());
+		}
 
-	@Override
-	public int getMinimumLightToGrow() {
-		return 8;
+		return null;
 	}
 }

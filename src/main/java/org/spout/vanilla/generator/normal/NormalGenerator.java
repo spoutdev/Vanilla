@@ -26,10 +26,8 @@
 package org.spout.vanilla.generator.normal;
 
 import org.spout.vanilla.biome.selectors.NoiseSelector;
-import org.spout.vanilla.biome.selectors.SquareSelector;
 import org.spout.vanilla.generator.BiomeGenerator;
-import org.spout.vanilla.generator.normal.biome.DesertBiome;
-import org.spout.vanilla.generator.normal.biome.PlainBiome;
+import org.spout.vanilla.generator.VanillaBiomes;
 
 /**
  * Generator that generates default Minecraft-like worlds.
@@ -38,8 +36,7 @@ public class NormalGenerator extends BiomeGenerator {
 	@Override
 	public void registerBiomes() {
 		setSelector(new NoiseSelector());
-		register(new PlainBiome());
-		register(new DesertBiome());
-		//TODO: Create Normal's biome(s);
+		register(VanillaBiomes.PLAIN);
+		register(VanillaBiomes.DESERT);
 	}
 }

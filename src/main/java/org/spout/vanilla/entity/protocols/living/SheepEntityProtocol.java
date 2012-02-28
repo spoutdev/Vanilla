@@ -1,12 +1,12 @@
-package org.spout.vanilla.entity.living.player;
+package org.spout.vanilla.entity.protocols.living;
 
 import java.util.Collections;
-
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.vanilla.entity.living.passive.Sheep;
+import org.spout.vanilla.entity.protocols.BasicEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 
 public class SheepEntityProtocol extends BasicEntityProtocol implements EntityProtocol {

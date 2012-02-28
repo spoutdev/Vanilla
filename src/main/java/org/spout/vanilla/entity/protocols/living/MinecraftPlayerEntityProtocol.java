@@ -23,13 +23,15 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.living.player;
+package org.spout.vanilla.entity.protocols.living;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
+import org.spout.vanilla.entity.living.player.MinecraftPlayer;
+import org.spout.vanilla.entity.protocols.BasicEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
 public class MinecraftPlayerEntityProtocol extends BasicEntityProtocol implements EntityProtocol {

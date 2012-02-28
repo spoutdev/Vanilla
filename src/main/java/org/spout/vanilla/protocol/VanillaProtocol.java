@@ -29,8 +29,10 @@ import org.spout.api.protocol.Protocol;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.passive.Sheep;
 import org.spout.vanilla.entity.living.player.MinecraftPlayer;
-import org.spout.vanilla.entity.living.player.MinecraftPlayerEntityProtocol;
-import org.spout.vanilla.entity.living.player.SheepEntityProtocol;
+import org.spout.vanilla.entity.objects.Pickup;
+import org.spout.vanilla.entity.protocols.living.MinecraftPlayerEntityProtocol;
+import org.spout.vanilla.entity.protocols.living.SheepEntityProtocol;
+import org.spout.vanilla.entity.protocols.objects.PickupEntityProtocol;
 
 public class VanillaProtocol extends Protocol {
 	public VanillaProtocol() {
@@ -38,5 +40,6 @@ public class VanillaProtocol extends Protocol {
 
 		MinecraftPlayer.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new MinecraftPlayerEntityProtocol());
 		Sheep.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new SheepEntityProtocol());
+		Pickup.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new PickupEntityProtocol());
 	}
 }

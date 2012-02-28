@@ -25,15 +25,19 @@
  */
 package org.spout.vanilla.entity.objects;
 
+import java.util.Set;
 import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.MinecraftEntity;
+import org.spout.vanilla.entity.MovingEntity;
+import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
-public class Pickup extends MinecraftEntity {
+public class Pickup extends MovingEntity {
 	
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore(); //TODO this is an annoying fix, someone with knowlege in entities get rid of this?
 
@@ -61,7 +65,33 @@ public class Pickup extends MinecraftEntity {
 
 	@Override
 	public void onTick(float dt) {
-		World a = parent.getWorld();
+		if(parent.isDead()) {
+			return;
+		}
+
+		World world = parent.getWorld();
+		//TODO replace with getClosestPlayer when my Spout PR gets pulled!
+		Set<Player> players = world.getPlayers();
+		double minDistance = -1;
+		Player closestPlayer = null;
+		for(Player plr : players) {
+			double distance = plr.getEntity().getPoint().distance(parent.getPoint());
+			if(distance<minDistance||minDistance == -1) {
+				closestPlayer = plr;
+				minDistance = distance;
+			}
+		}
+		if(closestPlayer == null)
+			return;
+		if(minDistance > 3)
+			return;
+		int collected = parent.getId();
+		int collector = closestPlayer.getEntity().getId();
+		CollectItemMessage message = new CollectItemMessage(collected, collector);
+		for(Player plr : players)
+			plr.getSession().send(message);
+		closestPlayer.getEntity().getInventory().addItem(is);
+		//parent.kill(); TODO re-add after the kill actually erases the entity :P
 	}
 
 	public Material getMaterial() {

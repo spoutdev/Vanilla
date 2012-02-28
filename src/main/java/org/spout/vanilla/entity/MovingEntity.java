@@ -25,17 +25,10 @@
  */
 package org.spout.vanilla.entity;
 
-import java.util.LinkedList;
-import java.util.List;
 
 import org.spout.api.collision.BoundingBox;
-import org.spout.api.collision.CollisionHelper;
 import org.spout.api.collision.CollisionModel;
-import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.Pointm;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector3m;
 import org.spout.vanilla.VanillaMaterials;

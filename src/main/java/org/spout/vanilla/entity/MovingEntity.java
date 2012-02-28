@@ -110,6 +110,9 @@ public abstract class MovingEntity extends MinecraftEntity {
 
 	private void checkWeb() {
 		Point pos = parent.getPoint();
+		if (pos == null) {
+			return;
+		}
 		if (pos.getWorld().getBlock(pos).getBlockMaterial() == VanillaMaterials.WEB) {
 			velocity.multiply(0.25F, 0.05F, 0.25F);
 		}

@@ -91,15 +91,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 		if (inventoryChanged) {
 			SetWindowSlotsMessage message = new SetWindowSlotsMessage((byte)0, newContents);
 			player.getSession().send(message);
-			String msg = "";
-			for(ItemStack is : newContents) {
-				if(is == null) continue;
-				msg+=is.getMaterial().getName()+" ";
-			}
-			player.sendMessage(msg);
-		} else {
-			player.sendMessage("B");
-		}
+		} 
 
 	}
 }

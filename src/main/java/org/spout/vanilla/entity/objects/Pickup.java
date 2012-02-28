@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.entity.objects;
 
+import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.protocol.EntityProtocol;
@@ -60,6 +61,7 @@ public class Pickup extends MinecraftEntity {
 
 	@Override
 	public void onTick(float dt) {
+		World a = parent.getWorld();
 	}
 
 	public Material getMaterial() {

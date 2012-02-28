@@ -28,7 +28,7 @@ package org.spout.vanilla.entity.living;
 /**
  * Represents a flying entity controller.
  */
-public class Flying extends Living {
+public class Flying extends Falling {
 	@Override
 	public void onAttached() {
 		super.onAttached();

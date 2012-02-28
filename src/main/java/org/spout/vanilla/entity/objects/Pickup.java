@@ -25,20 +25,21 @@
  */
 package org.spout.vanilla.entity.objects;
 
+import java.util.Random;
 import java.util.Set;
 import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.Entity;
-import org.spout.vanilla.entity.MinecraftEntity;
-import org.spout.vanilla.entity.MovingEntity;
+import org.spout.vanilla.entity.living.Falling;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
-public class Pickup extends MovingEntity {
-	
+public class Pickup extends Falling {
+
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore(); //TODO this is an annoying fix, someone with knowlege in entities get rid of this?
 
 	@Override
@@ -49,13 +50,15 @@ public class Pickup extends MovingEntity {
 	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
 		entityProtocolStore.setEntityProtocol(protocolId, protocol);
 	}
-	
 	private ItemStack is;
-	private int roll;
+	private int roll, unpickable;
+	private final Random rand = new Random();
 
-	public Pickup(ItemStack is) {
+	public Pickup(ItemStack is, Vector3 initial) {
 		this.is = is;
 		this.roll = 1;
+		unpickable = 10;
+		velocity.add(initial);
 	}
 
 	@Override
@@ -65,31 +68,44 @@ public class Pickup extends MovingEntity {
 
 	@Override
 	public void onTick(float dt) {
-		if(parent.isDead()) {
+		if (parent.isDead()) {
 			return;
 		}
+		if (unpickable > 0) {
+			unpickable--;
+		  super.onTick(dt);
+			return;
+		}
+		float x = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
+		float y = rand.nextFloat();
+		float z = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
+		this.velocity.add(x, y, z);
+		super.onTick(dt);
 
 		World world = parent.getWorld();
 		//TODO replace with getClosestPlayer when my Spout PR gets pulled!
 		Set<Player> players = world.getPlayers();
 		double minDistance = -1;
 		Player closestPlayer = null;
-		for(Player plr : players) {
+		for (Player plr : players) {
 			double distance = plr.getEntity().getPoint().distance(parent.getPoint());
-			if(distance<minDistance||minDistance == -1) {
+			if (distance < minDistance || minDistance == -1) {
 				closestPlayer = plr;
 				minDistance = distance;
 			}
 		}
-		if(closestPlayer == null)
+		if (closestPlayer == null) {
 			return;
-		if(minDistance > 3)
+		}
+		if (minDistance > 3) {
 			return;
+		}
 		int collected = parent.getId();
 		int collector = closestPlayer.getEntity().getId();
 		CollectItemMessage message = new CollectItemMessage(collected, collector);
-		for(Player plr : players)
+		for (Player plr : players) {
 			plr.getSession().send(message);
+		}
 		closestPlayer.getEntity().getInventory().addItem(is);
 		//parent.kill(); TODO re-add after the kill actually erases the entity :P
 	}

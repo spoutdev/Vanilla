@@ -111,7 +111,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			world.setBlockIdAndData(x, y, z, (short) 0, (short) 0, player);
 			player.getSession().send(new BlockChangeMessage(x, y, z, (short) 0, (byte) 0));
 			if(player.getEntity().getController() instanceof SurvivalPlayer) {
-				world.createAndSpawnEntity(block.getBase(), new Pickup(new ItemStack(oldMat,1)));//TODO get the actual block drops, and more than one can fall :)
+				world.createAndSpawnEntity(block.getBase(), new Pickup(new ItemStack(oldMat,1), player.getEntity().getPoint().normalize().add(0, 5, 0)));//TODO get the actual block drops, and more than one can fall :)
 			}
 			/*if (!block.isEmpty() && !block.isLiquid()) {
 				if (!player.getInventory().contains(block.getTypeId()) || player.getGameMode() != GameMode.CREATIVE) {

@@ -62,5 +62,6 @@ public abstract class MinecraftPlayer extends PlayerController {
 	@Override
 	public void onTick(float dt) {
 		// TODO need to send timeout packets
+		// TODO send inventory change packet
 	}
 }

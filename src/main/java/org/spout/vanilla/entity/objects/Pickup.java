@@ -69,6 +69,7 @@ public class Pickup extends Falling {
 	@Override
 	public void onTick(float dt) {
 		if (parent.isDead()) {
+			System.out.println("Should not happen!");
 			return;
 		}
 		if (unpickable > 0) {
@@ -107,7 +108,7 @@ public class Pickup extends Falling {
 			plr.getSession().send(message);
 		}
 		closestPlayer.getEntity().getInventory().addItem(is);
-		//parent.kill(); TODO re-add after the kill actually erases the entity :P
+		parent.kill();
 	}
 
 	public Material getMaterial() {

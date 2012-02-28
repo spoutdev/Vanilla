@@ -45,21 +45,21 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 
 	@Override
 	public SetWindowSlotsMessage decode(ChannelBuffer buffer) throws IOException {
-		int id = buffer.readUnsignedByte();
-		int count = buffer.readUnsignedShort();
+		byte id = buffer.readByte();
+		short count = buffer.readShort();
 		ItemStack[] items = new ItemStack[count];
 		for (int slot = 0; slot < count; slot++) {
-			int item = buffer.readUnsignedShort();
+			short item = buffer.readShort();
 			if (item == 0xFFFF) {
 				items[slot] = null;
 			} else {
-				int itemCount = buffer.readUnsignedByte();
-				int damage = buffer.readUnsignedByte();
+				byte itemCount = buffer.readByte();
+				short damage = buffer.readShort();
 				Map<String, Tag> nbtData = null;
 				if (ChannelBufferUtils.hasNbtData(item)) {
 					nbtData = ChannelBufferUtils.readCompound(buffer);
 				}
-				items[slot] = new ItemStack(MaterialData.getMaterial((short) item, (byte) damage), itemCount, (short) damage).setAuxData(nbtData);
+				items[slot] = new ItemStack(MaterialData.getMaterial(item, damage), itemCount, (short) damage).setAuxData(nbtData);
 			}
 		}
 		return new SetWindowSlotsMessage(id, items);
@@ -78,7 +78,7 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 			} else {
 				buffer.writeShort(item.getMaterial().getId());
 				buffer.writeByte(item.getAmount());
-				buffer.writeByte(item.getDamage());
+				buffer.writeShort(item.getDamage());
 				if (ChannelBufferUtils.hasNbtData(item.getMaterial().getData())) {
 					ChannelBufferUtils.writeCompound(buffer, item.getAuxData());
 				}

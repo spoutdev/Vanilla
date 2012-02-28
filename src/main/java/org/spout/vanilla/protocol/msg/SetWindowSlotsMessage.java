@@ -26,20 +26,19 @@
 package org.spout.vanilla.protocol.msg;
 
 import java.util.Arrays;
-
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 
 public final class SetWindowSlotsMessage extends Message {
-	private final int id;
+	private final byte id;
 	private final ItemStack[] items;
 
-	public SetWindowSlotsMessage(int id, ItemStack[] items) {
+	public SetWindowSlotsMessage(byte id, ItemStack[] items) {
 		this.id = id;
 		this.items = items;
 	}
 
-	public int getId() {
+	public byte getId() {
 		return id;
 	}
 

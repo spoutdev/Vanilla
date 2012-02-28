@@ -27,14 +27,18 @@ package org.spout.vanilla.entity.living.player;
 
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.atomic.Transform;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 
 public abstract class MinecraftPlayer extends PlayerController {
+
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
+	private ItemStack[] oldInventory;
 
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
@@ -62,6 +66,40 @@ public abstract class MinecraftPlayer extends PlayerController {
 	@Override
 	public void onTick(float dt) {
 		// TODO need to send timeout packets
-		// TODO send inventory change packet
+		Player player = getPlayer();
+		ItemStack[] newContents = player.getEntity().getInventory().getContents();
+		boolean inventoryChanged = false;
+		if (oldInventory != null) {
+			for(int i=0;i<oldInventory.length;i++) {
+				if(newContents[i]==null&&oldInventory[i]==null)
+					continue;
+				if(newContents[i]==null&&oldInventory[i]!=null) {
+					inventoryChanged = true;
+					break;
+				}
+				if(newContents[i]!=null&&oldInventory[i]==null) {
+					inventoryChanged = true;
+					break;
+				}
+				if(!newContents[i].toString().equals(oldInventory[i].toString())) {
+					inventoryChanged = true;
+					break;
+				} 
+			}
+		}
+		oldInventory  = newContents.clone();
+		if (inventoryChanged) {
+			SetWindowSlotsMessage message = new SetWindowSlotsMessage((byte)0, newContents);
+			player.getSession().send(message);
+			String msg = "";
+			for(ItemStack is : newContents) {
+				if(is == null) continue;
+				msg+=is.getMaterial().getName()+" ";
+			}
+			player.sendMessage(msg);
+		} else {
+			player.sendMessage("B");
+		}
+
 	}
 }

@@ -164,7 +164,7 @@ public class VanillaProtocolTest {
 			new CloseWindowMessage(23),
 			new WindowClickMessage(1, 2, false, 34, true, 5, 5, 12, null),
 			new SetWindowSlotMessage(1, 2, 45, 5, 5, null),
-			new SetWindowSlotsMessage(3, new ItemStack[] {new ItemStack(VanillaMaterials.PISTON_BASE, 3), new ItemStack(VanillaMaterials.ARROW, 23)}),
+			new SetWindowSlotsMessage((byte)3, new ItemStack[] {new ItemStack(VanillaMaterials.PISTON_BASE, 3), new ItemStack(VanillaMaterials.ARROW, 23)}),
 			new ProgressBarMessage(2, 4, 55),
 			new TransactionMessage(1, 55, true),
 			new QuickBarMessage((short) 1, (short) 2, (short) 3, (short) 4, null),

@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.generic.GenericBlock;
 

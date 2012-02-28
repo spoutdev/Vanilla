@@ -29,11 +29,15 @@ import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
+import org.spout.vanilla.entity.living.player.SurvivalPlayer;
+import org.spout.vanilla.entity.objects.Pickup;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
@@ -102,9 +106,13 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 
 		System.out.print(message + "|" + blockBroken);
 
-		if (blockBroken) { //TODO: We *drop* the block, don't add it >.<
+		if (blockBroken) {
+			BlockMaterial oldMat = block.getBlockMaterial();
 			world.setBlockIdAndData(x, y, z, (short) 0, (short) 0, player);
 			player.getSession().send(new BlockChangeMessage(x, y, z, (short) 0, (byte) 0));
+			if(player.getEntity().getController() instanceof SurvivalPlayer) {
+				world.createAndSpawnEntity(block.getBase(), new Pickup(new ItemStack(oldMat,1)));//TODO get the actual block drops, and more than one can fall :)
+			}
 			/*if (!block.isEmpty() && !block.isLiquid()) {
 				if (!player.getInventory().contains(block.getTypeId()) || player.getGameMode() != GameMode.CREATIVE) {
 					player.getInventory().addItem(BlockProperties.get(block.getTypeId()).getDrops(block.getData()));

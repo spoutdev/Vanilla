@@ -1,4 +1,4 @@
-package org.spout.vanilla.entity.living.player;
+package org.spout.vanilla.entity.protocols;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;

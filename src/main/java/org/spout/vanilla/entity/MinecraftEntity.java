@@ -28,6 +28,7 @@ package org.spout.vanilla.entity;
 import org.spout.api.entity.Controller;
 
 public abstract class MinecraftEntity extends Controller {
+	
 	@Override
 	public void onAttached() {
 		// TODO Auto-generated method stub

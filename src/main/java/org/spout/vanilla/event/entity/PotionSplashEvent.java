@@ -46,7 +46,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	public PotionSplashEvent(Entity e, Source source, Map<Entity, Double> entitiesAffected) throws InvalidControllerException {
 		super(e, source);
-		if (!(e.getController() instanceof ThrownPotion)) {
+		if (!e.is(ThrownPotion.class)) {
 			throw new InvalidControllerException();
 		}
 		this.entitiesAffected = entitiesAffected;

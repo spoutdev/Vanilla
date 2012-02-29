@@ -96,7 +96,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 					return;
 				}
 			}*/
-			if(player.getEntity().getController() instanceof CreativePlayer) {
+			if(player.getEntity().is(CreativePlayer.class)) {
 				blockBroken = true;
 			}
 		} else if (message.getState() == DiggingMessage.STATE_DONE_DIGGING) {
@@ -110,7 +110,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			BlockMaterial oldMat = block.getBlockMaterial();
 			world.setBlockIdAndData(x, y, z, (short) 0, (short) 0, player);
 			player.getSession().send(new BlockChangeMessage(x, y, z, (short) 0, (byte) 0));
-			if(player.getEntity().getController() instanceof SurvivalPlayer) {
+			if(player.getEntity().is(SurvivalPlayer.class)) {
 				world.createAndSpawnEntity(block.getBase(), new Pickup(new ItemStack(oldMat,1), player.getEntity().getPoint().normalize().add(0, 5, 0)));//TODO get the actual block drops, and more than one can fall :)
 			}
 			/*if (!block.isEmpty() && !block.isLiquid()) {

@@ -28,15 +28,15 @@ public class GenericBlockItem extends GenericItem implements BlockItem{
 		this.onPlace = onPlace;
 		if (onPlace == null) throw new NullPointerException("Block material can not be null");
 	}
-	
+
 	@Override
 	public void onInteract(Entity entity, Point position, Action type) {
-		if (type == Action.RIGHT_CLICK){ 
+		if (type == Action.RIGHT_CLICK){
 			ItemStack holding = entity.getInventory().getCurrentItem();
 			if (holding == null || holding.getMaterial() != this) {
 				throw new IllegalStateException("Interaction with an entity that is not holding this material!");
 			}
-			if (entity.getController() instanceof SurvivalPlayer) {
+			if (entity.is(SurvivalPlayer.class)) {
 				if (holding.getAmount() > 1) {
 					holding.setAmount(holding.getAmount() - 1);
 				}

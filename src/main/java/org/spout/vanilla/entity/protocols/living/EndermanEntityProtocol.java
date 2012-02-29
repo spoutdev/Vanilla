@@ -33,16 +33,16 @@ import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
-import org.spout.vanilla.entity.living.passive.Sheep;
+import org.spout.vanilla.entity.living.neutral.Enderman;
 import org.spout.vanilla.entity.protocols.BasicEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 
-public class SheepEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
+public class EndermanEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
 
 	@Override
 	public Message getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
-		if (c != null && c instanceof Sheep) {
+		if (c != null && c instanceof Enderman) {
 			
 			int id = entity.getId();
 			int x = (int) (entity.getX() * 32);
@@ -50,9 +50,10 @@ public class SheepEntityProtocol extends BasicEntityProtocol implements EntityPr
 			int z = (int) (entity.getZ() * 32);
 			int r = (int) (entity.getYaw() * 32);
 			int p = (int) (entity.getPitch() * 32);
-			int type = 91;
-			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-			//TODO: Index 16 (byte): bit 0x10 indicates shearedness. bits 0x0F indicate color
+			int type = 58;
+			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(2);
+		    //TODO: Index 16 (byte): Item in hand
+		    //TODO: Index 17 (byte): Aggression. 1 for aggressive, 0 otherwise. 
 			return new SpawnMobMessage(id, type, x, y, z, r, p, parameters);
 		} else {
 			return null;

@@ -69,7 +69,6 @@ public class Pickup extends Falling {
 	@Override
 	public void onTick(float dt) {
 		if (parent.isDead()) {
-			System.out.println("Should not happen!");
 			return;
 		}
 		if (unpickable > 0) {

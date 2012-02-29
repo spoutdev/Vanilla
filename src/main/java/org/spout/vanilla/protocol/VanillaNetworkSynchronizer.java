@@ -39,6 +39,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
@@ -160,7 +161,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (first) {
 			first = false;
 			int entityId = owner.getEntity().getId();
-			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), world.getSeed(), 1, 0, 0, 128, 20, "DEFAULT");
+			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), world.getSeed(), owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1, 0, 0, 128, 20, "DEFAULT");
 			owner.getSession().send(idMsg);
 			for (int slot = 0; slot < 5; slot++) {
 				EntityEquipmentMessage EEMsg = new EntityEquipmentMessage(entityId, slot, -1, 0);

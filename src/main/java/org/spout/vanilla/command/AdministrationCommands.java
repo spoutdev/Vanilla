@@ -49,7 +49,7 @@ public class AdministrationCommands {
 	public AdministrationCommands(VanillaPlugin plugin) {
 	}
 
-	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <1|2> (1 = SURVIVAL, 2 = CREATIVE)", desc = "Change a player's game mode", min = 1, max = 2)
+	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|survival|creative> (0 = SURVIVAL, 1 = CREATIVE)", desc = "Change a player's game mode", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.gamemode")
 	public void gamemode(CommandContext args, CommandSource source) throws CommandException {
 
@@ -75,9 +75,9 @@ public class AdministrationCommands {
 		if (args.isInteger(index)) {
 			mode = args.getInteger(index);
 		} else if (args.getString(index).equalsIgnoreCase("survival")) {
-			mode = 1;
+			mode = 0;
 		} else if (args.getString(index).equalsIgnoreCase("creative")) {
-			mode = 2;
+			mode = 1;
 		} else {
 			throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
 		}
@@ -86,11 +86,11 @@ public class AdministrationCommands {
 		String message;
 
 		switch (mode) {
-			case 1:
+			case 0:
 				controller = new SurvivalPlayer(player);
 				message = "SURVIVAL.";
 				break;
-			case 2:
+			case 1:
 				controller = new CreativePlayer(player);
 				message = "CREATIVE.";
 				break;
@@ -98,14 +98,14 @@ public class AdministrationCommands {
 				throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
 		}
 
-		if (player.getEntity().getController().getClass().isInstance(controller)) {
+		if (player.getEntity().is(controller.getClass())) {
 			source.sendMessage(player.getName() + " is already in the choosen game mode.");
 			return;
 		}
 
 		player.sendMessage("Your game mode has been changed to " + message);
 		player.getEntity().setController(controller);
-		player.getSession().send(new StateChangeMessage((byte)3, (byte)--mode));
+		player.getSession().send(new StateChangeMessage((byte)3, (byte)mode));
 
 		if (!player.equals(source)) {
 			source.sendMessage(player.getName() + "'s game mode has been changed to " + message);

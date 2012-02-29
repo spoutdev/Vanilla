@@ -37,6 +37,7 @@ import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.living.Falling;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
+import org.spout.vanilla.util.configuration.VanillaConfiguration;
 
 public class Pickup extends Falling {
 
@@ -97,7 +98,7 @@ public class Pickup extends Falling {
 		if (closestPlayer == null) {
 			return;
 		}
-		if (minDistance > 3) {
+		if (minDistance > VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble()) {
 			return;
 		}
 		int collected = parent.getId();

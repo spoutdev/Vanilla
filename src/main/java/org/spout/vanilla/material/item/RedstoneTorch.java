@@ -34,6 +34,7 @@ import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.attachable.WallAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.RedstoneTarget;
+import org.spout.vanilla.util.configuration.VanillaConfiguration;
 
 public class RedstoneTorch extends WallAttachable implements RedstoneSource, RedstoneTarget {
 
@@ -78,6 +79,10 @@ public class RedstoneTorch extends WallAttachable implements RedstoneSource, Red
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
 		super.onUpdate(world, x, y, z);
+		if (!VanillaConfiguration.REDSTONE_PHYSICS.getBoolean()) {
+			return;
+		}
+		
 		BlockFace face = getFaceAttachedTo(world.getBlockData(x, y, z));
 		Vector3 offset = face.getOffset();
 		int tx = (int) (x + offset.getX()), ty = (int) (y + offset.getY()), tz = (int) (z + offset.getZ());

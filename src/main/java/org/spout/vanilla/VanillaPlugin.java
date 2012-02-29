@@ -50,13 +50,21 @@ import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.generator.theend.TheEndGenerator;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
+import org.spout.vanilla.util.configuration.VanillaConfiguration;
 
 public class VanillaPlugin extends CommonPlugin {
+	
+	private static VanillaPlugin instance;
+	private final VanillaConfiguration config = new VanillaConfiguration();
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
 	public static int vanillaProtocolId;
 	public static final int minecraftProtocolId = 23;
 
 	public static World spawnWorld;
+	
+	public VanillaPlugin() {
+		instance = this;
+	}
 
 	@Override
 	public void onLoad() {
@@ -94,6 +102,8 @@ public class VanillaPlugin extends CommonPlugin {
 	@Override
 	public void onEnable() {
 		Game game = getGame();
+		
+		config.load();
 
 		//Register commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
@@ -118,5 +128,13 @@ public class VanillaPlugin extends CommonPlugin {
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), new TheEndSky());
 
 		getLogger().info("enabled. Protocol: " + getDescription().getProtocol());
+	}
+	
+	public static VanillaPlugin getInstance() {
+		return instance;
+	}
+	
+	public VanillaConfiguration getConfig() {
+		return config;
 	}
 }

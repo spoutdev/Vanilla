@@ -77,7 +77,7 @@ public class RegionEntitySpawner extends Controller {
 	public void onTick(float dt) {
 		World world = region.getWorld();
 		Set<Player> players = world.getPlayers();
-		if (players.size() == 0) {
+		if (players.isEmpty()) {
 			return;
 		}
 		for (int dx = 0; dx < Region.REGION_SIZE; dx++) {

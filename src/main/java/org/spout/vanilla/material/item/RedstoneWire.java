@@ -8,6 +8,7 @@ import org.spout.vanilla.material.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.configuration.VanillaConfiguration;
 
 public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget {
 
@@ -35,6 +36,10 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
 		super.onUpdate(world, x, y, z);
+		if (!VanillaConfiguration.REDSTONE_PHYSICS.getBoolean()) {
+			return;
+		}
+		
 		System.out.println("Updating " + x + " " + y + " " + z);
 		short maxPower = 0;
 		BlockMaterial below = world.getBlockMaterial(x, y - 1, z);

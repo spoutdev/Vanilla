@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla.
+ * This file is part of Vanilla (http://www.spout.org/).
  *
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
@@ -23,21 +23,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.protocols.living;
+package org.spout.vanilla.material.block;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.spout.api.geo.World;
+import org.spout.vanilla.material.attachable.GroundAttachable;
+import org.spout.vanilla.util.block.MinecartTrackLogic;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.util.Parameter;
+public class MinecartTrack extends GroundAttachable {
 
-public class SheepEntityProtocol extends BasicMobEntityProtocol {
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-		//TODO: Index 16 (byte): bit 0x10 indicates shearedness. bits 0x0F indicate color
-		return parameters;
+	public MinecartTrack(String name, int id) {
+		super(name, id);
 	}
 	
+	public boolean canCurve() {
+		return true;
+	}
+	
+	@Override
+	public void onUpdate(World world, int x, int y, int z) {
+		MinecartTrackLogic logic = MinecartTrackLogic.create(world, x, y, z);
+		if (logic != null) {
+			logic.refresh();
+		}
+	}
+		
 }

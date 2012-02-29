@@ -23,64 +23,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.projectile;
+package org.spout.vanilla.material.item;
 
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
-import org.spout.vanilla.entity.MovingEntity;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.block.MinecartTrack;
+import org.spout.vanilla.material.generic.GenericItem;
 
-public class Projectile extends MovingEntity {
-	Point start;
-	Quaternion rotation;
-	Entity shooter;
+public class Minecart extends GenericItem {
 
-	final int maxSpeed;
-
-	protected Vector3 velocity;
-
-	public Projectile(Point start, Quaternion rotation, int maxSpeed) {
-		this.maxSpeed = maxSpeed;
-		this.start = start;
-		this.rotation = rotation;
-
-		velocity = new Vector3(maxSpeed, 0, 0);
-	}
-
-	@Override
-	public void onAttached() {
-		Vector3 rotation = this.rotation.getAxisAngles();
-		parent.setRoll(rotation.getX());
-		parent.setYaw(rotation.getY());
-		parent.setPitch(rotation.getZ());
-		parent.setPoint(start);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		//position += velocity.transform(rotation) * dt;
-		//parent.setPosition(parent.getPosition().add(velocity.transform(t.getRotation()).multiply(dt)));
-	}
-
-	@Override
-	public void preSnapshot() {
+	public Minecart(String name, int id) {
+		super(name, id);
 	}
 	
 	/**
-	 * Sets the entity that shot this projectile
-	 * @param entity - the shooter
+	 * Creates a new minecart controller to spawn when interacted
+	 * @return a new Minecart controller
 	 */
-	public void setShooter(Entity entity) {
-		shooter = entity;
+	protected Controller getSpawnedEntity() {
+		return new org.spout.vanilla.entity.vehicle.TransportMinecart();
 	}
 	
-	/**
-	 * Gets the entity that shot this projectile
-	 * @return the shooter entity
-	 */
-	public Entity getShooter() {
-		return shooter;
+	@Override
+	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedface) {
+		super.onInteract(entity, position, type, clickedface);
+		
+		//is clicked position a track?
+		World world = position.getWorld();
+		Block block = world.getBlock(position);
+		if (block.getBlockMaterial() instanceof MinecartTrack) {
+			//spawn minecart on rails
+			world.createAndSpawnEntity(position, this.getSpawnedEntity());
+			//TODO: Subtracting one from the held item?
+			//Shouldn't the held item be passed to this function instead?
+		}
 	}
-	
+
 }

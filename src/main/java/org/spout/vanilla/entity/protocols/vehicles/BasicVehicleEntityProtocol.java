@@ -23,21 +23,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.protocols.living;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.spout.vanilla.entity.protocols.vehicles;
 
 import org.spout.api.entity.Controller;
-import org.spout.api.util.Parameter;
+import org.spout.api.entity.Entity;
+import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.protocol.Message;
+import org.spout.vanilla.entity.protocols.BasicEntityProtocol;
+import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
-public class SheepEntityProtocol extends BasicMobEntityProtocol {
+public abstract class BasicVehicleEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
 
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-		//TODO: Index 16 (byte): bit 0x10 indicates shearedness. bits 0x0F indicate color
-		return parameters;
-	}
+	/**
+	 * Gets the vehicle type to spawn using this protocol
+	 * @return The vehicle type id
+	 */
+	public abstract int getSpawnedVehicleType();
 	
+	@Override
+	public Message getSpawnMessage(Entity entity) {
+		Controller c = entity.getController();
+		if (c == null) {
+			return null;
+		}
+		int id = entity.getId();
+		int x = (int) (entity.getX() * 32);
+		int y = (int) (entity.getY() * 32);
+		int z = (int) (entity.getZ() * 32);
+
+		//FIXME: Store vehicle type in entity (Vehicle implementing?) class instead
+	    return new SpawnVehicleMessage(id, this.getSpawnedVehicleType(), x, y, z);
+	}
+
 }

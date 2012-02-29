@@ -23,21 +23,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.protocols.living;
+package org.spout.vanilla.entity.protocols.projectile;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.spout.api.entity.Controller;
-import org.spout.api.util.Parameter;
-
-public class SheepEntityProtocol extends BasicMobEntityProtocol {
+public class GhastFireballEntityProtocol extends BasicProjectileEntityProtocol{
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-		//TODO: Index 16 (byte): bit 0x10 indicates shearedness. bits 0x0F indicate color
-		return parameters;
+	public int getSpawnedProjectileType() {
+		return 63;
 	}
 	
 }

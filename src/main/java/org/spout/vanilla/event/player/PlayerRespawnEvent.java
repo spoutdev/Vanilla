@@ -44,13 +44,13 @@ public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable 
 
 	public PlayerRespawnEvent(Entity e, Point point, boolean bedRespawn) {
 		super(e, point);
-		if (!(e.getController() instanceof PlayerController)) {
+		if (!e.is(PlayerController.class)) {
 			throw new InvalidControllerException();
 		}
 		this.bedRespawn = bedRespawn;
 	}
 
-	
+
 
 	/**
 	 * Gets the player associated in this event.

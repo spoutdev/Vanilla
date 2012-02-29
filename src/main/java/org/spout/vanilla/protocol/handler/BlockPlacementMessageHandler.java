@@ -153,7 +153,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 					player.getSession().send(new BlockChangeMessage(x, y, z, holding.getMaterial().getId(), placedData));
 				}
 
-				if(player.getEntity().getController() instanceof SurvivalPlayer) {
+				if(player.getEntity().is(SurvivalPlayer.class)) {
 					holding.setAmount(holding.getAmount() - 1);
 					if (holding.getAmount() == 0) {
 						inventory.setItem(null, inventory.getCurrentSlot());

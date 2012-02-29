@@ -41,7 +41,7 @@ public class PlayerDeathEvent extends VanillaEntityDeathEvent implements Cancell
 
 	public PlayerDeathEvent(Entity e) {
 		super(e);
-		if (!(e.getController() instanceof PlayerController)) {
+		if (!e.is(PlayerController.class)) {
 			throw new InvalidControllerException();
 		}
 	}

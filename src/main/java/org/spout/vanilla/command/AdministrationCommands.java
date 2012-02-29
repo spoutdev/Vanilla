@@ -111,6 +111,19 @@ public class AdministrationCommands {
 			source.sendMessage(player.getName() + "'s game mode has been changed to " + message);
 		}
 	}
+	
+	@Command( aliases = "kick", usage = "[player]", desc = "Kick a player from the server", max = 1 )
+	@CommandPermissions( "vanilla.command.kick" )
+	public void kick( CommandContext args, CommandSource source ) throws CommandException {
+		if ( args.length() == 1 ) {
+			Player player = Spout.getGame().getPlayer( args.getString( 0 ), true );
+			if ( player != null ) {
+				player.kick( "Kicked from server" );
+			} else {
+				throw new CommandException( args.getString( 0 ) + " is not online." );
+			}
+		}
+	}
 
 	@Command(aliases = "xp", usage = "[player] <amount>", desc = "Give/take experience from a player", max = 2)
 	@CommandPermissions("vanilla.command.xp")

@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.entity.living.player;
 
+import java.util.Random;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.inventory.Inventory;
@@ -33,11 +34,15 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
+import org.spout.vanilla.util.configuration.VanillaConfiguration;
 
 public abstract class MinecraftPlayer extends PlayerController {
 
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
+	private static Random random = new Random();
+	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
 
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
@@ -67,13 +72,21 @@ public abstract class MinecraftPlayer extends PlayerController {
 
 	@Override
 	public void onTick(float dt) {
-		// TODO need to send timeout packets
 		Player player = getPlayer();
+		PingMessage p = new PingMessage(random.nextInt());
+		player.getSession().send(p);
+		unresponsiveTicks--;
+		if(unresponsiveTicks==0) {
+			player.getSession().disconnect("Connection timeout!");
+		}
 		if (player.getEntity().getInventory().isDirty()) {
 			player.getEntity().getInventory().setDirty(false);
 			SetWindowSlotsMessage message = new SetWindowSlotsMessage((byte)0, player.getEntity().getInventory().getContents());
 			player.getSession().send(message);
 		} 
-
+	}
+	
+	public void resetTimeoutTicks() {
+		unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
 	}
 }

@@ -28,10 +28,15 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.entity.living.player.MinecraftPlayer;
 import org.spout.vanilla.protocol.msg.PingMessage;
 
 public class PingMessageHandler extends MessageHandler<PingMessage> {
 	@Override
 	public void handle(Session session, Player player, PingMessage message) {
+		if(!(player.getEntity().getController() instanceof MinecraftPlayer))
+			return;
+		MinecraftPlayer mp = (MinecraftPlayer) player.getEntity().getController();
+		mp.resetTimeoutTicks();
 	}
 }

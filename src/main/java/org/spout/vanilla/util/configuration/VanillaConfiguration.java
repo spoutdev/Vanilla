@@ -51,6 +51,7 @@ public class VanillaConfiguration extends Configuration {
 	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_HEALTH = new ConfigurationNode("player.survival.enable-health", true);
 	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_HUNGER = new ConfigurationNode("player.survival.enable-hunger", true);
 	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_XP = new ConfigurationNode("player.survival.enable-xp", true);
+	public static final ConfigurationNode PLAYER_TIMEOUT_TICKS = new ConfigurationNode("player.timeout-ticks",1200);
 	
 	
 	public VanillaConfiguration() {

@@ -22,11 +22,7 @@
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
- */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+ */ 
 package org.spout.vanilla.util.configuration;
 
 import java.io.File;

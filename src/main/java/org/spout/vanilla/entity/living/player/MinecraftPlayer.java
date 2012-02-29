@@ -27,7 +27,7 @@ package org.spout.vanilla.entity.living.player;
 
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.atomic.Transform;
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
@@ -38,7 +38,6 @@ import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 public abstract class MinecraftPlayer extends PlayerController {
 
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
-	private ItemStack[] oldInventory;
 
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
@@ -53,6 +52,9 @@ public abstract class MinecraftPlayer extends PlayerController {
 		super(p);
 		p.getEntity().setInventorySize(45);
 		p.getEntity().getInventory().setCurrentSlot(36);
+		Inventory inv = p.getEntity().getInventory();
+		for(int i=0;i<=8;i++) 
+			inv.setHiddenSlot(i, true);
 	}
 
 	@Override
@@ -67,29 +69,9 @@ public abstract class MinecraftPlayer extends PlayerController {
 	public void onTick(float dt) {
 		// TODO need to send timeout packets
 		Player player = getPlayer();
-		ItemStack[] newContents = player.getEntity().getInventory().getContents();
-		boolean inventoryChanged = false;
-		if (oldInventory != null) {
-			for(int i=0;i<oldInventory.length;i++) {
-				if(newContents[i]==null&&oldInventory[i]==null)
-					continue;
-				if(newContents[i]==null&&oldInventory[i]!=null) {
-					inventoryChanged = true;
-					break;
-				}
-				if(newContents[i]!=null&&oldInventory[i]==null) {
-					inventoryChanged = true;
-					break;
-				}
-				if(!newContents[i].toString().equals(oldInventory[i].toString())) {
-					inventoryChanged = true;
-					break;
-				} 
-			}
-		}
-		oldInventory  = newContents.clone();
-		if (inventoryChanged) {
-			SetWindowSlotsMessage message = new SetWindowSlotsMessage((byte)0, newContents);
+		if (player.getEntity().getInventory().isDirty()) {
+			player.getEntity().getInventory().setDirty(false);
+			SetWindowSlotsMessage message = new SetWindowSlotsMessage((byte)0, player.getEntity().getInventory().getContents());
 			player.getSession().send(message);
 		} 
 

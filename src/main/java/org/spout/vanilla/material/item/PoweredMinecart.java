@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla.
+ * This file is part of Vanilla (http://www.spout.org/).
  *
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
@@ -23,40 +23,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.protocols.living;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.spout.vanilla.material.item;
 
 import org.spout.api.entity.Controller;
-import org.spout.api.entity.Entity;
-import org.spout.api.protocol.EntityProtocol;
-import org.spout.api.protocol.Message;
-import org.spout.api.util.Parameter;
-import org.spout.vanilla.entity.living.passive.Sheep;
-import org.spout.vanilla.entity.protocols.BasicEntityProtocol;
-import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 
-public class SheepEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
+public class PoweredMinecart extends Minecart {
 
+	public PoweredMinecart(String name, int id) {
+		super(name, id);
+	}
+	
 	@Override
-	public Message getSpawnMessage(Entity entity) {
-		Controller c = entity.getController();
-		if (c != null && c instanceof Sheep) {
-			
-			int id = entity.getId();
-			int x = (int) (entity.getX() * 32);
-			int y = (int) (entity.getY() * 32);
-			int z = (int) (entity.getZ() * 32);
-			int r = (int) (entity.getYaw() * 32);
-			int p = (int) (entity.getPitch() * 32);
-			int type = 91;
-			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-			//TODO: Index 16 (byte): bit 0x10 indicates shearedness. bits 0x0F indicate color
-			return new SpawnMobMessage(id, type, x, y, z, r, p, parameters);
-		} else {
-			return null;
-		}
+	protected Controller getSpawnedEntity() {
+		return new org.spout.vanilla.entity.vehicle.PoweredMinecart();
 	}
 
 }

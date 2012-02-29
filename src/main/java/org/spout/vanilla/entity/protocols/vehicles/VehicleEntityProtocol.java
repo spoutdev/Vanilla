@@ -23,40 +23,46 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.protocols.living;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.spout.vanilla.entity.protocols.vehicles;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
-import org.spout.api.util.Parameter;
-import org.spout.vanilla.entity.living.passive.Sheep;
 import org.spout.vanilla.entity.protocols.BasicEntityProtocol;
-import org.spout.vanilla.protocol.msg.SpawnMobMessage;
+import org.spout.vanilla.entity.vehicle.Boat;
+import org.spout.vanilla.entity.vehicle.PoweredMinecart;
+import org.spout.vanilla.entity.vehicle.StorageMinecart;
+import org.spout.vanilla.entity.vehicle.TransportMinecart;
+import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
-public class SheepEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
+public class VehicleEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
 
 	@Override
 	public Message getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
-		if (c != null && c instanceof Sheep) {
-			
-			int id = entity.getId();
-			int x = (int) (entity.getX() * 32);
-			int y = (int) (entity.getY() * 32);
-			int z = (int) (entity.getZ() * 32);
-			int r = (int) (entity.getYaw() * 32);
-			int p = (int) (entity.getPitch() * 32);
-			int type = 91;
-			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-			//TODO: Index 16 (byte): bit 0x10 indicates shearedness. bits 0x0F indicate color
-			return new SpawnMobMessage(id, type, x, y, z, r, p, parameters);
+		if (c == null) {
+			return null;
+		}
+		int id = entity.getId();
+		int x = (int) (entity.getX() * 32);
+		int y = (int) (entity.getY() * 32);
+		int z = (int) (entity.getZ() * 32);
+		int type;
+		
+	    if (c instanceof Boat) {
+	    	type = 1;
+	    } else if (c instanceof TransportMinecart) {
+			type = 10;
+		} else if (c instanceof PoweredMinecart) {
+			type = 11;
+		} else if (c instanceof StorageMinecart) {
+			type = 12;
 		} else {
 			return null;
 		}
+	    
+	    return new SpawnVehicleMessage(id, type, x, y, z);
 	}
 
 }

@@ -33,16 +33,16 @@ import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
-import org.spout.vanilla.entity.living.passive.Sheep;
+import org.spout.vanilla.entity.living.other.Enderdragon;
 import org.spout.vanilla.entity.protocols.BasicEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 
-public class SheepEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
+public class EnderdragonEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
 
 	@Override
 	public Message getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
-		if (c != null && c instanceof Sheep) {
+		if (c != null && c instanceof Enderdragon) {
 			
 			int id = entity.getId();
 			int x = (int) (entity.getX() * 32);
@@ -50,9 +50,9 @@ public class SheepEntityProtocol extends BasicEntityProtocol implements EntityPr
 			int z = (int) (entity.getZ() * 32);
 			int r = (int) (entity.getYaw() * 32);
 			int p = (int) (entity.getPitch() * 32);
-			int type = 91;
+			int type = 53;
 			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-			//TODO: Index 16 (byte): bit 0x10 indicates shearedness. bits 0x0F indicate color
+			//TODO: Index 16 (byte): Health bar (0-200)
 			return new SpawnMobMessage(id, type, x, y, z, r, p, parameters);
 		} else {
 			return null;

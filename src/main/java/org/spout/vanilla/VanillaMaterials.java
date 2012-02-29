@@ -39,6 +39,9 @@ import org.spout.vanilla.material.block.Cactus;
 import org.spout.vanilla.material.block.DoubleSlab;
 import org.spout.vanilla.material.block.Grass;
 import org.spout.vanilla.material.block.LongGrass;
+import org.spout.vanilla.material.block.MinecartTrack;
+import org.spout.vanilla.material.block.MinecartTrackDetector;
+import org.spout.vanilla.material.block.MinecartTrackPowered;
 import org.spout.vanilla.material.block.Sapling;
 import org.spout.vanilla.material.block.Slab;
 import org.spout.vanilla.material.block.Solid;
@@ -57,8 +60,11 @@ import org.spout.vanilla.material.generic.GenericTool;
 import org.spout.vanilla.material.generic.GenericWeapon;
 import org.spout.vanilla.material.item.Coal;
 import org.spout.vanilla.material.item.Dye;
+import org.spout.vanilla.material.item.Minecart;
+import org.spout.vanilla.material.item.PoweredMinecart;
 import org.spout.vanilla.material.item.RedstoneTorch;
 import org.spout.vanilla.material.item.RedstoneWire;
+import org.spout.vanilla.material.item.StorageMinecart;
 
 public final class VanillaMaterials {
 
@@ -95,8 +101,8 @@ public final class VanillaMaterials {
 	public static final BlockMaterial SANDSTONE = new Solid("Sandstone", 24).setHardness(0.8F);
 	public static final BlockMaterial NOTEBLOCK = new Solid("Note Block", 25).setHardness(0.8F);
 	public static final BlockMaterial BED_BLOCK = new Solid("Bed", 26).setHardness(0.2F);
-	public static final BlockMaterial POWERED_RAIL = new Solid("Powered Rail", 27).setHardness(0.7F);
-	public static final BlockMaterial DETECTOR_RAIL = new Solid("Detector Rail", 28).setHardness(0.7F);
+	public static final BlockMaterial POWERED_RAIL = new MinecartTrackPowered("Powered Rail", 27).setHardness(0.7F);
+	public static final BlockMaterial DETECTOR_RAIL = new MinecartTrackDetector("Detector Rail", 28).setHardness(0.7F);
 	public static final BlockMaterial PISTON_STICKY_BASE = new Solid("Sticky Piston", 29);
 	public static final BlockMaterial WEB = new Solid("Cobweb", 30).setHardness(4.0F);
 	public static final BlockMaterial DEAD_SHRUB = new LongGrass("Dead Grass", 31, 0).setHardness(0.0F);
@@ -161,7 +167,7 @@ public final class VanillaMaterials {
 	public static final BlockMaterial SIGN_POST = new Solid("Sign Post", 63).setHardness(1.0F);
 	public static final BlockMaterial WOODEN_DOOR_BLOCK = new Solid("Wooden Door", 64).setHardness(3.0F);
 	public static final BlockMaterial LADDERS = new Solid("Ladders", 65).setHardness(0.4F);
-	public static final BlockMaterial RAILS = new Solid("Rails", 66).setHardness(0.7F);
+	public static final BlockMaterial RAILS = new MinecartTrack("Rails", 66).setHardness(0.7F);
 	public static final BlockMaterial COBBLESTONE_STAIRS = new Solid("Cobblestone Stairs", 67);
 	public static final BlockMaterial WALL_SIGN = new Solid("Wall Sign", 68).setHardness(1.0F);
 	public static final BlockMaterial LEVER = new Solid("Lever", 69).setHardness(0.5F);
@@ -296,7 +302,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial BUCKET = new GenericEmptyContainer("Bucket", 325);
 	public static final ItemMaterial WATER_BUCKET = new GenericFullContainer("Water Bucket", 326, WATER, (GenericEmptyContainer)BUCKET);
 	public static final ItemMaterial LAVA_BUCKET = new GenericFullContainer("Lava Bucket", 327, LAVA, (GenericEmptyContainer)BUCKET);
-	public static final ItemMaterial MINECART = new GenericItem("Minecart", 328);
+	public static final ItemMaterial MINECART = new Minecart("Minecart", 328);
 	public static final ItemMaterial SADDLE = new GenericItem("Saddle", 329);
 	public static final ItemMaterial IRON_DOOR = new GenericItem("Iron Door", 330);
 	public static final ItemMaterial REDSTONE = new GenericBlockItem("Redstone", 331, VanillaMaterials.REDSTONE_WIRE);
@@ -310,8 +316,8 @@ public final class VanillaMaterials {
 	public static final ItemMaterial PAPER = new GenericItem("Paper", 339);
 	public static final ItemMaterial BOOK = new GenericItem("Book", 340);
 	public static final ItemMaterial SLIMEBALL = new GenericItem("Slimeball", 341);
-	public static final ItemMaterial MINECART_CHEST = new GenericItem("Minecart with Chest", 342);
-	public static final ItemMaterial MINECART_FURNACE = new GenericItem("Minecart with Furnace", 343);
+	public static final ItemMaterial MINECART_CHEST = new StorageMinecart("Minecart with Chest", 342);
+	public static final ItemMaterial MINECART_FURNACE = new PoweredMinecart("Minecart with Furnace", 343);
 	public static final ItemMaterial EGG = new GenericItem("Egg", 344);
 	public static final ItemMaterial COMPASS = new GenericItem("Compass", 345);
 	public static final ItemMaterial FISHING_ROD = new GenericTool("Fishing Rod", 346, (short) 65);

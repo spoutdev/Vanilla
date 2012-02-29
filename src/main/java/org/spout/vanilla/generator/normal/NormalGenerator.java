@@ -25,14 +25,15 @@
  */
 package org.spout.vanilla.generator.normal;
 
-import org.spout.vanilla.biome.selectors.NoiseSelector;
-import org.spout.vanilla.generator.BiomeGenerator;
+
+import org.spout.vanilla.generator.NoiseSelector;
 import org.spout.vanilla.generator.VanillaBiomes;
+import org.spout.vanilla.generator.VanillaGeneratorBase;
 
 /**
  * Generator that generates default Minecraft-like worlds.
  */
-public class NormalGenerator extends BiomeGenerator {
+public class NormalGenerator extends VanillaGeneratorBase {
 	@Override
 	public void registerBiomes() {
 		setSelector(new NoiseSelector());

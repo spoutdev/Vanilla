@@ -25,15 +25,15 @@
  */
 package org.spout.vanilla.generator.nether;
 
-import org.spout.vanilla.biome.selectors.NoiseSelector;
-import org.spout.vanilla.biome.selectors.SquareSelector;
-import org.spout.vanilla.generator.BiomeGenerator;
+
+import org.spout.vanilla.generator.NoiseSelector;
+import org.spout.vanilla.generator.VanillaGeneratorBase;
 import org.spout.vanilla.generator.nether.biome.NetherrackBiome;
 
 /**
  * Generator that generates Nether-like worlds.
  */
-public class NetherGenerator extends BiomeGenerator {
+public class NetherGenerator extends VanillaGeneratorBase {
 	@Override
 	public void registerBiomes() {
 		setSelector(new NoiseSelector());

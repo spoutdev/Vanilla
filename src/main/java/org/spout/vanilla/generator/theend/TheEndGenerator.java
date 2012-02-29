@@ -25,15 +25,15 @@
  */
 package org.spout.vanilla.generator.theend;
 
-import org.spout.vanilla.biome.selectors.NoiseSelector;
-import org.spout.vanilla.biome.selectors.SquareSelector;
-import org.spout.vanilla.generator.BiomeGenerator;
+
+import org.spout.vanilla.generator.NoiseSelector;
+import org.spout.vanilla.generator.VanillaGeneratorBase;
 import org.spout.vanilla.generator.theend.biome.EndStoneBiome;
 
 /**
  * Generator that generates The End-like worlds.
  */
-public class TheEndGenerator extends BiomeGenerator {
+public class TheEndGenerator extends VanillaGeneratorBase {
 	/**
 	 * Called during biome generatator's construction phase
 	 */

@@ -29,10 +29,10 @@ import java.util.Random;
 
 import net.royawesome.jlibnoise.module.source.Perlin;
 
+import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.biome.BiomeDecorator;
 
 /**
  * Decorator that decorates a biome with caves.

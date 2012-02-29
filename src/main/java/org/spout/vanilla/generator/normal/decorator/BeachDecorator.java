@@ -2,13 +2,13 @@ package org.spout.vanilla.generator.normal.decorator;
 
 import java.util.Random;
 
+import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.biome.BiomeDecorator;
 
 public class BeachDecorator implements BiomeDecorator {
 

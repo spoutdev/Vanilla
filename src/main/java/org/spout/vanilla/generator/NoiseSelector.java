@@ -1,8 +1,9 @@
-package org.spout.vanilla.biome.selectors;
+package org.spout.vanilla.generator;
 
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Voronoi;
-import org.spout.vanilla.biome.BiomeSelector;
+
+import org.spout.api.generator.biome.BiomeSelector;
 
 /**
  * @author zml2008

@@ -29,9 +29,9 @@ import java.util.ArrayList;
 
 import net.royawesome.jlibnoise.module.source.Perlin;
 
+import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.biome.BiomeType;
 import org.spout.vanilla.generator.normal.decorator.BeachDecorator;
 import org.spout.vanilla.generator.normal.decorator.CaveDecorator;
 import org.spout.vanilla.generator.normal.decorator.DungeonDecorator;

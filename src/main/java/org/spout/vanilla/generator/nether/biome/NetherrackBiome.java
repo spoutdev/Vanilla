@@ -25,10 +25,10 @@
  */
 package org.spout.vanilla.generator.nether.biome;
 
+import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.biome.BiomeType;
 
 /**
  * Biome consisting of netherrack. Found only in the Nether.

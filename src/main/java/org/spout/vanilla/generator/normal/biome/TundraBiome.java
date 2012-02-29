@@ -25,8 +25,8 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
+import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
-import org.spout.vanilla.biome.BiomeType;
 
 /**
  * Biome consisting of flat snowy terrain with frozen rivers and lakes.

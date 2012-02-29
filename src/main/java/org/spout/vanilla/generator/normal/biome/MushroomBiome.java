@@ -25,8 +25,8 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
+import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
-import org.spout.vanilla.biome.BiomeType;
 
 /**
  * Biome consisting of flat landscapes and high hills covered in Mycelium. Huge mushrooms are present.

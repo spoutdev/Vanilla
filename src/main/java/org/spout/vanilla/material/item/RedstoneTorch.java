@@ -55,7 +55,7 @@ public class RedstoneTorch extends WallAttachable implements RedstoneSource, Red
 	@Override
 	public short getRedstonePower(World world, int x, int y, int z, int tx, int ty, int tz) {
 		if (providesPowerTo(world, x, y, z, tx, ty, tz)) {
-			return (short) (powered ? 16 : 0);
+			return (short) (powered ? REDSTONE_POWER : 0);
 		}
 		return 0;
 	}

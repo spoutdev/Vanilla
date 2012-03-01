@@ -109,7 +109,6 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 		if (blockBroken) {
 			BlockMaterial oldMat = block.getBlockMaterial();
 			world.setBlockIdAndData(x, y, z, (short) 0, (short) 0, player);
-			player.getSession().send(new BlockChangeMessage(x, y, z, (short) 0, (byte) 0));
 			if(player.getEntity().getController() instanceof SurvivalPlayer) {
 				world.createAndSpawnEntity(block.getBase(), new Pickup(new ItemStack(oldMat,1), player.getEntity().getPoint().normalize().add(0, 5, 0)));//TODO get the actual block drops, and more than one can fall :)
 			}

@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.entity.PlayerController;
 import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
@@ -81,30 +82,28 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		//session.setPreviousPlacement(message);
 
 		Point pos = new Point(world, message.getX(), message.getY(), message.getZ());
-
 		BlockFace face = VanillaMessageHandlerUtils.messageToBlockFace(message.getDirection());
 
 		if (face == BlockFace.THIS) {
 			return;
 		}
 
-		pos = pos.add(face.getOffset());
-		org.spout.api.geo.cuboid.Block target = world.getBlock(pos);
+		Point offsetPos = pos.add(face.getOffset());
+		org.spout.api.geo.cuboid.Block target = world.getBlock(offsetPos);
 
 		if (pos.getY() >= world.getHeight() || pos.getY() < 0) {
 			return;
 		}
 		boolean sendRevert = false;
 
-		int x = MathHelper.floor(pos.getX());
-		int y = MathHelper.floor(pos.getY());
-		int z = MathHelper.floor(pos.getZ());
-
-		PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, new Point(pos.add(face.getOffset()), world), inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, false);
-		eventManager.callEvent(interactEvent);
+		PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, new Point(pos, world), inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, false));
 		if (interactEvent.isCancelled()) {
 			sendRevert = true;
 		}
+
+		int x = MathHelper.floor(offsetPos.getX());
+		int y = MathHelper.floor(offsetPos.getY());
+		int z = MathHelper.floor(offsetPos.getZ());
 
 		if (holding != null && !sendRevert) {
 			/*if (interactEvent.useItemInHand() != Event.Result.DENY) { //TODO: Implement items (they are not in yet!)
@@ -125,7 +124,10 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 				sendRevert = true;
 			}
 
-			short placedData = placedMaterial.getData();
+			short placedData = holding.getDamage();
+			if (placedData == 0) {
+				placedData = placedMaterial.getData();
+			}
 
 			if (placedMaterial instanceof Attachable) {
 				Attachable attachable = (Attachable) placedMaterial;
@@ -148,16 +150,10 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 					sendRevert = true;
 				}*/
 
-				if (!sendRevert) {
-					world.setBlockIdAndData(x, y, z, newBlock.getId(), placedData, player);
-					player.getSession().send(new BlockChangeMessage(x, y, z, holding.getMaterial().getId(), placedData));
-				}
-
-				if(player.getEntity().getController() instanceof SurvivalPlayer) {
+				world.setBlockIdAndData(x, y, z, newBlock.getId(), placedData, player);
+				if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
 					holding.setAmount(holding.getAmount() - 1);
-					if (holding.getAmount() == 0) {
-						inventory.setItem(null, inventory.getCurrentSlot());
-					}
+					inventory.setItem(holding, inventory.getCurrentSlot());
 				}
 				//} else {
 				//	sendRevert = true;
@@ -170,8 +166,8 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			}
 		}
 		if (sendRevert) {
-			player.getSession().send(new BlockChangeMessage(x, y, z, target != null ? target.getBlockId() : 0, world.getBlockData(x, y, z)));
-			//TODO: Send potential amount change/whatever!
+			player.getSession().send(new BlockChangeMessage(x, y, z, target != null ? target.getBlockId() : 0, world.getBlockData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ())));
+			inventory.setItem(holding, inventory.getCurrentSlot());
 		}
 	}
 }

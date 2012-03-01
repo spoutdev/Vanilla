@@ -111,7 +111,7 @@ public abstract class MovingEntity extends MinecraftEntity {
 
 	private void checkWeb() {
 		Point pos = parent.getPoint();
-		if (pos == null) {
+		if (pos == null || pos.getWorld() == null) {
 			return;
 		}
 		if (pos.getWorld().getBlock(pos).getBlockMaterial() == VanillaMaterials.WEB) {

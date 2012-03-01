@@ -42,6 +42,7 @@ import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.permissions.PermissionsSubject;
+import org.spout.api.event.player.PlayerLeaveEvent;
 import org.spout.api.player.Player;
 import org.spout.vanilla.entity.RegionEntitySpawner;
 import org.spout.vanilla.entity.living.passive.Sheep;
@@ -51,7 +52,7 @@ import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.util.configuration.VanillaConfiguration;
 
 public class VanillaEventListener implements Listener {
-	
+
 	private final VanillaPlugin plugin;
 
 	public VanillaEventListener(VanillaPlugin plugin) {
@@ -67,12 +68,20 @@ public class VanillaEventListener implements Listener {
 		} else {
 			mode = new SurvivalPlayer(player); // TODO: Implement Survival mode.
 		}
-		
+
 		Entity playerEntity = player.getEntity();
 		playerEntity.setController(mode);
 		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
 	}
-	
+
+	@EventHandler(order = Order.LATEST)
+	public void onPlayerLeave(PlayerLeaveEvent event) {
+		Entity entity = event.getPlayer().getEntity();
+		if (entity != null) {
+			entity.getInventory().removeViewer(event.getPlayer().getNetworkSynchronizer());
+		}
+	}
+
 	@EventHandler()
 	public void onRegionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
@@ -80,13 +89,13 @@ public class VanillaEventListener implements Listener {
 			region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE), new RegionEntitySpawner(region));
 		}
 	}
-	
+
 	@EventHandler(order = Order.MONITOR)
 	public void onEntitySpawn(EntitySpawnEvent event) {
 		if (event.isCancelled()) {
 			return;
 		}
-		
+
 		Entity entity = event.getEntity();
 		Controller c = entity.getController();
 		if (c != null) {
@@ -98,7 +107,7 @@ public class VanillaEventListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler(order = Order.EARLIEST)
 	public void onPermissionNode(PermissionNodeEvent event) {
 		PermissionsSubject subject = event.getSubject();

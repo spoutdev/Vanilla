@@ -28,21 +28,30 @@ package org.spout.vanilla.entity.living.player;
 import java.util.Random;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.atomic.Transform;
+<<<<<<< HEAD
 import org.spout.api.inventory.Inventory;
+=======
+>>>>>>> Improved inventory handling and handle window clicks
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.VanillaPlugin;
+<<<<<<< HEAD
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 import org.spout.vanilla.util.configuration.VanillaConfiguration;
+=======
+>>>>>>> Improved inventory handling and handle window clicks
 
 public abstract class MinecraftPlayer extends PlayerController {
 
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
+<<<<<<< HEAD
 	private static Random random = new Random();
 	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
+=======
+>>>>>>> Improved inventory handling and handle window clicks
 
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
@@ -56,10 +65,14 @@ public abstract class MinecraftPlayer extends PlayerController {
 	public MinecraftPlayer(Player p) {
 		super(p);
 		p.getEntity().setInventorySize(45);
+<<<<<<< HEAD
 		p.getEntity().getInventory().setCurrentSlot(36);
 		Inventory inv = p.getEntity().getInventory();
 		for(int i=0;i<=8;i++) 
 			inv.setHiddenSlot(i, true);
+=======
+		p.getEntity().getInventory().setCurrentSlot(0);
+>>>>>>> Improved inventory handling and handle window clicks
 	}
 
 	@Override
@@ -72,6 +85,7 @@ public abstract class MinecraftPlayer extends PlayerController {
 
 	@Override
 	public void onTick(float dt) {
+<<<<<<< HEAD
 		Player player = getPlayer();
 		PingMessage p = new PingMessage(random.nextInt());
 		player.getSession().send(p);
@@ -88,5 +102,9 @@ public abstract class MinecraftPlayer extends PlayerController {
 	
 	public void resetTimeoutTicks() {
 		unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
+=======
+		// TODO need to send timeout packets
+		//super.onTick(dt);
+>>>>>>> Improved inventory handling and handle window clicks
 	}
 }

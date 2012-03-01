@@ -27,7 +27,7 @@ public class SheepEntityProtocol extends BasicEntityProtocol implements EntityPr
 		if (c instanceof Sheep) {
 			return new SpawnMobMessage(id, 91, x, y, z, r, p, Collections.EMPTY_LIST);
 		}
-		
+
 		return null;
 	}
 

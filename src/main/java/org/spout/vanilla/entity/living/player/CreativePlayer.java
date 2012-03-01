@@ -31,4 +31,8 @@ public class CreativePlayer extends MinecraftPlayer {
 	public CreativePlayer(Player p) {
 		super(p);
 	}
+
+	public boolean hasInfiniteResources() {
+		return true;
+	}
 }

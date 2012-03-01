@@ -25,6 +25,8 @@
  */
 package org.spout.vanilla.protocol;
 
+import gnu.trove.iterator.TIntObjectIterator;
+import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
 
 import org.spout.api.entity.Controller;
@@ -33,11 +35,14 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
+import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
@@ -47,7 +52,11 @@ import org.spout.vanilla.protocol.msg.IdentificationMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.PositionRotationMessage;
+import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
+import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
+
+import static org.spout.vanilla.VanillaMessageHandlerUtils.getInventoryId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	@SuppressWarnings("unused")
@@ -67,6 +76,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 	//TODO: track entities as they come into range and untrack entities as they move out of range
 	private TIntHashSet activeEntities = new TIntHashSet();
+
+	private final TIntObjectHashMap<Message> queuedInventoryUpdates = new TIntObjectHashMap<Message>();
 
 	@Override
 	protected void freeChunk(Point p) {
@@ -164,9 +175,16 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), world.getSeed(), owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1, 0, 0, 128, 20, "DEFAULT");
 			owner.getSession().send(idMsg);
 			for (int slot = 0; slot < 5; slot++) {
-				EntityEquipmentMessage EEMsg = new EntityEquipmentMessage(entityId, slot, -1, 0);
+				ItemStack slotItem = owner.getEntity().getInventory().getItem(5 + slot);
+				EntityEquipmentMessage EEMsg;
+				if (slotItem == null) {
+					EEMsg = new EntityEquipmentMessage(entityId, slot, -1, 0);
+				} else {
+					EEMsg = new EntityEquipmentMessage(entityId, slot, slotItem.getMaterial().getId(), slotItem.getDamage());
+				}
 				owner.getSession().send(EEMsg);
 			}
+			entity.getInventory().addViewer(this);
 		}
 		if (world != null) {
 			Point spawn = world.getSpawnPoint().getPosition();
@@ -184,6 +202,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			PingMessage PingMsg = new PingMessage((int) currentTime);
 			lastKeepAlive = currentTime;
 			owner.getSession().send(PingMsg);
+		}
+
+		for (TIntObjectIterator<Message> i = queuedInventoryUpdates.iterator(); i.hasNext();) {
+			i.advance();
+			session.send(i.value());
 		}
 		super.preSnapshot();
 	}
@@ -270,5 +293,27 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			}
 		}
 		super.syncEntity(e);
+	}
+
+	@Override
+	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
+		Message message;
+		final int networkSlot = VanillaMessageHandlerUtils.playerInventorySlotToNetwork(slot);
+		if (item == null) {
+			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot);
+		} else {
+			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot, item.getMaterial().getId(), item.getAmount(), item.getDamage(), item.getAuxData());
+		}
+		queuedInventoryUpdates.put(slot, message);
+	}
+
+	@Override
+	public void updateAll(Inventory inventory, ItemStack[] slots) {
+		ItemStack[] newSlots = new ItemStack[slots.length];
+		for (int i = 0; i < slots.length; ++i) {
+			newSlots[VanillaMessageHandlerUtils.playerInventorySlotToNetwork(i)] = slots[i];
+		}
+		session.send(new SetWindowSlotsMessage(getInventoryId(inventory.getClass()), newSlots));
+		queuedInventoryUpdates.clear();
 	}
 }

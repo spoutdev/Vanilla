@@ -25,6 +25,10 @@
  */
 package org.spout.vanilla;
 
+import gnu.trove.map.TObjectIntMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.material.block.BlockFace;
 
 public class VanillaMessageHandlerUtils {
@@ -45,5 +49,39 @@ public class VanillaMessageHandlerUtils {
 			default:
 				return BlockFace.THIS;
 		}
+	}
+
+	private final static int PLAYER_SLOT_CONVERSION[] = {
+			36, 37, 38, 39, 40, 41, 42, 43, 44, // quickbar
+			9,  10, 11, 12, 13, 14, 15, 16, 17,
+			18, 19, 20, 21, 22, 23, 24, 25, 26,
+			27, 28, 29, 30, 31, 32, 33, 34, 35,
+			5, 6, 7, 8, /* armor */ 4, 3, 2, 1, 0 // crafting
+	};
+
+	public static int playerInventorySlotToNetwork(int slot) {
+		return PLAYER_SLOT_CONVERSION[slot];
+	}
+	public static int playerInventorySlotToSpout(int slot) {
+		for (int i = 0; i < PLAYER_SLOT_CONVERSION.length; ++i) {
+			if (PLAYER_SLOT_CONVERSION[i] == slot) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private static final TObjectIntMap<Class<? extends Inventory>> INVENTORY_MAPPING = new TObjectIntHashMap<Class<? extends Inventory>>();
+
+	static {
+		INVENTORY_MAPPING.put(PlayerInventory.class, 0);
+	}
+
+	public static byte getInventoryId(Class<? extends Inventory> inventory) {
+		int result = INVENTORY_MAPPING.get(inventory);
+		if (result == INVENTORY_MAPPING.getNoEntryValue()) {
+			result = 0;
+		}
+		return (byte)result;
 	}
 }

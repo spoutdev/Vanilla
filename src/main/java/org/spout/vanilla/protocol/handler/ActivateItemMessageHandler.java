@@ -45,6 +45,6 @@ public final class ActivateItemMessageHandler extends MessageHandler<ActivateIte
 			return;
 		}
 
-		player.getEntity().getInventory().setCurrentSlot(newSlot + 36);
+		player.getEntity().getInventory().setCurrentSlot(newSlot);
 	}
 }

@@ -31,4 +31,8 @@ public class SurvivalPlayer extends MinecraftPlayer {
 	public SurvivalPlayer(Player p) {
 		super(p);
 	}
+
+	public boolean hasInfiniteResources() {
+		return false;
+	}
 }

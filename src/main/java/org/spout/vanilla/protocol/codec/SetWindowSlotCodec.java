@@ -52,7 +52,7 @@ public final class SetWindowSlotCodec extends MessageCodec<SetWindowSlotMessage>
 			int count = buffer.readUnsignedByte();
 			int damage = buffer.readUnsignedShort();
 			Map<String, Tag> nbtData = null;
-			if (ChannelBufferUtils.hasNbtData(id)) {
+			if (ChannelBufferUtils.hasNbtData(item)) {
 				nbtData = ChannelBufferUtils.readCompound(buffer);
 			}
 			return new SetWindowSlotMessage(id, slot, item, count, damage, nbtData);
@@ -68,7 +68,7 @@ public final class SetWindowSlotCodec extends MessageCodec<SetWindowSlotMessage>
 		if (message.getItem() != -1) {
 			buffer.writeByte(message.getCount());
 			buffer.writeShort(message.getDamage());
-			if (ChannelBufferUtils.hasNbtData(message.getId())) {
+			if (ChannelBufferUtils.hasNbtData(message.getItem())) {
 				ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
 			}
 		}

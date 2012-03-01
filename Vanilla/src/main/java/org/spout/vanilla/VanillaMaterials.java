@@ -224,8 +224,8 @@ public final class VanillaMaterials {
 	public static final BlockMaterial END_PORTAL_FRAME = new Solid("End Portal Frame", 120).setHardness(-1.0F);
 	public static final BlockMaterial END_STONE = new Solid("End Stone", 121).setHardness(3.0F).setResistance(15.0F);
 	public static final BlockMaterial DRAGON_EGG = new Solid("Dragon Egg", 122).setHardness(3.0F).setResistance(15.0F);
-	public static final BlockMaterial REDSTONE_LAMP_OFF = new Solid("Redstone Lamp", 123, false).setHardness(0.3F).setResistance(0.0F);
-	public static final BlockMaterial REDSTONE_LAMP_ON = new Solid("Redstone Lamp (On)", 124, true).setHardness(0.3F).setResistance(0.0F);
+	//public static final BlockMaterial REDSTONE_LAMP_OFF = new Solid("Redstone Lamp", 123, false).setHardness(0.3F).setResistance(0.0F);
+	//public static final BlockMaterial REDSTONE_LAMP_ON = new Solid("Redstone Lamp (On)", 124, true).setHardness(0.3F).setResistance(0.0F);
 	/*
 	 * Items
 	 */

@@ -59,8 +59,7 @@ public class OreDecorator implements BiomeDecorator {
 		}
 	}
 
-	private void generateOre(World world, Random random, int originX,
-					int originY, int originZ, int amount, BlockMaterial type) {
+	private void generateOre(World world, Random random, int originX, int originY, int originZ, int amount, BlockMaterial type) {
 		double angle = random.nextDouble() * Math.PI;
 		double x1 = ((originX + 8) + Math.sin(angle) * amount / 8);
 		double x2 = ((originX + 8) - Math.sin(angle) * amount / 8);

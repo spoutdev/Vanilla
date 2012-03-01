@@ -91,12 +91,12 @@ public class VanillaPlugin extends CommonPlugin {
 		VanillaMaterials.initialize();
 
 
-		getLogger().info("Vanilla loaded");
+		getLogger().info("loaded");
 	}
 
 	@Override
 	public void onDisable() {
-		getLogger().info("Vanilla disabled");
+		getLogger().info("disabled");
 	}
 
 	@Override
@@ -127,7 +127,7 @@ public class VanillaPlugin extends CommonPlugin {
 		World end = getGame().loadWorld("world_end", new TheEndGenerator());
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), new TheEndSky());
 
-		getLogger().info("Vanilla b" + this.getDescription().getVersion() + " enabled. Protocol: " + getDescription().getProtocol());
+		getLogger().info("b" + this.getDescription().getVersion() + " enabled. Protocol: " + getDescription().getProtocol());
 	}
 	
 	public static VanillaPlugin getInstance() {

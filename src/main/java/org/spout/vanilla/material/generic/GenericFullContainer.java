@@ -32,6 +32,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.ItemMaterial;
+import org.spout.api.material.block.BlockFace;
 
 public class GenericFullContainer extends GenericBlockItem {
 
@@ -66,8 +67,8 @@ public class GenericFullContainer extends GenericBlockItem {
 	}
 
 	@Override
-	public void onInteract(Entity entity, Point position, Action type) {
-		super.onInteract(entity, position, type);
+	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
+		super.onInteract(entity, position, type, clickedFace);
 
 		Inventory inventory = entity.getInventory();
 		if (inventory.getCurrentItem() == null) {

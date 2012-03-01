@@ -23,32 +23,42 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.entity;
 
-import org.spout.api.protocol.Message;
+import org.spout.api.math.Vector3;
 
-public final class AnimateEntityMessage extends Message {
-	public static final int ANIMATION_SWING_ARM = 1;
-	public static final int ANIMATION_HURT = 2;
-	public static final int ANIMATION_LEAVE_BED = 3;
+/**
+ * Represents a living entity controller that has gravity!
+ * Doesn't have to be alive....
+ */
+public abstract class FallingEntity extends MovingEntity {
+	private static float GRAVITY_MULTIPLIER = 23.31f;
 
-	private final int id, animation;
+	private boolean gravity = true;
 
-	public AnimateEntityMessage(int id, int animation) {
-		this.id = id;
-		this.animation = animation;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public int getAnimation() {
-		return animation;
+	@Override
+	public void onAttached() {
+		super.onAttached();
 	}
 
 	@Override
-	public String toString() {
-		return "AnimateEntityMessage{id=" + id + ",animation=" + animation + "}";
+	public void onTick(float dt) {
+		if(parent.isDead()) return;
+		if (gravity) {
+			updateGravity(dt);
+		}
+		super.onTick(dt);
+	}
+
+	protected void updateGravity(float dt) {
+		velocity.add(Vector3.Up.multiply(-(dt * GRAVITY_MULTIPLIER)));
+	}
+
+	public boolean isGravity() {
+		return gravity;
+	}
+
+	public void setGravity(boolean gravity) {
+		this.gravity = gravity;
 	}
 }

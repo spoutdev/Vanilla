@@ -23,41 +23,37 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.living;
+package org.spout.vanilla.protocol.msg;
 
-import org.spout.api.math.Vector3;
-import org.spout.vanilla.entity.MovingEntity;
+import org.spout.api.protocol.Message;
 
-/**
- * Represents a living entity controller that moves.
- */
-public abstract class Falling extends MovingEntity {
-	private static float GRAVITY_MULTIPLIER = 23.31f;
+public final class EntityAnimationMessage extends Message {
+	public static final byte ANIMATION_SWING_ARM = 1;
+	public static final byte ANIMATION_HURT = 2;
+	public static final byte ANIMATION_LEAVE_BED = 3;
+	public static final byte ANIMATION_EAT_FOOD = 3;
+	public static final byte ANIMATION_UNKNOWN = 102;
+	public static final byte ANIMATION_CROUCH = 104;
+	public static final byte ANIMATION_UNCROUCH = 105;
 
-	private boolean gravity = true;
+	private final int id;
+	private final byte animation;
 
-	@Override
-	public void onAttached() {
-		super.onAttached();
+	public EntityAnimationMessage(int id, byte animation) {
+		this.id = id;
+		this.animation = animation;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public byte getAnimation() {
+		return animation;
 	}
 
 	@Override
-	public void onTick(float dt) {
-		if (gravity) {
-			updateGravity(dt);
-		}
-		super.onTick(dt);
-	}
-
-	protected void updateGravity(float dt) {
-		velocity.add(Vector3.Up.multiply(-(dt * GRAVITY_MULTIPLIER)));
-	}
-
-	public boolean isGravity() {
-		return gravity;
-	}
-
-	public void setGravity(boolean gravity) {
-		this.gravity = gravity;
+	public String toString() {
+		return "AnimateEntityMessage{id=" + id + ",animation=" + animation + "}";
 	}
 }

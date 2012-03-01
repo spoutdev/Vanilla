@@ -28,7 +28,7 @@ package org.spout.vanilla.entity.living;
 /**
  * Human entity controller
  */
-public class Human extends Creature {
+public class Human extends Creature{
 	@Override
 	public void onAttached() {
 		super.onAttached();

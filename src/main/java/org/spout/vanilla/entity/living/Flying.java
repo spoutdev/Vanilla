@@ -25,10 +25,12 @@
  */
 package org.spout.vanilla.entity.living;
 
+import org.spout.vanilla.entity.FallingEntity;
+
 /**
  * Represents a flying entity controller.
  */
-public class Flying extends Falling {
+public class Flying extends FallingEntity {
 	@Override
 	public void onAttached() {
 		super.onAttached();

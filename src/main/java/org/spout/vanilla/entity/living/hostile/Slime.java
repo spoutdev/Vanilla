@@ -28,9 +28,9 @@ package org.spout.vanilla.entity.living.hostile;
 import org.spout.vanilla.Entity;
 import org.spout.vanilla.entity.HostileEntity;
 import org.spout.vanilla.entity.living.Land;
-import org.spout.vanilla.entity.living.Falling;
+import org.spout.vanilla.entity.FallingEntity;
 
-public class Slime extends Falling implements HostileEntity, Land {
+public class Slime extends FallingEntity implements HostileEntity, Land {
 	@Override
 	public void onAttached() {
 		super.onAttached();

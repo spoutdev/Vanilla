@@ -35,6 +35,7 @@ import org.spout.vanilla.protocol.handler.ChatMessageHandler;
 import org.spout.vanilla.protocol.handler.CloseWindowMessageHandler;
 import org.spout.vanilla.protocol.handler.DiggingMessageHandler;
 import org.spout.vanilla.protocol.handler.EntityActionMessageHandler;
+import org.spout.vanilla.protocol.handler.EntityInteractionMessageHandler;
 import org.spout.vanilla.protocol.handler.GroundMessageHandler;
 import org.spout.vanilla.protocol.handler.HandshakeMessageHandler;
 import org.spout.vanilla.protocol.handler.IdentificationMessageHandler;
@@ -47,12 +48,13 @@ import org.spout.vanilla.protocol.handler.RespawnMessageHandler;
 import org.spout.vanilla.protocol.handler.RotationMessageHandler;
 import org.spout.vanilla.protocol.handler.WindowClickMessageHandler;
 import org.spout.vanilla.protocol.msg.ActivateItemMessage;
-import org.spout.vanilla.protocol.msg.AnimateEntityMessage;
+import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
+import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
 import org.spout.vanilla.protocol.msg.GroundMessage;
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.IdentificationMessage;
@@ -86,10 +88,11 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(CloseWindowMessage.class, CloseWindowMessageHandler.class);
 			bind(ActivateItemMessage.class, ActivateItemMessageHandler.class);
 			bind(EntityActionMessage.class, EntityActionMessageHandler.class);
-			bind(AnimateEntityMessage.class, AnimateEntityMessageHandler.class);
+			bind(EntityAnimationMessage.class, AnimateEntityMessageHandler.class);
 			bind(PingMessage.class, PingMessageHandler.class);
 			bind(QuickBarMessage.class, QuickBarMessageHandler.class);
 			bind(RespawnMessage.class, RespawnMessageHandler.class);
+			bind(EntityInteractionMessage.class, EntityInteractionMessageHandler.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

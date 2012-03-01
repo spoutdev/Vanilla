@@ -35,7 +35,7 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.EntityEffect;
 import org.spout.vanilla.protocol.msg.ActivateItemMessage;
-import org.spout.vanilla.protocol.msg.AnimateEntityMessage;
+import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.AttachEntityMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
@@ -129,7 +129,7 @@ public class VanillaProtocolTest {
 			new BlockPlacementMessage(1, 2, 3, 4, 89, 2, 7, null),
 			new ActivateItemMessage(4),
 			new UseBedMessage(0, 3, 42, 42, 42),
-			new AnimateEntityMessage(1234, AnimateEntityMessage.ANIMATION_HURT),
+			new EntityAnimationMessage(1234, EntityAnimationMessage.ANIMATION_HURT),
 			new EntityActionMessage(5, 2),
 			new SpawnPlayerMessage(24, "risaccess1", 8000, 28, 900, 0, 0, 89),
 			new SpawnItemMessage(1234, 89, 3, (short) 4, 1, 2, 3, 34, 56, 55),
@@ -145,7 +145,7 @@ public class VanillaProtocolTest {
 			new EntityRotationMessage(1234, 34, 5),
 			new RelativeEntityPositionRotationMessage(1, 2, 3, 4, 45, 54),
 			new EntityTeleportMessage(1, 2, 3, 4, 5, 6),
-			new EntityStatusMessage(1, 2),
+			new EntityStatusMessage(1,(byte) 2),
 			new AttachEntityMessage(1, 2),
 			new EntityMetadataMessage(1, TEST_PARAMS),
 			new EntityEffectMessage(1, EntityEffect.BLINDNESS.getId(), (byte) 1, (short) 34),

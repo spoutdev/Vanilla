@@ -31,22 +31,22 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
-import org.spout.vanilla.protocol.msg.AnimateEntityMessage;
+import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 
-public final class AnimateEntityCodec extends MessageCodec<AnimateEntityMessage> {
-	public AnimateEntityCodec() {
-		super(AnimateEntityMessage.class, 0x12);
+public final class EntityAnimationCodec extends MessageCodec<EntityAnimationMessage> {
+	public EntityAnimationCodec() {
+		super(EntityAnimationMessage.class, 0x12);
 	}
 
 	@Override
-	public AnimateEntityMessage decode(ChannelBuffer buffer) throws IOException {
+	public EntityAnimationMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
-		int animation = buffer.readUnsignedByte();
-		return new AnimateEntityMessage(id, animation);
+		byte animation = buffer.readByte();
+		return new EntityAnimationMessage(id, animation);
 	}
 
 	@Override
-	public ChannelBuffer encode(AnimateEntityMessage message) throws IOException {
+	public ChannelBuffer encode(EntityAnimationMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.buffer(5);
 		buffer.writeInt(message.getId());
 		buffer.writeByte(message.getAnimation());

@@ -35,11 +35,11 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.Entity;
-import org.spout.vanilla.entity.living.Falling;
+import org.spout.vanilla.entity.FallingEntity;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 import org.spout.vanilla.util.configuration.VanillaConfiguration;
 
-public class Pickup extends Falling {
+public class Pickup extends FallingEntity {
 
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore(); //TODO this is an annoying fix, someone with knowlege in entities get rid of this?
 

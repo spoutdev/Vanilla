@@ -224,8 +224,8 @@ public final class VanillaMaterials {
 	 * Items
 	 */
 	public static final ItemMaterial IRON_SHOVEL = new GenericTool("Iron Shovel", 256, (short) 251);
-	public static final ItemMaterial IRON_PICKAXE = new GenericTool("Iron Pickaxe", 257, (short) 251);
-	public static final ItemMaterial IRON_AXE = new GenericTool("Iron Axe", 258, (short) 251);
+	public static final ItemMaterial IRON_PICKAXE = new GenericWeapon("Iron Pickaxe", 257, 4, (short) 251);
+	public static final ItemMaterial IRON_AXE = new GenericWeapon("Iron Axe", 258, 5,(short) 251);
 	public static final ItemMaterial FLINT_AND_STEEL = new GenericTool("Flint and Steel", 259, (short) 64);
 	public static final ItemMaterial RED_APPLE = new GenericFood("Apple", 260, 4, FoodEffectType.HUNGER);
 	public static final ItemMaterial BOW = new GenericRangedWeapon("Bow", 261, 1, 9, (short) 385);
@@ -238,23 +238,23 @@ public final class VanillaMaterials {
 	public static final ItemMaterial IRON_SWORD = new GenericWeapon("Iron Sword", 267, 6, (short) 251);
 	public static final ItemMaterial WOODEN_SWORD = new GenericWeapon("Wooden Sword", 268, 4, (short) 60);
 	public static final ItemMaterial WOODEN_SHOVEL = new GenericTool("Wooden Shovel", 269, (short) 60);
-	public static final ItemMaterial WOODEN_PICKAXE = new GenericTool("Wooden Pickaxe", 270, (short) 60);
-	public static final ItemMaterial WOODEN_AXE = new GenericTool("Wooden Axe", 271, (short) 60);
+	public static final ItemMaterial WOODEN_PICKAXE = new GenericWeapon("Wooden Pickaxe", 270, 2, (short) 60);
+	public static final ItemMaterial WOODEN_AXE = new GenericWeapon("Wooden Axe", 271, 3, (short) 60);
 	public static final ItemMaterial STONE_SWORD = new GenericWeapon("Stone Sword", 272, 5, (short) 132);
 	public static final ItemMaterial STONE_SHOVEL = new GenericTool("Stone Shovel", 273, (short) 132);
-	public static final ItemMaterial STONE_PICKAXE = new GenericTool("Stone Pickaxe", 274, (short) 132);
-	public static final ItemMaterial STONE_AXE = new GenericTool("Stone Axe", 275, (short) 132);
+	public static final ItemMaterial STONE_PICKAXE = new GenericWeapon("Stone Pickaxe", 274, 3, (short) 132);
+	public static final ItemMaterial STONE_AXE = new GenericWeapon("Stone Axe", 275, 3,(short) 132);
 	public static final ItemMaterial DIAMOND_SWORD = new GenericWeapon("Diamond Sword", 276, 7, (short) 1562);
 	public static final ItemMaterial DIAMOND_SHOVEL = new GenericTool("Diamond Shovel", 277, (short) 1562);
-	public static final ItemMaterial DIAMOND_PICKAXE = new GenericTool("Diamond Pickaxe", 278, (short) 1562);
-	public static final ItemMaterial DIAMOND_AXE = new GenericTool("Diamond Axe", 279, (short) 1562);
+	public static final ItemMaterial DIAMOND_PICKAXE = new GenericWeapon("Diamond Pickaxe", 278, 5, (short) 1562);
+	public static final ItemMaterial DIAMOND_AXE = new GenericWeapon("Diamond Axe", 279, 6, (short) 1562);
 	public static final ItemMaterial STICK = new GenericItem("Stick", 280);
 	public static final ItemMaterial BOWL = new GenericItem("Bowl", 281);
 	public static final ItemMaterial MUSHROOM_SOUP = new GenericFood("Mushroom Soup", 282, 8, FoodEffectType.HUNGER);
 	public static final ItemMaterial GOLD_SWORD = new GenericWeapon("Gold Sword", 283, 4, (short) 33);
 	public static final ItemMaterial GOLD_SHOVEL = new GenericTool("Gold Shovel", 284, (short) 33);
-	public static final ItemMaterial GOLD_PICKAXE = new GenericTool("Gold Pickaxe", 285, (short) 33);
-	public static final ItemMaterial GOLD_AXE = new GenericTool("Gold Axe", 286, (short) 33);
+	public static final ItemMaterial GOLD_PICKAXE = new GenericWeapon("Gold Pickaxe", 285, 2,(short) 33);
+	public static final ItemMaterial GOLD_AXE = new GenericWeapon("Gold Axe", 286, 3,(short) 33);
 	public static final ItemMaterial STRING = new GenericItem("String", 287);
 	public static final ItemMaterial FEATHER = new GenericItem("Feather", 288);
 	public static final ItemMaterial GUNPOWDER = new GenericItem("Gunpowder", 289);

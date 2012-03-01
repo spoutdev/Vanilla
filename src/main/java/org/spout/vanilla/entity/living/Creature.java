@@ -28,7 +28,7 @@ package org.spout.vanilla.entity.living;
 /**
  * Creature Entity Controller
  */
-public class Creature extends Falling {
+public class Creature extends LivingEntity{
 	@Override
 	public void onAttached() {
 		super.onAttached();

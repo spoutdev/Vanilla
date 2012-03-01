@@ -50,6 +50,7 @@ public abstract class MovingEntity extends MinecraftEntity {
 
 	@Override
 	public void onTick(float dt) {
+		if(parent.isDead()) return;
 		checkWeb();
 		updateMovement(dt);
 		checkFireTicks();

@@ -41,7 +41,7 @@ public final class EntityStatusCodec extends MessageCodec<EntityStatusMessage> {
 	@Override
 	public EntityStatusMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
-		int status = buffer.readUnsignedByte();
+		byte status = buffer.readByte();
 		return new EntityStatusMessage(id, status);
 	}
 

@@ -28,9 +28,17 @@ package org.spout.vanilla.protocol.msg;
 import org.spout.api.protocol.Message;
 
 public final class EntityStatusMessage extends Message {
-	private final int id, status;
+	public static final byte ENTITY_HURT = 2;
+	public static final byte ENTITY_DEAD = 3;
+	public static final byte WOLF_TAMING = 6;
+	public static final byte WOLF_TAMED = 7;
+	public static final byte WOLF_SHAKING = 8;
+	public static final byte EATING_ACCEPTED = 9;
+	
+	private final int id;
+	private final byte status;
 
-	public EntityStatusMessage(int id, int status) {
+	public EntityStatusMessage(int id, byte status) {
 		this.id = id;
 		this.status = status;
 	}
@@ -39,7 +47,7 @@ public final class EntityStatusMessage extends Message {
 		return id;
 	}
 
-	public int getStatus() {
+	public byte getStatus() {
 		return status;
 	}
 

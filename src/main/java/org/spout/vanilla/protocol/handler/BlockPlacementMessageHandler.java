@@ -114,7 +114,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			}*/
 			Material placedMaterial = holding.getMaterial();
 			if (placedMaterial instanceof Item) {
-				((Item)placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK);
+				((Item)placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
 				return;
 			}
 			if (placedMaterial.getId() > 255) {

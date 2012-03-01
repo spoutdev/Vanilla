@@ -5,6 +5,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.material.BlockItem;
@@ -30,7 +31,7 @@ public class GenericBlockItem extends GenericItem implements BlockItem{
 	}
 	
 	@Override
-	public void onInteract(Entity entity, Point position, Action type) {
+	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
 		if (type == Action.RIGHT_CLICK){ 
 			ItemStack holding = entity.getInventory().getCurrentItem();
 			if (holding == null || holding.getMaterial() != this) {

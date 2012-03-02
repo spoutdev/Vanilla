@@ -33,6 +33,7 @@ public class NetherSky extends Controller implements Sky {
 	@Override
 	public void onAttached() {
 		// TODO Auto-generated method stub
+		parent.setObserver(true);
 	}
 
 	@Override

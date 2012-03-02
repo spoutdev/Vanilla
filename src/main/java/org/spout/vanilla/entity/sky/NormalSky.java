@@ -54,6 +54,7 @@ public class NormalSky extends Controller implements Sky {
 		currentWeather = Weather.CLEAR;
 		forecast = Weather.CLEAR;
 		timeUntilWeatherChange = random.nextFloat() * 5 * 60; //Max 5min till pattern change
+		parent.setObserver(true);
 	}
 
 	@Override

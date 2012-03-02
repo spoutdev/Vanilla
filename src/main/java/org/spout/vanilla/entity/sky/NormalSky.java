@@ -26,39 +26,59 @@
 package org.spout.vanilla.entity.sky;
 
 import java.util.Random;
+import java.util.Set;
 
 import org.spout.api.entity.Controller;
+import org.spout.api.geo.World;
+import org.spout.api.player.Player;
+import org.spout.vanilla.protocol.msg.TimeMessage;
 import org.spout.vanilla.world.Weather;
 
 public class NormalSky extends Controller {
-	final String weatherKey = "weather";
-	final String timeKey = "worldTime";
-
-	final float maxTime = 12000;
-	final float gameSecondsPerSecond = 1.f / 0.013f; // ~0.013 MCseconds per RL second.
-	float time = 0;
-
-	Weather currentWeather;
-	Weather forecast;
-	float timeUntilWeatherChange = 0.0f;
-
-	Random rng = new Random();
+	
+	private final World world;
+	private float time = 0;
+	private float tickcount = 0;
+	private float countdown = 20;
+	private Weather currentWeather;
+	private Weather forecast;
+	private float timeUntilWeatherChange = 0.0f;
+	private Random random = new Random();
+	
+	public NormalSky(World world) {
+		this.world = world;
+	}
 
 	@Override
 	public void onAttached() {
 		currentWeather = Weather.CLEAR;
 		forecast = Weather.CLEAR;
-		timeUntilWeatherChange = rng.nextFloat() * 5 * 60; //Max 5min till pattern change
+		timeUntilWeatherChange = random.nextFloat() * 5 * 60; //Max 5min till pattern change
 	}
 
 	@Override
 	public void onTick(float dt) {
-		time = (time + gameSecondsPerSecond * dt) % maxTime;
-
+		countdown -= 1;
+		tickcount += 1;
+		if (countdown <= 0) {
+			if (tickcount >= 24000) {
+				time = 0;
+			} else {
+				time += 20;
+			}
+						
+			countdown = 20;
+			tickcount = 0;
+			Set<Player> players = world.getPlayers();
+			for (Player player : players) {
+				player.getSession().send(new TimeMessage((long) time));
+			}
+		}
+		
 		timeUntilWeatherChange -= dt;
 		if (timeUntilWeatherChange <= 0.0f) {
-			changeWeatherPattern(forecast);
-			switch (rng.nextInt(3)) {
+			setWeather(forecast);
+			switch (random.nextInt(3)) {
 				case 0:
 					forecast = Weather.CLEAR;
 					break;
@@ -70,18 +90,19 @@ public class NormalSky extends Controller {
 					break;
 			}
 		}
-
-		//TODO: parent is null here... what to do?
-		//parent.setMetadata(timeKey, time);
-		//parent.setMetadata(weatherKey, currentWeather.getId());
+	}
+	
+	public Weather getWeather() {
+		return currentWeather;
 	}
 
-	public void changeWeatherPattern(Weather pattern) {
+	public void setWeather(Weather pattern) {
 		currentWeather = pattern;
 		//Throw the event here
 	}
 
 	@Override
 	public void preSnapshot() {
+		
 	}
 }

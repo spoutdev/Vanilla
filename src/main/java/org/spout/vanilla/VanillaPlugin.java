@@ -119,7 +119,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 		// TODO - Should probably be auto-set by generator
 		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
-		spawnWorld.createAndSpawnEntity(new Point(spawnWorld, 0.f, 0.f, 0.f), new NormalSky());
+		spawnWorld.createAndSpawnEntity(new Point(spawnWorld, 0.f, 0.f, 0.f), new NormalSky(spawnWorld));
 
 		World nether = getGame().loadWorld("world_nether", new NetherGenerator());
 		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), new NetherSky());

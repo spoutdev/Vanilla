@@ -156,8 +156,8 @@ public final class VanillaMaterials {
 	public static final BlockMaterial BOOKSHELF = new Solid("Bookshelf", 47).setHardness(1.5F).setResistance(2.5F);
 	public static final BlockMaterial MOSS_STONE = new Solid("Moss Stone", 48).setHardness(2.0F).setResistance(10.0F).setResistance(10.0F);
 	public static final BlockMaterial OBSIDIAN = new Solid("Obsidian", 49).setHardness(50.0F).setResistance(2000.0F);
-	public static final BlockMaterial TORCH = new WallAttachable("Torch", 50).setHardness(0.0F).setResistance(0.0F);
-	public static final BlockMaterial FIRE = new Solid("Fire", 51).setHardness(0.0F).setResistance(0.0F);
+	public static final BlockMaterial TORCH = new WallAttachable("Torch", 50).setHardness(0.0F).setResistance(0.0F).setLightLevel(14);
+	public static final BlockMaterial FIRE = new Solid("Fire", 51).setHardness(0.0F).setResistance(0.0F).setLightLevel(15);
 	public static final BlockMaterial MONSTER_SPAWNER = new Solid("Monster Spawner", 52).setHardness(5.0F).setResistance(8.3F);
 	public static final BlockMaterial WOODEN_STAIRS = new Solid("Wooden Stairs", 53).setResistance(3.0F);
 	public static final BlockMaterial CHEST = new Solid("Chest", 54).setHardness(2.5F).setResistance(4.2F);
@@ -168,7 +168,7 @@ public final class VanillaMaterials {
 	public static final BlockMaterial CROPS = new Solid("Seeds", 59).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial FARMLAND = new Solid("Farmland", 60).setHardness(0.6F).setResistance(1.0F);
 	public static final BlockMaterial FURNACE = new Solid("Furnace", 61).setHardness(3.5F).setResistance(5.8F);
-	public static final BlockMaterial BURNINGFURNACE = new Solid("Burning Furnace", 62).setHardness(3.5F).setResistance(5.8F);
+	public static final BlockMaterial BURNINGFURNACE = new Solid("Burning Furnace", 62).setHardness(3.5F).setResistance(5.8F).setLightLevel(13);
 	public static final BlockMaterial SIGN_POST = new Solid("Sign Post", 63).setHardness(1.0F).setResistance(1.6F);
 	public static final DoorBlock WOODEN_DOOR_BLOCK = (DoorBlock) new DoorBlock("Wooden Door", 64, true).setHardness(3.0F);
 	public static final BlockMaterial LADDERS = new Solid("Ladders", 65).setHardness(0.4F).setResistance(0.7F);
@@ -196,8 +196,8 @@ public final class VanillaMaterials {
 	public static final BlockMaterial NETHERRACK = new Solid("Netherrack", 87).setHardness(0.7F);
 	public static final BlockMaterial SOUL_SAND = new Solid("Soul Sand", 88).setHardness(0.5F).setResistance(0.8F);
 	public static final BlockMaterial GLOWSTONE_BLOCK = new Solid("Glowstone Block", 89).setHardness(0.3F).setResistance(0.5F).setLightLevel(15);
-	public static final BlockMaterial PORTAL = new Solid("Portal", 90).setHardness(-1.0F).setResistance(0.0F);
-	public static final BlockMaterial JACK_O_LANTERN = new Solid("Jack 'o' Lantern", 91).setHardness(1.0F).setResistance(1.7F);
+	public static final BlockMaterial PORTAL = new Solid("Portal", 90).setHardness(-1.0F).setResistance(0.0F).setLightLevel(11);
+	public static final BlockMaterial JACK_O_LANTERN = new Solid("Jack 'o' Lantern", 91).setHardness(1.0F).setResistance(1.7F).setLightLevel(15);
 	public static final BlockMaterial CAKE_BLOCK = new Solid("Cake Block", 92).setHardness(0.5F).setResistance(0.8F);
 	public static final BlockMaterial REDSTONE_REPEATER_OFF = new Solid("Redstone Repeater", 93).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial REDSTONE_REPEATER_ON = new Solid("Redstone Repeater (On)", 94).setHardness(0.0F).setResistance(0.0F).setLightLevel(9);

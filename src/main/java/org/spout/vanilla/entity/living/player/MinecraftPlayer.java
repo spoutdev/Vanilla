@@ -68,7 +68,6 @@ public abstract class MinecraftPlayer extends PlayerController {
 		Vector3 rotation = spawn.getRotation().getAxisAngles();
 		parent.setPosition(spawn.getPosition(), rotation.getZ(), rotation.getY(), rotation.getX());
 		parent.setScale(spawn.getScale());
-		parent.setObserver(true);
 	}
 
 	@Override

@@ -49,6 +49,7 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
+import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;

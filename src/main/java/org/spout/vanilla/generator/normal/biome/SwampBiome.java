@@ -33,7 +33,7 @@ import org.spout.vanilla.generator.VanillaBiomeType;
  */
 public class SwampBiome extends VanillaBiomeType {
 
-	protected SwampBiome() {
+	public SwampBiome() {
 		super(6);
 	}
 

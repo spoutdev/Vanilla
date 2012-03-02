@@ -56,15 +56,15 @@ import org.spout.vanilla.util.configuration.Operators;
 import org.spout.vanilla.util.configuration.VanillaConfiguration;
 
 public class VanillaPlugin extends CommonPlugin {
-	
+
 	private static VanillaPlugin instance;
 	private final VanillaConfiguration config = new VanillaConfiguration();
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
 	public static int vanillaProtocolId;
-	public static final int minecraftProtocolId = 23;
+	public static final int minecraftProtocolId = 28;
 	private final HashMap<World, Sky> skys = new HashMap<World, Sky>();
 	public static World spawnWorld;
-	
+
 	public VanillaPlugin() {
 		instance = this;
 	}
@@ -105,7 +105,7 @@ public class VanillaPlugin extends CommonPlugin {
 	@Override
 	public void onEnable() {
 		Game game = getGame();
-		
+
 		// IO
 		config.load();
 		Operators ops = new Operators();
@@ -118,7 +118,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 		//Register events
 		game.getEventManager().registerEvents(new VanillaEventListener(this), this);
-		
+
 		vanillaProtocolId = Controller.getProtocolId("org.spout.vanilla.protocol");
 
 		spawnWorld = game.loadWorld("world", new NormalGenerator());
@@ -137,15 +137,15 @@ public class VanillaPlugin extends CommonPlugin {
 
 		getLogger().info("b" + this.getDescription().getVersion() + " enabled. Protocol: " + getDescription().getProtocol());
 	}
-	
+
 	public static VanillaPlugin getInstance() {
 		return instance;
 	}
-	
+
 	public VanillaConfiguration getConfig() {
 		return config;
 	}
-	
+
 	public Sky getSky(World world) {
 		return skys.get(world);
 	}

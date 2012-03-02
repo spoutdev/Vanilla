@@ -33,7 +33,7 @@ import org.spout.vanilla.generator.VanillaBiomeType;
  */
 public class MushroomBiome extends VanillaBiomeType {
 
-	protected MushroomBiome() {
+	public MushroomBiome() {
 		super(14);
 	}
 

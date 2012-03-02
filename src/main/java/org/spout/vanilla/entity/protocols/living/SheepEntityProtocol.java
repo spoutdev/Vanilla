@@ -22,10 +22,11 @@ public class SheepEntityProtocol extends BasicEntityProtocol implements EntityPr
 		int x = (int) (entity.getX() * 32);
 		int y = (int) (entity.getY() * 32);
 		int z = (int) (entity.getZ() * 32);
-		int r = (int) (entity.getYaw() * 32);
-		int p = (int) (entity.getPitch() * 32);
+		int rotation = (int) (entity.getYaw() * 32);
+		int pitch = (int) (entity.getPitch() * 32);
+		int roll = (int) (entity.getRoll() * 32);
 		if (c instanceof Sheep) {
-			return new SpawnMobMessage(id, 91, x, y, z, r, p, Collections.EMPTY_LIST);
+			return new SpawnMobMessage(id, 91, x, y, z, rotation, pitch, roll, Collections.EMPTY_LIST);
 		}
 
 		return null;

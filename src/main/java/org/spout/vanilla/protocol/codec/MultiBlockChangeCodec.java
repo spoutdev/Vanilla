@@ -66,13 +66,15 @@ public final class MultiBlockChangeCodec extends MessageCodec<MultiBlockChangeMe
 		int changes = buffer.readUnsignedShort();
 
 		short[] coordinates = new short[changes * 3];
-		byte[] types = new byte[changes];
+		short[] types = new short[changes];
 		byte[] metadata = new byte[changes];
 
 		for (int i = 0; i < coordinates.length; i++) {
 			coordinates[i] = buffer.readShort();
 		}
-		buffer.readBytes(types);
+		for (int i = 0; i < types.length; i++) {
+			types[i] = buffer.readByte();
+		}
 		buffer.readBytes(metadata);
 
 		return new MultiBlockChangeMessage(chunkX, chunkZ, coordinates, types, metadata);
@@ -108,7 +110,10 @@ public final class MultiBlockChangeCodec extends MessageCodec<MultiBlockChangeMe
 			buffer.writeShort(coordinate);
 		}
 
-		buffer.writeBytes(message.getTypes());
+		for (short type : message.getTypes()) {
+			buffer.writeByte(type);
+		}
+
 		buffer.writeBytes(message.getMetadata());
 		return buffer;
 	}

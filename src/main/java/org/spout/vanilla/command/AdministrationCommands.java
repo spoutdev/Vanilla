@@ -32,6 +32,7 @@ import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
+import org.spout.api.entity.Entity;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.player.Player;
@@ -41,7 +42,9 @@ import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.MinecraftPlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.entity.sky.Sky;
+import org.spout.vanilla.entity.sky.NormalSky;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
+import org.spout.vanilla.world.Weather;
 
 /**
  * Commands to emulate core Minecraft admin functions.
@@ -173,39 +176,51 @@ public class AdministrationCommands {
 			}
 		}
 	}
-
-	@Command(aliases = "weather", usage = "<1|2|3> (1 = RAIN, 2 = SNOW, 3 = LIGHTNING)", desc = "Toggles weather on/off", max = 1)
+	
+	@Command(aliases = "weather", usage = "<0|1|2> (0 = CLEAR, 1 = RAIN, 2 = THUNDERSTORM)", desc = "Changes the weather", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.weather")
 	public void weather(CommandContext args, CommandSource source) throws CommandException {
-		if (args.length() == 1) {
-			if (args.isInteger(0)) {
-				int mode = args.getInteger(0);
-				switch (mode) {
-					case 1:
-						source.sendMessage("Weather set to RAIN.");
-						break; // TODO: Switch weather to rain
-					case 2:
-						source.sendMessage("Weather set to SNOW.");
-						break; // TODO: Switch weather to snow
-					case 3:
-						source.sendMessage("Weather set to LIGHTNING.");
-						break; // TODO: Start a storm
-					default:
-						throw new CommandException("Weather must be between 1 and 3.");
-				}
-			} else if (args.getString(0).equalsIgnoreCase("rain")) {
-				source.sendMessage("Weather set to RAIN.");
-				// TODO: Switch weather to rain.
-			} else if (args.getString(0).equalsIgnoreCase("snow")) {
-				source.sendMessage("Weather set to SNOW.");
-				// TODO: Switch weather to snow.
-			} else if (args.getString(0).equalsIgnoreCase("lightning")) {
-				source.sendMessage("Weather set to LIGHTNING.");
-				// TODO: Switch weather to lightning.
-			} else {
-				throw new CommandException("Weather must be a mode between 1 and 3, 'RAIN', 'SNOW', or 'LIGHTNING'");
-			}
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to set the time!");
 		}
+		
+		Weather weather;
+		
+		if (args.isInteger(0)) {
+			int mode = args.getInteger(0);
+			switch (mode) {
+				case 0:
+					source.sendMessage("Weather set to CLEAR.");
+					weather = Weather.CLEAR;
+					break;
+				case 1:
+					source.sendMessage("Weather set to RAIN.");
+					weather = Weather.RAIN;
+					break;
+				case 2:
+					source.sendMessage("Weather set to THUNDERSTORM.");
+					weather = Weather.THUNDERSTORM;
+					break;
+				default:
+					throw new CommandException("Weather must be between 0 and 2.");
+			}
+		} else if (args.getString(0).equalsIgnoreCase("clear")) {
+			source.sendMessage("Weather set to CLEAR.");
+			weather = Weather.CLEAR;
+		} else if (args.getString(0).equalsIgnoreCase("rain")) {
+			source.sendMessage("Weather set to RAIN.");
+			weather = Weather.RAIN;
+		} else if (args.getString(0).equalsIgnoreCase("thunderstorm")) {
+			source.sendMessage("Weather set to THUNDERSTORM.");
+			weather = Weather.THUNDERSTORM;
+		} else {
+			throw new CommandException("Weather must be a mode between 0 and 2, 'CLEAR', 'RAIN', or 'THUNDERSTORM'");
+		}
+		
+		Player player = (Player)source;
+		
+		Sky sky = plugin.getSky(player.getEntity().getWorld());
+		sky.setWeather( weather );
 	}
 
 	@Command(aliases = "debug", usage = "[type] (/resend /resendall)", desc = "Debug commands", max = 1)

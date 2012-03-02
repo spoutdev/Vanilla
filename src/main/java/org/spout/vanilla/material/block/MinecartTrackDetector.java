@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla.
+ * This file is part of Vanilla (http://www.spout.org/).
  *
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
@@ -23,21 +23,37 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.protocols.living;
+package org.spout.vanilla.material.block;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.spout.api.geo.World;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.util.Parameter;
+public class MinecartTrackDetector extends MinecartTrack implements RedstoneSource {
 
-public class SheepEntityProtocol extends BasicMobEntityProtocol {
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-		//TODO: Index 16 (byte): bit 0x10 indicates shearedness. bits 0x0F indicate color
-		return parameters;
+	public MinecartTrackDetector(String name, int id) {
+		super(name, id);
 	}
 	
+	@Override
+	public boolean canCurve() {
+		return false;
+	}
+
+	@Override
+	public short getRedstonePower(World world, int x, int y, int z, int tx, int ty, int tz) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean providesPowerTo(World world, int x, int y, int z, int tx, int ty, int tz) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean providesAttachPoint(World world, int x, int y, int z, int tx, int ty, int tz) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

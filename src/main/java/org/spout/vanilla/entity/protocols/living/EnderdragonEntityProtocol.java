@@ -31,12 +31,12 @@ import java.util.List;
 import org.spout.api.entity.Controller;
 import org.spout.api.util.Parameter;
 
-public class SheepEntityProtocol extends BasicMobEntityProtocol {
+public class EnderdragonEntityProtocol extends BasicMobEntityProtocol {
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-		//TODO: Index 16 (byte): bit 0x10 indicates shearedness. bits 0x0F indicate color
+		//TODO: Index 16 (byte): Health bar (0-200)
 		return parameters;
 	}
 	

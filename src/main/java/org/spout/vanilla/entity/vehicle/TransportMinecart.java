@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla.
+ * This file is part of Vanilla (http://www.spout.org/).
  *
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
@@ -23,21 +23,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.protocols.living;
+package org.spout.vanilla.entity.vehicle;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.spout.vanilla.entity.Vehicle;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.util.Parameter;
+public class TransportMinecart extends MinecartBase implements Vehicle {
 
-public class SheepEntityProtocol extends BasicMobEntityProtocol {
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-		//TODO: Index 16 (byte): bit 0x10 indicates shearedness. bits 0x0F indicate color
-		return parameters;
+	public void onAttached() {
+		super.onAttached();
+	}
+	
+	public void onTick(float dt) {
+		super.onTick(dt);
 	}
 	
 }

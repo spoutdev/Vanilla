@@ -33,16 +33,16 @@ import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
-import org.spout.vanilla.entity.living.passive.Sheep;
+import org.spout.vanilla.entity.living.neutral.Wolf;
 import org.spout.vanilla.entity.protocols.BasicEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 
-public class SheepEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
+public class WolfEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
 
 	@Override
 	public Message getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
-		if (c != null && c instanceof Sheep) {
+		if (c != null && c instanceof Wolf) {
 			
 			int id = entity.getId();
 			int x = (int) (entity.getX() * 32);
@@ -51,8 +51,13 @@ public class SheepEntityProtocol extends BasicEntityProtocol implements EntityPr
 			int r = (int) (entity.getYaw() * 32);
 			int p = (int) (entity.getPitch() * 32);
 			int type = 91;
-			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-			//TODO: Index 16 (byte): bit 0x10 indicates shearedness. bits 0x0F indicate color
+			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(3);
+		    //TODO: Index 16 (byte): Flags (below:)
+			//  bit 0 	0x01 	Sitting down
+			//  bit 1 	0x02 	Aggressive (red eyes)
+			//  bit 2 	0x04 	Tamed
+		    //TODO: Index 17 (string): Name of player that tamed wolf
+		    //TODO: Index 18 (int): Health
 			return new SpawnMobMessage(id, type, x, y, z, r, p, parameters);
 		} else {
 			return null;

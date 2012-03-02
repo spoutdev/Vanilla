@@ -52,6 +52,7 @@ import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.generator.theend.TheEndGenerator;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
+import org.spout.vanilla.util.configuration.Operators;
 import org.spout.vanilla.util.configuration.VanillaConfiguration;
 
 public class VanillaPlugin extends CommonPlugin {
@@ -105,7 +106,10 @@ public class VanillaPlugin extends CommonPlugin {
 	public void onEnable() {
 		Game game = getGame();
 		
+		// IO
 		config.load();
+		Operators ops = new Operators();
+		ops.load();
 
 		//Register commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(), new SimpleAnnotatedCommandExecutorFactory());

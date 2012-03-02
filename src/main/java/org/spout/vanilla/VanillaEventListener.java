@@ -27,17 +27,21 @@ package org.spout.vanilla;
 
 import java.util.HashSet;
 
+import java.util.List;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
+import org.spout.api.event.Result;
 import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
+import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
 import org.spout.vanilla.entity.RegionEntitySpawner;
 import org.spout.vanilla.entity.living.passive.Sheep;
@@ -92,6 +96,15 @@ public class VanillaEventListener implements Listener {
 				spawnable.add(VanillaMaterials.GRASS);
 				spawner.addSpawnableType(Sheep.class, spawnable, 5);
 			}
+		}
+	}
+	
+	@EventHandler(order = Order.EARLIEST)
+	public void onPermissionNode(PermissionNodeEvent event) {
+		PermissionsSubject subject = event.getSubject();
+		List<String> ops = VanillaConfiguration.OPS.getStringList();
+		if (ops.contains(subject.getName())) {
+			event.setResult(Result.ALLOW);
 		}
 	}
 }

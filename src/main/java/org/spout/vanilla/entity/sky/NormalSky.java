@@ -34,7 +34,7 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.protocol.msg.TimeMessage;
 import org.spout.vanilla.world.Weather;
 
-public class NormalSky extends Controller {
+public class NormalSky extends Controller implements Sky {
 	
 	private final World world;
 	private float time = 0;
@@ -92,10 +92,22 @@ public class NormalSky extends Controller {
 		}
 	}
 	
+	@Override
+	public void setTime(float time) {
+		this.time = time;
+	}
+	
+	@Override
+	public float getTime() {
+		return time;
+	}
+	
+	@Override
 	public Weather getWeather() {
 		return currentWeather;
 	}
 
+	@Override
 	public void setWeather(Weather pattern) {
 		currentWeather = pattern;
 		//Throw the event here

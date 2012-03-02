@@ -40,15 +40,49 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.MinecraftPlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
+import org.spout.vanilla.entity.sky.Sky;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
 
 /**
  * Commands to emulate core Minecraft admin functions.
  */
 public class AdministrationCommands {
-	public AdministrationCommands(VanillaPlugin plugin) {
+	
+	private final VanillaPlugin plugin = VanillaPlugin.getInstance();
+	
+	@Command(aliases = {"time"}, usage = "[add|set|day|night] [time]", desc = "Set the time of the server", min = 1, max = 2)
+	@CommandPermissions("vanilla.command.time")
+	public void time(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to set the time!");
+		}
+		
+		Player player = (Player) source;
+		Sky sky = plugin.getSky(player.getEntity().getWorld());
+		String arg1 = args.getString(0);
+		if (args.length() == 1) {
+			if (arg1.equalsIgnoreCase("day")) {
+				sky.setTime(0);
+			} else if (arg1.equalsIgnoreCase("night")) {
+				sky.setTime(18000);
+			} else {
+				throw new CommandException(arg1 + " is not an option! Please use day or night.");
+			}
+		}
+		
+		if (args.length() == 2) {
+			int time = args.getInteger(1);
+			if (arg1.equalsIgnoreCase("set")) {
+				sky.setTime(time);
+			} else if (arg1.equalsIgnoreCase("add")) {
+				time += sky.getTime();
+				sky.setTime(time);
+			} else {
+				throw new CommandException("Options are 'set' or 'add'.");
+			}
+		}
 	}
-
+	
 	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|survival|creative> (0 = SURVIVAL, 1 = CREATIVE)", desc = "Change a player's game mode", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.gamemode")
 	public void gamemode(CommandContext args, CommandSource source) throws CommandException {
@@ -180,14 +214,14 @@ public class AdministrationCommands {
 		Player player = null;
 		if (source instanceof Player) {
 			player = (Player)source;
-		}
-		else {
+		} else {
 			player = Spout.getGame().getPlayer(args.getString(1, ""), true);
 			if (player == null) {
 				source.sendMessage("Must be a player or send player name in arguments");
 				return;
 			}
 		}
+		
 		if (args.getString(0, "").contains("resendall")) {
 			NetworkSynchronizer network = player.getNetworkSynchronizer();
 			Set<Chunk> chunks = network.getActiveChunks();
@@ -195,8 +229,7 @@ public class AdministrationCommands {
 				network.sendChunk(c);
 			}
 			source.sendMessage("All chunks resent");
-		}
-		else if (args.getString(0, "").contains("resend")) {
+		} else if (args.getString(0, "").contains("resend")) {
 			player.getNetworkSynchronizer().sendChunk(player.getEntity().getChunk());
 			source.sendMessage("Chunk resent");
 		}

@@ -26,21 +26,42 @@
 package org.spout.vanilla.entity.sky;
 
 import org.spout.api.entity.Controller;
+import org.spout.vanilla.world.Weather;
 
-public class TheEndSky extends Controller {
+public class TheEndSky extends Controller implements Sky {
+	
 	@Override
 	public void onAttached() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onTick(float dt) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void preSnapshot() {
+		
+	}
+
+	@Override
+	public void setWeather(Weather weather) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public Weather getWeather() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setTime(float time) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public float getTime() {
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

@@ -26,6 +26,7 @@
 package org.spout.vanilla;
 
 import java.net.InetSocketAddress;
+import java.util.HashMap;
 
 import org.spout.api.Game;
 import org.spout.api.Server;
@@ -44,6 +45,7 @@ import org.spout.api.protocol.Protocol;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.entity.sky.NetherSky;
 import org.spout.vanilla.entity.sky.NormalSky;
+import org.spout.vanilla.entity.sky.Sky;
 import org.spout.vanilla.entity.sky.TheEndSky;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
@@ -59,7 +61,7 @@ public class VanillaPlugin extends CommonPlugin {
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
 	public static int vanillaProtocolId;
 	public static final int minecraftProtocolId = 23;
-
+	private final HashMap<World, Sky> skys = new HashMap<World, Sky>();
 	public static World spawnWorld;
 	
 	public VanillaPlugin() {
@@ -106,7 +108,7 @@ public class VanillaPlugin extends CommonPlugin {
 		config.load();
 
 		//Register commands
-		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
+		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(), new SimpleAnnotatedCommandExecutorFactory());
 
 		game.getRootCommand().addSubCommands(game, AdministrationCommands.class, commandRegFactory);
 
@@ -117,9 +119,11 @@ public class VanillaPlugin extends CommonPlugin {
 
 		spawnWorld = game.loadWorld("world", new NormalGenerator());
 
-		// TODO - Should probably be auto-set by generator
+		// TODO - Should probably be auto-set by generator and worlds should be defined in configuration.
+		NormalSky normSky = new NormalSky(spawnWorld);
+		skys.put(spawnWorld, normSky);
 		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
-		spawnWorld.createAndSpawnEntity(new Point(spawnWorld, 0.f, 0.f, 0.f), new NormalSky(spawnWorld));
+		spawnWorld.createAndSpawnEntity(new Point(spawnWorld, 0.f, 0.f, 0.f), normSky);
 
 		World nether = getGame().loadWorld("world_nether", new NetherGenerator());
 		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), new NetherSky());
@@ -136,5 +140,9 @@ public class VanillaPlugin extends CommonPlugin {
 	
 	public VanillaConfiguration getConfig() {
 		return config;
+	}
+	
+	public Sky getSky(World world) {
+		return skys.get(world);
 	}
 }

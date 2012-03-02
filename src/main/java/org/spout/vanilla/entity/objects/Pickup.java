@@ -34,7 +34,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
-import org.spout.vanilla.Entity;
+import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.FallingEntity;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 import org.spout.vanilla.util.configuration.VanillaConfiguration;

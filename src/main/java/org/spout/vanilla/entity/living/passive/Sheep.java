@@ -26,7 +26,7 @@
 package org.spout.vanilla.entity.living.passive;
 
 import java.util.Random;
-import org.spout.vanilla.Entity;
+import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.AnimalEntity;
 import org.spout.vanilla.entity.PassiveEntity;
 

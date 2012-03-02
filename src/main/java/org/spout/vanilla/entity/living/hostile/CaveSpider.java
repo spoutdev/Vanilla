@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.entity.living.hostile;
 
-import org.spout.vanilla.Entity;
+import org.spout.vanilla.entity.Entity;
 
 public class CaveSpider extends Spider {
 	@Override

@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.entity.living.neutral;
 
-import org.spout.vanilla.Entity;
+import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.NeutralEntity;
 import org.spout.vanilla.entity.living.Monster;
 

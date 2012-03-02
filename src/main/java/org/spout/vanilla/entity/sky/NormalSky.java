@@ -39,7 +39,6 @@ public class NormalSky extends Controller implements Sky {
 	
 	private final World world;
 	private float time = 0;
-	private float tickcount = 0;
 	private float countdown = 20;
 	private Weather currentWeather;
 	private Weather forecast;
@@ -61,16 +60,14 @@ public class NormalSky extends Controller implements Sky {
 	@Override
 	public void onTick(float dt) {
 		countdown -= 1;
-		tickcount += 1;
 		if (countdown <= 0) {
-			if (tickcount >= 24000) {
+			if (time >= 24000) {
 				time = 0;
 			} else {
 				time += 20;
 			}
 						
 			countdown = 20;
-			tickcount = 0;
 			Set<Player> players = world.getPlayers();
 			for (Player player : players) {
 				player.getSession().send(new TimeMessage((long) time));

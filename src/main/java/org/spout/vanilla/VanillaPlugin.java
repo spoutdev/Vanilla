@@ -114,7 +114,7 @@ public class VanillaPlugin extends CommonPlugin {
 		//Register commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(), new SimpleAnnotatedCommandExecutorFactory());
 
-		game.getRootCommand().addSubCommands(game, AdministrationCommands.class, commandRegFactory);
+		game.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);
 
 		//Register events
 		game.getEventManager().registerEvents(new VanillaEventListener(this), this);

@@ -101,7 +101,7 @@ public final class VanillaMaterials {
 	public static final BlockMaterial POWERED_RAIL = new Solid("Powered Rail", 27).setHardness(0.7F).setResistance(1.2F);
 	public static final BlockMaterial DETECTOR_RAIL = new Solid("Detector Rail", 28).setHardness(0.7F).setResistance(1.2F);
 	public static final BlockMaterial PISTON_STICKY_BASE = new Solid("Sticky Piston", 29).setResistance(0.8F);
-	public static final BlockMaterial WEB = new Solid("Cobweb", 30).setHardness(4.0F).setResistance(20F.setResistance(0.1F));
+	public static final BlockMaterial WEB = new Solid("Cobweb", 30).setHardness(4.0F).setResistance(20.0F);
 	public static final BlockMaterial DEAD_SHRUB = new LongGrass("Dead Grass", 31, 0).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial TALL_GRASS = new LongGrass("Tall Grass", 31, 1).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial FERN = new LongGrass("Fern", 31, 2).setHardness(0.0F).setResistance(0.0F);

@@ -31,6 +31,7 @@ import java.util.Set;
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.World;
 import org.spout.api.player.Player;
+import org.spout.vanilla.protocol.msg.StateChangeMessage;
 import org.spout.vanilla.protocol.msg.TimeMessage;
 import org.spout.vanilla.world.Weather;
 
@@ -111,7 +112,15 @@ public class NormalSky extends Controller implements Sky {
 	@Override
 	public void setWeather(Weather pattern) {
 		currentWeather = pattern;
+		
 		//Throw the event here
+		
+		boolean rain = (currentWeather != Weather.CLEAR);
+		StateChangeMessage msg = new StateChangeMessage((byte)(rain ? 1 : 2), (byte)0);
+		
+		for (Player player : parent.getWorld().getPlayers()) {
+			player.getSession().send(msg);
+		}
 	}
 
 	@Override

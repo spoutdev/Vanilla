@@ -58,7 +58,6 @@ public class VanillaPlugin extends CommonPlugin {
 	private final VanillaConfiguration config = new VanillaConfiguration();
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
 	public static int vanillaProtocolId;
-	public static final int minecraftProtocolId = 23;
 
 	public static World spawnWorld;
 	

@@ -23,29 +23,59 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.bootstrap.handler;
 
-import org.spout.api.event.Event;
-import org.spout.api.event.player.PlayerConnectEvent;
-import org.spout.api.player.Player;
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
-import org.spout.vanilla.protocol.msg.IdentificationMessage;
-import org.spout.vanilla.utils.Versioning;
+package org.spout.vanilla.utils;
 
-public class BootstrapIdentificationMessageHandler extends MessageHandler<IdentificationMessage> {
+import java.util.HashSet;
+import java.util.Set;
 
-	@Override
-	public void handle(Session session, Player player, IdentificationMessage message) {
-		if (!(Versioning.isCompatible(message.getId()))) {
-			if (Versioning.getLatestVersion() > message.getId()) {
-				session.disconnect("Outdated client!");
-			} else {
-				session.disconnect("Outdated server!");
-			}
-			return;
+public class Versioning {
+
+	private static int latestVersion = 23;
+	private static Set<Integer> compatible = new HashSet<Integer>();
+	private static boolean acceptNewer, overrideCompatibility;
+
+	public static boolean isCompatible(int protocolId) {
+		if (overrideCompatibility) {
+			return true;
 		}
-		Event event = new PlayerConnectEvent(session, message.getName());
-		session.getGame().getEventManager().callEvent(event);
+		if (compatible.contains(protocolId)) {
+			return true;
+		}
+		if (latestVersion == protocolId) {
+			return true;
+		}
+		if (acceptNewer && latestVersion < protocolId) {
+			return true;
+		}
+		return false;
+	}
+
+	static {
+		//addCompatibility(23);
+	}
+
+	public static void addCompatibility(int protocol) {
+		compatible.add(protocol);
+	}
+
+	public static void setAllowNewerClients(boolean value) {
+		acceptNewer = value;
+	}
+
+	public static void setOverrideCompatibility(boolean value) {
+		overrideCompatibility = value;
+	}
+
+	public boolean allowsNewerClients() {
+		return acceptNewer;
+	}
+
+	public boolean overridesCompatibility() {
+		return overrideCompatibility;
+	}
+
+	public static int getLatestVersion() {
+		return latestVersion;
 	}
 }

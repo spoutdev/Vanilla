@@ -55,7 +55,7 @@ public class AdministrationCommands {
 	private final VanillaConfiguration config = plugin.getConfig();
 	
 	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
-	//@CommandPermissions("Vanilla.command.time")
+	//@CommandPermissions("vanilla.command.time")
 	public void time(CommandContext args, CommandSource source) throws CommandException {
 		int time = 0;
 		boolean relative = false;
@@ -106,7 +106,7 @@ public class AdministrationCommands {
 	}
 
 	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|survival|creative> (0 = SURVIVAL, 1 = CREATIVE)", desc = "Change a player's game mode", min = 1, max = 2)
-	@CommandPermissions("Vanilla.command.gamemode")
+	@CommandPermissions("vanilla.command.gamemode")
 	public void gamemode(CommandContext args, CommandSource source) throws CommandException {
 
 		int index = 0;
@@ -169,7 +169,7 @@ public class AdministrationCommands {
 	}
 
 	@Command(aliases = "xp", usage = "[player] <amount>", desc = "Give/take experience from a player", max = 2)
-	@CommandPermissions("Vanilla.command.xp")
+	@CommandPermissions("vanilla.command.xp")
 	public void xp(CommandContext args, CommandSource source) throws CommandException {
 		// If source is player
 		if (args.length() == 1) {
@@ -197,7 +197,7 @@ public class AdministrationCommands {
 	}
 
 	@Command(aliases = "weather", usage = "[world] <0|1|2> (0 = CLEAR, 1 = RAIN/SNOW, 2 = THUNDERSTORM)", desc = "Changes the weather", min = 1, max = 2)
-	@CommandPermissions("Vanilla.command.weather")
+	@CommandPermissions("vanilla.command.weather")
 	public void weather(CommandContext args, CommandSource source) throws CommandException {
 		World world = null;
 		if (source instanceof Player && args.length() == 1) {
@@ -254,7 +254,7 @@ public class AdministrationCommands {
 	}
 
 	@Command(aliases = "debug", usage = "[type] (/resend /resendall)", desc = "Debug commands", max = 1)
-	//@CommandPermissions("Vanilla.command.debug")
+	//@CommandPermissions("vanilla.command.debug")
 	public void debug(CommandContext args, CommandSource source) throws CommandException {
 		Player player = null;
 		if (source instanceof Player) {
@@ -281,7 +281,7 @@ public class AdministrationCommands {
 	}
 
 /*	@Command(aliases = "op", usage = "[player]", desc = "Gives a user operator status", max = 1)
-	@CommandPermissions("Vanilla.command.op")
+	@CommandPermissions("vanilla.command.op")
 	public void op(CommandContext args, CommandSource source) throws CommandException {
 		//Handle in-game player
 		if (args.length() == 0) {

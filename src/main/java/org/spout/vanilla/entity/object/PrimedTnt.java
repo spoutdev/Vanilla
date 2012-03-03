@@ -30,7 +30,7 @@ import java.util.Random;
 import org.spout.api.entity.Controller;
 import org.spout.api.math.Vector3;
 
-public class PrimedTNT extends Controller {
+public class PrimedTnt extends Controller {
 	float timeToExplode = 4.f;
 
 	Vector3 velocity;

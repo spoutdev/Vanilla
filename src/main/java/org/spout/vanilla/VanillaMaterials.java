@@ -27,6 +27,7 @@ package org.spout.vanilla;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.Material;
@@ -276,7 +277,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial IRON_HOE = new GenericTool("Iron Hoe", 292, (short) 251);
 	public static final ItemMaterial DIAMOND_HOE = new GenericTool("Diamond Hoe", 293, (short) 1562);
 	public static final ItemMaterial GOLD_HOE = new GenericTool("Gold Hoe", 294, (short) 33);
-	public static final ItemMaterial SEEDS = new GenericItem("Seeds", 295, VanillaMaterials.CROPS);
+	public static final ItemMaterial SEEDS = new GenericItem("Seeds", 295);
 	public static final ItemMaterial WHEAT = new GenericItem("Wheat", 296);
 	public static final ItemMaterial BREAD = new GenericFood("Bread", 297, 5, FoodEffectType.HUNGER);
 	public static final ItemMaterial LEATHER_CAP = new GenericArmor("Leather Cap", 298, 1);
@@ -304,7 +305,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial COOKED_PORKCHOP = new GenericFood("Cooked Porkchop", 320, 8, FoodEffectType.HUNGER);
 	public static final ItemMaterial PAINTINGS = new GenericItem("Paintings", 321);
 	public static final ItemMaterial GOLDEN_APPLE = new GenericFood("Golden Apple", 322, 10, FoodEffectType.HUNGER);
-	public static final ItemMaterial SIGN = new GenericItem("Sign", 323, VanillaMaterials.SIGN_POST); //Temporary Implementation
+	public static final ItemMaterial SIGN = new GenericItem("Sign", 323);
 	public static final ItemMaterial WOODEN_DOOR = new DoorItem("Wooden Door", 324, WOODEN_DOOR_BLOCK);
 	public static final ItemMaterial BUCKET = new GenericEmptyContainer("Bucket", 325);
 	public static final ItemMaterial WATER_BUCKET = new GenericFullContainer("Water Bucket", 326, WATER, (GenericEmptyContainer)BUCKET);
@@ -319,7 +320,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial MILK = new GenericItem("Milk", 335);
 	public static final ItemMaterial CLAY_BRICK = new GenericItem("Brick", 336);
 	public static final ItemMaterial CLAY = new GenericItem("Clay", 337);
-	public static final ItemMaterial SUGAR_CANE = new GenericItem("Sugar Cane", 338, VanillaMaterials.SUGAR_CANE_BLOCK);
+	public static final ItemMaterial SUGAR_CANE = new GenericItem("Sugar Cane", 338);
 	public static final ItemMaterial PAPER = new GenericItem("Paper", 339);
 	public static final ItemMaterial BOOK = new GenericItem("Book", 340);
 	public static final ItemMaterial SLIMEBALL = new GenericItem("Slimeball", 341);
@@ -351,14 +352,14 @@ public final class VanillaMaterials {
 	public static final ItemMaterial BONE = new GenericItem("Bone", 352);
 	public static final ItemMaterial SUGAR = new GenericItem("Sugar", 353);
 	public static final ItemMaterial CAKE = new GenericBlockItem("Cake", 354, VanillaMaterials.CAKE_BLOCK);
-	public static final ItemMaterial BED = new GenericItem("Bed", 355, VanillaMaterials.BED_BLOCK);
+	public static final ItemMaterial BED = new GenericItem("Bed", 355);
 	public static final ItemMaterial REDSTONE_REPEATER = new GenericItem("Redstone Repeater", 356);
 	public static final ItemMaterial COOKIE = new GenericFood("Cookie", 357, 1, FoodEffectType.HUNGER);
 	public static final ItemMaterial MAP = new GenericItem("Map", 358);
 	public static final ItemMaterial SHEARS = new GenericTool("Shears", 359, (short) 238);
 	public static final ItemMaterial MELON_SLICE = new GenericFood("Melon Slice", 360, 2, FoodEffectType.HUNGER);
-	public static final ItemMaterial PUMPKIN_SEEDS = new GenericItem("Pumpkin Seeds", 361, VanillaMaterials.PUMPKIN_STEM);
-	public static final ItemMaterial MELON_SEEDS = new GenericItem("Melon Seeds", 362, VanillaMaterials.MELON_STEM);
+	public static final ItemMaterial PUMPKIN_SEEDS = new GenericItem("Pumpkin Seeds", 361);
+	public static final ItemMaterial MELON_SEEDS = new GenericItem("Melon Seeds", 362);
 	public static final ItemMaterial RAW_BEEF = new GenericFood("Raw Beef", 363, 3, FoodEffectType.HUNGER);
 	public static final ItemMaterial STEAK = new GenericFood("Steak", 364, 8, FoodEffectType.HUNGER);
 	public static final ItemMaterial RAW_CHICKEN = new GenericFood("Raw Chicken", 365, 2, FoodEffectType.HUNGER);
@@ -368,7 +369,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial BLAZE_ROD = new GenericItem("Blaze Rod", 369);
 	public static final ItemMaterial GHAST_TEAR = new GenericItem("Ghast Tear", 370);
 	public static final ItemMaterial GOLD_NUGGET = new GenericItem("Gold Nugget", 371);
-	public static final ItemMaterial NETHER_WART = new GenericItem("Nether Wart", 372, VanillaMaterials.NETHER_WART_BLOCK);
+	public static final ItemMaterial NETHER_WART = new GenericItem("Nether Wart", 372);
 	public static final ItemMaterial POTION = new GenericItem("Potion", 373);
 	public static final ItemMaterial GLASS_BOTTLE = new GenericItem("Glass Bottle", 374);
 	public static final ItemMaterial SPIDER_EYE = new GenericFood("Spider Eye", 375, 2, FoodEffectType.HUNGER);
@@ -401,7 +402,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial VILLAGER_SPAWN_EGG = new GenericItem("Spawn Villager", 383, 120);
 	public static final ItemMaterial OCELOT_SPAWN_EGG = new GenericItem("Spawn Ocelot", 383, 98);
 	public static final ItemMaterial BOTTLE_O_ENCHANTING = new GenericItem("Bottle o' Enchanting", 384);
-	public static final ItemMaterial FIRE_CHARGE = new GenericItem("Fire Charge", 385, VanillaMaterials.FIRE); //Basic Implentation
+	public static final ItemMaterial FIRE_CHARGE = new GenericItem("Fire Charge", 385);
 	public static final ItemMaterial GOLD_MUSIC_DISC = new GenericItem("Music Disc", 2256);
 	public static final ItemMaterial GREEN_MUSIC_DISC = new GenericItem("Music Disc", 2257);
 	public static final ItemMaterial ORANGE_MUSIC_DISC = new GenericItem("Music Disc", 2258);

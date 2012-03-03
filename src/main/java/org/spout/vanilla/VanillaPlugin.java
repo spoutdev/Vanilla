@@ -43,6 +43,8 @@ import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
 import org.spout.vanilla.command.AdministrationCommands;
+import org.spout.vanilla.command.TestCommands;
+import org.spout.vanilla.configuration.OpConfig;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.sky.NetherSky;
 import org.spout.vanilla.entity.sky.NormalSky;
@@ -111,6 +113,7 @@ public class VanillaPlugin extends CommonPlugin {
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(), new SimpleAnnotatedCommandExecutorFactory());
 
 		game.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);
+		game.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
 
 		//Register events
 		game.getEventManager().registerEvents(new VanillaEventListener(this), this);

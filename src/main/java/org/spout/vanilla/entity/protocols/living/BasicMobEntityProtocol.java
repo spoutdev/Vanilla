@@ -1,9 +1,9 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of vanilla (http://www.spout.org/).
  *
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * vanilla is licensed under the SpoutDev License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
+ * vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -28,6 +28,7 @@ package org.spout.vanilla.entity.protocols.living;
 import java.util.Collections;
 import java.util.List;
 
+import org.spout.api.datatable.DatatableTuple;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
@@ -37,7 +38,7 @@ import org.spout.vanilla.entity.protocols.BasicEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 
 public class BasicMobEntityProtocol extends BasicEntityProtocol implements EntityProtocol {
-	
+
 	/**
 	 * Gets a list of parameters used for the creation of a mob spawn message
 	 * @param controller - The entity controller to obtain the parameters from
@@ -47,7 +48,7 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol implements Entit
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		return Collections.EMPTY_LIST;
 	}
-	
+
 	@Override
 	public Message getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
@@ -60,6 +61,9 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol implements Entit
 			int p = (int) (entity.getPitch() * 32);
 			int headyaw = 0; //TODO: obtain headyaw from entity
 			int type = entity.getData(org.spout.vanilla.entity.Entity.KEY).asInt();
+			if (type == 0) {
+				return null;
+			}
 			List<Parameter<?>> parameters = this.getSpawnParameters(c);
 			return new SpawnMobMessage(id, type, x, y, z, r, p, headyaw, parameters);
 		} else {

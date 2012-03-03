@@ -28,24 +28,24 @@ package org.spout.vanilla.protocol.codec;
 import java.io.IOException;
 
 import org.spout.api.protocol.MessageCodec;
-import org.spout.vanilla.protocol.msg.ActivateItemMessage;
+import org.spout.vanilla.protocol.msg.ChangeItemMessage;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
-public final class ActivateItemCodec extends MessageCodec<ActivateItemMessage> {
-	public ActivateItemCodec() {
-		super(ActivateItemMessage.class, 0x10);
+public final class ChangeItemCodec extends MessageCodec<ChangeItemMessage> {
+	public ChangeItemCodec() {
+		super(ChangeItemMessage.class, 0x10);
 	}
 
 	@Override
-	public ActivateItemMessage decode(ChannelBuffer buffer) throws IOException {
+	public ChangeItemMessage decode(ChannelBuffer buffer) throws IOException {
 		int slot = buffer.readUnsignedShort();
-		return new ActivateItemMessage(slot);
+		return new ChangeItemMessage(slot);
 	}
 
 	@Override
-	public ChannelBuffer encode(ActivateItemMessage message) throws IOException {
+	public ChannelBuffer encode(ChangeItemMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.buffer(2);
 		buffer.writeShort(message.getSlot());
 		return buffer;

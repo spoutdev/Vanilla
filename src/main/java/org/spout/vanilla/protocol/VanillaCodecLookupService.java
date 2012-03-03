@@ -26,7 +26,7 @@
 package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.CodecLookupService;
-import org.spout.vanilla.protocol.codec.ActivateItemCodec;
+import org.spout.vanilla.protocol.codec.ChangeItemCodec;
 import org.spout.vanilla.protocol.codec.AttachEntityCodec;
 import org.spout.vanilla.protocol.codec.BlockActionCodec;
 import org.spout.vanilla.protocol.codec.BlockChangeCodec;
@@ -130,7 +130,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x0F */
 			bind(BlockPlacementCodec.class);
 			/* 0x10 */
-			bind(ActivateItemCodec.class);
+			bind(ChangeItemCodec.class);
 			/* 0x11 */
 			bind(UseBedCodec.class);
 			/* 0x12 */

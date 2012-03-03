@@ -28,11 +28,11 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.protocol.msg.ActivateItemMessage;
+import org.spout.vanilla.protocol.msg.ChangeItemMessage;
 
-public final class ActivateItemMessageHandler extends MessageHandler<ActivateItemMessage> {
+public final class ChangeItemMessageHandler extends MessageHandler<ChangeItemMessage> {
 	@Override
-	public void handle(Session session, Player player, ActivateItemMessage message) {
+	public void handle(Session session, Player player, ChangeItemMessage message) {
 		if (player == null) {
 			return;
 		}

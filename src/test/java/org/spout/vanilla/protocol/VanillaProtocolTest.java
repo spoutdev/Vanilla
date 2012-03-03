@@ -32,7 +32,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.effect.EntityEffect;
-import org.spout.vanilla.protocol.msg.ActivateItemMessage;
+import org.spout.vanilla.protocol.msg.ChangeItemMessage;
 import org.spout.vanilla.protocol.msg.AttachEntityMessage;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
@@ -128,7 +128,7 @@ public class VanillaProtocolTest {
 			new PositionRotationMessage(1, 2, 5, 3.62, 4, 3, false),
 			new DiggingMessage(DiggingMessage.STATE_START_DIGGING, 1, 2, 3, 4),
 			new BlockPlacementMessage(1, 2, 3, 4, 89, 2, 7, null),
-			new ActivateItemMessage(4),
+			new ChangeItemMessage(4),
 			new UseBedMessage(0, 3, 42, 42, 42),
 			new EntityAnimationMessage(1234, EntityAnimationMessage.ANIMATION_HURT),
 			new EntityActionMessage(5, 2),

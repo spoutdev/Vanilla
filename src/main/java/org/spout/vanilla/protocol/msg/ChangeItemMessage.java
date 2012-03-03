@@ -27,10 +27,10 @@ package org.spout.vanilla.protocol.msg;
 
 import org.spout.api.protocol.Message;
 
-public final class ActivateItemMessage extends Message {
+public final class ChangeItemMessage extends Message {
 	private final int slot;
 
-	public ActivateItemMessage(int slot) {
+	public ChangeItemMessage(int slot) {
 		this.slot = slot;
 	}
 
@@ -40,6 +40,6 @@ public final class ActivateItemMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "ActivateItemMessage{slot=" + slot + "}";
+		return "ChangeItemMessage{slot=" + slot + "}";
 	}
 }

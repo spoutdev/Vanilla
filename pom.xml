@@ -10,7 +10,7 @@
 
     <!-- Project information -->
     <groupId>org.spout</groupId>
-    <artifactId>Vanilla</artifactId>
+    <artifactId>vanilla</artifactId>
     <version>dev-SNAPSHOT</version>
     <name>Vanilla</name>
     <url>http://www.spout.org</url>

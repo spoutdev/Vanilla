@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -82,7 +82,7 @@ public final class VanillaMaterials {
 	public static final BlockMaterial BIRCH_SAPLING = new Sapling("Birch Sapling", 2).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial JUNGLE_SAPLING = new Sapling("Jungle Sapling", 3).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial BEDROCK = new Solid("Bedrock", 7).setResistance(6000000.0F);
-	public static final BlockMaterial WATER = new GenericLiquid("Water", 8, true).setHardness(100.0F).setResistance(166.7F);		
+	public static final BlockMaterial WATER = new GenericLiquid("Water", 8, true).setHardness(100.0F).setResistance(166.7F);
 	public static final BlockMaterial STATIONARY_WATER = new GenericLiquid("Stationary Water", 9, false).setHardness(100.0F).setResistance(166.7F);
 	public static final BlockMaterial LAVA = new GenericLiquid("Lava", 10, true).setHardness(0.0F).setLightLevel(15).setResistance(0.0F);
 	public static final BlockMaterial STATIONARY_LAVA = new GenericLiquid("Stationary Lava", 11, false).setHardness(100.0F).setLightLevel(15).setResistance(166.7F);
@@ -159,7 +159,7 @@ public final class VanillaMaterials {
 	public static final BlockMaterial OBSIDIAN = new Solid("Obsidian", 49).setHardness(50.0F).setResistance(2000.0F);
 	public static final BlockMaterial TORCH = new WallAttachable("Torch", 50).setHardness(0.0F).setResistance(0.0F).setLightLevel(14);
 	public static final BlockMaterial FIRE = new Solid("Fire", 51).setHardness(0.0F).setResistance(0.0F).setLightLevel(15);
-	public static final BlockMaterial MONSTER_SPAWNER = new Solid("Monster Spawner", 52).setHardness(5.0F).setResistance(8.3F);
+	public static final BlockMaterial MONSTER_SPAWNER = new Solid("MonsterEntity Spawner", 52).setHardness(5.0F).setResistance(8.3F);
 	public static final BlockMaterial WOODEN_STAIRS = new Solid("Wooden Stairs", 53).setResistance(3.0F);
 	public static final BlockMaterial CHEST = new Solid("Chest", 54).setHardness(2.5F).setResistance(4.2F);
 	public static final BlockMaterial REDSTONE_WIRE = new RedstoneWire("Redstone Wire", 55, 0).setHardness(0.0F).setResistance(0.0F);
@@ -183,7 +183,8 @@ public final class VanillaMaterials {
 	public static final BlockMaterial REDSTONE_ORE = new Solid("Redstone Ore", 73).setHardness(3.0F).setResistance(5.0F);
 	public static final BlockMaterial GLOWING_REDSTONE_ORE = new Solid("Glowing Redstone Ore", 74).setHardness(3.0F).setResistance(5.0F).setLightLevel(3);
 	public static final BlockMaterial REDSTONE_TORCH_OFF = new RedstoneTorch("Redstone Torch", 75, false).setHardness(0.0F).setResistance(0.0F);
-	public static final BlockMaterial REDSTONE_TORCH_ON = new RedstoneTorch("Redstone Torch (On)", 76, true).setHardness(0.0F).setResistance(0.0F).setLightLevel(7);;
+	public static final BlockMaterial REDSTONE_TORCH_ON = new RedstoneTorch("Redstone Torch (On)", 76, true).setHardness(0.0F).setResistance(0.0F).setLightLevel(7);
+	;
 	public static final BlockMaterial STONE_BUTTON = new Solid("Stone Button", 77).setHardness(0.5F).setResistance(0.8F);
 	public static final BlockMaterial SNOW = new Solid("Snow", 78).setHardness(0.1F).setResistance(0.2F);
 	public static final BlockMaterial ICE = new Solid("Ice", 79).setHardness(0.5F).setResistance(0.8F);
@@ -239,7 +240,7 @@ public final class VanillaMaterials {
 	 */
 	public static final ItemMaterial IRON_SHOVEL = new GenericTool("Iron Shovel", 256, (short) 251);
 	public static final ItemMaterial IRON_PICKAXE = new GenericWeapon("Iron Pickaxe", 257, 4, (short) 251);
-	public static final ItemMaterial IRON_AXE = new GenericWeapon("Iron Axe", 258, 5,(short) 251);
+	public static final ItemMaterial IRON_AXE = new GenericWeapon("Iron Axe", 258, 5, (short) 251);
 	public static final ItemMaterial FLINT_AND_STEEL = new GenericTool("Flint and Steel", 259, (short) 64);
 	public static final ItemMaterial RED_APPLE = new GenericFood("Apple", 260, 4, FoodEffectType.HUNGER);
 	public static final ItemMaterial BOW = new GenericRangedWeapon("Bow", 261, 1, 9, (short) 385);
@@ -257,7 +258,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial STONE_SWORD = new GenericWeapon("Stone Sword", 272, 5, (short) 132);
 	public static final ItemMaterial STONE_SHOVEL = new GenericTool("Stone Shovel", 273, (short) 132);
 	public static final ItemMaterial STONE_PICKAXE = new GenericWeapon("Stone Pickaxe", 274, 3, (short) 132);
-	public static final ItemMaterial STONE_AXE = new GenericWeapon("Stone Axe", 275, 3,(short) 132);
+	public static final ItemMaterial STONE_AXE = new GenericWeapon("Stone Axe", 275, 3, (short) 132);
 	public static final ItemMaterial DIAMOND_SWORD = new GenericWeapon("Diamond Sword", 276, 7, (short) 1562);
 	public static final ItemMaterial DIAMOND_SHOVEL = new GenericTool("Diamond Shovel", 277, (short) 1562);
 	public static final ItemMaterial DIAMOND_PICKAXE = new GenericWeapon("Diamond Pickaxe", 278, 5, (short) 1562);
@@ -267,8 +268,8 @@ public final class VanillaMaterials {
 	public static final ItemMaterial MUSHROOM_SOUP = new GenericFood("Mushroom Soup", 282, 8, FoodEffectType.HUNGER);
 	public static final ItemMaterial GOLD_SWORD = new GenericWeapon("Gold Sword", 283, 4, (short) 33);
 	public static final ItemMaterial GOLD_SHOVEL = new GenericTool("Gold Shovel", 284, (short) 33);
-	public static final ItemMaterial GOLD_PICKAXE = new GenericWeapon("Gold Pickaxe", 285, 2,(short) 33);
-	public static final ItemMaterial GOLD_AXE = new GenericWeapon("Gold Axe", 286, 3,(short) 33);
+	public static final ItemMaterial GOLD_PICKAXE = new GenericWeapon("Gold Pickaxe", 285, 2, (short) 33);
+	public static final ItemMaterial GOLD_AXE = new GenericWeapon("Gold Axe", 286, 3, (short) 33);
 	public static final ItemMaterial STRING = new GenericItem("String", 287);
 	public static final ItemMaterial FEATHER = new GenericItem("Feather", 288);
 	public static final ItemMaterial GUNPOWDER = new GenericItem("Gunpowder", 289);
@@ -308,8 +309,8 @@ public final class VanillaMaterials {
 	public static final ItemMaterial SIGN = new GenericItem("Sign", 323);
 	public static final ItemMaterial WOODEN_DOOR = new DoorItem("Wooden Door", 324, WOODEN_DOOR_BLOCK);
 	public static final ItemMaterial BUCKET = new GenericEmptyContainer("Bucket", 325);
-	public static final ItemMaterial WATER_BUCKET = new GenericFullContainer("Water Bucket", 326, WATER, (GenericEmptyContainer)BUCKET);
-	public static final ItemMaterial LAVA_BUCKET = new GenericFullContainer("Lava Bucket", 327, LAVA, (GenericEmptyContainer)BUCKET);
+	public static final ItemMaterial WATER_BUCKET = new GenericFullContainer("Water Bucket", 326, WATER, (GenericEmptyContainer) BUCKET);
+	public static final ItemMaterial LAVA_BUCKET = new GenericFullContainer("Lava Bucket", 327, LAVA, (GenericEmptyContainer) BUCKET);
 	public static final ItemMaterial MINECART = new Minecart("Minecart", 328);
 	public static final ItemMaterial SADDLE = new GenericItem("Saddle", 329);
 	public static final ItemMaterial IRON_DOOR = new DoorItem("Iron Door", 330, IRON_DOOR_BLOCK);

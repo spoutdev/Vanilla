@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -26,8 +26,8 @@
 package org.spout.vanilla;
 
 import java.util.HashSet;
-
 import java.util.List;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
@@ -36,20 +36,20 @@ import org.spout.api.event.Order;
 import org.spout.api.event.Result;
 import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
+import org.spout.api.event.player.PlayerLeaveEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.permissions.PermissionsSubject;
-import org.spout.api.event.player.PlayerLeaveEvent;
 import org.spout.api.player.Player;
-import org.spout.vanilla.entity.RegionEntitySpawner;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.living.passive.Sheep;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
+import org.spout.vanilla.entity.world.RegionEntitySpawner;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
-import org.spout.vanilla.util.configuration.VanillaConfiguration;
 
 public class VanillaEventListener implements Listener {
 
@@ -100,7 +100,7 @@ public class VanillaEventListener implements Listener {
 		Controller c = entity.getController();
 		if (c != null) {
 			if (c instanceof RegionEntitySpawner) {
-				RegionEntitySpawner spawner = (RegionEntitySpawner)c;
+				RegionEntitySpawner spawner = (RegionEntitySpawner) c;
 				HashSet<BlockMaterial> spawnable = new HashSet<BlockMaterial>();
 				spawnable.add(VanillaMaterials.GRASS);
 				spawner.addSpawnableType(Sheep.class, spawnable, 5);

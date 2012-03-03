@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -33,10 +33,6 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.VanillaMaterials;
 
-/**
- * Populates the world with ores.
- *
- */
 public class OreDecorator implements BiomeDecorator {
 
 	@Override
@@ -45,16 +41,16 @@ public class OreDecorator implements BiomeDecorator {
 		int[] iterations = new int[]{10, 20, 20, 2, 8, 1, 1, 1};
 		int[] amount = new int[]{32, 16, 8, 8, 7, 7, 6};
 		BlockMaterial[] type = new BlockMaterial[]{VanillaMaterials.GRAVEL, VanillaMaterials.COAL_ORE,
-			VanillaMaterials.IRON_ORE, VanillaMaterials.GOLD_ORE, VanillaMaterials.REDSTONE_ORE,
-			VanillaMaterials.DIAMOND_ORE, VanillaMaterials.LAPIS_ORE};
+				VanillaMaterials.IRON_ORE, VanillaMaterials.GOLD_ORE, VanillaMaterials.REDSTONE_ORE,
+				VanillaMaterials.DIAMOND_ORE, VanillaMaterials.LAPIS_ORE};
 
 		int[] maxHeight = new int[]{128, 128, 128, 128, 128, 64, 32, 16, 16,
-			32};
+				32};
 
 		for (int i = 0; i < type.length; i++) {
 			for (int j = 0; j < iterations[i]; j++) {
 				generateOre(world, random, source.getX() * 16 + random.nextInt(16), random.nextInt(maxHeight[i]), source.getZ()
-								* 16 + random.nextInt(16), amount[i], type[i]);
+						* 16 + random.nextInt(16), amount[i], type[i]);
 			}
 		}
 	}
@@ -73,7 +69,7 @@ public class OreDecorator implements BiomeDecorator {
 			double seedY = y1 + (y2 - y1) * i / amount;
 			double seedZ = z1 + (z2 - z1) * i / amount;
 			double size = ((Math.sin(i * Math.PI / amount) + 1)
-							* random.nextDouble() * amount / 16 + 1) / 2;
+					* random.nextDouble() * amount / 16 + 1) / 2;
 
 			int startX = (int) (seedX - size);
 			int startY = (int) (seedY - size);

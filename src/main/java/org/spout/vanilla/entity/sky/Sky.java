@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -29,40 +29,40 @@ import org.spout.api.geo.World;
 import org.spout.vanilla.world.Weather;
 
 public interface Sky {
-	
+
 	/**
 	 * Sets the current time of day
-	 * 
-	 * @param time 
+	 *
+	 * @param time
 	 */
 	public void setTime(float time);
-	
+
 	/**
 	 * Gets the current time of day
-	 * 
+	 *
 	 * @return the time of day
 	 */
 	public float getTime();
-	
+
 	/**
 	 * Sets the weather of the sky
-	 * 
-	 * @param weather 
+	 *
+	 * @param weather
 	 */
 	public void setWeather(Weather weather);
-	
+
 	/**
 	 * Gets the current weather of the sky.
-	 * 
-	 * @return 
+	 *
+	 * @return
 	 */
 	public Weather getWeather();
-	
+
 	/**
 	 * Gets the world the sky is in.
-	 * 
+	 *
 	 * @return the world the sky is in.
 	 */
 	public World getWorld();
-	
+
 }

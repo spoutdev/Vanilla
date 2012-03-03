@@ -18,20 +18,13 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla;
 
-/**
- * Is a representation of the different game modes that {@link org.spout.vanilla.entity.living.player.MinecraftPlayer}s may
- * have. <br/> {@link GameMode#CREATIVE} implies that the player has no restrictions
- * on flight, has infinite health, instant break, and can use any blocks.
- * {@link GameMode#SURVIVAL} implies that the player is subject to standard game
- * rules for health, movement, and inventory.
- */
 public enum GameMode {
 	/**
 	 * Creative mode has no restrictions on flight, can build and break
@@ -65,7 +58,7 @@ public enum GameMode {
 	 *
 	 * @param id Value to check
 	 * @return Associative {@link GameMode} with the given value, or null if it
-	 *		 doesn't exist
+	 *         doesn't exist
 	 */
 	public static GameMode getByValue(final int id) {
 		switch (id) {

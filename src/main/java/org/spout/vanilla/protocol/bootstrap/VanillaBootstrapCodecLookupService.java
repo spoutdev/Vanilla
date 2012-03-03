@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -31,18 +31,18 @@ import org.spout.vanilla.protocol.codec.IdentificationCodec;
 import org.spout.vanilla.protocol.codec.KickCodec;
 import org.spout.vanilla.protocol.codec.ServerListPingCodec;
 
-/**
- *
- * @author zml2008
- */
 public class VanillaBootstrapCodecLookupService extends CodecLookupService {
 	public VanillaBootstrapCodecLookupService() {
 		super();
 		try {
-			/* 0x01 */bind(IdentificationCodec.class);
-			/* 0x02 */bind(HandshakeCodec.class);
-			/* 0xFE */bind(ServerListPingCodec.class);
-			/* 0xFF */bind(KickCodec.class);
+			/* 0x01 */
+			bind(IdentificationCodec.class);
+			/* 0x02 */
+			bind(HandshakeCodec.class);
+			/* 0xFE */
+			bind(ServerListPingCodec.class);
+			/* 0xFF */
+			bind(KickCodec.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

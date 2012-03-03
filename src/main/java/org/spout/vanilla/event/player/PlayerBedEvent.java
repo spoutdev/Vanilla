@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -31,9 +31,6 @@ import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.player.Player;
 
-/**
- * This event is fired when the player is almost about to enter the bed.
- */
 public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
@@ -49,6 +46,7 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Returns the bed block involved in this event.
+	 *
 	 * @return the bed block involved in this event
 	 */
 	public Block getBed() {
@@ -61,6 +59,7 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Gets if the player entered the bed.
+	 *
 	 * @return True if the bed was entered.
 	 */
 	public boolean isEntered() {
@@ -69,6 +68,7 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Gets if the player left the bed.
+	 *
 	 * @return False if the bed was left.
 	 */
 	public boolean isLeft() {
@@ -77,6 +77,7 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Sets if a player has entered the bed.
+	 *
 	 * @param entered The new status of if the player has entered a bed (true or false).
 	 */
 	public void setEntered(boolean entered) {

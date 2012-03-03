@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -29,9 +29,6 @@ import java.util.HashMap;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-/**
- * Represents the painting on a Painting.
- */
 public enum Art {
 	KEBAB(0, 1, 1),
 	AZTEC(1, 1, 1),
@@ -57,12 +54,13 @@ public enum Art {
 	DONKEYKONG(21, 4, 3),
 	POINTER(22, 4, 4),
 	PIGSCENE(23, 4, 4),
-	BURNINGSKULL(24, 4, 4), ;
+	BURNINGSKULL(24, 4, 4),;
 	private final int id;
 	private final int width;
 	private final int height;
 	private static HashMap<String, Art> names = new HashMap<String, Art>();
 	private static TIntObjectHashMap<Art> ids = new TIntObjectHashMap<Art>();
+
 	static {
 		for (Art art : Art.values()) {
 			ids.put(art.id, art);

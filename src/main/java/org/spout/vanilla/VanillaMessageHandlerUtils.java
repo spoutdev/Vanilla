@@ -18,18 +18,19 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla;
 
-import gnu.trove.map.TObjectIntMap;
-import gnu.trove.map.hash.TObjectIntHashMap;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.material.block.BlockFace;
+
+import gnu.trove.map.TObjectIntMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
 
 public class VanillaMessageHandlerUtils {
 	public static BlockFace messageToBlockFace(int messageFace) {
@@ -53,7 +54,7 @@ public class VanillaMessageHandlerUtils {
 
 	private final static int PLAYER_SLOT_CONVERSION[] = {
 			36, 37, 38, 39, 40, 41, 42, 43, 44, // quickbar
-			9,  10, 11, 12, 13, 14, 15, 16, 17,
+			9, 10, 11, 12, 13, 14, 15, 16, 17,
 			18, 19, 20, 21, 22, 23, 24, 25, 26,
 			27, 28, 29, 30, 31, 32, 33, 34, 35,
 			5, 6, 7, 8, /* armor */ 4, 3, 2, 1, 0 // crafting
@@ -62,6 +63,7 @@ public class VanillaMessageHandlerUtils {
 	public static int playerInventorySlotToNetwork(int slot) {
 		return PLAYER_SLOT_CONVERSION[slot];
 	}
+
 	public static int playerInventorySlotToSpout(int slot) {
 		for (int i = 0; i < PLAYER_SLOT_CONVERSION.length; ++i) {
 			if (PLAYER_SLOT_CONVERSION[i] == slot) {
@@ -82,6 +84,6 @@ public class VanillaMessageHandlerUtils {
 		if (result == INVENTORY_MAPPING.getNoEntryValue()) {
 			result = 0;
 		}
-		return (byte)result;
+		return (byte) result;
 	}
 }

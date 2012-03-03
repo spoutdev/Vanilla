@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -31,9 +31,6 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
-/**
- * Called when a projectile hits something.
- */
 public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
@@ -46,6 +43,7 @@ public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the source of this event.
+	 *
 	 * @return An Source that is the source of the event.
 	 */
 	public Source getSource() {
@@ -54,6 +52,7 @@ public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the source of this event.
+	 *
 	 * @param source The source of this event.
 	 */
 	public void setSource(Source source) {

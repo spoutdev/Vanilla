@@ -18,18 +18,17 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla.entity.living.neutral;
 
-import org.spout.vanilla.entity.AnimalEntity;
-import org.spout.vanilla.entity.NeutralEntity;
+import org.spout.vanilla.entity.Neutral;
+import org.spout.vanilla.entity.living.AnimalEntity;
+import org.spout.vanilla.entity.living.Land;
 
-/**
- * An entity that is the ocelot cat creature found in jungle biomes. Minecraft 1.2 only.
- */
-public class Ocelot extends AnimalEntity implements NeutralEntity {
+public class Ocelot extends AnimalEntity implements Neutral, Land {
+
 }

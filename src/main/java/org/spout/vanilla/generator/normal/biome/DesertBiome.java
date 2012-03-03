@@ -18,14 +18,12 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla.generator.normal.biome;
-
-import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
@@ -35,9 +33,8 @@ import org.spout.vanilla.generator.normal.decorator.CaveDecorator;
 import org.spout.vanilla.generator.normal.decorator.DungeonDecorator;
 import org.spout.vanilla.generator.normal.decorator.OreDecorator;
 
-/**
- * Biome consisting of desert-like terrain.
- */
+import net.royawesome.jlibnoise.module.source.Perlin;
+
 public class DesertBiome extends VanillaBiomeType {
 	private Perlin heightMap = new Perlin();
 
@@ -51,11 +48,11 @@ public class DesertBiome extends VanillaBiomeType {
 		int y = chunkY * 16;
 		heightMap.setSeed((int) blockData.getWorld().getSeed());
 
-				int height = (int) ((heightMap.GetValue(x / 32.0 + 0.005, 0.05, z / 32.0 + 0.005) + 1.0) * 2.0 + 60.0);
+		int height = (int) ((heightMap.GetValue(x / 32.0 + 0.005, 0.05, z / 32.0 + 0.005) + 1.0) * 2.0 + 60.0);
 
-				for (int dy = y; dy < y + 16; dy++) {
-					short id = getBlockId(height, dy);
-					blockData.set(x, dy, z, id);
+		for (int dy = y; dy < y + 16; dy++) {
+			short id = getBlockId(height, dy);
+			blockData.set(x, dy, z, id);
 		}
 	}
 

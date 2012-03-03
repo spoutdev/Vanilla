@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -30,11 +30,11 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.attachable.WallAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.RedstoneTarget;
-import org.spout.vanilla.util.configuration.VanillaConfiguration;
 
 public class RedstoneTorch extends WallAttachable implements RedstoneSource, RedstoneTarget {
 
@@ -82,7 +82,7 @@ public class RedstoneTorch extends WallAttachable implements RedstoneSource, Red
 		if (!VanillaConfiguration.REDSTONE_PHYSICS.getBoolean()) {
 			return;
 		}
-		
+
 		BlockFace face = getFaceAttachedTo(world.getBlockData(x, y, z));
 		Vector3 offset = face.getOffset();
 		int tx = (int) (x + offset.getX()), ty = (int) (y + offset.getY()), tz = (int) (z + offset.getZ());

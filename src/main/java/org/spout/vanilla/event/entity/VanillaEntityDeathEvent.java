@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -30,9 +30,6 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityDeathEvent;
 
-/**
- * Called when an entity dies with Vanilla characteristics.
- */
 public class VanillaEntityDeathEvent extends EntityDeathEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
@@ -44,6 +41,7 @@ public class VanillaEntityDeathEvent extends EntityDeathEvent implements Cancell
 
 	/**
 	 * Gets the amount of experience to drop.
+	 *
 	 * @return The amount of experience to drop.
 	 */
 	public int getDropExp() {
@@ -52,6 +50,7 @@ public class VanillaEntityDeathEvent extends EntityDeathEvent implements Cancell
 
 	/**
 	 * Sets the amount of experience to drop.
+	 *
 	 * @param dropExp The experience to set.
 	 */
 	public void setDropExp(int dropExp) {

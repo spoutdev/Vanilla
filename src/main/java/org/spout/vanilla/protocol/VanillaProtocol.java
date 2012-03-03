@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -28,17 +28,17 @@ package org.spout.vanilla.protocol;
 import org.spout.api.protocol.Protocol;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.passive.Sheep;
-import org.spout.vanilla.entity.living.player.MinecraftPlayer;
-import org.spout.vanilla.entity.objects.Pickup;
-import org.spout.vanilla.entity.protocols.living.MinecraftPlayerEntityProtocol;
-import org.spout.vanilla.entity.protocols.living.SheepEntityProtocol;
-import org.spout.vanilla.entity.protocols.objects.PickupEntityProtocol;
+import org.spout.vanilla.entity.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.object.Pickup;
+import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.VanillaPlayerEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.PickupEntityProtocol;
 
 public class VanillaProtocol extends Protocol {
 	public VanillaProtocol() {
 		super("Vanilla", new VanillaCodecLookupService(), new VanillaHandlerLookupService(), new VanillaPlayerProtocol());
 
-		MinecraftPlayer.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new MinecraftPlayerEntityProtocol());
+		VanillaPlayer.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new VanillaPlayerEntityProtocol());
 		Sheep.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new SheepEntityProtocol());
 		Pickup.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new PickupEntityProtocol());
 	}

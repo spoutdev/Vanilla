@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -32,13 +32,13 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.World;
 import org.spout.api.player.Player;
-import org.spout.vanilla.entity.world.WeatherChangeEvent;
+import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
 import org.spout.vanilla.protocol.msg.TimeMessage;
 import org.spout.vanilla.world.Weather;
 
 public class NormalSky extends Controller implements Sky {
-	
+
 	private final World world;
 	private float time = 0;
 	private float countdown = 20;
@@ -46,7 +46,7 @@ public class NormalSky extends Controller implements Sky {
 	private Weather forecast;
 	private float timeUntilWeatherChange = 0.0f;
 	private Random random = new Random();
-	
+
 	public NormalSky(World world) {
 		this.world = world;
 	}
@@ -68,14 +68,14 @@ public class NormalSky extends Controller implements Sky {
 			} else {
 				time += 20;
 			}
-						
+
 			countdown = 20;
 			Set<Player> players = world.getPlayers();
 			for (Player player : players) {
 				player.getSession().send(new TimeMessage((long) time));
 			}
 		}
-		
+
 		timeUntilWeatherChange -= dt;
 		if (timeUntilWeatherChange <= 0.0f) {
 			setWeather(forecast);
@@ -92,17 +92,17 @@ public class NormalSky extends Controller implements Sky {
 			}
 		}
 	}
-	
+
 	@Override
 	public void setTime(float time) {
 		this.time = time;
 	}
-	
+
 	@Override
 	public float getTime() {
 		return time;
 	}
-	
+
 	@Override
 	public Weather getWeather() {
 		return currentWeather;
@@ -114,11 +114,11 @@ public class NormalSky extends Controller implements Sky {
 		if (event.isCancelled()) {
 			return;
 		}
-		
+
 		Spout.getEventManager().callEvent(event);
 		currentWeather = event.getNewWeather();
 		boolean rain = (currentWeather != Weather.CLEAR);
-		StateChangeMessage msg = new StateChangeMessage((byte)(rain ? 1 : 2), (byte)0);
+		StateChangeMessage msg = new StateChangeMessage((byte) (rain ? 1 : 2), (byte) 0);
 		for (Player player : parent.getWorld().getPlayers()) {
 			player.getSession().send(msg);
 		}
@@ -126,7 +126,7 @@ public class NormalSky extends Controller implements Sky {
 
 	@Override
 	public void preSnapshot() {
-		
+
 	}
 
 	@Override

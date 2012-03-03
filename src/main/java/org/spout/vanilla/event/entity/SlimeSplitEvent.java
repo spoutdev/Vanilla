@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -32,9 +32,6 @@ import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.exception.InvalidControllerException;
 import org.spout.vanilla.entity.living.hostile.Slime;
 
-/**
- * Called when a slime is split.
- */
 public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
@@ -51,6 +48,7 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the amount of slimes to spawn.
+	 *
 	 * @return The amount of slimes to spawn.
 	 */
 	public int getAmount() {
@@ -59,6 +57,7 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the amount of slimes to spawn
+	 *
 	 * @param amount The amount of slimes to spawn.
 	 */
 	public void setAmount(int amount) {
@@ -67,6 +66,7 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the size of slimes to spawn.
+	 *
 	 * @return The size of the slimes to spawn.
 	 */
 	public int getSize() {
@@ -75,6 +75,7 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the size of slimes to spawn.
+	 *
 	 * @param size The size of the slimes to spawn.
 	 */
 	public void setSize(int size) {

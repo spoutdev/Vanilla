@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -34,11 +34,6 @@ import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
-/*
- * Called when an entity explodes.
- *
- * TODO look at EntityExplode event later on.
- */
 public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 

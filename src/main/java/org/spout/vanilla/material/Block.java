@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -34,6 +34,7 @@ public interface Block extends BlockMaterial {
 	/**
 	 * Represents power that comes into the block from a redstone wire or a torch that is below the block
 	 * Indirect power from below powers redstone wire, but level indirect power just inverts adjacent redstone torches.
+	 *
 	 * @return the indirect redstone power.
 	 */
 	public short getIndirectRedstonePower(World world, int x, int y, int z);
@@ -41,6 +42,7 @@ public interface Block extends BlockMaterial {
 	/**
 	 * Represents power that comes from a repeater that points to this block.
 	 * This power can be used by all neighbors that are redstone targets, even if they wouldn't attach.
+	 *
 	 * @return the direct redstone power.
 	 */
 	public short getDirectRedstonePower(World world, int x, int y, int z);

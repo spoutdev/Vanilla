@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -30,10 +30,6 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 
-/**
- * A {@link MessageHandler} which handles {@link org.spout.vanilla.entity.MinecraftEntity}
- * animation messages.
- */
 public final class AnimateEntityMessageHandler extends MessageHandler<EntityAnimationMessage> {
 	@Override
 	public void handle(Session session, Player player, EntityAnimationMessage message) {

@@ -18,45 +18,44 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla.command;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import org.spout.api.Spout;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
-import org.spout.api.entity.Entity;
 import org.spout.api.exception.CommandException;
-import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.configuration.OpConfig;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
-import org.spout.vanilla.entity.living.player.MinecraftPlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
+import org.spout.vanilla.entity.living.player.VanillaPlayer;
 import org.spout.vanilla.entity.sky.Sky;
-import org.spout.vanilla.entity.sky.NormalSky;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
 import org.spout.vanilla.world.Weather;
 
-/**
- * Commands to emulate core Minecraft admin functions.
- */
 public class AdministrationCommands {
-	
+
 	private final VanillaPlugin plugin = VanillaPlugin.getInstance();
+	private final VanillaConfiguration config = plugin.getConfig();
 	
 	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
-	//@CommandPermissions("vanilla.command.time")
+	//@CommandPermissions("Vanilla.command.time")
 	public void time(CommandContext args, CommandSource source) throws CommandException {
 		int time = 0;
 		boolean relative = false;
@@ -76,18 +75,18 @@ public class AdministrationCommands {
 			}
 		} else if (args.getString(0).equalsIgnoreCase("add")) {
 			relative = true;
-			
+
 			if (args.isInteger(1)) {
 				time = args.getInteger(1);
 			} else {
 				throw new CommandException("Argument to 'add' must be an integer.");
 			}
 		}
-		
+
 		World world = null;
 		if (args.length() == 3) {
 			world = plugin.getGame().getWorld(args.getString(2));
-			
+
 			if (world == null) {
 				throw new CommandException("'" + args.getString(2) + "' is not a valid world.");
 			}
@@ -97,18 +96,17 @@ public class AdministrationCommands {
 		} else {
 			throw new CommandException("You must specify a world.");
 		}
-		
+
 		Sky sky = plugin.getSky(world);
-		if (sky == null)
-		{
+		if (sky == null) {
 			throw new CommandException("The world '" + args.getString(2) + "' is not availible.");
 		}
-		
+
 		sky.setTime(relative ? (sky.getTime() + time) : time);
 	}
-	
+
 	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|survival|creative> (0 = SURVIVAL, 1 = CREATIVE)", desc = "Change a player's game mode", min = 1, max = 2)
-	@CommandPermissions("vanilla.command.gamemode")
+	@CommandPermissions("Vanilla.command.gamemode")
 	public void gamemode(CommandContext args, CommandSource source) throws CommandException {
 
 		int index = 0;
@@ -125,7 +123,7 @@ public class AdministrationCommands {
 				throw new CommandException("You must be a player to toggle your game mode.");
 			}
 
-			player = (Player)source;
+			player = (Player) source;
 		}
 
 		int mode;
@@ -140,7 +138,7 @@ public class AdministrationCommands {
 			throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
 		}
 
-		MinecraftPlayer controller;
+		VanillaPlayer controller;
 		String message;
 
 		switch (mode) {
@@ -163,7 +161,7 @@ public class AdministrationCommands {
 
 		player.sendMessage("Your game mode has been changed to " + message);
 		player.getEntity().setController(controller);
-		player.getSession().send(new StateChangeMessage((byte)3, (byte)mode));
+		player.getSession().send(new StateChangeMessage((byte) 3, (byte) mode));
 
 		if (!player.equals(source)) {
 			source.sendMessage(player.getName() + "'s game mode has been changed to " + message);
@@ -171,7 +169,7 @@ public class AdministrationCommands {
 	}
 
 	@Command(aliases = "xp", usage = "[player] <amount>", desc = "Give/take experience from a player", max = 2)
-	@CommandPermissions("vanilla.command.xp")
+	@CommandPermissions("Vanilla.command.xp")
 	public void xp(CommandContext args, CommandSource source) throws CommandException {
 		// If source is player
 		if (args.length() == 1) {
@@ -197,9 +195,9 @@ public class AdministrationCommands {
 			}
 		}
 	}
-	
+
 	@Command(aliases = "weather", usage = "[world] <0|1|2> (0 = CLEAR, 1 = RAIN/SNOW, 2 = THUNDERSTORM)", desc = "Changes the weather", min = 1, max = 2)
-	//@CommandPermissions("vanilla.command.weather")
+	@CommandPermissions("Vanilla.command.weather")
 	public void weather(CommandContext args, CommandSource source) throws CommandException {
 		World world = null;
 		if (source instanceof Player && args.length() == 1) {
@@ -210,11 +208,11 @@ public class AdministrationCommands {
 		} else {
 			throw new CommandException("You need to specify a world.");
 		}
-		
+
 		if (world == null) {
 			throw new CommandException("Invalid world '" + args.getString(0) + "'.");
 		}
-		
+
 		Weather weather;
 		if (args.isInteger(1)) {
 			int mode = args.getInteger(1);
@@ -246,22 +244,21 @@ public class AdministrationCommands {
 		} else {
 			throw new CommandException("Weather must be a mode between 0 and 2, 'CLEAR', 'RAIN', 'SNOW', or 'THUNDERSTORM'");
 		}
-		
+
 		Sky sky = plugin.getSky(world);
-		if (sky == null)
-		{
+		if (sky == null) {
 			throw new CommandException("The world '" + args.getString(2) + "' is not availible.");
 		}
-		
-		sky.setWeather( weather );
+
+		sky.setWeather(weather);
 	}
 
 	@Command(aliases = "debug", usage = "[type] (/resend /resendall)", desc = "Debug commands", max = 1)
-	//@CommandPermissions("vanilla.command.debug")
+	//@CommandPermissions("Vanilla.command.debug")
 	public void debug(CommandContext args, CommandSource source) throws CommandException {
 		Player player = null;
 		if (source instanceof Player) {
-			player = (Player)source;
+			player = (Player) source;
 		} else {
 			player = Spout.getGame().getPlayer(args.getString(1, ""), true);
 			if (player == null) {
@@ -269,7 +266,7 @@ public class AdministrationCommands {
 				return;
 			}
 		}
-		
+
 		if (args.getString(0, "").contains("resendall")) {
 			NetworkSynchronizer network = player.getNetworkSynchronizer();
 			Set<Chunk> chunks = network.getActiveChunks();
@@ -282,4 +279,40 @@ public class AdministrationCommands {
 			source.sendMessage("Chunk resent");
 		}
 	}
+
+/*	@Command(aliases = "op", usage = "[player]", desc = "Gives a user operator status", max = 1)
+	@CommandPermissions("Vanilla.command.op")
+	public void op(CommandContext args, CommandSource source) throws CommandException {
+		//Handle in-game player
+		if (args.length() == 0) {
+			if ((!(source instanceof Player))) {
+				throw new CommandException("You must specify a specific player to give OP");
+			} else {
+				//TODO perhaps not save OPs right in this command?
+				String name = source.getName();
+				Object[] ops = config.getStringList("ops").toArray();
+				for (Object temp: ops) {
+					if (temp.toString().equalsIgnoreCase(name)) {
+						source.sendMessage("You are already OP!");
+					}
+				}
+			}
+		//Handle console	
+		} else if (args.length() == 1) {
+			Player player = Spout.getGame().getPlayer(args.getString(0), true);
+			if (player == null) {
+				throw new CommandException(args.getString(0) + " is not online.");
+			}
+			//TODO perhaps not save OPs right in this command?
+			String name = player.getName();
+			Object[] ops = config.getStringList("ops").toArray();
+			for (Object temp: ops) {
+				if (temp.toString().equalsIgnoreCase(name)) {
+					source.sendMessage(name + " is already an OP.");
+				}
+			}
+			source.sendMessage(name + " was promoted to an OP.");
+			player.sendMessage("You have been promoted to an OP.");
+		}
+	}*/
 }

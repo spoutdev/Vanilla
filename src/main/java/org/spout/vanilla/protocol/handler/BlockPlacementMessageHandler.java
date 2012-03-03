@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -39,16 +39,12 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
-import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.Item;
 import org.spout.vanilla.material.attachable.Attachable;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
 
-/**
- * A {@link MessageHandler} which processes placement messages.
- */
 public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlacementMessage> {
 	@Override
 	public void handle(Session session, Player player, BlockPlacementMessage message) {
@@ -113,7 +109,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			}*/
 			Material placedMaterial = holding.getMaterial();
 			if (placedMaterial instanceof Item) {
-				((Item)placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
+				((Item) placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
 				return;
 			}
 			if (placedMaterial.getId() > 255) {
@@ -136,7 +132,6 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 
 			Block newBlock = (Block) placedMaterial;
 			Block oldBlock = target != null ? (Block) target.getBlockMaterial() : null;
-
 
 
 			if (!sendRevert && (oldBlock == null || oldBlock.isLiquid() || oldBlock.getId() == 0)) {

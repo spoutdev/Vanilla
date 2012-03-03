@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -32,6 +32,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.entity.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.generic.GenericItem;
 
@@ -40,19 +41,20 @@ public class Minecart extends GenericItem {
 	public Minecart(String name, int id) {
 		super(name, id);
 	}
-	
+
 	/**
 	 * Creates a new minecart controller to spawn when interacted
+	 *
 	 * @return a new Minecart controller
 	 */
 	protected Controller getSpawnedEntity() {
-		return new org.spout.vanilla.entity.vehicle.TransportMinecart();
+		return new TransportMinecart();
 	}
-	
+
 	@Override
 	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedface) {
 		super.onInteract(entity, position, type, clickedface);
-		
+
 		//is clicked position a track?
 		World world = position.getWorld();
 		Block block = world.getBlock(position);

@@ -1,9 +1,9 @@
 /*
- * This file is part of vanilla (http://www.spout.org/).
+ * This file is part of Vanilla (http://www.spout.org/).
  *
- * vanilla is licensed under the SpoutDev License Version 1.
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
- * vanilla is free software: you can redistribute it and/or modify
+ * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -18,17 +18,15 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla.protocol;
 
-import gnu.trove.set.TIntSet;
-import gnu.trove.set.hash.TIntHashSet;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.junit.Test;
+import java.io.IOException;
+
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapCodecLookupService;
@@ -37,18 +35,18 @@ import org.spout.vanilla.protocol.msg.IdentificationMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 
-import java.io.IOException;
+import gnu.trove.set.TIntSet;
+import gnu.trove.set.hash.TIntHashSet;
+import org.jboss.netty.buffer.ChannelBuffer;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-/**
- *
- * @author zml2008
- */
 public class VanillaBootstrapProtocolTest {
 	private static final TIntSet testedOpcodes = new TIntHashSet();
 	private static final VanillaBootstrapCodecLookupService CODEC_LOOKUP = new VanillaBootstrapCodecLookupService();
-	private static final Message[] TEST_MESSAGES = new Message[] {
+	private static final Message[] TEST_MESSAGES = new Message[]{
 			new IdentificationMessage(0, "Tester", 0, -1, 0, 128, 20, "MAGICAL"),
 			new HandshakeMessage("Player"),
 			new ServerListPingMessage(),
@@ -65,7 +63,7 @@ public class VanillaBootstrapProtocolTest {
 				opcode <<= 8;
 			}
 			MessageCodec idCodec = CODEC_LOOKUP.find(opcode);
-			assertNotNull("No codec for opcode "+ opcode + " in codec lookup!", idCodec);
+			assertNotNull("No codec for opcode " + opcode + " in codec lookup!", idCodec);
 			testedOpcodes.add(opcode);
 		}
 	}
@@ -74,7 +72,7 @@ public class VanillaBootstrapProtocolTest {
 	@SuppressWarnings("unchecked")
 	public void testMessageEncoding() throws IOException {
 		for (Message message : TEST_MESSAGES) {
-			MessageCodec<Message> codec = (MessageCodec<Message>)CODEC_LOOKUP.find(message.getClass());
+			MessageCodec<Message> codec = (MessageCodec<Message>) CODEC_LOOKUP.find(message.getClass());
 			ChannelBuffer encoded = codec.encode(message);
 			Message decoded = codec.decode(encoded);
 			assertEquals(message.toString(), decoded.toString());
@@ -99,7 +97,7 @@ public class VanillaBootstrapProtocolTest {
 			if (!codec.isExpanded()) {
 				opcode <<= 8;
 			}
-			assertTrue("Opcode "+ opcode + " (non-expanded: " + (opcode >> 8) + ") not tested", testedOpcodes.contains(opcode));
+			assertTrue("Opcode " + opcode + " (non-expanded: " + (opcode >> 8) + ") not tested", testedOpcodes.contains(opcode));
 		}
 	}
 }

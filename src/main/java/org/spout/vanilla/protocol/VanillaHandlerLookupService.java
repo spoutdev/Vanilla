@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -46,12 +46,12 @@ import org.spout.vanilla.protocol.handler.RespawnMessageHandler;
 import org.spout.vanilla.protocol.handler.RotationMessageHandler;
 import org.spout.vanilla.protocol.handler.WindowClickMessageHandler;
 import org.spout.vanilla.protocol.msg.ActivateItemMessage;
-import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
+import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
 import org.spout.vanilla.protocol.msg.GroundMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;

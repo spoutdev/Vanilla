@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -30,9 +30,6 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
-/**
- * Called when an entity targets or untargets another entity.
- */
 public class EntityTargetEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
@@ -45,6 +42,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the reason for the targeting.
+	 *
 	 * @return The target reason.
 	 */
 	public TargetReason getReason() {
@@ -53,6 +51,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the reason for the targeting.
+	 *
 	 * @param reason The reason for the targeting.
 	 */
 	public void setReason(TargetReason reason) {
@@ -61,6 +60,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Returns true if the entity has targeted.
+	 *
 	 * @return True it the entity has targeted, false if not.
 	 */
 	public boolean isTarget() {
@@ -69,6 +69,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Returns true if the entity has untargeted.
+	 *
 	 * @return True is the entity has untargeted, false if not.
 	 */
 	public boolean isUntarget() {

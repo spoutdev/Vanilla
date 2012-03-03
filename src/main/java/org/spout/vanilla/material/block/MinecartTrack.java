@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -27,18 +27,18 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.World;
 import org.spout.vanilla.material.attachable.GroundAttachable;
-import org.spout.vanilla.util.block.MinecartTrackLogic;
+import org.spout.vanilla.util.MinecartTrackLogic;
 
 public class MinecartTrack extends GroundAttachable {
 
 	public MinecartTrack(String name, int id) {
 		super(name, id);
 	}
-	
+
 	public boolean canCurve() {
 		return true;
 	}
-	
+
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
 		MinecartTrackLogic logic = MinecartTrackLogic.create(world, x, y, z);
@@ -46,5 +46,5 @@ public class MinecartTrack extends GroundAttachable {
 			logic.refresh();
 		}
 	}
-		
+
 }

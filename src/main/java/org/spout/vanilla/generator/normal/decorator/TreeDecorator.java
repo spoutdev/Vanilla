@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -32,9 +32,6 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.VanillaMaterials;
 
-/**
- * Decorator that decorates a biome with trees.
- */
 public class TreeDecorator implements BiomeDecorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -90,7 +87,7 @@ public class TreeDecorator implements BiomeDecorator {
 	}
 
 	private int getHighestWorkableBlock(Chunk c, int px, int pz) {
-		int y = c.getY()*16 + 15;
+		int y = c.getY() * 16 + 15;
 		int pozx = c.getX() * 16 + px;
 		int pozz = c.getZ() * 16 + pz;
 		while (c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaMaterials.DIRT && c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaMaterials.GRASS) {

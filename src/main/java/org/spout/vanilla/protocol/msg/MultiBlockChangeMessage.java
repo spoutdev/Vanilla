@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -37,11 +37,12 @@ public final class MultiBlockChangeMessage extends Message {
 
 	/**
 	 * Creates a MultiBlockChangeMessage using the specified data
-	 * @param chunkX The x coordinate of the chunk containing these changes
-	 * @param chunkZ The z coordinate of the chunk containing these changes
+	 *
+	 * @param chunkX	  The x coordinate of the chunk containing these changes
+	 * @param chunkZ	  The z coordinate of the chunk containing these changes
 	 * @param coordinates An array of change coordinates. Length should be 3 * types.length, with coordinates in x y z format
-	 * @param types An array of block types
-	 * @param metadata An array of block metadata. No more than a nibble per entry
+	 * @param types	   An array of block types
+	 * @param metadata	An array of block metadata. No more than a nibble per entry
 	 */
 	public MultiBlockChangeMessage(int chunkX, int chunkZ, short[] coordinates, short[] types, byte[] metadata) {
 		if (coordinates.length != (types.length * 3) || types.length != metadata.length) {

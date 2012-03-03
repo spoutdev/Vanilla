@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -34,9 +34,6 @@ import org.spout.api.exception.InvalidControllerException;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 
-/**
- * Called when a player respawns.
- */
 public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
@@ -50,10 +47,10 @@ public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable 
 		this.bedRespawn = bedRespawn;
 	}
 
-	
 
 	/**
 	 * Gets the player associated in this event.
+	 *
 	 * @return The player of the event.
 	 */
 	public Player getPlayer() {
@@ -62,6 +59,7 @@ public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable 
 
 	/**
 	 * Returns true if the respawn location is a bed.
+	 *
 	 * @return True if the respawn location is a bed.
 	 */
 	public boolean isBedRespawn() {

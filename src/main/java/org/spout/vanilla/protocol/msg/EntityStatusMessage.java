@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -34,7 +34,7 @@ public final class EntityStatusMessage extends Message {
 	public static final byte WOLF_TAMED = 7;
 	public static final byte WOLF_SHAKING = 8;
 	public static final byte EATING_ACCEPTED = 9;
-	
+
 	private final int id;
 	private final byte status;
 

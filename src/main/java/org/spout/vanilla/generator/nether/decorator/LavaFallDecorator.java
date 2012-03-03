@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -30,9 +30,6 @@ import java.util.Random;
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.cuboid.Chunk;
 
-/**
- * Decorator that decorates a biome with lava falls. TODO May not be needed...
- */
 public class LavaFallDecorator implements BiomeDecorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {

@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -27,7 +27,6 @@ package org.spout.vanilla.entity.vehicle;
 
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.MovingEntity;
-import org.spout.vanilla.entity.Vehicle;
 
 public class Boat extends MovingEntity implements Vehicle {
 
@@ -35,9 +34,9 @@ public class Boat extends MovingEntity implements Vehicle {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.Boat.id);
 	}
-	
+
 	public void onTick(float dt) {
 		super.onTick(dt);
 	}
-	
+
 }

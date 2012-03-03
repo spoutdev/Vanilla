@@ -18,13 +18,12 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla.entity;
-
 
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
@@ -34,9 +33,9 @@ import org.spout.api.math.Vector3m;
 import org.spout.vanilla.VanillaMaterials;
 
 /**
- * Moving entity controller
+ * Entity that moves in the world.
  */
-public abstract class MovingEntity extends MinecraftEntity {
+public abstract class MovingEntity extends VanillaEntity {
 	protected final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	protected final Vector3m velocity = new Vector3m(Vector3.ZERO);
 	private int fireTicks;
@@ -44,13 +43,12 @@ public abstract class MovingEntity extends MinecraftEntity {
 
 	@Override
 	public void onAttached() {
-		super.onAttached();
 		parent.setCollision(new CollisionModel(area));
 	}
 
 	@Override
 	public void onTick(float dt) {
-		if(parent.isDead()) return;
+		if (parent.isDead()) return;
 		checkWeb();
 		updateMovement(dt);
 		checkFireTicks();

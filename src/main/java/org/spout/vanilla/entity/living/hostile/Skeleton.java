@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -26,11 +26,11 @@
 package org.spout.vanilla.entity.living.hostile;
 
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.HostileEntity;
+import org.spout.vanilla.entity.Hostile;
 import org.spout.vanilla.entity.living.Land;
-import org.spout.vanilla.entity.living.Monster;
+import org.spout.vanilla.entity.living.MonsterEntity;
 
-public class Skeleton extends Monster implements HostileEntity, Land {
+public class Skeleton extends MonsterEntity implements Hostile, Land {
 	@Override
 	public void onAttached() {
 		super.onAttached();

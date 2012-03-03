@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -43,6 +43,8 @@ import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
 import org.spout.vanilla.command.AdministrationCommands;
+import org.spout.vanilla.configuration.OpConfig;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.sky.NetherSky;
 import org.spout.vanilla.entity.sky.NormalSky;
 import org.spout.vanilla.entity.sky.Sky;
@@ -52,21 +54,20 @@ import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.generator.theend.TheEndGenerator;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
-import org.spout.vanilla.util.configuration.Operators;
-import org.spout.vanilla.util.configuration.VanillaConfiguration;
 
 public class VanillaPlugin extends CommonPlugin {
-
-	private static VanillaPlugin instance;
-	private final VanillaConfiguration config = new VanillaConfiguration();
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
-	public static int vanillaProtocolId;
 	public static final int minecraftProtocolId = 28;
-	private final HashMap<World, Sky> skys = new HashMap<World, Sky>();
+	public static int vanillaProtocolId;
 	public static World spawnWorld;
+
+	private final VanillaConfiguration config;
+	private final HashMap<World, Sky> skys = new HashMap<World, Sky>();
+	private static VanillaPlugin instance;
 
 	public VanillaPlugin() {
 		instance = this;
+		config = new VanillaConfiguration();
 	}
 
 	@Override
@@ -105,11 +106,11 @@ public class VanillaPlugin extends CommonPlugin {
 	@Override
 	public void onEnable() {
 		Game game = getGame();
+		OpConfig opConfig = new OpConfig();
 
 		// IO
 		config.load();
-		Operators ops = new Operators();
-		ops.load();
+		opConfig.load();
 
 		//Register commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(), new SimpleAnnotatedCommandExecutorFactory());

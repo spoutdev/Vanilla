@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla.
+ * This file is part of Vanilla (http://www.spout.org/).
  *
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -28,6 +28,7 @@ package org.spout.vanilla.generator;
 import org.spout.api.generator.biome.BiomeType;
 import org.spout.vanilla.generator.nether.biome.NetherrackBiome;
 import org.spout.vanilla.generator.normal.biome.DesertBiome;
+import org.spout.vanilla.generator.normal.biome.JungleBiome;
 import org.spout.vanilla.generator.normal.biome.MountainBiome;
 import org.spout.vanilla.generator.normal.biome.MushroomBiome;
 import org.spout.vanilla.generator.normal.biome.OceanBiome;
@@ -37,11 +38,9 @@ import org.spout.vanilla.generator.normal.biome.TaigaBiome;
 import org.spout.vanilla.generator.normal.biome.TundraBiome;
 import org.spout.vanilla.generator.theend.biome.EndStoneBiome;
 
-
-
 public class VanillaBiomes {
 	public static final BiomeType DESERT = new DesertBiome();
-	public static final BiomeType JUNGLE = new PlainBiome();
+	public static final BiomeType JUNGLE = new JungleBiome();
 	public static final BiomeType MOUNTAIN = new MountainBiome();
 	public static final BiomeType MUSHROOM = new MushroomBiome();
 	public static final BiomeType OCEAN = new OceanBiome();

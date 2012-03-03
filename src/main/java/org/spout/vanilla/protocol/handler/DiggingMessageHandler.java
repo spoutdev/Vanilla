@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -37,13 +37,10 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
-import org.spout.vanilla.entity.objects.Pickup;
+import org.spout.vanilla.entity.object.Pickup;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
 
-/**
- * A {@link MessageHandler} which processes digging messages.
- */
 public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> {
 	@Override
 	public void handle(Session session, Player player, DiggingMessage message) {
@@ -108,8 +105,8 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 		if (blockBroken) {
 			BlockMaterial oldMat = block.getBlockMaterial();
 			world.setBlockIdAndData(x, y, z, (short) 0, (short) 0, player);
-			if(player.getEntity().getController() instanceof SurvivalPlayer) {
-				world.createAndSpawnEntity(block.getBase(), new Pickup(new ItemStack(oldMat,1), player.getEntity().getPoint().normalize().add(0, 5, 0)));//TODO get the actual block drops, and more than one can fall :)
+			if (player.getEntity().getController() instanceof SurvivalPlayer) {
+				world.createAndSpawnEntity(block.getBase(), new Pickup(new ItemStack(oldMat, 1), player.getEntity().getPoint().normalize().add(0, 5, 0)));//TODO get the actual block drops, and more than one can fall :)
 			}
 			/*if (!block.isEmpty() && !block.isLiquid()) {
 				if (!player.getInventory().contains(block.getTypeId()) || player.getGameMode() != GameMode.CREATIVE) {

@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -26,10 +26,11 @@
 package org.spout.vanilla.entity.living.neutral;
 
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.NeutralEntity;
-import org.spout.vanilla.entity.living.Monster;
+import org.spout.vanilla.entity.Neutral;
+import org.spout.vanilla.entity.living.Land;
+import org.spout.vanilla.entity.living.MonsterEntity;
 
-public class Enderman extends Monster implements NeutralEntity {
+public class Enderman extends MonsterEntity implements Neutral, Land {
 	@Override
 	public void onAttached() {
 		super.onAttached();

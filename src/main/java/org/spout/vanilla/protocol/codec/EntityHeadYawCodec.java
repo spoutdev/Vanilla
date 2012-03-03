@@ -1,9 +1,9 @@
 /*
- * This file is part of vanilla (http://www.spout.org/).
+ * This file is part of Vanilla (http://www.spout.org/).
  *
- * vanilla is licensed under the SpoutDev License Version 1.
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
- * vanilla is free software: you can redistribute it and/or modify
+ * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -18,19 +18,20 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla.protocol.codec;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import java.io.IOException;
+
 import org.spout.api.protocol.MessageCodec;
 import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 
-import java.io.IOException;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 
 public class EntityHeadYawCodec extends MessageCodec<EntityHeadYawMessage> {
 
@@ -44,7 +45,7 @@ public class EntityHeadYawCodec extends MessageCodec<EntityHeadYawMessage> {
 		int headYaw = buffer.readUnsignedByte();
 		return new EntityHeadYawMessage(id, headYaw);
 	}
-	
+
 	@Override
 	public ChannelBuffer encode(EntityHeadYawMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.buffer(5);

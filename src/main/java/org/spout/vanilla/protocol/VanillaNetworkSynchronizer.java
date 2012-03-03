@@ -18,16 +18,12 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla.protocol;
-
-import gnu.trove.iterator.TIntObjectIterator;
-import gnu.trove.map.hash.TIntObjectHashMap;
-import gnu.trove.set.hash.TIntHashSet;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
@@ -57,11 +53,14 @@ import org.spout.vanilla.protocol.msg.IdentificationMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.PositionRotationMessage;
+import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
-import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 
+import gnu.trove.iterator.TIntObjectIterator;
+import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.set.hash.TIntHashSet;
 import static org.spout.vanilla.VanillaMessageHandlerUtils.getInventoryId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
@@ -217,7 +216,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			}
 			entity.getInventory().addViewer(this);
 		} else {
-			owner.getSession().send(new RespawnMessage(0, (byte)0, (byte)0, world == null ? 0: world.getHeight(), "DEFAULT"));
+			owner.getSession().send(new RespawnMessage(0, (byte) 0, (byte) 0, world == null ? 0 : world.getHeight(), "DEFAULT"));
 		}
 
 		if (world != null) {
@@ -238,7 +237,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			owner.getSession().send(PingMsg);
 		}
 
-		for (TIntObjectIterator<Message> i = queuedInventoryUpdates.iterator(); i.hasNext();) {
+		for (TIntObjectIterator<Message> i = queuedInventoryUpdates.iterator(); i.hasNext(); ) {
 			i.advance();
 			session.send(i.value());
 		}

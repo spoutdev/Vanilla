@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -33,9 +33,6 @@ import org.spout.api.exception.InvalidControllerException;
 import org.spout.api.player.Player;
 import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
 
-/**
- * Called when a player dies.
- */
 public class PlayerDeathEvent extends VanillaEntityDeathEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
@@ -49,6 +46,7 @@ public class PlayerDeathEvent extends VanillaEntityDeathEvent implements Cancell
 
 	/**
 	 * Gets the player associated in this event.
+	 *
 	 * @return The player.
 	 */
 	public Player getPlayer() {

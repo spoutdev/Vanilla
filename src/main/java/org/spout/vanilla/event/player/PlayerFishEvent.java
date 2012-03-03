@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -31,9 +31,6 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.player.Player;
 
-/**
- * Called when a player fishes for something.
- */
 public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
@@ -55,8 +52,9 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Gets the controller of the entity caught by the player
+	 *
 	 * @return Controller of the entity caught by the player, null if fishing,
-	 * bobber has gotten stuck in the ground or nothing has been caught
+	 *         bobber has gotten stuck in the ground or nothing has been caught
 	 */
 	public Controller getCaught() {
 		return caught;
@@ -64,6 +62,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Sets the controller of the entity that as caught.
+	 *
 	 * @param caught Controller of the entity that was caught.
 	 */
 	public void setCaught(Controller caught) {
@@ -72,6 +71,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Gets the status of the fishing event
+	 *
 	 * @return The status of fishing.
 	 */
 	public FishingStatus getStatus() {
@@ -80,6 +80,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Sets the status of the fishing event.
+	 *
 	 * @param status Sets the status of fishing.
 	 */
 	public void setStatus(FishingStatus status) {

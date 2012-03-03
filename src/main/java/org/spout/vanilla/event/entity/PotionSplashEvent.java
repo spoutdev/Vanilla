@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -55,6 +55,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Gets the potion that was thrown
+	 *
 	 * @return The potion thrown.
 	 */
 	public ThrownPotion getPotionThrown() {
@@ -63,6 +64,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Sets the potion that was thrown.
+	 *
 	 * @param potion The potion that is thrown.
 	 */
 	public void setPotionThrown(ThrownPotion potion) {
@@ -71,6 +73,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Gets a list of all of the effected entities.
+	 *
 	 * @return A list of the affected entities.
 	 */
 	public Collection<Entity> getAffectedEntities() {
@@ -79,6 +82,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Gets the intensity of the potion effect for an entity.
+	 *
 	 * @param entity The entity to get the intensity for
 	 * @return The intensity of the potion effect. 0.0 symbolizes no effect, 1.0 symbolizes full effect.
 	 */
@@ -92,7 +96,8 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Sets the intensity of the potion effect for an entity.
-	 * @param entity The entity that will have a new defined intensity.
+	 *
+	 * @param entity	The entity that will have a new defined intensity.
 	 * @param intensity The intensity of the potion effect.
 	 */
 	public void setIntensityFor(Entity entity, double intensity) {

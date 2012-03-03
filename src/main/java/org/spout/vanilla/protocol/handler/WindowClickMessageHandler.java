@@ -18,12 +18,14 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
 package org.spout.vanilla.protocol.handler;
+
+import java.util.logging.Level;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
@@ -35,8 +37,6 @@ import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
-
-import java.util.logging.Level;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
 
@@ -57,7 +57,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		}
 		if (slot < 0) {
 			response(session, message, false);
-			session.getGame().getLogger().log(Level.WARNING, "Got invalid inventory slot {0} from {1}", new Object[] {message.getSlot(), player.getName()});
+			session.getGame().getLogger().log(Level.WARNING, "Got invalid inventory slot {0} from {1}", new Object[]{message.getSlot(), player.getName()});
 			return;
 		}
 
@@ -66,7 +66,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		if (entity.getController() instanceof CreativePlayer && message.getId() == VanillaMessageHandlerUtils.getInventoryId(inv.getClass())) {
 			response(session, message, false);
 			player.getNetworkSynchronizer().onSlotSet(inv, slot, currentItem);
-			session.getGame().getLogger().log(Level.WARNING, "{0} tried to do an invalid inventory action in Creative mode!", new Object[] {player.getName()});
+			session.getGame().getLogger().log(Level.WARNING, "{0} tried to do an invalid inventory action in Creative mode!", new Object[]{player.getName()});
 			return;
 		}
 		if (currentItem == null) {
@@ -85,7 +85,8 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		if (message.isShift()) {
 			if (false /* inv == player.getInventory().getOpenWindow() */) {
 				// TODO: if player has e.g. chest open
-			} {
+			}
+			{
 				if (slot < 9) {
 					for (int i = 9; i < 36; ++i) {
 						if (inv.getItem(i) == null) {

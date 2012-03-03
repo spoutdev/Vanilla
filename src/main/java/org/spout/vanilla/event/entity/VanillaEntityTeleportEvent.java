@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -31,9 +31,6 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityTeleportEvent;
 import org.spout.api.geo.discrete.Point;
 
-/**
- * Called when a entity teleports with Vanilla characteristics.
- */
 public class VanillaEntityTeleportEvent extends EntityTeleportEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 
@@ -46,6 +43,7 @@ public class VanillaEntityTeleportEvent extends EntityTeleportEvent implements C
 
 	/**
 	 * Gets the reason behind the teleport of the entity.
+	 *
 	 * @return The reason behind the teleport.
 	 */
 	public TeleportReason getReason() {
@@ -54,6 +52,7 @@ public class VanillaEntityTeleportEvent extends EntityTeleportEvent implements C
 
 	/**
 	 * Sets the reason for the teleport of the entity.
+	 *
 	 * @param reason The new reason for the teleport of the entity.
 	 */
 	public void setReason(TeleportReason reason) {

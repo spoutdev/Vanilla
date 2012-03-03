@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -30,12 +30,12 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
+
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 
 public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMessage> {
 	private static final int COMPRESSION_LEVEL = Deflater.BEST_SPEED;
@@ -105,7 +105,7 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 			}
 		}
 		byte[] biomeData = new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
-		
+
 		if (contiguous) {
 			System.arraycopy(uncompressedData, size, biomeData, 0, biomeData.length);
 			size += biomeData.length;
@@ -136,7 +136,7 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 				uncompressedSize += data[i].length;
 			}
 		}
-		
+
 		if (message.isContiguous()) {
 			uncompressedSize += message.getBiomeData().length;
 		}
@@ -151,7 +151,7 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 				index += sectionData.length;
 			}
 		}
-		
+
 		if (message.isContiguous()) {
 			System.arraycopy(message.getBiomeData(), 0, uncompressedData, index, message.getBiomeData().length);
 			index += message.getBiomeData().length;

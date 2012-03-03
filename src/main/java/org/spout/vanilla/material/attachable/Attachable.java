@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -32,6 +32,7 @@ import org.spout.vanilla.material.Block;
 public interface Attachable extends Block {
 	/**
 	 * Gets which data id should be set for the given face
+	 *
 	 * @param face where the block will be attached to
 	 * @return data for the given face
 	 */
@@ -39,6 +40,7 @@ public interface Attachable extends Block {
 
 	/**
 	 * Gets the face the block is attached to by given data
+	 *
 	 * @param data that the block has
 	 * @return to which face the block is attached to
 	 */
@@ -46,6 +48,7 @@ public interface Attachable extends Block {
 
 	/**
 	 * Returns the block that the attachable at x,y,z is attached to.
+	 *
 	 * @param world
 	 * @param x
 	 * @param y

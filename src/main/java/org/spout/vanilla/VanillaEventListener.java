@@ -111,7 +111,7 @@ public class VanillaEventListener implements Listener {
 	@EventHandler(order = Order.EARLIEST)
 	public void onPermissionNode(PermissionNodeEvent event) {
 		PermissionsSubject subject = event.getSubject();
-		List<String> ops = VanillaConfiguration.OPS.getStringList();
+		List<String> ops = VanillaConfiguration.OPS.getOps();
 		if (ops.contains(subject.getName())) {
 			event.setResult(Result.ALLOW);
 		}

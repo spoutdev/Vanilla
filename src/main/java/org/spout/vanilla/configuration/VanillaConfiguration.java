@@ -28,7 +28,6 @@ package org.spout.vanilla.configuration;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
 
 import org.spout.api.util.config.Configuration;
 import org.spout.api.util.config.ConfigurationNode;
@@ -54,8 +53,7 @@ public class VanillaConfiguration extends Configuration {
 	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_HUNGER = new ConfigurationNode("player.survival.enable-hunger", true);
 	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_XP = new ConfigurationNode("player.survival.enable-xp", true);
 	public static final ConfigurationNode PLAYER_TIMEOUT_TICKS = new ConfigurationNode("player.timeout-ticks", 1200);
-	private static final String[] ops = {"Notch", "jeb", "ez"};
-	public static final ConfigurationNode OPS = new ConfigurationNode("ops", Arrays.asList(ops));
+	public static final OpConfig OPS = new OpConfig();
 
 	// Entity
 	public static final ConfigurationNode ITEM_PICKUP_RANGE = new ConfigurationNode("entity.item-pickup-range", 3);
@@ -81,5 +79,6 @@ public class VanillaConfiguration extends Configuration {
 		}
 
 		this.save();
+		OPS.load();
 	}
 }

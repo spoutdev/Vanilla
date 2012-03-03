@@ -25,8 +25,6 @@
  */
 package org.spout.vanilla.command;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import org.spout.api.Spout;
@@ -40,8 +38,6 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.configuration.OpConfig;
-import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.entity.living.player.VanillaPlayer;
@@ -52,10 +48,9 @@ import org.spout.vanilla.world.Weather;
 public class AdministrationCommands {
 
 	private final VanillaPlugin plugin = VanillaPlugin.getInstance();
-	private final VanillaConfiguration config = plugin.getConfig();
 	
 	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
-	//@CommandPermissions("vanilla.command.time")
+	@CommandPermissions("vanilla.command.time")
 	public void time(CommandContext args, CommandSource source) throws CommandException {
 		int time = 0;
 		boolean relative = false;
@@ -75,7 +70,6 @@ public class AdministrationCommands {
 			}
 		} else if (args.getString(0).equalsIgnoreCase("add")) {
 			relative = true;
-
 			if (args.isInteger(1)) {
 				time = args.getInteger(1);
 			} else {
@@ -86,7 +80,6 @@ public class AdministrationCommands {
 		World world = null;
 		if (args.length() == 3) {
 			world = plugin.getGame().getWorld(args.getString(2));
-
 			if (world == null) {
 				throw new CommandException("'" + args.getString(2) + "' is not a valid world.");
 			}
@@ -108,13 +101,10 @@ public class AdministrationCommands {
 	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|survival|creative> (0 = SURVIVAL, 1 = CREATIVE)", desc = "Change a player's game mode", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.gamemode")
 	public void gamemode(CommandContext args, CommandSource source) throws CommandException {
-
 		int index = 0;
 		Player player;
-
 		if (args.length() == 2) {
 			player = Spout.getGame().getPlayer(args.getString(index++), true);
-
 			if (player == null) {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
@@ -127,7 +117,6 @@ public class AdministrationCommands {
 		}
 
 		int mode;
-
 		if (args.isInteger(index)) {
 			mode = args.getInteger(index);
 		} else if (args.getString(index).equalsIgnoreCase("survival")) {
@@ -140,7 +129,6 @@ public class AdministrationCommands {
 
 		VanillaPlayer controller;
 		String message;
-
 		switch (mode) {
 			case 0:
 				controller = new SurvivalPlayer(player);
@@ -162,7 +150,6 @@ public class AdministrationCommands {
 		player.sendMessage("Your game mode has been changed to " + message);
 		player.getEntity().setController(controller);
 		player.getSession().send(new StateChangeMessage((byte) 3, (byte) mode));
-
 		if (!player.equals(source)) {
 			source.sendMessage(player.getName() + "'s game mode has been changed to " + message);
 		}
@@ -254,7 +241,7 @@ public class AdministrationCommands {
 	}
 
 	@Command(aliases = "debug", usage = "[type] (/resend /resendall)", desc = "Debug commands", max = 2)
-	//@CommandPermissions("vanilla.command.debug")
+	@CommandPermissions("vanilla.command.debug")
 	public void debug(CommandContext args, CommandSource source) throws CommandException {
 		Player player = null;
 		if (source instanceof Player) {
@@ -273,46 +260,11 @@ public class AdministrationCommands {
 			for (Chunk c : chunks) {
 				network.sendChunk(c);
 			}
+			
 			source.sendMessage("All chunks resent");
 		} else if (args.getString(0, "").contains("resend")) {
 			player.getNetworkSynchronizer().sendChunk(player.getEntity().getChunk());
 			source.sendMessage("Chunk resent");
 		}
 	}
-
-/*	@Command(aliases = "op", usage = "[player]", desc = "Gives a user operator status", max = 1)
-	@CommandPermissions("vanilla.command.op")
-	public void op(CommandContext args, CommandSource source) throws CommandException {
-		//Handle in-game player
-		if (args.length() == 0) {
-			if ((!(source instanceof Player))) {
-				throw new CommandException("You must specify a specific player to give OP");
-			} else {
-				//TODO perhaps not save OPs right in this command?
-				String name = source.getName();
-				Object[] ops = config.getStringList("ops").toArray();
-				for (Object temp: ops) {
-					if (temp.toString().equalsIgnoreCase(name)) {
-						source.sendMessage("You are already OP!");
-					}
-				}
-			}
-		//Handle console	
-		} else if (args.length() == 1) {
-			Player player = Spout.getGame().getPlayer(args.getString(0), true);
-			if (player == null) {
-				throw new CommandException(args.getString(0) + " is not online.");
-			}
-			//TODO perhaps not save OPs right in this command?
-			String name = player.getName();
-			Object[] ops = config.getStringList("ops").toArray();
-			for (Object temp: ops) {
-				if (temp.toString().equalsIgnoreCase(name)) {
-					source.sendMessage(name + " is already an OP.");
-				}
-			}
-			source.sendMessage(name + " was promoted to an OP.");
-			player.sendMessage("You have been promoted to an OP.");
-		}
-	}*/
 }

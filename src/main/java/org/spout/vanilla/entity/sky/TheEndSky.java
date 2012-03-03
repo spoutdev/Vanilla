@@ -26,6 +26,7 @@
 package org.spout.vanilla.entity.sky;
 
 import org.spout.api.entity.Controller;
+import org.spout.api.geo.World;
 import org.spout.vanilla.world.Weather;
 
 public class TheEndSky extends Controller implements Sky {
@@ -63,6 +64,11 @@ public class TheEndSky extends Controller implements Sky {
 
 	@Override
 	public float getTime() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public World getWorld() {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

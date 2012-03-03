@@ -23,46 +23,65 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.sky;
+package org.spout.vanilla.entity.world;
 
-import org.spout.api.geo.World;
+import org.spout.api.event.Cancellable;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.world.WorldEvent;
+import org.spout.vanilla.entity.sky.Sky;
 import org.spout.vanilla.world.Weather;
 
-public interface Sky {
+/**
+ * Called when the sky changes weather.
+ * 
+ */
+public class WeatherChangeEvent extends WorldEvent implements Cancellable {
+
+	private static HandlerList handlers = new HandlerList();
+	private Weather current, weather;
+	
+	public WeatherChangeEvent(Sky sky, Weather current, Weather weather) {
+		super(sky.getWorld());
+	}
 	
 	/**
-	 * Sets the current time of day
+	 * Gets the weather at the time the event is called.
 	 * 
-	 * @param time 
+	 * @return the current weather.
 	 */
-	public void setTime(float time);
+	public Weather getCurrentWeather() {
+		return current;
+	}
 	
 	/**
-	 * Gets the current time of day
+	 * Gets the new weather set after the event.
 	 * 
-	 * @return the time of day
+	 * @return the new weather.
 	 */
-	public float getTime();
+	public Weather getNewWeather() {
+		return weather;
+	}
 	
 	/**
-	 * Sets the weather of the sky
+	 * Sets the outcome of the event.
 	 * 
 	 * @param weather 
 	 */
-	public void setWeather(Weather weather);
+	public void setNewWeather(Weather weather) {
+		this.weather = weather;
+	}
 	
-	/**
-	 * Gets the current weather of the sky.
-	 * 
-	 * @return 
-	 */
-	public Weather getWeather();
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
+	}
 	
-	/**
-	 * Gets the world the sky is in.
-	 * 
-	 * @return the world the sky is in.
-	 */
-	public World getWorld();
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
 	
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
 }

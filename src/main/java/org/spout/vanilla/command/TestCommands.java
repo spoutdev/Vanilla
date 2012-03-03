@@ -32,8 +32,11 @@ import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.entity.Entity;
 import org.spout.api.exception.CommandException;
+import org.spout.api.geo.World;
+import org.spout.api.player.Player;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.sky.NormalSky;
+import org.spout.vanilla.entity.living.passive.Sheep;
 
 public class TestCommands {
 	private final VanillaPlugin plugin = VanillaPlugin.getInstance();
@@ -42,5 +45,33 @@ public class TestCommands {
 	public void getsky(CommandContext args, CommandSource source) throws CommandException {
 		Set<Entity> ents = VanillaPlugin.spawnWorld.getAll(NormalSky.class);
 		plugin.getLogger().info("Size of ents: " + ents.size());
+	}
+
+	@Command(aliases = {"spawnsheep"}, usage = "[color]", desc = "Spawn a sheep!", max = 1)
+	public void spawnsheep(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to spawn a sheep.");
+		}
+		
+		int color = 0xF;
+		if (args.length() == 1) {
+			if (args.isInteger(0)) {
+				color = args.getInteger(0);
+			} else {
+				throw new CommandException("Color must be a string.");
+			}
+		}
+		
+		Player player = (Player) source;
+		Entity entity = player.getEntity();
+		World world = entity.getWorld();
+		
+		if (args.length() < 1) {
+			world.createAndSpawnEntity(entity.getPoint(), new Sheep());
+		} else {
+			world.createAndSpawnEntity(entity.getPoint(), new Sheep(color));
+		}
+		
+		source.sendMessage("Baaaaa!");
 	}
 }

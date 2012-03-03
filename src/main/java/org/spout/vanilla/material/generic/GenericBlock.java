@@ -94,14 +94,13 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 		return (GenericBlock) super.setHardness(hardness);
 	}
 
-	@Override
 	public GenericBlock setLightLevel(int level) {
-		return (GenericBlock) super.setLightLevel(level);
+		return setLightLevel((short) level);
 	}
 
 	@Override
-	public GenericBlock setOpaque(boolean opaque) {
-		return (GenericBlock) super.setOpaque(opaque);
+	public GenericBlock setLightLevel(short level) {
+		return (GenericBlock) super.setLightLevel(level);
 	}
 
 }

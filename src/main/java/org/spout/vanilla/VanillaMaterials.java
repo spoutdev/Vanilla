@@ -82,8 +82,8 @@ public final class VanillaMaterials {
 	public static final BlockMaterial BIRCH_SAPLING = new Sapling("Birch Sapling", 2).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial JUNGLE_SAPLING = new Sapling("Jungle Sapling", 3).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial BEDROCK = new Solid("Bedrock", 7).setResistance(6000000.0F);
-	public static final BlockMaterial WATER = new GenericLiquid("Water", 8, true).setHardness(100.0F).setResistance(166.7F);
-	public static final BlockMaterial STATIONARY_WATER = new GenericLiquid("Stationary Water", 9, false).setHardness(100.0F).setResistance(166.7F);
+	public static final BlockMaterial WATER = new GenericLiquid("Water", 8, true).setHardness(100.0F).setResistance(166.7F).setOpacity((short) 2);
+	public static final BlockMaterial STATIONARY_WATER = new GenericLiquid("Stationary Water", 9, false).setHardness(100.0F).setResistance(166.7F).setOpacity((short) 2);
 	public static final BlockMaterial LAVA = new GenericLiquid("Lava", 10, true).setHardness(0.0F).setLightLevel(15).setResistance(0.0F);
 	public static final BlockMaterial STATIONARY_LAVA = new GenericLiquid("Stationary Lava", 11, false).setHardness(100.0F).setLightLevel(15).setResistance(166.7F);
 	public static final BlockMaterial SAND = new Solid("Sand", 12, true).setHardness(0.5F).setResistance(0.8F);

@@ -59,17 +59,17 @@ public class Air extends GenericBlock implements Block {
 	}
 
 	@Override
-	public GenericBlock setOpaque(boolean opaque) {
-		return this;
-	}
-
-	@Override
-	public int getLightLevel() {
+	public short getOpacity() {
 		return 0;
 	}
 
 	@Override
-	public GenericBlock setLightLevel(int level) {
+	public short getLightLevel() {
+		return 0;
+	}
+
+	@Override
+	public GenericBlock setLightLevel(short level) {
 		return this;
 	}
 }

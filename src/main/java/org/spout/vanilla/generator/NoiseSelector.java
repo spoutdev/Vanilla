@@ -35,17 +35,21 @@ public class NoiseSelector extends BiomeSelector {
 	private Voronoi base = new Voronoi();
 
 	public NoiseSelector() {
-		base.setFrequency(Math.PI);
+		base.setFrequency(0.8);
+		base.setDisplacement(1.4);
 		noise.SetSourceModule(0, base);
 		noise.setRoughness(4);
 		noise.setFrequency(0.8);
 		noise.setPower(1.3);
+		//noise.setRoughness(2);
+		//noise.setFrequency(0.4);
+		//noise.setPower(0.8);
 	}
 
 	@Override
 	public int pickBiome(int x, int y, int z, long seed) {
 		base.setSeed((int) seed);
 		noise.setSeed((int) seed);
-		return (int) (noise.GetValue(x / 256.0 + 0.05, y + 0.05, z / 256.0 + 0.05) * 32);
+		return (int) (noise.GetValue(x / 256.0 + 0.05, y + 0.05, z / 256.0 + 0.05) * 64);
 	}
 }

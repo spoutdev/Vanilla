@@ -36,7 +36,8 @@ public class TundraBiome extends PlainBiome {
 	protected void generateWateredStack(CuboidShortBuffer blockData, int x, int y, int z, int maxSeaLevel) {
 		boolean first = true;
 		for (int dy = y + 15; dy >= y; dy--) {
-			if (dy < maxSeaLevel && blockData.get(x, dy, z) == VanillaMaterials.AIR.getId()) {
+			final int curBlock = blockData.get(x, dy, z);
+			if (dy < maxSeaLevel && (curBlock == VanillaMaterials.AIR.getId() || curBlock == VanillaMaterials.SNOW.getId())) {
 				if (first) {
 					blockData.set(x, dy, z, VanillaMaterials.ICE.getId());
 					first = false;

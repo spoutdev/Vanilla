@@ -36,6 +36,7 @@ import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.MaterialData;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
@@ -141,11 +142,13 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 		ChunkSnapshot snapshot = c.getSnapshot(false);
 		short[] rawBlockIdArray = snapshot.getBlockIds();
-
 		short[] rawBlockData = snapshot.getBlockData();
+		short[] rawBlockLight = snapshot.getBlockLight();
+		short[] rawSkyLight = snapshot.getSkyLight();
 		byte[] fullChunkData = new byte[16 * 16 * 16 * 5 / 2];
 		final int maxIdIndex = 16 * 16 * 16;
 		final int maxDataIndex = maxIdIndex + 16 * 16 * 16 / 2;
+
 		for (int i = 0; i < fullChunkData.length; i++) {
 			if (i < maxIdIndex) {
 				fullChunkData[i] = (byte) 0x00;
@@ -155,13 +158,28 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 				fullChunkData[i] = (byte) 0xFF;
 			}
 		}
+
+		boolean hasData = false;
+		int arrIndex = 0;
 		for (int i = 0; i < rawBlockIdArray.length; i++) {
 			// TODO - conversion code
-			fullChunkData[i] = (byte) (rawBlockIdArray[i] & 0xFF);
+			if ((rawBlockIdArray[i] & 0xFF) != 0) {
+				hasData = true;
+			}
+			fullChunkData[arrIndex++] = (byte) (rawBlockIdArray[i] & 0xFF);
+		}
+		if (!hasData) {
+			return;
 		}
 
 		for (int i = 0; i < rawBlockData.length; i += 2) {
-			fullChunkData[i + maxIdIndex] = (byte) (rawBlockData[i + 1] & 0xF << 4 | rawBlockData[i] & 0xF);
+			fullChunkData[arrIndex++] = (byte) ((byte) rawBlockData[i + 1] << 4 | (byte) rawBlockData[i]);
+		}
+		for (int i = 0; i < rawBlockLight.length; i += 2) {
+			fullChunkData[arrIndex++] = (byte) ((byte) rawBlockLight[i + 1] << 4 | (byte) rawBlockLight[i]);
+		}
+		for (int i = 0; i < rawSkyLight.length; i += 2) {
+			fullChunkData[arrIndex++] = (byte) ((byte) rawSkyLight[i + 1] << 4 | (byte) rawSkyLight[i]);
 		}
 
 		final boolean sendBiomes = !biomesSentChunks.contains(c.getX(), c.getZ());
@@ -216,7 +234,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			}
 			entity.getInventory().addViewer(this);
 		} else {
-			owner.getSession().send(new RespawnMessage(0, (byte) 0, (byte) 0, world == null ? 0 : world.getHeight(), "DEFAULT"));
+			owner.getSession().send(new RespawnMessage(0, (byte)0, (byte) (owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1), world == null ? 0: world.getHeight(), "DEFAULT"));
 		}
 
 		if (world != null) {

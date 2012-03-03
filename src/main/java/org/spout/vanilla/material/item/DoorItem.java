@@ -55,7 +55,7 @@ public class DoorItem extends GenericItem {
 		int y = (int) position.getY();
 		int z = (int) position.getZ();
 		if (world.getBlockId(x, y, z) == 0 && world.getBlockId(x, y + 1, z) == 0 && world.getBlockMaterial(x, y - 1, z) instanceof Solid) {
-			System.out.println("Placing door");
+			System.out.println("Placing door!");
 		}
 		/*
 		 * Formula kinda copied from minecraft source

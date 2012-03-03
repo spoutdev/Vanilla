@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
@@ -18,51 +18,31 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev License Version 1 along with this program.
+ * the MIT license and the SpoutDev license version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.configuration;
+package org.spout.vanilla.protocol.handler;
 
-import java.io.File;
+import org.spout.api.player.Player;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
+import org.spout.vanilla.entity.VanillaEntity;
+import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 
-import java.util.Arrays;
-import java.util.List;
-import org.spout.api.util.config.Configuration;
-import org.spout.api.util.config.ConfigurationNode;
 
-public class OpConfig extends Configuration {
 
-	private static final String[] ops = {"Notch", "jeb", "ez"};
-	private static final ConfigurationNode OPS = new ConfigurationNode("ops", Arrays.asList(ops));
-	
-	public OpConfig() {
-		super(new File("plugins/Vanilla/ops.yml"));
-	}
+public class EntityHeadYawMessageHandler extends MessageHandler<EntityHeadYawMessage>{
 
 	@Override
-	public void load() {
-		super.load();
-		this.addNode(OPS);
-		this.save();
+	public void handle(Session session, Player player, EntityHeadYawMessage message) {
+		if(player.getEntity().getController() == null)
+			return;
+		if(!(player.getEntity().getController() instanceof VanillaEntity))
+			return;
+		VanillaEntity vanilla = (VanillaEntity) player.getEntity().getController();
+		vanilla.setHeadYaw(message.getHeadYaw());
 	}
-	
-	public List<String> getOps() {
-		return OPS.getStringList();
-	}
-	
-	public void addOp(String name) {
-		List<String> list = OPS.getStringList();
-		list.add(name);
-		OPS.setValue(list);
-		this.save();
-	}
-	
-	public void removeOp(String name) {				
-		List<String> list = OPS.getStringList();
-		list.remove(name);
-		OPS.setValue(list);
-		this.save();
-	}
+
 }

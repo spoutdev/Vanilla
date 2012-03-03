@@ -25,11 +25,17 @@
  */
 package org.spout.vanilla.entity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.spout.api.entity.Controller;
+import org.spout.api.geo.World;
 import org.spout.api.player.Player;
+import org.spout.api.protocol.Message;
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
+import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 
 /**
@@ -37,14 +43,34 @@ import org.spout.vanilla.protocol.msg.EntityStatusMessage;
  */
 public abstract class VanillaEntity extends Controller {
 	private int health = 10, maxHealth = 10;
+	private int headYaw=0, headYawLive=0;
 
 	@Override
 	public void onTick(float dt) {
 		if (parent.isDead()) {
 			return;
 		}
+		List<Message> toSend = new ArrayList<Message>();
+		
+		if(headYawLive!=headYaw) {
+			headYawLive = headYaw;
+			EntityHeadYawMessage message = new EntityHeadYawMessage(parent.getId(), headYaw);
+			toSend.add(message);
+		}
+		if(health <= 0) {
+			toSend.add(new EntityStatusMessage(parent.getId(), EntityStatusMessage.ENTITY_DEAD));
+		}
+		if(toSend.isEmpty())
+			return;
+		Set<Player> onlinePlayers = parent.getWorld().getPlayers();
+		for(Player player : onlinePlayers) {
+			for(Message message : toSend) {
+				player.getSession().send(message);
+			}
+		}
+		
 		if (health <= 0) {
-			die();
+			parent.kill();
 		}
 	}
 
@@ -78,12 +104,19 @@ public abstract class VanillaEntity extends Controller {
 		maxHealth = newMax;
 	}
 
-	public void die() {
-		EntityStatusMessage message = new EntityStatusMessage(parent.getId(), EntityStatusMessage.ENTITY_DEAD);
-		Set<Player> players = parent.getWorld().getPlayers();
-		for (Player player : players) {
-			player.getSession().send(message);
-		}
-		parent.kill();
+	public void kill() {
+		setHealth(0);
+	}
+	
+	public void setHeadYaw(int headYaw) {
+		headYawLive = headYaw;
+	}
+	
+	public int getHeadYaw() {
+		return headYaw;
+	}
+	
+	public int getLiveHeadYaw() {
+		return headYawLive;
 	}
 }

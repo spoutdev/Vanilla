@@ -27,7 +27,6 @@ package org.spout.vanilla;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
-
 import org.spout.api.Game;
 import org.spout.api.Server;
 import org.spout.api.command.CommandRegistrationsFactory;

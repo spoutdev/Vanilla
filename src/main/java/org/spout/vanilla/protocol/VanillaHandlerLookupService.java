@@ -35,6 +35,7 @@ import org.spout.vanilla.protocol.handler.ChatMessageHandler;
 import org.spout.vanilla.protocol.handler.CloseWindowMessageHandler;
 import org.spout.vanilla.protocol.handler.DiggingMessageHandler;
 import org.spout.vanilla.protocol.handler.EntityActionMessageHandler;
+import org.spout.vanilla.protocol.handler.EntityHeadYawMessageHandler;
 import org.spout.vanilla.protocol.handler.EntityInteractionMessageHandler;
 import org.spout.vanilla.protocol.handler.GroundMessageHandler;
 import org.spout.vanilla.protocol.handler.KickMessageHandler;
@@ -52,6 +53,7 @@ import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
+import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
 import org.spout.vanilla.protocol.msg.GroundMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
@@ -87,6 +89,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(QuickBarMessage.class, QuickBarMessageHandler.class);
 			bind(RespawnMessage.class, RespawnMessageHandler.class);
 			bind(EntityInteractionMessage.class, EntityInteractionMessageHandler.class);
+			bind(EntityHeadYawMessage.class, EntityHeadYawMessageHandler.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

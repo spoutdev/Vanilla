@@ -33,6 +33,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
+import org.spout.vanilla.entity.VanillaEntity;
 import org.spout.vanilla.protocol.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 
@@ -59,7 +60,10 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 			int z = (int) (entity.getZ() * 32);
 			int r = (int) (entity.getYaw() * 32);
 			int p = (int) (entity.getPitch() * 32);
-			int headyaw = 0; //TODO: obtain headyaw from entity
+			int headyaw = 0;
+			if(c instanceof VanillaEntity) {
+				headyaw = ((VanillaEntity) c).getHeadYaw();
+			}
 			int type = entity.getData(org.spout.vanilla.entity.Entity.KEY).asInt();
 			if (type == 0) {
 				return null;

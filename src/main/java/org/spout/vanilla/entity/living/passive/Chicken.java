@@ -25,12 +25,24 @@
  */
 package org.spout.vanilla.entity.living.passive;
 
+import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.Passive;
 import org.spout.vanilla.entity.living.AnimalEntity;
 import org.spout.vanilla.entity.living.Land;
 
 public class Chicken extends AnimalEntity implements Passive, Land {
+	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
+	
+	@Override
+	public EntityProtocol getEntityProtocol(int protocolId) {
+		return entityProtocolStore.getEntityProtocol(protocolId);
+	}
+
+	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
+		entityProtocolStore.setEntityProtocol(protocolId, protocol);
+	}
 	@Override
 	public void onAttached() {
 		super.onAttached();

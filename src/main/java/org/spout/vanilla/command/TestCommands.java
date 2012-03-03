@@ -35,6 +35,7 @@ import org.spout.api.exception.CommandException;
 import org.spout.api.geo.World;
 import org.spout.api.player.Player;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.entity.living.passive.Chicken;
 import org.spout.vanilla.entity.sky.NormalSky;
 import org.spout.vanilla.entity.living.passive.Sheep;
 
@@ -48,7 +49,7 @@ public class TestCommands {
 	}
 
 	@Command(aliases = {"spawnsheep"}, usage = "[color]", desc = "Spawn a sheep!", max = 1)
-	public void spawnsheep(CommandContext args, CommandSource source) throws CommandException {
+	public void spawnSheep(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to spawn a sheep.");
 		}
@@ -71,7 +72,19 @@ public class TestCommands {
 		} else {
 			world.createAndSpawnEntity(entity.getPoint(), new Sheep(color));
 		}
+	}
+	
+	@Command(aliases = {"spawnchicken"}, usage = "", desc = "Spawn a chicken!", max = 1)
+	public void spawnChicken(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to spawn a sheep.");
+		}
+		Player player = (Player) source;
+		Entity entity = player.getEntity();
+		World world = entity.getWorld();
 		
-		source.sendMessage("Baaaaa!");
+		if (args.length() < 1) {
+			world.createAndSpawnEntity(entity.getPoint(), new Chicken());
+		} 
 	}
 }

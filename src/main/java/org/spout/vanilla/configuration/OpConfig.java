@@ -53,6 +53,16 @@ public class OpConfig extends Configuration {
 	}
 	
 	public void addOp(String name) {
-		OPS.getStringList().add(name);
+		List<String> list = OPS.getStringList();
+		list.add(name);
+		OPS.setValue(list);
+		this.save();
+	}
+	
+	public void removeOp(String name) {				
+		List<String> list = OPS.getStringList();
+		list.remove(name);
+		OPS.setValue(list);
+		this.save();
 	}
 }

@@ -38,6 +38,8 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.configuration.OpConfig;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.entity.living.player.VanillaPlayer;
@@ -48,6 +50,49 @@ import org.spout.vanilla.world.Weather;
 public class AdministrationCommands {
 
 	private final VanillaPlugin plugin = VanillaPlugin.getInstance();
+	
+	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
+	@CommandPermissions("vanilla.command.deop")
+	public void deop(CommandContext args, CommandSource source) throws CommandException {
+		if (args.length() != 1) {
+			throw new CommandException("Please only provide a player to OP!");
+		}
+		
+		String playerName = args.getString(0);
+		OpConfig ops = VanillaConfiguration.OPS;
+		if (!ops.getOps().contains(playerName)) {
+			throw new CommandException(playerName + " is not an operator!");
+		}
+		
+		ops.removeOp(playerName);
+		source.sendMessage(playerName + " is no longer an operator!");
+		Player player = Spout.getGame().getPlayer(playerName, true);
+		plugin.getConfig().save();
+		if (player != null) {
+			player.sendMessage("You are no longer an operator!");
+		}
+	}
+	
+	@Command(aliases = {"op"}, usage = "<player>", desc = "Make a player an operator", min = 1, max = 1)
+	@CommandPermissions("vanilla.command.op")
+	public void op(CommandContext args, CommandSource source) throws CommandException {
+		if (args.length() != 1) {
+			throw new CommandException("Please only provide a player to OP!");
+		}
+		
+		String playerName = args.getString(0);
+		OpConfig ops = VanillaConfiguration.OPS;
+		if (ops.getOps().contains(playerName)) {
+			throw new CommandException(playerName + " is already an operator!");
+		}
+		
+		ops.addOp(playerName);
+		source.sendMessage(playerName + " is now an operator!");
+		Player op = Spout.getGame().getPlayer(playerName, true);
+		if (op != null) {
+			op.sendMessage("You are now an operator!");
+		}		
+	}
 	
 	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
 	@CommandPermissions("vanilla.command.time")

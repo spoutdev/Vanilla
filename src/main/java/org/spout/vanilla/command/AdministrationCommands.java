@@ -34,11 +34,12 @@ import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
+import org.spout.api.material.MaterialData;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.configuration.OpConfig;
-import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.entity.living.player.VanillaPlayer;
@@ -49,6 +50,81 @@ import org.spout.vanilla.world.Weather;
 public class AdministrationCommands {
 
 	private final VanillaPlugin plugin = VanillaPlugin.getInstance();
+	
+	@Command(aliases = {"give"}, usage = "<player|item> <material|amount> [amount] ", desc = "Lets a player spawn items", min = 1, max = 3)
+	@CommandPermissions("vanilla.command.give")
+	public void give(CommandContext args, CommandSource source) throws CommandException {
+		Player player = null;
+		Material material = null;
+		int amount = 1;
+		if (args.length() == 1) {
+			if (!(source instanceof Player)) {
+				throw new CommandException("You must be a player to give yourself materials!");
+			}
+			
+			player = (Player) source;
+			if (args.isInteger(0)) {
+				material = MaterialData.getMaterial((short) args.getInteger(0));
+			} else {
+				material = MaterialData.getMaterial(args.getString(0));
+			}
+			
+			if (material == null) {
+				throw new CommandException(args.getString(0) + " is not a material!");
+			}
+		}
+		
+		if (args.length() == 2) {
+			if (source instanceof Player) {
+				player = (Player) source;
+				amount = args.getInteger(1);
+				if (args.isInteger(0)) {
+					material = MaterialData.getMaterial((short) args.getInteger(0));
+				} else {
+					material = MaterialData.getMaterial(args.getString(0));
+				}
+				
+				if (material == null) {
+					throw new CommandException(args.getString(0) + " is not a material!");
+				}
+			}
+			
+			player = Spout.getGame().getPlayer(args.getString(0), true);
+			if (player == null) {
+				throw new CommandException(args.getString(0) + " is not online!");
+			}
+				
+			if (args.isInteger(1)) {
+				material = MaterialData.getMaterial((short) args.getInteger(1));
+			} else {
+				material = MaterialData.getMaterial(args.getString(1));
+			}
+				
+			if (material == null) {
+				throw new CommandException(args.getString(0) + " is not a material!");
+			}
+		}
+		
+		if (args.length() == 3) {
+			player = Spout.getGame().getPlayer(args.getString(0), true);
+			amount = args.getInteger(2);
+			if (player == null) {
+				throw new CommandException(args.getString(0) + " is not online!");
+			}
+			
+			if (args.isInteger(1)) {
+				material = MaterialData.getMaterial((short) args.getInteger(1));
+			} else {
+				material = MaterialData.getMaterial(args.getString(0));
+			}
+			
+			if (material == null) {
+				throw new CommandException(args.getString(0) + " is not a material!");
+			}
+		}
+		
+		player.getEntity().getInventory().addItem(new ItemStack(material, amount));
+	}
 	
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.deop")
@@ -65,7 +141,6 @@ public class AdministrationCommands {
 		plugin.setOp(playerName, false);
 		source.sendMessage(playerName + " is no longer an operator!");
 		Player player = Spout.getGame().getPlayer(playerName, true);
-		plugin.getConfig().save();
 		if (player != null) {
 			player.sendMessage("You are no longer an operator!");
 		}

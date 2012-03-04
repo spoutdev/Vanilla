@@ -30,19 +30,22 @@ import java.util.Random;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.entity.living.HumanEntity;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.msg.PingMessage;
 
-public abstract class VanillaPlayer extends PlayerController {
-
+public abstract class VanillaPlayer extends HumanEntity implements PlayerController {
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
 
 	private static Random random = new Random();
+	
+	private final Player owner;
 	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
 
 	@Override
@@ -55,7 +58,7 @@ public abstract class VanillaPlayer extends PlayerController {
 	}
 
 	public VanillaPlayer(Player p) {
-		super(p);
+		owner = p;
 		p.getEntity().setInventorySize(45);
 		Inventory inv = p.getEntity().getInventory();
 		for (int i = 37; i <= inv.getSize(); i++) {
@@ -63,6 +66,14 @@ public abstract class VanillaPlayer extends PlayerController {
 		}
 		p.getEntity().getInventory().setCurrentSlot(0);
 
+	}
+	
+	public Player getPlayer() {
+		return owner;
+	}
+	
+	public Inventory createInventory(int size) {
+		return new PlayerInventory(size);
 	}
 
 	@Override

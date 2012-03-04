@@ -26,7 +26,9 @@
 package org.spout.vanilla;
 
 import java.net.InetSocketAddress;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import org.spout.api.Game;
 import org.spout.api.Server;
 import org.spout.api.command.CommandRegistrationsFactory;
@@ -41,6 +43,7 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
+import org.spout.api.util.config.ConfigurationNode;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -55,14 +58,16 @@ import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
+	
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
 	public static final int minecraftProtocolId = 28;
 	public static int vanillaProtocolId;
 	public static World spawnWorld;
-
 	private final VanillaConfiguration config;
 	private final HashMap<World, Sky> skys = new HashMap<World, Sky>();
 	private static VanillaPlugin instance;
+	private static final String[] ops = {"Notch", "jeb", "ez"};
+	public static final ConfigurationNode OPS = new ConfigurationNode("ops", Arrays.asList(ops));
 
 	public VanillaPlugin() {
 		instance = this;
@@ -146,5 +151,20 @@ public class VanillaPlugin extends CommonPlugin {
 
 	public Sky getSky(World world) {
 		return skys.get(world);
+	}
+	
+	public List<String> getOps() {
+		return OPS.getStringList();
+	}
+	
+	public void setOp(String playerName, boolean op) {
+		List<String> list = OPS.getStringList();
+		if (op) {
+			list.add(playerName);
+		} else {
+			list.remove(playerName);
+		}
+		
+		OPS.setValue(list);
 	}
 }

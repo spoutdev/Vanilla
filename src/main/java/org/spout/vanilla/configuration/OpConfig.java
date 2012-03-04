@@ -27,15 +27,10 @@ package org.spout.vanilla.configuration;
 
 import java.io.File;
 
-import java.util.Arrays;
-import java.util.List;
 import org.spout.api.util.config.Configuration;
-import org.spout.api.util.config.ConfigurationNode;
+import org.spout.vanilla.VanillaPlugin;
 
 public class OpConfig extends Configuration {
-
-	private static final String[] ops = {"Notch", "jeb", "ez"};
-	private static final ConfigurationNode OPS = new ConfigurationNode("ops", Arrays.asList(ops));
 	
 	public OpConfig() {
 		super(new File("plugins/Vanilla/ops.yml"));
@@ -44,25 +39,7 @@ public class OpConfig extends Configuration {
 	@Override
 	public void load() {
 		super.load();
-		this.addNode(OPS);
-		this.save();
-	}
-	
-	public List<String> getOps() {
-		return OPS.getStringList();
-	}
-	
-	public void addOp(String name) {
-		List<String> list = OPS.getStringList();
-		list.add(name);
-		OPS.setValue(list);
-		this.save();
-	}
-	
-	public void removeOp(String name) {				
-		List<String> list = OPS.getStringList();
-		list.remove(name);
-		OPS.setValue(list);
+		this.addNode(VanillaPlugin.OPS);
 		this.save();
 	}
 }

@@ -58,12 +58,11 @@ public class AdministrationCommands {
 		}
 		
 		String playerName = args.getString(0);
-		OpConfig ops = VanillaConfiguration.OPS;
-		if (!ops.getOps().contains(playerName)) {
+		if (!plugin.getOps().contains(playerName)) {
 			throw new CommandException(playerName + " is not an operator!");
 		}
 		
-		ops.removeOp(playerName);
+		plugin.setOp(playerName, false);
 		source.sendMessage(playerName + " is no longer an operator!");
 		Player player = Spout.getGame().getPlayer(playerName, true);
 		plugin.getConfig().save();
@@ -80,12 +79,11 @@ public class AdministrationCommands {
 		}
 		
 		String playerName = args.getString(0);
-		OpConfig ops = VanillaConfiguration.OPS;
-		if (ops.getOps().contains(playerName)) {
+		if (plugin.getOps().contains(playerName)) {
 			throw new CommandException(playerName + " is already an operator!");
 		}
 		
-		ops.addOp(playerName);
+		plugin.setOp(playerName, true);
 		source.sendMessage(playerName + " is now an operator!");
 		Player op = Spout.getGame().getPlayer(playerName, true);
 		if (op != null) {

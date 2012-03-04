@@ -31,9 +31,11 @@ import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
+import org.spout.api.entity.Entity;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialData;
@@ -44,12 +46,68 @@ import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.entity.living.player.VanillaPlayer;
 import org.spout.vanilla.entity.sky.Sky;
+import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
 import org.spout.vanilla.world.Weather;
 
 public class AdministrationCommands {
 
 	private final VanillaPlugin plugin = VanillaPlugin.getInstance();
+	
+	@Command(aliases = {"tp", "teleport"}, usage = "<player> [player|x] [y] [z]", desc = "Teleport to a location", min = 1, max = 3)
+	@CommandPermissions("vanilla.command.tp")
+	public void tp(CommandContext args, CommandSource source) throws CommandException {
+		Player player = null;
+		Point point = null;
+		if (args.length() == 1) {
+			if (!(source instanceof Player)) {
+				throw new CommandException("You must be a player to teleport to another player!");
+			}
+			
+			player = (Player) source;
+			Player to = Spout.getGame().getPlayer(args.getString(0), true);
+			if (to != null) {
+				point = to.getEntity().getPoint();
+			} else {
+				throw new CommandException(args.getString(0) + " is not online!");
+			}
+		}
+		
+		if (args.length() == 2) {
+			player = Spout.getGame().getPlayer(args.getString(0), true);
+			if (player == null) {
+				throw new CommandException(args.getString(0) + " is not online!");
+			}
+			
+			Player to = Spout.getGame().getPlayer(args.getString(1), true);
+			if (to != null) {
+				point = to.getEntity().getPoint();
+			} else {
+				throw new CommandException(args.getString(1) + " is not online!");
+			}
+		}
+		
+		if (args.length() == 3) {
+			if (!(source instanceof Player)) {
+				throw new CommandException("You must be a player to teleport to coordinates!");
+			}
+			
+			player = (Player) source;
+			Entity playerEntity = player.getEntity();
+			point = new Point(playerEntity.getWorld(), args.getInteger(0), args.getInteger(1), args.getInteger(2));
+		}
+		
+		if (player == null) {
+			throw new CommandException("Player not found!");
+		}
+		
+		if (point == null) {
+			throw new CommandException("Point not found!");
+		}
+		
+		Entity playerEntity = player.getEntity();
+		player.getSession().send(new EntityTeleportMessage(playerEntity.getId(), (int) point.getX(), (int) point.getY(), (int) point.getZ(), (int) playerEntity.getRoll(), (int) playerEntity.getPitch()));
+	}
 	
 	@Command(aliases = {"give"}, usage = "<player|item> <material|amount> [amount] ", desc = "Lets a player spawn items", min = 1, max = 3)
 	@CommandPermissions("vanilla.command.give")

@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
@@ -74,5 +75,4 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 			return null;
 		}
 	}
-
 }

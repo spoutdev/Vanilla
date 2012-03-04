@@ -167,4 +167,8 @@ public class VanillaPlugin extends CommonPlugin {
 		
 		OPS.setValue(list, true);
 	}
+	
+	public boolean isOp(String playerName) {
+		return OPS.getStringList().contains(playerName);
+	}
 }

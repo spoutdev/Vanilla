@@ -44,7 +44,7 @@ public class QuickBarMessageHandler extends MessageHandler<QuickBarMessage> {
 			return;
 		}
 		ItemStack newItem = null;
-		if (checkValidId(message.getId())) {
+		if (checkValidId(message.getId(), message.getDamage())) {
 			newItem = new ItemStack(MaterialData.getMaterial(message.getId(), message.getDamage()), message.getAmount(), message.getDamage());
 		} else if (message.getId() != -1) {
 			player.kick("Unknown item ID: " + message.getId());
@@ -58,7 +58,7 @@ public class QuickBarMessageHandler extends MessageHandler<QuickBarMessage> {
 		}*/
 	}
 
-	public boolean checkValidId(short id) {
-		return MaterialData.getMaterial(id) != null;
+	public boolean checkValidId(short id, short data) {
+		return MaterialData.getMaterial(id, data) != null;
 	}
 }

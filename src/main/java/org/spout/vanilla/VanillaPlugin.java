@@ -58,7 +58,7 @@ import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
-	
+
 	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
 	public static final int minecraftProtocolId = 28;
 	public static int vanillaProtocolId;
@@ -114,7 +114,7 @@ public class VanillaPlugin extends CommonPlugin {
 		config.load();
 
 		//Register commands
-		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(), new SimpleAnnotatedCommandExecutorFactory());
+		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
 
 		game.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);
 		game.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
@@ -127,7 +127,7 @@ public class VanillaPlugin extends CommonPlugin {
 		spawnWorld = game.loadWorld("world", new NormalGenerator());
 
 		// TODO - Should probably be auto-set by generator and worlds should be defined in configuration.
-		NormalSky normSky = new NormalSky(spawnWorld);
+		NormalSky normSky = new NormalSky();
 		skys.put(spawnWorld, normSky);
 		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
 		spawnWorld.createAndSpawnEntity(new Point(spawnWorld, 0.f, 0.f, 0.f), normSky);
@@ -152,11 +152,11 @@ public class VanillaPlugin extends CommonPlugin {
 	public Sky getSky(World world) {
 		return skys.get(world);
 	}
-	
+
 	public List<String> getOps() {
 		return OPS.getStringList();
 	}
-	
+
 	public void setOp(String playerName, boolean op) {
 		List<String> list = OPS.getStringList();
 		if (op) {
@@ -164,10 +164,10 @@ public class VanillaPlugin extends CommonPlugin {
 		} else {
 			list.remove(playerName);
 		}
-		
+
 		OPS.setValue(list, true);
 	}
-	
+
 	public boolean isOp(String playerName) {
 		return OPS.getStringList().contains(playerName);
 	}

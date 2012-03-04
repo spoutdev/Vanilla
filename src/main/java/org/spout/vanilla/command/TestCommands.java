@@ -38,11 +38,15 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.passive.Chicken;
 import org.spout.vanilla.entity.sky.NormalSky;
 import org.spout.vanilla.entity.living.passive.Sheep;
+import org.spout.vanilla.entity.object.FallingBlock;
 
 public class TestCommands {
-	private final VanillaPlugin plugin = VanillaPlugin.getInstance();
+	private final VanillaPlugin plugin;
 
-	@Command(aliases = {"getsky"}, usage = "justdoit]", desc = "should respond with 0, if not royawesome know what the fuck he is doing")
+	public TestCommands(VanillaPlugin plugin) {
+		this.plugin = plugin;
+	}
+	@Command(aliases = {"getsky"}, usage = "justdoit]", desc = "should respond with 0, if not royawesome knows what the fuck he is doing and darsstar's PR got pulled")
 	public void getsky(CommandContext args, CommandSource source) throws CommandException {
 		Set<Entity> ents = VanillaPlugin.spawnWorld.getAll(NormalSky.class);
 		plugin.getLogger().info("Size of ents: " + ents.size());
@@ -53,38 +57,36 @@ public class TestCommands {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to spawn a sheep.");
 		}
-		
+
 		int color = 0xF;
 		if (args.length() == 1) {
 			if (args.isInteger(0)) {
 				color = args.getInteger(0);
 			} else {
-				throw new CommandException("Color must be a string.");
+				throw new CommandException("Color must be a integer.");
 			}
 		}
-		
+
 		Player player = (Player) source;
 		Entity entity = player.getEntity();
 		World world = entity.getWorld();
-		
+
 		if (args.length() < 1) {
 			world.createAndSpawnEntity(entity.getPoint(), new Sheep());
 		} else {
 			world.createAndSpawnEntity(entity.getPoint(), new Sheep(color));
 		}
 	}
-	
-	@Command(aliases = {"spawnchicken"}, usage = "", desc = "Spawn a chicken!", max = 1)
+
+	@Command(aliases = {"spawnchicken", "spawndodo"}, usage = "", desc = "Spawn a chicken!")
 	public void spawnChicken(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
-			throw new CommandException("You must be a player to spawn a sheep.");
+			throw new CommandException("You must be a player to spawn a chicken.");
 		}
 		Player player = (Player) source;
 		Entity entity = player.getEntity();
 		World world = entity.getWorld();
-		
-		if (args.length() < 1) {
-			world.createAndSpawnEntity(entity.getPoint(), new Chicken());
-		} 
+
+		world.createAndSpawnEntity(entity.getPoint(), new Chicken());
 	}
 }

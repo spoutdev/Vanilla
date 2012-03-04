@@ -39,17 +39,12 @@ import org.spout.vanilla.world.Weather;
 
 public class NormalSky extends Controller implements Sky {
 
-	private final World world;
 	private float time = 0;
 	private float countdown = 20;
 	private Weather currentWeather;
 	private Weather forecast;
 	private float timeUntilWeatherChange = 0.0f;
 	private Random random = new Random();
-
-	public NormalSky(World world) {
-		this.world = world;
-	}
 
 	@Override
 	public void onAttached() {
@@ -70,7 +65,7 @@ public class NormalSky extends Controller implements Sky {
 			}
 
 			countdown = 20;
-			Set<Player> players = world.getPlayers();
+			Set<Player> players = parent.getWorld().getPlayers();
 			for (Player player : players) {
 				player.getSession().send(new TimeMessage((long) time));
 			}
@@ -131,6 +126,6 @@ public class NormalSky extends Controller implements Sky {
 
 	@Override
 	public World getWorld() {
-		return world;
+		return parent.getWorld();
 	}
 }

@@ -39,14 +39,16 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.HumanEntity;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.msg.PingMessage;
+import org.spout.vanilla.protocol.msg.UserListItemMessage;
 
 public abstract class VanillaPlayer extends HumanEntity implements PlayerController {
-	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
-
-	private static Random random = new Random();
 	
+	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
+	private static Random random = new Random();
 	private final Player owner;
 	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
+	private short count = 0;
+	private short ping;
 
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
@@ -64,14 +66,21 @@ public abstract class VanillaPlayer extends HumanEntity implements PlayerControl
 		for (int i = 37; i <= inv.getSize(); i++) {
 			inv.setHiddenSlot(i, true);
 		}
+		
 		p.getEntity().getInventory().setCurrentSlot(0);
 
 	}
 	
+	public short getPing() {
+		return ping;
+	}
+	
+	@Override
 	public Player getPlayer() {
 		return owner;
 	}
 	
+	@Override
 	public Inventory createInventory(int size) {
 		return new PlayerInventory(size);
 	}
@@ -90,15 +99,21 @@ public abstract class VanillaPlayer extends HumanEntity implements PlayerControl
 		if (player == null || player.getSession() == null) {
 			return;
 		}
+		
 		PingMessage p = new PingMessage(random.nextInt());
 		player.getSession().send(p);
+		count++;
 		unresponsiveTicks--;
 		if (unresponsiveTicks == 0) {
 			player.getSession().disconnect("Connection timeout!");
 		}
+		
+		player.getSession().send(new UserListItemMessage(player.getName(), true, ping));
 	}
 
 	public void resetTimeoutTicks() {
+		ping = count;
+		count = 0;
 		unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
 	}
 }

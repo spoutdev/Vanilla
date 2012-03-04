@@ -165,6 +165,6 @@ public class VanillaPlugin extends CommonPlugin {
 			list.remove(playerName);
 		}
 		
-		OPS.setValue(list);
+		OPS.setValue(list, true);
 	}
 }

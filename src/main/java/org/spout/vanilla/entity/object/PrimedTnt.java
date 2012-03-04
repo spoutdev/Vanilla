@@ -29,8 +29,9 @@ import java.util.Random;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.math.Vector3;
+import org.spout.vanilla.entity.MovingEntity;
 
-public class PrimedTnt extends Controller {
+public class PrimedTnt extends MovingEntity {
 	float timeToExplode = 4.f;
 
 	Vector3 velocity;
@@ -48,7 +49,7 @@ public class PrimedTnt extends Controller {
 
 		if (timeToExplode <= 0.f) {
 			//Explode
-			System.out.print("tnt goes boom");
+			System.out.print("tnt goes boom!");
 		}
 
 		//Move in a random direction and apply gravity.

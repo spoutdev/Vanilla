@@ -27,11 +27,13 @@ package org.spout.vanilla.entity.living.neutral;
 
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.Neutral;
-import org.spout.vanilla.entity.living.Tameable;
+import org.spout.vanilla.entity.living.Tamed;
 import org.spout.vanilla.entity.living.AnimalEntity;
 import org.spout.vanilla.entity.living.Land;
 
-public class Ocelot extends AnimalEntity implements Tameable, Neutral, Land {
+public class Cat extends AnimalEntity implements Tamed, Neutral, Land {
+
+	org.spout.api.entity.Entity sovereign = null;
 
 	@Override
 	public void onAttached() {
@@ -46,8 +48,11 @@ public class Ocelot extends AnimalEntity implements Tameable, Neutral, Land {
 
 	@Override
 	public void subjectTo(org.spout.api.entity.Entity entity) {
-		Cat cat = new Cat();
-		cat.subjectTo(entity);
-		parent.setController(cat);
+		sovereign = entity;
+	}
+
+	@Override
+	public org.spout.api.entity.Entity subjectedTo() {
+		return sovereign;
 	}
 }

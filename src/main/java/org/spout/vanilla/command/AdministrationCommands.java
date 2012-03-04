@@ -51,9 +51,12 @@ import org.spout.vanilla.protocol.msg.StateChangeMessage;
 import org.spout.vanilla.world.Weather;
 
 public class AdministrationCommands {
+	private final VanillaPlugin plugin;
 
-	private final VanillaPlugin plugin = VanillaPlugin.getInstance();
-	
+	public AdministrationCommands(VanillaPlugin plugin) {
+		this.plugin = plugin;
+	}
+
 	@Command(aliases = {"tp", "teleport"}, usage = "<player> [player|x] [y] [z]", desc = "Teleport to a location", min = 1, max = 3)
 	@CommandPermissions("vanilla.command.tp")
 	public void tp(CommandContext args, CommandSource source) throws CommandException {
@@ -63,7 +66,7 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to teleport to another player!");
 			}
-			
+
 			player = (Player) source;
 			Player to = Spout.getGame().getPlayer(args.getString(0), true);
 			if (to != null) {
@@ -72,13 +75,13 @@ public class AdministrationCommands {
 				throw new CommandException(args.getString(0) + " is not online!");
 			}
 		}
-		
+
 		if (args.length() == 2) {
 			player = Spout.getGame().getPlayer(args.getString(0), true);
 			if (player == null) {
 				throw new CommandException(args.getString(0) + " is not online!");
 			}
-			
+
 			Player to = Spout.getGame().getPlayer(args.getString(1), true);
 			if (to != null) {
 				point = to.getEntity().getPoint();
@@ -86,116 +89,81 @@ public class AdministrationCommands {
 				throw new CommandException(args.getString(1) + " is not online!");
 			}
 		}
-		
+
 		if (args.length() == 3) {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to teleport to coordinates!");
 			}
-			
+
 			player = (Player) source;
 			Entity playerEntity = player.getEntity();
 			point = new Point(playerEntity.getWorld(), args.getInteger(0), args.getInteger(1), args.getInteger(2));
 		}
-		
+
 		if (player == null) {
 			throw new CommandException("Player not found!");
 		}
-		
+
 		if (point == null) {
 			throw new CommandException("Point not found!");
 		}
-		
+
 		Entity playerEntity = player.getEntity();
 		player.getSession().send(new EntityTeleportMessage(playerEntity.getId(), (int) point.getX(), (int) point.getY(), (int) point.getZ(), (int) playerEntity.getRoll(), (int) playerEntity.getPitch()));
 	}
-	
-	@Command(aliases = {"give"}, usage = "<player|item> <material|amount> [amount] ", desc = "Lets a player spawn items", min = 1, max = 3)
+
+	@Command(aliases = {"give"}, usage = "[player] <material> [amount] ", desc = "Lets a player spawn items", min = 1, max = 3)
 	@CommandPermissions("vanilla.command.give")
 	public void give(CommandContext args, CommandSource source) throws CommandException {
+		int index = 0;
 		Player player = null;
 		Material material = null;
-		int amount = 1;
+
 		if (args.length() == 1) {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to give yourself materials!");
 			}
-			
+
 			player = (Player) source;
-			if (args.isInteger(0)) {
-				material = MaterialData.getMaterial((short) args.getInteger(0));
-			} else {
-				material = MaterialData.getMaterial(args.getString(0));
-			}
-			
-			if (material == null) {
-				throw new CommandException(args.getString(0) + " is not a material!");
-			}
-		}
-		
-		if (args.length() == 2) {
-			if (source instanceof Player) {
-				player = (Player) source;
-				amount = args.getInteger(1);
-				if (args.isInteger(0)) {
-					material = MaterialData.getMaterial((short) args.getInteger(0));
-				} else {
-					material = MaterialData.getMaterial(args.getString(0));
-				}
-				
-				if (material == null) {
-					throw new CommandException(args.getString(0) + " is not a material!");
-				}
-			}
-			
-			player = Spout.getGame().getPlayer(args.getString(0), true);
+		} else {
+			player = Spout.getGame().getPlayer(args.getString(index++), true);
 			if (player == null) {
-				throw new CommandException(args.getString(0) + " is not online!");
-			}
-				
-			if (args.isInteger(1)) {
-				material = MaterialData.getMaterial((short) args.getInteger(1));
-			} else {
-				material = MaterialData.getMaterial(args.getString(1));
-			}
-				
-			if (material == null) {
-				throw new CommandException(args.getString(0) + " is not a material!");
+				throw new CommandException(args.getString(0) + " is not online.");
 			}
 		}
-		
-		if (args.length() == 3) {
-			player = Spout.getGame().getPlayer(args.getString(0), true);
-			amount = args.getInteger(2);
-			if (player == null) {
-				throw new CommandException(args.getString(0) + " is not online!");
-			}
-			
-			if (args.isInteger(1)) {
-				material = MaterialData.getMaterial((short) args.getInteger(1));
+
+		if (args.isInteger(index)) {
+			material = MaterialData.getMaterial((short) args.getInteger(index));
+		} else {
+			String name = args.getString(index);
+
+			if (name.contains(":")) {
+				String[] parts = args.getString(index).split(":");
+				material = MaterialData.getMaterial(Short.parseShort(parts[0]), Short.parseShort(parts[1]));
 			} else {
-				material = MaterialData.getMaterial(args.getString(0));
-			}
-			
-			if (material == null) {
-				throw new CommandException(args.getString(0) + " is not a material!");
+				material = MaterialData.getMaterial(args.getString(index));
 			}
 		}
-		
-		player.getEntity().getInventory().addItem(new ItemStack(material, amount));
+
+		if (material == null) {
+			throw new CommandException(args.getString(index) + " is not a material!");
+		}
+
+		player.getEntity().getInventory().addItem(new ItemStack(material, args.getInteger(2, 1)));
 	}
-	
+
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.deop")
 	public void deop(CommandContext args, CommandSource source) throws CommandException {
 		if (args.length() != 1) {
 			throw new CommandException("Please only provide a player to OP!");
 		}
-		
+
 		String playerName = args.getString(0);
 		if (!plugin.getOps().contains(playerName)) {
 			throw new CommandException(playerName + " is not an operator!");
 		}
-		
+
 		plugin.setOp(playerName, false);
 		source.sendMessage(playerName + " is no longer an operator!");
 		Player player = Spout.getGame().getPlayer(playerName, true);
@@ -203,27 +171,27 @@ public class AdministrationCommands {
 			player.sendMessage("You are no longer an operator!");
 		}
 	}
-	
+
 	@Command(aliases = {"op"}, usage = "<player>", desc = "Make a player an operator", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.op")
 	public void op(CommandContext args, CommandSource source) throws CommandException {
 		if (args.length() != 1) {
 			throw new CommandException("Please only provide a player to OP!");
 		}
-		
+
 		String playerName = args.getString(0);
 		if (plugin.getOps().contains(playerName)) {
 			throw new CommandException(playerName + " is already an operator!");
 		}
-		
+
 		plugin.setOp(playerName, true);
 		source.sendMessage(playerName + " is now an operator!");
 		Player op = Spout.getGame().getPlayer(playerName, true);
 		if (op != null) {
 			op.sendMessage("You are now an operator!");
-		}		
+		}
 	}
-	
+
 	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
 	@CommandPermissions("vanilla.command.time")
 	public void time(CommandContext args, CommandSource source) throws CommandException {
@@ -435,7 +403,7 @@ public class AdministrationCommands {
 			for (Chunk c : chunks) {
 				network.sendChunk(c);
 			}
-			
+
 			source.sendMessage("All chunks resent");
 		} else if (args.getString(0, "").contains("resend")) {
 			player.getNetworkSynchronizer().sendChunk(player.getEntity().getChunk());

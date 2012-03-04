@@ -23,31 +23,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.living.neutral;
+package org.spout.vanilla.entity.object;
 
-import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.Neutral;
-import org.spout.vanilla.entity.living.Tameable;
-import org.spout.vanilla.entity.living.AnimalEntity;
-import org.spout.vanilla.entity.living.Land;
+import org.spout.vanilla.entity.VanillaEntity;
 
-public class Ocelot extends AnimalEntity implements Tameable, Neutral, Land {
-
+public class EnderCrystal extends VanillaEntity {
 	@Override
 	public void onAttached() {
-		super.onAttached();
-		parent.setData(Entity.KEY, Entity.Ocelot.id);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
-	}
-
-	@Override
-	public void subjectTo(org.spout.api.entity.Entity entity) {
-		Cat cat = new Cat();
-		cat.subjectTo(entity);
-		parent.setController(cat);
 	}
 }

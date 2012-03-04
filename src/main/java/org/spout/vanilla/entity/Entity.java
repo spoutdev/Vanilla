@@ -26,58 +26,101 @@
 package org.spout.vanilla.entity;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
+import org.spout.vanilla.entity.living.hostile.Blaze;
+import org.spout.vanilla.entity.living.hostile.CaveSpider;
+import org.spout.vanilla.entity.living.hostile.Creeper;
+import org.spout.vanilla.entity.living.hostile.Ghast;
+import org.spout.vanilla.entity.living.hostile.Giant;
+import org.spout.vanilla.entity.living.hostile.MagmaCube;
+import org.spout.vanilla.entity.living.hostile.Silverfish;
+import org.spout.vanilla.entity.living.hostile.Skeleton;
+import org.spout.vanilla.entity.living.hostile.Slime;
+import org.spout.vanilla.entity.living.hostile.Spider;
+import org.spout.vanilla.entity.living.hostile.Zombie;
+import org.spout.vanilla.entity.living.hostile.boss.Enderdragon;
+import org.spout.vanilla.entity.living.neutral.Enderman;
+import org.spout.vanilla.entity.living.neutral.Ocelot;
+import org.spout.vanilla.entity.living.neutral.PigZombie;
+import org.spout.vanilla.entity.living.neutral.Wolf;
+import org.spout.vanilla.entity.living.passive.Chicken;
+import org.spout.vanilla.entity.living.passive.Cow;
+import org.spout.vanilla.entity.living.passive.Mooshroom;
+import org.spout.vanilla.entity.living.passive.Pig;
+import org.spout.vanilla.entity.living.passive.Sheep;
+import org.spout.vanilla.entity.living.passive.SnowGolem;
+import org.spout.vanilla.entity.living.passive.Squid;
+import org.spout.vanilla.entity.living.passive.Villager;
+import org.spout.vanilla.entity.object.EnderCrystal;
+import org.spout.vanilla.entity.object.FallingBlock;
+import org.spout.vanilla.entity.object.Pickup;
+import org.spout.vanilla.entity.object.PrimedTnt;
+import org.spout.vanilla.entity.projectile.Arrow;
+import org.spout.vanilla.entity.projectile.BlazeFireball;
+import org.spout.vanilla.entity.projectile.GhastFireball;
+import org.spout.vanilla.entity.projectile.ThrownEnderPearl;
+import org.spout.vanilla.entity.projectile.ThrownEyeOfEnder;
+import org.spout.vanilla.entity.projectile.ThrownSnowball;
+import org.spout.vanilla.entity.vehicle.Boat;
+import org.spout.vanilla.entity.vehicle.Minecart;
 
 public enum Entity {
-	DroppedItem(1),
-	XPOrb(2),
-	ShotArrow(10),
-	ThrownSnowball(11),
-	GhastFireball(12),
-	BlazeFireball(13),
-	ThrownEnderPearl(14),
-	ThrownEyeOfEnder(15),
-	PrimedTNT(16),
-	FallingBlock(21),
-	Minecart(40),
-	Boat(41),
-	Creeper(50),
-	Skeleton(51),
-	Spider(52),
-	GiantZombie(53),
-	Zombie(54),
-	Slime(55),
-	Ghast(56),
-	PigZombie(57),
-	Enderman(58),
-	CaveSpider(59),
-	Silverfish(60),
-	Blaze(61),
-	MagmaCube(62),
-	EnderDragon(64),
-	Pig(90),
-	Sheep(91),
-	Cow(92),
-	Chicken(93),
-	Squid(94),
-	Wolf(95),
-	Mooshroom(96),
-	SnowGolem(97),
-	Villager(120),
-	//Squidward
-	EnderCrystal(200);
+	DroppedItem(1, Pickup.class),
+	XPOrb(2, Pickup.class), // TODO: is this correct?
+	ShotArrow(10, Arrow.class),
+	ThrownSnowball(11, ThrownSnowball.class),
+	GhastFireball(12, GhastFireball.class),
+	BlazeFireball(13, BlazeFireball.class),
+	ThrownEnderPearl(14, ThrownEnderPearl.class),
+	ThrownEyeOfEnder(15, ThrownEyeOfEnder.class),
+	PrimedTNT(16, PrimedTnt.class),
+	FallingBlock(21, FallingBlock.class),
+	Minecart(40, Minecart.class),
+	Boat(41, Boat.class),
+	Creeper(50, Creeper.class),
+	Skeleton(51, Skeleton.class),
+	Spider(52, Spider.class),
+	GiantZombie(53, Giant.class),
+	Zombie(54, Zombie.class),
+	Slime(55, Slime.class),
+	Ghast(56, Ghast.class),
+	PigZombie(57, PigZombie.class),
+	Enderman(58, Enderman.class),
+	CaveSpider(59, CaveSpider.class),
+	Silverfish(60, Silverfish.class),
+	Blaze(61, Blaze.class),
+	MagmaCube(62, MagmaCube.class),
+	EnderDragon(64, Enderdragon.class),
+	Pig(90, Pig.class),
+	Sheep(91, Sheep.class),
+	Cow(92, Cow.class),
+	Chicken(93, Chicken.class),
+	Squid(94, Squid.class),
+	Wolf(95, Wolf.class),
+	Mooshroom(96, Mooshroom.class),
+	SnowGolem(97, SnowGolem.class),
+	Ocelot(98, Ocelot.class),
+	Villager(120, Villager.class),
+	EnderCrystal(200, EnderCrystal.class);
 
 	public final int id;
+
+	public final Class<? extends VanillaEntity> controller;
 
 	public static final String KEY = "EntityID";
 
 	final static TIntObjectHashMap<Entity> map = new TIntObjectHashMap<Entity>();
 
-	private Entity(int data) {
+	private Entity(int data, Class<? extends VanillaEntity> defaultController) {
 		id = (byte) data;
+		controller = defaultController;
 	}
 
 	public int getID() {
 		return id;
+	}
+
+	public Class<? extends VanillaEntity> getController() {
+		return controller;
 	}
 
 	public static Entity getByID(int id) {

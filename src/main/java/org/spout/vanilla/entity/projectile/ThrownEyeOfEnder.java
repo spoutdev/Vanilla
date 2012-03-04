@@ -25,20 +25,12 @@
  */
 package org.spout.vanilla.entity.projectile;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.Quaternion;
 
-public class ThrownEyeOfEnder extends Controller {
-	@Override
-	public void onAttached() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void onTick(float dt) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void preSnapshot() {
+public class ThrownEyeOfEnder extends Projectile {
+	public ThrownEyeOfEnder(Point start, Quaternion rotation, int maxSpeed) {
+		super(start, rotation, maxSpeed);
+		// TODO Auto-generated constructor stub
 	}
 }

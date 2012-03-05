@@ -58,8 +58,8 @@ public enum Art {
 	private final int id;
 	private final int width;
 	private final int height;
-	private static HashMap<String, Art> names = new HashMap<String, Art>();
-	private static TIntObjectHashMap<Art> ids = new TIntObjectHashMap<Art>();
+	private static final HashMap<String, Art> names = new HashMap<String, Art>();
+	private static final TIntObjectHashMap<Art> ids = new TIntObjectHashMap<Art>();
 
 	static {
 		for (Art art : Art.values()) {

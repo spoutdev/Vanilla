@@ -22,7 +22,7 @@ SpoutDev is the team behind Spout, SpoutAPI, Spoutcraft, SpoutcraftAPI, Spoutcra
 [![zml2008](https://secure.gravatar.com/avatar/2320ab48d0715a4e9c73b7ec13fd6f3a?d=mm&r=pg&s=48)](http://forums.spout.org/members/zml2008.14/) 
 [![Zidane](https://secure.gravatar.com/avatar/99532c7f117c8dac751422376116fb38?d=mm&r=pg&s=48)](http://forums.spout.org/members/zidane.7/) 
 
-Who is the Vanilla team?
+Who is Vanilla Team?
 ------------------------
 [![Zidane](https://secure.gravatar.com/avatar/99532c7f117c8dac751422376116fb38?d=mm&r=pg&s=48)](http://forums.spout.org/members/zidane.7/) 
 [![ZNickq](https://secure.gravatar.com/avatar/3833e68b8029636a843d436c06fb8434?d=mm&r=pg&s=48)](http://forums.spout.org/members/znickq.72/) 

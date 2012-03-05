@@ -32,6 +32,7 @@ import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.World;
@@ -411,4 +412,9 @@ public class AdministrationCommands {
 			source.sendMessage("Chunk resent");
 		}
 	}
+        @Command(aliases= "ping", usage = "/Ping", desc = "Check Ping")
+        public void ping(CommandContext args, CommandSource source) throws CommandException {
+            Player player = (Player)source;
+            player.sendMessage("Ping!");      
+     }
 }

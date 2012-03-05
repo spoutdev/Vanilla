@@ -59,7 +59,6 @@ import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
 
-	public static final GameMode defaultGamemode = GameMode.SURVIVAL;
 	public static final int minecraftProtocolId = 28;
 	public static int vanillaProtocolId;
 	public static World spawnWorld;

@@ -28,7 +28,6 @@ package org.spout.vanilla.material.generic;
 import org.spout.vanilla.material.RangedWeapon;
 
 public class GenericRangedWeapon extends GenericWeapon implements RangedWeapon {
-
 	private int rangedDamage;
 
 	public GenericRangedWeapon(String name, int id, int damage, int rangedDamage, short durability) {

@@ -33,12 +33,10 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class PigEntityProtocol extends BasicMobEntityProtocol {
-
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
 		//TODO: Index 16 (byte): 1 if saddled, 0 otherwise
 		return parameters;
 	}
-
 }

@@ -26,5 +26,4 @@
 package org.spout.vanilla.entity;
 
 public interface Neutral {
-
 }

@@ -28,7 +28,6 @@ package org.spout.vanilla.material.generic;
 import org.spout.vanilla.material.Weapon;
 
 public class GenericWeapon extends GenericTool implements Weapon {
-
 	private int damage;
 
 	public GenericWeapon(String name, int id, int damage, short durability) {

@@ -28,7 +28,6 @@ package org.spout.vanilla.material.item;
 import org.spout.api.entity.Controller;
 
 public class PoweredMinecart extends Minecart {
-
 	public PoweredMinecart(String name, int id) {
 		super(name, id);
 	}
@@ -37,5 +36,4 @@ public class PoweredMinecart extends Minecart {
 	protected Controller getSpawnedEntity() {
 		return new org.spout.vanilla.entity.vehicle.minecart.PoweredMinecart();
 	}
-
 }

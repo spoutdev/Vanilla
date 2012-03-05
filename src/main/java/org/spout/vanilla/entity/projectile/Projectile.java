@@ -35,9 +35,7 @@ public class Projectile extends MovingEntity {
 	Point start;
 	Quaternion rotation;
 	Entity shooter;
-
 	final int maxSpeed;
-
 	protected Vector3 velocity;
 
 	public Projectile(Point start, Quaternion rotation, int maxSpeed) {
@@ -69,7 +67,6 @@ public class Projectile extends MovingEntity {
 
 	/**
 	 * Sets the entity that shot this projectile
-	 *
 	 * @param entity - the shooter
 	 */
 	public void setShooter(Entity entity) {
@@ -78,11 +75,9 @@ public class Projectile extends MovingEntity {
 
 	/**
 	 * Gets the entity that shot this projectile
-	 *
 	 * @return the shooter entity
 	 */
 	public Entity getShooter() {
 		return shooter;
 	}
-
 }

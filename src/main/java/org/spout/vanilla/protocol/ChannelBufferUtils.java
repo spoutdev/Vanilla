@@ -56,7 +56,6 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Writes a list of parameters (e.g. mob metadata) to the buffer.
-	 *
 	 * @param buf		The buffer.
 	 * @param parameters The parameters.
 	 */
@@ -101,7 +100,6 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Reads a list of parameters from the buffer.
-	 *
 	 * @param buf The buffer.
 	 * @return The parameters.
 	 */
@@ -143,7 +141,6 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Writes a string to the buffer.
-	 *
 	 * @param buf The buffer.
 	 * @param str The string.
 	 * @throws IllegalArgumentException if the string is too long
@@ -163,7 +160,6 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Writes a UTF-8 string to the buffer.
-	 *
 	 * @param buf The buffer.
 	 * @param str The string.
 	 * @throws UnsupportedEncodingException if the encoding isn't supported.
@@ -182,7 +178,6 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Reads a string from the buffer.
-	 *
 	 * @param buf The buffer.
 	 * @return The string.
 	 */
@@ -199,7 +194,6 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Reads a UTF-8 encoded string from the buffer.
-	 *
 	 * @param buf The buffer.
 	 * @return The string.
 	 * @throws UnsupportedEncodingException if the encoding isn't supported.

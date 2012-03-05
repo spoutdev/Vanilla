@@ -31,7 +31,6 @@ import org.spout.api.util.config.Configuration;
 import org.spout.vanilla.VanillaPlugin;
 
 public class OpConfig extends Configuration {
-	
 	public OpConfig() {
 		super(new File("plugins/Vanilla/ops.yml"));
 	}

@@ -29,7 +29,6 @@ public enum Environment {
 	NORMAL(0),
 	NETHER(-1),
 	THEEND(1);
-
 	final int dim;
 
 	private Environment(int dim) {

@@ -36,9 +36,8 @@ import org.spout.api.geo.World;
 import org.spout.api.player.Player;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.passive.Chicken;
-import org.spout.vanilla.entity.sky.NormalSky;
 import org.spout.vanilla.entity.living.passive.Sheep;
-import org.spout.vanilla.entity.object.FallingBlock;
+import org.spout.vanilla.entity.sky.NormalSky;
 
 public class TestCommands {
 	private final VanillaPlugin plugin;
@@ -46,6 +45,7 @@ public class TestCommands {
 	public TestCommands(VanillaPlugin plugin) {
 		this.plugin = plugin;
 	}
+
 	@Command(aliases = {"getsky"}, usage = "justdoit]", desc = "should respond with 0, if not royawesome knows what the fuck he is doing and darsstar's PR got pulled")
 	public void getsky(CommandContext args, CommandSource source) throws CommandException {
 		Set<Entity> ents = VanillaPlugin.spawnWorld.getAll(NormalSky.class);

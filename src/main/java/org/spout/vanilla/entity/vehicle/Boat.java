@@ -29,7 +29,6 @@ import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.MovingEntity;
 
 public class Boat extends MovingEntity implements Vehicle {
-
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.Boat.id);
@@ -38,5 +37,4 @@ public class Boat extends MovingEntity implements Vehicle {
 	public void onTick(float dt) {
 		super.onTick(dt);
 	}
-
 }

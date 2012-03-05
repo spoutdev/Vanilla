@@ -41,7 +41,6 @@ import org.spout.vanilla.entity.FallingEntity;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
 public class Pickup extends FallingEntity {
-
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore(); //TODO this is an annoying fix, someone with knowlege in entities get rid of this?
 
 	@Override

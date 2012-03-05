@@ -34,23 +34,18 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.VanillaMaterials;
 
 public class OreDecorator implements BiomeDecorator {
-
 	@Override
 	public void populate(Chunk source, Random random) {
 		World world = source.getWorld();
 		int[] iterations = new int[]{10, 20, 20, 2, 8, 1, 1, 1};
 		int[] amount = new int[]{32, 16, 8, 8, 7, 7, 6};
-		BlockMaterial[] type = new BlockMaterial[]{VanillaMaterials.GRAVEL, VanillaMaterials.COAL_ORE,
-				VanillaMaterials.IRON_ORE, VanillaMaterials.GOLD_ORE, VanillaMaterials.REDSTONE_ORE,
-				VanillaMaterials.DIAMOND_ORE, VanillaMaterials.LAPIS_ORE};
+		BlockMaterial[] type = new BlockMaterial[]{VanillaMaterials.GRAVEL, VanillaMaterials.COAL_ORE, VanillaMaterials.IRON_ORE, VanillaMaterials.GOLD_ORE, VanillaMaterials.REDSTONE_ORE, VanillaMaterials.DIAMOND_ORE, VanillaMaterials.LAPIS_ORE};
 
-		int[] maxHeight = new int[]{128, 128, 128, 128, 128, 64, 32, 16, 16,
-				32};
+		int[] maxHeight = new int[]{128, 128, 128, 128, 128, 64, 32, 16, 16, 32};
 
 		for (int i = 0; i < type.length; i++) {
 			for (int j = 0; j < iterations[i]; j++) {
-				generateOre(world, random, source.getX() * 16 + random.nextInt(16), random.nextInt(maxHeight[i]), source.getZ()
-						* 16 + random.nextInt(16), amount[i], type[i]);
+				generateOre(world, random, source.getX() * 16 + random.nextInt(16), random.nextInt(maxHeight[i]), source.getZ() * 16 + random.nextInt(16), amount[i], type[i]);
 			}
 		}
 	}
@@ -68,8 +63,7 @@ public class OreDecorator implements BiomeDecorator {
 			double seedX = x1 + (x2 - x1) * i / amount;
 			double seedY = y1 + (y2 - y1) * i / amount;
 			double seedZ = z1 + (z2 - z1) * i / amount;
-			double size = ((Math.sin(i * Math.PI / amount) + 1)
-					* random.nextDouble() * amount / 16 + 1) / 2;
+			double size = ((Math.sin(i * Math.PI / amount) + 1) * random.nextDouble() * amount / 16 + 1) / 2;
 
 			int startX = (int) (seedX - size);
 			int startY = (int) (seedY - size);

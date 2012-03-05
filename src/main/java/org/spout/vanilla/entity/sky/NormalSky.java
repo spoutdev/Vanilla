@@ -38,7 +38,6 @@ import org.spout.vanilla.protocol.msg.TimeMessage;
 import org.spout.vanilla.world.Weather;
 
 public class NormalSky extends Controller implements Sky {
-
 	private float time = 0;
 	private float countdown = 20;
 	private Weather currentWeather;

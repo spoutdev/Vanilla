@@ -38,10 +38,8 @@ import org.spout.vanilla.entity.projectile.ThrownPotion;
 
 public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-
 	//Entity = Affected by potion, Double = Intensity of potion effect.
 	private final Map<Entity, Double> entitiesAffected;
-
 	private ThrownPotion potion;
 
 	public PotionSplashEvent(Entity e, Source source, Map<Entity, Double> entitiesAffected) throws InvalidControllerException {
@@ -55,7 +53,6 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Gets the potion that was thrown
-	 *
 	 * @return The potion thrown.
 	 */
 	public ThrownPotion getPotionThrown() {
@@ -64,7 +61,6 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Sets the potion that was thrown.
-	 *
 	 * @param potion The potion that is thrown.
 	 */
 	public void setPotionThrown(ThrownPotion potion) {
@@ -73,7 +69,6 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Gets a list of all of the effected entities.
-	 *
 	 * @return A list of the affected entities.
 	 */
 	public Collection<Entity> getAffectedEntities() {
@@ -82,7 +77,6 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Gets the intensity of the potion effect for an entity.
-	 *
 	 * @param entity The entity to get the intensity for
 	 * @return The intensity of the potion effect. 0.0 symbolizes no effect, 1.0 symbolizes full effect.
 	 */
@@ -96,7 +90,6 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Sets the intensity of the potion effect for an entity.
-	 *
 	 * @param entity	The entity that will have a new defined intensity.
 	 * @param intensity The intensity of the potion effect.
 	 */

@@ -26,11 +26,11 @@
 package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.CodecLookupService;
-import org.spout.vanilla.protocol.codec.ChangeItemCodec;
 import org.spout.vanilla.protocol.codec.AttachEntityCodec;
 import org.spout.vanilla.protocol.codec.BlockActionCodec;
 import org.spout.vanilla.protocol.codec.BlockChangeCodec;
 import org.spout.vanilla.protocol.codec.BlockPlacementCodec;
+import org.spout.vanilla.protocol.codec.ChangeItemCodec;
 import org.spout.vanilla.protocol.codec.ChatCodec;
 import org.spout.vanilla.protocol.codec.CloseWindowCodec;
 import org.spout.vanilla.protocol.codec.CollectItemCodec;

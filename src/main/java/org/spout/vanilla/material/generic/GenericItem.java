@@ -29,7 +29,6 @@ import org.spout.api.material.GenericItemMaterial;
 import org.spout.vanilla.material.Item;
 
 public class GenericItem extends GenericItemMaterial implements Item {
-
 	public GenericItem(String name, int id) {
 		super(name, id);
 	}

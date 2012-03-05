@@ -32,7 +32,6 @@ import org.spout.api.math.Vector3;
  */
 public abstract class FallingEntity extends MovingEntity {
 	private static float GRAVITY_MULTIPLIER = 23.31f;
-
 	private boolean gravity = true;
 
 	@Override
@@ -42,7 +41,9 @@ public abstract class FallingEntity extends MovingEntity {
 
 	@Override
 	public void onTick(float dt) {
-		if (parent.isDead()) return;
+		if (parent.isDead()) {
+			return;
+		}
 		if (gravity) {
 			updateGravity(dt);
 		}

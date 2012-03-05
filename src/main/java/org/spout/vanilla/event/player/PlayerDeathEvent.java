@@ -43,10 +43,8 @@ public class PlayerDeathEvent extends VanillaEntityDeathEvent implements Cancell
 		}
 	}
 
-
 	/**
 	 * Gets the player associated in this event.
-	 *
 	 * @return The player.
 	 */
 	public Player getPlayer() {

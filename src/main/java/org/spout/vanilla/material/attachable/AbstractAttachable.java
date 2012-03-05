@@ -33,7 +33,6 @@ import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.generic.GenericBlock;
 
 public abstract class AbstractAttachable extends GenericBlock implements Attachable {
-
 	protected AbstractAttachable(String name, int id) {
 		super(name, id);
 	}
@@ -60,5 +59,4 @@ public abstract class AbstractAttachable extends GenericBlock implements Attacha
 		Vector3 offset = base.getOffset();
 		return world.getBlock((int) (x + offset.getX()), (int) (y + offset.getY()), (int) (z + offset.getZ()));
 	}
-
 }

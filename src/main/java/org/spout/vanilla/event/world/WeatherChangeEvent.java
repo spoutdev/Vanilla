@@ -32,7 +32,6 @@ import org.spout.vanilla.entity.sky.Sky;
 import org.spout.vanilla.world.Weather;
 
 public class WeatherChangeEvent extends WorldEvent implements Cancellable {
-
 	private static HandlerList handlers = new HandlerList();
 	private Weather current, weather;
 
@@ -42,7 +41,6 @@ public class WeatherChangeEvent extends WorldEvent implements Cancellable {
 
 	/**
 	 * Gets the weather at the time the event is called.
-	 *
 	 * @return the current weather.
 	 */
 	public Weather getCurrentWeather() {
@@ -51,7 +49,6 @@ public class WeatherChangeEvent extends WorldEvent implements Cancellable {
 
 	/**
 	 * Gets the new weather set after the event.
-	 *
 	 * @return the new weather.
 	 */
 	public Weather getNewWeather() {
@@ -60,7 +57,6 @@ public class WeatherChangeEvent extends WorldEvent implements Cancellable {
 
 	/**
 	 * Sets the outcome of the event.
-	 *
 	 * @param weather
 	 */
 	public void setNewWeather(Weather weather) {

@@ -31,7 +31,7 @@ import org.spout.vanilla.material.generic.GenericBlock;
 public class Tree extends GenericBlock implements Plant {
 	public Tree(String name, int id, int data) {
 		super(name, id, data);
-		setOpacity((short)1);
+		setOpacity((short) 1);
 	}
 
 	@Override

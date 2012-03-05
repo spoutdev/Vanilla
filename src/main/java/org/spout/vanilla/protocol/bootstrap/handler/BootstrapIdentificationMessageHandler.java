@@ -34,7 +34,6 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.msg.IdentificationMessage;
 
 public class BootstrapIdentificationMessageHandler extends MessageHandler<IdentificationMessage> {
-
 	@Override
 	public void handle(Session session, Player player, IdentificationMessage message) {
 		if (message.getId() > VanillaPlugin.minecraftProtocolId) {

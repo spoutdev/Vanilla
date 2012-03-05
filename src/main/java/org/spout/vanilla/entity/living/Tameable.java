@@ -26,6 +26,5 @@
 package org.spout.vanilla.entity.living;
 
 public interface Tameable {
-
 	public void subjectTo(org.spout.api.entity.Entity entity);
 }

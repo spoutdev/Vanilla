@@ -32,9 +32,7 @@ public enum Weather {
 	CLEAR(0),
 	RAIN(1),
 	THUNDERSTORM(2);
-
 	final int id;
-
 	private final static TIntObjectMap<Weather> weathers = new TIntObjectHashMap<Weather>();
 
 	private Weather(int id) {

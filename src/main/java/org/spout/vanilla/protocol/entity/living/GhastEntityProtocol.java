@@ -33,12 +33,10 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class GhastEntityProtocol extends BasicMobEntityProtocol {
-
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
 		//TODO: index 16 (byte): Aggression level (1 red eyes, 0 not)
 		return parameters;
 	}
-
 }

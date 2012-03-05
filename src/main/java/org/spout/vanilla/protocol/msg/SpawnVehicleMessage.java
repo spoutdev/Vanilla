@@ -28,8 +28,7 @@ package org.spout.vanilla.protocol.msg;
 import org.spout.api.protocol.Message;
 
 public final class SpawnVehicleMessage extends Message {
-	private final int id, type, x, y, z, fireballId, fireballX, fireballY,
-			fireballZ;
+	private final int id, type, x, y, z, fireballId, fireballX, fireballY, fireballZ;
 
 	public SpawnVehicleMessage(int id, int type, int x, int y, int z) {
 		this(id, type, x, y, z, 0, 0, 0, 0);

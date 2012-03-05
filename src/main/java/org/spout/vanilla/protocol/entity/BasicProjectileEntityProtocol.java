@@ -35,7 +35,6 @@ import org.spout.vanilla.protocol.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
 public abstract class BasicProjectileEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
-
 	public abstract int getSpawnedProjectileType();
 
 	@Override
@@ -62,5 +61,4 @@ public abstract class BasicProjectileEntityProtocol extends VanillaEntityProtoco
 			return null;
 		}
 	}
-
 }

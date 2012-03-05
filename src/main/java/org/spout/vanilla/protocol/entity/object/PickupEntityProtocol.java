@@ -34,7 +34,6 @@ import org.spout.vanilla.protocol.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnItemMessage;
 
 public class PickupEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
-
 	@Override
 	public Message getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();

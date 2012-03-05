@@ -36,16 +36,16 @@ public class Sheep extends AnimalEntity implements Passive, Land {
 	private int countdown = 0;
 	private final Random rand = new Random();
 	private final int color;
-	
+
 	public Sheep() {
-		this( 0x0 );
+		this(0x0);
 	}
-	
+
 	public Sheep(int color) {
 		super();
 		this.color = color;
 	}
-	
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -65,11 +65,11 @@ public class Sheep extends AnimalEntity implements Passive, Land {
 		}
 		super.onTick(dt);
 	}
-	
+
 	public boolean getSheared() {
 		return parent.getData("SheepSheared").asBool();
 	}
-	
+
 	public int getColor() {
 		return parent.getData("SheepColor").asInt();
 	}

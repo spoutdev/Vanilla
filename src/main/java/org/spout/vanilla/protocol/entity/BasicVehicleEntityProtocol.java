@@ -33,10 +33,8 @@ import org.spout.vanilla.protocol.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
 public abstract class BasicVehicleEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
-
 	/**
 	 * Gets the vehicle type to spawn using this protocol
-	 *
 	 * @return The vehicle type id
 	 */
 	public abstract int getSpawnedVehicleType();
@@ -55,5 +53,4 @@ public abstract class BasicVehicleEntityProtocol extends VanillaEntityProtocol i
 		//FIXME: Store vehicle type in entity (VehicleEntity implementing?) class instead
 		return new SpawnVehicleMessage(id, this.getSpawnedVehicleType(), x, y, z);
 	}
-
 }

@@ -37,7 +37,7 @@ public class PingMessageHandler extends MessageHandler<PingMessage> {
 		if (!(player.getEntity().getController() instanceof VanillaPlayer)) {
 			return;
 		}
-		
+
 		VanillaPlayer mp = (VanillaPlayer) player.getEntity().getController();
 		mp.resetTimeoutTicks();
 	}

@@ -23,7 +23,6 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.World;
@@ -33,7 +32,6 @@ import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 
 public class Cactus extends Solid {
-
 	public Cactus(String name, int id) {
 		super(name, id);
 	}
@@ -73,6 +71,4 @@ public class Cactus extends Solid {
 			//TODO Drop item!
 		}
 	}
-
-
 }

@@ -29,6 +29,5 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.ItemMaterial;
 
 public interface BlockItem extends ItemMaterial {
-
 	public BlockMaterial getBlock();
 }

@@ -28,5 +28,4 @@ package org.spout.vanilla.entity.living.hostile.boss;
 import org.spout.vanilla.entity.MovingEntity;
 
 public class BossEntity extends MovingEntity {
-
 }

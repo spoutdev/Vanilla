@@ -26,7 +26,6 @@
 package org.spout.vanilla.entity.living;
 
 public interface Tamed {
-
 	public void subjectTo(org.spout.api.entity.Entity entity);
 
 	public org.spout.api.entity.Entity subjectedTo();

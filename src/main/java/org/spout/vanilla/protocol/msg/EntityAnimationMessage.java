@@ -35,7 +35,6 @@ public final class EntityAnimationMessage extends Message {
 	public static final byte ANIMATION_UNKNOWN = 102;
 	public static final byte ANIMATION_CROUCH = 104;
 	public static final byte ANIMATION_UNCROUCH = 105;
-
 	private final int id;
 	private final byte animation;
 

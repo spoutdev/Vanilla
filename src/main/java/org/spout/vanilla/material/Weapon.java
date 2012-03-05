@@ -26,6 +26,5 @@
 package org.spout.vanilla.material;
 
 public interface Weapon extends Item {
-
 	public int getDamage();
 }

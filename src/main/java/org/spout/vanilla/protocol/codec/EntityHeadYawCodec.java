@@ -34,7 +34,6 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 public class EntityHeadYawCodec extends MessageCodec<EntityHeadYawMessage> {
-
 	public EntityHeadYawCodec() {
 		super(EntityHeadYawMessage.class, 0x23);
 	}

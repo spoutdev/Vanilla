@@ -26,6 +26,5 @@
 package org.spout.vanilla.material;
 
 public interface RangedWeapon extends Weapon {
-
 	public int getRangedDamage();
 }

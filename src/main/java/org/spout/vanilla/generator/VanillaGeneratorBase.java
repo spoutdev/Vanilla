@@ -30,7 +30,6 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
 
 public abstract class VanillaGeneratorBase extends BiomeGenerator {
-
 	@Override
 	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
 		super.generate(blockData, chunkX, chunkY, chunkZ);
@@ -39,8 +38,5 @@ public abstract class VanillaGeneratorBase extends BiomeGenerator {
 			blockData.flood(VanillaMaterials.BEDROCK.getId());
 			return;
 		}
-
 	}
-
-
 }

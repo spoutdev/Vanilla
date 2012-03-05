@@ -26,6 +26,5 @@
 package org.spout.vanilla.material;
 
 public interface Armor extends Item {
-
 	public int getProtection();
 }

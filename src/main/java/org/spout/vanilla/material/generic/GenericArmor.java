@@ -28,7 +28,6 @@ package org.spout.vanilla.material.generic;
 import org.spout.vanilla.material.Armor;
 
 public class GenericArmor extends GenericItem implements Armor {
-
 	private int protection;
 
 	public GenericArmor(String name, int id, int protection) {

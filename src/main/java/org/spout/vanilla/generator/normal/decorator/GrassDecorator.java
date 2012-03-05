@@ -33,7 +33,6 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.VanillaMaterials;
 
 public class GrassDecorator implements BiomeDecorator {
-
 	private int minSteps = 7, maxSteps = 20, chance = 30;
 
 	@Override

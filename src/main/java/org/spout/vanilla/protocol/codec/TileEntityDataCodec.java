@@ -34,7 +34,6 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 public class TileEntityDataCodec extends MessageCodec<TileEntityDataMessage> {
-
 	public TileEntityDataCodec() {
 		super(TileEntityDataMessage.class, 0x84);
 	}

@@ -48,7 +48,9 @@ public abstract class MovingEntity extends VanillaEntity {
 
 	@Override
 	public void onTick(float dt) {
-		if (parent.isDead()) return;
+		if (parent.isDead()) {
+			return;
+		}
 		checkWeb();
 		updateMovement(dt);
 		checkFireTicks();
@@ -56,9 +58,8 @@ public abstract class MovingEntity extends VanillaEntity {
 	}
 
 	private void updateMovement(float dt) {
-		/*
-		final Pointm location = parent.getPoint();
-		//List<BoundingBox> colliding = this.getCollidingBoundingBoxes();
+		/*final Pointm location = parent.getPoint();
+		List<BoundingBox> colliding = this.get
 		final BoundingBox position = area.clone().offset(location);
 
 		Vector3m offset = velocity.clone();
@@ -66,7 +67,7 @@ public abstract class MovingEntity extends VanillaEntity {
 			Vector3 collision = CollisionHelper.getCollision(position, box);
 			if (collision != null) {
 				collision = collision.subtract(location);
-				//System.out.println("Collision: " + collision);
+				System.out.println("Collision: " + collision);
 				if (collision.getX() != 0F) {
 					offset.setX(collision.getX());
 				}
@@ -79,8 +80,8 @@ public abstract class MovingEntity extends VanillaEntity {
 			}
 		}
 
-		//if (colliding.size() > 0)
-		//	System.out.println("Old: " + velocity + " New: " + offset + " Colliding: " + colliding.size());
+		if (colliding.size() > 0)
+			System.out.println("Old: " + velocity + " New: " + offset + " Colliding: " + colliding.size());
 
 
 		if (offset.getX() != velocity.getX()) {
@@ -96,10 +97,10 @@ public abstract class MovingEntity extends VanillaEntity {
 		location.add(offset);
 		Point old = parent.getPoint();
 		parent.setPoint(location);
-		//if (colliding.size() > 0)
-		//	System.out.println("Moved from " + old + " to " + parent.getPoint() + ". Expected: " + location);
-		 * */
+		if (colliding.size() > 0)
+			System.out.println("Moved from " + old + " to " + parent.getPoint() + ". Expected: " + location);
 
+*/
 	}
 
 	@Override
@@ -158,6 +159,4 @@ public abstract class MovingEntity extends VanillaEntity {
 	public Vector3 getVelocity() {
 		return velocity;
 	}
-
-
 }

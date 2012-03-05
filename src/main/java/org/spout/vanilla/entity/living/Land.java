@@ -26,5 +26,4 @@
 package org.spout.vanilla.entity.living;
 
 public interface Land {
-
 }

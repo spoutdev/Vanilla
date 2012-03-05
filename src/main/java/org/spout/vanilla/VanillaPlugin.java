@@ -29,6 +29,7 @@ import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
 import org.spout.api.Game;
 import org.spout.api.Server;
 import org.spout.api.command.CommandRegistrationsFactory;
@@ -58,7 +59,6 @@ import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
-
 	public static final int minecraftProtocolId = 28;
 	public static int vanillaProtocolId;
 	public static World spawnWorld;

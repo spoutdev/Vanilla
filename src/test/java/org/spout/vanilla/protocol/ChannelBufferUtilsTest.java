@@ -64,13 +64,7 @@ import static org.spout.vanilla.protocol.ChannelBufferUtils.writeVector2;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.writeVector3;
 
 public class ChannelBufferUtilsTest {
-
-	public static final List<Parameter<?>> TEST_PARAMS = Arrays.asList(new Parameter<Byte>(Parameter.TYPE_BYTE, 1, (byte) 33),
-			new Parameter<Short>(Parameter.TYPE_SHORT, 2, (short) 333),
-			new Parameter<Integer>(Parameter.TYPE_INT, 3, 22),
-			new Parameter<Float>(Parameter.TYPE_FLOAT, 4, 1.23F),
-			new Parameter<String>(Parameter.TYPE_STRING, 5, "Hello World"),
-			new Parameter<ItemStack>(Parameter.TYPE_ITEM, 6, new ItemStack(VanillaMaterials.BEDROCK, 5)));
+	public static final List<Parameter<?>> TEST_PARAMS = Arrays.asList(new Parameter<Byte>(Parameter.TYPE_BYTE, 1, (byte) 33), new Parameter<Short>(Parameter.TYPE_SHORT, 2, (short) 333), new Parameter<Integer>(Parameter.TYPE_INT, 3, 22), new Parameter<Float>(Parameter.TYPE_FLOAT, 4, 1.23F), new Parameter<String>(Parameter.TYPE_STRING, 5, "Hello World"), new Parameter<ItemStack>(Parameter.TYPE_ITEM, 6, new ItemStack(VanillaMaterials.BEDROCK, 5)));
 
 	@Test
 	public void testParameters() throws Exception {
@@ -127,8 +121,7 @@ public class ChannelBufferUtilsTest {
 	@Test
 	public void testVector3() throws IllegalAccessException {
 		for (Field field : Vector3.class.getFields()) {
-			if (Modifier.isStatic(field.getModifiers())
-					&& Vector2.class.isAssignableFrom(field.getType())) {
+			if (Modifier.isStatic(field.getModifiers()) && Vector2.class.isAssignableFrom(field.getType())) {
 				Vector3 vec = (Vector3) field.get(null);
 				ChannelBuffer buf = ChannelBuffers.buffer(12);
 				writeVector3(vec, buf);
@@ -140,8 +133,7 @@ public class ChannelBufferUtilsTest {
 	@Test
 	public void testVector2() throws IllegalAccessException {
 		for (Field field : Vector2.class.getFields()) {
-			if (Modifier.isStatic(field.getModifiers())
-					&& Vector2.class.isAssignableFrom(field.getType())) {
+			if (Modifier.isStatic(field.getModifiers()) && Vector2.class.isAssignableFrom(field.getType())) {
 				Vector2 vec = (Vector2) field.get(null);
 				ChannelBuffer buf = ChannelBuffers.buffer(8);
 				writeVector2(vec, buf);
@@ -153,8 +145,7 @@ public class ChannelBufferUtilsTest {
 	@Test
 	public void testColor() throws IllegalAccessException {
 		for (Field field : Color.class.getFields()) {
-			if (Modifier.isStatic(field.getModifiers())
-					&& Color.class.isAssignableFrom(field.getType())) {
+			if (Modifier.isStatic(field.getModifiers()) && Color.class.isAssignableFrom(field.getType())) {
 				Color color = (Color) field.get(null);
 				ChannelBuffer buf = ChannelBuffers.buffer(4);
 				writeColor(color, buf);

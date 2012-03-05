@@ -34,7 +34,7 @@ import org.spout.vanilla.entity.living.Land;
 
 public class Chicken extends AnimalEntity implements Passive, Land {
 	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
-	
+
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
 		return entityProtocolStore.getEntityProtocol(protocolId);
@@ -43,6 +43,7 @@ public class Chicken extends AnimalEntity implements Passive, Land {
 	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
 		entityProtocolStore.setEntityProtocol(protocolId, protocol);
 	}
+
 	@Override
 	public void onAttached() {
 		super.onAttached();

@@ -29,5 +29,4 @@ package org.spout.vanilla.entity.vehicle;
  * Entity that is a vehicle. Will primarily be used for Minecarts.
  */
 public interface Vehicle {
-
 }

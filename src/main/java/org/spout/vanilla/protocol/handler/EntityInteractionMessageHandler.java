@@ -35,7 +35,6 @@ import org.spout.vanilla.material.Weapon;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
 
 public class EntityInteractionMessageHandler extends MessageHandler<EntityInteractionMessage> {
-
 	@Override
 	public void handle(Session session, Player player, EntityInteractionMessage message) {
 		//TODO what happens if the entity is in a different region?
@@ -51,7 +50,6 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 					damage = ((Weapon) is).getDamage();
 				}
 				((VanillaEntity) clickedEntity.getController()).damage(damage);
-
 			}
 		} else {
 		}

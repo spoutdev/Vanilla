@@ -33,7 +33,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.Tool;
 
 public class GenericTool extends GenericItem implements Tool {
-
 	private short durability;
 	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
 
@@ -55,8 +54,9 @@ public class GenericTool extends GenericItem implements Tool {
 
 	@Override
 	public float getStrengthModifier(BlockMaterial block) {
-		if (!(strengthModifiers.containsKey(block)))
+		if (!(strengthModifiers.containsKey(block))) {
 			return (float) 1.0;
+		}
 		return strengthModifiers.get(block);
 	}
 

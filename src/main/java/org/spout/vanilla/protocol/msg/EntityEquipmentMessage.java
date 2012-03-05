@@ -33,7 +33,6 @@ public final class EntityEquipmentMessage extends Message {
 	public static final int LEGGINGS_SLOT = 2;
 	public static final int CHESTPLATE_SLOT = 3;
 	public static final int HELMET_SLOT = 4;
-
 	private final int id, slot, item, damage;
 
 	public EntityEquipmentMessage(int id, int slot, int item, int damage) {

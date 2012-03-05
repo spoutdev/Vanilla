@@ -163,7 +163,6 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		deflater.setInput(uncompressedData);
 		deflater.finish();
 
-
 		int compressed = deflater.deflate(compressedData);
 		try {
 			if (compressed == 0) {

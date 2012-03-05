@@ -23,7 +23,6 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.World;
@@ -32,7 +31,6 @@ import org.spout.vanilla.material.Block;
 public interface RedstoneSource extends Block {
 	/**
 	 * Gets how much redstone power the block at x, y, z provides to block tx, ty, tz
-	 *
 	 * @param world world the blocks are in
 	 * @param x	 coord of source block
 	 * @param y	 coord of source block
@@ -46,7 +44,6 @@ public interface RedstoneSource extends Block {
 
 	/**
 	 * Gets if the block provides power to the target block
-	 *
 	 * @param world world the blocks are in
 	 * @param x	 coord of source block
 	 * @param y	 coord of source block
@@ -60,7 +57,6 @@ public interface RedstoneSource extends Block {
 
 	/**
 	 * Gets if the block provides an attach point for redstone wire.
-	 *
 	 * @param world the blocks are in
 	 * @param x	 coord of this block
 	 * @param y	 coord of this block

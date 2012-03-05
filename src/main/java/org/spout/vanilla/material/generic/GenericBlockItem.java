@@ -23,7 +23,6 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.material.generic;
 
 import org.spout.api.entity.Entity;
@@ -42,19 +41,25 @@ public class GenericBlockItem extends GenericItem implements BlockItem {
 	public GenericBlockItem(String name, int id, BlockMaterial onPlace) {
 		super(name, id);
 		this.onPlace = onPlace;
-		if (onPlace == null) throw new NullPointerException("Block material can not be null");
+		if (onPlace == null) {
+			throw new NullPointerException("Block material can not be null");
+		}
 	}
 
 	public GenericBlockItem(String name, int id, int data, boolean subtypes, BlockMaterial onPlace) {
 		super(name, id, data, subtypes);
 		this.onPlace = onPlace;
-		if (onPlace == null) throw new NullPointerException("Block material can not be null");
+		if (onPlace == null) {
+			throw new NullPointerException("Block material can not be null");
+		}
 	}
 
 	public GenericBlockItem(String name, int id, int data, BlockMaterial onPlace) {
 		super(name, id, data);
 		this.onPlace = onPlace;
-		if (onPlace == null) throw new NullPointerException("Block material can not be null");
+		if (onPlace == null) {
+			throw new NullPointerException("Block material can not be null");
+		}
 	}
 
 	@Override

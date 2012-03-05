@@ -33,7 +33,6 @@ import org.spout.api.geo.discrete.Point;
 
 public class VanillaEntityTeleportEvent extends EntityTeleportEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-
 	private TeleportReason reason;
 
 	public VanillaEntityTeleportEvent(Entity e, Point from, Point to, TeleportReason reason) {
@@ -43,7 +42,6 @@ public class VanillaEntityTeleportEvent extends EntityTeleportEvent implements C
 
 	/**
 	 * Gets the reason behind the teleport of the entity.
-	 *
 	 * @return The reason behind the teleport.
 	 */
 	public TeleportReason getReason() {
@@ -52,7 +50,6 @@ public class VanillaEntityTeleportEvent extends EntityTeleportEvent implements C
 
 	/**
 	 * Sets the reason for the teleport of the entity.
-	 *
 	 * @param reason The new reason for the teleport of the entity.
 	 */
 	public void setReason(TeleportReason reason) {

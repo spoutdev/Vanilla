@@ -33,7 +33,6 @@ import org.spout.api.event.entity.EntityEvent;
 
 public class EntityTameEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-
 	private Controller owner;
 
 	public EntityTameEvent(Entity e, Controller owner) {
@@ -43,7 +42,6 @@ public class EntityTameEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the owner of this entity
-	 *
 	 * @return The owner of the entity.
 	 */
 	public Controller getOwner() {
@@ -52,7 +50,6 @@ public class EntityTameEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the owner of this entity.
-	 *
 	 * @param owner The owner of the entity.
 	 */
 	public void setOwner(Controller owner) {

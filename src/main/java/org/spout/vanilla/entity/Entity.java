@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.entity;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
 import org.spout.vanilla.entity.living.hostile.Blaze;
 import org.spout.vanilla.entity.living.hostile.CaveSpider;
 import org.spout.vanilla.entity.living.hostile.Creeper;
@@ -62,6 +61,8 @@ import org.spout.vanilla.entity.projectile.ThrownEyeOfEnder;
 import org.spout.vanilla.entity.projectile.ThrownSnowball;
 import org.spout.vanilla.entity.vehicle.Boat;
 import org.spout.vanilla.entity.vehicle.Minecart;
+
+import gnu.trove.map.hash.TIntObjectHashMap;
 
 public enum Entity {
 	DroppedItem(1, Pickup.class),
@@ -101,13 +102,9 @@ public enum Entity {
 	Ocelot(98, Ocelot.class),
 	Villager(120, Villager.class),
 	EnderCrystal(200, EnderCrystal.class);
-
 	public final int id;
-
 	public final Class<? extends VanillaEntity> controller;
-
 	public static final String KEY = "EntityID";
-
 	final static TIntObjectHashMap<Entity> map = new TIntObjectHashMap<Entity>();
 
 	private Entity(int data, Class<? extends VanillaEntity> defaultController) {

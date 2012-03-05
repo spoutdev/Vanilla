@@ -28,10 +28,8 @@ package org.spout.vanilla.protocol.entity.vehicle;
 import org.spout.vanilla.protocol.entity.BasicVehicleEntityProtocol;
 
 public class BoatEntityProtocol extends BasicVehicleEntityProtocol {
-
 	@Override
 	public int getSpawnedVehicleType() {
 		return 1;
 	}
-
 }

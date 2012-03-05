@@ -31,18 +31,16 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.entity.VanillaEntity;
 import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 
-
-
-public class EntityHeadYawMessageHandler extends MessageHandler<EntityHeadYawMessage>{
-
+public class EntityHeadYawMessageHandler extends MessageHandler<EntityHeadYawMessage> {
 	@Override
 	public void handle(Session session, Player player, EntityHeadYawMessage message) {
-		if(player.getEntity().getController() == null)
+		if (player.getEntity().getController() == null) {
 			return;
-		if(!(player.getEntity().getController() instanceof VanillaEntity))
+		}
+		if (!(player.getEntity().getController() instanceof VanillaEntity)) {
 			return;
+		}
 		VanillaEntity vanilla = (VanillaEntity) player.getEntity().getController();
 		vanilla.setHeadYaw(message.getHeadYaw());
 	}
-
 }

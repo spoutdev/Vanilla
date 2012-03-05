@@ -26,6 +26,7 @@
 package org.spout.vanilla.command;
 
 import java.util.Set;
+
 import org.spout.api.Spout;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;

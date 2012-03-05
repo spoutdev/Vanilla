@@ -23,7 +23,6 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.entity.world;
 
 import java.lang.reflect.Constructor;
@@ -46,7 +45,6 @@ import org.spout.api.player.Player;
 public class RegionEntitySpawner extends Controller {
 	private static Map<Class<? extends Controller>, Boolean> validConstructors = new ConcurrentHashMap<Class<? extends Controller>, Boolean>();
 	private static final int SPAWN_TRIES = 6;
-
 	final Region region;
 	final Random rand = new Random();
 	final Map<Class<? extends Controller>, SpawnInformation> spawnableTypes = new ConcurrentHashMap<Class<? extends Controller>, SpawnInformation>();
@@ -57,7 +55,6 @@ public class RegionEntitySpawner extends Controller {
 
 	/**
 	 * Adds a controller type to the list of entity types this region spawner will try to spawn.
-	 *
 	 * @param type	   to spawn
 	 * @param canSpawnOn a set of block materials that this entity can spawn on
 	 * @param amount	 of this type of entity that should be spawned per chunk, on average
@@ -87,7 +84,6 @@ public class RegionEntitySpawner extends Controller {
 
 	/**
 	 * Region this spawner manages.
-	 *
 	 * @return region
 	 */
 	public Region getRegion() {

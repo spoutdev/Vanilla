@@ -23,7 +23,6 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.material.item;
 
 import org.spout.api.geo.World;
@@ -37,12 +36,9 @@ import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.material.block.Solid;
 
 public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget {
-
 	private final Vector3[] possibleIncoming = {new Vector3(1, 0, 0), new Vector3(0, 0, 1), new Vector3(-1, 0, 0), new Vector3(0, 0, -1), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1), new Vector3(0, 1, 0), //Redstone torch from above
 	};
-
 	private final Vector3[] possibleOutgoing = {new Vector3(1, 0, 0), new Vector3(0, 0, 1), new Vector3(-1, 0, 0), new Vector3(0, 0, -1), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1), new Vector3(1, -1, 0), new Vector3(0, -1, 1), new Vector3(-1, -1, 0), new Vector3(0, -1, -1),};
-
 	private final Vector3[] possibleOutgoingTorch = {new Vector3(2, 0, 0), new Vector3(0, 0, 2), new Vector3(-2, 0, 0), new Vector3(0, 0, -2), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1),};
 
 	public RedstoneWire(String name, int id, int data) {
@@ -93,7 +89,6 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 
 	/**
 	 * Sets the wire at x,y,z to the given power and initiates an update process that will recalculate the wire.
-	 *
 	 * @param world
 	 * @param x
 	 * @param y

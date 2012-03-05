@@ -37,14 +37,12 @@ import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class Minecart extends GenericItem {
-
 	public Minecart(String name, int id) {
 		super(name, id);
 	}
 
 	/**
 	 * Creates a new minecart controller to spawn when interacted
-	 *
 	 * @return a new Minecart controller
 	 */
 	protected Controller getSpawnedEntity() {
@@ -65,5 +63,4 @@ public class Minecart extends GenericItem {
 			//Shouldn't the held item be passed to this function instead?
 		}
 	}
-
 }

@@ -76,7 +76,6 @@ public enum Art {
 
 	/**
 	 * Gets the width of the painting
-	 *
 	 * @return width
 	 */
 	public int getWidth() {
@@ -85,7 +84,6 @@ public enum Art {
 
 	/**
 	 * Gets the height of the painting
-	 *
 	 * @return height
 	 */
 	public int getHeight() {
@@ -94,7 +92,6 @@ public enum Art {
 
 	/**
 	 * Gets the painting id
-	 *
 	 * @return painting id
 	 */
 	public int getId() {
@@ -110,7 +107,6 @@ public enum Art {
 
 	/**
 	 * Search for a painting by it's id.
-	 *
 	 * @param id painting id
 	 * @return painting if found, else null
 	 */
@@ -120,7 +116,6 @@ public enum Art {
 
 	/**
 	 * Searches for a painting based on it's enum {@link #name()}.
-	 *
 	 * @param name to search for
 	 * @return painting if found, else null
 	 */

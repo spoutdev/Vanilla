@@ -29,7 +29,6 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.generator.VanillaBiomeType;
 
 public class SwampBiome extends VanillaBiomeType {
-
 	public SwampBiome() {
 		super(6);
 	}

@@ -29,7 +29,6 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.generator.VanillaBiomeType;
 
 public class TaigaBiome extends VanillaBiomeType {
-
 	public TaigaBiome() {
 		super(5);
 	}

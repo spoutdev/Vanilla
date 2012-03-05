@@ -39,7 +39,6 @@ import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
-
 	@Override
 	public void handleServer(Session session, Player player, WindowClickMessage message) {
 		if (player == null || player.getEntity() == null) {
@@ -80,7 +79,6 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			response(session, message, false);
 			return;
 		}
-
 
 		if (message.isShift()) {
 			if (false /* inv == player.getInventory().getOpenWindow() */) {

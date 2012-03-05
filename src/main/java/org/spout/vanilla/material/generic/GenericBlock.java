@@ -23,7 +23,6 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.material.generic;
 
 import org.spout.api.geo.World;
@@ -36,9 +35,7 @@ import org.spout.vanilla.material.item.RedstoneTorch;
 import org.spout.vanilla.material.item.RedstoneWire;
 
 public class GenericBlock extends GenericBlockMaterial implements Block {
-
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
-
 	private float resistance;
 
 	public GenericBlock(String name, int id) {
@@ -102,5 +99,4 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 	public GenericBlock setLightLevel(short level) {
 		return (GenericBlock) super.setLightLevel(level);
 	}
-
 }

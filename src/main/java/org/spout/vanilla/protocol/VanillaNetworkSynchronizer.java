@@ -36,7 +36,6 @@ import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.MaterialData;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
@@ -80,10 +79,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();
 	private TIntPairHashSet biomesSentChunks = new TIntPairHashSet();
-
 	//TODO: track entities as they come into range and untrack entities as they move out of range
 	private TIntHashSet activeEntities = new TIntHashSet();
-
 	private final TIntObjectHashMap<Message> queuedInventoryUpdates = new TIntObjectHashMap<Message>();
 
 	@Override
@@ -234,7 +231,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			}
 			entity.getInventory().addViewer(this);
 		} else {
-			owner.getSession().send(new RespawnMessage(0, (byte)0, (byte) (owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1), world == null ? 0: world.getHeight(), "DEFAULT"));
+			owner.getSession().send(new RespawnMessage(0, (byte) 0, (byte) (owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1), world == null ? 0 : world.getHeight(), "DEFAULT"));
 		}
 
 		if (world != null) {

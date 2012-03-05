@@ -23,7 +23,6 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.generator.normal.decorator;
 
 import java.util.Random;
@@ -36,7 +35,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.VanillaMaterials;
 
 public class BeachDecorator implements BiomeDecorator {
-
 	@Override
 	public void populate(Chunk c, Random r) {
 		if (c.getY() != 3) {

@@ -26,7 +26,6 @@
 package org.spout.vanilla.material;
 
 public interface Food extends Item {
-
 	public enum FoodEffectType {
 
 		HEALTH,

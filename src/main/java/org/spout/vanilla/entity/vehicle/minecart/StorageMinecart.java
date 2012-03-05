@@ -29,7 +29,6 @@ import org.spout.vanilla.entity.vehicle.Minecart;
 import org.spout.vanilla.entity.vehicle.Vehicle;
 
 public class StorageMinecart extends Minecart implements Vehicle {
-
 	public void onAttached() {
 		super.onAttached();
 	}
@@ -37,5 +36,4 @@ public class StorageMinecart extends Minecart implements Vehicle {
 	public void onTick(float dt) {
 		super.onTick(dt);
 	}
-
 }

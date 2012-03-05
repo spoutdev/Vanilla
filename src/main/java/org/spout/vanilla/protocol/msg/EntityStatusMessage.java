@@ -34,7 +34,6 @@ public final class EntityStatusMessage extends Message {
 	public static final byte WOLF_TAMED = 7;
 	public static final byte WOLF_SHAKING = 8;
 	public static final byte EATING_ACCEPTED = 9;
-
 	private final int id;
 	private final byte status;
 

@@ -33,10 +33,8 @@ import org.spout.api.util.config.Configuration;
 import org.spout.api.util.config.ConfigurationNode;
 
 public class VanillaConfiguration extends Configuration {
-
 	// General
 	public static final ConfigurationNode ENABLE_END_CREDITS = new ConfigurationNode("general.enable-ending-credits", true);
-
 	// Physics
 	public static final ConfigurationNode GRAVEL_PHYSICS = new ConfigurationNode("physics.gravel", true);
 	public static final ConfigurationNode FIRE_PHYSICS = new ConfigurationNode("physics.fire", true);
@@ -46,7 +44,6 @@ public class VanillaConfiguration extends Configuration {
 	public static final ConfigurationNode SAND_PHYSICS = new ConfigurationNode("physics.sand", true);
 	public static final ConfigurationNode WATER_PHYSICS = new ConfigurationNode("physics.water", true);
 	public static final ConfigurationNode CACTUS_PHYSICS = new ConfigurationNode("physics.cactus", true);
-
 	// Player
 	public static final ConfigurationNode PLAYER_DEFAULT_GAMEMODE = new ConfigurationNode("player.default-gamemode", "survival");
 	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_HEALTH = new ConfigurationNode("player.survival.enable-health", true);
@@ -54,7 +51,6 @@ public class VanillaConfiguration extends Configuration {
 	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_XP = new ConfigurationNode("player.survival.enable-xp", true);
 	public static final ConfigurationNode PLAYER_TIMEOUT_TICKS = new ConfigurationNode("player.timeout-ticks", 1200);
 	public static final OpConfig OPS = new OpConfig();
-
 	// Entity
 	public static final ConfigurationNode ITEM_PICKUP_RANGE = new ConfigurationNode("entity.item-pickup-range", 3);
 

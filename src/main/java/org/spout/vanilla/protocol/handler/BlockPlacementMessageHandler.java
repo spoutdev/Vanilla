@@ -133,7 +133,6 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			Block newBlock = (Block) placedMaterial;
 			Block oldBlock = target != null ? (Block) target.getBlockMaterial() : null;
 
-
 			if (!sendRevert && (oldBlock == null || oldBlock.isLiquid() || oldBlock.getId() == 0)) {
 				//if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {
 				//SpoutBlockState newState = BlockProperties.get(placedId.getItemTypeId()).getPhysics().placeAgainst(player, target.getState(), placedId, face);

@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.World;
 
 public class MinecartTrackPowered extends MinecartTrack implements RedstoneTarget {
-
 	public MinecartTrackPowered(String name, int id) {
 		super(name, id);
 	}
@@ -43,5 +42,4 @@ public class MinecartTrackPowered extends MinecartTrack implements RedstoneTarge
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

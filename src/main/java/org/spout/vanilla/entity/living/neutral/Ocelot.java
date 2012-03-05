@@ -27,12 +27,11 @@ package org.spout.vanilla.entity.living.neutral;
 
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.Neutral;
-import org.spout.vanilla.entity.living.Tameable;
 import org.spout.vanilla.entity.living.AnimalEntity;
 import org.spout.vanilla.entity.living.Land;
+import org.spout.vanilla.entity.living.Tameable;
 
 public class Ocelot extends AnimalEntity implements Tameable, Neutral, Land {
-
 	@Override
 	public void onAttached() {
 		super.onAttached();

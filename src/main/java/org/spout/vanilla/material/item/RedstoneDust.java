@@ -23,15 +23,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.material.item;
 
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class RedstoneDust extends GenericItem {
-
 	public RedstoneDust(String name, int id) {
 		super(name, id);
 	}
-
 }

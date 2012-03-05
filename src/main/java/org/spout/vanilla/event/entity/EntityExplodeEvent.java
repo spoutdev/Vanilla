@@ -36,13 +36,9 @@ import org.spout.api.geo.discrete.Point;
 
 public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-
 	private List<Block> blocks;
-
 	private Point epicenter;
-
 	private float yield;
-
 	private boolean incendiary;
 
 	public EntityExplodeEvent(Entity e) {

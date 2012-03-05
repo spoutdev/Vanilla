@@ -33,12 +33,10 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class BlazeEntityProtocol extends BasicMobEntityProtocol {
-
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
 		//TODO: Index 16 (byte): Attacking. 1 sets the blaze on fire; 0 signals the end of the attack
 		return parameters;
 	}
-
 }

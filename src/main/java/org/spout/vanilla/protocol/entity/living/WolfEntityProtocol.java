@@ -33,7 +33,6 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class WolfEntityProtocol extends BasicMobEntityProtocol {
-
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
@@ -45,5 +44,4 @@ public class WolfEntityProtocol extends BasicMobEntityProtocol {
 		//TODO: Index 18 (int): Health
 		return parameters;
 	}
-
 }

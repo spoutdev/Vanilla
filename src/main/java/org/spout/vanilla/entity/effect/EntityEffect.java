@@ -48,9 +48,7 @@ public enum EntityEffect {
 	HUNGER(17),
 	WEAKNESS(18),
 	POISON(19);
-
 	private final byte id;
-
 	private static final Map<Integer, EntityEffect> lookup = new HashMap<Integer, EntityEffect>();
 
 	static {

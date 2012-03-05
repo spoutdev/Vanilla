@@ -27,13 +27,11 @@ package org.spout.vanilla.entity.object;
 
 import java.util.Random;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.entity.MovingEntity;
 
 public class PrimedTnt extends MovingEntity {
 	float timeToExplode = 4.f;
-
 	Vector3 velocity;
 	Vector3 gravity = new Vector3(0, -5, 0);
 	Random rng = new Random();
@@ -54,7 +52,6 @@ public class PrimedTnt extends MovingEntity {
 
 		//Move in a random direction and apply gravity.
 		parent.setPoint(parent.getPoint().add(velocity.multiply(dt)).add(gravity.multiply(dt)));
-
 	}
 
 	@Override

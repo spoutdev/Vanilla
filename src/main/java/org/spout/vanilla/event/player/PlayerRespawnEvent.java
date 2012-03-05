@@ -36,7 +36,6 @@ import org.spout.api.player.Player;
 
 public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-
 	private boolean bedRespawn;
 
 	public PlayerRespawnEvent(Entity e, Point point, boolean bedRespawn) {
@@ -47,10 +46,8 @@ public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable 
 		this.bedRespawn = bedRespawn;
 	}
 
-
 	/**
 	 * Gets the player associated in this event.
-	 *
 	 * @return The player of the event.
 	 */
 	public Player getPlayer() {
@@ -59,7 +56,6 @@ public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable 
 
 	/**
 	 * Returns true if the respawn location is a bed.
-	 *
 	 * @return True if the respawn location is a bed.
 	 */
 	public boolean isBedRespawn() {

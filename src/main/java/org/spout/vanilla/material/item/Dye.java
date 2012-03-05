@@ -28,7 +28,6 @@ package org.spout.vanilla.material.item;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class Dye extends GenericItem {
-
 	public Dye(String name, int id, int data) {
 		super(name, id, data);
 	}

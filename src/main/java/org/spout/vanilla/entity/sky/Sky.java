@@ -29,40 +29,33 @@ import org.spout.api.geo.World;
 import org.spout.vanilla.world.Weather;
 
 public interface Sky {
-
 	/**
 	 * Sets the current time of day
-	 *
 	 * @param time
 	 */
 	public void setTime(float time);
 
 	/**
 	 * Gets the current time of day
-	 *
 	 * @return the time of day
 	 */
 	public float getTime();
 
 	/**
 	 * Sets the weather of the sky
-	 *
 	 * @param weather
 	 */
 	public void setWeather(Weather weather);
 
 	/**
 	 * Gets the current weather of the sky.
-	 *
 	 * @return
 	 */
 	public Weather getWeather();
 
 	/**
 	 * Gets the world the sky is in.
-	 *
 	 * @return the world the sky is in.
 	 */
 	public World getWorld();
-
 }

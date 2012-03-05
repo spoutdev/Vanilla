@@ -32,7 +32,6 @@ import org.spout.api.event.entity.EntityEvent;
 
 public class EntityTargetEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-
 	private TargetReason reason;
 
 	public EntityTargetEvent(Entity e, TargetReason reason) {
@@ -42,7 +41,6 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the reason for the targeting.
-	 *
 	 * @return The target reason.
 	 */
 	public TargetReason getReason() {
@@ -51,7 +49,6 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the reason for the targeting.
-	 *
 	 * @param reason The reason for the targeting.
 	 */
 	public void setReason(TargetReason reason) {
@@ -60,7 +57,6 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Returns true if the entity has targeted.
-	 *
 	 * @return True it the entity has targeted, false if not.
 	 */
 	public boolean isTarget() {
@@ -69,7 +65,6 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Returns true if the entity has untargeted.
-	 *
 	 * @return True is the entity has untargeted, false if not.
 	 */
 	public boolean isUntarget() {
@@ -100,7 +95,6 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 		RANDOM_TARGET(true),
 		CUSTOM_TARGET(true),
 		CUSTOM_UNTARGET(false);
-
 		private boolean target;
 
 		private TargetReason(boolean target) {

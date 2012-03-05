@@ -34,7 +34,6 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 public final class BlockActionCodec extends MessageCodec<BlockActionMessage> {
-
 	public BlockActionCodec() {
 		super(BlockActionMessage.class, 0x36);
 	}

@@ -23,7 +23,6 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.material.item;
 
 import org.spout.api.Source;
@@ -36,7 +35,6 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class DoorItem extends GenericItem {
-
 	private DoorBlock doorBlock;
 
 	public DoorItem(String name, int id, DoorBlock woodenDoorBlock) {
@@ -68,5 +66,4 @@ public class DoorItem extends GenericItem {
 		world.setBlockIdAndData(x, y, z, doorBlock.getId(), hinge, false, source);
 		world.setBlockIdAndData(x, y + 1, z, doorBlock.getId(), (short) (hinge | 0x8), false, source);
 	}
-
 }

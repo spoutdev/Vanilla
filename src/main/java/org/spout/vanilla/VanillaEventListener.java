@@ -52,7 +52,6 @@ import org.spout.vanilla.entity.world.RegionEntitySpawner;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 
 public class VanillaEventListener implements Listener {
-
 	private final VanillaPlugin plugin;
 
 	public VanillaEventListener(VanillaPlugin plugin) {

@@ -32,7 +32,6 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.VanillaMaterials;
 
 public class DungeonDecorator implements BiomeDecorator {
-
 	private final static int HEIGHT = 6;
 	private final static int PROBABILITY = 2000;
 
@@ -67,9 +66,7 @@ public class DungeonDecorator implements BiomeDecorator {
 
 			chunk.getWorld().setBlockMaterial(cx + width / 2, cy + 1, cz + height / 2, VanillaMaterials.MONSTER_SPAWNER, chunk.getWorld());
 
-
 			chunk.getWorld().setBlockMaterial(cx + 1, cy + 1, cz + height / 2, VanillaMaterials.CHEST, chunk.getWorld());
-
 
 			chunk.getWorld().setBlockMaterial(cx + width / 2, cy + 1, cz + 1, VanillaMaterials.CHEST, chunk.getWorld());
 

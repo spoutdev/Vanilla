@@ -27,13 +27,11 @@ package org.spout.vanilla.entity.living.neutral;
 
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.Neutral;
-import org.spout.vanilla.entity.living.Tameable;
-import org.spout.vanilla.entity.living.Tamed;
 import org.spout.vanilla.entity.living.AnimalEntity;
 import org.spout.vanilla.entity.living.Land;
+import org.spout.vanilla.entity.living.Tamed;
 
 public class Dog extends AnimalEntity implements Tamed, Neutral, Land {
-
 	private org.spout.api.entity.Entity sovereign = null;
 
 	@Override

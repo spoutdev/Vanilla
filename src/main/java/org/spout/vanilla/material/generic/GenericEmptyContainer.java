@@ -38,7 +38,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.VanillaMaterials;
 
 public class GenericEmptyContainer extends GenericBlockItem {
-
 	private HashMap<BlockMaterial, GenericFullContainer> map = new HashMap<BlockMaterial, GenericFullContainer>();
 
 	public GenericEmptyContainer(String name, int id) {

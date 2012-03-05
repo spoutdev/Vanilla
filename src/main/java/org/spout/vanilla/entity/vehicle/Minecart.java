@@ -29,7 +29,6 @@ import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.MovingEntity;
 
 public abstract class Minecart extends MovingEntity implements Vehicle {
-
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.Minecart.id);

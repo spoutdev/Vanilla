@@ -35,7 +35,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.VanillaMaterials;
 
 public class FlowerDecorator implements BiomeDecorator {
-
 	private static final List<BlockMaterial> flowers = new ArrayList<BlockMaterial>();
 
 	static {

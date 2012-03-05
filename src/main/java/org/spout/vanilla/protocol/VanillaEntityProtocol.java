@@ -23,7 +23,6 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.protocol;
 
 import org.spout.api.entity.Entity;
@@ -33,7 +32,6 @@ import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
-
 	@Override
 	public Message getDestroyMessage(Entity entity) {
 		return new DestroyEntityMessage(entity.getId());

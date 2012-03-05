@@ -31,7 +31,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.block.MinecartTrack;
 
 public class MinecartTrackLogic {
-
 	public int x, y, z;
 	public World world;
 	public MinecartTrack material;
@@ -131,5 +130,4 @@ public class MinecartTrackLogic {
 		//TODO: Update this track piece based on environment
 		//check if connections are made, and if new connections need to be made
 	}
-
 }

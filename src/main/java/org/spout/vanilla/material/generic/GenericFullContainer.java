@@ -35,7 +35,6 @@ import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.block.BlockFace;
 
 public class GenericFullContainer extends GenericBlockItem {
-
 	private ItemMaterial container;
 
 	public GenericFullContainer(String name, int id, BlockMaterial onPlace, GenericEmptyContainer container) {

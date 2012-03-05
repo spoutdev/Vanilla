@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.msg;
 import org.spout.api.protocol.Message;
 
 public final class BlockActionMessage extends Message {
-
 	private final int x, y, z;
 	byte firstByte, secondByte;
 

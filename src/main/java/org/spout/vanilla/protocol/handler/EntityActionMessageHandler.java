@@ -31,7 +31,6 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
 
 public final class EntityActionMessageHandler extends MessageHandler<EntityActionMessage> {
-
 	@Override
 	public void handle(Session session, Player player, EntityActionMessage message) {
 		switch (message.getAction()) {

@@ -23,13 +23,11 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-
 package org.spout.vanilla.material.attachable;
 
 import org.spout.api.material.block.BlockFace;
 
 public class GroundAttachable extends AbstractAttachable {
-
 	public GroundAttachable(String name, int id) {
 		super(name, id);
 	}
@@ -47,5 +45,4 @@ public class GroundAttachable extends AbstractAttachable {
 	public BlockFace getFaceAttachedTo(short data) {
 		return BlockFace.BOTTOM;
 	}
-
 }

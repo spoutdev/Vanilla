@@ -46,12 +46,7 @@ import org.junit.Test;
 public class VanillaBootstrapProtocolTest {
 	private static final TIntSet testedOpcodes = new TIntHashSet();
 	private static final VanillaBootstrapCodecLookupService CODEC_LOOKUP = new VanillaBootstrapCodecLookupService();
-	private static final Message[] TEST_MESSAGES = new Message[]{
-			new IdentificationMessage(0, "Tester", 0, -1, 0, 128, 20, "MAGICAL"),
-			new HandshakeMessage("Player"),
-			new ServerListPingMessage(),
-			new KickMessage("This is a test")
-	};
+	private static final Message[] TEST_MESSAGES = new Message[]{new IdentificationMessage(0, "Tester", 0, -1, 0, 128, 20, "MAGICAL"), new HandshakeMessage("Player"), new ServerListPingMessage(), new KickMessage("This is a test")};
 
 	@Test
 	public void testMessageCodecLookup() {

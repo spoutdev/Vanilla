@@ -30,7 +30,6 @@ import org.spout.api.geo.World;
 import org.spout.vanilla.world.Weather;
 
 public class TheEndSky extends Controller implements Sky {
-
 	@Override
 	public void onAttached() {
 		parent.setObserver(true);

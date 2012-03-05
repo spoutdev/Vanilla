@@ -30,7 +30,6 @@ import org.spout.vanilla.material.attachable.GroundAttachable;
 import org.spout.vanilla.util.MinecartTrackLogic;
 
 public class MinecartTrack extends GroundAttachable {
-
 	public MinecartTrack(String name, int id) {
 		super(name, id);
 	}
@@ -46,5 +45,4 @@ public class MinecartTrack extends GroundAttachable {
 			logic.refresh();
 		}
 	}
-
 }

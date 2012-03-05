@@ -71,7 +71,6 @@ import org.spout.vanilla.material.item.SpawnEgg;
 import org.spout.vanilla.material.item.StorageMinecart;
 
 public final class VanillaMaterials {
-
 	public static final BlockMaterial AIR = new Air("Air");
 	public static final BlockMaterial STONE = new Solid("Stone", 1).setHardness(1.5F).setResistance(10.0F);
 	public static final BlockMaterial GRASS = new Grass("Grass").setHardness(0.6F).setResistance(0.8F);
@@ -307,13 +306,13 @@ public final class VanillaMaterials {
 	public static final ItemMaterial PAINTINGS = new GenericItem("Paintings", 321);
 	public static final ItemMaterial GOLDEN_APPLE = new GenericFood("Golden Apple", 322, 10, FoodEffectType.HUNGER);
 	public static final ItemMaterial SIGN = new GenericItem("Sign", 323);
-	public static final ItemMaterial WOODEN_DOOR = new DoorItem("Wooden Door", 324,(DoorBlock) WOODEN_DOOR_BLOCK);
+	public static final ItemMaterial WOODEN_DOOR = new DoorItem("Wooden Door", 324, (DoorBlock) WOODEN_DOOR_BLOCK);
 	public static final ItemMaterial BUCKET = new GenericEmptyContainer("Bucket", 325);
 	public static final ItemMaterial WATER_BUCKET = new GenericFullContainer("Water Bucket", 326, WATER, (GenericEmptyContainer) BUCKET);
 	public static final ItemMaterial LAVA_BUCKET = new GenericFullContainer("Lava Bucket", 327, LAVA, (GenericEmptyContainer) BUCKET);
 	public static final ItemMaterial MINECART = new Minecart("Minecart", 328);
 	public static final ItemMaterial SADDLE = new GenericItem("Saddle", 329);
-	public static final ItemMaterial IRON_DOOR = new DoorItem("Iron Door", 330,(DoorBlock) IRON_DOOR_BLOCK);
+	public static final ItemMaterial IRON_DOOR = new DoorItem("Iron Door", 330, (DoorBlock) IRON_DOOR_BLOCK);
 	public static final ItemMaterial REDSTONE = new GenericBlockItem("Redstone", 331, VanillaMaterials.REDSTONE_WIRE);
 	public static final ItemMaterial SNOWBALL = new GenericItem("Snowball", 332);
 	public static final ItemMaterial BOAT = new GenericItem("Boat", 333);

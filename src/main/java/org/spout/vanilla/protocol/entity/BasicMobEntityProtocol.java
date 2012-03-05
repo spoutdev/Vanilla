@@ -30,7 +30,6 @@ import java.util.List;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
@@ -39,10 +38,8 @@ import org.spout.vanilla.protocol.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 
 public class BasicMobEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
-
 	/**
 	 * Gets a list of parameters used for the creation of a mob spawn message
-	 *
 	 * @param controller - The entity controller to obtain the parameters from
 	 * @return a list of parameters
 	 */
@@ -62,7 +59,7 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 			int r = (int) (entity.getYaw() * 32);
 			int p = (int) (entity.getPitch() * 32);
 			int headyaw = 0;
-			if(c instanceof VanillaEntity) {
+			if (c instanceof VanillaEntity) {
 				headyaw = ((VanillaEntity) c).getHeadYaw();
 			}
 			int type = entity.getData(org.spout.vanilla.entity.Entity.KEY).asInt();

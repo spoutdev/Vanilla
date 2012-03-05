@@ -37,14 +37,13 @@ import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class SpawnEgg extends GenericItem {
-
 	final Constructor<?> chosen;
-	
+
 	public SpawnEgg(String name, int id, int data) {
 		super(name, id, data);
-		
+
 		Class<? extends VanillaEntity> controller = org.spout.vanilla.entity.Entity.getByID((int) getData()).getController();
-		
+
 		Constructor<?>[] constructors = controller.getConstructors();
 		for (Constructor<?> constructor : constructors) {
 			if (constructor.getParameterTypes().length == 0) {
@@ -52,20 +51,20 @@ public class SpawnEgg extends GenericItem {
 				return;
 			}
 		}
-		
+
 		chosen = null;
 	}
-	
+
 	@Override
 	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
 		if (chosen != null) {
 			try {
-				entity.getWorld().createAndSpawnEntity(position, (VanillaEntity) chosen.newInstance(new Object[] {}));
-			} catch ( Exception e ) {
+				entity.getWorld().createAndSpawnEntity(position, (VanillaEntity) chosen.newInstance(new Object[]{}));
+			} catch (Exception e) {
 				// What to do here?
 			}
 		}
-		
+
 		ItemStack holding = entity.getInventory().getCurrentItem();
 		if (entity.getController() instanceof SurvivalPlayer) {
 			if (holding.getAmount() > 1) {

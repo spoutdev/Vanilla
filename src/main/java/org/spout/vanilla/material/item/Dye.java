@@ -25,10 +25,44 @@
  */
 package org.spout.vanilla.material.item;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.entity.VanillaEntity;
+import org.spout.vanilla.entity.living.passive.Sheep;
+import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class Dye extends GenericItem {
+	
+	private final int color;
+	
 	public Dye(String name, int id, int data) {
 		super(name, id, data);
+		
+		color = 0xF - data;
+	}
+	
+	@Override
+	public void onInteract(Entity entity, Entity other) {
+		if (!(other.getController() instanceof Sheep)) {
+			System.out.println("No sheep: " + other.getClass().getName() + " :(");
+			return;
+		}
+		
+		other.setData( "SheepColor", color );
+		System.out.println("Sheep go baaaa!");
+		
+		ItemStack holding = entity.getInventory().getCurrentItem();
+		if (entity.getController() instanceof SurvivalPlayer) {
+			if (holding.getAmount() > 1) {
+				holding.setAmount(holding.getAmount() - 1);
+				entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
+			} else if (holding.getAmount() == 1) {
+				entity.getInventory().setItem(null, entity.getInventory().getCurrentSlot());
+			}
+		}
 	}
 }

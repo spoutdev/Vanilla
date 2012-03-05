@@ -11,13 +11,20 @@
       <package name="javax" withSubpackages="true" static="false" />
       <package name="java" withSubpackages="true" static="false" />
       <emptyLine />
+      <package name="org.bukkit" withSubpackages="true" static="false" />
+      <emptyLine />
       <package name="org.spout" withSubpackages="true" static="false" />
+      <emptyLine />
+      <package name="com" withSubpackages="true" static="false" />
       <emptyLine />
       <package name="" withSubpackages="true" static="false" />
     </value>
   </option>
   <option name="JD_ADD_BLANK_AFTER_DESCRIPTION" value="false" />
   <option name="DO_NOT_INDENT_TOP_LEVEL_CLASS_MEMBERS" value="true" />
+  <XML>
+    <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
+  </XML>
   <codeStyleSettings language="JAVA">
     <option name="KEEP_LINE_BREAKS" value="false" />
     <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />

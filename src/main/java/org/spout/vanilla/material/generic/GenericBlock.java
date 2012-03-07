@@ -37,13 +37,24 @@ import org.spout.vanilla.material.item.RedstoneWire;
 public class GenericBlock extends GenericBlockMaterial implements Block {
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
 	private float resistance;
+	private int dropId;
+	private int dropData;
+	private int dropCount;
 
 	public GenericBlock(String name, int id) {
 		super(name, id);
+		
+		dropId = id;
+		dropData = 0;
+		dropCount = 1;
 	}
 
 	public GenericBlock(String name, int id, int data) {
 		super(name, id, data);
+		
+		dropId = id;
+		dropData = data;
+		dropCount = 1;
 	}
 
 	@Override
@@ -98,5 +109,37 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 	@Override
 	public GenericBlock setLightLevel(short level) {
 		return (GenericBlock) super.setLightLevel(level);
+	}
+	
+	@Override
+	public int getDrop() {
+		return dropId;
+	}
+	
+	@Override
+	public int getDropData() {
+		return dropData;
+	}
+	
+	@Override
+	public int getDropCount() {
+		return dropCount;
+	}
+	
+	public GenericBlock setDrop(int id) {
+		return setDrop(id, 0);
+	}
+	
+	public GenericBlock setDrop(int id, int data) {
+		dropId = id;
+		dropData = data;
+		
+		return this;
+	}
+	
+	public GenericBlock setDropCount(int count) {
+		dropCount = count;
+		
+		return this;
 	}
 }

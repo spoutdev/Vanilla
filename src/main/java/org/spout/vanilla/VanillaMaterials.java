@@ -74,7 +74,7 @@ import org.spout.vanilla.material.item.StorageMinecart;
 public final class VanillaMaterials {
 	public static final BlockMaterial AIR = new Air("Air");
 	public static final BlockMaterial STONE = new Solid("Stone", 1).setHardness(1.5F).setResistance(10.0F).setDrop(4);
-	public static final BlockMaterial GRASS = new Grass("Grass").setHardness(0.6F).setResistance(0.8F);
+	public static final BlockMaterial GRASS = new Grass("Grass").setHardness(0.6F).setResistance(0.8F).setDrop(3);
 	public static final BlockMaterial DIRT = new Solid("Dirt", 3).setHardness(0.5F).setResistance(0.8F);
 	public static final BlockMaterial COBBLESTONE = new Solid("Cobblestone", 4).setHardness(2.0F).setResistance(10.0F);
 	public static final BlockMaterial WOOD = new Solid("Wooden Planks", 5).setHardness(2.0F).setResistance(5.0F);

@@ -32,6 +32,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.MaterialData;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.nbt.Tag;
+import org.spout.vanilla.material.Tool;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 
@@ -78,7 +79,13 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 			} else {
 				buffer.writeShort(item.getMaterial().getId());
 				buffer.writeByte(item.getAmount());
-				buffer.writeShort(item.getDamage());
+				if (item.getMaterial() instanceof Tool) {
+					System.out.println("damage");
+					buffer.writeShort(item.getDamage());
+				} else {
+					System.out.println("data");
+					buffer.writeShort(item.getMaterial().getData());
+				}
 				if (ChannelBufferUtils.hasNbtData(item.getMaterial().getData())) {
 					ChannelBufferUtils.writeCompound(buffer, item.getAuxData());
 				}

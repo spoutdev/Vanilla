@@ -34,28 +34,28 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.exception.InvalidControllerException;
-import org.spout.vanilla.entity.projectile.ThrownPotion;
+import org.spout.vanilla.entity.projectile.Potion;
 
 public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	//Entity = Affected by potion, Double = Intensity of potion effect.
 	private final Map<Entity, Double> entitiesAffected;
-	private ThrownPotion potion;
+	private Potion potion;
 
 	public PotionSplashEvent(Entity e, Source source, Map<Entity, Double> entitiesAffected) throws InvalidControllerException {
 		super(e, source);
-		if (!(e.getController() instanceof ThrownPotion)) {
+		if (!(e.getController() instanceof Potion)) {
 			throw new InvalidControllerException();
 		}
 		this.entitiesAffected = entitiesAffected;
-		potion = (ThrownPotion) e.getController();
+		potion = (Potion) e.getController();
 	}
 
 	/**
 	 * Gets the potion that was thrown
 	 * @return The potion thrown.
 	 */
-	public ThrownPotion getPotionThrown() {
+	public Potion getPotionThrown() {
 		return potion;
 	}
 
@@ -63,7 +63,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 	 * Sets the potion that was thrown.
 	 * @param potion The potion that is thrown.
 	 */
-	public void setPotionThrown(ThrownPotion potion) {
+	public void setPotionThrown(Potion potion) {
 		this.potion = potion;
 	}
 

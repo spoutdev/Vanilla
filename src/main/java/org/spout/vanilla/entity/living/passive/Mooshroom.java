@@ -26,18 +26,13 @@
 package org.spout.vanilla.entity.living.passive;
 
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.Passive;
-import org.spout.vanilla.entity.living.Land;
+import org.spout.vanilla.entity.living.creature.Passive;
 
-public class Mooshroom extends Cow implements Passive, Land {
+public class Mooshroom extends Cow implements Passive {
+	
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.Mooshroom.id);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
 	}
 }

@@ -28,10 +28,12 @@ package org.spout.vanilla.entity.living.player;
 import org.spout.api.player.Player;
 
 public class SurvivalPlayer extends VanillaPlayer {
+	
 	public SurvivalPlayer(Player p) {
 		super(p);
 	}
 
+	@Override
 	public boolean hasInfiniteResources() {
 		return false;
 	}

@@ -26,19 +26,13 @@
 package org.spout.vanilla.entity.living.passive;
 
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.Passive;
-import org.spout.vanilla.entity.living.CreatureEntity;
-import org.spout.vanilla.entity.living.Water;
+import org.spout.vanilla.entity.living.creature.Passive;
+import org.spout.vanilla.entity.living.Creature;
 
-public class Squid extends CreatureEntity implements Passive, Water {
+public class Squid extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.Squid.id);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
 	}
 }

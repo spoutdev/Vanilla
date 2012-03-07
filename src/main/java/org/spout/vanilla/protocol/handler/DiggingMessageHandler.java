@@ -37,7 +37,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
-import org.spout.vanilla.entity.object.Pickup;
+import org.spout.vanilla.entity.object.Item;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
 
@@ -108,7 +108,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			oldMat.onDestroy(world, x, y, z);
 			
 			if (player.getEntity().getController() instanceof SurvivalPlayer) {
-				world.createAndSpawnEntity(block.getBase(), new Pickup(new ItemStack(oldMat, 1), player.getEntity().getPoint().normalize().add(0, 5, 0)));//TODO get the actual block drops, and more than one can fall :)
+				world.createAndSpawnEntity(block.getBase(), new Item(new ItemStack(oldMat, 1), player.getEntity().getPoint().normalize().add(0, 5, 0)));//TODO get the actual block drops, and more than one can fall :)
 			}
 			/*if (!block.isEmpty() && !block.isLiquid()) {
 				if (!player.getInventory().contains(block.getTypeId()) || player.getGameMode() != GameMode.CREATIVE) {

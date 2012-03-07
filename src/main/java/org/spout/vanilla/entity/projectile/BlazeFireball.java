@@ -27,8 +27,10 @@ package org.spout.vanilla.entity.projectile;
 
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
+import org.spout.vanilla.entity.object.Projectile;
 
 public class BlazeFireball extends Projectile {
+	
 	public BlazeFireball(Point start, Quaternion rotation, int maxSpeed) {
 		super(start, rotation, maxSpeed);
 	}

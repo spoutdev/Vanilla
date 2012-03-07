@@ -25,6 +25,10 @@
  */
 package org.spout.vanilla.entity.living;
 
+import org.spout.api.entity.Entity;
+
 public interface Tameable {
-	public void subjectTo(org.spout.api.entity.Entity entity);
+	
+	public void subjectTo(Entity entity);
+	
 }

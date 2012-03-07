@@ -28,7 +28,7 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.entity.object.FallingBlock;
+import org.spout.vanilla.entity.object.falling.FallingBlock;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;

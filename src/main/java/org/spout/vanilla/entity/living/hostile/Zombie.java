@@ -26,19 +26,14 @@
 package org.spout.vanilla.entity.living.hostile;
 
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.Hostile;
-import org.spout.vanilla.entity.living.Land;
-import org.spout.vanilla.entity.living.MonsterEntity;
+import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.living.creature.Hostile;
 
-public class Zombie extends MonsterEntity implements Hostile, Land {
+public class Zombie extends Creature implements Hostile {
+	
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.Zombie.id);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
 	}
 }

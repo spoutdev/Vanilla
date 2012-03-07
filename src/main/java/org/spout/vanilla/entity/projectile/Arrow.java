@@ -27,25 +27,14 @@ package org.spout.vanilla.entity.projectile;
 
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
+import org.spout.vanilla.entity.object.Projectile;
 
 public class Arrow extends Projectile {
-	final static int maxArrowSpeed = 10;
+	
+	private final static int maxArrowSpeed = 10;
 
 	public Arrow(Point start, Quaternion rotation, float charge) {
 		super(start, rotation, maxArrowSpeed);
-
 		velocity = velocity.multiply(charge);
-	}
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		//TODO arrow model;
-	}
-
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
-		//Do Gravity here?
 	}
 }

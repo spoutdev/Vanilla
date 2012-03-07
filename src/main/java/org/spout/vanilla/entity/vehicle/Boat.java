@@ -25,16 +25,15 @@
  */
 package org.spout.vanilla.entity.vehicle;
 
+import org.spout.vanilla.entity.object.Vehicle;
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.MovingEntity;
+import org.spout.vanilla.entity.ObjectEntity;
 
-public class Boat extends MovingEntity implements Vehicle {
+public class Boat extends ObjectEntity implements Vehicle {
+	
+	@Override
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.Boat.id);
-	}
-
-	public void onTick(float dt) {
-		super.onTick(dt);
 	}
 }

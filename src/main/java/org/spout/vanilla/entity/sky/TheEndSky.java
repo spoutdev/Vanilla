@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.entity.sky;
 
+import org.spout.vanilla.entity.object.Sky;
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.World;
 import org.spout.vanilla.world.Weather;

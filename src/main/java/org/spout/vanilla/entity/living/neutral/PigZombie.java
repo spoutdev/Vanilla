@@ -26,19 +26,14 @@
 package org.spout.vanilla.entity.living.neutral;
 
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.Neutral;
-import org.spout.vanilla.entity.living.Land;
+import org.spout.vanilla.entity.living.creature.Neutral;
 import org.spout.vanilla.entity.living.hostile.Zombie;
 
-public class PigZombie extends Zombie implements Neutral, Land {
+public class PigZombie extends Zombie implements Neutral {
+	
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.PigZombie.id);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
 	}
 }

@@ -28,11 +28,11 @@ package org.spout.vanilla.entity.living.passive;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.Passive;
-import org.spout.vanilla.entity.living.AnimalEntity;
-import org.spout.vanilla.entity.living.Land;
+import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.living.creature.Passive;
 
-public class Chicken extends AnimalEntity implements Passive, Land {
+public class Chicken extends Creature implements Passive {
+	
 	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
 
 	@Override
@@ -48,10 +48,5 @@ public class Chicken extends AnimalEntity implements Passive, Land {
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.Chicken.id);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
 	}
 }

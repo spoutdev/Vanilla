@@ -26,18 +26,13 @@
 package org.spout.vanilla.entity.living.hostile;
 
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.Hostile;
-import org.spout.vanilla.entity.living.Land;
+import org.spout.vanilla.entity.living.creature.Hostile;
 
-public class CaveSpider extends Spider implements Hostile, Land {
+public class CaveSpider extends Spider implements Hostile {
+	
 	@Override
 	public void onAttached() {
 		super.onAttached();//Again, without the metadata.
 		parent.setData(Entity.KEY, Entity.CaveSpider.id);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
 	}
 }

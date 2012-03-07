@@ -28,17 +28,21 @@ package org.spout.vanilla.entity.living.passive;
 import java.util.Random;
 
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.Passive;
-import org.spout.vanilla.entity.living.AnimalEntity;
-import org.spout.vanilla.entity.living.Land;
+import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.living.creature.Passive;
 
-public class Sheep extends AnimalEntity implements Passive, Land {
+public class Sheep extends Creature implements Passive {
+	
 	private int countdown = 0;
 	private final Random rand = new Random();
-	private final int color;
-
+	private int color;
+	
 	public Sheep() {
 		this(0x0);
+	}
+	
+	public Sheep(WoolColor color) {
+		this(color.getId());
 	}
 
 	public Sheep(int color) {
@@ -63,14 +67,52 @@ public class Sheep extends AnimalEntity implements Passive, Land {
 			float z = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
 			this.velocity.add(x, y, z);
 		}
+		
 		super.onTick(dt);
 	}
 
-	public boolean getSheared() {
+	public boolean isSheared() {
 		return parent.getData("SheepSheared").asBool();
+	}
+	
+	public void setSheared(boolean sheared) {
+		parent.setData("SheepSheared", sheared);
 	}
 
 	public int getColor() {
 		return parent.getData("SheepColor").asInt();
+	}
+	
+	public void setColor() {
+		parent.setData("SheepColor", rand);
+	}
+	
+	public enum WoolColor {
+		White(0),
+		Orange(1),
+		Magenta(2),
+		LightBlue(3),
+		Yellow(4),
+		Lime(5),
+		Pink(6),
+		Gray(7),
+		Silver(8),
+		Cyan(9),
+		Purple(10),
+		Blue(11),
+		Brown(12),
+		Green(13),
+		Red(14),
+		Black(15);
+		
+		private final int id;
+		
+		private WoolColor(int color) {
+			id = color;
+		}
+		
+		public int getId() {
+			return id;
+		}
 	}
 }

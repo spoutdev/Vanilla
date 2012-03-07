@@ -36,9 +36,9 @@ import org.spout.vanilla.entity.living.hostile.Skeleton;
 import org.spout.vanilla.entity.living.hostile.Slime;
 import org.spout.vanilla.entity.living.hostile.Spider;
 import org.spout.vanilla.entity.living.hostile.Zombie;
-import org.spout.vanilla.entity.living.hostile.boss.Enderdragon;
+import org.spout.vanilla.entity.living.hostile.Enderdragon;
 import org.spout.vanilla.entity.living.neutral.Enderman;
-import org.spout.vanilla.entity.living.neutral.Ocelot;
+import org.spout.vanilla.entity.living.passive.Ocelot;
 import org.spout.vanilla.entity.living.neutral.PigZombie;
 import org.spout.vanilla.entity.living.neutral.Wolf;
 import org.spout.vanilla.entity.living.passive.Chicken;
@@ -46,33 +46,34 @@ import org.spout.vanilla.entity.living.passive.Cow;
 import org.spout.vanilla.entity.living.passive.Mooshroom;
 import org.spout.vanilla.entity.living.passive.Pig;
 import org.spout.vanilla.entity.living.passive.Sheep;
-import org.spout.vanilla.entity.living.passive.SnowGolem;
+import org.spout.vanilla.entity.living.util.SnowGolem;
+import org.spout.vanilla.entity.living.util.IronGolem;
 import org.spout.vanilla.entity.living.passive.Squid;
 import org.spout.vanilla.entity.living.passive.Villager;
-import org.spout.vanilla.entity.object.EnderCrystal;
-import org.spout.vanilla.entity.object.FallingBlock;
-import org.spout.vanilla.entity.object.Pickup;
-import org.spout.vanilla.entity.object.PrimedTnt;
+import org.spout.vanilla.entity.object.falling.EnderCrystal;
+import org.spout.vanilla.entity.object.falling.FallingBlock;
+import org.spout.vanilla.entity.object.Item;
+import org.spout.vanilla.entity.object.falling.PrimedTnt;
 import org.spout.vanilla.entity.projectile.Arrow;
 import org.spout.vanilla.entity.projectile.BlazeFireball;
 import org.spout.vanilla.entity.projectile.GhastFireball;
-import org.spout.vanilla.entity.projectile.ThrownEnderPearl;
-import org.spout.vanilla.entity.projectile.ThrownEyeOfEnder;
-import org.spout.vanilla.entity.projectile.ThrownSnowball;
+import org.spout.vanilla.entity.projectile.EnderPearl;
+import org.spout.vanilla.entity.projectile.EyeOfEnder;
+import org.spout.vanilla.entity.projectile.Snowball;
 import org.spout.vanilla.entity.vehicle.Boat;
 import org.spout.vanilla.entity.vehicle.Minecart;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 public enum Entity {
-	DroppedItem(1, Pickup.class),
-	XPOrb(2, Pickup.class), // TODO: is this correct?
+	DroppedItem(1, Item.class),
+	XPOrb(2, Item.class), // TODO: is this correct?
 	ShotArrow(10, Arrow.class),
-	ThrownSnowball(11, ThrownSnowball.class),
+	ThrownSnowball(11, Snowball.class),
 	GhastFireball(12, GhastFireball.class),
 	BlazeFireball(13, BlazeFireball.class),
-	ThrownEnderPearl(14, ThrownEnderPearl.class),
-	ThrownEyeOfEnder(15, ThrownEyeOfEnder.class),
+	ThrownEnderPearl(14, EnderPearl.class),
+	ThrownEyeOfEnder(15, EyeOfEnder.class),
 	PrimedTNT(16, PrimedTnt.class),
 	FallingBlock(21, FallingBlock.class),
 	Minecart(40, Minecart.class),
@@ -101,11 +102,13 @@ public enum Entity {
 	SnowGolem(97, SnowGolem.class),
 	Ocelot(98, Ocelot.class),
 	Villager(120, Villager.class),
-	EnderCrystal(200, EnderCrystal.class);
+	EnderCrystal(200, EnderCrystal.class),
+	IronGolem(99, IronGolem.class);
+	
 	public final int id;
 	public final Class<? extends VanillaEntity> controller;
 	public static final String KEY = "EntityID";
-	final static TIntObjectHashMap<Entity> map = new TIntObjectHashMap<Entity>();
+	private final static TIntObjectHashMap<Entity> map = new TIntObjectHashMap<Entity>();
 
 	private Entity(int data, Class<? extends VanillaEntity> defaultController) {
 		id = (byte) data;

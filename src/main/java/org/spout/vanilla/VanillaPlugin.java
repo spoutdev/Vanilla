@@ -50,7 +50,7 @@ import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.sky.NetherSky;
 import org.spout.vanilla.entity.sky.NormalSky;
-import org.spout.vanilla.entity.sky.Sky;
+import org.spout.vanilla.entity.object.Sky;
 import org.spout.vanilla.entity.sky.TheEndSky;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;

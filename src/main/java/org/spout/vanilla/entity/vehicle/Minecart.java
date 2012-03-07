@@ -25,16 +25,15 @@
  */
 package org.spout.vanilla.entity.vehicle;
 
+import org.spout.vanilla.entity.object.Vehicle;
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.MovingEntity;
+import org.spout.vanilla.entity.ObjectEntity;
 
-public abstract class Minecart extends MovingEntity implements Vehicle {
+public abstract class Minecart extends ObjectEntity implements Vehicle {
+	
+	@Override
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.Minecart.id);
-	}
-
-	public void onTick(float dt) {
-		super.onTick(dt);
 	}
 }

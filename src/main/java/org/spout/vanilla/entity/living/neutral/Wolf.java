@@ -26,12 +26,12 @@
 package org.spout.vanilla.entity.living.neutral;
 
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.Neutral;
-import org.spout.vanilla.entity.living.AnimalEntity;
-import org.spout.vanilla.entity.living.Land;
+import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.living.creature.Neutral;
 import org.spout.vanilla.entity.living.Tameable;
 
-public class Wolf extends AnimalEntity implements Tameable, Neutral, Land {
+public class Wolf extends Creature implements Tameable, Neutral {
+	
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -39,14 +39,7 @@ public class Wolf extends AnimalEntity implements Tameable, Neutral, Land {
 	}
 
 	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
-	}
-
-	@Override
 	public void subjectTo(org.spout.api.entity.Entity entity) {
-		Dog dog = new Dog();
-		dog.subjectTo(entity);
-		parent.setController(dog);
+
 	}
 }

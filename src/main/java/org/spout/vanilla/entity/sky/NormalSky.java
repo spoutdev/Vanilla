@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.entity.sky;
 
+import org.spout.vanilla.entity.object.Sky;
 import java.util.Random;
 import java.util.Set;
 

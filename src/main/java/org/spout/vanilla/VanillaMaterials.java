@@ -39,6 +39,7 @@ import org.spout.vanilla.material.block.Air;
 import org.spout.vanilla.material.block.Cactus;
 import org.spout.vanilla.material.block.DoubleSlab;
 import org.spout.vanilla.material.block.Grass;
+import org.spout.vanilla.material.block.Ice;
 import org.spout.vanilla.material.block.LongGrass;
 import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.block.MinecartTrackDetector;
@@ -186,7 +187,7 @@ public final class VanillaMaterials {
 	public static final BlockMaterial REDSTONE_TORCH_ON = new RedstoneTorch("Redstone Torch (On)", 76, true).setHardness(0.0F).setResistance(0.0F).setLightLevel(7);
 	public static final BlockMaterial STONE_BUTTON = new Solid("Stone Button", 77).setHardness(0.5F).setResistance(0.8F);
 	public static final BlockMaterial SNOW = new Solid("Snow", 78).setHardness(0.1F).setResistance(0.2F);
-	public static final BlockMaterial ICE = new Solid("Ice", 79).setHardness(0.5F).setResistance(0.8F);
+	public static final BlockMaterial ICE = new Ice("Ice", 79).setHardness(0.5F).setResistance(0.8F);
 	public static final BlockMaterial SNOW_BLOCK = new Solid("Snow Block", 80).setHardness(0.2F).setResistance(0.3F);
 	public static final BlockMaterial CACTUS = new Cactus("Cactus", 81).setHardness(0.4F).setResistance(0.7F);
 	public static final BlockMaterial CLAY_BLOCK = new Solid("Clay Block", 82).setHardness(0.6F).setResistance(1.0F);

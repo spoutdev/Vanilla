@@ -67,6 +67,7 @@ import org.spout.vanilla.material.item.Minecart;
 import org.spout.vanilla.material.item.PoweredMinecart;
 import org.spout.vanilla.material.item.RedstoneTorch;
 import org.spout.vanilla.material.item.RedstoneWire;
+import org.spout.vanilla.material.item.Shears;
 import org.spout.vanilla.material.item.SpawnEgg;
 import org.spout.vanilla.material.item.StorageMinecart;
 
@@ -356,7 +357,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial REDSTONE_REPEATER = new GenericBlockItem("Redstone Repeater", 356, VanillaMaterials.REDSTONE_REPEATER_OFF);
 	public static final ItemMaterial COOKIE = new GenericFood("Cookie", 357, 1, FoodEffectType.HUNGER);
 	public static final ItemMaterial MAP = new GenericItem("Map", 358);
-	public static final ItemMaterial SHEARS = new GenericTool("Shears", 359, (short) 238);
+	public static final ItemMaterial SHEARS = new Shears("Shears", 359, (short) 238);
 	public static final ItemMaterial MELON_SLICE = new GenericFood("Melon Slice", 360, 2, FoodEffectType.HUNGER);
 	public static final ItemMaterial PUMPKIN_SEEDS = new GenericItem("Pumpkin Seeds", 361);
 	public static final ItemMaterial MELON_SEEDS = new GenericItem("Melon Seeds", 362);

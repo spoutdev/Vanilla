@@ -26,11 +26,7 @@
 package org.spout.vanilla.material.item;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.block.BlockFace;
-import org.spout.vanilla.entity.VanillaEntity;
 import org.spout.vanilla.entity.living.passive.Sheep;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.material.generic.GenericItem;

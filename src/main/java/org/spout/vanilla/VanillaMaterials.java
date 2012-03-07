@@ -60,7 +60,6 @@ import org.spout.vanilla.material.generic.GenericLiquid;
 import org.spout.vanilla.material.generic.GenericRangedWeapon;
 import org.spout.vanilla.material.generic.GenericTool;
 import org.spout.vanilla.material.generic.GenericWeapon;
-import org.spout.vanilla.material.item.Coal;
 import org.spout.vanilla.material.item.DoorBlock;
 import org.spout.vanilla.material.item.DoorItem;
 import org.spout.vanilla.material.item.Dye;
@@ -245,8 +244,8 @@ public final class VanillaMaterials {
 	public static final ItemMaterial RED_APPLE = new GenericFood("Apple", 260, 4, FoodEffectType.HUNGER);
 	public static final ItemMaterial BOW = new GenericRangedWeapon("Bow", 261, 1, 9, (short) 385);
 	public static final ItemMaterial ARROW = new GenericItem("Arrow", 262);
-	public static final ItemMaterial COAL = new Coal("Coal", 263, 0);
-	public static final ItemMaterial CHARCOAL = new Coal("Charcoal", 263, 1);
+	public static final ItemMaterial COAL = new GenericItem("Coal", 263, 0);
+	public static final ItemMaterial CHARCOAL = new GenericItem("Charcoal", 263, 1);
 	public static final ItemMaterial DIAMOND = new GenericItem("Diamond", 264);
 	public static final ItemMaterial IRON_INGOT = new GenericItem("Iron Ingot", 265);
 	public static final ItemMaterial GOLD_INGOT = new GenericItem("Gold Ingot", 266);

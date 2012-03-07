@@ -56,7 +56,7 @@ public class NormalSky extends Controller implements Sky {
 
 	@Override
 	public void onTick(float dt) {
-		countdown -= 1;
+		countdown--;
 		if (countdown <= 0) {
 			if (time >= 24000) {
 				time = 0;

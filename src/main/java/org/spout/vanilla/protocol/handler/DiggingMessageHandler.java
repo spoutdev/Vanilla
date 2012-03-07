@@ -31,6 +31,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.MaterialData;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -103,7 +104,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 		System.out.print(message + "|" + blockBroken);
 
 		if (blockBroken) {
-			BlockMaterial oldMat = block.getBlockMaterial();
+			BlockMaterial oldMat = (BlockMaterial) MaterialData.getMaterial(world.getBlockId(x, y, z), world.getBlockData(x, y, z));
 			world.setBlockIdAndData(x, y, z, (short) 0, (short) 0, player);
 			oldMat.onDestroy(world, x, y, z);
 			

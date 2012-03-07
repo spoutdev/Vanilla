@@ -43,6 +43,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.player.Player;
 
 public class RegionEntitySpawner extends Controller {
+	
 	private static Map<Class<? extends Controller>, Boolean> validConstructors = new ConcurrentHashMap<Class<? extends Controller>, Boolean>();
 	private static final int SPAWN_TRIES = 6;
 	final Region region;
@@ -102,6 +103,7 @@ public class RegionEntitySpawner extends Controller {
 		if (players.isEmpty()) {
 			return;
 		}
+		
 		for (int dx = 0; dx < Region.REGION_SIZE; dx++) {
 			for (int dy = 0; dy < Region.REGION_SIZE; dy++) {
 				for (int dz = 0; dz < Region.REGION_SIZE; dz++) {
@@ -180,6 +182,7 @@ public class RegionEntitySpawner extends Controller {
 		if (world.getBlockId(x, y, z - 1) != 0) {
 			return false;
 		}
+		
 		return true;
 	}
 

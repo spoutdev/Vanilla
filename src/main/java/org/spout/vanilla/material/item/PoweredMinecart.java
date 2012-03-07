@@ -34,6 +34,6 @@ public class PoweredMinecart extends Minecart {
 
 	@Override
 	protected Controller getSpawnedEntity() {
-		return new org.spout.vanilla.entity.vehicle.minecart.PoweredMinecart();
+		return new org.spout.vanilla.entity.object.vehicle.minecart.PoweredMinecart();
 	}
 }

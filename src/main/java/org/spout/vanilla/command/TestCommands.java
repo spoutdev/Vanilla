@@ -37,7 +37,7 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.passive.Chicken;
 import org.spout.vanilla.entity.living.passive.Sheep;
-import org.spout.vanilla.entity.sky.NormalSky;
+import org.spout.vanilla.entity.object.sky.NormalSky;
 
 public class TestCommands {
 	private final VanillaPlugin plugin;

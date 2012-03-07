@@ -23,17 +23,52 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.vehicle.minecart;
+package org.spout.vanilla.entity.object.sky;
 
-import org.spout.vanilla.entity.vehicle.Minecart;
-import org.spout.vanilla.entity.object.Vehicle;
+import org.spout.vanilla.entity.object.Sky;
+import org.spout.api.entity.Controller;
+import org.spout.api.geo.World;
+import org.spout.vanilla.world.Weather;
 
-public class TransportMinecart extends Minecart implements Vehicle {
+public class NetherSky extends Controller implements Sky {
+	@Override
 	public void onAttached() {
-		super.onAttached();
+		// TODO Auto-generated method stub
+		parent.setObserver(true);
 	}
 
+	@Override
 	public void onTick(float dt) {
-		super.onTick(dt);
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void preSnapshot() {
+
+	}
+
+	@Override
+	public void setWeather(Weather weather) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public Weather getWeather() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void setTime(float time) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public float getTime() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public World getWorld() {
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

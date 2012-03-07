@@ -23,15 +23,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.projectile;
+package org.spout.vanilla.entity.object.projectile;
 
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
 import org.spout.vanilla.entity.object.Projectile;
 
-public class Snowball extends Projectile {
+public class Arrow extends Projectile {
 	
-	public Snowball(Point start, Quaternion rotation, int maxSpeed) {
-		super(start, rotation, maxSpeed);
+	private final static int maxArrowSpeed = 10;
+
+	public Arrow(Point start, Quaternion rotation, float charge) {
+		super(start, rotation, maxArrowSpeed);
+		velocity = velocity.multiply(charge);
 	}
 }

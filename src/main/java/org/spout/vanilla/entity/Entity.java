@@ -54,14 +54,14 @@ import org.spout.vanilla.entity.object.falling.EnderCrystal;
 import org.spout.vanilla.entity.object.falling.FallingBlock;
 import org.spout.vanilla.entity.object.Item;
 import org.spout.vanilla.entity.object.falling.PrimedTnt;
-import org.spout.vanilla.entity.projectile.Arrow;
-import org.spout.vanilla.entity.projectile.BlazeFireball;
-import org.spout.vanilla.entity.projectile.GhastFireball;
-import org.spout.vanilla.entity.projectile.EnderPearl;
-import org.spout.vanilla.entity.projectile.EyeOfEnder;
-import org.spout.vanilla.entity.projectile.Snowball;
-import org.spout.vanilla.entity.vehicle.Boat;
-import org.spout.vanilla.entity.vehicle.Minecart;
+import org.spout.vanilla.entity.object.projectile.Arrow;
+import org.spout.vanilla.entity.object.projectile.BlazeFireball;
+import org.spout.vanilla.entity.object.projectile.GhastFireball;
+import org.spout.vanilla.entity.object.projectile.EnderPearl;
+import org.spout.vanilla.entity.object.projectile.EyeOfEnder;
+import org.spout.vanilla.entity.object.projectile.Snowball;
+import org.spout.vanilla.entity.object.vehicle.Boat;
+import org.spout.vanilla.entity.object.vehicle.Minecart;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 

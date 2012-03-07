@@ -23,17 +23,15 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.vehicle.minecart;
+package org.spout.vanilla.entity.object.projectile;
 
-import org.spout.vanilla.entity.vehicle.Minecart;
-import org.spout.vanilla.entity.object.Vehicle;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.Quaternion;
+import org.spout.vanilla.entity.object.Projectile;
 
-public class StorageMinecart extends Minecart implements Vehicle {
-	public void onAttached() {
-		super.onAttached();
-	}
-
-	public void onTick(float dt) {
-		super.onTick(dt);
+public class EyeOfEnder extends Projectile {
+	
+	public EyeOfEnder(Point start, Quaternion rotation, int maxSpeed) {
+		super(start, rotation, maxSpeed);
 	}
 }

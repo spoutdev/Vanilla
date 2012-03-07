@@ -23,17 +23,15 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.vehicle;
+package org.spout.vanilla.entity.object.projectile;
 
-import org.spout.vanilla.entity.object.Vehicle;
-import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.ObjectEntity;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.Quaternion;
+import org.spout.vanilla.entity.object.Projectile;
 
-public abstract class Minecart extends ObjectEntity implements Vehicle {
+public class Potion extends Projectile {
 	
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		parent.setData(Entity.KEY, Entity.Minecart.id);
+	public Potion(Point start, Quaternion rotation, int maxSpeed) {
+		super(start, rotation, maxSpeed);
 	}
 }

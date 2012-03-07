@@ -46,6 +46,7 @@ import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
+import org.spout.vanilla.material.Tool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
@@ -350,7 +351,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (item == null) {
 			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot);
 		} else {
-			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot, item.getMaterial().getId(), item.getAmount(), item.getDamage(), item.getAuxData());
+			if (item.getMaterial() instanceof Tool) {
+				message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot, item.getMaterial().getId(), item.getAmount(), item.getDamage(), item.getAuxData());
+			} else {
+				message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot, item.getMaterial().getId(), item.getAmount(), item.getMaterial().getData(), item.getAuxData());
+			}
 		}
 		queuedInventoryUpdates.put(slot, message);
 	}

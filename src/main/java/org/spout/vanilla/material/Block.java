@@ -30,6 +30,10 @@ import org.spout.api.material.BlockMaterial;
 
 public interface Block extends BlockMaterial {
 	public boolean isLiquid();
+	
+	public int getDrop();
+	public int getDropData();
+	public int getDropCount();
 
 	/**
 	 * Represents power that comes into the block from a redstone wire or a torch that is below the block

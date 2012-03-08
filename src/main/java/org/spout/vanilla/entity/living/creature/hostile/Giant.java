@@ -25,15 +25,28 @@
  */
 package org.spout.vanilla.entity.living.creature.hostile;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Hostile;
+import org.spout.vanilla.VanillaMaterials;
 
 public class Giant extends Creature implements Hostile {
-	
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.GiantZombie.id);
+	}
+	
+	@Override
+	public Set<ItemStack> getDeathDrops() {
+		Set<ItemStack> drops = new HashSet<ItemStack>();
+		
+		// None
+		
+		return drops;
 	}
 }

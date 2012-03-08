@@ -5,103 +5,104 @@
 	Vanilla is licensed under GNU LESSER GENERAL PUBLIC LICENSE Version 3, but with a provision that files are released under the MIT license 180 days after they are published. Please see the `LICENSE.txt` file for details.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <!-- Project information -->
-    <groupId>org.spout</groupId>
-    <artifactId>vanilla</artifactId>
-    <version>dev-SNAPSHOT</version>
-    <name>Vanilla</name>
-    <url>http://www.spout.org</url>
-    <description>Vanilla is a plugin for the Spout server that provides Vanilla Minecraft functionality.</description>
+	<!-- Project information -->
+	<groupId>org.spout</groupId>
+	<artifactId>vanilla</artifactId>
+	<version>dev-SNAPSHOT</version>
+	<name>Vanilla</name>
+	<url>http://www.spout.org</url>
+	<description>Vanilla is a plugin for the Spout server that provides Vanilla Minecraft functionality.</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <minecraft.version>1.2</minecraft.version>
-        <build.number>Unknown</build.number>
-    </properties>
+	<properties>
+		<netbeans.hint.license>Vanilla</netbeans.hint.license>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<minecraft.version>1.2</minecraft.version>
+		<build.number>Unknown</build.number>
+	</properties>
 
-    <!-- License -->
-    <licenses>
-        <license>
-            <name>SpoutDev License Version 1</name>
-            <url>http://www.spout.org/SpoutDevLicenseV1.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+	<!-- License -->
+	<licenses>
+		<license>
+			<name>SpoutDev License Version 1</name>
+			<url>http://www.spout.org/SpoutDevLicenseV1.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-    <!-- Source code -->
-    <scm>
-        <developerConnection>scm:git:git@github.com:SpoutDev/${project.name}.git</developerConnection>
-        <connection>scm:git:git://github.com/SpoutDev/${project.name}.git</connection>
-        <url>https://github.com/SpoutDev/${project.name}</url>
-    </scm>
+	<!-- Source code -->
+	<scm>
+		<developerConnection>scm:git:git@github.com:SpoutDev/${project.name}.git</developerConnection>
+		<connection>scm:git:git://github.com/SpoutDev/${project.name}.git</connection>
+		<url>https://github.com/SpoutDev/${project.name}</url>
+	</scm>
 
-    <!-- Continuous integration -->
-    <ciManagement>
-        <system>jenkins</system>
-        <url>http://ci.spout.org</url>
-    </ciManagement>
+	<!-- Continuous integration -->
+	<ciManagement>
+		<system>jenkins</system>
+		<url>http://ci.spout.org</url>
+	</ciManagement>
 
-    <!-- Repository locations -->
-    <repositories>
-        <repository>
-            <id>spout-repo</id>
-            <url>http://repo.spout.org</url>
-        </repository>
-    </repositories>
+	<!-- Repository locations -->
+	<repositories>
+		<repository>
+			<id>spout-repo</id>
+			<url>http://repo.spout.org</url>
+		</repository>
+	</repositories>
 
-    <!-- Dependencies -->
-    <dependencies>
-        <dependency>
-            <groupId>org.spout</groupId>
-            <artifactId>spoutapi</artifactId>
-            <version>dev-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.10</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+	<!-- Dependencies -->
+	<dependencies>
+		<dependency>
+			<groupId>org.spout</groupId>
+			<artifactId>spoutapi</artifactId>
+			<version>dev-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
-    <build>
-        <defaultGoal>clean install</defaultGoal>
-        <!-- Resources -->
-        <resources>
-            <resource>
-                <targetPath>.</targetPath>
-                <filtering>false</filtering>
-                <directory>${basedir}</directory>
-                <includes>
-                    <include>LICENSE.txt</include>
-                </includes>
-            </resource>
-            <resource>
-                <targetPath>.</targetPath>
-                <filtering>true</filtering>
-                <directory>${basedir}/src/main/resources</directory>
-                <includes>
-                    <include>spoutplugin.yml</include>
-                </includes>
-            </resource>
-        </resources>
-        <!-- Plugins -->
-        <plugins>
-            <!-- Compile plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<defaultGoal>clean install</defaultGoal>
+		<!-- Resources -->
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}</directory>
+				<includes>
+					<include>LICENSE.txt</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources</directory>
+				<includes>
+					<include>spoutplugin.yml</include>
+				</includes>
+			</resource>
+		</resources>
+		<!-- Plugins -->
+		<plugins>
+			<!-- Compile plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

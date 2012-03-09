@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.generator.theend;
 
-import org.spout.api.generator.biome.SingleSelector;
+import org.spout.vanilla.generator.NoiseSelector;
+import org.spout.vanilla.generator.VanillaBiomes;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
-import org.spout.vanilla.generator.theend.biome.EndStoneBiome;
 
 public class TheEndGenerator extends VanillaGeneratorBase {
 	/**
@@ -35,8 +35,7 @@ public class TheEndGenerator extends VanillaGeneratorBase {
 	 */
 	@Override
 	public void registerBiomes() {
-		setSelector(new SingleSelector(0));
-		register(new EndStoneBiome());
-		//TODO: Create The End's biome(s);
+		setSelector(new NoiseSelector(0.8, 1.4, 4, 0.8, 1.3));
+		register(VanillaBiomes.ENDSTONE);
 	}
 }

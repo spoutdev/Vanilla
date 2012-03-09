@@ -25,8 +25,6 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
-import java.util.ArrayList;
-
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.generator.VanillaBiomeType;
@@ -41,12 +39,10 @@ import org.spout.vanilla.generator.normal.decorator.TreeDecorator;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 public class PlainBiome extends VanillaBiomeType {
-	Perlin layerCount = new Perlin(), heightMap = new Perlin();
-	ArrayList<Perlin> layers = new ArrayList<Perlin>();
+	Perlin heightMap = new Perlin();
 
 	protected PlainBiome(int id) {
 		super(id, new CaveDecorator(), new FlowerDecorator(), new GrassDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
-		layerCount.setOctaveCount(5);
 		heightMap.setOctaveCount(5);
 	}
 
@@ -54,25 +50,8 @@ public class PlainBiome extends VanillaBiomeType {
 		this(1);
 	}
 
-	public Perlin getLayer(int seed, int layer) {
-		if (layer >= 0) {
-			if (layer < layers.size()) {
-				return layers.get(layer);
-			} else {
-				Perlin p = new Perlin();
-				p.setSeed(seed + layer);
-				p.setOctaveCount(5);
-				layers.add(p);
-				return p;
-			}
-		} else {
-			return null;
-		}
-	}
-
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		layerCount.setSeed((int) blockData.getWorld().getSeed() + 10);
 		heightMap.setSeed((int) blockData.getWorld().getSeed());
 
 		final int y = chunkY * 16;

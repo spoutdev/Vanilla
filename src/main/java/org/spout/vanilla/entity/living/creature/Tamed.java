@@ -23,28 +23,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.entity.living.creature;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.spout.api.entity.Entity;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.util.Parameter;
-import org.spout.vanilla.entity.living.creature.passive.Sheep;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+public interface Tamed {
+	
+	public void subjectTo(Entity entity);
 
-public class SheepEntityProtocol extends BasicMobEntityProtocol {
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-		if (controller instanceof Sheep) {
-			Sheep sheep = (Sheep) controller;
-			byte data = 0;
-			data |= (sheep.isSheared() ? 1 : 0) << 4;
-			data |= sheep.getColor() & 0x0F;
-			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
-		}
-
-		return parameters;
-	}
+	public Entity subjectedTo();
+	
 }

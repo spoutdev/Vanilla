@@ -45,7 +45,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.entity.living.passive.Sheep;
+import org.spout.vanilla.entity.living.creature.passive.Sheep;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.entity.world.RegionEntitySpawner;

@@ -27,8 +27,8 @@ package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.Protocol;
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.entity.living.passive.Chicken;
-import org.spout.vanilla.entity.living.passive.Sheep;
+import org.spout.vanilla.entity.living.creature.passive.Chicken;
+import org.spout.vanilla.entity.living.creature.passive.Sheep;
 import org.spout.vanilla.entity.living.player.VanillaPlayer;
 import org.spout.vanilla.entity.object.Item;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;

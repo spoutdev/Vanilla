@@ -30,7 +30,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.exception.InvalidControllerException;
-import org.spout.vanilla.entity.living.hostile.Slime;
+import org.spout.vanilla.entity.living.creature.hostile.Slime;
 
 public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();

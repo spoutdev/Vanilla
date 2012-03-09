@@ -25,8 +25,6 @@
  */
 package org.spout.vanilla.command;
 
-import java.util.Set;
-
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
@@ -35,21 +33,14 @@ import org.spout.api.exception.CommandException;
 import org.spout.api.geo.World;
 import org.spout.api.player.Player;
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.entity.living.passive.Chicken;
-import org.spout.vanilla.entity.living.passive.Sheep;
-import org.spout.vanilla.entity.object.sky.NormalSky;
+import org.spout.vanilla.entity.living.creature.passive.Chicken;
+import org.spout.vanilla.entity.living.creature.passive.Sheep;
 
 public class TestCommands {
 	private final VanillaPlugin plugin;
 
 	public TestCommands(VanillaPlugin plugin) {
 		this.plugin = plugin;
-	}
-
-	@Command(aliases = {"getsky"}, usage = "justdoit]", desc = "should respond with 0, if not royawesome knows what the fuck he is doing and darsstar's PR got pulled")
-	public void getsky(CommandContext args, CommandSource source) throws CommandException {
-		Set<Entity> ents = VanillaPlugin.spawnWorld.getAll(NormalSky.class);
-		plugin.getLogger().info("Size of ents: " + ents.size());
 	}
 
 	@Command(aliases = {"spawnsheep"}, usage = "[color]", desc = "Spawn a sheep!", max = 1)

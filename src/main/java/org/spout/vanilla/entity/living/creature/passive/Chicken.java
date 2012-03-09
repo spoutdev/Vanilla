@@ -23,28 +23,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.entity.living.creature.passive;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.protocol.EntityProtocolStore;
+import org.spout.vanilla.entity.Entity;
+import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.living.creature.Passive;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.util.Parameter;
-import org.spout.vanilla.entity.living.creature.passive.Sheep;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+public class Chicken extends Creature implements Passive {
+	
+	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
 
-public class SheepEntityProtocol extends BasicMobEntityProtocol {
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-		if (controller instanceof Sheep) {
-			Sheep sheep = (Sheep) controller;
-			byte data = 0;
-			data |= (sheep.isSheared() ? 1 : 0) << 4;
-			data |= sheep.getColor() & 0x0F;
-			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
-		}
+	public EntityProtocol getEntityProtocol(int protocolId) {
+		return entityProtocolStore.getEntityProtocol(protocolId);
+	}
 
-		return parameters;
+	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
+		entityProtocolStore.setEntityProtocol(protocolId, protocol);
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		parent.setData(Entity.KEY, Entity.Chicken.id);
 	}
 }

@@ -23,28 +23,25 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.entity.living.creature.passive;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.spout.vanilla.entity.Entity;
+import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.living.creature.Tameable;
+import org.spout.vanilla.entity.living.creature.Passive;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.util.Parameter;
-import org.spout.vanilla.entity.living.creature.passive.Sheep;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
-
-public class SheepEntityProtocol extends BasicMobEntityProtocol {
+public class Ocelot extends Creature implements Tameable, Passive {
+	
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-		if (controller instanceof Sheep) {
-			Sheep sheep = (Sheep) controller;
-			byte data = 0;
-			data |= (sheep.isSheared() ? 1 : 0) << 4;
-			data |= sheep.getColor() & 0x0F;
-			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
-		}
+	public void onAttached() {
+		super.onAttached();
+		parent.setData(Entity.KEY, Entity.Ocelot.id);
+	}
 
-		return parameters;
+	@Override
+	public void subjectTo(org.spout.api.entity.Entity entity) {
+		Cat cat = new Cat();
+		cat.subjectTo(entity);
+		parent.setController(cat);
 	}
 }

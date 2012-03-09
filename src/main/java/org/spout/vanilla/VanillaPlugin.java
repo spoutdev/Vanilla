@@ -48,9 +48,9 @@ import org.spout.api.util.config.ConfigurationNode;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.entity.object.Sky;
 import org.spout.vanilla.entity.object.sky.NetherSky;
 import org.spout.vanilla.entity.object.sky.NormalSky;
-import org.spout.vanilla.entity.object.Sky;
 import org.spout.vanilla.entity.object.sky.TheEndSky;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
@@ -59,12 +59,11 @@ import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
+	private static VanillaPlugin instance;
+	private final VanillaConfiguration config;
 	public static final int minecraftProtocolId = 28;
 	public static int vanillaProtocolId;
-	public static World spawnWorld;
-	private final VanillaConfiguration config;
 	private final HashMap<World, Sky> skys = new HashMap<World, Sky>();
-	private static VanillaPlugin instance;
 	private static final String[] ops = {"Notch", "jeb", "ez"};
 	public static final ConfigurationNode OPS = new ConfigurationNode("ops", Arrays.asList(ops));
 
@@ -107,6 +106,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
+		//Grab singleton game instance.
 		Game game = getGame();
 
 		// IO
@@ -114,28 +114,39 @@ public class VanillaPlugin extends CommonPlugin {
 
 		//Register commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-
 		game.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);
 		game.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
 
 		//Register events
 		game.getEventManager().registerEvents(new VanillaEventListener(this), this);
 
+		//Set protocol ID.
 		vanillaProtocolId = Controller.getProtocolId("org.spout.vanilla.protocol");
 
-		spawnWorld = game.loadWorld("world", new NormalGenerator());
+		//Initialize our default Vanilla worlds.
+		World normal = game.loadWorld("world", new NormalGenerator());
+		World nether = game.loadWorld("world_nether", new NetherGenerator());
+		World end = game.loadWorld("world_end", new TheEndGenerator());
 
-		// TODO - Should probably be auto-set by generator and worlds should be defined in configuration.
+		//Create the sky.
 		NormalSky normSky = new NormalSky();
-		skys.put(spawnWorld, normSky);
-		spawnWorld.setSpawnPoint(new Transform(new Point(spawnWorld, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
-		spawnWorld.createAndSpawnEntity(new Point(spawnWorld, 0.f, 0.f, 0.f), normSky);
+		NetherSky netherSky = new NetherSky();
+		TheEndSky endSky = new TheEndSky();
 
-		World nether = getGame().loadWorld("world_nether", new NetherGenerator());
-		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), new NetherSky());
+		//Register skys to the map
+		skys.put(normal, normSky);
+		skys.put(nether, netherSky);
+		skys.put(end, endSky);
 
-		World end = getGame().loadWorld("world_end", new TheEndGenerator());
-		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), new TheEndSky());
+		//Create spawn points as well as spawn the sky. TODO Have spawn point set by generator.
+		normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
+		normal.createAndSpawnEntity(new Point(normal, 0.f, 0.f, 0.f), normSky);
+
+		nether.setSpawnPoint(new Transform(new Point(nether, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
+		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), netherSky);
+
+		end.setSpawnPoint(new Transform(new Point(end, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
+		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), endSky);
 
 		getLogger().info("b" + this.getDescription().getVersion() + " enabled. Protocol: " + getDescription().getProtocol());
 	}

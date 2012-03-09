@@ -35,7 +35,6 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.living.Human;
 import org.spout.vanilla.protocol.msg.PingMessage;
@@ -86,7 +85,7 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public void onAttached() {
-		Transform spawn = VanillaPlugin.spawnWorld.getSpawnPoint();
+		Transform spawn = this.getParent().getWorld().getSpawnPoint();
 		Vector3 rotation = spawn.getRotation().getAxisAngles();
 		parent.setPosition(spawn.getPosition(), rotation.getZ(), rotation.getY(), rotation.getX());
 		parent.setScale(spawn.getScale());

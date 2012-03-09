@@ -32,7 +32,7 @@ import org.spout.vanilla.generator.VanillaGeneratorBase;
 public class NormalGenerator extends VanillaGeneratorBase {
 	@Override
 	public void registerBiomes() {
-		setSelector(new NoiseSelector());
+		setSelector(new NoiseSelector(0.8, 1.4, 4, 0.8, 1.3));
 		register(VanillaBiomes.PLAIN);
 		register(VanillaBiomes.DESERT);
 		register(VanillaBiomes.TUNDRA);

@@ -41,14 +41,14 @@ public class EndStoneBiome extends VanillaBiomeType {
 	public EndStoneBiome() {
 		super(9, new SpireDecorator());
 		base.setNoiseQuality(NoiseQuality.BEST);
-		base.setOctaveCount(6);
-		base.setFrequency(0.3);
-		base.setPersistence(0.12);
-		base.setLacunarity(0.5);
+		base.setOctaveCount(4);
+		base.setFrequency(0.1);
+		base.setPersistence(0.10);
+		base.setLacunarity(0.4);
 		noise.SetSourceModule(0, base);
-		noise.setFrequency(0.3);
+		noise.setFrequency(0.2);
 		noise.setRoughness(2);
-		noise.setPower(0.5);
+		noise.setPower(0.3);
 	}
 
 	@Override

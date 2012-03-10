@@ -124,10 +124,10 @@ public class VanillaPlugin extends CommonPlugin {
 		vanillaProtocolId = Controller.getProtocolId("org.spout.vanilla.protocol");
 
 		//Initialize our default Vanilla worlds.
-		//World end = game.loadWorld("world_end", new TheEndGenerator());
+		World end = game.loadWorld("world_end", new TheEndGenerator());
 		World normal = game.loadWorld("world", new NormalGenerator());
 		World nether = game.loadWorld("world_nether", new NetherGenerator());
-		World end = game.loadWorld("world_end", new TheEndGenerator());
+		//World end = game.loadWorld("world_end", new TheEndGenerator());
 
 		//Create the sky.
 		NormalSky normSky = new NormalSky();

@@ -40,8 +40,8 @@ public class MountainBiome extends VanillaBiomeType {
 	public MountainBiome() {
 		super(3, new FlowerDecorator(), new TreeDecorator(), new OreDecorator());
 		noise.setNoiseQuality(NoiseQuality.BEST);
-		noise.setOctaveCount(8);
-		noise.setFrequency(8);
+		noise.setOctaveCount(10);
+		noise.setFrequency(0.4);
 		noise.setLacunarity(0.10);
 	}
 
@@ -50,7 +50,7 @@ public class MountainBiome extends VanillaBiomeType {
 		noise.setSeed((int) blockData.getWorld().getSeed());
 
 		final int y = chunkY * 16;
-		final int height = (int) ((noise.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 4.0 + 60.0);
+		final int height = (int) ((noise.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 10.0 + 60.0);
 
 		for (int dy = y; dy < y + 16; dy++) {
 			blockData.set(x, dy, z, getBlockId(height, dy));
@@ -59,7 +59,9 @@ public class MountainBiome extends VanillaBiomeType {
 
 	protected short getBlockId(int top, int dy) {
 		short id;
-		if (dy == top && dy >= 63) {
+		if (dy > top) {
+			id = VanillaMaterials.AIR.getId();
+		} else if (dy == top && dy >= 63) {
 			id = VanillaMaterials.GRASS.getId();
 		} else if (dy + 4 >= top) {
 			id = VanillaMaterials.DIRT.getId();

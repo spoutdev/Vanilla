@@ -25,11 +25,17 @@
  */
 package org.spout.vanilla.generator.nether;
 
+import org.spout.vanilla.entity.object.sky.VanillaSky;
 import org.spout.vanilla.generator.NoiseSelector;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
 import org.spout.vanilla.generator.nether.biome.NetherrackBiome;
 
 public class NetherGenerator extends VanillaGeneratorBase {
+	
+	public NetherGenerator(float spawnX, float spawnY, float spawnZ, VanillaSky sky) {
+		super(spawnX, spawnY, spawnZ, sky);
+	}
+
 	@Override
 	public void registerBiomes() {
 		setSelector(new NoiseSelector(0.9, 1.5, 5, 0.9, 1.5));

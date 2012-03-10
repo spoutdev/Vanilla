@@ -23,25 +23,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.generator.normal;
 
-import org.spout.vanilla.entity.object.sky.VanillaSky;
-import org.spout.vanilla.generator.NoiseSelector;
-import org.spout.vanilla.generator.VanillaBiomes;
-import org.spout.vanilla.generator.VanillaGeneratorBase;
+package org.spout.vanilla.entity.object.sky;
 
-public class NormalGenerator extends VanillaGeneratorBase {
+import org.spout.api.entity.Controller;
+import org.spout.vanilla.entity.object.Sky;
 
-	public NormalGenerator(float spawnX, float spawnY, float spawnZ, VanillaSky sky) {
-		super(spawnX, spawnY, spawnZ, sky);
-	}
-
-	@Override
-	public void registerBiomes() {
-		setSelector(new NoiseSelector(0.9, 1.5, 5, 0.9, 1.5));
-		register(VanillaBiomes.PLAIN);
-		register(VanillaBiomes.DESERT);
-		register(VanillaBiomes.TUNDRA);
-		register(VanillaBiomes.MOUNTAIN);
-	}
+public abstract class VanillaSky extends Controller implements Sky {
+	protected org.spout.api.entity.Entity parent;
 }

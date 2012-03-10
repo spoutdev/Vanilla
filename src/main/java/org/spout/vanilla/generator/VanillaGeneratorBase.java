@@ -26,10 +26,25 @@
 package org.spout.vanilla.generator;
 
 import org.spout.api.generator.biome.BiomeGenerator;
+import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.geo.discrete.atomic.Transform;
+import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.entity.object.Sky;
+import org.spout.vanilla.entity.object.sky.VanillaSky;
 
 public abstract class VanillaGeneratorBase extends BiomeGenerator {
+
+	protected final VanillaSky sky;
+
+	public VanillaGeneratorBase(float spawnX, float spawnY, float spawnZ, VanillaSky sky) {
+		super(spawnX, spawnY, spawnZ);
+		this.sky = sky;
+	}
+
 	@Override
 	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
 		super.generate(blockData, chunkX, chunkY, chunkZ);
@@ -38,5 +53,14 @@ public abstract class VanillaGeneratorBase extends BiomeGenerator {
 			blockData.flood(VanillaMaterials.BEDROCK.getId());
 			return;
 		}
+	}
+
+	@Override
+	public Transform getSpawn(World world) {
+		return new Transform(new Point(world, this.spawnX, this.spawnY, this.spawnZ), Quaternion.identity, Vector3.ONE);
+	}
+
+	public VanillaSky getSky() {
+		return this.sky;
 	}
 }

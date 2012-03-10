@@ -23,42 +23,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.block.data;
 
-import org.spout.api.geo.World;
-import org.spout.vanilla.material.block.data.DetectorRails;
+import org.spout.api.material.BlockMaterial;
+import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.util.RailsState;
 
-public class MinecartTrackDetector extends MinecartTrackBase implements RedstoneSource {
-	public MinecartTrackDetector(String name, int id) {
-		super(name, id);
+public class DetectorRails extends Rails {
+	
+	private boolean pressed;
+	public DetectorRails(short data) {
+		super((short) (data & 0x7));
+		this.pressed = (data & 0x8) == 0x8;
 	}
-
-	@Override
-	public boolean canCurve() {
-		return false;
+	
+	public DetectorRails(RailsState state, boolean pressed) {
+		super(state);
+		this.pressed = pressed;
 	}
-
-	@Override
-	public short getRedstonePower(World world, int x, int y, int z, int tx, int ty, int tz) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	public boolean isPressed() {
+		return this.pressed;
 	}
-
-	@Override
-	public boolean providesPowerTo(World world, int x, int y, int z, int tx, int ty, int tz) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean providesAttachPoint(World world, int x, int y, int z, int tx, int ty, int tz) {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public void setPressed(boolean pressed) {
+		this.pressed = pressed;
 	}
 	
 	@Override
-	public DetectorRails createData(short data) {
-		return new DetectorRails(data);
+	public short getData() {
+		short data = super.getData();
+		if (this.pressed) {
+			data |= 0x8;
+		}
+		return data;
 	}
 	
+	@Override
+	public BlockMaterial getMaterial() {
+		return VanillaMaterials.DETECTOR_RAIL;
+	}
+
 }

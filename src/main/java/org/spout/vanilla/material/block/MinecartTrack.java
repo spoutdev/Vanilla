@@ -26,23 +26,28 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.World;
-import org.spout.vanilla.material.attachable.GroundAttachable;
-import org.spout.vanilla.util.MinecartTrackLogic;
+import org.spout.vanilla.material.block.data.Rails;
 
-public class MinecartTrack extends GroundAttachable {
+public class MinecartTrack extends MinecartTrackBase implements RedstoneTarget {
+	
 	public MinecartTrack(String name, int id) {
 		super(name, id);
 	}
 
+	@Override
 	public boolean canCurve() {
 		return true;
 	}
-
+	
 	@Override
-	public void onUpdate(World world, int x, int y, int z) {
-		MinecartTrackLogic logic = MinecartTrackLogic.create(world, x, y, z);
-		if (logic != null) {
-			logic.refresh();
-		}
+	public Rails createData(short data) {
+		return new Rails(data);
 	}
+	
+	@Override
+	public boolean providesAttachPoint(World world, int x, int y, int z, int tx, int ty, int tz) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 }

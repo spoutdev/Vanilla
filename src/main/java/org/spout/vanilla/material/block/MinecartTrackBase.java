@@ -25,40 +25,35 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.Source;
 import org.spout.api.geo.World;
-import org.spout.vanilla.material.block.data.DetectorRails;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.attachable.GroundAttachable;
+import org.spout.vanilla.util.MinecartTrackLogic;
 
-public class MinecartTrackDetector extends MinecartTrackBase implements RedstoneSource {
-	public MinecartTrackDetector(String name, int id) {
+public abstract class MinecartTrackBase extends GroundAttachable {
+	
+	public MinecartTrackBase(String name, int id) {
 		super(name, id);
 	}
-
-	@Override
-	public boolean canCurve() {
-		return false;
-	}
-
-	@Override
-	public short getRedstonePower(World world, int x, int y, int z, int tx, int ty, int tz) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean providesPowerTo(World world, int x, int y, int z, int tx, int ty, int tz) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean providesAttachPoint(World world, int x, int y, int z, int tx, int ty, int tz) {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public abstract boolean canCurve();
+	
+	public void doTrackLogic(World world, int x, int y, int z) {
+		MinecartTrackLogic logic = MinecartTrackLogic.create(world, x, y, z);
+		if (logic != null) {
+			logic.refresh();
+		}
 	}
 	
 	@Override
-	public DetectorRails createData(short data) {
-		return new DetectorRails(data);
+	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
+		if (super.onPlacement(world, x, y, z, data, against, source)) {
+			this.doTrackLogic(world, x, y, z);
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 }

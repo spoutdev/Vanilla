@@ -43,7 +43,10 @@ public class PlainBiome extends VanillaBiomeType {
 
 	protected PlainBiome(int id) {
 		super(id, new CaveDecorator(), new FlowerDecorator(), new GrassDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
-		heightMap.setOctaveCount(5);
+		heightMap.setOctaveCount(4);
+		heightMap.setFrequency(0.6);
+		heightMap.setPersistence(0.30);
+		heightMap.setLacunarity(0.7);
 	}
 
 	public PlainBiome() {

@@ -35,7 +35,7 @@ public class TheEndGenerator extends VanillaGeneratorBase {
 	 */
 	@Override
 	public void registerBiomes() {
-		setSelector(new NoiseSelector(0.8, 1.4, 4, 0.8, 1.3));
+		setSelector(new NoiseSelector(1, 1.4, 1, 0.8, 1.3));
 		register(VanillaBiomes.ENDSTONE);
 	}
 }

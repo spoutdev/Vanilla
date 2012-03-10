@@ -25,9 +25,6 @@
  */
 package org.spout.vanilla.generator.theend.biome;
 
-import org.spout.api.Spout;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.generator.VanillaBiomeType;
@@ -36,32 +33,31 @@ import org.spout.vanilla.generator.theend.decorator.SpireDecorator;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 public class EndStoneBiome extends VanillaBiomeType {
-	Perlin heightMap = new Perlin();
+	private final Perlin heightMap = new Perlin();
 
 	public EndStoneBiome() {
 		super(9, new SpireDecorator());
-		heightMap.setOctaveCount(1);
+		heightMap.setOctaveCount(4);
+		heightMap.setFrequency(0.5);
+		heightMap.setPersistence(0.25);
+		heightMap.setLacunarity(0.5);
 	}
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		final int y = chunkY * 16;
-		final int height = (int) ((heightMap.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 4.0 + 60.0);
-		final Transform spawn = blockData.getWorld().getSpawnPoint();
-		final Point currPOS = new Point(blockData.getWorld(), (float) x, (float) chunkY, (float) z);
-
 		heightMap.setSeed((int) blockData.getWorld().getSeed());
+		int y = chunkY * 16;
+		double seaLevel = 60.0;
+		double perlinRange = 0.005;
+		double colSize = 16.0;
+		int height = (int) ((heightMap.GetValue(x / colSize + perlinRange, 0.05, z / colSize + perlinRange) + 1.0) * 4.0 + seaLevel);
+		
 		for (int dy = y; dy < y + 16; dy++) {
-			//Used 100 as it first came to mind lol
-			if (currPOS.distance(spawn.getPosition()) > 80) {
-				blockData.set(x, dy, z, VanillaMaterials.AIR.getId());
-			} else {
-				blockData.set(x, dy, z, getBlockId(height, dy));
-			}
+			blockData.set(x, dy, z, getBlockId(height, dy));
 		}
 	}
 
-	protected short getBlockId(int noise, int dy) {
+	private short getBlockId(int noise, int dy) {
 		short id;
 		if (dy > noise) {
 			id = VanillaMaterials.AIR.getId();

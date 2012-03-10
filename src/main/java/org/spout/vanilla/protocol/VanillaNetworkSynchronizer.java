@@ -46,6 +46,8 @@ import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
+import org.spout.vanilla.generator.nether.NetherGenerator;
+import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.material.Tool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
@@ -218,7 +220,16 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (first) {
 			first = false;
 			int entityId = owner.getEntity().getId();
-			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1, 0, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
+			int dimensionBit;
+			WorldGenerator worldGen = world.getGenerator();
+			if (worldGen instanceof NormalGenerator) {
+				dimensionBit = 0;
+			} else if (worldGen instanceof NetherGenerator) {
+				dimensionBit = -1;
+			} else {
+				dimensionBit = 1;
+			}
+			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1, dimensionBit, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
 			owner.getSession().send(idMsg);
 			for (int slot = 0; slot < 5; slot++) {
 				ItemStack slotItem = owner.getEntity().getInventory().getItem(5 + slot);

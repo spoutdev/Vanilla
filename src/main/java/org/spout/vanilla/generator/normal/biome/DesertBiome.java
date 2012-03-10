@@ -40,7 +40,10 @@ public class DesertBiome extends VanillaBiomeType {
 
 	public DesertBiome() {
 		super(2, new CactusDecorator(), new OreDecorator(), new CaveDecorator(), new DungeonDecorator());
-		heightMap.setOctaveCount(5);
+		heightMap.setOctaveCount(4);
+		heightMap.setFrequency(0.6);
+		heightMap.setPersistence(0.30);
+		heightMap.setLacunarity(0.7);
 	}
 
 	@Override

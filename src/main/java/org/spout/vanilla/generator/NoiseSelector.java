@@ -31,9 +31,19 @@ import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Voronoi;
 
 public class NoiseSelector extends BiomeSelector {
-	private Turbulence noise = new Turbulence();
+	//Produces base noise
 	private Voronoi base = new Voronoi();
+	//Modifies base noise
+	private Turbulence noise = new Turbulence();
 
+	/**
+	 * Constructor that will setup the noise generator to construct a world.
+	 * @param vorFreq Number of cycles per unit length that a the base Voronoi function will output
+	 * @param displacement
+	 * @param roughness
+	 * @param turFreq
+	 * @param power
+	 */
 	public NoiseSelector(double vorFreq, double displacement, int roughness, double turFreq, double power) {
 		base.setFrequency(vorFreq);
 		base.setDisplacement(displacement);

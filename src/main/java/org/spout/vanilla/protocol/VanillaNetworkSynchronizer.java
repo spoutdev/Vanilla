@@ -223,9 +223,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			int dimensionBit;
 			WorldGenerator worldGen = world.getGenerator();
 			if (worldGen instanceof NormalGenerator) {
-				dimensionBit = 0;
+				dimensionBit = 1;
 			} else if (worldGen instanceof NetherGenerator) {
-				dimensionBit = -1;
+				dimensionBit = 1;
 			} else {
 				dimensionBit = 1;
 			}

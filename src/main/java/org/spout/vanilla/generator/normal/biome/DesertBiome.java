@@ -33,25 +33,33 @@ import org.spout.vanilla.generator.normal.decorator.CaveDecorator;
 import org.spout.vanilla.generator.normal.decorator.DungeonDecorator;
 import org.spout.vanilla.generator.normal.decorator.OreDecorator;
 
+import net.royawesome.jlibnoise.NoiseQuality;
+import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 public class DesertBiome extends VanillaBiomeType {
-	private Perlin heightMap = new Perlin();
+	private Perlin base = new Perlin();
+	private Turbulence noise = new Turbulence();
 
 	public DesertBiome() {
 		super(2, new CactusDecorator(), new OreDecorator(), new CaveDecorator(), new DungeonDecorator());
-		heightMap.setOctaveCount(4);
-		heightMap.setFrequency(0.6);
-		heightMap.setPersistence(0.30);
-		heightMap.setLacunarity(0.7);
+		base.setNoiseQuality(NoiseQuality.BEST);
+		base.setOctaveCount(6);
+		base.setFrequency(0.3);
+		base.setPersistence(0.12);
+		base.setLacunarity(0.5);
+		noise.SetSourceModule(0, base);
+		noise.setFrequency(0.3);
+		noise.setRoughness(2);
+		noise.setPower(0.5);
 	}
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
 		int y = chunkY * 16;
-		heightMap.setSeed((int) blockData.getWorld().getSeed());
+		noise.setSeed((int) blockData.getWorld().getSeed());
 
-		int height = (int) ((heightMap.GetValue(x / 32.0 + 0.005, 0.05, z / 32.0 + 0.005) + 1.0) * 2.0 + 60.0);
+		int height = (int) ((noise.GetValue(x / 32.0 + 0.005, 0.05, z / 32.0 + 0.005) + 1.0) * 2.0 + 60.0);
 
 		for (int dy = y; dy < y + 16; dy++) {
 			short id = getBlockId(height, dy);

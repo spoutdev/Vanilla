@@ -36,17 +36,25 @@ import org.spout.vanilla.generator.normal.decorator.GrassDecorator;
 import org.spout.vanilla.generator.normal.decorator.PondDecorator;
 import org.spout.vanilla.generator.normal.decorator.TreeDecorator;
 
+import net.royawesome.jlibnoise.NoiseQuality;
+import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 public class PlainBiome extends VanillaBiomeType {
-	Perlin heightMap = new Perlin();
+	private Perlin base = new Perlin();
+	private Turbulence noise = new Turbulence();
 
 	protected PlainBiome(int id) {
 		super(id, new CaveDecorator(), new FlowerDecorator(), new GrassDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
-		heightMap.setOctaveCount(4);
-		heightMap.setFrequency(0.6);
-		heightMap.setPersistence(0.30);
-		heightMap.setLacunarity(0.7);
+		base.setNoiseQuality(NoiseQuality.BEST);
+		base.setOctaveCount(6);
+		base.setFrequency(0.3);
+		base.setPersistence(0.12);
+		base.setLacunarity(0.5);
+		noise.SetSourceModule(0, base);
+		noise.setFrequency(0.3);
+		noise.setRoughness(2);
+		noise.setPower(0.5);
 	}
 
 	public PlainBiome() {
@@ -55,10 +63,11 @@ public class PlainBiome extends VanillaBiomeType {
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		heightMap.setSeed((int) blockData.getWorld().getSeed());
+		base.setSeed((int) blockData.getWorld().getSeed());
+		noise.setSeed((int) blockData.getWorld().getSeed());
 
 		final int y = chunkY * 16;
-		final int height = (int) ((heightMap.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 4.0 + 60.0);
+		final int height = (int) ((noise.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 4.0 + 60.0);
 
 		for (int dy = y; dy < y + 16; dy++) {
 			blockData.set(x, dy, z, getBlockId(height, dy));

@@ -30,27 +30,36 @@ import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.theend.decorator.SpireDecorator;
 
+import net.royawesome.jlibnoise.NoiseQuality;
+import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 public class EndStoneBiome extends VanillaBiomeType {
-	private final Perlin heightMap = new Perlin();
+	private Perlin base = new Perlin();
+	private Turbulence noise = new Turbulence();
 
 	public EndStoneBiome() {
 		super(9, new SpireDecorator());
-		heightMap.setOctaveCount(4);
-		heightMap.setFrequency(0.5);
-		heightMap.setPersistence(0.25);
-		heightMap.setLacunarity(0.5);
+		base.setNoiseQuality(NoiseQuality.BEST);
+		base.setOctaveCount(6);
+		base.setFrequency(0.3);
+		base.setPersistence(0.12);
+		base.setLacunarity(0.5);
+		noise.SetSourceModule(0, base);
+		noise.setFrequency(0.3);
+		noise.setRoughness(2);
+		noise.setPower(0.5);
 	}
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		heightMap.setSeed((int) blockData.getWorld().getSeed());
+		base.setSeed((int) blockData.getWorld().getSeed());
+		noise.setSeed((int) blockData.getWorld().getSeed());
 		int y = chunkY * 16;
 		double seaLevel = 60.0;
 		double perlinRange = 0.005;
 		double colSize = 16.0;
-		int height = (int) ((heightMap.GetValue(x / colSize + perlinRange, 0.05, z / colSize + perlinRange) + 1.0) * 4.0 + seaLevel);
+		int height = (int) ((noise.GetValue(x / colSize + perlinRange, 0.05, z / colSize + perlinRange) + 1.0) * 4.0 + seaLevel);
 		
 		for (int dy = y; dy < y + 16; dy++) {
 			blockData.set(x, dy, z, getBlockId(height, dy));

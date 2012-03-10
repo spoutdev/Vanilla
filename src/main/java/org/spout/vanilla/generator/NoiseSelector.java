@@ -30,6 +30,11 @@ import org.spout.api.generator.biome.BiomeSelector;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Voronoi;
 
+/**
+ * NoiseSelector that uses parameters to setup a conherent noise function which will
+ * be used for biome selection. This is the first step of WGEN and doesn't partake in actual
+ * biome construction.
+ */
 public class NoiseSelector extends BiomeSelector {
 	//Produces base noise
 	private Voronoi base = new Voronoi();
@@ -48,13 +53,14 @@ public class NoiseSelector extends BiomeSelector {
 		base.setFrequency(vorFreq);
 		base.setDisplacement(displacement);
 		noise.SetSourceModule(0, base);
-		noise.setRoughness(roughness);
 		noise.setFrequency(turFreq);
+		noise.setRoughness(roughness);
 		noise.setPower(power);
 	}
 
 	@Override
 	public int pickBiome(int x, int y, int z, long seed) {
+		base.setSeed((int) seed);
 		noise.setSeed((int) seed);
 		//Pick a biome at 256 height for both x and z
 		return (int) (noise.GetValue(x / 256.0 + 0.05, y + 0.05, z / 256.0 + 0.05) * 64);

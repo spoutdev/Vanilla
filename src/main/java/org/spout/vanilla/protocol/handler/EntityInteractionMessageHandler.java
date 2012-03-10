@@ -44,6 +44,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 		if (clickedEntity == null) {
 			return;
 		}
+		
 		if (message.isPunching()) {
 			if (clickedEntity.getController() instanceof VanillaEntity) {
 				ItemStack is = player.getEntity().getInventory().getCurrentItem();

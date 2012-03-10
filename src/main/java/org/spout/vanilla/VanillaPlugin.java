@@ -28,7 +28,6 @@ package org.spout.vanilla;
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import org.spout.api.Game;
 import org.spout.api.Server;
@@ -162,24 +161,5 @@ public class VanillaPlugin extends CommonPlugin {
 
 	public Sky getSky(World world) {
 		return skys.get(world);
-	}
-
-	public List<String> getOps() {
-		return OPS.getStringList();
-	}
-
-	public void setOp(String playerName, boolean op) {
-		List<String> list = OPS.getStringList();
-		if (op) {
-			list.add(playerName);
-		} else {
-			list.remove(playerName);
-		}
-
-		OPS.setValue(list, true);
-	}
-
-	public boolean isOp(String playerName) {
-		return OPS.getStringList().contains(playerName);
 	}
 }

@@ -31,10 +31,11 @@ public enum Instrument {
 	CLICKS(2),
 	BASS_DRUM(3),
 	PIANO(4);
+	
 	private final byte id;
 	private final String name;
 
-	Instrument(int id) {
+	private Instrument(int id) {
 		this.id = (byte) id;
 		name = name().charAt(0) + name().substring(1).toLowerCase().replaceAll("_", " ");
 	}

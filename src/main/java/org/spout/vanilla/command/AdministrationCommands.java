@@ -43,6 +43,8 @@ import org.spout.api.material.MaterialData;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.configuration.OpConfig;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.entity.living.player.VanillaPlayer;
@@ -160,12 +162,13 @@ public class AdministrationCommands {
 			throw new CommandException("Please only provide a player to OP!");
 		}
 
+		OpConfig ops = VanillaConfiguration.OPS;
 		String playerName = args.getString(0);
-		if (!plugin.getOps().contains(playerName)) {
+		if (!ops.getOps().contains(playerName)) {
 			throw new CommandException(playerName + " is not an operator!");
 		}
 
-		plugin.setOp(playerName, false);
+		ops.setOp(playerName, false);
 		source.sendMessage(playerName + " is no longer an operator!");
 		Player player = Spout.getGame().getPlayer(playerName, true);
 		if (player != null) {
@@ -180,12 +183,13 @@ public class AdministrationCommands {
 			throw new CommandException("Please only provide a player to OP!");
 		}
 
+		OpConfig ops = VanillaConfiguration.OPS;
 		String playerName = args.getString(0);
-		if (plugin.getOps().contains(playerName)) {
+		if (ops.getOps().contains(playerName)) {
 			throw new CommandException(playerName + " is already an operator!");
 		}
 
-		plugin.setOp(playerName, true);
+		ops.setOp(playerName, true);
 		source.sendMessage(playerName + " is now an operator!");
 		Player op = Spout.getGame().getPlayer(playerName, true);
 		if (op != null) {

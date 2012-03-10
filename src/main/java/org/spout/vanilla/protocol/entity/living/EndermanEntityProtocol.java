@@ -30,14 +30,25 @@ import java.util.List;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.util.Parameter;
+import org.spout.vanilla.entity.living.creature.neutral.Enderman;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class EndermanEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(2);
+	/*	List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(2);
 		//TODO: Index 16 (byte): Item in hand
 		//TODO: Index 17 (byte): Aggression. 1 for aggressive, 0 otherwise.
+		return parameters;
+	}*/
+
+		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
+		if (controller instanceof Enderman) {
+			Enderman enderman = (Enderman) controller;
+			byte data = 0;
+			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
+		}
+
 		return parameters;
 	}
 }

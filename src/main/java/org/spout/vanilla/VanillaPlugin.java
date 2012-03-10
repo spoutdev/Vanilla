@@ -63,8 +63,6 @@ public class VanillaPlugin extends CommonPlugin {
 	public static final int minecraftProtocolId = 28;
 	public static int vanillaProtocolId;
 	private final HashMap<World, Sky> skys = new HashMap<World, Sky>();
-	private static final String[] ops = {"Notch", "jeb", "ez"};
-	public static final ConfigurationNode OPS = new ConfigurationNode("ops", Arrays.asList(ops));
 
 	public VanillaPlugin() {
 		instance = this;

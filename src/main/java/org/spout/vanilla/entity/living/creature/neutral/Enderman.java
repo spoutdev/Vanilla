@@ -25,15 +25,32 @@
  */
 package org.spout.vanilla.entity.living.creature.neutral;
 
+import java.util.Random;
+
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Neutral;
 
 public class Enderman extends Creature implements Neutral {
-	
+	private int countdown = 0;
+	private final Random rand = new Random();
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.Enderman.id);
+	}
+
+	@Override
+	public void onTick(float dt) {
+		if (--countdown <= 0) {
+			countdown = rand.nextInt(7) + 3;
+			float x = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
+			float y = this.getParent().getY();
+			float z = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
+			this.velocity.add(x, y, z);
+		}
+
+		super.onTick(dt);
 	}
 }

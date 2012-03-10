@@ -45,6 +45,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.entity.living.creature.neutral.Enderman;
 import org.spout.vanilla.entity.living.creature.passive.Sheep;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
@@ -102,6 +103,8 @@ public class VanillaEventListener implements Listener {
 				RegionEntitySpawner spawner = (RegionEntitySpawner) c;
 				HashSet<BlockMaterial> spawnable = new HashSet<BlockMaterial>();
 				spawnable.add(VanillaMaterials.GRASS);
+				spawnable.add(VanillaMaterials.END_STONE);
+				spawner.addSpawnableType(Enderman.class, spawnable, 7);
 				spawner.addSpawnableType(Sheep.class, spawnable, 5);
 			}
 		}
@@ -110,8 +113,7 @@ public class VanillaEventListener implements Listener {
 	@EventHandler(order = Order.EARLIEST)
 	public void onPermissionNode(PermissionNodeEvent event) {
 		PermissionsSubject subject = event.getSubject();
-		List<String> ops = VanillaConfiguration.OPS.getOps();
-		if (ops.contains(subject.getName())) {
+		if (VanillaConfiguration.OPS.isOp(subject.getName())) {
 			event.setResult(Result.ALLOW);
 		}
 	}

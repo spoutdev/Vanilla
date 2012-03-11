@@ -25,13 +25,17 @@
  */
 package org.spout.vanilla.entity.living.creature.neutral;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Neutral;
 import org.spout.vanilla.entity.living.creature.Tameable;
+import org.spout.vanilla.VanillaMaterials;
 
 public class Wolf extends Creature implements Tameable, Neutral {
-	
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -41,5 +45,14 @@ public class Wolf extends Creature implements Tameable, Neutral {
 	@Override
 	public void subjectTo(org.spout.api.entity.Entity entity) {
 
+	}
+	
+	@Override
+	public Set<ItemStack> getDeathDrops() {
+		Set<ItemStack> drops = new HashSet<ItemStack>();
+		
+		// None
+		
+		return drops;
 	}
 }

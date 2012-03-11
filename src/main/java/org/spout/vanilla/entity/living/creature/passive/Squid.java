@@ -25,14 +25,31 @@
  */
 package org.spout.vanilla.entity.living.creature.passive;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.creature.Passive;
 import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.VanillaMaterials;
 
 public class Squid extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.Squid.id);
+	}
+	
+	@Override
+	public Set<ItemStack> getDeathDrops() {
+		Set<ItemStack> drops = new HashSet<ItemStack>();
+		
+		int count = dropRand.nextInt(4);
+		if (count > 0) {
+			drops.add(new ItemStack(VanillaMaterials.INK_SAC, count));
+		}
+		
+		return drops;
 	}
 }

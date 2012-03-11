@@ -25,11 +25,14 @@
  */
 package org.spout.vanilla.entity.living.player;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
@@ -39,6 +42,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.living.Human;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.UserListItemMessage;
+import org.spout.vanilla.VanillaMaterials;
 
 public abstract class VanillaPlayer extends Human implements PlayerController {
 	
@@ -113,5 +117,14 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 		ping = count;
 		count = 0;
 		unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
+	}
+	
+	@Override
+	public Set<ItemStack> getDeathDrops() {
+		Set<ItemStack> drops = new HashSet<ItemStack>();
+		
+		// TODO: Drop inventory
+		
+		return drops;
 	}
 }

@@ -25,14 +25,18 @@
  */
 package org.spout.vanilla.entity.living.creature.passive;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.MaterialData;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Passive;
+import org.spout.vanilla.VanillaMaterials;
 
 public class Sheep extends Creature implements Passive {
-	
 	private int countdown = 0;
 	private final Random rand = new Random();
 	private int color;
@@ -114,5 +118,16 @@ public class Sheep extends Creature implements Passive {
 		public int getId() {
 			return id;
 		}
+	}
+	
+	@Override
+	public Set<ItemStack> getDeathDrops() {
+		Set<ItemStack> drops = new HashSet<ItemStack>();
+		
+		if (!isSheared()) {
+			drops.add(new ItemStack(MaterialData.getMaterial((short) 35, (short) getColor()), 1));
+		}
+		
+		return drops;
 	}
 }

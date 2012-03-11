@@ -25,15 +25,48 @@
  */
 package org.spout.vanilla.entity.living.creature.neutral;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.creature.Neutral;
 import org.spout.vanilla.entity.living.creature.hostile.Zombie;
+import org.spout.vanilla.VanillaMaterials;
 
 public class PigZombie extends Zombie implements Neutral {
-	
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		parent.setData(Entity.KEY, Entity.PigZombie.id);
+	}
+	
+	@Override
+	public Set<ItemStack> getDeathDrops() {
+		Set<ItemStack> drops = new HashSet<ItemStack>();
+		
+		int count = dropRand.nextInt(2);
+		if (count > 0) {
+			drops.add(new ItemStack(VanillaMaterials.ROTTEN_FLESH, count));
+		}
+		
+		count = dropRand.nextInt(2);
+		if (count > 0) {
+			drops.add(new ItemStack(VanillaMaterials.GOLD_NUGGET, count));
+		}
+		
+		if (dropRand.nextInt(25) == 0) {
+			drops.add(new ItemStack(VanillaMaterials.GOLD_INGOT, 1));
+		}
+		
+		if (dropRand.nextInt(50) == 0) {
+			drops.add(new ItemStack(VanillaMaterials.GOLD_SWORD, 1));
+		}
+		
+		if (dropRand.nextInt(75) == 0) {
+			drops.add(new ItemStack(VanillaMaterials.GOLD_HELMET, 1));
+		}
+		
+		return drops;
 	}
 }

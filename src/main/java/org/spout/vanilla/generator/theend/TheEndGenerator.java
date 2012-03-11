@@ -30,12 +30,9 @@ import org.spout.vanilla.generator.VanillaBiomes;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
 
 public class TheEndGenerator extends VanillaGeneratorBase {
-	/**
-	 * Called during biome generator's construction phase
-	 */
 	@Override
 	public void registerBiomes() {
-		setSelector(new NoiseSelector(1, 1.4, 1, 0.8, 1.3));
+		setSelector(new NoiseSelector(0.9, 1.5, 5, 0.9, 1.5));
 		register(VanillaBiomes.ENDSTONE);
 	}
 }

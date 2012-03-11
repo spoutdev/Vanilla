@@ -32,20 +32,22 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.vanilla.VanillaMaterials;
 
+import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 public class CaveDecorator implements BiomeDecorator {
-	private Perlin p;
+	private Perlin noise = new Perlin();
 
 	public CaveDecorator() {
-		p = new Perlin();
-		p.setSeed(10);
-		p.setOctaveCount(8);
-		p.setFrequency(2);
+		noise.setNoiseQuality(NoiseQuality.BEST);
+		noise.setOctaveCount(8);
+		noise.setFrequency(2);
 	}
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
+		noise.setSeed((int) chunk.getWorld().getSeed());
+
 		int x = chunk.getX() * 16;
 		int y = chunk.getY() * 16;
 		int z = chunk.getZ() * 16;
@@ -56,7 +58,7 @@ public class CaveDecorator implements BiomeDecorator {
 					if (Math.sqrt(Math.pow(dx - pt.getX(), 2) + Math.pow(dy - pt.getY(), 2) + Math.pow(dz - pt.getZ(), 2)) > 6) {
 						continue;
 					}
-					if (p.GetValue(dx / 5.0 + 0.005, dy / 5.0 + 0.005, dz / 5.0 + 0.005) > 0 && chunk.getBlockId(dx, dy, dz) == VanillaMaterials.STONE.getId()) {
+					if (noise.GetValue(dx / 5.0 + 0.005, dy / 5.0 + 0.005, dz / 5.0 + 0.005) > 0 && chunk.getBlockId(dx, dy, dz) == VanillaMaterials.STONE.getId()) {
 						chunk.setBlockId(dx, dy, dz, VanillaMaterials.AIR.getId(), chunk.getWorld());
 					}
 				}

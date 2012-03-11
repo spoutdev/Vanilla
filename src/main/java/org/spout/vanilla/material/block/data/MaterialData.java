@@ -23,42 +23,17 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.block.data;
 
-import org.spout.api.geo.World;
-import org.spout.vanilla.material.block.data.DetectorRails;
+import org.spout.api.material.BlockMaterial;
 
-public class MinecartTrackDetector extends MinecartTrackBase implements RedstoneSource {
-	public MinecartTrackDetector(String name, int id) {
-		super(name, id);
-	}
-
-	@Override
-	public boolean canCurve() {
-		return false;
-	}
-
-	@Override
-	public short getRedstonePower(World world, int x, int y, int z, int tx, int ty, int tz) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean providesPowerTo(World world, int x, int y, int z, int tx, int ty, int tz) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean providesAttachPoint(World world, int x, int y, int z, int tx, int ty, int tz) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+//FIXME: Needs to be placed in SpoutAPI instead
+public interface MaterialData {
 	
-	@Override
-	public DetectorRails createData(short data) {
-		return new DetectorRails(data);
-	}
+	public void setData(short data);
 	
+	public short getData();
+	
+	public BlockMaterial getMaterial();
+
 }

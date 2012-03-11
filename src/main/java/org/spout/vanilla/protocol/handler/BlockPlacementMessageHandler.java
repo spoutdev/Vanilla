@@ -38,10 +38,10 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.Item;
-import org.spout.vanilla.material.attachable.Attachable;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
 
@@ -124,16 +124,18 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			if (placedData == 0) {
 				placedData = placedMaterial.getData();
 			}
-
-			if (placedMaterial instanceof Attachable) {
-				Attachable attachable = (Attachable) placedMaterial;
-				placedData = attachable.getDataForFace(face.getOpposite());
+			
+			if (face == BlockFace.BOTTOM && world.getBlockMaterial(x, y - 1, z) == VanillaMaterials.SNOW) {
+				//make sure the target switches one block below (just like water)
+				--y;
+				target = world.getBlock(x, y, z);
 			}
 
 			Block newBlock = (Block) placedMaterial;
 			Block oldBlock = target != null ? (Block) target.getBlockMaterial() : null;
 
-			if (!sendRevert && (oldBlock == null || oldBlock.isLiquid() || oldBlock.getId() == 0)) {
+			if (!sendRevert && (oldBlock == null || oldBlock.isLiquid() || oldBlock.getId() == 0 || oldBlock == VanillaMaterials.SNOW)) {
+				
 				//if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {
 				//SpoutBlockState newState = BlockProperties.get(placedId.getItemTypeId()).getPhysics().placeAgainst(player, target.getState(), placedId, face);
 				//BlockPlaceEvent event = EventFactory.onBlockPlace(target, newState, against, player);
@@ -143,12 +145,14 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 				if (newState.getX() != target.getX() || newState.getY() != target.getY() || newState.getZ() != target.getZ()) {
 					sendRevert = true;
 				}*/
-
-				world.setBlockIdAndData(x, y, z, newBlock.getId(), placedData, player);
-				if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
-					holding.setAmount(holding.getAmount() - 1);
-					inventory.setItem(holding, inventory.getCurrentSlot());
+				
+				if (newBlock.onPlacement(world, x, y, z, placedData, face, player)) {
+					if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
+						holding.setAmount(holding.getAmount() - 1);
+						inventory.setItem(holding, inventory.getCurrentSlot());
+					}
 				}
+
 				//} else {
 				//	sendRevert = true;
 				//}

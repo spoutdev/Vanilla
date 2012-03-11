@@ -69,7 +69,7 @@ public class Sheep extends Creature implements Passive {
 			float x = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
 			float y = rand.nextFloat();
 			float z = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
-			this.velocity.add(x, y, z);
+			getParent().translate(x,y,z);
 		}
 		
 		super.onTick(dt);

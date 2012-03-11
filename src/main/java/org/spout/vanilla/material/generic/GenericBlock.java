@@ -28,8 +28,10 @@ package org.spout.vanilla.material.generic;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.GenericBlockMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.block.data.MaterialData;
 import org.spout.vanilla.material.block.data.SimpleMaterialData;
@@ -40,23 +42,20 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
 	private float resistance;
-	private int dropId;
-	private int dropData;
+	private Material dropMaterial;
 	private int dropCount;
 
 	public GenericBlock(String name, int id) {
 		super(name, id);
-		
-		dropId = id;
-		dropData = 0;
+
+		dropMaterial = this;
 		dropCount = 1;
 	}
 
 	public GenericBlock(String name, int id, int data) {
 		super(name, id, data);
-		
-		dropId = id;
-		dropData = data;
+
+		dropMaterial = this;
 		dropCount = 1;
 	}
 
@@ -115,28 +114,20 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 	}
 	
 	@Override
-	public int getDrop() {
-		return dropId;
+	public Material getDrop() {
+		return dropMaterial;
+
 	}
 	
-	@Override
-	public int getDropData() {
-		return dropData;
-	}
-	
+
 	@Override
 	public int getDropCount() {
 		return dropCount;
 	}
 	
-	public GenericBlock setDrop(int id) {
-		return setDrop(id, 0);
-	}
-	
-	public GenericBlock setDrop(int id, int data) {
-		dropId = id;
-		dropData = data;
-		
+
+	public GenericBlock setDrop(Material id) {
+		dropMaterial = id;
 		return this;
 	}
 	

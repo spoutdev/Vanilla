@@ -27,12 +27,12 @@ package org.spout.vanilla.material;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
 
 public interface Block extends BlockMaterial {
 	public boolean isLiquid();
 	
-	public int getDrop();
-	public int getDropData();
+	public Material getDrop();
 	public int getDropCount();
 
 	/**

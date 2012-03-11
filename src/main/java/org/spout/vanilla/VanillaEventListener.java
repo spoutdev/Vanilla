@@ -107,8 +107,6 @@ public class VanillaEventListener implements Listener {
 				HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
 				grass.add(VanillaMaterials.GRASS);
 				spawner.addSpawnableType(Sheep.class, grass, 5);
-				spawner.addSpawnableType(Chicken.class, grass, 5);
-				spawner.addSpawnableType(Cow.class, grass, 5);
 
 				HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
 				endStone.add(VanillaMaterials.END_STONE);

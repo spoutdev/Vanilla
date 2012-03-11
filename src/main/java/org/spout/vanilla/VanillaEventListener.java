@@ -46,6 +46,9 @@ import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.living.creature.neutral.Enderman;
+import org.spout.vanilla.entity.living.creature.passive.Chicken;
+import org.spout.vanilla.entity.living.creature.passive.Cow;
+import org.spout.vanilla.entity.living.creature.passive.Pig;
 import org.spout.vanilla.entity.living.creature.passive.Sheep;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
@@ -101,11 +104,16 @@ public class VanillaEventListener implements Listener {
 		if (c != null) {
 			if (c instanceof RegionEntitySpawner) {
 				RegionEntitySpawner spawner = (RegionEntitySpawner) c;
-				HashSet<BlockMaterial> spawnable = new HashSet<BlockMaterial>();
-				spawnable.add(VanillaMaterials.GRASS);
-				spawnable.add(VanillaMaterials.END_STONE);
-				spawner.addSpawnableType(Enderman.class, spawnable, 7);
-				spawner.addSpawnableType(Sheep.class, spawnable, 5);
+				HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
+				grass.add(VanillaMaterials.GRASS);
+				spawner.addSpawnableType(Sheep.class, grass, 5);
+				spawner.addSpawnableType(Pig.class, grass, 5);
+				spawner.addSpawnableType(Chicken.class, grass, 5);
+				spawner.addSpawnableType(Cow.class, grass, 5);
+
+				HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
+				endStone.add(VanillaMaterials.END_STONE);
+				spawner.addSpawnableType(Enderman.class, endStone, 7);
 			}
 		}
 	}

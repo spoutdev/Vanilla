@@ -40,6 +40,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
+import org.spout.api.protocol.Session.State;
 import org.spout.api.util.map.TIntPairHashSet;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 import org.spout.vanilla.VanillaMessageHandlerUtils;
@@ -143,21 +144,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		ChunkSnapshot snapshot = c.getSnapshot(false);
 		short[] rawBlockIdArray = snapshot.getBlockIds();
 		short[] rawBlockData = snapshot.getBlockData();
-		short[] rawBlockLight = snapshot.getBlockLight();
-		short[] rawSkyLight = snapshot.getSkyLight();
+		byte[] rawBlockLight = snapshot.getBlockLight();
+		byte[] rawSkyLight = snapshot.getSkyLight();
 		byte[] fullChunkData = new byte[16 * 16 * 16 * 5 / 2];
-		final int maxIdIndex = 16 * 16 * 16;
-		final int maxDataIndex = maxIdIndex + 16 * 16 * 16 / 2;
-
-		for (int i = 0; i < fullChunkData.length; i++) {
-			if (i < maxIdIndex) {
-				fullChunkData[i] = (byte) 0x00;
-			} else if (i < maxDataIndex) {
-				fullChunkData[i] = (byte) 0x00;
-			} else {
-				fullChunkData[i] = (byte) 0xFF;
-			}
-		}
 
 		boolean hasData = false;
 		int arrIndex = 0;
@@ -173,14 +162,14 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		}
 
 		for (int i = 0; i < rawBlockData.length; i += 2) {
-			fullChunkData[arrIndex++] = (byte) ((byte) rawBlockData[i + 1] << 4 | (byte) rawBlockData[i]);
+			fullChunkData[arrIndex++] = (byte) ((byte) rawBlockData[i] << 4 | (byte) rawBlockData[i + 1] & 0xF);
 		}
-		for (int i = 0; i < rawBlockLight.length; i += 2) {
-			fullChunkData[arrIndex++] = (byte) ((byte) rawBlockLight[i + 1] << 4 | (byte) rawBlockLight[i]);
-		}
-		for (int i = 0; i < rawSkyLight.length; i += 2) {
-			fullChunkData[arrIndex++] = (byte) ((byte) rawSkyLight[i + 1] << 4 | (byte) rawSkyLight[i]);
-		}
+		
+		System.arraycopy(rawBlockLight, 0, fullChunkData, arrIndex, rawBlockLight.length);
+		arrIndex += rawBlockLight.length;
+		
+		System.arraycopy(rawSkyLight, 0, fullChunkData, arrIndex, rawSkyLight.length);
+		arrIndex += rawSkyLight.length;
 
 		final boolean sendBiomes = !biomesSentChunks.contains(c.getX(), c.getZ());
 		byte[] biomeData = sendBiomes ? new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE] : null;
@@ -230,7 +219,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 				dimensionBit = 1;
 			}
 			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1, dimensionBit, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
-			owner.getSession().send(idMsg);
+			owner.getSession().send(idMsg, true);
+			//Normal messages may be sent
+			owner.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 5; slot++) {
 				ItemStack slotItem = owner.getEntity().getInventory().getItem(5 + slot);
 				EntityEquipmentMessage EEMsg;
@@ -261,7 +252,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (currentTime > lastKeepAlive + TIMEOUT) {
 			PingMessage PingMsg = new PingMessage((int) currentTime);
 			lastKeepAlive = currentTime;
-			owner.getSession().send(PingMsg);
+			owner.getSession().send(PingMsg, true);
 		}
 
 		for (TIntObjectIterator<Message> i = queuedInventoryUpdates.iterator(); i.hasNext(); ) {

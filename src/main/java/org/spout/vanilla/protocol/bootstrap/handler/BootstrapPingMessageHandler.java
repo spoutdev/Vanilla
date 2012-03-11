@@ -39,6 +39,6 @@ public class BootstrapPingMessageHandler extends MessageHandler<ServerListPingMe
 	public void handle(Session session, Player player, ServerListPingMessage message) {
 		ServerListPingEvent event = new ServerListPingEvent(session.getAddress().getAddress(), VanillaConfiguration.MOTD.getString(), Spout.getGame().getOnlinePlayers().length, Spout.getGame().getMaxPlayers());
 		Spout.getGame().getEventManager().callEvent(event);
-		session.send(new KickMessage(event.getMessage()));
+		session.send(new KickMessage(event.getMessage()), true);
 	}
 }

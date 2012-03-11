@@ -40,7 +40,7 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 			//if (session.getServer().getOnlineMode()) {
 			//	session.send(new HandshakeMessage(session.getSessionId()));
 			//} else {
-			session.send(new HandshakeMessage("-"));
+			session.send(new HandshakeMessage("-"), true);
 			//}
 		} else {
 			session.disconnect("Handshake already exchanged.");

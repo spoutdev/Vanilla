@@ -105,11 +105,11 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 	}
 
 	public GenericBlock setLightLevel(int level) {
-		return setLightLevel((short) level);
+		return setLightLevel((byte) level);
 	}
 
 	@Override
-	public GenericBlock setLightLevel(short level) {
+	public GenericBlock setLightLevel(byte level) {
 		return (GenericBlock) super.setLightLevel(level);
 	}
 	

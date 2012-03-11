@@ -59,17 +59,17 @@ public class Air extends GenericBlock implements Block {
 	}
 
 	@Override
-	public short getOpacity() {
+	public byte getOpacity() {
 		return 0;
 	}
 
 	@Override
-	public short getLightLevel() {
+	public byte getLightLevel() {
 		return 0;
 	}
 
 	@Override
-	public GenericBlock setLightLevel(short level) {
+	public GenericBlock setLightLevel(byte level) {
 		return this;
 	}
 }

@@ -69,7 +69,7 @@ public class VanillaEventListener implements Listener {
 		if (VanillaConfiguration.PLAYER_DEFAULT_GAMEMODE.getString().equalsIgnoreCase("creative")) {
 			mode = new CreativePlayer(player);
 		} else {
-			mode = new SurvivalPlayer(player); // TODO: Implement Survival mode.
+			mode = new SurvivalPlayer(player);
 		}
 
 		Entity playerEntity = player.getEntity();

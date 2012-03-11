@@ -34,6 +34,7 @@ import org.spout.api.util.config.ConfigurationNode;
 
 public class VanillaConfiguration extends Configuration {
 	// General
+	public static final ConfigurationNode MOTD = new ConfigurationNode("general.motd", "A Spout Server");
 	public static final ConfigurationNode ENABLE_END_CREDITS = new ConfigurationNode("general.enable-ending-credits", true);
 	// Physics
 	public static final ConfigurationNode GRAVEL_PHYSICS = new ConfigurationNode("physics.gravel", true);

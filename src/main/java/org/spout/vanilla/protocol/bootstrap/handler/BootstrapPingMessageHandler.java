@@ -29,6 +29,7 @@ import org.spout.api.Spout;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.game.ServerListPingEvent;
 import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
@@ -36,7 +37,7 @@ import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 public class BootstrapPingMessageHandler extends MessageHandler<ServerListPingMessage> {
 	@Override
 	public void handle(Session session, Player player, ServerListPingMessage message) {
-		ServerListPingEvent event = new ServerListPingEvent(session.getAddress().getAddress(), "Spout Server", Spout.getGame().getOnlinePlayers().length, Spout.getGame().getMaxPlayers());
+		ServerListPingEvent event = new ServerListPingEvent(session.getAddress().getAddress(), VanillaConfiguration.MOTD.getString(), Spout.getGame().getOnlinePlayers().length, Spout.getGame().getMaxPlayers());
 		Spout.getGame().getEventManager().callEvent(event);
 		session.send(new KickMessage(event.getMessage()));
 	}

@@ -56,7 +56,7 @@ public class Shears extends GenericTool {
 		other.setData("SheepSheared", true);
 		
 		short col = (short) other.getData("SheepColor").asInt();
-		other.getWorld().createAndSpawnEntity(other.getPoint(), new Item(new ItemStack(MaterialData.getMaterial((short) 35, col), rand.nextInt(3) + 1), other.getPoint().normalize()));
+		other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(MaterialData.getMaterial((short) 35, col), rand.nextInt(3) + 1), other.getPosition().normalize()));
 		
 		ItemStack holding = entity.getInventory().getCurrentItem();
 		if (entity.getController() instanceof SurvivalPlayer) {

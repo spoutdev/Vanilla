@@ -73,7 +73,7 @@ public class AdministrationCommands {
 			player = (Player) source;
 			Player to = Spout.getGame().getPlayer(args.getString(0), true);
 			if (to != null) {
-				point = to.getEntity().getPoint();
+				point = to.getEntity().getPosition();
 			} else {
 				throw new CommandException(args.getString(0) + " is not online!");
 			}
@@ -87,7 +87,7 @@ public class AdministrationCommands {
 
 			Player to = Spout.getGame().getPlayer(args.getString(1), true);
 			if (to != null) {
-				point = to.getEntity().getPoint();
+				point = to.getEntity().getPosition();
 			} else {
 				throw new CommandException(args.getString(1) + " is not online!");
 			}

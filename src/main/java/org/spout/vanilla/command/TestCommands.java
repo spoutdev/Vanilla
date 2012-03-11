@@ -63,9 +63,9 @@ public class TestCommands {
 		World world = entity.getWorld();
 
 		if (args.length() < 1) {
-			world.createAndSpawnEntity(entity.getPoint(), new Sheep());
+			world.createAndSpawnEntity(entity.getPosition(), new Sheep());
 		} else {
-			world.createAndSpawnEntity(entity.getPoint(), new Sheep(color));
+			world.createAndSpawnEntity(entity.getPosition(), new Sheep(color));
 		}
 	}
 
@@ -78,6 +78,6 @@ public class TestCommands {
 		Entity entity = player.getEntity();
 		World world = entity.getWorld();
 
-		world.createAndSpawnEntity(entity.getPoint(), new Chicken());
+		world.createAndSpawnEntity(entity.getPosition(), new Chicken());
 	}
 }

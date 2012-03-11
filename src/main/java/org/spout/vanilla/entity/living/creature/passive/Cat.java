@@ -25,10 +25,15 @@
  */
 package org.spout.vanilla.entity.living.creature.passive;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Tamed;
 import org.spout.vanilla.entity.living.creature.Passive;
+import org.spout.vanilla.VanillaMaterials;
 
 public class Cat extends Creature implements Tamed, Passive {
 	org.spout.api.entity.Entity sovereign = null;
@@ -47,5 +52,14 @@ public class Cat extends Creature implements Tamed, Passive {
 	@Override
 	public org.spout.api.entity.Entity subjectedTo() {
 		return sovereign;
+	}
+	
+	@Override
+	public Set<ItemStack> getDeathDrops() {
+		Set<ItemStack> drops = new HashSet<ItemStack>();
+		
+		// None
+		
+		return drops;
 	}
 }

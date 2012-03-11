@@ -114,7 +114,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 				int count = 1;
 				if (oldMat instanceof Block) {
 					Block blockMat = (Block) oldMat;
-					dropMat = MaterialData.getMaterial((short) blockMat.getDrop(), (short) blockMat.getDropData());
+					dropMat = MaterialData.getMaterial((short) blockMat.getDrop().getId(), (short) blockMat.getDrop().getData());
 					count = blockMat.getDropCount();
 				}
 				

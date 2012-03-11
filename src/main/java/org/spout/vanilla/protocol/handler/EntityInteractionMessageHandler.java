@@ -40,7 +40,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 	@Override
 	public void handle(Session session, Player player, EntityInteractionMessage message) {
 		//TODO what happens if the entity is in a different region?
-		Entity clickedEntity = player.getEntity().getWorld().getRegion(player.getEntity().getPoint()).getEntity(message.getTarget());
+		Entity clickedEntity = player.getEntity().getWorld().getRegion(player.getEntity().getPosition()).getEntity(message.getTarget());
 		if (clickedEntity == null) {
 			return;
 		}

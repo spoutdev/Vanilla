@@ -34,21 +34,24 @@ import org.spout.vanilla.entity.living.creature.Hostile;
 import org.spout.vanilla.VanillaMaterials;
 
 public class SpiderJockey extends Creature implements Hostile {
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 	}
 	
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		
-		int count = dropRand.nextInt(3);
+		int count = getRandom().nextInt(3);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.STRING, count));
 		}
 		
-		count = dropRand.nextInt(2);
+		count = getRandom().nextInt(2);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.SPIDER_EYE, count));
 		}

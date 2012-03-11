@@ -46,7 +46,8 @@ public class Item extends ObjectEntity {
 	private ItemStack is;
 	private int roll, unpickable;
 	private final Random rand = new Random();	
-	
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
 		return entityProtocolStore.getEntityProtocol(protocolId);
@@ -65,15 +66,12 @@ public class Item extends ObjectEntity {
 
 	@Override
 	public void onAttached() {
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.DroppedItem.id);
 	}
 
 	@Override
 	public void onTick(float dt) {
-		if (parent.isDead()) {
-			return;
-		}
-		
 		if (unpickable > 0) {
 			unpickable--;
 			super.onTick(dt);

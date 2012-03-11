@@ -35,9 +35,12 @@ import org.spout.vanilla.entity.living.creature.hostile.Zombie;
 import org.spout.vanilla.VanillaMaterials;
 
 public class PigZombie extends Zombie implements Neutral {
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.PigZombie.id);
 	}
 	
@@ -45,25 +48,25 @@ public class PigZombie extends Zombie implements Neutral {
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		
-		int count = dropRand.nextInt(2);
+		int count = getRandom().nextInt(2);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.ROTTEN_FLESH, count));
 		}
 		
-		count = dropRand.nextInt(2);
+		count = getRandom().nextInt(2);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.GOLD_NUGGET, count));
 		}
 		
-		if (dropRand.nextInt(25) == 0) {
+		if (getRandom().nextInt(25) == 0) {
 			drops.add(new ItemStack(VanillaMaterials.GOLD_INGOT, 1));
 		}
 		
-		if (dropRand.nextInt(50) == 0) {
+		if (getRandom().nextInt(50) == 0) {
 			drops.add(new ItemStack(VanillaMaterials.GOLD_SWORD, 1));
 		}
 		
-		if (dropRand.nextInt(75) == 0) {
+		if (getRandom().nextInt(75) == 0) {
 			drops.add(new ItemStack(VanillaMaterials.GOLD_HELMET, 1));
 		}
 		

@@ -30,10 +30,12 @@ import org.spout.vanilla.entity.living.creature.Passive;
 import org.spout.vanilla.entity.living.Creature;
 
 public class SnowGolem extends Creature implements Passive {
-	
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.SnowGolem.id);
 	}
 }

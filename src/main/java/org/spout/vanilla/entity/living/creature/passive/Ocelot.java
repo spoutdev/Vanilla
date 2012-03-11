@@ -36,9 +36,12 @@ import org.spout.vanilla.entity.living.creature.Passive;
 import org.spout.vanilla.VanillaMaterials;
 
 public class Ocelot extends Creature implements Tameable, Passive {
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Ocelot.id);
 	}
 
@@ -52,9 +55,6 @@ public class Ocelot extends Creature implements Tameable, Passive {
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		
-		// None
-		
 		return drops;
 	}
 }

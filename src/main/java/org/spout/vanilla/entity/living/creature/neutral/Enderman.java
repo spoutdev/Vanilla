@@ -37,21 +37,22 @@ import org.spout.vanilla.VanillaMaterials;
 
 public class Enderman extends Creature implements Neutral {
 	private int countdown = 0;
-	private final Random rand = new Random();
+	private org.spout.api.entity.Entity parent;
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Enderman.id);
 	}
 
 	@Override
 	public void onTick(float dt) {
 		if (--countdown <= 0) {
-			countdown = rand.nextInt(7) + 3;
-			float x = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
-			float y = getParent().getPosition().getY();
-			float z = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
+			countdown = getRandom().nextInt(7) + 3;
+			float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
+			float y = parent.getPosition().getY();
+			float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
 			this.velocity.add(x, y, z);
 		}
 
@@ -62,7 +63,7 @@ public class Enderman extends Creature implements Neutral {
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		
-		int count = dropRand.nextInt(2);
+		int count = getRandom().nextInt(2);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.ENDER_PEARL, count));
 		}

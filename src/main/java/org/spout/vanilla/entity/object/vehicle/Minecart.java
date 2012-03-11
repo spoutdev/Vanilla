@@ -30,10 +30,12 @@ import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.ObjectEntity;
 
 public abstract class Minecart extends ObjectEntity implements Vehicle {
-	
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Minecart.id);
 	}
 }

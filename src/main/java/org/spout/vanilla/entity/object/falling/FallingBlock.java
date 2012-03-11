@@ -25,19 +25,18 @@
  */
 package org.spout.vanilla.entity.object.falling;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
-import org.spout.api.protocol.Message;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.object.Falling;
 import org.spout.vanilla.material.Block;
-import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
 public class FallingBlock extends Falling {
-	
 	private final BlockMaterial block;
+	private Entity parent;
 
 	public FallingBlock(BlockMaterial block) {
 		this.block = block;
@@ -46,6 +45,7 @@ public class FallingBlock extends Falling {
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 	}
 
 	@Override
@@ -65,33 +65,12 @@ public class FallingBlock extends Falling {
 		int z = MathHelper.floor(position.getZ());
 		Block material = (Block) world.getBlock(x, y - 1, z).getBlockMaterial();
 		if (material == VanillaMaterials.AIR || material.isLiquid()) {
-			getVelocity().add(0, -0.004, 0);
+			parent.translate(x, -.004f, z);
 		} else {
 			world.setBlockMaterial(x, y, z, block, world);
 			parent.kill();
 		}
 		
 		super.onTick(dt);
-	}
-
-	public Message getSpawnMessage() {
-		int spawnId = -1; //TODO: support for other falling block types?
-		if (block == VanillaMaterials.SAND) {
-			spawnId = 70;
-		}
-		
-		if (block == VanillaMaterials.GRAVEL) {
-			spawnId = 71;
-		}
-		
-		if (spawnId > 0) {
-			Point position = parent.getPosition();
-			int x = MathHelper.floor(position.getX());
-			int y = MathHelper.floor(position.getY());
-			int z = MathHelper.floor(position.getZ());
-			return new SpawnVehicleMessage(parent.getId(), spawnId, x, y, z);
-		}
-		
-		return null;
 	}
 }

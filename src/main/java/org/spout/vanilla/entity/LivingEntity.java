@@ -28,19 +28,27 @@ package org.spout.vanilla.entity;
 import java.util.Random;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.entity.object.Item;
 
 import java.util.HashSet;
+
 public abstract class LivingEntity extends VanillaEntity {
-	protected Random dropRand = new Random();
+	private Entity parent;
+	private Random rand = new Random();
 	private World prevWorld;
 	private Point prevPoint;
 	
 	public Set<ItemStack> getDeathDrops() {return new HashSet<ItemStack>();}
-	
+
+	@Override
+	public void onAttached() {
+		parent = getParent();
+	}
+
 	@Override
 	public void onTick(float dt) {
 		if (parent.getWorld() != null) {
@@ -60,5 +68,9 @@ public abstract class LivingEntity extends VanillaEntity {
 			Item item = new Item(drop, prevPoint.normalize());
 			prevWorld.createAndSpawnEntity(prevPoint, item);
 		}
+	}
+	
+	public Random getRandom() {
+		return rand;
 	}
 }

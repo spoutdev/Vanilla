@@ -35,9 +35,12 @@ import org.spout.vanilla.entity.living.creature.Hostile;
 import org.spout.vanilla.VanillaMaterials;
 
 public class Skeleton extends Creature implements Hostile {
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Skeleton.id);
 	}
 	
@@ -45,18 +48,18 @@ public class Skeleton extends Creature implements Hostile {
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		
-		int count = dropRand.nextInt(3);
+		int count = getRandom().nextInt(3);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.ARROW, count));
 		}
 		
-		count = dropRand.nextInt(3);
+		count = getRandom().nextInt(3);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.BONE, count));
 		}
 		
 		// TODO: Enchantments
-		if (dropRand.nextInt(32) == 0) {
+		if (getRandom().nextInt(32) == 0) {
 			drops.add(new ItemStack(VanillaMaterials.BOW, 1));
 		}
 		

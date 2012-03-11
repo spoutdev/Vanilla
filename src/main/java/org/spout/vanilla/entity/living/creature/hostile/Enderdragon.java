@@ -33,21 +33,20 @@ import org.spout.vanilla.entity.living.creature.Boss;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Hostile;
-import org.spout.vanilla.VanillaMaterials;
 
 public class Enderdragon extends Creature implements Hostile, Boss {
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.EnderDragon.id);
 	}
 	
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		
-		// None
-		
 		return drops;
 	}
 }

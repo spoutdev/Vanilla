@@ -23,30 +23,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.living.creature.hostile;
+package org.spout.vanilla.generator;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Random;
 
-import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.living.Creature;
-import org.spout.vanilla.entity.living.creature.Hostile;
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.api.generator.Populator;
+import org.spout.api.geo.cuboid.Chunk;
 
-public class Silverfish extends Creature implements Hostile {
-	private org.spout.api.entity.Entity parent;
-
+/**
+ * Populator ran at stage 2 of world generation which serves to smooth
+ * the borders between biomes.
+ */
+public class SmoothPopulator implements Populator {
 	@Override
-	public void onAttached() {
-		super.onAttached();
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.Silverfish.id);
-	}
-	
-	@Override
-	public Set<ItemStack> getDeathDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		return drops;
+	public void populate(Chunk chunk, Random random) {
+
 	}
 }

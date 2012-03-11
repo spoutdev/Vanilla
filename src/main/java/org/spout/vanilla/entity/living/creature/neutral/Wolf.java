@@ -36,9 +36,12 @@ import org.spout.vanilla.entity.living.creature.Tameable;
 import org.spout.vanilla.VanillaMaterials;
 
 public class Wolf extends Creature implements Tameable, Neutral {
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Wolf.id);
 	}
 

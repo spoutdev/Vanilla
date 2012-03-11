@@ -31,9 +31,12 @@ import org.spout.vanilla.entity.living.creature.Hostile;
 import org.spout.vanilla.VanillaMaterials;
 
 public class CaveSpider extends Spider implements Hostile {
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
-		super.onAttached();//Again, without the metadata.
+		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.CaveSpider.id);
 	}
 }

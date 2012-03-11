@@ -31,20 +31,16 @@ import org.spout.api.geo.World;
 import org.spout.vanilla.world.Weather;
 
 public class NetherSky extends Controller implements Sky {
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
-		// TODO Auto-generated method stub
+		parent = getParent();
 		parent.setObserver(true);
 	}
 
 	@Override
 	public void onTick(float dt) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void preSnapshot() {
-
 	}
 
 	@Override

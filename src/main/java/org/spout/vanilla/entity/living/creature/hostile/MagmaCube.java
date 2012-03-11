@@ -34,9 +34,12 @@ import org.spout.vanilla.entity.living.creature.Hostile;
 import org.spout.vanilla.VanillaMaterials;
 
 public class MagmaCube extends Slime implements Hostile {
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.MagmaCube.id);
 	}
 	
@@ -45,7 +48,7 @@ public class MagmaCube extends Slime implements Hostile {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		
 		// TODO: Check for small/big
-		int count = dropRand.nextInt(2);
+		int count = getRandom().nextInt(2);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.MAGMA_CREAM, count));
 		}

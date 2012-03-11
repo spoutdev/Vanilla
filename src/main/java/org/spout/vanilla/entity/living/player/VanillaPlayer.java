@@ -53,6 +53,7 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
 	private short count = 0;
 	private short ping;
+	private org.spout.api.entity.Entity parent;
 
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
@@ -90,7 +91,8 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public void onAttached() {
-		Transform spawn = this.getParent().getWorld().getSpawnPoint();
+		parent = getParent();
+		Transform spawn = parent.getWorld().getSpawnPoint();
 		Quaternion rotation = spawn.getRotation();
 		parent.setPosition(spawn.getPosition());
 		parent.setRotation(rotation);

@@ -37,20 +37,12 @@ import org.spout.vanilla.entity.living.creature.Passive;
 import org.spout.vanilla.VanillaMaterials;
 
 public class Chicken extends Creature implements Passive {
-	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
-
-	@Override
-	public EntityProtocol getEntityProtocol(int protocolId) {
-		return entityProtocolStore.getEntityProtocol(protocolId);
-	}
-
-	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
-		entityProtocolStore.setEntityProtocol(protocolId, protocol);
-	}
+	private org.spout.api.entity.Entity parent;
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Chicken.id);
 	}
 	
@@ -58,13 +50,13 @@ public class Chicken extends Creature implements Passive {
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		
-		int count = dropRand.nextInt(3);
+		int count = getRandom().nextInt(3);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.FEATHER, count));
 		}
 		
 		// TODO: Check if killed by fire
-		count = dropRand.nextInt(2);
+		count = getRandom().nextInt(2);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.RAW_CHICKEN, count));
 		}

@@ -35,9 +35,12 @@ import org.spout.vanilla.entity.living.creature.Passive;
 import org.spout.vanilla.VanillaMaterials;
 
 public class Cow extends Creature implements Passive {
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Cow.id);
 	}
 	
@@ -45,12 +48,12 @@ public class Cow extends Creature implements Passive {
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		
-		int count = dropRand.nextInt(3);
+		int count = getRandom().nextInt(3);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.LEATHER, count));
 		}
 		
-		count = dropRand.nextInt(2) + 1;
+		count = getRandom().nextInt(2) + 1;
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.RAW_BEEF, count));
 		}

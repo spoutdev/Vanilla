@@ -38,9 +38,6 @@ public abstract class Falling extends ObjectEntity {
 
 	@Override
 	public void onTick(float dt) {
-		if (parent.isDead()) {
-			return;
-		}
 		if (gravity) {
 			updateGravity(dt);
 		}

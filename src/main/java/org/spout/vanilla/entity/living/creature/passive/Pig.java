@@ -35,9 +35,12 @@ import org.spout.vanilla.entity.living.creature.Passive;
 import org.spout.vanilla.VanillaMaterials;
 
 public class Pig extends Creature implements Passive {
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Pig.id);
 	}
 	
@@ -46,7 +49,7 @@ public class Pig extends Creature implements Passive {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		
 		// TODO: Check if killed by fire
-		int count = dropRand.nextInt(3);
+		int count = getRandom().nextInt(3);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.RAW_PORKCHOP, count));
 		}

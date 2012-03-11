@@ -30,10 +30,12 @@ import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Utility;
 
 public class IronGolem extends Creature implements Utility {
-	
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.IronGolem.id);
 	}
 }

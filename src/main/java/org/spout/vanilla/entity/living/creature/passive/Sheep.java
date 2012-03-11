@@ -40,7 +40,8 @@ public class Sheep extends Creature implements Passive {
 	private int countdown = 0;
 	private final Random rand = new Random();
 	private int color;
-	
+	private org.spout.api.entity.Entity parent;
+
 	public Sheep() {
 		this(0x0);
 	}
@@ -57,6 +58,7 @@ public class Sheep extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Sheep.id);
 		parent.setData("SheepSheared", false);
 		parent.setData("SheepColor", color);

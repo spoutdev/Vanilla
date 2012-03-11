@@ -31,6 +31,7 @@ import java.util.Set;
 
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
@@ -53,9 +54,11 @@ public abstract class VanillaEntity extends Controller {
 	protected final Vector3m velocity = new Vector3m(Vector3.ZERO);
 	private int fireTicks;
 	private boolean flammable;
+	private Entity parent;
 	
 	@Override
 	public void onAttached() {
+		parent = getParent();
 		parent.setCollision(new CollisionModel(area));
 	}
 
@@ -96,7 +99,6 @@ public abstract class VanillaEntity extends Controller {
 		}
 		
 		checkWeb();
-		updateMovement(dt);
 		checkFireTicks();
 	}
 
@@ -144,52 +146,6 @@ public abstract class VanillaEntity extends Controller {
 
 	public int getLiveHeadYaw() {
 		return headYawLive;
-	}
-	
-	private void updateMovement(float dt) {
-		/*final Pointm location = parent.getPoint();
-		List<BoundingBox> colliding = this.get
-		final BoundingBox position = area.clone().offset(location);
-
-		Vector3m offset = velocity.clone();
-		for (BoundingBox box : colliding) {
-			Vector3 collision = CollisionHelper.getCollision(position, box);
-			if (collision != null) {
-				collision = collision.subtract(location);
-				System.out.println("Collision: " + collision);
-				if (collision.getX() != 0F) {
-					offset.setX(collision.getX());
-				}
-				if (collision.getY() != 0F) {
-					offset.setY(collision.getY());
-				}
-				if (collision.getZ() != 0F) {
-					offset.setZ(collision.getZ());
-				}
-			}
-		}
-
-		if (colliding.size() > 0)
-			System.out.println("Old: " + velocity + " New: " + offset + " Colliding: " + colliding.size());
-
-
-		if (offset.getX() != velocity.getX()) {
-			velocity.setX(0);
-		}
-		if (offset.getY() != velocity.getY()) {
-			velocity.setY(0);
-		}
-		if (offset.getZ() != velocity.getZ()) {
-			velocity.setZ(0);
-		}
-
-		location.add(offset);
-		Point old = parent.getPoint();
-		parent.setPoint(location);
-		if (colliding.size() > 0)
-			System.out.println("Moved from " + old + " to " + parent.getPoint() + ". Expected: " + location);
-
-*/
 	}
 	
 	private void checkWeb() {

@@ -35,9 +35,12 @@ import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.VanillaMaterials;
 
 public class Squid extends Creature implements Passive {
+	private org.spout.api.entity.Entity parent;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Squid.id);
 	}
 	
@@ -45,7 +48,7 @@ public class Squid extends Creature implements Passive {
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		
-		int count = dropRand.nextInt(4);
+		int count = getRandom().nextInt(4);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.INK_SAC, count));
 		}

@@ -119,7 +119,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 				}
 				
 				for (int i = 0; i < count && dropMat.getId() != 0; ++i) {
-					world.createAndSpawnEntity(block.getBase(), new Item(new ItemStack(dropMat, 1), player.getEntity().getPoint().normalize().add(0, 5, 0)));
+					world.createAndSpawnEntity(block.getBase(), new Item(new ItemStack(dropMat, 1), player.getEntity().getPosition().normalize().add(0, 5, 0)));
 				}
 			}
 			/*if (!block.isEmpty() && !block.isLiquid()) {

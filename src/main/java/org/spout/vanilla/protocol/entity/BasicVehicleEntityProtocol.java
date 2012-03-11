@@ -46,9 +46,9 @@ public abstract class BasicVehicleEntityProtocol extends VanillaEntityProtocol i
 			return null;
 		}
 		int id = entity.getId();
-		int x = (int) (entity.getX() * 32);
-		int y = (int) (entity.getY() * 32);
-		int z = (int) (entity.getZ() * 32);
+		int x = (int) (entity.getPosition().getX() * 32);
+		int y = (int) (entity.getPosition().getY() * 32);
+		int z = (int) (entity.getPosition().getZ() * 32);
 
 		//FIXME: Store vehicle type in entity (VehicleEntity implementing?) class instead
 		return new SpawnVehicleMessage(id, this.getSpawnedVehicleType(), x, y, z);

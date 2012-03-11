@@ -53,9 +53,9 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 		Controller c = entity.getController();
 		if (c != null) {
 			int id = entity.getId();
-			int x = (int) (entity.getX() * 32);
-			int y = (int) (entity.getY() * 32);
-			int z = (int) (entity.getZ() * 32);
+			int x = (int) (entity.getPosition().getX() * 32);
+			int y = (int) (entity.getPosition().getY() * 32);
+			int z = (int) (entity.getPosition().getZ() * 32);
 			int r = (int) (entity.getYaw() * 32);
 			int p = (int) (entity.getPitch() * 32);
 			int headyaw = 0;

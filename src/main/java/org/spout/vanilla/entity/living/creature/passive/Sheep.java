@@ -26,26 +26,26 @@
 package org.spout.vanilla.entity.living.creature.passive;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.MaterialData;
+import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Passive;
-import org.spout.vanilla.VanillaMaterials;
 
 public class Sheep extends Creature implements Passive {
 	private int countdown = 0;
-	private final Random rand = new Random();
 	private int color;
 	private org.spout.api.entity.Entity parent;
+	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
 
 	public Sheep() {
 		this(0x0);
 	}
-	
+
 	public Sheep(WoolColor color) {
 		this(color.getId());
 	}
@@ -65,22 +65,31 @@ public class Sheep extends Creature implements Passive {
 	}
 
 	@Override
+	public EntityProtocol getEntityProtocol(int protocolId) {
+		return entityProtocolStore.getEntityProtocol(protocolId);
+	}
+
+	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
+		entityProtocolStore.setEntityProtocol(protocolId, protocol);
+	}
+
+	@Override
 	public void onTick(float dt) {
 		if (--countdown <= 0) {
-			countdown = rand.nextInt(7) + 3;
-			float x = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
-			float y = rand.nextFloat();
-			float z = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
-			getParent().translate(x,y,z);
+			countdown = getRandom().nextInt(7) + 3;
+			float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
+			float y = getRandom().nextFloat();
+			float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
+			getParent().translate(x, y, z);
 		}
-		
+
 		super.onTick(dt);
 	}
 
 	public boolean isSheared() {
 		return parent.getData("SheepSheared").asBool();
 	}
-	
+
 	public void setSheared(boolean sheared) {
 		parent.setData("SheepSheared", sheared);
 	}
@@ -88,11 +97,11 @@ public class Sheep extends Creature implements Passive {
 	public int getColor() {
 		return parent.getData("SheepColor").asInt();
 	}
-	
+
 	public void setColor() {
-		parent.setData("SheepColor", rand);
+		parent.setData("SheepColor", getRandom());
 	}
-	
+
 	public enum WoolColor {
 		White(0),
 		Orange(1),
@@ -110,26 +119,25 @@ public class Sheep extends Creature implements Passive {
 		Green(13),
 		Red(14),
 		Black(15);
-		
 		private final int id;
-		
+
 		private WoolColor(int color) {
 			id = color;
 		}
-		
+
 		public int getId() {
 			return id;
 		}
 	}
-	
+
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		
+
 		if (!isSheared()) {
 			drops.add(new ItemStack(MaterialData.getMaterial((short) 35, (short) getColor()), 1));
 		}
-		
+
 		return drops;
 	}
 }

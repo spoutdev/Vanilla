@@ -30,15 +30,14 @@ import java.util.Random;
 import org.spout.api.material.Material;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.Plant;
-import org.spout.vanilla.material.block.Solid;
 
 public class WheatCrop extends Solid implements Plant {
 	private Random rand = new Random();
-	
+
 	public WheatCrop(String name) {
 		super(name, 59, 0x0);
 	}
-	
+
 	@Override
 	public boolean hasGrowthStages() {
 		return true;
@@ -58,12 +57,12 @@ public class WheatCrop extends Solid implements Plant {
 	public Material getDrop() {
 		return VanillaMaterials.SEEDS;
 	}
-	
+
 	@Override
 	public int getDropCount() {
 		return rand.nextInt(4);
 	}
-	
+
 	// TODO: Grow
 	// TODO: Trampling
 	// TODO: Multiple drops

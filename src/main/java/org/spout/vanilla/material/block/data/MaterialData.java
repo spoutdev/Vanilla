@@ -29,11 +29,9 @@ import org.spout.api.material.BlockMaterial;
 
 //FIXME: Needs to be placed in SpoutAPI instead
 public interface MaterialData {
-	
 	public void setData(short data);
-	
-	public short getData();
-	
-	public BlockMaterial getMaterial();
 
+	public short getData();
+
+	public BlockMaterial getMaterial();
 }

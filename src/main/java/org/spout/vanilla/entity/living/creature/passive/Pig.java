@@ -29,10 +29,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Passive;
-import org.spout.vanilla.VanillaMaterials;
 
 public class Pig extends Creature implements Passive {
 	private org.spout.api.entity.Entity parent;
@@ -43,17 +43,17 @@ public class Pig extends Creature implements Passive {
 		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Pig.id);
 	}
-	
+
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		
+
 		// TODO: Check if killed by fire
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.RAW_PORKCHOP, count));
 		}
-		
+
 		return drops;
 	}
 }

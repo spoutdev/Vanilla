@@ -31,7 +31,6 @@ import org.spout.api.material.GenericBlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
-import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.block.data.MaterialData;
 import org.spout.vanilla.material.block.data.SimpleMaterialData;
@@ -39,7 +38,6 @@ import org.spout.vanilla.material.item.RedstoneTorch;
 import org.spout.vanilla.material.item.RedstoneWire;
 
 public class GenericBlock extends GenericBlockMaterial implements Block {
-
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
 	private float resistance;
 	private Material dropMaterial;
@@ -112,33 +110,29 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 	public GenericBlock setLightLevel(byte level) {
 		return (GenericBlock) super.setLightLevel(level);
 	}
-	
+
 	@Override
 	public Material getDrop() {
 		return dropMaterial;
-
 	}
-	
 
 	@Override
 	public int getDropCount() {
 		return dropCount;
 	}
-	
 
 	public GenericBlock setDrop(Material id) {
 		dropMaterial = id;
 		return this;
 	}
-	
+
 	public GenericBlock setDropCount(int count) {
 		dropCount = count;
-		
+
 		return this;
 	}
-	
+
 	public MaterialData createData(short data) {
 		return new SimpleMaterialData(this, data);
 	}
-		
 }

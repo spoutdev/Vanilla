@@ -60,7 +60,7 @@ public class EndStoneBiome extends VanillaBiomeType {
 		double perlinRange = 0.005;
 		double colSize = 16.0;
 		int height = (int) ((noise.GetValue(x / colSize + perlinRange, 0.05, z / colSize + perlinRange) + 1.0) * 4.0 + seaLevel);
-		
+
 		for (int dy = y; dy < y + 16; dy++) {
 			blockData.set(x, dy, z, getBlockId(height, dy));
 		}

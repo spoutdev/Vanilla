@@ -25,8 +25,8 @@
  */
 package org.spout.vanilla.entity.object.vehicle.minecart;
 
-import org.spout.vanilla.entity.object.vehicle.Minecart;
 import org.spout.vanilla.entity.object.Vehicle;
+import org.spout.vanilla.entity.object.vehicle.Minecart;
 
 public class PoweredMinecart extends Minecart implements Vehicle {
 	public void onAttached() {

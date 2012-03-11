@@ -31,9 +31,8 @@ import java.util.Set;
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
-import org.spout.vanilla.entity.living.creature.Tameable;
 import org.spout.vanilla.entity.living.creature.Passive;
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.entity.living.creature.Tameable;
 
 public class Ocelot extends Creature implements Tameable, Passive {
 	private org.spout.api.entity.Entity parent;
@@ -51,7 +50,7 @@ public class Ocelot extends Creature implements Tameable, Passive {
 		cat.subjectTo(entity);
 		parent.setController(cat);
 	}
-	
+
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();

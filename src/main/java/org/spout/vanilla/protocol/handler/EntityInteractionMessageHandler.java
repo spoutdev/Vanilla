@@ -44,16 +44,16 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 		if (clickedEntity == null) {
 			return;
 		}
-		
+
 		if (message.isPunching()) {
 			if (clickedEntity.getController() instanceof VanillaEntity) {
 				ItemStack is = player.getEntity().getInventory().getCurrentItem();
-				
+
 				int damage = 1;
 				if (is != null && is.getMaterial() != null && is.getMaterial() instanceof Weapon) {
 					damage = ((Weapon) is.getMaterial()).getDamage();
 				}
-				
+
 				((VanillaEntity) clickedEntity.getController()).damage(damage);
 			}
 		} else {
@@ -61,7 +61,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 			if (holding == null) {
 				return;
 			}
-			
+
 			Material mat = holding.getMaterial();
 			if (mat instanceof Item) {
 				((Item) mat).onInteract(player.getEntity(), clickedEntity);

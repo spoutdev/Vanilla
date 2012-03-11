@@ -31,7 +31,7 @@ import org.spout.api.material.block.BlockFace;
  * Indicates the direction of a minecart track
  */
 public enum RailsState {
-	
+
 	EAST(BlockFace.EAST, BlockFace.WEST, false),
 	SOUTH(BlockFace.SOUTH, BlockFace.NORTH, false),
 	SOUTH_SLOPED(BlockFace.SOUTH, BlockFace.NORTH, true),
@@ -42,37 +42,36 @@ public enum RailsState {
 	NORTH_EAST(BlockFace.NORTH, BlockFace.EAST, false),
 	SOUTH_EAST(BlockFace.SOUTH, BlockFace.EAST, false),
 	SOUTH_WEST(BlockFace.SOUTH, BlockFace.WEST, false);
-		
 	private final BlockFace[] directions;
 	private final boolean curved;
 	private final boolean sloped;
-	
+
 	public boolean isCurved() {
 		return this.curved;
 	}
-	
+
 	public boolean isSloped() {
 		return this.sloped;
 	}
-	
+
 	private RailsState(BlockFace dir1, BlockFace dir2, boolean sloped) {
-		this.directions = new BlockFace[] {dir1, dir2};
+		this.directions = new BlockFace[]{dir1, dir2};
 		this.curved = dir1.getOpposite() != dir2;
 		this.sloped = sloped;
 	}
-	
+
 	public byte getData() {
 		return (byte) this.ordinal();
 	}
-	
+
 	public boolean isConnected(BlockFace direction) {
 		return this.directions[0] == direction || this.directions[1] == direction;
 	}
-	
+
 	public BlockFace[] getDirections() {
 		return this.directions;
 	}
-	
+
 	public static RailsState get(int data) {
 		if (data >= values().length || data < 0) {
 			return null;
@@ -80,11 +79,15 @@ public enum RailsState {
 			return values()[data];
 		}
 	}
-	
+
 	public static RailsState get(BlockFace direction, boolean sloped) {
 		for (RailsState dir : values()) {
-			if (dir.isCurved()) continue;
-			if (sloped != dir.isSloped()) continue;
+			if (dir.isCurved()) {
+				continue;
+			}
+			if (sloped != dir.isSloped()) {
+				continue;
+			}
 			if (sloped) {
 				if (dir.getDirections()[0] == direction) {
 					return dir;
@@ -95,15 +98,17 @@ public enum RailsState {
 		}
 		return null;
 	}
-	
+
 	public static RailsState get(BlockFace from, BlockFace to) {
 		for (RailsState dir : values()) {
-			if (dir.isSloped()) continue;
+			if (dir.isSloped()) {
+				continue;
+			}
 			if (dir.isConnected(from) && dir.isConnected(to)) {
 				return dir;
 			}
 		}
 		return null;
 	}
-	
+
 }

@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.entity.object.sky;
 
-import org.spout.vanilla.entity.object.Sky;
 import java.util.Random;
 import java.util.Set;
 
@@ -33,6 +32,7 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.World;
 import org.spout.api.player.Player;
+import org.spout.vanilla.entity.object.Sky;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
 import org.spout.vanilla.protocol.msg.TimeMessage;

@@ -31,8 +31,8 @@ import java.util.Set;
 
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector3m;
@@ -47,7 +47,6 @@ import org.spout.vanilla.protocol.msg.EntityStatusMessage;
  * Entity that is the parent of all Vanilla entities.
  */
 public abstract class VanillaEntity extends Controller {
-	
 	private int health = 10, maxHealth = 10;
 	private int headYaw = 0, headYawLive = 0;
 	protected final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
@@ -55,7 +54,7 @@ public abstract class VanillaEntity extends Controller {
 	private int fireTicks;
 	private boolean flammable;
 	private Entity parent;
-	
+
 	@Override
 	public void onAttached() {
 		parent = getParent();
@@ -67,22 +66,22 @@ public abstract class VanillaEntity extends Controller {
 		if (parent.isDead()) {
 			return;
 		}
-		
+
 		List<Message> toSend = new ArrayList<Message>();
 		if (headYawLive != headYaw) {
 			headYawLive = headYaw;
 			EntityHeadYawMessage message = new EntityHeadYawMessage(parent.getId(), headYaw);
 			toSend.add(message);
 		}
-		
+
 		if (health <= 0) {
 			toSend.add(new EntityStatusMessage(parent.getId(), EntityStatusMessage.ENTITY_DEAD));
 		}
-		
+
 		if (toSend.isEmpty()) {
 			return;
 		}
-		
+
 		Set<Player> onlinePlayers = parent.getWorld().getPlayers();
 		for (Player player : onlinePlayers) {
 			for (Message message : toSend) {
@@ -93,11 +92,11 @@ public abstract class VanillaEntity extends Controller {
 		if (health <= 0) {
 			parent.kill();
 		}
-		
+
 		if (parent.isDead()) {
 			return;
 		}
-		
+
 		checkWeb();
 		checkFireTicks();
 	}
@@ -147,7 +146,7 @@ public abstract class VanillaEntity extends Controller {
 	public int getLiveHeadYaw() {
 		return headYawLive;
 	}
-	
+
 	private void checkWeb() {
 		Point pos = parent.getPosition();
 		if (pos == null || pos.getWorld() == null) {
@@ -157,7 +156,7 @@ public abstract class VanillaEntity extends Controller {
 			velocity.multiply(0.25F, 0.05F, 0.25F);
 		}
 	}
-	
+
 	private void checkFireTicks() {
 		if (fireTicks > 0) {
 			if (!flammable) {

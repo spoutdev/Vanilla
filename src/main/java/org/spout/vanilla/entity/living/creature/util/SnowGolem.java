@@ -26,8 +26,8 @@
 package org.spout.vanilla.entity.living.creature.util;
 
 import org.spout.vanilla.entity.Entity;
-import org.spout.vanilla.entity.living.creature.Passive;
 import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.living.creature.Passive;
 
 public class SnowGolem extends Creature implements Passive {
 	private org.spout.api.entity.Entity parent;

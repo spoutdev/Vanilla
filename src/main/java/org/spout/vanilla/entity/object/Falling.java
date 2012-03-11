@@ -32,7 +32,6 @@ import org.spout.vanilla.entity.ObjectEntity;
  * Entity that falls. This class will be primarily used for Sand and Gravel.
  */
 public abstract class Falling extends ObjectEntity {
-	
 	private static float GRAVITY_MULTIPLIER = 23.31f;
 	private boolean gravity = true;
 

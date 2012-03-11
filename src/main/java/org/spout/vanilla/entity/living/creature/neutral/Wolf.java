@@ -33,7 +33,6 @@ import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Neutral;
 import org.spout.vanilla.entity.living.creature.Tameable;
-import org.spout.vanilla.VanillaMaterials;
 
 public class Wolf extends Creature implements Tameable, Neutral {
 	private org.spout.api.entity.Entity parent;
@@ -49,13 +48,13 @@ public class Wolf extends Creature implements Tameable, Neutral {
 	public void subjectTo(org.spout.api.entity.Entity entity) {
 
 	}
-	
+
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		
+
 		// None
-		
+
 		return drops;
 	}
 }

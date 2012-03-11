@@ -29,11 +29,10 @@ import java.util.Random;
 
 import org.spout.api.material.Material;
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.material.generic.GenericBlock;
 
 public class Leaves extends Solid {
 	private Random rand = new Random();
-	
+
 	public Leaves(String name, int data) {
 		super(name, 18, data);
 	}
@@ -43,13 +42,12 @@ public class Leaves extends Solid {
 	public Material getDrop() {
 		if (rand.nextInt(20) == 0) {
 			return VanillaMaterials.SAPLING;
-		}
-		else if (rand.nextInt(200) == 0) {
+		} else if (rand.nextInt(200) == 0) {
 			return VanillaMaterials.RED_APPLE;
 		}
-		
+
 		return VanillaMaterials.AIR;
 	}
-	
+
 	// TODO: Decay
 }

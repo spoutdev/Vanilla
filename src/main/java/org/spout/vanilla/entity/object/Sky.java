@@ -29,7 +29,6 @@ import org.spout.api.geo.World;
 import org.spout.vanilla.world.Weather;
 
 public interface Sky {
-	
 	/**
 	 * Sets the current time of day
 	 * @param time
@@ -59,5 +58,4 @@ public interface Sky {
 	 * @return the world the sky is in.
 	 */
 	public World getWorld();
-	
 }

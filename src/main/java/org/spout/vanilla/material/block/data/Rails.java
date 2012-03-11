@@ -31,13 +31,12 @@ import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.util.RailsState;
 
 public class Rails implements MaterialData {
-			
 	private RailsState state;
-	
+
 	public Rails(short data) {
 		this.setData(data);
 	}
-	
+
 	public Rails(RailsState state) {
 		this.setState(state);
 	}
@@ -45,39 +44,39 @@ public class Rails implements MaterialData {
 	public boolean canCurve() {
 		return true;
 	}
-		
+
 	public boolean isSloped() {
 		return this.state.isSloped();
 	}
-	
+
 	public boolean isCurved() {
 		return this.state.isCurved();
 	}
-	
+
 	public boolean isConnected(BlockFace face) {
 		return this.state.isConnected(face);
 	}
-	
+
 	public RailsState getState() {
 		return this.state;
 	}
-	
+
 	public BlockFace[] getDirections() {
 		return this.state.getDirections();
 	}
-	
+
 	public void setDirection(BlockFace direction) {
 		this.setDirection(direction, false);
 	}
-	
+
 	public void setDirection(BlockFace direction, boolean sloped) {
 		this.setState(RailsState.get(direction, sloped));
 	}
-		
+
 	public void setDirection(BlockFace from, BlockFace to) {
 		this.setState(RailsState.get(from, to));
 	}
-	
+
 	/**
 	 * Sets the direction in such a way that both directions are connected
 	 * @param dir1
@@ -93,7 +92,7 @@ public class Rails implements MaterialData {
 			this.state = state;
 		}
 	}
-	
+
 	@Override
 	public void setData(short data) {
 		RailsState state = RailsState.get(data);
@@ -103,7 +102,7 @@ public class Rails implements MaterialData {
 			this.setState(state);
 		}
 	}
-	
+
 	@Override
 	public short getData() {
 		return this.state.getData();
@@ -113,5 +112,4 @@ public class Rails implements MaterialData {
 	public BlockMaterial getMaterial() {
 		return VanillaMaterials.RAILS;
 	}
-	
 }

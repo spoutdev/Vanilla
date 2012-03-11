@@ -29,7 +29,6 @@ import org.spout.api.geo.World;
 import org.spout.vanilla.material.block.data.Rails;
 
 public class MinecartTrack extends MinecartTrackBase implements RedstoneTarget {
-	
 	public MinecartTrack(String name, int id) {
 		super(name, id);
 	}
@@ -38,16 +37,15 @@ public class MinecartTrack extends MinecartTrackBase implements RedstoneTarget {
 	public boolean canCurve() {
 		return true;
 	}
-	
+
 	@Override
 	public Rails createData(short data) {
 		return new Rails(data);
 	}
-	
+
 	@Override
 	public boolean providesAttachPoint(World world, int x, int y, int z, int tx, int ty, int tz) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
 }

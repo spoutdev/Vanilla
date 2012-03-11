@@ -29,9 +29,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.creature.Hostile;
-import org.spout.vanilla.VanillaMaterials;
 
 public class MagmaCube extends Slime implements Hostile {
 	private org.spout.api.entity.Entity parent;
@@ -42,11 +42,11 @@ public class MagmaCube extends Slime implements Hostile {
 		parent = getParent();
 		parent.setData(Entity.KEY, Entity.MagmaCube.id);
 	}
-	
+
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		
+
 		// TODO: Check for small/big
 		int count = getRandom().nextInt(2);
 		if (count > 0) {

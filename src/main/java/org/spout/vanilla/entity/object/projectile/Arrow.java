@@ -27,8 +27,6 @@ package org.spout.vanilla.entity.object.projectile;
 
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
-import org.spout.vanilla.entity.VanillaEntity;
 import org.spout.vanilla.entity.object.Projectile;
 
 public class Arrow extends Projectile {

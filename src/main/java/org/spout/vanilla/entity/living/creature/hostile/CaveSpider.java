@@ -25,10 +25,8 @@
  */
 package org.spout.vanilla.entity.living.creature.hostile;
 
-import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.creature.Hostile;
-import org.spout.vanilla.VanillaMaterials;
 
 public class CaveSpider extends Spider implements Hostile {
 	private org.spout.api.entity.Entity parent;

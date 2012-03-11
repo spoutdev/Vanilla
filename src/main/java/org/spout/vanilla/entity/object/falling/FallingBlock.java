@@ -53,12 +53,12 @@ public class FallingBlock extends Falling {
 		if (parent == null || parent.getWorld() == null) {
 			return;
 		}
-		
+
 		Point position = parent.getPosition();
 		if (position == null) {
 			return;
 		}
-		
+
 		World world = position.getWorld();
 		int x = MathHelper.floor(position.getX());
 		int y = MathHelper.floor(position.getY());
@@ -70,7 +70,7 @@ public class FallingBlock extends Falling {
 			world.setBlockMaterial(x, y, z, block, world);
 			parent.kill();
 		}
-		
+
 		super.onTick(dt);
 	}
 }

@@ -29,10 +29,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Hostile;
-import org.spout.vanilla.VanillaMaterials;
 
 public class Zombie extends Creature implements Hostile {
 	private org.spout.api.entity.Entity parent;
@@ -43,33 +43,33 @@ public class Zombie extends Creature implements Hostile {
 		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Zombie.id);
 	}
-	
+
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		
+
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.ROTTEN_FLESH, count));
 		}
-		
+
 		if (getRandom().nextInt(25) == 0) {
 			drops.add(new ItemStack(VanillaMaterials.IRON_INGOT, 1));
 		}
-		
+
 		// TODO: Enchantments
 		if (getRandom().nextInt(50) == 0) {
 			drops.add(new ItemStack(VanillaMaterials.IRON_HELMET, 1));
 		}
-		
+
 		if (getRandom().nextInt(75) == 0) {
 			drops.add(new ItemStack(VanillaMaterials.IRON_SHOVEL, 1));
 		}
-		
+
 		if (getRandom().nextInt(100) == 0) {
 			drops.add(new ItemStack(VanillaMaterials.IRON_SWORD, 1));
 		}
-		
+
 		return drops;
 	}
 }

@@ -31,13 +31,14 @@ import java.util.Set;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Passive;
-import org.spout.vanilla.VanillaMaterials;
 
 public class Chicken extends Creature implements Passive {
 	private org.spout.api.entity.Entity parent;
+	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
 
 	@Override
 	public void onAttached() {
@@ -45,22 +46,31 @@ public class Chicken extends Creature implements Passive {
 		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Chicken.id);
 	}
-	
+
+	@Override
+	public EntityProtocol getEntityProtocol(int protocolId) {
+		return entityProtocolStore.getEntityProtocol(protocolId);
+	}
+
+	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
+		entityProtocolStore.setEntityProtocol(protocolId, protocol);
+	}
+
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		
+
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.FEATHER, count));
 		}
-		
+
 		// TODO: Check if killed by fire
 		count = getRandom().nextInt(2);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.RAW_CHICKEN, count));
 		}
-		
+
 		return drops;
 	}
 }

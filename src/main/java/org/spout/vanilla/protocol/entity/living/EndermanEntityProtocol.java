@@ -36,11 +36,11 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 public class EndermanEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-	/*	List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(2);
-		//TODO: Index 16 (byte): Item in hand
-		//TODO: Index 17 (byte): Aggression. 1 for aggressive, 0 otherwise.
-		return parameters;
-	}*/
+		/*	List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(2);
+		 //TODO: Index 16 (byte): Item in hand
+		 //TODO: Index 17 (byte): Aggression. 1 for aggressive, 0 otherwise.
+		 return parameters;
+	 }*/
 
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
 		if (controller instanceof Enderman) {

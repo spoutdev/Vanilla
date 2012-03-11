@@ -164,10 +164,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		for (int i = 0; i < rawBlockData.length; i += 2) {
 			fullChunkData[arrIndex++] = (byte) ((byte) rawBlockData[i] << 4 | (byte) rawBlockData[i + 1] & 0xF);
 		}
-		
+
 		System.arraycopy(rawBlockLight, 0, fullChunkData, arrIndex, rawBlockLight.length);
 		arrIndex += rawBlockLight.length;
-		
+
 		System.arraycopy(rawSkyLight, 0, fullChunkData, arrIndex, rawSkyLight.length);
 		arrIndex += rawSkyLight.length;
 

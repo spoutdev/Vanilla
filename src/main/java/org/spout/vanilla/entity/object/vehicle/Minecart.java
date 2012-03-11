@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.entity.object.vehicle;
 
-import org.spout.vanilla.entity.object.Vehicle;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.ObjectEntity;
+import org.spout.vanilla.entity.object.Vehicle;
 
 public abstract class Minecart extends ObjectEntity implements Vehicle {
 	private org.spout.api.entity.Entity parent;

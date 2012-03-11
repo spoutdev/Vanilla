@@ -25,16 +25,16 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.geo.World;
 import org.spout.api.Source;
-import org.spout.vanilla.material.generic.GenericBlock;
+import org.spout.api.geo.World;
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.generic.GenericBlock;
 
 public class Ice extends GenericBlock implements Source {
 	public Ice(String name, int id) {
 		super(name, id);
 	}
-	
+
 	@Override
 	public void onDestroy(World world, int x, int y, int z) {
 		if (world.getBlockMaterial(x, y - 1, z) != VanillaMaterials.AIR) {

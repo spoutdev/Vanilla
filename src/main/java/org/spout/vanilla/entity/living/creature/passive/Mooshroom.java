@@ -25,10 +25,8 @@
  */
 package org.spout.vanilla.entity.living.creature.passive;
 
-import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.creature.Passive;
-import org.spout.vanilla.VanillaMaterials;
 
 public class Mooshroom extends Cow implements Passive {
 	private org.spout.api.entity.Entity parent;

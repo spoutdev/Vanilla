@@ -77,11 +77,11 @@ public class Projectile extends ObjectEntity {
 	public Entity getShooter() {
 		return shooter;
 	}
-	
+
 	public Vector3 getVelocity() {
 		return velocity;
 	}
-	
+
 	public void setVelocity(Vector3 velocity) {
 		this.velocity = velocity;
 	}

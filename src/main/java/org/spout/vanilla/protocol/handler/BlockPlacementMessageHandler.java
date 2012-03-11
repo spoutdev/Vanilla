@@ -124,7 +124,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			if (placedData == 0) {
 				placedData = placedMaterial.getData();
 			}
-			
+
 			if (face == BlockFace.BOTTOM && world.getBlockMaterial(x, y - 1, z) == VanillaMaterials.SNOW) {
 				//make sure the target switches one block below (just like water)
 				--y;
@@ -135,7 +135,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			Block oldBlock = target != null ? (Block) target.getBlockMaterial() : null;
 
 			if (!sendRevert && (oldBlock == null || oldBlock.isLiquid() || oldBlock.getId() == 0 || oldBlock == VanillaMaterials.SNOW)) {
-				
+
 				//if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {
 				//SpoutBlockState newState = BlockProperties.get(placedId.getItemTypeId()).getPhysics().placeAgainst(player, target.getState(), placedId, face);
 				//BlockPlaceEvent event = EventFactory.onBlockPlace(target, newState, against, player);
@@ -145,7 +145,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 				if (newState.getX() != target.getX() || newState.getY() != target.getY() || newState.getZ() != target.getZ()) {
 					sendRevert = true;
 				}*/
-				
+
 				if (newBlock.onPlacement(world, x, y, z, placedData, face, player)) {
 					if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
 						holding.setAmount(holding.getAmount() - 1);

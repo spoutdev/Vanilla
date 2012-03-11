@@ -29,5 +29,4 @@ package org.spout.vanilla.entity.object;
  * Entity that is a vehicle.
  */
 public interface Vehicle {
-	
 }

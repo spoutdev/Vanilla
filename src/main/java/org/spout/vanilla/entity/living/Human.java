@@ -28,5 +28,4 @@ package org.spout.vanilla.entity.living;
 import org.spout.vanilla.entity.LivingEntity;
 
 public abstract class Human extends LivingEntity {
-	
 }

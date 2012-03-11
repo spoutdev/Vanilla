@@ -27,14 +27,11 @@ package org.spout.vanilla.material.block;
 
 import java.util.Random;
 
-import org.spout.vanilla.material.Plant;
-import org.spout.vanilla.material.generic.GenericBlock;
-
 public class Ore extends Solid {
 	private Random rand = new Random();
 	private int max = 1;
 	private int min = 1;
-	
+
 	public Ore(String name, int id) {
 		super(name, id);
 	}
@@ -43,23 +40,23 @@ public class Ore extends Solid {
 	public int getDropCount() {
 		return rand.nextInt(max - min + 1) + min;
 	}
-	
+
 	public Ore setMinDropCount(int min) {
 		this.min = min;
-		
+
 		return this;
 	}
-	
+
 	public Ore setMaxDropCount(int max) {
 		this.max = max;
-		
+
 		return this;
 	}
-	
+
 	public int getMinDropCount() {
 		return min;
 	}
-	
+
 	public int getMaxDropCount() {
 		return max;
 	}

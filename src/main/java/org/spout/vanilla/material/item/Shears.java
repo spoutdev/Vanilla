@@ -37,30 +37,30 @@ import org.spout.vanilla.material.generic.GenericTool;
 
 public class Shears extends GenericTool {
 	private Random rand = new Random();
-	
+
 	public Shears(String name, int id, short durability) {
 		super(name, id, durability);
 	}
-	
+
 	@Override
 	public void onInteract(Entity entity, Entity other) {
 		if (!(other.getController() instanceof Sheep)) {
 			return;
 		}
-		
+
 		Sheep sheep = (Sheep) other.getController();
 		if (sheep.isSheared()) {
 			return;
 		}
-		
+
 		other.setData("SheepSheared", true);
-		
+
 		short col = (short) other.getData("SheepColor").asInt();
 		other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(MaterialData.getMaterial((short) 35, col), rand.nextInt(3) + 1), other.getPosition().normalize()));
-		
+
 		ItemStack holding = entity.getInventory().getCurrentItem();
 		if (entity.getController() instanceof SurvivalPlayer) {
-			holding.setDamage((short)(holding.getDamage() + 1));
+			holding.setDamage((short) (holding.getDamage() + 1));
 			entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
 		}
 	}

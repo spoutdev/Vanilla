@@ -31,8 +31,8 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.MaterialData;
 import org.spout.api.material.Material;
+import org.spout.api.material.MaterialData;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -108,7 +108,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			BlockMaterial oldMat = (BlockMaterial) MaterialData.getMaterial(world.getBlockId(x, y, z), world.getBlockData(x, y, z));
 			world.setBlockIdAndData(x, y, z, (short) 0, (short) 0, player);
 			oldMat.onDestroy(world, x, y, z);
-			
+
 			if (player.getEntity().getController() instanceof SurvivalPlayer) {
 				Material dropMat = oldMat;
 				int count = 1;
@@ -117,7 +117,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 					dropMat = MaterialData.getMaterial((short) blockMat.getDrop().getId(), (short) blockMat.getDrop().getData());
 					count = blockMat.getDropCount();
 				}
-				
+
 				for (int i = 0; i < count && dropMat.getId() != 0; ++i) {
 					world.createAndSpawnEntity(block.getBase(), new Item(new ItemStack(dropMat, 1), player.getEntity().getPosition().normalize().add(0, 5, 0)));
 				}

@@ -31,7 +31,6 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.entity.object.Falling;
 
 public class PrimedTnt extends Falling {
-	
 	private float timeToExplode = 4.f;
 	private Vector3 velocity;
 	private Vector3 gravity = new Vector3(0, -5, 0);
@@ -53,11 +52,10 @@ public class PrimedTnt extends Falling {
 		//Move in a random direction and apply gravity.
 		getParent().translate(velocity);
 		getParent().translate(gravity);
-
 	}
 
 	@Override
 	public void preSnapshot() {
-		
+
 	}
 }

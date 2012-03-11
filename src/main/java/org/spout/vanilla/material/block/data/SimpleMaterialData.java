@@ -28,14 +28,14 @@ package org.spout.vanilla.material.block.data;
 import org.spout.api.material.BlockMaterial;
 
 public class SimpleMaterialData implements MaterialData {
-
 	private short data;
 	private final BlockMaterial material;
+
 	public SimpleMaterialData(BlockMaterial material, short data) {
 		this.data = data;
 		this.material = material;
 	}
-	
+
 	@Override
 	public void setData(short data) {
 		this.data = data;
@@ -45,10 +45,9 @@ public class SimpleMaterialData implements MaterialData {
 	public short getData() {
 		return this.data;
 	}
-	
+
 	@Override
 	public BlockMaterial getMaterial() {
 		return this.material;
 	}
-
 }

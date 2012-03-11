@@ -28,7 +28,6 @@ package org.spout.vanilla.entity.object.misc;
 import org.spout.api.entity.Controller;
 
 public class Lightning extends Controller {
-
 	@Override
 	public void onAttached() {
 

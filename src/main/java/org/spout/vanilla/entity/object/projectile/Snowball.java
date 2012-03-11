@@ -30,7 +30,6 @@ import org.spout.api.math.Quaternion;
 import org.spout.vanilla.entity.object.Projectile;
 
 public class Snowball extends Projectile {
-	
 	public Snowball(Point start, Quaternion rotation, int maxSpeed) {
 		super(start, rotation, maxSpeed);
 	}

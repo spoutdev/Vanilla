@@ -31,8 +31,9 @@ import org.spout.api.material.Material;
 
 public interface Block extends BlockMaterial {
 	public boolean isLiquid();
-	
+
 	public Material getDrop();
+
 	public int getDropCount();
 
 	/**

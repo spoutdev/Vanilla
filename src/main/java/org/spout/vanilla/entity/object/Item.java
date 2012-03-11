@@ -41,11 +41,10 @@ import org.spout.vanilla.entity.ObjectEntity;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
 public class Item extends ObjectEntity {
-	
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore(); //TODO this is an annoying fix, someone with knowlege in entities get rid of this?
 	private ItemStack is;
 	private int roll, unpickable;
-	private final Random rand = new Random();	
+	private final Random rand = new Random();
 	private org.spout.api.entity.Entity parent;
 
 	@Override
@@ -77,7 +76,7 @@ public class Item extends ObjectEntity {
 			super.onTick(dt);
 			return;
 		}
-		
+
 		float x = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
 		float y = rand.nextFloat();
 		float z = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
@@ -95,22 +94,22 @@ public class Item extends ObjectEntity {
 				minDistance = distance;
 			}
 		}
-		
+
 		if (closestPlayer == null) {
 			return;
 		}
-		
+
 		if (minDistance > VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble()) {
 			return;
 		}
-		
+
 		int collected = parent.getId();
 		int collector = closestPlayer.getEntity().getId();
 		CollectItemMessage message = new CollectItemMessage(collected, collector);
 		for (Player plr : players) {
 			plr.getSession().send(message);
 		}
-		
+
 		closestPlayer.getEntity().getInventory().addItem(is);
 		parent.kill();
 	}

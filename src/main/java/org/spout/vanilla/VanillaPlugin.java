@@ -26,7 +26,6 @@
 package org.spout.vanilla;
 
 import java.net.InetSocketAddress;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import org.spout.api.Game;
@@ -43,7 +42,6 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
-import org.spout.api.util.config.ConfigurationNode;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;

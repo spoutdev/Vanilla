@@ -32,7 +32,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Passive;
-import org.spout.vanilla.VanillaMaterials;
 
 public class Villager extends Creature implements Passive {
 	private org.spout.api.entity.Entity parent;
@@ -43,7 +42,7 @@ public class Villager extends Creature implements Passive {
 		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Villager.id);
 	}
-	
+
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();

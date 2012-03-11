@@ -38,7 +38,6 @@ import org.spout.vanilla.material.block.data.Rails;
 import org.spout.vanilla.material.generic.GenericBlock;
 
 public class MinecartTrackLogic implements Source {
-	
 	public int x, y, z;
 	public World world;
 	public Rails data;
@@ -46,7 +45,7 @@ public class MinecartTrackLogic implements Source {
 	public BlockFace direction;
 	public boolean changed = false;
 	public List<MinecartTrackLogic> neighbours = new ArrayList<MinecartTrackLogic>();
-		
+
 	private MinecartTrackLogic(World world, int x, int y, int z, Rails data) {
 		this.world = world;
 		this.x = x;
@@ -56,7 +55,7 @@ public class MinecartTrackLogic implements Source {
 		this.data = data;
 		this.direction = BlockFace.THIS;
 	}
-	
+
 	public static MinecartTrackLogic create(World world, int x, int y, int z) {
 		BlockMaterial mat = world.getBlockMaterial(x, y, z);
 		if (mat instanceof MinecartTrack) {
@@ -66,7 +65,7 @@ public class MinecartTrackLogic implements Source {
 			return null;
 		}
 	}
-	
+
 	public MinecartTrackLogic addNeighbour(BlockFace direction, boolean genSubNeighbours) {
 		MinecartTrackLogic logic = this.getLogic(direction);
 		if (logic != null) {
@@ -89,7 +88,7 @@ public class MinecartTrackLogic implements Source {
 		}
 		return logic;
 	}
-		
+
 	public MinecartTrackLogic getLogic(BlockFace direction) {
 		int x = this.x + (int) direction.getOffset().getX();
 		int y = this.y + (int) direction.getOffset().getY();
@@ -106,15 +105,15 @@ public class MinecartTrackLogic implements Source {
 		logic = create(this.world, x, y - 1, z);
 		return logic;
 	}
-	
+
 	public boolean setDirection(BlockFace dir1, BlockFace dir2) {
 		return this.setDirection(RailsState.get(dir1, dir2));
 	}
-	
+
 	public boolean setDirection(BlockFace direction, boolean sloped) {
 		return this.setDirection(RailsState.get(direction, sloped));
 	}
-	
+
 	public boolean setDirection(RailsState state) {
 		System.out.println("SETTING TO " + state);
 		if (state != this.data.getState()) {
@@ -125,7 +124,7 @@ public class MinecartTrackLogic implements Source {
 			return false;
 		}
 	}
-	
+
 	public BlockFace getDirection(MinecartTrackLogic to) {
 		if (to.direction == BlockFace.THIS) {
 			return this.direction.getOpposite();
@@ -133,15 +132,15 @@ public class MinecartTrackLogic implements Source {
 			return to.direction;
 		}
 	}
-		
+
 	public String toString() {
 		return this.world.getName() + " " + this.x + "/" + this.y + "/" + this.z + " neighbours: " + this.neighbours.size();
 	}
-	
+
 	public void refresh() {
 		this.refresh(true);
 	}
-	
+
 	private void refresh(boolean isMain) {
 		//Update this track piece based on environment
 		this.neighbours.clear();
@@ -160,7 +159,7 @@ public class MinecartTrackLogic implements Source {
 				Collections.swap(this.neighbours, 1, 0);
 			}
 		}
-		
+
 		System.out.println(this.toString());
 		if (this.neighbours.size() == 1) {
 			//align tracks straight to face this direction
@@ -217,7 +216,7 @@ public class MinecartTrackLogic implements Source {
 			this.refreshData();
 		}
 	}
-	
+
 	private void refreshData() {
 		if (this.changed) {
 			this.world.setBlockData(this.x, this.y, this.z, this.data.getData(), false, this);
@@ -226,5 +225,4 @@ public class MinecartTrackLogic implements Source {
 			logic.refreshData();
 		}
 	}
-	
 }

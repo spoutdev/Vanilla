@@ -29,12 +29,10 @@ import java.util.Random;
 
 import org.spout.api.material.Material;
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.material.Plant;
-import org.spout.vanilla.material.generic.GenericBlock;
 
 public class Gravel extends Solid {
 	private Random rand = new Random();
-	
+
 	public Gravel(String name) {
 		super(name, 13, true);
 	}

@@ -32,25 +32,24 @@ import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class Dye extends GenericItem {
-	
 	private final int color;
-	
+
 	public Dye(String name, int id, int data) {
 		super(name, id, data);
-		
+
 		color = 0xF - data;
 	}
-	
+
 	@Override
 	public void onInteract(Entity entity, Entity other) {
 		if (!(other.getController() instanceof Sheep)) {
 			System.out.println("No sheep: " + other.getClass().getName() + " :(");
 			return;
 		}
-		
-		other.setData( "SheepColor", color );
+
+		other.setData("SheepColor", color);
 		System.out.println("Sheep go baaaa!");
-		
+
 		ItemStack holding = entity.getInventory().getCurrentItem();
 		if (entity.getController() instanceof SurvivalPlayer) {
 			if (holding.getAmount() > 1) {

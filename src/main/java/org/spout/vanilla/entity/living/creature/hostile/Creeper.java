@@ -29,10 +29,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Hostile;
-import org.spout.vanilla.VanillaMaterials;
 
 public class Creeper extends Creature implements Hostile {
 	private org.spout.api.entity.Entity parent;
@@ -43,18 +43,18 @@ public class Creeper extends Creature implements Hostile {
 		parent = getParent();
 		parent.setData(Entity.KEY, Entity.Creeper.id);
 	}
-	
+
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		
+
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.GUNPOWDER, count));
 		}
-		
+
 		// TODO: Check if killed by skeleton for music disk
-		
+
 		return drops;
 	}
 }

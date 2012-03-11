@@ -50,10 +50,10 @@ public class Projectile extends ObjectEntity {
 	@Override
 	public void onAttached() {
 		Vector3 rotation = this.rotation.getAxisAngles();
-		parent.setRoll(rotation.getX());
-		parent.setYaw(rotation.getY());
-		parent.setPitch(rotation.getZ());
-		parent.setPoint(start);
+		parent.roll(rotation.getX());
+		parent.yaw(rotation.getY());
+		parent.pitch(rotation.getZ());
+		parent.setPosition(start);
 	}
 
 	@Override

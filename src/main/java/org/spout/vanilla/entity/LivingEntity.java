@@ -46,8 +46,8 @@ public abstract class LivingEntity extends VanillaEntity {
 		if (parent.getWorld() != null) {
 			prevWorld = parent.getWorld();
 		}
-		if (parent.getPoint() != null) {
-			prevPoint = parent.getPoint();
+		if (parent.getPosition() != null) {
+			prevPoint = parent.getPosition();
 		}
 		
 		super.onTick(dt);

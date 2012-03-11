@@ -91,7 +91,7 @@ public class Item extends ObjectEntity {
 		double minDistance = -1;
 		Player closestPlayer = null;
 		for (Player plr : players) {
-			double distance = plr.getEntity().getPoint().distance(parent.getPoint());
+			double distance = plr.getEntity().getPosition().distance(parent.getPosition());
 			if (distance < minDistance || minDistance == -1) {
 				closestPlayer = plr;
 				minDistance = distance;

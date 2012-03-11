@@ -34,6 +34,7 @@ import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.PlayerInventory;
+import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
@@ -90,8 +91,9 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public void onAttached() {
 		Transform spawn = this.getParent().getWorld().getSpawnPoint();
-		Vector3 rotation = spawn.getRotation().getAxisAngles();
-		parent.setPosition(spawn.getPosition(), rotation.getZ(), rotation.getY(), rotation.getX());
+		Quaternion rotation = spawn.getRotation();
+		parent.setPosition(spawn.getPosition());
+		parent.setRotation(rotation);
 		parent.setScale(spawn.getScale());
 	}
 

@@ -50,7 +50,7 @@ public class Enderman extends Creature implements Neutral {
 		if (--countdown <= 0) {
 			countdown = rand.nextInt(7) + 3;
 			float x = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
-			float y = this.getParent().getY();
+			float y = getParent().getPosition().getY();
 			float z = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
 			this.velocity.add(x, y, z);
 		}

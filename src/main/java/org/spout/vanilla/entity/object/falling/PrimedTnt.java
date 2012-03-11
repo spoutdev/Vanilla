@@ -51,7 +51,9 @@ public class PrimedTnt extends Falling {
 		}
 
 		//Move in a random direction and apply gravity.
-		parent.setPoint(parent.getPoint().add(velocity.multiply(dt)).add(gravity.multiply(dt)));
+		getParent().translate(velocity);
+		getParent().translate(gravity);
+
 	}
 
 	@Override

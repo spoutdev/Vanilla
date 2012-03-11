@@ -193,7 +193,7 @@ public abstract class VanillaEntity extends Controller {
 	}
 	
 	private void checkWeb() {
-		Point pos = parent.getPoint();
+		Point pos = parent.getPosition();
 		if (pos == null || pos.getWorld() == null) {
 			return;
 		}

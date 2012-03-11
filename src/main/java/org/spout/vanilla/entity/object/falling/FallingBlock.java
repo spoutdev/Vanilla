@@ -54,7 +54,7 @@ public class FallingBlock extends Falling {
 			return;
 		}
 		
-		Point position = parent.getPoint();
+		Point position = parent.getPosition();
 		if (position == null) {
 			return;
 		}
@@ -85,7 +85,7 @@ public class FallingBlock extends Falling {
 		}
 		
 		if (spawnId > 0) {
-			Point position = parent.getPoint();
+			Point position = parent.getPosition();
 			int x = MathHelper.floor(position.getX());
 			int y = MathHelper.floor(position.getY());
 			int z = MathHelper.floor(position.getZ());

@@ -46,6 +46,7 @@ public class VanillaConfiguration extends Configuration {
 	public static final ConfigurationNode WATER_PHYSICS = new ConfigurationNode("physics.water", true);
 	public static final ConfigurationNode CACTUS_PHYSICS = new ConfigurationNode("physics.cactus", true);
 	// Player
+	public static final ConfigurationNode PLAYER_PVP_ENABLED = new ConfigurationNode("player.pvp-enabled", true);
 	public static final ConfigurationNode PLAYER_DEFAULT_GAMEMODE = new ConfigurationNode("player.default-gamemode", "survival");
 	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_HEALTH = new ConfigurationNode("player.survival.enable-health", true);
 	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_HUNGER = new ConfigurationNode("player.survival.enable-hunger", true);

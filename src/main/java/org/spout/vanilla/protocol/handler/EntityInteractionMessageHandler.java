@@ -31,7 +31,9 @@ import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.VanillaEntity;
+import org.spout.vanilla.entity.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Item;
 import org.spout.vanilla.material.Weapon;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
@@ -46,6 +48,10 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 		}
 
 		if (message.isPunching()) {
+			if (clickedEntity.getController() instanceof VanillaPlayer && !VanillaConfiguration.PLAYER_PVP_ENABLED.getBoolean()) {
+				return;
+			}
+
 			if (clickedEntity.getController() instanceof VanillaEntity) {
 				ItemStack is = player.getEntity().getInventory().getCurrentItem();
 
@@ -65,7 +71,6 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 			Material mat = holding.getMaterial();
 			if (mat instanceof Item) {
 				((Item) mat).onInteract(player.getEntity(), clickedEntity);
-				return;
 			}
 		}
 	}

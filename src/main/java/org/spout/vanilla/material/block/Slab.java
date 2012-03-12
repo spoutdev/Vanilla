@@ -35,16 +35,16 @@ import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;
 
 public class Slab extends GenericBlock implements MovingBlock {
-	public static final Slab STONE = new Slab("Stone Slab");
-	public static final Slab SANDSTONE = new Slab("Sandstone Slab", 1, STONE).register();
-	public static final Slab WOOD = new Slab("Wooden Slab", 2, STONE).register();
-	public static final Slab COBBLESTONE = new Slab("Cobblestone Slab", 3, STONE).register();
-	public static final Slab BRICK = new Slab("Brick Slab", 4, STONE).register();
-	public static final Slab STONE_BRICK = new Slab("Stone Brick Slab", 5, STONE).register();
+	public static final Slab STONE = register(new Slab("Stone Slab"));
+	public static final Slab SANDSTONE = register(new Slab("Sandstone Slab", 1, STONE));
+	public static final Slab WOOD = register(new Slab("Wooden Slab", 2, STONE));
+	public static final Slab COBBLESTONE = register(new Slab("Cobblestone Slab", 3, STONE));
+	public static final Slab BRICK = register(new Slab("Brick Slab", 4, STONE));
+	public static final Slab STONE_BRICK = register(new Slab("Stone Brick Slab", 5, STONE));
 
 	private DoubleSlab doubletype = VanillaMaterials.DOUBLE_SLABS;
 
-	public Slab(String name) {
+	private Slab(String name) {
 		super(name, 44);
 		this.setDefault();
 	}

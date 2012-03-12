@@ -28,14 +28,14 @@ package org.spout.vanilla.material.item;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class Coal extends GenericItem {
-	public static final Coal COAL = new Coal("Coal");
-	public static final Coal CHARCOAL = new Coal("Charcoal", 1, COAL).register();
+	public static final Coal COAL = register(new Coal("Coal"));
+	public static final Coal CHARCOAL = register(new Coal("Charcoal", 1, COAL));
 
-	public Coal(String name) {
+	private Coal(String name) {
 		super(name, 263);
 	}
 
-	public Coal(String name, int data, Coal parent) {
+	private Coal(String name, int data, Coal parent) {
 		super(name, 263, data, parent);
 	}
 

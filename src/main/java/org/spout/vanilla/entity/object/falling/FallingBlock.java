@@ -36,7 +36,6 @@ import org.spout.vanilla.material.Block;
 
 public class FallingBlock extends Falling {
 	private final BlockMaterial block;
-	private Entity parent;
 
 	public FallingBlock(BlockMaterial block) {
 		this.block = block;
@@ -45,16 +44,15 @@ public class FallingBlock extends Falling {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
 	}
 
 	@Override
 	public void onTick(float dt) {
-		if (parent == null || parent.getWorld() == null) {
+		if (getParent() == null || getParent().getWorld() == null) {
 			return;
 		}
 
-		Point position = parent.getPosition();
+		Point position = getParent().getPosition();
 		if (position == null) {
 			return;
 		}
@@ -65,10 +63,10 @@ public class FallingBlock extends Falling {
 		int z = MathHelper.floor(position.getZ());
 		Block material = (Block) world.getBlock(x, y - 1, z).getBlockMaterial();
 		if (material == VanillaMaterials.AIR || material.isLiquid()) {
-			parent.translate(x, -.004f, z);
+			getParent().translate(x, -.004f, z);
 		} else {
 			world.setBlockMaterial(x, y, z, block, world);
-			parent.kill();
+			getParent().kill();
 		}
 
 		super.onTick(dt);

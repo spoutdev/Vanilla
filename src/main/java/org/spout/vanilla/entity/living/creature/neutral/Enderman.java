@@ -38,14 +38,12 @@ import org.spout.vanilla.entity.living.creature.Neutral;
 
 public class Enderman extends Creature implements Neutral {
 	private int countdown = 0;
-	private org.spout.api.entity.Entity parent;
 	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.Enderman.id);
+		getParent().setData(Entity.KEY, Entity.Enderman.id);
 	}
 
 	@Override
@@ -62,7 +60,7 @@ public class Enderman extends Creature implements Neutral {
 		if (--countdown <= 0) {
 			countdown = getRandom().nextInt(7) + 3;
 			float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			float y = parent.getPosition().getY();
+			float y = getParent().getPosition().getY();
 			float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
 			this.velocity.add(x, y, z);
 		}

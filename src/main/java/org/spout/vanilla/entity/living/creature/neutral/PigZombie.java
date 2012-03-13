@@ -35,13 +35,10 @@ import org.spout.vanilla.entity.living.creature.Neutral;
 import org.spout.vanilla.entity.living.creature.hostile.Zombie;
 
 public class PigZombie extends Zombie implements Neutral {
-	private org.spout.api.entity.Entity parent;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.PigZombie.id);
+		getParent().setData(Entity.KEY, Entity.PigZombie.id);
 	}
 
 	@Override

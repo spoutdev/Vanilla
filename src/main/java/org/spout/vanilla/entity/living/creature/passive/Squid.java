@@ -35,13 +35,10 @@ import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Passive;
 
 public class Squid extends Creature implements Passive {
-	private org.spout.api.entity.Entity parent;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.Squid.id);
+		getParent().setData(Entity.KEY, Entity.Squid.id);
 	}
 
 	@Override

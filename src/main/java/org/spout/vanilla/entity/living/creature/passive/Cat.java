@@ -35,13 +35,12 @@ import org.spout.vanilla.entity.living.creature.Passive;
 import org.spout.vanilla.entity.living.creature.Tamed;
 
 public class Cat extends Creature implements Tamed, Passive {
-	private org.spout.api.entity.Entity parent, sovereign = null;
+	private org.spout.api.entity.Entity sovereign = null;
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.Ocelot.id);
+		getParent().setData(Entity.KEY, Entity.Ocelot.id);
 	}
 
 	@Override

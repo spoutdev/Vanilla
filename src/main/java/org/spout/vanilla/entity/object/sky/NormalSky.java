@@ -45,12 +45,10 @@ public class NormalSky extends Controller implements Sky {
 	private Weather forecast;
 	private float timeUntilWeatherChange = 0.0f;
 	private Random random = new Random();
-	private org.spout.api.entity.Entity parent;
 
 	@Override
 	public void onAttached() {
-		parent = getParent();
-		parent.setObserver(true);
+		getParent().setObserver(true);
 		currentWeather = Weather.CLEAR;
 		forecast = Weather.CLEAR;
 		timeUntilWeatherChange = random.nextFloat() * 5 * 60; //Max 5min till pattern change
@@ -67,7 +65,7 @@ public class NormalSky extends Controller implements Sky {
 			}
 
 			countdown = 20;
-			Set<Player> players = parent.getWorld().getPlayers();
+			Set<Player> players = getParent().getWorld().getPlayers();
 			for (Player player : players) {
 				player.getSession().send(new TimeMessage((long) time));
 			}
@@ -116,13 +114,13 @@ public class NormalSky extends Controller implements Sky {
 		currentWeather = event.getNewWeather();
 		boolean rain = (currentWeather != Weather.CLEAR);
 		StateChangeMessage msg = new StateChangeMessage((byte) (rain ? 1 : 2), (byte) 0);
-		for (Player player : parent.getWorld().getPlayers()) {
+		for (Player player : getParent().getWorld().getPlayers()) {
 			player.getSession().send(msg);
 		}
 	}
 
 	@Override
 	public World getWorld() {
-		return parent.getWorld();
+		return getParent().getWorld();
 	}
 }

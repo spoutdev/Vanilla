@@ -29,12 +29,9 @@ import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.creature.Passive;
 
 public class Mooshroom extends Cow implements Passive {
-	private org.spout.api.entity.Entity parent;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.Mooshroom.id);
+		getParent().setData(Entity.KEY, Entity.Mooshroom.id);
 	}
 }

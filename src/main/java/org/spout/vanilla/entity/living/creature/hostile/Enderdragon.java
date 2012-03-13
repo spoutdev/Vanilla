@@ -35,13 +35,10 @@ import org.spout.vanilla.entity.living.creature.Boss;
 import org.spout.vanilla.entity.living.creature.Hostile;
 
 public class Enderdragon extends Creature implements Hostile, Boss {
-	private org.spout.api.entity.Entity parent;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.EnderDragon.id);
+		getParent().setData(Entity.KEY, Entity.EnderDragon.id);
 	}
 
 	@Override

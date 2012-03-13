@@ -34,13 +34,10 @@ import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.creature.Hostile;
 
 public class MagmaCube extends Slime implements Hostile {
-	private org.spout.api.entity.Entity parent;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.MagmaCube.id);
+		getParent().setData(Entity.KEY, Entity.MagmaCube.id);
 	}
 
 	@Override

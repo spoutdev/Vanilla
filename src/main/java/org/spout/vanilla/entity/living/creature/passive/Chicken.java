@@ -37,14 +37,12 @@ import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Passive;
 
 public class Chicken extends Creature implements Passive {
-	private org.spout.api.entity.Entity parent;
 	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.Chicken.id);
+		getParent().setData(Entity.KEY, Entity.Chicken.id);
 	}
 
 	@Override

@@ -31,12 +31,9 @@ import org.spout.vanilla.entity.object.Sky;
 import org.spout.vanilla.world.Weather;
 
 public class TheEndSky extends Controller implements Sky {
-	private org.spout.api.entity.Entity parent;
-
 	@Override
 	public void onAttached() {
-		parent = getParent();
-		parent.setObserver(true);
+		getParent().setObserver(true);
 	}
 
 	@Override

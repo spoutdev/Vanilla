@@ -32,7 +32,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.entity.ObjectEntity;
 
 public class Projectile extends ObjectEntity {
-	private Entity parent, shooter;
+	private Entity shooter;
 	private Point start;
 	private Quaternion rotation;
 	private final int maxSpeed;
@@ -49,11 +49,10 @@ public class Projectile extends ObjectEntity {
 	@Override
 	public void onAttached() {
 		Vector3 rotation = this.rotation.getAxisAngles();
-		parent = getParent();
-		parent.roll(rotation.getX());
-		parent.yaw(rotation.getY());
-		parent.pitch(rotation.getZ());
-		parent.setPosition(start);
+		getParent().roll(rotation.getX());
+		getParent().yaw(rotation.getY());
+		getParent().pitch(rotation.getZ());
+		getParent().setPosition(start);
 	}
 
 	@Override

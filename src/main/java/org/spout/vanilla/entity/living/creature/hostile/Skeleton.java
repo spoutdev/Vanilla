@@ -35,13 +35,10 @@ import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Hostile;
 
 public class Skeleton extends Creature implements Hostile {
-	private org.spout.api.entity.Entity parent;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.Skeleton.id);
+		getParent().setData(Entity.KEY, Entity.Skeleton.id);
 	}
 
 	@Override

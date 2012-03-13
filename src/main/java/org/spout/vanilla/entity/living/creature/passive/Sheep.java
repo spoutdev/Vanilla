@@ -39,7 +39,6 @@ import org.spout.vanilla.entity.living.creature.Passive;
 public class Sheep extends Creature implements Passive {
 	private int countdown = 0;
 	private int color;
-	private org.spout.api.entity.Entity parent;
 	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
 
 	public Sheep() {
@@ -58,10 +57,9 @@ public class Sheep extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.Sheep.id);
-		parent.setData("SheepSheared", false);
-		parent.setData("SheepColor", color);
+		getParent().setData(Entity.KEY, Entity.Sheep.id);
+		getParent().setData("SheepSheared", false);
+		getParent().setData("SheepColor", color);
 	}
 
 	@Override
@@ -80,26 +78,26 @@ public class Sheep extends Creature implements Passive {
 			float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
 			float y = getRandom().nextFloat();
 			float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			//getParent().translate(x, y, z);
+			getParent().translate(x, y, z);
 		}
 
 		super.onTick(dt);
 	}
 
 	public boolean isSheared() {
-		return parent.getData("SheepSheared").asBool();
+		return getParent().getData("SheepSheared").asBool();
 	}
 
 	public void setSheared(boolean sheared) {
-		parent.setData("SheepSheared", sheared);
+		getParent().setData("SheepSheared", sheared);
 	}
 
 	public int getColor() {
-		return parent.getData("SheepColor").asInt();
+		return getParent().getData("SheepColor").asInt();
 	}
 
 	public void setColor() {
-		parent.setData("SheepColor", getRandom());
+		getParent().setData("SheepColor", getRandom());
 	}
 
 	public enum WoolColor {

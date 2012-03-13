@@ -45,7 +45,6 @@ public class Item extends ObjectEntity {
 	private ItemStack is;
 	private int roll, unpickable;
 	private final Random rand = new Random();
-	private org.spout.api.entity.Entity parent;
 
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
@@ -65,8 +64,7 @@ public class Item extends ObjectEntity {
 
 	@Override
 	public void onAttached() {
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.DroppedItem.id);
+		getParent().setData(Entity.KEY, Entity.DroppedItem.id);
 	}
 
 	@Override
@@ -82,13 +80,13 @@ public class Item extends ObjectEntity {
 		float z = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
 		this.velocity.add(x, y, z);
 		super.onTick(dt);
-		World world = parent.getWorld();
+		World world = getParent().getWorld();
 		//TODO replace with getClosestPlayer when my Spout PR gets pulled!
 		Set<Player> players = world.getPlayers();
 		double minDistance = -1;
 		Player closestPlayer = null;
 		for (Player plr : players) {
-			double distance = plr.getEntity().getPosition().distance(parent.getPosition());
+			double distance = plr.getEntity().getPosition().distance(getParent().getPosition());
 			if (distance < minDistance || minDistance == -1) {
 				closestPlayer = plr;
 				minDistance = distance;
@@ -103,7 +101,7 @@ public class Item extends ObjectEntity {
 			return;
 		}
 
-		int collected = parent.getId();
+		int collected = getParent().getId();
 		int collector = closestPlayer.getEntity().getId();
 		CollectItemMessage message = new CollectItemMessage(collected, collector);
 		for (Player plr : players) {
@@ -111,7 +109,7 @@ public class Item extends ObjectEntity {
 		}
 
 		closestPlayer.getEntity().getInventory().addItem(is);
-		parent.kill();
+		getParent().kill();
 	}
 
 	public Material getMaterial() {

@@ -34,12 +34,9 @@ import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Hostile;
 
 public class SpiderJockey extends Creature implements Hostile {
-	private org.spout.api.entity.Entity parent;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
 	}
 
 	@Override

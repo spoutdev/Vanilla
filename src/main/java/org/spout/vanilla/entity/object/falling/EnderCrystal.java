@@ -29,12 +29,9 @@ import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.object.Falling;
 
 public class EnderCrystal extends Falling {
-	private org.spout.api.entity.Entity parent;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(Entity.KEY, Entity.EnderCrystal.id);
+		getParent().setData(Entity.KEY, Entity.EnderCrystal.id);
 	}
 }

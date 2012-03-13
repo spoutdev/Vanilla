@@ -50,7 +50,7 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
 	private short count = 0;
 	private short ping;
-	private boolean sneaking, running;
+	private boolean sneaking, running, onGround;
 
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
@@ -141,5 +141,13 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	
 	public boolean isRunning() {
 		return running;
+	}
+
+	public void setOnGround(boolean onGround) {
+		this.onGround = onGround;
+	}
+	
+	public boolean isOnGround() {
+		return onGround;
 	}
 }

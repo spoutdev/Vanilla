@@ -37,9 +37,6 @@ import org.spout.api.command.annotated.SimpleInjector;
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.atomic.Transform;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
 import org.spout.vanilla.command.AdministrationCommands;
@@ -118,31 +115,26 @@ public class VanillaPlugin extends CommonPlugin {
 		//Set protocol ID.
 		vanillaProtocolId = Controller.getProtocolId("org.spout.vanilla.protocol");
 
+		//Define world generators
+		NormalGenerator normGen = new NormalGenerator(0.5F, 64.5F, 0.5F, new NormalSky());
+		NetherGenerator nethGen = new NetherGenerator(0.5F, 64.5F, 0.5F, new NetherSky());
+		TheEndGenerator endGen = new TheEndGenerator(0.5F, 64.5F, 0.5F, new TheEndSky());
+		
 		//Initialize our default Vanilla worlds.
-		//World end = game.loadWorld("world_end", new TheEndGenerator());
-		World normal = game.loadWorld("world", new NormalGenerator());
-		World nether = game.loadWorld("world_nether", new NetherGenerator());
-		World end = game.loadWorld("world_end", new TheEndGenerator());
-
-		//Create the sky.
-		NormalSky normSky = new NormalSky();
-		NetherSky netherSky = new NetherSky();
-		TheEndSky endSky = new TheEndSky();
+		//World end = game.loadWorld("world_end", new TheEndGenerator());		
+		World normal = game.loadWorld("world", normGen);
+		World nether = game.loadWorld("world_nether",nethGen );
+		World end = game.loadWorld("world_end", endGen);
 
 		//Register skys to the map
-		skys.put(normal, normSky);
-		skys.put(nether, netherSky);
-		skys.put(end, endSky);
+		skys.put(normal, normGen.getSky());
+		skys.put(nether, nethGen.getSky());
+		skys.put(end, endGen.getSky());
 
-		//Create spawn points as well as spawn the sky. TODO Have spawn point set by generator.
-		normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
-		normal.createAndSpawnEntity(new Point(normal, 0.f, 0.f, 0.f), normSky);
-
-		nether.setSpawnPoint(new Transform(new Point(nether, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
-		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), netherSky);
-
-		end.setSpawnPoint(new Transform(new Point(end, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
-		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), endSky);
+		//Spawn the sky.
+		normal.createAndSpawnEntity(new Point(normal, 0.f, 0.f, 0.f), normGen.getSky());
+		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), nethGen.getSky());
+		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), endGen.getSky());
 
 		getLogger().info("b" + this.getDescription().getVersion() + " enabled. Protocol: " + getDescription().getProtocol());
 	}

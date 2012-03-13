@@ -25,11 +25,19 @@
  */
 package org.spout.vanilla.generator.theend;
 
+import org.spout.vanilla.entity.object.sky.VanillaSky;
 import org.spout.vanilla.generator.NoiseSelector;
 import org.spout.vanilla.generator.VanillaBiomes;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
 
-public class TheEndGenerator extends VanillaGeneratorBase {
+public class TheEndGenerator extends VanillaGeneratorBase {	
+	public TheEndGenerator(float spawnX, float spawnY, float spawnZ, VanillaSky sky) {
+		super(spawnX, spawnY, spawnZ, sky);
+	}
+
+	/**
+	 * Called during biome generator's construction phase
+	 */
 	@Override
 	public void registerBiomes() {
 		setSelector(new NoiseSelector(0.9, 1.5, 5, 0.9, 1.5));

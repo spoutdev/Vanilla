@@ -29,23 +29,20 @@ import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.Spout;
-import org.spout.api.entity.Controller;
 import org.spout.api.geo.World;
 import org.spout.api.player.Player;
-import org.spout.vanilla.entity.object.Sky;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
 import org.spout.vanilla.protocol.msg.TimeMessage;
 import org.spout.vanilla.world.Weather;
 
-public class NormalSky extends Controller implements Sky {
+public class NormalSky extends VanillaSky {
 	private float time = 0;
 	private float countdown = 20;
 	private Weather currentWeather;
 	private Weather forecast;
 	private float timeUntilWeatherChange = 0.0f;
 	private Random random = new Random();
-	private org.spout.api.entity.Entity parent;
 
 	@Override
 	public void onAttached() {

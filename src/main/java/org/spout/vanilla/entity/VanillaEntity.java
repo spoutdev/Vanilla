@@ -53,36 +53,34 @@ public abstract class VanillaEntity extends Controller {
 	protected final Vector3m velocity = new Vector3m(Vector3.ZERO);
 	private int fireTicks;
 	private boolean flammable;
-	private Entity parent;
 
 	@Override
 	public void onAttached() {
-		parent = getParent();
-		parent.setCollision(new CollisionModel(area));
+		getParent().setCollision(new CollisionModel(area));
 	}
 
 	@Override
 	public void onTick(float dt) {
-		if (parent.isDead()) {
+		if (getParent().isDead()) {
 			return;
 		}
 
 		List<Message> toSend = new ArrayList<Message>();
 		if (headYawLive != headYaw) {
 			headYawLive = headYaw;
-			EntityHeadYawMessage message = new EntityHeadYawMessage(parent.getId(), headYaw);
+			EntityHeadYawMessage message = new EntityHeadYawMessage(getParent().getId(), headYaw);
 			toSend.add(message);
 		}
 
 		if (health <= 0) {
-			toSend.add(new EntityStatusMessage(parent.getId(), EntityStatusMessage.ENTITY_DEAD));
+			toSend.add(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 		}
 
 		if (toSend.isEmpty()) {
 			return;
 		}
 
-		Set<Player> onlinePlayers = parent.getWorld().getPlayers();
+		Set<Player> onlinePlayers = getParent().getWorld().getPlayers();
 		for (Player player : onlinePlayers) {
 			for (Message message : toSend) {
 				player.getSession().send(message);
@@ -90,10 +88,10 @@ public abstract class VanillaEntity extends Controller {
 		}
 
 		if (health <= 0) {
-			parent.kill();
+			getParent().kill();
 		}
 
-		if (parent.isDead()) {
+		if (getParent().isDead()) {
 			return;
 		}
 
@@ -114,9 +112,9 @@ public abstract class VanillaEntity extends Controller {
 
 	public void damage(int amount) {
 		health -= amount;
-		EntityAnimationMessage message = new EntityAnimationMessage(parent.getId(), EntityAnimationMessage.ANIMATION_HURT);
-		EntityStatusMessage message2 = new EntityStatusMessage(parent.getId(), EntityStatusMessage.ENTITY_HURT);
-		Set<Player> players = parent.getWorld().getPlayers();
+		EntityAnimationMessage message = new EntityAnimationMessage(getParent().getId(), EntityAnimationMessage.ANIMATION_HURT);
+		EntityStatusMessage message2 = new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_HURT);
+		Set<Player> players = getParent().getWorld().getPlayers();
 		for (Player player : players) {
 			player.getSession().send(message);
 			player.getSession().send(message2);
@@ -148,7 +146,7 @@ public abstract class VanillaEntity extends Controller {
 	}
 
 	private void checkWeb() {
-		Point pos = parent.getPosition();
+		Point pos = getParent().getPosition();
 		if (pos == null || pos.getWorld() == null) {
 			return;
 		}

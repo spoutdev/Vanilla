@@ -23,7 +23,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla;
+package org.spout.vanilla.material.block.misc;
 
 public enum Instrument {
 	BASS_GUITAR(0),

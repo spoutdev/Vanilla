@@ -36,12 +36,12 @@ import org.spout.api.material.MaterialData;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.entity.living.player.CreativePlayer;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.entity.object.Item;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
+import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> {
 	@Override

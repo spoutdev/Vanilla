@@ -39,11 +39,11 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.VanillaMessageHandlerUtils;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.Item;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
+import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlacementMessage> {
 	@Override

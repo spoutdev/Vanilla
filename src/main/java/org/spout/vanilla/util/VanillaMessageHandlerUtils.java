@@ -23,14 +23,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla;
-
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.PlayerInventory;
-import org.spout.api.material.block.BlockFace;
+package org.spout.vanilla.util;
 
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.PlayerInventory;
+import org.spout.api.material.block.BlockFace;
 
 public class VanillaMessageHandlerUtils {
 	public static BlockFace messageToBlockFace(int messageFace) {

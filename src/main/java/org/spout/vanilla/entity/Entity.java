@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.entity;
 
+import gnu.trove.map.hash.TIntObjectHashMap;
 import org.spout.vanilla.entity.living.creature.hostile.Blaze;
 import org.spout.vanilla.entity.living.creature.hostile.CaveSpider;
 import org.spout.vanilla.entity.living.creature.hostile.Creeper;
@@ -62,8 +63,6 @@ import org.spout.vanilla.entity.object.projectile.GhastFireball;
 import org.spout.vanilla.entity.object.projectile.Snowball;
 import org.spout.vanilla.entity.object.vehicle.Boat;
 import org.spout.vanilla.entity.object.vehicle.Minecart;
-
-import gnu.trove.map.hash.TIntObjectHashMap;
 
 public enum Entity {
 	DroppedItem(1, Item.class),

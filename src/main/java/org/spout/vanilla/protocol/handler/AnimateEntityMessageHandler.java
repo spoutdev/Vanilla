@@ -25,36 +25,22 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.Spout;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 
 public final class AnimateEntityMessageHandler extends MessageHandler<EntityAnimationMessage> {
+
 	@Override
 	public void handle(Session session, Player player, EntityAnimationMessage message) {
-		/*Block block = player.getTargetBlock(null, 6);
-		if (block == null || block.getTypeId() == BlockID.AIR) {
-			if (EventFactory.onPlayerInteract(player, Action.LEFT_CLICK_AIR).isCancelled()) {
-				return; // TODO: Item interactions
+		//TODO get target block and call onPlayerInteract
+		//TODO call AnimationEvent
+		for (Player plr : Spout.getGame().getOnlinePlayers()) {
+			if (!(plr.getName().equals(player.getName()))) {
+				plr.getSession().send(message);
 			}
 		}
-		if (EventFactory.onPlayerAnimate(player).isCancelled()) {
-			return;
-		}
-		switch (message.getAnimation()) {
-			case EntityAnimationMessage.ANIMATION_SWING_ARM:
-				EntityAnimationMessage toSend = new EntityAnimationMessage(player.getEntityId(), EntityAnimationMessage.ANIMATION_SWING_ARM);
-				for (SpoutPlayer observer : player.getWorld().getRawPlayers()) {
-					if (observer != player && observer.canSee(player)) {
-						observer.getSession().send(toSend);
-					}
-				}
-				break;
-			default:
-				// TODO: other things?
-				return;
-		}
-		*/
 	}
 }

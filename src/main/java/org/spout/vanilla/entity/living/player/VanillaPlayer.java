@@ -25,10 +25,10 @@
  */
 package org.spout.vanilla.entity.living.player;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.atomic.Transform;
 import org.spout.api.inventory.Inventory;
@@ -50,7 +50,7 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
 	private short count = 0;
 	private short ping;
-	private org.spout.api.entity.Entity parent;
+	private boolean sneaking, running;
 
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
@@ -88,12 +88,11 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public void onAttached() {
-		parent = getParent();
-		Transform spawn = parent.getWorld().getSpawnPoint();
+		Transform spawn = getParent().getWorld().getSpawnPoint();
 		Quaternion rotation = spawn.getRotation();
-		parent.setPosition(spawn.getPosition());
-		parent.setRotation(rotation);
-		parent.setScale(spawn.getScale());
+		getParent().setPosition(spawn.getPosition());
+		getParent().setRotation(rotation);
+		getParent().setScale(spawn.getScale());
 	}
 
 	@Override
@@ -123,9 +122,24 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public Set<ItemStack> getDeathDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-
-		// TODO: Drop inventory
-
+		ItemStack[] contents = getParent().getInventory().getContents();
+		drops.addAll(Arrays.asList(contents));
 		return drops;
+	}
+
+	public void setSneaking(boolean b) {
+		sneaking = b;
+	}
+	
+	public boolean isSneaking() {
+		return sneaking;
+	}
+	
+	public void setRunning(boolean b) {
+		running = b;
+	}
+	
+	public boolean isRunning() {
+		return running;
 	}
 }

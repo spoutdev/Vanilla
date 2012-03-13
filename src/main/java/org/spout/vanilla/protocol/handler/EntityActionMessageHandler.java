@@ -28,23 +28,32 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.entity.VanillaEntity;
+import org.spout.vanilla.entity.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
 
 public final class EntityActionMessageHandler extends MessageHandler<EntityActionMessage> {
 	@Override
 	public void handle(Session session, Player player, EntityActionMessage message) {
+		if(player.getEntity().getController() == null)
+			return;
+		if(!(player.getEntity().getController() instanceof VanillaEntity))
+		return;
+		VanillaPlayer ve = (VanillaPlayer) player.getEntity().getController();
 		switch (message.getAction()) {
 			case EntityActionMessage.ACTION_SNEAKING:
-				//player.setSneaking(true);
+				ve.setSneaking(true);
 				break;
 			case EntityActionMessage.ACTION_STOP_SNEAKING:
-				//player.setSneaking(false);
+				ve.setSneaking(false);
 				break;
 			case EntityActionMessage.ACTION_LEAVE_BED:
 				break;
 			case EntityActionMessage.ACTION_START_SPRINTING:
+				ve.setRunning(true);
 				break;
 			case EntityActionMessage.ACTION_STOP_SPRINTING:
+				ve.setRunning(false);
 				break;
 			default:
 				break;

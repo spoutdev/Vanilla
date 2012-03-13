@@ -25,16 +25,22 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.entity.PlayerController;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.entity.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.GroundMessage;
 
 public class GroundMessageHandler extends MessageHandler<GroundMessage> {
 	@Override
 	public void handle(Session session, Player player, GroundMessage message) {
-		/*if (player != null) {
-			player.setOnGround(message.isOnGround());
-		}*/
+		if(player.getEntity().getController() == null)
+			return;
+		if(!(player.getEntity().getController() instanceof PlayerController))
+			return;
+		VanillaPlayer vplayer = (VanillaPlayer) player.getEntity().getController();
+		vplayer.setOnGround(message.isOnGround());
+		//TODO check and apply fall damage!
 	}
 }

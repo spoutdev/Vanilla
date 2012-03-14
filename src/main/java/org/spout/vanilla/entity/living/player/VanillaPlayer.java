@@ -30,7 +30,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 import org.spout.api.entity.PlayerController;
-import org.spout.api.geo.discrete.atomic.Transform;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.PlayerInventory;

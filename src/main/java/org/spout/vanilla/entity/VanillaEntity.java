@@ -35,7 +35,6 @@ import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
-import org.spout.api.math.Vector3m;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 import org.spout.vanilla.VanillaMaterials;
@@ -50,7 +49,7 @@ public abstract class VanillaEntity extends Controller {
 	private int health = 10, maxHealth = 10;
 	private int headYaw = 0, headYawLive = 0;
 	protected final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
-	protected final Vector3m velocity = new Vector3m(Vector3.ZERO);
+	protected final Vector3 velocity = Vector3.ZERO;
 	private int fireTicks;
 	private boolean flammable;
 
@@ -151,7 +150,7 @@ public abstract class VanillaEntity extends Controller {
 			return;
 		}
 		if (pos.getWorld().getBlock(pos).getBlockMaterial() == VanillaMaterials.WEB) {
-			velocity.multiply(0.25F, 0.05F, 0.25F);
+			velocity.scale(0.25F, 0.05F, 0.25F);
 		}
 	}
 

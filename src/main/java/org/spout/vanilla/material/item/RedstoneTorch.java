@@ -38,7 +38,7 @@ import org.spout.vanilla.material.block.RedstoneTarget;
 
 public class RedstoneTorch extends WallAttachable implements RedstoneSource, RedstoneTarget {
 	public static final short REDSTONE_POWER = 15;
-	private static final Vector3 possibleOutgoing[] = {new Vector3(1, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, -1), new Vector3(0, -1, 0), new Vector3(0, 2, 0),};
+	private static final Vector3 possibleOutgoing[] = {Vector3.UNIT_X, Vector3.UNIT_X.scale(-1), Vector3.UNIT_Z, Vector3.UNIT_Z.scale(-1), Vector3.UNIT_Y.scale(-1), Vector3.create(0, 2, 0),};
 	private boolean powered;
 
 	public RedstoneTorch(String name, int id, boolean powered) {

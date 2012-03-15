@@ -55,6 +55,7 @@ import org.spout.vanilla.material.block.Tree;
 import org.spout.vanilla.material.block.WheatCrop;
 import org.spout.vanilla.material.block.Wool;
 import org.spout.vanilla.material.generic.GenericArmor;
+import org.spout.vanilla.material.generic.GenericBlock;
 import org.spout.vanilla.material.generic.GenericBlockItem;
 import org.spout.vanilla.material.generic.GenericEmptyContainer;
 import org.spout.vanilla.material.generic.GenericFood;
@@ -77,8 +78,8 @@ import org.spout.vanilla.material.item.StorageMinecart;
 
 public final class VanillaMaterials {
 	public static final BlockMaterial AIR = new Air("Air");
-	public static final BlockMaterial STONE = new Solid("Stone", 1).setHardness(1.5F).setResistance(10.0F).setDrop(VanillaMaterials.COBBLESTONE);
-	public static final BlockMaterial GRASS = new Grass("Grass").setHardness(0.6F).setResistance(0.8F).setDrop(VanillaMaterials.DIRT);
+	public static final BlockMaterial STONE = new Solid("Stone", 1).setHardness(1.5F).setResistance(10.0F);
+	public static final BlockMaterial GRASS = new Grass("Grass").setHardness(0.6F).setResistance(0.8F);
 	public static final BlockMaterial DIRT = new Solid("Dirt", 3).setHardness(0.5F).setResistance(0.8F);
 	public static final BlockMaterial COBBLESTONE = new Solid("Cobblestone", 4).setHardness(2.0F).setResistance(10.0F);
 	public static final BlockMaterial WOOD = new Solid("Wooden Planks", 5).setHardness(2.0F).setResistance(5.0F);
@@ -95,7 +96,7 @@ public final class VanillaMaterials {
 	public static final BlockMaterial GRAVEL = new Gravel("Gravel").setHardness(0.6F).setResistance(1.0F);
 	public static final BlockMaterial GOLD_ORE = new Ore("Gold Ore", 14).setHardness(3.0F).setResistance(5.0F);
 	public static final BlockMaterial IRON_ORE = new Ore("Iron Ore", 15).setHardness(3.0F).setResistance(5.0F);
-	public static final BlockMaterial COAL_ORE = new Ore("Coal Ore", 16).setHardness(3.0F).setResistance(5.0F).setDrop(VanillaMaterials.COAL);
+	public static final BlockMaterial COAL_ORE = new Ore("Coal Ore", 16).setHardness(3.0F).setResistance(5.0F);
 	public static final BlockMaterial LOG = new Tree("Wood", 17, 0).setHardness(2.0F).setResistance(3.3F);
 	public static final BlockMaterial SPRUCE_LOG = new Tree("Wood", 17, 1).setHardness(0.2F).setResistance(3.3F);
 	public static final BlockMaterial BIRCH_LOG = new Tree("Wood", 17, 2).setHardness(0.2F).setResistance(3.3F);
@@ -105,23 +106,23 @@ public final class VanillaMaterials {
 	public static final BlockMaterial BIRCH_LEAVES = new Leaves("Birch Leaves", 2).setHardness(0.2F).setResistance(0.3F);
 	public static final BlockMaterial JUNGLE_LEAVES = new Leaves("Jungle Leaves", 3).setHardness(0.2F).setResistance(0.3F);
 	public static final BlockMaterial SPONGE = new Solid("Sponge", 19).setHardness(0.6F).setResistance(1.0F);
-	public static final BlockMaterial GLASS = new Solid("Glass", 20).setHardness(0.3F).setResistance(0.5F).setDrop(VanillaMaterials.AIR);
-	public static final BlockMaterial LAPIS_ORE = new Ore("Lapis Lazuli Ore", 21).setMinDropCount(4).setMaxDropCount(8).setHardness(3.0F).setResistance(5.0F).setDrop(VanillaMaterials.LAPIS_LAZULI);
+	public static final BlockMaterial GLASS = new Solid("Glass", 20).setHardness(0.3F).setResistance(0.5F);
+	public static final BlockMaterial LAPIS_ORE = new Ore("Lapis Lazuli Ore", 21).setMinDropCount(4).setMaxDropCount(8).setHardness(3.0F).setResistance(5.0F);
 	public static final BlockMaterial LAPIS_BLOCK = new Solid("Lapis Lazuli Block", 22).setHardness(3.0F).setResistance(5.0F);
 	public static final BlockMaterial DISPENSER = new Solid("Dispenser", 23).setHardness(3.5F).setResistance(5.8F);
 	public static final BlockMaterial SANDSTONE = new Solid("Sandstone", 24).setHardness(0.8F).setResistance(1.3F);
 	public static final BlockMaterial NOTEBLOCK = new Solid("Note Block", 25).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial BED_BLOCK = new Solid("Bed", 26).setHardness(0.2F).setResistance(0.3F).setDrop(VanillaMaterials.BED);
+	public static final BlockMaterial BED_BLOCK = new Solid("Bed", 26).setHardness(0.2F).setResistance(0.3F);
 	public static final BlockMaterial POWERED_RAIL = new MinecartTrackPowered("Powered Rail", 27).setHardness(0.7F).setResistance(1.2F);
 	public static final BlockMaterial DETECTOR_RAIL = new MinecartTrackDetector("Detector Rail", 28).setHardness(0.7F).setResistance(1.2F);
 	public static final BlockMaterial PISTON_STICKY_BASE = new Solid("Sticky Piston", 29).setResistance(0.8F);
-	public static final BlockMaterial WEB = new Solid("Cobweb", 30).setHardness(4.0F).setResistance(20.0F).setDrop(VanillaMaterials.STRING);
-	public static final BlockMaterial DEAD_SHRUB = new LongGrass("Dead Grass", 31, 0).setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.AIR);
-	public static final BlockMaterial TALL_GRASS = new LongGrass("Tall Grass", 31, 1).setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.AIR);
-	public static final BlockMaterial FERN = new LongGrass("Fern", 31, 2).setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.AIR);
-	public static final BlockMaterial DEAD_BUSH = new LongGrass("Dead Shrubs", 32, 0).setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.AIR);
+	public static final BlockMaterial WEB = new Solid("Cobweb", 30).setHardness(4.0F).setResistance(20.0F);
+	public static final BlockMaterial DEAD_SHRUB = new LongGrass("Dead Grass", 31, 0).setHardness(0.0F).setResistance(0.0F);
+	public static final BlockMaterial TALL_GRASS = new LongGrass("Tall Grass", 31, 1).setHardness(0.0F).setResistance(0.0F);
+	public static final BlockMaterial FERN = new LongGrass("Fern", 31, 2).setHardness(0.0F).setResistance(0.0F);
+	public static final BlockMaterial DEAD_BUSH = new LongGrass("Dead Shrubs", 32, 0).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial PISTON_BASE = new Solid("Piston", 33).setResistance(0.8F);
-	public static final BlockMaterial PISTON_EXTENSION = new Solid("Piston (Head)", 34).setResistance(0.8F).setDrop(VanillaMaterials.PISTON_BASE); // TODO: Check sticky
+	public static final BlockMaterial PISTON_EXTENSION = new Solid("Piston (Head)", 34).setResistance(0.8F);
 	public static final BlockMaterial WHITE_WOOL = new Wool("Wool", 35, 0).setHardness(0.8F).setResistance(1.3F);
 	public static final BlockMaterial ORANGE_WOOL = new Wool("Orange Wool", 35, 1).setHardness(0.8F).setResistance(1.3F);
 	public static final BlockMaterial MAGENTA_WOOL = new Wool("Magenta Wool", 35, 2).setHardness(0.8F).setResistance(1.3F);
@@ -138,19 +139,19 @@ public final class VanillaMaterials {
 	public static final BlockMaterial GREEN_WOOL = new Wool("Dark Green Wool", 35, 13).setHardness(0.8F).setResistance(1.3F);
 	public static final BlockMaterial RED_WOOL = new Wool("Red Wool", 35, 14).setHardness(0.8F).setResistance(1.3F);
 	public static final BlockMaterial BLACK_WOOL = new Wool("Black Wool", 35, 15).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial MOVED_BY_PISTON = new Solid("Moved By Piston", 36).setResistance(0.0F).setDrop(VanillaMaterials.AIR); // TODO: ???
+	public static final BlockMaterial MOVED_BY_PISTON = new Solid("Moved By Piston", 36).setResistance(0.0F);
 	public static final BlockMaterial DANDELION = new GroundAttachable("Dandelion", 37).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial ROSE = new GroundAttachable("Rose", 38).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial BROWN_MUSHROOM = new GroundAttachable("Brown Mushroom", 39).setHardness(0.0F).setResistance(0.0F).setLightLevel(1);
 	public static final BlockMaterial RED_MUSHROOM = new GroundAttachable("Red Mushroom", 40).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial GOLD_BLOCK = new Solid("Gold Block", 41).setHardness(3.0F).setResistance(10.0F);
 	public static final BlockMaterial IRON_BLOCK = new Solid("Iron Block", 42).setHardness(5.0F).setResistance(10.0F);
-	public static final BlockMaterial STONE_DOUBLE_SLABS = new DoubleSlab("Stone Double Slab", 43, 0).setHardness(2.0F).setResistance(10.0F).setDrop(VanillaMaterials.STONE_SLAB).setDropCount(2);
-	public static final BlockMaterial SANDSTONE_DOUBLE_SLABS = new DoubleSlab("Sandstone Double Slab", 43, 1).setHardness(2.0F).setResistance(10.0F).setDrop(VanillaMaterials.SANDSTONE_SLAB).setDropCount(2);
-	public static final BlockMaterial WOODEN_DOUBLE_SLABS = new DoubleSlab("Wooden Double Slab", 43, 2).setHardness(2.0F).setResistance(10.0F).setDrop(VanillaMaterials.WOODEN_SLAB).setDropCount(2);
-	public static final BlockMaterial COBBLESTONE_DOUBLE_SLABS = new DoubleSlab("Cobblestone Double Slab", 43, 3).setHardness(2.0F).setResistance(10.0F).setDrop(VanillaMaterials.COBBLESTONE_SLAB).setDropCount(2);
-	public static final BlockMaterial BRICK_DOUBLE_SLABS = new DoubleSlab("Brick Double Slab", 43, 4).setHardness(2.0F).setResistance(10.0F).setDrop(VanillaMaterials.BRICK_SLAB).setDropCount(2);
-	public static final BlockMaterial STONE_BRICK_DOUBLE_SLABS = new DoubleSlab("Stone Brick Double Slab", 43, 5).setHardness(2.0F).setResistance(10.0F).setDrop(VanillaMaterials.STONE_BRICK_SLAB).setDropCount(2);
+	public static final BlockMaterial STONE_DOUBLE_SLABS = new DoubleSlab("Stone Double Slab", 43, 0).setHardness(2.0F).setResistance(10.0F);
+	public static final BlockMaterial SANDSTONE_DOUBLE_SLABS = new DoubleSlab("Sandstone Double Slab", 43, 1).setHardness(2.0F).setResistance(10.0F);
+	public static final BlockMaterial WOODEN_DOUBLE_SLABS = new DoubleSlab("Wooden Double Slab", 43, 2).setHardness(2.0F).setResistance(10.0F);
+	public static final BlockMaterial COBBLESTONE_DOUBLE_SLABS = new DoubleSlab("Cobblestone Double Slab", 43, 3).setHardness(2.0F).setResistance(10.0F);
+	public static final BlockMaterial BRICK_DOUBLE_SLABS = new DoubleSlab("Brick Double Slab", 43, 4).setHardness(2.0F).setResistance(10.0F);
+	public static final BlockMaterial STONE_BRICK_DOUBLE_SLABS = new DoubleSlab("Stone Brick Double Slab", 43, 5).setHardness(2.0F).setResistance(10.0F);
 	public static final BlockMaterial STONE_SLAB = new Slab("Stone Slab", 44, 0).setHardness(2.0F).setResistance(10.0F);
 	public static final BlockMaterial SANDSTONE_SLAB = new Slab("Sandstone Slab", 44, 1).setHardness(2.0F).setResistance(10.0F);
 	public static final BlockMaterial WOODEN_SLAB = new Slab("Wooden Slab", 44, 2).setHardness(2.0F).setResistance(10.0F);
@@ -159,72 +160,72 @@ public final class VanillaMaterials {
 	public static final BlockMaterial STONE_BRICK_SLAB = new Slab("Stone Brick Slab", 44, 5).setHardness(2.0F).setResistance(10.0F);
 	public static final BlockMaterial BRICK = new Solid("Brick Block", 45).setHardness(2.0F).setResistance(10.0F);
 	public static final BlockMaterial TNT = new Solid("TNT", 46).setHardness(0.0F).setResistance(0.0F);
-	public static final BlockMaterial BOOKSHELF = new Solid("Bookshelf", 47).setHardness(1.5F).setResistance(2.5F).setDrop(VanillaMaterials.BOOK).setDropCount(3);
+	public static final BlockMaterial BOOKSHELF = new Solid("Bookshelf", 47).setHardness(1.5F).setResistance(2.5F);
 	public static final BlockMaterial MOSS_STONE = new Solid("Moss Stone", 48).setHardness(2.0F).setResistance(10.0F).setResistance(10.0F);
 	public static final BlockMaterial OBSIDIAN = new Solid("Obsidian", 49).setHardness(50.0F).setResistance(2000.0F);
 	public static final BlockMaterial TORCH = new WallAttachable("Torch", 50).setHardness(0.0F).setResistance(0.0F).setLightLevel(14);
-	public static final BlockMaterial FIRE = new Solid("Fire", 51).setHardness(0.0F).setResistance(0.0F).setLightLevel(15).setDrop(VanillaMaterials.AIR);
-	public static final BlockMaterial MONSTER_SPAWNER = new Solid("MonsterEntity Spawner", 52).setHardness(5.0F).setResistance(8.3F).setDrop(VanillaMaterials.AIR);
+	public static final BlockMaterial FIRE = new Solid("Fire", 51).setHardness(0.0F).setResistance(0.0F).setLightLevel(15);
+	public static final BlockMaterial MONSTER_SPAWNER = new Solid("MonsterEntity Spawner", 52).setHardness(5.0F).setResistance(8.3F);
 	public static final BlockMaterial WOODEN_STAIRS = new Solid("Wooden Stairs", 53).setResistance(3.0F);
 	public static final BlockMaterial CHEST = new Solid("Chest", 54).setHardness(2.5F).setResistance(4.2F);
-	public static final BlockMaterial REDSTONE_WIRE = new RedstoneWire("Redstone Wire", 55, 0).setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.REDSTONE);
-	public static final BlockMaterial DIAMOND_ORE = new Solid("Diamond Ore", 56).setHardness(3.0F).setResistance(5.0F).setDrop(VanillaMaterials.DIAMOND);
+	public static final BlockMaterial REDSTONE_WIRE = new RedstoneWire("Redstone Wire", 55, 0).setHardness(0.0F).setResistance(0.0F);
+	public static final BlockMaterial DIAMOND_ORE = new Solid("Diamond Ore", 56).setHardness(3.0F).setResistance(5.0F);
 	public static final BlockMaterial DIAMOND_BLOCK = new Solid("Diamond Block", 57).setHardness(5.0F).setResistance(10.0F);
 	public static final BlockMaterial CRAFTING_TABLE = new Solid("Crafting Table", 58).setHardness(4.2F);
-	public static final BlockMaterial WHEATCROP = new WheatCrop("Wheat Crop").setResistance(0.0F).setDrop(VanillaMaterials.WHEAT);
-	public static final BlockMaterial FARMLAND = new Solid("Farmland", 60).setHardness(0.6F).setResistance(1.0F).setDrop(VanillaMaterials.DIRT);
+	public static final BlockMaterial WHEATCROP = new WheatCrop("Wheat Crop").setResistance(0.0F);
+	public static final BlockMaterial FARMLAND = new Solid("Farmland", 60).setHardness(0.6F).setResistance(1.0F);
 	public static final BlockMaterial FURNACE = new Solid("Furnace", 61).setHardness(3.5F).setResistance(5.8F);
-	public static final BlockMaterial BURNINGFURNACE = new Solid("Burning Furnace", 62).setHardness(3.5F).setResistance(5.8F).setLightLevel(13).setDrop(VanillaMaterials.FURNACE);
-	public static final BlockMaterial SIGN_POST = new Solid("Sign Post", 63).setHardness(1.0F).setResistance(1.6F).setDrop(VanillaMaterials.SIGN);
-	public static final BlockMaterial WOODEN_DOOR_BLOCK = new DoorBlock("Wooden Door", 64, true).setHardness(3.0F).setDrop(VanillaMaterials.WOODEN_DOOR);
+	public static final BlockMaterial BURNINGFURNACE = new Solid("Burning Furnace", 62).setHardness(3.5F).setResistance(5.8F).setLightLevel(13);
+	public static final BlockMaterial SIGN_POST = new Solid("Sign Post", 63).setHardness(1.0F).setResistance(1.6F);
+	public static final BlockMaterial WOODEN_DOOR_BLOCK = new DoorBlock("Wooden Door", 64, true).setHardness(3.0F);
 	public static final BlockMaterial LADDERS = new Solid("Ladders", 65).setHardness(0.4F).setResistance(0.7F);
 	public static final BlockMaterial RAILS = new MinecartTrack("Rails", 66).setHardness(0.7F).setResistance(1.2F);
 	public static final BlockMaterial COBBLESTONE_STAIRS = new Solid("Cobblestone Stairs", 67).setResistance(10.0F);
-	public static final BlockMaterial WALL_SIGN = new Solid("Wall Sign", 68).setHardness(1.0F).setDrop(VanillaMaterials.SIGN);
+	public static final BlockMaterial WALL_SIGN = new Solid("Wall Sign", 68).setHardness(1.0F);
 	public static final BlockMaterial LEVER = new Solid("Lever", 69).setHardness(0.5F).setResistance(1.7F);
 	public static final BlockMaterial STONE_PRESSURE_PLATE = new Solid("Stone Pressure Plate", 70).setHardness(0.5F).setResistance(0.8F);
 	public static final BlockMaterial IRON_DOOR_BLOCK = new DoorBlock("Iron Door", 71, false).setHardness(5.0F).setResistance(8.3F);
 	public static final BlockMaterial WOODEN_PRESSURE_PLATE = new Solid("Wooden Pressure Plate", 72).setHardness(0.5F).setResistance(0.8F);
-	public static final BlockMaterial REDSTONE_ORE = new Ore("Redstone Ore", 73).setMinDropCount(4).setMaxDropCount(5).setHardness(3.0F).setResistance(5.0F).setDrop(VanillaMaterials.REDSTONE);
-	public static final BlockMaterial GLOWING_REDSTONE_ORE = new Ore("Glowing Redstone Ore", 74).setMinDropCount(4).setMaxDropCount(5).setHardness(3.0F).setResistance(5.0F).setLightLevel(3).setDrop(VanillaMaterials.REDSTONE);
-	public static final BlockMaterial REDSTONE_TORCH_OFF = new RedstoneTorch("Redstone Torch", 75, false).setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.REDSTONE_TORCH_ON);
+	public static final BlockMaterial REDSTONE_ORE = new Ore("Redstone Ore", 73).setMinDropCount(4).setMaxDropCount(5).setHardness(3.0F).setResistance(5.0F);
+	public static final BlockMaterial GLOWING_REDSTONE_ORE = new Ore("Glowing Redstone Ore", 74).setMinDropCount(4).setMaxDropCount(5).setHardness(3.0F).setResistance(5.0F).setLightLevel(3);
+	public static final BlockMaterial REDSTONE_TORCH_OFF = new RedstoneTorch("Redstone Torch", 75, false).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial REDSTONE_TORCH_ON = new RedstoneTorch("Redstone Torch (On)", 76, true).setHardness(0.0F).setResistance(0.0F).setLightLevel(7);
 	public static final BlockMaterial STONE_BUTTON = new Solid("Stone Button", 77).setHardness(0.5F).setResistance(0.8F);
-	public static final BlockMaterial SNOW = new Solid("Snow", 78).setHardness(0.1F).setResistance(0.2F).setDrop(VanillaMaterials.SNOWBALL); // TODO: Make shovels drop snowballs
-	public static final BlockMaterial ICE = new Ice("Ice", 79).setHardness(0.5F).setResistance(0.8F).setDrop(VanillaMaterials.AIR);
+	public static final BlockMaterial SNOW = new Solid("Snow", 78).setHardness(0.1F).setResistance(0.2F);
+	public static final BlockMaterial ICE = new Ice("Ice", 79).setHardness(0.5F).setResistance(0.8F);
 	public static final BlockMaterial SNOW_BLOCK = new Solid("Snow Block", 80).setHardness(0.2F).setResistance(0.3F);
 	public static final BlockMaterial CACTUS = new Cactus("Cactus", 81).setHardness(0.4F).setResistance(0.7F);
-	public static final BlockMaterial CLAY_BLOCK = new Solid("Clay Block", 82).setHardness(0.6F).setResistance(1.0F).setDrop(VanillaMaterials.CLAY).setDropCount(4);
+	public static final BlockMaterial CLAY_BLOCK = new Solid("Clay Block", 82).setHardness(0.6F).setResistance(1.0F);
 	public static final BlockMaterial SUGAR_CANE_BLOCK = new Solid("Sugar Cane", 83).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial JUKEBOX = new Solid("Jukebox", 84).setHardness(2.0F).setResistance(10.0F);
 	public static final BlockMaterial FENCE = new Solid("Fence", 85).setResistance(5.0F).setResistance(5.0F);
 	public static final BlockMaterial PUMPKIN = new Solid("Pumpkin", 86).setHardness(1.0F).setResistance(1.7F);
 	public static final BlockMaterial NETHERRACK = new Solid("Netherrack", 87).setHardness(0.7F);
 	public static final BlockMaterial SOUL_SAND = new Solid("Soul Sand", 88).setHardness(0.5F).setResistance(0.8F);
-	public static final BlockMaterial GLOWSTONE_BLOCK = new Ore("Glowstone Block", 89).setMinDropCount(2).setMaxDropCount(4).setHardness(0.3F).setResistance(0.5F).setLightLevel(15).setDrop(VanillaMaterials.GLOWSTONE_DUST);
-	public static final BlockMaterial PORTAL = new Solid("Portal", 90).setHardness(-1.0F).setResistance(0.0F).setLightLevel(11).setDrop(VanillaMaterials.AIR);
+	public static final BlockMaterial GLOWSTONE_BLOCK = new Ore("Glowstone Block", 89).setMinDropCount(2).setMaxDropCount(4).setHardness(0.3F).setResistance(0.5F).setLightLevel(15);
+	public static final BlockMaterial PORTAL = new Solid("Portal", 90).setHardness(-1.0F).setResistance(0.0F).setLightLevel(11);
 	public static final BlockMaterial JACK_O_LANTERN = new Solid("Jack 'o' Lantern", 91).setHardness(1.0F).setResistance(1.7F).setLightLevel(15);
-	public static final BlockMaterial CAKE_BLOCK = new Solid("Cake Block", 92).setHardness(0.5F).setResistance(0.8F).setDrop(VanillaMaterials.AIR);
-	public static final BlockMaterial REDSTONE_REPEATER_OFF = new Solid("Redstone Repeater", 93).setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.REDSTONE_REPEATER);
-	public static final BlockMaterial REDSTONE_REPEATER_ON = new Solid("Redstone Repeater (On)", 94).setHardness(0.0F).setResistance(0.0F).setLightLevel(9).setDrop(VanillaMaterials.REDSTONE_REPEATER);
+	public static final BlockMaterial CAKE_BLOCK = new Solid("Cake Block", 92).setHardness(0.5F).setResistance(0.8F);
+	public static final BlockMaterial REDSTONE_REPEATER_OFF = new Solid("Redstone Repeater", 93).setHardness(0.0F).setResistance(0.0F);
+	public static final BlockMaterial REDSTONE_REPEATER_ON = new Solid("Redstone Repeater (On)", 94).setHardness(0.0F).setResistance(0.0F).setLightLevel(9);
 	public static final BlockMaterial LOCKED_CHEST = new Solid("Locked Chest", 95).setHardness(0.0F).setResistance(0.0F).setLightLevel(15);
 	public static final BlockMaterial TRAPDOOR = new Solid("Trapdoor", 96).setHardness(3.0F).setResistance(5.0F);
-	public static final BlockMaterial SILVERFISH_STONE = new Solid("Silverfish Stone", 97).setHardness(0.75F).setResistance(10.0F).setDrop(VanillaMaterials.STONE); // TODO: Get drop item based on data //Placeholder, block resistance unknown
+	public static final BlockMaterial SILVERFISH_STONE = new Solid("Silverfish Stone", 97).setHardness(0.75F).setResistance(10.0F); //Placeholder, block resistance unknown
 	public static final BlockMaterial STONE_BRICKS = new StoneBrick("Stone Brick", 98, 0).setHardness(1.5F).setResistance(10.0F);
 	public static final BlockMaterial MOSSY_STONE_BRICKS = new StoneBrick("Mossy Stone Brick", 98, 1).setHardness(1.5F).setResistance(10.0F);
 	public static final BlockMaterial CRACKED_STONE_BRICKS = new StoneBrick("Cracked Stone Brick", 98, 2).setHardness(1.5F).setResistance(10.0F);
-	public static final BlockMaterial HUGE_BROWN_MUSHROOM = new Ore("Huge Brown Mushroom", 99).setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F).setDrop(VanillaMaterials.BROWN_MUSHROOM); //Placeholder, block resistance unknown
-	public static final BlockMaterial HUGE_RED_MUSHROOM = new Ore("Huge Red Mushroom", 100).setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F).setDrop(VanillaMaterials.RED_MUSHROOM); //Placeholder, block resistance unknown
+	public static final BlockMaterial HUGE_BROWN_MUSHROOM = new Ore("Huge Brown Mushroom", 99).setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F); //Placeholder, block resistance unknown
+	public static final BlockMaterial HUGE_RED_MUSHROOM = new Ore("Huge Red Mushroom", 100).setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F); //Placeholder, block resistance unknown
 	public static final BlockMaterial IRON_BARS = new Solid("Iron Bars", 101).setHardness(5.0F).setResistance(10.0F);
-	public static final BlockMaterial GLASS_PANE = new Solid("Glass Pane", 102).setHardness(0.3F).setResistance(0.3F).setDrop(VanillaMaterials.AIR); //Placeholder, block resistance unknown
-	public static final BlockMaterial MELON = new Ore("Melon", 103).setMinDropCount(3).setMaxDropCount(7).setHardness(1.0F).setResistance(1.7F).setDrop(VanillaMaterials.MELON_SLICE);
-	public static final BlockMaterial PUMPKIN_STEM = new Solid("Pumpkin Stem", 104).setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.AIR);
-	public static final BlockMaterial MELON_STEM = new Solid("Melon Stem", 105).setHardness(0.0F).setResistance(0.3F).setDrop(VanillaMaterials.MELON_SEEDS);
-	public static final BlockMaterial VINES = new Solid("Vines", 106).setHardness(0.2F).setResistance(0.3F).setDrop(VanillaMaterials.AIR); // TODO: Drop vine for shears
+	public static final BlockMaterial GLASS_PANE = new Solid("Glass Pane", 102).setHardness(0.3F).setResistance(0.3F); //Placeholder, block resistance unknown
+	public static final BlockMaterial MELON = new Ore("Melon", 103).setMinDropCount(3).setMaxDropCount(7).setHardness(1.0F).setResistance(1.7F);
+	public static final BlockMaterial PUMPKIN_STEM = new Solid("Pumpkin Stem", 104).setHardness(0.0F).setResistance(0.0F);
+	public static final BlockMaterial MELON_STEM = new Solid("Melon Stem", 105).setHardness(0.0F).setResistance(0.3F);
+	public static final BlockMaterial VINES = new Solid("Vines", 106).setHardness(0.2F).setResistance(0.3F);
 	public static final BlockMaterial FENCE_GATE = new Solid("Fence Gate", 107).setHardness(2.0F).setResistance(3.0F);
 	public static final BlockMaterial BRICK_STAIRS = new Solid("Brick Stairs", 108).setResistance(10.0F);
 	public static final BlockMaterial STONE_BRICK_STAIRS = new Solid("Stone Brick Stairs", 109).setResistance(10.0F);
-	public static final BlockMaterial MYCELIUM = new Solid("Mycelium", 110).setHardness(0.6F).setResistance(0.8F).setDrop(VanillaMaterials.DIRT);
+	public static final BlockMaterial MYCELIUM = new Solid("Mycelium", 110).setHardness(0.6F).setResistance(0.8F);
 	public static final BlockMaterial LILY_PAD = new Solid("Lily Pad", 111).setHardness(0.0F).setResistance(0.3F); //Placeholder, block resistance unknown
 	public static final BlockMaterial NETHER_BRICK = new Solid("Nether Brick", 112).setHardness(2.0F).setResistance(10.0F);
 	public static final BlockMaterial NETHER_BRICK_FENCE = new Solid("Nether Brick Fence", 113).setHardness(2.0F).setResistance(10.0F);
@@ -233,12 +234,12 @@ public final class VanillaMaterials {
 	public static final BlockMaterial ENCHANTMENT_TABLE = new Solid("Enchantment Table", 116).setHardness(5.0F).setResistance(2000.0F);
 	public static final BlockMaterial BREWING_STAND_BLOCK = new Solid("Brewing Stand", 117).setHardness(0.5F).setResistance(0.8F).setLightLevel(1);
 	public static final BlockMaterial CAULDRON_BLOCK = new Solid("Cauldron", 118).setHardness(2.0F).setResistance(3.3F);
-	public static final BlockMaterial END_PORTAL = new Solid("End Portal", 119).setHardness(-1.0F).setResistance(6000000.0F).setLightLevel(1).setDrop(VanillaMaterials.AIR);
-	public static final BlockMaterial END_PORTAL_FRAME = new Solid("End Portal Frame", 120).setHardness(-1.0F).setDrop(VanillaMaterials.AIR);
+	public static final BlockMaterial END_PORTAL = new Solid("End Portal", 119).setHardness(-1.0F).setResistance(6000000.0F).setLightLevel(1);
+	public static final BlockMaterial END_PORTAL_FRAME = new Solid("End Portal Frame", 120).setHardness(-1.0F);
 	public static final BlockMaterial END_STONE = new Solid("End Stone", 121).setHardness(3.0F).setResistance(15.0F);
 	public static final BlockMaterial DRAGON_EGG = new Solid("Dragon Egg", 122).setHardness(3.0F).setResistance(15.0F).setLightLevel(1);
 	public static final BlockMaterial REDSTONE_LAMP_OFF = new Solid("Redstone Lamp", 123).setHardness(0.3F).setResistance(0.5F); //Placeholder Values
-	public static final BlockMaterial REDSTONE_LAMP_ON = new Solid("Redstone Lamp (On)", 124).setHardness(0.3F).setResistance(0.5F).setLightLevel(15).setDrop(VanillaMaterials.REDSTONE_LAMP_OFF); //Placeholder Values
+	public static final BlockMaterial REDSTONE_LAMP_ON = new Solid("Redstone Lamp (On)", 124).setHardness(0.3F).setResistance(0.5F).setLightLevel(15); //Placeholder Values
 	/*
 	 * Items
 	 */
@@ -484,6 +485,58 @@ public final class VanillaMaterials {
 	public static final ItemMaterial SPLASH_HARMING_POTION_II = new GenericItem("Splash Potion of Harming", 373, 16428);
 
 	protected static void initialize() {
+		((GenericBlock) VanillaMaterials.STONE).setDrop(VanillaMaterials.COBBLESTONE);
+		((GenericBlock) VanillaMaterials.GRASS).setDrop(VanillaMaterials.DIRT);
+		((GenericBlock) VanillaMaterials.COAL_ORE).setDrop(VanillaMaterials.COAL);
+		((GenericBlock) VanillaMaterials.GLASS).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.LAPIS_ORE).setDrop(VanillaMaterials.LAPIS_LAZULI);
+		((GenericBlock) VanillaMaterials.BED_BLOCK).setDrop(VanillaMaterials.BED);
+		((GenericBlock) VanillaMaterials.WEB).setDrop(VanillaMaterials.STRING);
+		((GenericBlock) VanillaMaterials.DEAD_SHRUB).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.TALL_GRASS).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.FERN).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.DEAD_BUSH).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.STONE_DOUBLE_SLABS).setDrop(VanillaMaterials.STONE_SLAB).setDropCount(2);
+		((GenericBlock) VanillaMaterials.SANDSTONE_DOUBLE_SLABS).setDrop(VanillaMaterials.SANDSTONE_SLAB).setDropCount(2);
+		((GenericBlock) VanillaMaterials.WOODEN_DOUBLE_SLABS).setDrop(VanillaMaterials.WOODEN_SLAB).setDropCount(2);
+		((GenericBlock) VanillaMaterials.COBBLESTONE_DOUBLE_SLABS).setDrop(VanillaMaterials.COBBLESTONE_SLAB).setDropCount(2);
+		((GenericBlock) VanillaMaterials.BRICK_DOUBLE_SLABS).setDrop(VanillaMaterials.BRICK_SLAB).setDropCount(2);
+		((GenericBlock) VanillaMaterials.STONE_BRICK_DOUBLE_SLABS).setDrop(VanillaMaterials.STONE_BRICK_SLAB).setDropCount(2);
+		((GenericBlock) VanillaMaterials.BOOKSHELF).setDrop(VanillaMaterials.BOOK).setDropCount(3);
+		((GenericBlock) VanillaMaterials.FIRE).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.MONSTER_SPAWNER).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.REDSTONE_WIRE).setDrop(VanillaMaterials.REDSTONE);
+		((GenericBlock) VanillaMaterials.DIAMOND_ORE).setDrop(VanillaMaterials.DIAMOND);
+		((GenericBlock) VanillaMaterials.WHEATCROP).setDrop(VanillaMaterials.WHEAT);
+		((GenericBlock) VanillaMaterials.FARMLAND).setDrop(VanillaMaterials.DIRT);
+		((GenericBlock) VanillaMaterials.BURNINGFURNACE).setDrop(VanillaMaterials.FURNACE);
+		((GenericBlock) VanillaMaterials.SIGN_POST).setDrop(VanillaMaterials.SIGN);
+		((GenericBlock) VanillaMaterials.WOODEN_DOOR_BLOCK).setDrop(VanillaMaterials.WOODEN_DOOR);
+		((GenericBlock) VanillaMaterials.WALL_SIGN).setDrop(VanillaMaterials.SIGN);
+		((GenericBlock) VanillaMaterials.REDSTONE_ORE).setDrop(VanillaMaterials.REDSTONE);
+		((GenericBlock) VanillaMaterials.GLOWING_REDSTONE_ORE).setDrop(VanillaMaterials.REDSTONE);
+		((GenericBlock) VanillaMaterials.REDSTONE_TORCH_OFF).setDrop(VanillaMaterials.REDSTONE_TORCH_ON);
+		((GenericBlock) VanillaMaterials.SNOW).setDrop(VanillaMaterials.SNOWBALL); // TODO: Make shovels drop snowballs
+		((GenericBlock) VanillaMaterials.ICE).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.CLAY_BLOCK).setDrop(VanillaMaterials.CLAY).setDropCount(4);
+		((GenericBlock) VanillaMaterials.GLOWSTONE_BLOCK).setDrop(VanillaMaterials.GLOWSTONE_DUST);
+		((GenericBlock) VanillaMaterials.PORTAL).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.CAKE_BLOCK).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.REDSTONE_REPEATER_OFF).setDrop(VanillaMaterials.REDSTONE_REPEATER);
+		((GenericBlock) VanillaMaterials.REDSTONE_REPEATER_ON).setDrop(VanillaMaterials.REDSTONE_REPEATER);
+		((GenericBlock) VanillaMaterials.SILVERFISH_STONE).setDrop(VanillaMaterials.STONE); // TODO: Get drop item based on data
+		((GenericBlock) VanillaMaterials.HUGE_BROWN_MUSHROOM).setDrop(VanillaMaterials.BROWN_MUSHROOM);
+		((GenericBlock) VanillaMaterials.HUGE_RED_MUSHROOM).setDrop(VanillaMaterials.RED_MUSHROOM);
+		((GenericBlock) VanillaMaterials.GLASS_PANE).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.MELON).setDrop(VanillaMaterials.MELON_SLICE);
+		((GenericBlock) VanillaMaterials.PUMPKIN_STEM).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.MELON_STEM).setDrop(VanillaMaterials.MELON_SEEDS);
+		((GenericBlock) VanillaMaterials.VINES).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.MYCELIUM).setDrop(VanillaMaterials.DIRT);
+		((GenericBlock) VanillaMaterials.END_PORTAL).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.END_PORTAL_FRAME).setDrop(VanillaMaterials.AIR);
+		((GenericBlock) VanillaMaterials.REDSTONE_LAMP_ON).setDrop(VanillaMaterials.REDSTONE_LAMP_OFF);
+		
 		Field[] fields = VanillaMaterials.class.getFields();
 		for (Field f : fields) {
 			if (Modifier.isStatic(f.getModifiers())) {

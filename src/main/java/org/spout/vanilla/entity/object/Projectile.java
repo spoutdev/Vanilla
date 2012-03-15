@@ -43,7 +43,7 @@ public class Projectile extends ObjectEntity {
 		this.start = start;
 		this.rotation = rotation;
 
-		velocity = Vector3.create(maxSpeed, 0, 0);
+		velocity = new Vector3(maxSpeed, 0, 0);
 	}
 
 	@Override

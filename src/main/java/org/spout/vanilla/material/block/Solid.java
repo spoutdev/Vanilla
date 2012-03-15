@@ -72,7 +72,7 @@ public class Solid extends GenericBlock implements MovingBlock {
 			Block material = (Block) world.getBlockMaterial(x, y - 1, z);
 			if (material == VanillaMaterials.AIR || material.isLiquid()) {
 				if (world.setBlockId(x, y, z, (short) 0, world)) {
-					world.createAndSpawnEntity(Point.create(world, x, y, z), new FallingBlock(this));
+					world.createAndSpawnEntity(new Point(world, x, y, z), new FallingBlock(this));
 				}
 			}
 		}

@@ -33,12 +33,12 @@ import org.spout.vanilla.entity.object.Falling;
 public class PrimedTnt extends Falling {
 	private float timeToExplode = 4.f;
 	private Vector3 velocity;
-	private Vector3 gravity = Vector3.create(0,5,0);
+	private Vector3 gravity = new Vector3(0,5,0);
 	private Random rng = new Random();
 
 	@Override
 	public void onAttached() {
-		velocity = Vector3.create(rng.nextFloat() * 5, rng.nextFloat() * 5, rng.nextFloat() * 5);
+		velocity = new Vector3(rng.nextFloat() * 5, rng.nextFloat() * 5, rng.nextFloat() * 5);
 	}
 
 	@Override

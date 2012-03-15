@@ -51,7 +51,7 @@ public class CaveDecorator implements BiomeDecorator {
 		int x = chunk.getX() * 16;
 		int y = chunk.getY() * 16;
 		int z = chunk.getZ() * 16;
-		Point pt = Point.create(chunk.getWorld(), x + random.nextInt(16), y + random.nextInt(16), z + random.nextInt(16));
+		Point pt = new Point(chunk.getWorld(), x + random.nextInt(16), y + random.nextInt(16), z + random.nextInt(16));
 		for (int dx = x; dx < x + 16; dx++) {
 			for (int dz = z; dz < z + 16; dz++) {
 				for (int dy = y; dy < y + 16; dy++) {

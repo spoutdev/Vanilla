@@ -153,7 +153,7 @@ public abstract class VanillaEntity extends Controller {
 			// TODO: this needs to be solved differently:
 			// 1. scale no longer modifies the vector
 			// 2. the speed modification is temporary in minecraft, while this here is pretty steeply reduces the speed to 0
-			velocity.scale(0.25F, 0.05F, 0.25F);
+			velocity.multiply(0.25F, 0.05F, 0.25F);
 		}
 	}
 

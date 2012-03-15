@@ -135,14 +135,14 @@ public class VanillaPlugin extends CommonPlugin {
 		skys.put(end, endSky);
 
 		//Create spawn points as well as spawn the sky. TODO Have spawn point set by generator.
-		normal.setSpawnPoint(new Transform(Point.create(normal, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
-		normal.createAndSpawnEntity(Point.create(normal, 0.f, 0.f, 0.f), normSky);
+		normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
+		normal.createAndSpawnEntity(new Point(normal, 0.f, 0.f, 0.f), normSky);
 
-		nether.setSpawnPoint(new Transform(Point.create(nether, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
-		nether.createAndSpawnEntity(Point.create(nether, 0.f, 0.f, 0.f), netherSky);
+		nether.setSpawnPoint(new Transform(new Point(nether, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
+		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), netherSky);
 
-		end.setSpawnPoint(new Transform(Point.create(end, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
-		end.createAndSpawnEntity(Point.create(end, 0.f, 0.f, 0.f), endSky);
+		end.setSpawnPoint(new Transform(new Point(end, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
+		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), endSky);
 
 		getLogger().info("b" + this.getDescription().getVersion() + " enabled. Protocol: " + getDescription().getProtocol());
 	}

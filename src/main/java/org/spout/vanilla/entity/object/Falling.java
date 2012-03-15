@@ -44,7 +44,7 @@ public abstract class Falling extends ObjectEntity {
 	}
 
 	protected void updateGravity(float dt) {
-		velocity.add(Vector3.Up.scale(-(dt * GRAVITY_MULTIPLIER)));
+		velocity.add(Vector3.Up.multiply(-(dt * GRAVITY_MULTIPLIER)));
 	}
 
 	public boolean isGravity() {

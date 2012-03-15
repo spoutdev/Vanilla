@@ -77,7 +77,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		}
 		//session.setPreviousPlacement(message);
 
-		Point pos = Point.create(world, message.getX(), message.getY(), message.getZ());
+		Point pos = new Point(world, message.getX(), message.getY(), message.getZ());
 		BlockFace face = VanillaMessageHandlerUtils.messageToBlockFace(message.getDirection());
 
 		if (face == BlockFace.THIS) {
@@ -92,7 +92,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		}
 		boolean sendRevert = false;
 
-		PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, Point.create(pos, world), inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, false));
+		PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, new Point(pos, world), inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, false));
 		if (interactEvent.isCancelled()) {
 			sendRevert = true;
 		}

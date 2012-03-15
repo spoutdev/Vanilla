@@ -36,10 +36,10 @@ import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.material.block.Solid;
 
 public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget {
-	private final Vector3[] possibleIncoming = {Vector3.UNIT_X, Vector3.UNIT_Z, Vector3.UNIT_X.scale(-1), Vector3.UNIT_Z.scale(-1), Vector3.create(1, 1, 0), Vector3.create(0, 1, 1), Vector3.create(-1, 1, 0), Vector3.create(0, 1, -1), Vector3.UNIT_Y, //Redstone torch from above
+	private final Vector3[] possibleIncoming = {Vector3.UNIT_X, Vector3.UNIT_Z, Vector3.UNIT_X.multiply(-1), Vector3.UNIT_Z.multiply(-1), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1), Vector3.UNIT_Y, //Redstone torch from above
 	};
-	private final Vector3[] possibleOutgoing = {Vector3.UNIT_X, Vector3.UNIT_Z, Vector3.UNIT_X.scale(-1), Vector3.UNIT_Z.scale(-1), Vector3.create(1, 1, 0), Vector3.create(0, 1, 1), Vector3.create(-1, 1, 0), Vector3.create(0, 1, -1), Vector3.create(1, -1, 0), Vector3.create(0, -1, 1), Vector3.create(-1, -1, 0), Vector3.create(0, -1, -1),};
-	private final Vector3[] possibleOutgoingTorch = {Vector3.create(2, 0, 0), Vector3.create(0, 0, 2), Vector3.create(-2, 0, 0), Vector3.create(0, 0, -2), Vector3.create(1, 1, 0), Vector3.create(0, 1, 1), Vector3.create(-1, 1, 0), Vector3.create(0, 1, -1),};
+	private final Vector3[] possibleOutgoing = {Vector3.UNIT_X, Vector3.UNIT_Z, Vector3.UNIT_X.multiply(-1), Vector3.UNIT_Z.multiply(-1), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1), new Vector3(1, -1, 0), new Vector3(0, -1, 1), new Vector3(-1, -1, 0), new Vector3(0, -1, -1),};
+	private final Vector3[] possibleOutgoingTorch = {new Vector3(2, 0, 0), new Vector3(0, 0, 2), new Vector3(-2, 0, 0), new Vector3(0, 0, -2), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1),};
 
 	public RedstoneWire(String name, int id, int data) {
 		super(name, id, data);

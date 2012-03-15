@@ -85,7 +85,7 @@ public class VanillaEventListener implements Listener {
 	public void onRegionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
 		if (region.getAll(RegionEntitySpawner.class).isEmpty()) {
-			region.getWorld().createAndSpawnEntity(Point.create(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE), new RegionEntitySpawner(region));
+			region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE), new RegionEntitySpawner(region));
 		}
 	}
 

@@ -100,7 +100,7 @@ public class AdministrationCommands {
 
 			player = (Player) source;
 			Entity playerEntity = player.getEntity();
-			point = Point.create(playerEntity.getWorld(), args.getInteger(0), args.getInteger(1), args.getInteger(2));
+			point = new Point(playerEntity.getWorld(), args.getInteger(0), args.getInteger(1), args.getInteger(2));
 		}
 
 		if (player == null) {

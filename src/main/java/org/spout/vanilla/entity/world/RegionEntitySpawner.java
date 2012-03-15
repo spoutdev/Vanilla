@@ -149,7 +149,7 @@ public class RegionEntitySpawner extends Controller {
 									x += chunk.getX() * 16 + 0.5F;
 									y += chunk.getY() * 16 + 1F;
 									z += chunk.getZ() * 16 + 0.5F;
-									region.getWorld().createAndSpawnEntity(Point.create(region.getWorld(), x, y, z), controller);
+									region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), x, y, z), controller);
 								} catch (Exception e) {
 									throw new RuntimeException("Unable to spawn " + entry.getKey(), e);
 								}

@@ -67,7 +67,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			if (block == null || block.getBlockId() == 0 || block.getBlockMaterial() == null) {
 				isAir = true;
 			}
-			PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, Point.create(world, x, y, z), player.getEntity().getInventory().getCurrentItem(), PlayerInteractEvent.Action.LEFT_CLICK, isAir);
+			PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, new Point(world, x, y, z), player.getEntity().getInventory().getCurrentItem(), PlayerInteractEvent.Action.LEFT_CLICK, isAir);
 			eventManager.callEvent(interactEvent);
 			if (interactEvent.isCancelled()) {
 				return;

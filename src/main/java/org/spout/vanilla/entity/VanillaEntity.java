@@ -49,7 +49,7 @@ public abstract class VanillaEntity extends Controller {
 	private int health = 10, maxHealth = 10;
 	private int headYaw = 0, headYawLive = 0;
 	protected final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
-	protected final Vector3 velocity = Vector3.ZERO;
+	protected Vector3 velocity = Vector3.ZERO;
 	private int fireTicks;
 	private boolean flammable;
 
@@ -150,6 +150,9 @@ public abstract class VanillaEntity extends Controller {
 			return;
 		}
 		if (pos.getWorld().getBlock(pos).getBlockMaterial() == VanillaMaterials.WEB) {
+			// TODO: this needs to be solved differently:
+			// 1. scale no longer modifies the vector
+			// 2. the speed modification is temporary in minecraft, while this here is pretty steeply reduces the speed to 0
 			velocity.scale(0.25F, 0.05F, 0.25F);
 		}
 	}
@@ -194,5 +197,9 @@ public abstract class VanillaEntity extends Controller {
 
 	public Vector3 getVelocity() {
 		return velocity;
+	}
+
+	public void setVelocity(Vector3 velocity) {
+		this.velocity = velocity;
 	}
 }

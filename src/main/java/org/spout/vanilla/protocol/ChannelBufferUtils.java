@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.protocol;
 
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -38,7 +39,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.MaterialData;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
-import org.spout.api.util.Color;
+import org.spout.api.util.ColorHelper;
 import org.spout.api.util.Parameter;
 import org.spout.nbt.CompoundTag;
 import org.spout.nbt.Tag;
@@ -309,7 +310,7 @@ public final class ChannelBufferUtils {
 	}
 
 	public static void writeColor(Color color, ChannelBuffer buf) {
-		buf.writeInt(color.toInt());
+		buf.writeInt(ColorHelper.toInt(color));
 	}
 
 	public static boolean hasNbtData(int id) {

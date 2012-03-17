@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.protocol;
 
+import java.awt.Color;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -35,7 +36,6 @@ import java.util.Map;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
-import org.spout.api.util.Color;
 import org.spout.api.util.Parameter;
 import org.spout.nbt.IntTag;
 import org.spout.nbt.StringTag;

@@ -85,7 +85,7 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	@Override
-	public Inventory createInventory(int size) {
+	public PlayerInventory createInventory(int size) {
 		return new PlayerInventory(size);
 	}
 

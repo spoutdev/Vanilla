@@ -27,6 +27,7 @@ package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -50,6 +51,30 @@ public final class PositionMessageHandler extends MessageHandler<PositionMessage
 		double x = message.getX();
 		double y = message.getY();
 		double z = message.getZ();
+		/*
+		//Figure out how much in X and Z the player has moved
+		Vector3 newPos = new Vector3(x,y,z);
+		newPos = newPos.normalize();
+		Vector3 pPos = entity.getPosition().normalize();
+		
+		Vector3 difference = pPos.subtract(newPos);
+		//Figure out how much in Forward we have moved
+		//Using gram-schmidt orthonormalization.  It's magic.
+		float projX = difference.dot(Vector3.Forward) / (difference.lengthSquared());
+		Vector3 xdiff = difference.subtract(difference.multiply(projX));
+		float diffInX = xdiff.length();
+		
+		//Figure out how much horizantal we have
+		float projZ = difference.dot(Vector3.Right) / (difference.lengthSquared());
+		Vector3 zdiff = difference.subtract(difference.multiply(projZ));
+		float diffInZ = zdiff.length();
+		
+		player.input().setForward(diffInX);
+		player.input().setHorizantal(diffInZ);
+		*/
+		
+		
+	
 
 		Point p = new Point(entity.getWorld(), (float) x, (float) y, (float) z);
 		entity.setPosition(p);

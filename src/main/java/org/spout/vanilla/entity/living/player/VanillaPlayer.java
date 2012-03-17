@@ -35,6 +35,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
@@ -51,6 +52,8 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	private short count = 0;
 	private short ping;
 	private boolean sneaking, running, onGround;
+	private final Vector3 moveSpeed = new Vector3(10,0,0);
+	private final Vector3 horizSpeed = new Vector3(0, 0, -10);
 
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
@@ -101,6 +104,19 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 		if (player == null || player.getSession() == null) {
 			return;
 		}
+		/* COMMENTED OUT PENDING TESTING 
+		if(player.input().getForward() > 0){
+			getParent().translate(moveSpeed.transform(getParent().getRotation()));
+		}
+		if(player.input().getForward() < 0){
+			getParent().translate(moveSpeed.transform(getParent().getRotation()).multiply(-1));
+		}
+		if(player.input().getHorizantal() < 0){
+			getParent().translate(horizSpeed.transform(getParent().getRotation()).multiply(-1));
+		}
+		if(player.input().getHorizantal() > 0){
+			getParent().translate(horizSpeed.transform(getParent().getRotation()));
+		}*/
 
 		PingMessage p = new PingMessage(random.nextInt());
 		player.getSession().send(p);

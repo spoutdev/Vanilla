@@ -62,7 +62,7 @@ public class Enderman extends Creature implements Neutral {
 			float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
 			float y = getParent().getPosition().getY();
 			float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			this.velocity.add(x, y, z);
+			setVelocity(velocity.add(x, y, z));
 		}
 
 		super.onTick(dt);

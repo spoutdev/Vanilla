@@ -59,7 +59,7 @@ public class Item extends ObjectEntity {
 		this.is = is;
 		this.roll = 1;
 		unpickable = 10;
-		velocity.add(initial);
+		setVelocity(velocity.add(initial));
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class Item extends ObjectEntity {
 		float x = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
 		float y = rand.nextFloat();
 		float z = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
-		this.velocity.add(x, y, z);
+		setVelocity(this.velocity.add(x, y, z));
 		super.onTick(dt);
 		World world = getParent().getWorld();
 		//TODO replace with getClosestPlayer when my Spout PR gets pulled!

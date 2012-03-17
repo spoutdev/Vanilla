@@ -35,6 +35,7 @@ import org.spout.api.protocol.EntityProtocolStore;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Passive;
+import org.spout.vanilla.material.block.Wool;
 
 public class Sheep extends Creature implements Passive {
 	private int countdown = 0;
@@ -45,7 +46,7 @@ public class Sheep extends Creature implements Passive {
 		this(0x0);
 	}
 
-	public Sheep(WoolColor color) {
+	public Sheep(Wool.WoolColor color) {
 		this(color.getId());
 	}
 
@@ -98,34 +99,6 @@ public class Sheep extends Creature implements Passive {
 
 	public void setColor() {
 		getParent().setData("SheepColor", getRandom());
-	}
-
-	public enum WoolColor {
-		White(0),
-		Orange(1),
-		Magenta(2),
-		LightBlue(3),
-		Yellow(4),
-		Lime(5),
-		Pink(6),
-		Gray(7),
-		Silver(8),
-		Cyan(9),
-		Purple(10),
-		Blue(11),
-		Brown(12),
-		Green(13),
-		Red(14),
-		Black(15);
-		private final int id;
-
-		private WoolColor(int color) {
-			id = color;
-		}
-
-		public int getId() {
-			return id;
-		}
 	}
 
 	@Override

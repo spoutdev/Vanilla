@@ -25,13 +25,49 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.material.SubMaterial;
 import org.spout.vanilla.material.Plant;
 import org.spout.vanilla.material.generic.GenericBlock;
 
-public class Tree extends GenericBlock implements Plant {
-	public Tree(String name, int id, int data) {
-		super(name, id, data);
-		setOpacity((byte) 1);
+public class Tree extends GenericBlock implements Plant, SubMaterial {
+	
+	public final Tree DEFAULT;
+	public final Tree SPRUCE;
+	public final Tree BIRCH;
+	public final Tree JUNGLE;
+	
+	private final Tree parent;
+	private final short data;
+	
+	private void setDefault() {
+		this.setHardness(2.0F).setResistance(3.3F).setOpacity((byte) 1);
+	}
+	
+	private Tree(String name, int data, Tree parent) {
+		super(name, 17);
+		this.setDefault();
+		this.parent = parent;
+		this.data = (short) data;
+		parent.registerSubMaterial(this);
+		this.register();
+		
+		this.DEFAULT = parent.DEFAULT;
+		this.SPRUCE = parent.SPRUCE;
+		this.BIRCH = parent.BIRCH;
+		this.JUNGLE = parent.JUNGLE;
+	}
+	
+	public Tree(String name) {
+		super(name, 17);
+		this.setDefault();
+		this.parent = this;
+		this.data = 0;
+		this.register();
+		
+		this.DEFAULT = new Tree("Default Wood", 0, this);
+		this.SPRUCE = new Tree("Spruce Wood", 1, this);
+		this.BIRCH = new Tree("Birch Wood", 2, this);
+		this.JUNGLE = new Tree("Jungle Wood", 3, this);
 	}
 
 	@Override
@@ -47,5 +83,15 @@ public class Tree extends GenericBlock implements Plant {
 	@Override
 	public int getMinimumLightToGrow() {
 		return 0;
+	}
+	
+	@Override
+	public short getData() {
+		return this.data;
+	}
+	
+	@Override
+	public Tree getParentMaterial() {
+		return this.parent;
 	}
 }

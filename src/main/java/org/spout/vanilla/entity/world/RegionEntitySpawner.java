@@ -41,6 +41,7 @@ import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.player.Player;
+import org.spout.vanilla.VanillaMaterials;
 
 public class RegionEntitySpawner extends Controller {
 	private static Map<Class<? extends Controller>, Boolean> validConstructors = new ConcurrentHashMap<Class<? extends Controller>, Boolean>();
@@ -166,19 +167,19 @@ public class RegionEntitySpawner extends Controller {
 		int y = chunk.getY() * 16 + randY;
 		int z = chunk.getZ() * 16 + randZ;
 		World world = chunk.getWorld();
-		if (world.getBlockId(x, y + 1, z) != 0) {
+		if (world.getBlockMaterial(x, y + 1, z) != VanillaMaterials.AIR) {
 			return false;
 		}
-		if (world.getBlockId(x + 1, y, z) != 0) {
+		if (world.getBlockMaterial(x + 1, y, z) != VanillaMaterials.AIR) {
 			return false;
 		}
-		if (world.getBlockId(x - 1, y, z) != 0) {
+		if (world.getBlockMaterial(x - 1, y, z) != VanillaMaterials.AIR) {
 			return false;
 		}
-		if (world.getBlockId(x, y, z + 1) != 0) {
+		if (world.getBlockMaterial(x, y, z + 1) != VanillaMaterials.AIR) {
 			return false;
 		}
-		if (world.getBlockId(x, y, z - 1) != 0) {
+		if (world.getBlockMaterial(x, y, z - 1) != VanillaMaterials.AIR) {
 			return false;
 		}
 

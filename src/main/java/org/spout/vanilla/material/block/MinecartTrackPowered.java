@@ -43,9 +43,10 @@ public class MinecartTrackPowered extends MinecartTrackBase implements RedstoneT
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
 	@Override
 	public PoweredRails createData(short data) {
 		return new PoweredRails(data);
 	}
+
 }

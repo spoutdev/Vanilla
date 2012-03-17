@@ -25,14 +25,12 @@
  */
 package org.spout.vanilla.entity.object.falling;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.MathHelper;
+import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.object.Falling;
-import org.spout.vanilla.material.Block;
 
 public class FallingBlock extends Falling {
 	private final BlockMaterial block;
@@ -57,15 +55,11 @@ public class FallingBlock extends Falling {
 			return;
 		}
 
-		World world = position.getWorld();
-		int x = MathHelper.floor(position.getX());
-		int y = MathHelper.floor(position.getY());
-		int z = MathHelper.floor(position.getZ());
-		Block material = (Block) world.getBlock(x, y - 1, z).getBlockMaterial();
-		if (material == VanillaMaterials.AIR || material.isLiquid()) {
-			getParent().translate(x, -.004f, z);
+		Block block = position.getWorld().getBlock(position).move(BlockFace.BOTTOM);
+		if (block.getMaterial() == VanillaMaterials.AIR || block.getMaterial().isLiquid()) {
+			getParent().translate(0f, -.004f, 0f); //gravity
 		} else {
-			world.setBlockMaterial(x, y, z, block, world);
+			block.move(BlockFace.TOP).setMaterial(this.block);
 			getParent().kill();
 		}
 

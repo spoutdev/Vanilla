@@ -29,8 +29,8 @@ import org.spout.vanilla.material.Plant;
 import org.spout.vanilla.material.attachable.GroundAttachable;
 
 public class LongGrass extends GroundAttachable implements Plant {
-	public LongGrass(String name, int id, int data) {
-		super(name, id, data);
+	public LongGrass(String name, int id) {
+		super(name, id);
 	}
 
 	@Override

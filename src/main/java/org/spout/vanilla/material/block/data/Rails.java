@@ -26,11 +26,13 @@
 package org.spout.vanilla.material.block.data;
 
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.DataSource;
+import org.spout.api.material.block.BlockData;
 import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.util.RailsState;
 
-public class Rails implements MaterialData {
+public class Rails implements BlockData {
 	private RailsState state;
 
 	public Rails(short data) {
@@ -108,8 +110,12 @@ public class Rails implements MaterialData {
 		return this.state.getData();
 	}
 
-	@Override
 	public BlockMaterial getMaterial() {
 		return VanillaMaterials.RAILS;
+	}
+
+	@Override
+	public void setData(DataSource datasource) {
+		this.setData(datasource.getData());
 	}
 }

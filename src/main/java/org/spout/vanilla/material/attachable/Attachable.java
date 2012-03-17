@@ -27,9 +27,8 @@ package org.spout.vanilla.material.attachable;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.block.BlockFace;
-import org.spout.vanilla.material.Block;
 
-public interface Attachable extends Block {
+public interface Attachable {
 	/**
 	 * Gets which data id should be set for the given face
 	 * @param face where the block will be attached to

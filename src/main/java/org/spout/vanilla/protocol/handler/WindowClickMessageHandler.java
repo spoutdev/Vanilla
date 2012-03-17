@@ -74,16 +74,16 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 				response(session, message, false);
 				return;
 			}
-		} else if (message.getItem() != currentItem.getMaterial().getId() || message.getCount() != currentItem.getAmount() || message.getDamage() != currentItem.getDamage()) {
+		} else if (message.getItem() != currentItem.getMaterial().getId() || message.getCount() != currentItem.getAmount() || message.getDamage() != currentItem.getData()) {
 			player.getNetworkSynchronizer().onSlotSet(inv, slot, currentItem);
 			response(session, message, false);
 			return;
 		}
 
 		if (message.isShift()) {
-			if (false /* inv == player.getInventory().getOpenWindow() */) {
+			//if (inv == player.getInventory().getOpenWindow()) {
 				// TODO: if player has e.g. chest open
-			}
+			//}
 			{
 				if (slot < 9) {
 					for (int i = 9; i < 36; ++i) {

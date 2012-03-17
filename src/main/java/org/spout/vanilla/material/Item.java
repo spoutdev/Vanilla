@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.material;
 
-import org.spout.api.material.ItemMaterial;
+public interface Item {
 
-public interface Item extends ItemMaterial {
 }

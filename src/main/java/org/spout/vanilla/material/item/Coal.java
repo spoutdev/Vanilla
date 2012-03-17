@@ -23,45 +23,49 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.material.item;
 
-public enum Instrument {
-	BASS_GUITAR(0),
-	SNARE_DRUM(1),
-	CLICKS(2),
-	BASS_DRUM(3),
-	PIANO(4);
-	private final byte id;
-	private final String name;
+import org.spout.api.material.Material;
+import org.spout.api.material.SubMaterial;
+import org.spout.vanilla.material.generic.GenericItem;
+import org.spout.vanilla.material.generic.GenericSubItem;
 
-	private Instrument(int id) {
-		this.id = (byte) id;
-		name = name().charAt(0) + name().substring(1).toLowerCase().replaceAll("_", " ");
+public class Coal extends GenericSubItem {
+	public final Coal CHARCOAL;
+	public final Coal COAL;
+	
+	private final Coal parent;
+	private final short data;
+	
+	private Coal(String name, int data, Coal parent) {
+		super(name, 263);
+		this.parent = parent;
+		this.data = (short) data;		
+		this.register();
+		parent.registerSubMaterial(this);
+		
+		this.COAL = parent.COAL;
+		this.CHARCOAL = parent.CHARCOAL;
 	}
-
-	public byte getId() {
-		return id;
+	
+	public Coal(String name) {
+		super(name, 263);
+		this.parent = this;
+		this.data = 0;
+		this.register();
+		
+		this.COAL = new Coal("Coal", 0, this);
+		this.CHARCOAL = new Coal("Charcoal", 1, this);
 	}
 
 	@Override
-	public String toString() {
-		return name;
+	public short getData() {
+		return this.data;
 	}
 
-	public static Instrument getInstrumentFromId(final byte id) {
-		switch (id) {
-			case 0:
-				return BASS_GUITAR;
-			case 1:
-				return SNARE_DRUM;
-			case 2:
-				return CLICKS;
-			case 3:
-				return BASS_DRUM;
-			case 4:
-				return PIANO;
-			default:
-				throw new IllegalArgumentException("Invalid id");
-		}
+	@Override
+	public Coal getParentMaterial() {
+		return this.parent;
 	}
+
 }

@@ -29,61 +29,47 @@ import java.util.HashMap;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockSource;
+import org.spout.api.material.block.GenericBlockSource;
 import org.spout.vanilla.VanillaMaterials;
 
 public class GenericEmptyContainer extends GenericBlockItem {
-	private HashMap<BlockMaterial, GenericFullContainer> map = new HashMap<BlockMaterial, GenericFullContainer>();
+	private HashMap<BlockSource, GenericFullContainer> fullContainers = new HashMap<BlockSource, GenericFullContainer>();
 
 	public GenericEmptyContainer(String name, int id) {
-		this(name, id, VanillaMaterials.AIR);
-	}
-
-	public GenericEmptyContainer(String name, int id, int data) {
-		this(name, id, data, VanillaMaterials.AIR);
-	}
-
-	public GenericEmptyContainer(String name, int id, BlockMaterial onPlace) {
-		super(name, id, onPlace);
-	}
-
-	public GenericEmptyContainer(String name, int id, int data, boolean subtypes) {
-		this(name, id, data, subtypes, VanillaMaterials.AIR);
-	}
-
-	public GenericEmptyContainer(String name, int id, int data, BlockMaterial onPlace) {
-		super(name, id, data, onPlace);
-	}
-
-	public GenericEmptyContainer(String name, int id, int data, boolean subtypes, BlockMaterial onPlace) {
-		super(name, id, data, subtypes, onPlace);
+		super(name, id, VanillaMaterials.AIR);
 	}
 
 	@Override
 	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
 		// TODO: ignore position and get the first non-air in the line of sight to prevent NPE's
-		BlockMaterial block = entity.getWorld().getBlock(position).getLiveBlockMaterial();
-
+		Block block = entity.getWorld().getBlock(position);
+		
 		super.onInteract(entity, position, type, clickedFace);
 
 		Inventory inventory = entity.getInventory();
 		if (inventory.getCurrentItem() == null) {
-			ItemMaterial item = map.get(block);
+			GenericFullContainer full = this.getFullItem(block.getMaterial(), block.getData());
 
-			if (item == null) {
+			if (full == null) {
 				return;
 			}
 
-			inventory.setItem(new ItemStack(item, 1), inventory.getCurrentSlot());
+			inventory.setItem(new ItemStack(full, 1), inventory.getCurrentSlot());
 		}
+	}
+	
+	public GenericFullContainer getFullItem(BlockMaterial material, short data) {
+		return this.fullContainers.get(new GenericBlockSource(material, data));
 	}
 
 	public void register(GenericFullContainer item) {
-		map.put(item.getBlock(), item);
+		this.fullContainers.put(item.getBlock(), item);
 	}
 }

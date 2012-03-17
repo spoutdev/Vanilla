@@ -25,9 +25,8 @@
  */
 package org.spout.vanilla.material;
 
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.ItemMaterial;
+import org.spout.api.material.block.BlockSource;
 
-public interface BlockItem extends ItemMaterial {
-	public BlockMaterial getBlock();
+public interface BlockItem extends Item {
+	public BlockSource getBlock();
 }

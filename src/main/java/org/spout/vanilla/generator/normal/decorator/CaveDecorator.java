@@ -27,13 +27,14 @@ package org.spout.vanilla.generator.normal.decorator;
 
 import java.util.Random;
 
+import net.royawesome.jlibnoise.NoiseQuality;
+import net.royawesome.jlibnoise.module.source.Perlin;
+
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
-import org.spout.vanilla.VanillaMaterials;
 
-import net.royawesome.jlibnoise.NoiseQuality;
-import net.royawesome.jlibnoise.module.source.Perlin;
+import org.spout.vanilla.VanillaMaterials;
 
 public class CaveDecorator implements BiomeDecorator {
 	private Perlin noise = new Perlin();

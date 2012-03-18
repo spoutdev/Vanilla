@@ -26,6 +26,7 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.World;
+
 import org.spout.vanilla.material.Block;
 
 public interface RedstoneTarget extends Block {

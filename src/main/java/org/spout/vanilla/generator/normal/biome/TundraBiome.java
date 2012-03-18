@@ -26,6 +26,7 @@
 package org.spout.vanilla.generator.normal.biome;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
 import org.spout.vanilla.VanillaMaterials;
 
 public class TundraBiome extends PlainBiome {

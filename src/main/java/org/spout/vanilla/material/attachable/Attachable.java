@@ -27,6 +27,7 @@ package org.spout.vanilla.material.attachable;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.Block;
 
 public interface Attachable extends Block {

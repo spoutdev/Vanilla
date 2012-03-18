@@ -26,6 +26,7 @@
 package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.Protocol;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.creature.passive.Chicken;
 import org.spout.vanilla.entity.living.creature.passive.Sheep;

@@ -26,6 +26,7 @@
 package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.CodecLookupService;
+
 import org.spout.vanilla.protocol.codec.AttachEntityCodec;
 import org.spout.vanilla.protocol.codec.BlockActionCodec;
 import org.spout.vanilla.protocol.codec.BlockChangeCodec;

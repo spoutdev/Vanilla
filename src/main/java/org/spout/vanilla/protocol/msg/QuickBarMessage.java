@@ -27,8 +27,9 @@ package org.spout.vanilla.protocol.msg;
 
 import java.util.Map;
 
-import org.spout.api.protocol.Message;
 import org.spout.nbt.Tag;
+
+import org.spout.api.protocol.Message;
 
 public class QuickBarMessage extends Message {
 	private final short slot, id, amount, damage;

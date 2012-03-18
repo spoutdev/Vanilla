@@ -26,6 +26,7 @@
 package org.spout.vanilla.generator;
 
 import org.spout.api.generator.biome.BiomeType;
+
 import org.spout.vanilla.generator.nether.biome.NetherrackBiome;
 import org.spout.vanilla.generator.normal.biome.DesertBiome;
 import org.spout.vanilla.generator.normal.biome.JungleBiome;

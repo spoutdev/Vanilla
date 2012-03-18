@@ -27,8 +27,9 @@ package org.spout.vanilla.protocol.msg;
 
 import java.util.Map;
 
-import org.spout.api.protocol.Message;
 import org.spout.nbt.Tag;
+
+import org.spout.api.protocol.Message;
 
 public final class SetWindowSlotMessage extends Message {
 	private final int id, slot, item, count, damage;

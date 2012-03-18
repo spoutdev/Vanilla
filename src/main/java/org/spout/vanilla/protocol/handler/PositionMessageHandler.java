@@ -27,10 +27,10 @@ package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.msg.PositionMessage;
 import org.spout.vanilla.protocol.msg.PositionRotationMessage;
 
@@ -72,9 +72,6 @@ public final class PositionMessageHandler extends MessageHandler<PositionMessage
 		player.input().setForward(diffInX);
 		player.input().setHorizantal(diffInZ);
 		*/
-		
-		
-	
 
 		Point p = new Point(entity.getWorld(), (float) x, (float) y, (float) z);
 		entity.setPosition(p);

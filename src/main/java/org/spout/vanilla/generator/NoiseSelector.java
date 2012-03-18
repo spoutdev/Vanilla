@@ -25,10 +25,10 @@
  */
 package org.spout.vanilla.generator;
 
-import org.spout.api.generator.biome.BiomeSelector;
-
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Voronoi;
+
+import org.spout.api.generator.biome.BiomeSelector;
 
 /**
  * NoiseSelector that uses parameters to setup a conherent noise function which will

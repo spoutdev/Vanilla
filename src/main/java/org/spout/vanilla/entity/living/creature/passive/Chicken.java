@@ -31,6 +31,7 @@ import java.util.Set;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
+
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;

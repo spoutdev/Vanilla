@@ -35,6 +35,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.ObjectEntity;

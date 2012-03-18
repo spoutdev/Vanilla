@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;

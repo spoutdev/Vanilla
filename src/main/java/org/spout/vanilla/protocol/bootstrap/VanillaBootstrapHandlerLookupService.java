@@ -26,6 +26,7 @@
 package org.spout.vanilla.protocol.bootstrap;
 
 import org.spout.api.protocol.HandlerLookupService;
+
 import org.spout.vanilla.protocol.bootstrap.handler.BootstrapHandshakeMessageHandler;
 import org.spout.vanilla.protocol.bootstrap.handler.BootstrapIdentificationMessageHandler;
 import org.spout.vanilla.protocol.bootstrap.handler.BootstrapPingMessageHandler;

@@ -33,19 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Vector2;
-import org.spout.api.math.Vector3;
-import org.spout.api.util.Parameter;
-import org.spout.nbt.IntTag;
-import org.spout.nbt.StringTag;
-import org.spout.nbt.Tag;
-import org.spout.vanilla.VanillaMaterials;
-
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
 import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+
 import static org.spout.vanilla.protocol.ChannelBufferUtils.getExpandedHeight;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.getShifts;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.readColor;
@@ -62,6 +51,20 @@ import static org.spout.vanilla.protocol.ChannelBufferUtils.writeString;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.writeUtf8String;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.writeVector2;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.writeVector3;
+
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
+import org.junit.Test;
+import org.spout.nbt.IntTag;
+import org.spout.nbt.StringTag;
+import org.spout.nbt.Tag;
+
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector2;
+import org.spout.api.math.Vector3;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.VanillaMaterials;
 
 public class ChannelBufferUtilsTest {
 	public static final List<Parameter<?>> TEST_PARAMS = Arrays.asList(new Parameter<Byte>(Parameter.TYPE_BYTE, 1, (byte) 33), new Parameter<Short>(Parameter.TYPE_SHORT, 2, (short) 333), new Parameter<Integer>(Parameter.TYPE_INT, 3, 22), new Parameter<Float>(Parameter.TYPE_FLOAT, 4, 1.23F), new Parameter<String>(Parameter.TYPE_STRING, 5, "Hello World"), new Parameter<ItemStack>(Parameter.TYPE_ITEM, 6, new ItemStack(VanillaMaterials.BEDROCK, 5)));

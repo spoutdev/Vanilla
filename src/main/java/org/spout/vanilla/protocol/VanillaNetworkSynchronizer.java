@@ -25,6 +25,12 @@
  */
 package org.spout.vanilla.protocol;
 
+import static org.spout.vanilla.util.VanillaMessageHandlerUtils.getInventoryId;
+
+import gnu.trove.iterator.TIntObjectIterator;
+import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.set.hash.TIntHashSet;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.generator.WorldGenerator;
@@ -43,7 +49,7 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.Session.State;
 import org.spout.api.util.map.TIntPairHashSet;
 import org.spout.api.util.map.TIntPairObjectHashMap;
-import org.spout.vanilla.util.VanillaMessageHandlerUtils;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
@@ -61,11 +67,7 @@ import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-
-import gnu.trove.iterator.TIntObjectIterator;
-import gnu.trove.map.hash.TIntObjectHashMap;
-import gnu.trove.set.hash.TIntHashSet;
-import static org.spout.vanilla.util.VanillaMessageHandlerUtils.getInventoryId;
+import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	@SuppressWarnings("unused")

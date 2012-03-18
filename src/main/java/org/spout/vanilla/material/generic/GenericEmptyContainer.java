@@ -35,6 +35,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.VanillaMaterials;
 
 public class GenericEmptyContainer extends GenericBlockItem {

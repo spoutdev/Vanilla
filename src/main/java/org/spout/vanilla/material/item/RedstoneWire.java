@@ -28,6 +28,7 @@ package org.spout.vanilla.material.item;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.attachable.GroundAttachable;

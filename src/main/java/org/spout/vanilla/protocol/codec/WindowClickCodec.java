@@ -28,13 +28,14 @@ package org.spout.vanilla.protocol.codec;
 import java.io.IOException;
 import java.util.Map;
 
-import org.spout.api.protocol.MessageCodec;
-import org.spout.nbt.Tag;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.WindowClickMessage;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+import org.spout.nbt.Tag;
+
+import org.spout.api.protocol.MessageCodec;
+
+import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.msg.WindowClickMessage;
 
 public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 	public WindowClickCodec() {

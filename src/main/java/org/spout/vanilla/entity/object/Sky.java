@@ -26,6 +26,7 @@
 package org.spout.vanilla.entity.object;
 
 import org.spout.api.geo.World;
+
 import org.spout.vanilla.world.Weather;
 
 public interface Sky {

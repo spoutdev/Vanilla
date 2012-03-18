@@ -30,6 +30,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.msg.PositionRotationMessage;
 
 public final class PositionRotationMessageHandler extends MessageHandler<PositionRotationMessage> {
@@ -52,7 +53,7 @@ public final class PositionRotationMessageHandler extends MessageHandler<Positio
 		double x = message.getX();
 		double y = message.getY();
 		double z = message.getZ();
-		
+
 		Point p = new Point(entity.getWorld(), (float) x, (float) y, (float) z);
 		entity.setPosition(p);
 		entity.yaw(rot);

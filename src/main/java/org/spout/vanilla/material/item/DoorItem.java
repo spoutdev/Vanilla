@@ -31,6 +31,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.generic.GenericItem;
 

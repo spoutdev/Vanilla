@@ -32,6 +32,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialData;
+
 import org.spout.vanilla.material.Food.FoodEffectType;
 import org.spout.vanilla.material.attachable.GroundAttachable;
 import org.spout.vanilla.material.attachable.WallAttachable;
@@ -536,7 +537,7 @@ public final class VanillaMaterials {
 		((GenericBlock) VanillaMaterials.END_PORTAL).setDrop(VanillaMaterials.AIR);
 		((GenericBlock) VanillaMaterials.END_PORTAL_FRAME).setDrop(VanillaMaterials.AIR);
 		((GenericBlock) VanillaMaterials.REDSTONE_LAMP_ON).setDrop(VanillaMaterials.REDSTONE_LAMP_OFF);
-		
+
 		Field[] fields = VanillaMaterials.class.getFields();
 		for (Field f : fields) {
 			if (Modifier.isStatic(f.getModifiers())) {

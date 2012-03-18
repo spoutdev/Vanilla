@@ -26,9 +26,8 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.World;
-import org.spout.api.geo.discrete.Point;
+
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.entity.object.falling.FallingBlock;
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;
@@ -72,7 +71,7 @@ public class Solid extends GenericBlock implements MovingBlock {
 			Block material = (Block) world.getBlockMaterial(x, y - 1, z);
 			if (material == VanillaMaterials.AIR || material.isLiquid()) {
 				if (world.setBlockId(x, y, z, (short) 0, world)) {
-//					world.createAndSpawnEntity(new Point(world, x, y, z), new FallingBlock(this));
+					//					world.createAndSpawnEntity(new Point(world, x, y, z), new FallingBlock(this));
 				}
 			}
 		}

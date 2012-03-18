@@ -33,6 +33,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.entity.object.Item;
 
 public abstract class LivingEntity extends VanillaEntity {

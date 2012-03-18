@@ -26,6 +26,7 @@
 package org.spout.vanilla.entity.object;
 
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.entity.ObjectEntity;
 
 /**

@@ -27,12 +27,13 @@ package org.spout.vanilla.protocol.codec;
 
 import java.io.IOException;
 
-import org.spout.api.protocol.MessageCodec;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.CustomDataMessage;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
+import org.spout.api.protocol.MessageCodec;
+
+import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.msg.CustomDataMessage;
 
 public class CustomDataCodec extends MessageCodec<CustomDataMessage> {
 	public CustomDataCodec() {

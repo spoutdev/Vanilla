@@ -25,14 +25,15 @@
  */
 package org.spout.vanilla.generator.theend.biome;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
-import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.generator.VanillaBiomeType;
-import org.spout.vanilla.generator.theend.decorator.SpireDecorator;
-
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
+
+import org.spout.api.util.cuboid.CuboidShortBuffer;
+
+import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.generator.VanillaBiomeType;
+import org.spout.vanilla.generator.theend.decorator.SpireDecorator;
 
 public class EndStoneBiome extends VanillaBiomeType {
 	private Perlin base = new Perlin();

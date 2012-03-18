@@ -25,12 +25,13 @@
  */
 package org.spout.vanilla.protocol.codec;
 
-import org.spout.api.protocol.MessageCodec;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.IdentificationMessage;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
+import org.spout.api.protocol.MessageCodec;
+
+import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.msg.IdentificationMessage;
 
 public final class IdentificationCodec extends MessageCodec<IdentificationMessage> {
 	public IdentificationCodec() {

@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.Tool;
 
 public class GenericTool extends GenericItem implements Tool {

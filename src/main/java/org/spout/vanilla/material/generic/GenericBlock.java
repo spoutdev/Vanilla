@@ -31,6 +31,7 @@ import org.spout.api.material.GenericBlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.block.data.MaterialData;
 import org.spout.vanilla.material.block.data.SimpleMaterialData;

@@ -25,17 +25,18 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
+import net.royawesome.jlibnoise.NoiseQuality;
+import net.royawesome.jlibnoise.module.modifier.Turbulence;
+import net.royawesome.jlibnoise.module.source.Perlin;
+
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.normal.decorator.CactusDecorator;
 import org.spout.vanilla.generator.normal.decorator.CaveDecorator;
 import org.spout.vanilla.generator.normal.decorator.DungeonDecorator;
 import org.spout.vanilla.generator.normal.decorator.OreDecorator;
-
-import net.royawesome.jlibnoise.NoiseQuality;
-import net.royawesome.jlibnoise.module.modifier.Turbulence;
-import net.royawesome.jlibnoise.module.source.Perlin;
 
 public class DesertBiome extends VanillaBiomeType {
 	private Perlin base = new Perlin();

@@ -25,11 +25,11 @@
  */
 package org.spout.vanilla.entity.object.falling;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
+
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.object.Falling;
 import org.spout.vanilla.material.Block;

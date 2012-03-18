@@ -25,16 +25,17 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
+import net.royawesome.jlibnoise.NoiseQuality;
+import net.royawesome.jlibnoise.module.source.RidgedMulti;
+
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.normal.decorator.CaveDecorator;
 import org.spout.vanilla.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.generator.normal.decorator.TreeDecorator;
-
-import net.royawesome.jlibnoise.NoiseQuality;
-import net.royawesome.jlibnoise.module.source.RidgedMulti;
 
 public class MountainBiome extends VanillaBiomeType {
 	private RidgedMulti noise = new RidgedMulti();

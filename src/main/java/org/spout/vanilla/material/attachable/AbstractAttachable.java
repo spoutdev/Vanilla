@@ -30,6 +30,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.generic.GenericBlock;
 

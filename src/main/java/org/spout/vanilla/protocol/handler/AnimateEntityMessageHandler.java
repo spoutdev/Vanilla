@@ -29,10 +29,10 @@ import org.spout.api.Spout;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 
 public final class AnimateEntityMessageHandler extends MessageHandler<EntityAnimationMessage> {
-
 	@Override
 	public void handle(Session session, Player player, EntityAnimationMessage message) {
 		//TODO get target block and call onPlayerInteract

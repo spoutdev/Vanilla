@@ -28,12 +28,13 @@ package org.spout.vanilla.entity.object.falling;
 import java.util.Random;
 
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.entity.object.Falling;
 
 public class PrimedTnt extends Falling {
 	private float timeToExplode = 4.f;
 	private Vector3 velocity;
-	private Vector3 gravity = new Vector3(0,5,0);
+	private Vector3 gravity = new Vector3(0, 5, 0);
 	private Random rng = new Random();
 
 	@Override

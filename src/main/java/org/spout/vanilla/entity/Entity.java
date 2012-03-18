@@ -26,6 +26,7 @@
 package org.spout.vanilla.entity;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
+
 import org.spout.vanilla.entity.living.creature.hostile.Blaze;
 import org.spout.vanilla.entity.living.creature.hostile.CaveSpider;
 import org.spout.vanilla.entity.living.creature.hostile.Creeper;

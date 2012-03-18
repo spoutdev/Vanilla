@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.Inventory;
@@ -39,6 +40,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.living.Human;
 import org.spout.vanilla.protocol.msg.PingMessage;
@@ -52,7 +54,7 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	private short count = 0;
 	private short ping;
 	private boolean sneaking, running, onGround;
-	private final Vector3 moveSpeed = new Vector3(10,0,0);
+	private final Vector3 moveSpeed = new Vector3(10, 0, 0);
 	private final Vector3 horizSpeed = new Vector3(0, 0, -10);
 
 	@Override
@@ -146,15 +148,15 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	public void setSneaking(boolean b) {
 		sneaking = b;
 	}
-	
+
 	public boolean isSneaking() {
 		return sneaking;
 	}
-	
+
 	public void setRunning(boolean b) {
 		running = b;
 	}
-	
+
 	public boolean isRunning() {
 		return running;
 	}
@@ -162,7 +164,7 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	public void setOnGround(boolean onGround) {
 		this.onGround = onGround;
 	}
-	
+
 	public boolean isOnGround() {
 		return onGround;
 	}

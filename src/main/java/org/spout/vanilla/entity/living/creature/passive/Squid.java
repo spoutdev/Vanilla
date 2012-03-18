@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.block.BlockSource;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.Entity;
 import org.spout.vanilla.entity.living.Creature;
@@ -47,7 +48,7 @@ public class Squid extends Creature implements Passive {
 
 		int count = getRandom().nextInt(4);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.INK_SAC, count));
+			drops.add(new ItemStack((BlockSource) VanillaMaterials.DYE.INK_SAC, count));
 		}
 
 		return drops;

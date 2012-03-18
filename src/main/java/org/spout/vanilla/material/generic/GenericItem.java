@@ -26,18 +26,20 @@
 package org.spout.vanilla.material.generic;
 
 import org.spout.api.material.GenericItemMaterial;
-import org.spout.vanilla.material.Item;
 
-public class GenericItem extends GenericItemMaterial implements Item {
+public class GenericItem extends GenericItemMaterial {
+	private boolean hasNBT = false;
+	
 	public GenericItem(String name, int id) {
 		super(name, id);
 	}
-
-	public GenericItem(String name, int id, int data, boolean subtypes) {
-		super(name, id, data, subtypes);
+	
+	public boolean getNBTData() {
+		return this.hasNBT;
 	}
-
-	public GenericItem(String name, int id, int data) {
-		super(name, id, data);
+	
+	public GenericItem setNBTData(boolean has) {
+		this.hasNBT = has;
+		return this;
 	}
 }

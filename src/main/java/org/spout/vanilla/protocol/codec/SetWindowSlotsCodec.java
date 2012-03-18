@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.MaterialData;
+import org.spout.api.material.Material;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.nbt.Tag;
 import org.spout.vanilla.material.Tool;
@@ -55,12 +55,12 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 				items[slot] = null;
 			} else {
 				byte itemCount = buffer.readByte();
-				short damage = buffer.readShort();
+				short data = buffer.readShort();
 				Map<String, Tag> nbtData = null;
 				if (ChannelBufferUtils.hasNbtData(item)) {
 					nbtData = ChannelBufferUtils.readCompound(buffer);
 				}
-				items[slot] = new ItemStack(MaterialData.getMaterial(item, damage), itemCount, (short) damage).setAuxData(nbtData);
+				items[slot] = new ItemStack(Material.get(item), data, itemCount).setAuxData(nbtData);
 			}
 		}
 		return new SetWindowSlotsMessage(id, items);
@@ -81,12 +81,12 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 				buffer.writeByte(item.getAmount());
 				if (item.getMaterial() instanceof Tool) {
 					System.out.println("damage");
-					buffer.writeShort(item.getDamage());
+					buffer.writeShort(item.getData());
 				} else {
 					System.out.println("data");
-					buffer.writeShort(item.getMaterial().getData());
+					buffer.writeShort(item.getData());
 				}
-				if (ChannelBufferUtils.hasNbtData(item.getMaterial().getData())) {
+				if (ChannelBufferUtils.hasNbtData(item.getData())) {
 					ChannelBufferUtils.writeCompound(buffer, item.getAuxData());
 				}
 			}

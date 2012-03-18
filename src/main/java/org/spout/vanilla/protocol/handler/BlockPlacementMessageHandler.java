@@ -32,15 +32,14 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.material.Block;
-import org.spout.vanilla.material.Item;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
@@ -97,9 +96,9 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			sendRevert = true;
 		}
 
-		int x = MathHelper.floor(offsetPos.getX());
-		int y = MathHelper.floor(offsetPos.getY());
-		int z = MathHelper.floor(offsetPos.getZ());
+		int x = offsetPos.getBlockX();
+		int y = offsetPos.getBlockY();
+		int z = offsetPos.getBlockZ();
 
 		if (holding != null && !sendRevert) {
 			/*if (interactEvent.useItemInHand() != Event.Result.DENY) { //TODO: Implement items (they are not in yet!)
@@ -108,8 +107,8 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 				}
 			}*/
 			Material placedMaterial = holding.getMaterial();
-			if (placedMaterial instanceof Item) {
-				((Item) placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
+			if (placedMaterial instanceof ItemMaterial) {
+				((ItemMaterial) placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
 				return;
 			}
 			if (placedMaterial.getId() > 255) {
@@ -120,21 +119,17 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 				sendRevert = true;
 			}
 
-			short placedData = holding.getDamage();
-			if (placedData == 0) {
-				placedData = placedMaterial.getData();
-			}
+			short placedData = holding.getData();
 
 			if (face == BlockFace.BOTTOM && world.getBlockMaterial(x, y - 1, z) == VanillaMaterials.SNOW) {
 				//make sure the target switches one block below (just like water)
-				--y;
-				target = world.getBlock(x, y, z);
+				y = target.move(BlockFace.BOTTOM).getY();
 			}
 
-			Block newBlock = (Block) placedMaterial;
-			Block oldBlock = target != null ? (Block) target.getBlockMaterial() : null;
+			BlockMaterial newBlock = (BlockMaterial) placedMaterial;
+			BlockMaterial oldBlock = target == null ? VanillaMaterials.AIR : target.getMaterial();
 
-			if (!sendRevert && (oldBlock == null || oldBlock.isLiquid() || oldBlock.getId() == 0 || oldBlock == VanillaMaterials.SNOW)) {
+			if (!sendRevert && !oldBlock.isPlacementObstacle()) {
 
 				//if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {
 				//SpoutBlockState newState = BlockProperties.get(placedId.getItemTypeId()).getPhysics().placeAgainst(player, target.getState(), placedId, face);
@@ -164,7 +159,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			}
 		}
 		if (sendRevert) {
-			player.getSession().send(new BlockChangeMessage(x, y, z, target != null ? target.getBlockId() : 0, world.getBlockData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ())));
+			player.getSession().send(new BlockChangeMessage(x, y, z, target != null ? target.getMaterial().getId() : 0, world.getBlockData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ())));
 			inventory.setItem(holding, inventory.getCurrentSlot());
 		}
 	}

@@ -25,17 +25,11 @@
  */
 package org.spout.vanilla;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.ItemMaterial;
-import org.spout.api.material.Material;
-import org.spout.api.material.MaterialData;
 import org.spout.vanilla.material.Food.FoodEffectType;
 import org.spout.vanilla.material.attachable.GroundAttachable;
 import org.spout.vanilla.material.attachable.WallAttachable;
-import org.spout.vanilla.material.block.Air;
 import org.spout.vanilla.material.block.Cactus;
 import org.spout.vanilla.material.block.DoubleSlab;
 import org.spout.vanilla.material.block.Grass;
@@ -51,6 +45,7 @@ import org.spout.vanilla.material.block.Sapling;
 import org.spout.vanilla.material.block.Slab;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.StoneBrick;
+import org.spout.vanilla.material.block.TallGrass;
 import org.spout.vanilla.material.block.Tree;
 import org.spout.vanilla.material.block.WheatCrop;
 import org.spout.vanilla.material.block.Wool;
@@ -65,10 +60,12 @@ import org.spout.vanilla.material.generic.GenericLiquid;
 import org.spout.vanilla.material.generic.GenericRangedWeapon;
 import org.spout.vanilla.material.generic.GenericTool;
 import org.spout.vanilla.material.generic.GenericWeapon;
+import org.spout.vanilla.material.item.Coal;
 import org.spout.vanilla.material.item.DoorBlock;
 import org.spout.vanilla.material.item.DoorItem;
 import org.spout.vanilla.material.item.Dye;
 import org.spout.vanilla.material.item.Minecart;
+import org.spout.vanilla.material.item.Potion;
 import org.spout.vanilla.material.item.PoweredMinecart;
 import org.spout.vanilla.material.item.RedstoneTorch;
 import org.spout.vanilla.material.item.RedstoneWire;
@@ -77,16 +74,13 @@ import org.spout.vanilla.material.item.SpawnEgg;
 import org.spout.vanilla.material.item.StorageMinecart;
 
 public final class VanillaMaterials {
-	public static final BlockMaterial AIR = new Air("Air");
+	public static final BlockMaterial AIR = BlockMaterial.AIR;
 	public static final BlockMaterial STONE = new Solid("Stone", 1).setHardness(1.5F).setResistance(10.0F);
 	public static final BlockMaterial GRASS = new Grass("Grass").setHardness(0.6F).setResistance(0.8F);
 	public static final BlockMaterial DIRT = new Solid("Dirt", 3).setHardness(0.5F).setResistance(0.8F);
 	public static final BlockMaterial COBBLESTONE = new Solid("Cobblestone", 4).setHardness(2.0F).setResistance(10.0F);
 	public static final BlockMaterial WOOD = new Solid("Wooden Planks", 5).setHardness(2.0F).setResistance(5.0F);
-	public static final BlockMaterial SAPLING = new Sapling("Sapling", 0).setHardness(0.0F).setResistance(0.0F);
-	public static final BlockMaterial SPRUCE_SAPLING = new Sapling("Spruce Sapling", 1).setHardness(0.0F).setResistance(0.0F);
-	public static final BlockMaterial BIRCH_SAPLING = new Sapling("Birch Sapling", 2).setHardness(0.0F).setResistance(0.0F);
-	public static final BlockMaterial JUNGLE_SAPLING = new Sapling("Jungle Sapling", 3).setHardness(0.0F).setResistance(0.0F);
+	public static final Sapling SAPLING = new Sapling("Sapling");	
 	public static final BlockMaterial BEDROCK = new Solid("Bedrock", 7).setResistance(6000000.0F);
 	public static final BlockMaterial WATER = new GenericLiquid("Water", 8, true).setHardness(100.0F).setResistance(166.7F).setOpacity((byte) 2);
 	public static final BlockMaterial STATIONARY_WATER = new GenericLiquid("Stationary Water", 9, false).setHardness(100.0F).setResistance(166.7F).setOpacity((byte) 2);
@@ -97,14 +91,8 @@ public final class VanillaMaterials {
 	public static final BlockMaterial GOLD_ORE = new Ore("Gold Ore", 14).setHardness(3.0F).setResistance(5.0F);
 	public static final BlockMaterial IRON_ORE = new Ore("Iron Ore", 15).setHardness(3.0F).setResistance(5.0F);
 	public static final BlockMaterial COAL_ORE = new Ore("Coal Ore", 16).setHardness(3.0F).setResistance(5.0F);
-	public static final BlockMaterial LOG = new Tree("Wood", 17, 0).setHardness(2.0F).setResistance(3.3F);
-	public static final BlockMaterial SPRUCE_LOG = new Tree("Wood", 17, 1).setHardness(0.2F).setResistance(3.3F);
-	public static final BlockMaterial BIRCH_LOG = new Tree("Wood", 17, 2).setHardness(0.2F).setResistance(3.3F);
-	public static final BlockMaterial JUNGLE_LOG = new Tree("Wood", 17, 3).setHardness(0.2F).setResistance(3.3F);
-	public static final BlockMaterial LEAVES = new Leaves("Leaves", 0).setHardness(0.2F).setResistance(3.3F);
-	public static final BlockMaterial SPRUCE_LEAVES = new Leaves("Spruce Leaves", 1).setHardness(0.2F).setResistance(0.3F);
-	public static final BlockMaterial BIRCH_LEAVES = new Leaves("Birch Leaves", 2).setHardness(0.2F).setResistance(0.3F);
-	public static final BlockMaterial JUNGLE_LEAVES = new Leaves("Jungle Leaves", 3).setHardness(0.2F).setResistance(0.3F);
+	public static final Tree LOG = new Tree("Wood");
+	public static final Leaves LEAVES = new Leaves("Leaves");
 	public static final BlockMaterial SPONGE = new Solid("Sponge", 19).setHardness(0.6F).setResistance(1.0F);
 	public static final BlockMaterial GLASS = new Solid("Glass", 20).setHardness(0.3F).setResistance(0.5F);
 	public static final BlockMaterial LAPIS_ORE = new Ore("Lapis Lazuli Ore", 21).setMinDropCount(4).setMaxDropCount(8).setHardness(3.0F).setResistance(5.0F);
@@ -117,28 +105,11 @@ public final class VanillaMaterials {
 	public static final BlockMaterial DETECTOR_RAIL = new MinecartTrackDetector("Detector Rail", 28).setHardness(0.7F).setResistance(1.2F);
 	public static final BlockMaterial PISTON_STICKY_BASE = new Solid("Sticky Piston", 29).setResistance(0.8F);
 	public static final BlockMaterial WEB = new Solid("Cobweb", 30).setHardness(4.0F).setResistance(20.0F);
-	public static final BlockMaterial DEAD_SHRUB = new LongGrass("Dead Grass", 31, 0).setHardness(0.0F).setResistance(0.0F);
-	public static final BlockMaterial TALL_GRASS = new LongGrass("Tall Grass", 31, 1).setHardness(0.0F).setResistance(0.0F);
-	public static final BlockMaterial FERN = new LongGrass("Fern", 31, 2).setHardness(0.0F).setResistance(0.0F);
-	public static final BlockMaterial DEAD_BUSH = new LongGrass("Dead Shrubs", 32, 0).setHardness(0.0F).setResistance(0.0F);
+	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass");	
+	public static final BlockMaterial DEAD_BUSH = new LongGrass("Dead Shrubs", 32).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial PISTON_BASE = new Solid("Piston", 33).setResistance(0.8F);
 	public static final BlockMaterial PISTON_EXTENSION = new Solid("Piston (Head)", 34).setResistance(0.8F);
-	public static final BlockMaterial WHITE_WOOL = new Wool("Wool", 35, 0).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial ORANGE_WOOL = new Wool("Orange Wool", 35, 1).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial MAGENTA_WOOL = new Wool("Magenta Wool", 35, 2).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial LIGHT_BLUE_WOOL = new Wool("Light Blue Wool", 35, 3).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial YELLOW_WOOL = new Wool("Yellow Wool", 35, 4).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial LIME_WOOL = new Wool("Light Green Wool", 35, 5).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial PINK_WOOL = new Wool("Pink Wool", 35, 6).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial GREY_WOOL = new Wool("Grey Wool", 35, 7).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial LIGHT_GREY_WOOL = new Wool("Light Grey Wool", 35, 8).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial CYAN_WOOL = new Wool("Cyan Wool", 35, 9).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial PURPLE_WOOL = new Wool("Purple Wool", 35, 10).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial BLUE_WOOL = new Wool("Blue Wool", 35, 11).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial BROWN_WOOL = new Wool("Brown Wool", 35, 12).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial GREEN_WOOL = new Wool("Dark Green Wool", 35, 13).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial RED_WOOL = new Wool("Red Wool", 35, 14).setHardness(0.8F).setResistance(1.3F);
-	public static final BlockMaterial BLACK_WOOL = new Wool("Black Wool", 35, 15).setHardness(0.8F).setResistance(1.3F);
+	public static final Wool WOOL = new Wool("Wool");
 	public static final BlockMaterial MOVED_BY_PISTON = new Solid("Moved By Piston", 36).setResistance(0.0F);
 	public static final BlockMaterial DANDELION = new GroundAttachable("Dandelion", 37).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial ROSE = new GroundAttachable("Rose", 38).setHardness(0.0F).setResistance(0.0F);
@@ -146,18 +117,8 @@ public final class VanillaMaterials {
 	public static final BlockMaterial RED_MUSHROOM = new GroundAttachable("Red Mushroom", 40).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial GOLD_BLOCK = new Solid("Gold Block", 41).setHardness(3.0F).setResistance(10.0F);
 	public static final BlockMaterial IRON_BLOCK = new Solid("Iron Block", 42).setHardness(5.0F).setResistance(10.0F);
-	public static final BlockMaterial STONE_DOUBLE_SLABS = new DoubleSlab("Stone Double Slab", 43, 0).setHardness(2.0F).setResistance(10.0F);
-	public static final BlockMaterial SANDSTONE_DOUBLE_SLABS = new DoubleSlab("Sandstone Double Slab", 43, 1).setHardness(2.0F).setResistance(10.0F);
-	public static final BlockMaterial WOODEN_DOUBLE_SLABS = new DoubleSlab("Wooden Double Slab", 43, 2).setHardness(2.0F).setResistance(10.0F);
-	public static final BlockMaterial COBBLESTONE_DOUBLE_SLABS = new DoubleSlab("Cobblestone Double Slab", 43, 3).setHardness(2.0F).setResistance(10.0F);
-	public static final BlockMaterial BRICK_DOUBLE_SLABS = new DoubleSlab("Brick Double Slab", 43, 4).setHardness(2.0F).setResistance(10.0F);
-	public static final BlockMaterial STONE_BRICK_DOUBLE_SLABS = new DoubleSlab("Stone Brick Double Slab", 43, 5).setHardness(2.0F).setResistance(10.0F);
-	public static final BlockMaterial STONE_SLAB = new Slab("Stone Slab", 44, 0).setHardness(2.0F).setResistance(10.0F);
-	public static final BlockMaterial SANDSTONE_SLAB = new Slab("Sandstone Slab", 44, 1).setHardness(2.0F).setResistance(10.0F);
-	public static final BlockMaterial WOODEN_SLAB = new Slab("Wooden Slab", 44, 2).setHardness(2.0F).setResistance(10.0F);
-	public static final BlockMaterial COBBLESTONE_SLAB = new Slab("Stone Slab", 44, 3).setHardness(2.0F).setResistance(10.0F);
-	public static final BlockMaterial BRICK_SLAB = new Slab("Brick Slab", 44, 4).setHardness(2.0F).setResistance(10.0F);
-	public static final BlockMaterial STONE_BRICK_SLAB = new Slab("Stone Brick Slab", 44, 5).setHardness(2.0F).setResistance(10.0F);
+	public static final DoubleSlab DOUBLE_SLABS = new DoubleSlab("Double Slab");
+	public static final Slab SLAB = new Slab("Slab");
 	public static final BlockMaterial BRICK = new Solid("Brick Block", 45).setHardness(2.0F).setResistance(10.0F);
 	public static final BlockMaterial TNT = new Solid("TNT", 46).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial BOOKSHELF = new Solid("Bookshelf", 47).setHardness(1.5F).setResistance(2.5F);
@@ -168,7 +129,7 @@ public final class VanillaMaterials {
 	public static final BlockMaterial MONSTER_SPAWNER = new Solid("MonsterEntity Spawner", 52).setHardness(5.0F).setResistance(8.3F);
 	public static final BlockMaterial WOODEN_STAIRS = new Solid("Wooden Stairs", 53).setResistance(3.0F);
 	public static final BlockMaterial CHEST = new Solid("Chest", 54).setHardness(2.5F).setResistance(4.2F);
-	public static final BlockMaterial REDSTONE_WIRE = new RedstoneWire("Redstone Wire", 55, 0).setHardness(0.0F).setResistance(0.0F);
+	public static final BlockMaterial REDSTONE_WIRE = new RedstoneWire("Redstone Wire", 55).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial DIAMOND_ORE = new Solid("Diamond Ore", 56).setHardness(3.0F).setResistance(5.0F);
 	public static final BlockMaterial DIAMOND_BLOCK = new Solid("Diamond Block", 57).setHardness(5.0F).setResistance(10.0F);
 	public static final BlockMaterial CRAFTING_TABLE = new Solid("Crafting Table", 58).setHardness(4.2F);
@@ -211,9 +172,7 @@ public final class VanillaMaterials {
 	public static final BlockMaterial LOCKED_CHEST = new Solid("Locked Chest", 95).setHardness(0.0F).setResistance(0.0F).setLightLevel(15);
 	public static final BlockMaterial TRAPDOOR = new Solid("Trapdoor", 96).setHardness(3.0F).setResistance(5.0F);
 	public static final BlockMaterial SILVERFISH_STONE = new Solid("Silverfish Stone", 97).setHardness(0.75F).setResistance(10.0F); //Placeholder, block resistance unknown
-	public static final BlockMaterial STONE_BRICKS = new StoneBrick("Stone Brick", 98, 0).setHardness(1.5F).setResistance(10.0F);
-	public static final BlockMaterial MOSSY_STONE_BRICKS = new StoneBrick("Mossy Stone Brick", 98, 1).setHardness(1.5F).setResistance(10.0F);
-	public static final BlockMaterial CRACKED_STONE_BRICKS = new StoneBrick("Cracked Stone Brick", 98, 2).setHardness(1.5F).setResistance(10.0F);
+	public static final StoneBrick STONE_BRICK = new StoneBrick("Stone Brick");
 	public static final BlockMaterial HUGE_BROWN_MUSHROOM = new Ore("Huge Brown Mushroom", 99).setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F); //Placeholder, block resistance unknown
 	public static final BlockMaterial HUGE_RED_MUSHROOM = new Ore("Huge Red Mushroom", 100).setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F); //Placeholder, block resistance unknown
 	public static final BlockMaterial IRON_BARS = new Solid("Iron Bars", 101).setHardness(5.0F).setResistance(10.0F);
@@ -250,8 +209,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial RED_APPLE = new GenericFood("Apple", 260, 4, FoodEffectType.HUNGER);
 	public static final ItemMaterial BOW = new GenericRangedWeapon("Bow", 261, 1, 9, (short) 385);
 	public static final ItemMaterial ARROW = new GenericItem("Arrow", 262);
-	public static final ItemMaterial COAL = new GenericItem("Coal", 263, 0);
-	public static final ItemMaterial CHARCOAL = new GenericItem("Charcoal", 263, 1);
+	public static final Coal COAL = new Coal("Coal");	
 	public static final ItemMaterial DIAMOND = new GenericItem("Diamond", 264);
 	public static final ItemMaterial IRON_INGOT = new GenericItem("Iron Ingot", 265);
 	public static final ItemMaterial GOLD_INGOT = new GenericItem("Gold Ingot", 266);
@@ -306,7 +264,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial GOLD_CHESTPLATE = new GenericArmor("Gold Chestplate", 315, 5);
 	public static final ItemMaterial GOLD_LEGGINGS = new GenericArmor("Gold Leggings", 316, 3);
 	public static final ItemMaterial GOLD_BOOTS = new GenericArmor("Gold Boots", 317, 1);
-	public static final ItemMaterial FLINT = new GenericItem("Flint", 318, 0);
+	public static final ItemMaterial FLINT = new GenericItem("Flint", 318);
 	public static final ItemMaterial RAW_PORKCHOP = new GenericFood("Raw Porkchop", 319, 3, FoodEffectType.HUNGER);
 	public static final ItemMaterial COOKED_PORKCHOP = new GenericFood("Cooked Porkchop", 320, 8, FoodEffectType.HUNGER);
 	public static final ItemMaterial PAINTINGS = new GenericItem("Paintings", 321);
@@ -339,22 +297,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial GLOWSTONE_DUST = new GenericItem("Glowstone Dust", 348);
 	public static final ItemMaterial RAW_FISH = new GenericFood("Raw Fish", 349, 2, FoodEffectType.HUNGER);
 	public static final ItemMaterial COOKED_FISH = new GenericFood("Cooked Fish", 350, 5, FoodEffectType.HUNGER);
-	public static final ItemMaterial INK_SAC = new Dye("Ink Sac", 351, 0);
-	public static final ItemMaterial ROSE_RED = new Dye("Rose Red", 351, 1);
-	public static final ItemMaterial CACTUS_GREEN = new Dye("Cactus Green", 351, 2);
-	public static final ItemMaterial COCOA_BEANS = new Dye("Cocoa Beans", 351, 3);
-	public static final ItemMaterial LAPIS_LAZULI = new Dye("Lapis Lazuli", 351, 4);
-	public static final ItemMaterial PURPLE_DYE = new Dye("Purple Dye", 351, 5);
-	public static final ItemMaterial CYAN_DYE = new Dye("Cyan Dye", 351, 6);
-	public static final ItemMaterial LIGHT_GRAY_DYE = new Dye("Light Gray Dye", 351, 7);
-	public static final ItemMaterial GRAY_DYE = new Dye("Gray Dye", 351, 8);
-	public static final ItemMaterial PINK_DYE = new Dye("Pink Dye", 351, 9);
-	public static final ItemMaterial LIME_DYE = new Dye("Lime Dye", 351, 10);
-	public static final ItemMaterial DANDELION_YELLOW = new Dye("Dandelion Yellow", 351, 11);
-	public static final ItemMaterial LIGHT_BLUE_DYE = new Dye("Light Blue Dye", 351, 12);
-	public static final ItemMaterial MAGENTA_DYE = new Dye("Magenta Dye", 351, 13);
-	public static final ItemMaterial ORANGE_DYE = new Dye("Orange Dye", 351, 14);
-	public static final ItemMaterial BONE_MEAL = new Dye("Bone Meal", 351, 15);
+	public static final Dye DYE = new Dye("Dye");
 	public static final ItemMaterial BONE = new GenericItem("Bone", 352);
 	public static final ItemMaterial SUGAR = new GenericItem("Sugar", 353);
 	public static final ItemMaterial CAKE = new GenericBlockItem("Cake", 354, VanillaMaterials.CAKE_BLOCK);
@@ -376,7 +319,6 @@ public final class VanillaMaterials {
 	public static final ItemMaterial GHAST_TEAR = new GenericItem("Ghast Tear", 370);
 	public static final ItemMaterial GOLD_NUGGET = new GenericItem("Gold Nugget", 371);
 	public static final ItemMaterial NETHER_WART = new GenericItem("Nether Wart", 372);
-	public static final ItemMaterial POTION = new GenericItem("Potion", 373);
 	public static final ItemMaterial GLASS_BOTTLE = new GenericItem("Glass Bottle", 374);
 	public static final ItemMaterial SPIDER_EYE = new GenericFood("Spider Eye", 375, 2, FoodEffectType.HUNGER);
 	public static final ItemMaterial FERMENTED_SPIDER_EYE = new GenericItem("Fermented Spider Eye", 376);
@@ -420,88 +362,26 @@ public final class VanillaMaterials {
 	public static final ItemMaterial WHITE_MUSIC_DISC = new GenericItem("Music Disc", 2264);
 	public static final ItemMaterial FOREST_GREEN_MUSIC_DISC = new GenericItem("Music Disc", 2265);
 	public static final ItemMaterial BROKEN_MUSIC_DISC = new GenericItem("Music Disc", 2266);
-	/*
-	 * Potions
-	 */
-	public static final ItemMaterial AWKWARD_POTION = new GenericItem("Awkward Potion", 373, 16);
-	public static final ItemMaterial SPLASH_AWKWARD_POTION = new GenericItem("Splash Awkward Potion", 373, 16384);
-	public static final ItemMaterial THICK_POTION = new GenericItem("Thick Potion", 373, 32);
-	public static final ItemMaterial MUNDANE_POTION_EXTENDED = new GenericItem("Mundane Potion (Extended)", 373, 64);
-	public static final ItemMaterial MUNDANE_POTION = new GenericItem("Mundane Potion", 373, 8192);
-	public static final ItemMaterial REGENERATION_POTION_EXTENDED = new GenericItem("Potion of Regeneration (Extended)", 373, 8193);
-	public static final ItemMaterial SPLASH_REGENERATION_POTION_EXTENDED = new GenericItem("Splash Potion of Regeneration (Extended)", 373, 16449);
-	public static final ItemMaterial REGENERATION_POTION = new GenericItem("Potion of Regeneration", 373, 8257);
-	public static final ItemMaterial SPLASH_REGENERATION_POTION = new GenericItem("Splash Potion of Regeneration", 373, 16385);
-	public static final ItemMaterial REGENERATION_POTION_II = new GenericItem("Potion of Regeneration II", 373, 8225);
-	public static final ItemMaterial SPLASH_REGENERATION_POTION_II = new GenericItem("Splash Potion of Regeneration II", 373, 16417);
-	public static final ItemMaterial SWIFTNESS_POTION_EXTENDED = new GenericItem("Potion of Swiftness (Extended)", 373, 8194);
-	public static final ItemMaterial SPLASH_SWIFTNESS_POTION_EXTENDED = new GenericItem("Splash Potion of Swiftness (Extended)", 373, 16450);
-	public static final ItemMaterial SWIFTNESS_POTION = new GenericItem("Potion of Swiftness", 373, 8258);
-	public static final ItemMaterial SPLASH_SWIFTNESS_POTION = new GenericItem("Splash Potion of Swiftness", 373, 16386);
-	public static final ItemMaterial SWIFTNESS_POTION_II = new GenericItem("Potion of Swiftness II", 373, 8226);
-	public static final ItemMaterial SPLASH_SWIFTNESS_POTION_II = new GenericItem("Splash Potion of Swiftness II", 373, 16418);
-	public static final ItemMaterial FIRE_POTION_EXTENDED = new GenericItem("Potion of Fire Resistance (Extended)", 373, 8194);
-	public static final ItemMaterial SPASH_FIRE_POTION_EXTENDED = new GenericItem("Splash Potion of Fire Resistance (Extended)", 373, 16415);
-	public static final ItemMaterial FIRE_POTION = new GenericItem("Potion of Fire Resistance", 373, 8258);
-	public static final ItemMaterial SPLASH_FIRE_POTION = new GenericItem("Splash Potion of Fire Resistance", 373, 16387);
-	public static final ItemMaterial FIRE_POTION_II = new GenericItem("Potion of Fire Resistance II", 373, 8226);
-	public static final ItemMaterial FIRE_POTION_REVERTED = new GenericItem("Potion of Fire Resistance", 373, 8227);
-	public static final ItemMaterial SPLASH_FIRE_POTION_REVERTED = new GenericItem("Splash Potion of Fire Resistance", 373, 16419);
-	public static final ItemMaterial HEALING_POTION_ = new GenericItem("Potion of Healing", 373, 8197);
-	public static final ItemMaterial SPLASH_HEALING_POTION_ = new GenericItem("Splash Potion of Healing", 373, 16389);
-	public static final ItemMaterial HEALING_POTION_REVERTED = new GenericItem("Potion of Healing", 373, 8261);
-	public static final ItemMaterial SPLASH_HEALING_POTION_REVERTED = new GenericItem("Splash Potion of Healing", 373, 16453);
-	public static final ItemMaterial HEALING_POTION_II = new GenericItem("Potion of Healing II", 373, 8229);
-	public static final ItemMaterial SPLASH_HEALING_POTION_II = new GenericItem("Splash Potion of Healing II", 373, 16421);
-	public static final ItemMaterial STRENGTH_POTION = new GenericItem("Potion of Strength", 373, 8201);
-	public static final ItemMaterial SPLASH_STRENGTH_POTION = new GenericItem("Splash Potion of Strength", 373, 16393);
-	public static final ItemMaterial STRENGTH_POTION_EXTENDED = new GenericItem("Potion of Strength (Extended)", 373, 8265);
-	public static final ItemMaterial SPLASH_STRENGTH_POTION_EXTENDED = new GenericItem("Spash Potion of Strength (Extended)", 373, 16457);
-	public static final ItemMaterial STRENGTH_POTION_II = new GenericItem("Potion of Strength II", 373, 8223);
-	public static final ItemMaterial SPLASH_STRENGTH_POTION_II = new GenericItem("Spash Potion of Strength II", 373, 16425);
-	public static final ItemMaterial POISON_POTION = new GenericItem("Potion of Poison", 373, 8196);
-	public static final ItemMaterial SPLASH_POISON_POTION = new GenericItem("Splash Potion of Poison", 373, 16388);
-	public static final ItemMaterial POISON_POTION_EXTENDED = new GenericItem("Potion of Poison (Extended)", 373, 8260);
-	public static final ItemMaterial SPLASH_POISON_POTION_EXTENDED = new GenericItem("Splash Potion of Poison (Extended)", 373, 16452);
-	public static final ItemMaterial POISON_POTION_II = new GenericItem("Potion of Poison II", 373, 8228);
-	public static final ItemMaterial SPLASH_POISON_POTION_II = new GenericItem("Splash Potion of Poison II", 373, 16420);
-	public static final ItemMaterial WEAKNESS_POTION = new GenericItem("Potion of Weakness", 373, 8200);
-	public static final ItemMaterial SPLASH_WEAKNESS_POTION = new GenericItem("Splash Potion of Weakness", 373, 16392);
-	public static final ItemMaterial WEAKNESS_POTION_EXTENDED = new GenericItem("Potion of Weakness (Extended)", 373, 8264);
-	public static final ItemMaterial SPLASH_WEAKNESS_POTION_EXTENDED = new GenericItem("Splash Potion of Weakness (Extended)", 373, 16456);
-	public static final ItemMaterial WEAKNESS_POTION_REVERTED = new GenericItem("Potion of Weakness", 373, 8232);
-	public static final ItemMaterial SPLASH_WEAKNESS_POTION_REVERTED = new GenericItem("Splash Potion of Weakness", 373, 16424);
-	public static final ItemMaterial SLOWNESS_POTION = new GenericItem("Potion of Slowness", 373, 8202);
-	public static final ItemMaterial SPLASH_SLOWNESS_POTION = new GenericItem("Splash Potion of Slowness", 373, 16394);
-	public static final ItemMaterial SLOWNESS_POTION_EXTENDED = new GenericItem("Potion of Slowness (Extended)", 373, 8226);
-	public static final ItemMaterial SPLASH_SLOWNESS_POTION_EXTENDED = new GenericItem("Splash Potion of Slowness (Extended)", 373, 16458);
-	public static final ItemMaterial SLOWNESS_POTION_REVERTED = new GenericItem("Potion of Slowness", 373, 8234);
-	public static final ItemMaterial SPLASH_SLOWNESS_POTION_REVERTED = new GenericItem("Splash Potion of Slowness", 373, 16426);
-	public static final ItemMaterial HARMING_POTION = new GenericItem("Potion of Harming", 373, 8202);
-	public static final ItemMaterial SPLASH_HARMING_POTION = new GenericItem("Splash Potion of Harming", 373, 16396);
-	public static final ItemMaterial HARMING_POTION_REVERTED = new GenericItem("Potion of Harming", 373, 8264);
-	public static final ItemMaterial SPLASH_HARMING_POTION_REVERTED = new GenericItem("Splash Potion of Harming", 373, 16460);
-	public static final ItemMaterial HARMING_POTION_II = new GenericItem("Potion of Harming II", 373, 8236);
-	public static final ItemMaterial SPLASH_HARMING_POTION_II = new GenericItem("Splash Potion of Harming", 373, 16428);
-
+	public static final Potion POTION = new Potion("Potion");
+	
 	protected static void initialize() {
 		((GenericBlock) VanillaMaterials.STONE).setDrop(VanillaMaterials.COBBLESTONE);
 		((GenericBlock) VanillaMaterials.GRASS).setDrop(VanillaMaterials.DIRT);
 		((GenericBlock) VanillaMaterials.COAL_ORE).setDrop(VanillaMaterials.COAL);
 		((GenericBlock) VanillaMaterials.GLASS).setDrop(VanillaMaterials.AIR);
-		((GenericBlock) VanillaMaterials.LAPIS_ORE).setDrop(VanillaMaterials.LAPIS_LAZULI);
+		((GenericBlock) VanillaMaterials.LAPIS_ORE).setDrop(VanillaMaterials.DYE.LAPIS_LAZULI);
 		((GenericBlock) VanillaMaterials.BED_BLOCK).setDrop(VanillaMaterials.BED);
 		((GenericBlock) VanillaMaterials.WEB).setDrop(VanillaMaterials.STRING);
-		((GenericBlock) VanillaMaterials.DEAD_SHRUB).setDrop(VanillaMaterials.AIR);
-		((GenericBlock) VanillaMaterials.TALL_GRASS).setDrop(VanillaMaterials.AIR);
-		((GenericBlock) VanillaMaterials.FERN).setDrop(VanillaMaterials.AIR);
+		VanillaMaterials.TALL_GRASS.DEAD_GRASS.setDrop(VanillaMaterials.AIR);
+		VanillaMaterials.TALL_GRASS.TALL_GRASS.setDrop(VanillaMaterials.AIR);
+		VanillaMaterials.TALL_GRASS.FERN.setDrop(VanillaMaterials.AIR);
 		((GenericBlock) VanillaMaterials.DEAD_BUSH).setDrop(VanillaMaterials.AIR);
-		((GenericBlock) VanillaMaterials.STONE_DOUBLE_SLABS).setDrop(VanillaMaterials.STONE_SLAB).setDropCount(2);
-		((GenericBlock) VanillaMaterials.SANDSTONE_DOUBLE_SLABS).setDrop(VanillaMaterials.SANDSTONE_SLAB).setDropCount(2);
-		((GenericBlock) VanillaMaterials.WOODEN_DOUBLE_SLABS).setDrop(VanillaMaterials.WOODEN_SLAB).setDropCount(2);
-		((GenericBlock) VanillaMaterials.COBBLESTONE_DOUBLE_SLABS).setDrop(VanillaMaterials.COBBLESTONE_SLAB).setDropCount(2);
-		((GenericBlock) VanillaMaterials.BRICK_DOUBLE_SLABS).setDrop(VanillaMaterials.BRICK_SLAB).setDropCount(2);
-		((GenericBlock) VanillaMaterials.STONE_BRICK_DOUBLE_SLABS).setDrop(VanillaMaterials.STONE_BRICK_SLAB).setDropCount(2);
+		VanillaMaterials.DOUBLE_SLABS.STONE.setSlabMaterial(VanillaMaterials.SLAB.STONE).setDropCount(2);
+		VanillaMaterials.DOUBLE_SLABS.SANDSTONE.setSlabMaterial(VanillaMaterials.SLAB.SANDSTONE).setDropCount(2);
+		VanillaMaterials.DOUBLE_SLABS.WOOD.setSlabMaterial(VanillaMaterials.SLAB.WOOD).setDropCount(2);
+		VanillaMaterials.DOUBLE_SLABS.COBBLESTONE.setSlabMaterial(VanillaMaterials.SLAB.COBBLESTONE).setDropCount(2);
+		VanillaMaterials.DOUBLE_SLABS.BRICK.setSlabMaterial(VanillaMaterials.SLAB.BRICK).setDropCount(2);
+		VanillaMaterials.DOUBLE_SLABS.STONE_BRICK.setSlabMaterial(VanillaMaterials.SLAB.STONE_BRICK).setDropCount(2);
 		((GenericBlock) VanillaMaterials.BOOKSHELF).setDrop(VanillaMaterials.BOOK).setDropCount(3);
 		((GenericBlock) VanillaMaterials.FIRE).setDrop(VanillaMaterials.AIR);
 		((GenericBlock) VanillaMaterials.MONSTER_SPAWNER).setDrop(VanillaMaterials.AIR);
@@ -537,18 +417,21 @@ public final class VanillaMaterials {
 		((GenericBlock) VanillaMaterials.END_PORTAL_FRAME).setDrop(VanillaMaterials.AIR);
 		((GenericBlock) VanillaMaterials.REDSTONE_LAMP_ON).setDrop(VanillaMaterials.REDSTONE_LAMP_OFF);
 		
+		/*
+		//TODO: Not needed?
 		Field[] fields = VanillaMaterials.class.getFields();
 		for (Field f : fields) {
 			if (Modifier.isStatic(f.getModifiers())) {
 				try {
 					Object value = f.get(null);
 					if (value instanceof Material) {
-						MaterialData.registerMaterial((Material) value);
+						Material.registerMaterial((Material) value);
 					}
 				} catch (IllegalArgumentException e) {
 				} catch (IllegalAccessException e) {
 				}
 			}
 		}
+		*/
 	}
 }

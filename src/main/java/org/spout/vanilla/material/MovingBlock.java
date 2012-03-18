@@ -25,6 +25,6 @@
  */
 package org.spout.vanilla.material;
 
-public interface MovingBlock extends Block {
+public interface MovingBlock {
 	public boolean isMoving();
 }

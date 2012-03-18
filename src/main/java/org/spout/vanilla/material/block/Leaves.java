@@ -28,13 +28,48 @@ package org.spout.vanilla.material.block;
 import java.util.Random;
 
 import org.spout.api.material.Material;
+import org.spout.api.material.SubMaterial;
 import org.spout.vanilla.VanillaMaterials;
 
-public class Leaves extends Solid {
+public class Leaves extends Solid implements SubMaterial {
+	public final Leaves DEFAULT;
+	public final Leaves SPRUCE;
+	public final Leaves BIRCH;
+	public final Leaves JUNGLE;
+	
 	private Random rand = new Random();
+	private final Leaves parent;
+	private final short data;
+	
+	private void setDefault() {
+		this.setHardness(0.2F).setResistance(0.3F);
+	}
 
-	public Leaves(String name, int data) {
-		super(name, 18, data);
+	private Leaves(String name, int data, Leaves parent) {
+		super(name, 18);
+		this.setDefault();
+		this.parent = parent;
+		this.data = (short) data;
+		parent.registerSubMaterial(this);
+		this.register();
+		
+		this.DEFAULT = parent.DEFAULT;
+		this.SPRUCE = parent.SPRUCE;
+		this.BIRCH = parent.BIRCH;
+		this.JUNGLE = parent.JUNGLE;
+	}
+
+	public Leaves(String name) {
+		super(name, 18);
+		this.setDefault();
+		this.parent = this;
+		this.data = 0;
+		this.register();
+		
+		this.DEFAULT = new Leaves("Default Leaves", 0, this);
+		this.SPRUCE = new Leaves("Spruce Leaves", 0, this);
+		this.BIRCH = new Leaves("Birch Leaves", 0, this);
+		this.JUNGLE = new Leaves("Jungle Leaves", 0, this);
 	}
 
 	// TODO: Shears
@@ -42,12 +77,23 @@ public class Leaves extends Solid {
 	public Material getDrop() {
 		if (rand.nextInt(20) == 0) {
 			return VanillaMaterials.SAPLING;
-		} else if (rand.nextInt(200) == 0) {
+		}
+		else if (rand.nextInt(200) == 0) {
 			return VanillaMaterials.RED_APPLE;
 		}
-
+		
 		return VanillaMaterials.AIR;
 	}
-
+	
 	// TODO: Decay
+	
+	@Override
+	public short getData() {
+		return this.data;
+	}
+
+	@Override
+	public Leaves getParentMaterial() {
+		return this.parent;
+	}
 }

@@ -32,13 +32,9 @@ public class GroundAttachable extends AbstractAttachable {
 		super(name, id);
 	}
 
-	public GroundAttachable(String name, int id, int data) {
-		super(name, id, data);
-	}
-
 	@Override
 	public short getDataForFace(BlockFace face) {
-		return getData(); //data will be either 0 or used for other stuff.
+		return (short) 0;
 	}
 
 	@Override

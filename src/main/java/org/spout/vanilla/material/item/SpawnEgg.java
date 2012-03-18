@@ -39,10 +39,18 @@ import org.spout.vanilla.material.generic.GenericItem;
 public class SpawnEgg extends GenericItem {
 	final Constructor<?> chosen;
 
-	public SpawnEgg(String name, int id, int data) {
-		super(name, id, data);
+	public SpawnEgg(String name, int id, int spawnedEntityId) {
+		this(name, id, org.spout.vanilla.entity.Entity.getByID(spawnedEntityId));
+	}
+	
+	public SpawnEgg(String name, int id, org.spout.vanilla.entity.Entity spawnedEntity) {
+		super(name, id);
 
-		Class<? extends VanillaEntity> controller = org.spout.vanilla.entity.Entity.getByID((int) getData()).getController();
+		if (spawnedEntity == null) {
+			throw new IllegalArgumentException("Spawned entity can not be null!");
+		}
+		
+		Class<? extends VanillaEntity> controller = spawnedEntity.getController();
 
 		Constructor<?>[] constructors = controller.getConstructors();
 		for (Constructor<?> constructor : constructors) {

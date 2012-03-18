@@ -29,30 +29,19 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.object.falling.FallingBlock;
-import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;
 
 public class Solid extends GenericBlock implements MovingBlock {
 	private final boolean moving;
 
-	public Solid(String name, int id, int data, boolean falling) {
-		super(name, id, data);
-		moving = falling;
-	}
-
 	public Solid(String name, int id, boolean falling) {
-		super(name, id, 0);
+		super(name, id);
 		moving = falling;
 	}
 
 	public Solid(String name, int id) {
-		super(name, id, 0);
-		moving = false;
-	}
-
-	public Solid(String name, int id, int data) {
-		super(name, id, data);
+		super(name, id);
 		moving = false;
 	}
 
@@ -69,10 +58,10 @@ public class Solid extends GenericBlock implements MovingBlock {
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
 		if (moving) {
-			Block material = (Block) world.getBlockMaterial(x, y - 1, z);
+			GenericBlock material = (GenericBlock) world.getBlockMaterial(x, y - 1, z);
 			if (material == VanillaMaterials.AIR || material.isLiquid()) {
-				if (world.setBlockId(x, y, z, (short) 0, world)) {
-//					world.createAndSpawnEntity(new Point(world, x, y, z), new FallingBlock(this));
+				if (world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world)) {
+					world.createAndSpawnEntity(new Point(world, x, y, z), new FallingBlock(this));
 				}
 			}
 		}

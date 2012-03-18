@@ -67,9 +67,9 @@ public class BeachDecorator implements BiomeDecorator {
 		while (radius > 0) {
 			BlockMaterial existing = world.getBlockMaterial(x, y, z);
 			if (existing.equals(VanillaMaterials.GRASS)) {
-				world.setBlockMaterial(x, y, z, VanillaMaterials.SAND, world);
+				world.setBlockMaterial(x, y, z, VanillaMaterials.SAND, (short) 0, true, world);
 			} else if ((existing.equals(VanillaMaterials.WATER) || existing.equals(VanillaMaterials.STATIONARY_WATER)) && world.getBlockMaterial(x, y - 1, z).equals(VanillaMaterials.DIRT)) {
-				world.setBlockMaterial(x, y - 1, z, VanillaMaterials.SAND, world);
+				world.setBlockMaterial(x, y - 1, z, VanillaMaterials.SAND, (short) 0, true, world);
 			} else {
 				BlockFace faces[] = {BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST, BlockFace.BOTTOM, BlockFace.TOP};
 				radius--;

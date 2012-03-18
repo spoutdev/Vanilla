@@ -23,22 +23,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.data;
+package org.spout.vanilla.material.generic;
 
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
+import org.spout.api.material.SubMaterial;
+import org.spout.vanilla.material.generic.GenericItem;
 
-public class SimpleMaterialData implements MaterialData {
-	private short data;
-	private final BlockMaterial material;
-
-	public SimpleMaterialData(BlockMaterial material, short data) {
-		this.data = data;
-		this.material = material;
+public class GenericSubItem extends GenericItem implements SubMaterial {
+	
+	private final GenericSubItem parent;
+	private final short data;
+	
+	public GenericSubItem(String name, int id, int data, GenericSubItem parent) {
+		super(name, id);
+		this.parent = parent;
+		this.data = (short) data;		
+		this.register();
+		parent.registerSubMaterial(this);
 	}
-
-	@Override
-	public void setData(short data) {
-		this.data = data;
+	
+	public GenericSubItem(String name, int id) {
+		super(name, id);
+		this.parent = this;
+		this.data = 0;
+		this.register();
 	}
 
 	@Override
@@ -47,7 +55,7 @@ public class SimpleMaterialData implements MaterialData {
 	}
 
 	@Override
-	public BlockMaterial getMaterial() {
-		return this.material;
+	public Material getParentMaterial() {
+		return this.parent;
 	}
 }

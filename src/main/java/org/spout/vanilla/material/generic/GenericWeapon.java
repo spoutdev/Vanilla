@@ -33,6 +33,7 @@ public class GenericWeapon extends GenericTool implements Weapon {
 	public GenericWeapon(String name, int id, int damage, short durability) {
 		super(name, id, durability);
 		this.damage = damage;
+		this.setNBTData(true);
 	}
 
 	@Override

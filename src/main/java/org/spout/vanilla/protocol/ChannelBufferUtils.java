@@ -36,10 +36,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.MaterialData;
+import org.spout.api.material.Material;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
-import org.spout.api.util.ColorHelper;
 import org.spout.api.util.Parameter;
 import org.spout.nbt.CompoundTag;
 import org.spout.nbt.Tag;
@@ -91,7 +90,7 @@ public final class ChannelBufferUtils {
 					ItemStack item = ((Parameter<ItemStack>) parameter).getValue();
 					buf.writeShort(item.getMaterial().getId());
 					buf.writeByte(item.getAmount());
-					buf.writeShort(item.getDamage());
+					buf.writeShort(item.getData());
 					break;
 			}
 		}
@@ -130,8 +129,8 @@ public final class ChannelBufferUtils {
 				case Parameter.TYPE_ITEM:
 					int id = buf.readShort();
 					int count = buf.readByte();
-					short damage = buf.readShort();
-					ItemStack item = new ItemStack(MaterialData.getMaterial((short) id, (byte) damage), count, damage);
+					short data = buf.readShort();
+					ItemStack item = new ItemStack(Material.get((short) id), data, count);
 					parameters.add(new Parameter<ItemStack>(type, index, item));
 					break;
 			}
@@ -310,7 +309,7 @@ public final class ChannelBufferUtils {
 	}
 
 	public static void writeColor(Color color, ChannelBuffer buf) {
-		buf.writeInt(ColorHelper.toInt(color));
+		buf.writeInt(color.getRGB());
 	}
 
 	public static boolean hasNbtData(int id) {

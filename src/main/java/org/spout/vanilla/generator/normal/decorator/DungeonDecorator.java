@@ -29,6 +29,7 @@ import java.util.Random;
 
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.VanillaMaterials;
 
 public class DungeonDecorator implements BiomeDecorator {
@@ -45,30 +46,30 @@ public class DungeonDecorator implements BiomeDecorator {
 			int cy = chunk.getY() * 16 + random.nextInt(16);
 			int cz = chunk.getZ() * 16 + random.nextInt(16);
 
-			if (chunk.getWorld().getBlockId(cx, cy, cz) == 0) {
+			if (chunk.getWorld().getBlockMaterial(cx, cy, cz) == VanillaMaterials.AIR) {
 				return; //No dungeons in the air, plox!
 			}
 
 			for (int x = cx; x < cx + width; x++) {
 				for (int y = cy; y < cy + HEIGHT; y++) {
 					for (int z = cz; z < cz + height; z++) {
-						short id = 0;
+						BlockMaterial material = VanillaMaterials.AIR;
 						if (x == cx || x == cx + width - 1 || z == cz || z == cz + height - 1) {
-							id = VanillaMaterials.COBBLESTONE.getId();
+							material = VanillaMaterials.COBBLESTONE;
 						}
 						if (y == cy || y == cy + HEIGHT - 1) {
-							id = random.nextBoolean() ? VanillaMaterials.COBBLESTONE.getId() : VanillaMaterials.MOSS_STONE.getId();
+							material = random.nextBoolean() ? VanillaMaterials.COBBLESTONE : VanillaMaterials.MOSS_STONE;
 						}
-						chunk.getWorld().setBlockId(x, y, z, id, chunk.getWorld());
+						chunk.getWorld().setBlockMaterial(x, y, z, material, (short) 0, true, chunk.getWorld());
 					}
 				}
 			}
 
-			chunk.getWorld().setBlockMaterial(cx + width / 2, cy + 1, cz + height / 2, VanillaMaterials.MONSTER_SPAWNER, chunk.getWorld());
+			chunk.getWorld().setBlockMaterial(cx + width / 2, cy + 1, cz + height / 2, VanillaMaterials.MONSTER_SPAWNER, (short) 0, true, chunk.getWorld());
 
-			chunk.getWorld().setBlockMaterial(cx + 1, cy + 1, cz + height / 2, VanillaMaterials.CHEST, chunk.getWorld());
+			chunk.getWorld().setBlockMaterial(cx + 1, cy + 1, cz + height / 2, VanillaMaterials.CHEST, (short) 0, true, chunk.getWorld());
 
-			chunk.getWorld().setBlockMaterial(cx + width / 2, cy + 1, cz + 1, VanillaMaterials.CHEST, chunk.getWorld());
+			chunk.getWorld().setBlockMaterial(cx + width / 2, cy + 1, cz + 1, VanillaMaterials.CHEST, (short) 0, true, chunk.getWorld());
 
 			//TODO Fill Chests with stuff, kinda waiting for inventories in worlds.
 		}

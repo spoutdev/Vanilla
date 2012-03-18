@@ -25,12 +25,48 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.material.SubMaterial;
 import org.spout.vanilla.material.Plant;
 import org.spout.vanilla.material.attachable.GroundAttachable;
 
-public class Sapling extends GroundAttachable implements Plant {
-	public Sapling(String name, int data) {
-		super(name, 6, data);
+public class Sapling extends GroundAttachable implements Plant, SubMaterial {
+	public final Sapling DEFAULT;
+	public final Sapling SPRUCE;
+	public final Sapling BIRCH;
+	public final Sapling JUNGLE;
+
+	private final Sapling parent;
+	private final short data;
+
+	private void setDefault() {
+		this.setHardness(0.0F).setResistance(0.0F);
+	}
+
+	private Sapling(String name, int data, Sapling parent) {
+		super(name, 6);
+		this.setDefault();
+		this.parent = parent;
+		this.data = (short) data;
+		parent.registerSubMaterial(this);
+		this.register();
+		
+		this.DEFAULT = parent.DEFAULT;
+		this.SPRUCE = parent.SPRUCE;
+		this.BIRCH = parent.BIRCH;
+		this.JUNGLE = parent.JUNGLE;
+	}
+
+	public Sapling(String name) {
+		super(name, 6);
+		this.setDefault();
+		this.parent = this;
+		this.data = 0;
+		this.register();
+		
+		this.DEFAULT = new Sapling("Default Sapling", 0, this);
+		this.SPRUCE = new Sapling("Spruce Sapling", 1, this);
+		this.BIRCH = new Sapling("Birch Sapling", 2, this);
+		this.JUNGLE = new Sapling("Jungle Sapling", 3, this);
 	}
 
 	@Override
@@ -46,5 +82,15 @@ public class Sapling extends GroundAttachable implements Plant {
 	@Override
 	public int getMinimumLightToGrow() {
 		return 8;
+	}
+	
+	@Override
+	public short getData() {
+		return this.data;
+	}
+
+	@Override
+	public Sapling getParentMaterial() {
+		return this.parent;
 	}
 }

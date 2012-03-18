@@ -25,10 +25,55 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.material.Material;
+import org.spout.api.material.SubMaterial;
 import org.spout.vanilla.material.generic.GenericBlock;
 
-public class StoneBrick extends GenericBlock {
-	public StoneBrick(String name, int id, int data) {
-		super(name, id, data);
+public class StoneBrick extends GenericBlock implements SubMaterial {
+	public final StoneBrick STONE;
+	public final StoneBrick MOSSY_STONE;
+	public final StoneBrick CRACKED_STONE;
+
+	private final StoneBrick parent;
+	private final short data;
+
+	private void setDefault() {
+		this.setHardness(1.5F);
+		this.setResistance(10.0F);
+	}
+
+	private StoneBrick(String name, int data, StoneBrick parent) {
+		super(name, 98);
+		this.setDefault();
+		this.parent = parent;
+		this.data = (short) data;
+		this.register();
+		parent.registerSubMaterial(this);
+		
+		this.STONE = parent.STONE;
+		this.MOSSY_STONE = parent.MOSSY_STONE;
+		this.CRACKED_STONE = parent.CRACKED_STONE;
+	}
+
+	public StoneBrick(String name) {
+		super(name, 98);
+		this.setDefault();
+		this.parent = this;
+		this.data = 0;
+		this.register();
+		
+		this.STONE = new StoneBrick("Stone Brick", 0, this);
+		this.MOSSY_STONE = new StoneBrick("Mossy Stone Brick", 1, this);
+		this.CRACKED_STONE = new StoneBrick("Cracked Stone Brick", 2, this);
+	}
+
+	@Override
+	public short getData() {
+		return this.data;
+	}
+
+	@Override
+	public Material getParentMaterial() {
+		return this.parent;
 	}
 }

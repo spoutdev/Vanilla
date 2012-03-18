@@ -36,6 +36,7 @@ import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
@@ -49,7 +50,6 @@ import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
-import org.spout.vanilla.material.Tool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
@@ -228,7 +228,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 				if (slotItem == null) {
 					EEMsg = new EntityEquipmentMessage(entityId, slot, -1, 0);
 				} else {
-					EEMsg = new EntityEquipmentMessage(entityId, slot, slotItem.getMaterial().getId(), slotItem.getDamage());
+					EEMsg = new EntityEquipmentMessage(entityId, slot, slotItem.getMaterial().getId(), slotItem.getData());
 				}
 				owner.getSession().send(EEMsg);
 			}
@@ -263,9 +263,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	}
 
 	@Override
-	public void updateBlock(Chunk chunk, int x, int y, int z, short id, short data) {
+	public void updateBlock(Chunk chunk, int x, int y, int z, BlockMaterial material, short data) {
 		// TODO - proper translation
-		if ((id & 0xFF) > 255) {
+		int id = material.getId();
+		if ((material.getId() & 0xFF) > 255) {
 			id = 1;
 		}
 		if ((data & 0xF) > 15) {
@@ -353,11 +354,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (item == null) {
 			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot);
 		} else {
-			if (item.getMaterial() instanceof Tool) {
-				message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot, item.getMaterial().getId(), item.getAmount(), item.getDamage(), item.getAuxData());
-			} else {
-				message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot, item.getMaterial().getId(), item.getAmount(), item.getMaterial().getData(), item.getAuxData());
-			}
+			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot, item.getMaterial().getId(), item.getAmount(), item.getData(), item.getAuxData());
 		}
 		queuedInventoryUpdates.put(slot, message);
 	}

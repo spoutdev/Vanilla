@@ -29,25 +29,20 @@ import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.generic.GenericBlock;
 
 public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget {
-	private final Vector3[] possibleIncoming = {Vector3.UNIT_X, Vector3.UNIT_Z, Vector3.UNIT_X.multiply(-1), Vector3.UNIT_Z.multiply(-1), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1), Vector3.UNIT_Y, //Redstone torch from above
+	private final Vector3[] possibleIncoming = {new Vector3(1, 0, 0), new Vector3(0, 0, 1), new Vector3(-1, 0, 0), new Vector3(0, 0, -1), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1), new Vector3(0, 1, 0), //Redstone torch from above
 	};
-	private final Vector3[] possibleOutgoing = {Vector3.UNIT_X, Vector3.UNIT_Z, Vector3.UNIT_X.multiply(-1), Vector3.UNIT_Z.multiply(-1), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1), new Vector3(1, -1, 0), new Vector3(0, -1, 1), new Vector3(-1, -1, 0), new Vector3(0, -1, -1),};
+	private final Vector3[] possibleOutgoing = {new Vector3(1, 0, 0), new Vector3(0, 0, 1), new Vector3(-1, 0, 0), new Vector3(0, 0, -1), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1), new Vector3(1, -1, 0), new Vector3(0, -1, 1), new Vector3(-1, -1, 0), new Vector3(0, -1, -1),};
 	private final Vector3[] possibleOutgoingTorch = {new Vector3(2, 0, 0), new Vector3(0, 0, 2), new Vector3(-2, 0, 0), new Vector3(0, 0, -2), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1),};
 
-	public RedstoneWire(String name, int id, int data) {
-		super(name, id, data);
-	}
-
-	@Override
-	public boolean isOpaque() {
-		return true;
+	public RedstoneWire(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
@@ -65,8 +60,8 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		System.out.println("Updating " + x + " " + y + " " + z);
 		short maxPower = 0;
 		BlockMaterial below = world.getBlockMaterial(x, y - 1, z);
-		if (below instanceof Block) {
-			maxPower = ((Block) below).getIndirectRedstonePower(world, x, y - 1, z); //Check for indirect power from below
+		if (below instanceof GenericBlock) {
+			maxPower = ((GenericBlock) below).getIndirectRedstonePower(world, x, y - 1, z); //Check for indirect power from below
 		}
 		int tx, ty, tz;
 		for (Vector3 vec : possibleIncoming) {
@@ -78,8 +73,8 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 			if (block instanceof RedstoneSource) {
 				RedstoneSource source = (RedstoneSource) block;
 				power = source.getRedstonePower(world, tx, ty, tz, x, y, z);
-			} else if (block instanceof Block) {
-				Block Vanilla = (Block) block;
+			} else if (block instanceof GenericBlock) {
+				GenericBlock Vanilla = (GenericBlock) block;
 				power = Vanilla.getDirectRedstonePower(world, tx, ty, tz);
 			}
 			maxPower = (short) Math.max(maxPower, power);
@@ -99,7 +94,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		short current = world.getBlockData(x, y, z);
 		if (current != power) {
 			System.out.println("Old: " + current + " new: " + power);
-			world.setBlockIdAndData(x, y, z, getId(), power, false, world);
+			world.setBlockMaterial(x, y, z, this, power, false, world);
 			//Trace signal
 			for (int j = 0; j < 3; j++) {
 				int ty = y;

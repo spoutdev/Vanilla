@@ -23,15 +23,54 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.data;
+package org.spout.vanilla.material.block;
 
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.SubMaterial;
 
-//FIXME: Needs to be placed in SpoutAPI instead
-public interface MaterialData {
-	public void setData(short data);
+public class TallGrass extends LongGrass implements SubMaterial {
+	public final TallGrass DEAD_GRASS;
+	public final TallGrass TALL_GRASS;
+	public final TallGrass FERN;
 
-	public short getData();
+	private final TallGrass parent;
+	private final short data;
+	
+	private void setDefault() {
+		this.setHardness(0.0F).setResistance(0.0F);
+	}
+	
+	private TallGrass(String name, int data, TallGrass parent) {
+		super(name, 31);
+		this.setDefault();
+		this.parent = parent;
+		this.data = (short) data;
+		parent.registerSubMaterial(this);
+		this.register();
+		
+		this.DEAD_GRASS = parent.DEAD_GRASS;
+		this.TALL_GRASS = parent.TALL_GRASS;
+		this.FERN = parent.FERN;
+	}
+	
+	public TallGrass(String name) {
+		super(name, 31);
+		this.setDefault();
+		this.parent = this;
+		this.data = 0;
+		this.register();
+		
+		this.DEAD_GRASS = new TallGrass("Dead Grass", 0, this);
+		this.TALL_GRASS = new TallGrass("Tall Grass", 1, this);
+		this.FERN = new TallGrass("Fern", 2, this);
+	}
 
-	public BlockMaterial getMaterial();
+	@Override
+	public short getData() {
+		return this.data;
+	}
+
+	@Override
+	public TallGrass getParentMaterial() {
+		return this.parent;
+	}
 }

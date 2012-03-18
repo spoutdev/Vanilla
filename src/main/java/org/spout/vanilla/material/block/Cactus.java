@@ -67,7 +67,7 @@ public class Cactus extends Solid {
 		}
 
 		if (destroy) {
-			world.setBlockId(x, y, z, (short) 0, world);
+			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world);
 			//TODO Drop item!
 		}
 	}

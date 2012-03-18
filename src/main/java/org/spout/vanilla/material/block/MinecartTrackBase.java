@@ -32,19 +32,20 @@ import org.spout.vanilla.material.attachable.GroundAttachable;
 import org.spout.vanilla.util.MinecartTrackLogic;
 
 public abstract class MinecartTrackBase extends GroundAttachable {
+	
 	public MinecartTrackBase(String name, int id) {
 		super(name, id);
 	}
-
+	
 	public abstract boolean canCurve();
-
+	
 	public void doTrackLogic(World world, int x, int y, int z) {
 		MinecartTrackLogic logic = MinecartTrackLogic.create(world, x, y, z);
 		if (logic != null) {
 			logic.refresh();
 		}
 	}
-
+	
 	@Override
 	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
 		if (super.onPlacement(world, x, y, z, data, against, source)) {
@@ -54,4 +55,5 @@ public abstract class MinecartTrackBase extends GroundAttachable {
 			return false;
 		}
 	}
+	
 }

@@ -37,28 +37,14 @@ import org.spout.api.material.block.BlockFace;
 public class GenericFullContainer extends GenericBlockItem {
 	private ItemMaterial container;
 
-	public GenericFullContainer(String name, int id, BlockMaterial onPlace, GenericEmptyContainer container) {
-		super(name, id, onPlace);
-
-		container.register(this);
-
-		this.container = container;
+	public GenericFullContainer(String name, int id, BlockMaterial onPlaceMaterial, GenericEmptyContainer emptyContainer) {
+		this(name, id, onPlaceMaterial, (short) 0, emptyContainer);
 	}
 
-	public GenericFullContainer(String name, int id, int data, BlockMaterial onPlace, GenericEmptyContainer container) {
-		super(name, id, data, onPlace);
-
-		container.register(this);
-
-		this.container = container;
-	}
-
-	public GenericFullContainer(String name, int id, int data, boolean subtypes, BlockMaterial onPlace, GenericEmptyContainer container) {
-		super(name, id, data, subtypes, onPlace);
-
-		container.register(this);
-
-		this.container = container;
+	public GenericFullContainer(String name, int id, BlockMaterial onPlaceMaterial, short onPlaceData, GenericEmptyContainer emptyContainer) {
+		super(name, id, onPlaceMaterial, onPlaceData);
+		this.container = emptyContainer;
+		emptyContainer.register(this);
 	}
 
 	public ItemMaterial getContainer() {

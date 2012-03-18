@@ -68,7 +68,7 @@ public class Slab extends GenericBlock implements MovingBlock, SubMaterial {
 	}
 	
 	public Slab(String name) {
-		super(name, 32);
+		super(name, 44);
 		this.setDefault();
 		this.parent = this;
 		this.data = 0;

@@ -25,24 +25,14 @@
  */
 package org.spout.vanilla.material.item;
 
-import org.spout.api.material.Material;
-import org.spout.api.material.SubMaterial;
-import org.spout.vanilla.material.generic.GenericItem;
 import org.spout.vanilla.material.generic.GenericSubItem;
 
 public class Coal extends GenericSubItem {
 	public final Coal CHARCOAL;
 	public final Coal COAL;
 	
-	private final Coal parent;
-	private final short data;
-	
 	private Coal(String name, int data, Coal parent) {
-		super(name, 263);
-		this.parent = parent;
-		this.data = (short) data;		
-		this.register();
-		parent.registerSubMaterial(this);
+		super(name, 263, data, parent);
 		
 		this.COAL = parent.COAL;
 		this.CHARCOAL = parent.CHARCOAL;
@@ -50,22 +40,14 @@ public class Coal extends GenericSubItem {
 	
 	public Coal(String name) {
 		super(name, 263);
-		this.parent = this;
-		this.data = 0;
-		this.register();
 		
 		this.COAL = new Coal("Coal", 0, this);
 		this.CHARCOAL = new Coal("Charcoal", 1, this);
 	}
 
 	@Override
-	public short getData() {
-		return this.data;
-	}
-
-	@Override
 	public Coal getParentMaterial() {
-		return this.parent;
+		return (Coal) super.getParentMaterial();
 	}
 
 }

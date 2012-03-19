@@ -30,6 +30,7 @@ import java.util.Random;
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+
 import org.spout.vanilla.VanillaMaterials;
 
 public class TreeDecorator implements BiomeDecorator {
@@ -77,7 +78,9 @@ public class TreeDecorator implements BiomeDecorator {
 		for (int k = oneWidth + 1; k <= oneWidth + twoWidth; k++) {
 			for (int i = -2; i <= 2; i++) {
 				for (int j = -2; j <= 2; j++) {
-					w.setBlockMaterial(cx + i, cy + height - k, cz + j, VanillaMaterials.LEAVES, c.getWorld());
+					if(!(j == -2 && i == -2) && !(j == 2 && i == -2) && !(j == -2 && i == 2) && !(j == 2 && i == 2)) {
+						w.setBlockMaterial(cx + i, cy + height - k, cz + j, VanillaMaterials.LEAVES, c.getWorld());
+					}
 				}
 			}
 		}

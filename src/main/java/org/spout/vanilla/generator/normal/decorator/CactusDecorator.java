@@ -49,7 +49,7 @@ public class CactusDecorator implements BiomeDecorator {
 		if (py == -1) {
 			return;
 		}
-		int height = random.nextInt(4) + 1;
+		int height = random.nextInt(3) + 1;
 		for (int i = py; i < py + height; ++i) {
 			chunk.getWorld().setBlockId(px, i, pz, VanillaMaterials.CACTUS.getId(), chunk.getWorld());
 		}

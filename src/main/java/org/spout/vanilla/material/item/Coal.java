@@ -26,17 +26,19 @@
 package org.spout.vanilla.material.item;
 
 import org.spout.vanilla.material.generic.GenericItem;
+import org.spout.vanilla.material.main.CoalMain;
 
 public class Coal extends GenericItem {
-	public static final Coal PARENT = new Coal("Coal");
-	public final Coal COAL = PARENT;
-	public final Coal CHARCOAL = new Coal("Charcoal", 1, PARENT);
-
 	public Coal(String name) {
 		super(name, 263);
 	}
 
-	private Coal(String name, int data, Coal parent) {
+	public Coal(String name, int data, CoalMain parent) {
 		super(name, 263, data, parent);
+	}
+
+	@Override
+	public CoalMain getParentMaterial() {
+		return (CoalMain) super.getParentMaterial();
 	}
 }

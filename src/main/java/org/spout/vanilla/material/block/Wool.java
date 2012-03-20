@@ -28,26 +28,9 @@ package org.spout.vanilla.material.block;
 import org.spout.api.material.DataSource;
 import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;
+import org.spout.vanilla.material.main.WoolMain;
 
 public class Wool extends GenericBlock implements MovingBlock {
-	public static final Wool PARENT = new Wool("White Wool");
-	public static final Wool WHITE = PARENT;
-	public static final Wool ORANGE = new Wool("Orange Wool", WoolColor.Orange, PARENT);
-	public static final Wool MAGENTA = new Wool("Magenta Wool", WoolColor.Magenta, PARENT);
-	public static final Wool LIGHTBLUE = new Wool("Light Blue Wool", WoolColor.LightBlue, PARENT);
-	public static final Wool YELLOW = new Wool("Yellow Wool", WoolColor.Yellow, PARENT);
-	public static final Wool LIME = new Wool("Lime Wool", WoolColor.Lime, PARENT);
-	public static final Wool PINK = new Wool("Pink Wool", WoolColor.Pink, PARENT);
-	public static final Wool GRAY = new Wool("Gray Wool", WoolColor.Gray, PARENT);
-	public static final Wool SILVER = new Wool("Silver Wool", WoolColor.Silver, PARENT);
-	public static final Wool CYAN = new Wool("Cyan Wool", WoolColor.Cyan, PARENT);
-	public static final Wool PURPLE = new Wool("Purple Wool", WoolColor.Purple, PARENT);
-	public static final Wool BLUE = new Wool("Blue Wool", WoolColor.Blue, PARENT);
-	public static final Wool BROWN = new Wool("Brown Wool", WoolColor.Brown, PARENT);
-	public static final Wool GREEN = new Wool("Green Wool", WoolColor.Green, PARENT);
-	public static final Wool RED = new Wool("Red Wool", WoolColor.Red, PARENT);
-	public static final Wool BLACK = new Wool("Black Wool", WoolColor.Black, PARENT);
-
 	public static enum WoolColor implements DataSource {
 		White(0),
 		Orange(1),
@@ -86,7 +69,7 @@ public class Wool extends GenericBlock implements MovingBlock {
 		this.color = WoolColor.White;
 	}
 
-	private Wool(String name, WoolColor color, Wool parent) {
+	public Wool(String name, WoolColor color, WoolMain parent) {
 		super(name, 35, color.getData(), parent);
 		this.setDefault();
 		this.color = color;
@@ -108,5 +91,10 @@ public class Wool extends GenericBlock implements MovingBlock {
 	@Override
 	public short getData() {
 		return this.color.getData();
+	}
+	
+	@Override
+	public WoolMain getParentMaterial() {
+		return (WoolMain) super.getParentMaterial();
 	}
 }

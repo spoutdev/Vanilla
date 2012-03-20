@@ -23,22 +23,15 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.main;
 
-import org.spout.vanilla.material.generic.GenericItem;
-import org.spout.vanilla.material.main.PotionMain;
+import org.spout.vanilla.material.item.Coal;
 
-public class Potion extends GenericItem {
-	public Potion(String name) {
-		super(name, 373);
-	}
-
-	public Potion(String name, int data, PotionMain parent) {
-		super(name, 373, data, parent);
-	}
+public class CoalMain extends Coal {
+	public final Coal COAL = new Coal("Coal", 0, this);
+	public final Coal CHARCOAL = new Coal("Charcoal", 1, this);
 	
-	@Override
-	public PotionMain getParentMaterial() {
-		return (PotionMain) super.getParentMaterial();
+	public CoalMain(String name) {
+		super(name);
 	}
 }

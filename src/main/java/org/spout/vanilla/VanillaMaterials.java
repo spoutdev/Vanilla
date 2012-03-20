@@ -45,10 +45,8 @@ import org.spout.vanilla.material.block.Sapling;
 import org.spout.vanilla.material.block.Slab;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.StoneBrick;
-import org.spout.vanilla.material.block.TallGrass;
 import org.spout.vanilla.material.block.Tree;
 import org.spout.vanilla.material.block.WheatCrop;
-import org.spout.vanilla.material.block.Wool;
 import org.spout.vanilla.material.generic.GenericArmor;
 import org.spout.vanilla.material.generic.GenericBlock;
 import org.spout.vanilla.material.generic.GenericBlockItem;
@@ -60,18 +58,19 @@ import org.spout.vanilla.material.generic.GenericLiquid;
 import org.spout.vanilla.material.generic.GenericRangedWeapon;
 import org.spout.vanilla.material.generic.GenericTool;
 import org.spout.vanilla.material.generic.GenericWeapon;
-import org.spout.vanilla.material.item.Coal;
 import org.spout.vanilla.material.item.DoorBlock;
 import org.spout.vanilla.material.item.DoorItem;
-import org.spout.vanilla.material.item.Dye;
 import org.spout.vanilla.material.item.Minecart;
-import org.spout.vanilla.material.item.Potion;
 import org.spout.vanilla.material.item.PoweredMinecart;
 import org.spout.vanilla.material.item.RedstoneTorch;
 import org.spout.vanilla.material.item.RedstoneWire;
 import org.spout.vanilla.material.item.Shears;
-import org.spout.vanilla.material.item.SpawnEgg;
 import org.spout.vanilla.material.item.StorageMinecart;
+import org.spout.vanilla.material.main.CoalMain;
+import org.spout.vanilla.material.main.DyeMain;
+import org.spout.vanilla.material.main.PotionMain;
+import org.spout.vanilla.material.main.TallGrassMain;
+import org.spout.vanilla.material.main.WoolMain;
 
 public final class VanillaMaterials {
 	public static final BlockMaterial AIR = BlockMaterial.AIR;
@@ -105,11 +104,11 @@ public final class VanillaMaterials {
 	public static final BlockMaterial DETECTOR_RAIL = new MinecartTrackDetector("Detector Rail", 28).setHardness(0.7F).setResistance(1.2F);
 	public static final BlockMaterial PISTON_STICKY_BASE = new Solid("Sticky Piston", 29).setResistance(0.8F);
 	public static final BlockMaterial WEB = new Solid("Cobweb", 30).setHardness(4.0F).setResistance(20.0F);
-	public static final TallGrass TALL_GRASS = TallGrass.PARENT;	
+	public static final TallGrassMain TALL_GRASS = new TallGrassMain("Tall Grass");	
 	public static final BlockMaterial DEAD_BUSH = new LongGrass("Dead Shrubs", 32).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial PISTON_BASE = new Solid("Piston", 33).setResistance(0.8F);
 	public static final BlockMaterial PISTON_EXTENSION = new Solid("Piston (Head)", 34).setResistance(0.8F);
-	public static final Wool WOOL = Wool.PARENT;
+	public static final WoolMain WOOL = new WoolMain("Wool");
 	public static final BlockMaterial MOVED_BY_PISTON = new Solid("Moved By Piston", 36).setResistance(0.0F);
 	public static final BlockMaterial DANDELION = new GroundAttachable("Dandelion", 37).setHardness(0.0F).setResistance(0.0F);
 	public static final BlockMaterial ROSE = new GroundAttachable("Rose", 38).setHardness(0.0F).setResistance(0.0F);
@@ -209,7 +208,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial RED_APPLE = new GenericFood("Apple", 260, 4, FoodEffectType.HUNGER);
 	public static final ItemMaterial BOW = new GenericRangedWeapon("Bow", 261, 1, 9, (short) 385);
 	public static final ItemMaterial ARROW = new GenericItem("Arrow", 262);
-	public static final Coal COAL = Coal.PARENT;	
+	public static final CoalMain COAL = new CoalMain("Coal");
 	public static final ItemMaterial DIAMOND = new GenericItem("Diamond", 264);
 	public static final ItemMaterial IRON_INGOT = new GenericItem("Iron Ingot", 265);
 	public static final ItemMaterial GOLD_INGOT = new GenericItem("Gold Ingot", 266);
@@ -297,7 +296,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial GLOWSTONE_DUST = new GenericItem("Glowstone Dust", 348);
 	public static final ItemMaterial RAW_FISH = new GenericFood("Raw Fish", 349, 2, FoodEffectType.HUNGER);
 	public static final ItemMaterial COOKED_FISH = new GenericFood("Cooked Fish", 350, 5, FoodEffectType.HUNGER);
-	public static final Dye DYE = Dye.PARENT;
+	public static final DyeMain DYE = new DyeMain("Dye");
 	public static final ItemMaterial BONE = new GenericItem("Bone", 352);
 	public static final ItemMaterial SUGAR = new GenericItem("Sugar", 353);
 	public static final ItemMaterial CAKE = new GenericBlockItem("Cake", 354, VanillaMaterials.CAKE_BLOCK);
@@ -363,7 +362,7 @@ public final class VanillaMaterials {
 	public static final ItemMaterial WHITE_MUSIC_DISC = new GenericItem("Music Disc", 2264);
 	public static final ItemMaterial FOREST_GREEN_MUSIC_DISC = new GenericItem("Music Disc", 2265);
 	public static final ItemMaterial BROKEN_MUSIC_DISC = new GenericItem("Music Disc", 2266);
-	public static final Potion POTION = Potion.PARENT;
+	public static final PotionMain POTION = new PotionMain("Potion");
 	
 	protected static void initialize() {
 		((GenericBlock) VanillaMaterials.STONE).setDrop(VanillaMaterials.COBBLESTONE);

@@ -26,102 +26,74 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.material.DataSource;
-import org.spout.api.material.SubMaterial;
 import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;
 
-public class Wool extends GenericBlock implements MovingBlock, SubMaterial {
-	public final Wool WHITE;
-	public final Wool ORANGE;
-	public final Wool MAGENTA;
-	public final Wool LIGHTBLUE;
-	public final Wool YELLOW;
-	public final Wool LIME;
-	public final Wool PINK;
-	public final Wool GRAY;
-	public final Wool SILVER;
-	public final Wool CYAN;
-	public final Wool PURPLE;
-	public final Wool BLUE;
-	public final Wool BROWN;
-	public final Wool GREEN;
-	public final Wool RED;
-	public final Wool BLACK;
+public class Wool extends GenericBlock implements MovingBlock {
+	public static final Wool PARENT = new Wool("White Wool");
+	public static final Wool WHITE = PARENT;
+	public static final Wool ORANGE = new Wool("Orange Wool", WoolColor.Orange, PARENT);
+	public static final Wool MAGENTA = new Wool("Magenta Wool", WoolColor.Magenta, PARENT);
+	public static final Wool LIGHTBLUE = new Wool("Light Blue Wool", WoolColor.LightBlue, PARENT);
+	public static final Wool YELLOW = new Wool("Yellow Wool", WoolColor.Yellow, PARENT);
+	public static final Wool LIME = new Wool("Lime Wool", WoolColor.Lime, PARENT);
+	public static final Wool PINK = new Wool("Pink Wool", WoolColor.Pink, PARENT);
+	public static final Wool GRAY = new Wool("Gray Wool", WoolColor.Gray, PARENT);
+	public static final Wool SILVER = new Wool("Silver Wool", WoolColor.Silver, PARENT);
+	public static final Wool CYAN = new Wool("Cyan Wool", WoolColor.Cyan, PARENT);
+	public static final Wool PURPLE = new Wool("Purple Wool", WoolColor.Purple, PARENT);
+	public static final Wool BLUE = new Wool("Blue Wool", WoolColor.Blue, PARENT);
+	public static final Wool BROWN = new Wool("Brown Wool", WoolColor.Brown, PARENT);
+	public static final Wool GREEN = new Wool("Green Wool", WoolColor.Green, PARENT);
+	public static final Wool RED = new Wool("Red Wool", WoolColor.Red, PARENT);
+	public static final Wool BLACK = new Wool("Black Wool", WoolColor.Black, PARENT);
 
-	public static enum Color implements DataSource {
-		White(0), Orange(1), Magenta(2), LightBlue(3),
-		Yellow(4), Lime(5), Pink(6), Gray(7), Silver(8),
-		Cyan(9), Purple(10), Blue(11), Brown(12), Green(13),
-		Red(14), Black(15);
-		
+	public static enum WoolColor implements DataSource {
+		White(0),
+		Orange(1),
+		Magenta(2),
+		LightBlue(3),
+		Yellow(4),
+		Lime(5),
+		Pink(6),
+		Gray(7),
+		Silver(8),
+		Cyan(9),
+		Purple(10),
+		Blue(11),
+		Brown(12),
+		Green(13),
+		Red(14),
+		Black(15);
+
 		private final short data;
-		
-		private Color(int data) {
+
+		private WoolColor(int data) {
 			this.data = (short) data;
 		}
-		
+
 		@Override
 		public short getData() {
 			return this.data;
 		}
 	}
-	
-	private final Color color;
-	private final Wool parent;
 
-	private void setDefault() {
-		this.setHardness(0.8F).setResistance(1.3F);
-	}
-	
-	private Wool(String name, Color color, Wool parent) {
-		super(name, 35);
-		this.setDefault();
-		this.color = color;
-		this.parent = parent;
-		parent.registerSubMaterial(this);
-		this.register();
-		
-		this.WHITE = parent.WHITE;
-		this.ORANGE = parent.ORANGE;
-		this.MAGENTA = parent.MAGENTA;
-		this.LIGHTBLUE = parent.LIGHTBLUE;
-		this.YELLOW = parent.YELLOW;
-		this.LIME = parent.LIME;
-		this.PINK = parent.PINK;
-		this.GRAY = parent.GRAY;
-		this.SILVER = parent.SILVER;
-		this.CYAN = parent.CYAN;
-		this.PURPLE = parent.PURPLE;
-		this.BLUE = parent.BLUE;
-		this.BROWN = parent.BROWN;
-		this.GREEN = parent.GREEN;
-		this.RED = parent.RED;
-		this.BLACK = parent.BLACK;
-	}
+	private final WoolColor color;
 
 	public Wool(String name) {
 		super(name, 35);
 		this.setDefault();
-		this.color = Color.White;
-		this.parent = this;
-		this.register();
-		
-		this.WHITE = new Wool("White Wool", Color.White, this);
-		this.ORANGE = new Wool("Orange Wool", Color.Orange, this);
-		this.MAGENTA = new Wool("Magenta Wool", Color.Magenta, this);
-		this.LIGHTBLUE = new Wool("Light Blue Wool", Color.LightBlue, this);
-		this.YELLOW = new Wool("Yellow Wool", Color.Yellow, this);
-		this.LIME = new Wool("Lime Wool", Color.Lime, this);
-		this.PINK = new Wool("Pink Wool", Color.Pink, this);
-		this.GRAY = new Wool("Gray Wool", Color.Gray, this);
-		this.SILVER = new Wool("Silver Wool", Color.Silver, this);
-		this.CYAN = new Wool("Cyan Wool", Color.Cyan, this);
-		this.PURPLE = new Wool("Purple Wool", Color.Purple, this);
-		this.BLUE = new Wool("Blue Wool", Color.Blue, this);
-		this.BROWN = new Wool("Brown Wool", Color.Brown, this);
-		this.GREEN = new Wool("Green Wool", Color.Green, this);
-		this.RED = new Wool("Red Wool", Color.Red, this);
-		this.BLACK = new Wool("Black Wool", Color.Black, this);
+		this.color = WoolColor.White;
+	}
+
+	private Wool(String name, WoolColor color, Wool parent) {
+		super(name, 35, color.getData(), parent);
+		this.setDefault();
+		this.color = color;
+	}
+
+	private void setDefault() {
+		this.setHardness(0.8F).setResistance(1.3F);
 	}
 
 	@Override
@@ -129,17 +101,12 @@ public class Wool extends GenericBlock implements MovingBlock, SubMaterial {
 		return false;
 	}
 
-	public Color getColor() {
+	public WoolColor getColor() {
 		return this.color;
 	}
 
 	@Override
 	public short getData() {
 		return this.color.getData();
-	}
-
-	@Override
-	public Wool getParentMaterial() {
-		return this.parent;
 	}
 }

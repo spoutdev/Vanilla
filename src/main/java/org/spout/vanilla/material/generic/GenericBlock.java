@@ -27,14 +27,13 @@ package org.spout.vanilla.material.generic;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.GenericBlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.item.RedstoneTorch;
 import org.spout.vanilla.material.item.RedstoneWire;
 
-public class GenericBlock extends GenericBlockMaterial {
+public class GenericBlock extends BlockMaterial {
 
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
 	private float resistance;
@@ -45,6 +44,11 @@ public class GenericBlock extends GenericBlockMaterial {
 		super(name, id);
 		dropMaterial = this;
 		dropCount = 1;
+	}
+	
+	public GenericBlock(String name, int id, int data, Material parent) {
+		super(name, id, data, parent);
+		
 	}
 
 	/**
@@ -128,5 +132,28 @@ public class GenericBlock extends GenericBlockMaterial {
 		dropCount = count;
 		
 		return this;
+	}
+
+	@Override
+	public boolean isLiquid() {
+		return false;
+	}
+
+	@Override
+	public boolean isPlacementObstacle() {
+		return false;
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return false;
+	}
+
+	@Override
+	public void onUpdate(World world, int x, int y, int z) {
+	}
+
+	@Override
+	public void onDestroy(World world, int x, int y, int z) {
 	}
 }

@@ -27,6 +27,7 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.Material;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.entity.object.falling.FallingBlock;
 import org.spout.vanilla.material.MovingBlock;
@@ -43,6 +44,16 @@ public class Solid extends GenericBlock implements MovingBlock {
 	public Solid(String name, int id) {
 		super(name, id);
 		moving = false;
+	}
+
+	public Solid(String name, int id, int data, Material parent) {
+		super(name, id, data, parent);
+		moving = false;
+	}
+	
+	public Solid(String name, int id, int data, Material parent, boolean falling) {
+		super(name, id, data, parent);
+		moving = falling;
 	}
 
 	@Override

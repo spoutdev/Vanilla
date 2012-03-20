@@ -25,62 +25,12 @@
  */
 package org.spout.vanilla.material.item;
 
-import java.lang.reflect.Constructor;
-
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.block.BlockFace;
-import org.spout.vanilla.entity.VanillaEntity;
-import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class SpawnEgg extends GenericItem {
-	final Constructor<?> chosen;
-
-	public SpawnEgg(String name, int id, int spawnedEntityId) {
-		this(name, id, org.spout.vanilla.entity.Entity.getByID(spawnedEntityId));
-	}
 	
-	public SpawnEgg(String name, int id, org.spout.vanilla.entity.Entity spawnedEntity) {
-		super(name, id);
-
-		if (spawnedEntity == null) {
-			throw new IllegalArgumentException("Spawned entity can not be null!");
-		}
-		
-		Class<? extends VanillaEntity> controller = spawnedEntity.getController();
-
-		Constructor<?>[] constructors = controller.getConstructors();
-		for (Constructor<?> constructor : constructors) {
-			if (constructor.getParameterTypes().length == 0) {
-				chosen = constructor;
-				return;
-			}
-		}
-
-		chosen = null;
+	public SpawnEgg(String name) {
+		super(name, 383);
 	}
 
-	@Override
-	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
-		if (chosen != null) {
-			try {
-				entity.getWorld().createAndSpawnEntity(position, (VanillaEntity) chosen.newInstance(new Object[]{}));
-			} catch (Exception e) {
-				// What to do here?
-			}
-		}
-
-		ItemStack holding = entity.getInventory().getCurrentItem();
-		if (entity.getController() instanceof SurvivalPlayer) {
-			if (holding.getAmount() > 1) {
-				holding.setAmount(holding.getAmount() - 1);
-				entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
-			} else if (holding.getAmount() == 1) {
-				entity.getInventory().setItem(null, entity.getInventory().getCurrentSlot());
-			}
-		}
-	}
 }

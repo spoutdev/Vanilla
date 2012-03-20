@@ -29,63 +29,40 @@ import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
-import org.spout.api.material.SubMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;
 
-public class Slab extends GenericBlock implements MovingBlock, SubMaterial {
-	public final Slab STONE;
-	public final Slab SANDSTONE;
-	public final Slab WOOD;
-	public final Slab COBBLESTONE;
-	public final Slab BRICK;
-	public final Slab STONE_BRICK;
-	
-	private final Slab parent;
-	private final short data;
-	private DoubleSlab doubletype = VanillaMaterials.DOUBLE_SLABS;
-	
-	private void setDefault() {
-		this.setHardness(2.0F).setResistance(10.0F);
-	}
-	
-	private Slab(String name, int data, Slab parent) {
-		super(name, 32);
-		this.setDefault();
-		this.parent = parent;
-		this.data = (short) data;
-		parent.registerSubMaterial(this);
-		this.register();
+public class Slab extends GenericBlock implements MovingBlock {
+	public static final Slab PARENT = new Slab("Stone Slab");
+	public final Slab STONE = PARENT;
+	public final Slab SANDSTONE = new Slab("Sandstone Slab", 1, PARENT);
+	public final Slab WOOD = new Slab("Wooden Slab", 2, PARENT);
+	public final Slab COBBLESTONE = new Slab("Cobblestone Slab", 3, PARENT);
+	public final Slab BRICK = new Slab("Brick Slab", 4, PARENT);
+	public final Slab STONE_BRICK = new Slab("Stone Brick Slab", 5, PARENT);
 
-		this.STONE = parent.STONE;
-		this.SANDSTONE = parent.SANDSTONE;
-		this.WOOD = parent.WOOD;
-		this.COBBLESTONE = parent.COBBLESTONE;
-		this.BRICK = parent.BRICK;
-		this.STONE_BRICK = parent.STONE_BRICK;
-	}
-	
+	private DoubleSlab doubletype = VanillaMaterials.DOUBLE_SLABS;
+
 	public Slab(String name) {
 		super(name, 44);
 		this.setDefault();
-		this.parent = this;
-		this.data = 0;
-		this.register();
-
-		this.STONE = new Slab("Stone Slab", 0, this);
-		this.SANDSTONE = new Slab("Sandstone Slab", 1, this);
-		this.WOOD = new Slab("Wooden Slab", 2, this);
-		this.COBBLESTONE = new Slab("Cobblestone Slab", 3, this);
-		this.BRICK = new Slab("Brick Slab", 4, this);
-		this.STONE_BRICK = new Slab("Stone Brick Slab", 5, this);
 	}
-	
+
+	private Slab(String name, int data, Slab parent) {
+		super(name, 44, data, parent);
+		this.setDefault();
+	}
+
+	private void setDefault() {
+		this.setHardness(2.0F).setResistance(10.0F);
+	}
+
 	public void setDoubleSlabMaterial(DoubleSlab material) {
 		this.doubletype = material;
 	}
-	
+
 	@Override
 	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
 		if (against == BlockFace.BOTTOM) {
@@ -106,15 +83,5 @@ public class Slab extends GenericBlock implements MovingBlock, SubMaterial {
 	@Override
 	public boolean isMoving() {
 		return false;
-	}
-
-	@Override
-	public short getData() {
-		return this.data;
-	}
-
-	@Override
-	public Slab getParentMaterial() {
-		return this.parent;
 	}
 }

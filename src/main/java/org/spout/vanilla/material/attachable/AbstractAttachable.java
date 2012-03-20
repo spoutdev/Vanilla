@@ -28,6 +28,7 @@ package org.spout.vanilla.material.attachable;
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.VanillaMaterials;
@@ -36,6 +37,10 @@ import org.spout.vanilla.material.generic.GenericBlock;
 public abstract class AbstractAttachable extends GenericBlock implements Attachable {
 	protected AbstractAttachable(String name, int id) {
 		super(name, id);
+	}
+
+	public AbstractAttachable(String name, int id, int data, Material parent) {
+		super(name, id, data, parent);
 	}
 
 	@Override

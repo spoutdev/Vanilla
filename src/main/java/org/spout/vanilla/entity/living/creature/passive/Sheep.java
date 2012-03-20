@@ -46,7 +46,7 @@ public class Sheep extends Creature implements Passive {
 		this(0x0);
 	}
 
-	public Sheep(Wool.Color color) {
+	public Sheep(Wool.WoolColor color) {
 		this(color.getData());
 	}
 

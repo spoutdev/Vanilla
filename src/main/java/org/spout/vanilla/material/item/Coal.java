@@ -14,7 +14,7 @@
  *
  * Vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PUR	POSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
@@ -25,29 +25,18 @@
  */
 package org.spout.vanilla.material.item;
 
-import org.spout.vanilla.material.generic.GenericSubItem;
+import org.spout.vanilla.material.generic.GenericItem;
 
-public class Coal extends GenericSubItem {
-	public final Coal CHARCOAL;
-	public final Coal COAL;
-	
-	private Coal(String name, int data, Coal parent) {
-		super(name, 263, data, parent);
-		
-		this.COAL = parent.COAL;
-		this.CHARCOAL = parent.CHARCOAL;
-	}
-	
+public class Coal extends GenericItem {
+	public static final Coal PARENT = new Coal("Coal");
+	public final Coal COAL = PARENT;
+	public final Coal CHARCOAL = new Coal("Charcoal", 1, PARENT);
+
 	public Coal(String name) {
 		super(name, 263);
-		
-		this.COAL = new Coal("Coal", 0, this);
-		this.CHARCOAL = new Coal("Charcoal", 1, this);
 	}
 
-	@Override
-	public Coal getParentMaterial() {
-		return (Coal) super.getParentMaterial();
+	private Coal(String name, int data, Coal parent) {
+		super(name, 263, data, parent);
 	}
-
 }

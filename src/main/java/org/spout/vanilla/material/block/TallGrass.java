@@ -25,52 +25,23 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.material.SubMaterial;
+public class TallGrass extends LongGrass {
+	public static final TallGrass PARENT = new TallGrass("Dead Grass");
+	public static final TallGrass DEAD_GRASS = PARENT;
+	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, PARENT);
+	public static final TallGrass FERN = new TallGrass("Fern", 2, PARENT);
 
-public class TallGrass extends LongGrass implements SubMaterial {
-	public final TallGrass DEAD_GRASS;
-	public final TallGrass TALL_GRASS;
-	public final TallGrass FERN;
-
-	private final TallGrass parent;
-	private final short data;
-	
-	private void setDefault() {
-		this.setHardness(0.0F).setResistance(0.0F);
-	}
-	
-	private TallGrass(String name, int data, TallGrass parent) {
-		super(name, 31);
-		this.setDefault();
-		this.parent = parent;
-		this.data = (short) data;
-		parent.registerSubMaterial(this);
-		this.register();
-		
-		this.DEAD_GRASS = parent.DEAD_GRASS;
-		this.TALL_GRASS = parent.TALL_GRASS;
-		this.FERN = parent.FERN;
-	}
-	
 	public TallGrass(String name) {
 		super(name, 31);
 		this.setDefault();
-		this.parent = this;
-		this.data = 0;
-		this.register();
-		
-		this.DEAD_GRASS = new TallGrass("Dead Grass", 0, this);
-		this.TALL_GRASS = new TallGrass("Tall Grass", 1, this);
-		this.FERN = new TallGrass("Fern", 2, this);
 	}
 
-	@Override
-	public short getData() {
-		return this.data;
+	private TallGrass(String name, int data, TallGrass parent) {
+		super(name, 31, data, parent);
+		this.setDefault();
 	}
 
-	@Override
-	public TallGrass getParentMaterial() {
-		return this.parent;
+	private void setDefault() {
+		this.setHardness(0.0F).setResistance(0.0F);
 	}
 }

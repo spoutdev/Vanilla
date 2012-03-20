@@ -31,26 +31,9 @@ import org.spout.api.material.DataSource;
 import org.spout.vanilla.entity.living.creature.passive.Sheep;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.material.generic.GenericItem;
+import org.spout.vanilla.material.main.DyeMain;
 
 public class Dye extends GenericItem {
-	public static final Dye PARENT = new Dye("Ink Sac");
-	public final Dye INK_SAC = new Dye("Ink Sac", DyeColor.BLACK, PARENT);
-	public final Dye ROSE_RED = new Dye("Rose Red", DyeColor.RED, PARENT);
-	public final Dye CACTUS_GREEN = new Dye("Cactus Green", DyeColor.GREEN, PARENT);
-	public final Dye COCOA_BEANS = new Dye("Cocoa Beans", DyeColor.BROWN, PARENT);
-	public final Dye LAPIS_LAZULI = new Dye("Lapis Lazuli", DyeColor.BLUE, PARENT);
-	public final Dye PURPLE = new Dye("Purple Dye", DyeColor.PURPLE, PARENT);
-	public final Dye CYAN = new Dye("Cyan Dye", DyeColor.CYAN, PARENT);
-	public final Dye LIGHT_GRAY = new Dye("Light Gray Dye", DyeColor.LIGHT_GRAY, PARENT);
-	public final Dye GRAY = new Dye("Gray Dye", DyeColor.GRAY, PARENT);
-	public final Dye PINK = new Dye("Pink Dye", DyeColor.PINK, PARENT);
-	public final Dye LIME = new Dye("Lime Dye", DyeColor.LIME, PARENT);
-	public final Dye DANDELION_YELLOW = new Dye("Dandelion Yellow", DyeColor.YELLOW, PARENT);
-	public final Dye LIGHT_BLUE = new Dye("Light Blue Dye", DyeColor.LIGHT_BLUE, PARENT);
-	public final Dye MAGENTA = new Dye("Magenta Dye", DyeColor.MAGENTA, PARENT);
-	public final Dye ORANGE = new Dye("Orange Dye", DyeColor.ORANGE, PARENT);
-	public final Dye BONE_MEAL = new Dye("Bone Meal", DyeColor.WHITE, PARENT);
-
 	private final DyeColor color;
 
 	public static enum DyeColor implements DataSource {
@@ -88,7 +71,7 @@ public class Dye extends GenericItem {
 		this.color = DyeColor.BLACK;
 	}
 
-	private Dye(String name, DyeColor color, Dye parent) {
+	public Dye(String name, DyeColor color, DyeMain parent) {
 		super(name, 351, color.getData(), parent);
 		this.color = color;
 	}
@@ -122,5 +105,10 @@ public class Dye extends GenericItem {
 	@Override
 	public short getData() {
 		return this.color.getData();
+	}
+	
+	@Override
+	public DyeMain getParentMaterial() {
+		return (DyeMain) super.getParentMaterial();
 	}
 }

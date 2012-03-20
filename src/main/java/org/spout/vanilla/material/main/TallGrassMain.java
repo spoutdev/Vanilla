@@ -23,22 +23,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.main;
 
-import org.spout.vanilla.material.generic.GenericItem;
-import org.spout.vanilla.material.main.PotionMain;
+import org.spout.vanilla.material.block.TallGrass;
 
-public class Potion extends GenericItem {
-	public Potion(String name) {
-		super(name, 373);
-	}
+public class TallGrassMain extends TallGrass {
+	public final TallGrass DEAD_GRASS = new TallGrass("Dead Grass", 0, this);
+	public final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, this);
+	public final TallGrass FERN = new TallGrass("Fern", 2, this);
 
-	public Potion(String name, int data, PotionMain parent) {
-		super(name, 373, data, parent);
-	}
-	
-	@Override
-	public PotionMain getParentMaterial() {
-		return (PotionMain) super.getParentMaterial();
+	public TallGrassMain(String name) {
+		super(name);
 	}
 }

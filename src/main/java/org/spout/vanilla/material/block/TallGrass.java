@@ -25,23 +25,24 @@
  */
 package org.spout.vanilla.material.block;
 
-public class TallGrass extends LongGrass {
-	public static final TallGrass PARENT = new TallGrass("Dead Grass");
-	public static final TallGrass DEAD_GRASS = PARENT;
-	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, PARENT);
-	public static final TallGrass FERN = new TallGrass("Fern", 2, PARENT);
+import org.spout.vanilla.material.main.TallGrassMain;
 
+public class TallGrass extends LongGrass {
 	public TallGrass(String name) {
 		super(name, 31);
 		this.setDefault();
 	}
 
-	private TallGrass(String name, int data, TallGrass parent) {
+	public TallGrass(String name, int data, TallGrassMain parent) {
 		super(name, 31, data, parent);
 		this.setDefault();
 	}
 
 	private void setDefault() {
 		this.setHardness(0.0F).setResistance(0.0F);
+	}
+	
+	public TallGrassMain getParentMaterial() {
+		return (TallGrassMain) super.getParentMaterial();
 	}
 }

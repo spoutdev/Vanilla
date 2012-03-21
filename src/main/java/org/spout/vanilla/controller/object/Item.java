@@ -47,7 +47,6 @@ public class Item extends Substance {
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore(); //TODO this is an annoying fix, someone with knowlege in entities get rid of this?
 	private ItemStack is;
 	private int roll, unpickable;
-	private final Random rand = new Random();
 
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
@@ -62,7 +61,7 @@ public class Item extends Substance {
 		this.is = is;
 		this.roll = 1;
 		unpickable = 10;
-		setVelocity(velocity.add(initial));
+		setVelocity(getVelocity().add(initial));
 	}
 
 	@Override
@@ -78,10 +77,10 @@ public class Item extends Substance {
 			return;
 		}
 
-		float x = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
-		float y = rand.nextFloat();
-		float z = (rand.nextBoolean() ? 1 : -1) * rand.nextFloat();
-		setVelocity(this.velocity.add(x, y, z));
+		float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
+		float y = getRandom().nextFloat();
+		float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
+		setVelocity(getVelocity().add(x, y, z));
 		super.onTick(dt);
 		World world = getParent().getWorld();
 		//TODO replace with getClosestPlayer when my Spout PR gets pulled!

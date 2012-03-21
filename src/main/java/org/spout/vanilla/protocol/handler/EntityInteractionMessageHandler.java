@@ -62,7 +62,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 					damage = ((Weapon) is.getMaterial()).getDamage();
 				}
 
-				((Living) clickedEntity.getController()).damage(damage);
+				((VanillaController) clickedEntity.getController()).damage(damage, true);
 			}
 		} else {
 			ItemStack holding = player.getEntity().getInventory().getCurrentItem();

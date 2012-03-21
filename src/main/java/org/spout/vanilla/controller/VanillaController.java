@@ -34,6 +34,7 @@ import org.spout.api.collision.CollisionModel;
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
@@ -52,6 +53,9 @@ public abstract class VanillaController extends Controller {
 	private boolean flammable = true, canMove = true;
 	private int headYaw = 0, headYawLive = 0, fireTicks = 0;
 	private Vector3 lavaField, velocity = Vector3.ZERO;
+	//Velocity constants
+	private Vector3 webVelocity = new Vector3(0.001f, 0.001f, 0.001f);
+	private Vector3 soulSandVelocity = new Vector3(0.010f, 0f, 0f); //TODO Guessed here...needs to be tweaked.
 	
 	@Override
 	public void onAttached() {
@@ -83,7 +87,7 @@ public abstract class VanillaController extends Controller {
 		 * abstraction layer.
 		 */
 		if (canMove) {
-			checkWeb();
+			setVelocityFor(VanillaMaterials.WEB);
 		}
 
 		//Check to see if the controller can be burned.
@@ -131,6 +135,7 @@ public abstract class VanillaController extends Controller {
 
 	public void setVelocity(Vector3 velocity) {
 		this.velocity = velocity;
+		getParent().setScale(velocity);
 	}
 
 	/**
@@ -188,6 +193,33 @@ public abstract class VanillaController extends Controller {
 	public void damage(int amount, boolean animate) {
 		damage(amount, null, animate);		
 	}
+
+	/**
+	 * This method checks to see if the entity came into contact with a block that would change its' velocity.
+	 * This has no effect on non-moving controllers.
+	 */
+	public void setVelocityFor(BlockMaterial target) {
+		Point pos = getParent().getPosition();
+		if (pos == null || pos.getWorld() == null) {
+			return;
+		}
+
+		//Adjust velocity due to coming into contact with a web.
+		if (target.equals(VanillaMaterials.WEB) && getParent().getWorld().getBlock(pos).getBlockMaterial().equals(target)) {
+			if (!velocity.equals(webVelocity)) {
+				velocity = webVelocity;
+				getParent().setScale(velocity);
+			}
+		} else if (target.equals(VanillaMaterials.SOUL_SAND) && getParent().getWorld().getBlock(pos).getBlockMaterial().equals(VanillaMaterials.SOUL_SAND)) {
+			if (!velocity.equals(soulSandVelocity)) {
+				velocity = soulSandVelocity; //TODO Guessed here...needs to be tweaked.
+				getParent().setScale(velocity);
+			}
+		} else {
+			//Reset velocity back to ZERO. TODO: Probably will need to adjust this method based on controller type or override it in child class
+			velocity = Vector3.ZERO;
+		}
+	}
 	
 	/**
 	 * This method takes in any amount of messages and sends them to all players in the world in-which the
@@ -211,25 +243,6 @@ public abstract class VanillaController extends Controller {
 	public void sendMessage(Player player, Message... messages) {
 		for (Message message : messages) {
 			player.getSession().send(message);
-		}
-	}
-
-	/**
-	 * This method checks to see if the entity came into contact with a web. If so its' velocity
-	 * is slowed down. This has no effect on non-moving controllers.
-	 */
-	public void checkWeb() {
-		Point pos = getParent().getPosition();
-		if (pos == null || pos.getWorld() == null) {
-			return;
-		}
-		if (pos.getWorld().getBlock(pos).getBlockMaterial() == VanillaMaterials.WEB) {
-			if (velocity.length() != 1f) {
-				velocity = new Vector3(0.001f, 0.001f, 0.001f);
-			}
-		} else {
-			//TODO adjust velocity for exit out of web. For now, reset velocity.
-			velocity = Vector3.ZERO;
 		}
 	}
 

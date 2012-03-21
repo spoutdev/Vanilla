@@ -49,7 +49,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		Entity entity = player.getEntity();
 
 		Inventory inv = entity.getInventory();
-		int slot = VanillaMessageHandlerUtils.playerInventorySlotToSpout(message.getSlot());
+		int slot = VanillaMessageHandlerUtils.networkInventorySlotToSpout(message.getSlot());
 
 		if (slot == 0xFFFF) {
 			//player.setItemOnCursor(null);

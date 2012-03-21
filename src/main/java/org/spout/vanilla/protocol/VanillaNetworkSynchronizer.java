@@ -53,7 +53,6 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
-import org.spout.vanilla.generator.VanillaBiomes;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.material.Tool;
@@ -352,7 +351,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
 		Message message;
-		final int networkSlot = VanillaMessageHandlerUtils.playerInventorySlotToNetwork(slot);
+		final int networkSlot = VanillaMessageHandlerUtils.spoutInventorySlotToNetwork(slot);
 		if (item == null) {
 			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot);
 		} else {
@@ -369,7 +368,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	public void updateAll(Inventory inventory, ItemStack[] slots) {
 		ItemStack[] newSlots = new ItemStack[slots.length];
 		for (int i = 0; i < slots.length; ++i) {
-			newSlots[VanillaMessageHandlerUtils.playerInventorySlotToNetwork(i)] = slots[i];
+			newSlots[VanillaMessageHandlerUtils.spoutInventorySlotToNetwork(i)] = slots[i];
 		}
 		session.send(new SetWindowSlotsMessage(getInventoryId(inventory.getClass()), newSlots));
 		queuedInventoryUpdates.clear();

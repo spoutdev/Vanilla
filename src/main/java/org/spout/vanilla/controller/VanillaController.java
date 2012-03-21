@@ -55,7 +55,7 @@ public abstract class VanillaController extends Controller {
 	private Vector3 lavaField, velocity = Vector3.ZERO;
 	//Velocity constants
 	private Vector3 webVelocity = new Vector3(0.001f, 0.001f, 0.001f);
-	private Vector3 soulSandVelocity = new Vector3(0.010f, 0f, 0f); //TODO Guessed here...needs to be tweaked.
+	private Vector3 soulSandVelocity = new Vector3(2f, 0f, 0f); //TODO Guessed here...needs to be tweaked.
 	
 	@Override
 	public void onAttached() {
@@ -87,7 +87,11 @@ public abstract class VanillaController extends Controller {
 		 * abstraction layer.
 		 */
 		if (canMove) {
-			setVelocityFor(getParent().getPosition().getWorld().getBlock(getParent().getPosition()).getBlockMaterial());
+			Vector3 temp = determineVelocityFor(getParent().getPosition().getWorld().getBlock(getParent().getPosition()).getBlockMaterial());
+			if (temp != null && !temp.equals(velocity)) {
+				velocity = temp;
+				getParent().setScale(velocity);
+			}
 		}
 
 		//Check to see if the controller can be burned.
@@ -198,29 +202,20 @@ public abstract class VanillaController extends Controller {
 	 * This method checks to see if the entity came into contact with a block that would change its' velocity.
 	 * This has no effect on non-moving controllers.
 	 */
-	public void setVelocityFor(BlockMaterial target) {
+	public Vector3 determineVelocityFor(BlockMaterial target) {
 		Point pos = getParent().getPosition();
 		if (pos == null || pos.getWorld() == null) {
-			return;
+			return null;
 		}
 
 		//Adjust velocity due to coming into contact with a web.
 		if (target.equals(VanillaMaterials.WEB)) {
-			if (!velocity.equals(webVelocity)) {
-				velocity = webVelocity;
-				getParent().setScale(velocity);
-			}
+			return webVelocity;
 		} else if (target.equals(VanillaMaterials.SOUL_SAND)) {
-			if (!velocity.equals(soulSandVelocity)) {
-				velocity = soulSandVelocity; //TODO Guessed here...needs to be tweaked.
-				getParent().setScale(velocity);
-			}
+			return soulSandVelocity;
 		} else {
 			//Reset velocity back to ZERO. TODO: Probably will need to adjust this method based on controller type or override it in child class
-			if (!velocity.equals(Vector3.ZERO)) {
-				velocity = Vector3.ZERO;
-				getParent().setScale(Vector3.ZERO);
-			}
+			return Vector3.ZERO;
 		}
 	}
 	

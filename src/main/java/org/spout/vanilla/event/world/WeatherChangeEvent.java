@@ -29,7 +29,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.world.WorldEvent;
 
-import org.spout.vanilla.entity.object.Sky;
+import org.spout.vanilla.controller.object.sky.Sky;
 import org.spout.vanilla.world.Weather;
 
 public class WeatherChangeEvent extends WorldEvent implements Cancellable {

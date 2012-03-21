@@ -55,7 +55,7 @@ public final class PositionMessageHandler extends MessageHandler<PositionMessage
 		//Figure out how much in X and Z the player has moved
 		Vector3 newPos = new Vector3(x,y,z);
 		newPos = newPos.normalize();
-		Vector3 pPos = entity.getPosition().normalize();
+		Vector3 pPos = controller.getPosition().normalize();
 		
 		Vector3 difference = pPos.subtract(newPos);
 		//Figure out how much in Forward we have moved

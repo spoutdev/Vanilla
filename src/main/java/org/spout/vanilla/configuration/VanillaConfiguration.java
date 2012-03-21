@@ -53,8 +53,8 @@ public class VanillaConfiguration extends Configuration {
 	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_XP = new ConfigurationNode("player.survival.enable-xp", true);
 	public static final ConfigurationNode PLAYER_TIMEOUT_TICKS = new ConfigurationNode("player.timeout-ticks", 1200);
 	public static final OpConfig OPS = new OpConfig();
-	// Entity
-	public static final ConfigurationNode ITEM_PICKUP_RANGE = new ConfigurationNode("entity.item-pickup-range", 3);
+	// ControllerType
+	public static final ConfigurationNode ITEM_PICKUP_RANGE = new ConfigurationNode("controller.item-pickup-range", 3);
 
 	public VanillaConfiguration() {
 		super(new File("plugins/Vanilla/config.yml"));

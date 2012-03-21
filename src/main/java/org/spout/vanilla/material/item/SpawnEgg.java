@@ -33,8 +33,9 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.entity.VanillaEntity;
-import org.spout.vanilla.entity.living.player.SurvivalPlayer;
+import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaController;
+import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class SpawnEgg extends GenericItem {
@@ -43,7 +44,7 @@ public class SpawnEgg extends GenericItem {
 	public SpawnEgg(String name, int id, int data) {
 		super(name, id, data);
 
-		Class<? extends VanillaEntity> controller = org.spout.vanilla.entity.Entity.getByID((int) getData()).getController();
+		Class<? extends VanillaController> controller = ControllerType.getByID((int) getData()).getController();
 
 		Constructor<?>[] constructors = controller.getConstructors();
 		for (Constructor<?> constructor : constructors) {
@@ -60,7 +61,7 @@ public class SpawnEgg extends GenericItem {
 	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
 		if (chosen != null) {
 			try {
-				entity.getWorld().createAndSpawnEntity(position, (VanillaEntity) chosen.newInstance(new Object[]{}));
+				entity.getWorld().createAndSpawnEntity(position, (VanillaController) chosen.newInstance(new Object[]{}));
 			} catch (Exception e) {
 				// What to do here?
 			}

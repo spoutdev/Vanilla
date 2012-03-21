@@ -33,7 +33,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 
-import org.spout.vanilla.entity.living.player.SurvivalPlayer;
+import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.material.BlockItem;
 
 public class GenericBlockItem extends GenericItem implements BlockItem {
@@ -68,7 +68,7 @@ public class GenericBlockItem extends GenericItem implements BlockItem {
 		if (type == Action.RIGHT_CLICK) {
 			ItemStack holding = entity.getInventory().getCurrentItem();
 			if (holding == null || holding.getMaterial() != this) {
-				throw new IllegalStateException("Interaction with an entity that is not holding this material!");
+				throw new IllegalStateException("Interaction with an controller that is not holding this material!");
 			}
 			if (entity.getController() instanceof SurvivalPlayer) {
 				if (holding.getAmount() > 1) {
@@ -76,7 +76,7 @@ public class GenericBlockItem extends GenericItem implements BlockItem {
 				} else if (holding.getAmount() == 1) {
 					entity.getInventory().setItem(null, entity.getInventory().getCurrentSlot());
 				} else {
-					throw new IllegalStateException("Entity is holding zero or negative sized item!");
+					throw new IllegalStateException("ControllerType is holding zero or negative sized item!");
 				}
 			}
 			int x = MathHelper.floor(position.getX());

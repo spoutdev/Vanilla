@@ -33,8 +33,9 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.entity.VanillaEntity;
-import org.spout.vanilla.entity.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.VanillaController;
+import org.spout.vanilla.controller.living.Living;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Item;
 import org.spout.vanilla.material.Weapon;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
@@ -42,7 +43,7 @@ import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
 public class EntityInteractionMessageHandler extends MessageHandler<EntityInteractionMessage> {
 	@Override
 	public void handle(Session session, Player player, EntityInteractionMessage message) {
-		//TODO what happens if the entity is in a different region?
+		//TODO what happens if the controller is in a different region?
 		Entity clickedEntity = player.getEntity().getWorld().getRegion(player.getEntity().getPosition()).getEntity(message.getTarget());
 		if (clickedEntity == null) {
 			return;
@@ -53,7 +54,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 				return;
 			}
 
-			if (clickedEntity.getController() instanceof VanillaEntity) {
+			if (clickedEntity.getController() instanceof VanillaController) {
 				ItemStack is = player.getEntity().getInventory().getCurrentItem();
 
 				int damage = 1;
@@ -61,7 +62,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 					damage = ((Weapon) is.getMaterial()).getDamage();
 				}
 
-				((VanillaEntity) clickedEntity.getController()).damage(damage);
+				((Living) clickedEntity.getController()).damage(damage);
 			}
 		} else {
 			ItemStack holding = player.getEntity().getInventory().getCurrentItem();

@@ -31,9 +31,9 @@ import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.MaterialData;
 
-import org.spout.vanilla.entity.living.creature.passive.Sheep;
-import org.spout.vanilla.entity.living.player.SurvivalPlayer;
-import org.spout.vanilla.entity.object.Item;
+import org.spout.vanilla.controller.living.creature.passive.Sheep;
+import org.spout.vanilla.controller.living.player.SurvivalPlayer;
+import org.spout.vanilla.controller.object.Item;
 import org.spout.vanilla.material.generic.GenericTool;
 
 public class Shears extends GenericTool {

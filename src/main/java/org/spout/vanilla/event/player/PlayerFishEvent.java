@@ -49,8 +49,8 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 	}
 
 	/**
-	 * Gets the controller of the entity caught by the player
-	 * @return Controller of the entity caught by the player, null if fishing,
+	 * Gets the controller of the controller caught by the player
+	 * @return Controller of the controller caught by the player, null if fishing,
 	 *         bobber has gotten stuck in the ground or nothing has been caught
 	 */
 	public Controller getCaught() {
@@ -58,8 +58,8 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 	}
 
 	/**
-	 * Sets the controller of the entity that as caught.
-	 * @param caught Controller of the entity that was caught.
+	 * Sets the controller of the controller that as caught.
+	 * @param caught Controller of the controller that was caught.
 	 */
 	public void setCaught(Controller caught) {
 		this.caught = caught;
@@ -104,7 +104,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 		 */
 		FISHING,
 		/**
-		 * When a player has successfully caught an entity
+		 * When a player has successfully caught an controller
 		 */
 		CAUGHT_ENTITY,
 		/**

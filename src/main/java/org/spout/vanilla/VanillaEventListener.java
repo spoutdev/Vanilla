@@ -45,11 +45,11 @@ import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.entity.living.creature.neutral.Enderman;
-import org.spout.vanilla.entity.living.creature.passive.Sheep;
-import org.spout.vanilla.entity.living.player.CreativePlayer;
-import org.spout.vanilla.entity.living.player.SurvivalPlayer;
-import org.spout.vanilla.entity.world.RegionEntitySpawner;
+import org.spout.vanilla.controller.living.creature.neutral.Enderman;
+import org.spout.vanilla.controller.living.creature.passive.Sheep;
+import org.spout.vanilla.controller.living.player.CreativePlayer;
+import org.spout.vanilla.controller.living.player.SurvivalPlayer;
+import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 
 public class VanillaEventListener implements Listener {
@@ -85,8 +85,8 @@ public class VanillaEventListener implements Listener {
 	@EventHandler()
 	public void onRegionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
-		if (region.getAll(RegionEntitySpawner.class).isEmpty()) {
-			region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE), new RegionEntitySpawner(region));
+		if (region.getAll(RegionSpawner.class).isEmpty()) {
+			region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE), new RegionSpawner(region));
 		}
 	}
 
@@ -99,8 +99,8 @@ public class VanillaEventListener implements Listener {
 		Entity entity = event.getEntity();
 		Controller c = entity.getController();
 		if (c != null) {
-			if (c instanceof RegionEntitySpawner) {
-				RegionEntitySpawner spawner = (RegionEntitySpawner) c;
+			if (c instanceof RegionSpawner) {
+				RegionSpawner spawner = (RegionSpawner) c;
 				HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
 				grass.add(VanillaMaterials.GRASS);
 				spawner.addSpawnableType(Sheep.class, grass, 5);

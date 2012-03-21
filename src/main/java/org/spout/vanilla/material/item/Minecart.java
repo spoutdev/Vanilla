@@ -33,7 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.entity.object.vehicle.minecart.TransportMinecart;
+import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.generic.GenericItem;
 

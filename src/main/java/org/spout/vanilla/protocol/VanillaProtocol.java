@@ -28,10 +28,10 @@ package org.spout.vanilla.protocol;
 import org.spout.api.protocol.Protocol;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.entity.living.creature.passive.Chicken;
-import org.spout.vanilla.entity.living.creature.passive.Sheep;
-import org.spout.vanilla.entity.living.player.VanillaPlayer;
-import org.spout.vanilla.entity.object.Item;
+import org.spout.vanilla.controller.living.creature.passive.Chicken;
+import org.spout.vanilla.controller.living.creature.passive.Sheep;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.object.Item;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.VanillaPlayerEntityProtocol;

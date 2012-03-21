@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.entity.Controller;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.entity.living.creature.neutral.Enderman;
+import org.spout.vanilla.controller.living.creature.neutral.Enderman;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class EndermanEntityProtocol extends BasicMobEntityProtocol {

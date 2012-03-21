@@ -51,7 +51,7 @@ import org.spout.api.util.map.TIntPairHashSet;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.entity.living.player.SurvivalPlayer;
+import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;

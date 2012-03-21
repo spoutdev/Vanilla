@@ -34,8 +34,8 @@ import org.spout.api.geo.World;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.entity.living.creature.passive.Chicken;
-import org.spout.vanilla.entity.living.creature.passive.Sheep;
+import org.spout.vanilla.controller.living.creature.passive.Chicken;
+import org.spout.vanilla.controller.living.creature.passive.Sheep;
 
 public class TestCommands {
 	private final VanillaPlugin plugin;

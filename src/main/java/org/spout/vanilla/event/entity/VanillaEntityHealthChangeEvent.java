@@ -79,24 +79,24 @@ public class VanillaEntityHealthChangeEvent extends EntityHealthChangeEvent impl
 		 */
 		PEACEFUL,
 		/**
-		 * Health changed from the entity being in contact with an object.
+		 * Health changed from the controller being in contact with an object.
 		 */
 		CONTACT,
 		/**
-		 * Health changed from the entity eating.
+		 * Health changed from the controller eating.
 		 */
 		EATING,
 		/**
-		 * Health changed from the entity being under attack from another
-		 * entity.
+		 * Health changed from the controller being under attack from another
+		 * controller.
 		 */
 		ENTITY_ATTACK,
 		/**
-		 * Health changed from the entity being collided with a projectile.
+		 * Health changed from the controller being collided with a projectile.
 		 */
 		PROJECTILE,
 		/**
-		 * Health changed from the entity suffocating.
+		 * Health changed from the controller suffocating.
 		 */
 		SUFFOCATION,
 		/**
@@ -124,7 +124,7 @@ public class VanillaEntityHealthChangeEvent extends EntityHealthChangeEvent impl
 		 */
 		BLOCK_EXPLOSION,
 		/**
-		 * Health changed due to an entity's explosion.
+		 * Health changed due to an controller's explosion.
 		 */
 		ENTITY_EXPLOSION,
 		/**
@@ -137,7 +137,7 @@ public class VanillaEntityHealthChangeEvent extends EntityHealthChangeEvent impl
 		 */
 		LIGHTNING,
 		/**
-		 * Health changed due to the entity starving.
+		 * Health changed due to the controller starving.
 		 */
 		STARVATION,
 		/**

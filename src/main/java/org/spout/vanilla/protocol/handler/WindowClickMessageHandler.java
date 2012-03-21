@@ -34,7 +34,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.entity.living.player.CreativePlayer;
+import org.spout.vanilla.controller.living.player.CreativePlayer;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;

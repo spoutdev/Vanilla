@@ -59,7 +59,7 @@ public class OpConfig extends Configuration {
 			list.remove(playerName);
 		}
 
-		OPS.setValue(list, true);
+		OPS.setValue(list);
 	}
 
 	public boolean isOp(String playerName) {

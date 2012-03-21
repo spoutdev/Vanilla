@@ -49,7 +49,7 @@ import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 public abstract class VanillaController extends Controller {
 	protected final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();
-	private boolean flammable, canMove = true;
+	private boolean flammable = true, canMove = true;
 	private int headYaw = 0, headYawLive = 0, fireTicks = 0;
 	private Vector3 lavaField, velocity = Vector3.ZERO;
 	
@@ -218,16 +218,18 @@ public abstract class VanillaController extends Controller {
 	 * This method checks to see if the entity came into contact with a web. If so its' velocity
 	 * is slowed down. This has no effect on non-moving controllers.
 	 */
-	private void checkWeb() {
+	public void checkWeb() {
 		Point pos = getParent().getPosition();
 		if (pos == null || pos.getWorld() == null) {
 			return;
 		}
 		if (pos.getWorld().getBlock(pos).getBlockMaterial() == VanillaMaterials.WEB) {
-			// TODO: this needs to be solved differently:
-			// 1. scale no longer modifies the vector
-			// 2. the speed modification is temporary in minecraft, while this here pretty steeply reduces the speed to 0
-			velocity = velocity.multiply(0.25F, 0.05F, 0.25F);
+			if (velocity.length() != 1f) {
+				velocity = new Vector3(0.001f, 0.001f, 0.001f);
+			}
+		} else {
+			//TODO adjust velocity for exit out of web. For now, reset velocity.
+			velocity = Vector3.ZERO;
 		}
 	}
 

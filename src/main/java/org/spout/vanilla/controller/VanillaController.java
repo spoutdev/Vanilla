@@ -218,6 +218,7 @@ public abstract class VanillaController extends Controller {
 		} else {
 			//Reset velocity back to ZERO. TODO: Probably will need to adjust this method based on controller type or override it in child class
 			velocity = Vector3.ZERO;
+			getParent().setScale(Vector3.ZERO);
 		}
 	}
 	

@@ -104,6 +104,7 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 		}
 
 		sendMessage(player, new UserListItemMessage(player.getName(), true, ping));
+		super.onTick(dt);
 	}
 
 	@Override

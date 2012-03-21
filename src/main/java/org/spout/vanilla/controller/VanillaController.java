@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import org.spout.api.Spout;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.entity.Controller;
@@ -48,12 +49,14 @@ import org.spout.vanilla.protocol.msg.EntityStatusMessage;
  * Controller that is the parent of all Vanilla controllers.
  */
 public abstract class VanillaController extends Controller {
+	//Collision box for controllers
 	protected final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();
 	private boolean flammable = true, canMove = true;
 	private int headYaw = 0, headYawLive = 0, fireTicks = 0;
 	private Vector3 lavaField, velocity = Vector3.ZERO;
 	//Velocity constants
+	private Vector3 waterVelocity = new Vector3(2f, 2f, 2f);
 	private Vector3 webVelocity = new Vector3(0.001f, 0.001f, 0.001f);
 	private Vector3 soulSandVelocity = new Vector3(2f, 0f, 0f); //TODO Guessed here...needs to be tweaked.
 	
@@ -80,20 +83,20 @@ public abstract class VanillaController extends Controller {
 			headYawLive = headYaw;
 			sendMessage(new EntityHeadYawMessage(getParent().getId(), headYaw));
 		}
-		
+
 		/**
 		 * Check to see if the child controller can move. This solves the issue with doing needless checks 
 		 * for things that only affect moving controllers and eliminates the need for a MovingController 
 		 * abstraction layer.
 		 */
 		if (canMove) {
-			Vector3 temp = determineVelocityFor(getParent().getPosition().getWorld().getBlock(getParent().getPosition()).getBlockMaterial());
-			if (temp != null && !temp.equals(velocity)) {
-				velocity = temp;
-				getParent().setScale(velocity);
+			Vector3 temp = determineVelocity();
+			if (!temp.equals(velocity)) {
+				//Set the new velocity.
+				setVelocity(temp);
 			}
 		}
-
+		
 		//Check to see if the controller can be burned.
 		if (flammable) {
 			checkLava();
@@ -139,7 +142,7 @@ public abstract class VanillaController extends Controller {
 
 	public void setVelocity(Vector3 velocity) {
 		this.velocity = velocity;
-		getParent().setScale(velocity);
+		getParent().translate(velocity);
 	}
 
 	/**
@@ -202,21 +205,47 @@ public abstract class VanillaController extends Controller {
 	 * This method checks to see if the entity came into contact with a block that would change its' velocity.
 	 * This has no effect on non-moving controllers.
 	 */
-	public Vector3 determineVelocityFor(BlockMaterial target) {
-		Point pos = getParent().getPosition();
-		if (pos == null || pos.getWorld() == null) {
-			return null;
+	public Vector3 determineVelocity() {
+		BlockMaterial waist = getParent().getWorld().getBlock(getParent().getPosition()).getBlockMaterial();
+		if (waist.equals(VanillaMaterials.WEB)) {
+			if(Spout.getGame().debugMode()) {
+				System.out.println("\nDetected moving controller and block that changes velocity!\n------------------\nCurrent controller: " + this.toString() + "\nCurrent block: " + waist.getDisplayName() + "\nCurrent velocity: " + velocity);
+			}
+			return webVelocity;
+		} else if (waist.equals(VanillaMaterials.WATER)) {
+			if(Spout.getGame().debugMode()) {
+				System.out.println("\nDetected moving controller and block that changes velocity!\n------------------\nCurrent controller: " + this.toString() + "\nCurrent block: " + waist.getDisplayName() + "\nCurrent velocity: " + velocity);
+			}
+			return waterVelocity;
 		}
 
-		//Adjust velocity due to coming into contact with a web.
-		if (target.equals(VanillaMaterials.WEB)) {
+		/**
+		 * If execution got here, that means we should check to see if the block under the controller's position
+		 * is a block (y - 1). 
+		 */
+		float x = getParent().getPosition().getX() - 1;
+		float y = getParent().getPosition().getY() - 1;
+		float z = getParent().getPosition().getZ();
+		
+		BlockMaterial feet = getParent().getWorld().getBlock(new Point(getParent().getWorld(), x, y, z)).getBlockMaterial();
+		if (feet.equals(VanillaMaterials.WEB)) {
+			if(Spout.getGame().debugMode()) {
+				System.out.println("\nDetected moving controller and block that changes velocity!\n------------------\nCurrent controller: " + this.toString() + "\nCurrent block: " + waist.getDisplayName() + "\nCurrent velocity: " + velocity);
+			}
 			return webVelocity;
-		} else if (target.equals(VanillaMaterials.SOUL_SAND)) {
+		} else if (feet.equals(VanillaMaterials.SOUL_SAND)) {
+			if(Spout.getGame().debugMode()) {
+				System.out.println("\nDetected moving controller and block that changes velocity!\n------------------\nCurrent controller: " + this.toString() + "\nCurrent block: " + waist.getDisplayName() + "\nCurrent velocity: " + velocity);
+			}
 			return soulSandVelocity;
-		} else {
-			//Reset velocity back to ZERO. TODO: Probably will need to adjust this method based on controller type or override it in child class
-			return Vector3.ZERO;
+		} else if(feet.equals(VanillaMaterials.WATER)) {
+			if(Spout.getGame().debugMode()) {
+				System.out.println("\nDetected moving controller and block that changes velocity!\n------------------\nCurrent controller: " + this.toString() + "\nCurrent block: " + waist.getDisplayName() + "\nCurrent velocity: " + velocity);
+			}
+			return waterVelocity;
 		}
+		
+		return Vector3.ZERO;
 	}
 	
 	/**

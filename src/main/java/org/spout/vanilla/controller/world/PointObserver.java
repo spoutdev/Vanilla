@@ -31,6 +31,10 @@ import org.spout.vanilla.controller.VanillaController;
  * Controller that observes chunks around a point. It will always keep these chunks in memory.
  */
 public class PointObserver extends VanillaController {
+	public PointObserver() {
+		setMoveable(false);
+		setFlammable(false);
+	}
 	@Override
 	public void onAttached() {
 		getParent().setObserver(true);

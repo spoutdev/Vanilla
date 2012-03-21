@@ -47,6 +47,7 @@ public class Item extends Substance {
 	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore(); //TODO this is an annoying fix, someone with knowlege in entities get rid of this?
 	private ItemStack is;
 	private int roll, unpickable;
+	private Vector3 initial;
 
 	@Override
 	public EntityProtocol getEntityProtocol(int protocolId) {
@@ -61,7 +62,8 @@ public class Item extends Substance {
 		this.is = is;
 		this.roll = 1;
 		unpickable = 10;
-		setVelocity(getVelocity().add(initial));
+		this.initial = initial;
+		setMoveable(false); //TODO Items can move so need to fix the NPE that occurs when the item dropped.
 	}
 
 	@Override
@@ -71,6 +73,10 @@ public class Item extends Substance {
 
 	@Override
 	public void onTick(float dt) {
+		if (dt <= 1) {
+			setVelocity(getVelocity().add(initial));
+		}
+
 		if (unpickable > 0) {
 			unpickable--;
 			super.onTick(dt);

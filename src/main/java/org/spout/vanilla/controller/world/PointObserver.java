@@ -28,9 +28,9 @@ package org.spout.vanilla.controller.world;
 import org.spout.vanilla.controller.VanillaController;
 
 /**
- * Simple controller that simply keeps a spawn point of a world in memory.
+ * Controller that observes chunks around a point. It will always keep these chunks in memory.
  */
-public class WorldSpawn extends VanillaController {
+public class PointObserver extends VanillaController {
 	@Override
 	public void onAttached() {
 		getParent().setObserver(true);

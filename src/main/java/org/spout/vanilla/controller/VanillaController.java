@@ -87,7 +87,7 @@ public abstract class VanillaController extends Controller {
 		 * abstraction layer.
 		 */
 		if (canMove) {
-			setVelocityFor(VanillaMaterials.WEB);
+			setVelocityFor(getParent().getPosition().getWorld().getBlock(getParent().getPosition()).getBlockMaterial());
 		}
 
 		//Check to see if the controller can be burned.
@@ -205,20 +205,22 @@ public abstract class VanillaController extends Controller {
 		}
 
 		//Adjust velocity due to coming into contact with a web.
-		if (target.equals(VanillaMaterials.WEB) && getParent().getWorld().getBlock(pos).getBlockMaterial().equals(target)) {
+		if (target.equals(VanillaMaterials.WEB)) {
 			if (!velocity.equals(webVelocity)) {
 				velocity = webVelocity;
 				getParent().setScale(velocity);
 			}
-		} else if (target.equals(VanillaMaterials.SOUL_SAND) && getParent().getWorld().getBlock(pos).getBlockMaterial().equals(VanillaMaterials.SOUL_SAND)) {
+		} else if (target.equals(VanillaMaterials.SOUL_SAND)) {
 			if (!velocity.equals(soulSandVelocity)) {
 				velocity = soulSandVelocity; //TODO Guessed here...needs to be tweaked.
 				getParent().setScale(velocity);
 			}
 		} else {
 			//Reset velocity back to ZERO. TODO: Probably will need to adjust this method based on controller type or override it in child class
-			velocity = Vector3.ZERO;
-			getParent().setScale(Vector3.ZERO);
+			if (!velocity.equals(Vector3.ZERO)) {
+				velocity = Vector3.ZERO;
+				getParent().setScale(Vector3.ZERO);
+			}
 		}
 	}
 	

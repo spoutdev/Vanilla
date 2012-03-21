@@ -44,4 +44,9 @@ public class NetherrackBiome extends VanillaBiomeType {
 			}
 		}
 	}
+
+	@Override
+	public String getName() {
+		return "Nether";
+	}
 }

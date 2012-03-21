@@ -38,4 +38,9 @@ public class OceanBiome extends VanillaBiomeType {
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
+
+	@Override
+	public String getName() {
+		return "Ocean";
+	}
 }

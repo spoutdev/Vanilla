@@ -60,6 +60,11 @@ public class MountainBiome extends VanillaBiomeType {
 		}
 	}
 
+	@Override
+	public String getName() {
+		return "Mountains";
+	}
+
 	protected short getBlockId(int top, int dy) {
 		short id;
 		if (dy > top) {

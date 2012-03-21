@@ -40,15 +40,15 @@ import org.spout.vanilla.generator.normal.biome.TundraBiome;
 import org.spout.vanilla.generator.theend.biome.EndStoneBiome;
 
 public class VanillaBiomes {
-	public static final BiomeType DESERT = new DesertBiome();
-	public static final BiomeType JUNGLE = new JungleBiome();
-	public static final BiomeType MOUNTAIN = new MountainBiome();
-	public static final BiomeType MUSHROOM = new MushroomBiome();
-	public static final BiomeType OCEAN = new OceanBiome();
-	public static final BiomeType PLAIN = new PlainBiome();
-	public static final BiomeType SWAMP = new SwampBiome();
-	public static final BiomeType TAIGA = new TaigaBiome();
-	public static final BiomeType TUNDRA = new TundraBiome();
-	public static final BiomeType ENDSTONE = new EndStoneBiome();
-	public static final BiomeType NETHERRACK = new NetherrackBiome();
+	public static final VanillaBiomeType DESERT = new DesertBiome();
+	public static final VanillaBiomeType JUNGLE = new JungleBiome();
+	public static final VanillaBiomeType MOUNTAIN = new MountainBiome();
+	public static final VanillaBiomeType MUSHROOM = new MushroomBiome();
+	public static final VanillaBiomeType OCEAN = new OceanBiome();
+	public static final VanillaBiomeType PLAIN = new PlainBiome();
+	public static final VanillaBiomeType SWAMP = new SwampBiome();
+	public static final VanillaBiomeType TAIGA = new TaigaBiome();
+	public static final VanillaBiomeType TUNDRA = new TundraBiome();
+	public static final VanillaBiomeType ENDSTONE = new EndStoneBiome();
+	public static final VanillaBiomeType NETHERRACK = new NetherrackBiome();
 }

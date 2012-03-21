@@ -67,6 +67,11 @@ public class EndStoneBiome extends VanillaBiomeType {
 		}
 	}
 
+	@Override
+	public String getName() {
+		return "End";
+	}
+
 	private short getBlockId(int noise, int dy) {
 		short id;
 		if (dy > noise) {

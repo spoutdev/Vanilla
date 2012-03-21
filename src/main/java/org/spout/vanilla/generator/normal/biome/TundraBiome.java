@@ -34,6 +34,11 @@ public class TundraBiome extends PlainBiome {
 		super(12);
 	}
 
+	@Override
+	public String getName() {
+		return "Tundra";
+	}
+
 	protected void generateWateredStack(CuboidShortBuffer blockData, int x, int y, int z, int maxSeaLevel) {
 		boolean first = true;
 		for (int dy = y + 15; dy >= y; dy--) {

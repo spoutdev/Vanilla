@@ -53,6 +53,7 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.entity.living.player.SurvivalPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
+import org.spout.vanilla.generator.VanillaBiomes;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.material.Tool;
@@ -173,18 +174,18 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		System.arraycopy(rawSkyLight, 0, fullChunkData, arrIndex, rawSkyLight.length);
 		arrIndex += rawSkyLight.length;
 
-		final boolean sendBiomes = !biomesSentChunks.contains(c.getX(), c.getZ());
+		final boolean sendBiomes = !biomesSentChunks.contains(x, z);
 		byte[] biomeData = sendBiomes ? new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE] : null;
 		if (sendBiomes) {
-			biomesSentChunks.add(c.getX(), c.getZ());
+			biomesSentChunks.add(x, z);
 			WorldGenerator gen = c.getWorld().getGenerator();
-			final long seed = c.getWorld().getSeed();
 			if (gen instanceof BiomeGenerator) {
+				final long seed = c.getWorld().getSeed();
 				for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
 					for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
 						BiomeType biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
 						if (biome instanceof VanillaBiomeType) {
-							biomeData[(dz & Chunk.CHUNK_SIZE - 1) << 4 | (dx & Chunk.CHUNK_SIZE - 1)] = (byte) ((VanillaBiomeType) biome).getBiomeId();
+							biomeData[(dz & (Chunk.CHUNK_SIZE - 1)) << 4 | (dx & (Chunk.CHUNK_SIZE - 1))] = (byte) ((VanillaBiomeType) biome).getBiomeId();
 						}
 					}
 				}

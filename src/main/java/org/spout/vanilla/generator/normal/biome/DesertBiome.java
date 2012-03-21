@@ -68,6 +68,11 @@ public class DesertBiome extends VanillaBiomeType {
 		}
 	}
 
+	@Override
+	public String getName() {
+		return "Desert";
+	}
+
 	private short getBlockId(int top, int dy) {
 		short id;
 		if (dy > top) {

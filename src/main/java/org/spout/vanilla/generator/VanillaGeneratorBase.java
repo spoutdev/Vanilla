@@ -37,7 +37,6 @@ public abstract class VanillaGeneratorBase extends BiomeGenerator {
 
 		if (chunkY < 0) {
 			blockData.flood(VanillaMaterials.BEDROCK.getId());
-			return;
 		}
 	}
 }

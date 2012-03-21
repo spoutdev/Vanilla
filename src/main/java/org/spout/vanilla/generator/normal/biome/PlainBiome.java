@@ -79,6 +79,11 @@ public class PlainBiome extends VanillaBiomeType {
 		}
 	}
 
+	@Override
+	public String getName() {
+		return "Plains";
+	}
+
 	protected void generateWateredStack(CuboidShortBuffer blockData, int x, int y, int z, int maxSeaLevel) {
 		for (int dy = y + 15; dy >= y; dy--) {
 			if (dy < maxSeaLevel && blockData.get(x, dy, z) == VanillaMaterials.AIR.getId()) {

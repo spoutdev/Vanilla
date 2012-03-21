@@ -50,6 +50,7 @@ import org.spout.vanilla.controller.object.sky.Sky;
 import org.spout.vanilla.controller.object.sky.NetherSky;
 import org.spout.vanilla.controller.object.sky.NormalSky;
 import org.spout.vanilla.controller.object.sky.TheEndSky;
+import org.spout.vanilla.controller.world.WorldSpawn;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.generator.theend.TheEndGenerator;
@@ -130,6 +131,9 @@ public class VanillaPlugin extends CommonPlugin {
 		NetherSky netherSky = new NetherSky();
 		TheEndSky endSky = new TheEndSky();
 
+		//Create dummy spawn controller
+		WorldSpawn observer = new WorldSpawn();
+
 		//Register skys to the map
 		skys.put(normal, normSky);
 		skys.put(nether, netherSky);
@@ -138,12 +142,15 @@ public class VanillaPlugin extends CommonPlugin {
 		//Create spawn points as well as spawn the sky. TODO Have spawn point set by generator.
 		normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
 		normal.createAndSpawnEntity(new Point(normal, 0.f, 0.f, 0.f), normSky);
+		normal.createAndSpawnEntity(new Point(normal, 0.5F, 64.5F, 0.5F), observer);
 
 		nether.setSpawnPoint(new Transform(new Point(nether, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
 		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), netherSky);
-
+		nether.createAndSpawnEntity(new Point(nether, 0.5F, 64.5F, 0.5F), observer);
+		
 		end.setSpawnPoint(new Transform(new Point(end, 0.5F, 64.5F, 0.5F), Quaternion.identity, Vector3.ONE));
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), endSky);
+		end.createAndSpawnEntity(new Point(end, 0.5F, 64.5F, 0.5F), observer);
 
 		getLogger().info("b" + this.getDescription().getVersion() + " enabled. Protocol: " + getDescription().getProtocol());
 	}

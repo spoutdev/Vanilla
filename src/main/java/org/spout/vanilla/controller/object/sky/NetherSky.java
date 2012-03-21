@@ -33,7 +33,6 @@ import org.spout.vanilla.world.Weather;
 public class NetherSky extends Controller implements Sky {
 	@Override
 	public void onAttached() {
-		getParent().setObserver(true);
 	}
 
 	@Override

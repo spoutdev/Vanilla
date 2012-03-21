@@ -23,44 +23,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.object.sky;
+package org.spout.vanilla.controller.world;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.geo.World;
+import org.spout.vanilla.controller.VanillaController;
 
-import org.spout.vanilla.world.Weather;
-
-public class TheEndSky extends Controller implements Sky {
+/**
+ * Simple controller that simply keeps a spawn point of a world in memory.
+ */
+public class WorldSpawn extends VanillaController {
 	@Override
 	public void onAttached() {
-	}
-
-	@Override
-	public void onTick(float dt) {
-	}
-
-	@Override
-	public void setWeather(Weather weather) {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public Weather getWeather() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public void setTime(float time) {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public float getTime() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public World getWorld() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		getParent().setObserver(true);
 	}
 }

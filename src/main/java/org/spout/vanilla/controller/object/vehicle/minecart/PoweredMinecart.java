@@ -29,11 +29,5 @@ import org.spout.vanilla.controller.object.vehicle.Vehicle;
 import org.spout.vanilla.controller.object.vehicle.Minecart;
 
 public class PoweredMinecart extends Minecart implements Vehicle {
-	public void onAttached() {
-		super.onAttached();
-	}
 
-	public void onTick(float dt) {
-		super.onTick(dt);
-	}
 }

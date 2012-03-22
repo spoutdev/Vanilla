@@ -35,10 +35,6 @@ import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class SpiderJockey extends Creature implements Hostile {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-	}
 
 	@Override
 	public Set<ItemStack> getDeathDrops() {

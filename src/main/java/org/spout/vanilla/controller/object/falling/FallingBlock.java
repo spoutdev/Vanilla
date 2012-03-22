@@ -42,11 +42,6 @@ public class FallingBlock extends Falling {
 	}
 
 	@Override
-	public void onAttached() {
-		super.onAttached();
-	}
-
-	@Override
 	public void onTick(float dt) {
 		if (getParent() == null || getParent().getWorld() == null) {
 			return;

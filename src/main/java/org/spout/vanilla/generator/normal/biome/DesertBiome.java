@@ -60,7 +60,7 @@ public class DesertBiome extends VanillaBiomeType {
 		int y = chunkY * 16;
 		noise.setSeed((int) blockData.getWorld().getSeed());
 
-		int height = (int) ((noise.GetValue(x / 32.0 + 0.005, 0.05, z / 32.0 + 0.005) + 1.0) * 2.0 + 60.0);
+		int height = (int) ((noise.GetValue(x / 32.0 + 0.005, 0.05, z / 32.0 + 0.005) + 1.0) * 2.0 + 60.0 + 3.0);
 
 		for (int dy = y; dy < y + 16; dy++) {
 			short id = getBlockId(height, dy);

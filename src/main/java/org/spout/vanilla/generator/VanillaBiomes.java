@@ -37,6 +37,7 @@ import org.spout.vanilla.generator.normal.biome.PlainBiome;
 import org.spout.vanilla.generator.normal.biome.SwampBiome;
 import org.spout.vanilla.generator.normal.biome.TaigaBiome;
 import org.spout.vanilla.generator.normal.biome.TundraBiome;
+import org.spout.vanilla.generator.normal.biome.UndefinedBiome;
 import org.spout.vanilla.generator.theend.biome.EndStoneBiome;
 
 public class VanillaBiomes {
@@ -51,4 +52,5 @@ public class VanillaBiomes {
 	public static final VanillaBiomeType TUNDRA = new TundraBiome();
 	public static final VanillaBiomeType ENDSTONE = new EndStoneBiome();
 	public static final VanillaBiomeType NETHERRACK = new NetherrackBiome();
+	public static final VanillaBiomeType UNDEFINED = new UndefinedBiome();
 }

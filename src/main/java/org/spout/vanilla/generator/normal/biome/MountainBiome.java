@@ -42,6 +42,10 @@ public class MountainBiome extends VanillaBiomeType {
 
 	public MountainBiome() {
 		super(3, new FlowerDecorator(), new TreeDecorator(), new CaveDecorator(), new OreDecorator());
+		minMoist = 30;
+		maxMoist = 70;
+		minTemp = 50;
+		maxTemp = 70;
 		noise.setNoiseQuality(NoiseQuality.BEST);
 		noise.setOctaveCount(10);
 		noise.setFrequency(0.4);

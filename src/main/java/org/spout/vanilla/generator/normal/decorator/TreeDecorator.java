@@ -26,12 +26,17 @@
 package org.spout.vanilla.generator.normal.decorator;
 
 import java.util.Random;
+import java.util.logging.Level;
 
 import org.spout.api.generator.biome.BiomeDecorator;
+import org.spout.api.generator.biome.BiomeGenerator;
+import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.generator.VanillaBiomes;
+import org.spout.vanilla.world.Biome;
 
 public class TreeDecorator implements BiomeDecorator {
 	@Override
@@ -55,6 +60,11 @@ public class TreeDecorator implements BiomeDecorator {
 	}
 
 	private void generateSmallTree(Chunk c, Random ra, int cx, int cy, int cz) {
+		BiomeGenerator bg = null;
+		if(c.getWorld().getGenerator() instanceof BiomeGenerator) {
+			bg = (BiomeGenerator) c.getWorld().getGenerator();
+		}
+		
 		int height = 5 + ra.nextInt(2), oneWidth, twoWidth;
 		if (height == 0) {
 			return;
@@ -71,7 +81,7 @@ public class TreeDecorator implements BiomeDecorator {
 		for (int k = 1; k <= oneWidth; k++) {
 			for (int i = -1; i <= 1; i++) {
 				for (int j = -1; j <= 1; j++) {
-					if(w.getBlockMaterial(cx + i, cy + height - k, cz + j).equals(VanillaMaterials.AIR)) {
+					if(w.getBlockMaterial(cx + i, cy + height - k, cz + j).equals(VanillaMaterials.AIR) || w.getBlockMaterial(cx + i, cy + height - k, cz + j).equals(VanillaMaterials.VINES)) {
 						w.setBlockMaterial(cx + i, cy + height - k, cz + j, VanillaMaterials.LEAVES, c.getWorld());
 					}
 				}
@@ -80,7 +90,7 @@ public class TreeDecorator implements BiomeDecorator {
 		for (int k = oneWidth + 1; k <= oneWidth + twoWidth; k++) {
 			for (int i = -2; i <= 2; i++) {
 				for (int j = -2; j <= 2; j++) {
-					if(w.getBlockMaterial(cx + i, cy + height - k, cz + j).equals(VanillaMaterials.AIR)) {
+					if(w.getBlockMaterial(cx + i, cy + height - k, cz + j).equals(VanillaMaterials.AIR) || w.getBlockMaterial(cx + i, cy + height - k, cz + j).equals(VanillaMaterials.VINES)) {
 						if(!(j == -2 && i == -2) && !(j == 2 && i == -2) && !(j == -2 && i == 2) && !(j == 2 && i == 2)) {
 							w.setBlockMaterial(cx + i, cy + height - k, cz + j, VanillaMaterials.LEAVES, c.getWorld());
 						}
@@ -90,6 +100,34 @@ public class TreeDecorator implements BiomeDecorator {
 		}
 		for (int i = 0; i < height; i++) {
 			w.setBlockMaterial(cx, cy + i, cz, VanillaMaterials.LOG, w);
+		}
+		if(bg != null) {
+			BiomeType bio = bg.getBiome(cx, cz, c.getWorld().getSeed());
+			if(bio.equals(VanillaBiomes.SWAMP)) {
+				//Placements of the vines relative to the trunk
+				int[] vx = {2,  2, -2, -2, 1,  1, 0,  0, -1, -1, 3, -3, 3, -3,  3, -3};
+				int[] vz = {2, -2, -2,  2, 3, -3, 3, -3,  3, -3, 1,  1, 0,  0, -1, -1};
+				for(int i = 0; i < vx.length; i++) {
+					int h = ra.nextInt(height-2);
+					for(int j = h; j >= 0; j--) {
+						if(w.getBlockMaterial(cx + vx[i], cy + height - j - 2, cz + vz[i]).equals(VanillaMaterials.AIR)) {
+							w.setBlockMaterial(cx + vx[i], cy + height - j - 2, cz + vz[i], VanillaMaterials.VINES, c.getWorld());
+							if(vx[i] > 2) { //East
+								w.setBlockData(cx + vx[i], cy + height - j - 2, cz + vz[i], (short) 2, c.getWorld());
+							}
+							else if(vx[i] < -2) { //West
+								w.setBlockData(cx + vx[i], cy + height - j - 2, cz + vz[i], (short) 8, c.getWorld());
+							}
+							else if(vz[i] > 2) { //North
+								w.setBlockData(cx + vx[i], cy + height - j - 2, cz + vz[i], (short) 1, c.getWorld());
+							}
+							else if(vz[i] < -2) { //Idk, south?
+								w.setBlockData(cx + vx[i], cy + height - j - 2, cz + vz[i], (short) 4, c.getWorld());
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 

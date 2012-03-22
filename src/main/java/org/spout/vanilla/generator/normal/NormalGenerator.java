@@ -37,5 +37,6 @@ public class NormalGenerator extends VanillaGeneratorBase {
 		register(VanillaBiomes.DESERT);
 		register(VanillaBiomes.TUNDRA);
 		register(VanillaBiomes.MOUNTAIN);
+		register(VanillaBiomes.SWAMP);
 	}
 }

@@ -25,19 +25,24 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
-public class SwampBiome extends PlainBiome {
+import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.generator.VanillaBiomeType;
 
-	public SwampBiome() {
-		super(6);
-		minMoist = 70;
-		maxMoist = 100;
-		minTemp = 60;
-		maxTemp = 85;
-		noise.setRoughness(1);
+public class UndefinedBiome extends VanillaBiomeType {
+	public UndefinedBiome() {
+		super(99);
+	}
+
+	@Override
+	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		for(int y = 0; y <= 64; y++) {
+			blockData.set(x, y, z, VanillaMaterials.BEDROCK.getId());
+		}
 	}
 
 	@Override
 	public String getName() {
-		return "Swamp";
+		return "Undefined";
 	}
 }

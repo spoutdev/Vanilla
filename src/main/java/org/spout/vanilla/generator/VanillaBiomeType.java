@@ -30,6 +30,10 @@ import org.spout.api.generator.biome.BiomeType;
 
 public abstract class VanillaBiomeType extends BiomeType {
 	private final int biomeId;
+	protected int minMoist = -1;
+	protected int maxMoist = -1;
+	protected int minTemp = -1;
+	protected int maxTemp = -1;
 
 	protected VanillaBiomeType(int biomeId, BiomeDecorator... decorators) {
 		super(decorators);
@@ -38,5 +42,18 @@ public abstract class VanillaBiomeType extends BiomeType {
 
 	public int getBiomeId() {
 		return biomeId;
+	}
+	
+	public boolean isValidPlacement(double temp, double moist)
+	{
+		if(maxTemp != -1 && minTemp != -1 && maxMoist != -1 && minMoist != -1) {
+			if((temp <= maxTemp && minTemp <= temp) && (moist <= maxMoist && minMoist <= moist)) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 }

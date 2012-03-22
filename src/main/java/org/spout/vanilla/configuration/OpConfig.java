@@ -34,7 +34,7 @@ import org.spout.api.util.config.ConfigurationNode;
 
 public class OpConfig extends Configuration {
 	private static final String[] ops = {"Notch", "jeb", "ez"};
-	public static final ConfigurationNode OPS = new ConfigurationNode("ops", Arrays.asList(ops));
+	private final ConfigurationNode node = new ConfigurationNode("ops", Arrays.asList(ops));
 
 	public OpConfig() {
 		super(new File("plugins/Vanilla/ops.yml"));
@@ -43,26 +43,26 @@ public class OpConfig extends Configuration {
 	@Override
 	public void load() {
 		super.load();
-		this.addNode(OPS);
+		this.addNode(node);
 		this.save();
 	}
 
 	public List<String> getOps() {
-		return OPS.getStringList();
+		return node.getStringList();
 	}
 
 	public void setOp(String playerName, boolean op) {
-		List<String> list = OPS.getStringList();
+		List<String> list = node.getStringList();
 		if (op) {
 			list.add(playerName);
 		} else {
 			list.remove(playerName);
 		}
 
-		OPS.setValue(list);
+		node.setValue(list);
 	}
 
 	public boolean isOp(String playerName) {
-		return OPS.getStringList().contains(playerName);
+		return node.getStringList().contains(playerName);
 	}
 }

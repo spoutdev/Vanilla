@@ -25,7 +25,10 @@
  */
 package org.spout.vanilla.controller;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
@@ -41,7 +44,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
+import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 
@@ -56,7 +59,7 @@ public abstract class VanillaController extends Controller {
 	private int headYaw = 0, headYawLive = 0, fireTicks = 0;
 	private Vector3 lavaField, velocity = Vector3.ZERO;
 	//Velocity constants
-	private Vector3 waterVelocity = new Vector3(2f, 2f, 2f);
+	private Vector3 waterVelocity = new Vector3(0.001f, 0.001f, 0.001f);
 	private Vector3 webVelocity = new Vector3(0.001f, 0.001f, 0.001f);
 	private Vector3 soulSandVelocity = new Vector3(2f, 0f, 0f); //TODO Guessed here...needs to be tweaked.
 	
@@ -69,19 +72,29 @@ public abstract class VanillaController extends Controller {
 	public void onTick(float dt) {
 		//Check controller health, send messages to the client based on current state.
 		if (getParent().getHealth() <= 0) {
-			sendMessage(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
+			sendMessage(getParent().getWorld().getPlayers(), new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 			//We can kill the controller here but the tick will continue due to death occurring at Pre-Snapshot and not Stage 1
 			getParent().kill();
 		}
 
-		//Stop the tick if the parent is dead. No need to do any redundant further tick work if this controller is going to be detached.
+		/**
+		 * Run through a timer if the parent is dead and then dispose of the entity from the world. 
+		 * This is to prevent "ghost" entities.
+		 */ 
 		if (getParent().isDead()) {
+			int count = 0;
+			while(count <= 30) {
+				count++;
+				if(count == 30) {
+					sendMessage(getParent().getWorld().getPlayers(), new DestroyEntityMessage(getParent().getId()));
+				}
+			}
 			return;
 		}
 
 		if (headYawLive != headYaw) {
 			headYawLive = headYaw;
-			sendMessage(new EntityHeadYawMessage(getParent().getId(), headYaw));
+			sendMessage(getParent().getWorld().getPlayers(), new EntityHeadYawMessage(getParent().getId(), headYaw));
 		}
 
 		/**
@@ -96,11 +109,69 @@ public abstract class VanillaController extends Controller {
 				setVelocity(temp);
 			}
 		}
-		
-		//Check to see if the controller can be burned.
+
+		/**
+		 * Check to see if the controller can be burned. If so, we should call all relevant methods to determine if a controller
+		 * should be hurt my lava, flames, or is on fire.
+		 */
 		if (flammable) {
 			checkLava();
 		}
+	}
+
+	/**
+	 * Damages this controller and sends messages to the client.
+	 * @param amount amount the controller will be damaged by.
+	 * @param players the players that will view the effect
+	 * @param messages One or more messages to send to the client when the damage occurred.
+	 */
+	public void damage(int amount, Set<Player> players, Message... messages) {
+		getParent().setHealth(getParent().getHealth() - amount);
+		if (messages == null || players == null) {
+			return;
+		}
+
+		sendMessage(players, messages);
+	}
+
+	/**
+	 * Damages this controller and sends messages to the client.
+	 * @param amount amount the controller will be damaged by.
+	 * @param players the players that will view the effect
+	 * @param messages One or more messages to send to the client when the damage occurred.
+	 */
+	public void damage(int amount, Player[] players, Message... messages) {
+		damage(amount, new HashSet<Player>(Arrays.asList(players)), messages);
+	}
+
+	/**
+	 * Damages this controller and doesn't send messages to the client.
+	 * @param amount amount the controller will be damaged by.
+	 */
+	public void damage(int amount) {
+		getParent().setHealth(getParent().getHealth() - amount);
+	}
+
+	/**
+	 * This method takes in any amount of messages and sends them to any amount of players.
+	 * @param players specific players to send a message to.
+	 * @param messages the message(s) to send
+	 */
+	public void sendMessage(Set<Player> players, Message... messages) {
+		for (Player player : players) {
+			for (Message message : messages) {
+			 	player.getSession().send(message);
+			}			
+		}
+	}
+
+	/**
+	 * This method takes in any amount of messages and sends them to any amount of players.
+	 * @param players specific players to send a message to.
+	 * @param messages the message(s) to send
+	 */
+	public void sendMessage(Player[] players, Message... messages) {
+		sendMessage(new HashSet<Player>(Arrays.asList(players)), messages);
 	}
 
 	/**
@@ -171,37 +242,6 @@ public abstract class VanillaController extends Controller {
 	}
 
 	/**
-	 * Damages this controller and sends messages to the client.
-	 * @param amount amount the controller will be damaged by.
-	 * @param viewer the player that will view the effect   
-	 * @param animate true if the entity should show an effect, false if the entity should just be damaged with no
-	 *                effect shown to clients.   
-	 */
-	public void damage(int amount, Player viewer, boolean animate) {
-		getParent().setHealth(getParent().getHealth() - amount);
-		if (animate) {
-			EntityAnimationMessage message1 = new EntityAnimationMessage(getParent().getId(), EntityAnimationMessage.ANIMATION_HURT);
-			EntityStatusMessage message2 = new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_HURT);
-			//If the player is null that means we should send the messages to all players and not just a viewer.
-			if (viewer == null) {
-				sendMessage(message1, message2);
-			} else {
-				sendMessage(viewer, message1, message2);
-			}
-		}
-	}
-
-	/**
-	 * Damages this controller and sends messages to the client. This method sends to ALL online players in the controller's world.
-	 * @param amount amount the controller will be damaged by.   
-	 * @param animate true if the entity should show an effect, false if the entity should just be damaged with no
-	 *                effect shown to clients.   
-	 */	
-	public void damage(int amount, boolean animate) {
-		damage(amount, null, animate);		
-	}
-
-	/**
 	 * This method checks to see if the entity came into contact with a block that would change its' velocity.
 	 * This has no effect on non-moving controllers.
 	 */
@@ -247,31 +287,6 @@ public abstract class VanillaController extends Controller {
 		
 		return Vector3.ZERO;
 	}
-	
-	/**
-	 * This method takes in any amount of messages and sends them to all players in the world in-which the
-	 * message occurred.
-	 * @param messages the message(s) to send.
-	 */
-	public void sendMessage(Message... messages) {
-		Set<Player> onlinePlayers = getParent().getWorld().getPlayers();
-		for (Player player : onlinePlayers) {
-			for (Message message : messages) {
-				player.getSession().send(message);
-			}
-		}
-	}
-
-	/**
-	 * This method takes in any amount of messages and sends them to a player specified.
-	 * @param player player to send message to
-	 * @param messages the message(s) to send
-	 */
-	public void sendMessage(Player player, Message... messages) {
-		for (Message message : messages) {
-			player.getSession().send(message);
-		}
-	}
 
 	private void checkFireTicks() {
 		if (fireTicks > 0) {
@@ -295,8 +310,9 @@ public abstract class VanillaController extends Controller {
 			lavaField = area.contract(-0.10000000149011612f, -0.4000000059604645f, -0.10000000149011612f).getPosition();
 		}
 		Point point = new Point(getParent().getWorld(), lavaField.getX(), lavaField.getY(), lavaField.getZ());
+
 		if (getParent().getWorld().getBlock(point).getMaterial() == VanillaMaterials.LAVA) {
-			damage(1, true); //TODO: What are the real values for lava damage per tick again :P
+			damage(1, getParent().getWorld().getPlayers()); //TODO: What are the real values for lava damage per tick again :P
 		}
 	}
 }

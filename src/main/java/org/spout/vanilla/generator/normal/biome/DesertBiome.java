@@ -53,6 +53,10 @@ public class DesertBiome extends VanillaBiomeType {
 		noise.setFrequency(0.3);
 		noise.setRoughness(2);
 		noise.setPower(0.5);
+		minHumid = 0;
+		maxHumid = 30;
+		minTemp = 55;
+		maxTemp = 100;
 	}
 
 	@Override

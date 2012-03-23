@@ -32,6 +32,10 @@ import org.spout.vanilla.generator.VanillaBiomeType;
 public class JungleBiome extends VanillaBiomeType {
 	public JungleBiome() {
 		super(21);
+		minHumid = 70;
+		maxHumid = 100;
+		minTemp = 85;
+		maxTemp = 100;
 	}
 
 	@Override

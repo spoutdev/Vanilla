@@ -32,6 +32,10 @@ import org.spout.vanilla.generator.VanillaBiomeType;
 public class SwampBiome extends VanillaBiomeType {
 	public SwampBiome() {
 		super(6);
+		minHumid = 70;
+		maxHumid = 100;
+		minTemp = 60;
+		maxTemp = 85;
 	}
 
 	@Override

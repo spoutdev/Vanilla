@@ -65,25 +65,25 @@ public class Sheep extends Creature implements Passive {
 	}
 
 	@Override
-	public EntityProtocol getEntityProtocol(int protocolId) {
-		return entityProtocolStore.getEntityProtocol(protocolId);
-	}
-
-	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
-		entityProtocolStore.setEntityProtocol(protocolId, protocol);
-	}
-
-	@Override
 	public void onTick(float dt) {
 		if (--countdown <= 0) {
 			countdown = getRandom().nextInt(7) + 3;
 			float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
 			float y = getRandom().nextFloat();
 			float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			getParent().translate(x, y, z);
+			//getParent().translate(x, y, z);
 		}
 
 		super.onTick(dt);
+	}
+
+	@Override
+	public EntityProtocol getEntityProtocol(int protocolId) {
+		return entityProtocolStore.getEntityProtocol(protocolId);
+	}
+
+	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
+		entityProtocolStore.setEntityProtocol(protocolId, protocol);
 	}
 
 	public boolean isSheared() {

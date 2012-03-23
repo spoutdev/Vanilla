@@ -118,8 +118,10 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 					count = blockMat.getDropCount();
 				}
 
-				for (int i = 0; i < count && dropMat.getId() != 0; ++i) {
-					world.createAndSpawnEntity(block.getPosition(), new Item(new ItemStack(dropMat, 1), player.getEntity().getPosition().normalize().add(0, 5, 0)));
+				if (dropMat != null) {
+					for (int i = 0; i < count && dropMat.getId() != 0; ++i) {
+						world.createAndSpawnEntity(block.getPosition(), new Item(new ItemStack(dropMat, 1), player.getEntity().getPosition().normalize().add(0, 5, 0)));
+					}
 				}
 			}
 			/*if (!block.isEmpty() && !block.isLiquid()) {

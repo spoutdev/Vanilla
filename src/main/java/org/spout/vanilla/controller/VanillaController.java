@@ -25,10 +25,7 @@
  */
 package org.spout.vanilla.controller;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
@@ -48,7 +45,6 @@ import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
-import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
 
 /**
  * Controller that is the parent of all Vanilla controllers.

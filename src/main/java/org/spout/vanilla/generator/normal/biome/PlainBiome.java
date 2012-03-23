@@ -42,11 +42,15 @@ import org.spout.vanilla.generator.normal.decorator.PondDecorator;
 import org.spout.vanilla.generator.normal.decorator.TreeDecorator;
 
 public class PlainBiome extends VanillaBiomeType {
-	private Perlin base = new Perlin();
-	private Turbulence noise = new Turbulence();
+	protected Perlin base = new Perlin();
+	protected Turbulence noise = new Turbulence();
 
 	protected PlainBiome(int id) {
 		super(id, new CaveDecorator(), new FlowerDecorator(), new GrassDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
+		minMoist = 0;
+		maxMoist = 70;
+		minTemp = 20;
+		maxTemp = 50;
 		base.setNoiseQuality(NoiseQuality.BEST);
 		base.setOctaveCount(6);
 		base.setFrequency(0.3);

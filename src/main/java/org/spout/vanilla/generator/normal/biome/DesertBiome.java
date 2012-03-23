@@ -44,6 +44,10 @@ public class DesertBiome extends VanillaBiomeType {
 
 	public DesertBiome() {
 		super(2, new CactusDecorator(), new OreDecorator(), new CaveDecorator(), new DungeonDecorator());
+		minMoist = 0;
+		maxMoist = 30;
+		minTemp = 50;
+		maxTemp = 100;
 		base.setNoiseQuality(NoiseQuality.BEST);
 		base.setOctaveCount(6);
 		base.setFrequency(0.3);

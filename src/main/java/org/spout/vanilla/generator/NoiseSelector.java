@@ -25,8 +25,8 @@
  */
 package org.spout.vanilla.generator;
 
-import net.royawesome.jlibnoise.module.modifier.Turbulence;
-import net.royawesome.jlibnoise.module.source.Voronoi;
+import net.royawesome.jlibnoise.NoiseQuality;
+import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.biome.BiomeSelector;
 
@@ -36,33 +36,39 @@ import org.spout.api.generator.biome.BiomeSelector;
  * biome construction.
  */
 public class NoiseSelector extends BiomeSelector {
-	//Produces base noise
-	private Voronoi base = new Voronoi();
-	//Modifies base noise
-	private Turbulence noise = new Turbulence();
+	private Perlin tempBase = new Perlin();
+	private Perlin moistBase = new Perlin();
 
-	/**
-	 * Constructor that will setup the noise generator to construct a world.
-	 * @param vorFreq	  Number of cycles per unit length that a the base Voronoi function will output
-	 * @param displacement
-	 * @param roughness
-	 * @param turFreq
-	 * @param power
-	 */
+	public NoiseSelector() {
+		tempBase.setNoiseQuality(NoiseQuality.BEST);
+		tempBase.setOctaveCount(2);
+		tempBase.setFrequency(0.005);
+		tempBase.setPersistence(0.5);
+		tempBase.setLacunarity(0.02);
+		
+		moistBase.setNoiseQuality(NoiseQuality.BEST);
+		moistBase.setOctaveCount(2);
+		moistBase.setFrequency(0.005);
+		moistBase.setPersistence(0.5);
+		moistBase.setLacunarity(0.02);		
+	}
+	
 	public NoiseSelector(double vorFreq, double displacement, int roughness, double turFreq, double power) {
-		base.setFrequency(vorFreq);
-		base.setDisplacement(displacement);
-		noise.SetSourceModule(0, base);
-		noise.setFrequency(turFreq);
-		noise.setRoughness(roughness);
-		noise.setPower(power);
+		this();
 	}
 
 	@Override
 	public int pickBiome(int x, int y, int z, long seed) {
-		base.setSeed((int) seed);
-		noise.setSeed((int) seed);
-		//Pick a biome at 256 height for both x and z
-		return (int) (noise.GetValue(x / 256.0 + 0.05, y + 0.05, z / 256.0 + 0.05) * 64);
+		tempBase.setSeed((int) seed*3);
+		moistBase.setSeed((int) seed^2); //math is to differentiate the seeds
+		
+		int biome = 99;
+		VanillaBiomeType biomes[] = {VanillaBiomes.DESERT, VanillaBiomes.JUNGLE, VanillaBiomes.MOUNTAIN, VanillaBiomes.MUSHROOM, VanillaBiomes.OCEAN, VanillaBiomes.PLAIN, VanillaBiomes.SWAMP, VanillaBiomes.TAIGA, VanillaBiomes.TUNDRA};;
+		for(VanillaBiomeType b : biomes) {
+			if(b.isValidPlacement(tempBase.GetValue(x, y, z)*100.0, moistBase.GetValue(x, y, z)*100.0)) {
+				biome = b.getBiomeId();
+			}
+		}
+		return biome;
 	}
 }

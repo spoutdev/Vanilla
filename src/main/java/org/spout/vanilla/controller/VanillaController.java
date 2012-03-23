@@ -45,8 +45,10 @@ import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
+import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
+import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
 
 /**
  * Controller that is the parent of all Vanilla controllers.
@@ -120,31 +122,6 @@ public abstract class VanillaController extends Controller {
 	}
 
 	/**
-	 * Damages this controller and sends messages to the client.
-	 * @param amount amount the controller will be damaged by.
-	 * @param players the players that will view the effect
-	 * @param messages One or more messages to send to the client when the damage occurred.
-	 */
-	public void damage(int amount, Set<Player> players, Message... messages) {
-		getParent().setHealth(getParent().getHealth() - amount);
-		if (messages == null || players == null) {
-			return;
-		}
-
-		sendMessage(players, messages);
-	}
-
-	/**
-	 * Damages this controller and sends messages to the client.
-	 * @param amount amount the controller will be damaged by.
-	 * @param players the players that will view the effect
-	 * @param messages One or more messages to send to the client when the damage occurred.
-	 */
-	public void damage(int amount, Player[] players, Message... messages) {
-		damage(amount, new HashSet<Player>(Arrays.asList(players)), messages);
-	}
-
-	/**
 	 * Damages this controller and doesn't send messages to the client.
 	 * @param amount amount the controller will be damaged by.
 	 */
@@ -160,18 +137,18 @@ public abstract class VanillaController extends Controller {
 	public void sendMessage(Set<Player> players, Message... messages) {
 		for (Player player : players) {
 			for (Message message : messages) {
-			 	player.getSession().send(message);
+			 	sendMessage(player, message);
 			}			
 		}
 	}
 
 	/**
-	 * This method takes in any amount of messages and sends them to any amount of players.
-	 * @param players specific players to send a message to.
-	 * @param messages the message(s) to send
+	 * This method takes in a message and sends it to a specific player
+	 * @param player specific player to relieve message
+	 * @param message specific message to send.
 	 */
-	public void sendMessage(Player[] players, Message... messages) {
-		sendMessage(new HashSet<Player>(Arrays.asList(players)), messages);
+	public void sendMessage(Player player, Message message) {
+		player.getSession().send(message);
 	}
 
 	/**
@@ -214,6 +191,7 @@ public abstract class VanillaController extends Controller {
 	public void setVelocity(Vector3 velocity) {
 		this.velocity = velocity;
 		getParent().translate(velocity);
+		//sendMessage(getParent().getWorld().getPlayers(), new EntityVelocityMessage(getParent().getId(), (int) velocity.getX(), (int) velocity.getY(), (int) velocity.getZ()));
 	}
 
 	/**
@@ -312,7 +290,8 @@ public abstract class VanillaController extends Controller {
 		Point point = new Point(getParent().getWorld(), lavaField.getX(), lavaField.getY(), lavaField.getZ());
 
 		if (getParent().getWorld().getBlock(point).getMaterial() == VanillaMaterials.LAVA) {
-			damage(1, getParent().getWorld().getPlayers()); //TODO: What are the real values for lava damage per tick again :P
+			damage(1); //TODO: What are the real values for lava damage per tick again :P
+			sendMessage(getParent().getWorld().getPlayers(), new EntityAnimationMessage(getParent().getId(), EntityAnimationMessage.ANIMATION_HURT));
 		}
 	}
 }

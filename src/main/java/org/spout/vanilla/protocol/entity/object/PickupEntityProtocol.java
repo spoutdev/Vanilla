@@ -50,11 +50,7 @@ public class PickupEntityProtocol extends VanillaEntityProtocol implements Entit
 		int p = (int) (entity.getPitch() * 32);
 		if (c instanceof Item) {
 			Item pi = (Item) c;
-			if (c instanceof Tool) {
-				return new SpawnItemMessage(id, (int) pi.getMaterial().getId(), pi.getAmount(), pi.getDamage(), x, y, z, r, p, pi.getRoll());
-			} else {
-				return new SpawnItemMessage(id, (int) pi.getMaterial().getId(), pi.getAmount(), pi.getMaterial().getData(), x, y, z, r, p, pi.getRoll());
-			}
+			return new SpawnItemMessage(id, (int) pi.getMaterial().getId(), pi.getAmount(), pi.getData(), x, y, z, r, p, pi.getRoll());
 		}
 
 		return null;

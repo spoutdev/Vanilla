@@ -32,10 +32,25 @@ import org.spout.api.material.Material;
 import org.spout.vanilla.VanillaMaterials;
 
 public class Leaves extends Solid {
+	public static final Leaves DEFAULT = new Leaves("Leaves");
+	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 0, DEFAULT).register();
+	public static final Leaves BIRCH = new Leaves("Birch Leaves", 0, DEFAULT).register();
+	public static final Leaves JUNGLE = new Leaves("Jungle Leaves", 0, DEFAULT).register();
+
 	private Random rand = new Random();
 
-	public Leaves(String name, int data) {
-		super(name, 18, data);
+	public Leaves(String name) {
+		super(name, 18);
+		this.setDefault();
+	}
+
+	private Leaves(String name, int data, Leaves parent) {
+		super(name, 18, data, parent);
+		this.setDefault();
+	}
+
+	private void setDefault() {
+		this.setHardness(0.2F).setResistance(0.3F);
 	}
 
 	// TODO: Shears

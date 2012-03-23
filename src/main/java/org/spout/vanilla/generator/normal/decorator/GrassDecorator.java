@@ -30,7 +30,7 @@ import java.util.Random;
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
-
+import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.VanillaMaterials;
 
 public class GrassDecorator implements BiomeDecorator {
@@ -55,15 +55,14 @@ public class GrassDecorator implements BiomeDecorator {
 			z += random.nextInt(3) - 1;
 			y = (source.getY() << Chunk.CHUNK_SIZE_BITS) + 15;
 			Block b = source.getWorld().getBlock(x, y, z);
-			while (b.getBlockMaterial() == VanillaMaterials.AIR && y >= 0) {
-				y--;
-				b = source.getWorld().getBlock(x, y, z);
+			while (b.getMaterial() == VanillaMaterials.AIR && y >= 0) {
+				b.move(BlockFace.BOTTOM);
 			}
-			if (y == -1) {
+			if (b.getY() == -1) {
 				return;
 			}
-			if (b.getBlockMaterial() == VanillaMaterials.GRASS) {
-				source.getWorld().setBlockMaterial(x, y + 1, z, VanillaMaterials.TALL_GRASS, source.getWorld());
+			if (b.getMaterial() == VanillaMaterials.GRASS) {
+				b.move(BlockFace.TOP).setMaterial(VanillaMaterials.TALL_GRASS);
 			}
 		}
 	}

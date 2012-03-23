@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.material.attachable;
 
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
 public class GroundAttachable extends AbstractAttachable {
@@ -32,13 +33,13 @@ public class GroundAttachable extends AbstractAttachable {
 		super(name, id);
 	}
 
-	public GroundAttachable(String name, int id, int data) {
-		super(name, id, data);
+	public GroundAttachable(String name, int id, int data, Material parent) {
+		super(name, id, data, parent);
 	}
 
 	@Override
 	public short getDataForFace(BlockFace face) {
-		return getData(); //data will be either 0 or used for other stuff.
+		return (short) 0;
 	}
 
 	@Override

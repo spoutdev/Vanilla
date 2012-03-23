@@ -48,7 +48,7 @@ public class Squid extends Creature implements Passive {
 
 		int count = getRandom().nextInt(4);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.INK_SAC, count));
+			drops.add(new ItemStack(VanillaMaterials.DYE.INK_SAC, count));
 		}
 
 		return drops;

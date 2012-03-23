@@ -57,7 +57,7 @@ public class FlowerDecorator implements BiomeDecorator {
 			if (dy == -1) {
 				continue;
 			}
-			chunk.setBlockMaterial(dx, dy, dz, flower, chunk.getWorld());
+			chunk.setBlockMaterial(dx, dy, dz, flower, (short) 0, true, chunk.getWorld());
 		}
 	}
 

@@ -27,39 +27,30 @@ package org.spout.vanilla.material.generic;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
+import org.spout.api.material.source.GenericMaterialSource;
+import org.spout.api.material.source.MaterialSource;
 import org.spout.vanilla.material.BlockItem;
 
 public class GenericBlockItem extends GenericItem implements BlockItem {
-	BlockMaterial onPlace = null;
+	GenericMaterialSource onPlace;
+	
+	public GenericBlockItem(String name, int id, BlockMaterial onPlaceMaterial) {
+		this(name, id, onPlaceMaterial, (short) 0);
+	}
 
-	public GenericBlockItem(String name, int id, BlockMaterial onPlace) {
+	public GenericBlockItem(String name, int id, BlockMaterial onPlaceMaterial, short onPlaceData) {
 		super(name, id);
-		this.onPlace = onPlace;
-		if (onPlace == null) {
+		if (onPlaceMaterial == null) {
 			throw new NullPointerException("Block material can not be null");
-		}
-	}
-
-	public GenericBlockItem(String name, int id, int data, boolean subtypes, BlockMaterial onPlace) {
-		super(name, id, data, subtypes);
-		this.onPlace = onPlace;
-		if (onPlace == null) {
-			throw new NullPointerException("Block material can not be null");
-		}
-	}
-
-	public GenericBlockItem(String name, int id, int data, BlockMaterial onPlace) {
-		super(name, id, data);
-		this.onPlace = onPlace;
-		if (onPlace == null) {
-			throw new NullPointerException("Block material can not be null");
+		} else {
+			this.onPlace = new GenericMaterialSource(onPlaceMaterial, onPlaceData);
 		}
 	}
 
@@ -79,16 +70,16 @@ public class GenericBlockItem extends GenericItem implements BlockItem {
 					throw new IllegalStateException("ControllerType is holding zero or negative sized item!");
 				}
 			}
-			int x = MathHelper.floor(position.getX());
-			int y = MathHelper.floor(position.getY());
-			int z = MathHelper.floor(position.getZ());
+			Block b = position.getWorld().getBlock(position);
+
 			System.out.println("Placing Block " + getBlock() + " on Interact at " + position);
-			position.getWorld().setBlockIdAndData(x, y, z, getBlock().getId(), getBlock().getData(), entity);
+			
+			b.setMaterial(getBlock());
 		}
 	}
 
 	@Override
-	public BlockMaterial getBlock() {
+	public MaterialSource getBlock() {
 		return onPlace;
 	}
 }

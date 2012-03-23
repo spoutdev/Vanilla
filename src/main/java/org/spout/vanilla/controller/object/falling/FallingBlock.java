@@ -32,7 +32,6 @@ import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.controller.object.Falling;
-import org.spout.vanilla.material.Block;
 
 public class FallingBlock extends Falling {
 	private final BlockMaterial block;
@@ -56,11 +55,11 @@ public class FallingBlock extends Falling {
 		int x = MathHelper.floor(position.getX());
 		int y = MathHelper.floor(position.getY());
 		int z = MathHelper.floor(position.getZ());
-		Block material = (Block) world.getBlock(x, y - 1, z).getBlockMaterial();
+		BlockMaterial material = (BlockMaterial) world.getBlock(x, y - 1, z).getMaterial();
 		if (material == VanillaMaterials.AIR || material.isLiquid()) {
 			getParent().translate(x, -.004f, z);
 		} else {
-			world.setBlockMaterial(x, y, z, block, world);
+			world.setBlockMaterial(x, y, z, block, block.getData(), isGravity(), world);
 			getParent().kill();
 		}
 

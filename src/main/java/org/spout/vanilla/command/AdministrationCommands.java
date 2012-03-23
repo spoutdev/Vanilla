@@ -39,7 +39,6 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
-import org.spout.api.material.MaterialData;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
 
@@ -136,16 +135,18 @@ public class AdministrationCommands {
 			}
 		}
 
+		short data = 0;
 		if (args.isInteger(index)) {
-			material = MaterialData.getMaterial((short) args.getInteger(index));
+			material = Material.get((short) args.getInteger(index));
 		} else {
 			String name = args.getString(index);
 
 			if (name.contains(":")) {
 				String[] parts = args.getString(index).split(":");
-				material = MaterialData.getMaterial(Short.parseShort(parts[0]), Short.parseShort(parts[1]));
+				material = Material.get(Short.parseShort(parts[0]));
+				data = Short.parseShort(parts[1]);
 			} else {
-				material = MaterialData.getMaterial(args.getString(index));
+				material = Material.get(args.getString(index));
 			}
 		}
 
@@ -153,7 +154,7 @@ public class AdministrationCommands {
 			throw new CommandException(args.getString(index) + " is not a material!");
 		}
 
-		player.getEntity().getInventory().addItem(new ItemStack(material, args.getInteger(2, 1)));
+		player.getEntity().getInventory().addItem(new ItemStack(material, data, args.getInteger(2, 1)));
 	}
 
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)

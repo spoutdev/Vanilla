@@ -206,7 +206,7 @@ public abstract class VanillaController extends Controller {
 	 * This has no effect on non-moving controllers.
 	 */
 	public Vector3 determineVelocity() {
-		BlockMaterial waist = getParent().getWorld().getBlock(getParent().getPosition()).getBlockMaterial();
+		BlockMaterial waist = getParent().getWorld().getBlock(getParent().getPosition()).getMaterial();
 		if (waist.equals(VanillaMaterials.WEB)) {
 			if(Spout.getGame().debugMode()) {
 				System.out.println("\nDetected moving controller and block that changes velocity!\n------------------\nCurrent controller: " + this.toString() + "\nCurrent block: " + waist.getDisplayName() + "\nCurrent velocity: " + velocity);
@@ -227,7 +227,7 @@ public abstract class VanillaController extends Controller {
 		float y = getParent().getPosition().getY() - 1;
 		float z = getParent().getPosition().getZ();
 		
-		BlockMaterial feet = getParent().getWorld().getBlock(new Point(getParent().getWorld(), x, y, z)).getBlockMaterial();
+		BlockMaterial feet = getParent().getWorld().getBlock(new Point(getParent().getWorld(), x, y, z)).getMaterial();
 		if (feet.equals(VanillaMaterials.WEB)) {
 			if(Spout.getGame().debugMode()) {
 				System.out.println("\nDetected moving controller and block that changes velocity!\n------------------\nCurrent controller: " + this.toString() + "\nCurrent block: " + waist.getDisplayName() + "\nCurrent velocity: " + velocity);
@@ -295,7 +295,7 @@ public abstract class VanillaController extends Controller {
 			lavaField = area.contract(-0.10000000149011612f, -0.4000000059604645f, -0.10000000149011612f).getPosition();
 		}
 		Point point = new Point(getParent().getWorld(), lavaField.getX(), lavaField.getY(), lavaField.getZ());
-		if (getParent().getWorld().getBlock(point).getBlockMaterial() == VanillaMaterials.LAVA) {
+		if (getParent().getWorld().getBlock(point).getMaterial() == VanillaMaterials.LAVA) {
 			damage(1, true); //TODO: What are the real values for lava damage per tick again :P
 		}
 	}

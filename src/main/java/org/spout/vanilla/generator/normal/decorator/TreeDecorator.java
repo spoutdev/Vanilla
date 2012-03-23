@@ -32,7 +32,9 @@ import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.generator.biome.BiomeType;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.generator.VanillaBiomes;
@@ -72,17 +74,18 @@ public class TreeDecorator implements BiomeDecorator {
 		oneWidth = 1;
 		twoWidth = 2;
 		World w = c.getWorld();
-		w.setBlockMaterial(cx, cy + height, cz, VanillaMaterials.LEAVES, c.getWorld());
-		w.setBlockMaterial(cx - 1, cy + height, cz, VanillaMaterials.LEAVES, c.getWorld());
-		w.setBlockMaterial(cx + 1, cy + height, cz, VanillaMaterials.LEAVES, c.getWorld());
-		w.setBlockMaterial(cx, cy + height, cz - 1, VanillaMaterials.LEAVES, c.getWorld());
-		w.setBlockMaterial(cx, cy + height, cz + 1, VanillaMaterials.LEAVES, c.getWorld());
-
+		Block b = w.getBlock(cx, cy + height, cz);
+		b.setMaterial(VanillaMaterials.LEAVES);
+		b.clone().move(BlockFace.NORTH).setMaterial(VanillaMaterials.LEAVES);
+		b.clone().move(BlockFace.EAST).setMaterial(VanillaMaterials.LEAVES);
+		b.clone().move(BlockFace.SOUTH).setMaterial(VanillaMaterials.LEAVES);
+		b.clone().move(BlockFace.WEST).setMaterial(VanillaMaterials.LEAVES);
+	
 		for (int k = 1; k <= oneWidth; k++) {
 			for (int i = -1; i <= 1; i++) {
 				for (int j = -1; j <= 1; j++) {
 					if(w.getBlockMaterial(cx + i, cy + height - k, cz + j).equals(VanillaMaterials.AIR) || w.getBlockMaterial(cx + i, cy + height - k, cz + j).equals(VanillaMaterials.VINES)) {
-						w.setBlockMaterial(cx + i, cy + height - k, cz + j, VanillaMaterials.LEAVES, c.getWorld());
+						b.clone().move(i, -k, j).setMaterial(VanillaMaterials.LEAVES);
 					}
 				}
 			}
@@ -92,14 +95,14 @@ public class TreeDecorator implements BiomeDecorator {
 				for (int j = -2; j <= 2; j++) {
 					if(w.getBlockMaterial(cx + i, cy + height - k, cz + j).equals(VanillaMaterials.AIR) || w.getBlockMaterial(cx + i, cy + height - k, cz + j).equals(VanillaMaterials.VINES)) {
 						if(!(j == -2 && i == -2) && !(j == 2 && i == -2) && !(j == -2 && i == 2) && !(j == 2 && i == 2)) {
-							w.setBlockMaterial(cx + i, cy + height - k, cz + j, VanillaMaterials.LEAVES, c.getWorld());
+							b.clone().move(i, -k, j).setMaterial(VanillaMaterials.LEAVES);
 						}
 					}
 				}
 			}
 		}
 		for (int i = 0; i < height; i++) {
-			w.setBlockMaterial(cx, cy + i, cz, VanillaMaterials.LOG, w);
+			b.move(BlockFace.BOTTOM).setMaterial(VanillaMaterials.LOG);
 		}
 		if(bg != null) {
 			BiomeType bio = bg.getBiome(cx, cz, c.getWorld().getSeed());
@@ -110,19 +113,20 @@ public class TreeDecorator implements BiomeDecorator {
 				for(int i = 0; i < vx.length; i++) {
 					int h = ra.nextInt(height-2);
 					for(int j = h; j >= 0; j--) {
-						if(w.getBlockMaterial(cx + vx[i], cy + height - j - 2, cz + vz[i]).equals(VanillaMaterials.AIR)) {
-							w.setBlockMaterial(cx + vx[i], cy + height - j - 2, cz + vz[i], VanillaMaterials.VINES, c.getWorld());
+						Block vb = w.getBlock(cx + vx[i], cy + height - j - 2, cz + vz[i]);
+						if(vb.getMaterial().equals(VanillaMaterials.AIR)) {
+							vb.setMaterial(VanillaMaterials.VINES);
 							if(vx[i] > 2) { //East
-								w.setBlockData(cx + vx[i], cy + height - j - 2, cz + vz[i], (short) 2, c.getWorld());
+								vb.setData((short) 2);
 							}
 							else if(vx[i] < -2) { //West
-								w.setBlockData(cx + vx[i], cy + height - j - 2, cz + vz[i], (short) 8, c.getWorld());
+								vb.setData((short) 8);
 							}
 							else if(vz[i] > 2) { //North
-								w.setBlockData(cx + vx[i], cy + height - j - 2, cz + vz[i], (short) 1, c.getWorld());
+								vb.setData((short) 1);
 							}
 							else if(vz[i] < -2) { //Idk, south?
-								w.setBlockData(cx + vx[i], cy + height - j - 2, cz + vz[i], (short) 4, c.getWorld());
+								vb.setData((short) 4);
 							}
 						}
 					}
@@ -135,9 +139,9 @@ public class TreeDecorator implements BiomeDecorator {
 		int y = c.getY() * 16 + 15;
 		int pozx = c.getX() * 16 + px;
 		int pozz = c.getZ() * 16 + pz;
-		while (c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaMaterials.DIRT && c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() != VanillaMaterials.GRASS) {
+		while (c.getWorld().getBlock(pozx, y, pozz).getMaterial() != VanillaMaterials.DIRT && c.getWorld().getBlock(pozx, y, pozz).getMaterial() != VanillaMaterials.GRASS) {
 			y--;
-			if (y == 0 || c.getWorld().getBlock(pozx, y, pozz).getBlockMaterial() == VanillaMaterials.WATER) {
+			if (y == 0 || c.getWorld().getBlock(pozx, y, pozz).getMaterial() == VanillaMaterials.WATER) {
 				return -1;
 			}
 		}

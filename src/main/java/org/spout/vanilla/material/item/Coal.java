@@ -14,7 +14,7 @@
  *
  * Vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PUR	POSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
@@ -23,30 +23,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material;
+package org.spout.vanilla.material.item;
 
-import org.spout.api.geo.World;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.Material;
+import org.spout.vanilla.material.generic.GenericItem;
 
-public interface Block extends BlockMaterial {
-	public boolean isLiquid();
+public class Coal extends GenericItem {
+	public static final Coal COAL = new Coal("Coal");
+	public static final Coal CHARCOAL = new Coal("Charcoal", 1, COAL).register();
 
-	public Material getDrop();
+	public Coal(String name) {
+		super(name, 263);
+	}
 
-	public int getDropCount();
+	public Coal(String name, int data, Coal parent) {
+		super(name, 263, data, parent);
+	}
 
-	/**
-	 * Represents power that comes into the block from a redstone wire or a torch that is below the block
-	 * Indirect power from below powers redstone wire, but level indirect power just inverts adjacent redstone torches.
-	 * @return the indirect redstone power.
-	 */
-	public short getIndirectRedstonePower(World world, int x, int y, int z);
-
-	/**
-	 * Represents power that comes from a repeater that points to this block.
-	 * This power can be used by all neighbors that are redstone targets, even if they wouldn't attach.
-	 * @return the direct redstone power.
-	 */
-	public short getDirectRedstonePower(World world, int x, int y, int z);
+	@Override
+	public Coal getParentMaterial() {
+		return (Coal) super.getParentMaterial();
+	}
 }

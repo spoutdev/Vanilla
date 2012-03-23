@@ -25,51 +25,26 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.Block;
-import org.spout.vanilla.material.generic.GenericBlock;
+public class TallGrass extends LongGrass {
+	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass");
+	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, DEAD_GRASS).register();
+	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS).register();
 
-public class Air extends GenericBlock implements Block {
-	public Air(String name) {
-		super(name, 0);
+	public TallGrass(String name) {
+		super(name, 31);
+		this.setDefault();
 	}
 
-	@Override
-	public float getFriction() {
-		return 0;
+	public TallGrass(String name, int data, TallGrass parent) {
+		super(name, 31, data, parent);
+		this.setDefault();
 	}
 
-	@Override
-	public GenericBlock setFriction(float slip) {
-		return this;
+	private void setDefault() {
+		this.setHardness(0.0F).setResistance(0.0F);
 	}
 
-	@Override
-	public float getHardness() {
-		return 0;
-	}
-
-	@Override
-	public GenericBlock setHardness(float hardness) {
-		return this;
-	}
-
-	@Override
-	public boolean isOpaque() {
-		return false;
-	}
-
-	@Override
-	public byte getOpacity() {
-		return 0;
-	}
-
-	@Override
-	public byte getLightLevel() {
-		return 0;
-	}
-
-	@Override
-	public GenericBlock setLightLevel(byte level) {
-		return this;
+	public TallGrass getParentMaterial() {
+		return (TallGrass) super.getParentMaterial();
 	}
 }

@@ -28,6 +28,7 @@ package org.spout.vanilla.material.attachable;
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
@@ -39,8 +40,8 @@ public abstract class AbstractAttachable extends GenericBlock implements Attacha
 		super(name, id);
 	}
 
-	protected AbstractAttachable(String name, int id, int data) {
-		super(name, id, data);
+	public AbstractAttachable(String name, int id, int data, Material parent) {
+		super(name, id, data, parent);
 	}
 
 	@Override
@@ -50,8 +51,8 @@ public abstract class AbstractAttachable extends GenericBlock implements Attacha
 
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
-		if (getBlockAttachedTo(world, x, y, z).getBlockMaterial().equals(VanillaMaterials.AIR)) {
-			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, world);
+		if (getBlockAttachedTo(world, x, y, z).getMaterial().equals(VanillaMaterials.AIR)) {
+			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world);
 		}
 	}
 
@@ -61,9 +62,10 @@ public abstract class AbstractAttachable extends GenericBlock implements Attacha
 		Vector3 offset = base.getOffset();
 		return world.getBlock((int) (x + offset.getX()), (int) (y + offset.getY()), (int) (z + offset.getZ()));
 	}
-
+	
 	@Override
 	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
 		return super.onPlacement(world, x, y, z, this.getDataForFace(against.getOpposite()), against, source);
 	}
+	
 }

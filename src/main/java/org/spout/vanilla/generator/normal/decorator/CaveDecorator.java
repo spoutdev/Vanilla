@@ -59,8 +59,8 @@ public class CaveDecorator implements BiomeDecorator {
 					if (Math.sqrt(Math.pow(dx - pt.getX(), 2) + Math.pow(dy - pt.getY(), 2) + Math.pow(dz - pt.getZ(), 2)) > 6) {
 						continue;
 					}
-					if (noise.GetValue(dx / 5.0 + 0.005, dy / 5.0 + 0.005, dz / 5.0 + 0.005) > 0 && chunk.getBlockId(dx, dy, dz) == VanillaMaterials.STONE.getId()) {
-						chunk.setBlockId(dx, dy, dz, VanillaMaterials.AIR.getId(), chunk.getWorld());
+					if (noise.GetValue(dx / 5.0 + 0.005, dy / 5.0 + 0.005, dz / 5.0 + 0.005) > 0 && chunk.getBlockMaterial(dx, dy, dz) == VanillaMaterials.STONE) {
+						chunk.setBlockMaterial(dx, dy, dz, VanillaMaterials.AIR, (short) 0, true, chunk.getWorld());
 					}
 				}
 			}

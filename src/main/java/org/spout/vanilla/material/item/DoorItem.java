@@ -29,9 +29,12 @@ import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.api.math.MathHelper;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.generic.GenericItem;
 
@@ -53,18 +56,20 @@ public class DoorItem extends GenericItem {
 		int x = (int) position.getX();
 		int y = (int) position.getY();
 		int z = (int) position.getZ();
-		if (world.getBlockId(x, y, z) == 0 && world.getBlockId(x, y + 1, z) == 0 && world.getBlockMaterial(x, y - 1, z) instanceof Solid) {
+		Block b = world.getBlock(x, y - 1, z);
+		
+		if (b.getMaterial() instanceof Solid && b.move(BlockFace.TOP).getMaterial() == VanillaMaterials.AIR && b.move(BlockFace.TOP).getMaterial() == VanillaMaterials.AIR) {
 			System.out.println("Placing door!");
 		}
 		/*
 		 * Formula kinda copied from minecraft source
 		 */
-		short hinge = (short) (((short) Math.floor((double) ((entity.getYaw() + 180F) * 4F) - 0.5D)) & 3);
+		short hinge = (short) ((MathHelper.floor((double) ((entity.getYaw() + 180F) * 4F) - 0.5)) & 3);
 		placeDoorBlock(world, x, y, z, hinge, doorBlock, entity);
 	}
 
 	public static void placeDoorBlock(World world, int x, int y, int z, short hinge, DoorBlock doorBlock, Source source) {
-		world.setBlockIdAndData(x, y, z, doorBlock.getId(), hinge, false, source);
-		world.setBlockIdAndData(x, y + 1, z, doorBlock.getId(), (short) (hinge | 0x8), false, source);
+		world.setBlockMaterial(x, y, z, doorBlock, hinge, false, source);
+		world.setBlockMaterial(x, y + 1, z, doorBlock, (short) (hinge | 0x8), false, source);
 	}
 }

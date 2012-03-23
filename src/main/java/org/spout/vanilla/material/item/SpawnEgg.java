@@ -25,56 +25,38 @@
  */
 package org.spout.vanilla.material.item;
 
-import java.lang.reflect.Constructor;
-
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.block.BlockFace;
-
-import org.spout.vanilla.controller.ControllerType;
-import org.spout.vanilla.controller.VanillaController;
-import org.spout.vanilla.controller.living.player.SurvivalPlayer;
+import org.spout.api.material.Material;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class SpawnEgg extends GenericItem {
-	final Constructor<?> chosen;
-
-	public SpawnEgg(String name, int id, int data) {
-		super(name, id, data);
-
-		Class<? extends VanillaController> controller = ControllerType.getByID((int) getData()).getController();
-
-		Constructor<?>[] constructors = controller.getConstructors();
-		for (Constructor<?> constructor : constructors) {
-			if (constructor.getParameterTypes().length == 0) {
-				chosen = constructor;
-				return;
-			}
-		}
-
-		chosen = null;
+	private static final SpawnEgg PARENT = new SpawnEgg("Spawn Egg").register(); //There is no entity with the ID 0 so this egg is invalid
+	public static final SpawnEgg CREEPER = new SpawnEgg("Spawn Creeper", 50, PARENT).register();
+	public static final SpawnEgg SKELETON = new SpawnEgg("Spawn Skeleton", 51, PARENT).register();
+	public static final SpawnEgg SPIDER = new SpawnEgg("Spawn Spider", 52, PARENT).register();
+	public static final SpawnEgg ZOMBIE = new SpawnEgg("Spawn Zombie", 54, PARENT).register();
+	public static final SpawnEgg SLIME = new SpawnEgg("Spawn Slime", 55, PARENT).register();
+	public static final SpawnEgg GHAST = new SpawnEgg("Spawn Ghast", 56, PARENT).register();
+	public static final SpawnEgg PIGMAN = new SpawnEgg("Spawn Pigman", 57, PARENT).register();
+	public static final SpawnEgg ENDERMAN = new SpawnEgg("Spawn Enderman", 58, PARENT).register();
+	public static final SpawnEgg CAVESPIDER = new SpawnEgg("Spawn Cavespider", 59, PARENT).register();
+	public static final SpawnEgg SILVERFISH = new SpawnEgg("Spawn Silverfish", 60, PARENT).register();
+	public static final SpawnEgg BLAZE = new SpawnEgg("Spawn Blaze", 61, PARENT).register();
+	public static final SpawnEgg MAGMACUBE = new SpawnEgg("Spawn Magmacube", 62, PARENT).register();
+	public static final SpawnEgg PIG = new SpawnEgg("Spawn Pig", 90, PARENT).register();
+	public static final SpawnEgg SHEEP = new SpawnEgg("Spawn Sheep", 91, PARENT).register();
+	public static final SpawnEgg COW = new SpawnEgg("Spawn Cow", 92, PARENT).register();
+	public static final SpawnEgg CHICKEN = new SpawnEgg("Spawn Chicken", 93, PARENT).register();
+	public static final SpawnEgg SQUID = new SpawnEgg("Spawn Squid", 94, PARENT).register();
+	public static final SpawnEgg WOLF = new SpawnEgg("Spawn Wolf", 95, PARENT).register();
+	public static final SpawnEgg MOOSHROOM = new SpawnEgg("Spawn Mooshroom", 96, PARENT).register();
+	public static final SpawnEgg VILLAGER = new SpawnEgg("Spawn Villager", 120, PARENT).register();
+	public static final SpawnEgg OCELOT = new SpawnEgg("Spawn Ocelot", 98, PARENT).register();
+	
+	public SpawnEgg(String name) {
+		super(name, 383);
 	}
 
-	@Override
-	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
-		if (chosen != null) {
-			try {
-				entity.getWorld().createAndSpawnEntity(position, (VanillaController) chosen.newInstance(new Object[]{}));
-			} catch (Exception e) {
-				// What to do here?
-			}
-		}
-
-		ItemStack holding = entity.getInventory().getCurrentItem();
-		if (entity.getController() instanceof SurvivalPlayer) {
-			if (holding.getAmount() > 1) {
-				holding.setAmount(holding.getAmount() - 1);
-				entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
-			} else if (holding.getAmount() == 1) {
-				entity.getInventory().setItem(null, entity.getInventory().getCurrentSlot());
-			}
-		}
+	public SpawnEgg(String name, int data, Material parent) {
+		super(name, 383, data, parent);
 	}
 }

@@ -30,15 +30,67 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
+import org.spout.api.material.source.DataSource;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class Dye extends GenericItem {
-	private final int color;
+	public static final Dye INK_SAC = new Dye("Ink Sac");
+	public static final Dye ROSE_RED = new Dye("Rose Red", DyeColor.RED, INK_SAC).register();
+	public static final Dye CACTUS_GREEN = new Dye("Cactus Green", DyeColor.GREEN, INK_SAC).register();
+	public static final Dye COCOA_BEANS = new Dye("Cocoa Beans", DyeColor.BROWN, INK_SAC).register();
+	public static final Dye LAPIS_LAZULI = new Dye("Lapis Lazuli", DyeColor.BLUE, INK_SAC).register();
+	public static final Dye PURPLE = new Dye("Purple Dye", DyeColor.PURPLE, INK_SAC).register();
+	public static final Dye CYAN = new Dye("Cyan Dye", DyeColor.CYAN, INK_SAC).register();
+	public static final Dye LIGHT_GRAY = new Dye("Light Gray Dye", DyeColor.LIGHT_GRAY, INK_SAC).register();
+	public static final Dye GRAY = new Dye("Gray Dye", DyeColor.GRAY, INK_SAC).register();
+	public static final Dye PINK = new Dye("Pink Dye", DyeColor.PINK, INK_SAC).register();
+	public static final Dye LIME = new Dye("Lime Dye", DyeColor.LIME, INK_SAC).register();
+	public static final Dye DANDELION_YELLOW = new Dye("Dandelion Yellow", DyeColor.YELLOW, INK_SAC).register();
+	public static final Dye LIGHT_BLUE = new Dye("Light Blue Dye", DyeColor.LIGHT_BLUE, INK_SAC).register();
+	public static final Dye MAGENTA = new Dye("Magenta Dye", DyeColor.MAGENTA, INK_SAC).register();
+	public static final Dye ORANGE = new Dye("Orange Dye", DyeColor.ORANGE, INK_SAC).register();
+	public static final Dye BONE_MEAL = new Dye("Bone Meal", DyeColor.WHITE, INK_SAC).register();
 
-	public Dye(String name, int id, int data) {
-		super(name, id, data);
+	private final DyeColor color;
 
-		color = 0xF - data;
+	public static enum DyeColor implements DataSource {
+		BLACK(0),
+		RED(1),
+		GREEN(2),
+		BROWN(3),
+		BLUE(4),
+		PURPLE(5),
+		CYAN(6),
+		LIGHT_GRAY(7),
+		GRAY(8),
+		PINK(9),
+		LIME(10),
+		YELLOW(11),
+		LIGHT_BLUE(12),
+		MAGENTA(13),
+		ORANGE(14),
+		WHITE(15);
+
+		private final short data;
+
+		private DyeColor(int data) {
+			this.data = (short) data;
+		}
+
+		@Override
+		public short getData() {
+			return this.data;
+		}
+	}
+
+	public Dye(String name) {
+		super(name, 351);
+		this.color = DyeColor.BLACK;
+	}
+
+	public Dye(String name, DyeColor color, Dye parent) {
+		super(name, 351, color.getData(), parent);
+		this.color = color;
 	}
 
 	@Override
@@ -48,10 +100,11 @@ public class Dye extends GenericItem {
 			return;
 		}
 
-		other.setData("SheepColor", color);
+		ItemStack holding = entity.getInventory().getCurrentItem();
+		//get color from holding item
+		other.setData("SheepColor", 0xF - holding.getData());
 		System.out.println("Sheep go baaaa!");
 
-		ItemStack holding = entity.getInventory().getCurrentItem();
 		if (entity.getController() instanceof SurvivalPlayer) {
 			if (holding.getAmount() > 1) {
 				holding.setAmount(holding.getAmount() - 1);
@@ -60,5 +113,19 @@ public class Dye extends GenericItem {
 				entity.getInventory().setItem(null, entity.getInventory().getCurrentSlot());
 			}
 		}
+	}
+
+	public DyeColor getColor() {
+		return this.color;
+	}
+
+	@Override
+	public short getData() {
+		return this.color.getData();
+	}
+	
+	@Override
+	public Dye getParentMaterial() {
+		return (Dye) super.getParentMaterial();
 	}
 }

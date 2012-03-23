@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.controller.object;
 
-import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.geo.World;
@@ -128,8 +127,8 @@ public class Item extends Substance {
 		return is.getAmount();
 	}
 
-	public short getDamage() {
-		return is.getDamage();
+	public short getData() {
+		return is.getData();
 	}
 
 	public int getRoll() {

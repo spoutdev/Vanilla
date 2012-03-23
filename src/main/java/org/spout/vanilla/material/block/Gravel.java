@@ -33,7 +33,7 @@ import org.spout.vanilla.VanillaMaterials;
 
 public class Gravel extends Solid {
 	private Random rand = new Random();
-
+	
 	public Gravel(String name) {
 		super(name, 13, true);
 	}

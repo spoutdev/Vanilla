@@ -25,6 +25,6 @@
  */
 package org.spout.vanilla.material;
 
-public interface Liquid extends Block {
+public interface Liquid {
 	public boolean isFlowing();
 }

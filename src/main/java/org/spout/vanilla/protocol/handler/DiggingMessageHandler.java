@@ -32,15 +32,14 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
-import org.spout.api.material.MaterialData;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
 import org.spout.vanilla.controller.living.player.CreativePlayer;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.controller.object.Item;
-import org.spout.vanilla.material.Block;
+import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.generic.GenericBlock;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
@@ -65,7 +64,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 		// Need to have some sort of verification to deal with malicious clients.
 		if (message.getState() == DiggingMessage.STATE_START_DIGGING) {
 			boolean isAir = false;
-			if (block == null || block.getBlockId() == 0 || block.getBlockMaterial() == null) {
+			if (block == null || block.getMaterial() == VanillaMaterials.AIR) {
 				isAir = true;
 			}
 			PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, new Point(world, x, y, z), player.getEntity().getInventory().getCurrentItem(), PlayerInteractEvent.Action.LEFT_CLICK, isAir);
@@ -76,7 +75,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 
 			VanillaMessageHandlerUtils.messageToBlockFace(message.getFace());
 
-			if (isAir || ((Block) block.getBlockMaterial()).isLiquid()) {
+			if (isAir || block.getMaterial().isLiquid()) {
 				return;
 			}
 			/*if (interactEvent.useItemInHand() != Event.Result.DENY) { //TODO: Interactivity!
@@ -106,21 +105,21 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 		System.out.print(message + "|" + blockBroken);
 
 		if (blockBroken) {
-			BlockMaterial oldMat = (BlockMaterial) MaterialData.getMaterial(world.getBlockId(x, y, z), world.getBlockData(x, y, z));
-			world.setBlockIdAndData(x, y, z, (short) 0, (short) 0, player);
+			BlockMaterial oldMat = world.getBlockMaterial(x, y, z);
 			oldMat.onDestroy(world, x, y, z);
+			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, player);
 
 			if (player.getEntity().getController() instanceof SurvivalPlayer) {
 				Material dropMat = oldMat;
 				int count = 1;
-				if (oldMat instanceof Block) {
-					Block blockMat = (Block) oldMat;
-					dropMat = MaterialData.getMaterial((short) blockMat.getDrop().getId(), (short) blockMat.getDrop().getData());
+				if (oldMat instanceof GenericBlock) {
+					GenericBlock blockMat = (GenericBlock) oldMat;
+					dropMat = Material.get((short) blockMat.getDrop().getId());
 					count = blockMat.getDropCount();
 				}
 
 				for (int i = 0; i < count && dropMat.getId() != 0; ++i) {
-					world.createAndSpawnEntity(block.getBase(), new Item(new ItemStack(dropMat, 1), player.getEntity().getPosition().normalize().add(0, 5, 0)));
+					world.createAndSpawnEntity(block.getPosition(), new Item(new ItemStack(dropMat, 1), player.getEntity().getPosition().normalize().add(0, 5, 0)));
 				}
 			}
 			/*if (!block.isEmpty() && !block.isLiquid()) {

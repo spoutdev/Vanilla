@@ -29,10 +29,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.MaterialData;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
 
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.controller.ControllerType;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
@@ -48,7 +48,7 @@ public class Sheep extends Creature implements Passive {
 	}
 
 	public Sheep(Wool.WoolColor color) {
-		this(color.getId());
+		this(color.getData());
 	}
 
 	public Sheep(int color) {
@@ -107,7 +107,7 @@ public class Sheep extends Creature implements Passive {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 
 		if (!isSheared()) {
-			drops.add(new ItemStack(MaterialData.getMaterial((short) 35, (short) getColor()), 1));
+			drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial((short) color), 1));
 		}
 
 		return drops;

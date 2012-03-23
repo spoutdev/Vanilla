@@ -25,12 +25,58 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.Source;
+import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;
 
 public class Slab extends GenericBlock implements MovingBlock {
-	public Slab(String name, int id, int data) {
-		super(name, id, data);
+	public static final Slab STONE = new Slab("Stone Slab");
+	public static final Slab SANDSTONE = new Slab("Sandstone Slab", 1, STONE).register();
+	public static final Slab WOOD = new Slab("Wooden Slab", 2, STONE).register();
+	public static final Slab COBBLESTONE = new Slab("Cobblestone Slab", 3, STONE).register();
+	public static final Slab BRICK = new Slab("Brick Slab", 4, STONE).register();
+	public static final Slab STONE_BRICK = new Slab("Stone Brick Slab", 5, STONE).register();
+
+	private DoubleSlab doubletype = VanillaMaterials.DOUBLE_SLABS;
+
+	public Slab(String name) {
+		super(name, 44);
+		this.setDefault();
+	}
+
+	private Slab(String name, int data, Slab parent) {
+		super(name, 44, data, parent);
+		this.setDefault();
+	}
+
+	private void setDefault() {
+		this.setHardness(2.0F).setResistance(10.0F);
+	}
+
+	public void setDoubleSlabMaterial(DoubleSlab material) {
+		this.doubletype = material;
+	}
+
+	@Override
+	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
+		if (against == BlockFace.BOTTOM) {
+			Block below = world.getBlock(x, y, z).move(against);
+			if (below.getMaterial() == this.getParentMaterial() && below.getData() == data) {
+				//we are stacking on top of another of the same type
+				//turn this block into the double type
+				Material slab = this.getSubMaterial(data);
+				if (slab != null && slab instanceof Slab) {
+					below.setBlock(((Slab) slab).doubletype);
+					return true;
+				}
+			}
+		}
+		return super.onPlacement(world, x, y, z, data, against, source);
 	}
 
 	@Override

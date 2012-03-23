@@ -29,8 +29,31 @@ import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;
 
 public class DoubleSlab extends GenericBlock implements MovingBlock {
-	public DoubleSlab(String name, int id, int data) {
-		super(name, id, data);
+	public static final DoubleSlab STONE = new DoubleSlab("Stone Double Slab");
+	public static final DoubleSlab SANDSTONE = new DoubleSlab("Sandstone Double Slab", 1, STONE).register();
+	public static final DoubleSlab WOOD = new DoubleSlab("Wooden Double Slab", 2, STONE).register();
+	public static final DoubleSlab COBBLESTONE = new DoubleSlab("Cobblestone Double Slab", 3, STONE).register();
+	public static final DoubleSlab BRICK = new DoubleSlab("Brick Double Slab", 4, STONE).register();
+	public static final DoubleSlab STONE_BRICK = new DoubleSlab("Stone Brick Double Slab", 5, STONE).register();
+
+	public DoubleSlab(String name) {
+		super(name, 43);
+		this.setDefault();
+	}
+
+	private DoubleSlab(String name, int data, DoubleSlab parent) {
+		super(name, 43, data, parent);
+		this.setDefault();
+	}
+
+	private void setDefault() {
+		this.setHardness(2.0F).setResistance(10.0F);
+	}
+
+	public DoubleSlab setSlabMaterial(Slab slab) {
+		this.setDrop(slab);
+		slab.setDoubleSlabMaterial(this);
+		return this;
 	}
 
 	@Override

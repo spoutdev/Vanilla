@@ -40,6 +40,7 @@ public class GenericTool extends GenericItem implements Tool {
 	public GenericTool(String name, int id, short durability) {
 		super(name, id);
 		this.durability = durability;
+		this.setNBTData(true);
 	}
 
 	@Override

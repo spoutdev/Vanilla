@@ -28,7 +28,22 @@ package org.spout.vanilla.material.block;
 import org.spout.vanilla.material.generic.GenericBlock;
 
 public class StoneBrick extends GenericBlock {
-	public StoneBrick(String name, int id, int data) {
-		super(name, id, data);
+	public static final StoneBrick STONE = new StoneBrick("Stone Brick");
+	public static final StoneBrick MOSSY_STONE = new StoneBrick("Mossy Stone Brick", 1, STONE).register();
+	public static final StoneBrick CRACKED_STONE = new StoneBrick("Cracked Stone Brick", 2, STONE).register();
+
+	public StoneBrick(String name) {
+		super(name, 98);
+		this.setDefault();
+	}
+
+	private StoneBrick(String name, int data, StoneBrick parent) {
+		super(name, 98, data, parent);
+		this.setDefault();
+	}
+
+	private void setDefault() {
+		this.setHardness(1.5F);
+		this.setResistance(10.0F);
 	}
 }

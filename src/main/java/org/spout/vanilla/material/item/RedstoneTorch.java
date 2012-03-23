@@ -32,14 +32,14 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.material.Block;
 import org.spout.vanilla.material.attachable.WallAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.RedstoneTarget;
+import org.spout.vanilla.material.generic.GenericBlock;
 
 public class RedstoneTorch extends WallAttachable implements RedstoneSource, RedstoneTarget {
 	public static final short REDSTONE_POWER = 15;
-	private static final Vector3 possibleOutgoing[] = {Vector3.UNIT_X, Vector3.UNIT_X.multiply(-1), Vector3.UNIT_Z, Vector3.UNIT_Z.multiply(-1), Vector3.UNIT_Y.multiply(-1), new Vector3(0, 2, 0),};
+	private static final Vector3 possibleOutgoing[] = {new Vector3(1, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, -1), new Vector3(0, -1, 0), new Vector3(0, 2, 0),};
 	private boolean powered;
 
 	public RedstoneTorch(String name, int id, boolean powered) {
@@ -87,19 +87,19 @@ public class RedstoneTorch extends WallAttachable implements RedstoneSource, Red
 		Vector3 offset = face.getOffset();
 		int tx = (int) (x + offset.getX()), ty = (int) (y + offset.getY()), tz = (int) (z + offset.getZ());
 		BlockMaterial mat = world.getBlockMaterial(tx, ty, tz);
-		if (mat instanceof Block) {
-			short updateId = getId();
-			Block va = (Block) mat;
+		if (mat instanceof GenericBlock) {
+			BlockMaterial newmat;
+			GenericBlock va = (GenericBlock) mat;
 			if (va.getIndirectRedstonePower(world, tx, ty, tz) > 0) {
 				//Power off.
-				updateId = VanillaMaterials.REDSTONE_TORCH_OFF.getId();
+				newmat = VanillaMaterials.REDSTONE_TORCH_OFF;
 			} else {
 				//Seems to be no incoming power, turn on!
-				updateId = VanillaMaterials.REDSTONE_TORCH_ON.getId();
+				newmat = VanillaMaterials.REDSTONE_TORCH_ON;
 			}
-			if (updateId != getId()) {
+			if (newmat != this) {
 				short data = world.getBlockData(x, y, z);
-				world.setBlockIdAndData(x, y, z, updateId, data, false, world);
+				world.setBlockMaterial(x, y, z, newmat, data, false, world);
 
 				//Update other redstone inputs
 				for (Vector3 offset2 : possibleOutgoing) {//TODO changed the values below from offset to offset2

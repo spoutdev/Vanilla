@@ -29,9 +29,23 @@ import org.spout.vanilla.material.Plant;
 import org.spout.vanilla.material.generic.GenericBlock;
 
 public class Tree extends GenericBlock implements Plant {
-	public Tree(String name, int id, int data) {
-		super(name, id, data);
-		setOpacity((byte) 1);
+	public static final Tree DEFAULT = new Tree("Wood");
+	public static final Tree SPRUCE = new Tree("Spruce Wood", 1, DEFAULT).register();
+	public static final Tree BIRCH = new Tree("Birch Wood", 2, DEFAULT).register();
+	public static final Tree JUNGLE = new Tree("Jungle Wood", 3, DEFAULT).register();
+
+	public Tree(String name) {
+		super(name, 17);
+		this.setDefault();
+	}
+
+	private Tree(String name, int data, Tree parent) {
+		super(name, 17, data, parent);
+		this.setDefault();
+	}
+
+	private void setDefault() {
+		this.setHardness(2.0F).setResistance(3.3F).setOpacity((byte) 1);
 	}
 
 	@Override

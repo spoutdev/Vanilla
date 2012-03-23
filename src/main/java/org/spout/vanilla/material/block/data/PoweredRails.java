@@ -31,26 +31,27 @@ import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.util.RailsState;
 
 public class PoweredRails extends Rails {
+	
 	private boolean powered;
-
+	
 	public PoweredRails(short data) {
 		super((short) (data & 0x7));
 		this.powered = (data & 0x8) == 0x8;
 	}
-
+	
 	public PoweredRails(RailsState state, boolean powered) {
 		super(state);
 		this.powered = powered;
 	}
-
+	
 	public boolean isPowered() {
 		return this.powered;
 	}
-
+	
 	public void setPowered(boolean pressed) {
 		this.powered = pressed;
 	}
-
+	
 	@Override
 	public short getData() {
 		short data = super.getData();
@@ -59,9 +60,10 @@ public class PoweredRails extends Rails {
 		}
 		return data;
 	}
-
+	
 	@Override
 	public BlockMaterial getMaterial() {
 		return VanillaMaterials.POWERED_RAIL;
 	}
+
 }

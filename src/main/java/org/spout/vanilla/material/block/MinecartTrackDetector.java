@@ -56,9 +56,10 @@ public class MinecartTrackDetector extends MinecartTrackBase implements Redstone
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
 	@Override
 	public DetectorRails createData(short data) {
 		return new DetectorRails(data);
 	}
+	
 }

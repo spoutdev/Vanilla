@@ -27,18 +27,15 @@ package org.spout.vanilla.material.generic;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.GenericBlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.material.Block;
-import org.spout.vanilla.material.block.data.MaterialData;
-import org.spout.vanilla.material.block.data.SimpleMaterialData;
 import org.spout.vanilla.material.item.RedstoneTorch;
 import org.spout.vanilla.material.item.RedstoneWire;
 
-public class GenericBlock extends GenericBlockMaterial implements Block {
+public class GenericBlock extends BlockMaterial {
+
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
 	private float resistance;
 	private Material dropMaterial;
@@ -46,19 +43,20 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 
 	public GenericBlock(String name, int id) {
 		super(name, id);
-
 		dropMaterial = this;
 		dropCount = 1;
 	}
-
-	public GenericBlock(String name, int id, int data) {
-		super(name, id, data);
-
-		dropMaterial = this;
-		dropCount = 1;
+	
+	public GenericBlock(String name, int id, int data, Material parent) {
+		super(name, id, data, parent);
+		
 	}
 
-	@Override
+	/**
+	 * Represents power that comes into the block from a redstone wire or a torch that is below the block
+	 * Indirect power from below powers redstone wire, but level indirect power just inverts adjacent redstone torches.
+	 * @return the indirect redstone power.
+	 */
 	public short getIndirectRedstonePower(World world, int x, int y, int z) {
 		short indirect = 0;
 		for (BlockFace face : indirectSourcesWire) {
@@ -78,7 +76,11 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 		return (short) Math.max(indirect, getDirectRedstonePower(world, x, y, z));
 	}
 
-	@Override
+	/**
+	 * Represents power that comes from a repeater that points to this block.
+	 * This power can be used by all neighbors that are redstone targets, even if they wouldn't attach.
+	 * @return the direct redstone power.
+	 */
 	public short getDirectRedstonePower(World world, int x, int y, int z) {
 		// TODO Waiting for repeaters
 		return 0;
@@ -112,28 +114,47 @@ public class GenericBlock extends GenericBlockMaterial implements Block {
 		return (GenericBlock) super.setLightLevel(level);
 	}
 
-	@Override
 	public Material getDrop() {
 		return dropMaterial;
+
 	}
 
-	@Override
 	public int getDropCount() {
 		return dropCount;
 	}
+	
 
 	public GenericBlock setDrop(Material id) {
 		dropMaterial = id;
 		return this;
 	}
-
+	
 	public GenericBlock setDropCount(int count) {
 		dropCount = count;
-
+		
 		return this;
 	}
 
-	public MaterialData createData(short data) {
-		return new SimpleMaterialData(this, data);
+	@Override
+	public boolean isLiquid() {
+		return false;
+	}
+
+	@Override
+	public boolean isPlacementObstacle() {
+		return false;
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return false;
+	}
+
+	@Override
+	public void onUpdate(World world, int x, int y, int z) {
+	}
+
+	@Override
+	public void onDestroy(World world, int x, int y, int z) {
 	}
 }

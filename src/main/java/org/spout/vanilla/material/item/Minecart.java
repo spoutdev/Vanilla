@@ -57,7 +57,7 @@ public class Minecart extends GenericItem {
 		//is clicked position a track?
 		World world = position.getWorld();
 		Block block = world.getBlock(position);
-		if (block.getBlockMaterial() instanceof MinecartTrack) {
+		if (block.getMaterial() instanceof MinecartTrack) {
 			//spawn minecart on rails
 			world.createAndSpawnEntity(position, this.getSpawnedEntity());
 			//TODO: Subtracting one from the held item?

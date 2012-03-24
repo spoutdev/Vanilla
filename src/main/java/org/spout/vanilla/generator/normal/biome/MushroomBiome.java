@@ -32,10 +32,6 @@ import org.spout.vanilla.generator.VanillaBiomeType;
 public class MushroomBiome extends VanillaBiomeType {
 	public MushroomBiome() {
 		super(14);
-		minHumid = 50;
-		maxHumid = 70;
-		minTemp = 70;
-		maxTemp = 85;
 	}
 
 	@Override

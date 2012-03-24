@@ -60,10 +60,6 @@ public class PlainBiome extends VanillaBiomeType {
 
 	public PlainBiome() {
 		this(1);
-		minHumid = 30;
-		maxHumid = 70;
-		minTemp = 20;
-		maxTemp = 50;
 	}
 
 	@Override

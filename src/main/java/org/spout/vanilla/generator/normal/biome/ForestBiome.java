@@ -32,10 +32,6 @@ import org.spout.vanilla.generator.VanillaBiomeType;
 public class ForestBiome extends VanillaBiomeType {
 	protected ForestBiome() {
 		super(4);
-		minHumid = 70;
-		maxHumid = 100;
-		minTemp = 20;
-		maxTemp = 60;
 	}
 
 	@Override

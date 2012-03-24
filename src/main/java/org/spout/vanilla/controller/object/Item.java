@@ -67,7 +67,7 @@ public class Item extends Substance {
 
 	@Override
 	public void onAttached() {
-		getParent().setData(ControllerType.KEY, ControllerType.DroppedItem.id);
+		getParent().setData(ControllerType.KEY, ControllerType.DROPPEDITEM.id);
 	}
 
 	@Override

@@ -33,6 +33,6 @@ public class IronGolem extends Creature implements Utility {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.IronGolem.id);
+		getParent().setData(ControllerType.KEY, ControllerType.IRONGOLEM.id);
 	}
 }

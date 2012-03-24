@@ -44,7 +44,23 @@ public class Enderman extends Creature implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Enderman.id);
+		getParent().setData(ControllerType.KEY, ControllerType.ENDERMAN.id);
+		getParent().setMaxHealth(5);
+		getParent().setHealth(5);
+	}
+
+	@Override
+	public void onTick(float dt) {
+		if (--countdown <= 0) {
+			countdown = getRandom().nextInt(7) + 3;
+			float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
+			float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
+			float rotate = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
+			getParent().rotate(rotate, x, 0, z);
+			getParent().translate(x, 0, z);
+		}
+
+		super.onTick(dt);
 	}
 
 	@Override
@@ -54,19 +70,6 @@ public class Enderman extends Creature implements Neutral {
 
 	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
 		entityProtocolStore.setEntityProtocol(protocolId, protocol);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		if (--countdown <= 0) {
-			countdown = getRandom().nextInt(7) + 3;
-			float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			float y = getParent().getPosition().getY();
-			float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			setVelocity(getVelocity().add(x, y, z));
-		}
-
-		super.onTick(dt);
 	}
 
 	@Override

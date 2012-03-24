@@ -39,7 +39,7 @@ public class Blaze extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Blaze.id);
+		getParent().setData(ControllerType.KEY, ControllerType.BLAZE.id);
 	}
 
 	@Override

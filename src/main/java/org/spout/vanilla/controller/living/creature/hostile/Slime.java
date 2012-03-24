@@ -39,7 +39,7 @@ public class Slime extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Slime.id);
+		getParent().setData(ControllerType.KEY, ControllerType.SLIME.id);
 	}
 
 	@Override

@@ -32,6 +32,6 @@ public class EnderCrystal extends Falling {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.EnderCrystal.id);
+		getParent().setData(ControllerType.KEY, ControllerType.ENDECRYSTAL.id);
 	}
 }

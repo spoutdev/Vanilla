@@ -41,7 +41,7 @@ public class Cat extends Creature implements Tamed, Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Ocelot.id);
+		getParent().setData(ControllerType.KEY, ControllerType.OCELOT.id);
 	}
 
 	@Override

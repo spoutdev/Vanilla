@@ -38,12 +38,28 @@ import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 
 public class Chicken extends Creature implements Passive {
+	private int countdown = 0;
 	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Chicken.id);
+		getParent().setData(ControllerType.KEY, ControllerType.CHICKEN.id);
+	}
+	
+	@Override
+	public void onTick(float dt) {
+		if (--countdown <= 0) {
+			countdown = getRandom().nextInt(7) + 3;
+			float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
+			float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
+			float rotate = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
+			//Rotate the sheep!
+			getParent().rotate(rotate, x, 0, z);
+			//Move the sheep!
+			getParent().translate(x, 0, z);
+		}
+		super.onTick(dt);
 	}
 
 	@Override

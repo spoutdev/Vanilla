@@ -32,6 +32,6 @@ public class Mooshroom extends Cow implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Mooshroom.id);
+		getParent().setData(ControllerType.KEY, ControllerType.MOOSHROOM.id);
 	}
 }

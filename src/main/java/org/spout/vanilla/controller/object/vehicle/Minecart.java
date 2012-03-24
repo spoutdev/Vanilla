@@ -35,6 +35,6 @@ public abstract class Minecart extends Substance implements Vehicle {
 	public void onAttached() {
 		super.onAttached();
 		parent = getParent();
-		parent.setData(ControllerType.KEY, ControllerType.Minecart.id);
+		parent.setData(ControllerType.KEY, ControllerType.MINECART.id);
 	}
 }

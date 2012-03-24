@@ -39,7 +39,7 @@ public class Spider extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Spider.id);
+		getParent().setData(ControllerType.KEY, ControllerType.SPIDER.id);
 	}
 
 	@Override

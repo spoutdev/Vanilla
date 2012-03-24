@@ -39,7 +39,7 @@ public class Enderdragon extends Creature implements Hostile, Boss {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.EnderDragon.id);
+		getParent().setData(ControllerType.KEY, ControllerType.ENDEDRAGON.id);
 	}
 
 	@Override

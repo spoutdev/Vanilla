@@ -39,7 +39,7 @@ public class Creeper extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Creeper.id);
+		getParent().setData(ControllerType.KEY, ControllerType.CREEPER.id);
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class Pig extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Pig.id);
+		getParent().setData(ControllerType.KEY, ControllerType.PIG.id);
 	}
 
 	@Override

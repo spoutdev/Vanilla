@@ -33,6 +33,6 @@ public class SnowGolem extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.SnowGolem.id);
+		getParent().setData(ControllerType.KEY, ControllerType.SNOWGOLEM.id);
 	}
 }

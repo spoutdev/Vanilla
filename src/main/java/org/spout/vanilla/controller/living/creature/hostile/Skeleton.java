@@ -39,7 +39,7 @@ public class Skeleton extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Skeleton.id);
+		getParent().setData(ControllerType.KEY, ControllerType.SKELETON.id);
 	}
 
 	@Override

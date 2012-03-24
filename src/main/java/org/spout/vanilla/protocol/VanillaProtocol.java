@@ -28,11 +28,13 @@ package org.spout.vanilla.protocol;
 import org.spout.api.protocol.Protocol;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.controller.living.creature.neutral.Enderman;
 import org.spout.vanilla.controller.living.creature.passive.Chicken;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.Item;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.VanillaPlayerEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.PickupEntityProtocol;
@@ -43,6 +45,7 @@ public class VanillaProtocol extends Protocol {
 
 		VanillaPlayer.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new VanillaPlayerEntityProtocol());
 		Sheep.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new SheepEntityProtocol());
+		Enderman.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new EndermanEntityProtocol());
 		Item.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new PickupEntityProtocol());
 		Chicken.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new BasicMobEntityProtocol());
 	}

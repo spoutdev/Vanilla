@@ -38,7 +38,7 @@ public class Silverfish extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Silverfish.id);
+		getParent().setData(ControllerType.KEY, ControllerType.SILVERFISH.id);
 	}
 
 	@Override

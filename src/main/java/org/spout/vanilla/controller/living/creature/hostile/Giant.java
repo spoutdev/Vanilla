@@ -38,7 +38,7 @@ public class Giant extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.GiantZombie.id);
+		getParent().setData(ControllerType.KEY, ControllerType.GIANT.id);
 	}
 
 	@Override

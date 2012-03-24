@@ -28,7 +28,10 @@ package org.spout.vanilla.controller.living.creature.passive;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.EntityProtocolStore;
 
@@ -42,7 +45,8 @@ public class Sheep extends Creature implements Passive {
 	private int countdown = 0;
 	private int color;
 	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
-
+	private Transform priorTransform;
+	
 	public Sheep() {
 		this(0x0);
 	}
@@ -59,7 +63,7 @@ public class Sheep extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Sheep.id);
+		getParent().setData(ControllerType.KEY, ControllerType.SHEEP.id);
 		getParent().setData("SheepSheared", false);
 		getParent().setData("SheepColor", color);
 		getParent().setMaxHealth(5);
@@ -68,12 +72,17 @@ public class Sheep extends Creature implements Passive {
 
 	@Override
 	public void onTick(float dt) {
+		priorTransform = new Transform(getParent().getPosition(), getParent().getRotation(), getParent().getScale());
+
 		if (--countdown <= 0) {
 			countdown = getRandom().nextInt(7) + 3;
 			float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			float y = getRandom().nextFloat();
 			float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			getParent().translate(x, y, z);
+			float rotate = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
+			//Rotate the sheep!
+			getParent().rotate(rotate, x, 0, z);
+			//Move the sheep!
+			getParent().translate(x, 0, z);
 		}
 
 		super.onTick(dt);

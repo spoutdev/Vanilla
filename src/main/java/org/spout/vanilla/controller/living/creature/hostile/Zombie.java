@@ -39,7 +39,7 @@ public class Zombie extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Zombie.id);
+		getParent().setData(ControllerType.KEY, ControllerType.ZOMBIE.id);
 	}
 
 	@Override

@@ -35,6 +35,6 @@ public class Boat extends Substance implements Vehicle {
 	public void onAttached() {
 		super.onAttached();
 		parent = getParent();
-		parent.setData(ControllerType.KEY, ControllerType.Boat.id);
+		parent.setData(ControllerType.KEY, ControllerType.BOAT.id);
 	}
 }

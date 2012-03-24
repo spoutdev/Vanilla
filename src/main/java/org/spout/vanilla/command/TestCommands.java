@@ -28,12 +28,15 @@ package org.spout.vanilla.command;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.World;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.living.creature.neutral.Enderman;
 import org.spout.vanilla.controller.living.creature.passive.Chicken;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 
@@ -44,41 +47,32 @@ public class TestCommands {
 		this.plugin = plugin;
 	}
 
-	@Command(aliases = {"spawnsheep"}, usage = "[color]", desc = "Spawn a sheep!", max = 1)
-	public void spawnSheep(CommandContext args, CommandSource source) throws CommandException {
+	@Command(aliases = {"spawn"}, usage = "[controller]", desc = "Spawn a controller!", max = 1)
+	public void spawn(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
-			throw new CommandException("You must be a player to spawn a sheep.");
+			throw new CommandException("You must be a player to spawn a controller");
 		}
 
-		int color = 0xF;
-		if (args.length() == 1) {
-			if (args.isInteger(0)) {
-				color = args.getInteger(0);
-			} else {
-				throw new CommandException("Color must be a integer.");
+		Player player = (Player) source;
+		Entity entity = player.getEntity();
+		World world = entity.getWorld();
+		Controller control;
+		if (args.length() > 0) {
+			switch(ControllerType.valueOf(args.getString(0).toUpperCase())) {
+				case SHEEP: {
+					control = new Sheep();
+					break;
+				}
+				case ENDERMAN: {
+					control = new Enderman();
+					break;
+				}
+				default:
+					control = null;
+			}
+			if (control != null) {
+				world.createAndSpawnEntity(entity.getPosition(), control);
 			}
 		}
-
-		Player player = (Player) source;
-		Entity entity = player.getEntity();
-		World world = entity.getWorld();
-
-		if (args.length() < 1) {
-			world.createAndSpawnEntity(entity.getPosition(), new Sheep());
-		} else {
-			world.createAndSpawnEntity(entity.getPosition(), new Sheep(color));
-		}
-	}
-
-	@Command(aliases = {"spawnchicken", "spawndodo"}, usage = "", desc = "Spawn a chicken!")
-	public void spawnChicken(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("You must be a player to spawn a chicken.");
-		}
-		Player player = (Player) source;
-		Entity entity = player.getEntity();
-		World world = entity.getWorld();
-
-		world.createAndSpawnEntity(entity.getPosition(), new Chicken());
 	}
 }

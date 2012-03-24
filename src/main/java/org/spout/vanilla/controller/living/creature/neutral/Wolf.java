@@ -39,7 +39,7 @@ public class Wolf extends Creature implements Tameable, Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Wolf.id);
+		getParent().setData(ControllerType.KEY, ControllerType.WOLF.id);
 	}
 
 	@Override

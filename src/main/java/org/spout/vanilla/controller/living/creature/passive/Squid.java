@@ -39,7 +39,7 @@ public class Squid extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Squid.id);
+		getParent().setData(ControllerType.KEY, ControllerType.SQUID.id);
 	}
 
 	@Override

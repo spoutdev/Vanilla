@@ -39,7 +39,7 @@ public class PigZombie extends Zombie implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.PigZombie.id);
+		getParent().setData(ControllerType.KEY, ControllerType.PIGZOMBIE.id);
 	}
 
 	@Override

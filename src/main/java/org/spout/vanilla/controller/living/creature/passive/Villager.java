@@ -38,7 +38,7 @@ public class Villager extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.Villager.id);
+		getParent().setData(ControllerType.KEY, ControllerType.VILLAGER.id);
 	}
 
 	@Override

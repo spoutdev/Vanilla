@@ -32,6 +32,6 @@ public class CaveSpider extends Spider implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.CaveSpider.id);
+		getParent().setData(ControllerType.KEY, ControllerType.CAVESPIDER.id);
 	}
 }

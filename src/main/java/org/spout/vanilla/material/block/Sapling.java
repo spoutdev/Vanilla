@@ -29,16 +29,16 @@ import org.spout.vanilla.material.Plant;
 import org.spout.vanilla.material.attachable.GroundAttachable;
 
 public class Sapling extends GroundAttachable implements Plant {
-	public static final Sapling DEFAULT = new Sapling("Sapling");
-	public static final Sapling SPRUCE = new Sapling("Spruce Sapling", 1, DEFAULT).register();
-	public static final Sapling BIRCH = new Sapling("Birch Sapling", 2, DEFAULT).register();
-	public static final Sapling JUNGLE = new Sapling("Jungle Sapling", 3, DEFAULT).register();
+	public static final Sapling DEFAULT = register(new Sapling("Sapling"));
+	public static final Sapling SPRUCE = register(new Sapling("Spruce Sapling", 1, DEFAULT));
+	public static final Sapling BIRCH = register(new Sapling("Birch Sapling", 2, DEFAULT));
+	public static final Sapling JUNGLE = register(new Sapling("Jungle Sapling", 3, DEFAULT));
 
 	private void setDefault() {
 		this.setHardness(0.0F).setResistance(0.0F);
 	}
 
-	public Sapling(String name) {
+	private Sapling(String name) {
 		super(name, 6);
 		this.setDefault();
 	}

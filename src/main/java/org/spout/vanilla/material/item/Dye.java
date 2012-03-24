@@ -34,22 +34,22 @@ import org.spout.api.material.source.DataSource;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class Dye extends GenericItem {
-	public static final Dye INK_SAC = new Dye("Ink Sac");
-	public static final Dye ROSE_RED = new Dye("Rose Red", DyeColor.RED, INK_SAC).register();
-	public static final Dye CACTUS_GREEN = new Dye("Cactus Green", DyeColor.GREEN, INK_SAC).register();
-	public static final Dye COCOA_BEANS = new Dye("Cocoa Beans", DyeColor.BROWN, INK_SAC).register();
-	public static final Dye LAPIS_LAZULI = new Dye("Lapis Lazuli", DyeColor.BLUE, INK_SAC).register();
-	public static final Dye PURPLE = new Dye("Purple Dye", DyeColor.PURPLE, INK_SAC).register();
-	public static final Dye CYAN = new Dye("Cyan Dye", DyeColor.CYAN, INK_SAC).register();
-	public static final Dye LIGHT_GRAY = new Dye("Light Gray Dye", DyeColor.LIGHT_GRAY, INK_SAC).register();
-	public static final Dye GRAY = new Dye("Gray Dye", DyeColor.GRAY, INK_SAC).register();
-	public static final Dye PINK = new Dye("Pink Dye", DyeColor.PINK, INK_SAC).register();
-	public static final Dye LIME = new Dye("Lime Dye", DyeColor.LIME, INK_SAC).register();
-	public static final Dye DANDELION_YELLOW = new Dye("Dandelion Yellow", DyeColor.YELLOW, INK_SAC).register();
-	public static final Dye LIGHT_BLUE = new Dye("Light Blue Dye", DyeColor.LIGHT_BLUE, INK_SAC).register();
-	public static final Dye MAGENTA = new Dye("Magenta Dye", DyeColor.MAGENTA, INK_SAC).register();
-	public static final Dye ORANGE = new Dye("Orange Dye", DyeColor.ORANGE, INK_SAC).register();
-	public static final Dye BONE_MEAL = new Dye("Bone Meal", DyeColor.WHITE, INK_SAC).register();
+	public static final Dye INK_SAC = register(new Dye("Ink Sac"));
+	public static final Dye ROSE_RED = register(new Dye("Rose Red", DyeColor.RED, INK_SAC));
+	public static final Dye CACTUS_GREEN = register(new Dye("Cactus Green", DyeColor.GREEN, INK_SAC));
+	public static final Dye COCOA_BEANS = register(new Dye("Cocoa Beans", DyeColor.BROWN, INK_SAC));
+	public static final Dye LAPIS_LAZULI = register(new Dye("Lapis Lazuli", DyeColor.BLUE, INK_SAC));
+	public static final Dye PURPLE = register(new Dye("Purple Dye", DyeColor.PURPLE, INK_SAC));
+	public static final Dye CYAN = register(new Dye("Cyan Dye", DyeColor.CYAN, INK_SAC));
+	public static final Dye LIGHT_GRAY = register(new Dye("Light Gray Dye", DyeColor.LIGHT_GRAY, INK_SAC));
+	public static final Dye GRAY = register(new Dye("Gray Dye", DyeColor.GRAY, INK_SAC));
+	public static final Dye PINK = register(new Dye("Pink Dye", DyeColor.PINK, INK_SAC));
+	public static final Dye LIME = register(new Dye("Lime Dye", DyeColor.LIME, INK_SAC));
+	public static final Dye DANDELION_YELLOW = register(new Dye("Dandelion Yellow", DyeColor.YELLOW, INK_SAC));
+	public static final Dye LIGHT_BLUE = register(new Dye("Light Blue Dye", DyeColor.LIGHT_BLUE, INK_SAC));
+	public static final Dye MAGENTA = register(new Dye("Magenta Dye", DyeColor.MAGENTA, INK_SAC));
+	public static final Dye ORANGE = register(new Dye("Orange Dye", DyeColor.ORANGE, INK_SAC));
+	public static final Dye BONE_MEAL = register(new Dye("Bone Meal", DyeColor.WHITE, INK_SAC));
 
 	private final DyeColor color;
 
@@ -83,12 +83,12 @@ public class Dye extends GenericItem {
 		}
 	}
 
-	public Dye(String name) {
+	private Dye(String name) {
 		super(name, 351);
 		this.color = DyeColor.BLACK;
 	}
 
-	public Dye(String name, DyeColor color, Dye parent) {
+	private Dye(String name, DyeColor color, Dye parent) {
 		super(name, 351, color.getData(), parent);
 		this.color = color;
 	}

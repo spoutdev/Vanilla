@@ -26,16 +26,16 @@
 package org.spout.vanilla.material.block;
 
 public class TallGrass extends LongGrass {
-	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass");
-	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, DEAD_GRASS).register();
-	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS).register();
+	public static final TallGrass DEAD_GRASS = register(new TallGrass("Dead Grass"));
+	public static final TallGrass TALL_GRASS = register(new TallGrass("Tall Grass", 1, DEAD_GRASS));
+	public static final TallGrass FERN = register(new TallGrass("Fern", 2, DEAD_GRASS));
 
-	public TallGrass(String name) {
+	private TallGrass(String name) {
 		super(name, 31);
 		this.setDefault();
 	}
 
-	public TallGrass(String name, int data, TallGrass parent) {
+	private TallGrass(String name, int data, TallGrass parent) {
 		super(name, 31, data, parent);
 		this.setDefault();
 	}

@@ -32,14 +32,14 @@ import org.spout.api.material.Material;
 import org.spout.vanilla.VanillaMaterials;
 
 public class Leaves extends Solid {
-	public static final Leaves DEFAULT = new Leaves("Leaves");
-	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 0, DEFAULT).register();
-	public static final Leaves BIRCH = new Leaves("Birch Leaves", 0, DEFAULT).register();
-	public static final Leaves JUNGLE = new Leaves("Jungle Leaves", 0, DEFAULT).register();
+	public static final Leaves DEFAULT = register(new Leaves("Leaves"));
+	public static final Leaves SPRUCE = register(new Leaves("Spruce Leaves", 0, DEFAULT));
+	public static final Leaves BIRCH = register(new Leaves("Birch Leaves", 0, DEFAULT));
+	public static final Leaves JUNGLE = register(new Leaves("Jungle Leaves", 0, DEFAULT));
 
 	private Random rand = new Random();
 
-	public Leaves(String name) {
+	private Leaves(String name) {
 		super(name, 18);
 		this.setDefault();
 	}

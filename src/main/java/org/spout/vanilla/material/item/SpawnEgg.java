@@ -29,34 +29,34 @@ import org.spout.api.material.Material;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class SpawnEgg extends GenericItem {
-	private static final SpawnEgg PARENT = new SpawnEgg("Spawn Egg").register(); //There is no entity with the ID 0 so this egg is invalid
-	public static final SpawnEgg CREEPER = new SpawnEgg("Spawn Creeper", 50, PARENT).register();
-	public static final SpawnEgg SKELETON = new SpawnEgg("Spawn Skeleton", 51, PARENT).register();
-	public static final SpawnEgg SPIDER = new SpawnEgg("Spawn Spider", 52, PARENT).register();
-	public static final SpawnEgg ZOMBIE = new SpawnEgg("Spawn Zombie", 54, PARENT).register();
-	public static final SpawnEgg SLIME = new SpawnEgg("Spawn Slime", 55, PARENT).register();
-	public static final SpawnEgg GHAST = new SpawnEgg("Spawn Ghast", 56, PARENT).register();
-	public static final SpawnEgg PIGMAN = new SpawnEgg("Spawn Pigman", 57, PARENT).register();
-	public static final SpawnEgg ENDERMAN = new SpawnEgg("Spawn Enderman", 58, PARENT).register();
-	public static final SpawnEgg CAVESPIDER = new SpawnEgg("Spawn Cavespider", 59, PARENT).register();
-	public static final SpawnEgg SILVERFISH = new SpawnEgg("Spawn Silverfish", 60, PARENT).register();
-	public static final SpawnEgg BLAZE = new SpawnEgg("Spawn Blaze", 61, PARENT).register();
-	public static final SpawnEgg MAGMACUBE = new SpawnEgg("Spawn Magmacube", 62, PARENT).register();
-	public static final SpawnEgg PIG = new SpawnEgg("Spawn Pig", 90, PARENT).register();
-	public static final SpawnEgg SHEEP = new SpawnEgg("Spawn Sheep", 91, PARENT).register();
-	public static final SpawnEgg COW = new SpawnEgg("Spawn Cow", 92, PARENT).register();
-	public static final SpawnEgg CHICKEN = new SpawnEgg("Spawn Chicken", 93, PARENT).register();
-	public static final SpawnEgg SQUID = new SpawnEgg("Spawn Squid", 94, PARENT).register();
-	public static final SpawnEgg WOLF = new SpawnEgg("Spawn Wolf", 95, PARENT).register();
-	public static final SpawnEgg MOOSHROOM = new SpawnEgg("Spawn Mooshroom", 96, PARENT).register();
-	public static final SpawnEgg VILLAGER = new SpawnEgg("Spawn Villager", 120, PARENT).register();
-	public static final SpawnEgg OCELOT = new SpawnEgg("Spawn Ocelot", 98, PARENT).register();
-	
-	public SpawnEgg(String name) {
+	private static final SpawnEgg PARENT = register(new SpawnEgg("Spawn Egg")); //There is no entity with the ID 0 so this egg is invalid
+	public static final SpawnEgg CREEPER = register(new SpawnEgg("Spawn Creeper", 50, PARENT));
+	public static final SpawnEgg SKELETON = register(new SpawnEgg("Spawn Skeleton", 51, PARENT));
+	public static final SpawnEgg SPIDER = register(new SpawnEgg("Spawn Spider", 52, PARENT));
+	public static final SpawnEgg ZOMBIE = register(new SpawnEgg("Spawn Zombie", 54, PARENT));
+	public static final SpawnEgg SLIME = register(new SpawnEgg("Spawn Slime", 55, PARENT));
+	public static final SpawnEgg GHAST = register(new SpawnEgg("Spawn Ghast", 56, PARENT));
+	public static final SpawnEgg PIGMAN = register(new SpawnEgg("Spawn Pigman", 57, PARENT));
+	public static final SpawnEgg ENDERMAN = register(new SpawnEgg("Spawn Enderman", 58, PARENT));
+	public static final SpawnEgg CAVESPIDER = register(new SpawnEgg("Spawn Cavespider", 59, PARENT));
+	public static final SpawnEgg SILVERFISH = register(new SpawnEgg("Spawn Silverfish", 60, PARENT));
+	public static final SpawnEgg BLAZE = register(new SpawnEgg("Spawn Blaze", 61, PARENT));
+	public static final SpawnEgg MAGMACUBE = register(new SpawnEgg("Spawn Magmacube", 62, PARENT));
+	public static final SpawnEgg PIG = register(new SpawnEgg("Spawn Pig", 90, PARENT));
+	public static final SpawnEgg SHEEP = register(new SpawnEgg("Spawn Sheep", 91, PARENT));
+	public static final SpawnEgg COW = register(new SpawnEgg("Spawn Cow", 92, PARENT));
+	public static final SpawnEgg CHICKEN = register(new SpawnEgg("Spawn Chicken", 93, PARENT));
+	public static final SpawnEgg SQUID = register(new SpawnEgg("Spawn Squid", 94, PARENT));
+	public static final SpawnEgg WOLF = register(new SpawnEgg("Spawn Wolf", 95, PARENT));
+	public static final SpawnEgg MOOSHROOM = register(new SpawnEgg("Spawn Mooshroom", 96, PARENT));
+	public static final SpawnEgg VILLAGER = register(new SpawnEgg("Spawn Villager", 120, PARENT));
+	public static final SpawnEgg OCELOT = register(new SpawnEgg("Spawn Ocelot", 98, PARENT));
+
+	private SpawnEgg(String name) {
 		super(name, 383);
 	}
 
-	public SpawnEgg(String name, int data, Material parent) {
+	private SpawnEgg(String name, int data, Material parent) {
 		super(name, 383, data, parent);
 	}
 }

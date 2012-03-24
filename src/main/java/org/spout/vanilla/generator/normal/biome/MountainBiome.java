@@ -46,6 +46,10 @@ public class MountainBiome extends VanillaBiomeType {
 		noise.setOctaveCount(10);
 		noise.setFrequency(0.4);
 		noise.setLacunarity(0.10);
+		minHumid = 30;
+		maxHumid = 70;
+		minTemp = 50;
+		maxTemp = 70;
 	}
 
 	@Override

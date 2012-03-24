@@ -32,7 +32,7 @@ import org.spout.vanilla.generator.nether.biome.NetherrackBiome;
 public class NetherGenerator extends VanillaGeneratorBase {
 	@Override
 	public void registerBiomes() {
-		setSelector(new NoiseSelector(0.9, 1.5, 5, 0.9, 1.5));
+		setSelector(new NoiseSelector(this));
 		register(new NetherrackBiome());
 		//TODO: Create Nether's biome(s);
 	}

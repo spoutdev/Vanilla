@@ -43,7 +43,7 @@ public abstract class Falling extends Substance {
 	}
 
 	protected void updateGravity(float dt) {
-		setVelocity(getVelocity().add(Vector3.Up.multiply(-(dt * GRAVITY_MULTIPLIER))));
+		setVelocity(getVelocity().add(Vector3.UP.multiply(-(dt * GRAVITY_MULTIPLIER))));
 	}
 
 	public boolean hasGravity() {

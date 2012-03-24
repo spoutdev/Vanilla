@@ -68,7 +68,12 @@ public class VanillaConfiguration extends Configuration {
 				try {
 					Object f = field.get(null);
 					if (f instanceof ConfigurationNode) {
-						this.addNode((ConfigurationNode) f);
+						ConfigurationNode node = (ConfigurationNode) f;
+						Object value = getValue(node.getPath());
+						if (value != null) {
+							node.setValue(value);
+						}
+						this.addNode(node);
 					}
 				} catch (IllegalArgumentException e) {
 				} catch (IllegalAccessException e) {

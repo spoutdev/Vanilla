@@ -43,6 +43,10 @@ public class OpConfig extends Configuration {
 	@Override
 	public void load() {
 		super.load();
+		Object value = getValue(node.getPath());
+		if (value != null) {
+			node.setValue(value);
+		}
 		this.addNode(node);
 		this.save();
 	}
@@ -60,6 +64,7 @@ public class OpConfig extends Configuration {
 		}
 
 		node.setValue(list);
+		this.save();
 	}
 
 	public boolean isOp(String playerName) {

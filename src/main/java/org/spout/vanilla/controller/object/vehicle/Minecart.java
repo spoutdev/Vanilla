@@ -29,12 +29,10 @@ import org.spout.vanilla.controller.ControllerType;
 import org.spout.vanilla.controller.object.Substance;
 
 public abstract class Minecart extends Substance implements Vehicle {
-	private org.spout.api.entity.Entity parent;
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(ControllerType.KEY, ControllerType.MINECART.id);
+		getParent().setData(ControllerType.KEY, ControllerType.MINECART.id);
 	}
 }

@@ -38,16 +38,12 @@ import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
-import org.spout.api.protocol.EntityProtocol;
-import org.spout.api.protocol.EntityProtocolStore;
-
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.UserListItemMessage;
 
 public abstract class VanillaPlayer extends Human implements PlayerController {
-	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
 	private final Player owner;
 	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
 	private short count = 0;
@@ -105,15 +101,6 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 		sendMessage(player, new UserListItemMessage(player.getName(), true, ping));
 		super.onTick(dt);
-	}
-
-	@Override
-	public EntityProtocol getEntityProtocol(int protocolId) {
-		return entityProtocolStore.getEntityProtocol(protocolId);
-	}
-
-	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
-		entityProtocolStore.setEntityProtocol(protocolId, protocol);
 	}
 
 	public short getPing() {

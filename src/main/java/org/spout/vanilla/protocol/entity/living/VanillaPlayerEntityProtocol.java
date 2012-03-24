@@ -37,7 +37,7 @@ import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
 public class VanillaPlayerEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
 	@Override
-	public Message getSpawnMessage(Entity entity) {
+	public Message[] getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
 		if (c == null) {
 			return null;
@@ -57,7 +57,7 @@ public class VanillaPlayerEntityProtocol extends VanillaEntityProtocol implement
 			if (hand != null) {
 				item = hand.getMaterial().getId();
 			}
-			return new SpawnPlayerMessage(id, name, x, y, z, r, p, item);
+			return new Message[] {new SpawnPlayerMessage(id, name, x, y, z, r, p, item)};
 		}
 
 		return null;

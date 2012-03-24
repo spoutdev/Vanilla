@@ -60,7 +60,7 @@ public abstract class VanillaController extends Controller {
 	private Vector3 waterVelocity = new Vector3(0.001f, 0.001f, 0.001f);
 	private Vector3 webVelocity = new Vector3(0.001f, 0.001f, 0.001f);
 	private Vector3 soulSandVelocity = new Vector3(2f, 0f, 0f); //TODO Guessed here...needs to be tweaked.
-	
+
 	@Override
 	public void onAttached() {
 		getParent().setCollision(new CollisionModel(area));
@@ -90,8 +90,8 @@ public abstract class VanillaController extends Controller {
 		}
 
 		/**
-		 * Check to see if the child controller can move. This solves the issue with doing needless checks 
-		 * for things that only affect moving controllers and eliminates the need for a MovingController 
+		 * Check to see if the child controller can move. This solves the issue with doing needless checks
+		 * for things that only affect moving controllers and eliminates the need for a MovingController
 		 * abstraction layer.
 		 */
 		if (canMove) {
@@ -109,6 +109,7 @@ public abstract class VanillaController extends Controller {
 		if (flammable) {
 			checkLava();
 		}
+		super.onTick(dt);
 	}
 
 	/**
@@ -128,7 +129,7 @@ public abstract class VanillaController extends Controller {
 		for (Player player : players) {
 			for (Message message : messages) {
 			 	sendMessage(player, message);
-			}			
+			}
 		}
 	}
 
@@ -229,12 +230,12 @@ public abstract class VanillaController extends Controller {
 
 		/**
 		 * If execution got here, that means we should check to see if the block under the controller's position
-		 * is a block (y - 1). 
+		 * is a block (y - 1).
 		 */
 		float x = getParent().getPosition().getX() - 1;
 		float y = getParent().getPosition().getY() - 1;
 		float z = getParent().getPosition().getZ();
-		
+
 		BlockMaterial feet = getParent().getWorld().getBlock(new Point(getParent().getWorld(), x, y, z)).getMaterial();
 		if (feet.equals(VanillaMaterials.WEB)) {
 			if(Spout.getGame().debugMode()) {
@@ -252,7 +253,7 @@ public abstract class VanillaController extends Controller {
 			}
 			return waterVelocity;
 		}
-		
+
 		return Vector3.ZERO;
 	}
 

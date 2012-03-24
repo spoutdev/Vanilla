@@ -29,47 +29,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.protocol.EntityProtocol;
-import org.spout.api.protocol.EntityProtocolStore;
-
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.controller.ControllerType;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
 
 public class Enderman extends Creature implements Neutral {
-	private int countdown = 0;
-	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		getParent().setData(ControllerType.KEY, ControllerType.ENDERMAN.id);
 		getParent().setMaxHealth(5);
 		getParent().setHealth(5);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		if (--countdown <= 0) {
-			countdown = getRandom().nextInt(7) + 3;
-			float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			float rotate = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			getParent().rotate(rotate, x, 0, z);
-			getParent().translate(x, 0, z);
-		}
-
-		super.onTick(dt);
-	}
-
-	@Override
-	public EntityProtocol getEntityProtocol(int protocolId) {
-		return entityProtocolStore.getEntityProtocol(protocolId);
-	}
-
-	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
-		entityProtocolStore.setEntityProtocol(protocolId, protocol);
 	}
 
 	@Override

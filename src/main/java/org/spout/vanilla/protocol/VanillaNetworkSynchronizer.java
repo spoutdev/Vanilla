@@ -139,7 +139,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 		//System.out.println("Sending chunk (" + x + ", " + y + ", " + z + ") " + c);
 
-		if (y < 0 || y > c.getWorld().getHeight() >> 4) {
+		if (y < 0 || y >= c.getWorld().getHeight() >> 4) {
 			return;
 		}
 
@@ -208,18 +208,18 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 	@Override
 	protected void worldChanged(World world) {
+		int dimensionBit;
+		WorldGenerator worldGen = world.getGenerator();
+		if (worldGen instanceof NormalGenerator) {
+			dimensionBit = 0;
+		} else if (worldGen instanceof NetherGenerator) {
+			dimensionBit = -1;
+		} else {
+			dimensionBit = 1;
+		}
 		if (first) {
 			first = false;
 			int entityId = owner.getEntity().getId();
-			int dimensionBit;
-			WorldGenerator worldGen = world.getGenerator();
-			if (worldGen instanceof NormalGenerator) {
-				dimensionBit = 0;
-			} else if (worldGen instanceof NetherGenerator) {
-				dimensionBit = -1;
-			} else {
-				dimensionBit = 1;
-			}
 			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1, dimensionBit, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
 			owner.getSession().send(idMsg, true);
 			//Normal messages may be sent
@@ -236,7 +236,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			}
 			entity.getInventory().addViewer(this);
 		} else {
-			owner.getSession().send(new RespawnMessage(0, (byte) 0, (byte) (owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1), world == null ? 0 : world.getHeight(), "DEFAULT"));
+			owner.getSession().send(new RespawnMessage(dimensionBit, (byte) 0, (byte) (owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1), world.getHeight(), "DEFAULT"));
 		}
 
 		if (world != null) {
@@ -293,10 +293,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (c != null) {
 			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
 			if (ep != null) {
-				Message spawn = ep.getSpawnMessage(e);
+				Message[] spawn = ep.getSpawnMessage(e);
 				if (spawn != null) {
 					activeEntities.add(e.getId());
-					session.send(spawn);
+					for (Message msg : spawn) {
+						session.send(msg);
+					}
 				}
 			}
 		}
@@ -316,9 +318,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (c != null) {
 			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
 			if (ep != null) {
-				Message death = ep.getDestroyMessage(e);
+				Message[] death = ep.getDestroyMessage(e);
 				if (death != null) {
-					session.send(death);
+					for (Message msg : death) {
+						session.send(msg);
+					}
 					activeEntities.remove(e.getId());
 				}
 			}
@@ -340,9 +344,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (c != null) {
 			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
 			if (ep != null) {
-				Message sync = ep.getUpdateMessage(e);
+				Message[] sync = ep.getUpdateMessage(e);
 				if (sync != null) {
-					session.send(sync);
+					for (Message msg : sync) {
+						session.send(msg);
+					}
 				}
 			}
 		}

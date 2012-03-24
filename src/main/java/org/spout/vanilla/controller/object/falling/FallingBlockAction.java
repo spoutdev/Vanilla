@@ -23,30 +23,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol;
+package org.spout.vanilla.controller.object.falling;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.protocol.EntityProtocol;
-import org.spout.api.protocol.Message;
+import org.spout.api.entity.EntityAction;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
+import org.spout.vanilla.VanillaMaterials;
 
-import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
-import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
+import static org.spout.api.math.MathHelper.floor;
 
-public abstract class VanillaEntityProtocol implements EntityProtocol {
-	@Override
-	public Message[] getDestroyMessage(Entity entity) {
-		return new Message[] {new DestroyEntityMessage(entity.getId())};
-	}
+/**
+ * @author zml2008
+ */
+public class FallingBlockAction extends EntityAction<FallingBlock> {
 
-	@Override
-	public Message[] getUpdateMessage(Entity entity) {
-		int id = entity.getId();
-		int x = (int) (entity.getPosition().getX() * 32);
-		int y = (int) (entity.getPosition().getY() * 32);
-		int z = (int) (entity.getPosition().getZ() * 32);
-		int r = (int) (entity.getYaw() * 32);
-		int p = (int) (entity.getPitch() * 32);
-		// TODO - improve efficiency
-		return new Message[] {new EntityTeleportMessage(id, x, y, z, r, p)};
-	}
+    @Override
+    public boolean shouldRun(Entity entity, FallingBlock block) {
+		Point pos = entity.getPosition();
+		BlockMaterial mat = entity.getWorld().getBlockMaterial(floor(pos.getX()), floor(pos.getY()) - 1, floor(pos.getZ()));
+        return mat == VanillaMaterials.AIR || mat.isLiquid();
+    }
+
+    @Override
+    public void run(Entity entity, FallingBlock controller) {
+		Point pos = entity.getPosition();
+        entity.getWorld().setBlockMaterial(floor(pos.getX()), floor(pos.getY()), floor(pos.getZ()), controller.getBlock(), controller.getBlock().getData(), true, entity);
+        entity.kill();
+    }
 }

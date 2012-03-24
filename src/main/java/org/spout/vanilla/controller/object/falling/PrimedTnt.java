@@ -33,13 +33,16 @@ import org.spout.vanilla.controller.object.Falling;
 
 public class PrimedTnt extends Falling {
 	private float timeToExplode = 4.f;
-	private Vector3 velocity;
 	private Vector3 gravity = new Vector3(0, 5, 0);
 	private Random rng = new Random();
 
+	public PrimedTnt() {
+		super(true);
+	}
+
 	@Override
 	public void onAttached() {
-		velocity = new Vector3(rng.nextFloat() * 5, rng.nextFloat() * 5, rng.nextFloat() * 5);
+		setVelocity(new Vector3(rng.nextFloat() * 5, rng.nextFloat() * 5, rng.nextFloat() * 5));
 	}
 
 	@Override
@@ -49,9 +52,6 @@ public class PrimedTnt extends Falling {
 			//Explode
 			System.out.print("tnt goes boom!");
 		}
-
-		//Move in a random direction and apply gravity.
-		getParent().translate(velocity);
-		getParent().translate(gravity);
+		super.onTick(dt);
 	}
 }

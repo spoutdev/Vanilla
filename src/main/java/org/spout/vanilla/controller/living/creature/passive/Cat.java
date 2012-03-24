@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.creature.passive;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.ControllerType;
@@ -36,7 +37,7 @@ import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.living.creature.Tamed;
 
 public class Cat extends Creature implements Tamed, Passive {
-	private org.spout.api.entity.Entity sovereign = null;
+	private Entity sovereign = null;
 
 	@Override
 	public void onAttached() {
@@ -45,12 +46,12 @@ public class Cat extends Creature implements Tamed, Passive {
 	}
 
 	@Override
-	public void subjectTo(org.spout.api.entity.Entity entity) {
+	public void subjectTo(Entity entity) {
 		sovereign = entity;
 	}
 
 	@Override
-	public org.spout.api.entity.Entity subjectedTo() {
+	public Entity subjectedTo() {
 		return sovereign;
 	}
 

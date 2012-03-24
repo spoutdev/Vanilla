@@ -25,9 +25,14 @@
  */
 package org.spout.vanilla.controller.living;
 
+import org.spout.vanilla.controller.GravityAction;
 import org.spout.vanilla.controller.VanillaController;
-import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
-import org.spout.vanilla.protocol.msg.EntityStatusMessage;
+import org.spout.vanilla.controller.WanderAction;
 
 public abstract class Living extends VanillaController {
+
+	public void onAttached() {
+		registerAction(new WanderAction());
+		registerAction(new GravityAction());
+	}
 }

@@ -84,7 +84,7 @@ public class VanillaPlugin extends CommonPlugin {
 				try {
 					port = Integer.parseInt(split[1]);
 				} catch (NumberFormatException e) {
-					System.out.println(split[1] + " is not a valid port number! Defaulting to " + port + "!");
+					getLogger().warning(split[1] + " is not a valid port number! Defaulting to " + port + "!");
 				}
 			}
 

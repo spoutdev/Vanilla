@@ -29,6 +29,10 @@ import org.spout.vanilla.controller.ControllerType;
 import org.spout.vanilla.controller.object.Falling;
 
 public class EnderCrystal extends Falling {
+	public EnderCrystal() {
+		super(true);
+	}
+
 	@Override
 	public void onAttached() {
 		super.onAttached();

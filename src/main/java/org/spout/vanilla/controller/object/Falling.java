@@ -26,31 +26,27 @@
 package org.spout.vanilla.controller.object;
 
 import org.spout.api.math.Vector3;
+import org.spout.vanilla.controller.GravityAction;
 
 /**
  * Controller that vertically falls. This is used for Sand and Gravel that fall (and anything else that would do so).
  */
 public abstract class Falling extends Substance {
 	private static float GRAVITY_MULTIPLIER = 23.31f;
-	private boolean gravity = true;
+	private final boolean gravity;
 
-	@Override
-	public void onTick(float dt) {
+	public Falling(boolean gravity) {
+		this.gravity = gravity;
 		if (gravity) {
-			updateGravity(dt);
+			registerAction(new GravityAction());
 		}
-		super.onTick(dt);
 	}
 
 	protected void updateGravity(float dt) {
 		setVelocity(getVelocity().add(Vector3.Up.multiply(-(dt * GRAVITY_MULTIPLIER))));
 	}
 
-	public boolean isGravity() {
+	public boolean hasGravity() {
 		return gravity;
-	}
-
-	public void setGravity(boolean gravity) {
-		this.gravity = gravity;
 	}
 }

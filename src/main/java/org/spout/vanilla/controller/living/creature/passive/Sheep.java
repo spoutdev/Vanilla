@@ -32,8 +32,6 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.EntityProtocol;
-import org.spout.api.protocol.EntityProtocolStore;
 
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.controller.ControllerType;
@@ -42,11 +40,8 @@ import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.material.block.Wool;
 
 public class Sheep extends Creature implements Passive {
-	private int countdown = 0;
 	private int color;
-	private static EntityProtocolStore entityProtocolStore = new EntityProtocolStore();
 	private Transform priorTransform;
-	
 	public Sheep() {
 		this(0x0);
 	}
@@ -74,27 +69,7 @@ public class Sheep extends Creature implements Passive {
 	public void onTick(float dt) {
 		priorTransform = new Transform(getParent().getPosition(), getParent().getRotation(), getParent().getScale());
 
-		if (--countdown <= 0) {
-			countdown = getRandom().nextInt(7) + 3;
-			float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			float rotate = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-			//Rotate the sheep!
-			getParent().rotate(rotate, x, 0, z);
-			//Move the sheep!
-			getParent().translate(x, 0, z);
-		}
-
 		super.onTick(dt);
-	}
-
-	@Override
-	public EntityProtocol getEntityProtocol(int protocolId) {
-		return entityProtocolStore.getEntityProtocol(protocolId);
-	}
-
-	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
-		entityProtocolStore.setEntityProtocol(protocolId, protocol);
 	}
 
 	public boolean isSheared() {

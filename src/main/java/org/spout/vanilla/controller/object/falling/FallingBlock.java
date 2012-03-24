@@ -25,44 +25,20 @@
  */
 package org.spout.vanilla.controller.object.falling;
 
-import org.spout.api.geo.World;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.MathHelper;
 
-import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.controller.object.Falling;
 
 public class FallingBlock extends Falling {
 	private final BlockMaterial block;
 
 	public FallingBlock(BlockMaterial block) {
+		super(true);
 		this.block = block;
+		registerAction(new FallingBlockAction());
 	}
 
-	@Override
-	public void onTick(float dt) {
-		if (getParent() == null || getParent().getWorld() == null) {
-			return;
-		}
-
-		Point position = getParent().getPosition();
-		if (position == null) {
-			return;
-		}
-
-		World world = position.getWorld();
-		int x = MathHelper.floor(position.getX());
-		int y = MathHelper.floor(position.getY());
-		int z = MathHelper.floor(position.getZ());
-		BlockMaterial material = (BlockMaterial) world.getBlock(x, y - 1, z).getMaterial();
-		if (material == VanillaMaterials.AIR || material.isLiquid()) {
-			getParent().translate(x, -.004f, z);
-		} else {
-			world.setBlockMaterial(x, y, z, block, block.getData(), isGravity(), world);
-			getParent().kill();
-		}
-
-		super.onTick(dt);
+	public BlockMaterial getBlock() {
+		return block;
 	}
 }

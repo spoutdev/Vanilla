@@ -23,30 +23,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol;
+package org.spout.vanilla.controller;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.protocol.EntityProtocol;
-import org.spout.api.protocol.Message;
+import org.spout.api.entity.EntityAction;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
+import org.spout.vanilla.VanillaMaterials;
 
-import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
-import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
+import static org.spout.api.math.MathHelper.floor;
 
-public abstract class VanillaEntityProtocol implements EntityProtocol {
-	@Override
-	public Message[] getDestroyMessage(Entity entity) {
-		return new Message[] {new DestroyEntityMessage(entity.getId())};
-	}
+public class GravityAction extends EntityAction<VanillaController> {
 
-	@Override
-	public Message[] getUpdateMessage(Entity entity) {
-		int id = entity.getId();
-		int x = (int) (entity.getPosition().getX() * 32);
-		int y = (int) (entity.getPosition().getY() * 32);
-		int z = (int) (entity.getPosition().getZ() * 32);
-		int r = (int) (entity.getYaw() * 32);
-		int p = (int) (entity.getPitch() * 32);
-		// TODO - improve efficiency
-		return new Message[] {new EntityTeleportMessage(id, x, y, z, r, p)};
-	}
+    @Override
+    public boolean shouldRun(Entity entity, VanillaController controller) {
+		Point pt = entity.getPosition();
+		BlockMaterial block = entity.getWorld().getBlockMaterial(floor(pt.getX()), floor(pt.getY()), floor(pt.getZ()));
+        return block.getId() == VanillaMaterials.AIR.getId() || block.isLiquid();
+    }
+
+    @Override
+    public void run(Entity entity, VanillaController controller) {
+		entity.translate(0, -0.04f, 0);
+    }
 }

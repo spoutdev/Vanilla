@@ -29,12 +29,10 @@ import org.spout.vanilla.controller.ControllerType;
 import org.spout.vanilla.controller.object.Substance;
 
 public class Boat extends Substance implements Vehicle {
-	private org.spout.api.entity.Entity parent;
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setData(ControllerType.KEY, ControllerType.BOAT.id);
+		getParent().setData(ControllerType.KEY, ControllerType.BOAT.id);
 	}
 }

@@ -39,7 +39,7 @@ public abstract class BasicProjectileEntityProtocol extends VanillaEntityProtoco
 	public abstract int getSpawnedProjectileType();
 
 	@Override
-	public Message getSpawnMessage(Entity entity) {
+	public Message[] getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
 		if (c != null && c instanceof Projectile) {
 			Projectile pro = (Projectile) c;
@@ -57,7 +57,7 @@ public abstract class BasicProjectileEntityProtocol extends VanillaEntityProtoco
 			int dirY = (int) (vel.getY() * 8000);
 			int dirZ = (int) (vel.getZ() * 8000);
 
-			return new SpawnVehicleMessage(id, this.getSpawnedProjectileType(), x, y, z, shooterid, dirX, dirY, dirZ);
+			return new Message[] {new SpawnVehicleMessage(id, this.getSpawnedProjectileType(), x, y, z, shooterid, dirX, dirY, dirZ)};
 		} else {
 			return null;
 		}

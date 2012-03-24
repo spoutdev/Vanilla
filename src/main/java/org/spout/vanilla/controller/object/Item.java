@@ -1,9 +1,9 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of vanilla (http://www.spout.org/).
  *
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * vanilla is licensed under the SpoutDev License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
+ * vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev License Version 1 along with this program.
+ * the MIT license and the SpoutDev license version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -32,9 +32,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
-import org.spout.api.protocol.EntityProtocol;
-import org.spout.api.protocol.EntityProtocolStore;
-
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.ControllerType;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
@@ -43,19 +40,10 @@ import org.spout.vanilla.protocol.msg.CollectItemMessage;
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).
  */
 public class Item extends Substance {
-	private static final EntityProtocolStore entityProtocolStore = new EntityProtocolStore(); //TODO this is an annoying fix, someone with knowlege in entities get rid of this?
 	private ItemStack is;
 	private int roll, unpickable;
 	private Vector3 initial;
 
-	@Override
-	public EntityProtocol getEntityProtocol(int protocolId) {
-		return entityProtocolStore.getEntityProtocol(protocolId);
-	}
-
-	public static void setEntityProtocol(int protocolId, EntityProtocol protocol) {
-		entityProtocolStore.setEntityProtocol(protocolId, protocol);
-	}
 
 	public Item(ItemStack is, Vector3 initial) {
 		this.is = is;
@@ -93,7 +81,7 @@ public class Item extends Substance {
 		double minDistance = -1;
 		Player closestPlayer = null;
 		for (Player plr : players) {
-			double distance = plr.getEntity().getPosition().distance(getParent().getPosition());
+			double distance = plr.getEntity().getPosition().getSquaredDistance(getParent().getPosition());
 			if (distance < minDistance || minDistance == -1) {
 				closestPlayer = plr;
 				minDistance = distance;
@@ -103,8 +91,9 @@ public class Item extends Substance {
 		if (closestPlayer == null) {
 			return;
 		}
-
-		if (minDistance > VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble()) {
+		double maxDistance = VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble();
+		maxDistance = maxDistance * maxDistance;
+		if (minDistance > maxDistance) {
 			return;
 		}
 

@@ -51,7 +51,7 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 	}
 
 	@Override
-	public Message getSpawnMessage(Entity entity) {
+	public Message[] getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
 		if (c != null) {
 			int id = entity.getId();
@@ -69,7 +69,7 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 				return null;
 			}
 			List<Parameter<?>> parameters = this.getSpawnParameters(c);
-			return new SpawnMobMessage(id, type, x, y, z, r, p, headyaw, parameters);
+			return new Message[] {new SpawnMobMessage(id, type, x, y, z, r, p, headyaw, parameters)};
 		} else {
 			return null;
 		}

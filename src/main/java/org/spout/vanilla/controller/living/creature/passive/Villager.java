@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.controller.living.creature.passive;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
@@ -43,7 +43,6 @@ public class Villager extends Creature implements Passive {
 
 	@Override
 	public Set<ItemStack> getDeathDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		return drops;
+		return Collections.emptySet();
 	}
 }

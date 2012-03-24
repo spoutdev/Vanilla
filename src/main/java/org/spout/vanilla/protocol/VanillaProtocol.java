@@ -33,20 +33,22 @@ import org.spout.vanilla.controller.living.creature.passive.Chicken;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.Item;
+import org.spout.vanilla.controller.object.falling.FallingBlock;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.VanillaPlayerEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
 import org.spout.vanilla.protocol.entity.object.PickupEntityProtocol;
 
 public class VanillaProtocol extends Protocol {
 	public VanillaProtocol() {
 		super("Vanilla", new VanillaCodecLookupService(), new VanillaHandlerLookupService(), new VanillaPlayerProtocol());
-
-		VanillaPlayer.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new VanillaPlayerEntityProtocol());
-		Sheep.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new SheepEntityProtocol());
-		Enderman.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new EndermanEntityProtocol());
-		Item.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new PickupEntityProtocol());
-		Chicken.setEntityProtocol(VanillaPlugin.vanillaProtocolId, new BasicMobEntityProtocol());
+		VanillaPlayer.setEntityProtocol(VanillaPlayer.class, VanillaPlugin.vanillaProtocolId, new VanillaPlayerEntityProtocol());
+		Sheep.setEntityProtocol(Sheep.class, VanillaPlugin.vanillaProtocolId, new SheepEntityProtocol());
+		Enderman.setEntityProtocol(Enderman.class, VanillaPlugin.vanillaProtocolId, new EndermanEntityProtocol());
+		Item.setEntityProtocol(Item.class, VanillaPlugin.vanillaProtocolId, new PickupEntityProtocol());
+		Chicken.setEntityProtocol(Chicken.class, VanillaPlugin.vanillaProtocolId, new BasicMobEntityProtocol());
+		FallingBlock.setEntityProtocol(FallingBlock.class, VanillaPlugin.vanillaProtocolId, new FallingBlockProtocol());
 	}
 }

@@ -34,7 +34,7 @@ import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.ControllerType;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
@@ -60,8 +60,8 @@ import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 public class VanillaPlugin extends CommonPlugin {
 	private static VanillaPlugin instance;
 	private final VanillaConfiguration config;
-	public static final int minecraftProtocolId = 29;
-	public static int vanillaProtocolId;
+	public static final int MINECRAFT_PROTOCOL_ID = 29;
+	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
 	private final HashMap<World, Sky> skys = new HashMap<World, Sky>();
 
 	public VanillaPlugin() {
@@ -116,9 +116,6 @@ public class VanillaPlugin extends CommonPlugin {
 
 		//Register events
 		game.getEventManager().registerEvents(new VanillaEventListener(this), this);
-
-		//Set protocol ID.
-		vanillaProtocolId = Controller.getProtocolId("org.spout.vanilla.protocol");
 
 		//Initialize our default Vanilla worlds.
 		//World end = game.loadWorld("world_end", new TheEndGenerator());

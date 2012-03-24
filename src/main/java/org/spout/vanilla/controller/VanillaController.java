@@ -53,10 +53,21 @@ public abstract class VanillaController extends ActionController {
 	private boolean isFlammable = true, canMove = true;
 	//Tick effects
 	private int fireTicks = 0;
+	private final VanillaControllerType type;
+
+	protected VanillaController(VanillaControllerType type) {
+		super(type);
+		this.type = type;
+	}
+
+	public VanillaControllerType getType() {
+		return type;
+	}
 
 	@Override
 	public void onAttached() {
 		getParent().setCollision(new CollisionModel(area));
+		getParent().setData(VanillaControllerTypes.KEY, getType().getSpawnId());
 	}
 
 	@Override

@@ -26,9 +26,13 @@
 package org.spout.vanilla.controller.object;
 
 import org.spout.vanilla.controller.VanillaController;
+import org.spout.vanilla.controller.VanillaControllerType;
 
 /**
  * Controller that is the base of all controllers that aren't living.
  */
 public abstract class Substance extends VanillaController {
+	protected Substance(VanillaControllerType type) {
+		super(type);
+	}
 }

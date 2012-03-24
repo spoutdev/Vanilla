@@ -29,6 +29,8 @@ import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.Spout;
+import org.spout.api.entity.ControllerType;
+import org.spout.api.entity.EmptyConstructorControllerType;
 import org.spout.api.geo.World;
 import org.spout.api.player.Player;
 
@@ -38,12 +40,17 @@ import org.spout.vanilla.protocol.msg.TimeMessage;
 import org.spout.vanilla.world.Weather;
 
 public class NormalSky extends VanillaSky {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(NormalSky.class, "Normal Sky");
 	private float time = 0;
 	private float countdown = 20;
 	private Weather currentWeather;
 	private Weather forecast;
 	private float timeUntilWeatherChange = 0.0f;
 	private Random random = new Random();
+
+	public NormalSky() {
+		super(TYPE);
+	}
 
 	@Override
 	public void onAttached() {

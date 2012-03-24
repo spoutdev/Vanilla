@@ -25,14 +25,12 @@
  */
 package org.spout.vanilla.controller.living.creature.util;
 
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 
 public class SnowGolem extends Creature implements Passive {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.SNOWGOLEM.id);
+	protected SnowGolem() {
+		super(VanillaControllerTypes.SNOW_GOLEM);
 	}
 }

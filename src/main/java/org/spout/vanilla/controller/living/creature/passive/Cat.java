@@ -31,19 +31,11 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.ControllerType;
-import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.living.creature.Tamed;
 
-public class Cat extends Creature implements Tamed, Passive {
+public class Cat extends Ocelot implements Tamed, Passive {
 	private Entity sovereign = null;
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.OCELOT.id);
-	}
 
 	@Override
 	public void subjectTo(Entity entity) {

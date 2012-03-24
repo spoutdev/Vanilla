@@ -25,5 +25,10 @@
  */
 package org.spout.vanilla.controller.living;
 
+import org.spout.vanilla.controller.VanillaControllerType;
+
 public abstract class Creature extends Living {
+	protected Creature(VanillaControllerType type) {
+		super(type);
+	}
 }

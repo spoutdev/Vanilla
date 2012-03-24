@@ -27,12 +27,16 @@ package org.spout.vanilla.controller.object.vehicle.minecart;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.math.Vector3;
-
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.vehicle.Minecart;
 import org.spout.vanilla.controller.object.vehicle.Vehicle;
 
 public class TransportMinecart extends Minecart implements Vehicle {
 	private Controller passenger = null;
+
+	public TransportMinecart() {
+		super(VanillaControllerTypes.MINECART); // TODO: Per-minecart-VanillaControllerTypes
+	}
 
 	@Override
 	public void onPostMove(float dt) {

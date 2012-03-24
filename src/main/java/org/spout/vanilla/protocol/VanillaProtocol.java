@@ -27,34 +27,8 @@ package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.Protocol;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.controller.living.creature.hostile.Ghast;
-import org.spout.vanilla.controller.living.creature.neutral.Enderman;
-import org.spout.vanilla.controller.living.creature.passive.Chicken;
-import org.spout.vanilla.controller.living.creature.passive.Sheep;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.object.MovingBlock;
-import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.controller.object.moving.XPOrb;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
-import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
-import org.spout.vanilla.protocol.entity.living.GhastEntityProtocol;
-import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
-import org.spout.vanilla.protocol.entity.living.VanillaPlayerEntityProtocol;
-import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
-import org.spout.vanilla.protocol.entity.object.PickupEntityProtocol;
-import org.spout.vanilla.protocol.entity.object.XPOrbEntityProtocol;
-
 public class VanillaProtocol extends Protocol {
 	public VanillaProtocol() {
 		super("Vanilla", new VanillaCodecLookupService(), new VanillaHandlerLookupService(), new VanillaPlayerProtocol());
-		VanillaPlayer.setEntityProtocol(VanillaPlayer.class, VanillaPlugin.vanillaProtocolId, new VanillaPlayerEntityProtocol());
-		Sheep.setEntityProtocol(Sheep.class, VanillaPlugin.vanillaProtocolId, new SheepEntityProtocol());
-		Enderman.setEntityProtocol(Enderman.class, VanillaPlugin.vanillaProtocolId, new EndermanEntityProtocol());
-		Item.setEntityProtocol(Item.class, VanillaPlugin.vanillaProtocolId, new PickupEntityProtocol());
-		Chicken.setEntityProtocol(Chicken.class, VanillaPlugin.vanillaProtocolId, new BasicMobEntityProtocol());
-		MovingBlock.setEntityProtocol(MovingBlock.class, VanillaPlugin.vanillaProtocolId, new FallingBlockProtocol());
-		Ghast.setEntityProtocol(Ghast.class, VanillaPlugin.vanillaProtocolId, new GhastEntityProtocol());
-		XPOrb.setEntityProtocol(XPOrb.class, VanillaPlugin.vanillaProtocolId, new XPOrbEntityProtocol());
 	}
 }

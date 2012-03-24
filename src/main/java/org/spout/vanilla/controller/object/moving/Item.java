@@ -12,13 +12,13 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful,
+ * vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -34,8 +34,8 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.ControllerType;
 import org.spout.vanilla.controller.object.Substance;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
 /**
@@ -48,16 +48,12 @@ public class Item extends Substance {
 	private Vector3 velocity = new Vector3();
 
 	public Item(ItemStack is, Vector3 initial) {
+		super(VanillaControllerTypes.DROPPED_ITEM);
 		this.is = is;
 		this.roll = 1;
 		unpickable = 10;
 		this.initial = initial;
 		setMoveable(true);
-	}
-
-	@Override
-	public void onAttached() {
-		getParent().setData(ControllerType.KEY, ControllerType.DROPPEDITEM.id);
 	}
 
 	@Override

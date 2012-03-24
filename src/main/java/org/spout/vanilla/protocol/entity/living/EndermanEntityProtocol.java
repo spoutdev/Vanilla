@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.Controller;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.living.creature.neutral.Enderman;
@@ -38,18 +39,22 @@ public class EndermanEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		/*	List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(2);
-		 //TODO: Index 16 (byte): Item in hand
-		 //TODO: Index 17 (byte): Aggression. 1 for aggressive, 0 otherwise.
+		 //TODO: Index 16 (byte): Item id in hand
+		 //TODO: Index 17 (byte): Item data in hand
 		 return parameters;
 	 }*/
 
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
 		if (controller instanceof Enderman) {
 			Enderman enderman = (Enderman) controller;
-			byte data = 0;
-			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
+			BlockMaterial held = enderman.getHeldItem();
+			if (held != null && !held.equals(enderman.getPreviouslyHeldItem())) {
+				List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(2);
+				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte)held.getId()));
+				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte)held.getData()));
+				return parameters;
+			}
 		}
 
-		return parameters;
+		return super.getSpawnParameters(controller);
 	}
 }

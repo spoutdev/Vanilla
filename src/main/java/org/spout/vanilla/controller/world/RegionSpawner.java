@@ -34,6 +34,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.spout.api.entity.Controller;
+import org.spout.api.entity.ControllerType;
+import org.spout.api.entity.EmptyConstructorControllerType;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -46,6 +48,7 @@ import org.spout.api.player.Player;
  * Controller that spawns entities in regions.
  */
 public class RegionSpawner extends Controller {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(RegionSpawner.class, "Region Spawner");
 	private static Map<Class<? extends Controller>, Boolean> validConstructors = new ConcurrentHashMap<Class<? extends Controller>, Boolean>();
 	private static final int SPAWN_TRIES = 6;
 	final Region region;
@@ -53,6 +56,7 @@ public class RegionSpawner extends Controller {
 	final Map<Class<? extends Controller>, SpawnInformation> spawnableTypes = new ConcurrentHashMap<Class<? extends Controller>, SpawnInformation>();
 
 	public RegionSpawner(Region region) {
+		super(TYPE);
 		this.region = region;
 	}
 
@@ -82,17 +86,23 @@ public class RegionSpawner extends Controller {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * <<<<<<< Updated upstream:src/main/java/org/spout/vanilla/controller/world/RegionSpawner.java
+=======
+>>>>>>> Updated to use the ControllerType system added to SpoutAPI
 	 * Adds a controller type to the list of controller types this region spawner will try to spawn.
 	 * @param type	   to spawn
 	 * @param canSpawnOn a set of block materials that this controller can spawn on
 	 * @param amount	 of this type of controller that should be spawned per chunk, on average
+<<<<<<< HEAD
 	 *                   =======
 	 *                   Adds a controller type to the list of entity types this region spawner will try to spawn.
 	 * @param type	   to spawn
 	 * @param canSpawnOn a set of block materials that this entity can spawn on
 	 * @param amount	 of this type of entity that should be spawned per chunk, on average
 	 *                   >>>>>>> Stashed changes:src/main/java/org/spout/vanilla/entity/world/RegionEntitySpawner.java
+=======
+>>>>>>> Updated to use the ControllerType system added to SpoutAPI
 	 * @throws IllegalStateException if the controller lacks a default no-argument constructor
 	 */
 	public void addSpawnableType(Class<? extends Controller> type, Set<BlockMaterial> canSpawnOn, int amount) {

@@ -25,13 +25,11 @@
  */
 package org.spout.vanilla.controller.living.creature.passive;
 
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Passive;
 
 public class Mooshroom extends Cow implements Passive {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.MOOSHROOM.id);
+	public Mooshroom() {
+		super(VanillaControllerTypes.MOOSHROOM);
 	}
 }

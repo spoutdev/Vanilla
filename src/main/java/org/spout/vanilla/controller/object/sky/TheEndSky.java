@@ -25,11 +25,19 @@
  */
 package org.spout.vanilla.controller.object.sky;
 
+import org.spout.api.entity.ControllerType;
+import org.spout.api.entity.EmptyConstructorControllerType;
 import org.spout.api.geo.World;
 
 import org.spout.vanilla.world.Weather;
 
 public class TheEndSky extends VanillaSky {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(TheEndSky.class, "The End Sky");
+
+	public TheEndSky() {
+		super(TYPE);
+	}
+
 	@Override
 	public void onAttached() {
 	}

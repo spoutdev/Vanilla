@@ -25,6 +25,8 @@
  */
 package org.spout.vanilla.protocol.entity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,9 +36,10 @@ import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.protocol.VanillaEntityProtocol;
+import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 
 public class BasicMobEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
@@ -47,7 +50,7 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -64,7 +67,7 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 			if (c instanceof Living) {
 				headyaw = ((Living) c).getHeadYaw();
 			}
-			int type = entity.getData(ControllerType.KEY).asInt();
+			int type = entity.getData(VanillaControllerTypes.KEY).asInt();
 			if (type == 0) {
 				return null;
 			}
@@ -72,6 +75,18 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 			return new Message[]{new SpawnMobMessage(id, type, x, y, z, r, p, headyaw, parameters)};
 		} else {
 			return null;
+		}
+	}
+
+	@Override
+	public Message[] getUpdateMessage(Entity entity) {
+		List<Parameter<?>> params = this.getSpawnParameters(entity.getController());
+		if (params != null && params.size() > 0) {
+			List<Message> msgs = new ArrayList<Message>(Arrays.asList(super.getUpdateMessage(entity)));
+			msgs.add(new EntityMetadataMessage(entity.getId(), params));
+			return msgs.toArray(new Message[msgs.size()]);
+		} else {
+			return super.getUpdateMessage(entity);
 		}
 	}
 }

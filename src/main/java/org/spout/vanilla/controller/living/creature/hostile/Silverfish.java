@@ -30,15 +30,18 @@ import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class Silverfish extends Creature implements Hostile {
+	protected Silverfish() {
+		super(VanillaControllerTypes.SILVERFISH);
+	}
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.SILVERFISH.id);
 	}
 
 	@Override

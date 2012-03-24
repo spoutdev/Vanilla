@@ -31,15 +31,13 @@ import java.util.Set;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class Blaze extends Creature implements Hostile {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.BLAZE.id);
+	public Blaze() {
+		super(VanillaControllerTypes.BLAZE);
 	}
 
 	@Override

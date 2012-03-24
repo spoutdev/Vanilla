@@ -30,16 +30,15 @@ import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Boss;
 import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class Enderdragon extends Creature implements Hostile, Boss {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.ENDEDRAGON.id);
+
+	protected Enderdragon() {
+		super(VanillaControllerTypes.ENDEDRAGON);
 	}
 
 	@Override

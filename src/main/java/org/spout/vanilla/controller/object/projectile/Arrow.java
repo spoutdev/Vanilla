@@ -25,16 +25,21 @@
  */
 package org.spout.vanilla.controller.object.projectile;
 
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 
 import org.spout.vanilla.controller.object.Projectile;
 
 public class Arrow extends Projectile {
-	private final static int maxArrowSpeed = 10;
+	private static final int MAX_ARROW_SPEED = 10;
 
-	public Arrow(Point start, Quaternion rotation, float charge) {
-		super(start, rotation, maxArrowSpeed);
+	public Arrow(Quaternion rotation, float charge) {
+		super(VanillaControllerTypes.SHOT_ARROW, rotation, MAX_ARROW_SPEED);
+		setVelocity(getVelocity().multiply(charge));
+	}
+
+	public Arrow(Quaternion rotation, int maxSpeed, float charge) {
+		super(VanillaControllerTypes.SHOT_ARROW, rotation, maxSpeed);
 		setVelocity(getVelocity().multiply(charge));
 	}
 }

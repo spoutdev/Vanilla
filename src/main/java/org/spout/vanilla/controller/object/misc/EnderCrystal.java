@@ -25,13 +25,11 @@
  */
 package org.spout.vanilla.controller.object.misc;
 
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 
 public class EnderCrystal extends Substance {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.ENDECRYSTAL.id);
+	protected EnderCrystal() {
+		super(VanillaControllerTypes.ENDER_CRYSTAL);
 	}
 }

@@ -31,15 +31,13 @@ import java.util.Set;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.hostile.Zombie;
 
 public class PigZombie extends Zombie implements Neutral {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.PIGZOMBIE.id);
+	public PigZombie() {
+		super(VanillaControllerTypes.PIG_ZOMBIE);
 	}
 
 	@Override

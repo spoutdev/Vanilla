@@ -31,15 +31,18 @@ import java.util.Set;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class Skeleton extends Creature implements Hostile {
+	protected Skeleton() {
+		super(VanillaControllerTypes.SKELETON);
+	}
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.SKELETON.id);
 	}
 
 	@Override

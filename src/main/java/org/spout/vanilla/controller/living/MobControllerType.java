@@ -12,43 +12,35 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful,
+ * vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev license version 1 along with this program.
+ * the MIT license and the SpoutDev License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.hostile;
+package org.spout.vanilla.controller.living;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.spout.api.entity.Controller;
+import org.spout.api.protocol.EntityProtocol;
+import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
-import org.spout.api.inventory.ItemStack;
+/**
+ *
+ * @author zml2008
+ */
+public class MobControllerType extends VanillaControllerType {
 
-import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Hostile;
+	public MobControllerType(int spawnId, Class<? extends Controller> controllerClass, String name) {
+		this(spawnId, controllerClass, name, new BasicMobEntityProtocol());
+	}
 
-public class SpiderJockey extends Creature implements Hostile {
-	@Override
-	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-
-		int count = getRandom().nextInt(3);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.STRING, count));
-		}
-
-		count = getRandom().nextInt(2);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.SPIDER_EYE, count));
-		}
-
-		return drops;
+	public MobControllerType(int spawnId, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
+		super(spawnId, controllerClass, name, protocol);
 	}
 }

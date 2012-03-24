@@ -25,13 +25,13 @@
  */
 package org.spout.vanilla.controller.object.projectile;
 
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
+import org.spout.vanilla.controller.VanillaControllerType;
 
 import org.spout.vanilla.controller.object.Projectile;
 
 public class Potion extends Projectile {
-	public Potion(Point start, Quaternion rotation, int maxSpeed) {
-		super(start, rotation, maxSpeed);
+	public Potion(Quaternion rotation, int maxSpeed) {
+		super(new VanillaControllerType(-1, Potion.class, "Potion"), rotation, maxSpeed);
 	}
 }

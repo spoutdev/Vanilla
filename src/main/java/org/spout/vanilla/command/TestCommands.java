@@ -25,20 +25,17 @@
  */
 package org.spout.vanilla.command;
 
+import org.spout.api.ChatColor;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
-import org.spout.api.entity.Controller;
-import org.spout.api.entity.Entity;
+import org.spout.api.entity.ControllerRegistry;
+import org.spout.api.entity.ControllerType;
 import org.spout.api.exception.CommandException;
-import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.controller.ControllerType;
-import org.spout.vanilla.controller.living.creature.hostile.Ghast;
-import org.spout.vanilla.controller.living.creature.neutral.Enderman;
-import org.spout.vanilla.controller.living.creature.passive.Sheep;
 
 public class TestCommands {
 	private final VanillaPlugin plugin;
@@ -47,38 +44,29 @@ public class TestCommands {
 		this.plugin = plugin;
 	}
 
-	@Command(aliases = {"spawn"}, usage = "[controller]", desc = "Spawn a controller!", max = 1)
+	@Command(aliases = {"spawn"}, usage = "<controller>", desc = "Spawn a controller!", min = 1, max = 1)
 	public void spawn(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to spawn a controller");
 		}
 
 		Player player = (Player) source;
-		Entity entity = player.getEntity();
-		World world = entity.getWorld();
-		Controller control;
-		if (args.length() > 0) {
-			switch (ControllerType.valueOf(args.getString(0).toUpperCase())) {
-				case SHEEP: {
-					control = new Sheep();
-					break;
-				}
-				case ENDERMAN: {
-					control = new Enderman();
-					break;
-				}
-				case GHAST: {
-					control = new Ghast();
-					break;
-				}
-				default:
-					control = null;
-			}
-			if (control != null) {
-				world.createAndSpawnEntity(entity.getPosition(), control);
-			} else {
-				throw new CommandException(args.getString(0) + " is not a valid controller to spawn.");
+		Point point = player.getEntity().getPosition();
+
+		String lookupType = args.getString(0).replaceAll("[_\\- ]", "");
+		ControllerType type = null;
+		for (ControllerType testType : ControllerRegistry.getAll()) {
+			if (testType.getName().replaceAll("[_\\- ]", "").equalsIgnoreCase(lookupType)) {
+				type = testType;
+				break;
 			}
 		}
+
+		if (type == null || !type.canCreateController()) {
+			throw new CommandException("Invalid entity type '" + args.getString(0) + "'!");
+		}
+
+		point.getWorld().createAndSpawnEntity(point, type.createController());
+		source.sendMessage(ChatColor.YELLOW + "One " + type.getName() + " spawned!");
 	}
 }

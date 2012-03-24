@@ -36,7 +36,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.object.MovingSubstance;
 import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.block.Solid;
@@ -57,7 +57,8 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 	private float length = 0.98F;
 	private float height = 0.49F;
 
-	public Minecart() {
+	protected Minecart(VanillaControllerType type) {
+		super(type);
 		this.setMaxSpeed(0.4f);
 	}
 
@@ -84,8 +85,6 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-
-		getParent().setData(ControllerType.KEY, ControllerType.MINECART.id);
 
 		BoundingBox shape = new BoundingBox(0.0F, 0.0F, 0.0F, width, height, length);
 		shape.offset(-width / 2, 0.0F, -length / 2);

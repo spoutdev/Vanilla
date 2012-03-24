@@ -25,11 +25,19 @@
  */
 package org.spout.vanilla.controller.object.sky;
 
+import org.spout.api.entity.ControllerType;
+import org.spout.api.entity.EmptyConstructorControllerType;
 import org.spout.api.geo.World;
 
 import org.spout.vanilla.world.Weather;
 
 public class NetherSky extends VanillaSky {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(NetherSky.class, "Nether Sky");
+
+	public NetherSky() {
+		super(TYPE);
+	}
+
 	@Override
 	public void onAttached() {
 	}

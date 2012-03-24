@@ -291,7 +291,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 		Controller c = e.getController();
 		if (c != null) {
-			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
+			EntityProtocol ep = c.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
 			if (ep != null) {
 				Message[] spawn = ep.getSpawnMessage(e);
 				if (spawn != null) {
@@ -316,7 +316,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 		Controller c = e.getController();
 		if (c != null) {
-			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
+			EntityProtocol ep = c.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
 			if (ep != null) {
 				Message[] death = ep.getDestroyMessage(e);
 				if (death != null) {
@@ -342,7 +342,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		}
 		Controller c = e.getController();
 		if (c != null) {
-			EntityProtocol ep = c.getEntityProtocol(VanillaPlugin.vanillaProtocolId);
+			EntityProtocol ep = c.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
 			if (ep != null) {
 				Message[] sync = ep.getUpdateMessage(e);
 				if (sync != null) {

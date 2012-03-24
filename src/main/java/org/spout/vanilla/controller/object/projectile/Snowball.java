@@ -25,13 +25,13 @@
  */
 package org.spout.vanilla.controller.object.projectile;
 
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 
 import org.spout.vanilla.controller.object.Projectile;
 
 public class Snowball extends Projectile {
-	public Snowball(Point start, Quaternion rotation, int maxSpeed) {
-		super(start, rotation, maxSpeed);
+	public Snowball(Quaternion rotation, int maxSpeed) {
+		super(VanillaControllerTypes.THROWN_SNOWBALL, rotation, maxSpeed);
 	}
 }

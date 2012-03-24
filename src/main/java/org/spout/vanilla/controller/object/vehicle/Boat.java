@@ -25,13 +25,12 @@
  */
 package org.spout.vanilla.controller.object.vehicle;
 
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 
 public class Boat extends Substance implements Vehicle {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.BOAT.id);
+
+	public Boat() {
+		super(VanillaControllerTypes.BOAT);
 	}
 }

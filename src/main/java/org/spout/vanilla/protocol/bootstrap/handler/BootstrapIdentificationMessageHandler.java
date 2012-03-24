@@ -37,10 +37,10 @@ import org.spout.vanilla.protocol.msg.IdentificationMessage;
 public class BootstrapIdentificationMessageHandler extends MessageHandler<IdentificationMessage> {
 	@Override
 	public void handle(Session session, Player player, IdentificationMessage message) {
-		if (message.getId() > VanillaPlugin.minecraftProtocolId) {
+		if (message.getId() > VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
 			session.disconnect("Outdated server!");
 		}
-		if (message.getId() < VanillaPlugin.minecraftProtocolId) {
+		if (message.getId() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
 			session.disconnect("Outdated client!");
 		}
 		Event event = new PlayerConnectEvent(session, message.getName());

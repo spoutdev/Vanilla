@@ -31,15 +31,19 @@ import java.util.Set;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 
 public class Cow extends Creature implements Passive {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.COW.id);
+
+	public Cow() {
+		super(VanillaControllerTypes.COW);
+	}
+
+	protected Cow(VanillaControllerType type) {
+		super(type);
 	}
 
 	@Override

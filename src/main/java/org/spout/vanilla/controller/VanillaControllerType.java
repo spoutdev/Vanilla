@@ -1,9 +1,9 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of vanilla (http://www.spout.org/).
  *
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * vanilla is licensed under the SpoutDev License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
+ * vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -12,7 +12,7 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful,
+ * vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
@@ -23,23 +23,33 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.world;
+package org.spout.vanilla.controller;
 
 import org.spout.api.entity.Controller;
-import org.spout.api.entity.ControllerType;
 import org.spout.api.entity.EmptyConstructorControllerType;
+import org.spout.api.protocol.EntityProtocol;
+import org.spout.vanilla.VanillaPlugin;
 
 /**
- * Controller that observes chunks around a point. It will always keep these chunks in memory.
+ *
+ * @author zml2008
  */
-public class PointObserver extends Controller {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(PointObserver.class, "Point Observer");
-	public PointObserver() {
-		super(TYPE);
+public class VanillaControllerType extends EmptyConstructorControllerType {
+	private final int spawnId;
+
+	public VanillaControllerType(int spawnId, Class<? extends Controller> controllerClass, String name) {
+		this(spawnId, controllerClass, name, null);
 	}
 
-	@Override
-	public void onAttached() {
-		getParent().setObserver(true);
+	public VanillaControllerType(int spawnId, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
+		super(controllerClass, name);
+		this.spawnId = spawnId;
+		if (protocol != null) {
+			this.setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, protocol);
+		}
+	}
+
+	public int getSpawnId() {
+		return spawnId;
 	}
 }

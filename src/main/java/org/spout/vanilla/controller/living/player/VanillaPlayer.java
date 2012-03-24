@@ -39,6 +39,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.UserListItemMessage;
@@ -56,6 +57,7 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	private final Vector3 horizSpeed = new Vector3(0, 0, -10);
 
 	public VanillaPlayer(Player p) {
+		super(VanillaControllerTypes.PLAYER);
 		owner = p;
 		p.getEntity().setInventorySize(45);
 		Inventory inv = p.getEntity().getInventory();

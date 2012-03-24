@@ -29,17 +29,41 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
 
 public class Enderman extends Creature implements Neutral {
+	private BlockMaterial heldItem;
+	private BlockMaterial previouslyHeldItem;
+	public Enderman() {
+		super(VanillaControllerTypes.ENDERMAN);
+	}
+
+	public BlockMaterial getPreviouslyHeldItem() {
+		return previouslyHeldItem;
+	}
+
+	public BlockMaterial getHeldItem() {
+		return heldItem;
+	}
+
+	public void setHeldItem(BlockMaterial heldItem) {
+		this.heldItem = heldItem;
+	}
+
+	@Override
+	public void finalizeTick() {
+		super.finalizeTick();
+		this.previouslyHeldItem = heldItem;
+	}
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.ENDERMAN.id);
 		getParent().setMaxHealth(5);
 		getParent().setHealth(5);
 	}
@@ -53,6 +77,11 @@ public class Enderman extends Creature implements Neutral {
 			drops.add(new ItemStack(VanillaMaterials.ENDER_PEARL, count));
 		}
 
+		BlockMaterial held = getHeldItem();
+		if (held != null && !held.equals(VanillaMaterials.AIR)) {
+			drops.add(new ItemStack(held, 1));
+			setHeldItem(null);
+		}
 		return drops;
 	}
 }

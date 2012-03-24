@@ -31,16 +31,19 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.Tameable;
 
 public class Wolf extends Creature implements Tameable, Neutral {
+	protected Wolf() {
+		super(VanillaControllerTypes.WOLF);
+	}
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.WOLF.id);
 	}
 
 	@Override

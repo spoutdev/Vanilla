@@ -25,14 +25,13 @@
  */
 package org.spout.vanilla.controller.living.creature.util;
 
-import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Utility;
 
 public class IronGolem extends Creature implements Utility {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.IRONGOLEM.id);
+
+	protected IronGolem() {
+		super(VanillaControllerTypes.IRON_GOLEM);
 	}
 }

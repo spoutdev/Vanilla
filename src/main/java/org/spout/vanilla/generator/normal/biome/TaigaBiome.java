@@ -32,6 +32,10 @@ import org.spout.vanilla.generator.VanillaBiomeType;
 public class TaigaBiome extends VanillaBiomeType {
 	public TaigaBiome() {
 		super(5);
+		minHumid = 30;
+		maxHumid = 100;
+		minTemp = 0;
+		maxTemp = 20;
 	}
 
 	@Override

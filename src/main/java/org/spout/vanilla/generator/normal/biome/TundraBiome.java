@@ -32,6 +32,10 @@ import org.spout.vanilla.VanillaMaterials;
 public class TundraBiome extends PlainBiome {
 	public TundraBiome() {
 		super(12);
+		minHumid = 0;
+		maxHumid = 30;
+		minTemp = 0;
+		maxTemp = 55;
 	}
 
 	@Override

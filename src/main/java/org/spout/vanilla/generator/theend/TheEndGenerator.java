@@ -32,7 +32,7 @@ import org.spout.vanilla.generator.VanillaGeneratorBase;
 public class TheEndGenerator extends VanillaGeneratorBase {
 	@Override
 	public void registerBiomes() {
-		setSelector(new NoiseSelector(0.9, 1.5, 5, 0.9, 1.5));
+		setSelector(new NoiseSelector(this));
 		register(VanillaBiomes.ENDSTONE);
 	}
 }

@@ -37,7 +37,9 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Weapon;
+import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
+import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 
 public class EntityInteractionMessageHandler extends MessageHandler<EntityInteractionMessage> {
 	@Override
@@ -61,7 +63,12 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 					damage = ((Weapon) is.getMaterial()).getDamage();
 				}
 
-				((VanillaController) clickedEntity.getController()).damage(damage);
+				VanillaController temp = (VanillaController) clickedEntity.getController();
+				if (!temp.getParent().isDead()) {
+					temp.damage(damage);
+					temp.sendMessage(temp.getParent().getWorld().getPlayers(), new EntityAnimationMessage(temp.getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(temp.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
+				}
+
 			}
 		} else {
 			ItemStack holding = player.getEntity().getInventory().getCurrentItem();

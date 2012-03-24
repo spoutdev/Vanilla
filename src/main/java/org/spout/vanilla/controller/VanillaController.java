@@ -53,7 +53,7 @@ public abstract class VanillaController extends Controller {
 	//Collision box for controllers
 	protected final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();
-	private boolean flammable = true, canMove = true;
+	private boolean flammable = true, canMove = true, aCorpse = false;
 	private int headYaw = 0, headYawLive = 0, fireTicks = 0;
 	private Vector3 lavaField, velocity = Vector3.ZERO;
 	//Velocity constants
@@ -70,23 +70,17 @@ public abstract class VanillaController extends Controller {
 	public void onTick(float dt) {
 		//Check controller health, send messages to the client based on current state.
 		if (getParent().getHealth() <= 0) {
-			sendMessage(getParent().getWorld().getPlayers(), new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
-			//We can kill the controller here but the tick will continue due to death occurring at Pre-Snapshot and not Stage 1
-			getParent().kill();
-		}
-
-		/**
-		 * Run through a timer if the parent is dead and then dispose of the entity from the world. 
-		 * This is to prevent "ghost" entities.
-		 */ 
-		if (getParent().isDead()) {
 			int count = 0;
-			while(count <= 30) {
+			//This message sends the "falling over dead effect" to the client
+			sendMessage(getParent().getWorld().getPlayers(), new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
+			while(count <= 100) {
 				count++;
-				if(count == 30) {
+				if(count == 100) {
+					//This message has the client destroy the entity.
 					sendMessage(getParent().getWorld().getPlayers(), new DestroyEntityMessage(getParent().getId()));
 				}
 			}
+			getParent().kill();
 			return;
 		}
 

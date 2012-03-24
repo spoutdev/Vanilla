@@ -62,6 +62,8 @@ public class Sheep extends Creature implements Passive {
 		getParent().setData(ControllerType.KEY, ControllerType.Sheep.id);
 		getParent().setData("SheepSheared", false);
 		getParent().setData("SheepColor", color);
+		getParent().setMaxHealth(5);
+		getParent().setHealth(5);
 	}
 
 	@Override

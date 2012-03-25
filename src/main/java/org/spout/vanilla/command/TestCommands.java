@@ -36,6 +36,7 @@ import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.creature.neutral.Enderman;
 import org.spout.vanilla.controller.living.creature.passive.Chicken;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
@@ -65,6 +66,10 @@ public class TestCommands {
 				}
 				case ENDERMAN: {
 					control = new Enderman();
+					break;
+				}
+				case GHAST: {
+					control = new Ghast();
 					break;
 				}
 				default:

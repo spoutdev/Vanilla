@@ -41,7 +41,6 @@ import org.spout.vanilla.material.block.Wool;
 
 public class Sheep extends Creature implements Passive {
 	private int color;
-	private Transform priorTransform;
 	public Sheep() {
 		this(0x0);
 	}
@@ -63,13 +62,6 @@ public class Sheep extends Creature implements Passive {
 		getParent().setData("SheepColor", color);
 		getParent().setMaxHealth(5);
 		getParent().setHealth(5);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		priorTransform = new Transform(getParent().getPosition(), getParent().getRotation(), getParent().getScale());
-
-		super.onTick(dt);
 	}
 
 	public boolean isSheared() {

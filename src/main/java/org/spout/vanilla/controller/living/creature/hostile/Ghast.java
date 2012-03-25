@@ -40,6 +40,8 @@ public class Ghast extends Creature implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getParent().setData(ControllerType.KEY, ControllerType.GHAST.id);
+		getParent().setMaxHealth(5);
+		getParent().setHealth(5);
 	}
 
 	@Override

@@ -32,7 +32,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
-import org.spout.vanilla.controller.object.Item;
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.api.material.Material;
 import org.spout.vanilla.material.generic.GenericTool;
 

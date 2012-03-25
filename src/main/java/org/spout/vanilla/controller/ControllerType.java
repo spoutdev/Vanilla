@@ -52,10 +52,11 @@ import org.spout.vanilla.controller.living.creature.passive.Squid;
 import org.spout.vanilla.controller.living.creature.passive.Villager;
 import org.spout.vanilla.controller.living.creature.util.IronGolem;
 import org.spout.vanilla.controller.living.creature.util.SnowGolem;
-import org.spout.vanilla.controller.object.Item;
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.object.MovingBlock;
 import org.spout.vanilla.controller.object.misc.EnderCrystal;
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
+import org.spout.vanilla.controller.object.moving.XPOrb;
 import org.spout.vanilla.controller.object.projectile.Arrow;
 import org.spout.vanilla.controller.object.projectile.BlazeFireball;
 import org.spout.vanilla.controller.object.projectile.EnderPearl;
@@ -70,7 +71,7 @@ import org.spout.vanilla.controller.object.vehicle.Minecart;
  */
 public enum ControllerType {
 	DROPPEDITEM(1, Item.class),
-	XPORB(2, Item.class), // TODO: is this correct?
+	XPORB(2, XPOrb.class),
 	SHOTARROW(10, Arrow.class),
 	THROWNSNOWBALL(11, Snowball.class),
 	GHASTFIREBALL(12, GhastFireball.class),

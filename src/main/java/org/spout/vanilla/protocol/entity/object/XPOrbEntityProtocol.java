@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev License Version 1 along with this program.
+ * the MIT license and the SpoutDev license version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
@@ -29,29 +29,25 @@ import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
-import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.controller.object.moving.XPOrb;
 import org.spout.vanilla.protocol.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.SpawnItemMessage;
+import org.spout.vanilla.protocol.msg.ExperienceOrbMessage;
 
-public class PickupEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
+
+
+public class XPOrbEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
+
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
-		if (c == null) {
+		if (c == null || !(c instanceof XPOrb)) {
 			return null;
 		}
 		int id = entity.getId();
 		int x = (int) (entity.getPosition().getX() * 32);
 		int y = (int) (entity.getPosition().getY() * 32);
 		int z = (int) (entity.getPosition().getZ() * 32);
-		int r = (int) (entity.getYaw() * 32);
-		int p = (int) (entity.getPitch() * 32);
-		if (c instanceof Item) {
-			Item pi = (Item) c;
-			return new Message[] {new SpawnItemMessage(id, (int) pi.getMaterial().getId(), pi.getAmount(), pi.getData(), x, y, z, r, p, pi.getRoll())};
-
-		}
-
-		return null;
+		return new Message[] {new ExperienceOrbMessage(id,x,y,z, (short) 1)}; //TODO improve efficiency, can be more than one experience orb in one packet!
 	}
+
 }

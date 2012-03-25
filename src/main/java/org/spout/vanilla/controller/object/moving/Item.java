@@ -23,7 +23,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.object;
+package org.spout.vanilla.controller.object.moving;
 
 import java.util.Set;
 
@@ -34,6 +34,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.ControllerType;
+import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
 /**

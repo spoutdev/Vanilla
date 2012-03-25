@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.VanillaMaterials;
 
 public class TreeDecorator implements BiomeDecorator {
+	
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() < 4) {

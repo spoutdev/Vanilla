@@ -46,7 +46,7 @@ public class PlainBiome extends VanillaBiomeType {
 	private Turbulence noise = new Turbulence();
 
 	protected PlainBiome(int id) {
-		super(id, new CaveDecorator(), new FlowerDecorator(), new GrassDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
+		super(id, new CaveDecorator(), new GrassDecorator(), new FlowerDecorator() , new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
 		base.setNoiseQuality(NoiseQuality.BEST);
 		base.setOctaveCount(6);
 		base.setFrequency(0.3);

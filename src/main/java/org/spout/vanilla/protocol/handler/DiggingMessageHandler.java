@@ -37,7 +37,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.controller.living.player.CreativePlayer;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
-import org.spout.vanilla.controller.object.Item;
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.generic.GenericBlock;
 import org.spout.vanilla.protocol.msg.DiggingMessage;

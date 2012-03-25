@@ -32,7 +32,7 @@ import org.spout.api.material.block.BlockFace;
  */
 public enum RailsState {
 
-	EAST(BlockFace.EAST, BlockFace.WEST, false),
+	WEST(BlockFace.WEST, BlockFace.EAST, false),
 	SOUTH(BlockFace.SOUTH, BlockFace.NORTH, false),
 	SOUTH_SLOPED(BlockFace.SOUTH, BlockFace.NORTH, true),
 	NORTH_SLOPED(BlockFace.NORTH, BlockFace.SOUTH, true),

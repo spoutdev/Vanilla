@@ -32,6 +32,7 @@ import java.util.Set;
 import org.spout.api.Spout;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
+import org.spout.api.entity.ActionController;
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
@@ -49,7 +50,7 @@ import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 /**
  * Controller that is the parent of all Vanilla controllers.
  */
-public abstract class VanillaController extends Controller {
+public abstract class VanillaController extends ActionController {
 	//Collision box for controllers
 	protected final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();

@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import java.util.List;
 import java.util.Map;
 
 import org.spout.nbt.Tag;
@@ -35,13 +36,13 @@ public final class WindowClickMessage extends Message {
 	private final int id, slot;
 	private final boolean rightClick, shift;
 	private final int transaction, item, count, damage;
-	private final Map<String, Tag> nbtData;
+	private final List<Tag> nbtData;
 
 	public WindowClickMessage(int id, int slot, boolean rightClick, int transaction, boolean shift) {
 		this(id, slot, rightClick, transaction, shift, -1, 0, 0, null);
 	}
 
-	public WindowClickMessage(int id, int slot, boolean rightClick, int transaction, boolean shift, int item, int count, int damage, Map<String, Tag> nbtData) {
+	public WindowClickMessage(int id, int slot, boolean rightClick, int transaction, boolean shift, int item, int count, int damage, List<Tag> nbtData) {
 		this.id = id;
 		this.slot = slot;
 		this.rightClick = rightClick;
@@ -85,7 +86,7 @@ public final class WindowClickMessage extends Message {
 		return damage;
 	}
 
-	public Map<String, Tag> getNbtData() {
+	public List<Tag> getNbtData() {
 		return nbtData;
 	}
 

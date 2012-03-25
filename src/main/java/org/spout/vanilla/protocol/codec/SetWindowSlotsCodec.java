@@ -26,6 +26,7 @@
 package org.spout.vanilla.protocol.codec;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -57,7 +58,7 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 			} else {
 				byte itemCount = buffer.readByte();
 				short data = buffer.readShort();
-				Map<String, Tag> nbtData = null;
+				List<Tag> nbtData = null;
 				if (ChannelBufferUtils.hasNbtData(item)) {
 					nbtData = ChannelBufferUtils.readCompound(buffer);
 				}

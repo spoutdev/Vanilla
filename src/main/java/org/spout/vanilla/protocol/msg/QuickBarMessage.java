@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import java.util.List;
 import java.util.Map;
 
 import org.spout.nbt.Tag;
@@ -33,9 +34,9 @@ import org.spout.api.protocol.Message;
 
 public class QuickBarMessage extends Message {
 	private final short slot, id, amount, damage;
-	private final Map<String, Tag> nbtData;
+	private final List<Tag> nbtData;
 
-	public QuickBarMessage(short slot, short id, short amount, short damage, Map<String, Tag> nbtData) {
+	public QuickBarMessage(short slot, short id, short amount, short damage, List<Tag> nbtData) {
 		this.slot = slot;
 		this.id = id;
 		this.amount = amount;
@@ -59,7 +60,7 @@ public class QuickBarMessage extends Message {
 		return damage;
 	}
 
-	public Map<String, Tag> getNbtData() {
+	public List<Tag> getNbtData() {
 		return nbtData;
 	}
 

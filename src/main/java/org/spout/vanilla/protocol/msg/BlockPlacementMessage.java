@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import java.util.List;
 import java.util.Map;
 
 import org.spout.nbt.Tag;
@@ -33,13 +34,13 @@ import org.spout.api.protocol.Message;
 
 public final class BlockPlacementMessage extends Message {
 	private final int id, x, y, z, direction, count, damage;
-	private Map<String, Tag> nbtData;
+	private List<Tag> nbtData;
 
 	public BlockPlacementMessage(int x, int y, int z, int direction) {
 		this(x, y, z, direction, -1, 0, 0, null);
 	}
 
-	public BlockPlacementMessage(int x, int y, int z, int direction, int id, int count, int damage, Map<String, Tag> nbtData) {
+	public BlockPlacementMessage(int x, int y, int z, int direction, int id, int count, int damage, List<Tag> nbtData) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
@@ -78,7 +79,7 @@ public final class BlockPlacementMessage extends Message {
 		return direction;
 	}
 
-	public Map<String, Tag> getNbtData() {
+	public List<Tag> getNbtData() {
 		return nbtData;
 	}
 

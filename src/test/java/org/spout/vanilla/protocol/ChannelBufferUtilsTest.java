@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol;
 import java.awt.Color;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -92,11 +93,11 @@ public class ChannelBufferUtilsTest {
 		assertEquals(TEST_STRING, readUtf8String(buf));
 	}
 
-	private static final Map<String, Tag> TEST_COMPOUND_MAP = new HashMap<String, Tag>();
+	private static final List<Tag> TEST_COMPOUND_MAP = new ArrayList<Tag>();
 
 	static {
-		TEST_COMPOUND_MAP.put("firstkey", new IntTag("firstkey", 3));
-		TEST_COMPOUND_MAP.put("somethingelse", new StringTag("somethingelse", "helloworld"));
+		TEST_COMPOUND_MAP.add(new IntTag("firstkey", 3));
+		TEST_COMPOUND_MAP.add(new StringTag("somethingelse", "helloworld"));
 	}
 
 	@Test

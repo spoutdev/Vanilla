@@ -27,13 +27,12 @@ package org.spout.vanilla.controller.object;
 
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.controller.action.MovingBlockAction;
 
 /**
  * Represents a block that can move, such as sand or gravel.
  */
-public class MovingBlock extends VanillaController {
+public class MovingBlock extends MovingSubstance {
 	private final BlockMaterial block;
 
 	public MovingBlock(BlockMaterial block) {

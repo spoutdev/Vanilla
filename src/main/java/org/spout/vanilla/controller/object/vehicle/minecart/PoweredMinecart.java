@@ -37,19 +37,23 @@ public class PoweredMinecart extends Minecart implements Vehicle {
 	
 	@Override
 	public void onPostMove(float dt) {
-		Vector3 velocity = this.getVelocity();
-		double fuelPower = this.pushVelocity.length();
-		if (fuelPower > 0.01) {
-			this.pushVelocity = this.pushVelocity.divide(fuelPower);
-			velocity = velocity.multiply(0.8, 0.0, 0.8);
-			
-			final double boost = 0.04;
-			
-			velocity = velocity.add(this.pushVelocity.multiply(boost).toVector3(0f));
+		if (this.isOnRail()) {
+			Vector3 velocity = this.getVelocity();
+			double fuelPower = this.pushVelocity.length();
+			if (fuelPower > 0.01) {
+				this.pushVelocity = this.pushVelocity.divide(fuelPower);
+				velocity = velocity.multiply(0.8, 0.0, 0.8);
+				
+				final double boost = 0.04;
+				
+				velocity = velocity.add(this.pushVelocity.multiply(boost).toVector3(0f));
+			} else {
+				velocity = velocity.multiply(0.9, 0.0, 0.9);
+			}
+			this.setVelocity(velocity);
 		} else {
-			velocity = velocity.multiply(0.9, 0.0, 0.9);
+			super.onPostMove(dt);
 		}
-		this.setVelocity(velocity);
 	}
 	
 	@Override

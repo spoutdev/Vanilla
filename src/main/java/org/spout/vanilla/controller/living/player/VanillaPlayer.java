@@ -25,10 +25,7 @@
  */
 package org.spout.vanilla.controller.living.player;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.Transform;
@@ -153,5 +150,15 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	public boolean isOnGround() {
 		return onGround;
+	}
+
+	public void setOp(boolean op) {
+		String playerName = getPlayer().getName();
+		VanillaConfiguration.OPS.setOp(playerName, op);
+	}
+	
+	public boolean isOp() {
+		String playerName = getPlayer().getName();
+		return VanillaConfiguration.OPS.isOp(playerName);
 	}
 }

@@ -77,6 +77,8 @@ public class TestCommands {
 			}
 			if (control != null) {
 				world.createAndSpawnEntity(entity.getPosition(), control);
+			} else {
+				throw new CommandException(args.getString(0) + " is not a valid controller to spawn.");
 			}
 		}
 	}

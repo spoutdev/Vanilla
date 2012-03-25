@@ -23,27 +23,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller;
+package org.spout.vanilla.controller.action;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityAction;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.controller.object.MovingBlock;
 
 import static org.spout.api.math.MathHelper.floor;
 
-public class GravityAction extends EntityAction<VanillaController> {
-
+public class MovingBlockAction extends EntityAction<MovingBlock> {
     @Override
-    public boolean shouldRun(Entity entity, VanillaController controller) {
-		Point pt = entity.getPosition();
-		BlockMaterial block = entity.getWorld().getBlockMaterial(floor(pt.getX()), floor(pt.getY()), floor(pt.getZ()));
-        return block.getId() == VanillaMaterials.AIR.getId() || block.isLiquid();
+    public boolean shouldRun(Entity entity, MovingBlock block) {
+		Point pos = entity.getPosition();
+		BlockMaterial mat = entity.getWorld().getBlockMaterial(floor(pos.getX()), floor(pos.getY()) - 1, floor(pos.getZ()));
+        return mat == VanillaMaterials.AIR || mat.isLiquid();
     }
 
     @Override
-    public void run(Entity entity, VanillaController controller) {
-		entity.translate(0, -0.04f, 0);
+    public void run(Entity entity, MovingBlock controller) {
+		Point pos = entity.getPosition();
+		controller.move(new Vector3(0, -0.50f, 0));
+        entity.getWorld().setBlockMaterial(floor(pos.getX()), floor(pos.getY()), floor(pos.getZ()), controller.getBlock(), controller.getBlock().getData(), true, entity);
+        entity.kill();
     }
 }

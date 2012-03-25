@@ -23,16 +23,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.object.falling;
+package org.spout.vanilla.controller.object.misc;
 
 import org.spout.vanilla.controller.ControllerType;
-import org.spout.vanilla.controller.object.Falling;
+import org.spout.vanilla.controller.object.Substance;
 
-public class EnderCrystal extends Falling {
-	public EnderCrystal() {
-		super(true);
-	}
-
+public class EnderCrystal extends Substance {
 	@Override
 	public void onAttached() {
 		super.onAttached();

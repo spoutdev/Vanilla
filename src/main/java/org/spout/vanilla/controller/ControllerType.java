@@ -53,9 +53,9 @@ import org.spout.vanilla.controller.living.creature.passive.Villager;
 import org.spout.vanilla.controller.living.creature.util.IronGolem;
 import org.spout.vanilla.controller.living.creature.util.SnowGolem;
 import org.spout.vanilla.controller.object.Item;
-import org.spout.vanilla.controller.object.falling.EnderCrystal;
-import org.spout.vanilla.controller.object.falling.FallingBlock;
-import org.spout.vanilla.controller.object.falling.PrimedTnt;
+import org.spout.vanilla.controller.object.MovingBlock;
+import org.spout.vanilla.controller.object.misc.EnderCrystal;
+import org.spout.vanilla.controller.object.moving.PrimedTNT;
 import org.spout.vanilla.controller.object.projectile.Arrow;
 import org.spout.vanilla.controller.object.projectile.BlazeFireball;
 import org.spout.vanilla.controller.object.projectile.EnderPearl;
@@ -77,8 +77,8 @@ public enum ControllerType {
 	BLAZEFIREBALL(13, BlazeFireball.class),
 	THROWNENDERPEARL(14, EnderPearl.class),
 	THROWNEYEOFENDER(15, EyeOfEnder.class),
-	PRIMEDTNT(16, PrimedTnt.class),
-	FALLINGBLOCK(21, FallingBlock.class),
+	PRIMEDTNT(16, PrimedTNT.class),
+	FALLINGBLOCK(21, MovingBlock.class),
 	MINECART(40, Minecart.class),
 	BOAT(41, Boat.class),
 	CREEPER(50, Creeper.class),

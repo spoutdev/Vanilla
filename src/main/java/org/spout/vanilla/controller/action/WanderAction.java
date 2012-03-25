@@ -23,12 +23,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller;
+package org.spout.vanilla.controller.action;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityAction;
 
 import java.util.Random;
+
+import org.spout.vanilla.controller.VanillaController;
 
 public class WanderAction extends EntityAction<VanillaController> {
     private static final int WANDER_FREQ = 2;

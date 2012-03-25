@@ -43,7 +43,7 @@ public class Slime extends Creature implements Hostile {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 
 		// TODO: Check if this is a tiny slime

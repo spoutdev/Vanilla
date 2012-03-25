@@ -42,7 +42,7 @@ public class Villager extends Creature implements Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		return Collections.emptySet();
 	}
 }

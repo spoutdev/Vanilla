@@ -43,7 +43,7 @@ public class Pig extends Creature implements Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 
 		// TODO: Check if killed by fire

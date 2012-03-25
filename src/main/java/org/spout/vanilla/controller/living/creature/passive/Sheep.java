@@ -89,7 +89,7 @@ public class Sheep extends Creature implements Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 
 		if (!isSheared()) {

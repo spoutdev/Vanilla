@@ -42,7 +42,7 @@ public class MagmaCube extends Slime implements Hostile {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 
 		// TODO: Check for small/big

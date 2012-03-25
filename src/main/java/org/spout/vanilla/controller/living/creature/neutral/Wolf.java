@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.creature.neutral;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.ControllerType;
@@ -43,12 +44,12 @@ public class Wolf extends Creature implements Tameable, Neutral {
 	}
 
 	@Override
-	public void subjectTo(org.spout.api.entity.Entity entity) {
+	public void subjectTo(Entity entity) {
 
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 
 		// None

@@ -23,32 +23,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.object.falling;
+package org.spout.vanilla.controller.action;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityAction;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.controller.VanillaController;
 
 import static org.spout.api.math.MathHelper.floor;
 
-/**
- * @author zml2008
- */
-public class FallingBlockAction extends EntityAction<FallingBlock> {
+public class GravityAction extends EntityAction<VanillaController> {
 
     @Override
-    public boolean shouldRun(Entity entity, FallingBlock block) {
-		Point pos = entity.getPosition();
-		BlockMaterial mat = entity.getWorld().getBlockMaterial(floor(pos.getX()), floor(pos.getY()) - 1, floor(pos.getZ()));
-        return mat == VanillaMaterials.AIR || mat.isLiquid();
+    public boolean shouldRun(Entity entity, VanillaController controller) {
+		Point pt = entity.getPosition();
+		BlockMaterial block = entity.getWorld().getBlockMaterial(floor(pt.getX()), floor(pt.getY()), floor(pt.getZ()));
+        return block.getId() == VanillaMaterials.AIR.getId() || block.isLiquid();
     }
 
     @Override
-    public void run(Entity entity, FallingBlock controller) {
-		Point pos = entity.getPosition();
-        entity.getWorld().setBlockMaterial(floor(pos.getX()), floor(pos.getY()), floor(pos.getZ()), controller.getBlock(), controller.getBlock().getData(), true, entity);
-        entity.kill();
+    public void run(Entity entity, VanillaController controller) {
+		entity.translate(0, -0.04f, 0);
     }
 }

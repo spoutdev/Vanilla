@@ -36,6 +36,7 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.ControllerType;
 import org.spout.vanilla.controller.VanillaController;
+import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.protocol.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 
@@ -61,8 +62,8 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 			int r = (int) (entity.getYaw() * 32);
 			int p = (int) (entity.getPitch() * 32);
 			int headyaw = 0;
-			if (c instanceof VanillaController) {
-				headyaw = ((VanillaController) c).getHeadYaw();
+			if (c instanceof Living) {
+				headyaw = ((Living) c).getHeadYaw();
 			}
 			int type = entity.getData(ControllerType.KEY).asInt();
 			if (type == 0) {

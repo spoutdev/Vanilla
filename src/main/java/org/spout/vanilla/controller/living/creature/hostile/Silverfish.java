@@ -42,7 +42,7 @@ public class Silverfish extends Creature implements Hostile {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		return Collections.emptySet();
 	}
 }

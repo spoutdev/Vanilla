@@ -37,7 +37,7 @@ import org.spout.vanilla.controller.living.creature.Hostile;
 public class SpiderJockey extends Creature implements Hostile {
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 
 		int count = getRandom().nextInt(3);

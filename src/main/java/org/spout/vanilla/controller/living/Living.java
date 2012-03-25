@@ -25,14 +25,39 @@
  */
 package org.spout.vanilla.controller.living;
 
-import org.spout.vanilla.controller.GravityAction;
+import org.spout.vanilla.controller.action.GravityAction;
 import org.spout.vanilla.controller.VanillaController;
-import org.spout.vanilla.controller.WanderAction;
+import org.spout.vanilla.controller.action.WanderAction;
+import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 
 public abstract class Living extends VanillaController {
+	private int headYaw = 0, headYawLive = 0;
 
+	@Override
 	public void onAttached() {
 		registerAction(new WanderAction());
 		registerAction(new GravityAction());
+	}
+
+	@Override
+	public void onTick(float dt) {
+		super.onTick(dt);
+
+		if (headYawLive != headYaw) {
+			headYawLive = headYaw;
+			sendMessage(getParent().getWorld().getPlayers(), new EntityHeadYawMessage(getParent().getId(), headYaw));
+		}
+	}
+
+	/**
+	 * Sets the yaw of a controller's head.
+	 * @param headYaw
+	 */
+	public void setHeadYaw(int headYaw) {
+		headYawLive = headYaw;
+	}
+
+	public int getHeadYaw() {
+		return headYaw;
 	}
 }

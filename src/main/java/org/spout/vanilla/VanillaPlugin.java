@@ -60,7 +60,7 @@ import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 public class VanillaPlugin extends CommonPlugin {
 	private static VanillaPlugin instance;
 	private final VanillaConfiguration config;
-	public static final int minecraftProtocolId = 28;
+	public static final int minecraftProtocolId = 29;
 	public static int vanillaProtocolId;
 	private final HashMap<World, Sky> skys = new HashMap<World, Sky>();
 

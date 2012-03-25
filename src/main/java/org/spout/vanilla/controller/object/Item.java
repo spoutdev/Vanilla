@@ -43,14 +43,14 @@ public class Item extends Substance {
 	private ItemStack is;
 	private int roll, unpickable;
 	private Vector3 initial;
-
+	private Vector3 velocity = new Vector3();
 
 	public Item(ItemStack is, Vector3 initial) {
 		this.is = is;
 		this.roll = 1;
 		unpickable = 10;
 		this.initial = initial;
-		setMoveable(false); //TODO Items can move so need to fix the NPE that occurs when the item dropped.
+		setMoveable(true);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class Item extends Substance {
 	@Override
 	public void onTick(float dt) {
 		if (dt <= 1) {
-			setVelocity(getVelocity().add(initial));
+			velocity.add(initial);
 		}
 
 		if (unpickable > 0) {
@@ -73,10 +73,9 @@ public class Item extends Substance {
 		float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
 		float y = getRandom().nextFloat();
 		float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-		setVelocity(getVelocity().add(x, y, z));
+		move(velocity.add(x, y, z));
 		super.onTick(dt);
 		World world = getParent().getWorld();
-		//TODO replace with getClosestPlayer when my Spout PR gets pulled!
 		Set<Player> players = world.getPlayers();
 		double minDistance = -1;
 		Player closestPlayer = null;
@@ -99,9 +98,9 @@ public class Item extends Substance {
 
 		int collected = getParent().getId();
 		int collector = closestPlayer.getEntity().getId();
-		CollectItemMessage message = new CollectItemMessage(collected, collector);
-		for (Player plr : players) {
-			plr.getSession().send(message);
+		
+		for (Player player : players) {
+			sendMessage(player, new CollectItemMessage(collected, collector));
 		}
 
 		closestPlayer.getEntity().getInventory().addItem(is);

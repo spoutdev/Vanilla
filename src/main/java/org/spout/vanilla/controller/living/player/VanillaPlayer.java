@@ -124,7 +124,7 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		ItemStack[] contents = getParent().getInventory().getContents();
 		drops.addAll(Arrays.asList(contents));

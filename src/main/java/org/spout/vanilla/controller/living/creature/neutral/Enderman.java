@@ -44,7 +44,7 @@ public class Enderman extends Creature implements Neutral {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 
 		int count = getRandom().nextInt(2);

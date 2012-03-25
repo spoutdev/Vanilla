@@ -23,30 +23,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.object;
+package org.spout.vanilla.controller.object.moving;
 
-import org.spout.api.math.Vector3;
-import org.spout.vanilla.controller.GravityAction;
+import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.controller.object.MovingBlock;
 
-/**
- * Controller that vertically falls. This is used for Sand and Gravel that fall (and anything else that would do so).
- */
-public abstract class Falling extends Substance {
-	private static float GRAVITY_MULTIPLIER = 23.31f;
-	private final boolean gravity;
+public class PrimedTNT extends MovingBlock {
+	private float timeToExplode = 4.f;
 
-	public Falling(boolean gravity) {
-		this.gravity = gravity;
-		if (gravity) {
-			registerAction(new GravityAction());
+	public PrimedTNT() {
+		super(VanillaMaterials.TNT);
+	}
+
+	@Override
+	public void onTick(float dt) {
+		timeToExplode -= dt;
+		if (timeToExplode <= 0.f) {
+
 		}
-	}
-
-	protected void updateGravity(float dt) {
-		setVelocity(getVelocity().add(Vector3.UP.multiply(-(dt * GRAVITY_MULTIPLIER))));
-	}
-
-	public boolean hasGravity() {
-		return gravity;
+		super.onTick(dt);
 	}
 }

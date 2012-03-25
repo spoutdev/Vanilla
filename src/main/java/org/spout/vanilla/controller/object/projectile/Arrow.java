@@ -28,6 +28,8 @@ package org.spout.vanilla.controller.object.projectile;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
 
+import org.spout.vanilla.controller.object.Projectile;
+
 public class Arrow extends Projectile {
 	private final static int maxArrowSpeed = 10;
 

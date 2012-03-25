@@ -56,7 +56,7 @@ public class Cat extends Creature implements Tamed, Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 
 		// None

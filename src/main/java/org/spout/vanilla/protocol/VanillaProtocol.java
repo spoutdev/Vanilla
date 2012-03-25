@@ -33,7 +33,7 @@ import org.spout.vanilla.controller.living.creature.passive.Chicken;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.Item;
-import org.spout.vanilla.controller.object.falling.FallingBlock;
+import org.spout.vanilla.controller.object.MovingBlock;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
@@ -49,6 +49,6 @@ public class VanillaProtocol extends Protocol {
 		Enderman.setEntityProtocol(Enderman.class, VanillaPlugin.vanillaProtocolId, new EndermanEntityProtocol());
 		Item.setEntityProtocol(Item.class, VanillaPlugin.vanillaProtocolId, new PickupEntityProtocol());
 		Chicken.setEntityProtocol(Chicken.class, VanillaPlugin.vanillaProtocolId, new BasicMobEntityProtocol());
-		FallingBlock.setEntityProtocol(FallingBlock.class, VanillaPlugin.vanillaProtocolId, new FallingBlockProtocol());
+		MovingBlock.setEntityProtocol(MovingBlock.class, VanillaPlugin.vanillaProtocolId, new FallingBlockProtocol());
 	}
 }

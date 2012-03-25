@@ -30,6 +30,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.VanillaController;
+import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 
 public class EntityHeadYawMessageHandler extends MessageHandler<EntityHeadYawMessage> {
@@ -38,10 +39,10 @@ public class EntityHeadYawMessageHandler extends MessageHandler<EntityHeadYawMes
 		if (player.getEntity().getController() == null) {
 			return;
 		}
-		if (!(player.getEntity().getController() instanceof VanillaController)) {
+		if (!(player.getEntity().getController() instanceof Living)) {
 			return;
 		}
-		VanillaController vanilla = (VanillaController) player.getEntity().getController();
-		vanilla.setHeadYaw(message.getHeadYaw());
+		Living creature = (Living) player.getEntity().getController();
+		creature.setHeadYaw(message.getHeadYaw());
 	}
 }

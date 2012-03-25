@@ -42,7 +42,7 @@ public class Chicken extends Creature implements Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 
 		int count = getRandom().nextInt(3);

@@ -33,7 +33,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.controller.object.falling.FallingBlock;
+import org.spout.vanilla.controller.object.MovingBlock;
 import org.spout.vanilla.protocol.entity.BasicVehicleEntityProtocol;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
@@ -55,9 +55,9 @@ public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 	public Message[] getSpawnMessage(Entity entity) {
 		final Controller controller = entity.getController();
 		BlockMaterial block = VanillaMaterials.SAND;
-		int spawnId = 70; //TODO: support for other falling block types?
-		if (controller instanceof FallingBlock) {
-			block = ((FallingBlock) controller).getBlock();
+		int spawnId = 70; //TODO: support for other moving block types?
+		if (controller instanceof MovingBlock) {
+			block = ((MovingBlock) controller).getBlock();
 			if (block == VanillaMaterials.DRAGON_EGG) {
 				spawnId = 74;
 			} else if (block == VanillaMaterials.GRAVEL) {

@@ -23,35 +23,22 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.object.falling;
+package org.spout.vanilla.controller.object;
 
-import java.util.Random;
+import org.spout.api.material.BlockMaterial;
 
-import org.spout.api.math.Vector3;
+import org.spout.vanilla.controller.VanillaController;
+import org.spout.vanilla.controller.action.MovingBlockAction;
 
-import org.spout.vanilla.controller.object.Falling;
+public class MovingBlock extends VanillaController {
+	private final BlockMaterial block;
 
-public class PrimedTnt extends Falling {
-	private float timeToExplode = 4.f;
-	private Vector3 gravity = new Vector3(0, 5, 0);
-	private Random rng = new Random();
-
-	public PrimedTnt() {
-		super(true);
+	public MovingBlock(BlockMaterial block) {
+		this.block = block;
+		registerAction(new MovingBlockAction());
 	}
 
-	@Override
-	public void onAttached() {
-		setVelocity(new Vector3(rng.nextFloat() * 5, rng.nextFloat() * 5, rng.nextFloat() * 5));
-	}
-
-	@Override
-	public void onTick(float dt) {
-		timeToExplode -= dt;
-		if (timeToExplode <= 0.f) {
-			//Explode
-			System.out.print("tnt goes boom!");
-		}
-		super.onTick(dt);
+	public BlockMaterial getBlock() {
+		return block;
 	}
 }

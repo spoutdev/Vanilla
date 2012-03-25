@@ -50,7 +50,7 @@ public class Ocelot extends Creature implements Tameable, Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		return drops;
 	}

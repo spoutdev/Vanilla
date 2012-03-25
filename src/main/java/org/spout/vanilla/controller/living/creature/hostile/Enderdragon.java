@@ -43,7 +43,7 @@ public class Enderdragon extends Creature implements Hostile, Boss {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		return drops;
 	}

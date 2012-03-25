@@ -42,7 +42,7 @@ public class Giant extends Creature implements Hostile {
 	}
 
 	@Override
-	public Set<ItemStack> getDeathDrops() {
+	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		return drops;
 	}

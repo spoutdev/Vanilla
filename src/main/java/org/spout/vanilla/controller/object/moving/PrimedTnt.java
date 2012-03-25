@@ -28,10 +28,10 @@ package org.spout.vanilla.controller.object.moving;
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.controller.object.MovingBlock;
 
-public class PrimedTNT extends MovingBlock {
+public class PrimedTnt extends MovingBlock {
 	private float timeToExplode = 4.f;
 
-	public PrimedTNT() {
+	public PrimedTnt() {
 		super(VanillaMaterials.TNT);
 	}
 

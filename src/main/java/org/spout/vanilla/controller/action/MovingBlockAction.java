@@ -45,7 +45,7 @@ public class MovingBlockAction extends EntityAction<MovingBlock> {
 	}
 
 	@Override
-	public void run(Entity entity, MovingBlock controller) {
+	public void run(Entity entity, MovingBlock controller, float dt) {
 		Point pos = entity.getPosition();
 		controller.move(new Vector3(0, -0.50f, 0));
 		entity.getWorld().setBlockMaterial(floor(pos.getX()), floor(pos.getY()), floor(pos.getZ()), controller.getBlock(), controller.getBlock().getData(), true, entity);

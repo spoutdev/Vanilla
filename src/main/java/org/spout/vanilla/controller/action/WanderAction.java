@@ -43,7 +43,7 @@ public class WanderAction extends EntityAction<VanillaController> {
 	}
 
 	@Override
-	public void run(Entity entity, VanillaController controller) {
+	public void run(Entity entity, VanillaController controller, float dt) {
 		countdown = controller.getRandom().nextInt(7) + 3;
 		float x = (controller.getRandom().nextBoolean() ? 1 : -1) * controller.getRandom().nextFloat();
 		float z = (controller.getRandom().nextBoolean() ? 1 : -1) * controller.getRandom().nextFloat();

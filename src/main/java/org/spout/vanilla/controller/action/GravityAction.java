@@ -44,7 +44,7 @@ public class GravityAction extends EntityAction<VanillaController> {
 	}
 
 	@Override
-	public void run(Entity entity, VanillaController controller) {
+	public void run(Entity entity, VanillaController controller, float dt) {
 		entity.translate(0, -0.04f, 0);
 	}
 }

@@ -25,9 +25,56 @@
  */
 package org.spout.vanilla.controller.object.vehicle.minecart;
 
+import org.spout.api.math.Vector2;
+import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.object.vehicle.Vehicle;
 import org.spout.vanilla.controller.object.vehicle.Minecart;
 
 public class PoweredMinecart extends Minecart implements Vehicle {
 
+	private int fuelTicks = 0;
+	private Vector2 pushVelocity = Vector2.ZERO;
+	
+	@Override
+	public void onPostMove(float dt) {
+		Vector3 velocity = this.getVelocity();
+		double fuelPower = this.pushVelocity.length();
+		if (fuelPower > 0.01) {
+			this.pushVelocity = this.pushVelocity.divide(fuelPower);
+			velocity = velocity.multiply(0.8, 0.0, 0.8);
+			
+			final double boost = 0.04;
+			
+			velocity = velocity.add(this.pushVelocity.multiply(boost).toVector3(0f));
+		} else {
+			velocity = velocity.multiply(0.9, 0.0, 0.9);
+		}
+		this.setVelocity(velocity);
+	}
+	
+	@Override
+	public void onTick(float dt) {
+		super.onTick(dt);
+		
+		if (this.fuelTicks > 0 && --this.fuelTicks == 0) {
+			this.pushVelocity = Vector2.ZERO;
+			//TODO: Change meta data to stop smoking
+		}
+	}
+	
+	@Override
+	public void onVelocityUpdated(float dt) {
+		super.onVelocityUpdated(dt);
+		
+		double velLength = this.pushVelocity.length();
+		Vector3 velocity = this.getVelocity();
+		if (velLength > 0.01 && velocity.lengthSquared() > 0.001f) {
+			this.pushVelocity = this.pushVelocity.divide(velLength);
+			if (this.pushVelocity.getX() * velocity.getX() + this.pushVelocity.getY() * velocity.getZ() < 0) {
+				this.pushVelocity = Vector2.ZERO;
+			} else {
+				this.pushVelocity = new Vector2(velocity.getX(), velocity.getZ());
+			}
+		}
+	}
 }

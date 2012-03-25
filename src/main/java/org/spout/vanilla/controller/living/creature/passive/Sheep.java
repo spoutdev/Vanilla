@@ -42,7 +42,7 @@ import org.spout.vanilla.material.block.Wool;
 
 public class Sheep extends Creature implements Passive {
 	private int color;
-	private Entity parent = getParent();
+	private Entity parent;
 	
 	public Sheep() {
 		this(0x0);
@@ -60,6 +60,7 @@ public class Sheep extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
 		parent.setData(ControllerType.KEY, ControllerType.SHEEP.id);
 		parent.setData("SheepSheared", false);
 		parent.setData("SheepColor", color);

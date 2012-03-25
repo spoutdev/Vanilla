@@ -72,7 +72,7 @@ public class Solid extends GenericBlock implements org.spout.vanilla.material.Mo
 			Block block = world.getBlock(x, y - 1, z);
 			if (block.getMaterial() == VanillaMaterials.AIR || block.getMaterial().isLiquid()) {
 				if (world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world)) {
-					world.createAndSpawnEntity(block.getPosition(), new MovingBlock(this));
+					//world.createAndSpawnEntity(block.getPosition(), new MovingBlock(this)); TODO: We aren't ready for this lol.
 				}
 			}
 		}

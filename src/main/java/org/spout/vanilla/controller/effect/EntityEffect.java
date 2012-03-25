@@ -28,6 +28,9 @@ package org.spout.vanilla.controller.effect;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a type of entity effect.
+ */
 public enum EntityEffect {
 	MOVE_SPEED(1),
 	MOVE_SLOW(2),
@@ -57,6 +60,12 @@ public enum EntityEffect {
 		}
 	}
 
+	/**
+	 * Gets the type of effect by it's mapped numerical value.
+	 *
+	 * @param id
+	 * @return effect of id.
+	 */
 	public static EntityEffect getById(int id) {
 		return lookup.get(id);
 	}
@@ -65,6 +74,11 @@ public enum EntityEffect {
 		this.id = (byte) id;
 	}
 
+	/**
+	 * Gets a entity effects numerical identification number.
+	 *
+	 * @return id
+	 */
 	public byte getId() {
 		return id;
 	}

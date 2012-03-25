@@ -29,6 +29,9 @@ import org.spout.api.material.source.DataSource;
 import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Wool extends GenericBlock implements MovingBlock {
 	public static final Wool WHITE = register(new Wool("White Wool"));
 	public static final Wool ORANGE = register(new Wool("Orange Wool", WoolColor.Orange, WHITE));
@@ -66,6 +69,7 @@ public class Wool extends GenericBlock implements MovingBlock {
 		Black(15);
 
 		private final short data;
+		private static final Map<Short, WoolColor> ids = new HashMap<Short, WoolColor>();
 
 		private WoolColor(int data) {
 			this.data = (short) data;
@@ -74,6 +78,16 @@ public class Wool extends GenericBlock implements MovingBlock {
 		@Override
 		public short getData() {
 			return this.data;
+		}
+		
+		public static WoolColor getById(short id) {
+			return ids.get(id);
+		}
+
+		static {
+			for (WoolColor color : WoolColor.values()) {
+				ids.put(color.getData(), color);
+			}
 		}
 	}
 

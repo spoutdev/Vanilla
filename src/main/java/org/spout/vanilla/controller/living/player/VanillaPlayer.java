@@ -40,12 +40,15 @@ import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.UserListItemMessage;
 
+/**
+ * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
+ */
 public abstract class VanillaPlayer extends Human implements PlayerController {
 	private final Player owner;
 	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
 	private short count = 0;
 	private short ping;
-	private boolean sneaking, running, onGround;
+	private boolean sneaking, sprinting, onGround;
 	private final Vector3 moveSpeed = new Vector3(10, 0, 0);
 	private final Vector3 horizSpeed = new Vector3(0, 0, -10);
 
@@ -100,6 +103,11 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 		super.onTick(dt);
 	}
 
+	/**
+	 * Gets the amount of ticks it takes the client to respond to the server.
+	 *
+	 * @return ping of player.
+	 */
 	public short getPing() {
 		return ping;
 	}
@@ -128,35 +136,75 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 		return drops;
 	}
 
-	public void setSneaking(boolean b) {
-		sneaking = b;
+	/**
+	 * Sets whether or not the player is sneaking.
+	 *
+	 * @param sneaking
+	 */
+	public void setSneaking(boolean sneaking) {
+		this.sneaking = sneaking;
 	}
 
+	/**
+	 * Whether or not the player is sneaking.
+	 *
+	 * @return true if player is sneaking
+	 */
 	public boolean isSneaking() {
 		return sneaking;
 	}
 
-	public void setRunning(boolean b) {
-		running = b;
+	/**
+	 * Sets whether or not th player is
+	 *
+	 * @param sprinting
+	 */
+	public void setSprinting(boolean sprinting) {
+		this.sprinting = sprinting;
 	}
 
-	public boolean isRunning() {
-		return running;
+	/**
+	 * Whether or not the player is sprinting.
+	 *
+	 * @return true if sprinting
+	 */
+	public boolean isSprinting() {
+		return sprinting;
 	}
 
+	/**
+	 * Sets whether or not the player is on the ground.
+	 *
+	 * @param onGround
+	 */
 	public void setOnGround(boolean onGround) {
 		this.onGround = onGround;
 	}
 
+	/**
+	 * Whether or not the player is on the ground.
+	 *
+	 * @return true if on ground.
+	 */
 	public boolean isOnGround() {
 		return onGround;
 	}
 
+	/**
+	 * Makes the player a server operator.
+	 *
+	 * @param op
+	 */
 	public void setOp(boolean op) {
 		String playerName = getPlayer().getName();
 		VanillaConfiguration.OPS.setOp(playerName, op);
 	}
-	
+
+	/**
+	 * Whether or not the player is a server operator.
+	 *
+	 * @return true if an operator.
+	 */
 	public boolean isOp() {
 		String playerName = getPlayer().getName();
 		return VanillaConfiguration.OPS.isOp(playerName);

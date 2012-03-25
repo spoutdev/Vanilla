@@ -18,35 +18,48 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev License Version 1 along with this program.
+ * the MIT license and the SpoutDev license version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.object;
+package org.spout.vanilla.controller.object.sky;
 
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.entity.Controller;
+import org.spout.api.geo.World;
+import org.spout.vanilla.controller.object.Sky;
+import org.spout.vanilla.world.Weather;
 
-import org.spout.vanilla.controller.VanillaController;
-import org.spout.vanilla.controller.action.MovingBlockAction;
+public class VanillaSky extends Controller implements Sky {
 
-/**
- * Represents a block that can move, such as sand or gravel.
- */
-public class MovingBlock extends VanillaController {
-	private final BlockMaterial block;
-
-	public MovingBlock(BlockMaterial block) {
-		this.block = block;
-		registerAction(new MovingBlockAction());
+	@Override
+	public void onTick(float dt) {
 	}
 
-	/**
-	 * Gets the block that is moving.
-	 *
-	 * @return moving block.
-	 */
-	public BlockMaterial getBlock() {
-		return block;
+	@Override
+	public void onAttached() {
+	}
+
+	@Override
+	public void setTime(float time) {
+	}
+
+	@Override
+	public float getTime() {
+		return -1;
+	}
+
+	@Override
+	public void setWeather(Weather weather) {
+	}
+
+	@Override
+	public Weather getWeather() {
+		return null;
+	}
+
+	@Override
+	public World getWorld() {
+		return null;
 	}
 }

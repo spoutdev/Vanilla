@@ -28,9 +28,10 @@ package org.spout.vanilla.controller.object.sky;
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.World;
 
+import org.spout.vanilla.controller.object.Sky;
 import org.spout.vanilla.world.Weather;
 
-public class TheEndSky extends Controller implements Sky {
+public class TheEndSky extends VanillaSky {
 	@Override
 	public void onAttached() {
 	}

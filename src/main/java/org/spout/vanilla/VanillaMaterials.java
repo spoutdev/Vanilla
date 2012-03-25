@@ -400,22 +400,5 @@ public final class VanillaMaterials {
 		VanillaMaterials.END_PORTAL.setDrop(VanillaMaterials.AIR);
 		VanillaMaterials.END_PORTAL_FRAME.setDrop(VanillaMaterials.AIR);
 		VanillaMaterials.REDSTONE_LAMP_ON.setDrop(VanillaMaterials.REDSTONE_LAMP_OFF);
-
-		/*
-		//TODO: Not needed?
-		Field[] fields = VanillaMaterials.class.getFields();
-		for (Field f : fields) {
-			if (Modifier.isStatic(f.getModifiers())) {
-				try {
-					Object value = f.get(null);
-					if (value instanceof Material) {
-						Material.registerMaterial((Material) value);
-					}
-				} catch (IllegalArgumentException e) {
-				} catch (IllegalAccessException e) {
-				}
-			}
-		}
-		*/
 	}
 }

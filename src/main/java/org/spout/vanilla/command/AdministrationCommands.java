@@ -48,7 +48,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.living.player.CreativePlayer;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.object.sky.Sky;
+import org.spout.vanilla.controller.object.Sky;
 import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
 import org.spout.vanilla.world.Weather;

@@ -42,7 +42,7 @@ public class SheepEntityProtocol extends BasicMobEntityProtocol {
 			Sheep sheep = (Sheep) controller;
 			byte data = 0;
 			data |= (sheep.isSheared() ? 1 : 0) << 4;
-			data |= sheep.getColor() & 0x0F;
+			data |= sheep.getColor().getData() & 0x0F;
 			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
 		}
 

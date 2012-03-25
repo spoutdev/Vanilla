@@ -107,18 +107,38 @@ public class Item extends Substance {
 		getParent().kill();
 	}
 
+	/**
+	 * Gets what material the item is.
+	 *
+	 * @return material of item.
+	 */
 	public Material getMaterial() {
 		return is.getMaterial();
 	}
 
+	/**
+	 * Gets the amount of the material there is in the ItemStack.
+	 *
+	 * @return amount of items
+	 */
 	public int getAmount() {
 		return is.getAmount();
 	}
 
+	/**
+	 * Gets the data of the item
+	 *
+	 * @return item data
+	 */
 	public short getData() {
 		return is.getData();
 	}
 
+	/**
+	 * Gets the roll of the item
+	 *
+	 * @return roll of item.
+	 */
 	public int getRoll() {
 		return roll;
 	}

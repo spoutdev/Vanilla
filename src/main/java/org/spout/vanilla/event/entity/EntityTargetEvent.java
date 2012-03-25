@@ -85,6 +85,9 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 		return handlers;
 	}
 
+	/**
+	 * Represents a target reason for an EntityTargetEvent.
+	 */
 	public enum TargetReason {
 		TARGET_DIED(false),
 		CLOSEST_PLAYER(true),
@@ -95,12 +98,18 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 		RANDOM_TARGET(true),
 		CUSTOM_TARGET(true),
 		CUSTOM_UNTARGET(false);
+
 		private boolean target;
 
 		private TargetReason(boolean target) {
 			this.target = target;
 		}
 
+		/**
+		 * Whether or not it is target
+		 *
+		 * @return true if target
+		 */
 		public boolean isTarget() {
 			return target;
 		}

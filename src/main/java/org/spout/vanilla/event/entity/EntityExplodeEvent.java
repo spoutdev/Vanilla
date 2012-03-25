@@ -26,6 +26,7 @@
 package org.spout.vanilla.event.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
@@ -36,44 +37,83 @@ import org.spout.api.geo.discrete.Point;
 
 public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private List<Block> blocks;
+	private Set<Block> blocks;
 	private Point epicenter;
 	private float yield;
 	private boolean incendiary;
 
 	public EntityExplodeEvent(Entity e) {
 		super(e);
-		// TODO Auto-generated constructor stub
 	}
 
-	public List<Block> getBlocks() {
+	/**
+	 * Gets a set of blocks that explode during this event.
+	 *
+	 * @return
+	 */
+	public Set<Block> getBlocks() {
 		return blocks;
 	}
 
-	public void setBlocks(List<Block> blocks) {
+	/**
+	 * Sets which blocks to explode.
+	 *
+	 * @param blocks
+	 */
+	public void setBlocks(Set<Block> blocks) {
 		this.blocks = blocks;
 	}
 
+	/**
+	 * Gets the epicenter of the explosion.
+	 *
+	 * @return epicenter of explosion.
+	 */
 	public Point getEpicenter() {
 		return epicenter;
 	}
 
+	/**
+	 * Sets the epicenter of the explosion.
+	 *
+	 * @param epicenter
+	 */
 	public void setEpicenter(Point epicenter) {
 		this.epicenter = epicenter;
 	}
 
+	/**
+	 * Whether or not the explosion is incendiary.
+	 *
+	 * @return true if incendiary.
+	 */
 	public boolean isIncendiary() {
 		return incendiary;
 	}
 
+	/**
+	 * Sets whether or not the explosion is incendiary.
+	 *
+	 * @param incendiary
+	 */
 	public void setIncendiary(boolean incendiary) {
 		this.incendiary = incendiary;
 	}
 
+	/**
+	 * Gets the yield of the explosion.
+	 *
+	 * @return yield of explosion.
+	 */
 	public float getYield() {
 		return yield;
 	}
 
+	/**
+	 * Sets the yield of the explosion.
+	 *
+	 * @param yield
+	 */
 	public void setYield(float yield) {
 		this.yield = yield;
 	}

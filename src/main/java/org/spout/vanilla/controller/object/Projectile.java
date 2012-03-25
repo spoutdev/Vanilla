@@ -32,6 +32,9 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.Substance;
 
+/**
+ * Represents a controller that can project through the air.
+ */
 public class Projectile extends Substance {
 	private Entity shooter;
 	private Point start;
@@ -64,6 +67,7 @@ public class Projectile extends Substance {
 
 	/**
 	 * Sets the controller that shot this projectile
+	 *
 	 * @param entity - the shooter
 	 */
 	public void setShooter(Entity entity) {
@@ -72,16 +76,27 @@ public class Projectile extends Substance {
 
 	/**
 	 * Gets the controller that shot this projectile
+	 *
 	 * @return the shooter controller
 	 */
 	public Entity getShooter() {
 		return shooter;
 	}
 
+	/**
+	 * Gets the velocity of the projectile.
+	 *
+	 * @return velocity of projectile.
+	 */
 	public Vector3 getVelocity() {
 		return velocity;
 	}
 
+	/**
+	 * Sets the velocity of the projectile.
+	 *
+	 * @param velocity
+	 */
 	public void setVelocity(Vector3 velocity) {
 		this.velocity = velocity;
 	}

@@ -25,6 +25,9 @@
  */
 package org.spout.vanilla.controller.effect;
 
+/**
+ * Represents an entity effect that is applied to an entity.
+ */
 public class ActiveEntityEffect {
 	private final EntityEffect effect;
 	private byte amplitude;
@@ -36,18 +39,47 @@ public class ActiveEntityEffect {
 		this.duration = duration;
 	}
 
+	/**
+	 * Gets the effect applied.
+	 *
+	 * @return effect
+	 */
 	public EntityEffect getEffect() {
 		return effect;
 	}
 
+	/**
+	 * Gets the amplitude of the effect.
+	 *
+	 * @return amplitude of effect.
+	 */
 	public byte getAmplitude() {
 		return amplitude;
 	}
 
+	/**
+	 * Gets the duration of the effect.
+	 *
+	 * @return duration
+	 */
 	public short getDuration() {
 		return duration;
 	}
 
+	/**
+	 * Sets the duration of the effect.
+	 *
+	 * @param duration
+	 */
+	public void setDuration(short duration) {
+		this.duration = duration;
+	}
+
+	/**
+	 * Decrements the effects duration by one.
+	 *
+	 * @return
+	 */
 	public boolean pulse() {
 		if (duration < 1) {
 			return false;

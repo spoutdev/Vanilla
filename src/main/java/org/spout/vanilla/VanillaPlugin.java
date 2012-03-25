@@ -46,7 +46,7 @@ import org.spout.api.protocol.Protocol;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.object.sky.Sky;
+import org.spout.vanilla.controller.object.Sky;
 import org.spout.vanilla.controller.object.sky.NetherSky;
 import org.spout.vanilla.controller.object.sky.NormalSky;
 import org.spout.vanilla.controller.object.sky.TheEndSky;

@@ -53,10 +53,10 @@ public final class EntityActionMessageHandler extends MessageHandler<EntityActio
 			case EntityActionMessage.ACTION_LEAVE_BED:
 				break;
 			case EntityActionMessage.ACTION_START_SPRINTING:
-				ve.setRunning(true);
+				ve.setSprinting(true);
 				break;
 			case EntityActionMessage.ACTION_STOP_SPRINTING:
-				ve.setRunning(false);
+				ve.setSprinting(false);
 				break;
 			default:
 				break;

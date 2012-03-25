@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.creature.passive;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Quaternion;
@@ -41,6 +42,8 @@ import org.spout.vanilla.material.block.Wool;
 
 public class Sheep extends Creature implements Passive {
 	private int color;
+	private Entity parent = getParent();
+	
 	public Sheep() {
 		this(0x0);
 	}
@@ -57,33 +60,52 @@ public class Sheep extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData(ControllerType.KEY, ControllerType.SHEEP.id);
-		getParent().setData("SheepSheared", false);
-		getParent().setData("SheepColor", color);
-		getParent().setMaxHealth(5);
-		getParent().setHealth(5);
+		parent.setData(ControllerType.KEY, ControllerType.SHEEP.id);
+		parent.setData("SheepSheared", false);
+		parent.setData("SheepColor", color);
+		parent.setMaxHealth(5);
+		parent.setHealth(5);
 	}
 
+	/**
+	 * Whether or not the sheep's wool has been sheared.
+	 * 
+	 * @return true if sheared.
+	 */
 	public boolean isSheared() {
-		return getParent().getData("SheepSheared").asBool();
+		return parent.getData("SheepSheared").asBool();
 	}
 
+	/**
+	 * Sets whether or not the sheep's wool has been sheared.
+	 * 
+	 * @param sheared
+	 */
 	public void setSheared(boolean sheared) {
-		getParent().setData("SheepSheared", sheared);
+		parent.setData("SheepSheared", sheared);
 	}
 
-	public int getColor() {
-		return getParent().getData("SheepColor").asInt();
+	/**
+	 * Gets the color of the sheep.
+	 * 
+	 * @return color of the sheep.
+	 */
+	public Wool.WoolColor getColor() {
+		return Wool.WoolColor.getById((short) color);
 	}
 
-	public void setColor() {
-		getParent().setData("SheepColor", getRandom());
+	/**
+	 * Sets the color of the sheep.
+	 *
+	 * @param color
+	 */
+	public void setColor(Wool.WoolColor color) {
+		parent.setData("SheepColor", color.getData());
 	}
 
 	@Override
 	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-
 		if (!isSheared()) {
 			drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial((short) color), 1));
 		}

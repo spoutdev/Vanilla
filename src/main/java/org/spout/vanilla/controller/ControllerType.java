@@ -118,21 +118,37 @@ public enum ControllerType {
 		controller = defaultController;
 	}
 
-	public int getID() {
+	/**
+	 * Gets the numerical id of the controller type.
+	 *
+	 * @return id of controller type.
+	 */
+	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Gets the controller class of the type.
+	 *
+	 * @return class of controller type.
+	 */
 	public Class<? extends VanillaController> getController() {
 		return controller;
 	}
 
-	public static ControllerType getByID(int id) {
+	/**
+	 * Gets a controller type by it's numerical value.
+	 *
+	 * @param id
+	 * @return controller type of id
+	 */
+	public static ControllerType getById(int id) {
 		return map.get(id);
 	}
 
 	static {
 		for (ControllerType m : ControllerType.values()) {
-			map.put(m.getID(), m);
+			map.put(m.getId(), m);
 		}
 	}
 }

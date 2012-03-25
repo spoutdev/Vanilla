@@ -18,7 +18,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<minecraft.version>1.2.3</minecraft.version>
+		<minecraft.version>1.2.4</minecraft.version>
 		<build.number>Unknown</build.number>
 	</properties>
 

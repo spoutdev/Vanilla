@@ -36,7 +36,7 @@ public class TransportMinecart extends Minecart implements Vehicle {
 
 	@Override
 	public void onPostMove(float dt) {
-		if (this.passenger == null) {
+		if (!this.isOnRail() || this.passenger == null) {
 			super.onPostMove(dt);
 		} else {
 			Vector3 velocity = this.getVelocity();

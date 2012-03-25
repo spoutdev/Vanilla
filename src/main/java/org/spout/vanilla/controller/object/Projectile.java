@@ -30,24 +30,19 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.object.Substance;
-
 /**
  * Represents a controller that can project through the air.
  */
-public class Projectile extends Substance {
+public class Projectile extends MovingSubstance {
 	private Entity shooter;
 	private Point start;
 	private Quaternion rotation;
-	private final int maxSpeed;
-	private Vector3 velocity;
 
 	public Projectile(Point start, Quaternion rotation, int maxSpeed) {
-		this.maxSpeed = maxSpeed;
+		this.setMaxSpeed(maxSpeed);
 		this.start = start;
 		this.rotation = rotation;
-
-		velocity = new Vector3(maxSpeed, 0, 0);
+		this.setVelocity(new Vector3(maxSpeed, 0, 0));
 	}
 
 	@Override
@@ -81,23 +76,5 @@ public class Projectile extends Substance {
 	 */
 	public Entity getShooter() {
 		return shooter;
-	}
-
-	/**
-	 * Gets the velocity of the projectile.
-	 *
-	 * @return velocity of projectile.
-	 */
-	public Vector3 getVelocity() {
-		return velocity;
-	}
-
-	/**
-	 * Sets the velocity of the projectile.
-	 *
-	 * @param velocity
-	 */
-	public void setVelocity(Vector3 velocity) {
-		this.velocity = velocity;
 	}
 }

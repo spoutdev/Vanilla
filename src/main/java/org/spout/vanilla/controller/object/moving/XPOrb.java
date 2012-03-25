@@ -26,22 +26,21 @@
 package org.spout.vanilla.controller.object.moving;
 
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.controller.ControllerType;
 import org.spout.vanilla.controller.object.Substance;
 
-
-
-public class XPOrb extends Substance{
+public class XPOrb extends Substance {
 	private int amount;
 	private Vector3 initial;
 	private Vector3 velocity = new Vector3();
-	
+
 	public XPOrb(int amount, Vector3 initial) {
 		this.amount = amount;
 		this.initial = initial;
 		setMoveable(true);
 	}
-	
+
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
@@ -52,9 +51,8 @@ public class XPOrb extends Substance{
 	public void onAttached() {
 		getParent().setData(ControllerType.KEY, ControllerType.XPORB.id);
 	}
-	
+
 	public int getExperienceAmount() {
 		return amount;
 	}
-
 }

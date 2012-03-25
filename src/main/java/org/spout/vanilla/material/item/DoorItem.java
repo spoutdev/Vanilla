@@ -32,8 +32,8 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
-
 import org.spout.api.math.MathHelper;
+
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.generic.GenericItem;
@@ -57,7 +57,7 @@ public class DoorItem extends GenericItem {
 		int y = (int) position.getY();
 		int z = (int) position.getZ();
 		Block b = world.getBlock(x, y - 1, z);
-		
+
 		if (b.getMaterial() instanceof Solid && b.move(BlockFace.TOP).getMaterial() == VanillaMaterials.AIR && b.move(BlockFace.TOP).getMaterial() == VanillaMaterials.AIR) {
 			System.out.println("Placing door!");
 		}

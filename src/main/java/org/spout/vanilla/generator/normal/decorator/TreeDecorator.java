@@ -32,10 +32,10 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.VanillaMaterials;
 
 public class TreeDecorator implements BiomeDecorator {
-	
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() < 4) {
@@ -70,7 +70,7 @@ public class TreeDecorator implements BiomeDecorator {
 		b.clone().move(BlockFace.EAST).setMaterial(VanillaMaterials.LEAVES);
 		b.clone().move(BlockFace.SOUTH).setMaterial(VanillaMaterials.LEAVES);
 		b.clone().move(BlockFace.WEST).setMaterial(VanillaMaterials.LEAVES);
-	
+
 		for (int k = 1; k <= oneWidth; k++) {
 			for (int i = -1; i <= 1; i++) {
 				for (int j = -1; j <= 1; j++) {

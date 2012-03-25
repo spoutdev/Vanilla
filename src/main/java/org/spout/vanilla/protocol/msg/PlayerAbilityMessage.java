@@ -23,41 +23,38 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living;
+package org.spout.vanilla.protocol.msg;
 
-import org.spout.vanilla.controller.VanillaController;
-import org.spout.vanilla.controller.action.GravityAction;
-import org.spout.vanilla.controller.action.WanderAction;
-import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
+import org.spout.api.protocol.Message;
 
-public abstract class Living extends VanillaController {
-	private int headYaw = 0, headYawLive = 0;
+public class PlayerAbilityMessage extends Message {
+	private final boolean isInvincible, isFlying, canFly, canInstantDestroy;
 
-	@Override
-	public void onAttached() {
-		registerAction(new WanderAction());
-		registerAction(new GravityAction());
+	public PlayerAbilityMessage(boolean isInvincible, boolean isFlying, boolean canFly, boolean canInstantDestroy) {
+		this.isInvincible = isInvincible;
+		this.isFlying = isFlying;
+		this.canFly = canFly;
+		this.canInstantDestroy = canInstantDestroy;
+	}
+
+	public boolean isInvincible() {
+		return isInvincible;
+	}
+
+	public boolean isFlying() {
+		return isFlying;
+	}
+
+	public boolean canFly() {
+		return canFly;
+	}
+
+	public boolean canInstantDestroy() {
+		return canInstantDestroy;
 	}
 
 	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
-
-		if (headYawLive != headYaw) {
-			headYawLive = headYaw;
-			sendMessage(getParent().getWorld().getPlayers(), new EntityHeadYawMessage(getParent().getId(), headYaw));
-		}
-	}
-
-	/**
-	 * Sets the yaw of a controller's head.
-	 * @param headYaw
-	 */
-	public void setHeadYaw(int headYaw) {
-		headYawLive = headYaw;
-	}
-
-	public int getHeadYaw() {
-		return headYaw;
+	public String toString() {
+		return "PlayerAbilityMessage{isInvincible=" + isInvincible + " isFlying=" + isFlying + " canFly=" + canFly + " canInstantDestroy=" + canInstantDestroy + "}";
 	}
 }

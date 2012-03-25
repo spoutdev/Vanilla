@@ -35,7 +35,6 @@ import org.spout.vanilla.material.item.RedstoneTorch;
 import org.spout.vanilla.material.item.RedstoneWire;
 
 public class GenericBlock extends BlockMaterial {
-
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
 	private float resistance;
 	private Material dropMaterial;
@@ -46,10 +45,9 @@ public class GenericBlock extends BlockMaterial {
 		dropMaterial = this;
 		dropCount = 1;
 	}
-	
+
 	public GenericBlock(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
-		
 	}
 
 	/**
@@ -116,22 +114,20 @@ public class GenericBlock extends BlockMaterial {
 
 	public Material getDrop() {
 		return dropMaterial;
-
 	}
 
 	public int getDropCount() {
 		return dropCount;
 	}
-	
 
 	public GenericBlock setDrop(Material id) {
 		dropMaterial = id;
 		return this;
 	}
-	
+
 	public GenericBlock setDropCount(int count) {
 		dropCount = count;
-		
+
 		return this;
 	}
 

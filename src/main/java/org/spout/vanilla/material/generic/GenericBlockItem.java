@@ -32,15 +32,15 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-
-import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
+
+import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.material.BlockItem;
 
 public class GenericBlockItem extends GenericItem implements BlockItem {
 	GenericMaterialSource onPlace;
-	
+
 	public GenericBlockItem(String name, int id, BlockMaterial onPlaceMaterial) {
 		this(name, id, onPlaceMaterial, (short) 0);
 	}
@@ -73,7 +73,7 @@ public class GenericBlockItem extends GenericItem implements BlockItem {
 			Block b = position.getWorld().getBlock(position);
 
 			System.out.println("Placing Block " + getBlock() + " on Interact at " + position);
-			
+
 			b.setMaterial(getBlock());
 		}
 	}

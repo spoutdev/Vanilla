@@ -38,7 +38,6 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.ControllerType;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.creature.neutral.Enderman;
-import org.spout.vanilla.controller.living.creature.passive.Chicken;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 
 public class TestCommands {
@@ -59,7 +58,7 @@ public class TestCommands {
 		World world = entity.getWorld();
 		Controller control;
 		if (args.length() > 0) {
-			switch(ControllerType.valueOf(args.getString(0).toUpperCase())) {
+			switch (ControllerType.valueOf(args.getString(0).toUpperCase())) {
 				case SHEEP: {
 					control = new Sheep();
 					break;

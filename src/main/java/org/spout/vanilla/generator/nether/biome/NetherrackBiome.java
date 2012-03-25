@@ -36,11 +36,11 @@ public class NetherrackBiome extends VanillaBiomeType {
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-//		if (chunkY <= 4) {
-//			for (int y = 0; y < (chunkY << Chunk.CHUNK_SIZE_BITS) + 16; ++y) {
-//				blockData.set(x, y, z, VanillaMaterials.NETHERRACK.getId());
-//			}
-//		}
+		//		if (chunkY <= 4) {
+		//			for (int y = 0; y < (chunkY << Chunk.CHUNK_SIZE_BITS) + 16; ++y) {
+		//				blockData.set(x, y, z, VanillaMaterials.NETHERRACK.getId());
+		//			}
+		//		}
 	}
 
 	@Override

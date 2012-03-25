@@ -26,11 +26,10 @@
 package org.spout.vanilla.protocol.msg;
 
 import java.util.List;
-import java.util.Map;
-
-import org.spout.nbt.Tag;
 
 import org.spout.api.protocol.Message;
+
+import org.spout.nbt.Tag;
 
 public final class WindowClickMessage extends Message {
 	private final int id, slot;

@@ -33,19 +33,19 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.jboss.netty.buffer.ChannelBuffer;
-import org.spout.nbt.CompoundTag;
-import org.spout.nbt.Tag;
-import org.spout.nbt.stream.NBTInputStream;
-import org.spout.nbt.stream.NBTOutputStream;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
+
+import org.spout.nbt.CompoundTag;
+import org.spout.nbt.Tag;
+import org.spout.nbt.stream.NBTInputStream;
+import org.spout.nbt.stream.NBTOutputStream;
 
 import org.spout.vanilla.VanillaMaterials;
 

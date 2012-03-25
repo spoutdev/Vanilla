@@ -29,10 +29,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.controller.ControllerType;
@@ -42,8 +39,8 @@ import org.spout.vanilla.material.block.Wool;
 
 public class Sheep extends Creature implements Passive {
 	private int color;
-	private Entity parent;
-	
+	private Entity parent = getParent();
+
 	public Sheep() {
 		this(0x0);
 	}
@@ -60,7 +57,6 @@ public class Sheep extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
 		parent.setData(ControllerType.KEY, ControllerType.SHEEP.id);
 		parent.setData("SheepSheared", false);
 		parent.setData("SheepColor", color);
@@ -70,7 +66,6 @@ public class Sheep extends Creature implements Passive {
 
 	/**
 	 * Whether or not the sheep's wool has been sheared.
-	 * 
 	 * @return true if sheared.
 	 */
 	public boolean isSheared() {
@@ -79,7 +74,6 @@ public class Sheep extends Creature implements Passive {
 
 	/**
 	 * Sets whether or not the sheep's wool has been sheared.
-	 * 
 	 * @param sheared
 	 */
 	public void setSheared(boolean sheared) {
@@ -88,7 +82,6 @@ public class Sheep extends Creature implements Passive {
 
 	/**
 	 * Gets the color of the sheep.
-	 * 
 	 * @return color of the sheep.
 	 */
 	public Wool.WoolColor getColor() {
@@ -97,7 +90,6 @@ public class Sheep extends Creature implements Passive {
 
 	/**
 	 * Sets the color of the sheep.
-	 *
 	 * @param color
 	 */
 	public void setColor(Wool.WoolColor color) {

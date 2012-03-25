@@ -32,22 +32,21 @@ import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-
 public class GenericItem extends ItemMaterial {
 	private boolean hasNBT = false;
-	
+
 	public GenericItem(String name, int id) {
 		super(name, id);
 	}
-	
+
 	public GenericItem(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
 	}
-	
+
 	public boolean getNBTData() {
 		return this.hasNBT;
 	}
-	
+
 	public GenericItem setNBTData(boolean has) {
 		this.hasNBT = has;
 		return this;

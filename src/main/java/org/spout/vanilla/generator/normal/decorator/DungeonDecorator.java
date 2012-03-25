@@ -30,6 +30,7 @@ import java.util.Random;
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.VanillaMaterials;
 
 public class DungeonDecorator implements BiomeDecorator {

@@ -35,16 +35,16 @@ public class GenericArmor extends GenericItem implements Armor {
 		this.protection = protection;
 		this.setNBTData(true);
 	}
-	
+
 	/*
-	 * 	VanillaMaterials.FLINT_AND_STEEL.getTypeId()
-	 * VanillaMaterials.BOW.getId()
-	 * VanillaMaterials.FISHING_ROD.getId()
-	 * VanillaMaterials.SHEARS.getId()
+		 * 	VanillaMaterials.FLINT_AND_STEEL.getTypeId()
+		 * VanillaMaterials.BOW.getId()
+		 * VanillaMaterials.FISHING_ROD.getId()
+		 * VanillaMaterials.SHEARS.getId()
 
 
-		}
-	 */
+			}
+		 */
 
 	@Override
 	public int getProtection() {

@@ -83,7 +83,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 
 		if (message.isShift()) {
 			//if (inv == player.getInventory().getOpenWindow()) {
-				// TODO: if player has e.g. chest open
+			// TODO: if player has e.g. chest open
 			//}
 			{
 				if (slot < 9) {

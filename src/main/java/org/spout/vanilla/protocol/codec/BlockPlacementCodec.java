@@ -27,13 +27,13 @@ package org.spout.vanilla.protocol.codec;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-import org.spout.nbt.Tag;
 
 import org.spout.api.protocol.MessageCodec;
+
+import org.spout.nbt.Tag;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;

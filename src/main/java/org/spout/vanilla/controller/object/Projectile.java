@@ -62,7 +62,6 @@ public class Projectile extends MovingSubstance {
 
 	/**
 	 * Sets the controller that shot this projectile
-	 *
 	 * @param entity - the shooter
 	 */
 	public void setShooter(Entity entity) {
@@ -71,7 +70,6 @@ public class Projectile extends MovingSubstance {
 
 	/**
 	 * Gets the controller that shot this projectile
-	 *
 	 * @return the shooter controller
 	 */
 	public Entity getShooter() {

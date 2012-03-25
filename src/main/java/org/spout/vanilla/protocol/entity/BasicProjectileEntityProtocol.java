@@ -57,7 +57,7 @@ public abstract class BasicProjectileEntityProtocol extends VanillaEntityProtoco
 			int dirY = (int) (vel.getY() * 8000);
 			int dirZ = (int) (vel.getZ() * 8000);
 
-			return new Message[] {new SpawnVehicleMessage(id, this.getSpawnedProjectileType(), x, y, z, shooterid, dirX, dirY, dirZ)};
+			return new Message[]{new SpawnVehicleMessage(id, this.getSpawnedProjectileType(), x, y, z, shooterid, dirX, dirY, dirZ)};
 		} else {
 			return null;
 		}

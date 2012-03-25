@@ -25,6 +25,8 @@
  */
 package org.spout.vanilla.protocol.entity.object;
 
+import java.util.Arrays;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
@@ -32,20 +34,19 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
+
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.controller.object.MovingBlock;
 import org.spout.vanilla.protocol.entity.BasicVehicleEntityProtocol;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
-import java.util.Arrays;
-
 /**
- *
  * @author zml2008
  */
 public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 	public static final int BLOCK_TYPE_METADATA_INDEX = 30;
+
 	@Override
 	public int getSpawnedVehicleType() {
 		return 70;
@@ -70,7 +71,7 @@ public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 			int y = MathHelper.floor(position.getY());
 			int z = MathHelper.floor(position.getZ());
 			SpawnVehicleMessage msg = new SpawnVehicleMessage(entity.getId(), spawnId, x, y, z);
-			return new Message[] {msg, new EntityMetadataMessage(entity.getId(), Arrays.<Parameter<?>>asList(new Parameter<Short>(Parameter.TYPE_SHORT, BLOCK_TYPE_METADATA_INDEX, block.getId())))};
+			return new Message[]{msg, new EntityMetadataMessage(entity.getId(), Arrays.<Parameter<?>>asList(new Parameter<Short>(Parameter.TYPE_SHORT, BLOCK_TYPE_METADATA_INDEX, block.getId())))};
 		}
 		return null;
 	}

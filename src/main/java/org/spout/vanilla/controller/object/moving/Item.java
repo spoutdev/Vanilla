@@ -32,6 +32,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.ControllerType;
 import org.spout.vanilla.controller.object.Substance;
@@ -99,7 +100,7 @@ public class Item extends Substance {
 
 		int collected = getParent().getId();
 		int collector = closestPlayer.getEntity().getId();
-		
+
 		for (Player player : players) {
 			sendMessage(player, new CollectItemMessage(collected, collector));
 		}
@@ -110,7 +111,6 @@ public class Item extends Substance {
 
 	/**
 	 * Gets what material the item is.
-	 *
 	 * @return material of item.
 	 */
 	public Material getMaterial() {
@@ -119,7 +119,6 @@ public class Item extends Substance {
 
 	/**
 	 * Gets the amount of the material there is in the ItemStack.
-	 *
 	 * @return amount of items
 	 */
 	public int getAmount() {
@@ -128,7 +127,6 @@ public class Item extends Substance {
 
 	/**
 	 * Gets the data of the item
-	 *
 	 * @return item data
 	 */
 	public short getData() {
@@ -137,7 +135,6 @@ public class Item extends Substance {
 
 	/**
 	 * Gets the roll of the item
-	 *
 	 * @return roll of item.
 	 */
 	public int getRoll() {

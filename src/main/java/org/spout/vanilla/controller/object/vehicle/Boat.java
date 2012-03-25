@@ -26,10 +26,9 @@
 package org.spout.vanilla.controller.object.vehicle;
 
 import org.spout.vanilla.controller.ControllerType;
-import org.spout.vanilla.controller.object.MovingSubstance;
+import org.spout.vanilla.controller.object.Substance;
 
-public class Boat extends MovingSubstance implements Vehicle {
-
+public class Boat extends Substance implements Vehicle {
 	@Override
 	public void onAttached() {
 		super.onAttached();

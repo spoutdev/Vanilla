@@ -23,41 +23,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living;
+package org.spout.vanilla.protocol.handler;
+
+import org.spout.api.player.Player;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.VanillaController;
-import org.spout.vanilla.controller.action.GravityAction;
-import org.spout.vanilla.controller.action.WanderAction;
-import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 
-public abstract class Living extends VanillaController {
-	private int headYaw = 0, headYawLive = 0;
-
+public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbilityMessage> {
 	@Override
-	public void onAttached() {
-		registerAction(new WanderAction());
-		registerAction(new GravityAction());
-	}
-
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
-
-		if (headYawLive != headYaw) {
-			headYawLive = headYaw;
-			sendMessage(getParent().getWorld().getPlayers(), new EntityHeadYawMessage(getParent().getId(), headYaw));
+	public void handle(Session session, Player player, PlayerAbilityMessage message) {
+		if (player.getEntity().getController() == null) {
+			return;
 		}
-	}
+		if (!(player.getEntity().getController() instanceof VanillaController)) {
+			return;
+		}
+		VanillaPlayer ve = (VanillaPlayer) player.getEntity().getController();
 
-	/**
-	 * Sets the yaw of a controller's head.
-	 * @param headYaw
-	 */
-	public void setHeadYaw(int headYaw) {
-		headYawLive = headYaw;
-	}
-
-	public int getHeadYaw() {
-		return headYaw;
+		//TODO Implement this.
 	}
 }

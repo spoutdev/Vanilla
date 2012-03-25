@@ -29,14 +29,12 @@ import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
+
 import org.spout.vanilla.controller.object.moving.XPOrb;
 import org.spout.vanilla.protocol.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.ExperienceOrbMessage;
 
-
-
 public class XPOrbEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
-
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
@@ -47,7 +45,6 @@ public class XPOrbEntityProtocol extends VanillaEntityProtocol implements Entity
 		int x = (int) (entity.getPosition().getX() * 32);
 		int y = (int) (entity.getPosition().getY() * 32);
 		int z = (int) (entity.getPosition().getZ() * 32);
-		return new Message[] {new ExperienceOrbMessage(id,x,y,z, (short) 1)}; //TODO improve efficiency, can be more than one experience orb in one packet!
+		return new Message[]{new ExperienceOrbMessage(id, x, y, z, (short) 1)}; //TODO improve efficiency, can be more than one experience orb in one packet!
 	}
-
 }

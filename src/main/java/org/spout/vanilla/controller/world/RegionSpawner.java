@@ -82,17 +82,17 @@ public class RegionSpawner extends Controller {
 	}
 
 	/**
-<<<<<<< Updated upstream:src/main/java/org/spout/vanilla/controller/world/RegionSpawner.java
+	 * <<<<<<< Updated upstream:src/main/java/org/spout/vanilla/controller/world/RegionSpawner.java
 	 * Adds a controller type to the list of controller types this region spawner will try to spawn.
 	 * @param type	   to spawn
 	 * @param canSpawnOn a set of block materials that this controller can spawn on
 	 * @param amount	 of this type of controller that should be spawned per chunk, on average
-=======
-	 * Adds a controller type to the list of entity types this region spawner will try to spawn.
-	 * @param type to spawn
+	 *                   =======
+	 *                   Adds a controller type to the list of entity types this region spawner will try to spawn.
+	 * @param type	   to spawn
 	 * @param canSpawnOn a set of block materials that this entity can spawn on
 	 * @param amount	 of this type of entity that should be spawned per chunk, on average
->>>>>>> Stashed changes:src/main/java/org/spout/vanilla/entity/world/RegionEntitySpawner.java
+	 *                   >>>>>>> Stashed changes:src/main/java/org/spout/vanilla/entity/world/RegionEntitySpawner.java
 	 * @throws IllegalStateException if the controller lacks a default no-argument constructor
 	 */
 	public void addSpawnableType(Class<? extends Controller> type, Set<BlockMaterial> canSpawnOn, int amount) {

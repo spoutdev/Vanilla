@@ -35,7 +35,7 @@ import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	@Override
 	public Message[] getDestroyMessage(Entity entity) {
-		return new Message[] {new DestroyEntityMessage(entity.getId())};
+		return new Message[]{new DestroyEntityMessage(entity.getId())};
 	}
 
 	@Override
@@ -47,6 +47,6 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		int r = (int) (entity.getYaw() * 32);
 		int p = (int) (entity.getPitch() * 32);
 		// TODO - improve efficiency
-		return new Message[] {new EntityTeleportMessage(id, x, y, z, r, p)};
+		return new Message[]{new EntityTeleportMessage(id, x, y, z, r, p)};
 	}
 }

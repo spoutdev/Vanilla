@@ -60,7 +60,7 @@ import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 public class VanillaPlugin extends CommonPlugin {
 	private static VanillaPlugin instance;
 	private final VanillaConfiguration config;
-	public static final int minecraftProtocolId = 28;
+	public static final int minecraftProtocolId = 29;
 	public static int vanillaProtocolId;
 	private final HashMap<World, Sky> skys = new HashMap<World, Sky>();
 
@@ -147,7 +147,7 @@ public class VanillaPlugin extends CommonPlugin {
 		nether.setSpawnPoint(new Transform(new Point(nether, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), netherSky);
 		nether.createAndSpawnEntity(new Point(nether, 0.5F, 64.5F, 0.5F), observer);
-		
+
 		end.setSpawnPoint(new Transform(new Point(end, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), endSky);
 		end.createAndSpawnEntity(new Point(end, 0.5F, 64.5F, 0.5F), observer);

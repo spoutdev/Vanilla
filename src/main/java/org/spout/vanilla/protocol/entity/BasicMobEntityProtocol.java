@@ -35,7 +35,6 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.ControllerType;
-import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.protocol.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
@@ -70,7 +69,7 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 				return null;
 			}
 			List<Parameter<?>> parameters = this.getSpawnParameters(c);
-			return new Message[] {new SpawnMobMessage(id, type, x, y, z, r, p, headyaw, parameters)};
+			return new Message[]{new SpawnMobMessage(id, type, x, y, z, r, p, headyaw, parameters)};
 		} else {
 			return null;
 		}

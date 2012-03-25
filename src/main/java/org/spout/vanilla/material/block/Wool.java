@@ -25,78 +25,37 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.material.source.DataSource;
-import org.spout.vanilla.material.MovingBlock;
-import org.spout.vanilla.material.generic.GenericBlock;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import org.spout.api.material.source.DataSource;
+
+import org.spout.vanilla.material.MovingBlock;
+import org.spout.vanilla.material.generic.GenericBlock;
+
 public class Wool extends GenericBlock implements MovingBlock {
 	public static final Wool WHITE = register(new Wool("White Wool"));
-	public static final Wool ORANGE = register(new Wool("Orange Wool", WoolColor.Orange, WHITE));
-	public static final Wool MAGENTA = register(new Wool("Magenta Wool", WoolColor.Magenta, WHITE));
-	public static final Wool LIGHTBLUE = register(new Wool("Light Blue Wool", WoolColor.LightBlue, WHITE));
-	public static final Wool YELLOW = register(new Wool("Yellow Wool", WoolColor.Yellow, WHITE));
-	public static final Wool LIME = register(new Wool("Lime Wool", WoolColor.Lime, WHITE));
-	public static final Wool PINK = register(new Wool("Pink Wool", WoolColor.Pink, WHITE));
-	public static final Wool GRAY = register(new Wool("Gray Wool", WoolColor.Gray, WHITE));
-	public static final Wool SILVER = register(new Wool("Silver Wool", WoolColor.Silver, WHITE));
-	public static final Wool CYAN = register(new Wool("Cyan Wool", WoolColor.Cyan, WHITE));
-	public static final Wool PURPLE = register(new Wool("Purple Wool", WoolColor.Purple, WHITE));
-	public static final Wool BLUE = register(new Wool("Blue Wool", WoolColor.Blue, WHITE));
-	public static final Wool BROWN = register(new Wool("Brown Wool", WoolColor.Brown, WHITE));
-	public static final Wool GREEN = register(new Wool("Green Wool", WoolColor.Green, WHITE));
-	public static final Wool RED = register(new Wool("Red Wool", WoolColor.Red, WHITE));
-	public static final Wool BLACK = register(new Wool("Black Wool", WoolColor.Black, WHITE));
-	
-	public static enum WoolColor implements DataSource {
-		White(0),
-		Orange(1),
-		Magenta(2),
-		LightBlue(3),
-		Yellow(4),
-		Lime(5),
-		Pink(6),
-		Gray(7),
-		Silver(8),
-		Cyan(9),
-		Purple(10),
-		Blue(11),
-		Brown(12),
-		Green(13),
-		Red(14),
-		Black(15);
-
-		private final short data;
-		private static final Map<Short, WoolColor> ids = new HashMap<Short, WoolColor>();
-
-		private WoolColor(int data) {
-			this.data = (short) data;
-		}
-
-		@Override
-		public short getData() {
-			return this.data;
-		}
-		
-		public static WoolColor getById(short id) {
-			return ids.get(id);
-		}
-
-		static {
-			for (WoolColor color : WoolColor.values()) {
-				ids.put(color.getData(), color);
-			}
-		}
-	}
-
+	public static final Wool ORANGE = register(new Wool("Orange Wool", WoolColor.ORANGE, WHITE));
+	public static final Wool MAGENTA = register(new Wool("Magenta Wool", WoolColor.MAGENTA, WHITE));
+	public static final Wool LIGHTBLUE = register(new Wool("Light Blue Wool", WoolColor.LIGHTBLUE, WHITE));
+	public static final Wool YELLOW = register(new Wool("Yellow Wool", WoolColor.YELLOW, WHITE));
+	public static final Wool LIME = register(new Wool("Lime Wool", WoolColor.LIME, WHITE));
+	public static final Wool PINK = register(new Wool("Pink Wool", WoolColor.PINK, WHITE));
+	public static final Wool GRAY = register(new Wool("Gray Wool", WoolColor.GRAY, WHITE));
+	public static final Wool SILVER = register(new Wool("Silver Wool", WoolColor.SILVER, WHITE));
+	public static final Wool CYAN = register(new Wool("Cyan Wool", WoolColor.CYAN, WHITE));
+	public static final Wool PURPLE = register(new Wool("Purple Wool", WoolColor.PURPLE, WHITE));
+	public static final Wool BLUE = register(new Wool("Blue Wool", WoolColor.BLUE, WHITE));
+	public static final Wool BROWN = register(new Wool("Brown Wool", WoolColor.BROWN, WHITE));
+	public static final Wool GREEN = register(new Wool("Green Wool", WoolColor.GREEN, WHITE));
+	public static final Wool RED = register(new Wool("Red Wool", WoolColor.RED, WHITE));
+	public static final Wool BLACK = register(new Wool("Black Wool", WoolColor.BLACK, WHITE));
 	private final WoolColor color;
 
 	private Wool(String name) {
 		super(name, 35);
 		this.setDefault();
-		this.color = WoolColor.White;
+		this.color = WoolColor.WHITE;
 	}
 
 	private Wool(String name, WoolColor color, Wool parent) {
@@ -122,9 +81,49 @@ public class Wool extends GenericBlock implements MovingBlock {
 	public short getData() {
 		return color.getData();
 	}
-	
+
 	@Override
 	public Wool getParentMaterial() {
 		return (Wool) super.getParentMaterial();
+	}
+
+	public static enum WoolColor implements DataSource {
+		WHITE(0),
+		ORANGE(1),
+		MAGENTA(2),
+		LIGHTBLUE(3),
+		YELLOW(4),
+		LIME(5),
+		PINK(6),
+		GRAY(7),
+		SILVER(8),
+		CYAN(9),
+		PURPLE(10),
+		BLUE(11),
+		BROWN(12),
+		GREEN(13),
+		RED(14),
+		BLACK(15);
+		private final short data;
+		private static final Map<Short, WoolColor> ids = new HashMap<Short, WoolColor>();
+
+		private WoolColor(int data) {
+			this.data = (short) data;
+		}
+
+		@Override
+		public short getData() {
+			return this.data;
+		}
+
+		public static WoolColor getById(short id) {
+			return ids.get(id);
+		}
+
+		static {
+			for (WoolColor color : WoolColor.values()) {
+				ids.put(color.getData(), color);
+			}
+		}
 	}
 }

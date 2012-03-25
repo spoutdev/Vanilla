@@ -68,7 +68,6 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 					temp.damage(damage);
 					temp.sendMessage(temp.getParent().getWorld().getPlayers(), new EntityAnimationMessage(temp.getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(temp.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
 				}
-
 			}
 		} else {
 			ItemStack holding = player.getEntity().getInventory().getCurrentItem();

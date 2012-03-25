@@ -30,6 +30,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;
@@ -41,7 +42,6 @@ public class Slab extends GenericBlock implements MovingBlock {
 	public static final Slab COBBLESTONE = register(new Slab("Cobblestone Slab", 3, STONE));
 	public static final Slab BRICK = register(new Slab("Brick Slab", 4, STONE));
 	public static final Slab STONE_BRICK = register(new Slab("Stone Brick Slab", 5, STONE));
-
 	private DoubleSlab doubletype = VanillaMaterials.DOUBLE_SLABS;
 
 	private Slab(String name) {

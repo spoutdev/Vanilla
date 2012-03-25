@@ -52,9 +52,9 @@ import org.spout.vanilla.controller.living.creature.passive.Squid;
 import org.spout.vanilla.controller.living.creature.passive.Villager;
 import org.spout.vanilla.controller.living.creature.util.IronGolem;
 import org.spout.vanilla.controller.living.creature.util.SnowGolem;
-import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.object.MovingBlock;
 import org.spout.vanilla.controller.object.misc.EnderCrystal;
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
 import org.spout.vanilla.controller.object.moving.XPOrb;
 import org.spout.vanilla.controller.object.projectile.Arrow;
@@ -108,7 +108,6 @@ public enum ControllerType {
 	VILLAGER(120, Villager.class),
 	ENDECRYSTAL(200, EnderCrystal.class),
 	IRONGOLEM(99, IronGolem.class);
-
 	public final int id;
 	public final Class<? extends VanillaController> controller;
 	public static final String KEY = "ControllerID";
@@ -121,7 +120,6 @@ public enum ControllerType {
 
 	/**
 	 * Gets the numerical id of the controller type.
-	 *
 	 * @return id of controller type.
 	 */
 	public int getId() {
@@ -130,7 +128,6 @@ public enum ControllerType {
 
 	/**
 	 * Gets the controller class of the type.
-	 *
 	 * @return class of controller type.
 	 */
 	public Class<? extends VanillaController> getController() {
@@ -139,7 +136,6 @@ public enum ControllerType {
 
 	/**
 	 * Gets a controller type by it's numerical value.
-	 *
 	 * @param id
 	 * @return controller type of id
 	 */

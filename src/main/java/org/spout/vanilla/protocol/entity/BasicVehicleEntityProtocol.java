@@ -52,6 +52,6 @@ public abstract class BasicVehicleEntityProtocol extends VanillaEntityProtocol i
 		int z = (int) (entity.getPosition().getZ() * 32);
 
 		//FIXME: Store vehicle type in controller (VehicleEntity implementing?) class instead
-		return new Message[] {new SpawnVehicleMessage(id, this.getSpawnedVehicleType(), x, y, z)};
+		return new Message[]{new SpawnVehicleMessage(id, this.getSpawnedVehicleType(), x, y, z)};
 	}
 }

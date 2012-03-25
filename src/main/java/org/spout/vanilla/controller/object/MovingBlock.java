@@ -42,7 +42,6 @@ public class MovingBlock extends MovingSubstance {
 
 	/**
 	 * Gets the block that is moving.
-	 *
 	 * @return moving block.
 	 */
 	public BlockMaterial getBlock() {

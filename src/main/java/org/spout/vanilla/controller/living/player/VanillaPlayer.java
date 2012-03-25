@@ -25,6 +25,10 @@
  */
 package org.spout.vanilla.controller.living.player;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.Inventory;
@@ -33,14 +37,11 @@ import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.UserListItemMessage;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
@@ -107,7 +108,6 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Gets the amount of ticks it takes the client to respond to the server.
-	 *
 	 * @return ping of player.
 	 */
 	public short getPing() {
@@ -140,7 +140,6 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not the player is sneaking.
-	 *
 	 * @param sneaking
 	 */
 	public void setSneaking(boolean sneaking) {
@@ -149,7 +148,6 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is sneaking.
-	 *
 	 * @return true if player is sneaking
 	 */
 	public boolean isSneaking() {
@@ -158,7 +156,6 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not th player is
-	 *
 	 * @param sprinting
 	 */
 	public void setSprinting(boolean sprinting) {
@@ -167,7 +164,6 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is sprinting.
-	 *
 	 * @return true if sprinting
 	 */
 	public boolean isSprinting() {
@@ -176,7 +172,6 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not the player is on the ground.
-	 *
 	 * @param onGround
 	 */
 	public void setOnGround(boolean onGround) {
@@ -185,7 +180,6 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is on the ground.
-	 *
 	 * @return true if on ground.
 	 */
 	public boolean isOnGround() {
@@ -194,7 +188,6 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Makes the player a server operator.
-	 *
 	 * @param op
 	 */
 	public void setOp(boolean op) {
@@ -204,7 +197,6 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is a server operator.
-	 *
 	 * @return true if an operator.
 	 */
 	public boolean isOp() {

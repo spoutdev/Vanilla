@@ -25,16 +25,16 @@
  */
 package org.spout.vanilla.controller.action;
 
+import java.util.Random;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityAction;
-
-import java.util.Random;
 
 import org.spout.vanilla.controller.VanillaController;
 
 public class WanderAction extends EntityAction<VanillaController> {
-    private static final int WANDER_FREQ = 2;
-    private final Random rand = new Random();
+	private static final int WANDER_FREQ = 2;
+	private final Random rand = new Random();
 	private int countdown;
 
 	@Override
@@ -43,7 +43,7 @@ public class WanderAction extends EntityAction<VanillaController> {
 	}
 
 	@Override
-    public void run(Entity entity, VanillaController controller) {
+	public void run(Entity entity, VanillaController controller) {
 		countdown = controller.getRandom().nextInt(7) + 3;
 		float x = (controller.getRandom().nextBoolean() ? 1 : -1) * controller.getRandom().nextFloat();
 		float z = (controller.getRandom().nextBoolean() ? 1 : -1) * controller.getRandom().nextFloat();
@@ -64,6 +64,5 @@ public class WanderAction extends EntityAction<VanillaController> {
             }
         }
         entity.setPoint(toLoc);*/
-    }
-
+	}
 }

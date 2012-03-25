@@ -35,7 +35,6 @@ import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class SpiderJockey extends Creature implements Hostile {
-
 	@Override
 	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();

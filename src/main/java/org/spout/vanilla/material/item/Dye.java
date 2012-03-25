@@ -27,10 +27,10 @@ package org.spout.vanilla.material.item;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
-import org.spout.api.material.source.DataSource;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class Dye extends GenericItem {
@@ -50,7 +50,6 @@ public class Dye extends GenericItem {
 	public static final Dye MAGENTA = register(new Dye("Magenta Dye", DyeColor.MAGENTA, INK_SAC));
 	public static final Dye ORANGE = register(new Dye("Orange Dye", DyeColor.ORANGE, INK_SAC));
 	public static final Dye BONE_MEAL = register(new Dye("Bone Meal", DyeColor.WHITE, INK_SAC));
-
 	private final DyeColor color;
 
 	public static enum DyeColor implements DataSource {
@@ -70,7 +69,6 @@ public class Dye extends GenericItem {
 		MAGENTA(13),
 		ORANGE(14),
 		WHITE(15);
-
 		private final short data;
 
 		private DyeColor(int data) {
@@ -123,7 +121,7 @@ public class Dye extends GenericItem {
 	public short getData() {
 		return this.color.getData();
 	}
-	
+
 	@Override
 	public Dye getParentMaterial() {
 		return (Dye) super.getParentMaterial();

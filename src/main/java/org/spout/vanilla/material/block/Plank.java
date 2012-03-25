@@ -25,56 +25,67 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.Material;
+import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.VanillaMaterials;
-import org.spout.vanilla.controller.object.MovingBlock;
+import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.generic.GenericBlock;
 
-public class Solid extends GenericBlock implements org.spout.vanilla.material.MovingBlock {
-	private final boolean moving;
+public class Plank extends GenericBlock implements MovingBlock {
+	public static final Plank PLANK = register(new Plank("Oak Plank"));
+	public static final Plank PINE = register(new Plank("Pine Plank", WoodType.PINE, PLANK));
+	public static final Plank BIRCH = register(new Plank("Birch Plank", WoodType.BIRCH, PLANK));
+	public static final Plank JUNGLE = register(new Plank("Jungle Plank", WoodType.JUNGLE, PLANK));
+	private final WoodType type;
 
-	public Solid(String name, int id, boolean canMove) {
-		super(name, id);
-		moving = canMove;
+	public Plank(String name) {
+		super(name, 05);
+		this.setDefault();
+		this.type = WoodType.OAK;
 	}
 
-	public Solid(String name, int id) {
-		super(name, id);
-		moving = false;
+	public Plank(String name, WoodType type, Plank parent) {
+		super(name, 05, type.getData(), parent);
+		this.setDefault();
+		this.type = type;
 	}
 
-	public Solid(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
-		moving = false;
-	}
-
-	public Solid(String name, int id, int data, Material parent, boolean canMove) {
-		super(name, id, data, parent);
-		moving = canMove;
+	private void setDefault() {
+		this.setHardness(0.8F).setResistance(1.3F);
 	}
 
 	@Override
 	public boolean isMoving() {
-		return moving;
+		return false;
+	}
+
+	public WoodType getType() {
+		return type;
 	}
 
 	@Override
-	public boolean hasPhysics() {
-		return moving;
+	public short getData() {
+		return type.getData();
 	}
 
 	@Override
-	public void onUpdate(World world, int x, int y, int z) {
-		if (moving) {
-			Block block = world.getBlock(x, y - 1, z);
-			if (block.getMaterial() == VanillaMaterials.AIR || block.getMaterial().isLiquid()) {
-				if (world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world)) {
-					world.createAndSpawnEntity(block.getPosition(), new MovingBlock(this));
-				}
-			}
+	public Plank getParentMaterial() {
+		return (Plank) super.getParentMaterial();
+	}
+
+	public static enum WoodType implements DataSource {
+		OAK(0),
+		PINE(1),
+		BIRCH(2),
+		JUNGLE(3),;
+		private final short data;
+
+		private WoodType(int data) {
+			this.data = (short) data;
+		}
+
+		@Override
+		public short getData() {
+			return this.data;
 		}
 	}
 }

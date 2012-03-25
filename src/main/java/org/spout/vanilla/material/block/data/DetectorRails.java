@@ -31,26 +31,26 @@ import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.util.RailsState;
 
 public class DetectorRails extends Rails {
-	
 	private boolean pressed;
+
 	public DetectorRails(short data) {
 		super((short) (data & 0x7));
 		this.pressed = (data & 0x8) == 0x8;
 	}
-	
+
 	public DetectorRails(RailsState state, boolean pressed) {
 		super(state);
 		this.pressed = pressed;
 	}
-	
+
 	public boolean isPressed() {
 		return this.pressed;
 	}
-	
+
 	public void setPressed(boolean pressed) {
 		this.pressed = pressed;
 	}
-	
+
 	@Override
 	public short getData() {
 		short data = super.getData();
@@ -59,10 +59,9 @@ public class DetectorRails extends Rails {
 		}
 		return data;
 	}
-	
+
 	@Override
 	public BlockMaterial getMaterial() {
 		return VanillaMaterials.DETECTOR_RAIL;
 	}
-
 }

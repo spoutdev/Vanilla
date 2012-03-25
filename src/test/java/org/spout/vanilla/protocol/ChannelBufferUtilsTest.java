@@ -30,9 +30,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -56,14 +54,15 @@ import static org.spout.vanilla.protocol.ChannelBufferUtils.writeVector3;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.junit.Test;
-import org.spout.nbt.IntTag;
-import org.spout.nbt.StringTag;
-import org.spout.nbt.Tag;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
+
+import org.spout.nbt.IntTag;
+import org.spout.nbt.StringTag;
+import org.spout.nbt.Tag;
 
 import org.spout.vanilla.VanillaMaterials;
 

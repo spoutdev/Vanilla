@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.protocol;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.protocol.Protocol;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -34,8 +33,8 @@ import org.spout.vanilla.controller.living.creature.neutral.Enderman;
 import org.spout.vanilla.controller.living.creature.passive.Chicken;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.object.MovingBlock;
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.object.moving.XPOrb;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;

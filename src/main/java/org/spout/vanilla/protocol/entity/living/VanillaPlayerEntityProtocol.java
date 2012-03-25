@@ -57,7 +57,7 @@ public class VanillaPlayerEntityProtocol extends VanillaEntityProtocol implement
 			if (hand != null) {
 				item = hand.getMaterial().getId();
 			}
-			return new Message[] {new SpawnPlayerMessage(id, name, x, y, z, r, p, item)};
+			return new Message[]{new SpawnPlayerMessage(id, name, x, y, z, r, p, item)};
 		}
 
 		return null;

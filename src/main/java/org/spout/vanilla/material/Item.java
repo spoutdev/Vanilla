@@ -26,5 +26,4 @@
 package org.spout.vanilla.material;
 
 public interface Item {
-
 }

@@ -29,16 +29,16 @@ import java.util.Random;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.api.material.Material;
 import org.spout.vanilla.material.generic.GenericTool;
 
 public class Shears extends GenericTool {
 	private Random rand = new Random();
-	
+
 	public Shears(String name, int id, short durability) {
 		super(name, id, durability);
 	}
@@ -48,22 +48,22 @@ public class Shears extends GenericTool {
 		if (!(other.getController() instanceof Sheep)) {
 			return;
 		}
-		
+
 		Sheep sheep = (Sheep) other.getController();
 		if (sheep.isSheared()) {
 			return;
 		}
-		
+
 		other.setData("SheepSheared", true);
-		
+
 		short col = (short) other.getData("SheepColor").asInt();
-		
+
 		//TODO: use proper wool constant
 		other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(Material.get((short) 35), col, rand.nextInt(3) + 1), other.getPosition().normalize()));
-		
+
 		ItemStack holding = entity.getInventory().getCurrentItem();
 		if (entity.getController() instanceof SurvivalPlayer) {
-			holding.setData((short)(holding.getData() + 1));
+			holding.setData((short) (holding.getData() + 1));
 			entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
 		}
 	}

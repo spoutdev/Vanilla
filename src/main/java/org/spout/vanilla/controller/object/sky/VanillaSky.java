@@ -27,8 +27,39 @@ package org.spout.vanilla.controller.object.sky;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.World;
+
 import org.spout.vanilla.controller.object.Sky;
 import org.spout.vanilla.world.Weather;
 
-public abstract class VanillaSky extends Controller implements Sky {
+public class VanillaSky extends Controller implements Sky {
+	@Override
+	public void onTick(float dt) {
+	}
+
+	@Override
+	public void onAttached() {
+	}
+
+	@Override
+	public void setTime(float time) {
+	}
+
+	@Override
+	public float getTime() {
+		return -1;
+	}
+
+	@Override
+	public void setWeather(Weather weather) {
+	}
+
+	@Override
+	public Weather getWeather() {
+		return null;
+	}
+
+	@Override
+	public World getWorld() {
+		return null;
+	}
 }

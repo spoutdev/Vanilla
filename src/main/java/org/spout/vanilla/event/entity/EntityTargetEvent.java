@@ -98,7 +98,6 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 		RANDOM_TARGET(true),
 		CUSTOM_TARGET(true),
 		CUSTOM_UNTARGET(false);
-
 		private boolean target;
 
 		private TargetReason(boolean target) {
@@ -107,7 +106,6 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 		/**
 		 * Whether or not it is target
-		 *
 		 * @return true if target
 		 */
 		public boolean isTarget() {

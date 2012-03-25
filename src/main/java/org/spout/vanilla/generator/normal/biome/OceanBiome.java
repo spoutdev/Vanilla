@@ -29,7 +29,6 @@ import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
-import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.VanillaMaterials;
@@ -51,7 +50,6 @@ public class OceanBiome extends VanillaBiomeType {
 		noise.setFrequency(0.3);
 		noise.setRoughness(2);
 		noise.setPower(0.5);
-
 	}
 
 	@Override
@@ -62,26 +60,27 @@ public class OceanBiome extends VanillaBiomeType {
 
 		int y = chunkY * 16;
 
-		for(int dy = y + 15; dy >= y; dy --) {
+		for (int dy = y + 15; dy >= y; dy--) {
 			if (blockData.get(x, dy, z) == VanillaMaterials.AIR.getId()) {
 				blockData.set(x, dy, z, getBlockId(height, dy));
 			}
 		}
 	}
-		protected short getBlockId(int top, int dy) {
-			short id;
-			blocksHit ++;
-			if (dy > top) {
-				id = VanillaMaterials.AIR.getId();
-			} else if (dy >= 63 && blocksHit > 4) {
-				id = VanillaMaterials.SAND.getId();
-			} else if (blocksHit <= 4) {
-				id = VanillaMaterials.DIRT.getId();
-			} else {
-				id = VanillaMaterials.WATER.getId();
-			}
-			return id;
+
+	protected short getBlockId(int top, int dy) {
+		short id;
+		blocksHit++;
+		if (dy > top) {
+			id = VanillaMaterials.AIR.getId();
+		} else if (dy >= 63 && blocksHit > 4) {
+			id = VanillaMaterials.SAND.getId();
+		} else if (blocksHit <= 4) {
+			id = VanillaMaterials.DIRT.getId();
+		} else {
+			id = VanillaMaterials.WATER.getId();
 		}
+		return id;
+	}
 
 	@Override
 	public String getName() {

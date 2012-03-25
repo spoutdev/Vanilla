@@ -29,6 +29,7 @@ import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
+
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.protocol.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnItemMessage;
@@ -48,8 +49,7 @@ public class PickupEntityProtocol extends VanillaEntityProtocol implements Entit
 		int p = (int) (entity.getPitch() * 32);
 		if (c instanceof Item) {
 			Item pi = (Item) c;
-			return new Message[] {new SpawnItemMessage(id, (int) pi.getMaterial().getId(), pi.getAmount(), pi.getData(), x, y, z, r, p, pi.getRoll())};
-
+			return new Message[]{new SpawnItemMessage(id, (int) pi.getMaterial().getId(), pi.getAmount(), pi.getData(), x, y, z, r, p, pi.getRoll())};
 		}
 
 		return null;

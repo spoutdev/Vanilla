@@ -41,7 +41,6 @@ public class ActiveEntityEffect {
 
 	/**
 	 * Gets the effect applied.
-	 *
 	 * @return effect
 	 */
 	public EntityEffect getEffect() {
@@ -50,7 +49,6 @@ public class ActiveEntityEffect {
 
 	/**
 	 * Gets the amplitude of the effect.
-	 *
 	 * @return amplitude of effect.
 	 */
 	public byte getAmplitude() {
@@ -59,7 +57,6 @@ public class ActiveEntityEffect {
 
 	/**
 	 * Gets the duration of the effect.
-	 *
 	 * @return duration
 	 */
 	public short getDuration() {
@@ -68,7 +65,6 @@ public class ActiveEntityEffect {
 
 	/**
 	 * Sets the duration of the effect.
-	 *
 	 * @param duration
 	 */
 	public void setDuration(short duration) {
@@ -77,7 +73,6 @@ public class ActiveEntityEffect {
 
 	/**
 	 * Decrements the effects duration by one.
-	 *
 	 * @return
 	 */
 	public boolean pulse() {

@@ -23,41 +23,38 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living;
+package org.spout.vanilla.protocol.codec;
 
-import org.spout.vanilla.controller.VanillaController;
-import org.spout.vanilla.controller.action.GravityAction;
-import org.spout.vanilla.controller.action.WanderAction;
-import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
+import java.io.IOException;
 
-public abstract class Living extends VanillaController {
-	private int headYaw = 0, headYawLive = 0;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 
-	@Override
-	public void onAttached() {
-		registerAction(new WanderAction());
-		registerAction(new GravityAction());
+import org.spout.api.protocol.MessageCodec;
+
+import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
+
+public class PlayerAbilityCodec extends MessageCodec<PlayerAbilityMessage> {
+	public PlayerAbilityCodec() {
+		super(PlayerAbilityMessage.class, 0xCA);
 	}
 
 	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
-
-		if (headYawLive != headYaw) {
-			headYawLive = headYaw;
-			sendMessage(getParent().getWorld().getPlayers(), new EntityHeadYawMessage(getParent().getId(), headYaw));
-		}
+	public ChannelBuffer encode(PlayerAbilityMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		buffer.writeByte(message.isInvincible() ? 1 : 0);
+		buffer.writeByte(message.canFly() ? 1 : 0);
+		buffer.writeByte(message.isFlying() ? 1 : 0);
+		buffer.writeByte(message.canInstantDestroy() ? 1 : 0);
+		return buffer;
 	}
 
-	/**
-	 * Sets the yaw of a controller's head.
-	 * @param headYaw
-	 */
-	public void setHeadYaw(int headYaw) {
-		headYawLive = headYaw;
-	}
-
-	public int getHeadYaw() {
-		return headYaw;
+	@Override
+	public PlayerAbilityMessage decode(ChannelBuffer buffer) throws IOException {
+		boolean isInvincible = buffer.readByte() == 0;
+		boolean isFlying = buffer.readByte() == 1;
+		boolean canFly = buffer.readByte() == 1;
+		boolean canInstantDestroy = buffer.readByte() == 0;
+		return new PlayerAbilityMessage(isInvincible, isFlying, canFly, canInstantDestroy);
 	}
 }

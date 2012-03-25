@@ -31,7 +31,7 @@ public abstract class MovingSubstance extends Substance {
 	private Vector3 movedVelocity;
 	private Vector3 velocity;
 	private float maxSpeed; //might turn this into a vector too?
-	
+
 	/**
 	 * Uses the current velocity and maximum speed to move this entity
 	 */
@@ -39,15 +39,15 @@ public abstract class MovingSubstance extends Substance {
 		this.movedVelocity = Vector3.min(this.velocity, new Vector3(this.maxSpeed, this.maxSpeed, this.maxSpeed));
 		super.move(this.movedVelocity);
 	}
-	
+
 	public final float getMaxSpeed() {
 		return this.maxSpeed;
 	}
-	
+
 	public void setMaxSpeed(float maxSpeed) {
 		this.maxSpeed = maxSpeed;
 	}
-	
+
 	public final Vector3 getVelocity() {
 		return velocity;
 	}
@@ -55,7 +55,7 @@ public abstract class MovingSubstance extends Substance {
 	public void setVelocity(Vector3 velocity) {
 		this.velocity = velocity;
 	}
-	
+
 	public final Vector3 getMovedVelocity() {
 		return this.movedVelocity;
 	}

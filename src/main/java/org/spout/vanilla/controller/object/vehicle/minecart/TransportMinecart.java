@@ -27,16 +27,16 @@ package org.spout.vanilla.controller.object.vehicle.minecart;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.math.Vector3;
-import org.spout.vanilla.controller.object.vehicle.Vehicle;
+
 import org.spout.vanilla.controller.object.vehicle.Minecart;
+import org.spout.vanilla.controller.object.vehicle.Vehicle;
 
 public class TransportMinecart extends Minecart implements Vehicle {
-	
 	private Controller passenger = null;
 
 	@Override
 	public void onPostMove(float dt) {
-		if (!this.isOnRail() || this.passenger == null) {
+		if (this.passenger == null) {
 			super.onPostMove(dt);
 		} else {
 			Vector3 velocity = this.getVelocity();
@@ -44,13 +44,12 @@ public class TransportMinecart extends Minecart implements Vehicle {
 			this.setVelocity(velocity);
 		}
 	}
-	
+
 	public void setPassenger(Controller passenger) {
 		this.passenger = passenger;
 	}
-	
+
 	public Controller getPassenger() {
 		return this.passenger;
 	}
-	
 }

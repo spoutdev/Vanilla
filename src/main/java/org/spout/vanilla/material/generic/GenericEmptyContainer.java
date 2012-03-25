@@ -35,9 +35,9 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-
 import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
+
 import org.spout.vanilla.VanillaMaterials;
 
 public class GenericEmptyContainer extends GenericBlockItem {
@@ -51,7 +51,7 @@ public class GenericEmptyContainer extends GenericBlockItem {
 	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
 		// TODO: ignore position and get the first non-air in the line of sight to prevent NPE's
 		Block block = entity.getWorld().getBlock(position);
-		
+
 		super.onInteract(entity, position, type, clickedFace);
 
 		Inventory inventory = entity.getInventory();
@@ -65,7 +65,7 @@ public class GenericEmptyContainer extends GenericBlockItem {
 			inventory.setItem(new ItemStack(full, 1), inventory.getCurrentSlot());
 		}
 	}
-	
+
 	public GenericFullContainer getFullItem(BlockMaterial material, short data) {
 		return this.fullContainers.get(new GenericMaterialSource(material, data));
 	}

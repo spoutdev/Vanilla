@@ -25,26 +25,26 @@
  */
 package org.spout.vanilla.controller.action;
 
+import static org.spout.api.math.MathHelper.floor;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityAction;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaController;
 
-import static org.spout.api.math.MathHelper.floor;
-
 public class GravityAction extends EntityAction<VanillaController> {
-
-    @Override
-    public boolean shouldRun(Entity entity, VanillaController controller) {
+	@Override
+	public boolean shouldRun(Entity entity, VanillaController controller) {
 		Point pt = entity.getPosition();
 		BlockMaterial block = entity.getWorld().getBlockMaterial(floor(pt.getX()), floor(pt.getY()), floor(pt.getZ()));
-        return block.getId() == VanillaMaterials.AIR.getId() || block.isLiquid();
-    }
+		return block.getId() == VanillaMaterials.AIR.getId() || block.isLiquid();
+	}
 
-    @Override
-    public void run(Entity entity, VanillaController controller) {
+	@Override
+	public void run(Entity entity, VanillaController controller) {
 		entity.translate(0, -0.04f, 0);
-    }
+	}
 }

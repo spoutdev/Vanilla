@@ -36,7 +36,6 @@ public class Leaves extends Solid {
 	public static final Leaves SPRUCE = register(new Leaves("Spruce Leaves", 0, DEFAULT));
 	public static final Leaves BIRCH = register(new Leaves("Birch Leaves", 0, DEFAULT));
 	public static final Leaves JUNGLE = register(new Leaves("Jungle Leaves", 0, DEFAULT));
-
 	private Random rand = new Random();
 
 	private Leaves(String name) {

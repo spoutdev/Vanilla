@@ -47,13 +47,10 @@ import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
  */
 public abstract class VanillaController extends ActionController {
 	private static Random rand = new Random();
-
 	//Collision box for controllers
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
-
 	//Controller flags
 	private boolean isFlammable = true, canMove = true;
-
 	//Tick effects
 	private int fireTicks = 0;
 
@@ -129,7 +126,7 @@ public abstract class VanillaController extends ActionController {
 	public boolean isMoveable() {
 		return canMove;
 	}
-	
+
 	private void checkFireTicks() {
 		if (fireTicks > 0) {
 			if (!isFlammable) {
@@ -165,7 +162,7 @@ public abstract class VanillaController extends ActionController {
 
 	/**
 	 * This method takes in any amount of messages and sends them to any amount of players.
-	 * @param players specific players to send a message to.
+	 * @param players  specific players to send a message to.
 	 * @param messages the message(s) to send
 	 */
 	public void sendMessage(Set<Player> players, Message... messages) {
@@ -178,7 +175,7 @@ public abstract class VanillaController extends ActionController {
 
 	/**
 	 * This method takes in a message and sends it to a specific player
-	 * @param player specific player to relieve message
+	 * @param player  specific player to relieve message
 	 * @param message specific message to send.
 	 */
 	public void sendMessage(Player player, Message message) {
@@ -209,18 +206,18 @@ public abstract class VanillaController extends ActionController {
 	 * Rotates the controller
 	 * @param rot the quaternion that is applied as the rotation.
 	 */
-	public void rotate (Quaternion rot) {
+	public void rotate(Quaternion rot) {
 		getParent().rotate(rot);
 	}
 
 	/**
 	 * Rotates the controller
 	 * @param degrees the angle of which to do rotation.
-	 * @param x x-axis to rotate the controller along
-	 * @param y y-axis to rotate the controller along
-	 * @param z z-axis to rotate the controller along
+	 * @param x	   x-axis to rotate the controller along
+	 * @param y	   y-axis to rotate the controller along
+	 * @param z	   z-axis to rotate the controller along
 	 */
-	public void rotate (float degrees, float x, float y, float z) {
+	public void rotate(float degrees, float x, float y, float z) {
 		getParent().rotate(degrees, x, y, z);
 	}
 

@@ -35,6 +35,7 @@ public class PointObserver extends VanillaController {
 		setMoveable(false);
 		setFlammable(false);
 	}
+
 	@Override
 	public void onAttached() {
 		getParent().setObserver(true);

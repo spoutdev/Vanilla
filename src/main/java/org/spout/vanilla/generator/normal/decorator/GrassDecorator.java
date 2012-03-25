@@ -31,6 +31,7 @@ import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.VanillaMaterials;
 
 public class GrassDecorator implements BiomeDecorator {

@@ -27,9 +27,9 @@ package org.spout.vanilla.material.block.data;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-
 import org.spout.api.material.source.DataSource;
 import org.spout.api.material.source.MaterialData;
+
 import org.spout.vanilla.VanillaMaterials;
 import org.spout.vanilla.util.RailsState;
 

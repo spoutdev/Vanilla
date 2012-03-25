@@ -33,6 +33,7 @@ public class NormalGenerator extends VanillaGeneratorBase {
 	@Override
 	public void registerBiomes() {
 		setSelector(new NoiseSelector(0.9, 1.5, 5, 0.9, 1.5));
+		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.PLAIN);
 		register(VanillaBiomes.DESERT);
 		register(VanillaBiomes.TUNDRA);

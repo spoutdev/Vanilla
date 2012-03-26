@@ -50,6 +50,8 @@ import org.spout.vanilla.protocol.msg.UserListItemMessage;
 public abstract class VanillaPlayer extends Human implements PlayerController {
 	private final Player owner;
 	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
+	private int lastPing = 0;
+	private int lastUserList = 0;
 	private short count = 0;
 	private short ping;
 	private boolean sneaking, sprinting, onGround;
@@ -97,14 +99,20 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 			getParent().translate(horizSpeed.transform(getParent().getRotation()));
 		}*/
 
-		sendMessage(player, new PingMessage(getRandom().nextInt()));
+		if (lastPing++ > 600) {
+			sendMessage(player, new PingMessage(getRandom().nextInt()));
+			lastPing = 0;
+		}
 		count++;
 		unresponsiveTicks--;
 		if (unresponsiveTicks == 0) {
 			player.getSession().disconnect("Connection timeout!");
 		}
 
-		sendMessage(player, new UserListItemMessage(player.getName(), true, ping));
+		if (lastUserList++ > 20) {
+			sendMessage(player, new UserListItemMessage(player.getName(), true, ping));
+			lastUserList = 0;
+		}
 		super.onTick(dt);
 	}
 

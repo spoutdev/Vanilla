@@ -34,9 +34,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.spout.api.entity.Controller;
-import org.spout.api.entity.ControllerType;
-import org.spout.api.entity.EmptyConstructorControllerType;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.Region;

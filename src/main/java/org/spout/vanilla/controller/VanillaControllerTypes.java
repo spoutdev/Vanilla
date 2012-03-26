@@ -27,7 +27,7 @@ package org.spout.vanilla.controller;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-import org.spout.api.entity.ControllerRegistry;
+import org.spout.api.entity.type.ControllerRegistry;
 import org.spout.vanilla.controller.living.MobControllerType;
 import org.spout.vanilla.controller.living.creature.hostile.Blaze;
 import org.spout.vanilla.controller.living.creature.hostile.CaveSpider;

@@ -31,7 +31,7 @@ import java.util.Set;
 
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
-import org.spout.api.entity.ActionController;
+import org.spout.api.entity.action.ActionController;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;

@@ -29,8 +29,8 @@ import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.Spout;
-import org.spout.api.entity.ControllerType;
-import org.spout.api.entity.EmptyConstructorControllerType;
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.geo.World;
 import org.spout.api.player.Player;
 

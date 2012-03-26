@@ -28,7 +28,7 @@ package org.spout.vanilla.controller.action;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.EntityAction;
+import org.spout.api.entity.action.EntityAction;
 
 import org.spout.vanilla.controller.VanillaController;
 

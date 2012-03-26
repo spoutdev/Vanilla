@@ -28,7 +28,7 @@ package org.spout.vanilla.controller.action;
 import static org.spout.api.math.MathHelper.floor;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.EntityAction;
+import org.spout.api.entity.action.EntityAction;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 

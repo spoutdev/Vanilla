@@ -26,8 +26,8 @@
 package org.spout.vanilla.controller.world;
 
 import org.spout.api.entity.Controller;
-import org.spout.api.entity.ControllerType;
-import org.spout.api.entity.EmptyConstructorControllerType;
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
 
 /**
  * Controller that observes chunks around a point. It will always keep these chunks in memory.

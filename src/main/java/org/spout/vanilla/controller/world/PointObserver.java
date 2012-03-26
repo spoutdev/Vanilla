@@ -39,6 +39,10 @@ public class PointObserver extends Controller {
 	}
 
 	@Override
+	public void onTick(float dt) {
+	}
+
+	@Override
 	public void onAttached() {
 		getParent().setObserver(true);
 	}

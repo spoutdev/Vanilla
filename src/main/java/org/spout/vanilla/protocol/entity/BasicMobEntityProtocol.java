@@ -37,6 +37,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.protocol.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
@@ -50,7 +51,13 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		return Collections.emptyList();
+		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
+		if (controller instanceof Creature) {
+			Creature creature = (Creature) controller;
+			parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 12, creature.getTimeUntilAdult()));
+		}
+
+		return parameters;
 	}
 
 	@Override

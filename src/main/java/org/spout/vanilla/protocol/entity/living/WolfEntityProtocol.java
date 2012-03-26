@@ -36,7 +36,7 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 public class WolfEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
+		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
 		//TODO: Index 16 (byte): Flags (below:)
 		//  bit 0 	0x01 	Sitting down
 		//  bit 1 	0x02 	Aggressive (red eyes)

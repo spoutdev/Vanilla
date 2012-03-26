@@ -36,7 +36,7 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 public class SpiderEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
+		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
 		//TODO: index 16 (byte): Aggression level
 		return parameters;
 	}

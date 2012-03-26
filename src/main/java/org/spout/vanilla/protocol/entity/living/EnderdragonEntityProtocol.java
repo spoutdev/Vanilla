@@ -36,7 +36,7 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 public class EnderdragonEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
+		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
 		//TODO: Index 16 (byte): Health bar (0-200)
 		return parameters;
 	}

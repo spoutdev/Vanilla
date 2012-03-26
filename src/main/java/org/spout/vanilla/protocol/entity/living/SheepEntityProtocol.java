@@ -37,7 +37,7 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 public class SheepEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
+		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
 		if (controller instanceof Sheep) {
 			Sheep sheep = (Sheep) controller;
 			byte data = 0;

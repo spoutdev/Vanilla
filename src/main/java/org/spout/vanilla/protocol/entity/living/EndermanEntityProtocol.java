@@ -38,17 +38,13 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 public class EndermanEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		/*	List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(2);
-		 //TODO: Index 16 (byte): Item id in hand
-		 //TODO: Index 17 (byte): Item data in hand
-		 return parameters;
-	 }*/
-
+		//TODO: Index 16 (byte): Item id in hand
+		//TODO: Index 17 (byte): Item data in hand
 		if (controller instanceof Enderman) {
 			Enderman enderman = (Enderman) controller;
 			BlockMaterial held = enderman.getHeldItem();
 			if (held != null && !held.equals(enderman.getPreviouslyHeldItem())) {
-				List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(2);
+				List<Parameter<?>> parameters = super.getSpawnParameters(controller);
 				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte)held.getId()));
 				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte)held.getData()));
 				return parameters;

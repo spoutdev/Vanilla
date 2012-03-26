@@ -25,10 +25,29 @@
  */
 package org.spout.vanilla.controller.living;
 
+import org.spout.api.entity.Entity;
 import org.spout.vanilla.controller.VanillaControllerType;
 
 public abstract class Creature extends Living {
 	protected Creature(VanillaControllerType type) {
 		super(type);
+	}
+
+	/**
+	 * Gets the amount of time before the creature is fully grown. Fully grown is 0 and not grown is -23999.
+	 *
+	 * @return time until grown.
+	 */
+	public int getTimeUntilAdult() {
+		return getParent().getData("CreatureTimeUntilAdult").asInt();
+	}
+
+	/**
+	 * Sets the amount of time before the creature is fully grown. Fully grown is 0 and not grown is -23999.
+	 *
+	 * @param time
+	 */
+	public void setTimeUntilAdult(int time) {
+		getParent().setData("CreatureTimeUntilAdult", time);
 	}
 }

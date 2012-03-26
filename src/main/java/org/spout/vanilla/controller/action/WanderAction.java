@@ -25,44 +25,35 @@
  */
 package org.spout.vanilla.controller.action;
 
-import java.util.Random;
-
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.action.EntityAction;
+import org.spout.api.entity.EntityAction;
+import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaController;
 
 public class WanderAction extends EntityAction<VanillaController> {
-	private static final int WANDER_FREQ = 2;
-	private final Random rand = new Random();
-	private int countdown;
+	private static final double WANDER_FREQ = 2.75;
+	private double freq = 0;
 
 	@Override
 	public boolean shouldRun(Entity entity, VanillaController controller) {
-		return --countdown <= 0;
+		freq = controller.getRandom().nextDouble() * 3.0;
+		if (freq >= WANDER_FREQ) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public void run(Entity entity, VanillaController controller, float dt) {
-		countdown = controller.getRandom().nextInt(7) + 3;
-		float x = (controller.getRandom().nextBoolean() ? 1 : -1) * controller.getRandom().nextFloat();
-		float z = (controller.getRandom().nextBoolean() ? 1 : -1) * controller.getRandom().nextFloat();
-		float rotate = (controller.getRandom().nextBoolean() ? 1 : -1) * controller.getRandom().nextFloat();
-		//Rotate the sheep!
-		entity.rotate(rotate, x, 0, z);
-		//Move the sheep!
-		entity.translate(x, 0, z);
-		/*Pointm toLoc = entity.getPoint();
-		int x = floor(entity.getX()), y = floor(entity.getY()), z = floor(entity.getZ());
-        toLoc.add(rand.nextFloat() / 4, 0, rand.nextFloat() / 4);
-        BlockMaterial targetId = entity.getWorld().getBlockMaterial(x, y, z);
-        if (targetId.isOpaque()) {
-            toLoc.add(0, 2, 0);
-            if (entity.getWorld().getBlockMaterial(x, y, z).isOpaque()) {
-                toLoc.setX(entity.getX());
-                toLoc.setZ(entity.getZ());
-            }
-        }
-        entity.setPoint(toLoc);*/
+		float x = controller.getRandom().nextFloat() * 3 + 2;
+		float y = 0;
+		float z = controller.getRandom().nextFloat() * 3 + 2;
+
+		Vector3 movement = new Vector3(x, y, z);
+		Quaternion newRot = entity.getRotation().rotate(5 * dt, Vector3.UP);
+		entity.setRotation(newRot);
+		controller.move(Vector3.transform(movement.multiply(dt * 0.9), entity.getRotation()));
 	}
 }

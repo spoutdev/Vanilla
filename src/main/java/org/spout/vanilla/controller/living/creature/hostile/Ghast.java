@@ -67,4 +67,22 @@ public class Ghast extends Creature implements Hostile {
 
 		return drops;
 	}
+
+	/**
+	 * Whether or not the ghast has red eyes.
+	 *
+	 * @return true if it has red eyes
+	 */
+	public boolean hasRedEyes() {
+		return parent.getData("GhastRedEyes").asBool();
+	}
+
+	/**
+	 * Sets whether or not the ghast has red eyes.
+	 *
+	 * @param redEyes
+	 */
+	public void setRedEyes(boolean redEyes) {
+		parent.setData("GhastRedEyes", redEyes);
+	}
 }

@@ -47,6 +47,7 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.hostile.Creeper;
+import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.creature.neutral.Enderman;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.CreativePlayer;
@@ -117,6 +118,11 @@ public class VanillaEventListener implements Listener {
 		if (c instanceof Creature) {
 			Creature creature = (Creature) c;
 			creature.setTimeUntilAdult(-23999);
+		}
+		
+		if (c instanceof Ghast) {
+			Ghast ghast = (Ghast) c;
+			ghast.setRedEyes(true);
 		}
 	}
 

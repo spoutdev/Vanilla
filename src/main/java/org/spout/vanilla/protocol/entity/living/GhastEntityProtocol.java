@@ -31,13 +31,19 @@ import java.util.List;
 import org.spout.api.entity.Controller;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class GhastEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-		//TODO: index 16 (byte): Aggression level (1 red eyes, 0 not)
+		if (controller instanceof Ghast) {
+			Ghast ghast = (Ghast) controller;
+			byte data = ghast.hasRedEyes() ? (byte) 1 : 0;
+			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
+		}
+
 		return parameters;
 	}
 }

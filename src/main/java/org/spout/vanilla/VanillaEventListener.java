@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import java.util.HashSet;
 
 import org.spout.api.entity.Controller;

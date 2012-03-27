@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.object.MovingBlock;
 
 public class PrimedTnt extends MovingBlock {

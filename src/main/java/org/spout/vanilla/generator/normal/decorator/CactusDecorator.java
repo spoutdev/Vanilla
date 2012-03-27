@@ -30,7 +30,7 @@ import java.util.Random;
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class CactusDecorator implements BiomeDecorator {
 	@Override

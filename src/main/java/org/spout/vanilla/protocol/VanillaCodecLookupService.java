@@ -67,6 +67,7 @@ import org.spout.vanilla.protocol.codec.MultiBlockChangeCodec;
 import org.spout.vanilla.protocol.codec.OpenWindowCodec;
 import org.spout.vanilla.protocol.codec.PingCodec;
 import org.spout.vanilla.protocol.codec.PlayEffectCodec;
+import org.spout.vanilla.protocol.codec.PlayerAbilityCodec;
 import org.spout.vanilla.protocol.codec.PositionCodec;
 import org.spout.vanilla.protocol.codec.PositionRotationCodec;
 import org.spout.vanilla.protocol.codec.ProgressBarCodec;
@@ -226,6 +227,8 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			bind(StatisticCodec.class);
 			/* 0xC9 */
 			bind(UserListItemCodec.class);
+			/* 0xCA */
+			bind(PlayerAbilityCodec.class);
 			/* 0xFA */
 			bind(CustomDataCodec.class);
 			/* 0xFE */

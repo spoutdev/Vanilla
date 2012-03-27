@@ -30,7 +30,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 import org.spout.api.material.source.MaterialData;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.RailsState;
 
 public class Rails implements MaterialData {

@@ -33,7 +33,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.object.MovingBlock;
 
 public class MovingBlockAction extends EntityAction<MovingBlock> {

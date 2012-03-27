@@ -29,7 +29,7 @@ import java.util.Random;
 
 import org.spout.api.material.Material;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.Plant;
 
 public class WheatCrop extends Solid implements Plant {

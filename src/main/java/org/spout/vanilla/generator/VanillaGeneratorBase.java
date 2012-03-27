@@ -28,7 +28,7 @@ package org.spout.vanilla.generator;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public abstract class VanillaGeneratorBase extends BiomeGenerator {
 	@Override

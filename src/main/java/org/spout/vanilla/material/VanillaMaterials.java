@@ -23,7 +23,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla;
+package org.spout.vanilla.material;
 
 import static org.spout.api.material.MaterialRegistry.register;
 
@@ -352,9 +352,13 @@ public final class VanillaMaterials {
 	public static final GenericItem FOREST_GREEN_MUSIC_DISC = register(new GenericItem("Music Disc", 2265));
 	public static final GenericItem BROKEN_MUSIC_DISC = register(new GenericItem("Music Disc", 2266));
 	public static final Potion POTION = Potion.EMPTY;
+	
+	private static boolean initialized = false;
 
 	@SuppressWarnings("static-access")
-	protected static void initialize() {
+	public static void initialize() {
+		if(initialized)
+			return;
 		VanillaMaterials.STONE.setDrop(VanillaMaterials.COBBLESTONE);
 		VanillaMaterials.GRASS.setDrop(VanillaMaterials.DIRT);
 		VanillaMaterials.COAL_ORE.setDrop(VanillaMaterials.COAL);
@@ -406,5 +410,6 @@ public final class VanillaMaterials {
 		VanillaMaterials.END_PORTAL.setDrop(VanillaMaterials.AIR);
 		VanillaMaterials.END_PORTAL_FRAME.setDrop(VanillaMaterials.AIR);
 		VanillaMaterials.REDSTONE_LAMP_ON.setDrop(VanillaMaterials.REDSTONE_LAMP_OFF);
+		initialized = true;
 	}
 }

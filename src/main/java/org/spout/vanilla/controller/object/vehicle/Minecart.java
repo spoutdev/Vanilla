@@ -35,7 +35,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.object.MovingSubstance;
 import org.spout.vanilla.material.block.MinecartTrack;

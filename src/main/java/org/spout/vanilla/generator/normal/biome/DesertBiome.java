@@ -31,7 +31,7 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.normal.decorator.CactusDecorator;
 import org.spout.vanilla.generator.normal.decorator.CaveDecorator;

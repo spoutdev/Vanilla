@@ -64,7 +64,7 @@ import org.spout.nbt.IntTag;
 import org.spout.nbt.StringTag;
 import org.spout.nbt.Tag;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class ChannelBufferUtilsTest {
 	public static final List<Parameter<?>> TEST_PARAMS = Arrays.asList(new Parameter<Byte>(Parameter.TYPE_BYTE, 1, (byte) 33), new Parameter<Short>(Parameter.TYPE_SHORT, 2, (short) 333), new Parameter<Integer>(Parameter.TYPE_INT, 3, 22), new Parameter<Float>(Parameter.TYPE_FLOAT, 4, 1.23F), new Parameter<String>(Parameter.TYPE_STRING, 5, "Hello World"), new Parameter<ItemStack>(Parameter.TYPE_ITEM, 6, new ItemStack(VanillaMaterials.BEDROCK, 5)));

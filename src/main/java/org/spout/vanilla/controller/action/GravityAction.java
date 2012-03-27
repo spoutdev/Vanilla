@@ -32,7 +32,7 @@ import org.spout.api.entity.action.EntityAction;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaController;
 
 public class GravityAction extends EntityAction<VanillaController> {

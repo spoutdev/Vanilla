@@ -43,7 +43,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.effect.EntityEffect;
 import org.spout.vanilla.protocol.msg.AttachEntityMessage;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;

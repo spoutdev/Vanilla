@@ -34,7 +34,7 @@ import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class CaveDecorator implements BiomeDecorator {
 	private Perlin noise = new Perlin();

@@ -27,7 +27,7 @@ package org.spout.vanilla.material.block.data;
 
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.RailsState;
 
 public class PoweredRails extends Rails {

@@ -29,7 +29,7 @@ import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 
 public class Cactus extends Solid {

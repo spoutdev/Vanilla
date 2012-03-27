@@ -38,7 +38,7 @@ public class CreeperEntityProtocol extends BasicMobEntityProtocol {
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
 		//TODO: index 16 (byte): Status. Depends on the fuse.
-		//TODO: Index 17 (byte): Charged. 1 if the creeper has been hit by lightning, 0 otherwise. 
+		//TODO: Index 17 (byte): Charged. 1 if the creeper has been hit by lightning, 0 otherwise.
 		return parameters;
 	}
 }

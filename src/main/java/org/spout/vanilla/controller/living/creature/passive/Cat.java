@@ -36,6 +36,15 @@ import org.spout.vanilla.controller.living.creature.Tamed;
 
 public class Cat extends Ocelot implements Tamed, Passive {
 	private Entity sovereign = null;
+	private Entity parent;
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		parent = getParent();
+		parent.setMaxHealth(10);
+		parent.setHealth(10);
+	}
 
 	@Override
 	public void subjectTo(Entity entity) {
@@ -49,10 +58,6 @@ public class Cat extends Ocelot implements Tamed, Passive {
 
 	@Override
 	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-
-		// None
-
-		return drops;
+		return null;
 	}
 }

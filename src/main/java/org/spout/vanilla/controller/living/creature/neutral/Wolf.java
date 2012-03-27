@@ -37,6 +37,8 @@ import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.Tameable;
 
 public class Wolf extends Creature implements Tameable, Neutral {
+	private Entity parent;
+	
 	protected Wolf() {
 		super(VanillaControllerTypes.WOLF);
 	}
@@ -44,6 +46,10 @@ public class Wolf extends Creature implements Tameable, Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
+		parent.setMaxHealth(8);
+		parent.setHealth(8);
+		// TODO: Health gets increased to 20 when tamed.
 	}
 
 	@Override
@@ -53,10 +59,6 @@ public class Wolf extends Creature implements Tameable, Neutral {
 
 	@Override
 	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-
-		// None
-
-		return drops;
+		return null;
 	}
 }

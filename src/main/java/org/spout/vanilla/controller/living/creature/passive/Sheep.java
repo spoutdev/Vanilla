@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.creature.passive;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaMaterials;
@@ -38,6 +39,7 @@ import org.spout.vanilla.material.block.Wool;
 
 public class Sheep extends Creature implements Passive {
 	private int color;
+	private Entity parent;
 
 	public Sheep() {
 		this(0x0);
@@ -55,10 +57,10 @@ public class Sheep extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData("SheepSheared", false);
-		getParent().setData("SheepColor", color);
-		getParent().setMaxHealth(5);
-		getParent().setHealth(5);
+		parent.setData("SheepSheared", false);
+		parent.setData("SheepColor", color);
+		parent.setMaxHealth(8);
+		parent.setHealth(8);
 	}
 
 	/**
@@ -66,7 +68,7 @@ public class Sheep extends Creature implements Passive {
 	 * @return true if sheared.
 	 */
 	public boolean isSheared() {
-		return getParent().getData("SheepSheared").asBool();
+		return parent.getData("SheepSheared").asBool();
 	}
 
 	/**
@@ -74,7 +76,7 @@ public class Sheep extends Creature implements Passive {
 	 * @param sheared
 	 */
 	public void setSheared(boolean sheared) {
-		getParent().setData("SheepSheared", sheared);
+		parent.setData("SheepSheared", sheared);
 	}
 
 	/**
@@ -90,7 +92,7 @@ public class Sheep extends Creature implements Passive {
 	 * @param color
 	 */
 	public void setColor(Wool.WoolColor color) {
-		getParent().setData("SheepColor", color.getData());
+		parent.setData("SheepColor", color.getData());
 		this.color = color.getData();
 	}
 

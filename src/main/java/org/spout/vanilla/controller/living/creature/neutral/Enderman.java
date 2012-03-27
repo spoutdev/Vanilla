@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.creature.neutral;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 
@@ -39,6 +40,8 @@ import org.spout.vanilla.controller.living.creature.Neutral;
 public class Enderman extends Creature implements Neutral {
 	private BlockMaterial heldItem;
 	private BlockMaterial previouslyHeldItem;
+	private Entity parent;
+	
 	public Enderman() {
 		super(VanillaControllerTypes.ENDERMAN);
 	}
@@ -64,14 +67,13 @@ public class Enderman extends Creature implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setMaxHealth(5);
-		getParent().setHealth(5);
+		parent.setMaxHealth(40);
+		parent.setHealth(40);
 	}
 
 	@Override
 	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-
 		int count = getRandom().nextInt(2);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.ENDER_PEARL, count));
@@ -82,6 +84,7 @@ public class Enderman extends Creature implements Neutral {
 			drops.add(new ItemStack(held, 1));
 			setHeldItem(null);
 		}
+
 		return drops;
 	}
 }

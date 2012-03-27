@@ -25,9 +25,11 @@
  */
 package org.spout.vanilla.controller.living.creature.hostile;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -35,13 +37,22 @@ import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class Giant extends Creature implements Hostile {
+	private Entity parent;
+	
 	public Giant() {
 		super(VanillaControllerTypes.GIANT);
 	}
 
 	@Override
+	public void onAttached() {
+		super.onAttached();
+		parent = getParent();
+		parent.setMaxHealth(100);
+		parent.setHealth(100);
+	}
+
+	@Override
 	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		return drops;
+		return Collections.emptySet();
 	}
 }

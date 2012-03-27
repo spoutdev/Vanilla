@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.creature.passive;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaMaterials;
@@ -36,15 +37,23 @@ import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 
 public class Pig extends Creature implements Passive {
-
+	private Entity parent;
+	
 	protected Pig() {
 		super(VanillaControllerTypes.PIG);
 	}
 
 	@Override
+	public void onAttached() {
+		super.onAttached();
+		parent = getParent();
+		parent.setMaxHealth(10);
+		parent.setHealth(10);
+	}
+	
+	@Override
 	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-
 		// TODO: Check if killed by fire
 		int count = getRandom().nextInt(3);
 		if (count > 0) {

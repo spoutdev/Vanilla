@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaMaterials;
@@ -37,9 +38,21 @@ import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class Slime extends Creature implements Hostile {
-
+	private Entity parent;
+	
 	protected Slime(VanillaControllerType type) {
 		super(type);
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		parent = getParent();
+		int size = getRandom().nextInt(4);
+		int health = size > 0 ? size * 4 : 1;
+		parent.setData("SlimeSize", size);
+		parent.setMaxHealth(health);
+		parent.setHealth(health);
 	}
 
 	public Slime() {
@@ -49,13 +62,37 @@ public class Slime extends Creature implements Hostile {
 	@Override
 	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
+		if (getSize() == 0) {
+			return drops;
+		}
 
-		// TODO: Check if this is a tiny slime
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.SLIMEBALL, count));
 		}
 
 		return drops;
+	}
+
+	/**
+	 * Gets the size of the slime between 0 and 4.
+	 *
+	 * @return slime's size.
+	 */
+	public byte getSize() {
+		return (byte) parent.getData("SlimeSize").asInt();
+	}
+
+	/**
+	 * Sets the size of the slime. Must be between 0 and 4.
+	 *
+	 * @param size
+	 */
+	public void setSize(byte size) {
+		if (size < 0 || size > 4) {
+			throw new IllegalArgumentException("A Slime's size must be between 0 and 4");
+		}
+
+		parent.setData("SlimeSize", size);
 	}
 }

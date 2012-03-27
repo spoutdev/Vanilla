@@ -25,9 +25,11 @@
  */
 package org.spout.vanilla.controller.living.creature.hostile;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -36,14 +38,22 @@ import org.spout.vanilla.controller.living.creature.Boss;
 import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class Enderdragon extends Creature implements Hostile, Boss {
-
+	private Entity parent;
+	
 	protected Enderdragon() {
 		super(VanillaControllerTypes.ENDEDRAGON);
 	}
 
 	@Override
+	public void onAttached() {
+		super.onAttached();
+		parent = getParent();
+		parent.setMaxHealth(200);
+		parent.setHealth(200);
+	}
+
+	@Override
 	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		return drops;
+		return Collections.emptySet();
 	}
 }

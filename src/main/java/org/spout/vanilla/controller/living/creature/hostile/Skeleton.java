@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaMaterials;
@@ -36,6 +37,8 @@ import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class Skeleton extends Creature implements Hostile {
+	private Entity parent;
+	
 	protected Skeleton() {
 		super(VanillaControllerTypes.SKELETON);
 	}
@@ -43,6 +46,9 @@ public class Skeleton extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
+		parent.setMaxHealth(20);
+		parent.setHealth(20);
 	}
 
 	@Override

@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.creature.neutral;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaMaterials;
@@ -36,14 +37,23 @@ import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.hostile.Zombie;
 
 public class PigZombie extends Zombie implements Neutral {
+	private Entity parent;
+	
 	public PigZombie() {
 		super(VanillaControllerTypes.PIG_ZOMBIE);
 	}
 
 	@Override
+	public void onAttached() {
+		super.onAttached();
+		parent = getParent();
+		parent.setMaxHealth(20);
+		parent.setHealth(20);
+	}
+
+	@Override
 	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-
 		int count = getRandom().nextInt(2);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.ROTTEN_FLESH, count));

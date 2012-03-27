@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.Collections;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -35,6 +36,8 @@ import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class Silverfish extends Creature implements Hostile {
+	private Entity parent;
+	
 	protected Silverfish() {
 		super(VanillaControllerTypes.SILVERFISH);
 	}
@@ -42,6 +45,9 @@ public class Silverfish extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		parent = getParent();
+		parent.setMaxHealth(8);
+		parent.setHealth(8);
 	}
 
 	@Override

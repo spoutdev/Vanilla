@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaMaterials;
@@ -36,6 +37,8 @@ import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class Ghast extends Creature implements Hostile {
+	private Entity parent;
+	
 	public Ghast() {
 		super(VanillaControllerTypes.GHAST);
 	}
@@ -43,8 +46,9 @@ public class Ghast extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setMaxHealth(5);
-		getParent().setHealth(5);
+		parent = getParent();
+		parent.setMaxHealth(10);
+		parent.setHealth(10);
 	}
 
 	@Override

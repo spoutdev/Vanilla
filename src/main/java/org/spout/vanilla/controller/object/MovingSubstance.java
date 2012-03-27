@@ -29,8 +29,8 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.VanillaControllerType;
 
 public abstract class MovingSubstance extends Substance {
-	private Vector3 movedVelocity;
-	private Vector3 velocity;
+	private Vector3 movedVelocity = Vector3.ZERO;
+	private Vector3 velocity = Vector3.ZERO;
 	private float maxSpeed; //might turn this into a vector too?
 
 	protected MovingSubstance(VanillaControllerType type) {

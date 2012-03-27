@@ -47,6 +47,7 @@ import org.spout.vanilla.material.block.Plank;
 import org.spout.vanilla.material.block.Sandstone;
 import org.spout.vanilla.material.block.Sapling;
 import org.spout.vanilla.material.block.Slab;
+import org.spout.vanilla.material.block.Snow;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.StoneBrick;
 import org.spout.vanilla.material.block.TallGrass;
@@ -158,7 +159,7 @@ public final class VanillaMaterials {
 	public static final RedstoneTorch REDSTONE_TORCH_OFF = (RedstoneTorch) register(new RedstoneTorch("Redstone Torch", 75, false).setHardness(0.0F).setResistance(0.0F));
 	public static final RedstoneTorch REDSTONE_TORCH_ON = (RedstoneTorch) register(new RedstoneTorch("Redstone Torch (On)", 76, true).setHardness(0.0F).setResistance(0.0F).setLightLevel(7));
 	public static final Solid STONE_BUTTON = (Solid) register(new Solid("Stone Button", 77).setHardness(0.5F).setResistance(0.8F));
-	public static final Solid SNOW = (Solid) register(new Solid("Snow", 78).setHardness(0.1F).setResistance(0.2F));
+	public static final Snow SNOW = (Snow) register(new Snow("Snow").setHardness(0.1F).setResistance(0.2F));
 	public static final Ice ICE = (Ice) register(new Ice("Ice", 79).setHardness(0.5F).setResistance(0.8F));
 	public static final Solid SNOW_BLOCK = (Solid) register(new Solid("Snow Block", 80).setHardness(0.2F).setResistance(0.3F));
 	public static final Cactus CACTUS = (Cactus) register(new Cactus("Cactus", 81).setHardness(0.4F).setResistance(0.7F));

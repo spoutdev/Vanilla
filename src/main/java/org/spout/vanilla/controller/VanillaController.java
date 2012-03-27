@@ -28,6 +28,7 @@ package org.spout.vanilla.controller;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import org.spout.api.Spout;
 
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
@@ -54,6 +55,8 @@ public abstract class VanillaController extends ActionController {
 	//Tick effects
 	private int fireTicks = 0;
 	private final VanillaControllerType type;
+	private EntityVelocityMessage velocityChange;
+	private int velocityTicks=0;
 
 	protected VanillaController(VanillaControllerType type) {
 		super(type);
@@ -76,6 +79,13 @@ public abstract class VanillaController extends ActionController {
 		if (getParent().getHealth() <= 0) {
 			sendMessage(getParent().getWorld().getPlayers(), new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 			getParent().kill();
+		}
+		
+		velocityTicks++;
+		if(velocityChange != null&&velocityTicks==5) {
+			sendMessage(getParent().getWorld().getPlayers(),velocityChange);
+			velocityChange = null;
+			velocityTicks=0;
 		}
 
 		super.onTick(dt);
@@ -199,7 +209,10 @@ public abstract class VanillaController extends ActionController {
 	 */
 	public void move(Vector3 vect) {
 		getParent().translate(vect);
-		sendMessage(getParent().getWorld().getPlayers(), new EntityVelocityMessage(getParent().getId(), (int) vect.getX(), (int) vect.getY(), (int) vect.getZ()));
+		if(velocityChange == null)
+			velocityChange = new EntityVelocityMessage(getParent().getId(), (int) vect.getX(), (int) vect.getY(), (int) vect.getZ());
+		else
+			velocityChange = new EntityVelocityMessage(getParent().getId(), velocityChange.getVelocityX() + (int) vect.getX(), velocityChange.getVelocityY() + (int) vect.getY(), velocityChange.getVelocityZ() + (int) vect.getZ());
 	}
 
 	/**
@@ -209,8 +222,7 @@ public abstract class VanillaController extends ActionController {
 	 * @param z z-axis to move the controller along
 	 */
 	public void move(float x, float y, float z) {
-		getParent().translate(x, y, z);
-		sendMessage(getParent().getWorld().getPlayers(), new EntityVelocityMessage(getParent().getId(), (int) x, (int) y, (int) z));
+		move(new Vector3(x,y,z));
 	}
 
 	/**

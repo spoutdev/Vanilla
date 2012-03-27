@@ -27,20 +27,17 @@ package org.spout.vanilla.controller.living.creature.neutral;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class Enderman extends Creature implements Neutral {
 	private BlockMaterial heldItem;
 	private BlockMaterial previouslyHeldItem;
-	private Entity parent;
+	//private Entity parent; @Zidane: This doesn't seem right, it's always null bc you don't override attachToEntity to give it a value, also seems not needed... we got getParent
 	
 	public Enderman() {
 		super(VanillaControllerTypes.ENDERMAN);
@@ -67,8 +64,8 @@ public class Enderman extends Creature implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent.setMaxHealth(40);
-		parent.setHealth(40);
+		getParent().setMaxHealth(40);
+		getParent().setHealth(40);
 	}
 
 	@Override

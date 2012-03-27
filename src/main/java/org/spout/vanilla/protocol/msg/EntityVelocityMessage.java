@@ -31,6 +31,13 @@ public final class EntityVelocityMessage extends Message {
 	private final int id, velocityX, velocityY, velocityZ;
 
 	public EntityVelocityMessage(int id, int velocityX, int velocityY, int velocityZ) {
+		/*try {
+			throw new Exception("Created EntityVelocityMessage");
+		} catch (Exception ex) {
+			Logger.getLogger(EntityVelocityMessage.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		* This is for testing the random teleport behaviour of some mobs, uncomment if it happens!
+		*/
 		this.id = id;
 		this.velocityX = velocityX;
 		this.velocityY = velocityY;

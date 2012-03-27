@@ -25,15 +25,13 @@
  */
 package org.spout.vanilla.controller.action;
 
-import static org.spout.api.math.MathHelper.floor;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.EntityAction;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
-
-import org.spout.vanilla.material.VanillaMaterials;
+import static org.spout.api.math.MathHelper.floor;
 import org.spout.vanilla.controller.VanillaController;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class GravityAction extends EntityAction<VanillaController> {
 	@Override
@@ -45,6 +43,6 @@ public class GravityAction extends EntityAction<VanillaController> {
 
 	@Override
 	public void run(Entity entity, VanillaController controller, float dt) {
-		entity.translate(0, -0.04f, 0);
+		controller.move(0, -0.04f, 0);
 	}
 }

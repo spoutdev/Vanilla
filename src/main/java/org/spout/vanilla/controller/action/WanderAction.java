@@ -33,8 +33,10 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.VanillaController;
 
 public class WanderAction extends EntityAction<VanillaController> {
+
 	private static final double WANDER_FREQ = 2.75;
 	private double freq = 0;
+	private Vector3 movement;
 
 	@Override
 	public boolean shouldRun(Entity entity, VanillaController controller) {
@@ -47,13 +49,14 @@ public class WanderAction extends EntityAction<VanillaController> {
 
 	@Override
 	public void run(Entity entity, VanillaController controller, float dt) {
-		float x = controller.getRandom().nextFloat() * 3 + 2;
-		float y = 0;
-		float z = controller.getRandom().nextFloat() * 3 + 2;
-
-		Vector3 movement = new Vector3(x, y, z);
-		Quaternion newRot = entity.getRotation().rotate(5 * dt, Vector3.UP);
-		entity.setRotation(newRot);
-		controller.move(Vector3.transform(movement.multiply(dt * 0.9), entity.getRotation()));
+		if (movement == null) {
+			float x = controller.getRandom().nextFloat() * 3 + 1;
+			float y = 0;
+			float z = controller.getRandom().nextFloat() * 3 + 1;
+			movement = new Vector3(x, y, z);
+			Quaternion newRot = entity.getRotation().rotate(1.0F, Vector3.UP);
+			entity.setRotation(newRot);
+		}
+		controller.move(Vector3.transform(movement, entity.getRotation()));
 	}
 }

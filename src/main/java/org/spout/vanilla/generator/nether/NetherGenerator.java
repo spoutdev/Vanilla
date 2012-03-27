@@ -36,4 +36,9 @@ public class NetherGenerator extends VanillaGeneratorBase {
 		register(new NetherrackBiome());
 		//TODO: Create Nether's biome(s);
 	}
+
+	@Override
+	public String getName() {
+		return "VanillaNether";
+	}
 }

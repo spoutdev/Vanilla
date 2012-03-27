@@ -35,4 +35,9 @@ public class TheEndGenerator extends VanillaGeneratorBase {
 		setSelector(new NoiseSelector(0.9, 1.5, 5, 0.9, 1.5));
 		register(VanillaBiomes.ENDSTONE);
 	}
+
+	@Override
+	public String getName() {
+		return "VanillaTheEnd";
+	}
 }

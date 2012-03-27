@@ -39,4 +39,9 @@ public class NormalGenerator extends VanillaGeneratorBase {
 		register(VanillaBiomes.TUNDRA);
 		register(VanillaBiomes.MOUNTAIN);
 	}
+
+	@Override
+	public String getName() {
+		return "VanillaNormal";
+	}
 }

@@ -26,10 +26,10 @@
 package org.spout.vanilla.controller.living;
 
 import org.spout.vanilla.controller.VanillaController;
+import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.action.GravityAction;
 import org.spout.vanilla.controller.action.WanderAction;
 import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
-import org.spout.vanilla.controller.VanillaControllerType;
 
 public abstract class Living extends VanillaController {
 	private int headYaw = 0, headYawLive = 0;

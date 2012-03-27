@@ -85,6 +85,7 @@ import org.spout.vanilla.protocol.msg.MultiBlockChangeMessage;
 import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
+import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 import org.spout.vanilla.protocol.msg.PositionMessage;
 import org.spout.vanilla.protocol.msg.PositionRotationMessage;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
@@ -182,7 +183,8 @@ public class VanillaProtocolTest {
 			new UserListItemMessage("Player", true, (short) 23),
 			new CustomDataMessage("EMERGENCY_SERVICES", new byte[]{0, 1, 1, 8, 9, 9, 8, 8, 8, 1, 9, 9, 9, 1, 1, 9, 7, 2, 5, 3}),
 			new ServerListPingMessage(),
-			new KickMessage("This is a test")};
+			new KickMessage("This is a test"),
+			new PlayerAbilityMessage(true,true,true,true)};
 
 	@Test
 	public void testMessageCodecLookup() {

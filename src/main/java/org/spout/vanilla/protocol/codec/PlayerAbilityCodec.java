@@ -42,9 +42,9 @@ public class PlayerAbilityCodec extends MessageCodec<PlayerAbilityMessage> {
 	@Override
 	public ChannelBuffer encode(PlayerAbilityMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeByte(message.isInvincible() ? 1 : 0);
-		buffer.writeByte(message.canFly() ? 1 : 0);
+		buffer.writeByte(message.isInvincible() ? 0 : 1);
 		buffer.writeByte(message.isFlying() ? 1 : 0);
+		buffer.writeByte(message.canFly() ? 1 : 0);
 		buffer.writeByte(message.canInstantDestroy() ? 1 : 0);
 		return buffer;
 	}
@@ -54,7 +54,7 @@ public class PlayerAbilityCodec extends MessageCodec<PlayerAbilityMessage> {
 		boolean isInvincible = buffer.readByte() == 0;
 		boolean isFlying = buffer.readByte() == 1;
 		boolean canFly = buffer.readByte() == 1;
-		boolean canInstantDestroy = buffer.readByte() == 0;
+		boolean canInstantDestroy = buffer.readByte() == 1;
 		return new PlayerAbilityMessage(isInvincible, isFlying, canFly, canInstantDestroy);
 	}
 }

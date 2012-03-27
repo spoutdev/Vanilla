@@ -38,10 +38,10 @@ public enum RailsState {
 	NORTH_SLOPED(BlockFace.NORTH, BlockFace.SOUTH, true),
 	EAST_SLOPED(BlockFace.EAST, BlockFace.WEST, true),
 	WEST_SLOPED(BlockFace.WEST, BlockFace.EAST, true),
+	SOUTH_WEST(BlockFace.SOUTH, BlockFace.WEST, false),
 	NORTH_WEST(BlockFace.NORTH, BlockFace.WEST, false),
 	NORTH_EAST(BlockFace.NORTH, BlockFace.EAST, false),
-	SOUTH_EAST(BlockFace.SOUTH, BlockFace.EAST, false),
-	SOUTH_WEST(BlockFace.SOUTH, BlockFace.WEST, false);
+	SOUTH_EAST(BlockFace.SOUTH, BlockFace.EAST, false);
 	private final BlockFace[] directions;
 	private final boolean curved;
 	private final boolean sloped;

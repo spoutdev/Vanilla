@@ -45,8 +45,11 @@ public class MinecartTrackLogic implements Source {
 	public boolean isPowered;
 	public BlockFace direction;
 	public boolean changed = false;
+	public MinecartTrackLogic parent = null;
 	public List<MinecartTrackLogic> neighbours = new ArrayList<MinecartTrackLogic>();
 
+	private static BlockFace[] rose = new BlockFace[] {BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST};
+	
 	private MinecartTrackLogic(World world, int x, int y, int z, Rails data) {
 		this.world = world;
 		this.x = x;
@@ -66,28 +69,60 @@ public class MinecartTrackLogic implements Source {
 			return null;
 		}
 	}
-
-	public MinecartTrackLogic addNeighbour(BlockFace direction, boolean genSubNeighbours) {
-		MinecartTrackLogic logic = this.getLogic(direction);
-		if (logic != null) {
-			//find out what connections this rails has
-			if (genSubNeighbours) {
-				for (BlockFace conn : logic.data.getDirections()) {
-					MinecartTrackLogic neigh = logic.addNeighbour(conn, false);
-					if (conn == direction.getOpposite() && neigh != null) {
-						neigh.data = this.data;
-					}
-				}
-				if (!logic.data.isConnected(direction.getOpposite())) {
+	
+	/**
+	 * Generates all neighbours around this rails
+	 * @param deep whether to perform a deep search
+	 */
+	public void genNeighbours(boolean deep) {
+		if (deep) {
+			for (BlockFace direction : rose) {
+				MinecartTrackLogic logic = this.getLogic(direction);
+				if (logic != null) {
+					logic.parent = this;
+					logic.direction = direction;
+					//find out what connections this rails has
+					logic.genNeighbours(false);
 					if (logic.neighbours.size() >= 2) {
-						return null;
+						continue; //already connected to two other track pieces
+					}
+					MinecartTrackLogic self = logic.getLogic(logic.direction.getOpposite());
+					self.data = this.data;
+					self.parent = logic;
+					self.direction = logic.direction.getOpposite();
+					logic.neighbours.add(self);
+					this.neighbours.add(logic);
+				}
+			}
+		} else {
+			for (BlockFace direction : this.data.getDirections()) {
+				if (direction == this.direction.getOpposite()) {
+					continue;
+				}
+				MinecartTrackLogic logic = this.getLogic(direction);
+				if (logic != null) {
+					logic.parent = this;
+					logic.direction = direction;
+					if (logic.data.isConnected(direction.getOpposite())) {
+						this.neighbours.add(logic);
 					}
 				}
 			}
-			logic.direction = direction;
-			this.neighbours.add(logic);
 		}
-		return logic;
+	}
+	
+	/**
+	 * Tries to find a neighbour in the direction given.
+	 * Returns null if none was found
+	 * @param direction
+	 */
+	public MinecartTrackLogic getNeighbour(BlockFace direction) {
+		for (MinecartTrackLogic logic : this.neighbours) {
+			if (logic.direction == direction) {
+				return logic;
+			}
+		}
+		return null;
 	}
 
 	public MinecartTrackLogic getLogic(BlockFace direction) {
@@ -126,30 +161,97 @@ public class MinecartTrackLogic implements Source {
 		}
 	}
 
-	public BlockFace getDirection(MinecartTrackLogic to) {
-		if (to.direction == BlockFace.THIS) {
-			return this.direction.getOpposite();
-		} else {
-			return to.direction;
-		}
-	}
-
 	public String toString() {
 		return this.world.getName() + " " + this.x + "/" + this.y + "/" + this.z + " neighbours: " + this.neighbours.size();
 	}
-
-	public void refresh() {
-		this.refresh(true);
+	
+	/**
+	 * Connects the two neighbouring rails using this piece of track
+	 * It is allowed to pass in null for the rails to connect to one rails, or to none
+	 * @param rails1
+	 * @param rails2
+	 */
+	public void connect(MinecartTrackLogic rails1, MinecartTrackLogic rails2) {
+		if (rails1 == null || rails1 == rails2) {
+			rails1 = rails2;
+			rails2 = null;
+		}
+		if (rails1 == null) {
+			//both rails null - switch to default
+			this.setDirection(RailsState.WEST);
+		} else if (rails2 == null) {
+			//connect to rails 1
+			this.setDirection(rails1.direction, rails1.y > this.y);
+		} else if (rails1.direction == rails2.direction.getOpposite()) {
+			//connect the two rails, sloped if needed
+			if (rails1.y > this.y) {
+				this.setDirection(rails1.direction, true);
+			} else if (rails2.y > this.y){
+				this.setDirection(rails2.direction, true);
+			} else {
+				this.setDirection(rails1.direction, false);
+			}
+		} else if (this.data.canCurve()) {
+			this.setDirection(rails1.direction, rails2.direction);
+		} else {
+			this.setDirection(rails1.direction, rails1.y > this.y);
+		}
+	}
+	
+	/**
+	 * Connects this neighbour to it's parent automatically
+	 */
+	public void connect() {
+		this.connect(this.direction.getOpposite());
+	}
+	
+	/**
+	 * Tries to connect this rail to the given direction
+	 */
+	public void connect(BlockFace direction) {
+		if (this.neighbours.isEmpty()) {
+			this.setDirection(RailsState.WEST);
+			return;
+		}
+		MinecartTrackLogic from = this.getNeighbour(direction);
+		if (from == null) {
+			from = this.neighbours.get(0);
+			direction = from.direction;
+		}
+		//try to find a rail on a 90-degree angle
+		for (BlockFace face : rose) {
+			if (face != direction && face != direction.getOpposite()) {
+				MinecartTrackLogic logic = this.getNeighbour(face);
+				if (logic != null) {
+					this.connect(from, logic);
+					return;
+				}
+			}
+		}
+		//try to use the opposite, null is handled
+		this.connect(from, this.getNeighbour(direction.getOpposite()));
 	}
 
-	private void refresh(boolean isMain) {
+	public void refresh() {
 		//Update this track piece based on environment
 		this.neighbours.clear();
-		this.addNeighbour(BlockFace.NORTH, true);
-		this.addNeighbour(BlockFace.EAST, true);
-		this.addNeighbour(BlockFace.SOUTH, true);
-		this.addNeighbour(BlockFace.WEST, true);
-		if (this.neighbours.size() == 3) {
+		this.genNeighbours(true);
+
+		System.out.println("Refreshing: " + this.toString());
+		
+		if (this.neighbours.size() == 1) {
+			//align tracks straight to face this direction
+			MinecartTrackLogic to = this.neighbours.get(0);
+			this.connect(to, null);
+			to.connect();
+		} else if (this.neighbours.size() == 2 || this.neighbours.size() == 4) {
+			//try to make a fixed curve
+			MinecartTrackLogic r1 = this.neighbours.get(0);
+			MinecartTrackLogic r2 = this.neighbours.get(1);
+			this.connect(r1, r2);
+			r1.connect();
+			r2.connect();
+		} else if (this.neighbours.size() == 3) {
 			//sort neighbours: middle at index 1
 			BlockFace middle = this.neighbours.get(1).direction.getOpposite();
 			if (middle == this.neighbours.get(2).direction) {
@@ -159,68 +261,26 @@ public class MinecartTrackLogic implements Source {
 				//dirs[1] need to be swapped with dirs[0]
 				Collections.swap(this.neighbours, 1, 0);
 			}
-		}
-
-		System.out.println(this.toString());
-		if (this.neighbours.size() == 1) {
-			//align tracks straight to face this direction
-			MinecartTrackLogic to = this.neighbours.get(0);
-			BlockFace direction = this.getDirection(to);
-			this.setDirection(direction, to.y > this.y);
-		} else if (this.neighbours.size() == 2) {
-			//try to make a fixed curve
-			MinecartTrackLogic r1 = this.neighbours.get(0);
-			MinecartTrackLogic r2 = this.neighbours.get(1);
-			if (r1.direction.getOpposite() == r2.direction) {
-				//straight track
-				//needs slope?
-				if (r1.y > this.y) {
-					if (this.setDirection(r1.direction, true) && isMain) {
-						r1.refresh(false);
-					}
-				} else if (r2.y > this.y) {
-					if (this.setDirection(r2.direction, true) && isMain) {
-						r2.refresh(false);
-					}
-				} else {
-					if (this.setDirection(r1.direction, false) && isMain) {
-						r1.refresh(false);
-					}
-				}
-			} else if (this.data.canCurve()) {
-				//curve
-				if (this.setDirection(r1.direction, r2.direction) && isMain) {
-					r1.refresh(false);
-					r2.refresh(false);
-				}
-			} else {
-				//face to r1 anyway
-				if (this.setDirection(r1.direction, r1.y > this.y) && isMain) {
-					r1.refresh(false);
-				}
-			}
-		} else if (this.neighbours.size() == 3) {
+			
 			//this will ALWAYS be a curve leading to [1]
 			//pick [0] or [2]?
-			BlockFace main = this.neighbours.get(1).direction;
+			MinecartTrackLogic from = this.neighbours.get(1);
 			MinecartTrackLogic to;
 			if (this.isPowered) {
 				to = this.neighbours.get(0);
 			} else {
 				to = this.neighbours.get(2);
 			}
-			if (this.setDirection(main, to.direction) && isMain) {
-				to.refresh(false);
-			}
+			this.connect(from, to);
+			from.connect();
+			to.connect();
 		}
-		if (isMain) {
-			this.refreshData();
-		}
+		this.refreshData();
 	}
 
 	private void refreshData() {
 		if (this.changed) {
-			this.world.setBlockData(this.x, this.y, this.z, this.data.getData(), false, this);
+			this.world.setBlockData(this.x, this.y, this.z, this.data.getData(), true, this);
 		}
 		for (MinecartTrackLogic logic : this.neighbours) {
 			logic.refreshData();

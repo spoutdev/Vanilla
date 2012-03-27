@@ -262,22 +262,11 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 					velocity = velocity.add(velocity.multiply(0.06D / velLength));
 				} else {
 					//push a minecart slightly forward when hitting a solid block
-					BlockFace pushDirection = null;
-					if (this.railData.getState() == RailsState.SOUTH) {
-						if (this.railsBlock.clone().move(BlockFace.SOUTH).getMaterial() instanceof Solid) {
-							pushDirection = BlockFace.NORTH;
-						} else if (this.railsBlock.clone().move(BlockFace.NORTH).getMaterial() instanceof Solid) {
-							pushDirection = BlockFace.SOUTH;
+					for (BlockFace dir : this.railData.getDirections()) {
+						if (this.railsBlock.clone().move(dir).getMaterial() instanceof Solid) {
+							velocity = dir.getOpposite().getOffset().toVector2().multiply(0.02);
+							break;
 						}
-					} else if (this.railData.getState() == RailsState.WEST) {
-						if (this.railsBlock.clone().move(BlockFace.WEST).getMaterial() instanceof Solid) {
-							pushDirection = BlockFace.EAST;
-						} else if (this.railsBlock.clone().move(BlockFace.EAST).getMaterial() instanceof Solid) {
-							pushDirection = BlockFace.WEST;
-						}
-					}
-					if (pushDirection != null) {
-						velocity = pushDirection.getOffset().toVector2().multiply(0.02);
 					}
 				}
 			}

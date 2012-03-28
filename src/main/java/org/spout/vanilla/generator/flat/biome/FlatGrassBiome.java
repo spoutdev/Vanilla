@@ -25,22 +25,26 @@
  */
 package org.spout.vanilla.generator.flat.biome;
 
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class FlatGrassBiome extends VanillaBiomeType {
+	private int height;
 	public FlatGrassBiome() {
 		super(8);
+		this.height = 4;
 	}
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		if (chunkY == 0) {
-			for (int y = 0; y < 4; y++) {
+		if (chunkY >= 0 && chunkY <= this.height >> Chunk.CHUNK_SIZE_BITS) {			
+			blockData.set(x, 0, z, VanillaMaterials.BEDROCK.getId());		
+			for (int y = 1; y < height - 1; y++) {
 				blockData.set(x, y, z, VanillaMaterials.DIRT.getId());
 			}
-			blockData.set(x, 4, z, VanillaMaterials.GRASS.getId());
+			blockData.set(x, height - 1, z, VanillaMaterials.GRASS.getId());
 		}
 	}
 

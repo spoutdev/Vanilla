@@ -27,6 +27,7 @@ Who is Vanilla Team?
 [![Zidane](https://secure.gravatar.com/avatar/99532c7f117c8dac751422376116fb38?d=mm&r=pg&s=48)](http://forums.spout.org/members/zidane.7/) 
 [![ZNickq](https://secure.gravatar.com/avatar/3833e68b8029636a843d436c06fb8434?d=mm&r=pg&s=48)](http://forums.spout.org/members/znickq.72/) 
 [![Windwaker](https://secure.gravatar.com/avatar/942913bba29c93344d8a2e4da56c6bf1?d=mm&r=pg&s=48)](http://forums.spout.org/members/windwaker.47/) 
+[![bergerkiller](https://secure.gravatar.com/avatar/231ba19298225157537674cbeb7a9f7f?s=mm&r=pg&s=48)](http://forums.spout.org/members/bergerkiller.3753/)
 
 Visit our [website][Website] or get support on our [forums][Forums].  
 Track and submit issues and bugs on our [issue tracker][Issues].

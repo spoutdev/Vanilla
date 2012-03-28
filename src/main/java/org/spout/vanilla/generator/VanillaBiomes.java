@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.generator;
 
+import org.spout.vanilla.generator.flat.biome.FlatGrassBiome;
 import org.spout.vanilla.generator.nether.biome.NetherrackBiome;
 import org.spout.vanilla.generator.normal.biome.DesertBiome;
 import org.spout.vanilla.generator.normal.biome.JungleBiome;
@@ -49,4 +50,5 @@ public class VanillaBiomes {
 	public static final VanillaBiomeType TUNDRA = new TundraBiome();
 	public static final VanillaBiomeType ENDSTONE = new EndStoneBiome();
 	public static final VanillaBiomeType NETHERRACK = new NetherrackBiome();
+	public static final VanillaBiomeType FLATGRASS = new FlatGrassBiome();
 }

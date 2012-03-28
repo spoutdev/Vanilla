@@ -112,17 +112,13 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 				((ItemMaterial) placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
 				return;
 			}
-			if (placedMaterial.getId() > 255) {
-				//placedId = ItemProperties.get(placedId.getItemTypeId()).getPhysics().getPlacedBlock(face, holding.getDurability()); //TODO: Implement items (they are not in yet!)
-				return;
-			}
 			if (placedMaterial.getId() < 0) {
 				sendRevert = true;
 			}
 
 			short placedData = holding.getData();
 
-			if (face == BlockFace.BOTTOM && world.getBlockMaterial(x, y - 1, z) == VanillaMaterials.SNOW) {
+			if (face == BlockFace.TOP && world.getBlockMaterial(x, y - 1, z) == VanillaMaterials.SNOW) {
 				//make sure the target switches one block below (just like water)
 				y = target.move(BlockFace.BOTTOM).getY();
 			}

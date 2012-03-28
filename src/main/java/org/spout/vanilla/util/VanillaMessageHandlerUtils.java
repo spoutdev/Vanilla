@@ -39,13 +39,13 @@ public class VanillaMessageHandlerUtils {
 				return BlockFace.BOTTOM;
 			case 1:
 				return BlockFace.TOP;
-			case 5:
-				return BlockFace.EAST;
-			case 4:
-				return BlockFace.WEST;
 			case 2:
-				return BlockFace.NORTH;
+				return BlockFace.EAST; 
 			case 3:
+				return BlockFace.WEST;
+			case 4:
+				return BlockFace.NORTH;
+			case 5:
 				return BlockFace.SOUTH;
 			default:
 				return BlockFace.THIS;

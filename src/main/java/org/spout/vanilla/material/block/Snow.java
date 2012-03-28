@@ -25,9 +25,11 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.generic.GenericBlock;
+import org.spout.api.geo.World;
+import org.spout.api.material.BlockMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class Snow extends GenericBlock {
+public class Snow extends Solid {
 
 	public Snow(String name) {
 		super(name, 78);
@@ -36,5 +38,18 @@ public class Snow extends GenericBlock {
 	@Override
 	public boolean isPlacementObstacle() {
 		return false;
+	}
+	
+	@Override
+	public boolean hasPhysics() {
+		return true;
+	}
+
+	@Override
+	public void onUpdate(World world, int x, int y, int z) {
+		BlockMaterial below = world.getBlockMaterial(x, y-1, z);
+		if(below.getMaterial() == VanillaMaterials.AIR) {
+			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR,(short) 0, true, world);
+		}
 	}
 }

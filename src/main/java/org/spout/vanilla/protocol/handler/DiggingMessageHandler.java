@@ -35,14 +35,12 @@ import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.living.player.CreativePlayer;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.generic.GenericBlock;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
-import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> {
 	@Override
@@ -62,7 +60,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 
 		org.spout.api.geo.cuboid.Block block = world.getBlock(x, y, z);
 
-		// Need to have some sort of verification to deal with malicious clients.
+		//TODO Need to have some sort of verification to deal with malicious clients.
 		if (message.getState() == DiggingMessage.STATE_START_DIGGING) {
 			boolean isAir = false;
 			if (block == null || block.getMaterial() == VanillaMaterials.AIR) {
@@ -74,9 +72,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 				return;
 			}
 
-			VanillaMessageHandlerUtils.messageToBlockFace(message.getFace());
-
-			if (isAir || block.getMaterial().isLiquid()) {
+			if (isAir) {
 				return;
 			}
 			/*if (interactEvent.useItemInHand() != Event.Result.DENY) { //TODO: Interactivity!
@@ -103,9 +99,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			blockBroken = true;
 		}
 
-		System.out.print(message + "|" + blockBroken);
-
-		if (blockBroken) {
+		if (blockBroken && block.getMaterial() != VanillaMaterials.WATER) {
 			BlockMaterial oldMat = world.getBlockMaterial(x, y, z);
 			oldMat.onDestroy(world, x, y, z);
 			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, player);
@@ -125,13 +119,6 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 					}
 				}
 			}
-			/*if (!block.isEmpty() && !block.isLiquid()) {
-				if (!player.getInventory().contains(block.getTypeId()) || player.getGameMode() != GameMode.CREATIVE) {
-					player.getInventory().addItem(BlockProperties.get(block.getTypeId()).getDrops(block.getData()));
-				}
-			}
-			world.playEffectExceptTo(block.getLocation(), Effect.STEP_SOUND, block.getTypeId(), 64, player);
-			block.setTypeId(BlockID.AIR);*/
 		}
 	}
 }

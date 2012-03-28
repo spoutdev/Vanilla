@@ -95,7 +95,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 					return;
 				}
 			}*/
-			if (player.getEntity().getController() instanceof CreativePlayer) {
+			if (CreativePlayer.is(player.getEntity().getController())) {
 				blockBroken = true;
 			}
 		} else if (message.getState() == DiggingMessage.STATE_DONE_DIGGING) {
@@ -110,7 +110,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			oldMat.onDestroy(world, x, y, z);
 			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, player);
 
-			if (player.getEntity().getController() instanceof SurvivalPlayer) {
+			if (SurvivalPlayer.is(player.getEntity().getController())) {
 				Material dropMat = oldMat;
 				int count = 1;
 				if (oldMat instanceof GenericBlock) {

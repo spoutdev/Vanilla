@@ -47,7 +47,7 @@ import org.spout.vanilla.protocol.msg.UserListItemMessage;
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
  */
-public abstract class VanillaPlayer extends Human implements PlayerController {
+public class VanillaPlayer extends Human implements PlayerController {
 	private final Player owner;
 	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
 	private int lastPing = 0;
@@ -57,17 +57,14 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	private boolean sneaking, sprinting, onGround;
 	private final Vector3 moveSpeed = new Vector3(10, 0, 0);
 	private final Vector3 horizSpeed = new Vector3(0, 0, -10);
+	private Inventory activeInventory;
+	private ItemStack itemOnCursor;
+	private GameModeHandler gmhandler;
 
 	public VanillaPlayer(Player p) {
 		super(VanillaControllerTypes.PLAYER);
 		owner = p;
 		p.getEntity().setInventorySize(45);
-		Inventory inv = p.getEntity().getInventory();
-		for (int i = 37; i <= inv.getSize(); i++) {
-			inv.setHiddenSlot(i, true);
-		}
-
-		p.getEntity().getInventory().setCurrentSlot(0);
 	}
 
 	@Override
@@ -81,6 +78,7 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public void onTick(float dt) {
+		gmhandler.onTick(dt);
 		Player player = getPlayer();
 		if (player == null || player.getSession() == null) {
 			return;
@@ -131,6 +129,11 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public PlayerInventory createInventory(int size) {
+		PlayerInventory inventory = new PlayerInventory(size);
+		for (int i = 37; i < inventory.getSize(); i++) {
+			inventory.setHiddenSlot(i, true);
+		}
+		inventory.setCurrentSlot(0);
 		return new PlayerInventory(size);
 	}
 
@@ -213,4 +216,40 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 		String playerName = getPlayer().getName();
 		return VanillaConfiguration.OPS.isOp(playerName);
 	}
+
+	public Inventory getActiveInventory() {
+		return activeInventory;
+	}
+	
+	public void setActiveInventory(Inventory newActive) {
+		newActive =activeInventory;
+	}
+	
+	public ItemStack getItemOnCursor() {
+		return itemOnCursor;
+	}
+	
+	public void setItemOnCursor(ItemStack newItem) {
+		itemOnCursor = newItem;
+	}
+	
+	
+	
+	@Override
+	public boolean hasInfiniteResources() {
+		return gmhandler.hasInfiniteResources();
+	}
+	
+	public void setGameMode(GameModeHandler newHandler) {
+		gmhandler = newHandler;
+	}
+
+	public boolean isSurvival() {
+		return gmhandler instanceof SurvivalPlayer;
+	}
+
+	public GameModeHandler getGameModeHandler() {
+		return gmhandler;
+	}
+	
 }

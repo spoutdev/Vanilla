@@ -103,7 +103,7 @@ public class Dye extends GenericItem {
 		other.setData("SheepColor", 0xF - holding.getData());
 		System.out.println("Sheep go baaaa!");
 
-		if (entity.getController() instanceof SurvivalPlayer) {
+		if (SurvivalPlayer.is(entity.getController())) {
 			if (holding.getAmount() > 1) {
 				holding.setAmount(holding.getAmount() - 1);
 				entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());

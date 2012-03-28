@@ -40,6 +40,7 @@ import org.spout.vanilla.protocol.msg.TimeMessage;
 import org.spout.vanilla.world.Weather;
 
 public class NormalSky extends VanillaSky {
+
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(NormalSky.class, "Normal Sky");
 	private float time = 0;
 	private float countdown = 20;
@@ -120,7 +121,9 @@ public class NormalSky extends VanillaSky {
 		boolean rain = (currentWeather != Weather.CLEAR);
 		StateChangeMessage msg = new StateChangeMessage((byte) (rain ? 1 : 2), (byte) 0);
 		for (Player player : getParent().getWorld().getPlayers()) {
-			player.getSession().send(msg);
+			if (player.getSession() != null) {
+				player.getSession().send(msg);
+			}
 		}
 	}
 

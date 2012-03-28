@@ -277,28 +277,22 @@ public class AdministrationCommands {
 			throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
 		}
 
-		VanillaPlayer controller;
+		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
 		String message;
 		switch (mode) {
 			case 0:
-				controller = new SurvivalPlayer(player);
+				controller.setGameMode(new SurvivalPlayer(controller));
 				message = "SURVIVAL.";
 				break;
 			case 1:
-				controller = new CreativePlayer(player);
+				controller.setGameMode(new CreativePlayer(controller));
 				message = "CREATIVE.";
 				break;
 			default:
 				throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
 		}
 
-		if (player.getEntity().is(controller.getClass())) {
-			source.sendMessage(player.getName() + " is already in the choosen game mode.");
-			return;
-		}
-
 		player.sendMessage("Your game mode has been changed to " + message);
-		player.getEntity().setController(controller);
 		player.getSession().send(new StateChangeMessage((byte) 3, (byte) mode));
 		if (!player.equals(source)) {
 			source.sendMessage(player.getName() + "'s game mode has been changed to " + message);

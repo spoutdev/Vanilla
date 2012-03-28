@@ -69,7 +69,7 @@ public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 		int item = message.getItem();
 
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeByte(message.getId());
+		buffer.writeByte(message.getWindowId());
 		buffer.writeShort(message.getSlot());
 		buffer.writeByte(message.isRightClick() ? 1 : 0);
 		buffer.writeShort(message.getTransaction());
@@ -78,7 +78,7 @@ public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 		if (item != -1) {
 			buffer.writeByte(message.getCount());
 			buffer.writeShort(message.getDamage());
-			if (ChannelBufferUtils.hasNbtData(message.getId())) {
+			if (ChannelBufferUtils.hasNbtData(message.getWindowId())) {
 				ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
 			}
 		}

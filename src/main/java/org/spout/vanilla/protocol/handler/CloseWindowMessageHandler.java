@@ -28,12 +28,16 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 
 public final class CloseWindowMessageHandler extends MessageHandler<CloseWindowMessage> {
 	@Override
 	public void handle(Session session, Player player, CloseWindowMessage message) {
+		VanillaPlayer vplr = (VanillaPlayer) player.getEntity().getController();
+		vplr.setActiveInventory(player.getEntity().getInventory());
+		vplr.setItemOnCursor(null);
+		//TODO drop item, code below ;D
 		/*if (player == null) {
 			return;
 		}

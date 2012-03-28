@@ -47,12 +47,12 @@ import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.hostile.Creeper;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.creature.neutral.Enderman;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.CreativePlayer;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 
@@ -66,11 +66,11 @@ public class VanillaEventListener implements Listener {
 	@EventHandler(order = Order.EARLIEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		Controller mode;
+		VanillaPlayer mode = new VanillaPlayer(player);
 		if (VanillaConfiguration.PLAYER_DEFAULT_GAMEMODE.getString().equalsIgnoreCase("creative")) {
-			mode = new CreativePlayer(player);
+			mode.setGameMode(new CreativePlayer(mode));
 		} else {
-			mode = new SurvivalPlayer(player);
+			mode.setGameMode(new SurvivalPlayer(mode));
 		}
 
 		Entity playerEntity = player.getEntity();

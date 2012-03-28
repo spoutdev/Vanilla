@@ -25,13 +25,29 @@
  */
 package org.spout.vanilla.controller.living.player;
 
-import org.spout.api.player.Player;
+import org.spout.api.entity.Controller;
 
-public class CreativePlayer extends VanillaPlayer {
-	public CreativePlayer(Player p) {
+public class CreativePlayer extends GameModeHandler{
+	
+	public static boolean is(Controller e) {
+		if(e==null)
+			return false;
+		if(!(e instanceof VanillaPlayer))
+			return false;
+		VanillaPlayer vplr = (VanillaPlayer) e;
+		if(!vplr.isSurvival())
+			return true;
+		return false;
+	}
+	
+	public CreativePlayer(VanillaPlayer p) {
 		super(p);
-		//Creative is immune to all damage
-		setFlammable(false);
+		p.setFlammable(false);
+	}
+	
+	@Override
+	public void onTick(float dt) {
+		
 	}
 
 	@Override

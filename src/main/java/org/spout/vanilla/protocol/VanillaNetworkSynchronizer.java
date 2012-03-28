@@ -53,6 +53,7 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
@@ -220,7 +221,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		if (first) {
 			first = false;
 			int entityId = owner.getEntity().getId();
-			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1, dimensionBit, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
+			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
+			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), vc.isSurvival() ? 0 : 1, dimensionBit, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
 			owner.getSession().send(idMsg, true);
 			//Normal messages may be sent
 			owner.getSession().setState(State.GAME);
@@ -236,7 +238,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			}
 			entity.getInventory().addViewer(this);
 		} else {
-			owner.getSession().send(new RespawnMessage(dimensionBit, (byte) 0, (byte) (owner.getEntity().is(SurvivalPlayer.class) ? 0 : 1), world.getHeight(), "DEFAULT"));
+			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
+			owner.getSession().send(new RespawnMessage(dimensionBit, (byte) 0, (byte) (vc.isSurvival() ? 0 : 1), world.getHeight(), "DEFAULT"));
 		}
 
 		if (world != null) {
@@ -355,6 +358,19 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		super.syncEntity(e);
 	}
 
+	@Override
+	public void onSlotSet(Inventory inventory, int slot) {
+		ItemStack item = inventory.getItem(slot);
+		Message message;
+		final int networkSlot = VanillaMessageHandlerUtils.spoutInventorySlotToNetwork(slot);
+		if (item == null) {
+			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot);
+		} else {
+			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot, item.getMaterial().getId(), item.getAmount(), item.getData(), item.getAuxData());
+		}
+		queuedInventoryUpdates.put(slot, message);
+	}
+	
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
 		Message message;

@@ -61,7 +61,7 @@ public class GenericBlockItem extends GenericItem implements BlockItem {
 			if (holding == null || holding.getMaterial() != this) {
 				throw new IllegalStateException("Interaction with an controller that is not holding this material!");
 			}
-			if (entity.getController() instanceof SurvivalPlayer) {
+			if (SurvivalPlayer.is(entity.getController())) {
 				if (holding.getAmount() > 1) {
 					holding.setAmount(holding.getAmount() - 1);
 				} else if (holding.getAmount() == 1) {

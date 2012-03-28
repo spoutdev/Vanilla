@@ -53,7 +53,7 @@ public final class WindowClickMessage extends Message {
 		this.nbtData = nbtData;
 	}
 
-	public int getId() {
+	public int getWindowId() {
 		return id;
 	}
 

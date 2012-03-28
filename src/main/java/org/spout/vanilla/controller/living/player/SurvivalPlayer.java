@@ -25,11 +25,27 @@
  */
 package org.spout.vanilla.controller.living.player;
 
-import org.spout.api.player.Player;
+import org.spout.api.entity.Controller;
 
-public class SurvivalPlayer extends VanillaPlayer {
-	public SurvivalPlayer(Player p) {
+public class SurvivalPlayer extends GameModeHandler{
+	
+	public static boolean is(Controller e) {
+		if(e==null)
+			return false;
+		if(!(e instanceof VanillaPlayer))
+			return false;
+		VanillaPlayer vplr = (VanillaPlayer) e;
+		return vplr.getGameModeHandler() instanceof SurvivalPlayer;
+	}
+	
+	public SurvivalPlayer(VanillaPlayer p) {
 		super(p);
+		p.setFlammable(true);
+	}
+	
+	@Override
+	public void onTick(float dt) {
+		
 	}
 
 	@Override

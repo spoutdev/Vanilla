@@ -45,9 +45,11 @@ import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.UserListItemMessage;
 
 /**
- * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
+ * Represents a player on a server with the VanillaPlugin; specific methods to
+ * Vanilla.
  */
 public class VanillaPlayer extends Human implements PlayerController {
+
 	private final Player owner;
 	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
 	private int lastPing = 0;
@@ -116,6 +118,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Gets the amount of ticks it takes the client to respond to the server.
+	 *
 	 * @return ping of player.
 	 */
 	public short getPing() {
@@ -153,6 +156,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not the player is sneaking.
+	 *
 	 * @param sneaking
 	 */
 	public void setSneaking(boolean sneaking) {
@@ -161,6 +165,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is sneaking.
+	 *
 	 * @return true if player is sneaking
 	 */
 	public boolean isSneaking() {
@@ -169,6 +174,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not th player is
+	 *
 	 * @param sprinting
 	 */
 	public void setSprinting(boolean sprinting) {
@@ -177,6 +183,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is sprinting.
+	 *
 	 * @return true if sprinting
 	 */
 	public boolean isSprinting() {
@@ -185,6 +192,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not the player is on the ground.
+	 *
 	 * @param onGround
 	 */
 	public void setOnGround(boolean onGround) {
@@ -193,6 +201,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is on the ground.
+	 *
 	 * @return true if on ground.
 	 */
 	public boolean isOnGround() {
@@ -201,6 +210,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Makes the player a server operator.
+	 *
 	 * @param op
 	 */
 	public void setOp(boolean op) {
@@ -210,6 +220,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is a server operator.
+	 *
 	 * @return true if an operator.
 	 */
 	public boolean isOp() {
@@ -220,26 +231,24 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public Inventory getActiveInventory() {
 		return activeInventory;
 	}
-	
+
 	public void setActiveInventory(Inventory newActive) {
-		newActive =activeInventory;
+		newActive = activeInventory;
 	}
-	
+
 	public ItemStack getItemOnCursor() {
 		return itemOnCursor;
 	}
-	
+
 	public void setItemOnCursor(ItemStack newItem) {
 		itemOnCursor = newItem;
 	}
-	
-	
-	
+
 	@Override
 	public boolean hasInfiniteResources() {
 		return gmhandler.hasInfiniteResources();
 	}
-	
+
 	public void setGameMode(GameModeHandler newHandler) {
 		gmhandler = newHandler;
 	}
@@ -251,5 +260,4 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public GameModeHandler getGameModeHandler() {
 		return gmhandler;
 	}
-	
 }

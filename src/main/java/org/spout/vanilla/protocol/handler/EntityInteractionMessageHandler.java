@@ -44,8 +44,7 @@ import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 public class EntityInteractionMessageHandler extends MessageHandler<EntityInteractionMessage> {
 	@Override
 	public void handle(Session session, Player player, EntityInteractionMessage message) {
-		//TODO what happens if the controller is in a different region?
-		Entity clickedEntity = player.getEntity().getWorld().getRegion(player.getEntity().getPosition()).getEntity(message.getTarget());
+		Entity clickedEntity = player.getEntity().getWorld().getEntity(message.getTarget());
 		if (clickedEntity == null) {
 			return;
 		}

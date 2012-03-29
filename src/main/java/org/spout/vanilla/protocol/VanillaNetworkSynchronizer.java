@@ -259,7 +259,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			lastKeepAlive = currentTime;
 			owner.getSession().send(PingMsg, true);
 		}
-
+		
 		for (TIntObjectIterator<Message> i = queuedInventoryUpdates.iterator(); i.hasNext(); ) {
 			i.advance();
 			session.send(i.value());

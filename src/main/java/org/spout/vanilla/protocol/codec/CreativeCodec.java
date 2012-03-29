@@ -36,15 +36,15 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.nbt.Tag;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.QuickBarMessage;
+import org.spout.vanilla.protocol.msg.CreativeMessage;
 
-public class QuickBarCodec extends MessageCodec<QuickBarMessage> {
-	public QuickBarCodec() {
-		super(QuickBarMessage.class, 0x6B);
+public class CreativeCodec extends MessageCodec<CreativeMessage> {
+	public CreativeCodec() {
+		super(CreativeMessage.class, 0x6B);
 	}
 
 	@Override
-	public QuickBarMessage decode(ChannelBuffer buffer) throws IOException {
+	public CreativeMessage decode(ChannelBuffer buffer) throws IOException {
 		short slot = buffer.readShort();
 		short id = buffer.readShort();
 
@@ -55,14 +55,14 @@ public class QuickBarCodec extends MessageCodec<QuickBarMessage> {
 			if (ChannelBufferUtils.hasNbtData(id)) {
 				nbtData = ChannelBufferUtils.readCompound(buffer);
 			}
-			return new QuickBarMessage(slot, id, amount, damage, nbtData);
+			return new CreativeMessage(slot, id, amount, damage, nbtData);
 		} else {
-			return new QuickBarMessage(slot, id, (short) 0, (short) 0, null);
+			return new CreativeMessage(slot, id, (short) 0, (short) 0, null);
 		}
 	}
 
 	@Override
-	public ChannelBuffer encode(QuickBarMessage message) throws IOException {
+	public ChannelBuffer encode(CreativeMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeShort(message.getSlot());
 		buffer.writeShort(message.getId());

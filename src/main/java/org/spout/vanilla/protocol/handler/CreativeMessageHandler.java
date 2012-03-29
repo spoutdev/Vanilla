@@ -25,41 +25,59 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.entity.Controller;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.controller.living.player.CreativePlayer;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
-import org.spout.vanilla.protocol.msg.QuickBarMessage;
+import org.spout.vanilla.protocol.msg.CreativeMessage;
+import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
-public class QuickBarMessageHandler extends MessageHandler<QuickBarMessage> {
+public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
+
 	@Override
-	public void handle(Session session, Player player, QuickBarMessage message) {
-		/*if (player.getData("gamemode") != GameMode.CREATIVE) { //TODO: Gamemode is currently not changeable
+	public void handle(Session session, Player player, CreativeMessage message) {
+		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
+
+		if (!(CreativePlayer.is(controller))) {
 			player.kick("Now now, don't try that here. Won't work.");
 			return;
-		}*/
+		}
 		int slot = message.getSlot();
+		slot = VanillaMessageHandlerUtils.networkInventorySlotToSpout(slot);
 		if (slot < 0 || slot >= player.getEntity().getInventorySize()) {
 			return;
 		}
-		ItemStack newItem = null;
-		if (checkValidId(message.getId())) {
-			newItem = new ItemStack(Material.get(message.getId()), message.getDamage(), message.getAmount());
-		} else if (message.getId() != -1) {
-			player.kick("Unknown item ID: " + message.getId());
+		ItemStack newItem;
+		if (checkValidId(message.getId(), message.getDamage())) {
+			if(message.getDamage()!=0)
+			newItem = new ItemStack(Material.get(message.getId()).getSubMaterial(message.getDamage()), message.getDamage(), message.getAmount());
+			else
+				newItem = new ItemStack(Material.get(message.getId()),message.getDamage(), message.getAmount());
+		} else {
+			player.kick("Unknown item ID: " + message.getId() + " and durability " + message.getDamage() + "!");
 			return;
 		}
 		player.getEntity().getInventory().setItem(newItem, slot);
-		/*if (currentItem != null) {
-			player.setItemOnCursor(currentItem);
-		} else {
-			player.setItemOnCursor(null);
-		}*/
+		/*
+		 * if (currentItem != null) { player.setItemOnCursor(currentItem); } else {
+		 * player.setItemOnCursor(null);
+		}
+		 */
 	}
 
-	public boolean checkValidId(short id) {
-		return Material.get(id) != null;
+	public boolean checkValidId(short id, short data) {
+		Material mat = Material.get(id);
+		if (mat == null) {
+			return false;
+		}
+		if (data == 0) {
+			return mat != null;
+		}
+		return mat.getSubMaterial(data) != null;
 	}
 }

@@ -69,7 +69,6 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		ItemStack currentItem = inventory.getItem(slot);
 		if (CreativePlayer.is(entity.getController()) && message.getWindowId() == VanillaMessageHandlerUtils.getInventoryId(inv.getClass())) {
 			response(session, message, false);
-			player.getNetworkSynchronizer().onSlotSet(inventory, slot, currentItem);
 			session.getGame().getLogger().log(Level.WARNING, "{0} tried to do an invalid inventory action in Creative mode!", new Object[]{player.getName()});
 			return;
 		}
@@ -94,7 +93,6 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 				inventory.setItem(null, slot);
 				response(session, message, true);
 			}
-			player.getNetworkSynchronizer().onSlotSet(inventory, slot);
 			return;
 		} else { //got an item on the cursor
 			ItemStack cursor = vplayer.getItemOnCursor();
@@ -137,7 +135,6 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 				}
 			}
 			response(session, message, true);
-			player.getNetworkSynchronizer().onSlotSet(inventory, slot);
 			return;
 		}
 		/*

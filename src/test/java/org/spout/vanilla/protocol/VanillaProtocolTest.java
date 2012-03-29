@@ -89,7 +89,7 @@ import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 import org.spout.vanilla.protocol.msg.PositionMessage;
 import org.spout.vanilla.protocol.msg.PositionRotationMessage;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
-import org.spout.vanilla.protocol.msg.QuickBarMessage;
+import org.spout.vanilla.protocol.msg.CreativeMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
@@ -174,7 +174,7 @@ public class VanillaProtocolTest {
 			new SetWindowSlotsMessage((byte) 3, new ItemStack[]{new ItemStack(VanillaMaterials.PISTON_BASE, 3), new ItemStack(VanillaMaterials.ARROW, 23)}),
 			new ProgressBarMessage(2, 4, 55),
 			new TransactionMessage(1, 55, true),
-			new QuickBarMessage((short) 1, (short) 2, (short) 3, (short) 4, null),
+			new CreativeMessage((short) 1, (short) 2, (short) 3, (short) 4, null),
 			new EnchantItemMessage(2, 3),
 			new UpdateSignMessage(1, 2, 3, new String[]{"This", "is", "a", "sign"}),
 			new MapDataMessage((short) 1, (short) 2, new byte[]{2, 3, 8, 127, 123}),

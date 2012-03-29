@@ -31,11 +31,11 @@ import org.spout.api.protocol.Message;
 
 import org.spout.nbt.Tag;
 
-public class QuickBarMessage extends Message {
+public class CreativeMessage extends Message {
 	private final short slot, id, amount, damage;
 	private final List<Tag> nbtData;
 
-	public QuickBarMessage(short slot, short id, short amount, short damage, List<Tag> nbtData) {
+	public CreativeMessage(short slot, short id, short amount, short damage, List<Tag> nbtData) {
 		this.slot = slot;
 		this.id = id;
 		this.amount = amount;

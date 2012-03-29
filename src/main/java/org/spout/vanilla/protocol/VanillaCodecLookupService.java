@@ -71,7 +71,7 @@ import org.spout.vanilla.protocol.codec.PlayerAbilityCodec;
 import org.spout.vanilla.protocol.codec.PositionCodec;
 import org.spout.vanilla.protocol.codec.PositionRotationCodec;
 import org.spout.vanilla.protocol.codec.ProgressBarCodec;
-import org.spout.vanilla.protocol.codec.QuickBarCodec;
+import org.spout.vanilla.protocol.codec.CreativeCodec;
 import org.spout.vanilla.protocol.codec.RelativeEntityPositionCodec;
 import org.spout.vanilla.protocol.codec.RelativeEntityPositionRotationCodec;
 import org.spout.vanilla.protocol.codec.RespawnCodec;
@@ -214,7 +214,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x6A */
 			bind(TransactionCodec.class);
 			/* 0x6B */
-			bind(QuickBarCodec.class);
+			bind(CreativeCodec.class);
 			/* 0x6C */
 			bind(EnchantItemCodec.class);
 			/* 0x82 */

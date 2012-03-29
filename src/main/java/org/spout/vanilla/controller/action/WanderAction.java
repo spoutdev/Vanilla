@@ -27,16 +27,17 @@ package org.spout.vanilla.controller.action;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.EntityAction;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaController;
 
 public class WanderAction extends EntityAction<VanillaController> {
-
 	private static final double WANDER_FREQ = 2.75;
 	private double freq = 0;
-	private Vector3 movement;
+	private Vector3 movement = Vector3.ZERO;
+	private Quaternion rotation = Quaternion.IDENTITY;
 
 	@Override
 	public boolean shouldRun(Entity entity, VanillaController controller) {
@@ -49,14 +50,23 @@ public class WanderAction extends EntityAction<VanillaController> {
 
 	@Override
 	public void run(Entity entity, VanillaController controller, float dt) {
-		if (movement == null) {
-			float x = controller.getRandom().nextFloat() * 3 + 1;
-			float y = 0;
-			float z = controller.getRandom().nextFloat() * 3 + 1;
-			movement = new Vector3(x, y, z);
-			Quaternion newRot = entity.getRotation().rotate(1.0F, Vector3.UP);
-			entity.setRotation(newRot);
-		}
-		controller.move(Vector3.transform(movement, entity.getRotation()));
+		//Grab current position
+		Point p = entity.getPosition();
+
+		//Grab the current vectored point
+		Vector3 current = new Vector3(p.getX(), p.getY(), p.getZ());
+
+		//Set the movement vector
+		movement = new Vector3(controller.getRandom().nextFloat() * 3 + 1, 0, controller.getRandom().nextFloat() * 3 + 1);
+
+		//Cross the vectors of the current scale and our random movement
+		Vector3 crossed = Vector3.cross(current, movement);
+
+		//Adjust our rotation quaternion
+		rotation = new Quaternion((float) Math.sqrt((Math.pow(current.length(), 2)) * (float) (Math.pow(movement.length(), 2))) + Vector3.dot(current, movement), crossed);
+
+		//Rotate and move
+		controller.rotate(rotation);
+		controller.move(Vector3.transform(movement.multiply(dt * 1.2), rotation));
 	}
 }

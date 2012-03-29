@@ -25,6 +25,8 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 
 import org.spout.api.entity.Entity;
@@ -72,6 +74,38 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			session.getGame().getLogger().log(Level.WARNING, "{0} tried to do an invalid inventory action in Creative mode!", new Object[]{player.getName()});
 			return;
 		}
+		
+		if(message.isShift()) {
+			if(currentItem == null) {
+				response(session,message,true);
+				return;
+			}
+			int l1,l2;
+			if(slot<9) {
+				l1=0;
+				l2=8;
+				player.sendMessage("You shifted in your quickbar");
+			} else {
+				l1=9;
+				l2=inventory.getSize()-1;
+				player.sendMessage("You shifted in your main inventory!");
+			}
+			Set<Integer> hiddenSlots = new HashSet<Integer>();
+			for(int i=l1;i<=l2;i++) {
+				if(inventory.isHiddenSlot(i))
+					hiddenSlots.add(i);
+				inventory.setHiddenSlot(i, true);
+			}
+			inventory.addItem(currentItem, false);
+			inventory.setItem(currentItem,slot);
+			for(int i=l1;i<=l2;i++) {
+				if(!(hiddenSlots.contains(i)))
+					inventory.setHiddenSlot(i, false);
+			}
+			response(session, message, true);
+			return;
+		}
+		
 		if (vplayer.getItemOnCursor() == null) { //no item on the cursor
 			if (currentItem == null) {
 				response(session, message, true);
@@ -110,6 +144,10 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 				inventory.setItem(currentItem, slot);
 			} else if (currentItem != null && message.isRightClick()) { //TODO check for stack size limits, also shift clicking
 				if (currentItem.equalsIgnoreSize(cursor)) {
+					if(currentItem.getMaterial().getMaxStackSize()==currentItem.getAmount()) {
+						response(session,message,true);
+						return;
+					}
 					currentItem.setAmount(currentItem.getAmount() + 1);
 					inventory.setItem(currentItem, slot);
 					cursor.setAmount(cursor.getAmount() - 1);
@@ -126,8 +164,14 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			} else if (currentItem != null && !message.isRightClick()) {
 				if (currentItem.equalsIgnoreSize(cursor)) {
 					currentItem.setAmount(currentItem.getAmount() + cursor.getAmount());
-					inv.setItem(currentItem, slot);
 					vplayer.setItemOnCursor(null);
+					if(currentItem.getAmount() > currentItem.getMaterial().getMaxStackSize()) {
+						ItemStack is = currentItem.clone();
+						is.setAmount(currentItem.getAmount() - currentItem.getMaterial().getMaxStackSize());
+						currentItem.setAmount(currentItem.getMaterial().getMaxStackSize());
+						vplayer.setItemOnCursor(is);
+					}
+					inv.setItem(currentItem, slot);
 				} else {
 					ItemStack temp = cursor.clone();
 					vplayer.setItemOnCursor(currentItem.clone());

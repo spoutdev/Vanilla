@@ -94,14 +94,13 @@ public class Item extends Substance {
 			return;
 		}
 
-		int collected = getParent().getId();
-		int collector = closestPlayer.getEntity().getId();
+		int collected = getParent().getId(), collector = closestPlayer.getEntity().getId();
 
 		for (Player player : players) {
 			sendMessage(player, new CollectItemMessage(collected, collector));
 		}
 
-		closestPlayer.getEntity().getInventory().addItem(is);
+		closestPlayer.getEntity().getInventory().addItem(is, false);
 		getParent().kill();
 	}
 

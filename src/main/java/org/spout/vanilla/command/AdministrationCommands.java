@@ -291,8 +291,6 @@ public class AdministrationCommands {
 			default:
 				throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
 		}
-
-		player.sendMessage("Your game mode has been changed to " + message);
 		player.getSession().send(new StateChangeMessage((byte) 3, (byte) mode));
 		if (!player.equals(source)) {
 			source.sendMessage(player.getName() + "'s game mode has been changed to " + message);
@@ -409,6 +407,14 @@ public class AdministrationCommands {
 		} else if (args.getString(0, "").contains("resend")) {
 			player.getNetworkSynchronizer().sendChunk(player.getEntity().getChunk());
 			source.sendMessage("Chunk resent");
+		}
+	}
+	
+	@Command(aliases = "comeatmebro", desc = "Gets you kicked!", max = 1)
+	public void testKick(CommandContext args, CommandSource source) throws CommandException {
+		if(source instanceof Player) {
+			Player player = (Player) source;
+			player.kick("bye!");
 		}
 	}
 }

@@ -40,4 +40,6 @@ public abstract class GameModeHandler {
 	public abstract void onTick(float dt);
 
 	public abstract boolean hasInfiniteResources();
+	
+	public abstract byte getPacketId();
 }

@@ -291,7 +291,6 @@ public class AdministrationCommands {
 			default:
 				throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
 		}
-		player.getSession().send(new StateChangeMessage((byte) 3, (byte) mode));
 		if (!player.equals(source)) {
 			source.sendMessage(player.getName() + "'s game mode has been changed to " + message);
 		}

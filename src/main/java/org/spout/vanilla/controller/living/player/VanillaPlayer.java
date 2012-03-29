@@ -42,6 +42,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.protocol.msg.PingMessage;
+import org.spout.vanilla.protocol.msg.StateChangeMessage;
 import org.spout.vanilla.protocol.msg.UserListItemMessage;
 
 /**
@@ -251,6 +252,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	public void setGameMode(GameModeHandler newHandler) {
 		gmhandler = newHandler;
+		this.getPlayer().getSession().send(new StateChangeMessage((byte)3, (byte) gmhandler.getPacketId()));
 	}
 
 	public boolean isSurvival() {

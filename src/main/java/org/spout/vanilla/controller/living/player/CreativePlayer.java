@@ -54,4 +54,9 @@ public class CreativePlayer extends GameModeHandler{
 	public boolean hasInfiniteResources() {
 		return true;
 	}
+
+	@Override
+	public byte getPacketId() {
+		return 1;
+	}
 }

@@ -52,4 +52,9 @@ public class SurvivalPlayer extends GameModeHandler{
 	public boolean hasInfiniteResources() {
 		return false;
 	}
+	
+	@Override
+	public byte getPacketId() {
+		return 0;
+	}
 }

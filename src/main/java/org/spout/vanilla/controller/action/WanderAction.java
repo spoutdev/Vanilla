@@ -54,19 +54,22 @@ public class WanderAction extends EntityAction<VanillaController> {
 		Point p = entity.getPosition();
 
 		//Grab the current vectored point
-		Vector3 current = new Vector3(p.getX(), p.getY(), p.getZ());
+		Vector3 current = new Vector3(p.getX(), p.getY(), p.getZ()).normalize();
 
 		//Set the movement vector
-		movement = new Vector3(controller.getRandom().nextFloat() * 3 + 1, 0, controller.getRandom().nextFloat() * 3 + 1);
+		movement = new Vector3(controller.getRandom().nextFloat() * 3 + 1, 0, controller.getRandom().nextFloat() * 3 + 1).normalize();
 
-		//Cross the vectors of the current scale and our random movement
-		Vector3 crossed = Vector3.cross(current, movement);
+		Vector3 combined = Vector3.add(current, movement).normalize();
+
+		//Compute the angle and the axis for rotation
+		float angle = Vector3.dot(combined, movement);
+		Vector3 axis = Vector3.cross(combined, movement);
 
 		//Adjust our rotation quaternion
-		rotation = new Quaternion((float) Math.sqrt((Math.pow(current.length(), 2)) * (float) (Math.pow(movement.length(), 2))) + Vector3.dot(current, movement), crossed);
+		rotation = new Quaternion((angle * dt), axis);
 
 		//Rotate and move
-		controller.rotate(rotation);
+		entity.setRotation(rotation);
 		controller.move(Vector3.transform(movement.multiply(dt * 1.2), rotation));
 	}
 }

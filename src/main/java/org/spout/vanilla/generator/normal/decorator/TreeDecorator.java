@@ -74,14 +74,22 @@ public class TreeDecorator implements BiomeDecorator {
 		for (int k = 1; k <= oneWidth; k++) {
 			for (int i = -1; i <= 1; i++) {
 				for (int j = -1; j <= 1; j++) {
-					b.clone().move(i, -k, j).setMaterial(VanillaMaterials.LEAVES);
+					Block bc = b.clone().move(i, -k, j);
+					if(bc.getMaterial() == VanillaMaterials.AIR || bc == VanillaMaterials.LEAVES) {
+						bc.setMaterial(VanillaMaterials.LEAVES);
+					}
 				}
 			}
 		}
 		for (int k = oneWidth + 1; k <= oneWidth + twoWidth; k++) {
 			for (int i = -2; i <= 2; i++) {
 				for (int j = -2; j <= 2; j++) {
-					b.clone().move(i, -k, j).setMaterial(VanillaMaterials.LEAVES);
+					if(!(j == 2 && i == 2) && !(j == -2 && i == 2) &&! (j == 2 && i == -2) &&!(j == -2 && i == -2)) {
+						Block bc = b.clone().move(i, -k, j);
+						if(bc.getMaterial() == VanillaMaterials.AIR || bc.getMaterial() == VanillaMaterials.LEAVES) {
+							bc.setMaterial(VanillaMaterials.LEAVES);
+						}
+					}
 				}
 			}
 		}

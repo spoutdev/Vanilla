@@ -69,6 +69,7 @@ public abstract class VanillaController extends ActionController {
 	@Override
 	public void onAttached() {
 		getParent().setCollision(new CollisionModel(area));
+		getParent().setData(VanillaControllerTypes.KEY, getType().getID());
 	}
 
 	@Override

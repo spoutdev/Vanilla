@@ -89,10 +89,12 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 		BoundingBox shape = new BoundingBox(0.0F, 0.0F, 0.0F, width, height, length);
 		shape.offset(-width / 2, 0.0F, -length / 2);
 		this.getParent().setCollision(new CollisionModel(shape));
+		
+		this.setVelocity(new Vector3(0, 0, 0.2));
 	}
 
-	public void generateRailData() {
-		this.railsBlock = this.getParent().getPosition().getWorld().getBlock(this.getParent().getPosition());
+	public void generateRailData(Point position) {
+		this.railsBlock = position.getWorld().getBlock(position);
 		this.railType = this.railsBlock.getMaterial();
 		if (!(this.railType instanceof MinecartTrack)) {
 			this.railsBlock = this.railsBlock.move(BlockFace.BOTTOM);
@@ -122,35 +124,40 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 		//TODO: update health to regenerate
 
 		//get current rails below minecart
-		this.generateRailData();
+		Point position = getParent().getPosition();
+		if (position.getWorld() == null) {
+			return;
+		}
+		this.generateRailData(position);
 
 		Vector2 velocity = this.getVelocity().toVector2();
-		float velocityY = this.getVelocity().getY();
-		Vector3 position = this.getParent().getPosition();
+		float velocityY = this.getVelocity().getY() - 0.04f;
+		
 		if (this.railData != null) {
 			//on tracks
 			this.previousPosY = position.getY();
-			position = position.multiply(1, 0, 1).add(0f, (float) this.railsBlock.getY() + this.height, 0f);
 
 			final float slopedMotion = 0.0078125f;
 
 			//Move a minecart up or down sloped tracks
 			if (this.railData.isSloped()) {
-				position = position.add(0.0f, 1.0f, 0.0f);
-				velocity = velocity.add(this.railMovement[0].getX() * slopedMotion, this.railMovement[0].getY() * slopedMotion);
+				velocity = velocity.subtract(this.railMovement[0].multiply(slopedMotion));
 			}
 
 			//rail motion is calculated from the rails
 			Vector2 railMotion = this.railMovement[1].subtract(this.railMovement[0]);
-
+			if (railMotion.getX() == -2 || railMotion.getY() == -2) {
+				railMotion = railMotion.multiply(-1);
+			}
+			
 			//reverse motion if needed
 			if ((velocity.getX() * railMotion.getX() + velocity.getY() * railMotion.getY()) < 0.0) {
 				railMotion = railMotion.multiply(-1);
 			}
 
 			//rail motion is applied (railFactor is used to normalize the rail motion to current motion)
-			float railFactor = (float) MathHelper.sqrt(railMotion.lengthSquared() / velocity.lengthSquared());
-			velocity = new Vector2(railMotion.getX(), railMotion.getY()).multiply(railFactor);
+			float railFactor = (float) MathHelper.sqrt(velocity.lengthSquared() / railMotion.lengthSquared());
+			velocity = railMotion.multiply(railFactor);
 
 			//slows down minecarts on unpowered booster rails
 			if (this.railData instanceof PoweredRails && !((PoweredRails) this.railData).isPowered()) {
@@ -162,27 +169,32 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 				velocityY = 0f;
 			}
 
-			//location is updated to follow the tracks
-			Vector2 railOffset = new Vector2(this.railsBlock.getX() + 0.5f, this.railsBlock.getZ() + 0.5f);
-			Vector2 oldRail = railOffset.add(this.railMovement[0].multiply(0.5f));
-
-			//positional adjustment (center in middle of tracks)
-			railMotion = railOffset.add(this.railMovement[1].multiply(0.5f)).subtract(oldRail);
-
-			Vector2 factor;
+			Vector3 railsPosition = this.railsBlock.getPosition().add(0.5f, this.height, 0.5f);
+			
+			//position is adjusted to snap to the rails
+			Vector3 adjustment = railsPosition.subtract(position);
+			
 			if (railMotion.getX() == 0) {
-				factor = new Vector2(1, position.getZ() - this.railsBlock.getY());
+				//traveling along Z
+				if (this.railData.isSloped()) {
+					adjustment = adjustment.add(Vector3.UP);
+				}
+				adjustment = adjustment.multiply(1f, 1f, 0f);
 			} else if (railMotion.getY() == 0) {
-				factor = new Vector2(position.getX() - this.railsBlock.getX(), 1);
+				//traveling along X
+				if (this.railData.isSloped()) {
+					adjustment = adjustment.add(Vector3.UP);
+				}
+				adjustment = adjustment.multiply(0f, 1f, 1f);
 			} else {
-				double f = railMotion.getX() * (position.getX() - oldRail.getX()) + railMotion.getY() * (position.getZ() - oldRail.getY());
-				f *= 2.0;
-				factor = new Vector2(f, f);
+				//travel in a corner
+				Vector3 adj = adjustment.abs();
+				float fact = 1f - 0.5f / (adj.getX() + adj.getZ());
+				adjustment = adjustment.multiply(fact);
 			}
-			railMotion = railMotion.multiply(factor);
-			position = oldRail.add(railMotion).toVector3(position.getY());
 
-			this.getParent().setPosition(new Point(position, this.getParent().getWorld()));
+			//apply adjustment
+			this.getParent().setPosition(position = position.add(adjustment));
 		} else if (this.railType == VanillaMaterials.AIR) {
 			//in the air
 			velocity = velocity.multiply(this.airFrictionModifier.toVector2());
@@ -206,48 +218,51 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 
 		//post-move updates
 		if (this.railData != null) {
-			if (this.railData.isSloped()) {
-				//snap to correct Y when changing sloped rails downwards
-				Block newBlock = this.getParent().getWorld().getBlock(this.getParent().getPosition());
-				Vector2 newBlockPos = new Vector2(newBlock.getX(), newBlock.getZ());
+			//snap to correct Y when changing sloped rails downwards
+			Block newBlock = position.getWorld().getBlock(position);
 
-				Vector2 blockChange = position.toVector2().floor();
-				blockChange = blockChange.subtract(newBlockPos);
-				if (blockChange.equals(this.railMovement[0]) || blockChange.equals(this.railMovement[1])) {
-					position = position.subtract(0, 1, 0);
-				}
-
-				if (newBlock.getMaterial() instanceof MinecartTrack) {
-					//x and z motion slowing down when moving up slopes
-					//also continues the Y-change described above
-
-					//calculate the current Y from the rails (triangle)
-					Rails rails = (Rails) newBlock.createData();
-					RailsState state = rails.getState();
-					float posY = position.getY();
-					if (state == RailsState.NORTH_SLOPED) {
-						posY = newBlock.getY() + (position.getX() - newBlock.getX()) + 1;
-					} else if (state == RailsState.EAST_SLOPED) {
-						posY = newBlock.getY() + (position.getZ() - newBlock.getZ()) + 1;
-					} else if (state == RailsState.SOUTH_SLOPED) {
-						posY = newBlock.getY() + (position.getX() - newBlock.getX()) + 1;
-					} else if (state == RailsState.WEST_SLOPED) {
-						posY = newBlock.getY() + (position.getZ() - newBlock.getZ()) + 1;
-					}
-					float velLength = velocity.length();
-					if (velLength > 0) {
-						double slopeSlowDown = (this.previousPosY - posY) * 0.05 / velLength + 1;
-						velocity = velocity.multiply(slopeSlowDown);
-					}
-					position = new Vector3(position.getX(), posY, position.getZ());
-				}
-				this.getParent().setPosition(new Point(position, this.getParent().getWorld()));
+			Vector2 blockChange = new Vector2(newBlock.getX() - this.railsBlock.getX(), newBlock.getZ() - this.railsBlock.getZ());
+			
+			//moved down the slope? Go one down if so
+			if (this.railData.isSloped() && blockChange.equals(this.railMovement[0])) {
+				position = position.add(new Vector3(0f, -1f, 0f));
+				newBlock.move(BlockFace.BOTTOM);
+				this.getParent().setPosition(position);
 			}
+
+			if (newBlock.getMaterial() instanceof MinecartTrack) {
+				//x and z motion slowing down when moving up slopes
+				//snap to correct Y (required for proper Y measures)
+
+				//calculate the current Y from the rails (triangle)
+				Rails rails = (Rails) newBlock.createData();
+				RailsState state = rails.getState();
+				float changeY = (newBlock.getY() - position.getY()) + this.height;
+				System.out.println("state=" + state);
+				if (state == RailsState.NORTH_SLOPED) {
+					changeY += (position.getX() - newBlock.getX()) + 1;
+				} else if (state == RailsState.EAST_SLOPED) {
+					changeY += (position.getZ() - newBlock.getZ()) + 1;
+				} else if (state == RailsState.SOUTH_SLOPED) {
+					changeY += (position.getX() - newBlock.getX()) + 1;
+				} else if (state == RailsState.WEST_SLOPED) {
+					changeY += (position.getZ() - newBlock.getZ()) + 1;
+				}
+				
+				
+//				float velLength = velocity.length();
+//				if (velLength > 0) {
+//					double slopeSlowDown = (this.previousPosY - posY) * 0.05 / velLength + 1;
+//					velocity = velocity.multiply(slopeSlowDown);
+//				}
+				
+				position = position.add(new Vector3(0f, changeY, 0f));
+			}
+			this.getParent().setPosition(new Point(position, this.getParent().getWorld()));
 
 			//make sure velocity follows block changes
 			position = this.getParent().getPosition();
-			Vector2 blockChange = position.toVector2().floor();
-			blockChange = blockChange.subtract(this.railsBlock.getX(), this.railsBlock.getZ());
+
 			if (blockChange.getX() != 0f || blockChange.getY() != 0f) {
 				velocity = blockChange.multiply(velocity.length());
 			}

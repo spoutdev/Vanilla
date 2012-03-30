@@ -32,6 +32,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.material.block.MinecartTrack;
@@ -59,7 +60,7 @@ public class Minecart extends GenericItem {
 		Block block = world.getBlock(position);
 		if (block.getMaterial() instanceof MinecartTrack) {
 			//spawn minecart on rails
-			world.createAndSpawnEntity(position, this.getSpawnedEntity());
+			world.createAndSpawnEntity(position.add(new Vector3(0.5, 0.5, 0.5)), this.getSpawnedEntity());
 			//TODO: Subtracting one from the held item?
 			//Shouldn't the held item be passed to this function instead?
 		}

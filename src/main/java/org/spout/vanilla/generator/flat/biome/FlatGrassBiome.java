@@ -39,13 +39,28 @@ public class FlatGrassBiome extends VanillaBiomeType {
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		if (chunkY >= 0 && chunkY <= this.height >> Chunk.CHUNK_SIZE_BITS) {			
-			blockData.set(x, 0, z, VanillaMaterials.BEDROCK.getId());		
-			for (int y = 1; y < height - 1; y++) {
-				blockData.set(x, y, z, VanillaMaterials.DIRT.getId());
+		final int y = chunkY * 16;
+		final int adjustedHeight = this.height >> Chunk.CHUNK_SIZE_BITS;
+
+		for (int dy = y; dy < y + 16; dy++) {
+			//Don't double generate AIR. TODO FIx this in other biomes.
+			if (dy > adjustedHeight) {
+				continue;
 			}
-			blockData.set(x, height - 1, z, VanillaMaterials.GRASS.getId());
+			blockData.set(x, dy, z, getBlockId(adjustedHeight, dy));
 		}
+	}
+
+	protected short getBlockId(int top, int dy) {
+		short id;
+		if (dy == top) {
+			id = VanillaMaterials.GRASS.getId();
+		} else if (dy + 4 >= top) {
+			id = VanillaMaterials.DIRT.getId();
+		} else {
+			id = VanillaMaterials.BEDROCK.getId();
+		}
+		return id;
 	}
 
 	@Override

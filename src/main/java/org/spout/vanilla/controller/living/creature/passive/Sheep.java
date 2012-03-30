@@ -105,8 +105,4 @@ public class Sheep extends Creature implements Passive {
 
 		return drops;
 	}
-
-	@Override
-	public void onCollide(Material other) {
-	}
 }

@@ -47,9 +47,8 @@ import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 	public static final int BLOCK_TYPE_METADATA_INDEX = 30;
 
-	@Override
-	public int getSpawnedVehicleType() {
-		return 70;
+	public FallingBlockProtocol() {
+		super(21);
 	}
 
 	@Override

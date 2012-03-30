@@ -274,8 +274,8 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 
 		//update yaw
 		float newyaw = (float) Math.toDegrees(Math.atan2(velocity.getX(), velocity.getY()));
-		if (getAngleDifference(this.getParent().getYaw(), newyaw) > 170f) {
-			newyaw = normalAngle(newyaw + 180f);
+		if (MathHelper.getAngleDifference(this.getParent().getYaw(), newyaw) > 170f) {
+			newyaw = MathHelper.wrapAngle(newyaw + 180f);
 		}
 		this.getParent().setYaw(newyaw);
 
@@ -300,20 +300,5 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 	 * @param dt
 	 */
 	public void onVelocityUpdated(float dt) {
-	}
-
-	//TODO: Place in MathHelper class?
-	public static float getAngleDifference(float angle1, float angle2) {
-		return Math.abs(normalAngle(angle1 - angle2));
-	}
-
-	public static float normalAngle(float angle) {
-		while (angle <= -180) {
-			angle += 360;
-		}
-		while (angle > 180) {
-			angle -= 360;
-		}
-		return angle;
 	}
 }

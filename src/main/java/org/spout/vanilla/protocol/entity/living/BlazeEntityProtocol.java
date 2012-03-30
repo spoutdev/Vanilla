@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.protocol.entity.living;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.Controller;
@@ -34,6 +33,10 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class BlazeEntityProtocol extends BasicMobEntityProtocol {
+	public BlazeEntityProtocol() {
+		super(61);
+	}
+
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(controller);

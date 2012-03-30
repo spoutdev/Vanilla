@@ -26,7 +26,6 @@
 package org.spout.vanilla.controller.living.creature.hostile;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.entity.Entity;

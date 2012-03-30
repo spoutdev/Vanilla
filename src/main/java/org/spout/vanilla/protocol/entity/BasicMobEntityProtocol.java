@@ -27,29 +27,29 @@ package org.spout.vanilla.protocol.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
-import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.Living;
-import org.spout.vanilla.protocol.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 
-public class BasicMobEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
+public class BasicMobEntityProtocol extends BasicEntityProtocol {
+
+	public BasicMobEntityProtocol(int mobSpawnID) {
+		super(mobSpawnID);
+	}
+
 	/**
 	 * Gets a list of parameters used for the creation of a mob spawn message
 	 * @param controller - The controller controller to obtain the parameters from
 	 * @return a list of parameters
 	 */
-	@SuppressWarnings("unchecked")
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
 		if (controller instanceof Creature) {
@@ -74,12 +74,8 @@ public class BasicMobEntityProtocol extends VanillaEntityProtocol implements Ent
 			if (c instanceof Living) {
 				headyaw = ((Living) c).getHeadYaw();
 			}
-			int type = entity.getData(VanillaControllerTypes.KEY).asInt();
-			if (type == 0) {
-				return null;
-			}
 			List<Parameter<?>> parameters = this.getSpawnParameters(c);
-			return new Message[]{new SpawnMobMessage(id, type, x, y, z, r, p, headyaw, parameters)};
+			return new Message[]{new SpawnMobMessage(id, this.getSpawnID(), x, y, z, r, p, headyaw, parameters)};
 		} else {
 			return null;
 		}

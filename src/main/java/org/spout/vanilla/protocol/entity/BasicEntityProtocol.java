@@ -1,9 +1,9 @@
 /*
- * This file is part of vanilla (http://www.spout.org/).
+ * This file is part of Vanilla (http://www.spout.org/).
  *
- * vanilla is licensed under the SpoutDev License Version 1.
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
- * vanilla is free software: you can redistribute it and/or modify
+ * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -12,9 +12,9 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * vanilla is distributed in the hope that it will be useful,
+ * Vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
@@ -23,24 +23,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living;
+package org.spout.vanilla.protocol.entity;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.protocol.EntityProtocol;
-import org.spout.vanilla.controller.VanillaControllerType;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.protocol.VanillaEntityProtocol;
 
-/**
- *
- * @author zml2008
- */
-public class MobControllerType extends VanillaControllerType {
-
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name) {
-		this(id, controllerClass, name, new BasicMobEntityProtocol(id));
+public abstract class BasicEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
+	private final int spawnID;
+	public BasicEntityProtocol(int spawnID) {
+		this.spawnID = spawnID;
 	}
-
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
-		super(id, controllerClass, name, protocol);
+	
+	public int getSpawnID() {
+		return this.spawnID;
 	}
 }

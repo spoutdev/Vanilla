@@ -25,33 +25,9 @@
  */
 package org.spout.vanilla.protocol.entity;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.entity.Entity;
-import org.spout.api.protocol.EntityProtocol;
-import org.spout.api.protocol.Message;
+public abstract class BasicVehicleEntityProtocol extends BasicObjectEntityProtocol {
 
-import org.spout.vanilla.protocol.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
-
-public abstract class BasicVehicleEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
-	/**
-	 * Gets the vehicle type to spawn using this protocol
-	 * @return The vehicle type id
-	 */
-	public abstract int getSpawnedVehicleType();
-
-	@Override
-	public Message[] getSpawnMessage(Entity entity) {
-		Controller c = entity.getController();
-		if (c == null) {
-			return null;
-		}
-		int id = entity.getId();
-		int x = (int) (entity.getPosition().getX() * 32);
-		int y = (int) (entity.getPosition().getY() * 32);
-		int z = (int) (entity.getPosition().getZ() * 32);
-
-		//FIXME: Store vehicle type in controller (VehicleEntity implementing?) class instead
-		return new Message[]{new SpawnVehicleMessage(id, this.getSpawnedVehicleType(), x, y, z)};
+	public BasicVehicleEntityProtocol(int vehicleSpawnID) {
+		super(vehicleSpawnID);
 	}
 }

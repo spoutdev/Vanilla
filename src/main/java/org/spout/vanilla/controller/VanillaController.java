@@ -28,7 +28,6 @@ package org.spout.vanilla.controller;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import org.spout.api.Spout;
 
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
@@ -70,7 +69,6 @@ public abstract class VanillaController extends ActionController {
 	@Override
 	public void onAttached() {
 		getParent().setCollision(new CollisionModel(area));
-		getParent().setData(VanillaControllerTypes.KEY, getType().getSpawnId());
 	}
 
 	@Override

@@ -35,21 +35,21 @@ import org.spout.vanilla.VanillaPlugin;
  * @author zml2008
  */
 public class VanillaControllerType extends EmptyConstructorControllerType {
-	private final int spawnId;
+	private final int id;
 
-	public VanillaControllerType(int spawnId, Class<? extends Controller> controllerClass, String name) {
-		this(spawnId, controllerClass, name, null);
+	public VanillaControllerType(final int id, Class<? extends Controller> controllerClass, String name) {
+		this(id, controllerClass, name, null);
 	}
 
-	public VanillaControllerType(int spawnId, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
+	public VanillaControllerType(final int id, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
 		super(controllerClass, name);
-		this.spawnId = spawnId;
+		this.id = id;
 		if (protocol != null) {
 			this.setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, protocol);
 		}
 	}
-
-	public int getSpawnId() {
-		return spawnId;
+	
+	public int getID() {
+		return this.id;
 	}
 }

@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.entity.projectile;
 import org.spout.vanilla.protocol.entity.BasicProjectileEntityProtocol;
 
 public class GhastFireballEntityProtocol extends BasicProjectileEntityProtocol {
-	@Override
-	public int getSpawnedProjectileType() {
-		return 63;
+
+	public GhastFireballEntityProtocol(int projectileSpawnID) {
+		super(63);
 	}
 }

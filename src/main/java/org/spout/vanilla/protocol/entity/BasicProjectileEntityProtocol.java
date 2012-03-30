@@ -28,15 +28,16 @@ package org.spout.vanilla.protocol.entity;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.object.Projectile;
-import org.spout.vanilla.protocol.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
-public abstract class BasicProjectileEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
-	public abstract int getSpawnedProjectileType();
+public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
+
+	public BasicProjectileEntityProtocol(int projectileSpawnID) {
+		super(projectileSpawnID);
+	}
 
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
@@ -57,7 +58,7 @@ public abstract class BasicProjectileEntityProtocol extends VanillaEntityProtoco
 			int dirY = (int) (vel.getY() * 8000);
 			int dirZ = (int) (vel.getZ() * 8000);
 
-			return new Message[]{new SpawnVehicleMessage(id, this.getSpawnedProjectileType(), x, y, z, shooterid, dirX, dirY, dirZ)};
+			return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), x, y, z, shooterid, dirX, dirY, dirZ)};
 		} else {
 			return null;
 		}

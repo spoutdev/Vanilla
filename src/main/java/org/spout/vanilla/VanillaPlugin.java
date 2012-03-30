@@ -52,6 +52,7 @@ import org.spout.vanilla.controller.object.sky.NetherSky;
 import org.spout.vanilla.controller.object.sky.NormalSky;
 import org.spout.vanilla.controller.object.sky.TheEndSky;
 import org.spout.vanilla.controller.world.PointObserver;
+import org.spout.vanilla.generator.flat.FlatGenerator;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.generator.theend.TheEndGenerator;
@@ -120,7 +121,14 @@ public class VanillaPlugin extends CommonPlugin {
 
 		//Initialize our default Vanilla worlds.
 		//World end = game.loadWorld("world_end", new TheEndGenerator());
-		World normal = game.loadWorld("world", new NormalGenerator());
+		World normal;
+		boolean flatWorld = false; //config.getBoolean("general.flatworld", false);
+		if (flatWorld) {
+			normal = game.loadWorld("world", new FlatGenerator());
+		} else {
+			normal = game.loadWorld("world", new NormalGenerator());
+		}
+		
 		World nether = game.loadWorld("world_nether", new NetherGenerator());
 		World end = game.loadWorld("world_end", new TheEndGenerator());
 

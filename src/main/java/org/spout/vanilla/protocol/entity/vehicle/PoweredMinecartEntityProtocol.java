@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.entity.vehicle;
 import org.spout.vanilla.protocol.entity.BasicVehicleEntityProtocol;
 
 public class PoweredMinecartEntityProtocol extends BasicVehicleEntityProtocol {
-	@Override
-	public int getSpawnedVehicleType() {
-		return 11;
+
+	public PoweredMinecartEntityProtocol() {
+		super(11);
 	}
 }

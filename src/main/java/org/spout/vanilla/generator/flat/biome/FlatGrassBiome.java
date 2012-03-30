@@ -31,36 +31,30 @@ import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class FlatGrassBiome extends VanillaBiomeType {
-	private int height;
+	private final int height;
+
 	public FlatGrassBiome() {
+		this(64);
+	}
+
+	public FlatGrassBiome(final int height) {
 		super(8);
-		this.height = 4;
+		this.height = height;
 	}
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		final int y = chunkY * 16;
-		final int adjustedHeight = this.height >> Chunk.CHUNK_SIZE_BITS;
-
-		for (int dy = y; dy < y + 16; dy++) {
-			//Don't double generate AIR. TODO FIx this in other biomes.
-			if (dy > adjustedHeight) {
-				continue;
+		final int startY = chunkY * Chunk.CHUNK_SIZE;
+		final int endY = Math.min(Chunk.CHUNK_SIZE + startY, this.height);
+		for (int y = startY; y < endY; y++) {
+			if (y <= 0) {
+				blockData.set(x, y, z, VanillaMaterials.BEDROCK.getId());
+			} else if (y == this.height - 1) {
+				blockData.set(x, y, z, VanillaMaterials.GRASS.getId());
+			} else {
+				blockData.set(x, y, z, VanillaMaterials.DIRT.getId());
 			}
-			blockData.set(x, dy, z, getBlockId(adjustedHeight, dy));
 		}
-	}
-
-	protected short getBlockId(int top, int dy) {
-		short id;
-		if (dy == top) {
-			id = VanillaMaterials.GRASS.getId();
-		} else if (dy + 4 >= top) {
-			id = VanillaMaterials.DIRT.getId();
-		} else {
-			id = VanillaMaterials.BEDROCK.getId();
-		}
-		return id;
 	}
 
 	@Override

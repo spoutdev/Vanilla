@@ -122,7 +122,7 @@ public class VanillaPlugin extends CommonPlugin {
 		//Initialize our default Vanilla worlds.
 		//World end = game.loadWorld("world_end", new TheEndGenerator());
 		World normal;
-		boolean flatWorld = true; //config.getBoolean("general.flatworld", false);
+		boolean flatWorld = false; //config.getBoolean("general.flatworld", false);
 		if (flatWorld) {
 			normal = game.loadWorld("world", new FlatGenerator());
 		} else {

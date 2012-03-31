@@ -53,7 +53,7 @@ public class WanderAction extends EntityAction<VanillaController> {
 	public void run(Entity entity, VanillaController controller, float dt) {
 		
 		
-		Vector3 entityForward = Vector3.transform(entity.getPosition(), entity.getRotation());
+		Vector3 entityForward = MathHelper.getDirectionVector(entity.getRotation());
 		Vector3 randomTarget = new Vector3(Math.random(), 0, Math.random()).normalize();
 		
 		Quaternion rotationTo = entityForward.rotationTo(randomTarget);

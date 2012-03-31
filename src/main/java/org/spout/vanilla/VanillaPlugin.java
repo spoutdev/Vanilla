@@ -137,9 +137,6 @@ public class VanillaPlugin extends CommonPlugin {
 		NetherSky netherSky = new NetherSky();
 		TheEndSky endSky = new TheEndSky();
 
-		//Create dummy spawn controller
-		PointObserver observer = new PointObserver();
-
 		//Register skys to the map
 		skys.put(normal, normSky);
 		skys.put(nether, netherSky);
@@ -148,15 +145,15 @@ public class VanillaPlugin extends CommonPlugin {
 		//Create spawn points as well as spawn the sky. TODO Have spawn point set by generator.
 		normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 		normal.createAndSpawnEntity(new Point(normal, 0.f, 0.f, 0.f), normSky);
-		normal.createAndSpawnEntity(new Point(normal, 0.5F, 64.5F, 0.5F), observer);
+		normal.createAndSpawnEntity(new Point(normal, 0.5F, 64.5F, 0.5F), new PointObserver());
 
 		nether.setSpawnPoint(new Transform(new Point(nether, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), netherSky);
-		nether.createAndSpawnEntity(new Point(nether, 0.5F, 64.5F, 0.5F), observer);
+		nether.createAndSpawnEntity(new Point(nether, 0.5F, 64.5F, 0.5F), new PointObserver());
 
 		end.setSpawnPoint(new Transform(new Point(end, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), endSky);
-		end.createAndSpawnEntity(new Point(end, 0.5F, 64.5F, 0.5F), observer);
+		end.createAndSpawnEntity(new Point(end, 0.5F, 64.5F, 0.5F), new PointObserver());
 
 		getLogger().info("b" + this.getDescription().getVersion() + " enabled. Protocol: " + getDescription().getProtocol());
 	}

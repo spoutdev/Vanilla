@@ -39,7 +39,7 @@ import org.spout.api.math.Vector3;
  */
 public class PointObserver extends Controller {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(PointObserver.class, "Point Observer");
-	private static Point currPoint;
+	private Point currPoint;
 	private static CollisionModel model = new CollisionModel();
 	
 	public PointObserver() {
@@ -60,5 +60,6 @@ public class PointObserver extends Controller {
 		model.setStrategy(CollisionStrategy.NOCOLLIDE);
 		getParent().setCollision(model);
 		getParent().setObserver(true);
+		currPoint = getParent().getPosition();
 	}
 }

@@ -52,12 +52,15 @@ public class WanderAction extends EntityAction<VanillaController> {
 	@Override
 	public void run(Entity entity, VanillaController controller, float dt) {
 		
-		
+		//Get the direction the entity is facing
 		Vector3 entityForward = MathHelper.getDirectionVector(entity.getRotation());
+		//Get somewhere we want to go.  Make sure it is length 1
 		Vector3 randomTarget = new Vector3(Math.random(), 0, Math.random()).normalize();
-		
+		//Get the rotation to that target
 		Quaternion rotationTo = entityForward.rotationTo(randomTarget);
+		//Look at it
 		entity.setRotation(rotationTo);
+		//Move forward
 		entity.translate(MathHelper.getDirectionVector(entity.getRotation()));		
 		
 	}

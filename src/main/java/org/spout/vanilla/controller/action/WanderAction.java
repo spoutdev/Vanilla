@@ -61,7 +61,7 @@ public class WanderAction extends EntityAction<VanillaController> {
 		//Look at it
 		entity.setRotation(rotationTo);
 		//Move forward
-		entity.translate(MathHelper.getDirectionVector(entity.getRotation()));		
+		entity.translate(MathHelper.getDirectionVector(entity.getRotation()).multiply(dt));		
 		
 	}
 }

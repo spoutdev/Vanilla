@@ -146,12 +146,12 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		buffer.writeShort(additionalDataBitMap);
 		byte[] uncompressedData = new byte[uncompressedSize];
 		int index = 0;
-		for (byte[] sectionData : data) {
-			if (sectionData != null) {
-				System.arraycopy(sectionData, 0, uncompressedData, index, sectionData.length);
-				index += sectionData.length;
-			}
-		}
+
+		// TODO - fix this total hack
+		index = writeSectionData(data, 0, uncompressedData , index, 4096);
+		index = writeSectionData(data, 0, uncompressedData , index, 2048);
+		index = writeSectionData(data, 0, uncompressedData , index, 2048);
+		index = writeSectionData(data, 0, uncompressedData , index, 2048);
 
 		if (message.isContiguous()) {
 			System.arraycopy(message.getBiomeData(), 0, uncompressedData, index, message.getBiomeData().length);
@@ -178,5 +178,17 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		buffer.writeBytes(compressedData, 0, compressed);
 
 		return buffer;
+	}
+	
+	private int writeSectionData(byte[][] data, int off, byte[] target, int targetOff, int len) {
+		for (byte[] sectionData : data) {
+			if (sectionData != null) {
+				int j = off;
+				for (int i = 0; i < len; i++) {
+					target[targetOff++] = sectionData[j++];
+				}
+			}
+		}
+		return targetOff;
 	}
 }

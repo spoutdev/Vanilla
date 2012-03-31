@@ -122,12 +122,69 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			return;
 		}
 
+		byte[] solidChunkData = new byte[16 * 16 * 16 * 5 / 2];
+		byte[] airChunkData = new byte[16 * 16 * 16 * 5 / 2];
+		
+		int i = 0;
+		for (int c = 0; c < 4096; c++) {
+			solidChunkData[i] = 1;
+			airChunkData[i++] = 0;
+		}
+		
+		for (int c = 0; c < 2048; c++) {
+			solidChunkData[i] = 0x00;
+			airChunkData[i++] = 0x00;
+		}
+		
+		for (int c = 0; c < 2048; c++) {
+			solidChunkData[i] = 0x00;
+			airChunkData[i++] = 0x00;
+		}
+		
+		for (int c = 0; c < 2048; c++) {
+			solidChunkData[i] = 0x00;
+			airChunkData[i++] = (byte)0xFF;		
+		}
+		
+		Chunk c = p.getWorld().getChunk(p);
+		
 		TIntHashSet column = activeChunks.get(x, z);
 		if (column == null) {
 			column = new TIntHashSet();
 			activeChunks.put(x, z, column);
 			LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
 			owner.getSession().send(loadChunk);
+			
+			final boolean sendBiomes = !biomesSentChunks.contains(x, z);
+			byte[] biomeData = sendBiomes ? new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE] : null;
+			if (sendBiomes) {
+				biomesSentChunks.add(x, z);
+				WorldGenerator gen = c.getWorld().getGenerator();
+				if (gen instanceof BiomeGenerator) {
+					final long seed = c.getWorld().getSeed();
+					for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
+						for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
+							BiomeType biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
+							if (biome instanceof VanillaBiomeType) {
+								biomeData[(dz & (Chunk.CHUNK_SIZE - 1)) << 4 | (dx & (Chunk.CHUNK_SIZE - 1))] = (byte) ((VanillaBiomeType) biome).getBiomeId();
+							}
+						}
+					}
+				}
+			}
+			
+			byte[][] packetChunkData = new byte[16][];
+
+			for (i = 0; i < 16; i++) {
+				if (i < 4) {
+					packetChunkData[i] = solidChunkData;
+				} else {
+					packetChunkData[i] = airChunkData;
+				}
+			}
+			
+			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, sendBiomes, new boolean[16], 0, packetChunkData, biomeData);
+			owner.getSession().send(CCMsg);
 		}
 		column.add(y);
 	}

@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.action;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.EntityAction;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
@@ -50,26 +51,14 @@ public class WanderAction extends EntityAction<VanillaController> {
 
 	@Override
 	public void run(Entity entity, VanillaController controller, float dt) {
-		//Grab current position
-		Point p = entity.getPosition();
-
-		//Grab the current vectored point
-		Vector3 current = new Vector3(p.getX(), p.getY(), p.getZ()).normalize();
-
-		//Set the movement vector
-		movement = new Vector3(controller.getRandom().nextFloat() * 3 + 1, 0, controller.getRandom().nextFloat() * 3 + 1).normalize();
-
-		Vector3 combined = Vector3.add(current, movement).normalize();
-
-		//Compute the angle and the axis for rotation
-		float angle = Vector3.dot(combined, movement);
-		Vector3 axis = Vector3.cross(combined, movement);
-
-		//Adjust our rotation quaternion
-		rotation = new Quaternion((angle * dt), axis);
-
-		//Rotate and move
-		entity.setRotation(rotation);
-		controller.move(Vector3.transform(movement.multiply(dt * 1.2), rotation));
+		
+		
+		Vector3 entityForward = Vector3.transform(entity.getPosition(), entity.getRotation());
+		Vector3 randomTarget = new Vector3(Math.random(), 0, Math.random()).normalize();
+		
+		Quaternion rotationTo = entityForward.rotationTo(randomTarget);
+		entity.setRotation(rotationTo);
+		entity.translate(MathHelper.getDirectionVector(entity.getRotation()));		
+		
 	}
 }

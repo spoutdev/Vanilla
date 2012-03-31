@@ -25,25 +25,40 @@
  */
 package org.spout.vanilla.controller.world;
 
+import org.spout.api.collision.CollisionModel;
+import org.spout.api.collision.CollisionStrategy;
+import org.spout.api.collision.CollisionVolume;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.Vector3;
 
 /**
  * Controller that observes chunks around a point. It will always keep these chunks in memory.
  */
 public class PointObserver extends Controller {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(PointObserver.class, "Point Observer");
+	private static Point currPoint;
+	private static CollisionModel model = new CollisionModel();
+	
 	public PointObserver() {
 		super(TYPE);
 	}
 
 	@Override
 	public void onTick(float dt) {
+		//Lets make sure the point observer never goes haywire...
+		if(!getParent().getPosition().equals(currPoint)) {
+			System.out.println("Point observer is moving! " + getParent().getPosition().toString());
+			currPoint = getParent().getPosition();
+		}
 	}
 
 	@Override
 	public void onAttached() {
+		model.setStrategy(CollisionStrategy.NOCOLLIDE);
+		getParent().setCollision(model);
 		getParent().setObserver(true);
 	}
 }

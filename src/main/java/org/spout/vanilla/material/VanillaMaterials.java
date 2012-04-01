@@ -34,6 +34,7 @@ import org.spout.vanilla.material.attachable.GroundAttachable;
 import org.spout.vanilla.material.attachable.WallAttachable;
 import org.spout.vanilla.material.block.Cactus;
 import org.spout.vanilla.material.block.DoubleSlab;
+import org.spout.vanilla.material.block.Fire;
 import org.spout.vanilla.material.block.Grass;
 import org.spout.vanilla.material.block.Gravel;
 import org.spout.vanilla.material.block.Ice;
@@ -109,6 +110,7 @@ public final class VanillaMaterials {
 	public static final MinecartTrackDetector DETECTOR_RAIL = (MinecartTrackDetector) register(new MinecartTrackDetector("Detector Rail", 28).setHardness(0.7F).setResistance(1.2F));
 	public static final Solid PISTON_STICKY_BASE = (Solid) register(new Solid("Sticky Piston", 29).setResistance(0.8F));
 	public static final Solid WEB = (Solid) register(new Solid("Cobweb", 30).setHardness(4.0F).setResistance(20.0F));
+
 	/**
 	 * Warning: This is NOT the data=0 sub-material!
 	 */
@@ -132,7 +134,7 @@ public final class VanillaMaterials {
 	public static final Solid MOSS_STONE = (Solid) register(new Solid("Moss Stone", 48).setHardness(2.0F).setResistance(10.0F).setResistance(10.0F));
 	public static final Solid OBSIDIAN = (Solid) register(new Solid("Obsidian", 49).setHardness(50.0F).setResistance(2000.0F));
 	public static final WallAttachable TORCH = (WallAttachable) register(new WallAttachable("Torch", 50).setHardness(0.0F).setResistance(0.0F).setLightLevel(14));
-	public static final Solid FIRE = (Solid) register(new Solid("Fire", 51).setHardness(0.0F).setResistance(0.0F).setLightLevel(15));
+	public static final Fire FIRE = (Fire) register(new Fire("Fire").setHardness(0.0F).setResistance(0.0F).setLightLevel(15));
 	public static final Solid MONSTER_SPAWNER = (Solid) register(new Solid("MonsterEntity Spawner", 52).setHardness(5.0F).setResistance(8.3F));
 	public static final Solid WOODEN_STAIRS = (Solid) register(new Solid("Wooden Stairs", 53).setResistance(3.0F));
 	public static final Solid CHEST = (Solid) register(new Solid("Chest", 54).setHardness(2.5F).setResistance(4.2F));

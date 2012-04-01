@@ -39,9 +39,9 @@ public class GenericLiquid extends GenericBlock implements Liquid {
 	public boolean isFlowing() {
 		return flowing;
 	}
-
+	
 	@Override
-	public boolean isLiquid() {
-		return true;
+	public boolean isPlacementObstacle() {
+		return false;
 	}
 }

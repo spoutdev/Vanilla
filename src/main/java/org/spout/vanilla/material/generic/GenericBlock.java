@@ -132,11 +132,6 @@ public class GenericBlock extends BlockMaterial {
 	}
 
 	@Override
-	public boolean isLiquid() {
-		return false;
-	}
-
-	@Override
 	public boolean isPlacementObstacle() {
 		return false;
 	}
@@ -145,6 +140,10 @@ public class GenericBlock extends BlockMaterial {
 	public boolean hasPhysics() {
 		return false;
 	}
+	
+    public boolean isSolid() {
+    	return false;
+    }
 
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {

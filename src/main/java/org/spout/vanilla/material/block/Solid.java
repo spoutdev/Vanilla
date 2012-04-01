@@ -30,7 +30,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.controller.object.MovingBlock;
 
 import org.spout.vanilla.material.generic.GenericBlock;
 
@@ -66,12 +65,12 @@ public class Solid extends GenericBlock implements org.spout.vanilla.material.Mo
 	public boolean hasPhysics() {
 		return moving;
 	}
-
+	
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
 		if (moving) {
 			Block block = world.getBlock(x, y - 1, z);
-			if (block.getMaterial() == VanillaMaterials.AIR || block.getMaterial().isLiquid()) {
+			if (!block.getMaterial().isPlacementObstacle()) {
 				if (world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world)) {
 					//world.createAndSpawnEntity(block.getPosition(), new MovingBlock(this)); TODO: We aren't ready for this lol.
 				}

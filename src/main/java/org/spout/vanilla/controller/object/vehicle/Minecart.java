@@ -25,8 +25,6 @@
  */
 package org.spout.vanilla.controller.object.vehicle;
 
-import org.spout.api.collision.BoundingBox;
-import org.spout.api.collision.CollisionModel;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.Material;
@@ -52,14 +50,12 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 	private Vector2[] railMovement = new Vector2[]{Vector2.ZERO, Vector2.ZERO};
 	private float previousPosY = 0.0f;
 	private Block railsBlock;
-	//TODO: Turn into collision volume (box) instead
-	private float width = 0.7F;
-	private float length = 0.98F;
-	private float height = 0.49F;
 
 	protected Minecart(VanillaControllerType type) {
 		super(type);
 		this.setMaxSpeed(0.4f);
+		this.getBounds().set(-0.35f, 0.0f, -0.49f, 0.35f, 0.49f, 0.49f);	
+		this.getParent().setHealth(40);
 	}
 
 	public final Vector3 getGroundFrictionModifier() {
@@ -85,11 +81,6 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-
-		BoundingBox shape = new BoundingBox(0.0F, 0.0F, 0.0F, width, height, length);
-		shape.offset(-width / 2, 0.0F, -length / 2);
-		this.getParent().setCollision(new CollisionModel(shape));
-		
 		this.setVelocity(new Vector3(0, 0, 0.2));
 	}
 
@@ -121,8 +112,12 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 			this.setFireTicks(fireticks - 1);
 		}
 
-		//TODO: update health to regenerate
-
+		//update health to regenerate
+		int health = this.getParent().getHealth();
+		if (health < 40) {
+			this.getParent().setHealth(health + 1);
+		}
+		
 		//get current rails below minecart
 		Point position = getParent().getPosition();
 		if (position.getWorld() == null) {
@@ -169,7 +164,7 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 				velocityY = 0f;
 			}
 
-			Vector3 railsPosition = this.railsBlock.getPosition().add(0.5f, this.height, 0.5f);
+			Vector3 railsPosition = this.railsBlock.getPosition().add(0.5f, this.getBounds().getSize().getY(), 0.5f);
 			
 			//position is adjusted to snap to the rails
 			Vector3 adjustment = railsPosition.subtract(position);
@@ -237,7 +232,7 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 				//calculate the current Y from the rails (triangle)
 				Rails rails = (Rails) newBlock.createData();
 				RailsState state = rails.getState();
-				float changeY = (newBlock.getY() - position.getY()) + this.height;
+				float changeY = (newBlock.getY() - position.getY()) + this.getBounds().getSize().getY();
 				System.out.println("state=" + state);
 				if (state == RailsState.NORTH_SLOPED) {
 					changeY += (position.getX() - newBlock.getX()) + 1;
@@ -249,16 +244,15 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 					changeY += (position.getZ() - newBlock.getZ()) + 1;
 				}
 				
-				
-//				float velLength = velocity.length();
-//				if (velLength > 0) {
-//					double slopeSlowDown = (this.previousPosY - posY) * 0.05 / velLength + 1;
-//					velocity = velocity.multiply(slopeSlowDown);
-//				}
+				float velLength = velocity.length();
+				if (velLength > 0.01f) {
+					double slopeSlowDown = (this.previousPosY - position.getY()) * 0.05 / velLength + 1.0;
+					velocity = velocity.multiply(slopeSlowDown);
+				}
 				
 				position = position.add(new Vector3(0f, changeY, 0f));
 			}
-			this.getParent().setPosition(new Point(position, this.getParent().getWorld()));
+			this.getParent().setPosition(position);
 
 			//make sure velocity follows block changes
 			position = this.getParent().getPosition();
@@ -274,7 +268,7 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 				if (velLength > 0.01) {
 					//simple motion boosting when already moving
 					//take part of velocity and add
-					velocity = velocity.add(velocity.multiply(0.06D / velLength));
+					velocity = velocity.add(velocity.multiply(0.06 / velLength));
 				} else {
 					//push a minecart slightly forward when hitting a solid block
 					for (BlockFace dir : this.railData.getDirections()) {

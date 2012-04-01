@@ -66,6 +66,10 @@ public abstract class VanillaController extends ActionController {
 		return type;
 	}
 
+	public BoundingBox getBounds() {
+		return this.area;
+	}
+	
 	@Override
 	public void onAttached() {
 		getParent().setCollision(new CollisionModel(area));

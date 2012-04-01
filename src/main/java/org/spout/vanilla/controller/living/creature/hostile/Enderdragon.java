@@ -49,7 +49,6 @@ public class Enderdragon extends Creature implements Hostile, Boss {
 		parent = getParent();
 		parent.setMaxHealth(200);
 		parent.setHealth(200);
-		parent.setData("EnderdragonHealth", 200);
 	}
 
 	@Override

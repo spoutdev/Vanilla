@@ -25,12 +25,17 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
+import java.util.Random;
+
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
+import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
+import org.spout.vanilla.generator.normal.decorator.BeachDecorator;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.generator.VanillaBiomeType;
 
@@ -38,9 +43,10 @@ public class OceanBiome extends VanillaBiomeType {
 	private Perlin base = new Perlin();
 	private Turbulence noise = new Turbulence();
 	private int blocksHit = 0;
+	private static Random rand = new Random();
 
 	public OceanBiome() {
-		super(0);
+		super(0, new BeachDecorator());
 		base.setNoiseQuality(NoiseQuality.BEST);
 		base.setOctaveCount(6);
 		base.setFrequency(0.3);
@@ -56,28 +62,30 @@ public class OceanBiome extends VanillaBiomeType {
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
 		base.setSeed((int) blockData.getWorld().getSeed());
 		noise.setSeed((int) blockData.getWorld().getSeed());
-		final int height = (int) ((noise.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 4.0 + 60.0);
+		final int height = (int) ((noise.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 4.0 + 4);
 
 		int y = chunkY * 16;
 
-		for (int dy = y + 15; dy >= y; dy--) {
-			if (blockData.get(x, dy, z) == VanillaMaterials.AIR.getId()) {
-				blockData.set(x, dy, z, getBlockId(height, dy));
+		for (int dy = y; dy < y + 16; dy++) {
+			if (dy >= 63 || dy < 0) {
+				continue;
 			}
+			blockData.set(x, dy, z, getBlockIdByLayer(height, dy));
 		}
 	}
 
-	protected short getBlockId(int top, int dy) {
+	protected short getBlockIdByLayer(int top, int dy) {
 		short id;
-		blocksHit++;
-		if (dy > top) {
-			id = VanillaMaterials.AIR.getId();
-		} else if (dy >= 63 && blocksHit > 4) {
-			id = VanillaMaterials.SAND.getId();
-		} else if (blocksHit <= 4) {
-			id = VanillaMaterials.DIRT.getId();
-		} else {
+		if (dy >= top) {
 			id = VanillaMaterials.WATER.getId();
+		} else if (dy + 4 >= top) {
+			id = VanillaMaterials.SAND.getId();
+		} else if (dy + 7 >= top) {
+			id = VanillaMaterials.DIRT.getId();
+		} else if (dy > 0 ) {
+			id = VanillaMaterials.STONE.getId();
+		} else {
+			id = VanillaMaterials.BEDROCK.getId();
 		}
 		return id;
 	}

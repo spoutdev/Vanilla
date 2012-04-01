@@ -120,9 +120,13 @@ public class VanillaPlugin extends CommonPlugin {
 		game.getEventManager().registerEvents(new VanillaEventListener(this), this);
 
 		//Initialize our default Vanilla worlds.
-		//World end = game.loadWorld("world_end", new TheEndGenerator());
 		World normal;
+<<<<<<< Updated upstream
 		if (VanillaConfiguration.FLATWORLD.getBoolean()) {
+=======
+		boolean flatWorld = false; //config.getBoolean("general.flatworld", false);
+		if (flatWorld) {
+>>>>>>> Stashed changes
 			normal = game.loadWorld("world", new FlatGenerator());
 		} else {
 			normal = game.loadWorld("world", new NormalGenerator());

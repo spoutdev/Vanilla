@@ -38,7 +38,7 @@ import org.spout.vanilla.controller.living.creature.Hostile;
 
 public class Enderdragon extends Creature implements Hostile, Boss {
 	private Entity parent;
-	
+
 	protected Enderdragon() {
 		super(VanillaControllerTypes.ENDERDRAGON);
 	}
@@ -49,6 +49,7 @@ public class Enderdragon extends Creature implements Hostile, Boss {
 		parent = getParent();
 		parent.setMaxHealth(200);
 		parent.setHealth(200);
+		parent.setData("EnderdragonHealth", 200);
 	}
 
 	@Override

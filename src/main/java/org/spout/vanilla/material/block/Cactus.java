@@ -27,9 +27,12 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.Source;
 import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 
@@ -47,6 +50,13 @@ public class Cactus extends Solid {
 	public void onUpdate(World world, int x, int y, int z) {
 		if (!VanillaConfiguration.CACTUS_PHYSICS.getBoolean()) {
 			return;
+		}
+
+		int amount = 0;
+		int off = 1;
+		while (world.getBlockMaterial(x, y + off, z).equals(VanillaMaterials.CACTUS)) {
+			off++;
+			amount++;
 		}
 
 		boolean destroy = false;
@@ -68,9 +78,10 @@ public class Cactus extends Solid {
 			}
 		}
 
+		Point point = new Point(world, x, y, z);
 		if (destroy) {
 			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world);
-			//TODO Drop item!
+			world.createAndSpawnEntity(point, new Item(new ItemStack(VanillaMaterials.CACTUS, amount), point.normalize()));
 		}
 	}
 

@@ -189,6 +189,15 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		column.add(y);
 	}
 
+	private final static byte[] dark = new byte[2048];
+	private final static byte[] light = new byte[2048];
+	
+	static {
+		for (int i = 0; i < light.length; i++) {
+			light[i] = -1;
+		}
+	}
+	
 	@Override
 	public void sendChunk(Chunk c) {
 		int x = c.getX();
@@ -204,8 +213,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		ChunkSnapshot snapshot = c.getSnapshot(false);
 		short[] rawBlockIdArray = snapshot.getBlockIds();
 		short[] rawBlockData = snapshot.getBlockData();
-		byte[] rawBlockLight = snapshot.getBlockLight();
-		byte[] rawSkyLight = snapshot.getSkyLight();
+		// TODO do lighting right
+		byte[] rawBlockLight = dark; // snapshot.getBlockLight();
+		byte[] rawSkyLight = c.getY() < 4 ? dark : light; // snapshot.getSkyLight();
 		byte[] fullChunkData = new byte[16 * 16 * 16 * 5 / 2];
 
 		boolean hasData = false;

@@ -37,6 +37,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
@@ -282,4 +283,20 @@ public class AdministrationCommands {
 			source.sendMessage("Chunk resent");
 		}
 	}
+        @Command(aliases= "teleport", usage= "/Teleport [Player] [Player]", desc = "Teleports", min = 2)
+        public void teleport(CommandContext args, CommandSource source) throws CommandException {
+            Player player = (Player)source;
+            Player p = Spout.getGame().getPlayer(args.getString(0), true);
+            Player play = Spout.getGame().getPlayer(args.getString(1), true);
+        if (p == null) {
+            source.sendMessage("Player " + args.getString(0) + " not found!");
+        }
+        if (play == null) {
+            source.sendMessage("Player " + args.getString(1) + " not found!");
+        }
+        p.getEntity().setPosition(play.getEntity().getPosition());
+        player.sendMessage("You have teleported " + args.getString(0) + " to player " + args.getString(1));
+
+
+    }
 }

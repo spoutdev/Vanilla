@@ -26,7 +26,8 @@
 package org.spout.vanilla.protocol.bootstrap;
 
 import org.spout.api.protocol.HandlerLookupService;
-
+import org.spout.api.protocol.common.handler.CustomDataMessageHandler;
+import org.spout.api.protocol.common.message.CustomDataMessage;
 import org.spout.vanilla.protocol.bootstrap.handler.BootstrapHandshakeMessageHandler;
 import org.spout.vanilla.protocol.bootstrap.handler.BootstrapIdentificationMessageHandler;
 import org.spout.vanilla.protocol.bootstrap.handler.BootstrapPingMessageHandler;
@@ -40,6 +41,7 @@ public class VanillaBootstrapHandlerLookupService extends HandlerLookupService {
 			bind(HandshakeMessage.class, BootstrapHandshakeMessageHandler.class);
 			bind(IdentificationMessage.class, BootstrapIdentificationMessageHandler.class);
 			bind(ServerListPingMessage.class, BootstrapPingMessageHandler.class);
+			bind(CustomDataMessage.class, CustomDataMessageHandler.class);
 		} catch (Exception e) {
 			throw new ExceptionInInitializerError(e);
 		}

@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 
@@ -43,7 +42,7 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
-
+import org.spout.api.protocol.common.CommonBootstrapProtocol;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -56,6 +55,7 @@ import org.spout.vanilla.generator.flat.FlatGenerator;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.generator.theend.TheEndGenerator;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 
@@ -75,7 +75,7 @@ public class VanillaPlugin extends CommonPlugin {
 	public void onLoad() {
 		// TODO - do we need a protocol manager ?
 		// getGame().getProtocolManager().register ...
-		Protocol.registerProtocol(0, new VanillaProtocol());
+		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
 
 		Game game = getGame();
 
@@ -91,6 +91,7 @@ public class VanillaPlugin extends CommonPlugin {
 			}
 
 			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
+			((Server) game).bind(new InetSocketAddress(split[0], port + 1), new CommonBootstrapProtocol());
 		}
 
 		VanillaMaterials.initialize();

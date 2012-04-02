@@ -26,7 +26,7 @@
 package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.CodecLookupService;
-
+import org.spout.api.protocol.common.codec.CustomDataCodec;
 import org.spout.vanilla.protocol.codec.AttachEntityCodec;
 import org.spout.vanilla.protocol.codec.BlockActionCodec;
 import org.spout.vanilla.protocol.codec.BlockChangeCodec;
@@ -37,7 +37,7 @@ import org.spout.vanilla.protocol.codec.CloseWindowCodec;
 import org.spout.vanilla.protocol.codec.CollectItemCodec;
 import org.spout.vanilla.protocol.codec.CompressedChunkCodec;
 import org.spout.vanilla.protocol.codec.CreateEntityCodec;
-import org.spout.vanilla.protocol.codec.CustomDataCodec;
+import org.spout.vanilla.protocol.codec.CreativeCodec;
 import org.spout.vanilla.protocol.codec.DestroyEntityCodec;
 import org.spout.vanilla.protocol.codec.DiggingCodec;
 import org.spout.vanilla.protocol.codec.EnchantItemCodec;
@@ -71,7 +71,6 @@ import org.spout.vanilla.protocol.codec.PlayerAbilityCodec;
 import org.spout.vanilla.protocol.codec.PositionCodec;
 import org.spout.vanilla.protocol.codec.PositionRotationCodec;
 import org.spout.vanilla.protocol.codec.ProgressBarCodec;
-import org.spout.vanilla.protocol.codec.CreativeCodec;
 import org.spout.vanilla.protocol.codec.RelativeEntityPositionCodec;
 import org.spout.vanilla.protocol.codec.RelativeEntityPositionRotationCodec;
 import org.spout.vanilla.protocol.codec.RespawnCodec;

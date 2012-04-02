@@ -28,19 +28,13 @@ package org.spout.vanilla.protocol.bootstrap;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.bootstrap.BootstrapProtocol;
 
-import org.spout.vanilla.protocol.msg.IdentificationMessage;
-
 public class VanillaBootstrapProtocol extends BootstrapProtocol {
 	public VanillaBootstrapProtocol() {
 		super("VanillaBootstrap", new VanillaBootstrapCodecLookupService(), new VanillaBootstrapHandlerLookupService());
 	}
 
 	@Override
-	public long detectProtocolDefinition(Message message) {
-		if (message instanceof IdentificationMessage) {
-			IdentificationMessage idMessage = (IdentificationMessage) message;
-			return idMessage.getDimension();
-		}
-		return -1L;
+	public String detectProtocolDefinition(Message message) {
+		return "VanillaProtocol";
 	}
 }

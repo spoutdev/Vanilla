@@ -45,6 +45,7 @@ import org.spout.vanilla.protocol.msg.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.IdentificationMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
+import org.spout.api.protocol.common.message.CustomDataMessage;
 
 public class VanillaBootstrapProtocolTest {
 	private static final TIntSet testedOpcodes = new TIntHashSet();
@@ -53,7 +54,8 @@ public class VanillaBootstrapProtocolTest {
 			new IdentificationMessage(0, "Tester", 0, -1, 0, 128, 20, "MAGICAL"),
 			new HandshakeMessage("Player"),
 			new ServerListPingMessage(),
-			new KickMessage("This is a test")};
+			new KickMessage("This is a test"),
+			new CustomDataMessage("CHANNEL:ONE", new byte[] {(byte)1, (byte)2, (byte)3, (byte)4})};
 
 	@Test
 	public void testMessageCodecLookup() {
@@ -80,7 +82,7 @@ public class VanillaBootstrapProtocolTest {
 			assertEquals(message.toString(), decoded.toString());
 		}
 	}
-
+	
 	@Test
 	public void testTestCompleteness() {
 		final TIntSet testedOpcodes = new TIntHashSet();

@@ -55,7 +55,7 @@ import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.CreateEntityMessage;
-import org.spout.vanilla.protocol.msg.CustomDataMessage;
+import org.spout.api.protocol.common.message.CustomDataMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
 import org.spout.vanilla.protocol.msg.EnchantItemMessage;
@@ -181,7 +181,7 @@ public class VanillaProtocolTest {
 			new TileEntityDataMessage(23, 45, 903, 1, 98, 0, 0),
 			new StatisticMessage(1, (byte) 5),
 			new UserListItemMessage("Player", true, (short) 23),
-			new CustomDataMessage("EMERGENCY_SERVICES", new byte[]{0, 1, 1, 8, 9, 9, 8, 8, 8, 1, 9, 9, 9, 1, 1, 9, 7, 2, 5, 3}),
+			new CustomDataMessage("EMERGENCY", new byte[]{0, 1, 1, 8, 9, 9, 8, 8, 8, 1, 9, 9, 9, 1, 1, 9, 7, 2, 5, 3}),
 			new ServerListPingMessage(),
 			new KickMessage("This is a test"),
 			new PlayerAbilityMessage(true,true,true,true)};

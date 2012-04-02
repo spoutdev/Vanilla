@@ -91,7 +91,7 @@ public class VanillaPlugin extends CommonPlugin {
 			}
 
 			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
-			((Server) game).bind(new InetSocketAddress(split[0], port + 1), new CommonBootstrapProtocol());
+			((Server) game).bind(new InetSocketAddress(split[0], port + 1), new CommonBootstrapProtocol(new VanillaProtocol()));
 		}
 
 		VanillaMaterials.initialize();

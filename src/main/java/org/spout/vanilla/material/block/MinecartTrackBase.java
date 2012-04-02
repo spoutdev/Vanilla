@@ -26,6 +26,8 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.Source;
+import org.spout.api.collision.BoundingBox;
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.World;
 import org.spout.api.material.block.BlockFace;
 
@@ -35,6 +37,10 @@ import org.spout.vanilla.util.MinecartTrackLogic;
 public abstract class MinecartTrackBase extends GroundAttachable {
 	public MinecartTrackBase(String name, int id) {
 		super(name, id);
+		this.setCollision(CollisionStrategy.NOCOLLIDE);
+		//TODO: Fix this up so we can set this area ourselves in the volume!
+		BoundingBox bb = (BoundingBox) this.getBoundingArea();
+		bb.set(0.0f, 0.0f, 0.0f, 1.0f, 0.125f, 1.0f);
 	}
 
 	public abstract boolean canCurve();

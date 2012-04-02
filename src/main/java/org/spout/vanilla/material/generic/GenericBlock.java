@@ -133,23 +133,11 @@ public class GenericBlock extends BlockMaterial {
 
 	@Override
 	public boolean isPlacementObstacle() {
-		return false;
+		return true;
 	}
-
+	
 	@Override
 	public boolean hasPhysics() {
 		return false;
-	}
-	
-    public boolean isSolid() {
-    	return false;
-    }
-
-	@Override
-	public void onUpdate(World world, int x, int y, int z) {
-	}
-
-	@Override
-	public void onDestroy(World world, int x, int y, int z) {
 	}
 }

@@ -29,6 +29,7 @@ import org.spout.api.entity.PlayerController;
 import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
@@ -40,7 +41,6 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
@@ -85,7 +85,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		}
 
 		Point offsetPos = pos.add(face.getOffset());
-		org.spout.api.geo.cuboid.Block target = world.getBlock(offsetPos);
+		Block target = world.getBlock(offsetPos);
 
 		if (pos.getY() >= world.getHeight() || pos.getY() < 0) {
 			return;
@@ -118,13 +118,13 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 
 			short placedData = holding.getData();
 
-			if (face == BlockFace.TOP && world.getBlockMaterial(x, y - 1, z) == VanillaMaterials.SNOW) {
-				//make sure the target switches one block below (just like water)
+			if (face == BlockFace.TOP && !world.getBlockMaterial(x, y - 1, z).isPlacementObstacle()) {
+				//make sure the target switches one block below
 				y = target.move(BlockFace.BOTTOM).getY();
 			}
 
 			BlockMaterial newBlock = (BlockMaterial) placedMaterial;
-			BlockMaterial oldBlock = target == null ? VanillaMaterials.AIR : target.getMaterial();
+			BlockMaterial oldBlock = target.getMaterial();
 
 			if (!sendRevert && !oldBlock.isPlacementObstacle()) {
 
@@ -137,11 +137,12 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 				if (newState.getX() != target.getX() || newState.getY() != target.getY() || newState.getZ() != target.getZ()) {
 					sendRevert = true;
 				}*/
-
-				if (newBlock.onPlacement(world, x, y, z, placedData, face, player)) {
-					if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
-						holding.setAmount(holding.getAmount() - 1);
-						inventory.setItem(holding, inventory.getCurrentSlot());
+				if (newBlock.canPlace(world, x, y, z, placedData, face, player)) {
+					if (newBlock.onPlacement(world, x, y, z, placedData, face, player)) {
+						if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
+							holding.setAmount(holding.getAmount() - 1);
+							inventory.setItem(holding, inventory.getCurrentSlot());
+						}
 					}
 				}
 

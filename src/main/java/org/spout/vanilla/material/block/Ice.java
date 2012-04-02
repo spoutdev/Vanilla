@@ -29,9 +29,8 @@ import org.spout.api.Source;
 import org.spout.api.geo.World;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.generic.GenericBlock;
 
-public class Ice extends GenericBlock implements Source {
+public class Ice extends Solid implements Source {
 	public Ice(String name, int id) {
 		super(name, id);
 	}

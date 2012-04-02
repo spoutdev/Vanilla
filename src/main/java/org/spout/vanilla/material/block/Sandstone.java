@@ -27,10 +27,7 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.material.MovingBlock;
-import org.spout.vanilla.material.generic.GenericBlock;
-
-public class Sandstone extends GenericBlock implements MovingBlock {
+public class Sandstone extends Solid {
 	public static final Sandstone SANDSTONE = register(new Sandstone("Sandstone"));
 	public static final Sandstone DECORATIVE = register(new Sandstone("Decorative Sandstone", SandstoneType.DECORATIVE, SANDSTONE));
 	public static final Sandstone SMOOTH = register(new Sandstone("Smooth Sandstone", SandstoneType.SMOOTH, SANDSTONE));
@@ -50,11 +47,6 @@ public class Sandstone extends GenericBlock implements MovingBlock {
 
 	private void setDefault() {
 		this.setHardness(0.8F).setResistance(1.3F);
-	}
-
-	@Override
-	public boolean isMoving() {
-		return false;
 	}
 
 	public SandstoneType getType() {

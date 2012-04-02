@@ -29,11 +29,12 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 
+import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.VanillaMaterials;
 
 import org.spout.vanilla.material.generic.GenericBlock;
 
-public class Solid extends GenericBlock implements org.spout.vanilla.material.MovingBlock {
+public class Solid extends GenericBlock implements MovingBlock {
 	private final boolean moving;
 
 	public Solid(String name, int id, boolean canMove) {

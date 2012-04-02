@@ -32,10 +32,8 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.MovingBlock;
-import org.spout.vanilla.material.generic.GenericBlock;
 
-public class Slab extends GenericBlock implements MovingBlock {
+public class Slab extends Solid {
 	public static final Slab STONE = register(new Slab("Stone Slab"));
 	public static final Slab SANDSTONE = register(new Slab("Sandstone Slab", 1, STONE));
 	public static final Slab WOOD = register(new Slab("Wooden Slab", 2, STONE));
@@ -77,10 +75,5 @@ public class Slab extends GenericBlock implements MovingBlock {
 			}
 		}
 		return super.onPlacement(world, x, y, z, data, against, source);
-	}
-
-	@Override
-	public boolean isMoving() {
-		return false;
 	}
 }

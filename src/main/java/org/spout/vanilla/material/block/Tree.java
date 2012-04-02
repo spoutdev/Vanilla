@@ -26,9 +26,8 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.vanilla.material.Plant;
-import org.spout.vanilla.material.generic.GenericBlock;
 
-public class Tree extends GenericBlock implements Plant {
+public class Tree extends Solid implements Plant {
 	public static final Tree DEFAULT = register(new Tree("Wood"));
 	public static final Tree SPRUCE = register(new Tree("Spruce Wood", 1, DEFAULT));
 	public static final Tree BIRCH = register(new Tree("Birch Wood", 2, DEFAULT));

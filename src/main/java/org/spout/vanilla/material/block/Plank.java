@@ -27,10 +27,7 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.material.MovingBlock;
-import org.spout.vanilla.material.generic.GenericBlock;
-
-public class Plank extends GenericBlock implements MovingBlock {
+public class Plank extends Solid {
 	public static final Plank PLANK = register(new Plank("Oak Plank"));
 	public static final Plank PINE = register(new Plank("Pine Plank", WoodType.PINE, PLANK));
 	public static final Plank BIRCH = register(new Plank("Birch Plank", WoodType.BIRCH, PLANK));
@@ -51,11 +48,6 @@ public class Plank extends GenericBlock implements MovingBlock {
 
 	private void setDefault() {
 		this.setHardness(0.8F).setResistance(1.3F);
-	}
-
-	@Override
-	public boolean isMoving() {
-		return false;
 	}
 
 	public WoodType getType() {

@@ -30,10 +30,7 @@ import java.util.Map;
 
 import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.material.MovingBlock;
-import org.spout.vanilla.material.generic.GenericBlock;
-
-public class Wool extends GenericBlock implements MovingBlock {
+public class Wool extends Solid {
 	public static final Wool WHITE = register(new Wool("White Wool"));
 	public static final Wool ORANGE = register(new Wool("Orange Wool", WoolColor.ORANGE, WHITE));
 	public static final Wool MAGENTA = register(new Wool("Magenta Wool", WoolColor.MAGENTA, WHITE));
@@ -66,11 +63,6 @@ public class Wool extends GenericBlock implements MovingBlock {
 
 	private void setDefault() {
 		this.setHardness(0.8F).setResistance(1.3F);
-	}
-
-	@Override
-	public boolean isMoving() {
-		return false;
 	}
 
 	public WoolColor getColor() {

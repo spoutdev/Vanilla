@@ -25,9 +25,7 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.generic.GenericBlock;
-
-public class StoneBrick extends GenericBlock {
+public class StoneBrick extends Solid {
 	public static final StoneBrick STONE = register(new StoneBrick("Stone Brick"));
 	public static final StoneBrick MOSSY_STONE = register(new StoneBrick("Mossy Stone Brick", 1, STONE));
 	public static final StoneBrick CRACKED_STONE = register(new StoneBrick("Cracked Stone Brick", 2, STONE));

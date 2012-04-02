@@ -33,9 +33,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.generic.GenericBlock;
 
 public abstract class AbstractAttachable extends GenericBlock implements Attachable {
+
 	protected AbstractAttachable(String name, int id) {
 		super(name, id);
 	}
@@ -62,9 +64,19 @@ public abstract class AbstractAttachable extends GenericBlock implements Attacha
 		Vector3 offset = base.getOffset();
 		return world.getBlock((int) (x + offset.getX()), (int) (y + offset.getY()), (int) (z + offset.getZ()));
 	}
-
+	
 	@Override
 	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
 		return super.onPlacement(world, x, y, z, this.getDataForFace(against.getOpposite()), against, source);
+	}
+	
+	@Override
+	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
+		if (super.canPlace(world, x, y, z, data, against, source)) {
+			Block block = world.getBlock(x, y, z).move(against.getOpposite());
+			return block.getMaterial() instanceof Solid;
+		} else {
+			return false;
+		}
 	}
 }

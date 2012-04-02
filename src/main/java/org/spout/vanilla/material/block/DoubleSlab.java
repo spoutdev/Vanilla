@@ -25,10 +25,7 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.MovingBlock;
-import org.spout.vanilla.material.generic.GenericBlock;
-
-public class DoubleSlab extends GenericBlock implements MovingBlock {
+public class DoubleSlab extends Solid {
 	public static final DoubleSlab STONE = register(new DoubleSlab("Stone Double Slab"));
 	public static final DoubleSlab SANDSTONE = register(new DoubleSlab("Sandstone Double Slab", 1, STONE));
 	public static final DoubleSlab WOOD = register(new DoubleSlab("Wooden Double Slab", 2, STONE));
@@ -54,10 +51,5 @@ public class DoubleSlab extends GenericBlock implements MovingBlock {
 		this.setDrop(slab);
 		slab.setDoubleSlabMaterial(this);
 		return this;
-	}
-
-	@Override
-	public boolean isMoving() {
-		return false;
 	}
 }

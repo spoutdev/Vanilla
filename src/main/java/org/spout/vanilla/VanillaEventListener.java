@@ -26,8 +26,11 @@
 package org.spout.vanilla;
 
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.Arrays;
 import java.util.HashSet;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
@@ -46,6 +49,7 @@ import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.creature.neutral.Enderman;
@@ -55,6 +59,7 @@ import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.msg.UserListItemMessage;
 
 public class VanillaEventListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -84,6 +89,8 @@ public class VanillaEventListener implements Listener {
 		if (entity != null) {
 			entity.getInventory().removeViewer(event.getPlayer().getNetworkSynchronizer());
 		}
+		//Tell anyone that we have an player less :(
+		((VanillaController) entity.getController()).sendMessage(new HashSet<Player>(Arrays.asList(Spout.getGame().getOnlinePlayers())), new UserListItemMessage(event.getPlayer().getName(), false, (short) 99));
 	}
 
 	@EventHandler()

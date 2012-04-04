@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla;
 
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaMaterials;
 import java.util.HashSet;
 
@@ -107,20 +108,20 @@ public class VanillaEventListener implements Listener {
 				RegionSpawner spawner = (RegionSpawner) c;
 				HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
 				grass.add(VanillaMaterials.GRASS);
-				spawner.addSpawnableType(Sheep.class, grass, 5);
+				spawner.addSpawnableType(VanillaControllerTypes.SHEEP, grass, 5);
 
 				HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
 				endStone.add(VanillaMaterials.END_STONE);
-				spawner.addSpawnableType(Enderman.class, endStone, 7);
+				spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
 			}
 		}
-		
+
 		// debug code
 		if (c instanceof Creature) {
 			Creature creature = (Creature) c;
 			creature.setTimeUntilAdult(-23999);
 		}
-		
+
 		if (c instanceof Ghast) {
 			Ghast ghast = (Ghast) c;
 			ghast.setRedEyes(true);
@@ -130,7 +131,7 @@ public class VanillaEventListener implements Listener {
 	@EventHandler(order = Order.EARLIEST)
 	public void onPermissionNode(PermissionNodeEvent event) {
 		PermissionsSubject subject = event.getSubject();
-		if (VanillaConfiguration.OPS.isOp(subject.getName())) {
+		if (VanillaConfiguration.OPS.isOp(subject.getName()) && event.getResult() == Result.DEFAULT) {
 			event.setResult(Result.ALLOW);
 		}
 	}

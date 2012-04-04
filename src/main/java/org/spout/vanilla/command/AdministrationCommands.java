@@ -111,8 +111,7 @@ public class AdministrationCommands {
 			throw new CommandException("Point not found!");
 		}
 
-		Entity playerEntity = player.getEntity();
-		player.getSession().send(new EntityTeleportMessage(playerEntity.getId(), (int) point.getX(), (int) point.getY(), (int) point.getZ(), (int) playerEntity.getRoll(), (int) playerEntity.getPitch()));
+		player.getNetworkSynchronizer().setPositionDirty();
 	}
 
 	@Command(aliases = {"give"}, usage = "[player] <material> [amount] ", desc = "Lets a player spawn items", min = 1, max = 3)
@@ -282,17 +281,17 @@ public class AdministrationCommands {
 		switch (mode) {
 			case 0:
 				controller.setGameMode(new SurvivalPlayer(controller));
-				message = "SURVIVAL.";
+				message = "SURVIVAL";
 				break;
 			case 1:
 				controller.setGameMode(new CreativePlayer(controller));
-				message = "CREATIVE.";
+				message = "CREATIVE";
 				break;
 			default:
 				throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
 		}
 		if (!player.equals(source)) {
-			source.sendMessage(player.getName() + "'s game mode has been changed to " + message);
+			source.sendMessage(player.getName() + "'s game mode has been changed to " + message + ".");
 		}
 	}
 
@@ -408,7 +407,7 @@ public class AdministrationCommands {
 			source.sendMessage("Chunk resent");
 		}
 	}
-	
+
 	@Command(aliases = "comeatmebro", desc = "Gets you kicked!", max = 1)
 	public void testKick(CommandContext args, CommandSource source) throws CommandException {
 		if(source instanceof Player) {

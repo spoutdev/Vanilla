@@ -57,12 +57,12 @@ public class NetherSky extends VanillaSky {
 	}
 
 	@Override
-	public void setTime(float time) {
+	public void setTime(long time) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
-	public float getTime() {
+	public long getTime() {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 

@@ -35,15 +35,15 @@ import org.spout.api.geo.World;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.event.world.WeatherChangeEvent;
-import org.spout.vanilla.protocol.msg.StateChangeMessage;
-import org.spout.vanilla.protocol.msg.TimeMessage;
+import org.spout.vanilla.protocol.event.TimeUpdateProtocolEvent;
+import org.spout.vanilla.protocol.event.WeatherChangeProtocolEvent;
 import org.spout.vanilla.world.Weather;
 
 public class NormalSky extends VanillaSky {
 
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(NormalSky.class, "Normal Sky");
-	private float time = 0;
-	private float countdown = 20;
+	private long time = 0;
+	private long countdown = 20;
 	private Weather currentWeather;
 	private Weather forecast;
 	private float timeUntilWeatherChange = 0.0f;
@@ -72,8 +72,9 @@ public class NormalSky extends VanillaSky {
 
 			countdown = 20;
 			Set<Player> players = getParent().getWorld().getPlayers();
+			TimeUpdateProtocolEvent event = new TimeUpdateProtocolEvent(time);
 			for (Player player : players) {
-				player.getSession().send(new TimeMessage((long) time));
+				player.getNetworkSynchronizer().callProtocolEvent(event);
 			}
 		}
 
@@ -95,12 +96,12 @@ public class NormalSky extends VanillaSky {
 	}
 
 	@Override
-	public void setTime(float time) {
+	public void setTime(long time) {
 		this.time = time;
 	}
 
 	@Override
-	public float getTime() {
+	public long getTime() {
 		return time;
 	}
 
@@ -111,18 +112,16 @@ public class NormalSky extends VanillaSky {
 
 	@Override
 	public void setWeather(Weather pattern) {
-		WeatherChangeEvent event = new WeatherChangeEvent(this, currentWeather, pattern);
+		WeatherChangeEvent event = Spout.getEventManager().callEvent(new WeatherChangeEvent(this, currentWeather, pattern));
 		if (event.isCancelled()) {
 			return;
 		}
 
-		Spout.getEventManager().callEvent(event);
 		currentWeather = event.getNewWeather();
-		boolean rain = (currentWeather != Weather.CLEAR);
-		StateChangeMessage msg = new StateChangeMessage((byte) (rain ? 1 : 2), (byte) 0);
+		final WeatherChangeProtocolEvent protocolEvent = new WeatherChangeProtocolEvent(currentWeather);
 		for (Player player : getParent().getWorld().getPlayers()) {
-			if (player.getSession() != null) {
-				player.getSession().send(msg);
+			if (player.getNetworkSynchronizer() != null) {
+				player.getNetworkSynchronizer().callProtocolEvent(protocolEvent);
 			}
 		}
 	}

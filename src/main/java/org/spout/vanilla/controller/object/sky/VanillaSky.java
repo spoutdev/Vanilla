@@ -46,11 +46,11 @@ public class VanillaSky extends Controller implements Sky {
 	}
 
 	@Override
-	public void setTime(float time) {
+	public void setTime(long time) {
 	}
 
 	@Override
-	public float getTime() {
+	public long getTime() {
 		return -1;
 	}
 

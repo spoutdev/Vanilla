@@ -33,6 +33,7 @@ import gnu.trove.set.hash.TIntHashSet;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.event.EventHandler;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.generator.biome.BiomeType;
@@ -43,22 +44,27 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.math.Quaternion;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.Session.State;
+import org.spout.api.protocol.event.ProtocolEventListener;
 import org.spout.api.util.map.TIntPairHashSet;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
+import org.spout.vanilla.protocol.event.EntityAnimateProtocolEvent;
+import org.spout.vanilla.protocol.event.TimeUpdateProtocolEvent;
+import org.spout.vanilla.protocol.event.WeatherChangeProtocolEvent;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
+import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.IdentificationMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
@@ -68,9 +74,12 @@ import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
+import org.spout.vanilla.protocol.msg.StateChangeMessage;
+import org.spout.vanilla.protocol.msg.TimeMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
+import org.spout.vanilla.world.Weather;
 
-public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
+public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	@SuppressWarnings("unused")
 	private final static int POSITION_UPDATE_TICKS = 20;
 	private final static double STANCE = 1.6D;
@@ -82,6 +91,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 	public VanillaNetworkSynchronizer(Player player, Entity entity) {
 		super(player, entity);
+		registerProtocolEvents(this);
 	}
 
 	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();
@@ -124,37 +134,37 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 		byte[] solidChunkData = new byte[16 * 16 * 16 * 5 / 2];
 		byte[] airChunkData = new byte[16 * 16 * 16 * 5 / 2];
-		
+
 		int i = 0;
 		for (int c = 0; c < 4096; c++) {
 			solidChunkData[i] = 1;
 			airChunkData[i++] = 0;
 		}
-		
+
 		for (int c = 0; c < 2048; c++) {
 			solidChunkData[i] = 0x00;
 			airChunkData[i++] = 0x00;
 		}
-		
+
 		for (int c = 0; c < 2048; c++) {
 			solidChunkData[i] = 0x00;
 			airChunkData[i++] = 0x00;
 		}
-		
+
 		for (int c = 0; c < 2048; c++) {
 			solidChunkData[i] = 0x00;
-			airChunkData[i++] = (byte)0xFF;		
+			airChunkData[i++] = (byte)0xFF;
 		}
-		
+
 		Chunk c = p.getWorld().getChunk(p);
-		
+
 		TIntHashSet column = activeChunks.get(x, z);
 		if (column == null) {
 			column = new TIntHashSet();
 			activeChunks.put(x, z, column);
 			LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
 			owner.getSession().send(loadChunk);
-			
+
 			final boolean sendBiomes = !biomesSentChunks.contains(x, z);
 			byte[] biomeData = sendBiomes ? new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE] : null;
 			if (sendBiomes) {
@@ -172,7 +182,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 					}
 				}
 			}
-			
+
 			byte[][] packetChunkData = new byte[16][];
 
 			for (i = 0; i < 16; i++) {
@@ -182,7 +192,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 					packetChunkData[i] = airChunkData;
 				}
 			}
-			
+
 			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, sendBiomes, new boolean[16], 0, packetChunkData, biomeData);
 			owner.getSession().send(CCMsg);
 		}
@@ -191,13 +201,13 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 
 	private final static byte[] dark = new byte[2048];
 	private final static byte[] light = new byte[2048];
-	
+
 	static {
 		for (int i = 0; i < light.length; i++) {
 			light[i] = -1;
 		}
 	}
-	
+
 	@Override
 	public void sendChunk(Chunk c) {
 		int x = c.getX();
@@ -266,9 +276,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 	}
 
 	@Override
-	protected void sendPosition(Point p, float yaw, float pitch) {
+	protected void sendPosition(Point p, Quaternion rot) {
 		//TODO: Implement Spout Protocol
-		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), yaw, pitch, true);
+		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true);
 		owner.getSession().send(PRMsg);
 	}
 
@@ -326,7 +336,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 			lastKeepAlive = currentTime;
 			owner.getSession().send(PingMsg, true);
 		}
-		
+
 		for (TIntObjectIterator<Message> i = queuedInventoryUpdates.iterator(); i.hasNext(); ) {
 			i.advance();
 			session.send(i.value());
@@ -437,7 +447,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		}
 		queuedInventoryUpdates.put(slot, message);
 	}
-	
+
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
 		Message message;
@@ -458,5 +468,21 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer {
 		}
 		session.send(new SetWindowSlotsMessage(getInventoryId(inventory.getClass()), newSlots));
 		queuedInventoryUpdates.clear();
+	}
+
+	@EventHandler
+	public void sendWeatherChange(WeatherChangeProtocolEvent event) {
+		boolean rain = (event.getNewWeather() != Weather.CLEAR);
+		session.send(new StateChangeMessage((byte) (rain ? 1 : 2), (byte) 0));
+	}
+
+	@EventHandler
+	public void sendTimeChange(TimeUpdateProtocolEvent event) {
+		session.send(new TimeMessage(event.getNewTime()));
+	}
+
+	@EventHandler
+	public void sendEntityAnimate(EntityAnimateProtocolEvent event) {
+		session.send(new EntityAnimationMessage(event.getId(), (byte) event.getAnimation()));
 	}
 }

@@ -49,11 +49,10 @@ import org.spout.api.player.Player;
  */
 public class RegionSpawner extends Controller {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(RegionSpawner.class, "Region Spawner");
-	private static Map<Class<? extends Controller>, Boolean> validConstructors = new ConcurrentHashMap<Class<? extends Controller>, Boolean>();
 	private static final int SPAWN_TRIES = 6;
 	final Region region;
 	final Random rand = new Random();
-	final Map<Class<? extends Controller>, SpawnInformation> spawnableTypes = new ConcurrentHashMap<Class<? extends Controller>, SpawnInformation>();
+	final Map<ControllerType, SpawnInformation> spawnableTypes = new ConcurrentHashMap<ControllerType, SpawnInformation>();
 
 	public RegionSpawner(Region region) {
 		super(TYPE);
@@ -86,45 +85,17 @@ public class RegionSpawner extends Controller {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * <<<<<<< Updated upstream:src/main/java/org/spout/vanilla/controller/world/RegionSpawner.java
-=======
->>>>>>> Updated to use the ControllerType system added to SpoutAPI
 	 * Adds a controller type to the list of controller types this region spawner will try to spawn.
 	 * @param type	   to spawn
 	 * @param canSpawnOn a set of block materials that this controller can spawn on
 	 * @param amount	 of this type of controller that should be spawned per chunk, on average
-<<<<<<< HEAD
-	 *                   =======
-	 *                   Adds a controller type to the list of entity types this region spawner will try to spawn.
-	 * @param type	   to spawn
-	 * @param canSpawnOn a set of block materials that this entity can spawn on
-	 * @param amount	 of this type of entity that should be spawned per chunk, on average
-	 *                   >>>>>>> Stashed changes:src/main/java/org/spout/vanilla/entity/world/RegionEntitySpawner.java
-=======
->>>>>>> Updated to use the ControllerType system added to SpoutAPI
-	 * @throws IllegalStateException if the controller lacks a default no-argument constructor
+	 * @throws IllegalStateException if the controller cannot be spawned
 	 */
-	public void addSpawnableType(Class<? extends Controller> type, Set<BlockMaterial> canSpawnOn, int amount) {
-		Boolean existing = validConstructors.get(type);
-		boolean valid = existing != null && existing.booleanValue();
-
-		if (!valid) {
-			Constructor<?>[] constructors = type.getConstructors();
-			for (Constructor<?> constructor : constructors) {
-				if (constructor.getParameterTypes().length == 0) {
-					valid = true;
-					validConstructors.put(type, true);
-					break;
-				}
-			}
-		}
-
-		if (valid) {
-			spawnableTypes.put(type, new SpawnInformation(amount, canSpawnOn));
-		} else {
+	public void addSpawnableType(ControllerType type, Set<BlockMaterial> canSpawnOn, int amount) {
+		if (!type.canCreateController()) {
 			throw new IllegalStateException("Class " + type + " does not have a default constructor!");
 		}
+		spawnableTypes.put(type, new SpawnInformation(amount, canSpawnOn));
 	}
 
 	/**
@@ -136,11 +107,9 @@ public class RegionSpawner extends Controller {
 	}
 
 	public void spawn(Chunk chunk) {
-		Iterator<Entry<Class<? extends Controller>, SpawnInformation>> i = spawnableTypes.entrySet().iterator();
-		while (i.hasNext()) {
-			Entry<Class<? extends Controller>, SpawnInformation> entry = i.next();
+		for (Entry<ControllerType, SpawnInformation> entry : spawnableTypes.entrySet()) {
 			SpawnInformation info = entry.getValue();
-			Set<Entity> existing = region.getAll(entry.getKey());
+			Set<Entity> existing = region.getAll(entry.getKey().getControllerClass());
 			if (existing.size() < info.amount) {
 				int randX = this.rand.nextInt(Chunk.CHUNK_SIZE);
 				int randY = this.rand.nextInt(Chunk.CHUNK_SIZE);
@@ -155,24 +124,14 @@ public class RegionSpawner extends Controller {
 						int y = randY + 1;
 						int z = randZ + (this.rand.nextInt(SPAWN_TRIES) - this.rand.nextInt(SPAWN_TRIES));
 						if (canSpawnAt(chunk, x, y, z)) {
-							Constructor<?> construct = null;
-							Constructor<?>[] constructors = entry.getKey().getConstructors();
-							for (Constructor<?> constructor : constructors) {
-								if (constructor.getParameterTypes().length == 0) {
-									construct = constructor;
-									break;
-								}
-							}
-							if (construct != null) {
-								try {
-									Controller controller = (Controller) construct.newInstance();
-									x += chunk.getX() * 16 + 0.5F;
-									y += chunk.getY() * 16 + 1F;
-									z += chunk.getZ() * 16 + 0.5F;
-									region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), x, y, z), controller);
-								} catch (Exception e) {
-									throw new RuntimeException("Unable to spawn " + entry.getKey(), e);
-								}
+							try {
+								Controller controller = entry.getKey().createController();
+								x += chunk.getX() * 16 + 0.5F;
+								y += chunk.getY() * 16 + 1F;
+								z += chunk.getZ() * 16 + 0.5F;
+								region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), x, y, z), controller);
+							} catch (Exception e) {
+								throw new RuntimeException("Unable to spawn " + entry.getKey().getName(), e);
 							}
 						}
 					}

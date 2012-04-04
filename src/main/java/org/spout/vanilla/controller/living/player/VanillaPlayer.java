@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.Inventory;
@@ -109,9 +110,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (unresponsiveTicks == 0) {
 			player.getSession().disconnect("Connection timeout!");
 		}
-
 		if (lastUserList++ > 20) {
-			sendMessage(player, new UserListItemMessage(player.getName(), true, ping));
+			//Actually send this message to ANYONE on the server, because the "current" player knows that he's online
+			sendMessage(new HashSet<Player>(Arrays.asList(Spout.getGame().getOnlinePlayers())), new UserListItemMessage(player.getName(), true, ping));
 			lastUserList = 0;
 		}
 		super.onTick(dt);

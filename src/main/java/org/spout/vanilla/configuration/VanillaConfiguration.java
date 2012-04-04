@@ -25,64 +25,61 @@
  */
 package org.spout.vanilla.configuration;
 
+import org.spout.api.exception.ConfigurationException;
+import org.spout.api.util.config.ConfigurationHolder;
+import org.spout.api.util.config.yaml.YamlConfiguration;
+import org.spout.vanilla.VanillaPlugin;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-import org.spout.api.util.config.Configuration;
-import org.spout.api.util.config.ConfigurationNode;
 
-public class VanillaConfiguration extends Configuration {
+public class VanillaConfiguration extends YamlConfiguration {
 	// General
-	public static final ConfigurationNode MOTD = new ConfigurationNode("general.motd", "A Spout Server");
-	public static final ConfigurationNode ENABLE_END_CREDITS = new ConfigurationNode("general.enable-ending-credits", true);
-	public static final ConfigurationNode FLATWORLD = new ConfigurationNode("general.flatworld", false);
+	public static final ConfigurationHolder MOTD = new ConfigurationHolder("A Spout Server", "general", "motd");
+	public static final ConfigurationHolder ENABLE_END_CREDITS = new ConfigurationHolder(true, "general", "enable-ending-credits");
+	public static final ConfigurationHolder FLATWORLD = new ConfigurationHolder(false, "general", "flatworld");
 	// Physics
-	public static final ConfigurationNode GRAVEL_PHYSICS = new ConfigurationNode("physics.gravel", true);
-	public static final ConfigurationNode FIRE_PHYSICS = new ConfigurationNode("physics.fire", true);
-	public static final ConfigurationNode LAVA_PHYSICS = new ConfigurationNode("physics.lava", true);
-	public static final ConfigurationNode PISTON_PHYSICS = new ConfigurationNode("physics.piston", true);
-	public static final ConfigurationNode REDSTONE_PHYSICS = new ConfigurationNode("physics.redstone", true);
-	public static final ConfigurationNode SAND_PHYSICS = new ConfigurationNode("physics.sand", true);
-	public static final ConfigurationNode WATER_PHYSICS = new ConfigurationNode("physics.water", true);
-	public static final ConfigurationNode CACTUS_PHYSICS = new ConfigurationNode("physics.cactus", true);
+	public static final ConfigurationHolder GRAVEL_PHYSICS = new ConfigurationHolder(true, "physics", "gravel");
+	public static final ConfigurationHolder FIRE_PHYSICS = new ConfigurationHolder(true, "physics", "fire");
+	public static final ConfigurationHolder LAVA_PHYSICS = new ConfigurationHolder(true, "physics", "lava");
+	public static final ConfigurationHolder PISTON_PHYSICS = new ConfigurationHolder(true, "physics", "piston");
+	public static final ConfigurationHolder REDSTONE_PHYSICS = new ConfigurationHolder(true, "physics", "redstone");
+	public static final ConfigurationHolder SAND_PHYSICS = new ConfigurationHolder(true, "physics", "sand");
+	public static final ConfigurationHolder WATER_PHYSICS = new ConfigurationHolder(true, "physics", "water");
+	public static final ConfigurationHolder CACTUS_PHYSICS = new ConfigurationHolder(true, "physics", "cactus");
 	// Player
-	public static final ConfigurationNode PLAYER_PVP_ENABLED = new ConfigurationNode("player.pvp-enabled", true);
-	public static final ConfigurationNode PLAYER_DEFAULT_GAMEMODE = new ConfigurationNode("player.default-gamemode", "survival");
-	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_HEALTH = new ConfigurationNode("player.survival.enable-health", true);
-	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_HUNGER = new ConfigurationNode("player.survival.enable-hunger", true);
-	public static final ConfigurationNode PLAYER_SURVIVAL_ENABLE_XP = new ConfigurationNode("player.survival.enable-xp", true);
-	public static final ConfigurationNode PLAYER_TIMEOUT_TICKS = new ConfigurationNode("player.timeout-ticks", 1200);
-	public static final OpConfig OPS = new OpConfig();
+	public static final ConfigurationHolder PLAYER_PVP_ENABLED = new ConfigurationHolder(true, "player", "pvp-enabled");
+	public static final ConfigurationHolder PLAYER_DEFAULT_GAMEMODE = new ConfigurationHolder("survival", "player", "default-gamemode");
+	public static final ConfigurationHolder PLAYER_SURVIVAL_ENABLE_HEALTH = new ConfigurationHolder(true, "player", "survival", "enable-health");
+	public static final ConfigurationHolder PLAYER_SURVIVAL_ENABLE_HUNGER = new ConfigurationHolder(true, "player", "survival", "enable-hunger");
+	public static final ConfigurationHolder PLAYER_SURVIVAL_ENABLE_XP = new ConfigurationHolder(true, "player", "survival", "enable-xp");
+	public static final ConfigurationHolder PLAYER_TIMEOUT_TICKS = new ConfigurationHolder(120, "player", "timeout-ticks");
+	public static final OpConfig OPS = new OpConfig(VanillaPlugin.getInstance().getDataFolder());
 	// Controller-specific
-	public static final ConfigurationNode ITEM_PICKUP_RANGE = new ConfigurationNode("controller.item-pickup-range", 3);
+	public static final ConfigurationHolder ITEM_PICKUP_RANGE = new ConfigurationHolder(3, "controller", "item-pickup-range");
 
-	public VanillaConfiguration() {
-		super(new File("plugins/Vanilla/config.yml"));
-	}
-
-	@Override
-	public void load() {
-		super.load();
+	public VanillaConfiguration(File dataFolder) {
+		super(new File(dataFolder, "config.yml"));
 		for (Field field : VanillaConfiguration.class.getFields()) {
 			if (Modifier.isStatic(field.getModifiers())) {
 				try {
 					Object f = field.get(null);
-					if (f instanceof ConfigurationNode) {
-						ConfigurationNode node = (ConfigurationNode) f;
-						Object value = getValue(node.getPath());
-						if (value != null) {
-							node.setValue(value);
-						}
-						this.addNode(node);
+					if (f instanceof ConfigurationHolder) {
+						ConfigurationHolder node = (ConfigurationHolder) f;
+						node.setConfiguration(this);
 					}
 				} catch (IllegalArgumentException e) {
 				} catch (IllegalAccessException e) {
 				}
 			}
 		}
+	}
 
-		this.save();
+	@Override
+	public void load() throws ConfigurationException {
+		super.load();
 		OPS.load();
 	}
 }

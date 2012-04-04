@@ -25,37 +25,35 @@
  */
 package org.spout.vanilla.configuration;
 
+import org.spout.api.exception.ConfigurationException;
+import org.spout.api.util.config.ConfigurationNode;
+import org.spout.api.util.config.yaml.YamlConfiguration;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import org.spout.api.util.config.Configuration;
-import org.spout.api.util.config.ConfigurationNode;
 
-public class OpConfig extends Configuration {
-	private static final String[] ops = {"Notch", "jeb", "ez"};
-	private final ConfigurationNode node = new ConfigurationNode("ops", Arrays.asList(ops));
+public class OpConfig extends YamlConfiguration {
+	private static final List<String> ops = Arrays.asList("Notch", "jeb", "ez");
+	private ConfigurationNode node;
 
-	public OpConfig() {
-		super(new File("plugins/Vanilla/ops.yml"));
+	public OpConfig(File dataFolder) {
+		super(new File(dataFolder, "ops.yml"));
 	}
 
 	@Override
-	public void load() {
+	public void load() throws ConfigurationException {
 		super.load();
-		Object value = getValue(node.getPath());
-		if (value != null) {
-			node.setValue(value);
-		}
-		this.addNode(node);
-		this.save();
+		node = getNode("ops");
+		node.getValue(ops);
 	}
 
 	public List<String> getOps() {
 		return node.getStringList();
 	}
 
-	public void setOp(String playerName, boolean op) {
+	public boolean setOp(String playerName, boolean op) {
 		List<String> list = node.getStringList();
 		if (op) {
 			list.add(playerName);
@@ -64,7 +62,12 @@ public class OpConfig extends Configuration {
 		}
 
 		node.setValue(list);
-		this.save();
+		try {
+			this.save();
+			return true;
+		} catch (ConfigurationException e) {
+			return false;
+		}
 	}
 
 	public boolean isOp(String playerName) {

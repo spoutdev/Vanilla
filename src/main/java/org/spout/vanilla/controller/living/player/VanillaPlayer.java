@@ -52,7 +52,7 @@ import org.spout.vanilla.protocol.msg.UserListItemMessage;
 public class VanillaPlayer extends Human implements PlayerController {
 
 	private final Player owner;
-	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
+	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt();
 	private int lastPing = 0;
 	private int lastUserList = 0;
 	private short count = 0;
@@ -144,7 +144,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public void resetTimeoutTicks() {
 		ping = count;
 		count = 0;
-		unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInteger();
+		unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt();
 	}
 
 	@Override

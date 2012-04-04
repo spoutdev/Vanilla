@@ -27,6 +27,7 @@ package org.spout.vanilla;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 import org.spout.api.Game;
 import org.spout.api.Server;
@@ -35,6 +36,7 @@ import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
 import org.spout.api.entity.type.ControllerType;
+import org.spout.api.exception.ConfigurationException;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
@@ -61,18 +63,18 @@ import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
 	private static VanillaPlugin instance;
-	private final VanillaConfiguration config;
+	private VanillaConfiguration config;
 	public static final int MINECRAFT_PROTOCOL_ID = 29;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
 	private final HashMap<World, Sky> skys = new HashMap<World, Sky>();
 
 	public VanillaPlugin() {
 		instance = this;
-		config = new VanillaConfiguration();
 	}
 
 	@Override
 	public void onLoad() {
+		config = new VanillaConfiguration(getDataFolder());
 		// TODO - do we need a protocol manager ?
 		// getGame().getProtocolManager().register ...
 		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
@@ -100,7 +102,11 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onDisable() {
-		config.save();
+		try {
+			config.save();
+		} catch (ConfigurationException e) {
+			getGame().getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
+		}
 		getLogger().info("disabled");
 	}
 
@@ -110,7 +116,11 @@ public class VanillaPlugin extends CommonPlugin {
 		Game game = getGame();
 
 		// IO
-		config.load();
+		try {
+			config.load();
+		} catch (ConfigurationException e) {
+			getGame().getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
+		}
 
 		//Register commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
@@ -127,7 +137,7 @@ public class VanillaPlugin extends CommonPlugin {
 		} else {
 			normal = game.loadWorld("world", new NormalGenerator());
 		}
-		
+
 		World nether = game.loadWorld("world_nether", new NetherGenerator());
 		World end = game.loadWorld("world_end", new TheEndGenerator());
 

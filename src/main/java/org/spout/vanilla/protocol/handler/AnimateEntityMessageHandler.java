@@ -39,7 +39,7 @@ public final class AnimateEntityMessageHandler extends MessageHandler<EntityAnim
 		//TODO get target block and call onPlayerInteract
 		//TODO call AnimationEvent
 		EntityAnimateProtocolEvent event = new EntityAnimateProtocolEvent(message);
-		for (Player plr : Spout.getGame().getOnlinePlayers()) {
+		for (Player plr : Spout.getEngine().getOnlinePlayers()) {
 			if (!(plr.getName().equals(player.getName()))) {
 				plr.getNetworkSynchronizer().callProtocolEvent(event);
 			}

@@ -112,7 +112,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 		if (lastUserList++ > 20) {
 			//Actually send this message to ANYONE on the server, because the "current" player knows that he's online
-			sendMessage(new HashSet<Player>(Arrays.asList(Spout.getGame().getOnlinePlayers())), new UserListItemMessage(player.getName(), true, ping));
+			sendMessage(new HashSet<Player>(Arrays.asList(Spout.getEngine().getOnlinePlayers())), new UserListItemMessage(player.getName(), true, ping));
 			lastUserList = 0;
 		}
 		super.onTick(dt);

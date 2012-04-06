@@ -29,7 +29,7 @@ import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.logging.Level;
 
-import org.spout.api.Game;
+import org.spout.api.Engine;
 import org.spout.api.Server;
 import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
@@ -79,7 +79,7 @@ public class VanillaPlugin extends CommonPlugin {
 		// getGame().getProtocolManager().register ...
 		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
 
-		Game game = getGame();
+		Engine game = getGame();
 
 		if (game instanceof Server) {
 			int port = 25565;
@@ -113,7 +113,7 @@ public class VanillaPlugin extends CommonPlugin {
 	@Override
 	public void onEnable() {
 		//Grab singleton game instance.
-		Game game = getGame();
+		Engine game = getGame();
 
 		// IO
 		try {

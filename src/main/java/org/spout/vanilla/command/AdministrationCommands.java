@@ -71,7 +71,7 @@ public class AdministrationCommands {
 			}
 
 			player = (Player) source;
-			Player to = Spout.getGame().getPlayer(args.getString(0), true);
+			Player to = Spout.getEngine().getPlayer(args.getString(0), true);
 			if (to != null) {
 				point = to.getEntity().getPosition();
 			} else {
@@ -80,12 +80,12 @@ public class AdministrationCommands {
 		}
 
 		if (args.length() == 2) {
-			player = Spout.getGame().getPlayer(args.getString(0), true);
+			player = Spout.getEngine().getPlayer(args.getString(0), true);
 			if (player == null) {
 				throw new CommandException(args.getString(0) + " is not online!");
 			}
 
-			Player to = Spout.getGame().getPlayer(args.getString(1), true);
+			Player to = Spout.getEngine().getPlayer(args.getString(1), true);
 			if (to != null) {
 				point = to.getEntity().getPosition();
 			} else {
@@ -128,7 +128,7 @@ public class AdministrationCommands {
 
 			player = (Player) source;
 		} else {
-			player = Spout.getGame().getPlayer(args.getString(index++), true);
+			player = Spout.getEngine().getPlayer(args.getString(index++), true);
 			if (player == null) {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
@@ -171,7 +171,7 @@ public class AdministrationCommands {
 
 		ops.setOp(playerName, false);
 		source.sendMessage(playerName + " is no longer an operator!");
-		Player player = Spout.getGame().getPlayer(playerName, true);
+		Player player = Spout.getEngine().getPlayer(playerName, true);
 		if (player != null) {
 			player.sendMessage("You are no longer an operator!");
 		}
@@ -192,7 +192,7 @@ public class AdministrationCommands {
 
 		ops.setOp(playerName, true);
 		source.sendMessage(playerName + " is now an operator!");
-		Player op = Spout.getGame().getPlayer(playerName, true);
+		Player op = Spout.getEngine().getPlayer(playerName, true);
 		if (op != null) {
 			op.sendMessage("You are now an operator!");
 		}
@@ -253,7 +253,7 @@ public class AdministrationCommands {
 		int index = 0;
 		Player player;
 		if (args.length() == 2) {
-			player = Spout.getGame().getPlayer(args.getString(index++), true);
+			player = Spout.getEngine().getPlayer(args.getString(index++), true);
 			if (player == null) {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
@@ -312,7 +312,7 @@ public class AdministrationCommands {
 
 		// If source is not player
 		if (args.length() == 2) {
-			Player player = Spout.getGame().getPlayer(args.getString(0), true);
+			Player player = Spout.getEngine().getPlayer(args.getString(0), true);
 			if (player != null) {
 				int amount = args.getInteger(1);
 				player.sendMessage("You have been given " + amount + " xp.");
@@ -387,7 +387,7 @@ public class AdministrationCommands {
 		if (source instanceof Player) {
 			player = (Player) source;
 		} else {
-			player = Spout.getGame().getPlayer(args.getString(1, ""), true);
+			player = Spout.getEngine().getPlayer(args.getString(1, ""), true);
 			if (player == null) {
 				source.sendMessage("Must be a player or send player name in arguments");
 				return;

@@ -91,7 +91,7 @@ public class VanillaEventListener implements Listener {
 			entity.getInventory().removeViewer(event.getPlayer().getNetworkSynchronizer());
 		}
 		//Tell anyone that we have an player less :(
-		((VanillaController) entity.getController()).sendMessage(new HashSet<Player>(Arrays.asList(Spout.getGame().getOnlinePlayers())), new UserListItemMessage(event.getPlayer().getName(), false, (short) 99));
+		((VanillaController) entity.getController()).sendMessage(new HashSet<Player>(Arrays.asList(Spout.getEngine().getOnlinePlayers())), new UserListItemMessage(event.getPlayer().getName(), false, (short) 99));
 	}
 
 	@EventHandler()

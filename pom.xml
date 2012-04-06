@@ -18,7 +18,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<minecraft.version>1.2.4</minecraft.version>
+		<minecraft.version>1.2.5</minecraft.version>
+		<api.version>dev-SNAPSHOT</api.version>
 		<build.number>Unknown</build.number>
 	</properties>
 
@@ -57,7 +58,7 @@
 		<dependency>
 			<groupId>org.spout</groupId>
 			<artifactId>spoutapi</artifactId>
-			<version>dev-SNAPSHOT</version>
+			<version>${api.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

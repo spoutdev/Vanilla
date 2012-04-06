@@ -30,6 +30,7 @@ import static org.spout.vanilla.util.VanillaMessageHandlerUtils.getInventoryId;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
+import org.spout.api.Spout;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
@@ -485,4 +486,5 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public void sendEntityAnimate(EntityAnimateProtocolEvent event) {
 		session.send(new EntityAnimationMessage(event.getId(), (byte) event.getAnimation()));
 	}
+	
 }

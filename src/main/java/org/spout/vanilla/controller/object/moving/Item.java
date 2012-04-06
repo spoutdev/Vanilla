@@ -67,11 +67,7 @@ public class Item extends Substance {
 			super.onTick(dt);
 			return;
 		}
-
-		float x = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-		float y = getRandom().nextFloat();
-		float z = (getRandom().nextBoolean() ? 1 : -1) * getRandom().nextFloat();
-		move(velocity.add(x, y, z));
+		
 		super.onTick(dt);
 		World world = getParent().getWorld();
 		Set<Player> players = world.getPlayers();

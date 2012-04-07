@@ -87,7 +87,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (player == null || player.getSession() == null) {
 			return;
 		}
-		/* COMMENTED OUT PENDING TESTING
+		/* TODO COMMENTED OUT PENDING TESTING
 		if(player.input().getForward() > 0){
 			getParent().translate(moveSpeed.transform(getParent().getRotation()));
 		}
@@ -252,8 +252,14 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	public void setGameMode(GameModeHandler newHandler) {
+		setGameMode(newHandler, true);
+	}
+	
+	public void setGameMode(GameModeHandler newHandler, boolean sendMessage) {
 		gmhandler = newHandler;
-		this.getPlayer().getSession().send(new StateChangeMessage((byte)3, (byte) gmhandler.getPacketId()));
+		if (sendMessage) {
+			this.getPlayer().getSession().send(new StateChangeMessage((byte) 3, (byte) gmhandler.getPacketId()));
+		}
 	}
 
 	public boolean isSurvival() {

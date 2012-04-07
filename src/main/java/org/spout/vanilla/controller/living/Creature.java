@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.controller.living;
 
-import org.spout.api.entity.Entity;
 import org.spout.vanilla.controller.VanillaControllerType;
 
 public abstract class Creature extends Living {

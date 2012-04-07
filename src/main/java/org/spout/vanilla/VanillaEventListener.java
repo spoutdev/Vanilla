@@ -74,9 +74,9 @@ public class VanillaEventListener implements Listener {
 		Player player = event.getPlayer();
 		VanillaPlayer mode = new VanillaPlayer(player);
 		if (VanillaConfiguration.PLAYER_DEFAULT_GAMEMODE.getString().equalsIgnoreCase("creative")) {
-			mode.setGameMode(new CreativePlayer(mode));
+			mode.setGameMode(new CreativePlayer(mode),false);
 		} else {
-			mode.setGameMode(new SurvivalPlayer(mode));
+			mode.setGameMode(new SurvivalPlayer(mode),false);
 		}
 
 		Entity playerEntity = player.getEntity();

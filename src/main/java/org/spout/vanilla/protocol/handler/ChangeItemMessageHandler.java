@@ -33,7 +33,7 @@ import org.spout.vanilla.protocol.msg.ChangeItemMessage;
 
 public final class ChangeItemMessageHandler extends MessageHandler<ChangeItemMessage> {
 	@Override
-	public void handle(Session session, Player player, ChangeItemMessage message) {
+	public void handleServer(Session session, Player player, ChangeItemMessage message) {
 		if (player == null) {
 			return;
 		}

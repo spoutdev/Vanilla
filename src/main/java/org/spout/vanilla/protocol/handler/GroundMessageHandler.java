@@ -35,7 +35,7 @@ import org.spout.vanilla.protocol.msg.GroundMessage;
 
 public class GroundMessageHandler extends MessageHandler<GroundMessage> {
 	@Override
-	public void handle(Session session, Player player, GroundMessage message) {
+	public void handleServer(Session session, Player player, GroundMessage message) {
 		if (player.getEntity().getController() == null) {
 			return;
 		}

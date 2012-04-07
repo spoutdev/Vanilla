@@ -33,7 +33,7 @@ import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 
 public final class CloseWindowMessageHandler extends MessageHandler<CloseWindowMessage> {
 	@Override
-	public void handle(Session session, Player player, CloseWindowMessage message) {
+	public void handleServer(Session session, Player player, CloseWindowMessage message) {
 		VanillaPlayer vplr = (VanillaPlayer) player.getEntity().getController();
 		vplr.setActiveInventory(player.getEntity().getInventory());
 		vplr.setItemOnCursor(null);

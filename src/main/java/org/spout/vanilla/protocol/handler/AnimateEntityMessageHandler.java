@@ -35,7 +35,7 @@ import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 
 public final class AnimateEntityMessageHandler extends MessageHandler<EntityAnimationMessage> {
 	@Override
-	public void handle(Session session, Player player, EntityAnimationMessage message) {
+	public void handleServer(Session session, Player player, EntityAnimationMessage message) {
 		//TODO get target block and call onPlayerInteract
 		//TODO call AnimationEvent
 		EntityAnimateProtocolEvent event = new EntityAnimateProtocolEvent(message);

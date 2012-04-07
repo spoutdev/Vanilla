@@ -43,7 +43,7 @@ import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 
 public class EntityInteractionMessageHandler extends MessageHandler<EntityInteractionMessage> {
 	@Override
-	public void handle(Session session, Player player, EntityInteractionMessage message) {
+	public void handleServer(Session session, Player player, EntityInteractionMessage message) {
 		Entity clickedEntity = player.getEntity().getWorld().getEntity(message.getTarget());
 		if (clickedEntity == null) {
 			return;

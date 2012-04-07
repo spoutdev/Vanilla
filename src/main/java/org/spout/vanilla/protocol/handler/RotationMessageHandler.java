@@ -34,7 +34,7 @@ import org.spout.vanilla.protocol.msg.RotationMessage;
 
 public final class RotationMessageHandler extends MessageHandler<RotationMessage> {
 	@Override
-	public void handle(Session session, Player player, RotationMessage message) {
+	public void handleServer(Session session, Player player, RotationMessage message) {
 		if (player == null) {
 			return;
 		}

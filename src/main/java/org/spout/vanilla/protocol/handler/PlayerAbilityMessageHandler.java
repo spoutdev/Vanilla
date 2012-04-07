@@ -35,7 +35,7 @@ import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 
 public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbilityMessage> {
 	@Override
-	public void handle(Session session, Player player, PlayerAbilityMessage message) {
+	public void handleServer(Session session, Player player, PlayerAbilityMessage message) {
 		if (player.getEntity().getController() == null) {
 			return;
 		}

@@ -44,7 +44,7 @@ import org.spout.vanilla.protocol.msg.DiggingMessage;
 
 public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> {
 	@Override
-	public void handle(Session session, Player player, DiggingMessage message) {
+	public void handleServer(Session session, Player player, DiggingMessage message) {
 		if (player == null) {
 			return;
 		}

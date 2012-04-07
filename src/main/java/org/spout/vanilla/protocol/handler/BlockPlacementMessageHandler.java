@@ -47,7 +47,7 @@ import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlacementMessage> {
 	@Override
-	public void handle(Session session, Player player, BlockPlacementMessage message) {
+	public void handleServer(Session session, Player player, BlockPlacementMessage message) {
 		//if (player == null) {
 		//	return;
 		//}

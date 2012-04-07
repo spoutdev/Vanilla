@@ -28,12 +28,12 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 
 public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 	@Override
-	public void handle(Session session, Player player, RespawnMessage message) {
+	public void handleServer(Session session, Player player, RespawnMessage message) {
+		//TODO this
 		//player.setHealth(20);
 		//player.teleport(player.getWorld().getSpawnLocation());
 	}

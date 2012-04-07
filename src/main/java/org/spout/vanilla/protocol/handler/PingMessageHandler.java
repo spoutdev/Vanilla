@@ -34,7 +34,7 @@ import org.spout.vanilla.protocol.msg.PingMessage;
 
 public class PingMessageHandler extends MessageHandler<PingMessage> {
 	@Override
-	public void handle(Session session, Player player, PingMessage message) {
+	public void handleServer(Session session, Player player, PingMessage message) {
 		if (!(player.getEntity().getController() instanceof VanillaPlayer)) {
 			return;
 		}

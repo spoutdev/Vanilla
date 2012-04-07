@@ -33,7 +33,7 @@ import org.spout.vanilla.protocol.msg.ChatMessage;
 
 public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
 	@Override
-	public void handle(Session session, Player player, ChatMessage message) {
+	public void handleServer(Session session, Player player, ChatMessage message) {
 		if (player == null) {
 			return;
 		}

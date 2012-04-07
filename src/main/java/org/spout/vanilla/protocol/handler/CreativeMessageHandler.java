@@ -40,7 +40,7 @@ import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 
 	@Override
-	public void handle(Session session, Player player, CreativeMessage message) {
+	public void handleServer(Session session, Player player, CreativeMessage message) {
 		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
 
 		if (!(CreativePlayer.is(controller))) {

@@ -27,12 +27,18 @@ package org.spout.vanilla.util;
 
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
-
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.material.block.BlockFace;
 
 public class VanillaMessageHandlerUtils {
+	
+	
+	/**
+	 * Converts a network block face to a spout one!
+	 * @param messageFace The network face!
+	 * @return The spout one!
+	 */
 	public static BlockFace messageToBlockFace(int messageFace) {
 		switch (messageFace) {
 			case 0:
@@ -56,10 +62,20 @@ public class VanillaMessageHandlerUtils {
 			9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 5, 6, 7, 8, /* armor */ 4, 3, 2, 1, 0 // crafting
 	};
 
+	/**
+	 * Converts a spout inventory slot to a network one!
+	 * @param slot The spout slot id.
+	 * @return The network id for that slot.
+	 */
 	public static int spoutInventorySlotToNetwork(int slot) {
 		return PLAYER_SLOT_CONVERSION[slot];
 	}
 
+	/**
+	 * Converts a network inventory slot to a spout one!
+	 * @param slot The network slot id.
+	 * @return The spout slot id.
+	 */
 	public static int networkInventorySlotToSpout(int slot) {
 		for (int i = 0; i < PLAYER_SLOT_CONVERSION.length; ++i) {
 			if (PLAYER_SLOT_CONVERSION[i] == slot) {
@@ -75,6 +91,11 @@ public class VanillaMessageHandlerUtils {
 		INVENTORY_MAPPING.put(PlayerInventory.class, 0);
 	}
 
+	/**
+	 * Gets the network inventory id of the inventory!
+	 * @param inventory The inventory's class.
+	 * @return The returned inventory id!
+	 */
 	public static byte getInventoryId(Class<? extends Inventory> inventory) {
 		int result = INVENTORY_MAPPING.get(inventory);
 		if (result == INVENTORY_MAPPING.getNoEntryValue()) {

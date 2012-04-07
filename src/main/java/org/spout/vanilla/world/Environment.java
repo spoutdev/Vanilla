@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.world;
 
+//TODO is this even needed?
 public enum Environment {
 	NORMAL(0),
 	NETHER(-1),

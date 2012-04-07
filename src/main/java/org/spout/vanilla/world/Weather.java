@@ -28,6 +28,9 @@ package org.spout.vanilla.world;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+/**
+ * Enum of the vanilla weather states.
+ */
 public enum Weather {
 	CLEAR(0),
 	RAIN(1),

@@ -28,7 +28,7 @@ package org.spout.vanilla.util;
 import org.spout.api.material.block.BlockFace;
 
 /**
- * Indicates the direction of a minecart track
+ * Indicates the direction of a minecart track, and several helper methods to get info about it.
  */
 public enum RailsState {
 
@@ -46,10 +46,16 @@ public enum RailsState {
 	private final boolean curved;
 	private final boolean sloped;
 
+	/**
+	 * @return Whether the RailsState is curved.
+	 */
 	public boolean isCurved() {
 		return this.curved;
 	}
 
+	/**
+	 * @return Whether the RailsState is sloped.
+	 */
 	public boolean isSloped() {
 		return this.sloped;
 	}
@@ -60,18 +66,35 @@ public enum RailsState {
 		this.sloped = sloped;
 	}
 
+	/**
+	 * @return Gets the standard data for the specified RailsState.
+	 */
 	public byte getData() {
-		return (byte) this.ordinal();
+		return (byte) ordinal();
 	}
 
+	/**
+	 * Check if the state is connected to the one in the param.
+	 * @param direction The RailsState to check.
+	 * @return Whether the 2 states are connected.
+	 */
 	public boolean isConnected(BlockFace direction) {
-		return this.directions[0] == direction || this.directions[1] == direction;
+		return directions[0] == direction || directions[1] == direction;
 	}
 
+	/**
+	 * Gets the directions the RailState goes towards/from.
+	 * @return The directions.
+	 */
 	public BlockFace[] getDirections() {
 		return this.directions;
 	}
 
+	/**
+	 * Get a RailState from the specified data.
+	 * @param data The data.
+	 * @return The RailState, or null if the data is invalid.
+	 */
 	public static RailsState get(int data) {
 		if (data >= values().length || data < 0) {
 			return null;
@@ -80,6 +103,12 @@ public enum RailsState {
 		}
 	}
 
+	/**
+	 * Get the RailState from a BlockFace, and whether it is curved.
+	 * @param direction The BlockFace.
+	 * @param sloped Whether the RailsState should be sloped.
+	 * @return The RailState.
+	 */
 	public static RailsState get(BlockFace direction, boolean sloped) {
 		for (RailsState dir : values()) {
 			if (dir.isCurved()) {
@@ -99,6 +128,12 @@ public enum RailsState {
 		return null;
 	}
 
+	/**
+	 * Returns the RailState from one BlockFace to another!
+	 * @param from The first BlockFace.
+	 * @param to The second one.
+	 * @return The RailState, or null if a connection is not possible.
+	 */
 	public static RailsState get(BlockFace from, BlockFace to) {
 		for (RailsState dir : values()) {
 			if (dir.isSloped()) {

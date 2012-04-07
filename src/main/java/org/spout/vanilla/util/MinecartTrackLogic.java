@@ -28,12 +28,10 @@ package org.spout.vanilla.util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-
 import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.block.data.Rails;
 import org.spout.vanilla.material.generic.GenericBlock;

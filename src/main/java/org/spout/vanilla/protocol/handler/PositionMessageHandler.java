@@ -47,7 +47,6 @@ public final class PositionMessageHandler extends MessageHandler<PositionMessage
 			return;
 		}
 
-		message.getStance();
 		double x = message.getX();
 		double y = message.getY();
 		double z = message.getZ();

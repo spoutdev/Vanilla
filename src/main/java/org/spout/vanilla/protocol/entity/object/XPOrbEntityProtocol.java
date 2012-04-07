@@ -31,7 +31,7 @@ import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.object.moving.XPOrb;
-import org.spout.vanilla.protocol.VanillaEntityProtocol;
+import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.ExperienceOrbMessage;
 
 public class XPOrbEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {

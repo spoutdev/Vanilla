@@ -32,7 +32,7 @@ import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.VanillaEntityProtocol;
+import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
 public class VanillaPlayerEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {

@@ -23,7 +23,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol;
+package org.spout.vanilla.protocol.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
@@ -44,8 +44,8 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		int x = (int) (entity.getPosition().getX() * 32);
 		int y = (int) (entity.getPosition().getY() * 32);
 		int z = (int) (entity.getPosition().getZ() * 32);
-		int r = (int) (entity.getYaw() * 32);
-		int p = (int) (entity.getPitch() * 32);
+		int r = (int) (entity.getYaw() );
+		int p = (int) (entity.getPitch() );
 		// TODO - improve efficiency
 		return new Message[]{new EntityTeleportMessage(id, x, y, z, r, p)};
 	}

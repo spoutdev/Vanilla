@@ -28,9 +28,8 @@ package org.spout.vanilla.protocol.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
-
+import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
-import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	@Override
@@ -40,13 +39,21 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 	@Override
 	public Message[] getUpdateMessage(Entity entity) {
-		int id = entity.getId();
+		if(entity.getController() == null)
+			return null;
+		if(!(entity.getController() instanceof VanillaController)) {
+			return null;
+		}
+		VanillaController vc = (VanillaController) entity.getController();
+		return vc.getUpdateMessage();
+		
+		/*int id = entity.getId();
 		int x = (int) (entity.getPosition().getX() * 32);
 		int y = (int) (entity.getPosition().getY() * 32);
 		int z = (int) (entity.getPosition().getZ() * 32);
 		int r = (int) (entity.getYaw() );
 		int p = (int) (entity.getPitch() );
 		// TODO - improve efficiency
-		return new Message[]{new EntityTeleportMessage(id, x, y, z, r, p)};
+		return new Message[]{new EntityTeleportMessage(id, x, y, z, r, p)};*/
 	}
 }

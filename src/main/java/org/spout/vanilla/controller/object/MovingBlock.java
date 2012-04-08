@@ -34,7 +34,7 @@ import org.spout.vanilla.controller.action.MovingBlockAction;
 /**
  * Represents a block that can move, such as sand or gravel.
  */
-public class MovingBlock extends MovingSubstance {
+public class MovingBlock extends Substance {
 	private final BlockMaterial block;
 
 	public MovingBlock(BlockMaterial block) {

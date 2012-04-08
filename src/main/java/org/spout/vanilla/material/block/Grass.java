@@ -26,9 +26,8 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.vanilla.material.Plant;
-import org.spout.vanilla.material.generic.GenericBlock;
 
-public class Grass extends GenericBlock implements Plant {
+public class Grass extends Solid implements Plant {
 	public Grass(String name) {
 		super(name, 2);
 	}

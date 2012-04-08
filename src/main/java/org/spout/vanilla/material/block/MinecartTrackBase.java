@@ -54,7 +54,9 @@ public abstract class MinecartTrackBase extends GroundAttachable {
 
 	@Override
 	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
+		System.out.println("PLACE");
 		if (super.onPlacement(world, x, y, z, data, against, source)) {
+			System.out.println("LOGIC");
 			this.doTrackLogic(world, x, y, z);
 			return true;
 		} else {

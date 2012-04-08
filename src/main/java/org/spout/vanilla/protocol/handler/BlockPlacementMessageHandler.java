@@ -100,7 +100,6 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		int x = offsetPos.getBlockX();
 		int y = offsetPos.getBlockY();
 		int z = offsetPos.getBlockZ();
-
 		if (holding != null && !sendRevert) {
 			/*if (interactEvent.useItemInHand() != Event.Result.DENY) { //TODO: Implement items (they are not in yet!)
 				if (holding.getMaterial().getId() > 255 &&  (holding.getTypeId()).getPhysics().interact(player, against, holding, PlayerInteractEvent.Action.RIGHT_CLICK, face)) {
@@ -127,7 +126,6 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			BlockMaterial oldBlock = target.getMaterial();
 
 			if (!sendRevert && !oldBlock.isPlacementObstacle()) {
-
 				//if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {
 				//SpoutBlockState newState = BlockProperties.get(placedId.getItemTypeId()).getPhysics().placeAgainst(player, target.getState(), placedId, face);
 				//BlockPlaceEvent event = EventFactory.onBlockPlace(target, newState, against, player);

@@ -33,7 +33,7 @@ import org.spout.vanilla.controller.VanillaControllerType;
 /**
  * Represents a controller that can project through the air.
  */
-public class Projectile extends MovingSubstance {
+public class Projectile extends Substance {
 	private Entity shooter;
 	private Quaternion rotation;
 

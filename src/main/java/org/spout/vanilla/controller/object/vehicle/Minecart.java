@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.controller.object.vehicle;
 
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.Material;
@@ -35,14 +36,14 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerType;
-import org.spout.vanilla.controller.object.MovingSubstance;
+import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.data.PoweredRails;
 import org.spout.vanilla.material.block.data.Rails;
 import org.spout.vanilla.util.RailsState;
 
-public abstract class Minecart extends MovingSubstance implements Vehicle {
+public abstract class Minecart extends Substance implements Vehicle {
 	private Material railType = VanillaMaterials.AIR;
 	private Rails railData;
 	private Vector3 groundFrictionModifier = new Vector3(0.5, 0.5, 0.5);
@@ -103,8 +104,6 @@ public abstract class Minecart extends MovingSubstance implements Vehicle {
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
-
-		//TODO: store last known positions
 
 		//update fire ticks
 		int fireticks = this.getFireTicks();

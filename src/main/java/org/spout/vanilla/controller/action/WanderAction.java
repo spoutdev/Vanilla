@@ -27,7 +27,6 @@ package org.spout.vanilla.controller.action;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.EntityAction;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
@@ -61,7 +60,7 @@ public class WanderAction extends EntityAction<VanillaController> {
 		//Look at it
 		entity.setRotation(rotationTo);
 		//Move forward
-		entity.translate(MathHelper.getDirectionVector(entity.getRotation()).multiply(dt));		
-		
+		controller.setVelocity(MathHelper.getDirectionVector(entity.getRotation()).multiply(dt));
+		controller.move(); //still needed?
 	}
 }

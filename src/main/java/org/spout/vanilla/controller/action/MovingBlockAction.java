@@ -61,7 +61,7 @@ public class MovingBlockAction extends EntityAction<MovingBlock> {
 			}
 			entity.kill();
 		} else {
-			controller.move(new Vector3(0, -0.50f, 0));
+			controller.setVelocity(controller.getVelocity().subtract(0, 0.50f, 0));
 		}
 	}
 }

@@ -27,15 +27,17 @@ package org.spout.vanilla.controller;
 
 import java.util.HashSet;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Set;
 
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.ActionController;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
@@ -65,10 +67,33 @@ public abstract class VanillaController extends ActionController {
 	private int velocityTicks = 0;
 	private float oldX, oldY, oldZ, oldHY, oldHP;
 	private int dX=0,dY=0, dZ=0; //TODO method to get these?
+	private Vector3 movedVelocity = Vector3.ZERO;
+	private Vector3 velocity = Vector3.ZERO;
+	private float maxSpeed = Float.MAX_VALUE; //might turn this into a vector too?
 
 	protected VanillaController(VanillaControllerType type) {
 		super(type);
 		this.type = type;
+	}
+
+	public float getMaxSpeed() {
+		return this.maxSpeed;
+	}
+
+	public void setMaxSpeed(float maxSpeed) {
+		this.maxSpeed = maxSpeed;
+	}
+
+	public Vector3 getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(Vector3 velocity) {
+		this.velocity = velocity;
+	}
+
+	public Vector3 getMovedVelocity() {
+		return this.movedVelocity;
 	}
 
 	@Override
@@ -83,12 +108,31 @@ public abstract class VanillaController extends ActionController {
 	@Override
 	public void onAttached() {
 		getParent().setCollision(new CollisionModel(area));
+		getParent().getCollision().setStrategy(CollisionStrategy.SOFT);
 		getParent().setData(VanillaControllerTypes.KEY, getType().getID());
 		oldX = getParent().getPosition().getX();
 		oldY = getParent().getPosition().getY();
 		oldZ = getParent().getPosition().getZ();
 		oldHY = getParent().getPitch();
 		oldHP = getParent().getYaw();
+	}
+	
+	@Override
+	public void onCollide(Block block) {
+		this.setVelocity(Vector3.ZERO);
+	}
+	
+	@Override
+	public void onCollide(Entity entity) {
+		//push entities apart
+		//TODO: Ignore if this entity is a passenger?
+		Vector2 diff = entity.getPosition().subtract(this.getParent().getPosition()).toVector2();
+		float distance = diff.length();
+		if (distance > 0.1f) {	
+			double factor = Math.min(1f / distance, 1f) / distance * 0.05;
+			diff = diff.multiply(factor);
+			this.setVelocity(this.getVelocity().add(diff.toVector3()));
+		}
 	}
 
 	@Override
@@ -250,6 +294,14 @@ public abstract class VanillaController extends ActionController {
 		} else {
 			velocityChange = new EntityVelocityMessage(getParent().getId(), velocityChange.getVelocityX() + (int) vect.getX(), velocityChange.getVelocityY() + (int) vect.getY(), velocityChange.getVelocityZ() + (int) vect.getZ());
 		}
+	}
+
+	/**
+	 * Uses the current velocity and maximum speed to move this entity
+	 */
+	public void move() {
+		this.movedVelocity = Vector3.min(this.velocity, new Vector3(this.maxSpeed, this.maxSpeed, this.maxSpeed));
+		this.move(this.movedVelocity);
 	}
 
 	/**

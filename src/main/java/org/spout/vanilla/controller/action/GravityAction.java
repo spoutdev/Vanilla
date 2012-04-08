@@ -39,6 +39,6 @@ public class GravityAction extends EntityAction<VanillaController> {
 
 	@Override
 	public void run(Entity entity, VanillaController controller, float dt) {
-		controller.move(0, -0.04f, 0);
+		controller.setVelocity(controller.getVelocity().subtract(0, 0.04f, 0));
 	}
 }

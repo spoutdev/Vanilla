@@ -146,6 +146,9 @@ public abstract class VanillaController extends ActionController {
 		dX = (int) (getParent().getPosition().getX() - oldX);
 		dY = (int) (getParent().getPosition().getY() - oldY);
 		dZ = (int) (getParent().getPosition().getY() - oldZ);
+		oldX = getParent().getPosition().getX();
+		oldY = getParent().getPosition().getY();
+		oldZ = getParent().getPosition().getZ();
 
 		velocityTicks++;
 		if (velocityChange != null && velocityTicks == 5) {

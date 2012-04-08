@@ -27,12 +27,17 @@ package org.spout.vanilla.protocol.msg;
 
 import java.util.List;
 
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 public final class SpawnMobMessage extends Message {
 	private final int id, type, x, y, z, yaw, pitch, headYaw;
 	private final List<Parameter<?>> parameters;
+
+	public SpawnMobMessage(int id, int type, Vector3 pos, int yaw, int pitch, int headYaw, List<Parameter<?>> parameters) {
+		this(id, type, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), yaw, pitch, headYaw, parameters);
+	}
 
 	public SpawnMobMessage(int id, int type, int x, int y, int z, int yaw, int pitch, int headYaw, List<Parameter<?>> parameters) {
 		this.id = id;

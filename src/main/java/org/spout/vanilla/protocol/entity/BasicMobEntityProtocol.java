@@ -31,6 +31,7 @@ import java.util.List;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
@@ -65,9 +66,7 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 		Controller c = entity.getController();
 		if (c != null) {
 			int id = entity.getId();
-			int x = (int) (entity.getPosition().getX() * 32);
-			int y = (int) (entity.getPosition().getY() * 32);
-			int z = (int) (entity.getPosition().getZ() * 32);
+			Vector3 pos = entity.getPosition().multiply(32).floor();
 			int r = (int) (entity.getYaw() * 32);
 			int p = (int) (entity.getPitch() * 32);
 			int headyaw = 0;
@@ -75,7 +74,7 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 				headyaw = ((Living) c).getHeadYaw();
 			}
 			List<Parameter<?>> parameters = this.getSpawnParameters(c);
-			return new Message[]{new SpawnMobMessage(id, this.getSpawnID(), x, y, z, r, p, headyaw, parameters)};
+			return new Message[]{new SpawnMobMessage(id, this.getSpawnID(), pos, r, p, headyaw, parameters)};
 		} else {
 			return null;
 		}

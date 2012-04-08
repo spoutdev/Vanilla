@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 
 public final class SpawnPlayerMessage extends Message {
@@ -33,6 +34,10 @@ public final class SpawnPlayerMessage extends Message {
 	private final int x, y, z;
 	private final int rotation, pitch;
 	private final int item;
+
+	public SpawnPlayerMessage(int id, String name, Vector3 position, int rotation, int pitch, int item) {
+		this(id, name, (int) position.getX(), (int) position.getY(), (int) position.getZ(), rotation, pitch, item);
+	}
 
 	public SpawnPlayerMessage(int id, String name, int x, int y, int z, int rotation, int pitch, int item) {
 		this.id = id;

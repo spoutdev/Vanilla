@@ -25,11 +25,16 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 
 public final class SpawnPaintingMessage extends Message {
 	private final int id, x, y, z, type;
 	private final String title;
+
+	public SpawnPaintingMessage(int id, String title, Vector3 position, int type) {
+		this(id, title, (int) position.getX(), (int) position.getY(), (int) position.getZ(), type);
+	}
 
 	public SpawnPaintingMessage(int id, String title, int x, int y, int z, int type) {
 		this.id = id;

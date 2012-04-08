@@ -25,13 +25,22 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 
 public final class SpawnVehicleMessage extends Message {
 	private final int id, type, x, y, z, fireballId, fireballX, fireballY, fireballZ;
 
+	public SpawnVehicleMessage(int id, int type, Vector3 pos) {
+		this(id, type, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
+	}
+	
 	public SpawnVehicleMessage(int id, int type, int x, int y, int z) {
 		this(id, type, x, y, z, 0, 0, 0, 0);
+	}
+
+	public SpawnVehicleMessage(int id, int type, Vector3 pos, int fbId, Vector3 fbPos) {
+		this(id, type, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), fbId, (int) fbPos.getX(), (int) fbPos.getY(), (int) fbPos.getZ());
 	}
 
 	public SpawnVehicleMessage(int id, int type, int x, int y, int z, int fbId, int fbX, int fbY, int fbZ) {

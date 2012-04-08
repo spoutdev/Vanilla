@@ -36,6 +36,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.ActionController;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
@@ -43,12 +44,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
-import org.spout.vanilla.protocol.msg.EntityRotationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
-import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
-import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
-import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
-import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
 
 /**
  * Controller that is the parent of all Vanilla controllers.
@@ -63,14 +59,24 @@ public abstract class VanillaController extends ActionController {
 	//Tick effects
 	private int fireTicks = 0;
 	private final VanillaControllerType type;
-	private EntityVelocityMessage velocityChange;
 	private int velocityTicks = 0;
-	private float oldX, oldY, oldZ, oldHY, oldHP;
-	private int dX=0,dY=0, dZ=0; //TODO method to get these?
+	private int positionTicks = 0;
+	private Vector3 oldPosition;
+	private Vector3 oldRotation;
 	private Vector3 movedVelocity = Vector3.ZERO;
 	private Vector3 velocity = Vector3.ZERO;
 	private float maxSpeed = Float.MAX_VALUE; //might turn this into a vector too?
+	private int clientX, clientY, clientZ;
+	private int clientYaw, clientPitch;
 
+	public boolean needsVelocityUpdate() {
+		return velocityTicks++ % 5 == 0;
+	}
+	
+	public boolean needsPositionUpdate() {
+		return positionTicks++ % 60 == 0;
+	}
+	
 	protected VanillaController(VanillaControllerType type) {
 		super(type);
 		this.type = type;
@@ -86,6 +92,59 @@ public abstract class VanillaController extends ActionController {
 
 	public Vector3 getVelocity() {
 		return velocity;
+	}
+	
+	public Vector3 getPreviousPosition() {
+		return this.oldPosition;
+	}
+	
+	public Vector3 getPreviousRotation() {
+		return this.oldRotation;
+	}
+	
+	public int getClientPosX() {
+		return this.clientX;
+	}
+	
+	public int getClientPosY() {
+		return this.clientY;
+	}
+	
+	public int getClientPosZ() {
+		return this.clientZ;
+	}
+	
+	public int getClientYaw() {
+		return this.clientYaw;
+	}
+	
+	public int getClientPitch() {
+		return this.clientPitch;
+	}
+	
+	//FIXME: MOVE TO MATHHELPER!
+	public static byte wrapByte(int value) {
+		value %= 256;
+		if (value < 0) {
+			value += 256;
+		}
+		return (byte) value;
+	}
+	
+	public void updateClientPosition() {
+		this.clientX = MathHelper.floor(this.getParent().getPosition().getX() * 32.0);
+		this.clientY = MathHelper.floor(this.getParent().getPosition().getY() * 32.0);
+		this.clientZ = MathHelper.floor(this.getParent().getPosition().getZ() * 32.0);
+		this.clientYaw = wrapByte(MathHelper.floor(this.getParent().getYaw() / 360f * 256f));
+		this.clientPitch = wrapByte(MathHelper.floor(this.getParent().getPitch() / 360f * 256f));
+	}
+	
+	public void setClientPosition(int x, int y, int z, int yaw, int pitch) {
+		this.clientX = x;
+		this.clientY = y;
+		this.clientZ = z;
+		this.clientYaw = yaw;
+		this.clientPitch = pitch;
 	}
 
 	public void setVelocity(Vector3 velocity) {
@@ -110,11 +169,9 @@ public abstract class VanillaController extends ActionController {
 		getParent().setCollision(new CollisionModel(area));
 		getParent().getCollision().setStrategy(CollisionStrategy.SOFT);
 		getParent().setData(VanillaControllerTypes.KEY, getType().getID());
-		oldX = getParent().getPosition().getX();
-		oldY = getParent().getPosition().getY();
-		oldZ = getParent().getPosition().getZ();
-		oldHY = getParent().getPitch();
-		oldHP = getParent().getYaw();
+		this.oldPosition = getParent().getPosition();
+		this.oldRotation = getParent().getRotation().getAxisAngles();
+		this.updateClientPosition();
 	}
 	
 	@Override
@@ -136,26 +193,15 @@ public abstract class VanillaController extends ActionController {
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public void onTick(float dt) {		
 		//Check controller health, send messages to the client based on current state.
 		if (getParent().getHealth() <= 0) {
 			sendMessage(getParent().getWorld().getPlayers(), new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 			getParent().kill();
 		}
 		
-		dX = (int) (getParent().getPosition().getX() - oldX);
-		dY = (int) (getParent().getPosition().getY() - oldY);
-		dZ = (int) (getParent().getPosition().getY() - oldZ);
-		oldX = getParent().getPosition().getX();
-		oldY = getParent().getPosition().getY();
-		oldZ = getParent().getPosition().getZ();
-
-		velocityTicks++;
-		if (velocityChange != null && velocityTicks == 5) {
-			sendMessage(getParent().getWorld().getPlayers(), velocityChange);
-			velocityChange = null;
-			velocityTicks = 0;
-		}
+		this.oldPosition = getParent().getPosition();
+		this.oldRotation = getParent().getRotation().getAxisAngles();
 
 		super.onTick(dt);
 	}
@@ -292,11 +338,6 @@ public abstract class VanillaController extends ActionController {
 	 */
 	public void move(Vector3 vect) {
 		getParent().translate(vect);
-		if (velocityChange == null) {
-			velocityChange = new EntityVelocityMessage(getParent().getId(), (int) vect.getX(), (int) vect.getY(), (int) vect.getZ());
-		} else {
-			velocityChange = new EntityVelocityMessage(getParent().getId(), velocityChange.getVelocityX() + (int) vect.getX(), velocityChange.getVelocityY() + (int) vect.getY(), velocityChange.getVelocityZ() + (int) vect.getZ());
-		}
 	}
 
 	/**
@@ -358,27 +399,4 @@ public abstract class VanillaController extends ActionController {
 		return rand;
 	}
 
-	public Message[] getUpdateMessage() {
-		if(dX == 0 && dY == 0 && dZ ==0 && oldHY == getParent().getYaw() && oldHP == getParent().getPitch()) {
-			return null;
-		}
-		Entity entity = getParent();
-		int id = entity.getId();
-		if (dX > 128 || dX < -128 || dY > 128 || dY < -128 || dZ > 128 || dZ < -1) {
-			int x = (int) (entity.getPosition().getX() * 32);
-			int y = (int) (entity.getPosition().getY() * 32);
-			int z = (int) (entity.getPosition().getZ() * 32);
-			int r = (int) (entity.getYaw());
-			int p = (int) (entity.getPitch());
-			return new Message[]{new EntityTeleportMessage(id, x, y, z, r, p)};
-		} else {
-			if(dX == 0 && dY == 0 && dZ ==0) {
-				return new Message[] {new EntityRotationMessage(id, (int) getParent().getYaw(), (int) getParent().getPitch()) };
-			}
-			if(oldHY == getParent().getYaw() && oldHP == getParent().getPitch()) {
-				return new Message[] { new RelativeEntityPositionMessage(id, dX, dY, dZ)};
-			}
-			return new Message[]{new RelativeEntityPositionRotationMessage(id,dX,dY,dZ,(int) entity.getYaw(),(int) entity.getPitch())};
-		}
-	}
 }

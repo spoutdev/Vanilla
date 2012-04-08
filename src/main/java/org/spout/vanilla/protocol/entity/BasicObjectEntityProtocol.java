@@ -2,6 +2,7 @@ package org.spout.vanilla.protocol.entity;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
@@ -16,11 +17,9 @@ public class BasicObjectEntityProtocol extends BasicEntityProtocol {
 		Controller c = entity.getController();
 		if (c != null) {
 			int id = entity.getId();
-			int x = (int) (entity.getPosition().getX() * 32);
-			int y = (int) (entity.getPosition().getY() * 32);
-			int z = (int) (entity.getPosition().getZ() * 32);
+			Vector3 pos = entity.getPosition().multiply(32).floor();
 
-			return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), x, y, z)};
+			return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), pos)};
 		} else {
 			return null;
 		}

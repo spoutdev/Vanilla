@@ -25,11 +25,16 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 
 public final class EntityTeleportMessage extends Message {
 	private final int id, x, y, z, rotation, pitch;
 
+	public EntityTeleportMessage(int id, Vector3 position, int rotation, int pitch) {
+		this(id, (int) position.getX(), (int) position.getY(), (int) position.getZ(), rotation, pitch);
+	}
+	
 	public EntityTeleportMessage(int id, int x, int y, int z, int rotation, int pitch) {
 		this.id = id;
 		this.x = x;

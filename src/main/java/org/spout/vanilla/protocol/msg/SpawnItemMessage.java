@@ -25,12 +25,17 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 
 public final class SpawnItemMessage extends Message {
 	private final int id, x, y, z, rotation, pitch, roll;
 	private final int itemId, count;
 	private final short damage;
+
+	public SpawnItemMessage(int id, int itemId, int count, short damage, Vector3 pos, int rotation, int pitch, int roll) {
+		this(id, itemId, count, damage, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), rotation, pitch, roll);
+	}
 
 	public SpawnItemMessage(int id, int itemId, int count, short damage, int x, int y, int z, int rotation, int pitch, int roll) {
 		this.id = id;

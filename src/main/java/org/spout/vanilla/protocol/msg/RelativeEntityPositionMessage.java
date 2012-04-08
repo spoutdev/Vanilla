@@ -25,11 +25,16 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 
 public final class RelativeEntityPositionMessage extends Message {
 	private final int id, deltaX, deltaY, deltaZ;
 
+	public RelativeEntityPositionMessage(int id, Vector3 deltaPosition) {
+		this(id, (int) deltaPosition.getX(), (int) deltaPosition.getY(), (int) deltaPosition.getZ());
+	}
+	
 	public RelativeEntityPositionMessage(int id, int deltaX, int deltaY, int deltaZ) {
 		this.id = id;
 		this.deltaX = deltaX;

@@ -46,19 +46,15 @@ public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
 			Projectile pro = (Projectile) c;
 
 			int id = entity.getId();
-			int x = (int) (entity.getPosition().getX() * 32);
-			int y = (int) (entity.getPosition().getY() * 32);
-			int z = (int) (entity.getPosition().getZ() * 32);
+			Vector3 pos = entity.getPosition().multiply(32).floor();
 
 			Entity shooter = pro.getShooter();
 			int shooterid = shooter == null ? 0 : shooter.getId();
 			Vector3 vel = pro.getVelocity();
 
-			int dirX = (int) (vel.getX() * 8000);
-			int dirY = (int) (vel.getY() * 8000);
-			int dirZ = (int) (vel.getZ() * 8000);
+			Vector3 dir = vel.multiply(8000).floor();
 
-			return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), x, y, z, shooterid, dirX, dirY, dirZ)};
+			return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), pos, shooterid, dir)};
 		} else {
 			return null;
 		}

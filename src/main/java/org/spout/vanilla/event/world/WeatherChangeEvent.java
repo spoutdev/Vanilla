@@ -29,14 +29,14 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.world.WorldEvent;
 
-import org.spout.vanilla.controller.object.Sky;
+import org.spout.vanilla.controller.object.VanillaSky;
 import org.spout.vanilla.world.Weather;
 
 public class WeatherChangeEvent extends WorldEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private Weather current, weather;
 
-	public WeatherChangeEvent(Sky sky, Weather current, Weather weather) {
+	public WeatherChangeEvent(VanillaSky sky, Weather current, Weather weather) {
 		super(sky.getWorld());
 	}
 

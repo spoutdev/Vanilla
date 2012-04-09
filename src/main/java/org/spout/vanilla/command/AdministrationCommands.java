@@ -48,9 +48,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.living.player.CreativePlayer;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.object.Sky;
-import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
-import org.spout.vanilla.protocol.msg.StateChangeMessage;
+import org.spout.vanilla.controller.object.VanillaSky;
 import org.spout.vanilla.world.Weather;
 
 public class AdministrationCommands {
@@ -239,7 +237,7 @@ public class AdministrationCommands {
 			throw new CommandException("You must specify a world.");
 		}
 
-		Sky sky = plugin.getSky(world);
+		VanillaSky sky = plugin.getSky(world);
 		if (sky == null) {
 			throw new CommandException("The world '" + args.getString(2) + "' is not availible.");
 		}
@@ -372,7 +370,7 @@ public class AdministrationCommands {
 			throw new CommandException("Weather must be a mode between 0 and 2, 'CLEAR', 'RAIN', 'SNOW', or 'THUNDERSTORM'");
 		}
 
-		Sky sky = plugin.getSky(world);
+		VanillaSky sky = plugin.getSky(world);
 		if (sky == null) {
 			throw new CommandException("The world '" + args.getString(2) + "' is not availible.");
 		}

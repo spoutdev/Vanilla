@@ -48,7 +48,7 @@ import org.spout.api.protocol.common.CommonBootstrapProtocol;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.object.Sky;
+import org.spout.vanilla.controller.object.VanillaSky;
 import org.spout.vanilla.controller.object.sky.NetherSky;
 import org.spout.vanilla.controller.object.sky.NormalSky;
 import org.spout.vanilla.controller.object.sky.TheEndSky;
@@ -66,7 +66,7 @@ public class VanillaPlugin extends CommonPlugin {
 	private VanillaConfiguration config;
 	public static final int MINECRAFT_PROTOCOL_ID = 29;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
-	private final HashMap<World, Sky> skys = new HashMap<World, Sky>();
+	private final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
 
 	public VanillaPlugin() {
 		instance = this;
@@ -97,7 +97,7 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 
 		VanillaMaterials.initialize();
-		getLogger().info("loaded");
+		getLogger().info("Loaded");
 	}
 
 	@Override
@@ -105,9 +105,9 @@ public class VanillaPlugin extends CommonPlugin {
 		try {
 			config.save();
 		} catch (ConfigurationException e) {
-			getGame().getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
+			getGame().getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);
 		}
-		getLogger().info("disabled");
+		getLogger().info("Disabled");
 	}
 
 	@Override
@@ -147,9 +147,9 @@ public class VanillaPlugin extends CommonPlugin {
 		TheEndSky endSky = new TheEndSky();
 
 		//Register skys to the map
-		skys.put(normal, normSky);
-		skys.put(nether, netherSky);
-		skys.put(end, endSky);
+		skies.put(normal, normSky);
+		skies.put(nether, netherSky);
+		skies.put(end, endSky);
 
 		//Create spawn points as well as spawn the sky. TODO Have spawn point set by generator.
 		normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
@@ -175,7 +175,7 @@ public class VanillaPlugin extends CommonPlugin {
 		return config;
 	}
 
-	public Sky getSky(World world) {
-		return skys.get(world);
+	public VanillaSky getSky(World world) {
+		return skies.get(world);
 	}
 }

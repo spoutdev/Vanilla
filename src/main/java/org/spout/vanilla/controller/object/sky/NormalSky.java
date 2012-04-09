@@ -34,100 +34,44 @@ import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.geo.World;
 import org.spout.api.player.Player;
 
+import org.spout.vanilla.controller.object.VanillaSky;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.protocol.event.TimeUpdateProtocolEvent;
 import org.spout.vanilla.protocol.event.WeatherChangeProtocolEvent;
 import org.spout.vanilla.world.Weather;
 
 public class NormalSky extends VanillaSky {
-
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(NormalSky.class, "Normal Sky");
-	private long time = 0;
-	private long countdown = 20;
-	private Weather currentWeather;
-	private Weather forecast;
-	private float timeUntilWeatherChange = 0.0f;
-	private Random random = new Random();
 
 	public NormalSky() {
-		super(TYPE);
+		super(TYPE, true);
 	}
 
 	@Override
 	public void onAttached() {
-		currentWeather = Weather.CLEAR;
-		forecast = Weather.CLEAR;
-		timeUntilWeatherChange = random.nextFloat() * 5 * 60; //Max 5min till pattern change
 	}
 
 	@Override
-	public void onTick(float dt) {
-		countdown--;
-		if (countdown <= 0) {
-			if (time >= 24000) {
-				time = 0;
-			} else {
-				time += 20;
-			}
-
-			countdown = 20;
-			Set<Player> players = getParent().getWorld().getPlayers();
-			TimeUpdateProtocolEvent event = new TimeUpdateProtocolEvent(time);
-			for (Player player : players) {
-				player.getNetworkSynchronizer().callProtocolEvent(event);
-			}
-		}
-
-		timeUntilWeatherChange -= dt;
-		if (timeUntilWeatherChange <= 0.0f) {
-			setWeather(forecast);
-			switch (random.nextInt(3)) {
-				case 0:
-					forecast = Weather.CLEAR;
-					break;
-				case 1:
-					forecast = Weather.RAIN;
-					break;
-				case 2:
-					forecast = Weather.THUNDERSTORM;
-					break;
-			}
+	public void updateTime(long time) {
+		Set<Player> players = getParent().getWorld().getPlayers();
+		TimeUpdateProtocolEvent event = new TimeUpdateProtocolEvent(time);
+		for (Player player : players) {
+			player.getNetworkSynchronizer().callProtocolEvent(event);
 		}
 	}
 
 	@Override
-	public void setTime(long time) {
-		this.time = time;
-	}
-
-	@Override
-	public long getTime() {
-		return time;
-	}
-
-	@Override
-	public Weather getWeather() {
-		return currentWeather;
-	}
-
-	@Override
-	public void setWeather(Weather pattern) {
-		WeatherChangeEvent event = Spout.getEventManager().callEvent(new WeatherChangeEvent(this, currentWeather, pattern));
+	public void updateWeather(Weather oldWeather, Weather newWeather) {
+		WeatherChangeEvent event = Spout.getEventManager().callEvent(new WeatherChangeEvent(this, oldWeather, newWeather));
 		if (event.isCancelled()) {
 			return;
 		}
 
-		currentWeather = event.getNewWeather();
-		final WeatherChangeProtocolEvent protocolEvent = new WeatherChangeProtocolEvent(currentWeather);
+		WeatherChangeProtocolEvent protocolEvent = new WeatherChangeProtocolEvent(newWeather);
 		for (Player player : getParent().getWorld().getPlayers()) {
 			if (player.getNetworkSynchronizer() != null) {
 				player.getNetworkSynchronizer().callProtocolEvent(protocolEvent);
 			}
 		}
-	}
-
-	@Override
-	public World getWorld() {
-		return getParent().getWorld();
 	}
 }

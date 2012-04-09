@@ -25,15 +25,12 @@
  */
 package org.spout.vanilla.controller.object.sky;
 
-import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.Spout;
-import org.spout.api.entity.type.ControllerType;
-import org.spout.api.entity.type.EmptyConstructorControllerType;
-import org.spout.api.geo.World;
 import org.spout.api.player.Player;
 
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.VanillaSky;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.protocol.event.TimeUpdateProtocolEvent;
@@ -41,10 +38,8 @@ import org.spout.vanilla.protocol.event.WeatherChangeProtocolEvent;
 import org.spout.vanilla.world.Weather;
 
 public class NormalSky extends VanillaSky {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(NormalSky.class, "Normal Sky");
-
 	public NormalSky() {
-		super(TYPE, true);
+		super(VanillaControllerTypes.NORMAL_SKY, true);
 	}
 
 	@Override

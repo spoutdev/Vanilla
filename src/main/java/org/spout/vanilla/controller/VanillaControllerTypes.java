@@ -67,6 +67,9 @@ import org.spout.vanilla.controller.object.projectile.EnderPearl;
 import org.spout.vanilla.controller.object.projectile.EyeOfEnder;
 import org.spout.vanilla.controller.object.projectile.GhastFireball;
 import org.spout.vanilla.controller.object.projectile.Snowball;
+import org.spout.vanilla.controller.object.sky.NetherSky;
+import org.spout.vanilla.controller.object.sky.NormalSky;
+import org.spout.vanilla.controller.object.sky.TheEndSky;
 import org.spout.vanilla.controller.object.vehicle.Boat;
 import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
@@ -136,6 +139,9 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType IRON_GOLEM = new MobControllerType(99, IronGolem.class, "Iron Golem");
 	public static final VanillaControllerType ENDER_CRYSTAL = new VanillaControllerType(200, EnderCrystal.class, "Ender Crystal", new BasicObjectEntityProtocol(51));
 	public static final VanillaControllerType PLAYER = new VanillaControllerType(-1, VanillaPlayer.class, "Player", new VanillaPlayerEntityProtocol());
+	public static final VanillaControllerType NORMAL_SKY = new VanillaControllerType(-2, NormalSky.class, "Normal Sky", null);
+	public static final VanillaControllerType NETHER_SKY = new VanillaControllerType(-3, NetherSky.class, "Nether Sky", null);
+	public static final VanillaControllerType THE_END_SKY = new VanillaControllerType(-4, TheEndSky.class, "The End Sky", null);
 
 	public static final String KEY = "ControllerID";
 	private static final TIntObjectHashMap<VanillaControllerType> map = new TIntObjectHashMap<VanillaControllerType>();

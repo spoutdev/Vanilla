@@ -1,9 +1,9 @@
 /*
- * This file is part of vanilla (http://www.spout.org/).
+ * This file is part of Vanilla (http://www.spout.org/).
  *
- * vanilla is licensed under the SpoutDev License Version 1.
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
- * vanilla is free software: you can redistribute it and/or modify
+ * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -12,7 +12,7 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * vanilla is distributed in the hope that it will be useful,
+ * Vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
@@ -25,10 +25,10 @@
  */
 package org.spout.vanilla.controller.object;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.entity.type.ControllerType;
 import org.spout.api.geo.World;
 
+import org.spout.vanilla.controller.VanillaController;
+import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.world.Weather;
 
 import java.util.Random;
@@ -36,7 +36,7 @@ import java.util.Random;
 /**
  * Represents a sky in Vanilla
  */
-public abstract class VanillaSky extends Controller {
+public abstract class VanillaSky extends VanillaController {
 	protected long maxTime = 24000;
 	protected long time = 0;
 	protected long countdown = 20;
@@ -47,22 +47,22 @@ public abstract class VanillaSky extends Controller {
 	protected final Random random = new Random();
 	protected float ticksUntilWeatherChange = random.nextFloat() * 5 * 60;
 
-	public VanillaSky(ControllerType type, boolean hasWeather, long maxTime, long rate) {
+	public VanillaSky(VanillaControllerType type, boolean hasWeather, long maxTime, long rate) {
 		super(type);
 		this.maxTime = maxTime;
 		this.hasWeather = hasWeather;
 		this.rate = rate;
 	}
 
-	public VanillaSky(ControllerType type, boolean hasWeather, long maxTime) {
+	public VanillaSky(VanillaControllerType type, boolean hasWeather, long maxTime) {
 		this(type, hasWeather, maxTime, 20);
 	}
 
-	public VanillaSky(ControllerType type, boolean hasWeather) {
+	public VanillaSky(VanillaControllerType type, boolean hasWeather) {
 		this(type, hasWeather, 24000, 20);
 	}
 
-	public VanillaSky(ControllerType type) {
+	public VanillaSky(VanillaControllerType type) {
 		this(type, false, 24000, 20);
 	}
 

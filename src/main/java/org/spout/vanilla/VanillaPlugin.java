@@ -164,7 +164,7 @@ public class VanillaPlugin extends CommonPlugin {
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), endSky);
 		end.createAndSpawnEntity(new Point(end, 0.5F, 64.5F, 0.5F), new PointObserver());
 
-		getLogger().info("b" + this.getDescription().getVersion() + " enabled. Protocol: " + getDescription().getProtocol());
+		getLogger().info("b" + this.getDescription().getVersion() + " enabled. Protocol: " + getData("protocol").get());
 	}
 
 	public static VanillaPlugin getInstance() {

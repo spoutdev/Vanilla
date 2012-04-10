@@ -1,9 +1,9 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of vanilla (http://www.spout.org/).
  *
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * vanilla is licensed under the SpoutDev License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
+ * vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -12,7 +12,7 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful,
+ * vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
@@ -42,6 +42,8 @@ public abstract class VanillaSky extends VanillaController {
 	protected long countdown = 20;
 	protected long rate = 20;
 	protected boolean hasWeather = false;
+	protected boolean forceWeatherUpdate = false;
+
 	protected Weather weather = Weather.CLEAR;
 	protected Weather forecast = Weather.CLEAR;
 	protected final Random random = new Random();
@@ -82,9 +84,9 @@ public abstract class VanillaSky extends VanillaController {
 
 		if (hasWeather) {
 			ticksUntilWeatherChange -= dt;
-			if (ticksUntilWeatherChange <= 0) {
+			if (forceWeatherUpdate || ticksUntilWeatherChange <= 0) {
 				updateWeather(weather, forecast);
-				setWeather(forecast);
+				this.weather = forecast;
 				switch (random.nextInt(3)) {
 					case 0:
 						forecast = Weather.CLEAR;
@@ -96,6 +98,8 @@ public abstract class VanillaSky extends VanillaController {
 						forecast = Weather.THUNDERSTORM;
 						break;
 				}
+				ticksUntilWeatherChange = random.nextFloat() * 5 * 60;
+				forceWeatherUpdate = false;
 			}
 		}
 	}
@@ -188,15 +192,6 @@ public abstract class VanillaSky extends VanillaController {
 	}
 
 	/**
-	 * Sets the weather of the sky.
-	 *
-	 * @param weather
-	 */
-	public void setWeather(Weather weather) {
-		this.weather = weather;
-	}
-
-	/**
 	 * Gets the weather of the sky.
 	 *
 	 * @return weather
@@ -210,8 +205,9 @@ public abstract class VanillaSky extends VanillaController {
 	 *
 	 * @param forecast
 	 */
-	public void setForecast(Weather forecast) {
+	public void setWeather(Weather forecast) {
 		this.forecast = forecast;
+		this.forceWeatherUpdate = true;
 	}
 
 	/**

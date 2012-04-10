@@ -239,7 +239,7 @@ public class AdministrationCommands {
 
 		VanillaSky sky = plugin.getSky(world);
 		if (sky == null) {
-			throw new CommandException("The world '" + args.getString(2) + "' is not availible.");
+			throw new CommandException("The world '" + args.getString(2) + "' is not available.");
 		}
 
 		sky.setTime(relative ? (sky.getTime() + time) : time);
@@ -410,7 +410,7 @@ public class AdministrationCommands {
 	public void testKick(CommandContext args, CommandSource source) throws CommandException {
 		if(source instanceof Player) {
 			Player player = (Player) source;
-			player.kick("bye!");
+			player.kick("Bye!");
 		}
 	}
 }

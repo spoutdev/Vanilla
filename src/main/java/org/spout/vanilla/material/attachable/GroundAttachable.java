@@ -29,6 +29,7 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
 public class GroundAttachable extends AbstractAttachable {
+
 	public GroundAttachable(String name, int id) {
 		super(name, id);
 	}

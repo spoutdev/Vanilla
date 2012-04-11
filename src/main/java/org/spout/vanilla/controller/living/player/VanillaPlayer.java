@@ -108,7 +108,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		count++;
 		unresponsiveTicks--;
 		if (unresponsiveTicks == 0) {
-			player.getSession().disconnect("Connection timeout!");
+			player.kick("Connection Timeout!");
 		}
 		if (lastUserList++ > 20) {
 			sendMessage(new HashSet<Player>(Arrays.asList(Spout.getEngine().getOnlinePlayers())), new UserListItemMessage(player.getName(), true, ping));

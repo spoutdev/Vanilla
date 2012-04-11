@@ -58,14 +58,15 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			inventory = inv;
 		}
 		int slot = VanillaMessageHandlerUtils.networkInventorySlotToSpout(message.getSlot());
-		if (slot == 0xFFFF) {
+		if( message.getSlot() == 64537) {
 			vplayer.setItemOnCursor(null);
+			//TODO drop
 			response(session, message, true);
 			return;
 		}
 		if (slot < 0) {
 			response(session, message, false);
-			session.getGame().getLogger().log(Level.WARNING, "Got invalid inventory slot {0} from {1}", new Object[]{message.getSlot(), player.getName()});
+				session.getGame().getLogger().log(Level.WARNING, "Got invalid inventory slot {0} from {1}", new Object[]{message.getSlot(), player.getName()});
 			return;
 		}
 		ItemStack currentItem = inventory.getItem(slot);
@@ -74,38 +75,40 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			session.getGame().getLogger().log(Level.WARNING, "{0} tried to do an invalid inventory action in Creative mode!", new Object[]{player.getName()});
 			return;
 		}
-		
-		if(message.isShift()) {
-			if(currentItem == null) {
-				response(session,message,true);
+
+		if (message.isShift()) {
+			if (currentItem == null) {
+				response(session, message, true);
 				return;
 			}
-			int l1,l2;
-			if(slot<9) {
-				l1=0;
-				l2=8;
+			int l1, l2;
+			if (slot < 9) {
+				l1 = 0;
+				l2 = 8;
 				player.sendMessage("You shifted in your quickbar");
 			} else {
-				l1=9;
-				l2=inventory.getSize()-1;
+				l1 = 9;
+				l2 = inventory.getSize() - 1;
 				player.sendMessage("You shifted in your main inventory!");
 			}
 			Set<Integer> hiddenSlots = new HashSet<Integer>();
-			for(int i=l1;i<=l2;i++) {
-				if(inventory.isHiddenSlot(i))
+			for (int i = l1; i <= l2; i++) {
+				if (inventory.isHiddenSlot(i)) {
 					hiddenSlots.add(i);
+				}
 				inventory.setHiddenSlot(i, true);
 			}
 			inventory.addItem(currentItem, false);
-			inventory.setItem(currentItem,slot);
-			for(int i=l1;i<=l2;i++) {
-				if(!(hiddenSlots.contains(i)))
+			inventory.setItem(currentItem, slot);
+			for (int i = l1; i <= l2; i++) {
+				if (!(hiddenSlots.contains(i))) {
 					inventory.setHiddenSlot(i, false);
+				}
 			}
 			response(session, message, true);
 			return;
 		}
-		
+
 		if (vplayer.getItemOnCursor() == null) { //no item on the cursor
 			if (currentItem == null) {
 				response(session, message, true);
@@ -144,8 +147,8 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 				inventory.setItem(currentItem, slot);
 			} else if (currentItem != null && message.isRightClick()) { //TODO check for stack size limits, also shift clicking
 				if (currentItem.equalsIgnoreSize(cursor)) {
-					if(currentItem.getMaterial().getMaxStackSize()==currentItem.getAmount()) {
-						response(session,message,true);
+					if (currentItem.getMaterial().getMaxStackSize() == currentItem.getAmount()) {
+						response(session, message, true);
 						return;
 					}
 					currentItem.setAmount(currentItem.getAmount() + 1);
@@ -165,7 +168,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 				if (currentItem.equalsIgnoreSize(cursor)) {
 					currentItem.setAmount(currentItem.getAmount() + cursor.getAmount());
 					vplayer.setItemOnCursor(null);
-					if(currentItem.getAmount() > currentItem.getMaterial().getMaxStackSize()) {
+					if (currentItem.getAmount() > currentItem.getMaterial().getMaxStackSize()) {
 						ItemStack is = currentItem.clone();
 						is.setAmount(currentItem.getAmount() - currentItem.getMaterial().getMaxStackSize());
 						currentItem.setAmount(currentItem.getMaterial().getMaxStackSize());

@@ -46,7 +46,7 @@ public enum Weather {
 		return id;
 	}
 
-	public static Weather fromID(int id) {
+	public static Weather getById(int id) {
 		return weathers.get(id);
 	}
 

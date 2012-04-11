@@ -37,13 +37,12 @@ import java.util.Random;
  * Represents a sky in Vanilla
  */
 public abstract class VanillaSky extends VanillaController {
-	protected long maxTime = 24000;
+	protected long maxTime;
 	protected long time = 0;
 	protected long countdown = 20;
-	protected long rate = 20;
-	protected boolean hasWeather = false;
+	protected long rate;
+	protected boolean hasWeather;
 	protected boolean forceWeatherUpdate = false;
-
 	protected Weather weather = Weather.CLEAR;
 	protected Weather forecast = Weather.CLEAR;
 	protected final Random random = new Random();
@@ -70,6 +69,8 @@ public abstract class VanillaSky extends VanillaController {
 
 	@Override
 	public void onTick(float dt) {
+
+		// Keep time
 		countdown--;
 		if (countdown <= 0) {
 			if (time >= maxTime) {
@@ -82,42 +83,18 @@ public abstract class VanillaSky extends VanillaController {
 			updateTime(time);
 		}
 
+		// Keep weather
 		if (hasWeather) {
 			ticksUntilWeatherChange -= dt;
 			if (forceWeatherUpdate || ticksUntilWeatherChange <= 0) {
 				updateWeather(weather, forecast);
-				this.weather = forecast;
-				switch (random.nextInt(3)) {
-					case 0:
-						forecast = Weather.CLEAR;
-						break;
-					case 1:
-						forecast = Weather.RAIN;
-						break;
-					case 2:
-						forecast = Weather.THUNDERSTORM;
-						break;
-				}
+				weather = forecast;
+				forecast = Weather.getById(random.nextInt(3));
 				ticksUntilWeatherChange = random.nextFloat() * 5 * 60;
 				forceWeatherUpdate = false;
 			}
 		}
 	}
-
-	/**
-	 * Updates the time in which ever way the implementation sees fit. A time update is sent every second and increments the time by the rate.
-	 *
-	 * @param time
-	 */
-	public abstract void updateTime(long time);
-
-	/**
-	 * Updates the time in which ever way the implementation sees fit.
-	 *
-	 * @param oldWeather
-	 * @param newWeather
-	 */
-	public abstract void updateWeather(Weather oldWeather, Weather newWeather);
 
 	/**
 	 * Sets the time of the sky.
@@ -227,4 +204,8 @@ public abstract class VanillaSky extends VanillaController {
 	public World getWorld() {
 		return getParent().getWorld();
 	}
+
+	protected abstract void updateTime(long time);
+
+	protected abstract void updateWeather(Weather oldWeather, Weather newWeather);
 }

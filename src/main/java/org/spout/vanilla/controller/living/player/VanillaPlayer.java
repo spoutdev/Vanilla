@@ -101,7 +101,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			getParent().translate(horizSpeed.transform(getParent().getRotation()));
 		}*/
 
-		if (lastPing++ > 600) {
+		if (lastPing++ > VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt()/2) {
 			sendMessage(player, new PingMessage(getRandom().nextInt()));
 			lastPing = 0;
 		}

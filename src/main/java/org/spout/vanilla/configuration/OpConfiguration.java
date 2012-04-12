@@ -23,37 +23,54 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.player;
+package org.spout.vanilla.configuration;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.exception.ConfigurationException;
+import org.spout.api.util.config.ConfigurationNode;
+import org.spout.api.util.config.yaml.YamlConfiguration;
 
-public class SurvivalPlayer extends GameModeHandler{
-	
-	public static boolean is(Controller e) {
-		if(e==null)
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+
+
+public class OpConfiguration extends YamlConfiguration {
+	private static final List<String> ops = Arrays.asList("Notch", "jeb", "ez");
+	private ConfigurationNode node;
+
+	public OpConfiguration(File dataFolder) {
+		super(new File(dataFolder, "ops.yml"));
+	}
+
+	@Override
+	public void load() throws ConfigurationException {
+		super.load();
+		node = getNode("ops");
+		node.getValue(ops);
+	}
+
+	public List<String> getOps() {
+		return node.getStringList();
+	}
+
+	public boolean setOp(String playerName, boolean op) {
+		List<String> list = node.getStringList();
+		if (op) {
+			list.add(playerName);
+		} else {
+			list.remove(playerName);
+		}
+
+		node.setValue(list);
+		try {
+			this.save();
+			return true;
+		} catch (ConfigurationException e) {
 			return false;
-		if(!(e instanceof VanillaPlayer))
-			return false;
-		VanillaPlayer vplr = (VanillaPlayer) e;
-		return vplr.getGameModeHandler() instanceof SurvivalPlayer;
-	}
-	
-	public SurvivalPlayer(VanillaPlayer p) {
-		super(p);
-		p.setFlammable(true);
-	}
-	
-	@Override
-	public void onTick(float dt) {
+		}
 	}
 
-	@Override
-	public boolean hasInfiniteResources() {
-		return false;
-	}
-	
-	@Override
-	public byte getPacketId() {
-		return 0;
+	public boolean isOp(String playerName) {
+		return node.getStringList().contains(playerName);
 	}
 }

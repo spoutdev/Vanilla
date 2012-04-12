@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Spout;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.Inventory;
@@ -42,6 +43,7 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
+import org.spout.vanilla.protocol.event.HealthEvent;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
 import org.spout.vanilla.protocol.msg.UserListItemMessage;
@@ -51,7 +53,6 @@ import org.spout.vanilla.protocol.msg.UserListItemMessage;
  * Vanilla.
  */
 public class VanillaPlayer extends Human implements PlayerController {
-
 	private final Player owner;
 	private int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt();
 	private int lastPing = 0;
@@ -64,6 +65,11 @@ public class VanillaPlayer extends Human implements PlayerController {
 	private Inventory activeInventory;
 	private ItemStack itemOnCursor;
 	private GameModeHandler gmhandler;
+	private boolean poisoned = false;
+	private short hunger = 20;
+	private float foodSaturation = 5.0f;
+	private float exhaustion = 0.0f;
+	private long foodTimer = 0;
 
 	public VanillaPlayer(Player p) {
 		super(VanillaControllerTypes.PLAYER);
@@ -78,6 +84,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setPosition(spawn.getPosition());
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
+		getParent().setMaxHealth(20);
+		// TODO: Persistent health
 	}
 
 	@Override
@@ -87,6 +95,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (player == null || player.getSession() == null) {
 			return;
 		}
+
 		/* TODO COMMENTED OUT PENDING TESTING
 		if(player.input().getForward() > 0){
 			getParent().translate(moveSpeed.transform(getParent().getRotation()));
@@ -105,15 +114,35 @@ public class VanillaPlayer extends Human implements PlayerController {
 			sendMessage(player, new PingMessage(getRandom().nextInt()));
 			lastPing = 0;
 		}
+
 		count++;
 		unresponsiveTicks--;
 		if (unresponsiveTicks == 0) {
 			player.kick("Connection Timeout!");
 		}
+
 		if (lastUserList++ > 20) {
 			sendMessage(new HashSet<Player>(Arrays.asList(Spout.getEngine().getOnlinePlayers())), new UserListItemMessage(player.getName(), true, ping));
 			lastUserList = 0;
 		}
+
+		if (sprinting) {
+			exhaustion += 0.1;
+		}
+		
+		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
+		
+		if (poisoned) {
+			exhaustion += 15.0;
+		}
+
+		// Track hunger
+		foodTimer++;
+		if (foodTimer >= 80) {
+			updateHealth();
+			foodTimer = 0;
+		}
+		
 		super.onTick(dt);
 	}
 
@@ -129,6 +158,42 @@ public class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public Player getPlayer() {
 		return owner;
+	}
+
+	/**
+	 * Returns the hunger of the player attached to the controller.
+	 *
+	 * @return hunger
+	 */
+	public short getHunger() {
+		return hunger;
+	}
+
+	/**
+	 * Returns the food saturation level of the player attached to the controller. The food bar "jitters" when the bar reaches 0.
+	 *
+	 * @return food saturation level
+	 */
+	public float getFoodSaturation() {
+		return foodSaturation;
+	}
+
+	/**
+	 * Whether or not the controller is poisoned.
+	 *
+	 * @return true if poisoned.
+	 */
+	public boolean isPoisoned() {
+		return poisoned;
+	}
+
+	/**
+	 * Sets whether or not the controller is poisoned.
+	 *
+	 * @param poisoned
+	 */
+	public void setPoisoned(boolean poisoned) {
+		this.poisoned = poisoned;
 	}
 
 	@Override
@@ -267,5 +332,37 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	public GameModeHandler getGameModeHandler() {
 		return gmhandler;
+	}
+
+	private void updateHealth() {
+		foodSaturation -= 0.1;
+		Entity parent = getParent();
+		short health = (short) parent.getHealth();
+		if (foodSaturation <= 0) {
+			hunger--;
+		} else {
+			health++;
+		}
+
+		if (exhaustion >= 4.0) {
+			exhaustion = 0;
+			if (foodSaturation <= 0) {
+				hunger--;
+			} else {
+				foodSaturation--;
+			}
+		}
+		
+		if (hunger <= 0) {
+			health--;
+		}
+		
+		System.out.println("Performing health/hunger update...");
+		System.out.println("Food saturation: " + foodSaturation);
+		System.out.println("Hunger: " + hunger);
+		System.out.println("Health: " + health);
+		System.out.println("Exhaustion: " + exhaustion);
+		parent.setHealth(health);
+		getPlayer().getNetworkSynchronizer().callProtocolEvent(new HealthEvent(health, hunger, foodSaturation));
 	}
 }

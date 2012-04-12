@@ -41,8 +41,8 @@ public final class HealthCodec extends MessageCodec<HealthMessage> {
 
 	@Override
 	public HealthMessage decode(ChannelBuffer buffer) throws IOException {
-		int health = buffer.readShort();
-		int food = buffer.readShort();
+		short health = buffer.readShort();
+		short food = buffer.readShort();
 		float foodSaturation = buffer.readFloat();
 		return new HealthMessage(health, food, foodSaturation);
 	}

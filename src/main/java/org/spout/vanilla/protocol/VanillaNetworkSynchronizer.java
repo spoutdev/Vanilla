@@ -61,22 +61,10 @@ import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.protocol.event.EntityAnimateProtocolEvent;
+import org.spout.vanilla.protocol.event.HealthEvent;
 import org.spout.vanilla.protocol.event.TimeUpdateProtocolEvent;
 import org.spout.vanilla.protocol.event.WeatherChangeProtocolEvent;
-import org.spout.vanilla.protocol.msg.BlockChangeMessage;
-import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
-import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
-import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
-import org.spout.vanilla.protocol.msg.IdentificationMessage;
-import org.spout.vanilla.protocol.msg.LoadChunkMessage;
-import org.spout.vanilla.protocol.msg.PingMessage;
-import org.spout.vanilla.protocol.msg.PositionRotationMessage;
-import org.spout.vanilla.protocol.msg.RespawnMessage;
-import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
-import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
-import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.StateChangeMessage;
-import org.spout.vanilla.protocol.msg.TimeMessage;
+import org.spout.vanilla.protocol.msg.*;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 import org.spout.vanilla.world.Weather;
 
@@ -486,5 +474,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public void sendEntityAnimate(EntityAnimateProtocolEvent event) {
 		session.send(new EntityAnimationMessage(event.getId(), (byte) event.getAnimation()));
 	}
-	
+
+	@EventHandler
+	public void sendHealthUpdate(HealthEvent event) {
+		session.send(new HealthMessage(event.getHealth(), event.getFood(), event.getFoodSaturation()));
+	}
 }

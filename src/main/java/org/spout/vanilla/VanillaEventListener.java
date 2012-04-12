@@ -53,13 +53,12 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
-import org.spout.vanilla.controller.living.creature.neutral.Enderman;
-import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.CreativePlayer;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.event.HealthEvent;
 import org.spout.vanilla.protocol.msg.UserListItemMessage;
 
 public class VanillaEventListener implements Listener {
@@ -82,6 +81,7 @@ public class VanillaEventListener implements Listener {
 		Entity playerEntity = player.getEntity();
 		playerEntity.setController(mode);
 		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
+		player.getNetworkSynchronizer().callProtocolEvent(new HealthEvent((short) playerEntity.getHealth(), mode.getHunger(), 5.0f));
 	}
 
 	@EventHandler(order = Order.LATEST)

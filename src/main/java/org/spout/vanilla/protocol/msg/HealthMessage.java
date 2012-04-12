@@ -28,20 +28,20 @@ package org.spout.vanilla.protocol.msg;
 import org.spout.api.protocol.Message;
 
 public final class HealthMessage extends Message {
-	private final int health, food;
+	private final short health, food;
 	private final float foodSaturation;
 
-	public HealthMessage(int health, int food, float foodSaturation) {
+	public HealthMessage(short health, short food, float foodSaturation) {
 		this.health = health;
 		this.food = food;
 		this.foodSaturation = foodSaturation;
 	}
 
-	public int getHealth() {
+	public short getHealth() {
 		return health;
 	}
 
-	public int getFood() {
+	public short getFood() {
 		return food;
 	}
 

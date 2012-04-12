@@ -43,7 +43,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.configuration.OpConfig;
+import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.living.player.CreativePlayer;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
@@ -161,7 +161,7 @@ public class AdministrationCommands {
 			throw new CommandException("Please only provide a player to OP!");
 		}
 
-		OpConfig ops = VanillaConfiguration.OPS;
+		OpConfiguration ops = VanillaConfiguration.OPS;
 		String playerName = args.getString(0);
 		if (!ops.getOps().contains(playerName)) {
 			throw new CommandException(playerName + " is not an operator!");
@@ -182,7 +182,7 @@ public class AdministrationCommands {
 			throw new CommandException("Please only provide a player to OP!");
 		}
 
-		OpConfig ops = VanillaConfiguration.OPS;
+		OpConfiguration ops = VanillaConfiguration.OPS;
 		String playerName = args.getString(0);
 		if (ops.getOps().contains(playerName)) {
 			throw new CommandException(playerName + " is already an operator!");

@@ -23,54 +23,34 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.configuration;
+package org.spout.vanilla.protocol.event;
 
-import org.spout.api.exception.ConfigurationException;
-import org.spout.api.util.config.ConfigurationNode;
-import org.spout.api.util.config.yaml.YamlConfiguration;
+import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.vanilla.protocol.msg.HealthMessage;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
+public class HealthEvent extends ProtocolEvent {
+	private final short health, food;
+	private final float saturation;
 
-
-public class OpConfig extends YamlConfiguration {
-	private static final List<String> ops = Arrays.asList("Notch", "jeb", "ez");
-	private ConfigurationNode node;
-
-	public OpConfig(File dataFolder) {
-		super(new File(dataFolder, "ops.yml"));
+	public HealthEvent(short health, short food, float saturation) {
+		this.health = health;
+		this.food = food;
+		this.saturation = saturation;
 	}
 
-	@Override
-	public void load() throws ConfigurationException {
-		super.load();
-		node = getNode("ops");
-		node.getValue(ops);
+	public HealthEvent(HealthMessage message) {
+		this(message.getHealth(), message.getFood(), message.getFoodSaturation());
 	}
 
-	public List<String> getOps() {
-		return node.getStringList();
+	public short getHealth() {
+		return health;
 	}
 
-	public boolean setOp(String playerName, boolean op) {
-		List<String> list = node.getStringList();
-		if (op) {
-			list.add(playerName);
-		} else {
-			list.remove(playerName);
-		}
-
-		node.setValue(list);
-		try {
-			this.save();
-			return true;
-		} catch (ConfigurationException e) {
-			return false;
-		}
+	public short getFood() {
+		return food;
 	}
 
-	public boolean isOp(String playerName) {
-		return node.getStringList().contains(playerName);
+	public float getFoodSaturation() {
+		return saturation;
 	}
 }

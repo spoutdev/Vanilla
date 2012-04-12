@@ -125,7 +125,7 @@ public class VanillaProtocolTest {
 			new EntityEquipmentMessage(234, 3, 2, 3),
 			new SpawnPositionMessage(42, 42, 42),
 			new EntityInteractionMessage(1123, 4455, true),
-			new HealthMessage(1, 2, 3.4F),
+			new HealthMessage((short) 1, (short) 2, 3.4F),
 			new RespawnMessage(89, (byte) 0, (byte) 1, 128, "VERYFANCY"),
 			new GroundMessage(true),
 			new PositionMessage(128, 256, 512, 3.4D, true),

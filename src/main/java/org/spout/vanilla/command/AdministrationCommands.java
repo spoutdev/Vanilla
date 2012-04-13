@@ -321,7 +321,7 @@ public class AdministrationCommands {
 		}
 	}
 
-	@Command(aliases = "weather", usage = "[world] <0|1|2> (0 = CLEAR, 1 = RAIN/SNOW, 2 = THUNDERSTORM)", desc = "Changes the weather", min = 1, max = 2)
+	@Command(aliases = "weather", usage = "<0|1|2> (0 = CLEAR, 1 = RAIN/SNOW, 2 = THUNDERSTORM) [world]", desc = "Changes the weather", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.weather")
 	public void weather(CommandContext args, CommandSource source) throws CommandException {
 		World world = null;
@@ -329,18 +329,18 @@ public class AdministrationCommands {
 			Player player = (Player) source;
 			world = player.getEntity().getWorld();
 		} else if (args.length() == 2) {
-			world = plugin.getGame().getWorld(args.getString(0));
+			world = plugin.getGame().getWorld(args.getString(1));
 		} else {
 			throw new CommandException("You need to specify a world.");
 		}
 
 		if (world == null) {
-			throw new CommandException("Invalid world '" + args.getString(0) + "'.");
+			throw new CommandException("Invalid world '" + args.getString(1) + "'.");
 		}
 
 		Weather weather;
-		if (args.isInteger(1)) {
-			int mode = args.getInteger(1);
+		if (args.isInteger(0)) {
+			int mode = args.getInteger(0);
 			switch (mode) {
 				case 0:
 					source.sendMessage("Weather set to CLEAR.");
@@ -357,13 +357,13 @@ public class AdministrationCommands {
 				default:
 					throw new CommandException("Weather must be between 0 and 2.");
 			}
-		} else if (args.getString(1).equalsIgnoreCase("clear")) {
+		} else if (args.getString(0).equalsIgnoreCase("clear")) {
 			source.sendMessage("Weather set to CLEAR.");
 			weather = Weather.CLEAR;
-		} else if (args.getString(1).equalsIgnoreCase("rain") || args.getString(1).equalsIgnoreCase("snow")) {
+		} else if (args.getString(0).equalsIgnoreCase("rain") || args.getString(0).equalsIgnoreCase("snow")) {
 			source.sendMessage("Weather set to RAIN/SNOW.");
 			weather = Weather.RAIN;
-		} else if (args.getString(1).equalsIgnoreCase("thunderstorm")) {
+		} else if (args.getString(0).equalsIgnoreCase("thunderstorm")) {
 			source.sendMessage("Weather set to THUNDERSTORM.");
 			weather = Weather.THUNDERSTORM;
 		} else {
@@ -372,7 +372,7 @@ public class AdministrationCommands {
 
 		VanillaSky sky = plugin.getSky(world);
 		if (sky == null) {
-			throw new CommandException("The world '" + args.getString(2) + "' is not availible.");
+			throw new CommandException("The world '" + args.getString(1) + "' is not availible.");
 		}
 
 		sky.setWeather(weather);

@@ -359,13 +359,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 			if (hunger <= 0) {
 				health--;
 			}
-		}
-		else {
+		} else {
 			foodSaturation = 5.0f;
 			exhaustion = 0;
 			hunger = 20;
 			health = 20;
 		}
+
 		System.out.println("Performing health/hunger update...");
 		System.out.println("Food saturation: " + foodSaturation);
 		System.out.println("Hunger: " + hunger);

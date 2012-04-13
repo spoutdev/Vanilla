@@ -34,7 +34,9 @@ import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.ActionController;
+import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
@@ -43,6 +45,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 
@@ -68,6 +71,7 @@ public abstract class VanillaController extends ActionController {
 	private float maxSpeed = Float.MAX_VALUE; //might turn this into a vector too?
 	private int clientX, clientY, clientZ;
 	private int clientYaw, clientPitch;
+	private Point lastKnownPosition;
 
 	public boolean needsVelocityUpdate() {
 		return velocityTicks++ % 5 == 0;
@@ -81,6 +85,24 @@ public abstract class VanillaController extends ActionController {
 		super(type);
 		this.type = type;
 	}
+	
+	@Override
+	public void onDeath() {
+		//Don't count disconnects/unknown exceptions as dead (!Yes that's a difference!)
+		if (this instanceof PlayerController) {
+			Player toCheck = ((PlayerController) this).getPlayer();
+			if(toCheck.getSession() == null || toCheck.getSession().getPlayer() == null) {
+				return;
+			}
+
+	    }
+        for(ItemStack drop : getDrops()) {
+        Item item = new Item(drop, Vector3.ZERO);
+        	if(lastKnownPosition != null) {
+        		lastKnownPosition.getWorld().createAndSpawnEntity(lastKnownPosition, item);
+        	}
+        }
+    }
 
 	public float getMaxSpeed() {
 		return this.maxSpeed;
@@ -203,6 +225,11 @@ public abstract class VanillaController extends ActionController {
 		this.oldPosition = getParent().getPosition();
 		this.oldRotation = getParent().getRotation().getAxisAngles();
 
+		//HACK: Store Position for later purposes
+		if(getParent().getPosition() != null  && getParent().getPosition() != Point.invalid) {
+			lastKnownPosition = getParent().getPosition();
+		}
+		
 		super.onTick(dt);
 	}
 

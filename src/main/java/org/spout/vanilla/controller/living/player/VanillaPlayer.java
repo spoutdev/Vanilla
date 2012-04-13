@@ -85,6 +85,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
 		getParent().setMaxHealth(20);
+		getParent().setHealth(20);
 		// TODO: Persistent health
 	}
 
@@ -335,28 +336,36 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	private void updateHealth() {
-		foodSaturation -= 0.1;
+		short health;
 		Entity parent = getParent();
-		short health = (short) parent.getHealth();
-		if (foodSaturation <= 0) {
-			hunger--;
-		} else {
-			health++;
-		}
-
-		if (exhaustion >= 4.0) {
-			exhaustion = 0;
+		if (isSurvival()) {
+			foodSaturation -= 0.1;
+			health = (short) parent.getHealth();
 			if (foodSaturation <= 0) {
 				hunger--;
 			} else {
-				foodSaturation--;
+				health++;
+			}
+
+			if (exhaustion >= 4.0) {
+				exhaustion = 0;
+				if (foodSaturation <= 0) {
+					hunger--;
+				} else {
+					foodSaturation--;
+				}
+			}
+			
+			if (hunger <= 0) {
+				health--;
 			}
 		}
-		
-		if (hunger <= 0) {
-			health--;
+		else {
+			foodSaturation = 5.0f;
+			exhaustion = 0;
+			hunger = 20;
+			health = 20;
 		}
-		
 		System.out.println("Performing health/hunger update...");
 		System.out.println("Food saturation: " + foodSaturation);
 		System.out.println("Hunger: " + hunger);

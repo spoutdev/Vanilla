@@ -48,14 +48,11 @@ import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlacementMessage> {
 	@Override
 	public void handleServer(Session session, Player player, BlockPlacementMessage message) {
-		//if (player == null) {
-		//	return;
-		//}
-
-		EventManager eventManager = player.getSession().getGame().getEventManager();
+		EventManager eventManager = session.getGame().getEventManager();
 		World world = player.getEntity().getWorld();
 		Inventory inventory = player.getEntity().getInventory();
 		ItemStack holding = inventory.getCurrentItem();
+
 		/**
 		 * The notch client's packet sending is weird. Here's how it works: If
 		 * the client is clicking a block not in range, sends a packet with
@@ -79,19 +76,17 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 
 		Point pos = new Point(world, message.getX(), message.getY(), message.getZ());
 		BlockFace face = VanillaMessageHandlerUtils.messageToBlockFace(message.getDirection());
-
 		if (face == BlockFace.THIS) {
 			return;
 		}
 
 		Point offsetPos = pos.add(face.getOffset());
 		Block target = world.getBlock(offsetPos);
-
 		if (pos.getY() >= world.getHeight() || pos.getY() < 0) {
 			return;
 		}
-		boolean sendRevert = false;
 
+		boolean sendRevert = false;
 		PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, new Point(pos, world), inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, false));
 		if (interactEvent.isCancelled()) {
 			sendRevert = true;
@@ -101,22 +96,17 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		int y = offsetPos.getBlockY();
 		int z = offsetPos.getBlockZ();
 		if (holding != null && !sendRevert) {
-			/*if (interactEvent.useItemInHand() != Event.Result.DENY) { //TODO: Implement items (they are not in yet!)
-				if (holding.getMaterial().getId() > 255 &&  (holding.getTypeId()).getPhysics().interact(player, against, holding, PlayerInteractEvent.Action.RIGHT_CLICK, face)) {
-					sendRevert = true;
-				}
-			}*/
 			Material placedMaterial = holding.getMaterial();
 			if (placedMaterial instanceof ItemMaterial) {
 				((ItemMaterial) placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
 				return;
 			}
+
 			if (placedMaterial.getId() < 0) {
 				sendRevert = true;
 			}
 
 			short placedData = holding.getData();
-
 			if (face == BlockFace.TOP && !world.getBlockMaterial(x, y - 1, z).isPlacementObstacle()) {
 				//make sure the target switches one block below
 				y = target.move(BlockFace.BOTTOM).getY();
@@ -154,6 +144,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 				sendRevert = true;
 			}
 		}
+
 		if (sendRevert) {
 			player.getSession().send(new BlockChangeMessage(x, y, z, target != null ? target.getMaterial().getId() : 0, world.getBlockData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ())));
 			inventory.setItem(holding, inventory.getCurrentSlot());

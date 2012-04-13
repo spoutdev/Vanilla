@@ -49,6 +49,16 @@ public class TestCommands {
 		this.plugin = instance;
 	}
 
+	@Command(aliases = {"sethealth"}, usage = "<health>", desc = "Set your health", min = 1, max = 1)
+	public void setHealth(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to set your health");
+		}
+		
+		Player player = (Player) source;
+		player.getEntity().setHealth(args.getInteger(0));
+	}
+
 	@Command(aliases = {"spawn"}, usage = "<controller>", desc = "Spawn a controller!", min = 1, max = 1)
 	public void spawn(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {

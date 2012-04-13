@@ -30,7 +30,6 @@ import static org.spout.vanilla.util.VanillaMessageHandlerUtils.getInventoryId;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
-import org.spout.api.Spout;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
@@ -57,14 +56,10 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.event.entity.VanillaEntityHealthChangeEvent;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
-import org.spout.vanilla.protocol.event.EntityAnimateProtocolEvent;
-import org.spout.vanilla.protocol.event.HealthEvent;
-import org.spout.vanilla.protocol.event.TimeUpdateProtocolEvent;
-import org.spout.vanilla.protocol.event.WeatherChangeProtocolEvent;
+import org.spout.vanilla.protocol.event.*;
 import org.spout.vanilla.protocol.msg.*;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 import org.spout.vanilla.world.Weather;

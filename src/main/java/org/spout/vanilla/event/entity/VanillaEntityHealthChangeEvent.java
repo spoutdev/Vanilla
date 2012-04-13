@@ -33,9 +33,9 @@ import org.spout.api.event.entity.EntityHealthChangeEvent;
 
 public class VanillaEntityHealthChangeEvent extends EntityHealthChangeEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private HealthChangeReason reason;
+	private Reason reason;
 
-	public VanillaEntityHealthChangeEvent(Entity e, Source source, int change, HealthChangeReason reason) {
+	public VanillaEntityHealthChangeEvent(Entity e, Source source, int change, Reason reason) {
 		super(e, source, change);
 		this.reason = reason;
 	}
@@ -44,7 +44,7 @@ public class VanillaEntityHealthChangeEvent extends EntityHealthChangeEvent impl
 	 * Gets the reason for the change of health.
 	 * @return the reason for the change in health.
 	 */
-	public HealthChangeReason getReason() {
+	public Reason getReason() {
 		return reason;
 	}
 
@@ -52,7 +52,7 @@ public class VanillaEntityHealthChangeEvent extends EntityHealthChangeEvent impl
 	 * Sets the reason for the change of health.
 	 * @param reason the new reason for the change of health.
 	 */
-	public void setReason(HealthChangeReason reason) {
+	public void setReason(Reason reason) {
 		this.reason = reason;
 	}
 
@@ -73,7 +73,7 @@ public class VanillaEntityHealthChangeEvent extends EntityHealthChangeEvent impl
 	/**
 	 * An enum to specify the reason behind the change in health.
 	 */
-	public enum HealthChangeReason {
+	public enum Reason {
 		/**
 		 * Health changed from the difficulty being peaceful.
 		 */
@@ -144,6 +144,6 @@ public class VanillaEntityHealthChangeEvent extends EntityHealthChangeEvent impl
 		 * Health changed due to a custom reason (normally specified by another
 		 * plugin).
 		 */
-		CUSTOM
+		CUSTOM;
 	}
 }

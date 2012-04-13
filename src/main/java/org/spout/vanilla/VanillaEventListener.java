@@ -27,6 +27,7 @@ package org.spout.vanilla;
 
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.event.entity.VanillaEntityHealthChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 
 import java.util.Arrays;
@@ -70,7 +71,7 @@ public class VanillaEventListener implements Listener {
 	}
 
 	@EventHandler(order = Order.EARLIEST)
-	public void onPlayerJoin(PlayerJoinEvent event) {
+	public void playerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		VanillaPlayer mode = new VanillaPlayer(player);
 		if (VanillaConfiguration.PLAYER_DEFAULT_GAMEMODE.getString().equalsIgnoreCase("creative")) {
@@ -86,7 +87,7 @@ public class VanillaEventListener implements Listener {
 	}
 
 	@EventHandler(order = Order.LATEST)
-	public void onPlayerLeave(PlayerLeaveEvent event) {
+	public void playerLeave(PlayerLeaveEvent event) {
 		Entity entity = event.getPlayer().getEntity();
 		if (entity != null) {
 			entity.getInventory().removeViewer(event.getPlayer().getNetworkSynchronizer());
@@ -96,7 +97,7 @@ public class VanillaEventListener implements Listener {
 	}
 
 	@EventHandler()
-	public void onRegionLoad(RegionLoadEvent event) {
+	public void regionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
 		if (region.getAll(RegionSpawner.class).isEmpty()) {
 			region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE), new RegionSpawner(region));
@@ -104,7 +105,7 @@ public class VanillaEventListener implements Listener {
 	}
 
 	@EventHandler(order = Order.MONITOR)
-	public void onEntitySpawn(EntitySpawnEvent event) {
+	public void entitySpawn(EntitySpawnEvent event) {
 		if (event.isCancelled()) {
 			return;
 		}
@@ -137,10 +138,20 @@ public class VanillaEventListener implements Listener {
 	}
 
 	@EventHandler(order = Order.EARLIEST)
-	public void onPermissionNode(PermissionNodeEvent event) {
+	public void checkPermission(PermissionNodeEvent event) {
 		PermissionsSubject subject = event.getSubject();
 		if (VanillaConfiguration.OPS.isOp(subject.getName()) && event.getResult() == Result.DEFAULT) {
 			event.setResult(Result.ALLOW);
+		}
+	}
+	
+	public void syncHealth(EntityHealthChangeEvent event) {
+		Controller c = event.getEntity().getController();
+		if (c instanceof VanillaPlayer) {
+			VanillaPlayer vp = (VanillaPlayer) c;
+			short health = (short) vp.getParent().getHealth();
+			health += (short) event.getChange();
+			vp.getPlayer().getNetworkSynchronizer().callProtocolEvent(new HealthEvent(health, vp.getHunger(), vp.getFoodSaturation()));
 		}
 	}
 }

@@ -79,10 +79,12 @@ public class MushroomDecorator implements BiomeDecorator {
          */
     }
 
+    @SuppressWarnings("unused")
     private void generateMushroom(Chunk c, Random ra, int cx, int cy, int cz) {
         c.setBlockMaterial(cx, cy, cz, getRandomMushroomType(ra, false), (short) 0, true, c.getWorld());
     }
 
+    @SuppressWarnings("unused")
     private void generateHugeMushroom(World world, BlockMaterial type, Random ra, int x, int y, int z) {
         final int height = ra.nextInt(3) + BASE_HEIGHT;
         if (y + height > world.getHeight() - 2) {
@@ -298,6 +300,7 @@ public class MushroomDecorator implements BiomeDecorator {
         }
     }
 
+    @SuppressWarnings("unused")
     private int getHighestWorkableBlock(Chunk c, int cx, int cz) {
         int y = 15;
         while (c.getBlockMaterial(cx, y, cz) != VanillaMaterials.GRASS) {

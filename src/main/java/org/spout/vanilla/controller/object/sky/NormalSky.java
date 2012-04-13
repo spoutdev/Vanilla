@@ -25,10 +25,7 @@
  */
 package org.spout.vanilla.controller.object.sky;
 
-import java.util.Set;
-
 import org.spout.api.Spout;
-import org.spout.api.player.Player;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.VanillaSky;
@@ -47,7 +44,6 @@ public class NormalSky extends VanillaSky {
 
 	@Override
 	public void updateTime(long time) {
-		Set<Player> players = getParent().getWorld().getPlayers();
 		broadcastPacket(new TimeMessage(time));
 	}
 

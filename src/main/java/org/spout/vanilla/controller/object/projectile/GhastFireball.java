@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.controller.object.projectile;
 
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 

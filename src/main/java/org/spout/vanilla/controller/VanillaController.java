@@ -302,6 +302,7 @@ public abstract class VanillaController extends ActionController {
 		return canMove;
 	}
 
+	@SuppressWarnings("unused")
 	private void checkFireTicks() {
 		if (fireTicks > 0) {
 			if (!isFlammable) {

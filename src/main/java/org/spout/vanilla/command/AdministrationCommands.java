@@ -302,6 +302,7 @@ public class AdministrationCommands {
 		// If source is player
 		if (args.length() == 1) {
 			if (source instanceof Player) {
+				@SuppressWarnings("unused")
 				Player sender = (Player) source;
 				int amount = args.getInteger(0);
 				source.sendMessage("You have been given " + amount + " xp.");

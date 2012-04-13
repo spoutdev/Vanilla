@@ -33,7 +33,6 @@ import gnu.trove.set.hash.TIntHashSet;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
-import org.spout.api.event.EventHandler;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.generator.biome.BiomeType;

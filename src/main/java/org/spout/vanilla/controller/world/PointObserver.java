@@ -27,12 +27,10 @@ package org.spout.vanilla.controller.world;
 
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
-import org.spout.api.collision.CollisionVolume;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.Vector3;
 
 /**
  * Controller that observes chunks around a point. It will always keep these chunks in memory.

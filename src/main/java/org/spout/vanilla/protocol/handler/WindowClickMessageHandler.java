@@ -44,26 +44,16 @@ import org.spout.vanilla.protocol.msg.WindowClickMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
-	private Session session;
-	private Player player;
-	private VanillaPlayer vplayer;
-	private WindowClickMessage message;
-	private Inventory inventory;
-	private int clickedSlot;
-	private ItemStack slotStack;
-	private ItemStack cursorStack;
 
 	@Override
 	public void handleServer(Session session, Player player, WindowClickMessage message) {
 		if (player == null || player.getEntity() == null) {
 			return;
 		}
-		this.session = session;
-		this.player = player;
-		this.message = message;
+
 		Entity entity = player.getEntity();
-		vplayer = (VanillaPlayer) entity.getController();
-		inventory = vplayer.getActiveInventory();
+		VanillaPlayer vplayer = (VanillaPlayer) entity.getController();
+		Inventory inventory = vplayer.getActiveInventory();
 		if (inventory == null) {
 			inventory = (PlayerInventory) entity.getInventory();
 		}
@@ -75,7 +65,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			return;
 		}
 
-		clickedSlot = VanillaMessageHandlerUtils.networkInventorySlotToSpout(message.getSlot());
+		int clickedSlot = VanillaMessageHandlerUtils.networkInventorySlotToSpout(message.getSlot());
 		if (clickedSlot < 0) {
 			response(session, message, false);
 			session.getGame().getLogger().log(Level.WARNING, "Got invalid inventory slot {0} from {1}", new Object[]{message.getSlot(), player.getName()});
@@ -88,8 +78,8 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			return;
 		}
 
-		slotStack = inventory.getItem(clickedSlot);
-		cursorStack = vplayer.getItemOnCursor();		
+		ItemStack slotStack = inventory.getItem(clickedSlot);
+		ItemStack cursorStack = vplayer.getItemOnCursor();		
 		boolean emptyCursor = cursorStack == null;
 		boolean emptySlot   = slotStack   == null;
 		boolean neitherIsEmpty = !emptySlot && !emptyCursor;
@@ -98,16 +88,19 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		if (emptyCursor && emptySlot) {
 			// Do Nothing!
 		} else if (message.isShift()) {
-			// Ignore cursorStack but move slotStack to/from inventory if it exists.
+			// Ignore cursorStack; move slotStack to/from inventory if it exists.
 			if (!emptySlot) {
-				moveShiftClickedStack();
+				moveStackToFromQuickbar(inventory, clickedSlot, player);
+				slotStack = null;
 			}
 		} else if (leftClick && !neitherIsEmpty || (neitherIsEmpty && !cursorStack.equalsIgnoreSize(slotStack))) { 
 			// Left click with one side empty OR two different types of stacks => Swap stack positions!
-			swapStacks();
+			ItemStack tmp = slotStack;
+			slotStack = cursorStack;
+			cursorStack = tmp;
 		} else if (emptyCursor) { 
 			// Empty handed right-click on stack: Split stack
-			splitSlotStack();
+			cursorStack = splitStack(slotStack);			
 		} else {
 			// Clicked while holding something, move items from cursorStack
 			int amountToMove = cursorStack.getAmount();
@@ -118,11 +111,11 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 					slotStack.setAmount(0);
 				}
 				amountToMove = 1;
-			}			
-			moveCursorItemToSlot(amountToMove);
+			}
+			moveItemFromTo(cursorStack, slotStack, amountToMove, true);
 		}
-		
-		updateItemStacks();
+
+		updateItemStacks(vplayer, cursorStack, inventory, slotStack, clickedSlot);
 		response(session, message, true);
 		/*
 		 * if (clickedItem == null) { if (message.getItem() != -1) {
@@ -157,73 +150,72 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		 * player.getInventory().getCraftingInventory().craft(); }
 		 */
 	}
+
+	private ItemStack splitStack(ItemStack stack) {
+		ItemStack newStack = stack.clone();
+		newStack.setAmount(0);
+		moveItemFromTo(stack, newStack, (stack.getAmount()+1)/2, true);
+		return newStack;
+	}	
 	
-	private void moveCursorItemToSlot(int maxAmount) {
-		int cursorAmount = cursorStack.getAmount();
-		int moveMax = Math.min(cursorAmount, maxAmount);
-		moveMax = Math.min(moveMax, slotStack.getMaterial().getMaxStackSize() - slotStack.getAmount());
-		int newAmount = slotStack.getAmount() + moveMax;
-		if (moveMax > 0) {
-			int newCursorAmount = cursorAmount - moveMax;
-			if (newCursorAmount == 0)
-				cursorStack = null;
-			else
-				cursorStack.setAmount(newCursorAmount);
-			slotStack.setAmount(newAmount);			
-		}
+	private int moveItemFromTo(ItemStack from, ItemStack to, int count, boolean tryToFill) {
+		if (from == null || to == null)
+			return 0;
+
+		int fromAmount = from.getAmount();
+		int toAmount = to.getAmount();		
+		int toFreeSpace = to.getMaterial().getMaxStackSize() - toAmount;
 		
+		if (count <= 0 || !tryToFill && (fromAmount < count || toFreeSpace < count))
+			return 0;
+
+		if (tryToFill) {
+			count = Math.min(fromAmount, count);
+			count = Math.min(toFreeSpace, count);
+		}
+
+		from.setAmount(fromAmount-count);
+		to.setAmount(toAmount+count);
+		return count;
 	}
 
-	private void splitSlotStack() {
-		int amount = slotStack.getAmount();
-		cursorStack = slotStack.clone();
-		cursorStack.setAmount((amount+1)/2); // round up by 1 if odd
-		slotStack.setAmount(amount - cursorStack.getAmount()); 
-		if (slotStack.getAmount() == 0)
-			slotStack = null;
+	
+	private void updateItemStacks(VanillaPlayer cursorOwner, ItemStack cursorStack, Inventory inv, ItemStack invStack, int invSlot) {
+		cursorStack = nullIfEmpty(cursorStack);
+		invStack 	= nullIfEmpty(invStack);
+		cursorOwner.setItemOnCursor(cursorStack);
+		inv.setItem(invStack, invSlot);
 	}
 	
-	private void swapStacks() {
-		ItemStack tmp = null;
-		if (slotStack != null)
-			tmp = slotStack.clone();
-		slotStack = cursorStack;
-		cursorStack = tmp;
-		updateItemStacks();
+	private ItemStack nullIfEmpty(ItemStack s) {
+		return (s != null && s.getAmount() == 0) ? null : s;
 	}
 	
-	private void updateItemStacks() {
-		if (cursorStack != null && cursorStack.getAmount() == 0)
-			cursorStack = null;
-		if (slotStack != null && slotStack.getAmount() == 0)
-			slotStack = null;
-		vplayer.setItemOnCursor(cursorStack);
-		inventory.setItem(slotStack, clickedSlot);
-	}
-	
-	private void moveShiftClickedStack() {
-		int l1, l2;
-		if (clickedSlot < 9) {
-			l1 = 0;
-			l2 = 8;
-			player.sendMessage("You shifted in your quickbar");
-		} else {
-			l1 = 9;
-			l2 = inventory.getSize() - 1;
-			player.sendMessage("You shifted in your main inventory!");
+	private void moveStackToFromQuickbar(Inventory inv, int currentStackPos, Player player) {
+		ItemStack theStack = inv.getItem(currentStackPos);
+		// Assume item is in quick-bar.
+		int startSlot = 0, stopSlot = 8;
+		String invName = "quickbar";
+		if (currentStackPos > stopSlot) {
+			startSlot = 9;
+			stopSlot = inv.getSize() - 1;
+			invName = "inventory!";
 		}
+
+		player.sendMessage("You shifted in your " + invName);
+
 		Set<Integer> hiddenSlots = new HashSet<Integer>();
-		for (int i = l1; i <= l2; i++) {
-			if (inventory.isHiddenSlot(i)) {
+		for (int i = startSlot; i <= stopSlot; i++) {
+			if (inv.isHiddenSlot(i)) {
 				hiddenSlots.add(i);
 			}
-			inventory.setHiddenSlot(i, true);
+			inv.setHiddenSlot(i, true);
 		}
-		inventory.addItem(slotStack, false);
-		inventory.setItem(slotStack, clickedSlot);
-		for (int i = l1; i <= l2; i++) {
+		inv.addItem(theStack, false);
+		//inv.setItem(theStack, currentStackPos);
+		for (int i = startSlot; i <= stopSlot; i++) {
 			if (!(hiddenSlots.contains(i))) {
-				inventory.setHiddenSlot(i, false);
+				inv.setHiddenSlot(i, false);
 			}
 		}
 	}

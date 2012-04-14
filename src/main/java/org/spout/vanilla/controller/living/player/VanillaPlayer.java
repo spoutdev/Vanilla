@@ -43,8 +43,8 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.protocol.event.entity.player.PlayerListEvent;
 import org.spout.vanilla.protocol.msg.PingMessage;
-import org.spout.vanilla.protocol.msg.UserListItemMessage;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to
@@ -62,10 +62,12 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	protected final Vector3 horizSpeed = new Vector3(0, 0, -10);
 	protected Inventory activeInventory;
 	protected ItemStack itemOnCursor;
+	protected String tabListName;
 
 	public VanillaPlayer(Player p) {
 		super(VanillaControllerTypes.PLAYER);
 		owner = p;
+		tabListName = owner.getName();
 		p.getEntity().setInventorySize(45);
 	}
 
@@ -115,7 +117,10 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 		}
 
 		if (lastUserList++ > 20) {
-			sendMessage(new HashSet<Player>(Arrays.asList(Spout.getEngine().getOnlinePlayers())), new UserListItemMessage(player.getName(), true, ping));
+			for (Player p : Spout.getEngine().getOnlinePlayers()) {
+				p.getNetworkSynchronizer().callProtocolEvent(new PlayerListEvent(tabListName, true, ping));
+			}
+
 			lastUserList = 0;
 		}
 	}
@@ -231,6 +236,24 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	public boolean isOp() {
 		String playerName = getPlayer().getName();
 		return VanillaConfiguration.OPS.isOp(playerName);
+	}
+
+	/**
+	 * The list displayed in the user list on the client when a client presses TAB.
+	 *
+	 * @return user list name
+	 */
+	public String getTabListName() {
+		return tabListName;
+	}
+
+	/**
+	 * Sets the list displayed in the user list on the client when a client presses TAB.
+	 *
+	 * @param tabListName
+	 */
+	public void setTabListName(String tabListName) {
+		this.tabListName = tabListName;
 	}
 
 	public Inventory getActiveInventory() {

@@ -33,10 +33,8 @@ import org.spout.vanilla.controller.source.ControllerInitialization;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
@@ -55,7 +53,6 @@ import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.player.CreativePlayer;
@@ -63,10 +60,9 @@ import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
-import org.spout.vanilla.protocol.event.HealthEvent;
-import org.spout.vanilla.protocol.event.SpawnPlayerEvent;
-import org.spout.vanilla.protocol.event.StateChangeEvent;
-import org.spout.vanilla.protocol.msg.UserListItemMessage;
+import org.spout.vanilla.protocol.event.entity.player.PlayerHealthEvent;
+import org.spout.vanilla.protocol.event.entity.player.SpawnPlayerEvent;
+import org.spout.vanilla.protocol.event.world.StateChangeEvent;
 
 public class VanillaEventListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -94,7 +90,7 @@ public class VanillaEventListener implements Listener {
 		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
 		if (mode instanceof SurvivalPlayer) {
 			SurvivalPlayer s = (SurvivalPlayer) mode;
-			player.getNetworkSynchronizer().callProtocolEvent(new HealthEvent((short) playerEntity.getHealth(), s.getHunger(), s.getFoodSaturation()));
+			player.getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent((short) playerEntity.getHealth(), s.getHunger(), s.getFoodSaturation()));
 		}
 
 		for (Player p : playerEntity.getWorld().getPlayers()) {
@@ -108,8 +104,6 @@ public class VanillaEventListener implements Listener {
 		if (entity != null) {
 			entity.getInventory().removeViewer(event.getPlayer().getNetworkSynchronizer());
 		}
-		//Tell anyone that we have an player less :(
-		((VanillaController) entity.getController()).sendMessage(new HashSet<Player>(Arrays.asList(Spout.getEngine().getOnlinePlayers())), new UserListItemMessage(event.getPlayer().getName(), false, (short) 99));
 	}
 
 	@EventHandler()
@@ -173,7 +167,7 @@ public class VanillaEventListener implements Listener {
 			SurvivalPlayer sp = (SurvivalPlayer) c;
 			short health = (short) sp.getParent().getHealth();
 			health += (short) event.getChange();
-			sp.getPlayer().getNetworkSynchronizer().callProtocolEvent(new HealthEvent(health, sp.getHunger(), sp.getFoodSaturation()));
+			sp.getPlayer().getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent(health, sp.getHunger(), sp.getFoodSaturation()));
 		}
 	}
 
@@ -190,6 +184,6 @@ public class VanillaEventListener implements Listener {
 			mode = 1;
 		}
 
-		p.getPlayer().getNetworkSynchronizer().callProtocolEvent(new StateChangeEvent((byte) 3, mode));
+		p.getPlayer().getNetworkSynchronizer().callProtocolEvent(new StateChangeEvent(StateChangeEvent.Reason.CHANGE_GAME_MODE, mode));
 	}
 }

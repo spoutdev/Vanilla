@@ -45,8 +45,8 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.living.player.CreativePlayer;
-import org.spout.vanilla.controller.living.player.SurvivalPlayer;
+import org.spout.vanilla.controller.living.player.GameMode;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.VanillaSky;
 import org.spout.vanilla.world.Weather;
 
@@ -255,11 +255,15 @@ public class AdministrationCommands {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
 		} else {
-			if (!(source instanceof Player)) {
+			if (!(source instanceof VanillaPlayer)) {
 				throw new CommandException("You must be a player to toggle your game mode.");
 			}
 
 			player = (Player) source;
+		}
+
+		if (!(player.getEntity().getController() instanceof VanillaPlayer)) {
+			throw new CommandException("Invalid player!");
 		}
 
 		int mode;
@@ -274,20 +278,21 @@ public class AdministrationCommands {
 		}
 
 		String message;
+		VanillaPlayer p = (VanillaPlayer) player.getEntity().getController();
 		switch (mode) {
 			case 0:
-				player.getEntity().setController(new SurvivalPlayer(player));
+				p.setGameMode(GameMode.SURVIVAL);
 				message = "SURVIVAL";
 				break;
 			case 1:
-				player.getEntity().setController(new CreativePlayer(player));
+				p.setGameMode(GameMode.CREATIVE);
 				message = "CREATIVE";
 				break;
 			default:
 				throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
 		}
 		if (!player.equals(source)) {
-			source.sendMessage(player.getName() + "'s game mode has been changed to " + message + ".");
+			source.sendMessage(p.getPlayer().getName() + "'s game mode has been changed to " + message + ".");
 		}
 	}
 

@@ -30,7 +30,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
-import org.spout.vanilla.controller.living.player.SurvivalPlayer;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class Dye extends GenericItem {
@@ -103,7 +103,7 @@ public class Dye extends GenericItem {
 		other.setData("SheepColor", 0xF - holding.getData());
 		System.out.println("Sheep go baaaa!");
 
-		if (entity.getController() instanceof SurvivalPlayer) {
+		if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
 			if (holding.getAmount() > 1) {
 				holding.setAmount(holding.getAmount() - 1);
 				entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());

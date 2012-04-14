@@ -25,13 +25,11 @@
  */
 package org.spout.vanilla.protocol.handler;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.controller.living.player.CreativePlayer;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
 import org.spout.vanilla.protocol.msg.CreativeMessage;
@@ -43,7 +41,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 	public void handleServer(Session session, Player player, CreativeMessage message) {
 		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
 
-		if (!(controller instanceof CreativePlayer)) {
+		if (controller.isSurvival()) {
 			player.kick("Now now, don't try that here. Won't work.");
 			return;
 		}

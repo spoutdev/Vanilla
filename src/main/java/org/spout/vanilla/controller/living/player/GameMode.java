@@ -25,16 +25,17 @@
  */
 package org.spout.vanilla.controller.living.player;
 
-import org.spout.api.player.Player;
+public enum GameMode {
+	SURVIVAL((byte) 0),
+	CREATIVE((byte) 1);
 
-public class CreativePlayer extends VanillaPlayer {
-	
-	public CreativePlayer(Player player) {
-		super(player);
+	private final byte id;
+
+	private GameMode(byte id) {
+		this.id = id;
 	}
 
-	@Override
-	public boolean hasInfiniteResources() {
-		return true;
+	public byte getId() {
+		return id;
 	}
 }

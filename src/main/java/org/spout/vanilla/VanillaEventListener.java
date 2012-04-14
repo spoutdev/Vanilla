@@ -144,6 +144,7 @@ public class VanillaEventListener implements Listener {
 		}
 	}
 	
+	@EventHandler
 	public void syncHealth(EntityHealthChangeEvent event) {
 		Controller c = event.getEntity().getController();
 		if (c instanceof VanillaPlayer) {

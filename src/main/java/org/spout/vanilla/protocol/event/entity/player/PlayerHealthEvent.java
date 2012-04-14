@@ -58,7 +58,7 @@ public class PlayerHealthEvent extends ProtocolEvent {
 		return saturation;
 	}
 
-	public void setFoodSaturation(short saturation) {
+	public void setFoodSaturation(float saturation) {
 		this.saturation = saturation;
 	}
 }

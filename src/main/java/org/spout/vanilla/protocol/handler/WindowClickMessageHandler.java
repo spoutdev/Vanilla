@@ -44,163 +44,103 @@ import org.spout.vanilla.protocol.msg.WindowClickMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
+	private Session session;
+	private Player player;
+	private VanillaPlayer vplayer;
+	private WindowClickMessage message;
+	private Inventory inventory;
+	private int clickedSlot;
+	private ItemStack slotStack;
+	private ItemStack cursorStack;
 
 	@Override
 	public void handleServer(Session session, Player player, WindowClickMessage message) {
 		if (player == null || player.getEntity() == null) {
 			return;
 		}
+		this.session = session;
+		this.player = player;
+		this.message = message;
 		Entity entity = player.getEntity();
-		PlayerInventory inv = (PlayerInventory) entity.getInventory();
-		VanillaPlayer vplayer = (VanillaPlayer) entity.getController();
-		Inventory inventory = vplayer.getActiveInventory();
+		vplayer = (VanillaPlayer) entity.getController();
+		inventory = vplayer.getActiveInventory();
 		if (inventory == null) {
-			inventory = inv;
+			inventory = (PlayerInventory) entity.getInventory();
 		}
-		int slot = VanillaMessageHandlerUtils.networkInventorySlotToSpout(message.getSlot());
-		if( message.getSlot() == 64537) {
+
+		if(message.getSlot() == 64537) {
 			vplayer.setItemOnCursor(null);
 			//TODO drop
 			response(session, message, true);
 			return;
 		}
-		if (slot < 0) {
+
+		clickedSlot = VanillaMessageHandlerUtils.networkInventorySlotToSpout(message.getSlot());
+		if (clickedSlot < 0) {
 			response(session, message, false);
-				session.getGame().getLogger().log(Level.WARNING, "Got invalid inventory slot {0} from {1}", new Object[]{message.getSlot(), player.getName()});
+			session.getGame().getLogger().log(Level.WARNING, "Got invalid inventory slot {0} from {1}", new Object[]{message.getSlot(), player.getName()});
 			return;
 		}
-		ItemStack currentItem = inventory.getItem(slot);
-		if (CreativePlayer.is(entity.getController()) && message.getWindowId() == VanillaMessageHandlerUtils.getInventoryId(inv.getClass())) {
+
+		if (CreativePlayer.is(entity.getController()) && message.getWindowId() == VanillaMessageHandlerUtils.getInventoryId(inventory.getClass())) {
 			response(session, message, false);
 			session.getGame().getLogger().log(Level.WARNING, "{0} tried to do an invalid inventory action in Creative mode!", new Object[]{player.getName()});
 			return;
 		}
 
-		if (message.isShift()) {
-			if (currentItem == null) {
-				response(session, message, true);
-				return;
-			}
-			int l1, l2;
-			if (slot < 9) {
-				l1 = 0;
-				l2 = 8;
-				player.sendMessage("You shifted in your quickbar");
-			} else {
-				l1 = 9;
-				l2 = inventory.getSize() - 1;
-				player.sendMessage("You shifted in your main inventory!");
-			}
-			Set<Integer> hiddenSlots = new HashSet<Integer>();
-			for (int i = l1; i <= l2; i++) {
-				if (inventory.isHiddenSlot(i)) {
-					hiddenSlots.add(i);
-				}
-				inventory.setHiddenSlot(i, true);
-			}
-			inventory.addItem(currentItem, false);
-			inventory.setItem(currentItem, slot);
-			for (int i = l1; i <= l2; i++) {
-				if (!(hiddenSlots.contains(i))) {
-					inventory.setHiddenSlot(i, false);
-				}
-			}
-			response(session, message, true);
-			return;
-		}
+		slotStack = inventory.getItem(clickedSlot);
+		cursorStack = vplayer.getItemOnCursor();		
+		boolean emptyCursor = cursorStack == null;
+		boolean emptySlot   = slotStack   == null;
+		boolean neitherIsEmpty = !emptySlot && !emptyCursor;
+		boolean leftClick = !message.isRightClick();
 
-		if (vplayer.getItemOnCursor() == null) { //no item on the cursor
-			if (currentItem == null) {
-				response(session, message, true);
-				return;
+		if (emptyCursor && emptySlot) {
+			// Do Nothing!
+		} else if (message.isShift()) {
+			// Ignore cursorStack but move slotStack to/from inventory if it exists.
+			if (!emptySlot) {
+				moveShiftClickedStack();
 			}
-			if (message.isRightClick()) {
-				int amount = currentItem.getAmount();
-				currentItem.setAmount(amount / 2);
-				inventory.setItem(currentItem, slot);
-				ItemStack newStack = currentItem.clone();
-				if (amount % 2 == 0) {
-					newStack.setAmount(amount / 2);
-				} else {
-					newStack.setAmount(amount / 2 + 1);
+		} else if (leftClick && !neitherIsEmpty || (neitherIsEmpty && !cursorStack.equalsIgnoreSize(slotStack))) { 
+			// Left click with one side empty OR two different types of stacks => Swap stack positions!
+			swapStacks();
+		} else if (emptyCursor) { 
+			// Empty handed right-click on stack: Split stack
+			splitSlotStack();
+		} else {
+			// Clicked while holding something, move items from cursorStack
+			int amountToMove = cursorStack.getAmount();
+			if (!leftClick) {
+				// Move 1 item from cursor to slot (slotStack can only be null if right-click).
+				if (slotStack == null) {
+					slotStack = cursorStack.clone();
+					slotStack.setAmount(0);
 				}
-				vplayer.setItemOnCursor(newStack);
-			} else {
-				vplayer.setItemOnCursor(currentItem);
-				inventory.setItem(null, slot);
-				response(session, message, true);
-			}
-			return;
-		} else { //got an item on the cursor
-			ItemStack cursor = vplayer.getItemOnCursor();
-			if (currentItem == null && !message.isRightClick()) {
-				inventory.setItem(cursor, slot);
-				vplayer.setItemOnCursor(null);
-			} else if (currentItem == null && message.isRightClick()) {
-				currentItem = cursor.clone();
-				cursor.setAmount(cursor.getAmount() - 1);
-				if (cursor.getAmount() == 0) {
-					cursor = null;
-				}
-				vplayer.setItemOnCursor(cursor);
-				currentItem.setAmount(1);
-				inventory.setItem(currentItem, slot);
-			} else if (currentItem != null && message.isRightClick()) { //TODO check for stack size limits, also shift clicking
-				if (currentItem.equalsIgnoreSize(cursor)) {
-					if (currentItem.getMaterial().getMaxStackSize() == currentItem.getAmount()) {
-						response(session, message, true);
-						return;
-					}
-					currentItem.setAmount(currentItem.getAmount() + 1);
-					inventory.setItem(currentItem, slot);
-					cursor.setAmount(cursor.getAmount() - 1);
-					if (cursor.getAmount() == 0) {
-						cursor = null;
-					}
-					vplayer.setItemOnCursor(cursor);
-					inv.setItem(currentItem, slot);
-				} else {
-					ItemStack temp = cursor.clone();
-					vplayer.setItemOnCursor(currentItem.clone());
-					inv.setItem(temp, slot);
-				}
-			} else if (currentItem != null && !message.isRightClick()) {
-				if (currentItem.equalsIgnoreSize(cursor)) {
-					currentItem.setAmount(currentItem.getAmount() + cursor.getAmount());
-					vplayer.setItemOnCursor(null);
-					if (currentItem.getAmount() > currentItem.getMaterial().getMaxStackSize()) {
-						ItemStack is = currentItem.clone();
-						is.setAmount(currentItem.getAmount() - currentItem.getMaterial().getMaxStackSize());
-						currentItem.setAmount(currentItem.getMaterial().getMaxStackSize());
-						vplayer.setItemOnCursor(is);
-					}
-					inv.setItem(currentItem, slot);
-				} else {
-					ItemStack temp = cursor.clone();
-					vplayer.setItemOnCursor(currentItem.clone());
-					inv.setItem(temp, slot);
-				}
-			}
-			response(session, message, true);
-			return;
+				amountToMove = 1;
+			}			
+			moveCursorItemToSlot(amountToMove);
 		}
+		
+		updateItemStacks();
+		response(session, message, true);
 		/*
-		 * if (currentItem == null) { if (message.getItem() != -1) {
-		 * player.getNetworkSynchronizer().onSlotSet(inv, slot, currentItem);
+		 * if (clickedItem == null) { if (message.getItem() != -1) {
+		 * player.getNetworkSynchronizer().onSlotSet(inv, slot, clickedItem);
 		 * response(session, message, false); return; } } else if (message.getItem()
-		 * != currentItem.getMaterial().getId() || message.getCount() !=
-		 * currentItem.getAmount() || message.getDamage() != currentItem.getData())
-		 * { player.getNetworkSynchronizer().onSlotSet(inv, slot, currentItem);
+		 * != clickedItem.getMaterial().getId() || message.getCount() !=
+		 * clickedItem.getAmount() || message.getDamage() != clickedItem.getData())
+		 * { player.getNetworkSynchronizer().onSlotSet(inv, slot, clickedItem);
 		 * response(session, message, false); return; }
 		 *
 		 * if (message.isShift()) { //if (inv ==
 		 * player.getInventory().getOpenWindow()) { // TODO: if player has e.g.
 		 * chest open //} { if (slot < 9) { for (int i = 9; i < 36; ++i) { if
 		 * (inv.getItem(i) == null) { // TODO: deal with item stacks
-		 * inv.setItem(currentItem, i); inv.setItem(null, slot); response(session,
+		 * inv.setItem(clickedItem, i); inv.setItem(null, slot); response(session,
 		 * message, true); return; } } } else { for (int i = 0; i < 9; ++i) { if
 		 * (inv.getItem(i) == null) { // TODO: deal with item stacks
-		 * inv.setItem(currentItem, i); inv.setItem(null, slot); response(session,
+		 * inv.setItem(clickedItem, i); inv.setItem(null, slot); response(session,
 		 * message, true); return; } } } } response(session, message, false);
 		 * return; }
 		 *
@@ -210,12 +150,82 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		 * response(session, message, false); return; }
 		 *
 		 * response(session, message, true); inv.setItem(slot,
-		 * player.getItemOnCursor()); player.setItemOnCursor(currentItem);
+		 * player.getItemOnCursor()); player.setItemOnCursor(clickedItem);
 		 *
 		 * if (inv == player.getInventory().getCraftingInventory() && slot ==
-		 * CraftingInventory.RESULT_SLOT && currentItem != null) {
+		 * CraftingInventory.RESULT_SLOT && clickedItem != null) {
 		 * player.getInventory().getCraftingInventory().craft(); }
 		 */
+	}
+	
+	private void moveCursorItemToSlot(int maxAmount) {
+		int cursorAmount = cursorStack.getAmount();
+		int moveMax = Math.min(cursorAmount, maxAmount);
+		moveMax = Math.min(moveMax, slotStack.getMaterial().getMaxStackSize() - slotStack.getAmount());
+		int newAmount = slotStack.getAmount() + moveMax;
+		if (moveMax > 0) {
+			int newCursorAmount = cursorAmount - moveMax;
+			if (newCursorAmount == 0)
+				cursorStack = null;
+			else
+				cursorStack.setAmount(newCursorAmount);
+			slotStack.setAmount(newAmount);			
+		}
+		
+	}
+
+	private void splitSlotStack() {
+		int amount = slotStack.getAmount();
+		cursorStack = slotStack.clone();
+		cursorStack.setAmount((amount+1)/2); // round up by 1 if odd
+		slotStack.setAmount(amount - cursorStack.getAmount()); 
+		if (slotStack.getAmount() == 0)
+			slotStack = null;
+	}
+	
+	private void swapStacks() {
+		ItemStack tmp = null;
+		if (slotStack != null)
+			tmp = slotStack.clone();
+		slotStack = cursorStack;
+		cursorStack = tmp;
+		updateItemStacks();
+	}
+	
+	private void updateItemStacks() {
+		if (cursorStack != null && cursorStack.getAmount() == 0)
+			cursorStack = null;
+		if (slotStack != null && slotStack.getAmount() == 0)
+			slotStack = null;
+		vplayer.setItemOnCursor(cursorStack);
+		inventory.setItem(slotStack, clickedSlot);
+	}
+	
+	private void moveShiftClickedStack() {
+		int l1, l2;
+		if (clickedSlot < 9) {
+			l1 = 0;
+			l2 = 8;
+			player.sendMessage("You shifted in your quickbar");
+		} else {
+			l1 = 9;
+			l2 = inventory.getSize() - 1;
+			player.sendMessage("You shifted in your main inventory!");
+		}
+		Set<Integer> hiddenSlots = new HashSet<Integer>();
+		for (int i = l1; i <= l2; i++) {
+			if (inventory.isHiddenSlot(i)) {
+				hiddenSlots.add(i);
+			}
+			inventory.setHiddenSlot(i, true);
+		}
+		inventory.addItem(slotStack, false);
+		inventory.setItem(slotStack, clickedSlot);
+		for (int i = l1; i <= l2; i++) {
+			if (!(hiddenSlots.contains(i))) {
+				inventory.setHiddenSlot(i, false);
+			}
+		}
 	}
 
 	private void response(Session session, WindowClickMessage message, boolean success) {

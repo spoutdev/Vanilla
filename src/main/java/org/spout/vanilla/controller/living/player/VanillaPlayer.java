@@ -172,12 +172,48 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	/**
+	 * Sets the hunger of the player attached to the controller.
+	 *
+	 * @param hunger
+	 */
+	public void setHunger(short hunger) {
+		this.hunger = hunger;
+	}
+
+	/**
 	 * Returns the food saturation level of the player attached to the controller. The food bar "jitters" when the bar reaches 0.
 	 *
 	 * @return food saturation level
 	 */
 	public float getFoodSaturation() {
 		return foodSaturation;
+	}
+
+	/**
+	 * Sets the food saturation level of the player attached to the controller.
+	 *
+	 * @param foodSaturation
+	 */
+	public void setFoodSaturation(float foodSaturation) {
+		this.foodSaturation = foodSaturation;
+	}
+
+	/**
+	 * Returns the exhaustion of the player attached to the controller.
+	 *
+	 * @return exhaustion
+	 */
+	public float getExhaustion() {
+		return exhaustion;
+	}
+
+	/**
+	 * Sets the exhaustion of the player attached to the controller.
+	 *
+	 * @param exhaustion
+	 */
+	public void setExhaustion(float exhaustion) {
+		this.exhaustion = exhaustion;
 	}
 
 	/**

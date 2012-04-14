@@ -60,6 +60,7 @@ import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.protocol.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.protocol.event.entity.EntityMetadataEvent;
 import org.spout.vanilla.protocol.event.entity.player.PlayerHealthEvent;
 import org.spout.vanilla.protocol.event.entity.player.PlayerListEvent;
 import org.spout.vanilla.protocol.event.entity.player.SpawnPlayerEvent;
@@ -495,5 +496,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@EventHandler
 	public void sendPlayerListUpdate(PlayerListEvent event) {
 		session.send(new PlayerListMessage(event.getPlayerName(), event.playerIsOnline(), event.getPing()));
+	}
+
+	@EventHandler
+	public void sendEntityMetadata(EntityMetadataEvent event) {
+		session.send(new EntityMetadataMessage(event.getEntityId(), event.getParameters()));
 	}
 }

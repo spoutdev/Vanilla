@@ -25,28 +25,77 @@
  */
 package org.spout.vanilla.controller.living;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.player.Player;
+import org.spout.api.util.Parameter;
 import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.vanilla.protocol.event.entity.EntityMetadataEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Creature extends Living {
+	private boolean baby = false;
+	private long timeUntilAdult = 0;
+
 	protected Creature(VanillaControllerType type) {
 		super(type);
 	}
+	
+	@Override
+	public void onTick(float dt) {
+		super.onTick(dt);
 
-	/**
-	 * Gets the amount of time before the creature is fully grown. Fully grown is 0 and not grown is -23999.
-	 *
-	 * @return time until grown.
-	 */
-	public int getTimeUntilAdult() {
-		return getParent().getData("CreatureTimeUntilAdult").asInt();
+		// Keep track of growth
+		if (timeUntilAdult < 0) {
+			baby = true;
+			timeUntilAdult++;
+			if (timeUntilAdult >= 0) {
+				baby = false;
+				List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
+				parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 12, (int) timeUntilAdult));
+				Entity parent = getParent();
+				for (Player player : parent.getWorld().getPlayers()) {
+					player.getNetworkSynchronizer().callProtocolEvent(new EntityMetadataEvent(parent.getId(), parameters));
+				}
+			}
+		}
 	}
 
 	/**
-	 * Sets the amount of time before the creature is fully grown. Fully grown is 0 and not grown is -23999.
+	 * Sets if the entity is a baby.
 	 *
-	 * @param time
+	 * @param baby
 	 */
-	public void setTimeUntilAdult(int time) {
-		getParent().setData("CreatureTimeUntilAdult", time);
+	public void setBaby(boolean baby) {
+		this.baby = baby;
+		this.timeUntilAdult = -23999;
+	}
+
+	/**
+	 * Whether or not the creature is a baby.
+	 *
+	 * @return true if a baby
+	 */
+	public boolean isBaby() {
+		return baby;
+	}
+
+	/**
+	 * Returns the amount of time until the baby is an adult. Fully grown is 0 and not grown is 23999.
+	 *
+	 * @return time until adult
+	 */
+	public long getTimeUntilAdult() {
+		return Math.abs(timeUntilAdult);
+	}
+
+	/**
+	 * Sets the time until the entity is an adult. Fully grown is 0 and not grown is 23999.
+	 *
+	 * @param timeUntilAdult
+	 */
+	public void setTimeUntilAdult(long timeUntilAdult) {
+		this.timeUntilAdult -= timeUntilAdult;
 	}
 }

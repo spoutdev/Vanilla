@@ -51,13 +51,13 @@ public class Shears extends GenericTool {
 		}
 
 		Sheep sheep = (Sheep) other.getController();
-		if (sheep.isSheared()) {
+		if (sheep.isSheared() || sheep.isBaby()) {
+			System.out.println("Debug");
 			return;
 		}
 
-		other.setData("SheepSheared", true);
-
-		short col = (short) other.getData("SheepColor").asInt();
+		sheep.setSheared(true);
+		short col = sheep.getColor().getData();
 
 		//TODO: use proper wool constant
 		other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(Material.get((short) 35), col, rand.nextInt(3) + 1), other.getPosition().normalize()));

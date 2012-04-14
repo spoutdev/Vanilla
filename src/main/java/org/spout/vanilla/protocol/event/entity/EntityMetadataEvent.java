@@ -23,34 +23,31 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.event;
+package org.spout.vanilla.protocol.event.entity;
 
 import org.spout.api.protocol.event.ProtocolEvent;
-import org.spout.vanilla.protocol.msg.HealthMessage;
+import org.spout.api.util.Parameter;
 
-public class HealthEvent extends ProtocolEvent {
-	private final short health, food;
-	private final float saturation;
+import java.util.List;
 
-	public HealthEvent(short health, short food, float saturation) {
-		this.health = health;
-		this.food = food;
-		this.saturation = saturation;
+public class EntityMetadataEvent extends ProtocolEvent {
+	private final int entityId;
+	private List<Parameter<?>> parameters;
+	
+	public EntityMetadataEvent(int entityId, List<Parameter<?>> parameters) {
+		this.entityId = entityId;
+		this.parameters = parameters;
 	}
-
-	public HealthEvent(HealthMessage message) {
-		this(message.getHealth(), message.getFood(), message.getFoodSaturation());
+	
+	public int getEntityId() {
+		return entityId;
 	}
-
-	public short getHealth() {
-		return health;
+	
+	public List<Parameter<?>> getParameters() {
+		return parameters;
 	}
-
-	public short getFood() {
-		return food;
-	}
-
-	public float getFoodSaturation() {
-		return saturation;
+	
+	public void setParameters(List<Parameter<?>> parameters) {
+		this.parameters = parameters;
 	}
 }

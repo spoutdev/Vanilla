@@ -29,6 +29,7 @@ import org.spout.api.Source;
 import org.spout.api.event.entity.EntityControllerChangeEvent;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.GameMode;
 import org.spout.vanilla.controller.source.ControllerInitialization;
 import org.spout.vanilla.controller.source.HealthChangeReason;
@@ -132,11 +133,10 @@ public class VanillaEventListener implements Listener {
 				spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
 			}
 		}
-
-		// debug code
-		if (c instanceof Creature) {
-			Creature creature = (Creature) c;
-			creature.setTimeUntilAdult(-23999);
+		
+		if (c instanceof Sheep) {
+			Sheep sheep = (Sheep) c;
+			sheep.setTimeUntilAdult(100);
 		}
 
 		if (c instanceof Ghast) {

@@ -55,7 +55,7 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
 		if (controller instanceof Creature) {
 			Creature creature = (Creature) controller;
-			parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 12, creature.getTimeUntilAdult()));
+			parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 12, (int) creature.getTimeUntilAdult() * -1));
 		}
 
 		return parameters;

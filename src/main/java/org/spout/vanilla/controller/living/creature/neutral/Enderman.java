@@ -32,7 +32,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
-import org.spout.vanilla.controller.source.Reason;
+import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Enderman extends Creature implements Neutral {
@@ -66,7 +66,7 @@ public class Enderman extends Creature implements Neutral {
 	public void onAttached() {
 		super.onAttached();
 		getParent().setMaxHealth(40);
-		getParent().setHealth(40, new Reason(Reason.Type.SPAWN));
+		getParent().setHealth(40, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

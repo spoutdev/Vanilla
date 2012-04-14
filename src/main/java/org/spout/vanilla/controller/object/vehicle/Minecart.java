@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.controller.object.vehicle;
 
-import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.Material;
@@ -34,7 +33,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.source.Reason;
+import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.object.Substance;
@@ -83,7 +82,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 	public void onAttached() {
 		super.onAttached();
 		this.setVelocity(new Vector3(0, 0, 0.2));
-		this.getParent().setHealth(40, new Reason(Reason.Type.SPAWN));
+		this.getParent().setHealth(40, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	public void generateRailData(Point position) {
@@ -115,7 +114,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 		//update health to regenerate
 		int health = this.getParent().getHealth();
 		if (health < 40) {
-			this.getParent().setHealth(health + 1, new Reason(Reason.Type.REGENERATION));
+			this.getParent().setHealth(health + 1, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
 		}
 		
 		//get current rails below minecart

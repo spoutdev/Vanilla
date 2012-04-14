@@ -23,44 +23,8 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.hostile;
+package org.spout.vanilla.controller.source;
 
-import java.util.HashSet;
-import java.util.Set;
+public class ControllerInitialization extends Reason {
 
-import org.spout.api.entity.Entity;
-import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Hostile;
-
-public class Creeper extends Creature implements Hostile {
-	private Entity parent;
-	
-	protected Creeper() {
-		super(VanillaControllerTypes.CREEPER);
-	}
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(20);
-		parent.setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
-	}
-
-	@Override
-	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(3);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.GUNPOWDER, count));
-		}
-
-		// TODO: Check if killed by skeleton for music disk
-		return drops;
-	}
 }

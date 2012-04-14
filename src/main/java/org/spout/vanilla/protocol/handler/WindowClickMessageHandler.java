@@ -70,7 +70,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			return;
 		}
 		ItemStack currentItem = inventory.getItem(slot);
-		if (CreativePlayer.is(entity.getController()) && message.getWindowId() == VanillaMessageHandlerUtils.getInventoryId(inv.getClass())) {
+		if (entity.getController() instanceof CreativePlayer && message.getWindowId() == VanillaMessageHandlerUtils.getInventoryId(inv.getClass())) {
 			response(session, message, false);
 			session.getGame().getLogger().log(Level.WARNING, "{0} tried to do an invalid inventory action in Creative mode!", new Object[]{player.getName()});
 			return;

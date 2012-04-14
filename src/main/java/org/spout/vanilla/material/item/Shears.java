@@ -62,7 +62,7 @@ public class Shears extends GenericTool {
 		other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(Material.get((short) 35), col, rand.nextInt(3) + 1), other.getPosition().normalize()));
 
 		ItemStack holding = entity.getInventory().getCurrentItem();
-		if (SurvivalPlayer.is(entity.getController())) {
+		if (entity.getController() instanceof SurvivalPlayer) {
 			holding.setData((short) (holding.getData() + 1));
 			entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
 		}

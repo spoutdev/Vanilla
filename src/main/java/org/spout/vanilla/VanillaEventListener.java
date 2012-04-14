@@ -26,9 +26,11 @@
 package org.spout.vanilla;
 
 import org.spout.api.Source;
+import org.spout.api.event.entity.EntityControllerChangeEvent;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.source.Reason;
+import org.spout.vanilla.controller.source.ControllerInitialization;
+import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 import java.util.Arrays;
@@ -63,7 +65,7 @@ import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.event.HealthEvent;
 import org.spout.vanilla.protocol.event.SpawnPlayerEvent;
-import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
+import org.spout.vanilla.protocol.event.StateChangeEvent;
 import org.spout.vanilla.protocol.msg.UserListItemMessage;
 
 public class VanillaEventListener implements Listener {
@@ -78,19 +80,23 @@ public class VanillaEventListener implements Listener {
 		
 		// Set their mode
 		Player player = event.getPlayer();
-		VanillaPlayer mode = new VanillaPlayer(player);
+		VanillaPlayer mode;
 		if (VanillaConfiguration.PLAYER_DEFAULT_GAMEMODE.getString().equalsIgnoreCase("creative")) {
-			mode.setGameMode(new CreativePlayer(mode),false);
+			mode = new CreativePlayer(player);
 		} else {
-			mode.setGameMode(new SurvivalPlayer(mode),false);
+			mode = new SurvivalPlayer(player);
 		}
 
 		Entity playerEntity = player.getEntity();
-		playerEntity.setController(mode);
+		playerEntity.setController(mode, new ControllerInitialization());
 
 		// Set protocol and send packets
 		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
-		player.getNetworkSynchronizer().callProtocolEvent(new HealthEvent((short) playerEntity.getHealth(), mode.getHunger(), mode.getFoodSaturation()));
+		if (mode instanceof SurvivalPlayer) {
+			SurvivalPlayer s = (SurvivalPlayer) mode;
+			player.getNetworkSynchronizer().callProtocolEvent(new HealthEvent((short) playerEntity.getHealth(), s.getHunger(), s.getFoodSaturation()));
+		}
+
 		for (Player p : playerEntity.getWorld().getPlayers()) {
 			player.getNetworkSynchronizer().callProtocolEvent(new SpawnPlayerEvent(player));
 		}
@@ -154,20 +160,36 @@ public class VanillaEventListener implements Listener {
 			event.setResult(Result.ALLOW);
 		}
 	}
-	
+
 	@EventHandler
 	public void syncHealth(EntityHealthChangeEvent event) {
 		Source source = event.getSource();
-		if (source instanceof Reason && ((Reason) source).getType().equals(Reason.Type.SPAWN)) {
+		if (source instanceof HealthChangeReason && ((HealthChangeReason) source).getType().equals(HealthChangeReason.Type.SPAWN)) {
 			return;
 		}
-		
+
 		Controller c = event.getEntity().getController();
-		if (c instanceof VanillaPlayer) {
-			VanillaPlayer vp = (VanillaPlayer) c;
-			short health = (short) vp.getParent().getHealth();
+		if (c instanceof SurvivalPlayer) {
+			SurvivalPlayer sp = (SurvivalPlayer) c;
+			short health = (short) sp.getParent().getHealth();
 			health += (short) event.getChange();
-			vp.getPlayer().getNetworkSynchronizer().callProtocolEvent(new HealthEvent(health, vp.getHunger(), vp.getFoodSaturation()));
+			sp.getPlayer().getNetworkSynchronizer().callProtocolEvent(new HealthEvent(health, sp.getHunger(), sp.getFoodSaturation()));
 		}
+	}
+
+	@EventHandler
+	public void syncGameMode(EntityControllerChangeEvent event) {
+		Controller c = event.getNewController();
+		if (!(c instanceof VanillaPlayer) || event.getSource() instanceof ControllerInitialization) {
+			return;
+		}
+
+		VanillaPlayer p = (VanillaPlayer) c;
+		byte mode = 0;
+		if (p instanceof CreativePlayer) {
+			mode = 1;
+		}
+
+		p.getPlayer().getNetworkSynchronizer().callProtocolEvent(new StateChangeEvent((byte) 3, mode));
 	}
 }

@@ -43,7 +43,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 	public void handleServer(Session session, Player player, CreativeMessage message) {
 		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
 
-		if (!(CreativePlayer.is(controller))) {
+		if (!(controller instanceof CreativePlayer)) {
 			player.kick("Now now, don't try that here. Won't work.");
 			return;
 		}

@@ -25,38 +25,16 @@
  */
 package org.spout.vanilla.controller.living.player;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.player.Player;
 
-public class CreativePlayer extends GameModeHandler{
+public class CreativePlayer extends VanillaPlayer {
 	
-	public static boolean is(Controller e) {
-		if(e==null)
-			return false;
-		if(!(e instanceof VanillaPlayer))
-			return false;
-		VanillaPlayer vplr = (VanillaPlayer) e;
-		if(!vplr.isSurvival())
-			return true;
-		return false;
-	}
-	
-	public CreativePlayer(VanillaPlayer p) {
-		super(p);
-		p.setFlammable(false);
-	}
-	
-	@Override
-	public void onTick(float dt) {
-		
+	public CreativePlayer(Player player) {
+		super(player);
 	}
 
 	@Override
 	public boolean hasInfiniteResources() {
 		return true;
-	}
-
-	@Override
-	public byte getPacketId() {
-		return 1;
 	}
 }

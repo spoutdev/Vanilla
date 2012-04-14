@@ -47,7 +47,6 @@ import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.living.player.CreativePlayer;
 import org.spout.vanilla.controller.living.player.SurvivalPlayer;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.VanillaSky;
 import org.spout.vanilla.world.Weather;
 
@@ -274,15 +273,14 @@ public class AdministrationCommands {
 			throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
 		}
 
-		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
 		String message;
 		switch (mode) {
 			case 0:
-				controller.setGameMode(new SurvivalPlayer(controller));
+				player.getEntity().setController(new SurvivalPlayer(player));
 				message = "SURVIVAL";
 				break;
 			case 1:
-				controller.setGameMode(new CreativePlayer(controller));
+				player.getEntity().setController(new CreativePlayer(player));
 				message = "CREATIVE";
 				break;
 			default:

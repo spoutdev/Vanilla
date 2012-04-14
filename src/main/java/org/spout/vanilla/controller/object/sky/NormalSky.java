@@ -32,9 +32,8 @@ import org.spout.api.player.Player;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.VanillaSky;
-import org.spout.vanilla.event.world.WeatherChangeEvent;
-import org.spout.vanilla.protocol.event.TimeUpdateProtocolEvent;
-import org.spout.vanilla.protocol.event.WeatherChangeProtocolEvent;
+import org.spout.vanilla.protocol.event.world.TimeUpdateEvent;
+import org.spout.vanilla.protocol.event.world.WeatherChangeEvent;
 import org.spout.vanilla.world.Weather;
 
 public class NormalSky extends VanillaSky {
@@ -49,7 +48,7 @@ public class NormalSky extends VanillaSky {
 	@Override
 	public void updateTime(long time) {
 		Set<Player> players = getParent().getWorld().getPlayers();
-		TimeUpdateProtocolEvent event = new TimeUpdateProtocolEvent(time);
+		TimeUpdateEvent event = new TimeUpdateEvent(time);
 		for (Player player : players) {
 			player.getNetworkSynchronizer().callProtocolEvent(event);
 		}
@@ -57,12 +56,12 @@ public class NormalSky extends VanillaSky {
 
 	@Override
 	public void updateWeather(Weather oldWeather, Weather newWeather) {
-		WeatherChangeEvent event = Spout.getEventManager().callEvent(new WeatherChangeEvent(this, oldWeather, newWeather));
+		org.spout.vanilla.event.world.WeatherChangeEvent event = Spout.getEventManager().callEvent(new org.spout.vanilla.event.world.WeatherChangeEvent(this, oldWeather, newWeather));
 		if (event.isCancelled()) {
 			return;
 		}
 
-		WeatherChangeProtocolEvent protocolEvent = new WeatherChangeProtocolEvent(newWeather);
+		WeatherChangeEvent protocolEvent = new WeatherChangeEvent(newWeather);
 		for (Player player : getParent().getWorld().getPlayers()) {
 			if (player.getNetworkSynchronizer() != null) {
 				player.getNetworkSynchronizer().callProtocolEvent(protocolEvent);

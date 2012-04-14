@@ -28,7 +28,7 @@ package org.spout.vanilla.controller.living.player;
 import org.spout.api.entity.Entity;
 import org.spout.api.player.Player;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.protocol.event.HealthEvent;
+import org.spout.vanilla.protocol.event.entity.player.PlayerHealthEvent;
 
 public class SurvivalPlayer extends VanillaPlayer {
 	private boolean poisoned = false;
@@ -92,7 +92,7 @@ public class SurvivalPlayer extends VanillaPlayer {
 		System.out.println("Health: " + health);
 		System.out.println("Exhaustion: " + exhaustion);
 		parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
-		getPlayer().getNetworkSynchronizer().callProtocolEvent(new HealthEvent(health, hunger, foodSaturation));
+		getPlayer().getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent(health, hunger, foodSaturation));
 	}
 
 	/**

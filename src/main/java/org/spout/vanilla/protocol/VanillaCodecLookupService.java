@@ -92,7 +92,7 @@ import org.spout.vanilla.protocol.codec.TimeCodec;
 import org.spout.vanilla.protocol.codec.TransactionCodec;
 import org.spout.vanilla.protocol.codec.UpdateSignCodec;
 import org.spout.vanilla.protocol.codec.UseBedCodec;
-import org.spout.vanilla.protocol.codec.UserListItemCodec;
+import org.spout.vanilla.protocol.codec.PlayerListCodec;
 import org.spout.vanilla.protocol.codec.WindowClickCodec;
 
 public class VanillaCodecLookupService extends CodecLookupService {
@@ -225,7 +225,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0xC8 */
 			bind(StatisticCodec.class);
 			/* 0xC9 */
-			bind(UserListItemCodec.class);
+			bind(PlayerListCodec.class);
 			/* 0xCA */
 			bind(PlayerAbilityCodec.class);
 			/* 0xFA */

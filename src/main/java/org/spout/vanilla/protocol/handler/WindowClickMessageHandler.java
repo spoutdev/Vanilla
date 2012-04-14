@@ -37,7 +37,6 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.living.player.CreativePlayer;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
@@ -70,7 +69,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			return;
 		}
 		ItemStack currentItem = inventory.getItem(slot);
-		if (entity.getController() instanceof CreativePlayer && message.getWindowId() == VanillaMessageHandlerUtils.getInventoryId(inv.getClass())) {
+		if (entity.getController() instanceof VanillaPlayer && !((VanillaPlayer) entity.getController()).isSurvival() && message.getWindowId() == VanillaMessageHandlerUtils.getInventoryId(inv.getClass())) {
 			response(session, message, false);
 			session.getGame().getLogger().log(Level.WARNING, "{0} tried to do an invalid inventory action in Creative mode!", new Object[]{player.getName()});
 			return;

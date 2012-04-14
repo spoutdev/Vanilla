@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Spout;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.Inventory;
@@ -43,32 +44,37 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.protocol.event.entity.player.PlayerHealthEvent;
 import org.spout.vanilla.protocol.event.entity.player.PlayerListEvent;
+import org.spout.vanilla.protocol.event.world.StateChangeEvent;
 import org.spout.vanilla.protocol.msg.PingMessage;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to
  * Vanilla.
  */
-public abstract class VanillaPlayer extends Human implements PlayerController {
+public class VanillaPlayer extends Human implements PlayerController {
 	protected final Player owner;
-	protected int unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt();
-	protected int lastPing = 0;
-	protected int lastUserList = 0;
-	protected short count = 0;
-	protected short ping;
-	protected boolean sneaking, sprinting, onGround;
-	protected final Vector3 moveSpeed = new Vector3(10, 0, 0);
-	protected final Vector3 horizSpeed = new Vector3(0, 0, -10);
+	protected long unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt(), lastPing = 0, lastUserList = 0, foodTimer = 0;
+	protected short count = 0, ping, hunger = 20;
+	protected float foodSaturation = 5.0f, exhaustion = 0.0f;
+	protected boolean sneaking, sprinting, onGround, poisoned;
+	protected final Vector3 moveSpeed = new Vector3(10, 0, 0), horizSpeed = new Vector3(0, 0, -10);
 	protected Inventory activeInventory;
 	protected ItemStack itemOnCursor;
 	protected String tabListName;
+	protected GameMode gameMode;
 
-	public VanillaPlayer(Player p) {
+	public VanillaPlayer(Player p, GameMode gameMode) {
 		super(VanillaControllerTypes.PLAYER);
 		owner = p;
 		tabListName = owner.getName();
+		this.gameMode = gameMode;
 		p.getEntity().setInventorySize(45);
+	}
+	
+	public VanillaPlayer(Player p) {
+		this(p, GameMode.SURVIVAL);
 	}
 
 	@Override
@@ -123,6 +129,69 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 			lastUserList = 0;
 		}
+
+		if (isSurvival()) {
+			survivalTick(dt);
+		} else {
+			creativeTick(dt);
+		}
+	}
+	
+	private void survivalTick(float dt) {
+		exhaustion += 0.1;
+		if (sprinting) {
+			exhaustion += 0.1;
+		}
+
+		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
+
+		if (poisoned) {
+			exhaustion += 15.0;
+		}
+
+		// Track hunger
+		foodTimer++;
+		if (foodTimer >= 80) {
+			updateHealth();
+			foodTimer = 0;
+		}
+	}
+
+	private void updateHealth() {
+		short health;
+		Entity parent = getParent();
+		foodSaturation -= 0.1;
+		health = (short) parent.getHealth();
+		if (foodSaturation <= 0) {
+			hunger--;
+		} else {
+			health++;
+		}
+
+		if (exhaustion >= 4.0) {
+			exhaustion = 0;
+			if (foodSaturation <= 0) {
+				hunger--;
+			} else {
+				foodSaturation--;
+			}
+		}
+
+		if (hunger <= 0) {
+			health--;
+		}
+
+		System.out.println("Performing health/hunger update...");
+		System.out.println("Food saturation: " + foodSaturation);
+		System.out.println("Hunger: " + hunger);
+		System.out.println("Health: " + health);
+		System.out.println("Exhaustion: " + exhaustion);
+		parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
+		getPlayer().getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent(health, hunger, foodSaturation));
+	}
+	
+	private void creativeTick(float dt) {
+		
 	}
 
 	/**
@@ -148,6 +217,11 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 
 		inventory.setCurrentSlot(0);
 		return new PlayerInventory(size);
+	}
+
+	@Override
+	public boolean hasInfiniteResources() {
+		return gameMode.equals(GameMode.CREATIVE);
 	}
 
 	public void resetTimeoutTicks() {
@@ -254,6 +328,106 @@ public abstract class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void setTabListName(String tabListName) {
 		this.tabListName = tabListName;
+	}
+
+	/**
+	 * Returns the current game-mode the controller is in.
+	 *
+	 * @return game mode of controller
+	 */
+	public GameMode getGameMode() {
+		return gameMode;
+	}
+
+	/**
+	 * Sets the current game-mode the controller is in.
+	 *
+	 * @param gameMode
+	 */
+	public void setGameMode(GameMode gameMode) {
+		this.gameMode = gameMode;
+		owner.getNetworkSynchronizer().callProtocolEvent(new StateChangeEvent(StateChangeEvent.Reason.CHANGE_GAME_MODE, gameMode));
+	}
+
+	/**
+	 * Whether or not the controller is in survival mode.
+	 *
+	 * @return true if in survival mode
+	 */
+	public boolean isSurvival() {
+		return gameMode.equals(GameMode.SURVIVAL);
+	}
+
+	/**
+	 * Whether or not the controller is poisoned.
+	 *
+	 * @return true if poisoned.
+	 */
+	public boolean isPoisoned() {
+		return poisoned;
+	}
+
+	/**
+	 * Sets whether or not the controller is poisoned.
+	 *
+	 * @param poisoned
+	 */
+	public void setPoisoned(boolean poisoned) {
+		this.poisoned = poisoned;
+	}
+
+	/**
+	 * Returns the hunger of the player attached to the controller.
+	 *
+	 * @return hunger
+	 */
+	public short getHunger() {
+		return hunger;
+	}
+
+	/**
+	 * Sets the hunger of the controller.
+	 *
+	 * @param hunger
+	 */
+	public void setHunger(short hunger) {
+		this.hunger = hunger;
+	}
+
+	/**
+	 * Returns the food saturation level of the player attached to the controller. The food bar "jitters" when the bar reaches 0.
+	 *
+	 * @return food saturation level
+	 */
+	public float getFoodSaturation() {
+		return this.foodSaturation;
+	}
+
+	/**
+	 * Sets the food saturation of the controller. The food bar "jitters" when the bar reaches 0.
+	 *
+	 * @param foodSaturation
+	 */
+	public void setFoodSaturation(float foodSaturation) {
+		this.foodSaturation = foodSaturation;
+	}
+
+	/**
+	 * Returns the exhaustion of the controller; affects hunger loss.
+	 *
+	 * @return
+	 */
+	public float getExhaustion() {
+		return exhaustion;
+	}
+
+	/**
+	 * Sets the exhaustion of the controller; affects hunger loss.
+	 *
+	 * @param exhaustion
+	 */
+	public void setExhaustion(float exhaustion) {
+		this.exhaustion = exhaustion;
 	}
 
 	public Inventory getActiveInventory() {

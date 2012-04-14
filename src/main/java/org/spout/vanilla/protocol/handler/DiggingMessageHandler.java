@@ -35,8 +35,7 @@ import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.controller.living.player.CreativePlayer;
-import org.spout.vanilla.controller.living.player.SurvivalPlayer;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.generic.GenericBlock;
@@ -91,7 +90,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 					return;
 				}
 			}*/
-			if (player.getEntity().getController() instanceof CreativePlayer) {
+			if (player.getEntity().getController() instanceof VanillaPlayer && !((VanillaPlayer) player.getEntity().getController()).isSurvival()) {
 				blockBroken = true;
 			}
 		} else if (message.getState() == DiggingMessage.STATE_DONE_DIGGING) {
@@ -104,7 +103,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			oldMat.onDestroy(world, x, y, z);
 			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, player);
 
-			if (player.getEntity().getController() instanceof SurvivalPlayer) {
+			if (player.getEntity().getController() instanceof VanillaPlayer && ((VanillaPlayer) player.getEntity().getController()).isSurvival()) {
 				Material dropMat = oldMat;
 				int count = 1;
 				if (oldMat instanceof GenericBlock) {

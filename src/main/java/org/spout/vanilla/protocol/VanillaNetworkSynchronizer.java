@@ -55,7 +55,6 @@ import org.spout.api.util.map.TIntPairHashSet;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.controller.living.player.SurvivalPlayer;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.nether.NetherGenerator;
@@ -291,7 +290,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			first = false;
 			int entityId = owner.getEntity().getId();
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
-			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), vc instanceof SurvivalPlayer ? 0 : 1, dimensionBit, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
+			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), vc.isSurvival() ? 0 : 1, dimensionBit, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
 			owner.getSession().send(idMsg, true);
 			//Normal messages may be sent
 			owner.getSession().setState(State.GAME);
@@ -308,7 +307,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			entity.getInventory().addViewer(this);
 		} else {
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
-			owner.getSession().send(new RespawnMessage(dimensionBit, (byte) 0, (byte) (vc instanceof SurvivalPlayer ? 0 : 1), world.getHeight(), "DEFAULT"));
+			owner.getSession().send(new RespawnMessage(dimensionBit, (byte) 0, (byte) (vc.isSurvival() ? 0 : 1), world.getHeight(), "DEFAULT"));
 		}
 
 		if (world != null) {
@@ -490,7 +489,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public void sendStateChange(StateChangeEvent event) {
-		session.send(new StateChangeMessage(event.getReason().getId(), event.getGameMode().getId()));
+		session.send(new StateChangeMessage(event.getReason().getId(), event.getGameMode()));
 	}
 
 	@EventHandler

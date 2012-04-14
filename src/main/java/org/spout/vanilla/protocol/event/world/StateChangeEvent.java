@@ -26,6 +26,7 @@
 package org.spout.vanilla.protocol.event.world;
 
 import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.vanilla.controller.living.player.GameMode;
 
 public class StateChangeEvent extends ProtocolEvent {
 	private Reason reason;
@@ -52,12 +53,8 @@ public class StateChangeEvent extends ProtocolEvent {
 		this.reason = reason;
 	}
 	
-	public GameMode getGameMode() {
-		if (gameMode != 1) {
-			return GameMode.SURVIVAL;
-		}
-
-		return GameMode.CREATIVE;
+	public byte getGameMode() {
+		return gameMode;
 	}
 
 	public void setGameMode(GameMode gameMode) {
@@ -77,21 +74,6 @@ public class StateChangeEvent extends ProtocolEvent {
 			this.id = id;
 		}
 		
-		public byte getId() {
-			return id;
-		}
-	}
-
-	public enum GameMode {
-		CREATIVE((byte) 0),
-		SURVIVAL((byte) 1);
-
-		private final byte id;
-
-		private GameMode(byte id) {
-			this.id = id;
-		}
-
 		public byte getId() {
 			return id;
 		}

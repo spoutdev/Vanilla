@@ -23,23 +23,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.player;
+package org.spout.vanilla.protocol.event;
 
-public abstract class GameModeHandler {
+import org.spout.api.protocol.event.ProtocolEvent;
 
-	private VanillaPlayer player;
+public class StateChangeEvent extends ProtocolEvent {
+	private final byte reasonCode, gameMode;
 	
-	public GameModeHandler(VanillaPlayer player) {
-		this.player = player;
-	}
-	
-	public VanillaPlayer getPlayer() {
-		return player;
+	public StateChangeEvent(byte reasonCode, byte gameMode) {
+		this.reasonCode = reasonCode;
+		this.gameMode = gameMode;
 	}
 
-	public abstract void onTick(float dt);
-
-	public abstract boolean hasInfiniteResources();
+	public StateChangeEvent(byte reasonCode) {
+		this(reasonCode, (byte) -1);
+	}
 	
-	public abstract byte getPacketId();
+	public byte getReasonCode() {
+		return reasonCode;
+	}
+	
+	public byte getGameMode() {
+		return gameMode;
+	}
 }

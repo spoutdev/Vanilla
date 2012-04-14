@@ -27,40 +27,5 @@ package org.spout.vanilla.controller.source;
 
 import org.spout.api.Source;
 
-/**
- * Represents the source of a health change.
- */
-public class Reason implements Source {
-	private final Type type;
-	
-	public Reason(Type type) {
-		this.type = type;
-	}
-
-	/**
-	 * Returns the type of reason.
-	 *
-	 * @return
-	 */
-	public Type getType() {
-		return type;
-	}
-
-	/**
-	 * Represents a reason why the health would be changed.
-	 */
-	public enum Type {
-		/**
-		 * Health changed due to regeneration cycle.
-		 */
-		REGENERATION,
-		/**
-		 * Health changed due to the entity spawning.
-		 */
-		SPAWN,
-		/**
-		 * Health changed due to some unknown reason.
-		 */
-		UNKNOWN;
-	}
+public abstract class Reason implements Source {
 }

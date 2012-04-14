@@ -31,7 +31,7 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.source.Reason;
+import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -53,7 +53,7 @@ public class Slime extends Creature implements Hostile {
 		int health = size > 0 ? size * 4 : 1;
 		parent.setData("SlimeSize", size);
 		parent.setMaxHealth(health);
-		parent.setHealth(health, new Reason(Reason.Type.SPAWN));
+		parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	public Slime() {

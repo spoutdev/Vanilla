@@ -34,7 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.controller.source.Reason;
+import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Villager extends Creature implements Passive {
 	private Entity parent;
@@ -48,7 +48,7 @@ public class Villager extends Creature implements Passive {
 		super.onAttached();
 		parent = getParent();
 		parent.setMaxHealth(20);
-		parent.setHealth(20, new Reason(Reason.Type.SPAWN));
+		parent.setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

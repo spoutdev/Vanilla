@@ -29,7 +29,7 @@ import org.spout.api.entity.Entity;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Utility;
-import org.spout.vanilla.controller.source.Reason;
+import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class IronGolem extends Creature implements Utility {
 	private Entity parent;
@@ -43,6 +43,6 @@ public class IronGolem extends Creature implements Utility {
 		super.onAttached();
 		parent = getParent();
 		parent.setMaxHealth(100);
-		parent.setHealth(100, new Reason(Reason.Type.SPAWN));
+		parent.setHealth(100, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 }

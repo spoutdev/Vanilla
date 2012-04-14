@@ -46,7 +46,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.controller.source.Reason;
+import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 
@@ -331,7 +331,7 @@ public abstract class VanillaController extends ActionController {
 	 * @param amount amount the controller will be damaged by.
 	 */
 	public void damage(int amount) {
-		getParent().setHealth(getParent().getHealth() - amount, new Reason(Reason.Type.UNKNOWN));
+		getParent().setHealth(getParent().getHealth() - amount, new HealthChangeReason(HealthChangeReason.Type.UNKNOWN));
 	}
 
 	/**

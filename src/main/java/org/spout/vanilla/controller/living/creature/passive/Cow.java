@@ -31,7 +31,7 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.source.Reason;
+import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -54,7 +54,7 @@ public class Cow extends Creature implements Passive {
 		super.onAttached();
 		parent = getParent();
 		parent.setMaxHealth(10);
-		parent.setHealth(10, new Reason(Reason.Type.SPAWN));
+		parent.setHealth(10, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

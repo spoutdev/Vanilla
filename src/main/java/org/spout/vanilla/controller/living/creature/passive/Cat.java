@@ -33,6 +33,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.living.creature.Tamed;
+import org.spout.vanilla.controller.source.Reason;
 
 public class Cat extends Ocelot implements Tamed, Passive {
 	private Entity sovereign = null;
@@ -43,7 +44,7 @@ public class Cat extends Ocelot implements Tamed, Passive {
 		super.onAttached();
 		parent = getParent();
 		parent.setMaxHealth(10);
-		parent.setHealth(10);
+		parent.setHealth(10, new Reason(Reason.Type.SPAWN));
 	}
 
 	@Override

@@ -41,6 +41,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.controller.source.Reason;
 
 public class TestCommands {
 	private VanillaPlugin plugin;
@@ -56,7 +57,7 @@ public class TestCommands {
 		}
 		
 		Player player = (Player) source;
-		player.getEntity().setHealth(args.getInteger(0));
+		player.getEntity().setHealth(args.getInteger(0), new Reason(Reason.Type.UNKNOWN));
 	}
 
 	@Command(aliases = {"spawn"}, usage = "<controller>", desc = "Spawn a controller!", min = 1, max = 1)

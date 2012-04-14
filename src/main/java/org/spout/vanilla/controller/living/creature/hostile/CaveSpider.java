@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import org.spout.api.entity.Entity;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Hostile;
+import org.spout.vanilla.controller.source.Reason;
 
 public class CaveSpider extends Spider implements Hostile {
 	private Entity parent;
@@ -41,6 +42,6 @@ public class CaveSpider extends Spider implements Hostile {
 		super.onAttached();
 		parent = getParent();
 		parent.setMaxHealth(12);
-		parent.setHealth(12);
+		parent.setHealth(12, new Reason(Reason.Type.SPAWN));
 	}
 }

@@ -27,7 +27,6 @@ package org.spout.vanilla;
 
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.event.entity.VanillaEntityHealthChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 
 import java.util.Arrays;

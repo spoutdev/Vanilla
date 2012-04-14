@@ -43,6 +43,7 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
+import org.spout.vanilla.controller.source.Reason;
 import org.spout.vanilla.protocol.event.HealthEvent;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
@@ -85,7 +86,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
 		getParent().setMaxHealth(20);
-		getParent().setHealth(20);
+		getParent().setHealth(20, new Reason(Reason.Type.SPAWN));
 		// TODO: Persistent health
 	}
 
@@ -371,7 +372,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		System.out.println("Hunger: " + hunger);
 		System.out.println("Health: " + health);
 		System.out.println("Exhaustion: " + exhaustion);
-		parent.setHealth(health);
+		parent.setHealth(health, new Reason(Reason.Type.REGENERATION));
 		getPlayer().getNetworkSynchronizer().callProtocolEvent(new HealthEvent(health, hunger, foodSaturation));
 	}
 }

@@ -35,6 +35,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.Tameable;
+import org.spout.vanilla.controller.source.Reason;
 
 public class Wolf extends Creature implements Tameable, Neutral {
 	private Entity parent;
@@ -48,7 +49,7 @@ public class Wolf extends Creature implements Tameable, Neutral {
 		super.onAttached();
 		parent = getParent();
 		parent.setMaxHealth(8);
-		parent.setHealth(8);
+		parent.setHealth(8, new Reason(Reason.Type.SPAWN));
 		// TODO: Health gets increased to 20 when tamed.
 	}
 

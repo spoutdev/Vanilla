@@ -34,6 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
+import org.spout.vanilla.controller.source.Reason;
 
 public class Silverfish extends Creature implements Hostile {
 	private Entity parent;
@@ -47,7 +48,7 @@ public class Silverfish extends Creature implements Hostile {
 		super.onAttached();
 		parent = getParent();
 		parent.setMaxHealth(8);
-		parent.setHealth(8);
+		parent.setHealth(8, new Reason(Reason.Type.SPAWN));
 	}
 
 	@Override

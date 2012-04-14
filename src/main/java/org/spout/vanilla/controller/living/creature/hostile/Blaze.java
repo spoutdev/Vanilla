@@ -31,6 +31,7 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.controller.source.Reason;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
@@ -48,7 +49,7 @@ public class Blaze extends Creature implements Hostile {
 		super.onAttached();
 		parent = getParent();
 		parent.setMaxHealth(20);
-		parent.setHealth(20);
+		parent.setHealth(20, new Reason(Reason.Type.SPAWN));
 	}
 
 	@Override

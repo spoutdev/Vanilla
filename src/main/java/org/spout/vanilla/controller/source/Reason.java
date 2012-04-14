@@ -23,36 +23,44 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.passive;
+package org.spout.vanilla.controller.source;
 
-import java.util.Collections;
-import java.util.Set;
+import org.spout.api.Source;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.controller.source.Reason;
-
-public class Villager extends Creature implements Passive {
-	private Entity parent;
+/**
+ * Represents the source of a health change.
+ */
+public class Reason implements Source {
+	private final Type type;
 	
-	protected Villager() {
-		super(VanillaControllerTypes.VILLAGER);
+	public Reason(Type type) {
+		this.type = type;
 	}
 
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(20);
-		parent.setHealth(20, new Reason(Reason.Type.SPAWN));
+	/**
+	 * Returns the type of reason.
+	 *
+	 * @return
+	 */
+	public Type getType() {
+		return type;
 	}
 
-	@Override
-	public Set<ItemStack> getDrops() {
-		return Collections.emptySet();
+	/**
+	 * Represents a reason why the health would be changed.
+	 */
+	public enum Type {
+		/**
+		 * Health changed due to regeneration cycle.
+		 */
+		REGENERATION,
+		/**
+		 * Health changed due to the entity spawning.
+		 */
+		SPAWN,
+		/**
+		 * Health changed due to some unknown reason.
+		 */
+		UNKNOWN;
 	}
 }

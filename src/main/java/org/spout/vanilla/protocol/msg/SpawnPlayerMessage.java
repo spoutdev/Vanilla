@@ -29,32 +29,29 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 
 public final class SpawnPlayerMessage extends Message {
-	private final int id;
+	private final int id, x, y, z, yaw, pitch, item;
 	private final String name;
-	private final int x, y, z;
-	private final int rotation, pitch;
-	private final int item;
 
-	public SpawnPlayerMessage(int id, String name, Vector3 position, int rotation, int pitch, int item) {
-		this(id, name, (int) position.getX(), (int) position.getY(), (int) position.getZ(), rotation, pitch, item);
+	public SpawnPlayerMessage(int id, String name, Vector3 position, int yaw, int pitch, int item) {
+		this(id, name, (int) position.getX(), (int) position.getY(), (int) position.getZ(), yaw, pitch, item);
 	}
 
-	public SpawnPlayerMessage(int id, String name, int x, int y, int z, int rotation, int pitch, int item) {
+	public SpawnPlayerMessage(int id, String name, int x, int y, int z, int yaw, int pitch, int item) {
 		this.id = id;
 		this.name = name;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.rotation = rotation;
+		this.yaw = yaw;
 		this.pitch = pitch;
 		this.item = item;
 	}
 
-	public int getId() {
+	public int getEntityId() {
 		return id;
 	}
 
-	public String getName() {
+	public String getPlayerName() {
 		return name;
 	}
 
@@ -70,20 +67,20 @@ public final class SpawnPlayerMessage extends Message {
 		return z;
 	}
 
-	public int getRotation() {
-		return rotation;
+	public int getYaw() {
+		return yaw;
 	}
 
 	public int getPitch() {
 		return pitch;
 	}
 
-	public int getItem() {
+	public int getItemId() {
 		return item;
 	}
 
 	@Override
 	public String toString() {
-		return "SpawnPlayerMessage{id=" + id + ",name=" + name + ",x=" + x + ",y=" + y + ",z=" + z + ",rotation=" + rotation + ",pitch=" + pitch + ",item=" + item + "}";
+		return "SpawnPlayerMessage{id=" + id + ",name=" + name + ",x=" + x + ",y=" + y + ",z=" + z + ",rotation=" + yaw + ",pitch=" + pitch + ",item=" + item + "}";
 	}
 }

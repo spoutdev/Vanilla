@@ -56,14 +56,14 @@ public final class SpawnPlayerCodec extends MessageCodec<SpawnPlayerMessage> {
 	@Override
 	public ChannelBuffer encode(SpawnPlayerMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeInt(message.getId());
-		ChannelBufferUtils.writeString(buffer, message.getName());
+		buffer.writeInt(message.getEntityId());
+		ChannelBufferUtils.writeString(buffer, message.getPlayerName());
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());
 		buffer.writeInt(message.getZ());
-		buffer.writeByte(message.getRotation());
+		buffer.writeByte(message.getYaw());
 		buffer.writeByte(message.getPitch());
-		buffer.writeShort(message.getItem());
+		buffer.writeShort(message.getItemId());
 		return buffer;
 	}
 }

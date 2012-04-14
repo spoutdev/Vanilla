@@ -475,4 +475,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public void sendHealthUpdate(HealthEvent event) {
 		session.send(new HealthMessage(event.getHealth(), event.getFood(), event.getFoodSaturation()));
 	}
+
+	@EventHandler
+	public void sendPlayerSpawn(SpawnPlayerEvent event) {
+		session.send(new SpawnPlayerMessage(event.getEntityId(), event.getPlayerName(), event.getX(), event.getY(), event.getZ(), event.getYaw(), event.getPitch(), event.getItemId()));
+	}
 }

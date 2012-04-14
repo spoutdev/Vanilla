@@ -25,8 +25,10 @@
  */
 package org.spout.vanilla;
 
+import org.spout.api.Source;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.source.Reason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 import java.util.Arrays;
@@ -60,6 +62,8 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.event.HealthEvent;
+import org.spout.vanilla.protocol.event.SpawnPlayerEvent;
+import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.UserListItemMessage;
 
 public class VanillaEventListener implements Listener {
@@ -71,6 +75,8 @@ public class VanillaEventListener implements Listener {
 
 	@EventHandler(order = Order.EARLIEST)
 	public void playerJoin(PlayerJoinEvent event) {
+		
+		// Set their mode
 		Player player = event.getPlayer();
 		VanillaPlayer mode = new VanillaPlayer(player);
 		if (VanillaConfiguration.PLAYER_DEFAULT_GAMEMODE.getString().equalsIgnoreCase("creative")) {
@@ -81,8 +87,13 @@ public class VanillaEventListener implements Listener {
 
 		Entity playerEntity = player.getEntity();
 		playerEntity.setController(mode);
+
+		// Set protocol and send packets
 		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
-		player.getNetworkSynchronizer().callProtocolEvent(new HealthEvent((short) playerEntity.getHealth(), mode.getHunger(), 5.0f));
+		player.getNetworkSynchronizer().callProtocolEvent(new HealthEvent((short) playerEntity.getHealth(), mode.getHunger(), mode.getFoodSaturation()));
+		for (Player p : playerEntity.getWorld().getPlayers()) {
+			player.getNetworkSynchronizer().callProtocolEvent(new SpawnPlayerEvent(player));
+		}
 	}
 
 	@EventHandler(order = Order.LATEST)
@@ -146,6 +157,11 @@ public class VanillaEventListener implements Listener {
 	
 	@EventHandler
 	public void syncHealth(EntityHealthChangeEvent event) {
+		Source source = event.getSource();
+		if (source instanceof Reason && ((Reason) source).getType().equals(Reason.Type.SPAWN)) {
+			return;
+		}
+		
 		Controller c = event.getEntity().getController();
 		if (c instanceof VanillaPlayer) {
 			VanillaPlayer vp = (VanillaPlayer) c;

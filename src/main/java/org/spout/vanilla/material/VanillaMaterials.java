@@ -35,6 +35,7 @@ import org.spout.vanilla.material.attachable.WallAttachable;
 import org.spout.vanilla.material.block.Cactus;
 import org.spout.vanilla.material.block.DoubleSlab;
 import org.spout.vanilla.material.block.Fire;
+import org.spout.vanilla.material.block.Flower;
 import org.spout.vanilla.material.block.Grass;
 import org.spout.vanilla.material.block.Gravel;
 import org.spout.vanilla.material.block.Ice;
@@ -121,8 +122,8 @@ public final class VanillaMaterials {
 	public static final Solid PISTON_EXTENSION = (Solid) register(new Solid("Piston (Head)", 34).setResistance(0.8F));
 	public static final Wool WOOL = Wool.WHITE;
 	public static final Solid MOVED_BY_PISTON = (Solid) register(new Solid("Moved By Piston", 36).setResistance(0.0F));
-	public static final GroundAttachable DANDELION = (GroundAttachable) register(new GroundAttachable("Dandelion", 37).setHardness(0.0F).setResistance(0.0F));
-	public static final GroundAttachable ROSE = (GroundAttachable) register(new GroundAttachable("Rose", 38).setHardness(0.0F).setResistance(0.0F));
+	public static final Flower DANDELION = (Flower) register(new Flower("Dandelion", 37).setHardness(0.0F).setResistance(0.0F));
+	public static final Flower ROSE = (Flower) register(new Flower("Rose", 38).setHardness(0.0F).setResistance(0.0F));
 	public static final GroundAttachable BROWN_MUSHROOM = (GroundAttachable) register(new GroundAttachable("Brown Mushroom", 39).setHardness(0.0F).setResistance(0.0F).setLightLevel(1));
 	public static final GroundAttachable RED_MUSHROOM = (GroundAttachable) register(new GroundAttachable("Red Mushroom", 40).setHardness(0.0F).setResistance(0.0F));
 	public static final Solid GOLD_BLOCK = (Solid) register(new Solid("Gold Block", 41).setHardness(3.0F).setResistance(10.0F));

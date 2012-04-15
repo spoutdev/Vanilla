@@ -97,14 +97,14 @@ public abstract class VanillaController extends ActionController {
 				return;
 			}
 
-	    }
-        for(ItemStack drop : getDrops()) {
-        Item item = new Item(drop, Vector3.ZERO);
-        	if(lastKnownPosition != null) {
-        		lastKnownPosition.getWorld().createAndSpawnEntity(lastKnownPosition, item);
-        	}
-        }
-    }
+		}
+		for(ItemStack drop : getDrops()) {
+			Item item = new Item(drop, Vector3.ZERO);
+			if(lastKnownPosition != null) {
+				lastKnownPosition.getWorld().createAndSpawnEntity(lastKnownPosition, item);
+			}
+		}
+	}
 
 	public float getMaxSpeed() {
 		return this.maxSpeed;

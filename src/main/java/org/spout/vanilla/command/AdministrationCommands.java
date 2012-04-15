@@ -255,7 +255,7 @@ public class AdministrationCommands {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
 		} else {
-			if (!(source instanceof VanillaPlayer)) {
+			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to toggle your game mode.");
 			}
 

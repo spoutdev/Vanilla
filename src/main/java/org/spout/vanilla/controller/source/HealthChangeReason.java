@@ -57,6 +57,10 @@ public class HealthChangeReason extends Reason {
 		 */
 		SPAWN,
 		/**
+		 * Health changed due to starvation.
+		 */
+		STARVE,
+		/**
 		 * Health changed due to some unknown reason.
 		 */
 		UNKNOWN;

@@ -43,76 +43,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 
+import org.spout.vanilla.controller.living.player.GameMode;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.effect.EntityEffect;
-import org.spout.vanilla.protocol.msg.AttachEntityMessage;
-import org.spout.vanilla.protocol.msg.BlockActionMessage;
-import org.spout.vanilla.protocol.msg.BlockChangeMessage;
-import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
-import org.spout.vanilla.protocol.msg.ChangeItemMessage;
-import org.spout.vanilla.protocol.msg.ChatMessage;
-import org.spout.vanilla.protocol.msg.CloseWindowMessage;
-import org.spout.vanilla.protocol.msg.CollectItemMessage;
-import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
-import org.spout.vanilla.protocol.msg.CreateEntityMessage;
+import org.spout.vanilla.protocol.msg.*;
 import org.spout.api.protocol.common.message.CustomDataMessage;
-import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
-import org.spout.vanilla.protocol.msg.DiggingMessage;
-import org.spout.vanilla.protocol.msg.EnchantItemMessage;
-import org.spout.vanilla.protocol.msg.EntityActionMessage;
-import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
-import org.spout.vanilla.protocol.msg.EntityEffectMessage;
-import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
-import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
-import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
-import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
-import org.spout.vanilla.protocol.msg.EntityRemoveEffectMessage;
-import org.spout.vanilla.protocol.msg.EntityRotationMessage;
-import org.spout.vanilla.protocol.msg.EntityStatusMessage;
-import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
-import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
-import org.spout.vanilla.protocol.msg.ExperienceMessage;
-import org.spout.vanilla.protocol.msg.ExperienceOrbMessage;
-import org.spout.vanilla.protocol.msg.ExplosionMessage;
-import org.spout.vanilla.protocol.msg.GroundMessage;
-import org.spout.vanilla.protocol.msg.HandshakeMessage;
-import org.spout.vanilla.protocol.msg.HealthMessage;
-import org.spout.vanilla.protocol.msg.IdentificationMessage;
-import org.spout.vanilla.protocol.msg.KickMessage;
-import org.spout.vanilla.protocol.msg.LoadChunkMessage;
-import org.spout.vanilla.protocol.msg.MapDataMessage;
-import org.spout.vanilla.protocol.msg.MultiBlockChangeMessage;
-import org.spout.vanilla.protocol.msg.OpenWindowMessage;
-import org.spout.vanilla.protocol.msg.PingMessage;
-import org.spout.vanilla.protocol.msg.PlayEffectMessage;
-import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
-import org.spout.vanilla.protocol.msg.PositionMessage;
-import org.spout.vanilla.protocol.msg.PositionRotationMessage;
-import org.spout.vanilla.protocol.msg.ProgressBarMessage;
-import org.spout.vanilla.protocol.msg.CreativeMessage;
-import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
-import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
-import org.spout.vanilla.protocol.msg.RespawnMessage;
-import org.spout.vanilla.protocol.msg.RotationMessage;
-import org.spout.vanilla.protocol.msg.ServerListPingMessage;
-import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
-import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
-import org.spout.vanilla.protocol.msg.SpawnItemMessage;
-import org.spout.vanilla.protocol.msg.SpawnLightningStrikeMessage;
-import org.spout.vanilla.protocol.msg.SpawnMobMessage;
-import org.spout.vanilla.protocol.msg.SpawnPaintingMessage;
-import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
-import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
-import org.spout.vanilla.protocol.msg.StateChangeMessage;
-import org.spout.vanilla.protocol.msg.StatisticMessage;
-import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
-import org.spout.vanilla.protocol.msg.TimeMessage;
-import org.spout.vanilla.protocol.msg.TransactionMessage;
-import org.spout.vanilla.protocol.msg.UpdateSignMessage;
-import org.spout.vanilla.protocol.msg.UseBedMessage;
-import org.spout.vanilla.protocol.msg.PlayerListMessage;
-import org.spout.vanilla.protocol.msg.WindowClickMessage;
+import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
 
 public class VanillaProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
@@ -125,7 +61,7 @@ public class VanillaProtocolTest {
 			new EntityEquipmentMessage(234, 3, 2, 3),
 			new SpawnPositionMessage(42, 42, 42),
 			new EntityInteractionMessage(1123, 4455, true),
-			new HealthMessage((short) 1, (short) 2, 3.4F),
+			new PlayerHealthMessage((short) 1, (short) 2, 3.4F),
 			new RespawnMessage(89, (byte) 0, (byte) 1, 128, "VERYFANCY"),
 			new GroundMessage(true),
 			new PositionMessage(128, 256, 512, 3.4D, true),
@@ -165,7 +101,7 @@ public class VanillaProtocolTest {
 			new BlockActionMessage(1, 2, 3, (byte) 4, (byte) 5),
 			new ExplosionMessage(3, 4, 5, 24, new byte[]{1, 2, 3, 1, 1, 2, 1, 1, 1}),
 			new PlayEffectMessage(34566, 1, 2, 34, 5),
-			new StateChangeMessage((byte) 3, (byte) 1),
+			new StateChangeMessage(StateChangeMessage.CHANGE_GAME_MODE, GameMode.CREATIVE),
 			new SpawnLightningStrikeMessage(34, 1, 23, 45, 55),
 			new OpenWindowMessage(1, 2, "container.furnace", 42),
 			new CloseWindowMessage(23),

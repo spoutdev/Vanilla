@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import org.spout.api.Spout;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
@@ -219,7 +220,7 @@ public abstract class VanillaController extends ActionController {
 	public void onTick(float dt) {		
 		//Check controller health, send messages to the client based on current state.
 		if (getParent().getHealth() <= 0) {
-			sendMessage(getParent().getWorld().getPlayers(), new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
+			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 			getParent().kill();
 		}
 		
@@ -313,9 +314,7 @@ public abstract class VanillaController extends ActionController {
 
 			if (fireTicks % 20 == 0) {
 				damage(1);
-				sendMessage(getParent().getWorld().getPlayers(),
-								new EntityAnimationMessage(getParent().getId(), EntityAnimationMessage.ANIMATION_HURT),
-								new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_HURT));
+				broadcastPacket(new EntityAnimationMessage(getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_HURT));
 			}
 
 			--fireTicks;
@@ -335,16 +334,25 @@ public abstract class VanillaController extends ActionController {
 	}
 
 	/**
+	 * This method takes any amount of messages and sends them to every online player on the server.
+	 *
+	 * @param messages
+	 */
+	public void broadcastPacket(Message... messages) {
+		sendPacket(Spout.getEngine().getOnlinePlayers(), messages);
+	}
+
+	/**
 	 * This method takes in any amount of messages and sends them to any amount of
 	 * players.
 	 *
 	 * @param players specific players to send a message to.
 	 * @param messages the message(s) to send
 	 */
-	public void sendMessage(Set<Player> players, Message... messages) {
+	public void sendPacket(Player[] players, Message... messages) {
 		for (Player player : players) {
 			for (Message message : messages) {
-				sendMessage(player, message);
+				sendPacket(player, message);
 			}
 		}
 	}
@@ -355,7 +363,7 @@ public abstract class VanillaController extends ActionController {
 	 * @param player specific player to relieve message
 	 * @param message specific message to send.
 	 */
-	public void sendMessage(Player player, Message message) {
+	public void sendPacket(Player player, Message message) {
 		player.getSession().send(message);
 	}
 

@@ -52,7 +52,7 @@ public abstract class Living extends VanillaController {
 
 		if (headYawLive != headYaw) {
 			headYawLive = headYaw;
-			sendMessage(getParent().getWorld().getPlayers(), new EntityHeadYawMessage(getParent().getId(), headYaw));
+			broadcastPacket(new EntityHeadYawMessage(getParent().getId(), headYaw));
 		}
 	}
 

@@ -118,7 +118,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			if (!sendRevert && !oldBlock.isPlacementObstacle()) {
 				//if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {
 				//SpoutBlockState newState = BlockProperties.get(placedId.getItemTypeId()).getPhysics().placeAgainst(player, target.getState(), placedId, face);
-				//BlockPlaceEvent event = EventFactory.onBlockPlace(target, newState, against, player);
+				//PlayerBlockPlaceEvent event = EventFactory.onBlockPlace(target, newState, against, player);
 
 				//if (!event.isCancelled() && event.canBuild()) {
 				/*newState.update(true);

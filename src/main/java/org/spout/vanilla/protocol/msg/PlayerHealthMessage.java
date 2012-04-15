@@ -1,9 +1,9 @@
 /*
- * This file is part of vanilla (http://www.spout.org/).
+ * This file is part of Vanilla (http://www.spout.org/).
  *
- * vanilla is licensed under the SpoutDev License Version 1.
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
- * vanilla is free software: you can redistribute it and/or modify
+ * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -12,7 +12,7 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * vanilla is distributed in the hope that it will be useful,
+ * Vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
@@ -23,23 +23,34 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.event.world;
+package org.spout.vanilla.protocol.msg;
 
-import org.spout.api.protocol.event.ProtocolEvent;
-import org.spout.vanilla.world.Weather;
+import org.spout.api.protocol.Message;
 
-public class WeatherChangeEvent extends ProtocolEvent {
-	private Weather weather;
+public final class PlayerHealthMessage extends Message {
+	private final short health, food;
+	private final float foodSaturation;
 
-	public WeatherChangeEvent(Weather weather) {
-		this.weather = weather;
+	public PlayerHealthMessage(short health, short food, float foodSaturation) {
+		this.health = health;
+		this.food = food;
+		this.foodSaturation = foodSaturation;
 	}
 
-	public Weather getWeather() {
-		return weather;
+	public short getHealth() {
+		return health;
 	}
-	
-	public void setWeather(Weather weather) {
-		this.weather = weather;
+
+	public short getFood() {
+		return food;
+	}
+
+	public float getFoodSaturation() {
+		return foodSaturation;
+	}
+
+	@Override
+	public String toString() {
+		return "PlayerHealthMessage{health=" + health + ",food=" + food + ",foodSaturation=" + foodSaturation + "}";
 	}
 }

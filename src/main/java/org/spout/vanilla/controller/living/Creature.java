@@ -26,10 +26,9 @@
 package org.spout.vanilla.controller.living;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.player.Player;
 import org.spout.api.util.Parameter;
 import org.spout.vanilla.controller.VanillaControllerType;
-import org.spout.vanilla.protocol.event.entity.EntityMetadataEvent;
+import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,9 +54,7 @@ public abstract class Creature extends Living {
 				List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
 				parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 12, (int) timeUntilAdult));
 				Entity parent = getParent();
-				for (Player player : parent.getWorld().getPlayers()) {
-					player.getNetworkSynchronizer().callProtocolEvent(new EntityMetadataEvent(parent.getId(), parameters));
-				}
+				broadcastPacket(new EntityMetadataMessage(parent.getId(), parameters));
 			}
 		}
 	}

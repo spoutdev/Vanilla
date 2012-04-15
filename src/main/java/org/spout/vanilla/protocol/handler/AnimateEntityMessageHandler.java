@@ -29,8 +29,6 @@ import org.spout.api.Spout;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
-import org.spout.vanilla.protocol.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 
 public final class AnimateEntityMessageHandler extends MessageHandler<EntityAnimationMessage> {
@@ -38,11 +36,5 @@ public final class AnimateEntityMessageHandler extends MessageHandler<EntityAnim
 	public void handleServer(Session session, Player player, EntityAnimationMessage message) {
 		//TODO get target block and call onPlayerInteract
 		//TODO call AnimationEvent
-		EntityAnimationEvent event = new EntityAnimationEvent(message.getId(), EntityAnimationEvent.Animation.getById(message.getId()));
-		for (Player plr : Spout.getEngine().getOnlinePlayers()) {
-			if (!(plr.getName().equals(player.getName()))) {
-				plr.getNetworkSynchronizer().callProtocolEvent(event);
-			}
-		}
 	}
 }

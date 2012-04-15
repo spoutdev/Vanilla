@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.Transform;
@@ -44,10 +43,10 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.protocol.event.entity.player.PlayerHealthEvent;
-import org.spout.vanilla.protocol.event.entity.player.PlayerListEvent;
-import org.spout.vanilla.protocol.event.world.StateChangeEvent;
 import org.spout.vanilla.protocol.msg.PingMessage;
+import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
+import org.spout.vanilla.protocol.msg.PlayerListMessage;
+import org.spout.vanilla.protocol.msg.StateChangeMessage;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to
@@ -112,7 +111,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}*/
 
 		if (lastPing++ > VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt()/2) {
-			sendMessage(player, new PingMessage(getRandom().nextInt()));
+			sendPacket(player, new PingMessage(getRandom().nextInt()));
 			lastPing = 0;
 		}
 
@@ -123,10 +122,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 
 		if (lastUserList++ > 20) {
-			for (Player p : Spout.getEngine().getOnlinePlayers()) {
-				p.getNetworkSynchronizer().callProtocolEvent(new PlayerListEvent(tabListName, true, ping));
-			}
-
+			broadcastPacket(new PlayerListMessage(tabListName, true, ping));
 			lastUserList = 0;
 		}
 
@@ -187,7 +183,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		System.out.println("Health: " + health);
 		System.out.println("Exhaustion: " + exhaustion);
 		parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
-		getPlayer().getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent(health, hunger, foodSaturation));
+		sendPacket(owner, new PlayerHealthMessage(health, hunger, foodSaturation));
 	}
 	
 	private void creativeTick(float dt) {
@@ -346,7 +342,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void setGameMode(GameMode gameMode) {
 		this.gameMode = gameMode;
-		owner.getNetworkSynchronizer().callProtocolEvent(new StateChangeEvent(StateChangeEvent.Reason.CHANGE_GAME_MODE, gameMode));
+		sendPacket(owner, new StateChangeMessage(StateChangeMessage.CHANGE_GAME_MODE, gameMode));
 	}
 
 	/**

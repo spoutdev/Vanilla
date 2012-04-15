@@ -78,11 +78,11 @@ public class VanillaEventListener implements Listener {
 		Player player = event.getPlayer();
 		Entity playerEntity = player.getEntity();
 		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
-		VanillaPlayer mode = new VanillaPlayer(player);
+		VanillaPlayer mode;
 		if (VanillaConfiguration.PLAYER_DEFAULT_GAMEMODE.getString().equalsIgnoreCase("creative")) {
-			mode.setGameMode(GameMode.CREATIVE);
+			mode = new VanillaPlayer(player, GameMode.CREATIVE);
 		} else {
-			mode.setGameMode(GameMode.SURVIVAL);
+			mode = new VanillaPlayer(player, GameMode.SURVIVAL);
 		}
 
 		playerEntity.setController(mode, new ControllerInitialization());

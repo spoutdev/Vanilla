@@ -59,17 +59,8 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
-import org.spout.vanilla.protocol.event.entity.EntityAnimationEvent;
-import org.spout.vanilla.protocol.event.entity.EntityMetadataEvent;
-import org.spout.vanilla.protocol.event.entity.player.PlayerHealthEvent;
-import org.spout.vanilla.protocol.event.entity.player.PlayerListEvent;
-import org.spout.vanilla.protocol.event.entity.player.SpawnPlayerEvent;
-import org.spout.vanilla.protocol.event.world.StateChangeEvent;
-import org.spout.vanilla.protocol.event.world.TimeUpdateEvent;
-import org.spout.vanilla.protocol.event.world.WeatherChangeEvent;
 import org.spout.vanilla.protocol.msg.*;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
-import org.spout.vanilla.world.Weather;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	@SuppressWarnings("unused")
@@ -460,46 +451,5 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 		session.send(new SetWindowSlotsMessage(getInventoryId(inventory.getClass()), newSlots));
 		queuedInventoryUpdates.clear();
-	}
-
-	@EventHandler
-	public void sendWeatherChange(WeatherChangeEvent event) {
-		boolean rain = (event.getWeather() != Weather.CLEAR);
-		session.send(new StateChangeMessage((byte) (rain ? 1 : 2), (byte) 0));
-	}
-
-	@EventHandler
-	public void sendTimeChange(TimeUpdateEvent event) {
-		session.send(new TimeMessage(event.getTime()));
-	}
-
-	@EventHandler
-	public void sendEntityAnimate(EntityAnimationEvent event) {
-		session.send(new EntityAnimationMessage(event.getId(), (byte) event.getAnimation().getId()));
-	}
-
-	@EventHandler
-	public void sendHealthUpdate(PlayerHealthEvent event) {
-		session.send(new HealthMessage(event.getHealth(), event.getHunger(), event.getFoodSaturation()));
-	}
-
-	@EventHandler
-	public void sendPlayerSpawn(SpawnPlayerEvent event) {
-		session.send(new SpawnPlayerMessage(event.getEntityId(), event.getPlayerName(), event.getX(), event.getY(), event.getZ(), event.getYaw(), event.getPitch(), event.getItemId()));
-	}
-
-	@EventHandler
-	public void sendStateChange(StateChangeEvent event) {
-		session.send(new StateChangeMessage(event.getReason().getId(), event.getGameMode()));
-	}
-
-	@EventHandler
-	public void sendPlayerListUpdate(PlayerListEvent event) {
-		session.send(new PlayerListMessage(event.getPlayerName(), event.playerIsOnline(), event.getPing()));
-	}
-
-	@EventHandler
-	public void sendEntityMetadata(EntityMetadataEvent event) {
-		session.send(new EntityMetadataMessage(event.getEntityId(), event.getParameters()));
 	}
 }

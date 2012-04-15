@@ -26,25 +26,36 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.spout.api.protocol.Message;
+import org.spout.vanilla.controller.living.player.GameMode;
 
 public final class StateChangeMessage extends Message {
-	private final byte state, gameMode;
+	public static final byte INVALID_BED = 0;
+	public static final byte BEGIN_RAINING = 1;
+	public static final byte END_RAINING = 2;
+	public static final byte CHANGE_GAME_MODE = 3;
+	public static final byte ENTER_CREDITS = 4;
+	private final byte reason;
+	private GameMode gameMode;
 
-	public StateChangeMessage(byte state, byte gameMode) {
-		this.state = state;
+	public StateChangeMessage(byte reason, GameMode gameMode) {
+		this.reason = reason;
 		this.gameMode = gameMode;
 	}
-
-	public byte getState() {
-		return state;
+	
+	public StateChangeMessage(byte reason) {
+		this(reason, GameMode.CREATIVE);
 	}
 
-	public byte getGameMode() {
+	public byte getReason() {
+		return reason;
+	}
+
+	public GameMode getGameMode() {
 		return gameMode;
 	}
 
 	@Override
 	public String toString() {
-		return "StateChangeMessage{state=" + state + ",gamemode=" + gameMode + "}";
+		return "StateChangeMessage{reason=" + reason + ",gamemode=" + gameMode.getId() + "}";
 	}
 }

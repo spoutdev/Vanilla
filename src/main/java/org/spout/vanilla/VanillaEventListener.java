@@ -28,6 +28,8 @@ package org.spout.vanilla;
 import org.spout.api.Source;
 import org.spout.api.event.entity.EntityControllerChangeEvent;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.GameMode;
@@ -55,14 +57,12 @@ import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
-import org.spout.vanilla.protocol.event.entity.player.PlayerHealthEvent;
-import org.spout.vanilla.protocol.event.entity.player.SpawnPlayerEvent;
-import org.spout.vanilla.protocol.event.world.StateChangeEvent;
+import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
+import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
 public class VanillaEventListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -89,12 +89,16 @@ public class VanillaEventListener implements Listener {
 
 		// Set protocol and send packets
 		if (mode.isSurvival()) {
-			player.getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent((short) playerEntity.getHealth(), mode.getHunger(), mode.getFoodSaturation()));
+			mode.sendPacket(mode.getPlayer(), new PlayerHealthMessage((short) playerEntity.getHealth(), mode.getHunger(), mode.getFoodSaturation()));
+		}
+		
+		int item = 0;
+		ItemStack currentItem = playerEntity.getInventory().getCurrentItem();
+		if (currentItem != null) {
+			item = currentItem.getMaterial().getId();
 		}
 
-		for (Player p : playerEntity.getWorld().getPlayers()) {
-			player.getNetworkSynchronizer().callProtocolEvent(new SpawnPlayerEvent(player));
-		}
+		mode.broadcastPacket(new SpawnPlayerMessage(playerEntity.getId(), player.getName(), playerEntity.getPosition(), (int) playerEntity.getYaw(), (int) playerEntity.getPitch(), item));
 	}
 
 	@EventHandler(order = Order.LATEST)
@@ -165,7 +169,7 @@ public class VanillaEventListener implements Listener {
 			VanillaPlayer sp = (VanillaPlayer) c;
 			short health = (short) sp.getParent().getHealth();
 			health += (short) event.getChange();
-			sp.getPlayer().getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent(health, sp.getHunger(), sp.getFoodSaturation()));
+			sp.sendPacket(sp.getPlayer(), new PlayerHealthMessage(health, sp.getHunger(), sp.getFoodSaturation()));
 		}
 	}
 }

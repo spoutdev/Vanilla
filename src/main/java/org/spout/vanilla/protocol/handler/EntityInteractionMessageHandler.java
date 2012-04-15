@@ -65,7 +65,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 				VanillaController temp = (VanillaController) clickedEntity.getController();
 				if (!temp.getParent().isDead()) {
 					temp.damage(damage);
-					temp.sendMessage(temp.getParent().getWorld().getPlayers(), new EntityAnimationMessage(temp.getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(temp.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
+					temp.broadcastPacket(new EntityAnimationMessage(temp.getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(temp.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
 				}
 			}
 		} else {

@@ -32,23 +32,23 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.msg.HealthMessage;
+import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
 
-public final class HealthCodec extends MessageCodec<HealthMessage> {
+public final class HealthCodec extends MessageCodec<PlayerHealthMessage> {
 	public HealthCodec() {
-		super(HealthMessage.class, 0x08);
+		super(PlayerHealthMessage.class, 0x08);
 	}
 
 	@Override
-	public HealthMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerHealthMessage decode(ChannelBuffer buffer) throws IOException {
 		short health = buffer.readShort();
 		short food = buffer.readShort();
 		float foodSaturation = buffer.readFloat();
-		return new HealthMessage(health, food, foodSaturation);
+		return new PlayerHealthMessage(health, food, foodSaturation);
 	}
 
 	@Override
-	public ChannelBuffer encode(HealthMessage message) throws IOException {
+	public ChannelBuffer encode(PlayerHealthMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.buffer(8);
 		buffer.writeShort(message.getHealth());
 		buffer.writeShort(message.getFood());

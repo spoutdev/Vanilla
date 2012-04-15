@@ -93,7 +93,7 @@ public class Item extends Substance {
 		int collected = getParent().getId(), collector = closestPlayer.getEntity().getId();
 
 		for (Player player : players) {
-			sendMessage(player, new CollectItemMessage(collected, collector));
+			sendPacket(player, new CollectItemMessage(collected, collector));
 		}
 
 		closestPlayer.getEntity().getInventory().addItem(is, false);

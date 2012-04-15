@@ -156,25 +156,23 @@ public class VanillaPlayer extends Human implements PlayerController {
 	private void updateHealth() {
 		short health;
 		Entity parent = getParent();
-		foodSaturation -= 0.1;
 		health = (short) parent.getHealth();
-		if (foodSaturation <= 0) {
-			hunger--;
-		} else {
-			health++;
-		}
 
-		if (exhaustion >= 4.0) {
+		if (exhaustion > 4.0) {
 			exhaustion = 0;
-			if (foodSaturation <= 0) {
-				hunger--;
+			if (foodSaturation > 0) {
+				foodSaturation = Math.max(foodSaturation - 1, 0);
 			} else {
-				foodSaturation--;
+				hunger = (short) Math.max(hunger - 1, 0);
 			}
 		}
 
 		if (hunger <= 0) {
-			health--;
+			health = (short) Math.max(health - 1, 0);
+			parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.STARVE));
+		} else if (hunger >= 18) {
+			health = (short) Math.min(health + 1, 20);
+			parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
 		}
 
 		System.out.println("Performing health/hunger update...");
@@ -182,7 +180,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		System.out.println("Hunger: " + hunger);
 		System.out.println("Health: " + health);
 		System.out.println("Exhaustion: " + exhaustion);
-		parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
 		sendPacket(owner, new PlayerHealthMessage(health, hunger, foodSaturation));
 	}
 	

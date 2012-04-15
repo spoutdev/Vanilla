@@ -36,7 +36,9 @@ import org.spout.vanilla.controller.VanillaController;
 public class WanderAction extends EntityAction<VanillaController> {
 	private static final double WANDER_FREQ = 2.75;
 	private double freq = 0;
+	@SuppressWarnings("unused")
 	private Vector3 movement = Vector3.ZERO;
+	@SuppressWarnings("unused")
 	private Quaternion rotation = Quaternion.IDENTITY;
 
 	@Override

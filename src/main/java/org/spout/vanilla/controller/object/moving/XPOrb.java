@@ -32,7 +32,8 @@ import org.spout.vanilla.controller.object.Substance;
 
 public class XPOrb extends Substance {
 	private int amount;
-	private Vector3 velocity = new Vector3();
+	@SuppressWarnings("unused")
+	private Vector3 velocity = Vector3.ZERO;
 
 	public XPOrb(int amount) {
 		super(VanillaControllerTypes.XP_ORB);

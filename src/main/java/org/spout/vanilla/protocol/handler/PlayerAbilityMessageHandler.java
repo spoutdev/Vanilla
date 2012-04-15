@@ -42,6 +42,7 @@ public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbil
 		if (!(player.getEntity().getController() instanceof VanillaController)) {
 			return;
 		}
+		@SuppressWarnings("unused")
 		VanillaPlayer ve = (VanillaPlayer) player.getEntity().getController();
 
 		//TODO Implement this.

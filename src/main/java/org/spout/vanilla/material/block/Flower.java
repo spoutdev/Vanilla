@@ -35,37 +35,37 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.attachable.GroundAttachable;
 
 public class Flower extends GroundAttachable implements Plant {
-    public Flower(String name, int id) {
-        super(name, id);
-    }
+	public Flower(String name, int id) {
+		super(name, id);
+	}
 
-    @Override
-    public boolean hasGrowthStages() {
-        return false;
-    }
+	@Override
+	public boolean hasGrowthStages() {
+		return false;
+	}
 
-    @Override
-    public int getNumGrowthStages() {
-        return 0;
-    }
+	@Override
+	public int getNumGrowthStages() {
+		return 0;
+	}
 
-    @Override
-    public int getMinimumLightToGrow() {
-        return 8;
-    }
+	@Override
+	public int getMinimumLightToGrow() {
+		return 8;
+	}
 
-    @Override
-    public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
-        if (super.canPlace(world, x, y, z, data, against, source)) {
-            Block block = world.getBlock(x, y, z).move(against.getOpposite());
-            return block.getMaterial() instanceof Grass || block.getMaterial() == VanillaMaterials.DIRT;
-        } else {
-            return false;
-        }
-    }
+	@Override
+	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
+		if (super.canPlace(world, x, y, z, data, against, source)) {
+			Block block = world.getBlock(x, y, z).move(against.getOpposite());
+			return block.getMaterial() instanceof Grass || block.getMaterial() == VanillaMaterials.DIRT;
+		} else {
+			return false;
+		}
+	}
 
-    @Override
-    public Material getDrop() {
-        return Material.get(getName());
-    }
+	@Override
+	public Material getDrop() {
+		return Material.get(getName());
+	}
 }

@@ -31,8 +31,6 @@ import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
-import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.generator.normal.decorator.BeachDecorator;
@@ -42,7 +40,9 @@ import org.spout.vanilla.generator.VanillaBiomeType;
 public class OceanBiome extends VanillaBiomeType {
 	private Perlin base = new Perlin();
 	private Turbulence noise = new Turbulence();
+	@SuppressWarnings("unused")
 	private int blocksHit = 0;
+	@SuppressWarnings("unused")
 	private static Random rand = new Random();
 
 	public OceanBiome() {

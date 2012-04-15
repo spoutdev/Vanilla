@@ -44,6 +44,7 @@ import org.spout.vanilla.material.block.LongGrass;
 import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.block.MinecartTrackDetector;
 import org.spout.vanilla.material.block.MinecartTrackPowered;
+import org.spout.vanilla.material.block.NetherWartBlock;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.Plank;
 import org.spout.vanilla.material.block.Sandstone;
@@ -200,7 +201,7 @@ public final class VanillaMaterials {
 	public static final Solid NETHER_BRICK = (Solid) register(new Solid("Nether Brick", 112).setHardness(2.0F).setResistance(10.0F));
 	public static final Solid NETHER_BRICK_FENCE = (Solid) register(new Solid("Nether Brick Fence", 113).setHardness(2.0F).setResistance(10.0F));
 	public static final Solid NETHER_BRICK_STAIRS = (Solid) register(new Solid("Nether Brick Stairs", 114).setResistance(10.0F));
-	public static final Solid NETHER_WART_BLOCK = (Solid) register(new Solid("Nether Wart", 115).setResistance(0.0F));
+	public static final NetherWartBlock NETHER_WART_BLOCK = (NetherWartBlock) register(new NetherWartBlock("Nether Wart", 115).setResistance(0.0F));
 	public static final Solid ENCHANTMENT_TABLE = (Solid) register(new Solid("Enchantment Table", 116).setHardness(5.0F).setResistance(2000.0F));
 	public static final Solid BREWING_STAND_BLOCK = (Solid) register(new Solid("Brewing Stand", 117).setHardness(0.5F).setResistance(0.8F).setLightLevel(1));
 	public static final Solid CAULDRON_BLOCK = (Solid) register(new Solid("Cauldron", 118).setHardness(2.0F).setResistance(3.3F));

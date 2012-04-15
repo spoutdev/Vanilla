@@ -53,6 +53,10 @@ public class HealthChangeReason extends Reason {
 		 */
 		REGENERATION,
 		/**
+		 * Health changed due to starvation.
+		 */
+		STARVE,
+		/**
 		 * Health changed due to the entity spawning.
 		 */
 		SPAWN,

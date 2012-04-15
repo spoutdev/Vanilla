@@ -25,32 +25,23 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.Source;
+import java.util.Random;
+
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
+import org.spout.api.material.source.DataSource;
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.Plant;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.attachable.GroundAttachable;
 
-public class Sapling extends GroundAttachable implements Plant {
-	public static final Sapling DEFAULT = register(new Sapling("Sapling"));
-	public static final Sapling SPRUCE = register(new Sapling("Spruce Sapling", 1, DEFAULT));
-	public static final Sapling BIRCH = register(new Sapling("Birch Sapling", 2, DEFAULT));
-	public static final Sapling JUNGLE = register(new Sapling("Jungle Sapling", 3, DEFAULT));
+public class NetherWartBlock extends Solid implements Plant {
+	private GrowthStage stage = GrowthStage.SEEDLING;
 
-	private void setDefault() {
-		this.setHardness(0.0F).setResistance(0.0F);
-	}
-
-	private Sapling(String name) {
-		super(name, 6);
-		this.setDefault();
-	}
-
-	private Sapling(String name, int data, Sapling parent) {
-		super(name, 6, data, parent);
-		this.setDefault();
+	public NetherWartBlock(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
@@ -65,16 +56,51 @@ public class Sapling extends GroundAttachable implements Plant {
 
 	@Override
 	public int getMinimumLightToGrow() {
-		return 8;
+		return 0;
 	}
 
 	@Override
-	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
-		if (super.canPlace(world, x, y, z, data, against, source)) {
-			Block block = world.getBlock(x, y, z).move(against.getOpposite());
-			return block.getMaterial() instanceof Grass || block.getMaterial() == VanillaMaterials.DIRT;
-		} else {
-			return false;
+	public short getData() {
+		return stage.getData();
+	}
+
+	@Override
+	public Material getDrop() {
+		return VanillaMaterials.NETHER_WART;
+	}
+
+	@Override
+	public int getDropCount() {
+		return stage == GrowthStage.LAST ? new Random().nextInt(4) + 2 : 1;
+	}
+
+	@Override
+	public void onUpdate(World world, int x, int y, int z) {
+		BlockMaterial below = world.getBlockMaterial(x, y - 1, z);
+		if (!below.equals(VanillaMaterials.SOUL_SAND)) {
+			Point point = new Point(world, x, y, z);
+			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world);
+			world.createAndSpawnEntity(point, new Item(new ItemStack(VanillaMaterials.NETHER_WART, 1), point.normalize()));
+		}
+	}
+
+	public GrowthStage getGrowthStage() {
+		return stage;
+	}
+
+	public enum GrowthStage implements DataSource {
+		SEEDLING(1),
+		MIDDLE(2),
+		LAST(3);
+		private final short data;
+
+		GrowthStage(int data) {
+			this.data = (short) data;
+		}
+
+		@Override
+		public short getData() {
+			return data;
 		}
 	}
 }

@@ -26,10 +26,8 @@
 package org.spout.vanilla;
 
 import org.spout.api.Source;
-import org.spout.api.event.entity.EntityControllerChangeEvent;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.GameMode;
@@ -65,6 +63,7 @@ import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
 public class VanillaEventListener implements Listener {
+	@SuppressWarnings("unused")
 	private final VanillaPlugin plugin;
 
 	public VanillaEventListener(VanillaPlugin plugin) {

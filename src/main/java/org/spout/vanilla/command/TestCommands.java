@@ -44,6 +44,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class TestCommands {
+	@SuppressWarnings("unused")
 	private VanillaPlugin plugin;
 
 	public TestCommands(VanillaPlugin instance) {

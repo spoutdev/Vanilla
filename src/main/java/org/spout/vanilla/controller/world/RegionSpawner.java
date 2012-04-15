@@ -25,8 +25,6 @@
  */
 package org.spout.vanilla.controller.world;
 
-import java.lang.reflect.Constructor;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;

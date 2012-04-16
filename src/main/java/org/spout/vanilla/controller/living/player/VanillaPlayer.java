@@ -161,7 +161,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (exhaustion > 4.0) {
 			exhaustion = 0;
 			if (foodSaturation > 0) {
-				foodSaturation = Math.max(foodSaturation - 1, 0);
+				foodSaturation = Math.max(foodSaturation - 0.1f, 0);
 			} else {
 				hunger = (short) Math.max(hunger - 1, 0);
 			}

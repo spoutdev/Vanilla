@@ -25,41 +25,60 @@
  */
 package org.spout.vanilla.material.block;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
-import org.spout.vanilla.material.Plant;
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.attachable.GroundAttachable;
+import org.spout.vanilla.material.generic.GenericBlock;
 
-public class Flower extends GroundAttachable implements Plant {
-	public Flower(String name, int id) {
+public class SugarCane extends GenericBlock {
+	private final Set<Material> validBases = new HashSet<Material>(4);
+
+	public SugarCane(String name, int id) {
 		super(name, id);
+		
+		validBases.add(VanillaMaterials.DIRT);
+		validBases.add(VanillaMaterials.GRASS);
+		validBases.add(VanillaMaterials.SAND);
+		validBases.add(VanillaMaterials.SUGAR_CANE_BLOCK);
 	}
 
 	@Override
-	public boolean hasGrowthStages() {
-		return false;
-	}
-
-	@Override
-	public int getNumGrowthStages() {
-		return 0;
-	}
-
-	@Override
-	public int getMinimumLightToGrow() {
-		return 8;
+	public boolean hasPhysics() {
+		return true;
 	}
 
 	@Override
 	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
 		if (super.canPlace(world, x, y, z, data, against, source)) {
 			Block block = world.getBlock(x, y, z).move(against.getOpposite());
-			return block.getMaterial() == VanillaMaterials.GRASS || block.getMaterial() == VanillaMaterials.DIRT;
+			return validBases.contains(block.getMaterial()) && block.move(against.getOpposite()).getMaterial() == VanillaMaterials.WATER;
 		} else {
 			return false;
+		}
+	}
+
+	@Override
+	public void onUpdate(World world, int x, int y, int z) {
+		int amount = 0;
+		int off = 1;
+		while (world.getBlockMaterial(x, y + off, z).equals(VanillaMaterials.SUGAR_CANE_BLOCK)) {
+			off++;
+			amount++;
+		}
+
+		if (!validBases.contains(world.getBlockMaterial(x, y - 1, z))) {
+			Point point = new Point(world, x, y, z);
+			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world);
+			world.createAndSpawnEntity(point, new Item(new ItemStack(VanillaMaterials.SUGAR_CANE, amount), point.normalize()));
 		}
 	}
 }

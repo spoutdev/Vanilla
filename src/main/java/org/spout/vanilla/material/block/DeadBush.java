@@ -25,17 +25,21 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.Source;
+import org.spout.api.geo.World;
 import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Plant;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.attachable.GroundAttachable;
 
-public class LongGrass extends GroundAttachable implements Plant {
-	public LongGrass(String name, int id) {
+public class DeadBush extends GroundAttachable implements Plant {
+	public DeadBush(String name, int id) {
 		super(name, id);
 	}
 
-	public LongGrass(String name, int id, int data, Material parent) {
+	public DeadBush(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
 	}
 
@@ -52,5 +56,14 @@ public class LongGrass extends GroundAttachable implements Plant {
 	@Override
 	public boolean hasGrowthStages() {
 		return false;
+	}
+
+	@Override
+	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
+		if (super.canPlace(world, x, y, z, data, against, source)) {
+			return world.getBlock(x, y - 1, z).move(against.getOpposite()).getMaterial() == VanillaMaterials.SAND;
+		} else {
+			return false;
+		}
 	}
 }

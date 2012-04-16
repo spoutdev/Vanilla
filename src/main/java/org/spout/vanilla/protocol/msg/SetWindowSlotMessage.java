@@ -25,21 +25,19 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import java.util.List;
-
 import org.spout.api.protocol.Message;
 
-import org.spout.nbt.Tag;
+import org.spout.nbt.CompoundMap;
 
 public final class SetWindowSlotMessage extends Message {
 	private final int id, slot, item, count, damage;
-	private final List<Tag> nbtData;
+	private final CompoundMap nbtData;
 
 	public SetWindowSlotMessage(int id, int slot) {
 		this(id, slot, -1, 0, 0, null);
 	}
 
-	public SetWindowSlotMessage(int id, int slot, int item, int count, int damage, List<Tag> nbtData) {
+	public SetWindowSlotMessage(int id, int slot, int item, int count, int damage, CompoundMap nbtData) {
 		this.id = id;
 		this.slot = slot;
 		this.item = item;
@@ -68,7 +66,7 @@ public final class SetWindowSlotMessage extends Message {
 		return damage;
 	}
 
-	public List<Tag> getNbtData() {
+	public CompoundMap getNbtData() {
 		return nbtData;
 	}
 

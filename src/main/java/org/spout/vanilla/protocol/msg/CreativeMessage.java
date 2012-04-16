@@ -25,17 +25,15 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import java.util.List;
-
 import org.spout.api.protocol.Message;
 
-import org.spout.nbt.Tag;
+import org.spout.nbt.CompoundMap;
 
 public class CreativeMessage extends Message {
 	private final short slot, id, amount, damage;
-	private final List<Tag> nbtData;
+	private final CompoundMap nbtData;
 
-	public CreativeMessage(short slot, short id, short amount, short damage, List<Tag> nbtData) {
+	public CreativeMessage(short slot, short id, short amount, short damage, CompoundMap nbtData) {
 		this.slot = slot;
 		this.id = id;
 		this.amount = amount;
@@ -59,7 +57,7 @@ public class CreativeMessage extends Message {
 		return damage;
 	}
 
-	public List<Tag> getNbtData() {
+	public CompoundMap getNbtData() {
 		return nbtData;
 	}
 

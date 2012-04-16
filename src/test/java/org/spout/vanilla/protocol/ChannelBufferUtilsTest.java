@@ -59,9 +59,9 @@ import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
 
+import org.spout.nbt.CompoundMap;
 import org.spout.nbt.IntTag;
 import org.spout.nbt.StringTag;
-import org.spout.nbt.Tag;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -99,11 +99,11 @@ public class ChannelBufferUtilsTest {
 		assertEquals(TEST_STRING, readUtf8String(buf));
 	}
 
-	private static final List<Tag> TEST_COMPOUND_MAP = new ArrayList<Tag>();
+	private static final CompoundMap TEST_COMPOUND_MAP = new CompoundMap();
 
 	static {
-		TEST_COMPOUND_MAP.add(new IntTag("firstkey", 3));
-		TEST_COMPOUND_MAP.add(new StringTag("somethingelse", "helloworld"));
+		TEST_COMPOUND_MAP.put(new IntTag("firstkey", 3));
+		TEST_COMPOUND_MAP.put(new StringTag("somethingelse", "helloworld"));
 	}
 
 	@Test

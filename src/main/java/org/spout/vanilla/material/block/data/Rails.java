@@ -100,7 +100,7 @@ public class Rails implements MaterialData {
 	public void setData(short data) {
 		RailsState state = RailsState.get(data);
 		if (state == null) {
-			throw new IllegalArgumentException("Invalid rails material data: " + data);
+			throw new IllegalArgumentException("Invalid rails block data: " + data);
 		} else {
 			this.setState(state);
 		}

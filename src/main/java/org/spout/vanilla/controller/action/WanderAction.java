@@ -31,9 +31,9 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.VanillaController;
+import org.spout.vanilla.controller.entity.EntityController;
 
-public class WanderAction extends EntityAction<VanillaController> {
+public class WanderAction extends EntityAction<EntityController> {
 	private static final double WANDER_FREQ = 2.75;
 	private double freq = 0;
 	@SuppressWarnings("unused")
@@ -42,7 +42,7 @@ public class WanderAction extends EntityAction<VanillaController> {
 	private Quaternion rotation = Quaternion.IDENTITY;
 
 	@Override
-	public boolean shouldRun(Entity entity, VanillaController controller) {
+	public boolean shouldRun(Entity entity, EntityController controller) {
 		freq = controller.getRandom().nextDouble() * 3.0;
 		if (freq >= WANDER_FREQ) {
 			return true;
@@ -51,7 +51,7 @@ public class WanderAction extends EntityAction<VanillaController> {
 	}
 
 	@Override
-	public void run(Entity entity, VanillaController controller, float dt) {
+	public void run(Entity entity, EntityController controller, float dt) {
 		
 		//Get the direction the entity is facing
 		Vector3 entityForward = MathHelper.getDirectionVector(entity.getRotation());

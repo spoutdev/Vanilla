@@ -26,11 +26,13 @@
 package org.spout.vanilla;
 
 import org.spout.api.Source;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.creature.passive.Sheep;
-import org.spout.vanilla.controller.living.player.GameMode;
+import org.spout.vanilla.controller.block.FurnaceController;
+import org.spout.vanilla.controller.entity.living.creature.passive.Sheep;
+import org.spout.vanilla.controller.entity.living.player.GameMode;
 import org.spout.vanilla.controller.source.ControllerInitialization;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -55,8 +57,8 @@ import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.living.creature.hostile.Ghast;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.entity.living.creature.hostile.Ghast;
+import org.spout.vanilla.controller.entity.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
@@ -134,6 +136,8 @@ public class VanillaEventListener implements Listener {
 				HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
 				endStone.add(VanillaMaterials.END_STONE);
 				spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
+
+				spawner.addBlockControllerType(VanillaControllerTypes.FURNACE);
 			}
 		}
 		

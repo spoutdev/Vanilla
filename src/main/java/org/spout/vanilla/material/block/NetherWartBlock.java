@@ -33,7 +33,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.source.DataSource;
-import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.controller.entity.object.moving.Item;
 import org.spout.vanilla.material.Plant;
 import org.spout.vanilla.material.VanillaMaterials;
 

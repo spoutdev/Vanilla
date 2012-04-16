@@ -29,8 +29,8 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.VanillaController;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.entity.EntityController;
+import org.spout.vanilla.controller.entity.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 
 public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbilityMessage> {
@@ -39,7 +39,7 @@ public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbil
 		if (player.getEntity().getController() == null) {
 			return;
 		}
-		if (!(player.getEntity().getController() instanceof VanillaController)) {
+		if (!(player.getEntity().getController() instanceof EntityController)) {
 			return;
 		}
 		@SuppressWarnings("unused")

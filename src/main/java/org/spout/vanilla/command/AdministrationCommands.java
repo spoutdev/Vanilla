@@ -45,9 +45,9 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.living.player.GameMode;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.object.VanillaSky;
+import org.spout.vanilla.controller.entity.living.player.GameMode;
+import org.spout.vanilla.controller.entity.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.world.sky.VanillaSky;
 import org.spout.vanilla.world.Weather;
 
 public class AdministrationCommands {
@@ -111,7 +111,7 @@ public class AdministrationCommands {
 		player.getNetworkSynchronizer().setPositionDirty();
 	}
 
-	@Command(aliases = {"give"}, usage = "[player] <material> [amount] ", desc = "Lets a player spawn items", min = 1, max = 3)
+	@Command(aliases = {"give"}, usage = "[player] <block> [amount] ", desc = "Lets a player spawn items", min = 1, max = 3)
 	@CommandPermissions("vanilla.command.give")
 	public void give(CommandContext args, CommandSource source) throws CommandException {
 		int index = 0;
@@ -147,7 +147,7 @@ public class AdministrationCommands {
 		}
 
 		if (material == null) {
-			throw new CommandException(args.getString(index) + " is not a material!");
+			throw new CommandException(args.getString(index) + " is not a block!");
 		}
 
 		player.getEntity().getInventory().addItem(new ItemStack(material, data, args.getInteger(2, 1)), false);

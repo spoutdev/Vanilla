@@ -28,17 +28,17 @@ package org.spout.vanilla.controller.action;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.EntityAction;
 import org.spout.api.material.BlockMaterial;
-import org.spout.vanilla.controller.VanillaController;
+import org.spout.vanilla.controller.entity.EntityController;
 
-public class GravityAction extends EntityAction<VanillaController> {
+public class GravityAction extends EntityAction<EntityController> {
 	@Override
-	public boolean shouldRun(Entity entity, VanillaController controller) {
+	public boolean shouldRun(Entity entity, EntityController controller) {
 		BlockMaterial block = entity.getWorld().getBlock(entity.getPosition()).getMaterial();
 		return !block.isSolid();
 	}
 
 	@Override
-	public void run(Entity entity, VanillaController controller, float dt) {
+	public void run(Entity entity, EntityController controller, float dt) {
 		controller.setVelocity(controller.getVelocity().subtract(0, 0.04f, 0));
 	}
 }

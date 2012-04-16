@@ -35,7 +35,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.entity.living.player.VanillaPlayer;
 import org.spout.vanilla.material.BlockItem;
 
 public class GenericBlockItem extends GenericItem implements BlockItem {
@@ -48,7 +48,7 @@ public class GenericBlockItem extends GenericItem implements BlockItem {
 	public GenericBlockItem(String name, int id, BlockMaterial onPlaceMaterial, short onPlaceData) {
 		super(name, id);
 		if (onPlaceMaterial == null) {
-			throw new NullPointerException("Block material can not be null");
+			throw new NullPointerException("Block block can not be null");
 		} else {
 			this.onPlace = new GenericMaterialSource(onPlaceMaterial, onPlaceData);
 		}
@@ -59,7 +59,7 @@ public class GenericBlockItem extends GenericItem implements BlockItem {
 		if (type == Action.RIGHT_CLICK) {
 			ItemStack holding = entity.getInventory().getCurrentItem();
 			if (holding == null || holding.getMaterial() != this) {
-				throw new IllegalStateException("Interaction with an controller that is not holding this material!");
+				throw new IllegalStateException("Interaction with an controller that is not holding this block!");
 			}
 			if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
 				if (holding.getAmount() > 1) {

@@ -44,9 +44,6 @@ import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.protocol.codec.SpawnItemCodec;
-import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
-import org.spout.vanilla.protocol.msg.RespawnMessage;
 
 public class TestCommands {
 	@SuppressWarnings("unused")

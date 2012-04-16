@@ -29,7 +29,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.entity.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.PingMessage;
 
 public class PingMessageHandler extends MessageHandler<PingMessage> {

@@ -43,7 +43,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.controller.living.player.GameMode;
+import org.spout.vanilla.controller.entity.living.player.GameMode;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.effect.EntityEffect;
 import org.spout.api.protocol.common.message.CustomDataMessage;
@@ -87,7 +87,6 @@ import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
-import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
 import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.PositionMessage;

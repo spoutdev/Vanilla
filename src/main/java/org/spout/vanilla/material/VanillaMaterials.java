@@ -115,7 +115,7 @@ public final class VanillaMaterials {
 	public static final Solid WEB = (Solid) register(new Solid("Cobweb", 30).setHardness(4.0F).setResistance(20.0F));
 
 	/**
-	 * Warning: This is NOT the data=0 sub-material!
+	 * Warning: This is NOT the data=0 sub-block!
 	 */
 	public static final TallGrass TALL_GRASS = TallGrass.TALL_GRASS;
 	public static final LongGrass DEAD_BUSH = (LongGrass) register(new LongGrass("Dead Shrubs", 32).setHardness(0.0F).setResistance(0.0F));
@@ -341,7 +341,7 @@ public final class VanillaMaterials {
 	public static final GenericItem EYE_OF_ENDER = register(new GenericItem("Eye of Ender", 381));
 	public static final GenericItem GLISTERING_MELON = register(new GenericItem("Glistering Melon", 382));
 	/**
-	 * Warning: This is NOT the data=0 sub-material!
+	 * Warning: This is NOT the data=0 sub-block!
 	 */
 	public static final SpawnEgg SPAWN_EGG = SpawnEgg.PIG;
 	public static final GenericItem BOTTLE_O_ENCHANTING = register(new GenericItem("Bottle o' Enchanting", 384));

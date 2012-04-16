@@ -28,50 +28,51 @@ package org.spout.vanilla.controller;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.api.entity.type.ControllerRegistry;
-import org.spout.vanilla.controller.living.MobControllerType;
-import org.spout.vanilla.controller.living.creature.hostile.Blaze;
-import org.spout.vanilla.controller.living.creature.hostile.CaveSpider;
-import org.spout.vanilla.controller.living.creature.hostile.Creeper;
-import org.spout.vanilla.controller.living.creature.hostile.Enderdragon;
-import org.spout.vanilla.controller.living.creature.hostile.Ghast;
-import org.spout.vanilla.controller.living.creature.hostile.Giant;
-import org.spout.vanilla.controller.living.creature.hostile.MagmaCube;
-import org.spout.vanilla.controller.living.creature.hostile.Silverfish;
-import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
-import org.spout.vanilla.controller.living.creature.hostile.Slime;
-import org.spout.vanilla.controller.living.creature.hostile.Spider;
-import org.spout.vanilla.controller.living.creature.hostile.Zombie;
-import org.spout.vanilla.controller.living.creature.neutral.Enderman;
-import org.spout.vanilla.controller.living.creature.neutral.PigZombie;
-import org.spout.vanilla.controller.living.creature.neutral.Wolf;
-import org.spout.vanilla.controller.living.creature.passive.Chicken;
-import org.spout.vanilla.controller.living.creature.passive.Cow;
-import org.spout.vanilla.controller.living.creature.passive.Mooshroom;
-import org.spout.vanilla.controller.living.creature.passive.Ocelot;
-import org.spout.vanilla.controller.living.creature.passive.Pig;
-import org.spout.vanilla.controller.living.creature.passive.Sheep;
-import org.spout.vanilla.controller.living.creature.passive.Squid;
-import org.spout.vanilla.controller.living.creature.passive.Villager;
-import org.spout.vanilla.controller.living.creature.util.IronGolem;
-import org.spout.vanilla.controller.living.creature.util.SnowGolem;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.object.MovingBlock;
-import org.spout.vanilla.controller.object.misc.EnderCrystal;
-import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.controller.object.moving.PrimedTnt;
-import org.spout.vanilla.controller.object.moving.XPOrb;
-import org.spout.vanilla.controller.object.projectile.Arrow;
-import org.spout.vanilla.controller.object.projectile.BlazeFireball;
-import org.spout.vanilla.controller.object.projectile.Egg;
-import org.spout.vanilla.controller.object.projectile.EnderPearl;
-import org.spout.vanilla.controller.object.projectile.EyeOfEnder;
-import org.spout.vanilla.controller.object.projectile.GhastFireball;
-import org.spout.vanilla.controller.object.projectile.Snowball;
-import org.spout.vanilla.controller.object.sky.NetherSky;
-import org.spout.vanilla.controller.object.sky.NormalSky;
-import org.spout.vanilla.controller.object.sky.TheEndSky;
-import org.spout.vanilla.controller.object.vehicle.Boat;
-import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
+import org.spout.vanilla.controller.block.FurnaceController;
+import org.spout.vanilla.controller.entity.living.MobControllerType;
+import org.spout.vanilla.controller.entity.living.creature.hostile.Blaze;
+import org.spout.vanilla.controller.entity.living.creature.hostile.CaveSpider;
+import org.spout.vanilla.controller.entity.living.creature.hostile.Creeper;
+import org.spout.vanilla.controller.entity.living.creature.hostile.Enderdragon;
+import org.spout.vanilla.controller.entity.living.creature.hostile.Ghast;
+import org.spout.vanilla.controller.entity.living.creature.hostile.Giant;
+import org.spout.vanilla.controller.entity.living.creature.hostile.MagmaCube;
+import org.spout.vanilla.controller.entity.living.creature.hostile.Silverfish;
+import org.spout.vanilla.controller.entity.living.creature.hostile.Skeleton;
+import org.spout.vanilla.controller.entity.living.creature.hostile.Slime;
+import org.spout.vanilla.controller.entity.living.creature.hostile.Spider;
+import org.spout.vanilla.controller.entity.living.creature.hostile.Zombie;
+import org.spout.vanilla.controller.entity.living.creature.neutral.Enderman;
+import org.spout.vanilla.controller.entity.living.creature.neutral.PigZombie;
+import org.spout.vanilla.controller.entity.living.creature.neutral.Wolf;
+import org.spout.vanilla.controller.entity.living.creature.passive.Chicken;
+import org.spout.vanilla.controller.entity.living.creature.passive.Cow;
+import org.spout.vanilla.controller.entity.living.creature.passive.Mooshroom;
+import org.spout.vanilla.controller.entity.living.creature.passive.Ocelot;
+import org.spout.vanilla.controller.entity.living.creature.passive.Pig;
+import org.spout.vanilla.controller.entity.living.creature.passive.Sheep;
+import org.spout.vanilla.controller.entity.living.creature.passive.Squid;
+import org.spout.vanilla.controller.entity.living.creature.passive.Villager;
+import org.spout.vanilla.controller.entity.living.creature.util.IronGolem;
+import org.spout.vanilla.controller.entity.living.creature.util.SnowGolem;
+import org.spout.vanilla.controller.entity.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.entity.object.MovingBlock;
+import org.spout.vanilla.controller.entity.object.misc.EnderCrystal;
+import org.spout.vanilla.controller.entity.object.moving.Item;
+import org.spout.vanilla.controller.entity.object.moving.PrimedTnt;
+import org.spout.vanilla.controller.entity.object.moving.XPOrb;
+import org.spout.vanilla.controller.entity.object.projectile.Arrow;
+import org.spout.vanilla.controller.entity.object.projectile.BlazeFireball;
+import org.spout.vanilla.controller.entity.object.projectile.Egg;
+import org.spout.vanilla.controller.entity.object.projectile.EnderPearl;
+import org.spout.vanilla.controller.entity.object.projectile.EyeOfEnder;
+import org.spout.vanilla.controller.entity.object.projectile.GhastFireball;
+import org.spout.vanilla.controller.entity.object.projectile.Snowball;
+import org.spout.vanilla.controller.world.sky.NetherSky;
+import org.spout.vanilla.controller.world.sky.NormalSky;
+import org.spout.vanilla.controller.world.sky.TheEndSky;
+import org.spout.vanilla.controller.entity.object.vehicle.Boat;
+import org.spout.vanilla.controller.entity.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.protocol.controller.BasicObjectEntityProtocol;
 import org.spout.vanilla.protocol.controller.BasicProjectileEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.BlazeEntityProtocol;
@@ -99,6 +100,7 @@ import java.lang.reflect.Modifier;
  * Enum that serves as a lookup for all controllers in Vanilla.
  */
 public class VanillaControllerTypes {
+	// Entity
 	public static final VanillaControllerType DROPPED_ITEM  = new VanillaControllerType(1, Item.class, "Item", new PickupEntityProtocol());
 	public static final VanillaControllerType XP_ORB = new VanillaControllerType(2, XPOrb.class, "XP Orb", new XPOrbEntityProtocol());
 	public static final VanillaControllerType SHOT_ARROW = new VanillaControllerType(10, Arrow.class, "Arrow", new BasicProjectileEntityProtocol(60));
@@ -139,9 +141,14 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType IRON_GOLEM = new MobControllerType(99, IronGolem.class, "Iron Golem");
 	public static final VanillaControllerType ENDER_CRYSTAL = new VanillaControllerType(200, EnderCrystal.class, "Ender Crystal", new BasicObjectEntityProtocol(51));
 	public static final VanillaControllerType PLAYER = new VanillaControllerType(-1, VanillaPlayer.class, "Player", new VanillaPlayerEntityProtocol());
+
+	// World
 	public static final VanillaControllerType NORMAL_SKY = new VanillaControllerType(-2, NormalSky.class, "Normal Sky", null);
 	public static final VanillaControllerType NETHER_SKY = new VanillaControllerType(-3, NetherSky.class, "Nether Sky", null);
 	public static final VanillaControllerType THE_END_SKY = new VanillaControllerType(-4, TheEndSky.class, "The End Sky", null);
+
+	// Block
+	public static final VanillaControllerType FURNACE = new VanillaControllerType(-5, FurnaceController.class, "Furnace", null);
 
 	public static final String KEY = "ControllerID";
 	private static final TIntObjectHashMap<VanillaControllerType> map = new TIntObjectHashMap<VanillaControllerType>();

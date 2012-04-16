@@ -35,7 +35,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.exception.InvalidControllerException;
 
-import org.spout.vanilla.controller.object.projectile.Potion;
+import org.spout.vanilla.controller.entity.object.projectile.Potion;
 
 public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();

@@ -62,11 +62,12 @@ import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
+    public static final int MINECRAFT_PROTOCOL_ID = 29;
+    public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
 	private static VanillaPlugin instance;
 	private VanillaConfiguration config;
-	public static final int MINECRAFT_PROTOCOL_ID = 29;
-	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
 	private final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
+    private Engine game;
 
 	public VanillaPlugin() {
 		instance = this;
@@ -79,7 +80,7 @@ public class VanillaPlugin extends CommonPlugin {
 		// getGame().getProtocolManager().register ...
 		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
 
-		Engine game = getGame();
+		game = getGame();
 
 		if (game instanceof Server) {
 			int port = 25565;
@@ -112,9 +113,6 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
-		//Grab singleton game instance.
-		Engine game = getGame();
-
 		// IO
 		try {
 			config.load();
@@ -169,10 +167,6 @@ public class VanillaPlugin extends CommonPlugin {
 
 	public static VanillaPlugin getInstance() {
 		return instance;
-	}
-
-	public VanillaConfiguration getConfig() {
-		return config;
 	}
 
 	public VanillaSky getSky(World world) {

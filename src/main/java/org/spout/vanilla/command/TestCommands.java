@@ -28,6 +28,7 @@ package org.spout.vanilla.command;
 import java.util.Set;
 
 import org.spout.api.ChatColor;
+import org.spout.api.Spout;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
@@ -36,12 +37,16 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.type.ControllerRegistry;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.exception.CommandException;
+import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.protocol.codec.SpawnItemCodec;
+import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
+import org.spout.vanilla.protocol.msg.RespawnMessage;
 
 public class TestCommands {
 	@SuppressWarnings("unused")
@@ -145,4 +150,30 @@ public class TestCommands {
 			control.getParent().translate(movement.divide(args.getDouble(5)));
 		}
 	}
+
+    @Command(aliases = {"tppos"}, usage = "<name> <world> <x> <y> <z>", desc = "Teleport to coordinates!", min = 1, max = 5)
+    public void tppos(CommandContext args, CommandSource source) throws CommandException {
+        Player player = Spout.getEngine().getPlayer(args.getString(0), true);
+        if (!(source instanceof Player) && player == null) {
+            throw new CommandException("Must specifiy a valid player to tppos from the console.");
+        }
+        World world = Spout.getEngine().getWorld(args.getString(1));
+        //If the source of the command is a player and they do not provide a valid player...teleport the source instead.
+        if (player == null) {
+            player = (Player) source;
+        }
+        if (world != null) {
+            Vector3 loc = new Vector3(args.getInteger(2), args.getInteger(3), args.getInteger(4));
+            int prevRot = (int) player.getEntity().getRotation().length();
+            int prevPitch = (int) player.getEntity().getRotation().getPitch();
+            //Server tracks position so we can set it here then send a relative message to the client
+            player.getEntity().setPosition(new Point(world, loc.getX(), loc.getY(), loc.getZ()));
+            //Send teleport packets if same world.
+            if (player.getEntity().getWorld() == world) {
+                player.getSession().send(new EntityTeleportMessage(player.getEntity().getId(), loc, prevRot, prevPitch));
+            }
+        } else {
+            throw new CommandException("Please enter a valid world");
+        }
+    }
 }

@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.controller.block;
 
+import org.spout.vanilla.controller.BlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaMaterials;
 

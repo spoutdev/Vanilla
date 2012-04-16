@@ -31,7 +31,7 @@ import org.spout.api.entity.Controller;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.controller.entity.living.creature.neutral.Enderman;
+import org.spout.vanilla.controller.living.creature.neutral.Enderman;
 import org.spout.vanilla.protocol.controller.BasicMobEntityProtocol;
 
 public class EndermanEntityProtocol extends BasicMobEntityProtocol {

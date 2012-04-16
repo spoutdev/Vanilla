@@ -34,8 +34,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.entity.object.MovingBlock;
-import org.spout.vanilla.controller.entity.object.moving.Item;
+import org.spout.vanilla.controller.object.MovingBlock;
+import org.spout.vanilla.controller.object.moving.Item;
 
 public class MovingBlockAction extends EntityAction<MovingBlock> {
 	@Override

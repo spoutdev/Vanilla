@@ -42,7 +42,7 @@ import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.player.Player;
-import org.spout.vanilla.controller.block.BlockController;
+import org.spout.vanilla.controller.BlockController;
 
 /**
  * Controller that spawns entities in regions.

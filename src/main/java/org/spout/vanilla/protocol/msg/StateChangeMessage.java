@@ -26,7 +26,7 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.spout.api.protocol.Message;
-import org.spout.vanilla.controller.entity.living.player.GameMode;
+import org.spout.vanilla.controller.living.player.GameMode;
 
 public final class StateChangeMessage extends Message {
 	public static final byte INVALID_BED = 0;

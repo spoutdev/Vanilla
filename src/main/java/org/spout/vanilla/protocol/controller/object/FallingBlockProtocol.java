@@ -36,7 +36,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.controller.entity.object.MovingBlock;
+import org.spout.vanilla.controller.object.MovingBlock;
 import org.spout.vanilla.protocol.controller.BasicVehicleEntityProtocol;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;

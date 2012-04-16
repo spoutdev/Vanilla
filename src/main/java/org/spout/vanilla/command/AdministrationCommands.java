@@ -45,8 +45,8 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.entity.living.player.GameMode;
-import org.spout.vanilla.controller.entity.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.living.player.GameMode;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.sky.VanillaSky;
 import org.spout.vanilla.world.Weather;
 

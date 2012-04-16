@@ -29,7 +29,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.entity.living.Living;
+import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 
 public class EntityHeadYawMessageHandler extends MessageHandler<EntityHeadYawMessage> {

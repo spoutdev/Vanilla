@@ -31,7 +31,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.entity.EntityController;
+import org.spout.vanilla.controller.EntityController;
 
 public class WanderAction extends EntityAction<EntityController> {
 	private static final double WANDER_FREQ = 2.75;

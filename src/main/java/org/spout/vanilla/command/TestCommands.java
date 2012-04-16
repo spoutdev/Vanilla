@@ -151,7 +151,7 @@ public class TestCommands {
 		}
 	}
 
-    @Command(aliases = {"tppos"}, usage = "<name> <world> <x> <y> <z>", desc = "Teleport to coordinates!", min = 1, max = 5)
+    @Command(aliases = {"tppos"}, usage = "<name> <world> <x> <y> <z>", desc = "Teleport to coordinates!", min = 5, max = 5)
     public void tppos(CommandContext args, CommandSource source) throws CommandException {
         Player player = Spout.getEngine().getPlayer(args.getString(0), true);
         if (!(source instanceof Player) && player == null) {
@@ -164,14 +164,9 @@ public class TestCommands {
         }
         if (world != null) {
             Vector3 loc = new Vector3(args.getInteger(2), args.getInteger(3), args.getInteger(4));
-            int prevRot = (int) player.getEntity().getRotation().length();
-            int prevPitch = (int) player.getEntity().getRotation().getPitch();
             //Server tracks position so we can set it here then send a relative message to the client
-            player.getEntity().setPosition(new Point(world, loc.getX(), loc.getY(), loc.getZ()));
-            //Send teleport packets if same world.
-            if (player.getEntity().getWorld() == world) {
-                player.getSession().send(new EntityTeleportMessage(player.getEntity().getId(), loc, prevRot, prevPitch));
-            }
+            player.getEntity().setPosition(new Point(loc, world));
+            player.getNetworkSynchronizer().setPositionDirty();
         } else {
             throw new CommandException("Please enter a valid world");
         }

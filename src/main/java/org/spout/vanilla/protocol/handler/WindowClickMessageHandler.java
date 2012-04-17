@@ -55,7 +55,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			inventory = entity.getInventory();
 		}
 
-		if(message.getSlot() == 64537) {
+		if (message.getSlot() == 64537) {
 			vplayer.setItemOnCursor(null);
 			//TODO drop
 			response(session, message, true);
@@ -82,7 +82,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		ItemStack slotStack = inventory.getItem(clickedSlot);
 		ItemStack cursorStack = vplayer.getItemOnCursor();
 		boolean emptyCursor = cursorStack == null;
-		boolean emptySlot   = slotStack   == null;
+		boolean emptySlot = slotStack == null;
 		boolean neitherIsEmpty = !emptySlot && !emptyCursor;
 		boolean leftClick = !message.isRightClick();
 
@@ -117,69 +117,39 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		}
 
 		cursorStack = nullIfEmpty(cursorStack);
-		slotStack 	= nullIfEmpty(slotStack);
+		slotStack = nullIfEmpty(slotStack);
 		vplayer.setItemOnCursor(cursorStack);
 		inventory.setItem(slotStack, clickedSlot);
 		response(session, message, true);
-		/*
-		 * if (clickedItem == null) { if (message.getItem() != -1) {
-		 * player.getNetworkSynchronizer().onSlotSet(inv, slot, clickedItem);
-		 * response(session, message, false); return; } } else if (message.getItem()
-		 * != clickedItem.getMaterial().getId() || message.getCount() !=
-		 * clickedItem.getAmount() || message.getDamage() != clickedItem.getData())
-		 * { player.getNetworkSynchronizer().onSlotSet(inv, slot, clickedItem);
-		 * response(session, message, false); return; }
-		 *
-		 * if (message.isShift()) { //if (inv ==
-		 * player.getInventory().getOpenWindow()) { // TODO: if player has e.g.
-		 * chest open //} { if (slot < 9) { for (int i = 9; i < 36; ++i) { if
-		 * (inv.getItem(i) == null) { // TODO: deal with item stacks
-		 * inv.setItem(clickedItem, i); inv.setItem(null, slot); response(session,
-		 * message, true); return; } } } else { for (int i = 0; i < 9; ++i) { if
-		 * (inv.getItem(i) == null) { // TODO: deal with item stacks
-		 * inv.setItem(clickedItem, i); inv.setItem(null, slot); response(session,
-		 * message, true); return; } } } } response(session, message, false);
-		 * return; }
-		 *
-		 * /*
-		 * if (inv == player.getInventory().getCraftingInventory() && slot ==
-		 * CraftingInventory.RESULT_SLOT && player.getItemOnCursor() != null) {
-		 * response(session, message, false); return; }
-		 *
-		 * response(session, message, true); inv.setItem(slot,
-		 * player.getItemOnCursor()); player.setItemOnCursor(clickedItem);
-		 *
-		 * if (inv == player.getInventory().getCraftingInventory() && slot ==
-		 * CraftingInventory.RESULT_SLOT && clickedItem != null) {
-		 * player.getInventory().getCraftingInventory().craft(); }
-		 */
 	}
 
 	private ItemStack splitStack(ItemStack stack) {
 		ItemStack newStack = stack.clone();
 		newStack.setAmount(0);
-		moveItemFromTo(stack, newStack, (stack.getAmount()+1)/2, true);
+		moveItemFromTo(stack, newStack, (stack.getAmount() + 1) / 2, true);
 		return newStack;
 	}
 
 	private int moveItemFromTo(ItemStack from, ItemStack to, int count, boolean tryToFill) {
-		if (from == null || to == null)
+		if (from == null || to == null) {
 			return 0;
+		}
 
 		int fromAmount = from.getAmount();
 		int toAmount = to.getAmount();
 		int toFreeSpace = to.getMaterial().getMaxStackSize() - toAmount;
 
-		if (count <= 0 || !tryToFill && (fromAmount < count || toFreeSpace < count))
+		if (count <= 0 || !tryToFill && (fromAmount < count || toFreeSpace < count)) {
 			return 0;
+		}
 
 		if (tryToFill) {
 			count = Math.min(fromAmount, count);
 			count = Math.min(toFreeSpace, count);
 		}
 
-		from.setAmount(fromAmount-count);
-		to.setAmount(toAmount+count);
+		from.setAmount(fromAmount - count);
+		to.setAmount(toAmount + count);
 		return count;
 	}
 
@@ -191,14 +161,11 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		ItemStack theStack = inv.getItem(pos);
 		// Assume item is in quick-bar.
 		int startSlot = 0, stopSlot = 8;
-		String invName = "quickbar";
 		if (pos > stopSlot) {
 			startSlot = 9;
 			stopSlot = inv.getSize() - 1;
-			invName = "inventory!";
 		}
 
-		player.sendMessage("You shifted in your " + invName);
 		Set<Integer> hiddenSlots = new HashSet<Integer>();
 		for (int i = startSlot; i <= stopSlot; i++) {
 			if (inv.isHiddenSlot(i)) {

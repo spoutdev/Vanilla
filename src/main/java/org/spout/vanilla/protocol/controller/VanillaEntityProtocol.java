@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
-import org.spout.vanilla.controller.EntityController;
+import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.EntityRotationMessage;
 import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
@@ -44,8 +44,8 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 	@Override
 	public Message[] getUpdateMessage(Entity entity) {
-		if (entity.getController() != null && entity.getController() instanceof EntityController) {
-			EntityController controller = (EntityController) entity.getController();
+		if (entity.getController() != null && entity.getController() instanceof VanillaActionController) {
+			VanillaActionController controller = (VanillaActionController) entity.getController();
 			
 			int id = entity.getId();
 			

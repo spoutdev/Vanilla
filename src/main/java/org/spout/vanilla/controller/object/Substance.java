@@ -25,13 +25,13 @@
  */
 package org.spout.vanilla.controller.object;
 
-import org.spout.vanilla.controller.EntityController;
+import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
 
 /**
  * Controller that is the base of all controllers that aren't living.
  */
-public abstract class Substance extends EntityController {
+public abstract class Substance extends VanillaActionController {
 	protected Substance(VanillaControllerType type) {
 		super(type);
 	}

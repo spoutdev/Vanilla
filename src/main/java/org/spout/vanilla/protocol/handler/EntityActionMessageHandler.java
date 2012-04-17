@@ -29,7 +29,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.EntityController;
+import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
 
@@ -39,7 +39,7 @@ public final class EntityActionMessageHandler extends MessageHandler<EntityActio
 		if (player.getEntity().getController() == null) {
 			return;
 		}
-		if (!(player.getEntity().getController() instanceof EntityController)) {
+		if (!(player.getEntity().getController() instanceof VanillaActionController)) {
 			return;
 		}
 		VanillaPlayer ve = (VanillaPlayer) player.getEntity().getController();

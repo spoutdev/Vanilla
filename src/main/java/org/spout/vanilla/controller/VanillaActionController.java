@@ -54,7 +54,7 @@ import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 /**
  * Controller that is the parent of all entity controllers.
  */
-public abstract class EntityController extends ActionController implements VanillaController {
+public abstract class VanillaActionController extends ActionController implements VanillaController {
 	private static Random rand = new Random();
 	//Collision box for controllers
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
@@ -82,7 +82,7 @@ public abstract class EntityController extends ActionController implements Vanil
 		return positionTicks++ % 60 == 0;
 	}
 	
-	protected EntityController(VanillaControllerType type) {
+	protected VanillaActionController(VanillaControllerType type) {
 		super(type);
 		this.type = type;
 	}

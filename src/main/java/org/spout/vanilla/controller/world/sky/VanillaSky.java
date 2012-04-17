@@ -27,7 +27,7 @@ package org.spout.vanilla.controller.world.sky;
 
 import org.spout.api.geo.World;
 
-import org.spout.vanilla.controller.EntityController;
+import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.world.Weather;
 
@@ -36,7 +36,7 @@ import java.util.Random;
 /**
  * Represents a sky in Vanilla
  */
-public abstract class VanillaSky extends EntityController {
+public abstract class VanillaSky extends VanillaActionController {
 	protected long maxTime;
 	protected long time = 0;
 	protected long countdown = 20;

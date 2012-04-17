@@ -36,13 +36,13 @@ public class WallAttachable extends AbstractAttachable {
 	@Override
 	public short getDataForFace(BlockFace face) {
 		switch (face) {
-			case EAST:
-				return 0x1;
-			case WEST:
-				return 0x2;
-			case SOUTH:
-				return 0x3;
 			case NORTH:
+				return 0x1;
+			case SOUTH:
+				return 0x2;
+			case EAST:
+				return 0x3;
+			case WEST:
 				return 0x4;
 			default:
 				return 0x5; //Standing on floor, this will be default if other faces are passed, too
@@ -53,13 +53,13 @@ public class WallAttachable extends AbstractAttachable {
 	public BlockFace getFaceAttachedTo(short data) {
 		switch (data) {
 			case 0x1:
-				return BlockFace.EAST;
-			case 0x2:
-				return BlockFace.WEST;
-			case 0x3:
-				return BlockFace.SOUTH;
-			case 0x4:
 				return BlockFace.NORTH;
+			case 0x2:
+				return BlockFace.SOUTH;
+			case 0x3:
+				return BlockFace.EAST;
+			case 0x4:
+				return BlockFace.WEST;
 			case 0x5:
 				return BlockFace.TOP;
 			default:

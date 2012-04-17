@@ -27,15 +27,14 @@ package org.spout.vanilla.configuration;
 
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.util.config.ConfigurationHolder;
+import org.spout.api.util.config.ConfigurationHolderConfiguration;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 import org.spout.vanilla.VanillaPlugin;
 
 import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 
-public class VanillaConfiguration extends YamlConfiguration {
+public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	// General
 	public static final ConfigurationHolder MOTD = new ConfigurationHolder("A Spout Server", "general", "motd");
 	public static final ConfigurationHolder ENABLE_END_CREDITS = new ConfigurationHolder(true, "general", "enable-ending-credits");
@@ -61,21 +60,7 @@ public class VanillaConfiguration extends YamlConfiguration {
 	public static final ConfigurationHolder ITEM_PICKUP_RANGE = new ConfigurationHolder(3, "controller", "item-pickup-range");
 
 	public VanillaConfiguration(File dataFolder) {
-		super(new File(dataFolder, "config.yml"));
-		for (Field field : VanillaConfiguration.class.getFields()) {
-			if (Modifier.isStatic(field.getModifiers())) {
-				try {
-					Object f = field.get(null);
-					if (f instanceof ConfigurationHolder) {
-						ConfigurationHolder node = (ConfigurationHolder) f;
-						node.setConfiguration(this);
-						node.getValue();
-					}
-				} catch (IllegalArgumentException e) {
-				} catch (IllegalAccessException e) {
-				}
-			}
-		}
+		super(new YamlConfiguration(new File(dataFolder, "config.yml")));
 	}
 
 	@Override

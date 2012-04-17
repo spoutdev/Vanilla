@@ -148,24 +148,26 @@ public class TestCommands {
 		}
 	}
 
-    @Command(aliases = {"tppos"}, usage = "<name> <world> <x> <y> <z>", desc = "Teleport to coordinates!", min = 5, max = 5)
-    public void tppos(CommandContext args, CommandSource source) throws CommandException {
-        Player player = Spout.getEngine().getPlayer(args.getString(0), true);
-        if (!(source instanceof Player) && player == null) {
-            throw new CommandException("Must specifiy a valid player to tppos from the console.");
-        }
-        World world = Spout.getEngine().getWorld(args.getString(1));
-        //If the source of the command is a player and they do not provide a valid player...teleport the source instead.
-        if (player == null) {
-            player = (Player) source;
-        }
-        if (world != null) {
-            Vector3 loc = new Vector3(args.getInteger(2), args.getInteger(3), args.getInteger(4));
-            //Server tracks position so we can set it here then send a relative message to the client
-            player.getEntity().setPosition(new Point(loc, world));
-            player.getNetworkSynchronizer().setPositionDirty();
-        } else {
-            throw new CommandException("Please enter a valid world");
-        }
-    }
+	@Command(aliases = {"tppos"}, usage = "<name> <world> <x> <y> <z>", desc = "Teleport to coordinates!", min = 5, max = 5)
+	public void tppos(CommandContext args, CommandSource source) throws CommandException {
+		Player player = Spout.getEngine().getPlayer(args.getString(0), true);
+		if (!(source instanceof Player) && player == null) {
+			throw new CommandException("Must specifiy a valid player to tppos from the console.");
+		}
+		
+		World world = Spout.getEngine().getWorld(args.getString(1));
+		//If the source of the command is a player and they do not provide a valid player...teleport the source instead.
+		if (player == null) {
+			player = (Player) source;
+		}
+		
+		if (world != null) {
+			Vector3 loc = new Vector3(args.getInteger(2), args.getInteger(3), args.getInteger(4));
+			//Server tracks position so we can set it here then send a relative message to the client
+			player.getEntity().setPosition(new Point(loc, world));
+			player.getNetworkSynchronizer().setPositionDirty();
+		} else {
+			throw new CommandException("Please enter a valid world");
+		}
+	}
 }

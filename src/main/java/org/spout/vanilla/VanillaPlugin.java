@@ -62,12 +62,12 @@ import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 
 public class VanillaPlugin extends CommonPlugin {
-    public static final int MINECRAFT_PROTOCOL_ID = 29;
-    public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
+	public static final int MINECRAFT_PROTOCOL_ID = 29;
+	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
 	private static VanillaPlugin instance;
 	private VanillaConfiguration config;
 	private final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
-    private Engine game;
+	private Engine game;
 
 	public VanillaPlugin() {
 		instance = this;

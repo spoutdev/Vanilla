@@ -36,10 +36,10 @@ import org.spout.vanilla.protocol.msg.GroundMessage;
 public class GroundMessageHandler extends MessageHandler<GroundMessage> {
 	@Override
 	public void handleServer(Session session, Player player, GroundMessage message) {
-		if (player.getEntity().getController() == null) {
+		if (player == null || player.getEntity() == null || player.getEntity().getController() == null) {
 			return;
 		}
-		if (!(player.getEntity().getController() instanceof PlayerController)) {
+		if (!(player.getEntity().getController() instanceof VanillaPlayer)) {
 			return;
 		}
 		VanillaPlayer vplayer = (VanillaPlayer) player.getEntity().getController();

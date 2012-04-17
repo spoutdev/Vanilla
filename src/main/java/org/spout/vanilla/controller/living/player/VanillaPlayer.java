@@ -63,6 +63,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected ItemStack itemOnCursor;
 	protected String tabListName;
 	protected GameMode gameMode;
+	private int distanceMoved;
 
 	public VanillaPlayer(Player p, GameMode gameMode) {
 		super(VanillaControllerTypes.PLAYER);
@@ -71,7 +72,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.gameMode = gameMode;
 		p.getEntity().setInventorySize(45);
 	}
-	
+
 	public VanillaPlayer(Player p) {
 		this(p, GameMode.SURVIVAL);
 	}
@@ -132,9 +133,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 			creativeTick(dt);
 		}
 	}
-	
+
 	private void survivalTick(float dt) {
-		exhaustion += 0.1;
+		if ((distanceMoved += getPreviousPosition().distanceSquared(getParent().getPosition())) >= 1) {
+			exhaustion += 0.01;
+			distanceMoved = 0;
+		}
+
 		if (sprinting) {
 			exhaustion += 0.1;
 		}
@@ -142,7 +147,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
 
 		if (poisoned) {
-			exhaustion += 15.0;
+			exhaustion += 15.0 / 30 * dt;
 		}
 
 		// Track hunger
@@ -159,7 +164,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		health = (short) parent.getHealth();
 
 		if (exhaustion > 4.0) {
-			exhaustion = 0;
+			exhaustion -= 4.0;
 			if (foodSaturation > 0) {
 				foodSaturation = Math.max(foodSaturation - 0.1f, 0);
 			} else {
@@ -167,24 +172,29 @@ public class VanillaPlayer extends Human implements PlayerController {
 			}
 		}
 
-		if (hunger <= 0) {
+		boolean changed = false;
+		if (hunger <= 0 && health > 0) {
 			health = (short) Math.max(health - 1, 0);
 			parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.STARVE));
-		} else if (hunger >= 18) {
+			changed = true;
+		} else if (hunger >= 18 && health < 20) {
 			health = (short) Math.min(health + 1, 20);
 			parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
+			changed = true;
 		}
 
-		System.out.println("Performing health/hunger update...");
-		System.out.println("Food saturation: " + foodSaturation);
-		System.out.println("Hunger: " + hunger);
-		System.out.println("Health: " + health);
-		System.out.println("Exhaustion: " + exhaustion);
-		sendPacket(owner, new PlayerHealthMessage(health, hunger, foodSaturation));
+		if (changed) {
+			System.out.println("Performing health/hunger update...");
+			System.out.println("Food saturation: " + foodSaturation);
+			System.out.println("Hunger: " + hunger);
+			System.out.println("Health: " + health);
+			System.out.println("Exhaustion: " + exhaustion);
+			sendPacket(owner, new PlayerHealthMessage(health, hunger, foodSaturation));
+		}
 	}
-	
+
 	private void creativeTick(float dt) {
-		
+
 	}
 
 	/**

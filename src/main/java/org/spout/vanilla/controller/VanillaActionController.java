@@ -1,9 +1,9 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of vanilla (http://www.spout.org/).
  *
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * vanilla is licensed under the SpoutDev License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
+ * vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -12,7 +12,7 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful,
+ * vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
@@ -81,12 +81,12 @@ public abstract class VanillaActionController extends ActionController implement
 	public boolean needsPositionUpdate() {
 		return positionTicks++ % 60 == 0;
 	}
-	
+
 	protected VanillaActionController(VanillaControllerType type) {
 		super(type);
 		this.type = type;
 	}
-	
+
 	@Override
 	public void onDeath() {
 		//Don't count disconnects/unknown exceptions as dead (!Yes that's a difference!)
@@ -116,35 +116,35 @@ public abstract class VanillaActionController extends ActionController implement
 	public Vector3 getVelocity() {
 		return velocity;
 	}
-	
+
 	public Vector3 getPreviousPosition() {
 		return this.oldPosition;
 	}
-	
+
 	public Vector3 getPreviousRotation() {
 		return this.oldRotation;
 	}
-	
+
 	public int getClientPosX() {
 		return this.clientX;
 	}
-	
+
 	public int getClientPosY() {
 		return this.clientY;
 	}
-	
+
 	public int getClientPosZ() {
 		return this.clientZ;
 	}
-	
+
 	public int getClientYaw() {
 		return this.clientYaw;
 	}
-	
+
 	public int getClientPitch() {
 		return this.clientPitch;
 	}
-	
+
 	//FIXME: MOVE TO MATHHELPER!
 	public static byte wrapByte(int value) {
 		value %= 256;
@@ -153,7 +153,7 @@ public abstract class VanillaActionController extends ActionController implement
 		}
 		return (byte) value;
 	}
-	
+
 	public void updateClientPosition() {
 		this.clientX = MathHelper.floor(this.getParent().getPosition().getX() * 32.0);
 		this.clientY = MathHelper.floor(this.getParent().getPosition().getY() * 32.0);
@@ -161,7 +161,7 @@ public abstract class VanillaActionController extends ActionController implement
 		this.clientYaw = wrapByte(MathHelper.floor(this.getParent().getYaw() / 360f * 256f));
 		this.clientPitch = wrapByte(MathHelper.floor(this.getParent().getPitch() / 360f * 256f));
 	}
-	
+
 	public void setClientPosition(int x, int y, int z, int yaw, int pitch) {
 		this.clientX = x;
 		this.clientY = y;
@@ -196,19 +196,19 @@ public abstract class VanillaActionController extends ActionController implement
 		this.oldRotation = getParent().getRotation().getAxisAngles();
 		this.updateClientPosition();
 	}
-	
+
 	@Override
 	public void onCollide(Block block) {
 		this.setVelocity(Vector3.ZERO);
 	}
-	
+
 	@Override
 	public void onCollide(Entity entity) {
 		//push entities apart
 		//TODO: Ignore if this entity is a passenger?
 		Vector2 diff = entity.getPosition().subtract(this.getParent().getPosition()).toVector2();
 		float distance = diff.length();
-		if (distance > 0.1f) {	
+		if (distance > 0.1f) {
 			double factor = Math.min(1f / distance, 1f) / distance * 0.05;
 			diff = diff.multiply(factor);
 			this.setVelocity(this.getVelocity().add(diff.toVector3()));
@@ -216,13 +216,13 @@ public abstract class VanillaActionController extends ActionController implement
 	}
 
 	@Override
-	public void onTick(float dt) {		
+	public void onTick(float dt) {
 		//Check controller health, send messages to the client based on current state.
 		if (getParent().getHealth() <= 0) {
 			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 			getParent().kill();
 		}
-		
+
 		this.oldPosition = getParent().getPosition();
 		this.oldRotation = getParent().getRotation().getAxisAngles();
 
@@ -230,7 +230,7 @@ public abstract class VanillaActionController extends ActionController implement
 		if(getParent().getPosition() != null  && getParent().getPosition() != Point.invalid) {
 			lastKnownPosition = getParent().getPosition();
 		}
-		
+
 		super.onTick(dt);
 	}
 

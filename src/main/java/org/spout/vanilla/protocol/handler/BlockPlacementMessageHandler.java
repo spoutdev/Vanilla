@@ -41,6 +41,9 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.block.FurnaceController;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
@@ -114,6 +117,11 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 
 			BlockMaterial newBlock = (BlockMaterial) placedMaterial;
 			BlockMaterial oldBlock = target.getMaterial();
+
+			// TODO: Find better home for this code
+			if (newBlock.getMaterial() == VanillaMaterials.FURNACE) {
+				world.createAndSpawnEntity(new Point(world, x, y, z), new FurnaceController());
+			}
 
 			if (!sendRevert && !oldBlock.isPlacementObstacle()) {
 				//if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {

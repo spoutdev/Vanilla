@@ -25,13 +25,12 @@
  */
 package org.spout.vanilla.controller.block;
 
-import org.spout.vanilla.controller.BlockController;
+import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class FurnaceController extends BlockController {
-
-	protected FurnaceController() {
+public class FurnaceController extends VanillaBlockController {
+	public FurnaceController() {
 		super(VanillaControllerTypes.FURNACE, VanillaMaterials.FURNACE);
 	}
 

@@ -134,8 +134,6 @@ public class VanillaEventListener implements Listener {
 				HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
 				endStone.add(VanillaMaterials.END_STONE);
 				spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
-
-				spawner.addBlockControllerType(VanillaControllerTypes.FURNACE);
 			}
 		}
 		

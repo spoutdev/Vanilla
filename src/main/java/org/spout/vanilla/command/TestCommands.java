@@ -32,12 +32,14 @@ import org.spout.api.Spout;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
+import org.spout.api.entity.BlockController;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.type.ControllerRegistry;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
@@ -169,5 +171,23 @@ public class TestCommands {
 		} else {
 			throw new CommandException("Please enter a valid world");
 		}
+	}
+	
+	@Command(aliases = {"block"}, desc = "Checks if the block below you has an entity", min = 0, max = 0)
+	public void checkBlock(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("Source must be player");
+		}
+		
+		Player player = (Player) source;
+		Entity playerEntity = player.getEntity();
+		Block block = playerEntity.getWorld().getBlock(playerEntity.getPosition().subtract(0, 1, 0));
+		if (!block.hasController()) {
+			player.sendMessage("Block has no entity!");
+			return;
+		}
+
+		BlockController controller = block.getController();
+		player.sendMessage("Material: " + controller.getMaterial().getName());
 	}
 }

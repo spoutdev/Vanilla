@@ -42,7 +42,7 @@ import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.player.Player;
-import org.spout.vanilla.controller.BlockController;
+import org.spout.vanilla.controller.VanillaBlockController;
 
 /**
  * Controller that spawns entities in regions.
@@ -53,7 +53,6 @@ public class RegionSpawner extends Controller {
 	private final Region region;
 	private final Random rand = new Random();
 	private final Map<ControllerType, SpawnInformation> spawnableTypes = new ConcurrentHashMap<ControllerType, SpawnInformation>();
-	private final Set<ControllerType> blockTypes = new HashSet<ControllerType>();
 
 	public RegionSpawner(Region region) {
 		super(TYPE);
@@ -72,18 +71,6 @@ public class RegionSpawner extends Controller {
 		if (players.isEmpty()) {
 			return;
 		}
-
-		for (int dx = 0; dx < Region.REGION_SIZE; dx++) {
-			for (int dy = 0; dy < Region.REGION_SIZE; dy++) {
-				for (int dz = 0; dz < Region.REGION_SIZE; dz++) {
-					Chunk chunk = region.getChunk(dx, dy, dz, false);
-					if (chunk != null && chunk.isLoaded() && chunk.isPopulated()) {
-						spawn(chunk);
-						createBlockEntities(chunk);
-					}
-				}
-			}
-		}
 	}
 
 	/**
@@ -101,44 +88,11 @@ public class RegionSpawner extends Controller {
 	}
 
 	/**
-	 * Adds a controller type to the list of controller types this region spawner will ONLY create and not spawn.
-	 *
-	 * @param type
-	 */
-	public void addBlockControllerType(ControllerType type) {
-		if (!type.canCreateController()) {
-			throw new IllegalStateException("Class " + type + " does not have a default constructor!");
-		}
-
-		blockTypes.add(type);
-	}
-
-	/**
 	 * Region this spawner manages.
 	 * @return region
 	 */
 	public Region getRegion() {
 		return region;
-	}
-	
-	public void createBlockEntities(Chunk chunk) {
-		for (ControllerType type : blockTypes) {
-			for (int x = 0; x < Chunk.CHUNK_SIZE; x++) {
-				for (int y = 0; y < Chunk.CHUNK_SIZE; y++) {
-					for (int z = 0; z < Chunk.CHUNK_SIZE; z++) {
-						Controller controller = type.createController();
-						if (!(controller instanceof BlockController)) {
-							return;
-						}
-
-						BlockController blockController = (BlockController) controller;
-						if (chunk.getBlockMaterial(x, y, z) == blockController.getMaterial()) {
-							chunk.getWorld().createAndSpawnEntity(new Point(chunk.getWorld(), x, y, z), controller);
-						}
-					}
-				}
-			}
-		}
 	}
 
 	public void spawn(Chunk chunk) {

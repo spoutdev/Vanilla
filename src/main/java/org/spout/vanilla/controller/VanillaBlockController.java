@@ -25,20 +25,12 @@
  */
 package org.spout.vanilla.controller;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.material.Material;
-import org.spout.vanilla.controller.VanillaController;
-import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.api.entity.BlockController;
+import org.spout.api.material.BlockMaterial;
 
-public abstract class BlockController extends Controller implements VanillaController {
-	private final Material material;
+public abstract class VanillaBlockController extends BlockController implements VanillaController {
 
-	protected BlockController(VanillaControllerType type, Material material) {
-		super(type);
-		this.material = material;
-	}
-
-	public Material getMaterial() {
-		return material;
+	protected VanillaBlockController(VanillaControllerType type, BlockMaterial blockMaterial) {
+		super(type, blockMaterial);
 	}
 }

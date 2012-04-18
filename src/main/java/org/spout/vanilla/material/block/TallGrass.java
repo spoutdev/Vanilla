@@ -25,7 +25,13 @@
  */
 package org.spout.vanilla.material.block;
 
-public class TallGrass extends LongGrass {
+import org.spout.api.Source;
+import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.VanillaMaterials;
+
+public class TallGrass extends DeadBush {
 	public static final TallGrass DEAD_GRASS = register(new TallGrass("Dead Grass"));
 	public static final TallGrass TALL_GRASS = register(new TallGrass("Tall Grass", 1, DEAD_GRASS));
 	public static final TallGrass FERN = register(new TallGrass("Fern", 2, DEAD_GRASS));
@@ -44,7 +50,18 @@ public class TallGrass extends LongGrass {
 		this.setHardness(0.0F).setResistance(0.0F);
 	}
 
+	@Override
 	public TallGrass getParentMaterial() {
 		return (TallGrass) super.getParentMaterial();
+	}
+	
+	@Override
+	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
+		if (super.canPlace(world, x, y, z, data, against, source)) {
+			Block block = world.getBlock(x, y, z).move(against.getOpposite());
+			return block.getMaterial() == VanillaMaterials.GRASS || block.getMaterial() == VanillaMaterials.DIRT;
+		} else {
+			return false;
+		}
 	}
 }

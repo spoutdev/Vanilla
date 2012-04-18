@@ -71,8 +71,8 @@ public class Sapling extends GroundAttachable implements Plant {
 	@Override
 	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
 		if (super.canPlace(world, x, y, z, data, against, source)) {
-			Block block = world.getBlock(x, y, z).move(against.getOpposite());
-			return block.getMaterial() instanceof Grass || block.getMaterial() == VanillaMaterials.DIRT;
+			Block block = world.getBlock(x, y - 1, z).move(against.getOpposite());
+			return block.getMaterial() == VanillaMaterials.GRASS || block.getMaterial() == VanillaMaterials.DIRT;
 		} else {
 			return false;
 		}

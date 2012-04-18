@@ -40,11 +40,12 @@ import org.spout.vanilla.material.block.Grass;
 import org.spout.vanilla.material.block.Gravel;
 import org.spout.vanilla.material.block.Ice;
 import org.spout.vanilla.material.block.Leaves;
-import org.spout.vanilla.material.block.LongGrass;
+import org.spout.vanilla.material.block.DeadBush;
+import org.spout.vanilla.material.block.LilyPad;
 import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.block.MinecartTrackDetector;
 import org.spout.vanilla.material.block.MinecartTrackPowered;
-import org.spout.vanilla.material.block.NetherWartBlock;
+import org.spout.vanilla.material.block.NetherWart;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.Plank;
 import org.spout.vanilla.material.block.Sandstone;
@@ -54,6 +55,7 @@ import org.spout.vanilla.material.block.Slab;
 import org.spout.vanilla.material.block.Snow;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.StoneBrick;
+import org.spout.vanilla.material.block.SugarCane;
 import org.spout.vanilla.material.block.TallGrass;
 import org.spout.vanilla.material.block.Tree;
 import org.spout.vanilla.material.block.WheatCrop;
@@ -118,7 +120,7 @@ public final class VanillaMaterials {
 	 * Warning: This is NOT the data=0 sub-block!
 	 */
 	public static final TallGrass TALL_GRASS = TallGrass.TALL_GRASS;
-	public static final LongGrass DEAD_BUSH = (LongGrass) register(new LongGrass("Dead Shrubs", 32).setHardness(0.0F).setResistance(0.0F));
+	public static final DeadBush DEAD_BUSH = (DeadBush) register(new DeadBush("Dead Shrubs", 32).setHardness(0.0F).setResistance(0.0F));
 	public static final Solid PISTON_BASE = (Solid) register(new Solid("Piston", 33).setResistance(0.8F));
 	public static final Solid PISTON_EXTENSION = (Solid) register(new Solid("Piston (Head)", 34).setResistance(0.8F));
 	public static final Wool WOOL = Wool.WHITE;
@@ -169,7 +171,7 @@ public final class VanillaMaterials {
 	public static final Solid SNOW_BLOCK = (Solid) register(new Solid("Snow Block", 80).setHardness(0.2F).setResistance(0.3F));
 	public static final Cactus CACTUS = (Cactus) register(new Cactus("Cactus", 81).setHardness(0.4F).setResistance(0.7F));
 	public static final Solid CLAY_BLOCK = (Solid) register(new Solid("Clay Block", 82).setHardness(0.6F).setResistance(1.0F));
-	public static final Solid SUGAR_CANE_BLOCK = (Solid) register(new Solid("Sugar Cane", 83).setHardness(0.0F).setResistance(0.0F));
+	public static final SugarCane SUGAR_CANE_BLOCK = (SugarCane) register(new SugarCane("Sugar Cane", 83).setHardness(0.0F).setResistance(0.0F));
 	public static final Solid JUKEBOX = (Solid) register(new Solid("Jukebox", 84).setHardness(2.0F).setResistance(10.0F));
 	public static final Solid FENCE = (Solid) register(new Solid("Fence", 85).setResistance(5.0F).setResistance(5.0F));
 	public static final Solid PUMPKIN = (Solid) register(new Solid("Pumpkin", 86).setHardness(1.0F).setResistance(1.7F));
@@ -197,11 +199,11 @@ public final class VanillaMaterials {
 	public static final Solid BRICK_STAIRS = (Solid) register(new Solid("Brick Stairs", 108).setResistance(10.0F));
 	public static final Solid STONE_BRICK_STAIRS = (Solid) register(new Solid("Stone Brick Stairs", 109).setResistance(10.0F));
 	public static final Solid MYCELIUM = (Solid) register(new Solid("Mycelium", 110).setHardness(0.6F).setResistance(0.8F));
-	public static final Solid LILY_PAD = (Solid) register(new Solid("Lily Pad", 111).setHardness(0.0F).setResistance(0.3F)); //Placeholder, block resistance unknown
+	public static final LilyPad LILY_PAD = (LilyPad) register(new LilyPad("Lily Pad", 111).setHardness(0.0F).setResistance(0.3F)); //Placeholder, block resistance unknown
 	public static final Solid NETHER_BRICK = (Solid) register(new Solid("Nether Brick", 112).setHardness(2.0F).setResistance(10.0F));
 	public static final Solid NETHER_BRICK_FENCE = (Solid) register(new Solid("Nether Brick Fence", 113).setHardness(2.0F).setResistance(10.0F));
 	public static final Solid NETHER_BRICK_STAIRS = (Solid) register(new Solid("Nether Brick Stairs", 114).setResistance(10.0F));
-	public static final NetherWartBlock NETHER_WART_BLOCK = (NetherWartBlock) register(new NetherWartBlock("Nether Wart", 115).setResistance(0.0F));
+	public static final NetherWart NETHER_WART_BLOCK = (NetherWart) register(new NetherWart("Nether Wart", 115).setResistance(0.0F));
 	public static final Solid ENCHANTMENT_TABLE = (Solid) register(new Solid("Enchantment Table", 116).setHardness(5.0F).setResistance(2000.0F));
 	public static final Solid BREWING_STAND_BLOCK = (Solid) register(new Solid("Brewing Stand", 117).setHardness(0.5F).setResistance(0.8F).setLightLevel(1));
 	public static final Solid CAULDRON_BLOCK = (Solid) register(new Solid("Cauldron", 118).setHardness(2.0F).setResistance(3.3F));
@@ -387,6 +389,7 @@ public final class VanillaMaterials {
 		VanillaMaterials.MONSTER_SPAWNER.setDrop(VanillaMaterials.AIR);
 		VanillaMaterials.REDSTONE_WIRE.setDrop(VanillaMaterials.REDSTONE);
 		VanillaMaterials.DIAMOND_ORE.setDrop(VanillaMaterials.DIAMOND);
+		VanillaMaterials.SUGAR_CANE_BLOCK.setDrop(VanillaMaterials.SUGAR_CANE);
 		VanillaMaterials.WHEATCROP.setDrop(VanillaMaterials.WHEAT);
 		VanillaMaterials.FARMLAND.setDrop(VanillaMaterials.DIRT);
 		VanillaMaterials.BURNINGFURNACE.setDrop(VanillaMaterials.FURNACE);
@@ -416,6 +419,7 @@ public final class VanillaMaterials {
 		VanillaMaterials.END_PORTAL.setDrop(VanillaMaterials.AIR);
 		VanillaMaterials.END_PORTAL_FRAME.setDrop(VanillaMaterials.AIR);
 		VanillaMaterials.REDSTONE_LAMP_ON.setDrop(VanillaMaterials.REDSTONE_LAMP_OFF);
+		VanillaMaterials.NETHER_WART_BLOCK.setDrop(VanillaMaterials.NETHER_WART);
 		initialized = true;
 	}
 }

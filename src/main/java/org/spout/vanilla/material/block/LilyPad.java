@@ -27,37 +27,18 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.Source;
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-import org.spout.vanilla.material.Plant;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.attachable.GroundAttachable;
 
-public class Flower extends GroundAttachable implements Plant {
-	public Flower(String name, int id) {
+public class LilyPad extends Solid {
+	public LilyPad(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public boolean hasGrowthStages() {
-		return false;
-	}
-
-	@Override
-	public int getNumGrowthStages() {
-		return 0;
-	}
-
-	@Override
-	public int getMinimumLightToGrow() {
-		return 8;
 	}
 
 	@Override
 	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
 		if (super.canPlace(world, x, y, z, data, against, source)) {
-			Block block = world.getBlock(x, y, z).move(against.getOpposite());
-			return block.getMaterial() == VanillaMaterials.GRASS || block.getMaterial() == VanillaMaterials.DIRT;
+			return world.getBlock(x, y - 1, z).move(against.getOpposite()).getMaterial() == VanillaMaterials.WATER;
 		} else {
 			return false;
 		}

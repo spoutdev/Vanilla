@@ -31,17 +31,21 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.Material;
 import org.spout.api.material.source.DataSource;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.Plant;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class NetherWartBlock extends Solid implements Plant {
+public class NetherWart extends Solid implements Plant {
 	private GrowthStage stage = GrowthStage.SEEDLING;
 
-	public NetherWartBlock(String name, int id) {
+	public NetherWart(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return true;
 	}
 
 	@Override
@@ -62,11 +66,6 @@ public class NetherWartBlock extends Solid implements Plant {
 	@Override
 	public short getData() {
 		return stage.getData();
-	}
-
-	@Override
-	public Material getDrop() {
-		return VanillaMaterials.NETHER_WART;
 	}
 
 	@Override

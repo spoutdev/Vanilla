@@ -32,6 +32,7 @@ import java.util.Set;
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
@@ -49,6 +50,7 @@ import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
+import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
 
 /**
@@ -68,11 +70,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected GameMode gameMode;
 	protected int distanceMoved;
 	protected Set<Player> invisibleFor = new HashSet<Player>();
+	protected Point compassTarget;
 
 	public VanillaPlayer(Player p, GameMode gameMode) {
 		super(VanillaControllerTypes.PLAYER);
 		owner = p;
 		tabListName = owner.getName();
+		compassTarget = owner.getEntity().getWorld().getSpawnPoint().getPosition();
 		this.gameMode = gameMode;
 		p.getEntity().setInventorySize(45);
 	}
@@ -201,15 +205,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	}
 
-	/**
-	 * Gets the amount of ticks it takes the client to respond to the server.
-	 *
-	 * @return ping of player.
-	 */
-	public short getPing() {
-		return ping;
-	}
-
 	@Override
 	public Player getPlayer() {
 		return owner;
@@ -243,6 +238,34 @@ public class VanillaPlayer extends Human implements PlayerController {
 		ItemStack[] contents = getParent().getInventory().getContents();
 		drops.addAll(Arrays.asList(contents));
 		return drops;
+	}
+	
+	/**
+	 * Sets the position of player's compass target.
+	 * 
+	 * @param point 
+	 */
+	public void setCompassTarget(Point compassTarget) {
+		this.compassTarget = compassTarget;
+		sendPacket(owner, new SpawnPositionMessage(compassTarget.getBlockX(), compassTarget.getBlockY(), compassTarget.getBlockZ()));
+	}
+	
+	/**
+	 * Gets the position of the player's compass target.
+	 * 
+	 * @return 
+	 */
+	public Point getCompassTarget() {
+		return compassTarget;
+	}
+	
+	/**
+	 * Gets the amount of ticks it takes the client to respond to the server.
+	 *
+	 * @return ping of player.
+	 */
+	public short getPing() {
+		return ping;
 	}
 	
 	/**

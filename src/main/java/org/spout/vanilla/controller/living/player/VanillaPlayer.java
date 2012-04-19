@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.Transform;
@@ -43,9 +44,11 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.PingMessage;
 import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
+import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.StateChangeMessage;
 
 /**
@@ -63,7 +66,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected ItemStack itemOnCursor;
 	protected String tabListName;
 	protected GameMode gameMode;
-	private int distanceMoved;
+	protected int distanceMoved;
+	protected Set<Player> invisibleFor = new HashSet<Player>();
 
 	public VanillaPlayer(Player p, GameMode gameMode) {
 		super(VanillaControllerTypes.PLAYER);
@@ -239,6 +243,50 @@ public class VanillaPlayer extends Human implements PlayerController {
 		ItemStack[] contents = getParent().getInventory().getContents();
 		drops.addAll(Arrays.asList(contents));
 		return drops;
+	}
+	
+	/**
+	 * Sets whether the player is visible for the collection of players given.
+	 * 
+	 * @param visible
+	 * @param players 
+	 */
+	public void setVisibleFor(boolean visible, Player... players) {
+		Entity parent = getParent();
+		for (Player player : players) {
+			if (visible) {
+				invisibleFor.remove(player);
+				ItemStack currentItem = parent.getInventory().getCurrentItem();
+				int itemId = 0;
+				if (currentItem != null) {
+					itemId = currentItem.getMaterial().getId();
+				}
+				
+				sendPacket(player, new SpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId));
+			} else {
+				invisibleFor.add(player);
+				sendPacket(player, new DestroyEntityMessage(parent.getId()));
+			}
+		}
+	}
+	
+	/**
+	 * Sets whether the player is visible for everyone.
+	 * 
+	 * @param visible 
+	 */
+	public void setVisible(boolean visible) {
+		setVisibleFor(visible, Spout.getEngine().getOnlinePlayers());
+	}
+	
+	/**
+	 * Whether or not the player is visible for that player.
+	 * 
+	 * @param player
+	 * @return true if visible for that player
+	 */
+	public boolean isVisibleFor(Player player) {
+		return !invisibleFor.contains(player);
 	}
 
 	/**

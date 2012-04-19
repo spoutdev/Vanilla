@@ -60,7 +60,6 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
-import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
 public class VanillaEventListener implements Listener {
 	@SuppressWarnings("unused")
@@ -77,27 +76,22 @@ public class VanillaEventListener implements Listener {
 		Player player = event.getPlayer();
 		Entity playerEntity = player.getEntity();
 		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
-		VanillaPlayer mode;
+		VanillaPlayer vanillaPlayer;
 		if (VanillaConfiguration.PLAYER_DEFAULT_GAMEMODE.getString().equalsIgnoreCase("creative")) {
-			mode = new VanillaPlayer(player, GameMode.CREATIVE);
+			vanillaPlayer = new VanillaPlayer(player, GameMode.CREATIVE);
 		} else {
-			mode = new VanillaPlayer(player, GameMode.SURVIVAL);
+			vanillaPlayer = new VanillaPlayer(player, GameMode.SURVIVAL);
 		}
 
-		playerEntity.setController(mode, new ControllerInitialization());
+		playerEntity.setController(vanillaPlayer, new ControllerInitialization());
 
 		// Set protocol and send packets
-		if (mode.isSurvival()) {
-			mode.sendPacket(mode.getPlayer(), new PlayerHealthMessage((short) playerEntity.getHealth(), mode.getHunger(), mode.getFoodSaturation()));
+		if (vanillaPlayer.isSurvival()) {
+			vanillaPlayer.sendPacket(vanillaPlayer.getPlayer(), new PlayerHealthMessage((short) playerEntity.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
 		}
 		
-		int item = 0;
-		ItemStack currentItem = playerEntity.getInventory().getCurrentItem();
-		if (currentItem != null) {
-			item = currentItem.getMaterial().getId();
-		}
-
-		mode.broadcastPacket(new SpawnPlayerMessage(playerEntity.getId(), player.getName(), playerEntity.getPosition(), (int) playerEntity.getYaw(), (int) playerEntity.getPitch(), item));
+		// Make them visible to everyone by default
+		vanillaPlayer.setVisible(true);
 	}
 
 	@EventHandler(order = Order.LATEST)
@@ -108,7 +102,7 @@ public class VanillaEventListener implements Listener {
 		}
 	}
 
-	@EventHandler()
+	@EventHandler
 	public void regionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
 		if (region.getAll(RegionSpawner.class).isEmpty()) {

@@ -58,6 +58,7 @@ public class PointObserver extends Controller {
 		model.setStrategy(CollisionStrategy.NOCOLLIDE);
 		getParent().setCollision(model);
 		getParent().setObserver(true);
+		getParent().setViewDistance(256);
 		currPoint = getParent().getPosition();
 	}
 }

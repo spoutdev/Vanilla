@@ -94,6 +94,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setScale(spawn.getScale());
 		getParent().setMaxHealth(20);
 		getParent().setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		getParent().setViewDistance(16 * 10);
 		// TODO: Persistent health
 	}
 

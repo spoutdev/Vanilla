@@ -36,29 +36,18 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.generic.GenericBlock;
 
 public class ExplosionModelSpherical extends ExplosionModel implements Source {
 	
 	public ExplosionModelSpherical() {
 		this.layers.add(new ExplosionLayer(this));
-		this.root = this.layers.get(0).slotArray[0];
+		this.root = this.layers.get(0).slots[0];
 	}
 	
-	private List<ExplosionBlockSlot> blockList = new ArrayList<ExplosionBlockSlot>();
-	private Map<Vector3, ExplosionBlockSlot> blocks = new HashMap<Vector3, ExplosionBlockSlot>();
 	private List<ExplosionLayer> layers = new ArrayList<ExplosionLayer>();
 	private ExplosionSlot root;
-	
-	public synchronized ExplosionBlockSlot getBlock(Vector3 position) {
-		ExplosionBlockSlot block = this.blocks.get(position);
-		if (block == null) {
-			block = new ExplosionBlockSlot(position);
-			this.blocks.put(position, block);
-			this.blockList.add(block);
-		}
-		return block;
-	}
-	
+		
 	public synchronized ExplosionLayer getLastLayer() {
 		return this.layers.get(this.layers.size() - 1);
 	}
@@ -91,28 +80,22 @@ public class ExplosionModelSpherical extends ExplosionModel implements Source {
 		//recursively operate on all blocks
 		float damageFactor;
 		boolean hasDamage = true;
+		ExplosionLayer layer;
 		for (int i = 0; i < this.layers.size() && hasDamage; i++) {
 			hasDamage = false;
-			for (ExplosionSlot slot : this.layers.get(i).slotArray) {
+			layer = this.layers.get(i);
+			for (ExplosionSlot slot : layer.slots) {
+				//prepare the block information
 				if (!slot.block.isSet) {
-					//generate the info for this block
-					slot.block.realx = (int) slot.block.pos.getX() + xoff;
-					slot.block.realy = (int) slot.block.pos.getY() + yoff;
-					slot.block.realz = (int) slot.block.pos.getZ() + zoff;
-					slot.block.material = world.getBlockMaterial(slot.block.realx, slot.block.realy, slot.block.realz);
-					if (slot.block.material != VanillaMaterials.AIR) {
-						slot.block.damageFactor = (slot.block.material.getHardness() + 0.3F) * 0.3F;
-						slot.block.damageFactor *= (2.0F + (float) Math.random()) / 3.0F;
-					} else {
-						slot.block.damageFactor = 0;
-					}
-					slot.block.isSet = true;
+					slot.block.prepare(world, xoff, yoff, zoff, this.random);
 				}
 
 				//subtract damage factor
 				damageFactor = slot.sourcedamage - slot.block.damageFactor;
-				slot.sourcedamage = 0;
-				if (damageFactor <= 0) continue;	
+				slot.sourcedamage = 0f;
+				if (damageFactor <= 0f) continue;
+
+				//this block has been destroyed
 				if (!slot.block.destroy) {
 					slot.block.destroy = true;
 					Block block = world.getBlock(slot.block.realx, slot.block.realy, slot.block.realz);
@@ -120,15 +103,15 @@ public class ExplosionModelSpherical extends ExplosionModel implements Source {
 				}
 
 				//one block layer further...
-				if ((damageFactor -= 0.225) <= 0.0F) continue;
+				if ((damageFactor -= 0.225f) <= 0.0f) continue;
 
-				//force a new layer if needed
+				//create a new layer if needed
 				if (slot.next == null) {
 					//create a new layer
-					ExplosionLayer nextLayer = new ExplosionLayer(this.getLastLayer());
+					ExplosionLayer nextLayer = new ExplosionLayer(layer);
 					//finalize the 'next' of the current layer to lead to the new layer
-					for (ExplosionSlot slot2 : this.getLastLayer().slots.values()) {
-						slot2.end();
+					for (ExplosionSlot slot2 : layer.slots) {
+						slot2.finish();
 					}
 					this.layers.add(nextLayer);
 				}

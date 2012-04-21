@@ -46,6 +46,7 @@ import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.util.explosion.ExplosionModels;
 
 public class TestCommands {
 	@SuppressWarnings("unused")
@@ -55,6 +56,16 @@ public class TestCommands {
 		this.plugin = instance;
 	}
 
+	@Command(aliases = {"explode"}, usage = "<explode>", desc = "Create an explosion")
+	public void explode(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to cause an explosion");
+		}
+		
+		Point position = ((Player) source).getEntity().getPosition();
+		ExplosionModels.SPHERICAL.execute(position, 4.0f);
+	}
+	
 	@Command(aliases = {"sethealth"}, usage = "<health>", desc = "Set your health", min = 1, max = 1)
 	public void setHealth(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {

@@ -23,7 +23,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
@@ -31,9 +31,6 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.attachable.GroundAttachable;
-import org.spout.vanilla.material.block.RedstoneSource;
-import org.spout.vanilla.material.block.RedstoneTarget;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.generic.GenericBlock;
 
 public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget {

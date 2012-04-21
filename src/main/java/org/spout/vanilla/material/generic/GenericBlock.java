@@ -31,8 +31,8 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.material.item.RedstoneTorch;
-import org.spout.vanilla.material.item.RedstoneWire;
+import org.spout.vanilla.material.block.RedstoneTorch;
+import org.spout.vanilla.material.block.RedstoneWire;
 
 public class GenericBlock extends BlockMaterial {
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};

@@ -36,7 +36,7 @@ public class ExplosionLayer {
 	public ExplosionLayer(final ExplosionModelSpherical model) {
 		this.model = model;
 		this.index = 0;
-		this.slotArray = new ExplosionSlot[] {this.createSlot(0.0, 0.0, 0.0)};
+		this.slots = new ExplosionSlot[] {this.createSlot(0.0, 0.0, 0.0)};
 	}
 	public ExplosionLayer(ExplosionLayer previous) {
 		this(previous, 16);
@@ -60,26 +60,41 @@ public class ExplosionLayer {
 						dy *= d;
 						dz *= d;
 						//=============================================
-						previous.createSlot(dx, dy, dz).nextSet.add(this.createSlot(dx, dy, dz));
+						previous.createSlot(dx, dy, dz).addNext(this.createSlot(dx, dy, dz));
 					}
 				}
 			}
 		}
-		this.slotArray = this.slots.values().toArray(new ExplosionSlot[0]);
+		this.finish();
 	}
 	private final int index;
-	public final ExplosionSlot[] slotArray;
+	public ExplosionSlot[] slots;
+	private Map<Vector3, ExplosionSlot> tmpSlotMap = new HashMap<Vector3, ExplosionSlot>();
 	private final ExplosionModelSpherical model;
-	public Map<Vector3, ExplosionSlot> slots = new HashMap<Vector3, ExplosionSlot>();
+	
+	/**
+	 * Transfers all slots previously added to the 'slots' array
+	 */
+	public void finish() {
+		this.slots = this.tmpSlotMap.values().toArray(new ExplosionSlot[0]);
+	}
+	
+	/**
+	 * Creates a new slot using a given direction
+	 * @param dx is the delta x motion
+	 * @param dy is the delta y motion
+	 * @param dz is the delta z motion
+	 * @return an already stored or new slot
+	 */
 	public ExplosionSlot createSlot(final double dx, final double dy, final double dz) {
 		int x = MathHelper.floor(dx * (double) this.index + 0.5);
 		int y = MathHelper.floor(dy * (double) this.index + 0.5);
 		int z = MathHelper.floor(dz * (double) this.index + 0.5);
 		Vector3 pos = new Vector3(x, y, z);
-		ExplosionSlot slot = this.slots.get(pos);
+		ExplosionSlot slot = this.tmpSlotMap.get(pos);
 		if (slot == null) {
 			slot = new ExplosionSlot(this.model.getBlock(pos));
-			this.slots.put(pos, slot);
+			this.tmpSlotMap.put(pos, slot);
 		}
 		return slot;
 	}

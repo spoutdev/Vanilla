@@ -26,7 +26,9 @@
 package org.spout.vanilla.util.explosion;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.spout.api.Source;
@@ -34,17 +36,39 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.ExplosionMessage;
 
 public abstract class ExplosionModel {
 	
-	protected List<Block> blocksToDestroy = new ArrayList<Block>(100);
+	private List<ExplosionBlockSlot> blockList = new ArrayList<ExplosionBlockSlot>();
+	private Map<Vector3, ExplosionBlockSlot> blocks = new HashMap<Vector3, ExplosionBlockSlot>();
+	public List<Block> blocksToDestroy = new ArrayList<Block>(100);
 	public Random random = new Random();
 	private final double messageRadiusSquared = Math.pow(64, 2.0);
+	
+	public synchronized ExplosionBlockSlot getBlock(Vector3 position) {
+		ExplosionBlockSlot block = this.blocks.get(position);
+		if (block == null) {
+			block = new ExplosionBlockSlot(position);
+			this.blocks.put(position, block);
+			this.blockList.add(block);
+		}
+		return block;
+	}
+	
+	public synchronized List<ExplosionBlockSlot> getBlocks() {
+		return this.blockList;
+	}
 
 	public synchronized void execute(Point position, float size, boolean fire, Source source) {
+		//reset all blocks for the next explosion
+		for (ExplosionBlockSlot block : this.blockList) {
+			block.isSet = false;
+		}
+		
 		//find all entities in the affected blocks and perform damage
 		//TODO: Entity Damage
 		

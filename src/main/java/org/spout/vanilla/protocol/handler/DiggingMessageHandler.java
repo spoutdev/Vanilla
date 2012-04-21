@@ -97,8 +97,15 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			//TODO: Timing checks!
 			blockBroken = true;
 		}
+		
+		BlockMaterial material = block.getMaterial();
+		if (material == VanillaMaterials.WATER || material == VanillaMaterials.LAVA) {
+			blockBroken = false; //deny digging for water or lava
+		} else if (material.getHardness() == 0.0f) {
+			blockBroken = true; //insta-break
+		}
 
-		if (blockBroken && block.getMaterial() != VanillaMaterials.WATER) {
+		if (blockBroken) {
 			BlockMaterial oldMat = world.getBlockMaterial(x, y, z);
 			oldMat.onDestroy(world, x, y, z);
 			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, player);

@@ -36,11 +36,23 @@ public class ExplosionSlot {
 		this.block = block;
 	}
 	public final ExplosionBlockSlot block;
-	public Set<ExplosionSlot> nextSet = new HashSet<ExplosionSlot>();
+	private Set<ExplosionSlot> nextSet = new HashSet<ExplosionSlot>();
 	public ExplosionSlot[] next;
 	public float sourcedamage = 0;
 	
-	public void end() {
+	/**
+	 * Adds the next linked block slot to the chain
+	 * @param next slot to add
+	 */
+	public void addNext(ExplosionSlot next) {
+		this.nextSet.add(next);
+	}
+	
+	/**
+	 * Transfers all next slots previously added to the next array
+	 * After this is called you can no longer add new 'next' slots
+	 */
+	public void finish() {
 		this.next = this.nextSet.toArray(new ExplosionSlot[0]);
 		this.nextSet = null;
 	}

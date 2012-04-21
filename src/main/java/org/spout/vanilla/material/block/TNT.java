@@ -23,60 +23,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.material.block;
 
-import java.util.Arrays;
+import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
+import org.spout.vanilla.controller.object.moving.PrimedTnt;
+import org.spout.vanilla.material.VanillaMaterials;
 
-import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
+public class TNT extends Solid {
 
-public final class ExplosionMessage extends Message {
-	private final double x, y, z;
-	private final float radius;
-	private final byte[] coordinates;
-
-	public ExplosionMessage(Vector3 position, float radius, byte[] coordinates) {
-		this(position.getX(), position.getY(), position.getZ(), radius, coordinates);
+	public TNT(String name, int id) {
+		super(name, id);
 	}
 	
-	public ExplosionMessage(double x, double y, double z, float radius, byte[] coordinates) {
-		if (coordinates.length % 3 != 0) {
-			throw new IllegalArgumentException();
-		}
-
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.radius = radius;
-		this.coordinates = coordinates;
-	}
-
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public double getZ() {
-		return z;
-	}
-
-	public float getRadius() {
-		return radius;
-	}
-
-	public int getRecords() {
-		return coordinates.length / 3;
-	}
-
-	public byte[] getCoordinates() {
-		return coordinates;
-	}
-
 	@Override
-	public String toString() {
-		return "ExplosionMessage{x=" + x + ",y=" + y + ",z=" + z + ",radius=" + radius + ",coordinates=" + Arrays.toString(coordinates) + "}";
+	public boolean hasPhysics() {
+		return true;
+	}
+
+	public void onIgnite(World world, int x, int y, int z) {
+		world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world);
+		//spawn a primed TNT
+		Point point = new Point(world, (float) x + 0.5f, (float) y + 0.5f, (float) z + 0.5f);
+		world.createAndSpawnEntity(point, new PrimedTnt());
+	}
+	
+	@Override
+	public void onUpdate(World world, int x, int y, int z) {
+		super.onUpdate(world, x, y, z);
+		if (this.getIndirectRedstonePower(world, x, y, z) > 0) {
+			this.onIgnite(world, x, y, z);
+		}
 	}
 }

@@ -23,60 +23,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.util.explosion;
 
-import java.util.Arrays;
-
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public final class ExplosionMessage extends Message {
-	private final double x, y, z;
-	private final float radius;
-	private final byte[] coordinates;
-
-	public ExplosionMessage(Vector3 position, float radius, byte[] coordinates) {
-		this(position.getX(), position.getY(), position.getZ(), radius, coordinates);
+/**
+ * This is a permanent block slot whose information is loaded from a world dynamically
+ * It is used to load block information all at once
+ */
+public class ExplosionBlockSlot {
+	public ExplosionBlockSlot(final Vector3 pos) {
+		this.pos = pos;
 	}
-	
-	public ExplosionMessage(double x, double y, double z, float radius, byte[] coordinates) {
-		if (coordinates.length % 3 != 0) {
-			throw new IllegalArgumentException();
-		}
-
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.radius = radius;
-		this.coordinates = coordinates;
-	}
-
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public double getZ() {
-		return z;
-	}
-
-	public float getRadius() {
-		return radius;
-	}
-
-	public int getRecords() {
-		return coordinates.length / 3;
-	}
-
-	public byte[] getCoordinates() {
-		return coordinates;
-	}
-
-	@Override
-	public String toString() {
-		return "ExplosionMessage{x=" + x + ",y=" + y + ",z=" + z + ",radius=" + radius + ",coordinates=" + Arrays.toString(coordinates) + "}";
-	}
+	public final Vector3 pos;
+	public boolean isSet = false; //whether the information has been loaded
+	public boolean destroy = false; //whether the block got destroyed
+	public BlockMaterial material = VanillaMaterials.AIR; //the mat loaded from the world
+	public float damageFactor;
+	public int realx, realy, realz;
 }

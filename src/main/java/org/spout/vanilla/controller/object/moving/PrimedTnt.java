@@ -26,20 +26,33 @@
 package org.spout.vanilla.controller.object.moving;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.controller.object.MovingBlock;
 
 public class PrimedTnt extends MovingBlock {
 	private float timeToExplode = 4.f;
+	private float radius = 4.f;
 
 	public PrimedTnt() {
 		super(VanillaMaterials.TNT);
+	}
+	
+	public void setExplosionRadius(float radius) {
+		this.radius = radius;
+	}
+	
+	public float getExplosionRadius() {
+		return this.radius;
 	}
 
 	@Override
 	public void onTick(float dt) {
 		timeToExplode -= dt;
 		if (timeToExplode <= 0.f) {
-
+			//TODO: Event? We don't have the blocks, as that is internally handled...
+			ExplosionModels.SPHERICAL.execute(this.getParent().getPosition(), this.radius);
+			this.getParent().kill();
+			return;
 		}
 		super.onTick(dt);
 	}

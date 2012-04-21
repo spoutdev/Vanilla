@@ -148,8 +148,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			airChunkData[i++] = (byte)0xFF;
 		}
 
-		Chunk c = p.getWorld().getChunk(p);
-
 		TIntHashSet column = activeChunks.get(x, z);
 		if (column == null) {
 			column = new TIntHashSet();
@@ -161,9 +159,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			byte[] biomeData = sendBiomes ? new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE] : null;
 			if (sendBiomes) {
 				biomesSentChunks.add(x, z);
-				WorldGenerator gen = c.getWorld().getGenerator();
+				WorldGenerator gen = p.getWorld().getGenerator();
 				if (gen instanceof BiomeGenerator) {
-					final long seed = c.getWorld().getSeed();
+					final long seed = p.getWorld().getSeed();
 					for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
 						for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
 							BiomeType biome = ((BiomeGenerator) gen).getBiome(x, z, seed);

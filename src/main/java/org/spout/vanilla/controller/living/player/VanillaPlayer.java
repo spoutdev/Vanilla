@@ -219,7 +219,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 
 		inventory.setCurrentSlot(0);
-		return new PlayerInventory(size);
+		return inventory;
 	}
 
 	@Override
@@ -510,7 +510,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	public void setActiveInventory(Inventory newActive) {
-		newActive = activeInventory;
+		activeInventory = newActive;
 	}
 
 	public ItemStack getItemOnCursor() {

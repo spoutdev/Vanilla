@@ -45,19 +45,19 @@ public class PondDecorator implements BiomeDecorator {
 	private void generateWaterPond(World world, int x, int y, int z, Random random) {
 		x -= 8;
 		z -= 8;
-		PondHole hole = new PondHole(random);
-		byte[] waterBlocks = getNoiseMap(hole);
-		byte[] airBlocks = getNoiseMap(hole);
+		final PondHole hole = new PondHole(random);
+		final byte[] waterBlocks = getNoiseMap(hole);
+		final byte[] airBlocks = getNoiseMap(hole);
 		if (!canBuildPondHole(world, x, y, z, waterBlocks, VanillaMaterials.STATIONARY_WATER)
 				|| !canBuildPondTop(world, x, y, z, airBlocks)) {
 			return;
 		}
-		for (int px = 0; px < 16; px++) {
-			for (int pz = 0; pz < 16; pz++) {
-				for (int py = -waterBlocks[16 * px + pz]; py < 0; py++) {
+		for (byte px = 0; px < 16; px++) {
+			for (byte pz = 0; pz < 16; pz++) {
+				for (byte py = (byte) -waterBlocks[16 * px + pz]; py < 0; py++) {
 					world.setBlockMaterial(px + x, py + y, pz + z, VanillaMaterials.STATIONARY_WATER, (short) 0, false, world);
 				}
-				for (int py = 0; py < airBlocks[16 * px + pz]; py++) {
+				for (byte py = 0; py < airBlocks[16 * px + pz]; py++) {
 					world.setBlockMaterial(px + x, py + y, pz + z, VanillaMaterials.AIR, (short) 0, false, world);
 				}
 			}
@@ -69,32 +69,32 @@ public class PondDecorator implements BiomeDecorator {
 	private void generateLavaPond(World world, int x, int y, int z, Random random) {
 		x -= 8;
 		z -= 8;
-		PondHole hole = new PondHole(random);
-		byte[] lavaBlocks = getNoiseMap(hole);
-		byte[] airBlocks = getNoiseMap(hole);
+		final PondHole hole = new PondHole(random);
+		final byte[] lavaBlocks = getNoiseMap(hole);
+		final byte[] airBlocks = getNoiseMap(hole);
 		if (!canBuildPondHole(world, x, y, z, lavaBlocks, VanillaMaterials.STATIONARY_LAVA)
 				|| !canBuildPondTop(world, x, y, z, airBlocks)) {
 			return;
 		}
-		for (int px = 0; px < 16; px++) {
-			for (int pz = 0; pz < 16; pz++) {
-				for (int py = -lavaBlocks[16 * px + pz]; py < 0; py++) {
+		for (byte px = 0; px < 16; px++) {
+			for (byte pz = 0; pz < 16; pz++) {
+				for (byte py = (byte) -lavaBlocks[16 * px + pz]; py < 0; py++) {
 					world.setBlockMaterial(px + x, py + y, pz + z, VanillaMaterials.STATIONARY_LAVA, (short) 0, false, world);
 				}
-				for (int py = 1; py < 5; py++) {
+				for (byte py = 1; py < 5; py++) {
 					if (isWallBlock(px, py, pz, lavaBlocks)) {
-						Block block = world.getBlock(x + px, y - py, z + pz);
+						final Block block = world.getBlock(x + px, y - py, z + pz);
 						if (block.getMaterial().isSolid()) {
 							block.setMaterial(VanillaMaterials.STONE);
 						}
 					}
 				}
-				for (int py = 0; py < airBlocks[16 * px + pz]; py++) {
+				for (byte py = 0; py < airBlocks[16 * px + pz]; py++) {
 					world.setBlockMaterial(px + x, py + y, pz + z, VanillaMaterials.AIR, (short) 0, false, world);
 				}
-				for (int py = 1; py < 5; py++) {
+				for (byte py = 1; py < 5; py++) {
 					if (isWallBlock(px, py, pz, airBlocks)) {
-						Block block = world.getBlock(px + x, py + y - 1, pz + z);
+						final Block block = world.getBlock(px + x, py + y - 1, pz + z);
 						if (block.getMaterial().isSolid() && random.nextBoolean()) {
 							block.setMaterial(VanillaMaterials.STONE);
 						}
@@ -106,10 +106,10 @@ public class PondDecorator implements BiomeDecorator {
 	}
 
 	private void finalizeSurface(World world, int x, int y, int z) {
-		for (int px = 0; px < 16; px++) {
-			for (int pz = 0; pz < 16; pz++) {
-				for (int py = -1; py < 4; py++) {
-					Block block = world.getBlock(x + px, y + py, z + pz);
+		for (byte px = 0; px < 16; px++) {
+			for (byte pz = 0; pz < 16; pz++) {
+				for (byte py = -1; py < 4; py++) {
+					final Block block = world.getBlock(x + px, y + py, z + pz);
 					if (block.getMaterial() == VanillaMaterials.DIRT
 							&& world.getSkyLight(x + px, y + py + 1, z + pz) > 0) {
 						/*Biome biome = block.getBiome(); Waiting for getBiome() method
@@ -126,21 +126,21 @@ public class PondDecorator implements BiomeDecorator {
 	}
 
 	private byte[] getNoiseMap(PondHole hole) {
-		byte[] map = new byte[256];
-		for (int px = 0; px < 16; px++) {
-			for (int pz = 0; pz < 16; pz++) {
-				map[16 * px + pz] = hole.getDepth(px, pz);
+		final byte[] noiseMap = new byte[256];
+		for (byte px = 0; px < 16; px++) {
+			for (byte pz = 0; pz < 16; pz++) {
+				noiseMap[16 * px + pz] = hole.getDepth(px, pz);
 			}
 		}
-		return map;
+		return noiseMap;
 	}
 
 	private boolean canBuildPondHole(World world, int x, int y, int z, byte[] liquidBlocks, BlockMaterial liquid) {
-		for (int px = 0; px < 16; px++) {
-			for (int pz = 0; pz < 16; pz++) {
-				for (int py = 1; py < 5; py++) {
+		for (byte px = 0; px < 16; px++) {
+			for (byte pz = 0; pz < 16; pz++) {
+				for (byte py = 1; py < 5; py++) {
 					if (isWallBlock(px, py, pz, liquidBlocks)) {
-						BlockMaterial material = world.getBlockMaterial(x + px, y - py, z + pz);
+						final BlockMaterial material = world.getBlockMaterial(x + px, y - py, z + pz);
 						if (!material.isSolid() && material != liquid) {
 							return false;
 						}
@@ -152,11 +152,11 @@ public class PondDecorator implements BiomeDecorator {
 	}
 
 	private boolean canBuildPondTop(World world, int x, int y, int z, byte[] airBlocks) {
-		for (int px = 0; px < 16; px++) {
-			for (int pz = 0; pz < 16; pz++) {
-				for (int py = 1; py < 5; py++) {
+		for (byte px = 0; px < 16; px++) {
+			for (byte pz = 0; pz < 16; pz++) {
+				for (byte py = 1; py < 5; py++) {
 					if (isWallBlock(px, py, pz, airBlocks)) {
-						BlockMaterial material = world.getBlockMaterial(x + px, y + py, z + pz);
+						final BlockMaterial material = world.getBlockMaterial(x + px, y + py, z + pz);
 						if (material instanceof GenericLiquid) {
 							return false;
 						}
@@ -208,14 +208,14 @@ public class PondDecorator implements BiomeDecorator {
 
 		private PondHole(Random random) {
 			noise = new SphericalNoise[random.nextInt(4) + 4];
-			for (int i = 0; i < noise.length; i++) {
+			for (byte i = 0; i < noise.length; i++) {
 				noise[i] = new SphericalNoise(random);
 			}
 		}
 
 		private byte getDepth(int x, int z) {
 			byte depth = Byte.MIN_VALUE;
-			for (SphericalNoise n : noise) {
+			for (final SphericalNoise n : noise) {
 				byte d = n.getValue(x, z);
 				depth = d > depth ? d : depth;
 			}
@@ -252,12 +252,12 @@ public class PondDecorator implements BiomeDecorator {
 			}
 
 			private byte getValue(int x, int z) {
-				float xOffNoise = random.nextFloat() * 0.2f;
-				float zOffNoise = random.nextFloat() * 0.2f;
-				float radiusNoise = random.nextFloat() * 0.8f;
-				float multiXNoise = 1f - random.nextFloat() * 0.1f;
-				float multiZNoise = 1f - random.nextFloat() * 0.1f;
-				float value = (float) Math.sqrt(Math.pow(radius + radiusNoise, 2)
+				final float xOffNoise = random.nextFloat() * 0.2f;
+				final float zOffNoise = random.nextFloat() * 0.2f;
+				final float radiusNoise = random.nextFloat() * 0.8f;
+				final float multiXNoise = 1f - random.nextFloat() * 0.1f;
+				final float multiZNoise = 1f - random.nextFloat() * 0.1f;
+				final float value = (float) Math.sqrt(Math.pow(radius + radiusNoise, 2)
 						- Math.pow((xMultiplier * multiXNoise) * x - xOffset - xOffNoise, 2)
 						- Math.pow((zMultiplier * multiZNoise) * z - zOffset - zOffNoise, 2));
 				return (byte) ((value + yOffset) / yMultiplier);

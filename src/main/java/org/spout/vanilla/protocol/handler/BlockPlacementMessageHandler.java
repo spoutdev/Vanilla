@@ -41,9 +41,6 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.block.FurnaceController;
-import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
@@ -88,10 +85,10 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		}
 
 		// If denied, revert the block
-		boolean sendRevert = false;
+		boolean cancelled = false;
 		PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, new Point(pos, world), inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, false));
 		if (interactEvent.isCancelled()) {
-			sendRevert = true;
+			cancelled = true;
 		}
 
 		int x = offsetPos.getBlockX();
@@ -99,18 +96,13 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		int z = offsetPos.getBlockZ();
 
 		// If placement is accepted
-		if (holding != null && !sendRevert) {
+		if (holding != null && !cancelled) {
 
 			// If it's an item, send event and go no further.
 			Material placedMaterial = holding.getMaterial();
 			if (placedMaterial instanceof ItemMaterial) {
 				((ItemMaterial) placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
 				return;
-			}
-
-			// Check if the material is valid
-			if (!(placedMaterial instanceof VanillaMaterial)) {
-				sendRevert = true;
 			}
 
 			// Make sure the target switches one block below
@@ -122,20 +114,20 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			BlockMaterial oldBlock = target.getMaterial();
 			BlockMaterial newBlock = (BlockMaterial) placedMaterial;
 
-			// TODO: Find better home for this code
-			if (newBlock.getMaterial() == VanillaMaterials.FURNACE) {
-				world.createAndSpawnEntity(new Point(world, x, y, z), new FurnaceController());
-			}
-
-			// Handle inventory
+			// Remove block from inventory if not in creative mode.
 			if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
 				holding.setAmount(holding.getAmount() - 1);
 				inventory.setItem(holding, inventory.getCurrentSlot());
 			}
+
+			// Make sure the block can be placed
+			if (oldBlock.isPlacementObstacle() || !newBlock.canPlace(world, x, y, z, placedData, face, player) || !newBlock.onPlacement(world, x, y, z, placedData, face, player)) {
+				cancelled = true;
+			}
 		}
 
-		// If placement is denied
-		if (sendRevert) {
+		// If placement is denied revert the new block to the old
+		if (cancelled) {
 			player.getSession().send(new BlockChangeMessage(x, y, z, target != null ? target.getMaterial().getId() : 0, world.getBlockData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ())));
 			inventory.setItem(holding, inventory.getCurrentSlot());
 		}

@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.material.generic;
 
-import org.spout.vanilla.material.item.Food;
+import org.spout.vanilla.material.item.generic.Food;
 
 public class GenericFood extends GenericItem implements Food {
 	private final int amount;

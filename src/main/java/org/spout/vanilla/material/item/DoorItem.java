@@ -35,7 +35,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class DoorItem extends GenericItem {

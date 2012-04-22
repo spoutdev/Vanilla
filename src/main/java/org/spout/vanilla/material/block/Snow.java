@@ -25,11 +25,10 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
 
 public class Snow extends Solid {
 

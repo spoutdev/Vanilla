@@ -33,7 +33,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.material.generic.GenericBlock;
 
 public abstract class AbstractAttachable extends GenericBlock implements Attachable {

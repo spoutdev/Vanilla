@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.material.block.specific.redstone;
 
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;

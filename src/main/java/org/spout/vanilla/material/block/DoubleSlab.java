@@ -25,8 +25,7 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.generic.Solid;
 
 public class DoubleSlab extends Solid {
 	public static final DoubleSlab STONE = register(new DoubleSlab("Stone Double Slab"));

@@ -23,9 +23,8 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.item.generic;
 
-import org.spout.vanilla.material.item.Item;
 import org.spout.api.material.source.MaterialSource;
 
 public interface BlockItem extends Item {

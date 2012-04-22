@@ -36,7 +36,7 @@ import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.material.item.BlockItem;
+import org.spout.vanilla.material.item.generic.BlockItem;
 
 public class GenericBlockItem extends GenericItem implements BlockItem {
 	GenericMaterialSource onPlace;

@@ -23,9 +23,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
-
-import org.spout.vanilla.material.item.Weapon;
+package org.spout.vanilla.material.item.generic;
 
 public interface RangedWeapon extends Weapon {
 	public int getRangedDamage();

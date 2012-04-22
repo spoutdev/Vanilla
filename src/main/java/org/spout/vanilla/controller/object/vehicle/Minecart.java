@@ -38,7 +38,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.material.block.MinecartTrack;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.material.block.data.PoweredRails;
 import org.spout.vanilla.material.block.data.Rails;
 import org.spout.vanilla.util.RailsState;

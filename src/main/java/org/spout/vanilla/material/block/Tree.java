@@ -25,8 +25,8 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.generic.Plant;
+import org.spout.vanilla.material.block.generic.Solid;
 
 public class Tree extends Solid implements Plant {
 	public static final Tree DEFAULT = register(new Tree("Wood"));

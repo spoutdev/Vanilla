@@ -23,53 +23,41 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.generic;
+package org.spout.vanilla.material.item.generic;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.ItemMaterial;
+import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.item.generic.Tool;
+public class FullContainer extends BlockItem {
+	private ItemMaterial container;
 
-public class GenericTool extends GenericItem implements Tool {
-	private short durability;
-	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
+	public FullContainer(String name, int id, BlockMaterial onPlaceMaterial, EmptyContainer emptyContainer) {
+		this(name, id, onPlaceMaterial, (short) 0, emptyContainer);
+	}
 
-	public GenericTool(String name, int id, short durability) {
-		super(name, id);
-		this.durability = durability;
-		this.setNBTData(true);
+	public FullContainer(String name, int id, BlockMaterial onPlaceMaterial, short onPlaceData, EmptyContainer emptyContainer) {
+		super(name, id, onPlaceMaterial, onPlaceData);
+		this.container = emptyContainer;
+		emptyContainer.register(this);
+	}
+
+	public ItemMaterial getContainer() {
+		return container;
 	}
 
 	@Override
-	public short getDurability() {
-		return durability;
-	}
+	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
+		super.onInteract(entity, position, type, clickedFace);
 
-	@Override
-	public Tool setDurability(short durability) {
-		this.durability = durability;
-		return this;
-	}
-
-	@Override
-	public float getStrengthModifier(BlockMaterial block) {
-		if (!(strengthModifiers.containsKey(block))) {
-			return (float) 1.0;
+		Inventory inventory = entity.getInventory();
+		if (inventory.getCurrentItem() == null) {
+			inventory.setItem(new ItemStack(getContainer(), 1), inventory.getCurrentSlot());
 		}
-		return strengthModifiers.get(block);
-	}
-
-	@Override
-	public Tool setStrengthModifier(BlockMaterial block, float modifier) {
-		strengthModifiers.put(block, modifier);
-		return this;
-	}
-
-	@Override
-	public Set<BlockMaterial> getStrengthModifiedBlocks() {
-		return strengthModifiers.keySet();
 	}
 }

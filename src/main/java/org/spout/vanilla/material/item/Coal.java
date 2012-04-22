@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.material.item;
 
-import org.spout.vanilla.material.generic.GenericItem;
+import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
-public class Coal extends GenericItem {
+public class Coal extends VanillaItemMaterial {
 	public static final Coal COAL = register(new Coal("Coal"));
 	public static final Coal CHARCOAL = register(new Coal("Charcoal", 1, COAL));
 

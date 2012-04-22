@@ -31,7 +31,7 @@ import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.generic.GenericBlock;
+import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 /**
  * This is a permanent block slot whose information is loaded from a world dynamically
@@ -61,8 +61,8 @@ public class ExplosionBlockSlot {
 		this.realy = (int) this.offset.getY() + y;
 		this.realz = (int) this.offset.getZ() + z;
 		this.material = world.getBlockMaterial(this.realx, this.realy, this.realz);
-		if (this.material != VanillaMaterials.AIR && this.material instanceof GenericBlock) {
-			this.damageFactor = (((GenericBlock) this.material).getResistance() + 0.3f) * 0.3f;
+		if (this.material != VanillaMaterials.AIR && this.material instanceof VanillaBlockMaterial) {
+			this.damageFactor = (((VanillaBlockMaterial) this.material).getResistance() + 0.3f) * 0.3f;
 			this.damageFactor *= (2.0f + random.nextFloat()) / 3.0f;
 		} else {
 			this.damageFactor = 0f;

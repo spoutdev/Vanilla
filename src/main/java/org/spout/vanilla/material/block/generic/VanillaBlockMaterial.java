@@ -23,7 +23,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.generic;
+package org.spout.vanilla.material.block.generic;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
@@ -34,19 +34,19 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.block.specific.redstone.RedstoneTorch;
 import org.spout.vanilla.material.block.specific.redstone.RedstoneWire;
 
-public class GenericBlock extends BlockMaterial {
+public class VanillaBlockMaterial extends BlockMaterial {
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
 	private float resistance;
 	private Material dropMaterial;
 	private int dropCount;
 
-	public GenericBlock(String name, int id) {
+	public VanillaBlockMaterial(String name, int id) {
 		super(name, id);
 		dropMaterial = this;
 		dropCount = 1;
 	}
 
-	public GenericBlock(String name, int id, int data, Material parent) {
+	public VanillaBlockMaterial(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
 	}
 
@@ -84,7 +84,7 @@ public class GenericBlock extends BlockMaterial {
 		return 0;
 	}
 
-	public GenericBlock setResistance(Float newResistance) {
+	public VanillaBlockMaterial setResistance(Float newResistance) {
 		resistance = newResistance;
 		return this;
 	}
@@ -94,22 +94,22 @@ public class GenericBlock extends BlockMaterial {
 	}
 
 	@Override
-	public GenericBlock setFriction(float friction) {
-		return (GenericBlock) super.setFriction(friction);
+	public VanillaBlockMaterial setFriction(float friction) {
+		return (VanillaBlockMaterial) super.setFriction(friction);
 	}
 
 	@Override
-	public GenericBlock setHardness(float hardness) {
-		return (GenericBlock) super.setHardness(hardness);
+	public VanillaBlockMaterial setHardness(float hardness) {
+		return (VanillaBlockMaterial) super.setHardness(hardness);
 	}
 
-	public GenericBlock setLightLevel(int level) {
+	public VanillaBlockMaterial setLightLevel(int level) {
 		return setLightLevel((byte) level);
 	}
 
 	@Override
-	public GenericBlock setLightLevel(byte level) {
-		return (GenericBlock) super.setLightLevel(level);
+	public VanillaBlockMaterial setLightLevel(byte level) {
+		return (VanillaBlockMaterial) super.setLightLevel(level);
 	}
 
 	public Material getDrop() {
@@ -120,12 +120,12 @@ public class GenericBlock extends BlockMaterial {
 		return dropCount;
 	}
 
-	public GenericBlock setDrop(Material id) {
+	public VanillaBlockMaterial setDrop(Material id) {
 		dropMaterial = id;
 		return this;
 	}
 
-	public GenericBlock setDropCount(int count) {
+	public VanillaBlockMaterial setDropCount(int count) {
 		dropCount = count;
 
 		return this;

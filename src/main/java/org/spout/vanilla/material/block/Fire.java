@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.generic.GenericBlock;
+import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
-public class Fire extends GenericBlock {
+public class Fire extends VanillaBlockMaterial {
 	
 	public Fire(String name) {
 		super(name, 51);

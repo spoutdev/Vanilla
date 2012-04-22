@@ -25,15 +25,28 @@
  */
 package org.spout.vanilla.material.item.generic;
 
-public interface Food extends Item {
+
+public class Food extends VanillaItemMaterial {
 	public enum FoodEffectType {
 
 		HEALTH,
 		HUNGER,
 		CUSTOM
 	}
+	private final int amount;
+	private final FoodEffectType type;
 
-	public int getAmount();
+	public Food(String name, int id, int amount, FoodEffectType type) {
+		super(name, id);
+		this.amount = amount;
+		this.type = type;
+	}
 
-	public FoodEffectType getEffectType();
+	public int getAmount() {
+		return amount;
+	}
+
+	public FoodEffectType getEffectType() {
+		return type;
+	}
 }

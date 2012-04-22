@@ -25,19 +25,43 @@
  */
 package org.spout.vanilla.material.item.generic;
 
-import org.spout.vanilla.material.item.generic.Item;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
-
 import org.spout.api.material.BlockMaterial;
 
-public interface Tool extends Item {
-	public short getDurability();
+public class Tool extends VanillaItemMaterial {
+	private short durability;
+	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
 
-	public Tool setDurability(short durability);
+	public Tool(String name, int id, short durability) {
+		super(name, id);
+		this.durability = durability;
+		this.setNBTData(true);
+	}
 
-	public float getStrengthModifier(BlockMaterial block);
+	public short getDurability() {
+		return durability;
+	}
 
-	public Tool setStrengthModifier(BlockMaterial block, float modifier);
+	public Tool setDurability(short durability) {
+		this.durability = durability;
+		return this;
+	}
 
-	public Set<BlockMaterial> getStrengthModifiedBlocks();
+	public float getStrengthModifier(BlockMaterial block) {
+		if (!(strengthModifiers.containsKey(block))) {
+			return (float) 1.0;
+		}
+		return strengthModifiers.get(block);
+	}
+
+	public Tool setStrengthModifier(BlockMaterial block, float modifier) {
+		strengthModifiers.put(block, modifier);
+		return this;
+	}
+
+	public Set<BlockMaterial> getStrengthModifiedBlocks() {
+		return strengthModifiers.keySet();
+	}
 }

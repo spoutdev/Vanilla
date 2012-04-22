@@ -33,7 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.generic.GenericLiquid;
+import org.spout.vanilla.material.item.generic.Liquid;
 
 public class PondDecorator implements BiomeDecorator {
 
@@ -154,7 +154,7 @@ public class PondDecorator implements BiomeDecorator {
 				for (byte py = 1; py < 5; py++) {
 					if (isWallBlock(px, py, pz, airBlocks)) {
 						final BlockMaterial material = world.getBlockMaterial(x + px, y + py, z + pz);
-						if (material instanceof GenericLiquid) {
+						if (material instanceof Liquid) {
 							return false;
 						}
 					}

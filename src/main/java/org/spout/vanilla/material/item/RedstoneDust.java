@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.material.item;
 
-import org.spout.vanilla.material.generic.GenericItem;
+import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
-public class RedstoneDust extends GenericItem {
+public class RedstoneDust extends VanillaItemMaterial {
 	public RedstoneDust(String name, int id) {
 		super(name, id);
 	}

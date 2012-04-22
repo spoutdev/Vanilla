@@ -34,9 +34,9 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Solid;
-import org.spout.vanilla.material.generic.GenericBlock;
+import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
-public abstract class AbstractAttachable extends GenericBlock implements Attachable {
+public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
 
 	protected AbstractAttachable(String name, int id) {
 		super(name, id);

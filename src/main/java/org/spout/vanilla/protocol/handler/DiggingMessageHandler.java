@@ -38,7 +38,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.generic.GenericBlock;
+import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.msg.DiggingMessage;
 
 public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> {
@@ -113,8 +113,8 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			if (player.getEntity().getController() instanceof VanillaPlayer && ((VanillaPlayer) player.getEntity().getController()).isSurvival()) {
 				Material dropMat = oldMat;
 				int count = 1;
-				if (oldMat instanceof GenericBlock) {
-					GenericBlock blockMat = (GenericBlock) oldMat;
+				if (oldMat instanceof VanillaBlockMaterial) {
+					VanillaBlockMaterial blockMat = (VanillaBlockMaterial) oldMat;
 					dropMat = Material.get((short) blockMat.getDrop().getId());
 					count = blockMat.getDropCount();
 				}

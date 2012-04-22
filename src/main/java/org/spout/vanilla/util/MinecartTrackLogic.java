@@ -34,7 +34,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.block.data.Rails;
-import org.spout.vanilla.material.generic.GenericBlock;
+import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 public class MinecartTrackLogic implements Source {
 	public int x, y, z;
@@ -53,7 +53,7 @@ public class MinecartTrackLogic implements Source {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.isPowered = ((GenericBlock) data.getMaterial()).getIndirectRedstonePower(world, x, y, z) > 0;
+		this.isPowered = ((VanillaBlockMaterial) data.getMaterial()).getIndirectRedstonePower(world, x, y, z) > 0;
 		this.data = data;
 		this.direction = BlockFace.THIS;
 	}

@@ -23,44 +23,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.generic;
+package org.spout.vanilla.material.item.generic;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.material.ItemMaterial;
-import org.spout.api.material.Material;
-import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
-public class GenericItem extends ItemMaterial {
-	private boolean hasNBT = false;
+public class Liquid extends VanillaBlockMaterial {
+	private final boolean flowing;
 
-	public GenericItem(String name, int id) {
+	public Liquid(String name, int id, boolean flowing) {
 		super(name, id);
+		this.flowing = flowing;
 	}
 
-	public GenericItem(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
+	public boolean isFlowing() {
+		return flowing;
 	}
-
-	public boolean getNBTData() {
-		return this.hasNBT;
-	}
-
-	public GenericItem setNBTData(boolean has) {
-		this.hasNBT = has;
-		return this;
-	}
-
+	
 	@Override
-	public void onInventoryRender() {
-	}
-
-	@Override
-	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
-	}
-
-	@Override
-	public void onInteract(Entity entity, Entity other) {
+	public boolean isPlacementObstacle() {
+		return false;
 	}
 }

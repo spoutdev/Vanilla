@@ -34,9 +34,9 @@ import org.spout.api.material.Material;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.material.generic.GenericTool;
+import org.spout.vanilla.material.item.generic.Tool;
 
-public class Shears extends GenericTool {
+public class Shears extends Tool {
 	private Random rand = new Random();
 
 	public Shears(String name, int id, short durability) {

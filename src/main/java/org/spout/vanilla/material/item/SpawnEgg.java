@@ -27,9 +27,9 @@ package org.spout.vanilla.material.item;
 
 import org.spout.api.material.Material;
 
-import org.spout.vanilla.material.generic.GenericItem;
+import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
-public class SpawnEgg extends GenericItem {
+public class SpawnEgg extends VanillaItemMaterial {
 	private static final SpawnEgg PARENT = register(new SpawnEgg("Spawn Egg")); //There is no entity with the ID 0 so this egg is invalid
 	public static final SpawnEgg CREEPER = register(new SpawnEgg("Spawn Creeper", 50, PARENT));
 	public static final SpawnEgg SKELETON = register(new SpawnEgg("Spawn Skeleton", 51, PARENT));

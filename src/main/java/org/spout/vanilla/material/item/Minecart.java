@@ -36,9 +36,9 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.material.block.MinecartTrack;
-import org.spout.vanilla.material.generic.GenericItem;
+import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
-public class Minecart extends GenericItem {
+public class Minecart extends VanillaItemMaterial {
 	public Minecart(String name, int id) {
 		super(name, id);
 	}

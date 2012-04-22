@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.material.item;
 
-import org.spout.vanilla.material.generic.GenericItem;
+import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
-public class Potion extends GenericItem {
+public class Potion extends VanillaItemMaterial {
 	public static final Potion EMPTY = register(new Potion("Empty Potion"));
 	public static final Potion AWKWARD = register(new Potion("Awkward Potion", 16, EMPTY));
 	public static final Potion SPLASH_AWKWARD = register(new Potion("Splash Awkward Potion", 16384, EMPTY));

@@ -31,9 +31,9 @@ import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.material.generic.GenericItem;
+import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
-public class Dye extends GenericItem {
+public class Dye extends VanillaItemMaterial {
 	public static final Dye INK_SAC = register(new Dye("Ink Sac"));
 	public static final Dye ROSE_RED = register(new Dye("Rose Red", DyeColor.RED, INK_SAC));
 	public static final Dye CACTUS_GREEN = register(new Dye("Cactus Green", DyeColor.GREEN, INK_SAC));

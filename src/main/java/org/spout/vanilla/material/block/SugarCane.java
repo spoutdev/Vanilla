@@ -37,9 +37,9 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.generic.GenericBlock;
+import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
-public class SugarCane extends GenericBlock {
+public class SugarCane extends VanillaBlockMaterial {
 	private final Set<Material> validBases = new HashSet<Material>(4);
 
 	public SugarCane(String name, int id) {

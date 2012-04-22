@@ -25,6 +25,26 @@
  */
 package org.spout.vanilla.material.item.generic;
 
-public interface Armor extends Item {
-	public int getProtection();
+public class Armor extends VanillaItemMaterial {
+	private int protection;
+
+	public Armor(String name, int id, int protection) {
+		super(name, id);
+		this.protection = protection;
+		this.setNBTData(true);
+	}
+
+	/*
+		 * 	VanillaMaterials.FLINT_AND_STEEL.getTypeId()
+		 * VanillaMaterials.BOW.getId()
+		 * VanillaMaterials.FISHING_ROD.getId()
+		 * VanillaMaterials.SHEARS.getId()
+
+
+			}
+		 */
+
+	public int getProtection() {
+		return protection;
+	}
 }

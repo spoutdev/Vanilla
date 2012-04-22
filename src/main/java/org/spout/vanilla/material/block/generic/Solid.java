@@ -29,9 +29,8 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.generic.GenericBlock;
 
-public class Solid extends GenericBlock {
+public class Solid extends VanillaBlockMaterial {
 	private final boolean moving;
 
 	public Solid(String name, int id, boolean canMove) {

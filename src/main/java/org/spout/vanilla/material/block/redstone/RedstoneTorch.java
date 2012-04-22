@@ -33,7 +33,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.block.attachable.WallAttachable;
-import org.spout.vanilla.material.generic.GenericBlock;
+import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 public class RedstoneTorch extends WallAttachable implements RedstoneSource, RedstoneTarget {
 	public static final short REDSTONE_POWER = 15;
@@ -85,9 +85,9 @@ public class RedstoneTorch extends WallAttachable implements RedstoneSource, Red
 		Vector3 offset = face.getOffset();
 		int tx = (int) (x + offset.getX()), ty = (int) (y + offset.getY()), tz = (int) (z + offset.getZ());
 		BlockMaterial mat = world.getBlockMaterial(tx, ty, tz);
-		if (mat instanceof GenericBlock) {
+		if (mat instanceof VanillaBlockMaterial) {
 			BlockMaterial newmat;
-			GenericBlock va = (GenericBlock) mat;
+			VanillaBlockMaterial va = (VanillaBlockMaterial) mat;
 			if (va.getIndirectRedstonePower(world, tx, ty, tz) > 0) {
 				//Power off.
 				newmat = VanillaMaterials.REDSTONE_TORCH_OFF;

@@ -25,6 +25,15 @@
  */
 package org.spout.vanilla.material.item.generic;
 
-public interface RangedWeapon extends Weapon {
-	public int getRangedDamage();
+public class RangedWeapon extends Weapon {
+	private int rangedDamage;
+
+	public RangedWeapon(String name, int id, int damage, int rangedDamage, short durability) {
+		super(name, id, damage, durability);
+		this.rangedDamage = rangedDamage;
+	}
+
+	public int getRangedDamage() {
+		return rangedDamage;
+	}
 }

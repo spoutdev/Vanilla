@@ -23,41 +23,54 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.generic;
+package org.spout.vanilla.material.item.generic;
+
+import java.util.HashMap;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.source.GenericMaterialSource;
+import org.spout.api.material.source.MaterialSource;
 
-public class GenericFullContainer extends GenericBlockItem {
-	private ItemMaterial container;
+import org.spout.vanilla.material.VanillaMaterials;
 
-	public GenericFullContainer(String name, int id, BlockMaterial onPlaceMaterial, GenericEmptyContainer emptyContainer) {
-		this(name, id, onPlaceMaterial, (short) 0, emptyContainer);
-	}
+public class EmptyContainer extends BlockItem {
+	private HashMap<MaterialSource, FullContainer> fullContainers = new HashMap<MaterialSource, FullContainer>();
 
-	public GenericFullContainer(String name, int id, BlockMaterial onPlaceMaterial, short onPlaceData, GenericEmptyContainer emptyContainer) {
-		super(name, id, onPlaceMaterial, onPlaceData);
-		this.container = emptyContainer;
-		emptyContainer.register(this);
-	}
-
-	public ItemMaterial getContainer() {
-		return container;
+	public EmptyContainer(String name, int id) {
+		super(name, id, VanillaMaterials.AIR);
 	}
 
 	@Override
 	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
+		// TODO: ignore position and get the first non-air in the line of sight to prevent NPE's
+		Block block = entity.getWorld().getBlock(position);
+
 		super.onInteract(entity, position, type, clickedFace);
 
 		Inventory inventory = entity.getInventory();
 		if (inventory.getCurrentItem() == null) {
-			inventory.setItem(new ItemStack(getContainer(), 1), inventory.getCurrentSlot());
+			FullContainer full = this.getFullItem(block.getMaterial(), block.getData());
+
+			if (full == null) {
+				return;
+			}
+
+			inventory.setItem(new ItemStack(full, 1), inventory.getCurrentSlot());
 		}
+	}
+
+	public FullContainer getFullItem(BlockMaterial material, short data) {
+		return this.fullContainers.get(new GenericMaterialSource(material, data));
+	}
+
+	public void register(FullContainer item) {
+		this.fullContainers.put(item.getBlock(), item);
 	}
 }

@@ -25,8 +25,17 @@
  */
 package org.spout.vanilla.material.item.generic;
 
-import org.spout.vanilla.material.item.generic.Item;
 
-public interface Weapon extends Item {
-	public int getDamage();
+public class Weapon extends Tool {
+	private int damage;
+
+	public Weapon(String name, int id, int damage, short durability) {
+		super(name, id, durability);
+		this.damage = damage;
+		this.setNBTData(true);
+	}
+
+	public int getDamage() {
+		return damage;
+	}
 }

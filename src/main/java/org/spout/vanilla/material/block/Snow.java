@@ -33,6 +33,7 @@ public class Snow extends Solid {
 
 	public Snow(String name) {
 		super(name, 78);
+		this.setOpacity((byte)0); 
 	}
 	
 	@Override

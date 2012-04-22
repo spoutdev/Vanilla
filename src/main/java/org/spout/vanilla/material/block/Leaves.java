@@ -47,7 +47,7 @@ public class Leaves extends Solid {
 	}
 
 	private void setDefault() {
-		this.setHardness(0.2F).setResistance(0.3F);
+		this.setHardness(0.2F).setResistance(0.3F).setOpacity((byte)0);
 	}
 
 	// TODO: Shears

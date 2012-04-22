@@ -31,7 +31,7 @@ import java.util.Set;
 
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.material.Tool;
+import org.spout.vanilla.material.item.Tool;
 
 public class GenericTool extends GenericItem implements Tool {
 	private short durability;

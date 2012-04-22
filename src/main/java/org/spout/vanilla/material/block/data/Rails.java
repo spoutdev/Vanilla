@@ -33,6 +33,7 @@ import org.spout.api.material.source.MaterialData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.RailsState;
 
+//TODO still not very happy about this,  perhaps VanillaMaterialData, and put rails in a separate package, block.data.rails?
 public class Rails implements MaterialData {
 	private RailsState state;
 

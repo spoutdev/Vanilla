@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.material.generic;
 
-import org.spout.vanilla.material.RangedWeapon;
+import org.spout.vanilla.material.item.RangedWeapon;
 
 public class GenericRangedWeapon extends GenericWeapon implements RangedWeapon {
 	private int rangedDamage;

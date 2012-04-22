@@ -35,7 +35,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.material.block.Wool;
+import org.spout.vanilla.material.block.specific.Wool;
 
 public class Sheep extends Creature implements Passive {
 	private int color;

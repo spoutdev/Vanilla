@@ -36,7 +36,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.material.Weapon;
+import org.spout.vanilla.material.item.Weapon;
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;

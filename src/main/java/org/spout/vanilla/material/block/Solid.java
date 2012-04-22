@@ -28,13 +28,10 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
-
-import org.spout.vanilla.material.MovingBlock;
 import org.spout.vanilla.material.VanillaMaterials;
-
 import org.spout.vanilla.material.generic.GenericBlock;
 
-public class Solid extends GenericBlock implements MovingBlock {
+public class Solid extends GenericBlock {
 	private final boolean moving;
 
 	public Solid(String name, int id, boolean canMove) {
@@ -55,11 +52,6 @@ public class Solid extends GenericBlock implements MovingBlock {
 	public Solid(String name, int id, int data, Material parent, boolean canMove) {
 		super(name, id, data, parent);
 		moving = canMove;
-	}
-
-	@Override
-	public boolean isMoving() {
-		return moving;
 	}
 
 	@Override

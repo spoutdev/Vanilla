@@ -83,10 +83,7 @@ public class PondDecorator implements BiomeDecorator {
 				}
 				for (byte py = 1; py < 5; py++) {
 					if (isWallBlock(px, py, pz, lavaBlocks)) {
-						final Block block = world.getBlock(x + px, y - py, z + pz);
-						if (block.getMaterial().isSolid()) {
-							block.setMaterial(VanillaMaterials.STONE);
-						}
+						world.setBlockMaterial(x + px, y - py, z + pz, VanillaMaterials.STONE, (short) 0, false, world);
 					}
 				}
 				for (byte py = 0; py < airBlocks[16 * px + pz]; py++) {
@@ -95,7 +92,7 @@ public class PondDecorator implements BiomeDecorator {
 				for (byte py = 1; py < 5; py++) {
 					if (isWallBlock(px, py, pz, airBlocks)) {
 						final Block block = world.getBlock(px + x, py + y - 1, pz + z);
-						if (block.getMaterial().isSolid() && random.nextBoolean()) {
+						if (block.getMaterial().isOpaque() && random.nextBoolean()) {
 							block.setMaterial(VanillaMaterials.STONE);
 						}
 					}
@@ -141,7 +138,7 @@ public class PondDecorator implements BiomeDecorator {
 				for (byte py = 1; py < 5; py++) {
 					if (isWallBlock(px, py, pz, liquidBlocks)) {
 						final BlockMaterial material = world.getBlockMaterial(x + px, y - py, z + pz);
-						if (!material.isSolid() && material != liquid) {
+						if (!material.isOpaque() && material != liquid) {
 							return false;
 						}
 					}

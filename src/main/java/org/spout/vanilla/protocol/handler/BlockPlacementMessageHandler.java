@@ -42,6 +42,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.block.FurnaceController;
+import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
@@ -65,29 +66,28 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		 * usually happens. Sometimes it doesn't happen like that. Therefore, a
 		 * hacky workaround.
 		 */
+
+		// Right clicked air with an item.
 		if (message.getDirection() == 255) {
-			// Right-clicked air. Note that the client doesn't send this if they are holding nothing.
-			//BlockPlacementMessage previous = session.getPreviousPlacement();
-			//if (previous == null || previous.getCount() != message.getCount() && previous.getId() != message.getId() && previous.getDamage() != message.getDamage()) {
 			eventManager.callEvent(new PlayerInteractEvent(player, null, inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, true));
-			//}
-			//session.setPreviousPlacement(null);
 			return;
 		}
-		//session.setPreviousPlacement(message);
 
+		// Block face is invalid
 		Point pos = new Point(world, message.getX(), message.getY(), message.getZ());
 		BlockFace face = VanillaMessageHandlerUtils.messageToBlockFace(message.getDirection());
 		if (face == BlockFace.THIS) {
 			return;
 		}
 
+		// Within world bounds
 		Point offsetPos = pos.add(face.getOffset());
 		Block target = world.getBlock(offsetPos);
 		if (pos.getY() >= world.getHeight() || pos.getY() < 0) {
 			return;
 		}
 
+		// If denied, revert the block
 		boolean sendRevert = false;
 		PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, new Point(pos, world), inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, false));
 		if (interactEvent.isCancelled()) {
@@ -97,61 +97,44 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		int x = offsetPos.getBlockX();
 		int y = offsetPos.getBlockY();
 		int z = offsetPos.getBlockZ();
+
+		// If placement is accepted
 		if (holding != null && !sendRevert) {
+
+			// If it's an item, send event and go no further.
 			Material placedMaterial = holding.getMaterial();
 			if (placedMaterial instanceof ItemMaterial) {
 				((ItemMaterial) placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
 				return;
 			}
 
-			if (placedMaterial.getId() < 0) {
+			// Check if the material is valid
+			if (!(placedMaterial instanceof VanillaMaterial)) {
 				sendRevert = true;
 			}
 
+			// Make sure the target switches one block below
 			short placedData = holding.getData();
 			if (face == BlockFace.TOP && !world.getBlockMaterial(x, y - 1, z).isPlacementObstacle()) {
-				//make sure the target switches one block below
 				y = target.move(BlockFace.BOTTOM).getY();
 			}
 
-			BlockMaterial newBlock = (BlockMaterial) placedMaterial;
 			BlockMaterial oldBlock = target.getMaterial();
+			BlockMaterial newBlock = (BlockMaterial) placedMaterial;
 
 			// TODO: Find better home for this code
 			if (newBlock.getMaterial() == VanillaMaterials.FURNACE) {
 				world.createAndSpawnEntity(new Point(world, x, y, z), new FurnaceController());
 			}
 
-			if (!sendRevert && !oldBlock.isPlacementObstacle()) {
-				//if (EventFactory.onBlockCanBuild(target, placedId.getItemTypeId(), face).isBuildable()) {
-				//SpoutBlockState newState = BlockProperties.get(placedId.getItemTypeId()).getPhysics().placeAgainst(player, target.getState(), placedId, face);
-				//PlayerBlockPlaceEvent event = EventFactory.onBlockPlace(target, newState, against, player);
-
-				//if (!event.isCancelled() && event.canBuild()) {
-				/*newState.update(true);
-				if (newState.getX() != target.getX() || newState.getY() != target.getY() || newState.getZ() != target.getZ()) {
-					sendRevert = true;
-				}*/
-				if (newBlock.canPlace(world, x, y, z, placedData, face, player)) {
-					if (newBlock.onPlacement(world, x, y, z, placedData, face, player)) {
-						if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
-							holding.setAmount(holding.getAmount() - 1);
-							inventory.setItem(holding, inventory.getCurrentSlot());
-						}
-					}
-				}
-
-				//} else {
-				//	sendRevert = true;
-				//}
-				//} else {
-				//	sendRevert = true;
-				//}
-			} else {
-				sendRevert = true;
+			// Handle inventory
+			if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
+				holding.setAmount(holding.getAmount() - 1);
+				inventory.setItem(holding, inventory.getCurrentSlot());
 			}
 		}
 
+		// If placement is denied
 		if (sendRevert) {
 			player.getSession().send(new BlockChangeMessage(x, y, z, target != null ? target.getMaterial().getId() : 0, world.getBlockData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ())));
 			inventory.setItem(holding, inventory.getCurrentSlot());

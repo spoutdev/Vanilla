@@ -23,45 +23,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.generic;
+package org.spout.vanilla.material;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.material.ItemMaterial;
-import org.spout.api.material.Material;
-import org.spout.api.material.block.BlockFace;
-import org.spout.vanilla.material.VanillaMaterial;
-
-public class VanillaItemMaterial extends ItemMaterial implements VanillaMaterial {
-	private boolean hasNBT = false;
-
-	public VanillaItemMaterial(String name, int id) {
-		super(name, id);
-	}
-
-	public VanillaItemMaterial(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
-	}
-
-	public boolean getNBTData() {
-		return hasNBT;
-	}
-
-	public VanillaItemMaterial setNBTData(boolean has) {
-		hasNBT = has;
-		return this;
-	}
-
-	@Override
-	public void onInventoryRender() {
-	}
-
-	@Override
-	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
-	}
-
-	@Override
-	public void onInteract(Entity entity, Entity other) {
-	}
+public interface VanillaMaterial {
 }

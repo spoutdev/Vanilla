@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.command;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.ChatColor;
@@ -45,12 +46,14 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 
 public class TestCommands {
 	@SuppressWarnings("unused")
 	private VanillaPlugin plugin;
+	private final Set<String> invisible = new HashSet<String>();
 
 	public TestCommands(VanillaPlugin instance) {
 		this.plugin = instance;
@@ -200,5 +203,30 @@ public class TestCommands {
 
 		BlockController controller = block.getController();
 		player.sendMessage("Material: " + controller.getMaterial().getName());
+	}
+	
+	@Command(aliases = {"vanish", "v"}, desc = "Toggle your visibility", min = 0, max = 0)
+	public void vanish(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("Source must be player");
+		}
+		
+		Controller controller = ((Player) source).getEntity().getController();
+		if (!(controller instanceof VanillaPlayer)) {
+			throw new CommandException("Invalid controller");
+		}
+		
+		VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
+		Player player = vanillaPlayer.getPlayer();
+		String name = player.getName();
+		if (invisible.contains(name)) {
+			invisible.remove(name);
+			vanillaPlayer.setVisible(true);
+			player.sendMessage("You re-appear");
+		} else {
+			invisible.add(name);
+			vanillaPlayer.setVisible(false);
+			player.sendMessage("You vanish from thin air!");
+		}
 	}
 }

@@ -23,23 +23,23 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.generic;
+package org.spout.vanilla.material.block;
 
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
-public class Weapon extends Tool {
-	private int damage;
+public class DoorBlock extends GroundAttachable {
+	private final boolean openByHand;
+	public static final short HINGE_NORTH_WEST = 0x0;
+	public static final short HINGE_NORTH_EAST = 0x1;
+	public static final short HINGE_SOUTH_EAST = 0x2;
+	public static final short HINGE_SOUTH_WEST = 0x3;
 
-	public Weapon(String name, int id, int damage, short durability) {
-		super(name, id, durability);
-		this.damage = damage;
+	public DoorBlock(String name, int id, boolean openByHand) {
+		super(name, id);
+		this.openByHand = openByHand;
 	}
 
-	public int getDamage() {
-		return damage;
-	}
-
-	@Override
-	public boolean getNBTData() {
-		return true;
+	public boolean isOpenByHand() {
+		return openByHand;
 	}
 }

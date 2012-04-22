@@ -31,7 +31,6 @@ public class Armor extends VanillaItemMaterial {
 	public Armor(String name, int id, int protection) {
 		super(name, id);
 		this.protection = protection;
-		this.setNBTData(true);
 	}
 
 	/*
@@ -46,5 +45,10 @@ public class Armor extends VanillaItemMaterial {
 
 	public int getProtection() {
 		return protection;
+	}
+	
+	@Override
+	public boolean getNBTData() {
+		return true;
 	}
 }

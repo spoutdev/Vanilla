@@ -37,7 +37,6 @@ public class Tool extends VanillaItemMaterial {
 	public Tool(String name, int id, short durability) {
 		super(name, id);
 		this.durability = durability;
-		this.setNBTData(true);
 	}
 
 	public short getDurability() {
@@ -63,5 +62,10 @@ public class Tool extends VanillaItemMaterial {
 
 	public Set<BlockMaterial> getStrengthModifiedBlocks() {
 		return strengthModifiers.keySet();
+	}
+
+	@Override
+	public boolean getNBTData() {
+		return true;
 	}
 }

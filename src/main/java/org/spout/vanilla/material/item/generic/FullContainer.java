@@ -31,11 +31,11 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.ItemMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
 public class FullContainer extends BlockItem {
-	private ItemMaterial container;
+	private Material container;
 
 	public FullContainer(String name, int id, BlockMaterial onPlaceMaterial, EmptyContainer emptyContainer) {
 		this(name, id, onPlaceMaterial, (short) 0, emptyContainer);
@@ -47,7 +47,7 @@ public class FullContainer extends BlockItem {
 		emptyContainer.register(this);
 	}
 
-	public ItemMaterial getContainer() {
+	public Material getContainer() {
 		return container;
 	}
 

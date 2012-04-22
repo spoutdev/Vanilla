@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.attachable;
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
@@ -50,7 +51,12 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	public boolean hasPhysics() {
 		return true;
 	}
-
+	
+	@Override
+	public boolean canSeekAttachedAlternative() {
+		return false;
+	}
+	
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
 		if (getBlockAttachedTo(world, x, y, z).getMaterial().equals(VanillaMaterials.AIR)) {
@@ -66,17 +72,42 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	}
 	
 	@Override
-	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
-		return super.onPlacement(world, x, y, z, this.getDataForFace(against.getOpposite()), against, source);
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		return material instanceof Solid;
+	}
+	
+	@Override
+	public boolean canAttachTo(World world, int x, int y, int z, BlockFace face) {
+		return this.canAttachTo(world.getBlock(x, y, z).move(face.getOpposite()).getMaterial(), face);
 	}
 	
 	@Override
 	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
 		if (super.canPlace(world, x, y, z, data, against, source)) {
-			Block block = world.getBlock(x, y, z).move(against.getOpposite());
-			return block.getMaterial() instanceof Solid;
-		} else {
-			return false;
+			if (this.canAttachTo(world, x, y, z, against.getOpposite())) {
+				return true;
+			} else if (this.canSeekAttachedAlternative()) {
+				for (BlockFace face : BlockFace.values()) {
+					if (this.canAttachTo(world, x, y, z, face)) {
+						return true;
+					}
+				}
+			}
 		}
+		return false;
+	}
+	
+	@Override
+	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
+		if (this.canAttachTo(world, x, y, z, against.getOpposite())) {
+			return super.onPlacement(world, x, y, z, this.getDataForFace(against.getOpposite()), against, source);
+		} else if (this.canSeekAttachedAlternative()) {
+			for (BlockFace face : BlockFace.values()) {
+				if (this.canAttachTo(world, x, y, z, face)) {
+					return super.onPlacement(world, x, y, z, this.getDataForFace(face), face, source);
+				}
+			}
+		}
+		return false;
 	}
 }

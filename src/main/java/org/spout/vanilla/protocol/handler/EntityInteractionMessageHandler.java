@@ -26,9 +26,8 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.ItemMaterial;
-import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -73,10 +72,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 				return;
 			}
 
-			Material mat = holding.getMaterial();
-			if (mat instanceof ItemMaterial) {
-				((ItemMaterial) mat).onInteract(player.getEntity(), clickedEntity);
-			}
+			holding.getMaterial().onInteract(player.getEntity(), clickedEntity, Action.RIGHT_CLICK);
 		}
 	}
 }

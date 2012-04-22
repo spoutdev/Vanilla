@@ -26,9 +26,36 @@
 package org.spout.vanilla.material.block.attachable;
 
 import org.spout.api.geo.World;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 public interface Attachable {
+
+	/**
+	 * Whether this material seeks an alternative attachment block
+	 */
+	public boolean canSeekAttachedAlternative();
+	
+	/**
+	 * Checks if this material can be attached to certain face of a block material
+	 * @param world
+	 * @param material to attach to
+	 * @param face to attach to
+	 * @return if this material can be attached to face of the block given
+	 */
+	public boolean canAttachTo(BlockMaterial material, BlockFace face);
+	
+	/**
+	 * Checks if this material can be attached to certain face of a block
+	 * @param world
+	 * @param x coordinate of the block to place
+	 * @param y coordinate of the block to place
+	 * @param z coordinate of the block to place
+	 * @param face to attach to
+	 * @return if this material can be attached to face of the block given
+	 */
+	public boolean canAttachTo(World world, int x, int y, int z, BlockFace face);
+	
 	/**
 	 * Gets which data id should be set for the given face
 	 * @param face where the block will be attached to

@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.material.block.attachable;
 
+import org.spout.api.geo.World;
 import org.spout.api.material.block.BlockFace;
 
 public class WallAttachable extends AbstractAttachable {
@@ -61,9 +62,22 @@ public class WallAttachable extends AbstractAttachable {
 			case 0x4:
 				return BlockFace.WEST;
 			case 0x5:
-				return BlockFace.TOP;
+				return BlockFace.BOTTOM;
 			default:
-				return BlockFace.TOP;
+				return BlockFace.BOTTOM;
 		}
+	}
+	
+	@Override
+	public boolean canAttachTo(World world, int x, int y, int z, BlockFace face) {
+		switch (face) {
+		case BOTTOM :
+		case NORTH :
+		case EAST :
+		case SOUTH :
+		case WEST :
+			return super.canAttachTo(world, x, y, z, face);
+		}
+		return false;
 	}
 }

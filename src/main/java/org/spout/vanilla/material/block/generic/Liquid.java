@@ -23,23 +23,22 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.generic;
+package org.spout.vanilla.material.block.generic;
 
+public class Liquid extends VanillaBlockMaterial {
+	private final boolean flowing;
 
-public class Weapon extends Tool {
-	private int damage;
-
-	public Weapon(String name, int id, int damage, short durability) {
-		super(name, id, durability);
-		this.damage = damage;
+	public Liquid(String name, int id, boolean flowing) {
+		super(name, id);
+		this.flowing = flowing;
 	}
 
-	public int getDamage() {
-		return damage;
+	public boolean isFlowing() {
+		return flowing;
 	}
-
+	
 	@Override
-	public boolean getNBTData() {
-		return true;
+	public boolean isPlacementObstacle() {
+		return false;
 	}
 }

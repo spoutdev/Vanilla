@@ -140,4 +140,9 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	public boolean hasPhysics() {
 		return false;
 	}
+
+	@Override
+	public boolean getNBTData() {
+		return false;
+	}
 }

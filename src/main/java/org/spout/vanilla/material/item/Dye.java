@@ -26,6 +26,7 @@
 package org.spout.vanilla.material.item;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.source.DataSource;
 
@@ -92,23 +93,25 @@ public class Dye extends VanillaItemMaterial {
 	}
 
 	@Override
-	public void onInteract(Entity entity, Entity other) {
-		if (!(other.getController() instanceof Sheep)) {
-			System.out.println("No sheep: " + other.getClass().getName() + " :(");
-			return;
-		}
+	public void onInteract(Entity entity, Entity other, Action action) {
+		if (action == Action.RIGHT_CLICK) {
+			if (!(other.getController() instanceof Sheep)) {
+				System.out.println("No sheep: " + other.getClass().getName() + " :(");
+				return;
+			}
 
-		ItemStack holding = entity.getInventory().getCurrentItem();
-		//get color from holding item
-		other.setData("SheepColor", 0xF - holding.getData());
-		System.out.println("Sheep go baaaa!");
+			ItemStack holding = entity.getInventory().getCurrentItem();
+			//get color from holding item
+			other.setData("SheepColor", 0xF - holding.getData());
+			System.out.println("Sheep go baaaa!");
 
-		if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
-			if (holding.getAmount() > 1) {
-				holding.setAmount(holding.getAmount() - 1);
-				entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
-			} else if (holding.getAmount() == 1) {
-				entity.getInventory().setItem(null, entity.getInventory().getCurrentSlot());
+			if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
+				if (holding.getAmount() > 1) {
+					holding.setAmount(holding.getAmount() - 1);
+					entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
+				} else if (holding.getAmount() == 1) {
+					entity.getInventory().setItem(null, entity.getInventory().getCurrentSlot());
+				}
 			}
 		}
 	}

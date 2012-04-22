@@ -34,7 +34,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.ItemMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
@@ -100,8 +99,9 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 
 			// If it's an item, send event and go no further.
 			Material placedMaterial = holding.getMaterial();
-			if (placedMaterial instanceof ItemMaterial) {
-				((ItemMaterial) placedMaterial).onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
+			placedMaterial.onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
+			
+			if (!(placedMaterial instanceof BlockMaterial)) {
 				return;
 			}
 

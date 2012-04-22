@@ -31,11 +31,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.material.block.attachable.WallAttachable;
+import org.spout.vanilla.material.block.Torch;
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 
-public class RedstoneTorch extends WallAttachable implements RedstoneSource, RedstoneTarget {
+public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget {
 	public static final short REDSTONE_POWER = 15;
 	private static final Vector3 possibleOutgoing[] = {new Vector3(1, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, -1), new Vector3(0, -1, 0), new Vector3(0, 2, 0),};
 	private boolean powered;

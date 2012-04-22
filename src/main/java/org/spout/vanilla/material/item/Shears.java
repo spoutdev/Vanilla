@@ -28,6 +28,7 @@ package org.spout.vanilla.material.item;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 
@@ -44,27 +45,29 @@ public class Shears extends Tool {
 	}
 
 	@Override
-	public void onInteract(Entity entity, Entity other) {
-		if (!(other.getController() instanceof Sheep)) {
-			return;
-		}
+	public void onInteract(Entity entity, Entity other, Action action) {
+		if (action == Action.RIGHT_CLICK) {
+			if (!(other.getController() instanceof Sheep)) {
+				return;
+			}
 
-		Sheep sheep = (Sheep) other.getController();
-		if (sheep.isSheared() || sheep.isBaby()) {
-			System.out.println("Debug");
-			return;
-		}
+			Sheep sheep = (Sheep) other.getController();
+			if (sheep.isSheared() || sheep.isBaby()) {
+				System.out.println("Debug");
+				return;
+			}
 
-		sheep.setSheared(true);
-		short col = sheep.getColor().getData();
+			sheep.setSheared(true);
+			short col = sheep.getColor().getData();
 
-		//TODO: use proper wool constant
-		other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(Material.get((short) 35), col, rand.nextInt(3) + 1), other.getPosition().normalize()));
+			//TODO: use proper wool constant
+			other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(Material.get((short) 35), col, rand.nextInt(3) + 1), other.getPosition().normalize()));
 
-		ItemStack holding = entity.getInventory().getCurrentItem();
-		if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
-			holding.setData((short) (holding.getData() + 1));
-			entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
+			ItemStack holding = entity.getInventory().getCurrentItem();
+			if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
+				holding.setData((short) (holding.getData() + 1));
+				entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
+			}
 		}
 	}
 }

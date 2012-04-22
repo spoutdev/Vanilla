@@ -27,7 +27,7 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.World;
 import org.spout.vanilla.material.block.data.PoweredRails;
-import org.spout.vanilla.material.block.specific.redstone.RedstoneTarget;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 
 public class MinecartTrackPowered extends MinecartTrackBase implements RedstoneTarget {
 	public MinecartTrackPowered(String name, int id) {

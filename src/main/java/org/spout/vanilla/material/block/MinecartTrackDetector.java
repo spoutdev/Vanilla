@@ -26,9 +26,8 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.World;
-
 import org.spout.vanilla.material.block.data.DetectorRails;
-import org.spout.vanilla.material.block.specific.redstone.RedstoneSource;
+import org.spout.vanilla.material.block.redstone.RedstoneSource;
 
 public class MinecartTrackDetector extends MinecartTrackBase implements RedstoneSource {
 	public MinecartTrackDetector(String name, int id) {

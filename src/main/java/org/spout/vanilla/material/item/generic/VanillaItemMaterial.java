@@ -44,11 +44,11 @@ public class VanillaItemMaterial extends ItemMaterial {
 	}
 
 	public boolean getNBTData() {
-		return this.hasNBT;
+		return hasNBT;
 	}
 
 	public VanillaItemMaterial setNBTData(boolean has) {
-		this.hasNBT = has;
+		hasNBT = has;
 		return this;
 	}
 

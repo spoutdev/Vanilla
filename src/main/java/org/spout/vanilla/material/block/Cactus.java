@@ -26,7 +26,7 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.Source;
-import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -48,20 +48,19 @@ public class Cactus extends Solid {
 	}
 
 	@Override
-	public void onUpdate(World world, int x, int y, int z) {
+	public void onUpdate(Block block) {
 		if (!VanillaConfiguration.CACTUS_PHYSICS.getBoolean()) {
 			return;
 		}
 
 		int amount = 0;
-		int off = 1;
-		while (world.getBlockMaterial(x, y + off, z).equals(VanillaMaterials.CACTUS)) {
-			off++;
+		Block tmpblock = block;
+		while ((tmpblock = tmpblock.translate(BlockFace.TOP)).getMaterial().equals(VanillaMaterials.CACTUS)) {
 			amount++;
 		}
 
 		boolean destroy = false;
-		BlockMaterial below = world.getBlockMaterial(x, y - 1, z);
+		BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial();
 		if (!below.equals(VanillaMaterials.SAND) && !below.equals(VanillaMaterials.CACTUS)) {
 			destroy = true;
 		}
@@ -69,9 +68,7 @@ public class Cactus extends Solid {
 		if (!destroy) {
 			BlockFace faces[] = {BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST};
 			for (BlockFace face : faces) {
-				int tx = (int) (x + face.getOffset().getX());
-				int tz = (int) (z + face.getOffset().getZ());
-				BlockMaterial side = world.getBlockMaterial(tx, y, tz);
+				BlockMaterial side = block.translate(face).getMaterial();
 				if (!side.equals(VanillaMaterials.AIR)) {
 					destroy = true;
 					break;
@@ -79,21 +76,21 @@ public class Cactus extends Solid {
 			}
 		}
 
-		Point point = new Point(world, x, y, z);
+		Point point = block.getPosition();
 		if (destroy) {
-			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world);
-			world.createAndSpawnEntity(point, new Item(new ItemStack(VanillaMaterials.CACTUS, amount), point.normalize()));
+			block.setMaterial(VanillaMaterials.AIR).update(true);
+			point.getWorld().createAndSpawnEntity(point, new Item(new ItemStack(VanillaMaterials.CACTUS, amount), point.normalize()));
 		}
 	}
 
 	@Override
-	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
+	public boolean onPlacement(Block block, short data, BlockFace against, Source source) {
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 				if (i == 0 && j == 0) {
 					continue;
 				}
-				if (world.getBlockMaterial(x + i, y, z + j) != VanillaMaterials.AIR) {
+				if (block.translate(i, 0, j).getMaterial() != VanillaMaterials.AIR) {
 					return false;
 				}
 			}

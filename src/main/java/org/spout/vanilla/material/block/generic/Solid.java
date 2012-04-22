@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.material.block.generic;
 
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -60,13 +60,11 @@ public class Solid extends VanillaBlockMaterial {
 	}
 
 	@Override
-	public void onUpdate(World world, int x, int y, int z) {
+	public void onUpdate(Block block) {
 		if (moving) {
-			Block block = world.getBlock(x, y - 1, z);
-			if (!block.getMaterial().isPlacementObstacle()) {
-				if (world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world)) {
-					//world.createAndSpawnEntity(block.getPosition(), new MovingBlock(this)); TODO: We aren't ready for this lol.
-				}
+			if (!block.translate(BlockFace.BOTTOM).getMaterial().isPlacementObstacle()) {
+				block.setMaterial(VanillaMaterials.AIR).update(true);
+				//world.createAndSpawnEntity(block.getPosition(), new MovingBlock(this)); TODO: We aren't ready for this lol.
 			}
 		}
 	}

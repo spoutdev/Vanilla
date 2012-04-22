@@ -71,34 +71,34 @@ public class WellDecorator implements BiomeDecorator {
 			for (int zz = z - 2; zz < z + 3; zz++) {
 				for (int yy = y - 1; yy < y + 5; yy++) {
 					if (yy > y - 2 && yy < y + 1) {
-						world.setBlockMaterial(xx, yy, zz, VanillaMaterials.SANDSTONE, (short) 0, false, world);
+						world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.SANDSTONE);
 					}
 					if (yy == y) {
 						if ((xx == x && z == zz)
 								|| ((xx == x - 1 || xx == x + 1) && zz == z)
 								|| ((zz == z + 1 || zz == z - 1) && x == xx)) {
-							world.setBlockMaterial(xx, yy, zz, VanillaMaterials.WATER, (short) 0, false, world);
+							world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.WATER);
 						}
 					}
 					if (yy == y + 1) {
 						if (xx == x - 2 || xx == x + 2 || zz == z - 2 || zz == z + 2) {
-							world.setBlockMaterial(xx, yy, zz, VanillaMaterials.SANDSTONE, (short) 0, false, world);
+							world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.SANDSTONE);
 						}
 						if (((xx == x - 2 || xx == x + 2) && zz == z)
 								|| ((zz == z + 2 || zz == z - 2) && x == xx)) {
-							world.setBlockMaterial(xx, yy, zz, VanillaMaterials.SLAB, (short) 1, false, world);
+							world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.SLAB, (short) 1); //FIXME: MAKE SUB MAT!
 						}
 					}
 					if (yy == y + 4 && xx > x - 2 && xx < x + 2 && zz > z - 2 && zz < z + 2) {
 						if (xx == 0 && zz == 0) {
-							world.setBlockMaterial(xx, yy, zz, VanillaMaterials.SANDSTONE, (short) 0, false, world);
+							world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.SANDSTONE);
 						} else {
-							world.setBlockMaterial(xx, yy, zz, VanillaMaterials.SLAB, (short) 1, false, world);
+							world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.SLAB, (short) 1); //FIXME: MAKE SUB MAT!
 						}
 					}
 					if (yy > y && yy < y + 4) {
 						if ((xx == x - 1 || xx == x + 1) && (zz == z + 1 || zz == z - 1)) {
-							world.setBlockMaterial(xx, yy, zz, VanillaMaterials.SANDSTONE, (short) 0, false, world);
+							world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.SANDSTONE);
 						}
 					}
 				}
@@ -111,7 +111,7 @@ public class WellDecorator implements BiomeDecorator {
 			for (int zz = z - 2; zz < z + 3; zz++) {
 				Block block = world.getBlock(xx, y - 1, zz);
 				if (block.getMaterial() == VanillaMaterials.AIR
-						&& block.move(BlockFace.BOTTOM).getMaterial() == VanillaMaterials.AIR) {
+						&& block.translate(BlockFace.BOTTOM).getMaterial() == VanillaMaterials.AIR) {
 					return false;
 				}
 			}

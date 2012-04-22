@@ -26,15 +26,20 @@
 package org.spout.vanilla.material.item.generic;
 
 public class Weapon extends Tool {
-	private int damage;
+	private int damage = 1;
 
-	public Weapon(String name, int id, int damage, short durability) {
+	public Weapon(String name, int id, short durability) {
 		super(name, id, durability);
-		this.damage = damage;
 	}
 
+	@Override
 	public int getDamage() {
 		return damage;
+	}
+
+	public Weapon setDamage(int damage) {
+		this.damage = damage;
+		return this;
 	}
 
 	@Override

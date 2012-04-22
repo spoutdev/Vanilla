@@ -27,9 +27,10 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.material.source.DataSource;
 
+import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class Plank extends Solid {
+public class Plank extends Solid implements FurnaceFuel {
 	public static final Plank PLANK = register(new Plank("Oak Plank"));
 	public static final Plank PINE = register(new Plank("Pine Plank", WoodType.PINE, PLANK));
 	public static final Plank BIRCH = register(new Plank("Birch Plank", WoodType.BIRCH, PLANK));
@@ -81,5 +82,10 @@ public class Plank extends Solid {
 		public short getData() {
 			return this.data;
 		}
+	}
+
+	@Override
+	public int getFuelTicks() {
+		return 300;
 	}
 }

@@ -320,9 +320,23 @@ public abstract class VanillaActionController extends ActionController implement
 	/**
 	 * Damages this controller and doesn't send messages to the client.
 	 * @param amount amount the controller will be damaged by.
+	 * @param sendHurtMessage whether or not to send a hurt message
 	 */
 	public void damage(int amount) {
+		this.damage(amount, false);
+	}
+	
+	/**
+	 * Damages this controller.
+	 *
+	 * @param amount amount the controller will be damaged by.
+	 * @param sendHurtMessage whether or not to send a hurt message
+	 */
+	public void damage(int amount, boolean sendHurtMessage) {
 		getParent().setHealth(getParent().getHealth() - amount, new HealthChangeReason(HealthChangeReason.Type.UNKNOWN));
+		if (sendHurtMessage) {
+			this.broadcastPacket(new EntityAnimationMessage(this.getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(this.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
+		}
 	}
 
 	/**

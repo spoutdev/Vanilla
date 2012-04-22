@@ -83,7 +83,7 @@ public class SugarCaneDecorator implements BiomeDecorator {
 			if (world.getBlockMaterial(x, y, z) != VanillaMaterials.AIR) {
 				return;
 			}
-			world.setBlockMaterial(x, y, z, VanillaMaterials.SUGAR_CANE_BLOCK, (short) 0, false, world);
+			world.getBlock(x, y, z).setMaterial(VanillaMaterials.SUGAR_CANE_BLOCK);
 		}
 	}
 

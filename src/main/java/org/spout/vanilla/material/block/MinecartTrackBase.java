@@ -28,10 +28,11 @@ package org.spout.vanilla.material.block;
 import org.spout.api.Source;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionStrategy;
-import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.block.data.Rails;
 import org.spout.vanilla.util.MinecartTrackLogic;
 
 public abstract class MinecartTrackBase extends GroundAttachable {
@@ -45,19 +46,22 @@ public abstract class MinecartTrackBase extends GroundAttachable {
 
 	public abstract boolean canCurve();
 
-	public void doTrackLogic(World world, int x, int y, int z) {
-		MinecartTrackLogic logic = MinecartTrackLogic.create(world, x, y, z);
+	public void doTrackLogic(Block block) {
+		MinecartTrackLogic logic = MinecartTrackLogic.create(block);
 		if (logic != null) {
 			logic.refresh();
 		}
 	}
+	
+	@Override
+	public Rails createData(short data) {
+		return new Rails(data);
+	}
 
 	@Override
-	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
-		System.out.println("PLACE");
-		if (super.onPlacement(world, x, y, z, data, against, source)) {
-			System.out.println("LOGIC");
-			this.doTrackLogic(world, x, y, z);
+	public boolean onPlacement(Block block, short data, BlockFace against, Source source) {
+		if (super.onPlacement(block, data, against, source)) {
+			this.doTrackLogic(block);
 			return true;
 		} else {
 			return false;

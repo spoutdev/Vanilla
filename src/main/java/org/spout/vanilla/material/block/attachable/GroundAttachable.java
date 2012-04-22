@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.material.block.attachable;
 
-import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
@@ -37,7 +37,7 @@ public class GroundAttachable extends AbstractAttachable {
 	public GroundAttachable(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
 	}
-
+	
 	@Override
 	public short getDataForFace(BlockFace face) {
 		return (short) 0;
@@ -49,7 +49,7 @@ public class GroundAttachable extends AbstractAttachable {
 	}
 
 	@Override
-	public boolean canAttachTo(World world, int x, int y, int z, BlockFace face) {
-		return face == BlockFace.BOTTOM && super.canAttachTo(world, x, y, z, face);
+	public boolean canAttachTo(Block block, BlockFace face) {
+		return face == BlockFace.BOTTOM && super.canAttachTo(block, face);
 	}
 }

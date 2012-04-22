@@ -25,8 +25,8 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.Source;
-import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -38,14 +38,14 @@ public class Ice extends Solid {
 	}
 
 	@Override
-	public void onDestroy(World world, int x, int y, int z) {
+	public void onDestroy(Block block) {
 		/*
 		 * Only let ice break into water if the world isn't a nether generated world
 		 * or there isn't air under the material.
 		 */
-		if (!(world.getGenerator() instanceof NetherGenerator) || world.getBlockMaterial(x, y - 1, z) != VanillaMaterials.AIR) {
+		if (!(block.getWorld().getGenerator() instanceof NetherGenerator) || block.translate(BlockFace.BOTTOM).getMaterial() != VanillaMaterials.AIR) {
 			//TODO Setting the source to world correct?
-			world.setBlockMaterial(x, y, z, VanillaMaterials.STATIONARY_WATER, (short) 0, true, world);
+			block.setMaterial(VanillaMaterials.STATIONARY_WATER).update(true);
 		}
 	}
 }

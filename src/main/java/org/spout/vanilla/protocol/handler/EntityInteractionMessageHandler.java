@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -35,10 +36,9 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.material.item.generic.Weapon;
-import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
+import org.spout.vanilla.material.VanillaMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
-import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 
 public class EntityInteractionMessageHandler extends MessageHandler<EntityInteractionMessage> {
 	@Override
@@ -48,32 +48,32 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 			return;
 		}
 
+		ItemStack holding = player.getEntity().getInventory().getCurrentItem();
+		Material holdingMat = holding == null ? VanillaMaterials.AIR : holding.getMaterial();
+		if (holdingMat == null) {
+			holdingMat = VanillaMaterials.AIR;
+		}
 		if (message.isPunching()) {
+			holdingMat.onInteract(player.getEntity(), clickedEntity, Action.LEFT_CLICK);
+			
 			if (clickedEntity.getController() instanceof VanillaPlayer && !VanillaConfiguration.PLAYER_PVP_ENABLED.getBoolean()) {
 				return;
 			}
 
 			if (clickedEntity.getController() instanceof VanillaActionController) {
-				ItemStack is = player.getEntity().getInventory().getCurrentItem();
-
 				int damage = 1;
-				if (is != null && is.getMaterial() != null && is.getMaterial() instanceof Weapon) {
-					damage = ((Weapon) is.getMaterial()).getDamage();
+				if (holding != null && holdingMat != null && holdingMat instanceof VanillaMaterial) {
+					damage = ((VanillaMaterial) holdingMat).getDamage();
 				}
-
-				VanillaActionController temp = (VanillaActionController) clickedEntity.getController();
-				if (!temp.getParent().isDead()) {
-					temp.damage(damage);
-					temp.broadcastPacket(new EntityAnimationMessage(temp.getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(temp.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
+				if (damage != 0) {
+					VanillaActionController temp = (VanillaActionController) clickedEntity.getController();
+					if (!temp.getParent().isDead()) {
+						temp.damage(damage, damage > 0);
+					}
 				}
 			}
 		} else {
-			ItemStack holding = player.getEntity().getInventory().getCurrentItem();
-			if (holding == null) {
-				return;
-			}
-
-			holding.getMaterial().onInteract(player.getEntity(), clickedEntity, Action.RIGHT_CLICK);
+			holdingMat.onInteract(player.getEntity(), clickedEntity, Action.RIGHT_CLICK);
 		}
 	}
 }

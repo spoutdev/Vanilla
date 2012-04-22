@@ -26,7 +26,7 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.Source;
-import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
@@ -59,9 +59,9 @@ public class DeadBush extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
-		if (super.canPlace(world, x, y, z, data, against, source)) {
-			return world.getBlock(x, y - 1, z).move(against.getOpposite()).getMaterial() == VanillaMaterials.SAND;
+	public boolean canPlace(Block block, short data, BlockFace against, Source source) {
+		if (super.canPlace(block, data, against, source)) {
+			return block.translate(BlockFace.BOTTOM).translate(against.getOpposite()).getMaterial() == VanillaMaterials.SAND;
 		} else {
 			return false;
 		}

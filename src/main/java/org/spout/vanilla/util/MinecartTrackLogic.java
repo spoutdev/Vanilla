@@ -31,6 +31,7 @@ import java.util.List;
 
 import org.spout.api.Source;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -54,19 +55,23 @@ public class MinecartTrackLogic implements Source {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.isPowered = ((VanillaBlockMaterial) data.getMaterial()).getIndirectRedstonePower(world, x, y, z) > 0;
+		this.isPowered = ((VanillaBlockMaterial) data.getMaterial()).getIndirectRedstonePower(world.getBlock(x, y, z)) > 0;
 		this.data = data;
 		this.direction = BlockFace.THIS;
 	}
 
-	public static MinecartTrackLogic create(World world, int x, int y, int z) {
-		BlockMaterial mat = world.getBlockMaterial(x, y, z);
+	public static MinecartTrackLogic create(Block block) {
+		BlockMaterial mat = block.getMaterial();
 		if (mat instanceof MinecartTrack) {
-			Rails rails = ((MinecartTrack) mat).createData(world.getBlockData(x, y, z));
-			return new MinecartTrackLogic(world, x, y, z, rails);
+			Rails rails = ((MinecartTrack) mat).createData(block.getData());
+			return new MinecartTrackLogic(block.getWorld(), block.getX(), block.getY(), block.getZ(), rails);
 		} else {
 			return null;
 		}
+	}
+	
+	public static MinecartTrackLogic create(World world, int x, int y, int z) {
+		return create(world.getBlock(x, y, z));
 	}
 
 	/**
@@ -279,7 +284,7 @@ public class MinecartTrackLogic implements Source {
 
 	private void refreshData() {
 		if (this.changed) {
-			this.world.setBlockData(this.x, this.y, this.z, this.data.getData(), true, this);
+			this.world.getBlock(this.x, this.y, this.z).setData(data).update(true);
 		}
 		for (MinecartTrackLogic logic : this.neighbours) {
 			logic.refreshData();

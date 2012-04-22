@@ -87,7 +87,7 @@ public class OreDecorator implements BiomeDecorator {
 								double sizeZ = (z + 0.5 - seedZ) / size;
 								sizeZ *= sizeZ;
 								if (sizeX + sizeY + sizeZ < 1 && world.getBlockMaterial(x, y, z) == VanillaMaterials.STONE) {
-									world.setBlockMaterial(x, y, z, type, (short) 0, true, world);
+									world.getBlock(x, y, z).setMaterial(type).update(true);
 								}
 							}
 						}

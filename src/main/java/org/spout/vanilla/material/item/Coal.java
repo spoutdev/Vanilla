@@ -25,9 +25,10 @@
  */
 package org.spout.vanilla.material.item;
 
+import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
-public class Coal extends VanillaItemMaterial {
+public class Coal extends VanillaItemMaterial implements FurnaceFuel {
 	public static final Coal COAL = register(new Coal("Coal"));
 	public static final Coal CHARCOAL = register(new Coal("Charcoal", 1, COAL));
 
@@ -42,5 +43,10 @@ public class Coal extends VanillaItemMaterial {
 	@Override
 	public Coal getParentMaterial() {
 		return (Coal) super.getParentMaterial();
+	}
+
+	@Override
+	public int getFuelTicks() {
+		return 1600;
 	}
 }

@@ -61,16 +61,16 @@ public class DungeonDecorator implements BiomeDecorator {
 						if (y == cy || y == cy + HEIGHT - 1) {
 							material = random.nextBoolean() ? VanillaMaterials.COBBLESTONE : VanillaMaterials.MOSS_STONE;
 						}
-						chunk.getWorld().setBlockMaterial(x, y, z, material, (short) 0, true, chunk.getWorld());
+						chunk.getBlock(x, y, z).setMaterial(material).update(true);
 					}
 				}
 			}
 
-			chunk.getWorld().setBlockMaterial(cx + width / 2, cy + 1, cz + height / 2, VanillaMaterials.MONSTER_SPAWNER, (short) 0, true, chunk.getWorld());
-
-			chunk.getWorld().setBlockMaterial(cx + 1, cy + 1, cz + height / 2, VanillaMaterials.CHEST, (short) 0, true, chunk.getWorld());
-
-			chunk.getWorld().setBlockMaterial(cx + width / 2, cy + 1, cz + 1, VanillaMaterials.CHEST, (short) 0, true, chunk.getWorld());
+			chunk.getBlock(cx + width / 2, cy + 1, cz + height / 2).setMaterial(VanillaMaterials.MONSTER_SPAWNER).update(true);
+			
+			chunk.getBlock(cx + 1, cy + 1, cz + height / 2).setMaterial(VanillaMaterials.CHEST).update(true); 
+			
+			chunk.getBlock(cx + width / 2, cy + 1, cz + 1).setMaterial(VanillaMaterials.CHEST).update(true); 
 
 			//TODO Fill Chests with stuff, kinda waiting for inventories in worlds.
 		}

@@ -23,13 +23,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.specific;
+package org.spout.vanilla.material.block;
 
 import org.spout.vanilla.material.block.Solid;
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Solid;
 
 public class LilyPad extends Solid {
 	public LilyPad(String name, int id) {

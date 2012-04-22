@@ -23,7 +23,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.specific;
+package org.spout.vanilla.material.block;
 
 import org.spout.vanilla.material.block.Solid;
 import java.util.Random;
@@ -32,6 +32,8 @@ import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.Solid;
 
 public class WheatCrop extends Solid implements Plant {
 	private Random rand = new Random();

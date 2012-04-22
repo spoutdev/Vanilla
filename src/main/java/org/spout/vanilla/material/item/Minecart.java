@@ -23,7 +23,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.specific;
+package org.spout.vanilla.material.item;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
@@ -35,7 +35,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
-import org.spout.vanilla.material.block.specific.MinecartTrack;
+import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.generic.GenericItem;
 
 public class Minecart extends GenericItem {

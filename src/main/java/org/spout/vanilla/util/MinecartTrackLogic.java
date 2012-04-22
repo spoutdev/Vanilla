@@ -32,7 +32,7 @@ import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.vanilla.material.block.specific.MinecartTrack;
+import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.block.data.Rails;
 import org.spout.vanilla.material.generic.GenericBlock;
 

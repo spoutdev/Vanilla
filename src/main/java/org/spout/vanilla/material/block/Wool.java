@@ -23,13 +23,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.specific;
+package org.spout.vanilla.material.block;
 
 import org.spout.vanilla.material.block.Solid;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.spout.api.material.source.DataSource;
+import org.spout.vanilla.material.block.Solid;
 
 public class Wool extends Solid {
 	public static final Wool WHITE = register(new Wool("White Wool"));

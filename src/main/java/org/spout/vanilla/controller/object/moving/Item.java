@@ -26,6 +26,7 @@
 package org.spout.vanilla.controller.object.moving;
 
 import java.util.Set;
+import org.spout.api.Spout;
 
 import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
@@ -70,10 +71,10 @@ public class Item extends Substance {
 		
 		super.onTick(dt);
 		World world = getParent().getWorld();
-		Set<Player> players = world.getPlayers();
 		double minDistance = -1;
 		Player closestPlayer = null;
-		for (Player plr : players) {
+		for (Player plr : Spout.getEngine().getOnlinePlayers()) {
+			if(!plr.getEntity().getWorld().getName().equals(world.getName())) continue;
 			double distance = plr.getEntity().getPosition().getSquaredDistance(getParent().getPosition());
 			if (distance < minDistance || minDistance == -1) {
 				closestPlayer = plr;
@@ -92,8 +93,9 @@ public class Item extends Substance {
 
 		int collected = getParent().getId(), collector = closestPlayer.getEntity().getId();
 
-		for (Player player : players) {
-			sendPacket(player, new CollectItemMessage(collected, collector));
+		for (Player plr : Spout.getEngine().getOnlinePlayers()) {
+			if(!plr.getEntity().getWorld().getName().equals(world.getName())) continue;
+			sendPacket(plr, new CollectItemMessage(collected, collector));
 		}
 
 		closestPlayer.getEntity().getInventory().addItem(is, false);

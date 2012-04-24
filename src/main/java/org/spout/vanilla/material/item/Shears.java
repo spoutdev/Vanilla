@@ -39,8 +39,8 @@ import org.spout.vanilla.material.item.generic.Tool;
 public class Shears extends Tool {
 	private Random rand = new Random();
 
-	public Shears(String name, int id, short durability) {
-		super(name, id, durability);
+	public Shears() {
+		super("Shears", 359, (short) 238);
 	}
 
 	@Override

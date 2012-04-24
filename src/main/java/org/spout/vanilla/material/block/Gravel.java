@@ -35,8 +35,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 public class Gravel extends Solid {
 	private Random rand = new Random();
 
-	public Gravel(String name) {
-		super(name, 13, true);
+	public Gravel() {
+		super("Gravel", 13, true);
 	}
 
 	@Override

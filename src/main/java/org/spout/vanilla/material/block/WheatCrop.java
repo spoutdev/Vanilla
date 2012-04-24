@@ -36,8 +36,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 public class WheatCrop extends Solid implements Plant {
 	private Random rand = new Random();
 
-	public WheatCrop(String name) {
-		super(name, 59);
+	public WheatCrop() {
+		super("Wheat Crop", 59);
 	}
 
 	@Override

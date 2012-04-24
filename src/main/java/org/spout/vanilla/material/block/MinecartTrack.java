@@ -30,8 +30,8 @@ import org.spout.vanilla.material.block.data.Rails;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 
 public class MinecartTrack extends MinecartTrackBase implements RedstoneTarget {
-	public MinecartTrack(String name, int id) {
-		super(name, id);
+	public MinecartTrack() {
+		super("Rails", 66);
 	}
 
 	@Override

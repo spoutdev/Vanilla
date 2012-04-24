@@ -42,8 +42,8 @@ import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 public class SugarCane extends VanillaBlockMaterial {
 	private final Set<Material> validBases = new HashSet<Material>(4);
 
-	public SugarCane(String name, int id) {
-		super(name, id);
+	public SugarCane() {
+		super("Sugar Cane", 83);
 		
 		validBases.add(VanillaMaterials.DIRT);
 		validBases.add(VanillaMaterials.GRASS);

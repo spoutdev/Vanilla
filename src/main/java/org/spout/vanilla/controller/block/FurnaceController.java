@@ -40,5 +40,6 @@ public class FurnaceController extends VanillaBlockController {
 
 	@Override
 	public void onAttached() {
+		System.out.println("Furnace entity spawned and controller attached to: " + getParent().getPosition().toString());
 	}
 }

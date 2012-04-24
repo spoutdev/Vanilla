@@ -32,8 +32,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 
 public class Snow extends Solid {
 
-	public Snow(String name) {
-		super(name, 78);
+	public Snow() {
+		super("Snow", 78);
 		this.setOpacity((byte)0); 
 	}
 	

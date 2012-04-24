@@ -28,8 +28,8 @@ package org.spout.vanilla.material.item;
 import org.spout.api.entity.Controller;
 
 public class PoweredMinecart extends Minecart {
-	public PoweredMinecart(String name, int id) {
-		super(name, id);
+	public PoweredMinecart() {
+		super("Minecart with Furnace", 343);
 	}
 
 	@Override

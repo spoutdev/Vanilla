@@ -40,8 +40,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 public class NetherWart extends Solid implements Plant {
 	private GrowthStage stage = GrowthStage.SEEDLING;
 
-	public NetherWart(String name, int id) {
-		super(name, id);
+	public NetherWart() {
+		super("Nether Wart", 115);
 	}
 
 	@Override

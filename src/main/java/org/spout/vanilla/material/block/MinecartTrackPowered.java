@@ -30,8 +30,8 @@ import org.spout.vanilla.material.block.data.PoweredRails;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 
 public class MinecartTrackPowered extends MinecartTrackBase implements RedstoneTarget {
-	public MinecartTrackPowered(String name, int id) {
-		super(name, id);
+	public MinecartTrackPowered() {
+		super("Powered Rail", 27);
 	}
 
 	@Override

@@ -38,8 +38,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 
 public class Cactus extends Solid {
-	public Cactus(String name, int id) {
-		super(name, id);
+	public Cactus() {
+		super("Cactus", 81);
 	}
 
 	@Override

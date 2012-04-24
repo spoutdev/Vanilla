@@ -30,8 +30,8 @@ import org.spout.vanilla.material.block.data.DetectorRails;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 
 public class MinecartTrackDetector extends MinecartTrackBase implements RedstoneSource {
-	public MinecartTrackDetector(String name, int id) {
-		super(name, id);
+	public MinecartTrackDetector() {
+		super("Detector Rail", 28);
 	}
 
 	@Override

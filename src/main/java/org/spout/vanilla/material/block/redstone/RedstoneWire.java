@@ -41,8 +41,8 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	private final Vector3[] possibleOutgoing = {new Vector3(1, 0, 0), new Vector3(0, 0, 1), new Vector3(-1, 0, 0), new Vector3(0, 0, -1), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1), new Vector3(1, -1, 0), new Vector3(0, -1, 1), new Vector3(-1, -1, 0), new Vector3(0, -1, -1),};
 	private final Vector3[] possibleOutgoingTorch = {new Vector3(2, 0, 0), new Vector3(0, 0, 2), new Vector3(-2, 0, 0), new Vector3(0, 0, -2), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1),};
 
-	public RedstoneWire(String name, int id) {
-		super(name, id);
+	public RedstoneWire() {
+		super("Redstone Wire", 55);
 	}
 
 	@Override

@@ -32,8 +32,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class LilyPad extends Solid {
-	public LilyPad(String name, int id) {
-		super(name, id);
+	public LilyPad() {
+		super("Lily Pad", 111);
 	}
 
 	@Override

@@ -33,8 +33,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 
 public class TNT extends Solid {
 
-	public TNT(String name, int id) {
-		super(name, id);
+	public TNT() {
+		super("TnT", 46);
 	}
 	
 	@Override

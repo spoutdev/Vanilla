@@ -32,8 +32,8 @@ import org.spout.api.geo.World;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Ice extends Solid implements Source {
-	public Ice(String name, int id) {
-		super(name, id);
+	public Ice() {
+		super("Ice", 79);
 	}
 
 	@Override

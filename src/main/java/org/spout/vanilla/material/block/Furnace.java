@@ -23,12 +23,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
+import org.spout.api.Source;
+import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.controller.block.FurnaceController;
+import org.spout.vanilla.material.block.generic.Solid;
 
-public class RedstoneDust extends VanillaItemMaterial {
-	public RedstoneDust(String name, int id) {
-		super(name, id);
+public class Furnace extends Solid {
+
+	public Furnace() {
+		super("Furnace", 61);
+	}
+
+	@Override
+	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
+		if (super.onPlacement(world, x, y, z, data, against, source)) {
+			world.createAndSpawnEntity(new Point(world, x, y, z), new FurnaceController());
+			return true;
+		}
+
+		return false;
 	}
 }

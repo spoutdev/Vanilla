@@ -29,8 +29,8 @@ import org.spout.vanilla.material.block.generic.Plant;
 import org.spout.vanilla.material.block.generic.Solid;
 
 public class Grass extends Solid implements Plant {
-	public Grass(String name) {
-		super(name, 2);
+	public Grass() {
+		super("Grass", 2);
 	}
 
 	@Override

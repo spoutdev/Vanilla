@@ -49,7 +49,6 @@ import org.spout.nbt.Tag;
 import org.spout.nbt.stream.NBTInputStream;
 import org.spout.nbt.stream.NBTOutputStream;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
 public final class ChannelBufferUtils {

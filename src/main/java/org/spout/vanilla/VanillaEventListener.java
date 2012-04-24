@@ -27,7 +27,6 @@ package org.spout.vanilla;
 
 import org.spout.api.Source;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
-import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.GameMode;

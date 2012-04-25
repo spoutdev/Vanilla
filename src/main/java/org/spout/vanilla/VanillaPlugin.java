@@ -61,6 +61,9 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 
+/**
+ * Vanilla - The Minecraft implementation for Spout.
+ */
 public class VanillaPlugin extends CommonPlugin {
 	public static final int MINECRAFT_PROTOCOL_ID = 29;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
@@ -90,7 +93,6 @@ public class VanillaPlugin extends CommonPlugin {
 			}
 
 			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
-			((Server) game).bind(new InetSocketAddress(split[0], port + 1), new CommonBootstrapProtocol(new VanillaProtocol()));
 		}
 		//TODO if (game instanceof Client) do stuff?
 

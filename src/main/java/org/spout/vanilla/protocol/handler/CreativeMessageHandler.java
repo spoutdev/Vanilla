@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.player.Player;
@@ -45,11 +46,18 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 			player.kick("Now now, don't try that here. Won't work.");
 			return;
 		}
+
+		Inventory inventory = controller.getActiveInventory();
+		if (inventory == null) {
+			inventory = player.getEntity().getInventory();
+		}
+
 		int slot = message.getSlot();
-		slot = VanillaMessageHandlerUtils.networkInventorySlotToSpout(slot);
+		slot = VanillaMessageHandlerUtils.getSpoutInventorySlot(inventory, slot);
 		if (slot < 0 || slot >= player.getEntity().getInventorySize()) {
 			return;
 		}
+
 		ItemStack newItem;
 		if (checkValidId(message.getId(), message.getDamage())) {
 			if(message.getDamage()!=0)
@@ -60,6 +68,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 			player.kick("Unknown item ID: " + message.getId() + " and durability " + message.getDamage() + "!");
 			return;
 		}
+
 		player.getEntity().getInventory().setItem(newItem, slot);
 		/*
 		 * if (currentItem != null) { player.setItemOnCursor(currentItem); } else {
@@ -73,9 +82,11 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 		if (mat == null) {
 			return false;
 		}
+
 		if (data == 0) {
 			return mat != null;
 		}
+
 		return mat.getSubMaterial(data) != null;
 	}
 }

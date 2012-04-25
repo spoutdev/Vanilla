@@ -426,7 +426,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public void onSlotSet(Inventory inventory, int slot) {
 		ItemStack item = inventory.getItem(slot);
 		Message message;
-		final int networkSlot = VanillaMessageHandlerUtils.spoutInventorySlotToNetwork(slot);
+		final int networkSlot = VanillaMessageHandlerUtils.getNetworkInventorySlot(inventory, slot);
 		if (item == null) {
 			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot);
 		} else {
@@ -438,7 +438,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
 		Message message;
-		final int networkSlot = VanillaMessageHandlerUtils.spoutInventorySlotToNetwork(slot);
+		final int networkSlot = VanillaMessageHandlerUtils.getNetworkInventorySlot(inventory, slot);
 		if (item == null) {
 			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot);
 		} else {
@@ -451,7 +451,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public void updateAll(Inventory inventory, ItemStack[] slots) {
 		ItemStack[] newSlots = new ItemStack[slots.length];
 		for (int i = 0; i < slots.length; ++i) {
-			newSlots[VanillaMessageHandlerUtils.spoutInventorySlotToNetwork(i)] = slots[i];
+			newSlots[VanillaMessageHandlerUtils.getNetworkInventorySlot(inventory, i)] = slots[i];
 		}
 		session.send(new SetWindowSlotsMessage(getInventoryId(inventory.getClass()), newSlots));
 		queuedInventoryUpdates.clear();

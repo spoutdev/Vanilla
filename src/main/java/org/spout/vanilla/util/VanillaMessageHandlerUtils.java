@@ -30,6 +30,8 @@ import gnu.trove.map.hash.TObjectIntHashMap;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.inventory.FurnaceInventory;
+import org.spout.vanilla.material.block.Fire;
 
 public class VanillaMessageHandlerUtils {
 	
@@ -57,31 +59,57 @@ public class VanillaMessageHandlerUtils {
 				return BlockFace.THIS;
 		}
 	}
-
-	private final static int PLAYER_SLOT_CONVERSION[] = {36, 37, 38, 39, 40, 41, 42, 43, 44, // quickbar
-			9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 5, 6, 7, 8, /* armor */ 4, 3, 2, 1, 0 // crafting
+	
+	private static final int PLAYER_INVENTORY_SLOTS[] = {
+			36, 37, 38, 39, 40, 41, 42, 43, 44,
+			27, 28, 29, 30, 31, 32, 33, 34, 35,
+			18, 19, 20, 21, 22, 23, 24, 25, 26,
+			 9, 10, 11, 12, 13, 14, 15, 16, 17,
+			 8,  7,  3,  4,  0,  6,  1,  2,  5
 	};
+	
+	private static final int FURNACE_INVENTORY_SLOTS[] = {
+			30, 31, 32, 33, 34, 35, 36, 37, 38,
+			21, 22, 23, 24, 25, 26, 27, 28, 29,
+			12, 13, 14, 15, 16, 17, 18, 19, 20,
+			 3,  4,  5,  6,  7,  8,  9, 10, 11,
+			 1,  2,  0
 
-	/**
-	 * Converts a spout inventory slot to a network one!
-	 * @param slot The spout slot id.
-	 * @return The network id for that slot.
-	 */
-	public static int spoutInventorySlotToNetwork(int slot) {
-		return PLAYER_SLOT_CONVERSION[slot];
-	}
-
-	/**
-	 * Converts a network inventory slot to a spout one!
-	 * @param slot The network slot id.
-	 * @return The spout slot id.
-	 */
-	public static int networkInventorySlotToSpout(int slot) {
-		for (int i = 0; i < PLAYER_SLOT_CONVERSION.length; ++i) {
-			if (PLAYER_SLOT_CONVERSION[i] == slot) {
-				return i;
+	};
+	
+	public static int getSpoutInventorySlot(Inventory inventory, int slot) {
+		if (inventory instanceof PlayerInventory) {
+			for (int a = 0; a < PLAYER_INVENTORY_SLOTS.length; a++) {
+				if (slot == PLAYER_INVENTORY_SLOTS[a]) {
+					return a;
+				}
 			}
 		}
+		
+		if (inventory instanceof FurnaceInventory) {
+			for (int b = -1; b < FURNACE_INVENTORY_SLOTS.length; b++) {
+				if (b == -1) {
+					continue;
+				}
+
+				if (slot == FURNACE_INVENTORY_SLOTS[b]) {
+					return b;
+				}
+			}
+		}
+
+		return -1;
+	}
+	
+	public static int getNetworkInventorySlot(Inventory inventory, int slot) {
+		if (inventory instanceof PlayerInventory) {
+			return PLAYER_INVENTORY_SLOTS[slot];
+		}
+
+		if (inventory instanceof FurnaceInventory) {
+			return FURNACE_INVENTORY_SLOTS[slot];
+		}
+
 		return -1;
 	}
 
@@ -89,6 +117,7 @@ public class VanillaMessageHandlerUtils {
 
 	static {
 		INVENTORY_MAPPING.put(PlayerInventory.class, 0);
+		INVENTORY_MAPPING.put(FurnaceInventory.class, 1);
 	}
 
 	/**

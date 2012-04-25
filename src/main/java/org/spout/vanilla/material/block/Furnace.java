@@ -26,14 +26,22 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.Source;
+import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.PlayerController;
+import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.player.Player;
 import org.spout.vanilla.controller.block.FurnaceController;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 
 public class Furnace extends Solid {
-
 	public Furnace() {
 		super("Furnace", 61);
 	}
@@ -46,5 +54,17 @@ public class Furnace extends Solid {
 		}
 
 		return false;
+	}
+
+	@Override
+	public void onInteract(Entity entity, Point pos, PlayerInteractEvent.Action action, BlockFace face) {
+		Controller controller = entity.getController();
+		if (!(controller instanceof VanillaPlayer)) {
+			return;
+		}
+
+		VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
+		vanillaPlayer.sendPacket(vanillaPlayer.getPlayer(), new OpenWindowMessage(1, 2, "Furnace", 38));
+		vanillaPlayer.setActiveInventory(new FurnaceInventory());
 	}
 }

@@ -93,6 +93,11 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		int x = offsetPos.getBlockX();
 		int y = offsetPos.getBlockY();
 		int z = offsetPos.getBlockZ();
+		
+		Block block = world.getBlock(pos);
+		if (!cancelled) {
+			block.getMaterial().onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
+		}
 
 		// If placement is accepted
 		if (holding != null && !cancelled) {

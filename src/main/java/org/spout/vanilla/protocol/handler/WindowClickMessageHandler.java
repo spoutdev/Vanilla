@@ -41,12 +41,14 @@ import org.spout.vanilla.protocol.msg.WindowClickMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
-
+	private Session session;
+	private WindowClickMessage message;
+	
 	@Override
 	public void handleServer(Session session, Player player, WindowClickMessage message) {
-		if (player == null || player.getEntity() == null) {
-			return;
-		}
+
+		this.session = session;
+		this.message = message;
 
 		Entity entity = player.getEntity();
 		VanillaPlayer vplayer = (VanillaPlayer) entity.getController();
@@ -58,11 +60,12 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		if (message.getSlot() == 64537) {
 			vplayer.setItemOnCursor(null);
 			//TODO drop
-			response(session, message, true);
+			respond(true);
 			return;
 		}
 
-		int clickedSlot = VanillaMessageHandlerUtils.networkInventorySlotToSpout(message.getSlot());
+		int clickedSlot = VanillaMessageHandlerUtils.getSpoutInventorySlot(inventory, message.getSlot());
+		System.out.println("Clicked: " + clickedSlot);
 		String errorMsg = "";
 		Object errorParams = null;
 		if (clickedSlot < 0) {
@@ -75,7 +78,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 
 		if (!errorMsg.equals("")) {
 			session.getGame().getLogger().log(Level.WARNING, errorMsg, errorParams);
-			response(session, message, false);
+			respond(false);
 			return;
 		}
 
@@ -86,6 +89,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		boolean neitherIsEmpty = !emptySlot && !emptyCursor;
 		boolean leftClick = !message.isRightClick();
 
+		// Determine action
 		if (emptyCursor && emptySlot) {
 			// Do Nothing!
 		} else if (message.isShift()) {
@@ -113,24 +117,29 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 				}
 				amountToMove = 1;
 			}
-			moveItemFromTo(cursorStack, slotStack, amountToMove, true);
+
+			mergeStack(cursorStack, slotStack, amountToMove, true);
+		}
+		
+		if (emptyCursor && !emptySlot && leftClick) {
+			slotStack = null;
 		}
 
 		cursorStack = nullIfEmpty(cursorStack);
 		slotStack = nullIfEmpty(slotStack);
 		vplayer.setItemOnCursor(cursorStack);
 		inventory.setItem(slotStack, clickedSlot);
-		response(session, message, true);
+		respond(true);
 	}
 
 	private ItemStack splitStack(ItemStack stack) {
 		ItemStack newStack = stack.clone();
 		newStack.setAmount(0);
-		moveItemFromTo(stack, newStack, (stack.getAmount() + 1) / 2, true);
+		mergeStack(stack, newStack, (stack.getAmount() + 1) / 2, true);
 		return newStack;
 	}
 
-	private int moveItemFromTo(ItemStack from, ItemStack to, int count, boolean tryToFill) {
+	private int mergeStack(ItemStack from, ItemStack to, int count, boolean tryToFill) {
 		if (from == null || to == null) {
 			return 0;
 		}
@@ -171,8 +180,10 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			if (inv.isHiddenSlot(i)) {
 				hiddenSlots.add(i);
 			}
+
 			inv.setHiddenSlot(i, true);
 		}
+
 		inv.addItem(theStack, false);
 		for (int i = startSlot; i <= stopSlot; i++) {
 			if (!(hiddenSlots.contains(i))) {
@@ -181,7 +192,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		}
 	}
 
-	private void response(Session session, WindowClickMessage message, boolean success) {
+	private void respond(boolean success) {
 		session.send(new TransactionMessage(message.getWindowId(), message.getTransaction(), success));
 	}
 }

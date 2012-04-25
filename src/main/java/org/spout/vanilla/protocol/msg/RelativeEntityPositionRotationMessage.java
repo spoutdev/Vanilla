@@ -34,7 +34,7 @@ public final class RelativeEntityPositionRotationMessage extends Message {
 	public RelativeEntityPositionRotationMessage(int id, Vector3 deltaPosition, int rotation, int pitch) {
 		this(id, (int) deltaPosition.getX(), (int) deltaPosition.getY(), (int) deltaPosition.getZ(), rotation, pitch);
 	}
-	
+
 	public RelativeEntityPositionRotationMessage(int id, int deltaX, int deltaY, int deltaZ, int rotation, int pitch) {
 		this.id = id;
 		this.deltaX = deltaX;

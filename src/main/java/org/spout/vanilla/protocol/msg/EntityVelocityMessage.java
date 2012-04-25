@@ -34,7 +34,7 @@ public final class EntityVelocityMessage extends Message {
 	public EntityVelocityMessage(int id, Vector3 velocity) {
 		this(id, (int) velocity.getX(), (int) velocity.getY(), (int) velocity.getZ());
 	}
-	
+
 	public EntityVelocityMessage(int id, int velocityX, int velocityY, int velocityZ) {
 		/*try {
 			throw new Exception("Created EntityVelocityMessage");

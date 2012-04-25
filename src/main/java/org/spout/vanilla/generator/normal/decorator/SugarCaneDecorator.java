@@ -31,18 +31,18 @@ import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * Decorator that decorates a biome with sugar canes.
  */
 public class SugarCaneDecorator implements BiomeDecorator {
-
 	/* How many times should we try to generate a sugar cane stack.
-	 * Seems a lot, but vanilla mc does 10 reed decorations per chunk.
-	 * Each decoration does 20 tries, so 200 tries total.
-	 * We should stick at 50 for now.
-	 */
+		 * Seems a lot, but vanilla mc does 10 reed decorations per chunk.
+		 * Each decoration does 20 tries, so 200 tries total.
+		 * We should stick at 50 for now.
+		 */
 	private static final short TRIES = 50;
 	// Height control
 	private static final byte BASE_HEIGHT = 2;

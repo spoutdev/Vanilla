@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.controller.object.vehicle;
 import org.spout.vanilla.protocol.controller.BasicVehicleEntityProtocol;
 
 public class PoweredMinecartEntityProtocol extends BasicVehicleEntityProtocol {
-
 	public PoweredMinecartEntityProtocol() {
 		super(11);
 	}

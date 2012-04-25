@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol;
 import org.spout.api.protocol.HandlerLookupService;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageHandler;
+
 import org.spout.vanilla.protocol.handler.AnimateEntityMessageHandler;
 import org.spout.vanilla.protocol.handler.BlockPlacementMessageHandler;
 import org.spout.vanilla.protocol.handler.ChangeItemMessageHandler;

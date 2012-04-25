@@ -35,6 +35,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
@@ -44,7 +45,7 @@ public class SugarCane extends VanillaBlockMaterial {
 
 	public SugarCane() {
 		super("Sugar Cane", 83);
-		
+
 		validBases.add(VanillaMaterials.DIRT);
 		validBases.add(VanillaMaterials.GRASS);
 		validBases.add(VanillaMaterials.SAND);

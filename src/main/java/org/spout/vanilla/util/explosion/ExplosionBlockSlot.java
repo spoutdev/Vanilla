@@ -30,6 +30,7 @@ import java.util.Random;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
@@ -41,19 +42,20 @@ public class ExplosionBlockSlot {
 	public ExplosionBlockSlot(final Vector3 offset) {
 		this.offset = offset;
 	}
+
 	public final Vector3 offset;
 	public boolean isSet = false; //whether the information has been loaded
 	public boolean destroy = false; //whether the block got destroyed
 	public BlockMaterial material = VanillaMaterials.AIR; //the mat loaded from the world
 	public float damageFactor;
 	public int realx, realy, realz;
-	
+
 	/**
 	 * Generates the material and initial damage factor for this block
-	 * @param world to use
-	 * @param x coordinate of the middle
-	 * @param y coordinate of the middle
-	 * @param z coordinate of the middle
+	 * @param world  to use
+	 * @param x      coordinate of the middle
+	 * @param y      coordinate of the middle
+	 * @param z      coordinate of the middle
 	 * @param random to use when generating the damage factor
 	 */
 	public void prepare(World world, int x, int y, int z, Random random) {

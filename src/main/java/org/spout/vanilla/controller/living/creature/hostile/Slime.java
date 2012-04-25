@@ -31,16 +31,16 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
+import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class Slime extends Creature implements Hostile {
 	private Entity parent;
-	
+
 	protected Slime(VanillaControllerType type) {
 		super(type);
 	}
@@ -77,7 +77,6 @@ public class Slime extends Creature implements Hostile {
 
 	/**
 	 * Gets the size of the slime between 0 and 4.
-	 *
 	 * @return slime's size.
 	 */
 	public byte getSize() {
@@ -86,7 +85,6 @@ public class Slime extends Creature implements Hostile {
 
 	/**
 	 * Sets the size of the slime. Must be between 0 and 4.
-	 *
 	 * @param size
 	 */
 	public void setSize(byte size) {

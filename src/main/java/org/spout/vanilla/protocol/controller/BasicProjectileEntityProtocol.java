@@ -34,7 +34,6 @@ import org.spout.vanilla.controller.object.Projectile;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 
 public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
-
 	public BasicProjectileEntityProtocol(int projectileSpawnID) {
 		super(projectileSpawnID);
 	}

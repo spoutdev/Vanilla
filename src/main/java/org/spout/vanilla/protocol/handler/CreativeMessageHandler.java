@@ -31,13 +31,12 @@ import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
-
 	@Override
 	public void handleServer(Session session, Player player, CreativeMessage message) {
 		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
@@ -60,10 +59,11 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 
 		ItemStack newItem;
 		if (checkValidId(message.getId(), message.getDamage())) {
-			if(message.getDamage()!=0)
-			newItem = new ItemStack(Material.get(message.getId()).getSubMaterial(message.getDamage()), message.getDamage(), message.getAmount());
-			else
-				newItem = new ItemStack(Material.get(message.getId()),message.getDamage(), message.getAmount());
+			if (message.getDamage() != 0) {
+				newItem = new ItemStack(Material.get(message.getId()).getSubMaterial(message.getDamage()), message.getDamage(), message.getAmount());
+			} else {
+				newItem = new ItemStack(Material.get(message.getId()), message.getDamage(), message.getAmount());
+			}
 		} else {
 			player.kick("Unknown item ID: " + message.getId() + " and durability " + message.getDamage() + "!");
 			return;

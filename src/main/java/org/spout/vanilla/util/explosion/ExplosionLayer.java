@@ -32,15 +32,16 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
 public class ExplosionLayer {
-
 	public ExplosionLayer(final ExplosionModelSpherical model) {
 		this.model = model;
 		this.index = 0;
-		this.slots = new ExplosionSlot[] {this.createSlot(0.0, 0.0, 0.0)};
+		this.slots = new ExplosionSlot[]{this.createSlot(0.0, 0.0, 0.0)};
 	}
+
 	public ExplosionLayer(ExplosionLayer previous) {
 		this(previous, 16);
 	}
+
 	public ExplosionLayer(ExplosionLayer previous, final int scale) {
 		this.model = previous.model;
 		this.index = previous.index + 1;
@@ -67,18 +68,19 @@ public class ExplosionLayer {
 		}
 		this.finish();
 	}
+
 	private final int index;
 	public ExplosionSlot[] slots;
 	private Map<Vector3, ExplosionSlot> tmpSlotMap = new HashMap<Vector3, ExplosionSlot>();
 	private final ExplosionModelSpherical model;
-	
+
 	/**
 	 * Transfers all slots previously added to the 'slots' array
 	 */
 	public void finish() {
 		this.slots = this.tmpSlotMap.values().toArray(new ExplosionSlot[0]);
 	}
-	
+
 	/**
 	 * Creates a new slot using a given direction
 	 * @param dx is the delta x motion

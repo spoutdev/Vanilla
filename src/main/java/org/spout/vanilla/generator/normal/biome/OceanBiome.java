@@ -33,9 +33,9 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
+import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.normal.decorator.BeachDecorator;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.generator.VanillaBiomeType;
 
 public class OceanBiome extends VanillaBiomeType {
 	private Perlin base = new Perlin();
@@ -82,7 +82,7 @@ public class OceanBiome extends VanillaBiomeType {
 			id = VanillaMaterials.SAND.getId();
 		} else if (dy + 7 >= top) {
 			id = VanillaMaterials.DIRT.getId();
-		} else if (dy > 0 ) {
+		} else if (dy > 0) {
 			id = VanillaMaterials.STONE.getId();
 		} else {
 			id = VanillaMaterials.BEDROCK.getId();

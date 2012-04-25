@@ -28,10 +28,12 @@ package org.spout.vanilla.util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.block.data.Rails;
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
@@ -45,9 +47,8 @@ public class MinecartTrackLogic implements Source {
 	public boolean changed = false;
 	public MinecartTrackLogic parent = null;
 	public List<MinecartTrackLogic> neighbours = new ArrayList<MinecartTrackLogic>();
+	private static BlockFace[] rose = new BlockFace[]{BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST};
 
-	private static BlockFace[] rose = new BlockFace[] {BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST};
-	
 	private MinecartTrackLogic(World world, int x, int y, int z, Rails data) {
 		this.world = world;
 		this.x = x;
@@ -67,7 +68,7 @@ public class MinecartTrackLogic implements Source {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Generates all neighbours around this rails
 	 * @param deep whether to perform a deep search
@@ -108,7 +109,7 @@ public class MinecartTrackLogic implements Source {
 			}
 		}
 	}
-	
+
 	/**
 	 * Tries to find a neighbour in the direction given.
 	 * Returns null if none was found
@@ -162,7 +163,7 @@ public class MinecartTrackLogic implements Source {
 	public String toString() {
 		return this.world.getName() + " " + this.x + "/" + this.y + "/" + this.z + " neighbours: " + this.neighbours.size();
 	}
-	
+
 	/**
 	 * Connects the two neighbouring rails using this piece of track
 	 * It is allowed to pass in null for the rails to connect to one rails, or to none
@@ -184,7 +185,7 @@ public class MinecartTrackLogic implements Source {
 			//connect the two rails, sloped if needed
 			if (rails1.y > this.y) {
 				this.setDirection(rails1.direction, true);
-			} else if (rails2.y > this.y){
+			} else if (rails2.y > this.y) {
 				this.setDirection(rails2.direction, true);
 			} else {
 				this.setDirection(rails1.direction, false);
@@ -195,14 +196,14 @@ public class MinecartTrackLogic implements Source {
 			this.setDirection(rails1.direction, rails1.y > this.y);
 		}
 	}
-	
+
 	/**
 	 * Connects this neighbour to it's parent automatically
 	 */
 	public void connect() {
 		this.connect(this.direction.getOpposite());
 	}
-	
+
 	/**
 	 * Tries to connect this rail to the given direction
 	 */
@@ -236,7 +237,7 @@ public class MinecartTrackLogic implements Source {
 		this.genNeighbours(true);
 
 		System.out.println("Refreshing: " + this.toString());
-		
+
 		if (this.neighbours.size() == 1) {
 			//align tracks straight to face this direction
 			MinecartTrackLogic to = this.neighbours.get(0);
@@ -259,7 +260,7 @@ public class MinecartTrackLogic implements Source {
 				//dirs[1] need to be swapped with dirs[0]
 				Collections.swap(this.neighbours, 1, 0);
 			}
-			
+
 			//this will ALWAYS be a curve leading to [1]
 			//pick [0] or [2]?
 			MinecartTrackLogic from = this.neighbours.get(1);

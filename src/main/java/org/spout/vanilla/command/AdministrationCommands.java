@@ -236,7 +236,7 @@ public class AdministrationCommands {
 			throw new CommandException("You must specify a world.");
 		}
 
-		VanillaSky sky = plugin.getSky(world);
+		VanillaSky sky = VanillaSky.getSky(world);
 		if (sky == null) {
 			throw new CommandException("The world '" + args.getString(2) + "' is not available.");
 		}
@@ -374,7 +374,7 @@ public class AdministrationCommands {
 			throw new CommandException("Weather must be a mode between 0 and 2, 'CLEAR', 'RAIN', 'SNOW', or 'THUNDERSTORM'");
 		}
 
-		VanillaSky sky = plugin.getSky(world);
+		VanillaSky sky = VanillaSky.getSky(world);
 		if (sky == null) {
 			throw new CommandException("The world '" + args.getString(1) + "' is not availible.");
 		}
@@ -412,7 +412,7 @@ public class AdministrationCommands {
 
 	@Command(aliases = "comeatmebro", desc = "Gets you kicked!", max = 1)
 	public void testKick(CommandContext args, CommandSource source) throws CommandException {
-		if(source instanceof Player) {
+		if (source instanceof Player) {
 			Player player = (Player) source;
 			player.kick("Bye!");
 		}

@@ -30,7 +30,6 @@ import org.spout.vanilla.generator.VanillaBiomes;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
 
 public class FlatGenerator extends VanillaGeneratorBase {
-
 	@Override
 	public void registerBiomes() {
 		setSelector(new NoiseSelector(0.9, 1.5, 5, 0.9, 1.5));

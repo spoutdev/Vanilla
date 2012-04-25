@@ -34,7 +34,7 @@ public final class RelativeEntityPositionMessage extends Message {
 	public RelativeEntityPositionMessage(int id, Vector3 deltaPosition) {
 		this(id, (int) deltaPosition.getX(), (int) deltaPosition.getY(), (int) deltaPosition.getZ());
 	}
-	
+
 	public RelativeEntityPositionMessage(int id, int deltaX, int deltaY, int deltaZ) {
 		this.id = id;
 		this.deltaX = deltaX;

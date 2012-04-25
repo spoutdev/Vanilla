@@ -30,11 +30,11 @@ import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
+import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Wool;
 
 public class Sheep extends Creature implements Passive {

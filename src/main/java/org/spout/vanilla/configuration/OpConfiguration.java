@@ -25,14 +25,13 @@
  */
 package org.spout.vanilla.configuration;
 
-import org.spout.api.exception.ConfigurationException;
-import org.spout.api.util.config.ConfigurationNode;
-import org.spout.api.util.config.yaml.YamlConfiguration;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import org.spout.api.exception.ConfigurationException;
+import org.spout.api.util.config.ConfigurationNode;
+import org.spout.api.util.config.yaml.YamlConfiguration;
 
 public class OpConfiguration extends YamlConfiguration {
 	private static final List<String> ops = Arrays.asList("Notch", "jeb", "ez");

@@ -28,12 +28,12 @@ package org.spout.vanilla.protocol.bootstrap;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.protocol.bootstrap.BootstrapProtocol;
+
 import org.spout.vanilla.protocol.VanillaProtocol;
 
 public class VanillaBootstrapProtocol extends BootstrapProtocol {
-	
 	private static final Protocol vanilla = new VanillaProtocol();
-	
+
 	public VanillaBootstrapProtocol() {
 		super("VanillaBootstrap", new VanillaBootstrapCodecLookupService(), new VanillaBootstrapHandlerLookupService());
 	}

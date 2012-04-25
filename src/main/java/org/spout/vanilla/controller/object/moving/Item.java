@@ -25,9 +25,7 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
-import java.util.Set;
 import org.spout.api.Spout;
-
 import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
@@ -35,8 +33,8 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
 /**
@@ -68,13 +66,15 @@ public class Item extends Substance {
 			super.onTick(dt);
 			return;
 		}
-		
+
 		super.onTick(dt);
 		World world = getParent().getWorld();
 		double minDistance = -1;
 		Player closestPlayer = null;
 		for (Player plr : Spout.getEngine().getOnlinePlayers()) {
-			if(!plr.getEntity().getWorld().getName().equals(world.getName())) continue;
+			if (!plr.getEntity().getWorld().getName().equals(world.getName())) {
+				continue;
+			}
 			double distance = plr.getEntity().getPosition().getSquaredDistance(getParent().getPosition());
 			if (distance < minDistance || minDistance == -1) {
 				closestPlayer = plr;
@@ -94,7 +94,9 @@ public class Item extends Substance {
 		int collected = getParent().getId(), collector = closestPlayer.getEntity().getId();
 
 		for (Player plr : Spout.getEngine().getOnlinePlayers()) {
-			if(!plr.getEntity().getWorld().getName().equals(world.getName())) continue;
+			if (!plr.getEntity().getWorld().getName().equals(world.getName())) {
+				continue;
+			}
 			sendPacket(plr, new CollectItemMessage(collected, collector));
 		}
 

@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
@@ -33,9 +32,10 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.material.block.generic.Solid;
 
 public class Cactus extends Solid {
 	public Cactus() {
@@ -88,12 +88,16 @@ public class Cactus extends Solid {
 
 	@Override
 	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
-		for(int i=-1;i<=1;i++)
-			for(int j=-1;j<=1;j++) {
-				if(i==0&&j==0) continue;
-				if(world.getBlockMaterial(x+i, y, z+j)!=VanillaMaterials.AIR)
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				if (i == 0 && j == 0) {
+					continue;
+				}
+				if (world.getBlockMaterial(x + i, y, z + j) != VanillaMaterials.AIR) {
 					return false;
+				}
 			}
+		}
 		return true;
 	}
 }

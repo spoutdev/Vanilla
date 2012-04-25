@@ -38,7 +38,7 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Giant extends Creature implements Hostile {
 	private Entity parent;
-	
+
 	public Giant() {
 		super(VanillaControllerTypes.GIANT);
 	}

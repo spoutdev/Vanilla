@@ -28,6 +28,7 @@ package org.spout.vanilla.material.item.generic;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
 import org.spout.api.material.BlockMaterial;
 
 public class Tool extends VanillaItemMaterial {

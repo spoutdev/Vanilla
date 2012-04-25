@@ -31,7 +31,6 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.normal.decorator.BeachDecorator;
 import org.spout.vanilla.generator.normal.decorator.CaveDecorator;
@@ -40,13 +39,14 @@ import org.spout.vanilla.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.generator.normal.decorator.GrassDecorator;
 import org.spout.vanilla.generator.normal.decorator.PondDecorator;
 import org.spout.vanilla.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class PlainBiome extends VanillaBiomeType {
 	private Perlin base = new Perlin();
 	private Turbulence noise = new Turbulence();
 
 	protected PlainBiome(int id) {
-		super(id, new CaveDecorator(), new GrassDecorator(), new FlowerDecorator() , new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
+		super(id, new CaveDecorator(), new GrassDecorator(), new FlowerDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
 		base.setNoiseQuality(NoiseQuality.BEST);
 		base.setOctaveCount(6);
 		base.setFrequency(0.3);

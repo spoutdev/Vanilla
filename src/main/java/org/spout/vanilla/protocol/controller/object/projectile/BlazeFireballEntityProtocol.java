@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.controller.object.projectile;
 import org.spout.vanilla.protocol.controller.BasicProjectileEntityProtocol;
 
 public class BlazeFireballEntityProtocol extends BasicProjectileEntityProtocol {
-
 	public BlazeFireballEntityProtocol() {
 		super(64);
 	}

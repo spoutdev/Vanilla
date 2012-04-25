@@ -64,17 +64,17 @@ public class TestCommands {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to cause an explosion");
 		}
-		
+
 		Point position = ((Player) source).getEntity().getPosition();
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
 	}
-	
+
 	@Command(aliases = {"sethealth"}, usage = "<health>", desc = "Set your health", min = 1, max = 1)
 	public void setHealth(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to set your health");
 		}
-		
+
 		Player player = (Player) source;
 		player.getEntity().setHealth(args.getInteger(0), new HealthChangeReason(HealthChangeReason.Type.UNKNOWN));
 	}
@@ -170,29 +170,30 @@ public class TestCommands {
 		if (!(source instanceof Player) && player == null) {
 			throw new CommandException("Must specifiy a valid player to tppos from the console.");
 		}
-		
+
 		World world = Spout.getEngine().getWorld(args.getString(1));
 		//If the source of the command is a player and they do not provide a valid player...teleport the source instead.
 		if (player == null) {
 			player = (Player) source;
 		}
-		
+
 		if (world != null) {
-			Vector3 loc = new Vector3(args.getInteger(2), args.getInteger(3), args.getInteger(4));
-			//Server tracks position so we can set it here then send a relative message to the client
-			player.getEntity().setPosition(new Point(loc, world));
+			Point loc = new Point(world, args.getInteger(2), args.getInteger(3), args.getInteger(4));
+			//Make sure the chunk the player is teleported to is loaded.
+			world.getChunk(loc, true);
+			player.getEntity().setPosition(loc);
 			player.getNetworkSynchronizer().setPositionDirty();
 		} else {
 			throw new CommandException("Please enter a valid world");
 		}
 	}
-	
+
 	@Command(aliases = {"block"}, desc = "Checks if the block below you has an entity", min = 0, max = 0)
 	public void checkBlock(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("Source must be player");
 		}
-		
+
 		Player player = (Player) source;
 		Entity playerEntity = player.getEntity();
 		Block block = playerEntity.getWorld().getBlock(playerEntity.getPosition().subtract(0, 1, 0));
@@ -204,18 +205,18 @@ public class TestCommands {
 		BlockController controller = block.getController();
 		player.sendMessage("Material: " + controller.getMaterial().getName());
 	}
-	
+
 	@Command(aliases = {"vanish", "v"}, desc = "Toggle your visibility", min = 0, max = 0)
 	public void vanish(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("Source must be player");
 		}
-		
+
 		Controller controller = ((Player) source).getEntity().getController();
 		if (!(controller instanceof VanillaPlayer)) {
 			throw new CommandException("Invalid controller");
 		}
-		
+
 		VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
 		Player player = vanillaPlayer.getPlayer();
 		String name = player.getName();
@@ -226,7 +227,7 @@ public class TestCommands {
 		} else {
 			invisible.add(name);
 			vanillaPlayer.setVisible(false);
-			player.sendMessage("You vanish from thin air!");
+			player.sendMessage("You vanish into thin air!");
 		}
 	}
 }

@@ -46,7 +46,7 @@ public class Armor extends VanillaItemMaterial {
 	public int getProtection() {
 		return protection;
 	}
-	
+
 	@Override
 	public boolean getNBTData() {
 		return true;

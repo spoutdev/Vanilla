@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.material.item.generic;
 
-
 public class Weapon extends Tool {
 	private int damage;
 

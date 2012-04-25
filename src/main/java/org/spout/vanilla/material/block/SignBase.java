@@ -28,11 +28,11 @@ package org.spout.vanilla.material.block;
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.WallAttachable;
 
 public class SignBase extends WallAttachable {
-
 	public SignBase(String name, int id) {
 		super(name, id);
 	}
@@ -58,5 +58,4 @@ public class SignBase extends WallAttachable {
 			return false;
 		}
 	}
-
 }

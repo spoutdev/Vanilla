@@ -29,7 +29,6 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 
 public class Boat extends Substance implements Vehicle {
-
 	public Boat() {
 		super(VanillaControllerTypes.BOAT);
 	}

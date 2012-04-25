@@ -27,15 +27,14 @@ package org.spout.vanilla.controller.living;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.protocol.EntityProtocol;
+
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.protocol.controller.BasicMobEntityProtocol;
 
 /**
- *
  * @author zml2008
  */
 public class MobControllerType extends VanillaControllerType {
-
 	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name) {
 		this(id, controllerClass, name, new BasicMobEntityProtocol(id));
 	}

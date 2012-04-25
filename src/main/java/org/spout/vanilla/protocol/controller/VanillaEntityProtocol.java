@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
+
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.EntityRotationMessage;
@@ -46,9 +47,9 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 	public Message[] getUpdateMessage(Entity entity) {
 		if (entity.getController() != null && entity.getController() instanceof VanillaActionController) {
 			VanillaActionController controller = (VanillaActionController) entity.getController();
-			
+
 			int id = entity.getId();
-			
+
 			//Reducing variable counts would be great...but I see no alternative :(
 			int lastX = controller.getClientPosX();
 			int lastY = controller.getClientPosY();
@@ -56,21 +57,21 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 			int lastYaw = controller.getClientYaw();
 			int lastPitch = controller.getClientPitch();
 			controller.updateClientPosition();
-				
+
 			int newX = controller.getClientPosX();
 			int newY = controller.getClientPosY();
 			int newZ = controller.getClientPosZ();
 			int newYaw = controller.getClientYaw();
 			int newPitch = controller.getClientPitch();
-			
+
 			int deltaX = newX - lastX;
 			int deltaY = newY - lastY;
 			int deltaZ = newZ - lastZ;
 			int deltaYaw = newYaw - lastYaw;
 			int deltaPitch = newPitch - lastPitch;
-			
+
 			Message posmsg = null;
-			
+
 			if (controller.needsPositionUpdate() || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
 				posmsg = new EntityTeleportMessage(id, newX, newY, newZ, newYaw, newPitch);
 			} else {
@@ -78,7 +79,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 				boolean looked = deltaYaw > 4 || deltaYaw < -4 || deltaPitch > 4 || deltaPitch < -4;
 				if (moved) {
 					if (looked) {
-						posmsg = new RelativeEntityPositionRotationMessage(id, deltaX, deltaY, deltaZ, controller.getClientYaw(), controller.getClientPitch());					
+						posmsg = new RelativeEntityPositionRotationMessage(id, deltaX, deltaY, deltaZ, controller.getClientYaw(), controller.getClientPitch());
 					} else {
 						posmsg = new RelativeEntityPositionMessage(id, deltaX, deltaY, deltaZ);
 						controller.setClientPosition(newX, newY, newZ, lastYaw, lastPitch);
@@ -88,22 +89,22 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 					controller.setClientPosition(lastX, lastY, lastZ, newYaw, newPitch);
 				}
 			}
-			
+
 			Message velmsg = null;
 			if (controller.needsVelocityUpdate()) {
 				velmsg = new EntityVelocityMessage(id, controller.getVelocity());
 			}
-			
+
 			if (velmsg == null) {
 				if (posmsg == null) {
 					return null;
 				} else {
-					return new Message[] {posmsg};
+					return new Message[]{posmsg};
 				}
 			} else if (posmsg == null) {
-				return new Message[] {velmsg};
+				return new Message[]{velmsg};
 			} else {
-				return new Message[] {posmsg, velmsg};
+				return new Message[]{posmsg, velmsg};
 			}
 		} else {
 			return null;

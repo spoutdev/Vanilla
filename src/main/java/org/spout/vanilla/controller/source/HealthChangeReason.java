@@ -30,14 +30,13 @@ package org.spout.vanilla.controller.source;
  */
 public class HealthChangeReason extends Reason {
 	private final Type type;
-	
+
 	public HealthChangeReason(Type type) {
 		this.type = type;
 	}
 
 	/**
 	 * Returns the type of reason.
-	 *
 	 * @return
 	 */
 	public Type getType() {

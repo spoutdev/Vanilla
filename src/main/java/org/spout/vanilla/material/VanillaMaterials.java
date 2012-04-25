@@ -25,8 +25,9 @@
  */
 package org.spout.vanilla.material;
 
-import org.spout.api.material.BlockMaterial;
 import static org.spout.api.material.MaterialRegistry.register;
+
+import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.block.Cactus;
 import org.spout.vanilla.material.block.DeadBush;
@@ -116,7 +117,6 @@ public final class VanillaMaterials {
 	public static final MinecartTrackDetector DETECTOR_RAIL = (MinecartTrackDetector) register(new MinecartTrackDetector().setHardness(0.7F).setResistance(1.2F));
 	public static final Solid PISTON_STICKY_BASE = (Solid) register(new Solid("Sticky Piston", 29).setResistance(0.8F));
 	public static final Solid WEB = (Solid) register(new Solid("Cobweb", 30).setHardness(4.0F).setResistance(20.0F));
-
 	/**
 	 * Warning: This is NOT the data=0 sub-block!
 	 */
@@ -361,13 +361,13 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial FOREST_GREEN_MUSIC_DISC = register(new VanillaItemMaterial("Music Disc", 2265));
 	public static final VanillaItemMaterial BROKEN_MUSIC_DISC = register(new VanillaItemMaterial("Music Disc", 2266));
 	public static final Potion POTION = Potion.EMPTY;
-	
 	private static boolean initialized = false;
 
 	@SuppressWarnings("static-access")
 	public static void initialize() {
-		if(initialized)
+		if (initialized) {
 			return;
+		}
 		VanillaMaterials.STONE.setDrop(VanillaMaterials.COBBLESTONE);
 		VanillaMaterials.GRASS.setDrop(VanillaMaterials.DIRT);
 		VanillaMaterials.COAL_ORE.setDrop(VanillaMaterials.COAL);

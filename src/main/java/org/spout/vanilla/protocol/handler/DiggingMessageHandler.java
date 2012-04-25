@@ -35,6 +35,7 @@ import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -97,7 +98,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			//TODO: Timing checks!
 			blockBroken = true;
 		}
-		
+
 		BlockMaterial material = block.getMaterial();
 		if (material == VanillaMaterials.WATER || material == VanillaMaterials.LAVA) {
 			blockBroken = false; //deny digging for water or lava

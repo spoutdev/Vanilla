@@ -25,10 +25,12 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.block.generic.Solid;
 import java.util.Random;
+
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.generic.Solid;
 
 public class Leaves extends Solid {
 	public static final Leaves DEFAULT = register(new Leaves("Leaves"));
@@ -48,7 +50,7 @@ public class Leaves extends Solid {
 	}
 
 	private void setDefault() {
-		this.setHardness(0.2F).setResistance(0.3F).setOpacity((byte)0);
+		this.setHardness(0.2F).setResistance(0.3F).setOpacity((byte) 0);
 	}
 
 	// TODO: Shears

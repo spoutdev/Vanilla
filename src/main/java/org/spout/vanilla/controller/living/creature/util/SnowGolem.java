@@ -26,6 +26,7 @@
 package org.spout.vanilla.controller.living.creature.util;
 
 import org.spout.api.entity.Entity;
+
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
@@ -33,7 +34,7 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class SnowGolem extends Creature implements Passive {
 	private Entity parent;
-	
+
 	protected SnowGolem() {
 		super(VanillaControllerTypes.SNOW_GOLEM);
 	}

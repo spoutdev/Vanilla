@@ -25,12 +25,12 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.block.generic.Solid;
 import java.util.Random;
 
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.generic.Solid;
 
 public class Gravel extends Solid {
 	private Random rand = new Random();

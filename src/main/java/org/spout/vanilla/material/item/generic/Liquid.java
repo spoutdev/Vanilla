@@ -38,7 +38,7 @@ public class Liquid extends VanillaBlockMaterial {
 	public boolean isFlowing() {
 		return flowing;
 	}
-	
+
 	@Override
 	public boolean isPlacementObstacle() {
 		return false;

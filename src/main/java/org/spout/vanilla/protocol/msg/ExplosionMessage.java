@@ -38,7 +38,7 @@ public final class ExplosionMessage extends Message {
 	public ExplosionMessage(Vector3 position, float radius, byte[] coordinates) {
 		this(position.getX(), position.getY(), position.getZ(), radius, coordinates);
 	}
-	
+
 	public ExplosionMessage(double x, double y, double z, float radius, byte[] coordinates) {
 		if (coordinates.length % 3 != 0) {
 			throw new IllegalArgumentException();

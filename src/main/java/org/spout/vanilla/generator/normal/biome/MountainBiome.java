@@ -30,12 +30,12 @@ import net.royawesome.jlibnoise.module.source.RidgedMulti;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.normal.decorator.CaveDecorator;
 import org.spout.vanilla.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class MountainBiome extends VanillaBiomeType {
 	private RidgedMulti noise = new RidgedMulti();

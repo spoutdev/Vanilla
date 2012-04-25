@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block;
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 public class Fire extends VanillaBlockMaterial {
-	
 	public Fire() {
 		super("Fire", 51);
 	}
@@ -37,5 +36,4 @@ public class Fire extends VanillaBlockMaterial {
 	public boolean isPlacementObstacle() {
 		return false;
 	}
-
 }

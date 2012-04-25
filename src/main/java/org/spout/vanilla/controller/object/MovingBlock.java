@@ -39,7 +39,6 @@ public class MovingBlock extends Substance {
 
 	public MovingBlock(BlockMaterial block) {
 		this(VanillaControllerTypes.FALLING_BLOCK, block);
-
 	}
 
 	protected MovingBlock(VanillaControllerType type, BlockMaterial block) {

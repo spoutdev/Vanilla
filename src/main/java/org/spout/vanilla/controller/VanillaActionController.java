@@ -34,8 +34,8 @@ import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.action.ActionController;
 import org.spout.api.entity.PlayerController;
+import org.spout.api.entity.action.ActionController;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
@@ -92,14 +92,13 @@ public abstract class VanillaActionController extends ActionController implement
 		//Don't count disconnects/unknown exceptions as dead (!Yes that's a difference!)
 		if (this instanceof PlayerController) {
 			Player toCheck = ((PlayerController) this).getPlayer();
-			if(toCheck.getSession() == null || toCheck.getSession().getPlayer() == null) {
+			if (toCheck.getSession() == null || toCheck.getSession().getPlayer() == null) {
 				return;
 			}
-
 		}
-		for(ItemStack drop : getDrops()) {
+		for (ItemStack drop : getDrops()) {
 			Item item = new Item(drop, Vector3.ZERO);
-			if(lastKnownPosition != null) {
+			if (lastKnownPosition != null) {
 				lastKnownPosition.getWorld().createAndSpawnEntity(lastKnownPosition, item);
 			}
 		}
@@ -227,7 +226,7 @@ public abstract class VanillaActionController extends ActionController implement
 		this.oldRotation = getParent().getRotation().getAxisAngles();
 
 		//HACK: Store Position for later purposes
-		if(getParent().getPosition() != null  && getParent().getPosition() != Point.invalid) {
+		if (getParent().getPosition() != null && getParent().getPosition() != Point.invalid) {
 			lastKnownPosition = getParent().getPosition();
 		}
 
@@ -238,7 +237,6 @@ public abstract class VanillaActionController extends ActionController implement
 	 * Get the drops that Vanilla controllers disperse into the world when
 	 * un-attached (such as entity death). Children controllers should override
 	 * this method for their own personal drops.
-	 *
 	 * @return the drops to disperse.
 	 */
 	public Set<ItemStack> getDrops() {
@@ -247,7 +245,6 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Checks to see if the controller is combustible.
-	 *
 	 * @return true is combustible, false if not
 	 */
 	public boolean isFlammable() {
@@ -256,7 +253,6 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Sets if the controller is combustible or not.
-	 *
 	 * @param isFlammable flag representing combustible status.
 	 */
 	public void setFlammable(boolean isFlammable) {
@@ -265,7 +261,6 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Gets the amount of ticks the controller has been on fire.
-	 *
 	 * @return amount of ticks
 	 */
 	public int getFireTicks() {
@@ -274,9 +269,8 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Sets the amount of ticks the controller has been on fire.
-	 *
 	 * @param fireTicks the new amount of ticks the controller has been on fire
-	 * for.
+	 *                  for.
 	 */
 	public void setFireTicks(int fireTicks) {
 		this.fireTicks = fireTicks;
@@ -284,7 +278,6 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * This sets if a controller moves.
-	 *
 	 * @param canMove true if the controller can move, false otherwise.
 	 */
 	public void setMoveable(boolean canMove) {
@@ -293,9 +286,8 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Returns if the controller can move.
-	 *
 	 * @return true if the controller moves, false if the controller is
-	 * stationary.
+	 *         stationary.
 	 */
 	public boolean isMoveable() {
 		return canMove;
@@ -324,9 +316,9 @@ public abstract class VanillaActionController extends ActionController implement
 	//=========================
 	//Controller helper methods
 	//=========================
+
 	/**
 	 * Damages this controller and doesn't send messages to the client.
-	 *
 	 * @param amount amount the controller will be damaged by.
 	 */
 	public void damage(int amount) {
@@ -335,7 +327,6 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * This method takes any amount of messages and sends them to every online player on the server.
-	 *
 	 * @param messages
 	 */
 	public void broadcastPacket(Message... messages) {
@@ -345,8 +336,7 @@ public abstract class VanillaActionController extends ActionController implement
 	/**
 	 * This method takes in any amount of messages and sends them to any amount of
 	 * players.
-	 *
-	 * @param players specific players to send a message to.
+	 * @param players  specific players to send a message to.
 	 * @param messages the message(s) to send
 	 */
 	public void sendPacket(Player[] players, Message... messages) {
@@ -359,8 +349,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * This method takes in a message and sends it to a specific player
-	 *
-	 * @param player specific player to relieve message
+	 * @param player  specific player to relieve message
 	 * @param message specific message to send.
 	 */
 	public void sendPacket(Player player, Message message) {
@@ -369,7 +358,6 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Moves this controller.
-	 *
 	 * @param vect the vector that is applied as the movement.
 	 */
 	public void move(Vector3 vect) {
@@ -386,7 +374,6 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Moves this controller
-	 *
 	 * @param x x-axis to move the controller along
 	 * @param y y-axis to move the controller along
 	 * @param z z-axis to move the controller along
@@ -397,7 +384,6 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Rotates the controller
-	 *
 	 * @param rot the quaternion that is applied as the rotation.
 	 */
 	public void rotate(Quaternion rot) {
@@ -406,11 +392,10 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Rotates the controller
-	 *
 	 * @param degrees the angle of which to do rotation.
-	 * @param x	x-axis to rotate the controller along
-	 * @param y	y-axis to rotate the controller along
-	 * @param z	z-axis to rotate the controller along
+	 * @param x       x-axis to rotate the controller along
+	 * @param y       y-axis to rotate the controller along
+	 * @param z       z-axis to rotate the controller along
 	 */
 	public void rotate(float degrees, float x, float y, float z) {
 		getParent().rotate(degrees, x, y, z);
@@ -418,7 +403,6 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Rolls this controller along an angle.
-	 *
 	 * @param angle the angle in-which to roll
 	 */
 	public void roll(float angle) {
@@ -428,11 +412,9 @@ public abstract class VanillaActionController extends ActionController implement
 	/**
 	 * If a child controller needs a random number for anything, they should call
 	 * this method. This eliminates needless random objects created all the time.
-	 *
 	 * @return random object.
 	 */
 	public Random getRandom() {
 		return rand;
 	}
-
 }

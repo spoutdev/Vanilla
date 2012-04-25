@@ -29,10 +29,11 @@ import org.spout.api.protocol.EntityProtocol;
 
 public abstract class BasicEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
 	private final int spawnID;
+
 	public BasicEntityProtocol(int spawnID) {
 		this.spawnID = spawnID;
 	}
-	
+
 	public int getSpawnID() {
 		return this.spawnID;
 	}

@@ -31,7 +31,6 @@ import java.util.Map;
 public enum GameMode {
 	SURVIVAL((byte) 0),
 	CREATIVE((byte) 1);
-
 	private final byte id;
 	private static final Map<Byte, GameMode> idMap = new HashMap<Byte, GameMode>();
 
@@ -42,11 +41,11 @@ public enum GameMode {
 	public byte getId() {
 		return id;
 	}
-	
+
 	public static GameMode getById(byte id) {
 		return idMap.get(id);
 	}
-	
+
 	static {
 		for (GameMode mode : GameMode.values()) {
 			idMap.put(mode.getId(), mode);

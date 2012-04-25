@@ -35,6 +35,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
@@ -43,7 +44,7 @@ import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
 	private Session session;
 	private WindowClickMessage message;
-	
+
 	@Override
 	public void handleServer(Session session, Player player, WindowClickMessage message) {
 
@@ -120,7 +121,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 
 			mergeStack(cursorStack, slotStack, amountToMove, true);
 		}
-		
+
 		if (emptyCursor && !emptySlot && leftClick) {
 			slotStack = null;
 		}

@@ -34,35 +34,34 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
 public class ExplosionModelSpherical extends ExplosionModel implements Source {
-	
 	public ExplosionModelSpherical() {
 		this.layers.add(new ExplosionLayer(this));
 		this.root = this.layers.get(0).slots[0];
 	}
-	
+
 	private List<ExplosionLayer> layers = new ArrayList<ExplosionLayer>();
 	private ExplosionSlot root;
-		
+
 	public synchronized ExplosionLayer getLastLayer() {
 		return this.layers.get(this.layers.size() - 1);
 	}
-	
+
 	public synchronized ExplosionLayer getLayer(int index) {
 		return this.layers.get(index);
 	}
-	
+
 	public synchronized void execute(Point position, float size) {
 		this.execute(position, size, this);
 	}
-	
+
 	public synchronized void execute(Point position, float size, Source source) {
 		this.execute(position, size, false, source);
 	}
-	
+
 	public synchronized void execute(Point position, boolean fire, float size) {
 		this.execute(position, size, fire, this);
 	}
-	
+
 	public synchronized void execute(Point position, float size, boolean fire, Source source) {
 		int xoff = position.getBlockX();
 		int yoff = position.getBlockY();
@@ -88,7 +87,9 @@ public class ExplosionModelSpherical extends ExplosionModel implements Source {
 				//subtract damage factor
 				damageFactor = slot.sourcedamage - slot.block.damageFactor;
 				slot.sourcedamage = 0f;
-				if (damageFactor <= 0f) continue;
+				if (damageFactor <= 0f) {
+					continue;
+				}
 
 				//this block has been destroyed
 				if (!slot.block.destroy) {
@@ -98,7 +99,9 @@ public class ExplosionModelSpherical extends ExplosionModel implements Source {
 				}
 
 				//one block layer further...
-				if ((damageFactor -= 0.225f) <= 0.0f) continue;
+				if ((damageFactor -= 0.225f) <= 0.0f) {
+					continue;
+				}
 
 				//create a new layer if needed
 				if (slot.next == null) {
@@ -117,11 +120,11 @@ public class ExplosionModelSpherical extends ExplosionModel implements Source {
 						slot2.sourcedamage = damageFactor;
 					}
 				}
-				
+
 				hasDamage = true;
 			}
 		}
-		
+
 		//perform the final block changes, entity damage and explosion messages
 		super.execute(position, size, fire, source);
 	}

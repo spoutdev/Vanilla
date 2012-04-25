@@ -32,11 +32,11 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.generic.Liquid;
 
 public class PondDecorator implements BiomeDecorator {
-
 	@Override
 	public void populate(Chunk chunk, Random random) {
 	}
@@ -200,7 +200,6 @@ public class PondDecorator implements BiomeDecorator {
 	 * Represents a hole in the shape of a pond
 	 */
 	private static class PondHole {
-
 		private final SphericalNoise[] noise;
 
 		private PondHole(Random random) {
@@ -223,7 +222,6 @@ public class PondDecorator implements BiomeDecorator {
 		 * Noise used to generate the pond hole
 		 */
 		private static class SphericalNoise {
-
 			private final Random random;
 			private final float radius;
 			private final int xOffset;

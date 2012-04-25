@@ -48,8 +48,8 @@ public class EndermanEntityProtocol extends BasicMobEntityProtocol {
 			BlockMaterial held = enderman.getHeldItem();
 			if (held != null && !held.equals(enderman.getPreviouslyHeldItem())) {
 				List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte)held.getId()));
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte)held.getData()));
+				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) held.getId()));
+				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte) held.getData()));
 				return parameters;
 			}
 		}

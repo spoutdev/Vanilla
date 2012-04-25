@@ -26,7 +26,5 @@
 package org.spout.vanilla.material;
 
 public interface VanillaMaterial {
-	
 	public boolean getNBTData();
-	
 }

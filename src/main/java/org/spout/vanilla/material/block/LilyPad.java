@@ -25,11 +25,12 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.generic.Solid;
 
 public class LilyPad extends Solid {
 	public LilyPad() {

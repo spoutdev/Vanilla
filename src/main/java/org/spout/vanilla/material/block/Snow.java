@@ -25,23 +25,23 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.generic.Solid;
 
 public class Snow extends Solid {
-
 	public Snow() {
 		super("Snow", 78);
-		this.setOpacity((byte)0); 
+		this.setOpacity((byte) 0);
 	}
-	
+
 	@Override
 	public boolean isPlacementObstacle() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean hasPhysics() {
 		return true;
@@ -49,9 +49,9 @@ public class Snow extends Solid {
 
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
-		BlockMaterial below = world.getBlockMaterial(x, y-1, z);
-		if(below.getMaterial() == VanillaMaterials.AIR) {
-			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR,(short) 0, true, world);
+		BlockMaterial below = world.getBlockMaterial(x, y - 1, z);
+		if (below.getMaterial() == VanillaMaterials.AIR) {
+			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world);
 		}
 	}
 }

@@ -27,6 +27,7 @@ package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.CodecLookupService;
 import org.spout.api.protocol.common.codec.CustomDataCodec;
+
 import org.spout.vanilla.protocol.codec.AttachEntityCodec;
 import org.spout.vanilla.protocol.codec.BlockActionCodec;
 import org.spout.vanilla.protocol.codec.BlockChangeCodec;
@@ -68,6 +69,7 @@ import org.spout.vanilla.protocol.codec.OpenWindowCodec;
 import org.spout.vanilla.protocol.codec.PingCodec;
 import org.spout.vanilla.protocol.codec.PlayEffectCodec;
 import org.spout.vanilla.protocol.codec.PlayerAbilityCodec;
+import org.spout.vanilla.protocol.codec.PlayerListCodec;
 import org.spout.vanilla.protocol.codec.PositionCodec;
 import org.spout.vanilla.protocol.codec.PositionRotationCodec;
 import org.spout.vanilla.protocol.codec.ProgressBarCodec;
@@ -92,7 +94,6 @@ import org.spout.vanilla.protocol.codec.TimeCodec;
 import org.spout.vanilla.protocol.codec.TransactionCodec;
 import org.spout.vanilla.protocol.codec.UpdateSignCodec;
 import org.spout.vanilla.protocol.codec.UseBedCodec;
-import org.spout.vanilla.protocol.codec.PlayerListCodec;
 import org.spout.vanilla.protocol.codec.WindowClickCodec;
 
 public class VanillaCodecLookupService extends CodecLookupService {

@@ -26,7 +26,6 @@
 package org.spout.vanilla;
 
 import java.net.InetSocketAddress;
-import java.util.HashMap;
 import java.util.logging.Level;
 
 import org.spout.api.Engine;
@@ -45,14 +44,15 @@ import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.protocol.common.CommonBootstrapProtocol;
+
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.world.sky.VanillaSky;
+import org.spout.vanilla.controller.world.PointObserver;
 import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
-import org.spout.vanilla.controller.world.PointObserver;
+import org.spout.vanilla.controller.world.sky.VanillaSky;
 import org.spout.vanilla.generator.flat.FlatGenerator;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
@@ -64,10 +64,9 @@ import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 public class VanillaPlugin extends CommonPlugin {
 	public static final int MINECRAFT_PROTOCOL_ID = 29;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
-	private static VanillaPlugin instance;
-	private VanillaConfiguration config;
-	private final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
+	private static CommonPlugin instance;
 	private Engine game;
+	private VanillaConfiguration config;
 
 	public VanillaPlugin() {
 		instance = this;
@@ -75,12 +74,9 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onLoad() {
-		config = new VanillaConfiguration(getDataFolder());
-		// TODO - do we need a protocol manager ?
-		// getGame().getProtocolManager().register ...
-		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
-
 		game = getGame();
+		config = new VanillaConfiguration(getDataFolder());
+		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
 
 		if (game instanceof Server) {
 			int port = 25565;
@@ -96,6 +92,7 @@ public class VanillaPlugin extends CommonPlugin {
 			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
 			((Server) game).bind(new InetSocketAddress(split[0], port + 1), new CommonBootstrapProtocol(new VanillaProtocol()));
 		}
+		//TODO if (game instanceof Client) do stuff?
 
 		VanillaMaterials.initialize();
 		getLogger().info("Loaded");
@@ -106,7 +103,7 @@ public class VanillaPlugin extends CommonPlugin {
 		try {
 			config.save();
 		} catch (ConfigurationException e) {
-			getGame().getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);
+			getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);
 		}
 		getLogger().info("Disabled");
 	}
@@ -117,7 +114,7 @@ public class VanillaPlugin extends CommonPlugin {
 		try {
 			config.load();
 		} catch (ConfigurationException e) {
-			getGame().getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
+			getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
 		}
 
 		//Register commands
@@ -126,16 +123,16 @@ public class VanillaPlugin extends CommonPlugin {
 		game.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
 
 		//Register events
-		game.getEventManager().registerEvents(new VanillaEventListener(this), this);
+		game.getEventManager().registerEvents(new VanillaListener(this), this);
 
-		//Initialize our default Vanilla worlds.
-		World normal;
-		if (VanillaConfiguration.FLATWORLD.getBoolean()) {
-			normal = game.loadWorld("world", new FlatGenerator());
-		} else {
-			normal = game.loadWorld("world", new NormalGenerator());
-		}
+		setupWorlds();
 
+		getLogger().info("b" + this.getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
+	}
+
+	private void setupWorlds() {
+		World normal = game.loadWorld("world", new NormalGenerator());
+		World flat = game.loadWorld("world_flat", new FlatGenerator());
 		World nether = game.loadWorld("world_nether", new NetherGenerator());
 		World end = game.loadWorld("world_end", new TheEndGenerator());
 
@@ -145,14 +142,25 @@ public class VanillaPlugin extends CommonPlugin {
 		TheEndSky endSky = new TheEndSky();
 
 		//Register skys to the map
-		skies.put(normal, normSky);
-		skies.put(nether, netherSky);
-		skies.put(end, endSky);
+		VanillaSky.setSky(normal, normSky);
+		VanillaSky.setSky(nether, netherSky);
+		VanillaSky.setSky(end, endSky);
 
-		//Create spawn points as well as spawn the sky. TODO Have spawn point set by generator.
-		normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
+		//TODO This is bad...SpoutEngine should have a "setDefaultWorld"
+		if (VanillaConfiguration.FLATWORLD.getBoolean()) {
+			flat.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
+			normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
+		} else {
+			normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
+			flat.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
+		}
+
+		//TODO Have spawn point set by generator.
 		normal.createAndSpawnEntity(new Point(normal, 0.f, 0.f, 0.f), normSky);
 		normal.createAndSpawnEntity(new Point(normal, 0.5F, 64.5F, 0.5F), new PointObserver());
+
+		flat.createAndSpawnEntity(new Point(normal, 0.f, 0.f, 0.f), normSky);
+		flat.createAndSpawnEntity(new Point(normal, 0.5F, 64.5F, 0.5F), new PointObserver());
 
 		nether.setSpawnPoint(new Transform(new Point(nether, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), netherSky);
@@ -161,15 +169,9 @@ public class VanillaPlugin extends CommonPlugin {
 		end.setSpawnPoint(new Transform(new Point(end, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), endSky);
 		end.createAndSpawnEntity(new Point(end, 0.5F, 64.5F, 0.5F), new PointObserver());
-
-		getLogger().info("b" + this.getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
 	}
 
-	public static VanillaPlugin getInstance() {
+	public static CommonPlugin getInstance() {
 		return instance;
-	}
-
-	public VanillaSky getSky(World world) {
-		return skies.get(world);
 	}
 }

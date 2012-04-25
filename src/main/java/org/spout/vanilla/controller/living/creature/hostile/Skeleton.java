@@ -31,15 +31,15 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
+import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class Skeleton extends Creature implements Hostile {
 	private Entity parent;
-	
+
 	protected Skeleton() {
 		super(VanillaControllerTypes.SKELETON);
 	}

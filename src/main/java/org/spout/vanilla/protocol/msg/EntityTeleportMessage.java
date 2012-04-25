@@ -34,7 +34,7 @@ public final class EntityTeleportMessage extends Message {
 	public EntityTeleportMessage(int id, Vector3 position, int rotation, int pitch) {
 		this(id, (int) position.getX(), (int) position.getY(), (int) position.getZ(), rotation, pitch);
 	}
-	
+
 	public EntityTeleportMessage(int id, int x, int y, int z, int rotation, int pitch) {
 		this.id = id;
 		this.x = x;

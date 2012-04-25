@@ -38,7 +38,7 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Wolf extends Creature implements Tameable, Neutral {
 	private Entity parent;
-	
+
 	protected Wolf() {
 		super(VanillaControllerTypes.WOLF);
 	}

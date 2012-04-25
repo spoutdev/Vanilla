@@ -39,7 +39,7 @@ public class PointObserver extends Controller {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(PointObserver.class, "Point Observer");
 	private Point currPoint;
 	private static CollisionModel model = new CollisionModel();
-	
+
 	public PointObserver() {
 		super(TYPE);
 	}
@@ -47,7 +47,7 @@ public class PointObserver extends Controller {
 	@Override
 	public void onTick(float dt) {
 		//Lets make sure the point observer never goes haywire...
-		if(!getParent().getPosition().equals(currPoint)) {
+		if (!getParent().getPosition().equals(currPoint)) {
 			System.out.println("Point observer is moving! " + getParent().getPosition().toString());
 			currPoint = getParent().getPosition();
 		}

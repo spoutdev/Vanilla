@@ -38,7 +38,6 @@ import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
-
 	protected AbstractAttachable(String name, int id) {
 		super(name, id);
 	}
@@ -51,12 +50,12 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	public boolean hasPhysics() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean canSeekAttachedAlternative() {
 		return false;
 	}
-	
+
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
 		if (getBlockAttachedTo(world, x, y, z).getMaterial().equals(VanillaMaterials.AIR)) {
@@ -70,17 +69,17 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 		Vector3 offset = base.getOffset();
 		return world.getBlock((int) (x + offset.getX()), (int) (y + offset.getY()), (int) (z + offset.getZ()));
 	}
-	
+
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		return material instanceof Solid;
 	}
-	
+
 	@Override
 	public boolean canAttachTo(World world, int x, int y, int z, BlockFace face) {
 		return this.canAttachTo(world.getBlock(x, y, z).move(face.getOpposite()).getMaterial(), face);
 	}
-	
+
 	@Override
 	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
 		if (super.canPlace(world, x, y, z, data, against, source)) {
@@ -96,7 +95,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
 		if (this.canAttachTo(world, x, y, z, against.getOpposite())) {

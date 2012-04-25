@@ -31,15 +31,15 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
+import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class Pig extends Creature implements Passive {
 	private Entity parent;
-	
+
 	protected Pig() {
 		super(VanillaControllerTypes.PIG);
 	}
@@ -51,7 +51,7 @@ public class Pig extends Creature implements Passive {
 		parent.setMaxHealth(10);
 		parent.setHealth(10, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
-	
+
 	@Override
 	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();

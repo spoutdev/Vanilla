@@ -26,5 +26,4 @@
 package org.spout.vanilla.controller.source;
 
 public class ControllerInitialization extends Reason {
-
 }

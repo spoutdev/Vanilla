@@ -93,7 +93,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		int x = offsetPos.getBlockX();
 		int y = offsetPos.getBlockY();
 		int z = offsetPos.getBlockZ();
-		
+
 		Block block = world.getBlock(pos);
 		if (!cancelled) {
 			block.getMaterial().onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
@@ -105,7 +105,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			// If it's an item, send event and go no further.
 			Material placedMaterial = holding.getMaterial();
 			placedMaterial.onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
-			
+
 			if (!(placedMaterial instanceof BlockMaterial)) {
 				return;
 			}

@@ -33,13 +33,13 @@ import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class MushroomDecorator implements BiomeDecorator {
-
 	/*
-	 * Stores the differant types of mushrooms.
-	 */
+		 * Stores the differant types of mushrooms.
+		 */
 	private static final List<BlockMaterial> MUSHROOMS = new ArrayList<BlockMaterial>();
 	private static final List<BlockMaterial> HUGE_MUSHROOMS = new ArrayList<BlockMaterial>();
 	/*
@@ -181,7 +181,7 @@ public class MushroomDecorator implements BiomeDecorator {
 	}
 
 	private short getRedMushroomCapData(int x, int y, int z, int xx,
-			int yy, int zz, int height, int capSize) {
+										int yy, int zz, int height, int capSize) {
 		if (yy == y + height) { // top blocks
 			if (Math.abs(x - xx) < capSize && Math.abs(z - zz) < capSize) { // interior blocks
 				return 5;
@@ -248,7 +248,7 @@ public class MushroomDecorator implements BiomeDecorator {
 	}
 
 	private short getBrownMushroomCapData(int x, int y, int z, int xx,
-			int yy, int zz, int height, int capSize) {
+										  int yy, int zz, int height, int capSize) {
 		if (Math.abs(x - xx) < capSize && Math.abs(z - zz) < capSize) { // interior blocks
 			if (yy < y + height) {
 				return 0;

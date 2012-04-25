@@ -31,6 +31,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;

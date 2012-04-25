@@ -28,13 +28,11 @@ package org.spout.vanilla.material.block;
 import org.spout.api.Source;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.PlayerController;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.player.Player;
+
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;

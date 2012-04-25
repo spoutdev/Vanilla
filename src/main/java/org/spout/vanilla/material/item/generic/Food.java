@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.material.item.generic;
 
-
 public class Food extends VanillaItemMaterial {
 	public enum FoodEffectType {
 
@@ -33,6 +32,7 @@ public class Food extends VanillaItemMaterial {
 		HUNGER,
 		CUSTOM
 	}
+
 	private final int amount;
 	private final FoodEffectType type;
 

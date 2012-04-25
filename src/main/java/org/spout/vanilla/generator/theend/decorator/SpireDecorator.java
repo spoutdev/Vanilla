@@ -30,10 +30,10 @@ import java.util.Random;
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class SpireDecorator implements BiomeDecorator {
-
 	// Generation odds, chunk per 'ODD' chunk
 	private static final byte ODD = 5;
 	// These control the height of the spires

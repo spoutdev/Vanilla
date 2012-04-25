@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
+import org.spout.vanilla.controller.object.MovingBlock;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.explosion.ExplosionModels;
-import org.spout.vanilla.controller.object.MovingBlock;
 
 public class PrimedTnt extends MovingBlock {
 	private float timeToExplode = 4.f;
@@ -36,11 +36,11 @@ public class PrimedTnt extends MovingBlock {
 	public PrimedTnt() {
 		super(VanillaMaterials.TNT);
 	}
-	
+
 	public void setExplosionRadius(float radius) {
 		this.radius = radius;
 	}
-	
+
 	public float getExplosionRadius() {
 		return this.radius;
 	}

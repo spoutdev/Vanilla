@@ -26,7 +26,6 @@
 package org.spout.vanilla.protocol.controller;
 
 public abstract class BasicVehicleEntityProtocol extends BasicObjectEntityProtocol {
-
 	public BasicVehicleEntityProtocol(int vehicleSpawnID) {
 		super(vehicleSpawnID);
 	}

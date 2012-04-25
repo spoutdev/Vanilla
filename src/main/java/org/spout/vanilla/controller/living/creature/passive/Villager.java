@@ -38,7 +38,7 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Villager extends Creature implements Passive {
 	private Entity parent;
-	
+
 	protected Villager() {
 		super(VanillaControllerTypes.VILLAGER);
 	}

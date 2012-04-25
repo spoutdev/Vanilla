@@ -25,9 +25,13 @@
  */
 package org.spout.vanilla.controller;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.api.entity.type.ControllerRegistry;
+
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.MobControllerType;
 import org.spout.vanilla.controller.living.creature.hostile.Blaze;
@@ -68,11 +72,11 @@ import org.spout.vanilla.controller.object.projectile.EnderPearl;
 import org.spout.vanilla.controller.object.projectile.EyeOfEnder;
 import org.spout.vanilla.controller.object.projectile.GhastFireball;
 import org.spout.vanilla.controller.object.projectile.Snowball;
+import org.spout.vanilla.controller.object.vehicle.Boat;
+import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
-import org.spout.vanilla.controller.object.vehicle.Boat;
-import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.protocol.controller.BasicObjectEntityProtocol;
 import org.spout.vanilla.protocol.controller.BasicProjectileEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.BlazeEntityProtocol;
@@ -93,15 +97,12 @@ import org.spout.vanilla.protocol.controller.object.XPOrbEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.vehicle.BoatEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.vehicle.TransportMinecartEntityProtocol;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 /**
  * Enum that serves as a lookup for all controllers in Vanilla.
  */
 public class VanillaControllerTypes {
 	// Entity
-	public static final VanillaControllerType DROPPED_ITEM  = new VanillaControllerType(1, Item.class, "Item", new PickupEntityProtocol());
+	public static final VanillaControllerType DROPPED_ITEM = new VanillaControllerType(1, Item.class, "Item", new PickupEntityProtocol());
 	public static final VanillaControllerType XP_ORB = new VanillaControllerType(2, XPOrb.class, "XP Orb", new XPOrbEntityProtocol());
 	public static final VanillaControllerType SHOT_ARROW = new VanillaControllerType(10, Arrow.class, "Arrow", new BasicProjectileEntityProtocol(60));
 	public static final VanillaControllerType THROWN_SNOWBALL = new VanillaControllerType(11, Snowball.class, "Snowball", new BasicProjectileEntityProtocol(61));
@@ -141,15 +142,12 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType IRON_GOLEM = new MobControllerType(99, IronGolem.class, "Iron Golem");
 	public static final VanillaControllerType ENDER_CRYSTAL = new VanillaControllerType(200, EnderCrystal.class, "Ender Crystal", new BasicObjectEntityProtocol(51));
 	public static final VanillaControllerType PLAYER = new VanillaControllerType(-1, VanillaPlayer.class, "Player", new VanillaPlayerEntityProtocol());
-
 	// World
 	public static final VanillaControllerType NORMAL_SKY = new VanillaControllerType(-2, NormalSky.class, "Normal Sky", null);
 	public static final VanillaControllerType NETHER_SKY = new VanillaControllerType(-3, NetherSky.class, "Nether Sky", null);
 	public static final VanillaControllerType THE_END_SKY = new VanillaControllerType(-4, TheEndSky.class, "The End Sky", null);
-
 	// Block
 	public static final VanillaControllerType FURNACE = new VanillaControllerType(-5, FurnaceController.class, "Furnace", null);
-
 	public static final String KEY = "ControllerID";
 	private static final TIntObjectHashMap<VanillaControllerType> map = new TIntObjectHashMap<VanillaControllerType>();
 
@@ -158,7 +156,7 @@ public class VanillaControllerTypes {
 	}
 
 	static {
-		for (Field field : VanillaControllerTypes.class.getFields())  {
+		for (Field field : VanillaControllerTypes.class.getFields()) {
 			if (Modifier.isStatic(field.getModifiers()) && VanillaControllerType.class.isAssignableFrom(field.getType())) {
 				try {
 					VanillaControllerType type = (VanillaControllerType) field.get(null);

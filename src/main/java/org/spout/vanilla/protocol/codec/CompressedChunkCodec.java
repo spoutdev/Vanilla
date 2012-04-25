@@ -148,10 +148,10 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		int index = 0;
 
 		// TODO - fix this total hack
-		index = writeSectionData(data, 0*2048, uncompressedData , index, 4096);
-		index = writeSectionData(data, 2*2048, uncompressedData , index, 2048);
-		index = writeSectionData(data, 3*2048, uncompressedData , index, 2048);
-		index = writeSectionData(data, 4*2048, uncompressedData , index, 2048);
+		index = writeSectionData(data, 0 * 2048, uncompressedData, index, 4096);
+		index = writeSectionData(data, 2 * 2048, uncompressedData, index, 2048);
+		index = writeSectionData(data, 3 * 2048, uncompressedData, index, 2048);
+		index = writeSectionData(data, 4 * 2048, uncompressedData, index, 2048);
 
 		if (message.isContiguous()) {
 			System.arraycopy(message.getBiomeData(), 0, uncompressedData, index, message.getBiomeData().length);
@@ -179,7 +179,7 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 
 		return buffer;
 	}
-	
+
 	private int writeSectionData(byte[][] data, int off, byte[] target, int targetOff, int len) {
 		for (byte[] sectionData : data) {
 			if (sectionData != null) {

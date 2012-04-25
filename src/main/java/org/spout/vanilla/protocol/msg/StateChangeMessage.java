@@ -26,6 +26,7 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.spout.api.protocol.Message;
+
 import org.spout.vanilla.controller.living.player.GameMode;
 
 public final class StateChangeMessage extends Message {
@@ -41,7 +42,7 @@ public final class StateChangeMessage extends Message {
 		this.reason = reason;
 		this.gameMode = gameMode;
 	}
-	
+
 	public StateChangeMessage(byte reason) {
 		this(reason, GameMode.CREATIVE);
 	}

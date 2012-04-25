@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.generic;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Solid extends VanillaBlockMaterial {
@@ -57,7 +58,7 @@ public class Solid extends VanillaBlockMaterial {
 	public boolean hasPhysics() {
 		return moving;
 	}
-	
+
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
 		if (moving) {

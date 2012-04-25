@@ -29,6 +29,7 @@ import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class TallGrass extends DeadBush {
@@ -54,7 +55,7 @@ public class TallGrass extends DeadBush {
 	public TallGrass getParentMaterial() {
 		return (TallGrass) super.getParentMaterial();
 	}
-	
+
 	@Override
 	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
 		if (super.canPlace(world, x, y, z, data, against, source)) {

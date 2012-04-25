@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.object;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.controller.VanillaControllerType;
 
 /**

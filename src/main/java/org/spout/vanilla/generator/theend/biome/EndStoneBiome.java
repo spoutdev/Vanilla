@@ -31,9 +31,9 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.theend.decorator.SpireDecorator;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class EndStoneBiome extends VanillaBiomeType {
 	private Perlin base = new Perlin();

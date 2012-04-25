@@ -119,7 +119,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			getParent().translate(horizSpeed.transform(getParent().getRotation()));
 		}*/
 
-		if (lastPing++ > VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt()/2) {
+		if (lastPing++ > VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt() / 2) {
 			sendPacket(player, new PingMessage(getRandom().nextInt()));
 			lastPing = 0;
 		}
@@ -239,40 +239,36 @@ public class VanillaPlayer extends Human implements PlayerController {
 		drops.addAll(Arrays.asList(contents));
 		return drops;
 	}
-	
+
 	/**
 	 * Sets the position of player's compass target.
-	 * 
-	 * @param point 
+	 * @param point
 	 */
 	public void setCompassTarget(Point compassTarget) {
 		this.compassTarget = compassTarget;
 		sendPacket(owner, new SpawnPositionMessage(compassTarget.getBlockX(), compassTarget.getBlockY(), compassTarget.getBlockZ()));
 	}
-	
+
 	/**
 	 * Gets the position of the player's compass target.
-	 * 
-	 * @return 
+	 * @return
 	 */
 	public Point getCompassTarget() {
 		return compassTarget;
 	}
-	
+
 	/**
 	 * Gets the amount of ticks it takes the client to respond to the server.
-	 *
 	 * @return ping of player.
 	 */
 	public short getPing() {
 		return ping;
 	}
-	
+
 	/**
 	 * Sets whether the player is visible for the collection of players given.
-	 * 
 	 * @param visible
-	 * @param players 
+	 * @param players
 	 */
 	public void setVisibleFor(boolean visible, Player... players) {
 		Entity parent = getParent();
@@ -284,7 +280,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 				if (currentItem != null) {
 					itemId = currentItem.getMaterial().getId();
 				}
-				
+
 				sendPacket(player, new SpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId));
 			} else {
 				invisibleFor.add(player);
@@ -292,19 +288,17 @@ public class VanillaPlayer extends Human implements PlayerController {
 			}
 		}
 	}
-	
+
 	/**
 	 * Sets whether the player is visible for everyone.
-	 * 
-	 * @param visible 
+	 * @param visible
 	 */
 	public void setVisible(boolean visible) {
 		setVisibleFor(visible, Spout.getEngine().getOnlinePlayers());
 	}
-	
+
 	/**
 	 * Whether or not the player is visible for that player.
-	 * 
 	 * @param player
 	 * @return true if visible for that player
 	 */
@@ -314,7 +308,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not the player is sneaking.
-	 *
 	 * @param sneaking
 	 */
 	public void setSneaking(boolean sneaking) {
@@ -323,7 +316,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is sneaking.
-	 *
 	 * @return true if player is sneaking
 	 */
 	public boolean isSneaking() {
@@ -332,7 +324,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not th player is
-	 *
 	 * @param sprinting
 	 */
 	public void setSprinting(boolean sprinting) {
@@ -341,7 +332,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is sprinting.
-	 *
 	 * @return true if sprinting
 	 */
 	public boolean isSprinting() {
@@ -350,7 +340,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not the player is on the ground.
-	 *
 	 * @param onGround
 	 */
 	public void setOnGround(boolean onGround) {
@@ -359,7 +348,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is on the ground.
-	 *
 	 * @return true if on ground.
 	 */
 	public boolean isOnGround() {
@@ -368,7 +356,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Makes the player a server operator.
-	 *
 	 * @param op
 	 */
 	public void setOp(boolean op) {
@@ -378,7 +365,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is a server operator.
-	 *
 	 * @return true if an operator.
 	 */
 	public boolean isOp() {
@@ -388,7 +374,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * The list displayed in the user list on the client when a client presses TAB.
-	 *
 	 * @return user list name
 	 */
 	public String getTabListName() {
@@ -397,7 +382,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the list displayed in the user list on the client when a client presses TAB.
-	 *
 	 * @param tabListName
 	 */
 	public void setTabListName(String tabListName) {
@@ -406,7 +390,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Returns the current game-mode the controller is in.
-	 *
 	 * @return game mode of controller
 	 */
 	public GameMode getGameMode() {
@@ -415,7 +398,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the current game-mode the controller is in.
-	 *
 	 * @param gameMode
 	 */
 	public void setGameMode(GameMode gameMode) {
@@ -425,7 +407,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the controller is in survival mode.
-	 *
 	 * @return true if in survival mode
 	 */
 	public boolean isSurvival() {
@@ -434,7 +415,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the controller is poisoned.
-	 *
 	 * @return true if poisoned.
 	 */
 	public boolean isPoisoned() {
@@ -443,7 +423,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not the controller is poisoned.
-	 *
 	 * @param poisoned
 	 */
 	public void setPoisoned(boolean poisoned) {
@@ -452,7 +431,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Returns the hunger of the player attached to the controller.
-	 *
 	 * @return hunger
 	 */
 	public short getHunger() {
@@ -461,7 +439,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the hunger of the controller.
-	 *
 	 * @param hunger
 	 */
 	public void setHunger(short hunger) {
@@ -470,7 +447,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Returns the food saturation level of the player attached to the controller. The food bar "jitters" when the bar reaches 0.
-	 *
 	 * @return food saturation level
 	 */
 	public float getFoodSaturation() {
@@ -479,7 +455,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the food saturation of the controller. The food bar "jitters" when the bar reaches 0.
-	 *
 	 * @param foodSaturation
 	 */
 	public void setFoodSaturation(float foodSaturation) {
@@ -488,7 +463,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Returns the exhaustion of the controller; affects hunger loss.
-	 *
 	 * @return
 	 */
 	public float getExhaustion() {
@@ -497,7 +471,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the exhaustion of the controller; affects hunger loss.
-	 *
 	 * @param exhaustion
 	 */
 	public void setExhaustion(float exhaustion) {

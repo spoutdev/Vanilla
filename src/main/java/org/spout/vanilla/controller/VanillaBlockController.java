@@ -29,7 +29,6 @@ import org.spout.api.entity.BlockController;
 import org.spout.api.material.BlockMaterial;
 
 public abstract class VanillaBlockController extends BlockController implements VanillaController {
-
 	protected VanillaBlockController(VanillaControllerType type, BlockMaterial blockMaterial) {
 		super(type, blockMaterial);
 	}

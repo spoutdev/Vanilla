@@ -34,7 +34,7 @@ public final class SpawnVehicleMessage extends Message {
 	public SpawnVehicleMessage(int id, int type, Vector3 pos) {
 		this(id, type, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
 	}
-	
+
 	public SpawnVehicleMessage(int id, int type, int x, int y, int z) {
 		this(id, type, x, y, z, 0, 0, 0, 0);
 	}

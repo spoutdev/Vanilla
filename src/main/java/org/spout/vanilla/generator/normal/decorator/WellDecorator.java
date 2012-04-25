@@ -32,13 +32,13 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * Decorator that decorates a biome with a well structure.
  */
 public class WellDecorator implements BiomeDecorator {
-
 	// generation odd, 'ODD' chunk per chunk
 	private static final short ODD = 1000;
 

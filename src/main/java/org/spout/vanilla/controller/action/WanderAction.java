@@ -52,7 +52,7 @@ public class WanderAction extends EntityAction<VanillaActionController> {
 
 	@Override
 	public void run(Entity entity, VanillaActionController controller, float dt) {
-		
+
 		//Get the direction the entity is facing
 		Vector3 entityForward = MathHelper.getDirectionVector(entity.getRotation());
 		//Get somewhere we want to go.  Make sure it is length 1

@@ -25,18 +25,18 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
+
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.generic.Solid;
 
 public class TNT extends Solid {
-
 	public TNT() {
 		super("TnT", 46);
 	}
-	
+
 	@Override
 	public boolean hasPhysics() {
 		return true;
@@ -48,7 +48,7 @@ public class TNT extends Solid {
 		Point point = new Point(world, (float) x + 0.5f, (float) y + 0.5f, (float) z + 0.5f);
 		world.createAndSpawnEntity(point, new PrimedTnt());
 	}
-	
+
 	@Override
 	public void onUpdate(World world, int x, int y, int z) {
 		super.onUpdate(world, x, y, z);

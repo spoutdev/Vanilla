@@ -38,7 +38,7 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Silverfish extends Creature implements Hostile {
 	private Entity parent;
-	
+
 	protected Silverfish() {
 		super(VanillaControllerTypes.SILVERFISH);
 	}

@@ -41,7 +41,6 @@ import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 
 public class BasicMobEntityProtocol extends BasicEntityProtocol {
-
 	public BasicMobEntityProtocol(int mobSpawnID) {
 		super(mobSpawnID);
 	}

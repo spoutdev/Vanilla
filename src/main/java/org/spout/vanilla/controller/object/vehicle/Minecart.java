@@ -33,14 +33,14 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.object.Substance;
+import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.MinecartTrack;
-import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.material.block.data.PoweredRails;
 import org.spout.vanilla.material.block.data.Rails;
+import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.util.RailsState;
 
 public abstract class Minecart extends Substance implements Vehicle {
@@ -116,7 +116,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 		if (health < 40) {
 			this.getParent().setHealth(health + 1, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
 		}
-		
+
 		//get current rails below minecart
 		Point position = getParent().getPosition();
 		if (position.getWorld() == null) {
@@ -126,7 +126,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 
 		Vector2 velocity = this.getVelocity().toVector2();
 		float velocityY = this.getVelocity().getY() - 0.04f;
-		
+
 		if (this.railData != null) {
 			//on tracks
 			this.previousPosY = position.getY();
@@ -143,7 +143,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 			if (railMotion.getX() == -2 || railMotion.getY() == -2) {
 				railMotion = railMotion.multiply(-1);
 			}
-			
+
 			//reverse motion if needed
 			if ((velocity.getX() * railMotion.getX() + velocity.getY() * railMotion.getY()) < 0.0) {
 				railMotion = railMotion.multiply(-1);
@@ -164,10 +164,10 @@ public abstract class Minecart extends Substance implements Vehicle {
 			}
 
 			Vector3 railsPosition = this.railsBlock.getPosition().add(0.5f, this.getBounds().getSize().getY(), 0.5f);
-			
+
 			//position is adjusted to snap to the rails
 			Vector3 adjustment = railsPosition.subtract(position);
-			
+
 			if (railMotion.getX() == 0) {
 				//traveling along Z
 				if (this.railData.isSloped()) {
@@ -216,7 +216,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 			Block newBlock = position.getWorld().getBlock(position);
 
 			Vector2 blockChange = new Vector2(newBlock.getX() - this.railsBlock.getX(), newBlock.getZ() - this.railsBlock.getZ());
-			
+
 			//moved down the slope? Go one down if so
 			if (this.railData.isSloped() && blockChange.equals(this.railMovement[0])) {
 				position = position.add(new Vector3(0f, -1f, 0f));
@@ -242,13 +242,13 @@ public abstract class Minecart extends Substance implements Vehicle {
 				} else if (state == RailsState.WEST_SLOPED) {
 					changeY += (position.getZ() - newBlock.getZ()) + 1;
 				}
-				
+
 				float velLength = velocity.length();
 				if (velLength > 0.01f) {
 					double slopeSlowDown = (this.previousPosY - position.getY()) * 0.05 / velLength + 1.0;
 					velocity = velocity.multiply(slopeSlowDown);
 				}
-				
+
 				position = position.add(new Vector3(0f, changeY, 0f));
 			}
 			this.getParent().setPosition(position);

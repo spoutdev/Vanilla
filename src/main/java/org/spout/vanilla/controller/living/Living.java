@@ -38,7 +38,6 @@ public abstract class Living extends VanillaActionController {
 		super(type);
 	}
 
-
 	@Override
 	public void onAttached() {
 		super.onAttached();

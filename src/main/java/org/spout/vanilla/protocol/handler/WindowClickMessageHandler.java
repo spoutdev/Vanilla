@@ -59,8 +59,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		}
 
 		if (message.getSlot() == 64537) {
-			vplayer.setItemOnCursor(null);
-			//TODO drop
+			vplayer.dropItemFromCursor();
 			respond(true);
 			return;
 		}

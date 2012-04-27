@@ -44,6 +44,7 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.PingMessage;
@@ -218,6 +219,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 
 		inventory.setCurrentSlot(0);
+		if (getActiveInventory() == null)
+			setActiveInventory(inventory);
+
 		return inventory;
 	}
 
@@ -491,5 +495,84 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	public void setItemOnCursor(ItemStack newItem) {
 		itemOnCursor = newItem;
+	}
+
+	/**
+	 * Returns the view vector for the direction the player is looking in. Returns Vector3.ZERO if player is offline
+	 * @return
+	 */
+	public Vector3 getViewDirection() {
+		Entity parent = getParent();
+		if (parent == null)
+			return Vector3.ZERO;
+		double yaw = Math.toRadians(parent.getYaw());
+		double pitch = Math.toRadians(parent.getPitch());
+		double x = -Math.cos(pitch) * Math.sin(yaw);
+		double y = -Math.sin(pitch);
+		double z =  Math.cos(pitch) * Math.cos(yaw);
+		return new Vector3(x,y,z);
+	}
+
+	/**
+	 * Drops the ItemStack held in the player's cursor
+	 */
+	public Item dropItemFromCursor() {
+		Item item = null;
+		if (itemOnCursor != null) {
+			Vector3 view = getViewDirection().multiply(itemVelocityScale);
+			Vector3 velocity = new Vector3(view.getX(), 0.2, view.getZ());
+			item = dropItem(itemOnCursor, itemOnCursor.getAmount(), velocity);
+			setItemOnCursor(null);
+		}
+		return item;
+	}
+
+	/**
+	 * Drops <count> items from the selected ItemStack in activeInventory.
+	 * If the ItemStack count reaches 0, the slot is set to null.
+	 * @param count number of items to drop
+	 * @return
+	 */
+	public Item dropFromActiveInventorySlot(int count) {
+		Inventory inv = getActiveInventory();
+		Item item = null;
+
+		if (inv != null) {
+			ItemStack is = inv.getCurrentItem();
+			if (is != null) {
+				Vector3 view = getViewDirection().multiply(itemVelocityScale);
+				Vector3 velocity = new Vector3(view.getX(), view.getY()+0.1, view.getZ());
+				item = dropItem(is, count, velocity);
+				inv.setItem(subtractFromStack(is, count), inv.getCurrentSlot());
+			}
+		}
+		return item;
+	}
+
+	private static final Vector3 itemPositionOffset = new Vector3(0, 0.5, 0);
+	private static final float itemVelocityScale = 0.7f;
+
+	private Item dropItem(ItemStack stack, int amount, Vector3 velocity) {
+		Entity e = getParent();
+		if (e == null) return null;
+
+		ItemStack dropStack = stack.clone();
+		dropStack.setAmount(amount);
+		Item newItem = new Item(dropStack, velocity);
+		Vector3 position = e.getPosition().add(itemPositionOffset);
+		e.getWorld().createAndSpawnEntity(new Point(position, getParent().getWorld()), newItem);
+		return newItem;
+	}
+
+	private static ItemStack subtractFromStack(ItemStack in, int count) {
+		if (in == null) return null;
+		int oldAmount = in.getAmount();
+		int newAmount = oldAmount-count;
+		ItemStack newStack = null;
+		if (newAmount > 0) {
+			newStack = in.clone();
+			newStack.setAmount(newAmount);
+		}
+		return newStack;
 	}
 }

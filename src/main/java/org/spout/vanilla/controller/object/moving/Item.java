@@ -27,6 +27,8 @@ package org.spout.vanilla.controller.object.moving;
 
 import org.spout.api.Spout;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
@@ -35,31 +37,43 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
 /**
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).
  */
 public class Item extends Substance {
-	private ItemStack is;
-	private int roll, unpickable;
-	private Vector3 initial;
-	private Vector3 velocity = new Vector3();
+	private final ItemStack is;
+	private final int roll;
+	private int unpickable;
+	private boolean falling = true;
 
 	public Item(ItemStack is, Vector3 initial) {
 		super(VanillaControllerTypes.DROPPED_ITEM);
 		this.is = is;
 		this.roll = 1;
 		unpickable = 10;
-		this.initial = initial;
+		setVelocity(initial);
 		setMoveable(true);
 	}
 
 	@Override
 	public void onTick(float dt) {
-		if (dt <= 1) {
-			velocity.add(initial);
+		Point currentPos = this.getParent().getPosition();
+		Block intersectedBlock = getSolidBlockAt(currentPos);
+		boolean wasFalling = falling;
+		falling = (intersectedBlock == null);
+
+		if (wasFalling && !falling) {
+			// Move item on top of intersected block
+			this.move(new Vector3(0,(intersectedBlock.getY()-currentPos.getY()), 0));
 		}
+
+		Vector3 newVelocity = calculateVelocity(falling);
+		setVelocity(newVelocity);
+		if (newVelocity.length() > 0)
+			this.move();
 
 		if (unpickable > 0) {
 			unpickable--;
@@ -102,6 +116,23 @@ public class Item extends Substance {
 
 		closestPlayer.getEntity().getInventory().addItem(is, false);
 		getParent().kill();
+	}
+
+	private Vector3 calculateVelocity(boolean falling) {
+		float vx = 0,vy = 0,vz = 0;
+		if (falling) {
+			vx = getVelocity().getX() * 0.94f;
+			vy = getVelocity().getY() - 0.04f;
+			vz = getVelocity().getZ() * 0.94f;
+		}
+		Vector3 v = new Vector3(vx,vy,vz);
+
+		return v;
+	}
+
+	private Block getSolidBlockAt(Point p) {
+		Block inBlock = this.getParent().getWorld().getBlock((int)Math.floor(p.getX()), (int)Math.floor(p.getY()+1), (int)Math.floor(p.getZ()));
+		return (inBlock.getMaterial() != VanillaMaterials.AIR) ? inBlock : null;
 	}
 
 	/**

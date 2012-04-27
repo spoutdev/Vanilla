@@ -32,6 +32,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -50,6 +51,7 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 		}
 
 		boolean blockBroken = false;
+		boolean isVanilla = player.getEntity().getController() instanceof VanillaPlayer;
 
 		EventManager eventManager = player.getSession().getGame().getEventManager();
 		World world = player.getEntity().getWorld();
@@ -97,6 +99,10 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 		} else if (message.getState() == DiggingMessage.STATE_DONE_DIGGING) {
 			//TODO: Timing checks!
 			blockBroken = true;
+		} else if (message.getState() == DiggingMessage.STATE_DROP_ITEM && isVanilla) {
+			VanillaPlayer vplayer = (VanillaPlayer) player.getEntity().getController();
+			if (vplayer != null)
+				vplayer.dropFromActiveInventorySlot(1);
 		}
 
 		BlockMaterial material = block.getMaterial();
@@ -111,18 +117,20 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			oldMat.onDestroy(world, x, y, z);
 			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, player);
 
-			if (player.getEntity().getController() instanceof VanillaPlayer && ((VanillaPlayer) player.getEntity().getController()).isSurvival()) {
+			if (isVanilla && ((VanillaPlayer) player.getEntity().getController()).isSurvival()) {
 				Material dropMat = oldMat;
 				int count = 1;
 				if (oldMat instanceof VanillaBlockMaterial) {
 					VanillaBlockMaterial blockMat = (VanillaBlockMaterial) oldMat;
-					dropMat = Material.get((short) blockMat.getDrop().getId());
+					dropMat = Material.get(blockMat.getDrop().getId());
 					count = blockMat.getDropCount();
 				}
 
 				if (dropMat != null) {
+					VanillaPlayer vplayer = (VanillaPlayer) player.getEntity().getController();
+					Vector3 dropVelocity = vplayer.getViewDirection().multiply(-0.1,-0.5,-0.1);
 					for (int i = 0; i < count && dropMat.getId() != 0; ++i) {
-						world.createAndSpawnEntity(block.getPosition(), new Item(new ItemStack(dropMat, 1), player.getEntity().getPosition().normalize().add(0, 5, 0)));
+						world.createAndSpawnEntity(block.getPosition(), new Item(new ItemStack(dropMat, 1), dropVelocity));
 					}
 				}
 			}

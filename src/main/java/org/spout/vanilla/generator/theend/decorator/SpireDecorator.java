@@ -40,11 +40,14 @@ public class SpireDecorator implements BiomeDecorator {
 	private static final byte BASE_HEIGHT = 6;
 	private static final byte RAND_HEIGHT = 32;
 	// These control the radius of the spires
-	private static final byte BASE_RADIUS = 1;
+	private static final byte BASE_RADIUS = 2;
 	private static final byte RAND_RADIUS = 4;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() < 4) {
+			return;
+		}
 		if (random.nextInt(ODD) != 0) {
 			return;
 		}

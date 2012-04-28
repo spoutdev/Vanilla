@@ -127,7 +127,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		count++;
 		unresponsiveTicks--;
 		if (unresponsiveTicks == 0) {
-			player.kick("Connection Timeout!", false);
+			player.kick("Connection Timeout!");
 		}
 
 		if (lastUserList++ > 20) {
@@ -242,7 +242,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the position of player's compass target.
-	 * @param point
+	 * @param compassTarget The new compass target position
 	 */
 	public void setCompassTarget(Point compassTarget) {
 		this.compassTarget = compassTarget;

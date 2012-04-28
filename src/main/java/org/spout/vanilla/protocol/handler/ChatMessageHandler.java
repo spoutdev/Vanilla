@@ -42,7 +42,7 @@ public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
 		text = text.trim();
 
 		if (text.length() > 100) {
-			session.disconnect("Chat message is too long.");
+			session.disconnect("Chat message is too long.", false);
 		} else {
 			player.chat(text);
 		}

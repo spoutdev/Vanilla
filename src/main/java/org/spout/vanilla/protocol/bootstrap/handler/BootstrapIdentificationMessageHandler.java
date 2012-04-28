@@ -38,10 +38,10 @@ public class BootstrapIdentificationMessageHandler extends MessageHandler<Identi
 	@Override
 	public void handle(Session session, Player player, IdentificationMessage message) {
 		if (message.getId() > VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
-			session.disconnect("Outdated server!");
+			session.disconnect("Outdated server!", false);
 		}
 		if (message.getId() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
-			session.disconnect("Outdated client!");
+			session.disconnect("Outdated client!", false);
 		}
 		Event event = new PlayerConnectEvent(session, message.getName());
 		session.getGame().getEventManager().callEvent(event);

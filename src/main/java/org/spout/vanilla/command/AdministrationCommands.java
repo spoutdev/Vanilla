@@ -414,7 +414,7 @@ public class AdministrationCommands {
 	public void testKick(CommandContext args, CommandSource source) throws CommandException {
 		if (source instanceof Player) {
 			Player player = (Player) source;
-			player.kick("Bye!");
+			player.kick("Bye!", false);
 		}
 	}
 }

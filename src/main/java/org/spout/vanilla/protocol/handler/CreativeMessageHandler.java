@@ -42,7 +42,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
 
 		if (controller.isSurvival()) {
-			player.kick("Now now, don't try that here. Won't work.");
+			player.kick("Now now, don't try that here. Won't work.", false);
 			return;
 		}
 
@@ -65,7 +65,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 				newItem = new ItemStack(Material.get(message.getId()), message.getDamage(), message.getAmount());
 			}
 		} else {
-			player.kick("Unknown item ID: " + message.getId() + " and durability " + message.getDamage() + "!");
+			player.kick("Unknown item ID: " + message.getId() + " and durability " + message.getDamage() + "!", false);
 			return;
 		}
 

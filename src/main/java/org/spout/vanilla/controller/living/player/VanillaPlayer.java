@@ -127,7 +127,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		count++;
 		unresponsiveTicks--;
 		if (unresponsiveTicks == 0) {
-			player.kick("Connection Timeout!");
+			player.kick("Connection Timeout!", false);
 		}
 
 		if (lastUserList++ > 20) {

@@ -46,12 +46,12 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
-import org.spout.vanilla.protocol.msg.PingMessage;
-import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
+import org.spout.vanilla.protocol.msg.KeepAliveMessage;
+import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.StateChangeMessage;
+import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to
@@ -120,7 +120,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}*/
 
 		if (lastPing++ > VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt() / 2) {
-			sendPacket(player, new PingMessage(getRandom().nextInt()));
+			sendPacket(player, new KeepAliveMessage(getRandom().nextInt()));
 			lastPing = 0;
 		}
 
@@ -197,7 +197,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			System.out.println("Hunger: " + hunger);
 			System.out.println("Health: " + health);
 			System.out.println("Exhaustion: " + exhaustion);
-			sendPacket(owner, new PlayerHealthMessage(health, hunger, foodSaturation));
+			sendPacket(owner, new UpdateHealthMessage(health, hunger, foodSaturation));
 		}
 	}
 
@@ -402,7 +402,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void setGameMode(GameMode gameMode) {
 		this.gameMode = gameMode;
-		sendPacket(owner, new StateChangeMessage(StateChangeMessage.CHANGE_GAME_MODE, gameMode));
+		sendPacket(owner, new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, gameMode));
 	}
 
 	/**

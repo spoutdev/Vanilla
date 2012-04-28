@@ -61,10 +61,10 @@ import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
-import org.spout.vanilla.protocol.msg.IdentificationMessage;
+import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
-import org.spout.vanilla.protocol.msg.PingMessage;
-import org.spout.vanilla.protocol.msg.PositionRotationMessage;
+import org.spout.vanilla.protocol.msg.KeepAliveMessage;
+import org.spout.vanilla.protocol.msg.PlayerPositionRotationMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
@@ -268,7 +268,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
 		//TODO: Implement Spout Protocol
-		PositionRotationMessage PRMsg = new PositionRotationMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true);
+		PlayerPositionRotationMessage PRMsg = new PlayerPositionRotationMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true);
 		owner.getSession().send(PRMsg);
 	}
 
@@ -289,7 +289,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			first = false;
 			int entityId = owner.getEntity().getId();
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
-			IdentificationMessage idMsg = new IdentificationMessage(entityId, owner.getName(), vc.isSurvival() ? 0 : 1, dimensionBit, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
+			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, owner.getName(), vc.isSurvival() ? 0 : 1, dimensionBit, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
 			owner.getSession().send(idMsg, true);
 			//Normal messages may be sent
 			owner.getSession().setState(State.GAME);
@@ -322,7 +322,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public void preSnapshot() {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime > lastKeepAlive + TIMEOUT) {
-			PingMessage PingMsg = new PingMessage((int) currentTime);
+			KeepAliveMessage PingMsg = new KeepAliveMessage((int) currentTime);
 			lastKeepAlive = currentTime;
 			owner.getSession().send(PingMsg, true);
 		}

@@ -42,7 +42,7 @@ import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapCodecLookupService;
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
-import org.spout.vanilla.protocol.msg.IdentificationMessage;
+import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 import org.spout.api.protocol.common.message.CustomDataMessage;
@@ -51,7 +51,7 @@ public class VanillaBootstrapProtocolTest {
 	private static final TIntSet testedOpcodes = new TIntHashSet();
 	private static final VanillaBootstrapCodecLookupService CODEC_LOOKUP = new VanillaBootstrapCodecLookupService();
 	private static final Message[] TEST_MESSAGES = new Message[]{
-			new IdentificationMessage(0, "Tester", 0, -1, 0, 128, 20, "MAGICAL"),
+			new LoginRequestMessage(0, "Tester", 0, -1, 0, 128, 20, "MAGICAL"),
 			new HandshakeMessage("Player"),
 			new ServerListPingMessage(),
 			new KickMessage("This is a test"),

@@ -50,8 +50,8 @@ import org.spout.api.protocol.common.message.CustomDataMessage;
 import org.spout.vanilla.protocol.msg.AttachEntityMessage;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
-import org.spout.vanilla.protocol.msg.BlockPlacementMessage;
-import org.spout.vanilla.protocol.msg.ChangeItemMessage;
+import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
+import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
@@ -59,7 +59,7 @@ import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.CreateEntityMessage;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
-import org.spout.vanilla.protocol.msg.DiggingMessage;
+import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.protocol.msg.EnchantItemMessage;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
@@ -73,43 +73,43 @@ import org.spout.vanilla.protocol.msg.EntityRotationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
-import org.spout.vanilla.protocol.msg.ExperienceMessage;
-import org.spout.vanilla.protocol.msg.ExperienceOrbMessage;
+import org.spout.vanilla.protocol.msg.SetExperienceMessage;
+import org.spout.vanilla.protocol.msg.SpawnExperienceOrbMessage;
 import org.spout.vanilla.protocol.msg.ExplosionMessage;
 import org.spout.vanilla.protocol.msg.GroundMessage;
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
-import org.spout.vanilla.protocol.msg.IdentificationMessage;
+import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
-import org.spout.vanilla.protocol.msg.MapDataMessage;
+import org.spout.vanilla.protocol.msg.ItemDataMessage;
 import org.spout.vanilla.protocol.msg.MultiBlockChangeMessage;
 import org.spout.vanilla.protocol.msg.OpenWindowMessage;
-import org.spout.vanilla.protocol.msg.PingMessage;
+import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
-import org.spout.vanilla.protocol.msg.PlayerHealthMessage;
+import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
-import org.spout.vanilla.protocol.msg.PositionMessage;
-import org.spout.vanilla.protocol.msg.PositionRotationMessage;
+import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
+import org.spout.vanilla.protocol.msg.PlayerPositionRotationMessage;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
-import org.spout.vanilla.protocol.msg.RotationMessage;
+import org.spout.vanilla.protocol.msg.PlayerRotationMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
-import org.spout.vanilla.protocol.msg.SpawnItemMessage;
+import org.spout.vanilla.protocol.msg.SpawnDroppedItemMessage;
 import org.spout.vanilla.protocol.msg.SpawnLightningStrikeMessage;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
 import org.spout.vanilla.protocol.msg.SpawnPaintingMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
-import org.spout.vanilla.protocol.msg.StateChangeMessage;
+import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.StatisticMessage;
 import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
-import org.spout.vanilla.protocol.msg.TimeMessage;
+import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.UseBedMessage;
@@ -118,33 +118,33 @@ import org.spout.vanilla.protocol.msg.WindowClickMessage;
 public class VanillaProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
 	private static final Message[] TEST_MESSAGES = new Message[]{
-			new PingMessage(42),
-			new IdentificationMessage(0, "Tester", 0, -1, 0, 256, 20, "MAGICAL"),
+			new KeepAliveMessage(42),
+			new LoginRequestMessage(0, "Tester", 0, -1, 0, 256, 20, "MAGICAL"),
 			new HandshakeMessage("Player"),
 			new ChatMessage("<Spouty> This is a thing called a chat message"),
-			new TimeMessage(666L),
+			new TimeUpdateMessage(666L),
 			new EntityEquipmentMessage(234, 3, 2, 3),
 			new SpawnPositionMessage(42, 42, 42),
 			new EntityInteractionMessage(1123, 4455, true),
-			new PlayerHealthMessage((short) 1, (short) 2, 3.4F),
+			new UpdateHealthMessage((short) 1, (short) 2, 3.4F),
 			new RespawnMessage(89, (byte) 0, (byte) 1, 128, "VERYFANCY"),
 			new GroundMessage(true),
-			new PositionMessage(128, 256, 512, 3.4D, true),
-			new RotationMessage(1F, 2F, false),
-			new PositionRotationMessage(1, 2, 5, 3.62, 4, 3, false),
-			new DiggingMessage(DiggingMessage.STATE_START_DIGGING, 1, 2, 3, 4),
-			new BlockPlacementMessage(1, 2, 3, 4, 89, 2, 7, null),
-			new ChangeItemMessage(4),
+			new PlayerPositionMessage(128, 256, 512, 3.4D, true),
+			new PlayerRotationMessage(1F, 2F, false),
+			new PlayerPositionRotationMessage(1, 2, 5, 3.62, 4, 3, false),
+			new PlayerDiggingMessage(PlayerDiggingMessage.STATE_START_DIGGING, 1, 2, 3, 4),
+			new PlayerBlockPlacementMessage(1, 2, 3, 4, 89, 2, 7, null),
+			new HeldItemChangeMessage(4),
 			new UseBedMessage(0, 3, 42, 42, 42),
 			new EntityAnimationMessage(1234, EntityAnimationMessage.ANIMATION_HURT),
 			new EntityActionMessage(5, 2),
 			new SpawnPlayerMessage(24, "risaccess1", 8000, 28, 900, 0, 0, 89),
-			new SpawnItemMessage(1234, 89, 3, (short) 4, 1, 2, 3, 34, 56, 55),
+			new SpawnDroppedItemMessage(1234, 89, 3, (short) 4, 1, 2, 3, 34, 56, 55),
 			new CollectItemMessage(1234, 5678),
 			new SpawnVehicleMessage(1, 3, 3, 654, 1234, 778, 656, 4354, 6564),
 			new SpawnMobMessage(123, 255, 1, 2, 4, 34, 55, 33, TEST_PARAMS),
 			new SpawnPaintingMessage(4, "KEBAB", 2, 3, 4, 56),
-			new ExperienceOrbMessage(34, 1, 2, 3, (short) 34),
+			new SpawnExperienceOrbMessage(34, 1, 2, 3, (short) 34),
 			new EntityVelocityMessage(1, 2, 3, 4),
 			new DestroyEntityMessage(2),
 			new CreateEntityMessage(2),
@@ -158,7 +158,7 @@ public class VanillaProtocolTest {
 			new EntityMetadataMessage(1, TEST_PARAMS),
 			new EntityEffectMessage(1, EntityEffect.BLINDNESS.getId(), (byte) 1, (short) 34),
 			new EntityRemoveEffectMessage(1, EntityEffect.BLINDNESS.getId()),
-			new ExperienceMessage(1.2F, (short) 2, (short) 3),
+			new SetExperienceMessage(1.2F, (short) 2, (short) 3),
 			new LoadChunkMessage(0, -2, true),
 			new CompressedChunkMessage(1, 2, true, new boolean[16], 1, new byte[][]{new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null, null, null, null, null, new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null}, new byte[16 * 16]),
 			new MultiBlockChangeMessage(2, 3, new short[]{2, 3, 4, /**/ 3, 6, 4, /**/ 8, 5, 5}, new short[]{1, 2, 3}, new byte[]{3, 4, 5}),
@@ -166,7 +166,7 @@ public class VanillaProtocolTest {
 			new BlockActionMessage(1, 2, 3, (byte) 4, (byte) 5),
 			new ExplosionMessage(3, 4, 5, 24, new byte[]{1, 2, 3, 1, 1, 2, 1, 1, 1}),
 			new PlayEffectMessage(34566, 1, 2, 34, 5),
-			new StateChangeMessage(StateChangeMessage.CHANGE_GAME_MODE, GameMode.CREATIVE),
+			new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, GameMode.CREATIVE),
 			new SpawnLightningStrikeMessage(34, 1, 23, 45, 55),
 			new OpenWindowMessage(1, 2, "container.furnace", 42),
 			new CloseWindowMessage(23),
@@ -178,7 +178,7 @@ public class VanillaProtocolTest {
 			new CreativeMessage((short) 1, (short) 2, (short) 3, (short) 4, null),
 			new EnchantItemMessage(2, 3),
 			new UpdateSignMessage(1, 2, 3, new String[]{"This", "is", "a", "sign"}),
-			new MapDataMessage((short) 1, (short) 2, new byte[]{2, 3, 8, 127, 123}),
+			new ItemDataMessage((short) 1, (short) 2, new byte[]{2, 3, 8, 127, 123}),
 			new TileEntityDataMessage(23, 45, 903, 1, 98, 0, 0),
 			new StatisticMessage(1, (byte) 5),
 			new PlayerListMessage("Player", true, (short) 23),

@@ -23,35 +23,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.controller.object;
+package org.spout.vanilla.protocol.bootstrap.handler;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.entity.Entity;
-import org.spout.api.protocol.EntityProtocol;
-import org.spout.api.protocol.Message;
+import org.spout.api.event.Event;
+import org.spout.api.event.player.PlayerConnectEvent;
+import org.spout.api.player.Player;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.SpawnDroppedItemMessage;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 
-public class PickupEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
+public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginRequestMessage> {
 	@Override
-	public Message[] getSpawnMessage(Entity entity) {
-		Controller c = entity.getController();
-		if (c == null) {
-			return null;
+	public void handle(Session session, Player player, LoginRequestMessage message) {
+		if (message.getId() > VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
+			session.disconnect("Outdated server!", false);
 		}
-		int id = entity.getId();
-		int x = (int) (entity.getPosition().getX() * 32);
-		int y = (int) (entity.getPosition().getY() * 32);
-		int z = (int) (entity.getPosition().getZ() * 32);
-		int r = (int) (entity.getYaw() * 32);
-		int p = (int) (entity.getPitch() * 32);
-		if (c instanceof Item) {
-			Item pi = (Item) c;
-			return new Message[]{new SpawnDroppedItemMessage(id, (int) pi.getMaterial().getId(), pi.getAmount(), pi.getData(), x, y, z, r, p, pi.getRoll())};
+		if (message.getId() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
+			session.disconnect("Outdated client!", false);
 		}
-
-		return null;
+		Event event = new PlayerConnectEvent(session, message.getName());
+		session.getGame().getEventManager().callEvent(event);
 	}
 }

@@ -23,35 +23,34 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.controller.object;
+package org.spout.vanilla.protocol.msg;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.entity.Entity;
-import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.SpawnDroppedItemMessage;
+public final class UpdateHealthMessage extends Message {
+	private final short health, food;
+	private final float foodSaturation;
 
-public class PickupEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
+	public UpdateHealthMessage(short health, short food, float foodSaturation) {
+		this.health = health;
+		this.food = food;
+		this.foodSaturation = foodSaturation;
+	}
+
+	public short getHealth() {
+		return health;
+	}
+
+	public short getFood() {
+		return food;
+	}
+
+	public float getFoodSaturation() {
+		return foodSaturation;
+	}
+
 	@Override
-	public Message[] getSpawnMessage(Entity entity) {
-		Controller c = entity.getController();
-		if (c == null) {
-			return null;
-		}
-		int id = entity.getId();
-		int x = (int) (entity.getPosition().getX() * 32);
-		int y = (int) (entity.getPosition().getY() * 32);
-		int z = (int) (entity.getPosition().getZ() * 32);
-		int r = (int) (entity.getYaw() * 32);
-		int p = (int) (entity.getPitch() * 32);
-		if (c instanceof Item) {
-			Item pi = (Item) c;
-			return new Message[]{new SpawnDroppedItemMessage(id, (int) pi.getMaterial().getId(), pi.getAmount(), pi.getData(), x, y, z, r, p, pi.getRoll())};
-		}
-
-		return null;
+	public String toString() {
+		return "PlayerHealthMessage{health=" + health + ",food=" + food + ",foodSaturation=" + foodSaturation + "}";
 	}
 }

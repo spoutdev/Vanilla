@@ -29,7 +29,7 @@ import org.spout.api.protocol.CodecLookupService;
 import org.spout.api.protocol.common.codec.CustomDataCodec;
 
 import org.spout.vanilla.protocol.codec.HandshakeCodec;
-import org.spout.vanilla.protocol.codec.IdentificationCodec;
+import org.spout.vanilla.protocol.codec.LoginRequestCodec;
 import org.spout.vanilla.protocol.codec.KickCodec;
 import org.spout.vanilla.protocol.codec.ServerListPingCodec;
 
@@ -38,7 +38,7 @@ public class VanillaBootstrapCodecLookupService extends CodecLookupService {
 		super();
 		try {
 			/* 0x01 */
-			bind(IdentificationCodec.class);
+			bind(LoginRequestCodec.class);
 			/* 0x02 */
 			bind(HandshakeCodec.class);
 			/* 0xFA */

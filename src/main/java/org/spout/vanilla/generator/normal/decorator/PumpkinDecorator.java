@@ -30,20 +30,20 @@ import java.util.Random;
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * Decorator that decorates a biome with pumpkins.
  */
 public class PumpkinDecorator implements BiomeDecorator {
-
 	// Control how many pumpkins per patch
 	private static final byte BASE_AMOUNT = 1;
 	private static final byte RAND_AMOUNT = 8;
 	// Offset from main point control
-    private static final byte RAND_X = 8;
-    private static final byte RAND_Z = 8;
-	
+	private static final byte RAND_X = 8;
+	private static final byte RAND_Z = 8;
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() < 4) {

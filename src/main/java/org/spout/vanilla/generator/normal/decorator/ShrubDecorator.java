@@ -32,15 +32,15 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class ShrubDecorator implements BiomeDecorator {
-
 	// How many shrub decorations per chunk
 	private static final byte AMOUNT = 1;
 	// Control the size of the shrubs (pyramids, basically)
 	private static final byte SIZE = 2;
-	
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() < 4) {

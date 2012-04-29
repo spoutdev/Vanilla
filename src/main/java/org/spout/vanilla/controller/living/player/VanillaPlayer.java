@@ -243,8 +243,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	/**
 	 * Sets the position of player's compass target.
 	 * @param compassTarget The new compass target position
-	 *
-	 * @param compassTarget
 	 */
 	public void setCompassTarget(Point compassTarget) {
 		this.compassTarget = compassTarget;

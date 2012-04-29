@@ -32,7 +32,10 @@ import org.spout.vanilla.controller.action.WanderAction;
 import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 
 public abstract class Living extends VanillaActionController {
-	private int headYaw = 0, headYawLive = 0;
+	private final static double HEAD_YAW_SCALING = 256.0/360;
+	private int headYaw = 0;
+	private int lastHeadYaw = 0;
+	private int nextHeadYaw = 0;
 
 	protected Living(VanillaControllerType type) {
 		super(type);
@@ -49,18 +52,28 @@ public abstract class Living extends VanillaActionController {
 	public void onTick(float dt) {
 		super.onTick(dt);
 
-		if (headYawLive != headYaw) {
-			headYawLive = headYaw;
+		headYaw = calculateHeadYaw();
+		if (lastHeadYaw != headYaw) {
+			lastHeadYaw = headYaw;
 			broadcastPacket(new EntityHeadYawMessage(getParent().getId(), headYaw));
 		}
 	}
 
+	private int calculateHeadYaw() {
+		if (nextHeadYaw == 0) {
+			nextHeadYaw = (int) (getParent().getYaw() * HEAD_YAW_SCALING);
+		}
+		int tmp = nextHeadYaw;
+		nextHeadYaw = 0;
+		return tmp;
+	}
+
 	/**
-	 * Sets the yaw of a controller's head.
+	 * Sets the yaw of a controller's head for the next tick.
 	 * @param headYaw
 	 */
-	public void setHeadYaw(int headYaw) {
-		headYawLive = headYaw;
+	public void setHeadYaw(int yaw) {
+		this.nextHeadYaw = yaw;
 	}
 
 	public int getHeadYaw() {

@@ -52,97 +52,89 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		this.message = message;
 
 		Entity entity = player.getEntity();
-		VanillaPlayer vplayer = (VanillaPlayer) entity.getController();
-		Inventory inventory = vplayer.getActiveInventory();
+		VanillaPlayer controller = (VanillaPlayer) entity.getController();
+		Inventory inventory = controller.getActiveInventory();
 		if (inventory == null) {
 			inventory = entity.getInventory();
 		}
 
 		if (message.getSlot() == 64537) {
-			vplayer.setItemOnCursor(null);
-			//TODO drop
+			controller.setItemOnCursor(null);
+			//TODO drop item
 			respond(true);
 			return;
 		}
 
 		int clickedSlot = VanillaMessageHandlerUtils.getSpoutInventorySlot(inventory, message.getSlot());
 		System.out.println("Clicked: " + clickedSlot);
-		String errorMsg = "";
-		Object errorParams = null;
 		if (clickedSlot < 0) {
-			errorMsg = "Got invalid inventory slot {0} from {1}";
-			errorParams = new Object[]{message.getSlot(), player.getName()};
-		} else if (!vplayer.isSurvival() && message.getWindowId() == VanillaMessageHandlerUtils.getInventoryId(inventory.getClass())) {
-			errorMsg = "{0} tried to do an invalid inventory action in Creative mode!";
-			errorParams = new Object[]{player.getName()};
-		}
-
-		if (!errorMsg.equals("")) {
-			session.getGame().getLogger().log(Level.WARNING, errorMsg, errorParams);
+			System.out.println("Error: Invalid slot");
 			respond(false);
 			return;
 		}
 
 		ItemStack slotStack = inventory.getItem(clickedSlot);
-		ItemStack cursorStack = vplayer.getItemOnCursor();
-		boolean emptyCursor = cursorStack == null;
-		boolean emptySlot = slotStack == null;
-		boolean neitherIsEmpty = !emptySlot && !emptyCursor;
-		boolean leftClick = !message.isRightClick();
+		ItemStack cursorStack = controller.getItemOnCursor();
 
-		// Determine action
-		if (emptyCursor && emptySlot) {
-			// Do Nothing!
-		} else if (message.isShift()) {
-			// Ignore cursorStack; move slotStack to/from inventory if it exists.
-			if (!emptySlot) {
-				moveStackToFromQuickbar(inventory, clickedSlot, player);
-				slotStack = null;
-			}
-		} else if (leftClick && !neitherIsEmpty || (neitherIsEmpty && !cursorStack.equalsIgnoreSize(slotStack))) {
-			// Left click with one side empty OR two different types of stacks => Swap stack positions!
-			ItemStack tmp = slotStack;
-			slotStack = cursorStack;
-			cursorStack = tmp;
-		} else if (emptyCursor) {
-			// Empty handed right-click on stack: Split stack
-			cursorStack = splitStack(slotStack);
-		} else {
-			// Clicked while holding something, move items from cursorStack
-			int amountToMove = cursorStack.getAmount();
-			if (!leftClick) {
-				// Move 1 item from cursor to slot (slotStack can only be null if right-click).
-				if (slotStack == null) {
-					slotStack = cursorStack.clone();
-					slotStack.setAmount(0);
+		if (message.isShift()) {
+			if (!message.isRightClick()) {
+				if (slotStack != null) {
+					// Move from hot-bar to inventory, or vice-versa
+					quickMoveStack(inventory, clickedSlot, player);
+					slotStack = null;
 				}
-				amountToMove = 1;
+			} else {
+				// TODO: Shift click right click does what?
 			}
-
-			mergeStack(cursorStack, slotStack, amountToMove, true);
-		}
-
-		if (emptyCursor && !emptySlot && leftClick) {
-			slotStack = null;
+		} else {
+			if (!message.isRightClick()) {
+				if (cursorStack != null) {
+					if (slotStack != null) {
+						if (!cursorStack.equalsIgnoreSize(slotStack)) {
+							// Swap stacks
+							slotStack = cursorStack;
+							cursorStack = slotStack;
+						} else {
+							// Try to fill slot stacks
+							mergeStack(cursorStack, slotStack, cursorStack.getAmount(), true);
+						}
+					} else {
+						// Put cursor in empty slot
+						slotStack = cursorStack;
+						cursorStack = null;
+					}
+				}
+			} else {
+				if (cursorStack != null) {
+					if (slotStack != null) {
+						if (cursorStack.equalsIgnoreSize(slotStack)) {
+							// Dispose one of the stack into the slot stack.
+							mergeStack(cursorStack, slotStack, 1, true);
+						}
+					} else {
+						// Dispose on of the stack into the empty slot.
+						cursorStack.setAmount(cursorStack.getAmount() - 1);
+						slotStack = new ItemStack(cursorStack.getMaterial(), 1);
+					}
+				} else  if (slotStack != null) {
+					// Split the stack
+					int amount = slotStack.getAmount() / 2;
+					slotStack.setAmount(amount);
+					cursorStack = new ItemStack(slotStack.getMaterial(), amount);
+				}
+			}
 		}
 
 		cursorStack = nullIfEmpty(cursorStack);
 		slotStack = nullIfEmpty(slotStack);
-		vplayer.setItemOnCursor(cursorStack);
+		controller.setItemOnCursor(cursorStack);
 		inventory.setItem(slotStack, clickedSlot);
 		respond(true);
 	}
 
-	private ItemStack splitStack(ItemStack stack) {
-		ItemStack newStack = stack.clone();
-		newStack.setAmount(0);
-		mergeStack(stack, newStack, (stack.getAmount() + 1) / 2, true);
-		return newStack;
-	}
-
-	private int mergeStack(ItemStack from, ItemStack to, int count, boolean tryToFill) {
+	private void mergeStack(ItemStack from, ItemStack to, int count, boolean tryToFill) {
 		if (from == null || to == null) {
-			return 0;
+			return;
 		}
 
 		int fromAmount = from.getAmount();
@@ -150,7 +142,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		int toFreeSpace = to.getMaterial().getMaxStackSize() - toAmount;
 
 		if (count <= 0 || !tryToFill && (fromAmount < count || toFreeSpace < count)) {
-			return 0;
+			return;
 		}
 
 		if (tryToFill) {
@@ -160,14 +152,13 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 
 		from.setAmount(fromAmount - count);
 		to.setAmount(toAmount + count);
-		return count;
 	}
 
 	private ItemStack nullIfEmpty(ItemStack s) {
 		return (s != null && s.getAmount() == 0) ? null : s;
 	}
 
-	private void moveStackToFromQuickbar(Inventory inv, int pos, Player player) {
+	private void quickMoveStack(Inventory inv, int pos, Player player) {
 		ItemStack theStack = inv.getItem(pos);
 		// Assume item is in quick-bar.
 		int startSlot = 0, stopSlot = 8;

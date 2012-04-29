@@ -61,7 +61,7 @@ public class PumpkinDecorator implements BiomeDecorator {
 			final int pz = z + (random.nextBoolean() ? random.nextInt(RAND_Z) : -random.nextInt(RAND_Z));
 			final int py = getHighestWorkableBlock(world, px, pz);
 			if (canPlacePumpkin(world, px, py, pz)) {
-				world.setBlockMaterial(px, py, pz, VanillaMaterials.PUMPKIN, (short) random.nextInt(4), false, world);
+				world.getBlock(px, py, pz).setMaterial(VanillaMaterials.PUMPKIN, (short) random.nextInt(4));
 			}
 		}
 	}

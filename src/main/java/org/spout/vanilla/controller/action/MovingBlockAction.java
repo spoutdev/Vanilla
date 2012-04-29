@@ -48,7 +48,7 @@ public class MovingBlockAction extends EntityAction<MovingBlock> {
 	public void run(Entity entity, MovingBlock controller, float dt) {
 		Point pos = entity.getPosition();
 		Block block = pos.getWorld().getBlock(pos);
-		if (block.clone().move(BlockFace.BOTTOM).getMaterial().isSolid()) {
+		if (block.translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
 			BlockMaterial mat = controller.getBlock();
 			short data = mat.getData();
 			//can we place here?

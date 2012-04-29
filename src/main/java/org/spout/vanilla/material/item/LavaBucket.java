@@ -23,36 +23,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.item;
 
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.FurnaceFuel;
+import org.spout.vanilla.material.item.generic.EmptyContainer;
+import org.spout.vanilla.material.item.generic.FullContainer;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
+public class LavaBucket extends FullContainer implements FurnaceFuel {
 
-public class Snow extends Solid {
-	public Snow() {
-		super("Snow", 78);
-		this.setOpacity((byte) 0);
+	public LavaBucket(String name, int id, BlockMaterial onPlaceMaterial, EmptyContainer emptyContainer) {
+		super(name, id, onPlaceMaterial, emptyContainer);
 	}
 
 	@Override
-	public boolean isPlacementObstacle() {
-		return false;
-	}
-
-	@Override
-	public boolean hasPhysics() {
-		return true;
-	}
-
-	@Override
-	public void onUpdate(Block block) {
-		BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial(); 
-		if (below.getMaterial() == VanillaMaterials.AIR) {
-			block.setMaterial(VanillaMaterials.AIR).update(true);
-		}
+	public int getFuelTicks() {
+		return 20000;
 	}
 }

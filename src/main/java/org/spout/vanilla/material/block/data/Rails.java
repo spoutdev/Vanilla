@@ -25,12 +25,13 @@
  */
 package org.spout.vanilla.material.block.data;
 
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 import org.spout.api.material.source.MaterialData;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.MinecartTrackBase;
 import org.spout.vanilla.util.RailsState;
 
 //TODO still not very happy about this,  perhaps VanillaMaterialData, and put rails in a separate package, block.data.rails?
@@ -98,13 +99,14 @@ public class Rails implements MaterialData {
 	}
 
 	@Override
-	public void setData(short data) {
+	public Rails setData(short data) {
 		RailsState state = RailsState.get(data);
 		if (state == null) {
 			throw new IllegalArgumentException("Invalid rails block data: " + data);
 		} else {
 			this.setState(state);
 		}
+		return this;
 	}
 
 	@Override
@@ -112,12 +114,23 @@ public class Rails implements MaterialData {
 		return this.state.getData();
 	}
 
-	public BlockMaterial getMaterial() {
+	@Override
+	public MinecartTrackBase getMaterial() {
 		return VanillaMaterials.RAILS;
 	}
 
 	@Override
-	public void setData(DataSource datasource) {
-		this.setData(datasource.getData());
+	public Rails setData(DataSource datasource) {
+		return this.setData(datasource.getData());
+	}
+
+	@Override
+	public Material getSubMaterial() {
+		return this.getMaterial().getSubMaterial(this.getData());
+	}
+
+	@Override
+	public Rails createData() {
+		return this.getMaterial().createData(this.getData());
 	}
 }

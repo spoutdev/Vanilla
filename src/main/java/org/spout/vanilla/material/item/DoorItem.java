@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.material.item;
 
-import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
@@ -35,6 +34,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.DoorBlock;
 import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
@@ -58,18 +58,21 @@ public class DoorItem extends VanillaItemMaterial {
 		int z = (int) position.getZ();
 		Block b = world.getBlock(x, y - 1, z);
 
-		if (b.getMaterial() instanceof Solid && b.move(BlockFace.TOP).getMaterial() == VanillaMaterials.AIR && b.move(BlockFace.TOP).getMaterial() == VanillaMaterials.AIR) {
+		if (b.getMaterial() instanceof Solid && (b = b.translate(BlockFace.TOP)).getMaterial() == VanillaMaterials.AIR && (b = b.translate(BlockFace.TOP)).getMaterial() == VanillaMaterials.AIR) {
 			System.out.println("Placing door!");
 		}
 		/*
 		 * Formula kinda copied from minecraft source
+		 * - and that is terrible...this needs more functions!
+		 * * Entity yaw to blockface
+		 * * Blockface to sub-door-material ('hinge?')
 		 */
 		short hinge = (short) ((MathHelper.floor((double) ((entity.getYaw() + 180F) * 4F) - 0.5)) & 3);
-		placeDoorBlock(world, x, y, z, hinge, doorBlock, entity);
+		placeDoorBlock(world.getBlock(x, y, z, entity), hinge, doorBlock);
 	}
 
-	public static void placeDoorBlock(World world, int x, int y, int z, short hinge, DoorBlock doorBlock, Source source) {
-		world.setBlockMaterial(x, y, z, doorBlock, hinge, false, source);
-		world.setBlockMaterial(x, y + 1, z, doorBlock, (short) (hinge | 0x8), false, source);
+	public static void placeDoorBlock(Block block, short hinge, DoorBlock doorBlock) {
+		block.setMaterial(doorBlock, hinge);
+		block.translate(BlockFace.TOP).setMaterial(doorBlock, (short) (hinge | 0x8));
 	}
 }

@@ -66,15 +66,15 @@ public class TreeDecorator implements BiomeDecorator {
 		World w = c.getWorld();
 		Block b = w.getBlock(cx, cy + height, cz);
 		b.setMaterial(VanillaMaterials.LEAVES);
-		b.clone().move(BlockFace.NORTH).setMaterial(VanillaMaterials.LEAVES);
-		b.clone().move(BlockFace.EAST).setMaterial(VanillaMaterials.LEAVES);
-		b.clone().move(BlockFace.SOUTH).setMaterial(VanillaMaterials.LEAVES);
-		b.clone().move(BlockFace.WEST).setMaterial(VanillaMaterials.LEAVES);
+		b.translate(BlockFace.NORTH).setMaterial(VanillaMaterials.LEAVES);
+		b.translate(BlockFace.EAST).setMaterial(VanillaMaterials.LEAVES);
+		b.translate(BlockFace.SOUTH).setMaterial(VanillaMaterials.LEAVES);
+		b.translate(BlockFace.WEST).setMaterial(VanillaMaterials.LEAVES);
 
 		for (int k = 1; k <= oneWidth; k++) {
 			for (int i = -1; i <= 1; i++) {
 				for (int j = -1; j <= 1; j++) {
-					Block bc = b.clone().move(i, -k, j);
+					Block bc = b.translate(i, -k, j);
 					if (bc.getMaterial() == VanillaMaterials.AIR || bc == VanillaMaterials.LEAVES) {
 						bc.setMaterial(VanillaMaterials.LEAVES);
 					}
@@ -85,7 +85,7 @@ public class TreeDecorator implements BiomeDecorator {
 			for (int i = -2; i <= 2; i++) {
 				for (int j = -2; j <= 2; j++) {
 					if (!(j == 2 && i == 2) && !(j == -2 && i == 2) && !(j == 2 && i == -2) && !(j == -2 && i == -2)) {
-						Block bc = b.clone().move(i, -k, j);
+						Block bc = b.translate(i, -k, j);
 						if (bc.getMaterial() == VanillaMaterials.AIR || bc.getMaterial() == VanillaMaterials.LEAVES) {
 							bc.setMaterial(VanillaMaterials.LEAVES);
 						}
@@ -94,7 +94,7 @@ public class TreeDecorator implements BiomeDecorator {
 			}
 		}
 		for (int i = 0; i < height; i++) {
-			b.move(BlockFace.BOTTOM).setMaterial(VanillaMaterials.LOG);
+			b = b.translate(BlockFace.BOTTOM).setMaterial(VanillaMaterials.LOG);
 		}
 	}
 

@@ -74,12 +74,12 @@ public class SpireDecorator implements BiomeDecorator {
 			for (byte zz = (byte) -radius; zz <= diameter; zz++) {
 				if (xx * xx + zz * zz <= radiusSquare) {
 					for (byte yy = 0; yy < height; yy++) {
-						world.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.OBSIDIAN, (short) 0, true, world);
+						world.getBlock(x + xx, y + yy, z + zz).setMaterial(VanillaMaterials.OBSIDIAN).update(true);
 					}
 				}
 			}
 		}
-		world.setBlockMaterial(x, y + height, z, VanillaMaterials.BEDROCK, (short) 0, true, world);
+		world.getBlock(x, y + height, z).setMaterial(VanillaMaterials.BEDROCK).update(true);
 		spawnEnderCrystal((float) x + 0.5f, y + height, (float) z + 0.5f);
 	}
 

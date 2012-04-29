@@ -29,7 +29,7 @@ import org.spout.api.Source;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
-import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
@@ -48,9 +48,9 @@ public class Furnace extends Solid {
 	}
 
 	@Override
-	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
-		if (super.onPlacement(world, x, y, z, data, against, source)) {
-			world.createAndSpawnEntity(new Point(world, x, y, z), new FurnaceController());
+	public boolean onPlacement(Block block, short data, BlockFace against, Source source) {
+		if (super.onPlacement(block, data, against, source)) {
+			block.getWorld().createAndSpawnEntity(block.getPosition(), new FurnaceController());
 			return true;
 		}
 

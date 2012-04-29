@@ -14,7 +14,7 @@
  *
  * Vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PUR	POSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
@@ -23,36 +23,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.item;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.FurnaceFuel;
+import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
+public class BlazeRod extends VanillaItemMaterial implements FurnaceFuel {
 
-public class Snow extends Solid {
-	public Snow() {
-		super("Snow", 78);
-		this.setOpacity((byte) 0);
+	public BlazeRod(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
-	public boolean isPlacementObstacle() {
-		return false;
-	}
-
-	@Override
-	public boolean hasPhysics() {
-		return true;
-	}
-
-	@Override
-	public void onUpdate(Block block) {
-		BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial(); 
-		if (below.getMaterial() == VanillaMaterials.AIR) {
-			block.setMaterial(VanillaMaterials.AIR).update(true);
-		}
+	public int getFuelTicks() {
+		return 2400;
 	}
 }

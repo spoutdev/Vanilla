@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.material.block.redstone;
 
-import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
@@ -46,25 +46,29 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	}
 
 	@Override
-	public boolean providesAttachPoint(World world, int x, int y, int z, int tx, int ty, int tz) {
-		return ty == y;
+	public boolean providesAttachPoint(Block source, Block target) {
+		return source.getY() == target.getY();
 	}
 
 	@Override
-	public short getRedstonePower(World world, int x, int y, int z, int tx, int ty, int tz) {
-		if (providesPowerTo(world, x, y, z, tx, ty, tz)) {
+	public short getRedstonePower(Block source, Block target) {
+		if (providesPowerTo(source, target)) {
 			return (short) (powered ? REDSTONE_POWER : 0);
 		}
 		return 0;
 	}
 
 	@Override
-	public boolean providesPowerTo(World world, int x, int y, int z, int tx, int ty, int tz) {
-		if (y == ty) {
+	public boolean providesPowerTo(Block source, Block target) {
+		if (source.getY() == target.getY()) {
 			return true;
 		}
-		if (tx == x && tz == z) {
-			return tx - x == -2 || tx - x == 1;
+		if (source.getX() == target.getX() && source.getZ() == target.getZ()) {
+			//1 below or two above this block?
+			//TODO: THIS NEEDS A SERIOUS REDO GUIZ!
+			//Instead, it should power the block wire is attached to
+			//it doesn't provide power to the wire!
+			return Math.abs(target.getY() - source.getY()) == 1;
 		}
 		return false;
 	}
@@ -75,20 +79,20 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	}
 
 	@Override
-	public void onUpdate(World world, int x, int y, int z) {
-		super.onUpdate(world, x, y, z);
+	public void onUpdate(Block block) {
+		super.onUpdate(block);
 		if (!VanillaConfiguration.REDSTONE_PHYSICS.getBoolean()) {
 			return;
 		}
 
-		BlockFace face = getFaceAttachedTo(world.getBlockData(x, y, z));
-		Vector3 offset = face.getOffset();
-		int tx = (int) (x + offset.getX()), ty = (int) (y + offset.getY()), tz = (int) (z + offset.getZ());
-		BlockMaterial mat = world.getBlockMaterial(tx, ty, tz);
+		BlockFace face = getFaceAttachedTo(block.getData());
+		Block tblock = block.translate(face);
+		
+		BlockMaterial mat = tblock.getMaterial();
 		if (mat instanceof VanillaBlockMaterial) {
 			BlockMaterial newmat;
 			VanillaBlockMaterial va = (VanillaBlockMaterial) mat;
-			if (va.getIndirectRedstonePower(world, tx, ty, tz) > 0) {
+			if (va.getIndirectRedstonePower(tblock) > 0) {
 				//Power off.
 				newmat = VanillaMaterials.REDSTONE_TORCH_OFF;
 			} else {
@@ -96,18 +100,15 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 				newmat = VanillaMaterials.REDSTONE_TORCH_ON;
 			}
 			if (newmat != this) {
-				short data = world.getBlockData(x, y, z);
-				world.setBlockMaterial(x, y, z, newmat, data, false, world);
+				short data = block.getData();
+				block.setMaterial(newmat, data);
 
 				//Update other redstone inputs
 				for (Vector3 offset2 : possibleOutgoing) {//TODO changed the values below from offset to offset2
-					tx = (int) (x + offset2.getX());
-					ty = (int) (y + offset2.getY());
-					tz = (int) (z + offset2.getZ());
-					mat = world.getBlockMaterial(tx, ty, tz);
+					tblock = block.translate(offset2);
+					mat = tblock.getMaterial();
 					if (mat instanceof RedstoneTarget) {
-						world.updatePhysics(tx, ty, tz);
-						//mat.updatePhysics(world, tx, ty, tz);
+						tblock.update(false);
 					}
 				}
 			}

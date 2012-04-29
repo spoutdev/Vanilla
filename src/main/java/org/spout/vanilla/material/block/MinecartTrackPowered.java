@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.material.block.data.PoweredRails;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
@@ -41,7 +41,7 @@ public class MinecartTrackPowered extends MinecartTrackBase implements RedstoneT
 	}
 
 	@Override
-	public boolean providesAttachPoint(World world, int x, int y, int z, int tx, int ty, int tz) {
+	public boolean providesAttachPoint(Block source, Block target) {
 		// TODO Auto-generated method stub
 		return false;
 	}

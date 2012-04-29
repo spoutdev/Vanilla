@@ -26,7 +26,6 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.Source;
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
@@ -62,19 +61,19 @@ public class Slab extends Solid {
 	}
 
 	@Override
-	public boolean onPlacement(World world, int x, int y, int z, short data, BlockFace against, Source source) {
+	public boolean onPlacement(Block block, short data, BlockFace against, Source source) {
 		if (against == BlockFace.BOTTOM) {
-			Block below = world.getBlock(x, y, z).move(against);
+			Block below = block.translate(against);
 			if (below.getMaterial() == this.getParentMaterial() && below.getData() == data) {
 				//we are stacking on top of another of the same type
 				//turn this block into the double type
 				Material slab = this.getSubMaterial(data);
 				if (slab != null && slab instanceof Slab) {
-					below.setBlock(((Slab) slab).doubletype);
+					below.setMaterial(((Slab) slab).doubletype).update(true);
 					return true;
 				}
 			}
 		}
-		return super.onPlacement(world, x, y, z, data, against, source);
+		return super.onPlacement(block, data, against, source);
 	}
 }

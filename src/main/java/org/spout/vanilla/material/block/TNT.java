@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
@@ -42,18 +42,18 @@ public class TNT extends Solid {
 		return true;
 	}
 
-	public void onIgnite(World world, int x, int y, int z) {
-		world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, world);
+	public void onIgnite(Block block) {
+		block.setMaterial(VanillaMaterials.AIR).update(true);
 		//spawn a primed TNT
-		Point point = new Point(world, (float) x + 0.5f, (float) y + 0.5f, (float) z + 0.5f);
-		world.createAndSpawnEntity(point, new PrimedTnt());
+		Point point = block.getPosition();
+		point.getWorld().createAndSpawnEntity(point, new PrimedTnt());
 	}
 
 	@Override
-	public void onUpdate(World world, int x, int y, int z) {
-		super.onUpdate(world, x, y, z);
-		if (this.getIndirectRedstonePower(world, x, y, z) > 0) {
-			this.onIgnite(world, x, y, z);
+	public void onUpdate(Block block) {
+		super.onUpdate(block);
+		if (this.getIndirectRedstonePower(block) > 0) {
+			this.onIgnite(block);
 		}
 	}
 }

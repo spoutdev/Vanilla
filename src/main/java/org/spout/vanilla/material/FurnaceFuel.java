@@ -23,36 +23,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
+public interface FurnaceFuel {
+	
+	/**
+	 * Gets the amount of ticks a furnace can run using this material as fuel
+	 */
+	public int getFuelTicks();
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
-
-public class Snow extends Solid {
-	public Snow() {
-		super("Snow", 78);
-		this.setOpacity((byte) 0);
-	}
-
-	@Override
-	public boolean isPlacementObstacle() {
-		return false;
-	}
-
-	@Override
-	public boolean hasPhysics() {
-		return true;
-	}
-
-	@Override
-	public void onUpdate(Block block) {
-		BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial(); 
-		if (below.getMaterial() == VanillaMaterials.AIR) {
-			block.setMaterial(VanillaMaterials.AIR).update(true);
-		}
-	}
 }

@@ -68,29 +68,9 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			}
 			PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, new Point(world, x, y, z), player.getEntity().getInventory().getCurrentItem(), PlayerInteractEvent.Action.LEFT_CLICK, isAir);
 			eventManager.callEvent(interactEvent);
-			if (interactEvent.isCancelled()) {
+			if (interactEvent.isCancelled() || isAir) {
 				return;
 			}
-
-			if (isAir) {
-				return;
-			}
-			/*if (interactEvent.useItemInHand() != Event.Result.DENY) { //TODO: Interactivity!
-				SpoutItemStack heldItem = player.getItemInHand();
-				if (heldItem != null && heldItem.getTypeId() > 255) {
-					ItemProperties props = ItemProperties.get(heldItem.getTypeId());
-					if (props != null) {
-						if (!props.getPhysics().interact(player, block, heldItem, Action.LEFT_CLICK_BLOCK, face)) {
-							return;
-						}
-					}
-				}
-			}
-			if (interactEvent.useInteractedBlock() != Event.Result.DENY) {
-				if (!BlockProperties.get(block.getTypeId()).getPhysics().interact(player, block, false, face)) {
-					return;
-				}
-			}*/
 			if (player.getEntity().getController() instanceof VanillaPlayer && !((VanillaPlayer) player.getEntity().getController()).isSurvival()) {
 				blockBroken = true;
 			}
@@ -108,15 +88,15 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 		if (blockBroken) {
 			BlockMaterial oldMat = world.getBlockMaterial(x, y, z);
-			oldMat.onDestroy(world, x, y, z);
 			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, player);
+			oldMat.onDestroy(world, x, y, z);
 
 			if (player.getEntity().getController() instanceof VanillaPlayer && ((VanillaPlayer) player.getEntity().getController()).isSurvival()) {
 				Material dropMat = oldMat;
 				int count = 1;
 				if (oldMat instanceof VanillaBlockMaterial) {
 					VanillaBlockMaterial blockMat = (VanillaBlockMaterial) oldMat;
-					dropMat = Material.get((short) blockMat.getDrop().getId());
+					dropMat = Material.get(blockMat.getDrop().getId());
 					count = blockMat.getDropCount();
 				}
 

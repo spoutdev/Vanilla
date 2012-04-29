@@ -28,18 +28,24 @@ package org.spout.vanilla.material.block;
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 
+import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class Ice extends Solid implements Source {
+public class Ice extends Solid {
 	public Ice() {
 		super("Ice", 79);
 	}
 
 	@Override
 	public void onDestroy(World world, int x, int y, int z) {
-		if (world.getBlockMaterial(x, y - 1, z) != VanillaMaterials.AIR) {
-			world.setBlockMaterial(x, y, z, VanillaMaterials.STATIONARY_WATER, (short) 0, true, (Source) this);
+		/*
+		 * Only let ice break into water if the world isn't a nether generated world
+		 * or there isn't air under the material.
+		 */
+		if (!(world.getGenerator() instanceof NetherGenerator) || world.getBlockMaterial(x, y - 1, z) != VanillaMaterials.AIR) {
+			//TODO Setting the source to world correct?
+			world.setBlockMaterial(x, y, z, VanillaMaterials.STATIONARY_WATER, (short) 0, true, world);
 		}
 	}
 }

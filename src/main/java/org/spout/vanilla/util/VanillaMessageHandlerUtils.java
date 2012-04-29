@@ -127,6 +127,7 @@ public class VanillaMessageHandlerUtils {
 		if (result == INVENTORY_MAPPING.getNoEntryValue()) {
 			result = 0;
 		}
+
 		return (byte) result;
 	}
 }

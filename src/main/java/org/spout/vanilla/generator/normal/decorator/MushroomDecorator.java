@@ -81,7 +81,7 @@ public class MushroomDecorator implements BiomeDecorator {
 
 	@SuppressWarnings("unused")
 	private void generateMushroom(Chunk c, Random ra, int cx, int cy, int cz) {
-		c.setBlockMaterial(cx, cy, cz, getRandomMushroomType(ra, false), (short) 0, true, c.getWorld());
+		c.getBlock(cx, cy, cz).setMaterial(getRandomMushroomType(ra, false)).update(true);
 	}
 
 	@SuppressWarnings("unused")
@@ -96,7 +96,7 @@ public class MushroomDecorator implements BiomeDecorator {
 		if (!canPlaceMushroom(world, x, y - 1, z)) {
 			return;
 		}
-		world.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, true, world);
+		world.getBlock(x, y - 1, z).setMaterial(VanillaMaterials.DIRT).update(true);
 		if (type == VanillaMaterials.HUGE_BROWN_MUSHROOM) {
 			generateHugeBrownMushroom(world, x, z, y, height);
 		} else if (type == VanillaMaterials.HUGE_RED_MUSHROOM) {
@@ -122,12 +122,12 @@ public class MushroomDecorator implements BiomeDecorator {
 						}
 					}
 					short data = getRedMushroomCapData(x, y, z, xx, yy, zz, height, capSize);
-					world.setBlockMaterial(xx, yy, zz, VanillaMaterials.HUGE_RED_MUSHROOM, data, false, world);
+					world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.HUGE_RED_MUSHROOM, data);
 				}
 			}
 		}
 		for (int yy = y; yy < height + y; yy++) { // generate stem
-			world.setBlockMaterial(x, yy, z, VanillaMaterials.HUGE_RED_MUSHROOM, (byte) 10, false, world);
+			world.getBlock(x, yy, z).setMaterial(VanillaMaterials.HUGE_RED_MUSHROOM, (short) 10);
 		}
 	}
 
@@ -143,12 +143,12 @@ public class MushroomDecorator implements BiomeDecorator {
 						continue;
 					}
 					short data = getBrownMushroomCapData(x, y, z, xx, yy, zz, height, capSize);
-					world.setBlockMaterial(xx, yy, zz, VanillaMaterials.HUGE_BROWN_MUSHROOM, data, false, world);
+					world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.HUGE_BROWN_MUSHROOM, data);
 				}
 			}
 		}
 		for (int yy = y; yy < capYStart; yy++) { // generate stem
-			world.setBlockMaterial(x, yy, z, VanillaMaterials.HUGE_BROWN_MUSHROOM, (byte) 10, false, world);
+			world.getBlock(x, yy, z).setMaterial(VanillaMaterials.HUGE_BROWN_MUSHROOM, (short) 10);
 		}
 	}
 

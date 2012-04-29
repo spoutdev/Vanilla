@@ -25,9 +25,8 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.material.block.data.Rails;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 
 public class MinecartTrack extends MinecartTrackBase implements RedstoneTarget {
@@ -41,12 +40,7 @@ public class MinecartTrack extends MinecartTrackBase implements RedstoneTarget {
 	}
 
 	@Override
-	public Rails createData(short data) {
-		return new Rails(data);
-	}
-
-	@Override
-	public boolean providesAttachPoint(World world, int x, int y, int z, int tx, int ty, int tz) {
+	public boolean providesAttachPoint(Block source, Block target) {
 		// TODO Auto-generated method stub
 		return false;
 	}

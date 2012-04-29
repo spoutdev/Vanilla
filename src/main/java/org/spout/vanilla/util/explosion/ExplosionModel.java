@@ -81,14 +81,14 @@ public abstract class ExplosionModel {
 
 			if (material == VanillaMaterials.AIR) {
 				if (fire) {
-					BlockMaterial below = block.clone().move(BlockFace.BOTTOM).getMaterial();
+					BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial();
 					if (below.isSolid() && this.random.nextInt(3) == 0) {
 						block.setMaterial(VanillaMaterials.FIRE);
 					}
 				}
 			} else if (material != VanillaMaterials.FIRE) {
 				//TODO: Item dropping yield?
-				material.onDestroy(block.getWorld(), block.getX(), block.getY(), block.getZ());
+				material.onDestroy(block);
 				block.setMaterial(VanillaMaterials.AIR);
 			}
 		}

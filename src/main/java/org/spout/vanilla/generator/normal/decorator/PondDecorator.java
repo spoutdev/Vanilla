@@ -55,10 +55,10 @@ public class PondDecorator implements BiomeDecorator {
 		for (byte px = 0; px < 16; px++) {
 			for (byte pz = 0; pz < 16; pz++) {
 				for (byte py = (byte) -waterBlocks[16 * px + pz]; py < 0; py++) {
-					world.setBlockMaterial(px + x, py + y, pz + z, VanillaMaterials.STATIONARY_WATER, (short) 0, false, world);
+					world.getBlock(px + x, py + y, pz + z).setMaterial(VanillaMaterials.STATIONARY_WATER);
 				}
 				for (byte py = 0; py < airBlocks[16 * px + pz]; py++) {
-					world.setBlockMaterial(px + x, py + y, pz + z, VanillaMaterials.AIR, (short) 0, false, world);
+					world.getBlock(px + x, py + y, pz + z).setMaterial(VanillaMaterials.AIR);
 				}
 			}
 		}
@@ -79,21 +79,21 @@ public class PondDecorator implements BiomeDecorator {
 		for (byte px = 0; px < 16; px++) {
 			for (byte pz = 0; pz < 16; pz++) {
 				for (byte py = (byte) -lavaBlocks[16 * px + pz]; py < 0; py++) {
-					world.setBlockMaterial(px + x, py + y, pz + z, VanillaMaterials.STATIONARY_LAVA, (short) 0, false, world);
+					world.getBlock(px + x, py + y, pz + z).setMaterial(VanillaMaterials.STATIONARY_LAVA);
 				}
 				for (byte py = 1; py < 5; py++) {
 					if (isWallBlock(px, py, pz, lavaBlocks)) {
-						world.setBlockMaterial(x + px, y - py, z + pz, VanillaMaterials.STONE, (short) 0, false, world);
+						world.getBlock(x + px, y - py, z + pz).setMaterial(VanillaMaterials.STONE);
 					}
 				}
 				for (byte py = 0; py < airBlocks[16 * px + pz]; py++) {
-					world.setBlockMaterial(px + x, py + y, pz + z, VanillaMaterials.AIR, (short) 0, false, world);
+					world.getBlock(px + x, py + y, pz + z).setMaterial(VanillaMaterials.AIR);
 				}
 				for (byte py = 1; py < 5; py++) {
 					if (isWallBlock(px, py, pz, airBlocks)) {
 						final Block block = world.getBlock(px + x, py + y - 1, pz + z);
 						if (block.getMaterial().isOpaque() && random.nextBoolean()) {
-							block.setMaterial(VanillaMaterials.STONE);
+							block.setMaterial(VanillaMaterials.STONE).update(true);
 						}
 					}
 				}
@@ -108,7 +108,7 @@ public class PondDecorator implements BiomeDecorator {
 				for (byte py = -1; py < 4; py++) {
 					final Block block = world.getBlock(x + px, y + py, z + pz);
 					if (block.getMaterial() == VanillaMaterials.DIRT
-							&& world.getSkyLight(x + px, y + py + 1, z + pz) > 0) {
+							&& world.getBlockSkyLight(x + px, y + py + 1, z + pz) > 0) {
 						/*Biome biome = block.getBiome(); Waiting for getBiome() method
 						if (biome == Biome.MUSHROOM_ISLAND || biome == Biome.MUSHROOM_SHORE) {
 						block.setMaterial(VanillaMaterials.MYCEL);

@@ -25,17 +25,59 @@
  */
 package org.spout.vanilla.material.block.generic;
 
-import org.spout.api.geo.World;
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.redstone.RedstoneTorch;
 import org.spout.vanilla.material.block.redstone.RedstoneWire;
 
 public class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
+	@Override
+	public void onDestroy(Block block) {
+		this.onDestroyBlock(block);
+		this.onDestroySpawnDrops(block);
+	}
+
+	/**
+	 * Called when this block is destroyed to perform the actual block destruction
+	 * @param block to destroy
+	 */
+	public void onDestroyBlock(Block block) {
+		block.setMaterial(VanillaMaterials.AIR);
+	}
+	
+	/**
+	 * Called when this block is destroyed to perform the drops spawning
+	 * @param block to spawn drops for
+	 */
+	public void onDestroySpawnDrops(Block block) {
+		//don't block drops for creative players
+		if (block.getSource() instanceof Entity) {
+			Entity entity = (Entity) block.getSource();
+			if (entity.getController() instanceof VanillaPlayer) {
+				if (!((VanillaPlayer) entity.getController()).isSurvival()) {
+					return;
+				}
+			}
+		}
+		
+		Material dropMat = this.getDrop();
+		if (dropMat != null) {
+			int count = this.getDropCount();
+			for (int i = 0; i < count && dropMat.getId() != 0; ++i) {
+				block.getWorld().createAndSpawnEntity(block.getPosition(), new Item(new ItemStack(dropMat, 1), block.getPosition().normalize().add(0, 5, 0)));
+			}
+		}
+	}
+
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
 	private float resistance;
 	private Material dropMaterial;
@@ -56,23 +98,23 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	 * Indirect power from below powers redstone wire, but level indirect power just inverts adjacent redstone torches.
 	 * @return the indirect redstone power.
 	 */
-	public short getIndirectRedstonePower(World world, int x, int y, int z) {
+	public short getIndirectRedstonePower(Block block) {
 		short indirect = 0;
 		for (BlockFace face : indirectSourcesWire) {
-			Vector3 offset = face.getOffset();
-			int tx = (int) (x + offset.getX()), ty = (int) (y + offset.getY()), tz = (int) (z + offset.getZ());
-			BlockMaterial material = world.getBlockMaterial(tx, ty, tz);
+			Block tblock = block.translate(face);
+			BlockMaterial material = tblock.getMaterial();
 			if (material instanceof RedstoneWire) {
-				indirect = (short) Math.max(indirect, world.getBlockData(tx, ty, tz));
+				indirect = (short) Math.max(indirect, tblock.getData());
 			}
 		}
 
-		BlockMaterial material = world.getBlockMaterial(x, y - 1, z); //Check for redstone torch below
+		Block torchblock = block.translate(BlockFace.BOTTOM);
+		BlockMaterial material = torchblock.getMaterial(); //Check for redstone torch below
 		if (material instanceof RedstoneTorch) {
 			RedstoneTorch torch = (RedstoneTorch) material;
-			indirect = (short) Math.max(indirect, torch.getRedstonePower(world, x, y - 1, z, x, y, z));
+			indirect = (short) Math.max(indirect, torch.getRedstonePower(torchblock, block));
 		}
-		return (short) Math.max(indirect, getDirectRedstonePower(world, x, y, z));
+		return (short) Math.max(indirect, getDirectRedstonePower(block));
 	}
 
 	/**
@@ -80,7 +122,7 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	 * This power can be used by all neighbors that are redstone targets, even if they wouldn't attach.
 	 * @return the direct redstone power.
 	 */
-	public short getDirectRedstonePower(World world, int x, int y, int z) {
+	public short getDirectRedstonePower(Block block) {
 		// TODO Waiting for repeaters
 		return 0;
 	}
@@ -145,5 +187,10 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	@Override
 	public boolean getNBTData() {
 		return false;
+	}
+
+	@Override
+	public int getDamage() {
+		return 1;
 	}
 }

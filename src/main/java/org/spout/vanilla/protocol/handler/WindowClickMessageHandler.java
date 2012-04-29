@@ -27,7 +27,6 @@ package org.spout.vanilla.protocol.handler;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;

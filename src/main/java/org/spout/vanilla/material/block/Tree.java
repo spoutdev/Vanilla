@@ -25,10 +25,11 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.block.generic.Plant;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class Tree extends Solid implements Plant {
+public class Tree extends Solid implements Plant, FurnaceFuel {
 	public static final Tree DEFAULT = register(new Tree("Wood"));
 	public static final Tree SPRUCE = register(new Tree("Spruce Wood", 1, DEFAULT));
 	public static final Tree BIRCH = register(new Tree("Birch Wood", 2, DEFAULT));
@@ -61,5 +62,10 @@ public class Tree extends Solid implements Plant {
 	@Override
 	public int getMinimumLightToGrow() {
 		return 0;
+	}
+
+	@Override
+	public int getFuelTicks() {
+		return 300;
 	}
 }

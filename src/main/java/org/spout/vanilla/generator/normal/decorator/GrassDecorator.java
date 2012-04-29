@@ -57,13 +57,13 @@ public class GrassDecorator implements BiomeDecorator {
 			y = (source.getY() << Chunk.CHUNK_SIZE_BITS) + 15;
 			Block b = source.getWorld().getBlock(x, y, z);
 			while (b.getMaterial() == VanillaMaterials.AIR && y >= 0) {
-				b.move(BlockFace.BOTTOM);
+				b = b.translate(BlockFace.BOTTOM);
 			}
 			if (b.getY() == -1) {
 				return;
 			}
 			if (b.getMaterial() == VanillaMaterials.GRASS) {
-				b.move(BlockFace.TOP).setMaterial(VanillaMaterials.TALL_GRASS);
+				b = b.translate(BlockFace.TOP).setMaterial(VanillaMaterials.TALL_GRASS).update(true);
 			}
 		}
 	}

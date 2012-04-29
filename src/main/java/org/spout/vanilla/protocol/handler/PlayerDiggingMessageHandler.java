@@ -27,20 +27,22 @@ package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
+import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
 	@Override
@@ -54,22 +56,34 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		EventManager eventManager = player.getSession().getGame().getEventManager();
 		World world = player.getEntity().getWorld();
 
+		BlockFace clickedface = VanillaMessageHandlerUtils.messageToBlockFace(message.getFace());
 		int x = message.getX();
 		int y = message.getY();
 		int z = message.getZ();
 
-		org.spout.api.geo.cuboid.Block block = world.getBlock(x, y, z);
-
+		Block block = world.getBlock(x, y, z, player.getEntity());
+		BlockMaterial mat = block.getSubMaterial();
+		
 		//TODO Need to have some sort of verification to deal with malicious clients.
 		if (message.getState() == PlayerDiggingMessage.STATE_START_DIGGING) {
+			ItemStack holding = player.getEntity().getInventory().getCurrentItem();
+			Material holdingMat = holding == null ? VanillaMaterials.AIR : holding.getMaterial();
+			Point position = block.getPosition();
 			boolean isAir = false;
-			if (block == null || block.getMaterial() == VanillaMaterials.AIR) {
+			if (mat.equals(VanillaMaterials.AIR)) {
 				isAir = true;
 			}
-			PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, new Point(world, x, y, z), player.getEntity().getInventory().getCurrentItem(), PlayerInteractEvent.Action.LEFT_CLICK, isAir);
+
+			PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, position, holding, Action.LEFT_CLICK, isAir);
 			eventManager.callEvent(interactEvent);
-			if (interactEvent.isCancelled() || isAir) {
+			if (interactEvent.isCancelled()) {
 				return;
+			} else if (isAir) {
+				holdingMat.onInteract(player.getEntity(), Action.LEFT_CLICK); //call onInteract on item held for air
+				return;
+			} else {
+				holdingMat.onInteract(player.getEntity(), position, Action.LEFT_CLICK, clickedface); //call onInteract on item held
+				mat.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedface); //call onInteract on block clicked
 			}
 			if (player.getEntity().getController() instanceof VanillaPlayer && !((VanillaPlayer) player.getEntity().getController()).isSurvival()) {
 				blockBroken = true;
@@ -87,25 +101,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		}
 
 		if (blockBroken) {
-			BlockMaterial oldMat = world.getBlockMaterial(x, y, z);
-			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, true, player);
-			oldMat.onDestroy(world, x, y, z);
-
-			if (player.getEntity().getController() instanceof VanillaPlayer && ((VanillaPlayer) player.getEntity().getController()).isSurvival()) {
-				Material dropMat = oldMat;
-				int count = 1;
-				if (oldMat instanceof VanillaBlockMaterial) {
-					VanillaBlockMaterial blockMat = (VanillaBlockMaterial) oldMat;
-					dropMat = Material.get(blockMat.getDrop().getId());
-					count = blockMat.getDropCount();
-				}
-
-				if (dropMat != null) {
-					for (int i = 0; i < count && dropMat.getId() != 0; ++i) {
-						world.createAndSpawnEntity(block.getPosition(), new Item(new ItemStack(dropMat, 1), player.getEntity().getPosition().normalize().add(0, 5, 0)));
-					}
-				}
-			}
+			block.getSubMaterial().onDestroy(block);
 		}
 	}
 }

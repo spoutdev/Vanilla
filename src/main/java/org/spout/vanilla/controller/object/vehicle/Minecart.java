@@ -89,7 +89,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 		this.railsBlock = position.getWorld().getBlock(position);
 		this.railType = this.railsBlock.getMaterial();
 		if (!(this.railType instanceof MinecartTrack)) {
-			this.railsBlock = this.railsBlock.move(BlockFace.BOTTOM);
+			this.railsBlock = this.railsBlock.translate(BlockFace.BOTTOM);
 			this.railType = this.railsBlock.getMaterial();
 		}
 		if (this.railType instanceof MinecartTrack) {
@@ -220,7 +220,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 			//moved down the slope? Go one down if so
 			if (this.railData.isSloped() && blockChange.equals(this.railMovement[0])) {
 				position = position.add(new Vector3(0f, -1f, 0f));
-				newBlock.move(BlockFace.BOTTOM);
+				newBlock = newBlock.translate(BlockFace.BOTTOM);
 				this.getParent().setPosition(position);
 			}
 
@@ -271,7 +271,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 				} else {
 					//push a minecart slightly forward when hitting a solid block
 					for (BlockFace dir : this.railData.getDirections()) {
-						if (this.railsBlock.clone().move(dir).getMaterial() instanceof Solid) {
+						if (this.railsBlock.translate(dir).getMaterial() instanceof Solid) {
 							velocity = dir.getOpposite().getOffset().toVector2().multiply(0.02);
 							break;
 						}

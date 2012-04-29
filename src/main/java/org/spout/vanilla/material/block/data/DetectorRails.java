@@ -25,9 +25,8 @@
  */
 package org.spout.vanilla.material.block.data;
 
-import org.spout.api.material.BlockMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.MinecartTrackDetector;
 import org.spout.vanilla.util.RailsState;
 
 public class DetectorRails extends Rails {
@@ -61,7 +60,7 @@ public class DetectorRails extends Rails {
 	}
 
 	@Override
-	public BlockMaterial getMaterial() {
+	public MinecartTrackDetector getMaterial() {
 		return VanillaMaterials.DETECTOR_RAIL;
 	}
 }

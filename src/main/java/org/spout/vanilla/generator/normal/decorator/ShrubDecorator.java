@@ -65,7 +65,7 @@ public class ShrubDecorator implements BiomeDecorator {
 		if (canBuildShrub(world, x, y, z)) {
 			return;
 		}
-		world.setBlockMaterial(x, y, z, VanillaMaterials.LOG, wood, false, world);
+		world.getBlock(x, y, z).setMaterial(VanillaMaterials.LOG, wood);
 		for (byte yy = SIZE; yy > -1; yy--) {
 			for (byte xx = (byte) -yy; xx < yy + 1; xx++) {
 				for (byte zz = (byte) -yy; zz < yy + 1; zz++) {

@@ -113,7 +113,8 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			// Make sure the target switches one block below
 			short placedData = holding.getData();
 			if (face == BlockFace.TOP && !world.getBlockMaterial(x, y - 1, z).isPlacementObstacle()) {
-				y = target.move(BlockFace.BOTTOM).getY();
+				target = target.translate(BlockFace.BOTTOM);
+				y = target.getY();
 			}
 
 			BlockMaterial oldBlock = target.getMaterial();
@@ -126,7 +127,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			}
 
 			// Make sure the block can be placed
-			if (oldBlock.isPlacementObstacle() || !newBlock.canPlace(world, x, y, z, placedData, face, player) || !newBlock.onPlacement(world, x, y, z, placedData, face, player)) {
+			if (oldBlock.isPlacementObstacle() || !newBlock.canPlace(world.getBlock(x, y, z), placedData, face, player) || !newBlock.onPlacement(world.getBlock(x, y, z), placedData, face, player)) {
 				cancelled = true;
 			}
 		}

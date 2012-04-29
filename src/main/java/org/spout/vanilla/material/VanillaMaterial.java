@@ -26,5 +26,14 @@
 package org.spout.vanilla.material;
 
 public interface VanillaMaterial {
+	
+	/**
+	 * Gets whether or not this material stores additional NBT tag data
+	 */
 	public boolean getNBTData();
+	
+	/**
+	 * Gets the amount of damage this material can deal as an item
+	 */
+	public int getDamage();
 }

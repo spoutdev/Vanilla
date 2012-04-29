@@ -52,7 +52,7 @@ public class CactusDecorator implements BiomeDecorator {
 		}
 		int height = random.nextInt(3) + 1;
 		for (int i = py; i < py + height; ++i) {
-			chunk.getWorld().setBlockMaterial(px, i, pz, VanillaMaterials.CACTUS, (short) 0, true, chunk.getWorld());
+			chunk.getBlock(px, i, pz).setMaterial(VanillaMaterials.CACTUS).update(true);
 		}
 	}
 
@@ -60,9 +60,9 @@ public class CactusDecorator implements BiomeDecorator {
 		int y = c.getWorld().getHeight();
 		int pozx = c.getX() * 16 + px;
 		int pozz = c.getZ() * 16 + pz;
-		while (c.getWorld().getBlock(pozx, y, pozz).getMaterial() != VanillaMaterials.SAND && c.getWorld().getBlock(pozx, y, pozz).getMaterial() != VanillaMaterials.SANDSTONE) {
+		while (c.getWorld().getBlockMaterial(pozx, y, pozz) != VanillaMaterials.SAND && c.getWorld().getBlockMaterial(pozx, y, pozz) != VanillaMaterials.SANDSTONE) {
 			y--;
-			if (y == 0 || c.getWorld().getBlock(pozx, y, pozz).getMaterial() == VanillaMaterials.WATER) {
+			if (y == 0 || c.getWorld().getBlockMaterial(pozx, y, pozz) == VanillaMaterials.WATER) {
 				return -1;
 			}
 		}

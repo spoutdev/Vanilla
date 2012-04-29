@@ -25,34 +25,18 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.FurnaceFuel;
+import org.spout.vanilla.material.block.generic.Ore;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
+public class MushroomBlock extends Ore implements FurnaceFuel {
 
-public class Snow extends Solid {
-	public Snow() {
-		super("Snow", 78);
-		this.setOpacity((byte) 0);
+	public MushroomBlock(String name, int id) {
+		super(name, id);
+		this.setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F); //Placeholder, block resistance unknown
 	}
 
 	@Override
-	public boolean isPlacementObstacle() {
-		return false;
-	}
-
-	@Override
-	public boolean hasPhysics() {
-		return true;
-	}
-
-	@Override
-	public void onUpdate(Block block) {
-		BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial(); 
-		if (below.getMaterial() == VanillaMaterials.AIR) {
-			block.setMaterial(VanillaMaterials.AIR).update(true);
-		}
+	public int getFuelTicks() {
+		return 300;
 	}
 }

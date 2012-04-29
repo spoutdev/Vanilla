@@ -180,7 +180,7 @@ public class TestCommands {
 		if (world != null) {
 			Point loc = new Point(world, args.getInteger(2), args.getInteger(3), args.getInteger(4));
 			//Make sure the chunk the player is teleported to is loaded.
-			world.getChunk(loc, true);
+			world.getChunkFromBlock(loc, true);
 			player.getEntity().setPosition(loc);
 			player.getNetworkSynchronizer().setPositionDirty();
 		} else {

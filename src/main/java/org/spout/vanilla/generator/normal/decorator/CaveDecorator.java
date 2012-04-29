@@ -60,7 +60,7 @@ public class CaveDecorator implements BiomeDecorator {
 						continue;
 					}
 					if (noise.GetValue(dx / 5.0 + 0.005, dy / 5.0 + 0.005, dz / 5.0 + 0.005) > 0 && chunk.getBlockMaterial(dx, dy, dz) == VanillaMaterials.STONE) {
-						chunk.setBlockMaterial(dx, dy, dz, VanillaMaterials.AIR, (short) 0, true, chunk.getWorld());
+						chunk.getBlock(dx, dy, dz).setMaterial(VanillaMaterials.AIR).update(true);
 					}
 				}
 			}

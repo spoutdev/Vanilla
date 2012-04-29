@@ -26,15 +26,15 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.Source;
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.generic.Plant;
 
-public class Sapling extends GroundAttachable implements Plant {
+public class Sapling extends GroundAttachable implements Plant, FurnaceFuel {
 	public static final Sapling DEFAULT = register(new Sapling("Sapling"));
 	public static final Sapling SPRUCE = register(new Sapling("Spruce Sapling", 1, DEFAULT));
 	public static final Sapling BIRCH = register(new Sapling("Birch Sapling", 2, DEFAULT));
@@ -70,9 +70,14 @@ public class Sapling extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public boolean canPlace(World world, int x, int y, int z, short data, BlockFace against, Source source) {
-		if (super.canPlace(world, x, y, z, data, against, source)) {
-			Block block = world.getBlock(x, y - 1, z).move(against.getOpposite());
+	public int getFuelTicks() {
+		return 100;
+	}
+
+	@Override
+	public boolean canPlace(Block block, short data, BlockFace against, Source source) {
+		if (super.canPlace(block, data, against, source)) {
+			block = block.translate(BlockFace.BOTTOM).translate(against.getOpposite());
 			return block.getMaterial() == VanillaMaterials.GRASS || block.getMaterial() == VanillaMaterials.DIRT;
 		} else {
 			return false;

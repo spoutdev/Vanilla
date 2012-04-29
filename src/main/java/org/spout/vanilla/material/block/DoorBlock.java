@@ -42,4 +42,9 @@ public class DoorBlock extends GroundAttachable {
 	public boolean isOpenByHand() {
 		return openByHand;
 	}
+	
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
+	}
 }

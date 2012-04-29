@@ -28,9 +28,9 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -40,6 +40,8 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
@@ -51,7 +53,8 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		World world = player.getEntity().getWorld();
 		Inventory inventory = player.getEntity().getInventory();
 		ItemStack holding = inventory.getCurrentItem();
-
+		Material holdingMat = holding == null ? null : holding.getSubMaterial();
+		
 		/**
 		 * The notch client's packet sending is weird. Here's how it works: If
 		 * the client is clicking a block not in range, sends a packet with
@@ -62,80 +65,83 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		 * usually happens. Sometimes it doesn't happen like that. Therefore, a
 		 * hacky workaround.
 		 */
-
-		// Right clicked air with an item.
+		
 		if (message.getDirection() == 255) {
-			eventManager.callEvent(new PlayerInteractEvent(player, null, inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, true));
-			return;
-		}
-
-		// Block face is invalid
-		Point pos = new Point(world, message.getX(), message.getY(), message.getZ());
-		BlockFace face = VanillaMessageHandlerUtils.messageToBlockFace(message.getDirection());
-		if (face == BlockFace.THIS) {
-			return;
-		}
-
-		// Within world bounds
-		Point offsetPos = pos.add(face.getOffset());
-		Block target = world.getBlock(offsetPos);
-		if (pos.getY() >= world.getHeight() || pos.getY() < 0) {
-			return;
-		}
-
-		// If denied, revert the block
-		boolean cancelled = false;
-		PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, new Point(pos, world), inventory.getCurrentItem(), PlayerInteractEvent.Action.RIGHT_CLICK, false));
-		if (interactEvent.isCancelled()) {
-			cancelled = true;
-		}
-
-		int x = offsetPos.getBlockX();
-		int y = offsetPos.getBlockY();
-		int z = offsetPos.getBlockZ();
-
-		Block block = world.getBlock(pos);
-		if (!cancelled) {
-			block.getMaterial().onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
-		}
-
-		// If placement is accepted
-		if (holding != null && !cancelled) {
-
-			// If it's an item, send event and go no further.
-			Material placedMaterial = holding.getMaterial();
-			placedMaterial.onInteract(player.getEntity(), pos, PlayerInteractEvent.Action.RIGHT_CLICK, face);
-
-			if (!(placedMaterial instanceof BlockMaterial)) {
+			// Right clicked air with an item.
+			PlayerInteractEvent event = eventManager.callEvent(new PlayerInteractEvent(player, null, holding, Action.RIGHT_CLICK, true));
+			if (!event.isCancelled() && holdingMat != null) {
+				holdingMat.onInteract(player.getEntity(), Action.RIGHT_CLICK);
+			}
+		} else {
+			//TODO: Validate the x/y/z coordinates of the message to check if it is in range of the player
+			//This is an anti-hack requirement (else hackers can load far-away chunks and crash the server)
+			
+			//Get clicked block and validated face against it was placed
+			Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ(), player.getEntity());
+			BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(message.getDirection());
+			if (clickedFace == BlockFace.THIS) {
 				return;
 			}
 
-			// Make sure the target switches one block below
-			short placedData = holding.getData();
-			if (face == BlockFace.TOP && !world.getBlockMaterial(x, y - 1, z).isPlacementObstacle()) {
-				target = target.translate(BlockFace.BOTTOM);
-				y = target.getY();
+			//Perform interaction event
+			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), inventory.getCurrentItem(), Action.RIGHT_CLICK, false));
+			
+			//Get the target block and validate 
+			Block target;
+			BlockMaterial clickedMaterial = clickedBlock.getSubMaterial();
+			if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
+				return; //prevent placing when the clicked material suppresses this
+			} else if (clickedMaterial.isPlacementObstacle()) {
+				target = clickedBlock.translate(clickedFace);
+			} else {
+				target = clickedBlock;
+				clickedFace = BlockFace.BOTTOM; //face is no longer valid at this point
 			}
-
-			BlockMaterial oldBlock = target.getMaterial();
-			BlockMaterial newBlock = (BlockMaterial) placedMaterial;
-
-			// Remove block from inventory if not in creative mode.
-			if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
-				holding.setAmount(holding.getAmount() - 1);
-				inventory.setItem(holding, inventory.getCurrentSlot());
+			if (target.getY() >= world.getHeight() || target.getY() < 0) {
+				return;
 			}
+			
+			//check if the interaction can possibly result in placement
+			if (!interactEvent.isCancelled()) {
+				
+				//perform interaction on the server
+				if (holdingMat != null) {
+					holdingMat.onInteract(player.getEntity(), clickedBlock.getPosition(), Action.RIGHT_CLICK, clickedFace);
+				}
+				clickedMaterial.onInteractBy(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
+				
+				//if the material is actually a block, place it
+				if (holdingMat != null && holdingMat instanceof BlockMaterial) {
+					short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?
+					BlockMaterial oldBlock = target.getMaterial();
+					BlockMaterial newBlock = (BlockMaterial) holdingMat;
 
-			// Make sure the block can be placed
-			if (oldBlock.isPlacementObstacle() || !newBlock.canPlace(world.getBlock(x, y, z), placedData, face, player) || !newBlock.onPlacement(world.getBlock(x, y, z), placedData, face, player)) {
-				cancelled = true;
+					//check if placement is even possible and handle the destruction of the old block
+					if (!oldBlock.isPlacementObstacle() && newBlock.canPlace(target, placedData, clickedFace, player)) {
+						if (!oldBlock.equals(VanillaMaterials.AIR)) {
+							oldBlock.onDestroy(target);
+						}
+						
+						//perform actual placement
+						if (newBlock.onPlacement(target, placedData, clickedFace, player)) {
+							//Remove block from inventory if not in creative mode.
+							if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
+								holding.setAmount(holding.getAmount() - 1);
+								inventory.setItem(holding, inventory.getCurrentSlot());
+							}
+							return; //prevent undoing our placement
+						}
+					}
+				}
 			}
-		}
-
-		// If placement is denied revert the new block to the old
-		if (cancelled) {
-			player.getSession().send(new BlockChangeMessage(x, y, z, target != null ? target.getMaterial().getId() : 0, world.getBlockData((int) pos.getX(), (int) pos.getY(), (int) pos.getZ())));
+			
+			//refresh the client just in case it assumed something
+			int x = target.getX();
+			int y = target.getY();
+			int z = target.getZ();
+			player.getSession().send(new BlockChangeMessage(x, y, z, target.getMaterial().getId(), target.getData()));
 			inventory.setItem(holding, inventory.getCurrentSlot());
+			return;
 		}
 	}
 }

@@ -195,4 +195,11 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	public int getDamage() {
 		return 1;
 	}
+
+	/**
+	 * Gets whether this block material cancels block placement when clicked
+	 */
+	public boolean isPlacementSuppressed() {
+		return false;
+	}
 }

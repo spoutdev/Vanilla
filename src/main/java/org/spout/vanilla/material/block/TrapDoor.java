@@ -43,4 +43,9 @@ public class TrapDoor extends Solid implements FurnaceFuel {
 	public int getFuelTicks() {
 		return 300;
 	}
+	
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
+	}
 }

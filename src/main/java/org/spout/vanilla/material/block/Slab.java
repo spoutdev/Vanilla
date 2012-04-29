@@ -27,28 +27,28 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.Source;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Solid;
 
 public class Slab extends Solid {
-	public static final Slab STONE = register(new Slab("Stone Slab"));
-	public static final Slab SANDSTONE = register(new Slab("Sandstone Slab", 1, STONE));
-	public static final Slab WOOD = register(new Slab("Wooden Slab", 2, STONE));
-	public static final Slab COBBLESTONE = register(new Slab("Cobblestone Slab", 3, STONE));
-	public static final Slab BRICK = register(new Slab("Brick Slab", 4, STONE));
-	public static final Slab STONE_BRICK = register(new Slab("Stone Brick Slab", 5, STONE));
-	private DoubleSlab doubletype = VanillaMaterials.DOUBLE_SLABS;
+	public static final Slab STONE = register(new Slab("Stone Slab", DoubleSlab.STONE));
+	public static final Slab SANDSTONE = register(new Slab("Sandstone Slab", 1, STONE, DoubleSlab.SANDSTONE));
+	public static final Slab WOOD = register(new Slab("Wooden Slab", 2, STONE, DoubleSlab.WOOD));
+	public static final Slab COBBLESTONE = register(new Slab("Cobblestone Slab", 3, STONE, DoubleSlab.COBBLESTONE));
+	public static final Slab BRICK = register(new Slab("Brick Slab", 4, STONE, DoubleSlab.BRICK));
+	public static final Slab STONE_BRICK = register(new Slab("Stone Brick Slab", 5, STONE, DoubleSlab.STONE_BRICK));
+	private DoubleSlab doubletype;
 
-	private Slab(String name) {
+	private Slab(String name, DoubleSlab doubletype) {
 		super(name, 44);
+		this.doubletype = doubletype;
 		this.setDefault();
 	}
 
-	private Slab(String name, int data, Slab parent) {
+	private Slab(String name, int data, Slab parent, DoubleSlab doubletype) {
 		super(name, 44, data, parent);
+		this.doubletype = doubletype;
 		this.setDefault();
 	}
 
@@ -56,22 +56,15 @@ public class Slab extends Solid {
 		this.setHardness(2.0F).setResistance(10.0F);
 	}
 
-	public void setDoubleSlabMaterial(DoubleSlab material) {
-		this.doubletype = material;
-	}
-
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Source source) {
 		if (against == BlockFace.BOTTOM) {
-			Block below = block.translate(against);
-			if (below.getMaterial() == this.getParentMaterial() && below.getData() == data) {
+			Block clicked = block.translate(against.getOpposite());
+			if (clicked.getSubMaterial().equals(this.getParentMaterial())) {
 				//we are stacking on top of another of the same type
 				//turn this block into the double type
-				Material slab = this.getSubMaterial(data);
-				if (slab != null && slab instanceof Slab) {
-					below.setMaterial(((Slab) slab).doubletype).update(true);
-					return true;
-				}
+				clicked.setMaterial(this.doubletype).update(true);
+				return true;
 			}
 		}
 		return super.onPlacement(block, data, against, source);

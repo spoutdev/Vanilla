@@ -82,6 +82,7 @@ import org.spout.vanilla.material.item.Minecart;
 import org.spout.vanilla.material.item.Potion;
 import org.spout.vanilla.material.item.PoweredMinecart;
 import org.spout.vanilla.material.item.Shears;
+import org.spout.vanilla.material.item.Spade;
 import org.spout.vanilla.material.item.SpawnEgg;
 import org.spout.vanilla.material.item.Stick;
 import org.spout.vanilla.material.item.StorageMinecart;
@@ -229,7 +230,7 @@ public final class VanillaMaterials {
 	/*
 		 * Items
 		 */
-	public static final Tool IRON_SHOVEL = register(new Tool("Iron Shovel", 256, (short) 251));
+	public static final Spade IRON_SPADE = register(new Spade("Iron Spade", 256, (short) 251));
 	public static final Weapon IRON_PICKAXE = register(new Weapon("Iron Pickaxe", 257, (short) 251).setDamage(4));
 	public static final Weapon IRON_AXE = register(new Weapon("Iron Axe", 258, (short) 251).setDamage(5));
 	public static final Tool FLINT_AND_STEEL = register(new Tool("Flint and Steel", 259, (short) 64));
@@ -242,22 +243,22 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial GOLD_INGOT = register(new VanillaItemMaterial("Gold Ingot", 266));
 	public static final Weapon IRON_SWORD = register(new Weapon("Iron Sword", 267, (short) 251).setDamage(6));
 	public static final Weapon WOODEN_SWORD = register(new Weapon("Wooden Sword", 268, (short) 60).setDamage(4));
-	public static final Tool WOODEN_SHOVEL = register(new Tool("Wooden Shovel", 269, (short) 60));
+	public static final Spade WOODEN_SPADE = register(new Spade("Wooden Spade", 269, (short) 60));
 	public static final Weapon WOODEN_PICKAXE = register(new Weapon("Wooden Pickaxe", 270, (short) 60).setDamage(2));
 	public static final Weapon WOODEN_AXE = register(new Weapon("Wooden Axe", 271, (short) 60).setDamage(3));
 	public static final Weapon STONE_SWORD = register(new Weapon("Stone Sword", 272, (short) 132).setDamage(5));
-	public static final Tool STONE_SHOVEL = register(new Tool("Stone Shovel", 273, (short) 132));
+	public static final Spade STONE_SPADE = register(new Spade("Stone Spade", 273, (short) 132));
 	public static final Weapon STONE_PICKAXE = register(new Weapon("Stone Pickaxe", 274, (short) 132).setDamage(3));
 	public static final Weapon STONE_AXE = register(new Weapon("Stone Axe", 275, (short) 132).setDamage(3));
 	public static final Weapon DIAMOND_SWORD = register(new Weapon("Diamond Sword", 276, (short) 1562).setDamage(7));
-	public static final Tool DIAMOND_SHOVEL = register(new Tool("Diamond Shovel", 277, (short) 1562));
+	public static final Spade DIAMOND_SPADE = register(new Spade("Diamond Spade", 277, (short) 1562));
 	public static final Weapon DIAMOND_PICKAXE = register(new Weapon("Diamond Pickaxe", 278, (short) 1562).setDamage(5));
 	public static final Weapon DIAMOND_AXE = register(new Weapon("Diamond Axe", 279, (short) 1562).setDamage(6));
 	public static final Stick STICK = register(new Stick("Stick", 280));
 	public static final VanillaItemMaterial BOWL = register(new VanillaItemMaterial("Bowl", 281));
 	public static final Food MUSHROOM_SOUP = register(new Food("Mushroom Soup", 282, 8, FoodEffectType.HUNGER));
 	public static final Weapon GOLD_SWORD = register(new Weapon("Gold Sword", 283, (short) 33).setDamage(4));
-	public static final Tool GOLD_SHOVEL = register(new Tool("Gold Shovel", 284, (short) 33));
+	public static final Spade GOLD_SPADE = register(new Spade("Gold Spade", 284, (short) 33));
 	public static final Weapon GOLD_PICKAXE = register(new Weapon("Gold Pickaxe", 285, (short) 33).setDamage(2));
 	public static final Weapon GOLD_AXE = register(new Weapon("Gold Axe", 286, (short) 33).setDamage(3));
 	public static final VanillaItemMaterial STRING = register(new VanillaItemMaterial("String", 287));
@@ -411,7 +412,7 @@ public final class VanillaMaterials {
 		VanillaMaterials.REDSTONE_ORE.setDrop(VanillaMaterials.REDSTONE);
 		VanillaMaterials.GLOWING_REDSTONE_ORE.setDrop(VanillaMaterials.REDSTONE);
 		VanillaMaterials.REDSTONE_TORCH_OFF.setDrop(VanillaMaterials.REDSTONE_TORCH_ON);
-		VanillaMaterials.SNOW.setDrop(VanillaMaterials.SNOWBALL); // TODO: Make shovels drop snowballs
+		VanillaMaterials.SNOW.setDrop(VanillaMaterials.SNOWBALL);
 		VanillaMaterials.ICE.setDrop(VanillaMaterials.AIR);
 		VanillaMaterials.CLAY_BLOCK.setDrop(VanillaMaterials.CLAY).setDropCount(4);
 		VanillaMaterials.GLOWSTONE_BLOCK.setDrop(VanillaMaterials.GLOWSTONE_DUST);

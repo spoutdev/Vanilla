@@ -150,11 +150,11 @@ public class VanillaPlugin extends CommonPlugin {
 
 		//TODO This is bad...SpoutEngine should have a "setDefaultWorld"
 		if (VanillaConfiguration.FLATWORLD.getBoolean()) {
-			flat.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
+			flat.setSpawnPoint(new Transform(new Point(flat, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 			normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 		} else {
 			normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
-			flat.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
+			flat.setSpawnPoint(new Transform(new Point(flat, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 		}
 
 		//TODO Have spawn point set by generator.

@@ -76,7 +76,7 @@ public class Zombie extends Creature implements Hostile {
 		}
 
 		if (getRandom().nextInt(75) == 0) {
-			drops.add(new ItemStack(VanillaMaterials.IRON_SHOVEL, 1));
+			drops.add(new ItemStack(VanillaMaterials.IRON_SPADE, 1));
 		}
 
 		if (getRandom().nextInt(100) == 0) {

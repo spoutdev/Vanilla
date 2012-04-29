@@ -69,8 +69,10 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 			}
 		}
 		
-		Material dropMat = this.getDrop();
+		Material dropMat = getDrop();
 		if (dropMat != null) {
+			System.out.println(block.toString());
+			System.out.println(dropMat.toString());
 			int count = this.getDropCount();
 			for (int i = 0; i < count && dropMat.getId() != 0; ++i) {
 				block.getWorld().createAndSpawnEntity(block.getPosition(), new Item(new ItemStack(dropMat, 1), block.getPosition().normalize().add(0, 5, 0)));

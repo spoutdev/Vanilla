@@ -101,7 +101,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		}
 
 		if (blockBroken) {
-			block.getSubMaterial().onDestroy(block);
+			block.getMaterial().onDestroy(block);
 		}
 	}
 }

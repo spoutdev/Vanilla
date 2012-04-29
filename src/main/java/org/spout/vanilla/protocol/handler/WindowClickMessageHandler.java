@@ -32,11 +32,13 @@ import java.util.logging.Level;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.material.item.generic.Armor;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
@@ -66,7 +68,8 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		}
 
 		int clickedSlot = VanillaMessageHandlerUtils.getSpoutInventorySlot(inventory, message.getSlot());
-		System.out.println("Clicked: " + clickedSlot);
+		System.out.println("Minecraft slot: " + message.getSlot());
+		System.out.println("Spout slot: " + clickedSlot);
 		if (clickedSlot < 0) {
 			System.out.println("Error: Invalid slot");
 			respond(false);
@@ -75,6 +78,19 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 
 		ItemStack slotStack = inventory.getItem(clickedSlot);
 		ItemStack cursorStack = controller.getItemOnCursor();
+
+		boolean armorSlot = clickedSlot == 36 || clickedSlot == 37 || clickedSlot == 41 || clickedSlot == 44;
+		if (inventory instanceof PlayerInventory) {
+			if (armorSlot && cursorStack != null && !(cursorStack.getMaterial() instanceof Armor)) {
+				respond(false);
+				return;
+			}
+
+			if (clickedSlot == 40 && cursorStack != null) {
+				respond(false);
+				return;
+			}
+		}
 
 		if (message.isShift()) {
 			if (!message.isRightClick()) {
@@ -103,6 +119,9 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 						slotStack = cursorStack;
 						cursorStack = null;
 					}
+				} else if (slotStack != null) {
+					cursorStack = slotStack;
+					slotStack = null;
 				}
 			} else {
 				if (cursorStack != null) {

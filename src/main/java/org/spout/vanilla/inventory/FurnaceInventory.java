@@ -29,6 +29,6 @@ import org.spout.api.inventory.Inventory;
 
 public class FurnaceInventory extends Inventory {
 	public FurnaceInventory() {
-		super(38);
+		super(39);
 	}
 }

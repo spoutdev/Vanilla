@@ -31,6 +31,9 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.block.FurnaceController;
@@ -63,6 +66,19 @@ public class Furnace extends Solid {
 
 		VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
 		vanillaPlayer.sendPacket(vanillaPlayer.getPlayer(), new OpenWindowMessage(1, 2, "Furnace", 38));
-		vanillaPlayer.setActiveInventory(new FurnaceInventory());
+		Inventory inventory = entity.getInventory();
+		if (!(inventory instanceof PlayerInventory)) {
+			return;
+		}
+
+		FurnaceInventory newInventory = new FurnaceInventory();
+		for (int i = 0; i < inventory.getSize(); i++) {
+			ItemStack stack = inventory.getItem(i);
+			if (stack != null) {
+				newInventory.setItem(stack, i);
+			}
+		}
+		
+		vanillaPlayer.setActiveInventory(newInventory);
 	}
 }

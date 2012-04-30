@@ -56,6 +56,7 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
+import org.spout.vanilla.generator.flat.FlatGenerator;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
@@ -76,10 +77,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private final static int POSITION_UPDATE_TICKS = 20;
 	private final static double STANCE = 1.6D;
 	private final static int TIMEOUT = 15000;
-
-	public VanillaNetworkSynchronizer(Player player) {
-		this(player, null);
-	}
 
 	public VanillaNetworkSynchronizer(Player player, Entity entity) {
 		super(player, entity);
@@ -278,7 +275,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	protected void worldChanged(World world) {
 		int dimensionBit;
 		WorldGenerator worldGen = world.getGenerator();
-		if (worldGen instanceof NormalGenerator) {
+		if (worldGen instanceof NormalGenerator || worldGen instanceof FlatGenerator) {
 			dimensionBit = 0;
 		} else if (worldGen instanceof NetherGenerator) {
 			dimensionBit = -1;

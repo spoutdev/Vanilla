@@ -133,8 +133,18 @@ public class VanillaPlugin extends CommonPlugin {
 	}
 
 	private void setupWorlds() {
-		World normal = game.loadWorld("world", new NormalGenerator());
-		World flat = game.loadWorld("world_flat", new FlatGenerator());
+		World normal;
+		World flat;
+
+		//TODO This is bad...SpoutEngine should have a "setDefaultWorld"
+		if (VanillaConfiguration.FLATWORLD.getBoolean()) {
+			flat = game.loadWorld("world_flat", new FlatGenerator());
+			normal = game.loadWorld("world", new NormalGenerator());
+		} else {
+			normal = game.loadWorld("world", new NormalGenerator());
+			flat = game.loadWorld("world_flat", new FlatGenerator());
+		}
+
 		World nether = game.loadWorld("world_nether", new NetherGenerator());
 		World end = game.loadWorld("world_end", new TheEndGenerator());
 
@@ -148,19 +158,12 @@ public class VanillaPlugin extends CommonPlugin {
 		VanillaSky.setSky(nether, netherSky);
 		VanillaSky.setSky(end, endSky);
 
-		//TODO This is bad...SpoutEngine should have a "setDefaultWorld"
-		if (VanillaConfiguration.FLATWORLD.getBoolean()) {
-			flat.setSpawnPoint(new Transform(new Point(flat, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
-			normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
-		} else {
-			normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
-			flat.setSpawnPoint(new Transform(new Point(flat, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
-		}
-
 		//TODO Have spawn point set by generator.
+		normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 		normal.createAndSpawnEntity(new Point(normal, 0.f, 0.f, 0.f), normSky);
 		normal.createAndSpawnEntity(new Point(normal, 0.5F, 64.5F, 0.5F), new PointObserver());
 
+		flat.setSpawnPoint(new Transform(new Point(flat, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 		flat.createAndSpawnEntity(new Point(normal, 0.f, 0.f, 0.f), normSky);
 		flat.createAndSpawnEntity(new Point(normal, 0.5F, 64.5F, 0.5F), new PointObserver());
 

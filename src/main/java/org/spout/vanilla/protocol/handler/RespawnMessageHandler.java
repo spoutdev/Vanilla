@@ -45,7 +45,8 @@ public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 		if (player == null || player.getEntity() == null) {
 			return;
 		}
-		PlayerRespawnEvent event = new PlayerRespawnEvent(player.getEntity(), player.getEntity().getLastTransform().getPosition().getWorld().getSpawnPoint().getPosition());
+
+		PlayerRespawnEvent event = new PlayerRespawnEvent(player.getEntity(), player.getEntity().getPosition());
 		Spout.getEngine().getEventManager().callEvent(event);
 
 		//Set position for the server

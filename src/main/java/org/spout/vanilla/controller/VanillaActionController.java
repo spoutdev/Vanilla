@@ -88,6 +88,9 @@ public abstract class VanillaActionController extends ActionController implement
 	@Override
 	public void onDeath() {
 		for (ItemStack drop : getDrops()) {
+			if (drop == null) {
+				continue;
+			}
 			Item item = new Item(drop, Vector3.ZERO);
 			if (lastKnownPosition != null) {
 				lastKnownPosition.getWorld().createAndSpawnEntity(lastKnownPosition, item);
@@ -164,7 +167,9 @@ public abstract class VanillaActionController extends ActionController implement
 		//Check controller health, send messages to the client based on current state.
 		if (getParent().getHealth() <= 0) {
 			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
-			getParent().kill();
+			if(!(this instanceof Player)) {
+				getParent().kill();
+			}
 		}
 
 		this.oldPosition = getParent().getPosition();

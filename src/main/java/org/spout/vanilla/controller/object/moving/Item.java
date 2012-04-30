@@ -72,7 +72,7 @@ public class Item extends Substance {
 		double minDistance = -1;
 		Player closestPlayer = null;
 		for (Player plr : Spout.getEngine().getOnlinePlayers()) {
-			if (plr.getEntity().getWorld() == null || !plr.getEntity().getWorld().getName().equals(world.getName())) {
+			if ((plr == null || plr.getEntity() == null ||  world == null || !plr.getEntity().getWorld().getName().equals(world.getName()))) {
 				continue;
 			}
 			double distance = plr.getEntity().getPosition().getSquaredDistance(getParent().getPosition());
@@ -94,7 +94,7 @@ public class Item extends Substance {
 		int collected = getParent().getId(), collector = closestPlayer.getEntity().getId();
 
 		for (Player plr : Spout.getEngine().getOnlinePlayers()) {
-			if (!plr.getEntity().getWorld().getName().equals(world.getName())) {
+			if (plr == null || plr.getEntity() == null ||  world == null || !plr.getEntity().getWorld().getName().equals(world.getName())) {
 				continue;
 			}
 			sendPacket(plr, new CollectItemMessage(collected, collector));

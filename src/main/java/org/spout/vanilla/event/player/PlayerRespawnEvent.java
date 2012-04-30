@@ -36,14 +36,14 @@ import org.spout.api.player.Player;
 
 public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private boolean bedRespawn;
+	private Point point;
 
-	public PlayerRespawnEvent(Entity e, Point point, boolean bedRespawn) {
+	public PlayerRespawnEvent(Entity e, Point point) {
 		super(e, point);
 		if (!(e.getController() instanceof PlayerController)) {
 			throw new InvalidControllerException();
 		}
-		this.bedRespawn = bedRespawn;
+		this.point = point;
 	}
 
 	/**
@@ -55,11 +55,19 @@ public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable 
 	}
 
 	/**
-	 * Returns true if the respawn location is a bed.
-	 * @return True if the respawn location is a bed.
+	 * Gets the point where the player respawned.
+	 * @return
 	 */
-	public boolean isBedRespawn() {
-		return bedRespawn;
+	public Point getPoint() {
+		return point;
+	}
+
+	/**
+	 * Sets the point where the player respawns.
+	 * @param point The new location where spawning will take place.
+	 */
+	public void setPoint(Point point) {
+		this.point = point;
 	}
 
 	@Override

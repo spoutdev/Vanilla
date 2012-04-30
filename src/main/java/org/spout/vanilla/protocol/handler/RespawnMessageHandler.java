@@ -25,17 +25,48 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.Spout;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.event.player.PlayerRespawnEvent;
+import org.spout.vanilla.generator.flat.FlatGenerator;
+import org.spout.vanilla.generator.nether.NetherGenerator;
+import org.spout.vanilla.generator.normal.NormalGenerator;
+import org.spout.vanilla.generator.theend.TheEndGenerator;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 
 public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 	@Override
 	public void handleServer(Session session, Player player, RespawnMessage message) {
-		//TODO this
-		//player.setHealth(20);
-		//player.teleport(player.getWorld().getSpawnLocation());
+		if (player == null || player.getEntity() == null) {
+			return;
+		}
+		PlayerRespawnEvent event = new PlayerRespawnEvent(player.getEntity(), player.getEntity().getLastTransform().getPosition().getWorld().getSpawnPoint().getPosition());
+		Spout.getEngine().getEventManager().callEvent(event);
+
+		//Set position for the server
+		Point point = event.getPoint();
+		player.getEntity().setPosition(point);
+		player.getNetworkSynchronizer().setPositionDirty();
+
+		//Send respawn packet back to the client.
+		//TODO We need worlds associated with vanilla storing characteristics
+		RespawnMessage respawn;
+		if (point.getWorld().getGenerator() instanceof NormalGenerator) {
+			respawn = new RespawnMessage(0, (byte) 1, (((VanillaPlayer) player.getEntity()).getGameMode().getId()), 256, "DEFAULT");
+		} else if (point.getWorld().getGenerator() instanceof FlatGenerator) {
+			respawn = new RespawnMessage(0, (byte) 1, (((VanillaPlayer) player.getEntity()).getGameMode().getId()), 256, "SUPERFLAT");
+		} else if (point.getWorld().getGenerator() instanceof NetherGenerator) {
+			respawn = new RespawnMessage(-1, (byte) 1, (((VanillaPlayer) player.getEntity()).getGameMode().getId()), 256, "DEFAULT");
+		} else if (point.getWorld().getGenerator() instanceof TheEndGenerator) {
+			respawn = new RespawnMessage(1, (byte) 1, (((VanillaPlayer) player.getEntity()).getGameMode().getId()), 256, "DEFAULT");
+		} else {
+			return;
+		}
+		session.send(respawn);
 	}
 }

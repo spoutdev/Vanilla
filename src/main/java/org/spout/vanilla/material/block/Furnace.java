@@ -67,15 +67,13 @@ public class Furnace extends Solid {
 		VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
 		vanillaPlayer.sendPacket(vanillaPlayer.getPlayer(), new OpenWindowMessage(1, 2, "Furnace", 38));
 		Inventory inventory = entity.getInventory();
+		FurnaceInventory newInventory = new FurnaceInventory(entity.getWorld().getBlock(pos));
 		if (!(inventory instanceof PlayerInventory)) {
-			return;
-		}
-
-		FurnaceInventory newInventory = new FurnaceInventory();
-		for (int i = 0; i < inventory.getSize(); i++) {
-			ItemStack stack = inventory.getItem(i);
-			if (stack != null) {
-				newInventory.setItem(stack, i);
+			for (int i = 0; i < inventory.getSize(); i++) {
+				ItemStack stack = inventory.getItem(i);
+				if (stack != null) {
+					newInventory.setItem(stack, i);
+				}
 			}
 		}
 		

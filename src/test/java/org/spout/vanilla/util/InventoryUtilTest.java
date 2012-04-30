@@ -23,13 +23,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory;
+package org.spout.vanilla.util;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.Inventory;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-public class FurnaceInventory extends Inventory {
-	public FurnaceInventory(Block block) {
-		super(39);
+import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.material.VanillaMaterials;
+
+public class InventoryUtilTest {
+	
+	@Test
+	public void testInventoryUtil() {
+		ItemStack stack1 = new ItemStack(VanillaMaterials.CAKE, 20);
+		ItemStack stack2 = new ItemStack(VanillaMaterials.CAKE, 20);
+		InventoryUtil.mergeStack(stack1, stack2);
+		assertEquals(stack1.getAmount(), 0);
+		assertEquals(stack2.getAmount(), 40);
+		
+		stack1.setAmount(20);
+		InventoryUtil.mergeStack(stack1, stack2, 1);
+		assertEquals(stack1.getAmount(), 19);
+		assertEquals(stack2.getAmount(), 41);
+		
+		stack1.setAmount(0);
+		assertEquals(InventoryUtil.nullIfEmpty(stack1), null);
+		assertEquals(InventoryUtil.nullIfEmpty(stack2), stack2);
 	}
+	
 }

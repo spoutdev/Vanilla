@@ -25,9 +25,6 @@
  */
 package org.spout.vanilla.protocol.handler;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
@@ -37,173 +34,130 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.material.item.generic.Armor;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
+import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
-	private Session session;
-	private WindowClickMessage message;
-
+	
 	@Override
 	public void handleServer(Session session, Player player, WindowClickMessage message) {
-
-		this.session = session;
-		this.message = message;
-
+		
 		Entity entity = player.getEntity();
+		if (!(entity.getController() instanceof VanillaPlayer)) {
+			return;
+		}
+		
 		VanillaPlayer controller = (VanillaPlayer) entity.getController();
 		Inventory inventory = controller.getActiveInventory();
 		if (inventory == null) {
 			inventory = entity.getInventory();
 		}
-
+		
+		// Player clicked outside of window
 		if (message.getSlot() == 64537) {
 			controller.setItemOnCursor(null);
-			//TODO drop item
-			respond(true);
+			// TODO: Drop item
+			respond(session, message, true);
 			return;
 		}
-
+		
+		if (inventory instanceof PlayerInventory) {
+			handlePlayerInventory((PlayerInventory) inventory, message, controller);
+		}
+		
+		if (inventory instanceof FurnaceInventory) {
+			handleFurnaceInventory((FurnaceInventory) inventory, message, controller);
+		}
+	}
+	
+	private void handlePlayerInventory(PlayerInventory inventory, WindowClickMessage message, VanillaPlayer controller) {
+		
+		Player player = controller.getPlayer();
 		int clickedSlot = VanillaMessageHandlerUtils.getSpoutInventorySlot(inventory, message.getSlot());
 		System.out.println("Minecraft slot: " + message.getSlot());
 		System.out.println("Spout slot: " + clickedSlot);
 		if (clickedSlot < 0) {
-			System.out.println("Error: Invalid slot");
-			respond(false);
+			System.out.println("Error: Invalid slot!");
 			return;
 		}
-
+		
 		ItemStack slotStack = inventory.getItem(clickedSlot);
 		ItemStack cursorStack = controller.getItemOnCursor();
-
+		
 		boolean armorSlot = clickedSlot == 36 || clickedSlot == 37 || clickedSlot == 41 || clickedSlot == 44;
 		if (inventory instanceof PlayerInventory) {
+			// Only allow armor in the armor slots
 			if (armorSlot && cursorStack != null && !(cursorStack.getMaterial() instanceof Armor)) {
-				respond(false);
+				respond(player.getSession(), message, false);
 				return;
 			}
 
+			// Do not allow input in the output slot.
 			if (clickedSlot == 40 && cursorStack != null) {
-				respond(false);
+				respond(player.getSession(), message, false);
 				return;
 			}
 		}
-
-		if (message.isShift()) {
-			if (!message.isRightClick()) {
-				if (slotStack != null) {
-					// Move from hot-bar to inventory, or vice-versa
-					quickMoveStack(inventory, clickedSlot, player);
-					slotStack = null;
+		
+		boolean canMerge = false;
+		if (slotStack != null && cursorStack != null && slotStack.equalsIgnoreSize(cursorStack)) {
+			canMerge = true;
+		}
+		
+		// Right click
+		if (message.isRightClick()) {
+			if (!message.isShift()) {
+				if (slotStack != null && cursorStack != null && canMerge) {
+					InventoryUtil.mergeStack(cursorStack, slotStack, 1);
+				
+				} else if (slotStack != null && cursorStack == null) {
+					int amount = (slotStack.getAmount() + 1) / 2;
+					slotStack.setAmount(slotStack.getAmount() - amount);
+					cursorStack = new ItemStack(slotStack.getMaterial(), amount);
+				
+				} else if (slotStack == null && cursorStack != null) {
+					slotStack = new ItemStack(cursorStack.getMaterial(), 1);
+					cursorStack.setAmount(cursorStack.getAmount() - 1); 
 				}
-			} else {
-				// TODO: Shift click right click does what?
 			}
-		} else {
-			if (!message.isRightClick()) {
-				if (cursorStack != null) {
-					if (slotStack != null) {
-						if (!cursorStack.equalsIgnoreSize(slotStack)) {
-							// Swap stacks
-							ItemStack tmp = slotStack;
-							slotStack = cursorStack;
-							cursorStack = tmp;
-						} else {
-							// Try to fill slot stacks
-							mergeStack(cursorStack, slotStack, cursorStack.getAmount(), true);
-						}
-					} else {
-						// Put cursor in empty slot
-						slotStack = cursorStack;
-						cursorStack = null;
-					}
-				} else if (slotStack != null) {
+		}
+		
+		// Left click
+		if (!message.isRightClick()) {
+			if (!message.isShift()) {
+				if (slotStack != null && cursorStack != null && canMerge) {
+					InventoryUtil.mergeStack(cursorStack, slotStack);
+					
+				} else if (slotStack != null && cursorStack == null) {
 					cursorStack = slotStack;
 					slotStack = null;
+					
+				} else if (slotStack == null && cursorStack != null) {
+					slotStack = cursorStack;
+					cursorStack = null;
 				}
-			} else {
-				if (cursorStack != null) {
-					if (slotStack != null) {
-						if (cursorStack.equalsIgnoreSize(slotStack)) {
-							// Dispose one of the stack into the slot stack.
-							mergeStack(cursorStack, slotStack, 1, true);
-						}
-					} else {
-						// Dispose on of the stack into the empty slot.
-						cursorStack.setAmount(cursorStack.getAmount() - 1);
-						slotStack = new ItemStack(cursorStack.getMaterial(), 1);
-					}
-				} else  if (slotStack != null) {
-					// Split the stack
-					int amount = (slotStack.getAmount() + 1)/ 2;
-					slotStack.setAmount(slotStack.getAmount()-amount);
-					cursorStack = new ItemStack(slotStack.getMaterial(), amount);
-				}
+				
+			} else if (slotStack != null) {
+				InventoryUtil.quickMoveStack(inventory, clickedSlot);
 			}
 		}
 
-		cursorStack = nullIfEmpty(cursorStack);
-		slotStack = nullIfEmpty(slotStack);
+		cursorStack = InventoryUtil.nullIfEmpty(cursorStack);
+		slotStack = InventoryUtil.nullIfEmpty(slotStack);
 		controller.setItemOnCursor(cursorStack);
 		inventory.setItem(slotStack, clickedSlot);
-		respond(true);
+		respond(player.getSession(), message, true);
+	}
+	
+	private void handleFurnaceInventory(FurnaceInventory inventory, WindowClickMessage message, VanillaPlayer controller) {
+		
 	}
 
-	private void mergeStack(ItemStack from, ItemStack to, int count, boolean tryToFill) {
-		if (from == null || to == null) {
-			return;
-		}
-
-		int fromAmount = from.getAmount();
-		int toAmount = to.getAmount();
-		int toFreeSpace = to.getMaterial().getMaxStackSize() - toAmount;
-
-		if (count <= 0 || !tryToFill && (fromAmount < count || toFreeSpace < count)) {
-			return;
-		}
-
-		if (tryToFill) {
-			count = Math.min(fromAmount, count);
-			count = Math.min(toFreeSpace, count);
-		}
-
-		from.setAmount(fromAmount - count);
-		to.setAmount(toAmount + count);
-	}
-
-	private ItemStack nullIfEmpty(ItemStack s) {
-		return (s != null && s.getAmount() == 0) ? null : s;
-	}
-
-	private void quickMoveStack(Inventory inv, int pos, Player player) {
-		ItemStack theStack = inv.getItem(pos);
-		// Assume item is in quick-bar.
-		int startSlot = 0, stopSlot = 8;
-		if (pos > stopSlot) {
-			startSlot = 9;
-			stopSlot = inv.getSize() - 1;
-		}
-
-		Set<Integer> hiddenSlots = new HashSet<Integer>();
-		for (int i = startSlot; i <= stopSlot; i++) {
-			if (inv.isHiddenSlot(i)) {
-				hiddenSlots.add(i);
-			}
-
-			inv.setHiddenSlot(i, true);
-		}
-
-		inv.addItem(theStack, false);
-		for (int i = startSlot; i <= stopSlot; i++) {
-			if (!(hiddenSlots.contains(i))) {
-				inv.setHiddenSlot(i, false);
-			}
-		}
-	}
-
-	private void respond(boolean success) {
+	private void respond(Session session, WindowClickMessage message, boolean success) {
 		session.send(new TransactionMessage(message.getWindowId(), message.getTransaction(), success));
 	}
 }

@@ -34,8 +34,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.VanillaActionController;
 
 public class WanderAction extends EntityAction<VanillaActionController> {
-	private static final double WANDER_FREQ = 2.75;
-	private double freq = 0;
+	private static final double WANDER_FREQ = 1;
 	@SuppressWarnings("unused")
 	private Vector3 movement = Vector3.ZERO;
 	@SuppressWarnings("unused")
@@ -43,11 +42,7 @@ public class WanderAction extends EntityAction<VanillaActionController> {
 
 	@Override
 	public boolean shouldRun(Entity entity, VanillaActionController controller) {
-		freq = controller.getRandom().nextDouble() * 3.0;
-		if (freq >= WANDER_FREQ) {
-			return true;
-		}
-		return false;
+		return controller.getRandom().nextDouble() * 3.0 >= WANDER_FREQ;
 	}
 
 	@Override

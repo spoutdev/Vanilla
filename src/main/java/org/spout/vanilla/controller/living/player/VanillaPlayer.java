@@ -206,6 +206,14 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	@Override
+	public void onDeath() {
+		//Don't count disconnects/unknown exceptions as dead (Yes that's a difference!)
+		if (owner.getSession() != null && owner.getSession().getPlayer() != null) {
+			super.onDeath();
+		}
+	}
+
+	@Override
 	public Player getPlayer() {
 		return owner;
 	}

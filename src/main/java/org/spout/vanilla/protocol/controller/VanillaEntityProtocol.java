@@ -25,92 +25,86 @@
  */
 package org.spout.vanilla.protocol.controller;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
+import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.EntityRotationMessage;
 import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
 
+import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
+import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
+
 public abstract class VanillaEntityProtocol implements EntityProtocol {
-	private static final int MOVE = 1;
-	private static final int LOOK = 2;
 
 	@Override
 	public Message[] getDestroyMessage(Entity entity) {
-		return new Message[]{new DestroyEntityMessage(entity.getId())};
+		return new Message[] {new DestroyEntityMessage(entity.getId())};
 	}
 
-	@Override
 	public Message[] getUpdateMessage(Entity entity) {
-		Set<Message> messages = new HashSet<Message>();
+		Controller controller = entity.getController();
+		Transform previousPosition = entity.getLastTransform();
+		Transform newPosition = entity.getTransform();
 
-		if (entity.getController() != null && (entity.getController() instanceof VanillaActionController)) {
-			VanillaActionController controller = (VanillaActionController) entity.getController();
-			int id = entity.getId();
+		int lastX = protocolifyPosition(previousPosition.getPosition().getX());
+		int lastY = protocolifyPosition(previousPosition.getPosition().getY());
+		int lastZ = protocolifyPosition(previousPosition.getPosition().getZ());
 
-			//Reducing variable counts would be great...but I see no alternative :(
-			int lastX = controller.getClientPosX();
-			int lastY = controller.getClientPosY();
-			int lastZ = controller.getClientPosZ();
-			int lastYaw = controller.getClientYaw();
-			int lastPitch = controller.getClientPitch();
-			controller.updateClientPosition();
+		int newX = protocolifyPosition(newPosition.getPosition().getX());
+		int newY = protocolifyPosition(newPosition.getPosition().getY());
+		int newZ = protocolifyPosition(newPosition.getPosition().getZ());
+		int newYaw = protocolifyRotation(newPosition.getRotation().getYaw());
+		int newPitch = protocolifyRotation(newPosition.getRotation().getPitch());
 
-			int newX = controller.getClientPosX();
-			int newY = controller.getClientPosY();
-			int newZ = controller.getClientPosZ();
-			int newYaw = controller.getClientYaw();
-			int newPitch = controller.getClientPitch();
+		int deltaX = newX - lastX;
+		int deltaY = newY - lastY;
+		int deltaZ = newZ - lastZ;
 
-			int deltaX = newX - lastX;
-			int deltaY = newY - lastY;
-			int deltaZ = newZ - lastZ;
-			int deltaYaw = newYaw - lastYaw;
-			int deltaPitch = newPitch - lastPitch;
+		List<Message> messages = new ArrayList<Message>(3);
 
-			if (controller.needsPositionUpdate() || hasMagnitudeOver(128, deltaX, deltaY, deltaZ)) {
-				messages.add(new EntityTeleportMessage(id, newX, newY, newZ, newYaw, newPitch));
-			} else {
-				int pid = hasMagnitudeOver(4, deltaX, deltaY, deltaZ) ? MOVE:0;
-				pid += hasMagnitudeOver(4, deltaYaw, deltaPitch) ? LOOK:0;
+		if ((controller instanceof VanillaActionController && ((VanillaActionController)controller).needsPositionUpdate()) || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
+			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch));
+		} else {
+			boolean moved = !previousPosition.getPosition().equals(newPosition.getPosition());
+			boolean looked = !previousPosition.getRotation().equals(newPosition.getRotation());
+			if (moved) {
+				if (looked) {
+					messages.add(new RelativeEntityPositionRotationMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
+				} else {
+					messages.add(new RelativeEntityPositionMessage(entity.getId(), deltaX, deltaY, deltaZ));
+				}
+			} else if (looked) {
+				messages.add(new EntityRotationMessage(entity.getId(), newYaw, newPitch));
+			}
+		}
 
-				switch (pid) {
-					case MOVE:
-						messages.add(new RelativeEntityPositionMessage(id, deltaX, deltaY, deltaZ));
-						controller.setClientPosition(newX, newY, newZ, lastYaw, lastPitch);
-						break;
-					case LOOK:
-						messages.add(new EntityRotationMessage(id, newYaw, newPitch));
-						controller.setClientPosition(lastX, lastY, lastZ, newYaw, newPitch);
-						break;
-					case MOVE+LOOK:
-						messages.add(new RelativeEntityPositionRotationMessage(id, deltaX, deltaY, deltaZ, newYaw, newPitch));
-						break;
+		if (controller instanceof VanillaActionController) {
+			VanillaActionController vaController = (VanillaActionController) controller;
+			if (vaController.needsVelocityUpdate()) {
+				messages.add(new EntityVelocityMessage(entity.getId(), vaController.getVelocity()));
+			}
+
+			if (controller instanceof Living) {
+				Living living = (Living) controller;
+				if (living.headYawChanged()) {
+					messages.add(new EntityHeadYawMessage(entity.getId(), protocolifyRotation(living.getHeadYaw())));
 				}
 			}
-
-			if (controller.needsVelocityUpdate()) {
-				messages.add(new EntityVelocityMessage(id, controller.getVelocity()));
-			}
 		}
+
 		return messages.toArray(new Message[messages.size()]);
-	}
-
-	private boolean hasMagnitudeOver(int threshold, int... testVars) {
-		for (int t : testVars) {
-			if (Math.abs(t) > threshold) {
-				return true;
-			}
-		}
-		return false;
 	}
 }

@@ -86,7 +86,7 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 			Message[] toSend = super.getUpdateMessage(entity);
 			List<Message> msgs = new ArrayList<Message>(Arrays.asList(toSend != null ? toSend : new Message[0]));
 			msgs.add(new EntityMetadataMessage(entity.getId(), params));
-			return msgs != null ? msgs.toArray(new Message[msgs.size()]) : new Message[0];
+			return msgs.toArray(new Message[msgs.size()]);
 		} else {
 			return super.getUpdateMessage(entity);
 		}

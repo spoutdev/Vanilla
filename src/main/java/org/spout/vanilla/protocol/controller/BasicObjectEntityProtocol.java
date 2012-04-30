@@ -18,7 +18,6 @@ public class BasicObjectEntityProtocol extends BasicEntityProtocol {
 		if (c != null) {
 			int id = entity.getId();
 			Vector3 pos = entity.getPosition().multiply(32).floor();
-
 			return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), pos)};
 		} else {
 			return null;

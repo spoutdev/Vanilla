@@ -29,13 +29,12 @@ import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.action.GravityAction;
 import org.spout.vanilla.controller.action.WanderAction;
-import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 
 public abstract class Living extends VanillaActionController {
-	private final static double HEAD_YAW_SCALING = 256.0/360;
 	private int headYaw = 0;
 	private int lastHeadYaw = 0;
 	private int nextHeadYaw = 0;
+	private boolean headYawChanged;
 
 	protected Living(VanillaControllerType type) {
 		super(type);
@@ -52,16 +51,17 @@ public abstract class Living extends VanillaActionController {
 	public void onTick(float dt) {
 		super.onTick(dt);
 
+		headYawChanged = false;
 		headYaw = calculateHeadYaw();
 		if (lastHeadYaw != headYaw) {
 			lastHeadYaw = headYaw;
-			broadcastPacket(new EntityHeadYawMessage(getParent().getId(), headYaw));
+			headYawChanged = true;
 		}
 	}
 
 	private int calculateHeadYaw() {
 		if (nextHeadYaw == 0) {
-			nextHeadYaw = (int) (getParent().getYaw() * HEAD_YAW_SCALING);
+			nextHeadYaw = (int) (getParent().getYaw());
 		}
 		int tmp = nextHeadYaw;
 		nextHeadYaw = 0;
@@ -72,11 +72,15 @@ public abstract class Living extends VanillaActionController {
 	 * Sets the yaw of a controller's head for the next tick.
 	 * @param headYaw
 	 */
-	public void setHeadYaw(int yaw) {
-		this.nextHeadYaw = yaw;
+	public void setHeadYaw(int headYaw) {
+		this.nextHeadYaw = headYaw;
 	}
 
 	public int getHeadYaw() {
 		return headYaw;
+	}
+
+	public boolean headYawChanged() {
+		return headYawChanged;
 	}
 }

@@ -39,6 +39,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
@@ -322,6 +323,22 @@ public final class ChannelBufferUtils {
 			return false;
 		}
 		return ((VanillaItemMaterial) mat).getNBTData();
+	}
+
+	public static int protocolifyPosition(float pos) {
+		return MathHelper.floor(pos * 32);
+	}
+
+	public static float deProtocolifyPosition(int pos) {
+		return ((float) pos) / 32F;
+	}
+
+	public static int protocolifyRotation(float rot) {
+		return MathHelper.wrapByte(MathHelper.floor((rot / 360) * 256));
+	}
+
+	public static float deProtocolifyRotation(int rot) {
+		return (rot / 256f) * 360;
 	}
 
 	/**

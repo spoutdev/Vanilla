@@ -66,12 +66,10 @@ public abstract class VanillaActionController extends ActionController implement
 	private int velocityTicks = 0;
 	private int positionTicks = 0;
 	private Vector3 oldPosition;
-	private Vector3 oldRotation;
+	private Quaternion oldRotation;
 	private Vector3 movedVelocity = Vector3.ZERO;
 	private Vector3 velocity = Vector3.ZERO;
 	private float maxSpeed = Float.MAX_VALUE; //might turn this into a vector too?
-	private int clientX, clientY, clientZ;
-	private int clientYaw, clientPitch;
 	private Point lastKnownPosition;
 
 	public boolean needsVelocityUpdate() {
@@ -89,13 +87,6 @@ public abstract class VanillaActionController extends ActionController implement
 
 	@Override
 	public void onDeath() {
-		//Don't count disconnects/unknown exceptions as dead (!Yes that's a difference!)
-		if (this instanceof PlayerController) {
-			Player toCheck = ((PlayerController) this).getPlayer();
-			if (toCheck.getSession() == null || toCheck.getSession().getPlayer() == null) {
-				return;
-			}
-		}
 		for (ItemStack drop : getDrops()) {
 			Item item = new Item(drop, Vector3.ZERO);
 			if (lastKnownPosition != null) {
@@ -120,53 +111,8 @@ public abstract class VanillaActionController extends ActionController implement
 		return this.oldPosition;
 	}
 
-	public Vector3 getPreviousRotation() {
+	public Quaternion getPreviousRotation() {
 		return this.oldRotation;
-	}
-
-	public int getClientPosX() {
-		return this.clientX;
-	}
-
-	public int getClientPosY() {
-		return this.clientY;
-	}
-
-	public int getClientPosZ() {
-		return this.clientZ;
-	}
-
-	public int getClientYaw() {
-		return this.clientYaw;
-	}
-
-	public int getClientPitch() {
-		return this.clientPitch;
-	}
-
-	//FIXME: MOVE TO MATHHELPER!
-	public static byte wrapByte(int value) {
-		value %= 256;
-		if (value < 0) {
-			value += 256;
-		}
-		return (byte) value;
-	}
-
-	public void updateClientPosition() {
-		this.clientX = MathHelper.floor(this.getParent().getPosition().getX() * 32.0);
-		this.clientY = MathHelper.floor(this.getParent().getPosition().getY() * 32.0);
-		this.clientZ = MathHelper.floor(this.getParent().getPosition().getZ() * 32.0);
-		this.clientYaw = wrapByte(MathHelper.floor(this.getParent().getYaw() / 360f * 256f));
-		this.clientPitch = wrapByte(MathHelper.floor(this.getParent().getPitch() / 360f * 256f));
-	}
-
-	public void setClientPosition(int x, int y, int z, int yaw, int pitch) {
-		this.clientX = x;
-		this.clientY = y;
-		this.clientZ = z;
-		this.clientYaw = yaw;
-		this.clientPitch = pitch;
 	}
 
 	public void setVelocity(Vector3 velocity) {
@@ -192,8 +138,7 @@ public abstract class VanillaActionController extends ActionController implement
 		getParent().getCollision().setStrategy(CollisionStrategy.SOFT);
 		getParent().setData(VanillaControllerTypes.KEY, getType().getID());
 		this.oldPosition = getParent().getPosition();
-		this.oldRotation = getParent().getRotation().getAxisAngles();
-		this.updateClientPosition();
+		this.oldRotation = getParent().getRotation();
 	}
 
 	@Override
@@ -223,7 +168,7 @@ public abstract class VanillaActionController extends ActionController implement
 		}
 
 		this.oldPosition = getParent().getPosition();
-		this.oldRotation = getParent().getRotation().getAxisAngles();
+		this.oldRotation = getParent().getRotation();
 
 		//HACK: Store Position for later purposes
 		if (getParent().getPosition() != null && getParent().getPosition() != Point.invalid) {
@@ -320,12 +265,11 @@ public abstract class VanillaActionController extends ActionController implement
 	/**
 	 * Damages this controller and doesn't send messages to the client.
 	 * @param amount amount the controller will be damaged by.
-	 * @param sendHurtMessage whether or not to send a hurt message
 	 */
 	public void damage(int amount) {
 		this.damage(amount, false);
 	}
-	
+
 	/**
 	 * Damages this controller.
 	 *

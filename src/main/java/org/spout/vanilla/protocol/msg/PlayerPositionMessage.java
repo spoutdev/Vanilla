@@ -61,6 +61,6 @@ public final class PlayerPositionMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "PositionMessage{x=" + x + ",y=" + y + ",z=" + z + ",stance=" + stance + ",onGround=" + onGround + "}";
+		return "PlayerPositionMessage{x=" + x + ",y=" + y + ",z=" + z + ",stance=" + stance + ",onGround=" + onGround + "}";
 	}
 }

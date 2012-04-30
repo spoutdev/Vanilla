@@ -71,6 +71,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected int distanceMoved;
 	protected Set<Player> invisibleFor = new HashSet<Player>();
 	protected Point compassTarget;
+	protected Vector3 lookingAt;
 
 	public VanillaPlayer(Player p, GameMode gameMode) {
 		super(VanillaControllerTypes.PLAYER);
@@ -501,5 +502,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	public void setItemOnCursor(ItemStack newItem) {
 		itemOnCursor = newItem;
+	}
+
+	public void setLookingAtVector(Vector3 lookingAt) {
+		this.lookingAt = lookingAt;
+	}
+
+	public Vector3 getLookingAt() {
+		return lookingAt;
 	}
 }

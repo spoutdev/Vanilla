@@ -54,6 +54,7 @@ import org.spout.vanilla.protocol.codec.EntityRotationCodec;
 import org.spout.vanilla.protocol.codec.EntityStatusCodec;
 import org.spout.vanilla.protocol.codec.EntityTeleportCodec;
 import org.spout.vanilla.protocol.codec.EntityVelocityCodec;
+import org.spout.vanilla.protocol.codec.PlayerLookCodec;
 import org.spout.vanilla.protocol.codec.SetExperienceCodec;
 import org.spout.vanilla.protocol.codec.SpawnExperienceOrbCodec;
 import org.spout.vanilla.protocol.codec.ExplosionCodec;
@@ -76,7 +77,6 @@ import org.spout.vanilla.protocol.codec.ProgressBarCodec;
 import org.spout.vanilla.protocol.codec.RelativeEntityPositionCodec;
 import org.spout.vanilla.protocol.codec.RelativeEntityPositionRotationCodec;
 import org.spout.vanilla.protocol.codec.RespawnCodec;
-import org.spout.vanilla.protocol.codec.PlayerRotationCodec;
 import org.spout.vanilla.protocol.codec.ServerListPingCodec;
 import org.spout.vanilla.protocol.codec.SetWindowSlotCodec;
 import org.spout.vanilla.protocol.codec.SetWindowSlotsCodec;
@@ -124,7 +124,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x0B */
 			bind(PlayerPositionCodec.class);
 			/* 0x0C */
-			bind(PlayerRotationCodec.class); //TODO rename Player Look on the minecraft protocol page
+			bind(PlayerLookCodec.class); //TODO rename Player Look on the minecraft protocol page
 			/* 0x0D */
 			bind(PlayerPositionRotationCodec.class);
 			/* 0x0E */

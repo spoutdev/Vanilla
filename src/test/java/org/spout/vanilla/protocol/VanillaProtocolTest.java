@@ -73,6 +73,7 @@ import org.spout.vanilla.protocol.msg.EntityRotationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
+import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.SetExperienceMessage;
 import org.spout.vanilla.protocol.msg.SpawnExperienceOrbMessage;
 import org.spout.vanilla.protocol.msg.ExplosionMessage;
@@ -95,7 +96,6 @@ import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
-import org.spout.vanilla.protocol.msg.PlayerRotationMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
@@ -130,7 +130,7 @@ public class VanillaProtocolTest {
 			new RespawnMessage(89, (byte) 0, (byte) 1, 128, "VERYFANCY"),
 			new GroundMessage(true),
 			new PlayerPositionMessage(128, 256, 512, 3.4D, true),
-			new PlayerRotationMessage(1F, 2F, false),
+			new PlayerLookMessage(1F, 2F, false),
 			new PlayerPositionRotationMessage(1, 2, 5, 3.62, 4, 3, false),
 			new PlayerDiggingMessage(PlayerDiggingMessage.STATE_START_DIGGING, 1, 2, 3, 4),
 			new PlayerBlockPlacementMessage(1, 2, 3, 4, 89, 2, 7, null),

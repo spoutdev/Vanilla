@@ -410,11 +410,19 @@ public class AdministrationCommands {
 		}
 	}
 
-	@Command(aliases = "comeatmebro", desc = "Gets you kicked!", max = 1)
-	public void testKick(CommandContext args, CommandSource source) throws CommandException {
-		if (source instanceof Player) {
-			Player player = (Player) source;
-			player.kick("Bye!");
+	@Command(aliases = {"kill"}, usage = "<player>", desc = "Kill yourself or another player", min = 0, max = 1)
+	@CommandPermissions("vanilla.command.kill")
+	public void setHealth(CommandContext args, CommandSource source) throws CommandException {
+		if (args.length() > 1) {
+			if (!(source instanceof Player)) {
+				throw new CommandException("Don't be silly...you cannot kill yourself as the console.");
+			}
+			((Player) source).getEntity().kill();
+		} else {
+			Player victim = Spout.getEngine().getPlayer(args.getString(0), true);
+			if (victim != null) {
+				victim.getEntity().kill();
+			}
 		}
 	}
 }

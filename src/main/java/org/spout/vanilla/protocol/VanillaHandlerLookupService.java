@@ -43,10 +43,10 @@ import org.spout.vanilla.protocol.handler.GroundMessageHandler;
 import org.spout.vanilla.protocol.handler.KickMessageHandler;
 import org.spout.vanilla.protocol.handler.KeepAliveMessageHandler;
 import org.spout.vanilla.protocol.handler.PlayerAbilityMessageHandler;
+import org.spout.vanilla.protocol.handler.PlayerLookMessageHandler;
 import org.spout.vanilla.protocol.handler.PlayerPositionMessageHandler;
 import org.spout.vanilla.protocol.handler.PlayerPositionRotationMessageHandler;
 import org.spout.vanilla.protocol.handler.RespawnMessageHandler;
-import org.spout.vanilla.protocol.handler.PlayerRotationMessageHandler;
 import org.spout.vanilla.protocol.handler.WindowClickMessageHandler;
 import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
 import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
@@ -62,10 +62,10 @@ import org.spout.vanilla.protocol.msg.GroundMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
+import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionRotationMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
-import org.spout.vanilla.protocol.msg.PlayerRotationMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
 
 public class VanillaHandlerLookupService extends HandlerLookupService {
@@ -78,7 +78,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(ChatMessage.class, ChatMessageHandler.class);
 			bind(GroundMessage.class, GroundMessageHandler.class);
 			bind(PlayerPositionMessage.class, PlayerPositionMessageHandler.class);
-			bind(PlayerRotationMessage.class, PlayerRotationMessageHandler.class);
+			bind(PlayerLookMessage.class, PlayerLookMessageHandler.class);
 			bind(PlayerPositionRotationMessage.class, PlayerPositionRotationMessageHandler.class);
 			bind(KickMessage.class, KickMessageHandler.class);
 			bind(PlayerDiggingMessage.class, PlayerDiggingMessageHandler.class);

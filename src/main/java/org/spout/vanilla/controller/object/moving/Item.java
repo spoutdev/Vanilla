@@ -25,7 +25,10 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
+import java.util.Arrays;
+import java.util.List;
 import org.spout.api.Spout;
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
@@ -37,30 +40,28 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 /**
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).
  */
 public class Item extends Substance {
-	private ItemStack is;
-	private int roll, unpickable;
-	private Vector3 initial;
-	private Vector3 velocity = new Vector3();
+	private final ItemStack is;
+	private final int roll;
+	private int unpickable;
 
 	public Item(ItemStack is, Vector3 initial) {
 		super(VanillaControllerTypes.DROPPED_ITEM);
 		this.is = is;
 		this.roll = 1;
 		unpickable = 10;
-		this.initial = initial;
+		setVelocity(initial);
 		setMoveable(true);
 	}
 
 	@Override
 	public void onTick(float dt) {
-		if (dt <= 1) {
-			velocity.add(initial);
-		}
-
 		if (unpickable > 0) {
 			unpickable--;
 			super.onTick(dt);
@@ -69,40 +70,46 @@ public class Item extends Substance {
 
 		super.onTick(dt);
 		World world = getParent().getWorld();
+		if (world == null)
+			return;
+
+		List<Player> players = Arrays.asList(Spout.getEngine().getOnlinePlayers());
+		Iterable<Player> onlinePlayers = Iterables.filter(players, isValidPlayer);
+
 		double minDistance = -1;
-		Player closestPlayer = null;
-		for (Player plr : Spout.getEngine().getOnlinePlayers()) {
-			if ((plr == null || plr.getEntity() == null ||  world == null || !plr.getEntity().getWorld().getName().equals(world.getName()))) {
-				continue;
-			}
-			double distance = plr.getEntity().getPosition().getSquaredDistance(getParent().getPosition());
-			if (distance < minDistance || minDistance == -1) {
-				closestPlayer = plr;
-				minDistance = distance;
+		Entity closestPlayer = null;
+		for (Player plr : onlinePlayers) {
+			Entity entity = plr.getEntity();
+			if (entity.getWorld().equals(world)) {
+				double distance = entity.getPosition().getSquaredDistance(getParent().getPosition());
+				if (distance < minDistance || minDistance == -1) {
+					closestPlayer = entity;
+					minDistance = distance;
+				}
 			}
 		}
 
-		if (closestPlayer == null) {
-			return;
-		}
 		double maxDistance = VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble();
-		maxDistance = maxDistance * maxDistance;
-		if (minDistance > maxDistance) {
-			return;
-		}
-
-		int collected = getParent().getId(), collector = closestPlayer.getEntity().getId();
-
-		for (Player plr : Spout.getEngine().getOnlinePlayers()) {
-			if (plr == null || plr.getEntity() == null ||  world == null || !plr.getEntity().getWorld().getName().equals(world.getName())) {
-				continue;
+		if (closestPlayer != null && minDistance <= maxDistance * maxDistance) {
+			int collected = getParent().getId();
+			int collector = closestPlayer.getId();
+			for (Player plr : onlinePlayers) {
+				if (plr.getEntity().getWorld().equals(world)) {
+					sendPacket(plr, new CollectItemMessage(collected, collector));
+				}
 			}
-			sendPacket(plr, new CollectItemMessage(collected, collector));
-		}
 
-		closestPlayer.getEntity().getInventory().addItem(is, false);
-		getParent().kill();
+			closestPlayer.getInventory().addItem(is, false);
+			getParent().kill();
+		}
 	}
+
+	private final Predicate<Player> isValidPlayer = new Predicate<Player>() {
+		@Override public boolean apply(Player p) {
+			return p != null && p.getEntity() != null && p.getEntity().getWorld() != null;
+		}
+	};
+
 
 	/**
 	 * Gets what block the item is.

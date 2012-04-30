@@ -107,8 +107,9 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 					if (slotStack != null) {
 						if (!cursorStack.equalsIgnoreSize(slotStack)) {
 							// Swap stacks
+							ItemStack tmp = slotStack;
 							slotStack = cursorStack;
-							cursorStack = slotStack;
+							cursorStack = tmp;
 						} else {
 							// Try to fill slot stacks
 							mergeStack(cursorStack, slotStack, cursorStack.getAmount(), true);
@@ -136,8 +137,8 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 					}
 				} else  if (slotStack != null) {
 					// Split the stack
-					int amount = slotStack.getAmount() / 2;
-					slotStack.setAmount(amount);
+					int amount = (slotStack.getAmount() + 1)/ 2;
+					slotStack.setAmount(slotStack.getAmount()-amount);
 					cursorStack = new ItemStack(slotStack.getMaterial(), amount);
 				}
 			}

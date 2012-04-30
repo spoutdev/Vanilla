@@ -25,6 +25,9 @@
  */
 package org.spout.vanilla.protocol.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
@@ -38,6 +41,9 @@ import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
+	private static final int MOVE = 1;
+	private static final int LOOK = 2;
+
 	@Override
 	public Message[] getDestroyMessage(Entity entity) {
 		return new Message[]{new DestroyEntityMessage(entity.getId())};
@@ -45,9 +51,10 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 	@Override
 	public Message[] getUpdateMessage(Entity entity) {
-		if (entity.getController() != null && entity.getController() instanceof VanillaActionController) {
-			VanillaActionController controller = (VanillaActionController) entity.getController();
+		Set<Message> messages = new HashSet<Message>();
 
+		if (entity.getController() != null && (entity.getController() instanceof VanillaActionController)) {
+			VanillaActionController controller = (VanillaActionController) entity.getController();
 			int id = entity.getId();
 
 			//Reducing variable counts would be great...but I see no alternative :(
@@ -70,44 +77,40 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 			int deltaYaw = newYaw - lastYaw;
 			int deltaPitch = newPitch - lastPitch;
 
-			Message posmsg = null;
-
-			if (controller.needsPositionUpdate() || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
-				posmsg = new EntityTeleportMessage(id, newX, newY, newZ, newYaw, newPitch);
+			if (controller.needsPositionUpdate() || hasMagnitudeOver(128, deltaX, deltaY, deltaZ)) {
+				messages.add(new EntityTeleportMessage(id, newX, newY, newZ, newYaw, newPitch));
 			} else {
-				boolean moved = deltaX > 4 || deltaX < -4 || deltaY > 4 || deltaY < -4 || deltaZ > 4 || deltaZ < -4;
-				boolean looked = deltaYaw > 4 || deltaYaw < -4 || deltaPitch > 4 || deltaPitch < -4;
-				if (moved) {
-					if (looked) {
-						posmsg = new RelativeEntityPositionRotationMessage(id, deltaX, deltaY, deltaZ, controller.getClientYaw(), controller.getClientPitch());
-					} else {
-						posmsg = new RelativeEntityPositionMessage(id, deltaX, deltaY, deltaZ);
+				int pid = hasMagnitudeOver(4, deltaX, deltaY, deltaZ) ? MOVE:0;
+				pid += hasMagnitudeOver(4, deltaYaw, deltaPitch) ? LOOK:0;
+
+				switch (pid) {
+					case MOVE:
+						messages.add(new RelativeEntityPositionMessage(id, deltaX, deltaY, deltaZ));
 						controller.setClientPosition(newX, newY, newZ, lastYaw, lastPitch);
-					}
-				} else if (looked) {
-					posmsg = new EntityRotationMessage(id, controller.getClientYaw(), controller.getClientPitch());
-					controller.setClientPosition(lastX, lastY, lastZ, newYaw, newPitch);
+						break;
+					case LOOK:
+						messages.add(new EntityRotationMessage(id, newYaw, newPitch));
+						controller.setClientPosition(lastX, lastY, lastZ, newYaw, newPitch);
+						break;
+					case MOVE+LOOK:
+						messages.add(new RelativeEntityPositionRotationMessage(id, deltaX, deltaY, deltaZ, newYaw, newPitch));
+						break;
 				}
 			}
 
-			Message velmsg = null;
 			if (controller.needsVelocityUpdate()) {
-				velmsg = new EntityVelocityMessage(id, controller.getVelocity());
+				messages.add(new EntityVelocityMessage(id, controller.getVelocity()));
 			}
-
-			if (velmsg == null) {
-				if (posmsg == null) {
-					return null;
-				} else {
-					return new Message[]{posmsg};
-				}
-			} else if (posmsg == null) {
-				return new Message[]{velmsg};
-			} else {
-				return new Message[]{posmsg, velmsg};
-			}
-		} else {
-			return null;
 		}
+		return messages.toArray(new Message[messages.size()]);
+	}
+
+	private boolean hasMagnitudeOver(int threshold, int... testVars) {
+		for (int t : testVars) {
+			if (Math.abs(t) > threshold) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

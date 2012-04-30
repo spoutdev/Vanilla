@@ -273,18 +273,20 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public void setVisibleFor(boolean visible, Player... players) {
 		Entity parent = getParent();
 		for (Player player : players) {
-			if (visible) {
-				invisibleFor.remove(player);
-				ItemStack currentItem = parent.getInventory().getCurrentItem();
-				int itemId = 0;
-				if (currentItem != null) {
-					itemId = currentItem.getMaterial().getId();
+			if (player.getEntity().getController() != this) {
+				if (visible) {
+					invisibleFor.remove(player);
+					ItemStack currentItem = parent.getInventory().getCurrentItem();
+					int itemId = 0;
+					if (currentItem != null) {
+						itemId = currentItem.getMaterial().getId();
+					}
+	
+					sendPacket(player, new SpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId));
+				} else {
+					invisibleFor.add(player);
+					sendPacket(player, new DestroyEntityMessage(parent.getId()));
 				}
-
-				sendPacket(player, new SpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId));
-			} else {
-				invisibleFor.add(player);
-				sendPacket(player, new DestroyEntityMessage(parent.getId()));
 			}
 		}
 	}

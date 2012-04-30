@@ -36,13 +36,18 @@ import org.spout.api.util.config.yaml.YamlConfiguration;
 public class OpConfiguration extends YamlConfiguration {
 	private static final List<String> ops = Arrays.asList("Notch", "jeb", "ez");
 	private ConfigurationNode node;
+	private static File file;
 
 	public OpConfiguration(File dataFolder) {
 		super(new File(dataFolder, "ops.yml"));
+		file = new File(dataFolder, "ops.yml");
 	}
 
 	@Override
 	public void load() throws ConfigurationException {
+		if (!file.exists()) {
+			super.save();
+		}
 		super.load();
 		node = getNode("ops");
 		node.getValue(ops);

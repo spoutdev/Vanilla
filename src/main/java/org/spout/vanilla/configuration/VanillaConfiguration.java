@@ -58,13 +58,18 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	// Controller-specific
 	public static final ConfigurationHolder ITEM_PICKUP_RANGE = new ConfigurationHolder(3, "controller", "item-pickup-range");
+	private static File file;
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));
+		file = new File(dataFolder, "config.yml");
 	}
 
 	@Override
 	public void load() throws ConfigurationException {
+		if (!file.exists()) {
+			super.save();
+		}
 		super.load();
 		OPS.load();
 	}

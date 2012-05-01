@@ -39,26 +39,12 @@ import org.spout.vanilla.material.block.attachable.Attachable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class Cactus extends GroundAttachable {
+	private Set<BlockMaterial> allowedNeighbours = new HashSet<BlockMaterial>();
 
 	public Cactus() {
 		super("Cactus", 81);
-		
-		//TODO: Maybe a proper material state for this?
-		//Perhaps 'canBlockCactus' or something...
-		this.addAllowedNeighbour(VanillaMaterials.AIR);
-		this.addAllowedNeighbour(VanillaMaterials.TORCH);
-		this.addAllowedNeighbour(VanillaMaterials.REDSTONE_TORCH_OFF);
-		this.addAllowedNeighbour(VanillaMaterials.REDSTONE_TORCH_ON);
-		this.addAllowedNeighbour(VanillaMaterials.LEVER);
-		this.addAllowedNeighbour(VanillaMaterials.DEAD_BUSH);
-		this.addAllowedNeighbour(VanillaMaterials.TALL_GRASS);
-		this.addAllowedNeighbour(VanillaMaterials.REDSTONE_WIRE);
-	}
-	
-	private Set<BlockMaterial> allowedNeighbours = new HashSet<BlockMaterial>();
-
-	public void addAllowedNeighbour(BlockMaterial mat) {
-		this.allowedNeighbours.add(mat);
+		addAllowedNeighbour(VanillaMaterials.AIR, VanillaMaterials.TORCH, VanillaMaterials.REDSTONE_TORCH_OFF, VanillaMaterials.REDSTONE_TORCH_ON,
+				VanillaMaterials.LEVER, VanillaMaterials.DEAD_BUSH, VanillaMaterials.TALL_GRASS, VanillaMaterials.REDSTONE_WIRE);
 	}
 	
 	@Override
@@ -70,7 +56,7 @@ public class Cactus extends GroundAttachable {
 	
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		if (super.canAttachTo( material, face)) {
+		if (super.canAttachTo(material, face)) {
 			return material.equals(VanillaMaterials.SAND) ||  material.equals(VanillaMaterials.CACTUS);
 		}
 		return false;
@@ -94,5 +80,11 @@ public class Cactus extends GroundAttachable {
 	@Override
 	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
 		return face == BlockFace.TOP && material.equals(VanillaMaterials.CACTUS);
+	}
+
+	public void addAllowedNeighbour(BlockMaterial... additions) {
+		for (BlockMaterial mat : additions) {
+			this.allowedNeighbours.add(mat);
+		}
 	}
 }

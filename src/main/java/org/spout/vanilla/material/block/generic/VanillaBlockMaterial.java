@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.material.block.generic;
 
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
@@ -90,10 +91,12 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 		super(name, id);
 		dropMaterial = this;
 		dropCount = 1;
+		this.setCollision(CollisionStrategy.SOLID);
 	}
 
 	public VanillaBlockMaterial(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
+		this.setCollision(CollisionStrategy.SOLID);
 	}
 
 	/**

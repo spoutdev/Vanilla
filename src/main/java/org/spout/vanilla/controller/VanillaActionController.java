@@ -138,7 +138,7 @@ public abstract class VanillaActionController extends ActionController implement
 	@Override
 	public void onAttached() {
 		getParent().setCollision(new CollisionModel(area));
-		getParent().getCollision().setStrategy(CollisionStrategy.SOFT);
+		getParent().getCollision().setStrategy(CollisionStrategy.SOLID);
 		getParent().setData(VanillaControllerTypes.KEY, getType().getID());
 		this.oldPosition = getParent().getPosition();
 		this.oldRotation = getParent().getRotation();

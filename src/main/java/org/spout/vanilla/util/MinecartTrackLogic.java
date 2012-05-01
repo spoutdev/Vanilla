@@ -34,6 +34,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.block.data.Rails;
@@ -48,7 +49,6 @@ public class MinecartTrackLogic implements Source {
 	public boolean changed = false;
 	public MinecartTrackLogic parent = null;
 	public List<MinecartTrackLogic> neighbours = new ArrayList<MinecartTrackLogic>();
-	private static BlockFace[] rose = new BlockFace[]{BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST};
 
 	private MinecartTrackLogic(World world, int x, int y, int z, Rails data) {
 		this.world = world;
@@ -80,7 +80,7 @@ public class MinecartTrackLogic implements Source {
 	 */
 	public void genNeighbours(boolean deep) {
 		if (deep) {
-			for (BlockFace direction : rose) {
+			for (BlockFace direction : BlockFaces.NESW) {
 				MinecartTrackLogic logic = this.getLogic(direction);
 				if (logic != null) {
 					logic.parent = this;
@@ -223,7 +223,7 @@ public class MinecartTrackLogic implements Source {
 			direction = from.direction;
 		}
 		//try to find a rail on a 90-degree angle
-		for (BlockFace face : rose) {
+		for (BlockFace face : BlockFaces.NESW) {
 			if (face != direction && face != direction.getOpposite()) {
 				MinecartTrackLogic logic = this.getNeighbour(face);
 				if (logic != null) {

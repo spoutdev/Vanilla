@@ -28,18 +28,16 @@ package org.spout.vanilla.material.block;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.Source;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
-public class SugarCane extends VanillaBlockMaterial {
+public class SugarCane extends GroundAttachable {
 	private final Set<Material> validBases = new HashSet<Material>(4);
 
 	public SugarCane() {
@@ -50,38 +48,23 @@ public class SugarCane extends VanillaBlockMaterial {
 		validBases.add(VanillaMaterials.SAND);
 		validBases.add(VanillaMaterials.SUGAR_CANE_BLOCK);
 	}
-
+	
 	@Override
-	public boolean hasPhysics() {
-		return true;
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		return super.canAttachTo(material, face) && this.validBases.contains(material);
 	}
-
+	
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Source source) {
-		if (super.canPlace(block, data, against, source)) {
-			if (validBases.contains(block.getMaterial())) {
-				block = block.translate(against.getOpposite());
-				return block.getMaterial() == VanillaMaterials.WATER;
-			} else {
-				return false;
+	public boolean canAttachTo(Block block, BlockFace face) {
+		if (super.canAttachTo(block, face)) {
+			BlockMaterial wmat;
+			for (BlockFace around : BlockFaces.NESW) {
+				wmat = block.translate(around).getMaterial();
+				if (wmat.equals(VanillaMaterials.STATIONARY_WATER) || wmat.equals(VanillaMaterials.WATER)) {
+					return true;
+				}
 			}
-		} else {
-			return false;
 		}
-	}
-
-	@Override
-	public void onUpdate(Block block) {
-		int amount = 0;
-		Block tmpblock = block;
-		while ((tmpblock = tmpblock.translate(BlockFace.TOP)).getMaterial().equals(VanillaMaterials.SUGAR_CANE_BLOCK)) {
-			amount++;
-		}
-
-		if (!validBases.contains(block.translate(BlockFace.BOTTOM).getMaterial())) {
-			Point point = block.getPosition();
-			block.setMaterial(VanillaMaterials.AIR).update(true);
-			block.getWorld().createAndSpawnEntity(point, new Item(new ItemStack(VanillaMaterials.SUGAR_CANE, amount), point.normalize()));
-		}
+		return false;
 	}
 }

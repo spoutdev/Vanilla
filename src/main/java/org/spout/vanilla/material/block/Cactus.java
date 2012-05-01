@@ -25,76 +25,75 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.Source;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.block.attachable.Attachable;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
-public class Cactus extends Solid {
+public class Cactus extends GroundAttachable {
+
 	public Cactus() {
 		super("Cactus", 81);
+		
+		//TODO: Maybe a proper material state for this?
+		//Perhaps 'canBlockCactus' or something...
+		this.addAllowedNeighbour(VanillaMaterials.AIR);
+		this.addAllowedNeighbour(VanillaMaterials.TORCH);
+		this.addAllowedNeighbour(VanillaMaterials.REDSTONE_TORCH_OFF);
+		this.addAllowedNeighbour(VanillaMaterials.REDSTONE_TORCH_ON);
+		this.addAllowedNeighbour(VanillaMaterials.LEVER);
+		this.addAllowedNeighbour(VanillaMaterials.DEAD_BUSH);
+		this.addAllowedNeighbour(VanillaMaterials.TALL_GRASS);
+		this.addAllowedNeighbour(VanillaMaterials.REDSTONE_WIRE);
 	}
+	
+	private Set<BlockMaterial> allowedNeighbours = new HashSet<BlockMaterial>();
 
-	@Override
-	public boolean hasPhysics() {
-		return true;
+	public void addAllowedNeighbour(BlockMaterial mat) {
+		this.allowedNeighbours.add(mat);
 	}
-
+	
 	@Override
 	public void onUpdate(Block block) {
-		if (!VanillaConfiguration.CACTUS_PHYSICS.getBoolean()) {
-			return;
-		}
-
-		int amount = 0;
-		Block tmpblock = block;
-		while ((tmpblock = tmpblock.translate(BlockFace.TOP)).getMaterial().equals(VanillaMaterials.CACTUS)) {
-			amount++;
-		}
-
-		boolean destroy = false;
-		BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial();
-		if (!below.equals(VanillaMaterials.SAND) && !below.equals(VanillaMaterials.CACTUS)) {
-			destroy = true;
-		}
-
-		if (!destroy) {
-			BlockFace faces[] = {BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST};
-			for (BlockFace face : faces) {
-				BlockMaterial side = block.translate(face).getMaterial();
-				if (!side.equals(VanillaMaterials.AIR)) {
-					destroy = true;
-					break;
-				}
-			}
-		}
-
-		Point point = block.getPosition();
-		if (destroy) {
-			block.setMaterial(VanillaMaterials.AIR).update(true);
-			point.getWorld().createAndSpawnEntity(point, new Item(new ItemStack(VanillaMaterials.CACTUS, amount), point.normalize()));
+		if (VanillaConfiguration.CACTUS_PHYSICS.getBoolean()) {
+			super.onUpdate(block);
 		}
 	}
-
+	
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Source source) {
-		for (int i = -1; i <= 1; i++) {
-			for (int j = -1; j <= 1; j++) {
-				if (i == 0 && j == 0) {
-					continue;
-				}
-				if (block.translate(i, 0, j).getMaterial() != VanillaMaterials.AIR) {
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		if (super.canAttachTo( material, face)) {
+			return material.equals(VanillaMaterials.SAND) ||  material.equals(VanillaMaterials.CACTUS);
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean canAttachTo(Block block, BlockFace attachedFace) {
+		if (super.canAttachTo(block, attachedFace)) {
+			//surrounded by air or non-occupying block?
+			BlockMaterial mat;
+			for (BlockFace face : BlockFaces.NESW) {
+				mat = block.translate(face).getMaterial();
+				if (!this.allowedNeighbours.contains(mat)) {
 					return false;
 				}
 			}
+			return true;
 		}
-		return true;
+		return false;
+	}
+	
+	@Override
+	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
+		return face == BlockFace.TOP && material.equals(VanillaMaterials.CACTUS);
 	}
 }

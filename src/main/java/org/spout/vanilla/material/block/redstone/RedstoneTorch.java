@@ -84,8 +84,8 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 		if (!VanillaConfiguration.REDSTONE_PHYSICS.getBoolean()) {
 			return;
 		}
-
-		BlockFace face = getFaceAttachedTo(block.getData());
+		
+		BlockFace face = this.getAttachedFace(block);
 		Block tblock = block.translate(face);
 		
 		BlockMaterial mat = tblock.getMaterial();

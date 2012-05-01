@@ -25,14 +25,12 @@
  */
 package org.spout.vanilla.material.block.attachable;
 
-import org.spout.api.Source;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
@@ -48,7 +46,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	public boolean hasPhysics() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean canSeekAttachedAlternative() {
 		return false;
@@ -56,37 +54,54 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	@Override
 	public void onUpdate(Block block) {
-		if (getBlockAttachedTo(block).getMaterial().equals(VanillaMaterials.AIR)) {
-			block.setMaterial(VanillaMaterials.AIR).update(true);
+		if (!this.canPlace(block, block.getData(), this.getAttachedFace(block), false)) {
+			this.onDestroy(block);
 		}
+	}
+	
+	@Override
+	public BlockFace findAttachedFace(Block block) {
+		for (BlockFace face : BlockFaces.NESWBT) {
+			if (this.canAttachTo(block.translate(face), face.getOpposite())) {
+				return face;
+			}
+		}
+		return null;
 	}
 
 	@Override
 	public Block getBlockAttachedTo(Block block) {
-		BlockFace base = getFaceAttachedTo(block.getData());
-		return block.translate(base);
+		return block.translate(this.getAttachedFace(block));
 	}
 
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		return material instanceof Solid;
-	}
-	
-	@Override
-	public boolean canAttachTo(Block block, BlockFace face) {
-		return this.canAttachTo(block.translate(face.getOpposite()).getMaterial(), face);
+		if (material instanceof VanillaBlockMaterial) {
+			return ((VanillaBlockMaterial) material).canSupport(this, face);
+		} else {
+			return false;
+		}
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Source source) {
-		if (super.canPlace(block, data, against, source)) {
-			if (this.canAttachTo(block, against.getOpposite())) {
+	public boolean canAttachTo(Block block, BlockFace face) {
+		return this.canAttachTo(block.getSubMaterial(), face);
+	}
+	
+	@Override
+	public boolean canPlace(Block block, short data, BlockFace against) {
+		return this.canPlace(block, data, against, this.canSeekAttachedAlternative());
+	}
+	
+	@Override
+	public boolean canPlace(Block block, short data, BlockFace attachedFace, boolean seekAlternative) {
+		if (super.canPlace(block, data, attachedFace)) {
+			if (this.canAttachTo(block.translate(attachedFace), attachedFace.getOpposite())) {
 				return true;
-			} else if (this.canSeekAttachedAlternative()) {
-				for (BlockFace face : BlockFace.values()) {
-					if (this.canAttachTo(block, face)) {
-						return true;
-					}
+			} else if (seekAlternative) {
+				attachedFace = this.findAttachedFace(block);
+				if (attachedFace != null) {
+					return true;
 				}
 			}
 		}
@@ -94,16 +109,30 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Source source) {
-		if (this.canAttachTo(block, against.getOpposite())) {
-			return super.onPlacement(block, this.getDataForFace(against.getOpposite()), against, source);
-		} else if (this.canSeekAttachedAlternative()) {
-			for (BlockFace face : BlockFace.values()) {
-				if (this.canAttachTo(block, face)) {
-					return super.onPlacement(block, this.getDataForFace(face), face, source);
+	public boolean onPlacement(Block block, short data, BlockFace against) {
+		if (!this.canAttachTo(block.translate(against), against.getOpposite())) {
+			if (this.canSeekAttachedAlternative()) {
+				against = this.findAttachedFace(block);
+				if (against == null) {
+					return false;
 				}
+			} else {
+				return false;
 			}
 		}
+		this.handlePlacement(block, data, against);
+		return true;
+	}
+	
+	@Override
+	public void handlePlacement(Block block, short data, BlockFace against) {
+		block.setMaterial(this);
+		this.setAttachedFace(block, against);
+		block.update();
+	}
+	
+	@Override
+	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
 		return false;
 	}
 }

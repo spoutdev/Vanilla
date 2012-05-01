@@ -25,8 +25,7 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.Source;
-import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.FurnaceFuel;
@@ -75,12 +74,10 @@ public class Sapling extends GroundAttachable implements Plant, FurnaceFuel {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Source source) {
-		if (super.canPlace(block, data, against, source)) {
-			block = block.translate(BlockFace.BOTTOM).translate(against.getOpposite());
-			return block.getMaterial() == VanillaMaterials.GRASS || block.getMaterial() == VanillaMaterials.DIRT;
-		} else {
-			return false;
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		if (super.canAttachTo(material, face)) {
+			return material.equals(VanillaMaterials.GRASS) || material.equals(VanillaMaterials.DIRT);
 		}
+		return false;
 	}
 }

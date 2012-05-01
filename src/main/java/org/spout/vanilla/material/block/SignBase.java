@@ -38,7 +38,7 @@ public class SignBase extends WallAttachable {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Source source) {
+	public boolean onPlacement(Block block, short data, BlockFace against) {
 		if (against == BlockFace.BOTTOM) {
 			block.setMaterial(VanillaMaterials.SIGN_POST, data).update(true);
 			return true;
@@ -51,8 +51,8 @@ public class SignBase extends WallAttachable {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Source source) {
-		if (super.canPlace(block, data, against, source)) {
+	public boolean canPlace(Block block, short data, BlockFace against) {
+		if (super.canPlace(block, data, against)) {
 			return true;
 		} else if (block.translate(against.getOpposite()) instanceof SignBase) {
 			return true;

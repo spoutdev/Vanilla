@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.Source;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
@@ -59,8 +58,8 @@ public abstract class MinecartTrackBase extends GroundAttachable {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Source source) {
-		if (super.onPlacement(block, data, against, source)) {
+	public boolean onPlacement(Block block, short data, BlockFace against) {
+		if (super.onPlacement(block, data, against)) {
 			this.doTrackLogic(block);
 			return true;
 		} else {

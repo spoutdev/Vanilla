@@ -31,6 +31,7 @@ import gnu.trove.map.hash.TObjectIntHashMap;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.inventory.FurnaceInventory;
 
@@ -41,22 +42,7 @@ public class VanillaMessageHandlerUtils {
 	 * @return The spout one!
 	 */
 	public static BlockFace messageToBlockFace(int messageFace) {
-		switch (messageFace) {
-			case 0:
-				return BlockFace.BOTTOM;
-			case 1:
-				return BlockFace.TOP;
-			case 2:
-				return BlockFace.EAST;
-			case 3:
-				return BlockFace.WEST;
-			case 4:
-				return BlockFace.NORTH;
-			case 5:
-				return BlockFace.SOUTH;
-			default:
-				return BlockFace.THIS;
-		}
+		return BlockFaces.get(BlockFaces.BTEWNS, messageFace, BlockFace.THIS);
 	}
 
 	private static final int PLAYER_INVENTORY_SLOTS[] = {

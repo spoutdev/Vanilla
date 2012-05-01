@@ -114,7 +114,6 @@ public class VanillaPlugin extends CommonPlugin {
 		// IO
 		try {
 			config.load();
-			VanillaConfiguration.OPS.load();
 		} catch (ConfigurationException e) {
 			getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
 		}

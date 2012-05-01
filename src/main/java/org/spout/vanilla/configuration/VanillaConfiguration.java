@@ -69,4 +69,10 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 		OPS.load();
 		super.save();
 	}
+
+	@Override
+	public void save() throws ConfigurationException {
+		super.save();
+		OPS.save();
+	}
 }

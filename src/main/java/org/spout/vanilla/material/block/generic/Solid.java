@@ -29,8 +29,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.VanillaMaterials;
-
 public class Solid extends VanillaBlockMaterial {
 	private final boolean moving;
 
@@ -63,7 +61,7 @@ public class Solid extends VanillaBlockMaterial {
 	public void onUpdate(Block block) {
 		if (moving) {
 			if (!block.translate(BlockFace.BOTTOM).getMaterial().isPlacementObstacle()) {
-				block.setMaterial(VanillaMaterials.AIR).update(true);
+				block.getSubMaterial().onDestroy(block);
 				//world.createAndSpawnEntity(block.getPosition(), new MovingBlock(this)); TODO: We aren't ready for this lol.
 			}
 		}

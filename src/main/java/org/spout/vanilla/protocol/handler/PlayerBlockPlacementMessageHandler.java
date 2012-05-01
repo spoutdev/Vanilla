@@ -82,7 +82,6 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			if (clickedFace == BlockFace.THIS) {
 				return;
 			}
-
 			//Perform interaction event
 			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), inventory.getCurrentItem(), Action.RIGHT_CLICK, false));
 			
@@ -93,6 +92,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				return; //prevent placing when the clicked material suppresses this
 			} else if (clickedMaterial.isPlacementObstacle()) {
 				target = clickedBlock.translate(clickedFace);
+				clickedFace = clickedFace.getOpposite();
 			} else {
 				target = clickedBlock;
 				clickedFace = BlockFace.BOTTOM; //face is no longer valid at this point
@@ -100,7 +100,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			if (target.getY() >= world.getHeight() || target.getY() < 0) {
 				return;
 			}
-			
+						
 			//check if the interaction can possibly result in placement
 			if (!interactEvent.isCancelled()) {
 				
@@ -117,13 +117,13 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 					BlockMaterial newBlock = (BlockMaterial) holdingMat;
 
 					//check if placement is even possible and handle the destruction of the old block
-					if (!oldBlock.isPlacementObstacle() && newBlock.canPlace(target, placedData, clickedFace, player)) {
+					if (!oldBlock.isPlacementObstacle() && newBlock.canPlace(target, placedData, clickedFace)) {
 						if (!oldBlock.equals(VanillaMaterials.AIR)) {
 							oldBlock.onDestroy(target);
 						}
 						
 						//perform actual placement
-						if (newBlock.onPlacement(target, placedData, clickedFace, player)) {
+						if (newBlock.onPlacement(target, placedData, clickedFace)) {
 							//Remove block from inventory if not in creative mode.
 							if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
 								holding.setAmount(holding.getAmount() - 1);

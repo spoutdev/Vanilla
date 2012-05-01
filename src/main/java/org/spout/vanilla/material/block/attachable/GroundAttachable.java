@@ -39,17 +39,17 @@ public class GroundAttachable extends AbstractAttachable {
 	}
 	
 	@Override
-	public short getDataForFace(BlockFace face) {
-		return (short) 0;
-	}
-
-	@Override
-	public BlockFace getFaceAttachedTo(short data) {
-		return BlockFace.BOTTOM;
-	}
-
-	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
-		return face == BlockFace.BOTTOM && super.canAttachTo(block, face);
+		return face == BlockFace.TOP && super.canAttachTo(block, face);
+	}
+
+	@Override
+	public void setAttachedFace(Block block, BlockFace attachedFace) {
+		block.setData((short) 0);
+	}
+
+	@Override
+	public BlockFace getAttachedFace(Block block) {
+		return BlockFace.BOTTOM;
 	}
 }

@@ -25,11 +25,11 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.Source;
-import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 public class TallGrass extends DeadBush {
 	public static final TallGrass DEAD_GRASS = register(new TallGrass("Dead Grass"));
@@ -56,12 +56,12 @@ public class TallGrass extends DeadBush {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Source source) {
-		if (super.canPlace(block, data, against, source)) {
-			block = block.translate(against.getOpposite());
-			return block.getMaterial() == VanillaMaterials.GRASS || block.getMaterial() == VanillaMaterials.DIRT;
-		} else {
-			return false;
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		if (face == BlockFace.TOP) {
+			if (material.equals(VanillaMaterials.GRASS) || material.equals(VanillaMaterials.DIRT)) {
+				return ((VanillaBlockMaterial) material).canSupport(this, face);
+			}
 		}
+		return false;
 	}
 }

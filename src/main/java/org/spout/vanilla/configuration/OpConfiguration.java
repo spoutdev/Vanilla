@@ -30,40 +30,37 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.exception.ConfigurationException;
-import org.spout.api.util.config.ConfigurationNode;
+import org.spout.api.util.config.ConfigurationHolder;
+import org.spout.api.util.config.ConfigurationHolderConfiguration;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 
-public class OpConfiguration extends YamlConfiguration {
-	private static final List<String> ops = Arrays.asList("Notch", "jeb", "ez");
-	private ConfigurationNode node;
-	private static File file;
+public class OpConfiguration extends ConfigurationHolderConfiguration {
+	public static final ConfigurationHolder OPS = new ConfigurationHolder(Arrays.asList("Notch", "jeb", "ez"), "ops");
 
 	public OpConfiguration(File dataFolder) {
-		super(new File(dataFolder, "ops.yml"));
-		file = new File(dataFolder, "ops.yml");
+		super(new YamlConfiguration(new File(dataFolder, "ops.yml")));
 	}
 
 	@Override
 	public void load() throws ConfigurationException {
 		super.load();
 		super.save();
-		node = getNode("ops");
-		node.getValue(ops);
 	}
 
 	public List<String> getOps() {
-		return node.getStringList();
+		return OPS.getStringList();
 	}
 
 	public boolean setOp(String playerName, boolean op) {
-		List<String> list = node.getStringList();
+		List<String> list = getOps();
 		if (op) {
 			list.add(playerName);
 		} else {
 			list.remove(playerName);
 		}
 
-		node.setValue(list);
+		OPS.setValue(list);
+
 		try {
 			this.save();
 			return true;
@@ -73,6 +70,6 @@ public class OpConfiguration extends YamlConfiguration {
 	}
 
 	public boolean isOp(String playerName) {
-		return node.getStringList().contains(playerName);
+		return getOps().contains(playerName);
 	}
 }

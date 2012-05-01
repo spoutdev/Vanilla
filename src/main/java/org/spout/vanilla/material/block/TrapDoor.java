@@ -26,11 +26,11 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.block.generic.Solid;
 
 public class TrapDoor extends Solid implements FurnaceFuel {
-
 	public TrapDoor(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
 	}
@@ -43,7 +43,7 @@ public class TrapDoor extends Solid implements FurnaceFuel {
 	public int getFuelTicks() {
 		return 300;
 	}
-	
+
 	@Override
 	public boolean isPlacementSuppressed() {
 		return true;

@@ -33,7 +33,7 @@ public class WallAttachable extends AbstractAttachable {
 	public WallAttachable(String name, int id) {
 		super(name, id);
 	}
-	
+
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
 		if (BlockFaces.contains(BlockFaces.NESWT, face)) {

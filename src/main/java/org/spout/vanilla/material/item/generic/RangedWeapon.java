@@ -35,7 +35,7 @@ public class RangedWeapon extends Weapon {
 	public int getRangedDamage() {
 		return rangedDamage;
 	}
-	
+
 	public RangedWeapon setRangedDamage(int damage) {
 		this.rangedDamage = damage;
 		return this;

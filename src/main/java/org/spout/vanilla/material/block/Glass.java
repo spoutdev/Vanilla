@@ -27,17 +27,17 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.block.attachable.Attachable;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
 import org.spout.vanilla.material.block.generic.Solid;
 
 public class Glass extends Solid {
-
 	public Glass(String name, int id) {
 		super(name, id);
 		this.setOccludes(false);
 	}
-	
+
 	@Override
 	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
 		if (super.canSupport(material, face)) {

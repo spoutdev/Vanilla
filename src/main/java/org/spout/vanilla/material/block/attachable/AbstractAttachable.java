@@ -58,7 +58,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 			this.onDestroy(block);
 		}
 	}
-	
+
 	@Override
 	public BlockFace findAttachedFace(Block block) {
 		for (BlockFace face : BlockFaces.NESWBT) {
@@ -87,12 +87,12 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	public boolean canAttachTo(Block block, BlockFace face) {
 		return this.canAttachTo(block.getSubMaterial(), face);
 	}
-	
+
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against) {
 		return this.canPlace(block, data, against, this.canSeekAttachedAlternative());
 	}
-	
+
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace attachedFace, boolean seekAlternative) {
 		if (super.canPlace(block, data, attachedFace)) {
@@ -123,14 +123,14 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 		this.handlePlacement(block, data, against);
 		return true;
 	}
-	
+
 	@Override
 	public void handlePlacement(Block block, short data, BlockFace against) {
 		block.setMaterial(this);
 		this.setAttachedFace(block, against);
 		block.update();
 	}
-	
+
 	@Override
 	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
 		return false;

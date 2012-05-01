@@ -28,12 +28,10 @@ package org.spout.vanilla.material.block;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.spout.api.material.Material;
 import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.block.generic.Solid;
-import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
 public class Wool extends Solid implements VanillaMaterial {
 	public static final Wool WHITE = register(new Wool("White Wool"));

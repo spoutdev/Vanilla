@@ -29,7 +29,6 @@ import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.block.generic.Solid;
 
 public class BookShelf extends Solid implements FurnaceFuel {
-
 	public BookShelf(String name, int id) {
 		super(name, id);
 	}

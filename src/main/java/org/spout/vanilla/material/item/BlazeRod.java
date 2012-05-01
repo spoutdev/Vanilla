@@ -29,7 +29,6 @@ import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
 public class BlazeRod extends VanillaItemMaterial implements FurnaceFuel {
-
 	public BlazeRod(String name, int id) {
 		super(name, id);
 	}

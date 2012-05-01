@@ -29,7 +29,6 @@ import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
 public class Stick extends VanillaItemMaterial implements FurnaceFuel {
-
 	public Stick(String name, int id) {
 		super(name, id);
 	}

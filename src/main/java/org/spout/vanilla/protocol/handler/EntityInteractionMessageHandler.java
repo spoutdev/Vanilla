@@ -55,7 +55,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 		}
 		if (message.isPunching()) {
 			holdingMat.onInteract(player.getEntity(), clickedEntity, Action.LEFT_CLICK);
-			
+
 			if (clickedEntity.getController() instanceof VanillaPlayer && !VanillaConfiguration.PLAYER_PVP_ENABLED.getBoolean()) {
 				return;
 			}

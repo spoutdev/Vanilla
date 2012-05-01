@@ -30,27 +30,27 @@ import org.spout.api.geo.cuboid.Block;
 public interface RedstoneSource {
 	/**
 	 * Gets how much redstone power the block at x, y, z provides to block tx, ty, tz
-	 * @param world world the blocks are in
-	 * @param source     source block
-	 * @param target     target block
+	 * @param world  world the blocks are in
+	 * @param source source block
+	 * @param target target block
 	 * @return how much power source block provides to target block
 	 */
 	short getRedstonePower(Block source, Block target);
 
 	/**
 	 * Gets if the block provides power to the target block
-	 * @param world world the blocks are in
-	 * @param source     source block
-	 * @param target     target block
+	 * @param world  world the blocks are in
+	 * @param source source block
+	 * @param target target block
 	 * @return if the source block provides power to the target block
 	 */
 	boolean providesPowerTo(Block source, Block target);
 
 	/**
 	 * Gets if the block provides an attach point for redstone wire.
-	 * @param world the blocks are in
-	 * @param south     this block
-	 * @param target     the wire
+	 * @param world  the blocks are in
+	 * @param south  this block
+	 * @param target the wire
 	 * @return if the block provides an attachment point from the given face
 	 */
 	boolean providesAttachPoint(Block source, Block target);

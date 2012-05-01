@@ -28,6 +28,9 @@ package org.spout.vanilla.protocol.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
+import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
@@ -44,14 +47,10 @@ import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
 
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
-
 public abstract class VanillaEntityProtocol implements EntityProtocol {
-
 	@Override
 	public Message[] getDestroyMessage(Entity entity) {
-		return new Message[] {new DestroyEntityMessage(entity.getId())};
+		return new Message[]{new DestroyEntityMessage(entity.getId())};
 	}
 
 	public Message[] getUpdateMessage(Entity entity) {
@@ -75,7 +74,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 		List<Message> messages = new ArrayList<Message>(3);
 
-		if ((controller instanceof VanillaActionController && ((VanillaActionController)controller).needsPositionUpdate()) || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
+		if ((controller instanceof VanillaActionController && ((VanillaActionController) controller).needsPositionUpdate()) || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
 			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch));
 		} else {
 			boolean moved = !previousPosition.getPosition().equals(newPosition.getPosition());

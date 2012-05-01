@@ -48,12 +48,12 @@ public class SugarCane extends GroundAttachable {
 		validBases.add(VanillaMaterials.SAND);
 		validBases.add(VanillaMaterials.SUGAR_CANE_BLOCK);
 	}
-	
+
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		return super.canAttachTo(material, face) && this.validBases.contains(material);
 	}
-	
+
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
 		if (super.canAttachTo(block, face)) {

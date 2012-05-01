@@ -45,13 +45,13 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
-import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
+import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to
@@ -290,7 +290,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 					if (currentItem != null) {
 						itemId = currentItem.getMaterial().getId();
 					}
-	
+
 					sendPacket(player, new SpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId));
 				} else {
 					invisibleFor.add(player);

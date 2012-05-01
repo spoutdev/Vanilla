@@ -74,10 +74,10 @@ public class Furnace extends Solid {
 				}
 			}
 		}
-		
+
 		vanillaPlayer.setActiveInventory(newInventory);
 	}
-	
+
 	@Override
 	public boolean isPlacementSuppressed() {
 		return true;

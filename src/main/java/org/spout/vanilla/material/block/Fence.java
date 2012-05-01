@@ -29,7 +29,6 @@ import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.block.generic.Solid;
 
 public class Fence extends Solid implements FurnaceFuel {
-
 	public Fence(String name, int id) {
 		super(name, id);
 	}

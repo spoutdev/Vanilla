@@ -63,7 +63,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 		Block block = world.getBlock(x, y, z, player.getEntity());
 		BlockMaterial mat = block.getSubMaterial();
-		
+
 		//TODO Need to have some sort of verification to deal with malicious clients.
 		if (message.getState() == PlayerDiggingMessage.STATE_START_DIGGING) {
 			ItemStack holding = player.getEntity().getInventory().getCurrentItem();

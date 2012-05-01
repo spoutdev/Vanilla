@@ -44,7 +44,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 		if (!(entity.getController() instanceof VanillaPlayer)) {
 			return;
 		}
-		
+
 		VanillaPlayer controller = (VanillaPlayer) entity.getController();
 		if (controller.isSurvival()) {
 			player.kick("Now now, don't try that here. Won't work.");

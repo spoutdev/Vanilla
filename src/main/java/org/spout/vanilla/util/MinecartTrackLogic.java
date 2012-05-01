@@ -69,7 +69,7 @@ public class MinecartTrackLogic implements Source {
 			return null;
 		}
 	}
-	
+
 	public static MinecartTrackLogic create(World world, int x, int y, int z) {
 		return create(world.getBlock(x, y, z));
 	}

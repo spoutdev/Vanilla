@@ -34,12 +34,10 @@ import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.PlayerController;
 import org.spout.api.entity.action.ActionController;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
@@ -167,7 +165,7 @@ public abstract class VanillaActionController extends ActionController implement
 		//Check controller health, send messages to the client based on current state.
 		if (getParent().getHealth() <= 0) {
 			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
-			if(!(this instanceof Player)) {
+			if (!(this instanceof Player)) {
 				getParent().kill();
 			}
 		}
@@ -277,8 +275,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Damages this controller.
-	 *
-	 * @param amount amount the controller will be damaged by.
+	 * @param amount          amount the controller will be damaged by.
 	 * @param sendHurtMessage whether or not to send a hurt message
 	 */
 	public void damage(int amount, boolean sendHurtMessage) {

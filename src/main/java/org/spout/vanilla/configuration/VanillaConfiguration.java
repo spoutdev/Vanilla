@@ -67,10 +67,8 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 
 	@Override
 	public void load() throws ConfigurationException {
-		if (!file.exists()) {
-			super.save();
-		}
 		super.load();
+		super.save();
 		OPS.load();
 	}
 }

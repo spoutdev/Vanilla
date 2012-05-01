@@ -35,7 +35,7 @@ public class LilyPad extends GroundAttachable {
 	public LilyPad() {
 		super("Lily Pad", 111);
 	}
-	
+
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		return face == BlockFace.TOP && material.equals(VanillaMaterials.STATIONARY_WATER);

@@ -51,7 +51,7 @@ public abstract class MinecartTrackBase extends GroundAttachable {
 			logic.refresh();
 		}
 	}
-	
+
 	@Override
 	public Rails createData(short data) {
 		return new Rails(data);

@@ -67,10 +67,10 @@ public class DungeonDecorator implements BiomeDecorator {
 			}
 
 			chunk.getBlock(cx + width / 2, cy + 1, cz + height / 2).setMaterial(VanillaMaterials.MONSTER_SPAWNER).update(true);
-			
-			chunk.getBlock(cx + 1, cy + 1, cz + height / 2).setMaterial(VanillaMaterials.CHEST).update(true); 
-			
-			chunk.getBlock(cx + width / 2, cy + 1, cz + 1).setMaterial(VanillaMaterials.CHEST).update(true); 
+
+			chunk.getBlock(cx + 1, cy + 1, cz + height / 2).setMaterial(VanillaMaterials.CHEST).update(true);
+
+			chunk.getBlock(cx + width / 2, cy + 1, cz + 1).setMaterial(VanillaMaterials.CHEST).update(true);
 
 			//TODO Fill Chests with stuff, kinda waiting for inventories in worlds.
 		}

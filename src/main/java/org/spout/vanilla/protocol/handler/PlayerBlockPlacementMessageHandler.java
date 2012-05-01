@@ -54,7 +54,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		Inventory inventory = player.getEntity().getInventory();
 		ItemStack holding = inventory.getCurrentItem();
 		Material holdingMat = holding == null ? null : holding.getSubMaterial();
-		
+
 		/**
 		 * The notch client's packet sending is weird. Here's how it works: If
 		 * the client is clicking a block not in range, sends a packet with
@@ -65,7 +65,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		 * usually happens. Sometimes it doesn't happen like that. Therefore, a
 		 * hacky workaround.
 		 */
-		
+
 		if (message.getDirection() == 255) {
 			// Right clicked air with an item.
 			PlayerInteractEvent event = eventManager.callEvent(new PlayerInteractEvent(player, null, holding, Action.RIGHT_CLICK, true));
@@ -75,7 +75,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		} else {
 			//TODO: Validate the x/y/z coordinates of the message to check if it is in range of the player
 			//This is an anti-hack requirement (else hackers can load far-away chunks and crash the server)
-			
+
 			//Get clicked block and validated face against it was placed
 			Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ(), player.getEntity());
 			BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(message.getDirection());
@@ -84,7 +84,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			}
 			//Perform interaction event
 			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), inventory.getCurrentItem(), Action.RIGHT_CLICK, false));
-			
+
 			//Get the target block and validate 
 			Block target;
 			BlockMaterial clickedMaterial = clickedBlock.getSubMaterial();
@@ -100,16 +100,16 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			if (target.getY() >= world.getHeight() || target.getY() < 0) {
 				return;
 			}
-						
+
 			//check if the interaction can possibly result in placement
 			if (!interactEvent.isCancelled()) {
-				
+
 				//perform interaction on the server
 				if (holdingMat != null) {
 					holdingMat.onInteract(player.getEntity(), clickedBlock.getPosition(), Action.RIGHT_CLICK, clickedFace);
 				}
 				clickedMaterial.onInteractBy(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
-				
+
 				//if the material is actually a block, place it
 				if (holdingMat != null && holdingMat instanceof BlockMaterial) {
 					short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?
@@ -121,7 +121,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 						if (!oldBlock.equals(VanillaMaterials.AIR)) {
 							oldBlock.onDestroy(target);
 						}
-						
+
 						//perform actual placement
 						if (newBlock.onPlacement(target, placedData, clickedFace)) {
 							//Remove block from inventory if not in creative mode.
@@ -134,7 +134,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 					}
 				}
 			}
-			
+
 			//refresh the client just in case it assumed something
 			int x = target.getX();
 			int y = target.getY();

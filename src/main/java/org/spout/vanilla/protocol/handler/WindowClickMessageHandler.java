@@ -42,23 +42,22 @@ import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
-	
 	@Override
 	public void handleServer(Session session, Player player, WindowClickMessage message) {
-		
+
 		// Get the clicker
 		Entity entity = player.getEntity();
 		if (!(entity.getController() instanceof VanillaPlayer)) {
 			return;
 		}
-		
+
 		// Get the inventory
 		VanillaPlayer controller = (VanillaPlayer) entity.getController();
 		Inventory inventory = controller.getActiveInventory();
 		if (inventory == null) {
 			inventory = entity.getInventory();
 		}
-		
+
 		// Player clicked outside of window
 		if (message.getSlot() == 64537) {
 			controller.setItemOnCursor(null);
@@ -66,7 +65,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			respond(session, message, true);
 			return;
 		}
-		
+
 		// Check for validity of the slot
 		int clickedSlot = VanillaMessageHandlerUtils.getSpoutInventorySlot(inventory, message.getSlot());
 		System.out.println("Player inventory clicked!");
@@ -76,32 +75,32 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			System.out.println("Error: Invalid slot!");
 			return;
 		}
-		
+
 		// Get the stacks
 		ItemStack slotStack = inventory.getItem(clickedSlot);
 		ItemStack cursorStack = controller.getItemOnCursor();
-		
+
 		// Handle the click
 		ItemStack[] stacks = handleClick(message, inventory, clickedSlot, cursorStack, slotStack);
 		cursorStack = stacks[0];
 		slotStack = stacks[1];
-		
+
 		// Pass to inventory specific functions which will then respond to the transaction.
 		if (inventory instanceof PlayerInventory) {
 			handlePlayerInventory((PlayerInventory) inventory, message, clickedSlot, cursorStack, slotStack, controller);
 		}
-		
+
 		if (inventory instanceof FurnaceInventory) {
 			handleFurnaceInventory((FurnaceInventory) inventory, message, controller);
 		}
 	}
-	
+
 	private void handlePlayerInventory(PlayerInventory inventory, WindowClickMessage message, int clickedSlot, ItemStack cursorStack, ItemStack slotStack, VanillaPlayer controller) {
-		
+
 		Player player = controller.getPlayer();
 		boolean armorSlot = clickedSlot == 36 || clickedSlot == 37 || clickedSlot == 41 || clickedSlot == 44;
 		if (inventory instanceof PlayerInventory) {
-			
+
 			// Only allow armor in the armor slots
 			if (armorSlot && cursorStack != null && !(cursorStack.getMaterial() instanceof Armor)) {
 				respond(player.getSession(), message, false);
@@ -121,9 +120,9 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		inventory.setItem(slotStack, clickedSlot);
 		respond(player.getSession(), message, true);
 	}
-	
+
 	private void handleFurnaceInventory(FurnaceInventory inventory, WindowClickMessage message, VanillaPlayer controller) {
-		
+
 		Player player = controller.getPlayer();
 		int clickedSlot = VanillaMessageHandlerUtils.getSpoutInventorySlot(inventory, message.getSlot());
 		System.out.println("Furnace inventory clicked!");
@@ -133,61 +132,55 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			System.out.println("Error: Invalid slot!");
 			return;
 		}
-		
+
 		ItemStack slotStack = inventory.getItem(clickedSlot);
 		ItemStack cursorStack = controller.getItemOnCursor();
-		
+
 		// TODO: Don't let input in the output
-		
+
 		cursorStack = InventoryUtil.nullIfEmpty(cursorStack);
 		slotStack = InventoryUtil.nullIfEmpty(slotStack);
 		controller.setItemOnCursor(cursorStack);
 		inventory.setItem(slotStack, clickedSlot);
 		respond(player.getSession(), message, true);
-		
 	}
-	
+
 	private ItemStack[] handleClick(WindowClickMessage message, Inventory inventory, int clickedSlot, ItemStack cursorStack, ItemStack slotStack) {
-		
+
 		// Right click
 		if (message.isRightClick()) {
 			if (!message.isShift()) {
 				if (slotStack != null && cursorStack != null && cursorStack.equalsIgnoreSize(slotStack)) {
 					InventoryUtil.mergeStack(cursorStack, slotStack, 1);
-			
 				} else if (slotStack != null && cursorStack == null) {
 					int amount = (slotStack.getAmount() + 1) / 2;
 					slotStack.setAmount(slotStack.getAmount() - amount);
 					cursorStack = new ItemStack(slotStack.getMaterial(), amount);
-				
 				} else if (slotStack == null && cursorStack != null) {
 					slotStack = new ItemStack(cursorStack.getMaterial(), 1);
 					cursorStack.setAmount(cursorStack.getAmount() - 1);
 				}
 			}
 		}
-		
+
 		// Left click
 		if (!message.isRightClick()) {
 			if (!message.isShift()) {
 				if (slotStack != null && cursorStack != null && cursorStack.equalsIgnoreSize(slotStack)) {
 					InventoryUtil.mergeStack(cursorStack, slotStack);
-					
 				} else if (slotStack != null && cursorStack == null) {
 					cursorStack = slotStack;
 					slotStack = null;
-					
 				} else if (slotStack == null && cursorStack != null) {
 					slotStack = cursorStack;
 					cursorStack = null;
 				}
-				
 			} else if (slotStack != null) {
 				InventoryUtil.quickMoveStack(inventory, clickedSlot);
 			}
 		}
-		
-		return new ItemStack[] {cursorStack, slotStack}; 
+
+		return new ItemStack[]{cursorStack, slotStack};
 	}
 
 	private void respond(Session session, WindowClickMessage message, boolean success) {

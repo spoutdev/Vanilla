@@ -29,7 +29,6 @@ import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.block.generic.Ore;
 
 public class MushroomBlock extends Ore implements FurnaceFuel {
-
 	public MushroomBlock(String name, int id) {
 		super(name, id);
 		this.setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F); //Placeholder, block resistance unknown

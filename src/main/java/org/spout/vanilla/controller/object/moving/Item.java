@@ -27,6 +27,10 @@ package org.spout.vanilla.controller.object.moving;
 
 import java.util.Arrays;
 import java.util.List;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.World;
@@ -39,9 +43,6 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 
 /**
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).
@@ -69,12 +70,13 @@ public class Item extends Substance {
 		}
 
 		super.onTick(dt);
-		
+
 		//this.move();
-		
+
 		World world = getParent().getWorld();
-		if (world == null)
+		if (world == null) {
 			return;
+		}
 
 		List<Player> players = Arrays.asList(Spout.getEngine().getOnlinePlayers());
 		Iterable<Player> onlinePlayers = Iterables.filter(players, isValidPlayer);
@@ -108,11 +110,11 @@ public class Item extends Substance {
 	}
 
 	private final Predicate<Player> isValidPlayer = new Predicate<Player>() {
-		@Override public boolean apply(Player p) {
+		@Override
+		public boolean apply(Player p) {
 			return p != null && p.getEntity() != null && p.getEntity().getWorld() != null;
 		}
 	};
-
 
 	/**
 	 * Gets what block the item is.

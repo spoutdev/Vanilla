@@ -26,12 +26,12 @@
 package org.spout.vanilla.material.item;
 
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.item.generic.EmptyContainer;
 import org.spout.vanilla.material.item.generic.FullContainer;
 
 public class LavaBucket extends FullContainer implements FurnaceFuel {
-
 	public LavaBucket(String name, int id, BlockMaterial onPlaceMaterial, EmptyContainer emptyContainer) {
 		super(name, id, onPlaceMaterial, emptyContainer);
 	}

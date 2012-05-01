@@ -28,11 +28,10 @@ package org.spout.vanilla.material.block;
 import org.spout.vanilla.material.block.generic.Solid;
 
 public class Vines extends Solid {
-
 	public Vines(String name, int id) {
 		super(name, id);
 	}
-	
+
 	@Override
 	public boolean isPlacementObstacle() {
 		return false;

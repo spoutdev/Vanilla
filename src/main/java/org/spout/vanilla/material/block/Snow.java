@@ -57,7 +57,7 @@ public class Snow extends Solid implements VanillaMaterial {
 		if (block.getSource() instanceof Entity) {
 			Entity entity = (Entity) block.getSource();
 			ItemStack holding = entity.getInventory().getCurrentItem();
-			
+
 			if (holding != null && holding.getMaterial() instanceof Spade) {
 				System.out.println(block.toString());
 				System.out.println(holding.getMaterial().toString());
@@ -71,7 +71,7 @@ public class Snow extends Solid implements VanillaMaterial {
 
 	@Override
 	public void onUpdate(Block block) {
-		BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial(); 
+		BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial();
 		if (below.getMaterial() == VanillaMaterials.AIR) {
 			block.setMaterial(VanillaMaterials.AIR).update(true);
 		}

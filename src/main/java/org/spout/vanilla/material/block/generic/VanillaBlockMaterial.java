@@ -55,7 +55,7 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	public void onDestroyBlock(Block block) {
 		block.setMaterial(VanillaMaterials.AIR).update();
 	}
-	
+
 	/**
 	 * Called when this block is destroyed to perform the drops spawning
 	 * @param block to spawn drops for
@@ -70,7 +70,7 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 				}
 			}
 		}
-		
+
 		Material dropMat = getDrop();
 		if (dropMat != null) {
 			System.out.println(block.toString());
@@ -179,11 +179,11 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 		return this;
 	}
-	
+
 	/**
 	 * Gets whether this block material can support the attachable block material to the face given
 	 * @param material to attach
-	 * @param face of this block to attach to
+	 * @param face     of this block to attach to
 	 * @return
 	 */
 	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {

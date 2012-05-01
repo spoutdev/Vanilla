@@ -45,10 +45,8 @@ public class OpConfiguration extends YamlConfiguration {
 
 	@Override
 	public void load() throws ConfigurationException {
-		if (!file.exists()) {
-			super.save();
-		}
 		super.load();
+		super.save();
 		node = getNode("ops");
 		node.getValue(ops);
 	}

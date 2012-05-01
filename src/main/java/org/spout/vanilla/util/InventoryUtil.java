@@ -27,43 +27,43 @@ package org.spout.vanilla.util;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 public class InventoryUtil {
-	
 	private InventoryUtil() {
-		
+
 	}
-	
+
 	public static void mergeStack(ItemStack dump, ItemStack fill, int amount) {
 		int dumpAmount = amount;
 		int amount1 = dump.getAmount();
 		int amount2 = fill.getAmount();
 		int maxAmount = fill.getMaterial().getMaxStackSize();
 		int freeSpace = maxAmount - amount2;
-		
+
 		// Stop if the stack can't fit
 		if (freeSpace == 0 || dumpAmount > dump.getAmount()) {
 			return;
 		}
-		
+
 		// If the stack can fit
 		if (freeSpace >= dumpAmount) {
 			amount2 += dumpAmount;
 			amount1 -= dumpAmount;
 		}
-		
+
 		// If only part of the stack can fit.
 		if (freeSpace < dumpAmount) {
 			amount2 = maxAmount;
 			amount1 -= freeSpace;
 		}
-		
+
 		fill.setAmount(amount2);
 		dump.setAmount(amount1);
 	}
-	
+
 	public static void mergeStack(ItemStack dump, ItemStack fill) {
 		mergeStack(dump, fill, dump.getAmount());
 	}

@@ -43,25 +43,31 @@ public class Cactus extends GroundAttachable {
 
 	public Cactus() {
 		super("Cactus", 81);
-		addAllowedNeighbour(VanillaMaterials.AIR, VanillaMaterials.TORCH, VanillaMaterials.REDSTONE_TORCH_OFF, VanillaMaterials.REDSTONE_TORCH_ON,
-				VanillaMaterials.LEVER, VanillaMaterials.DEAD_BUSH, VanillaMaterials.TALL_GRASS, VanillaMaterials.REDSTONE_WIRE);
+		addAllowedNeighbour(VanillaMaterials.AIR,
+				VanillaMaterials.TORCH,
+				VanillaMaterials.REDSTONE_TORCH_OFF,
+				VanillaMaterials.REDSTONE_TORCH_ON,
+				VanillaMaterials.LEVER,
+				VanillaMaterials.DEAD_BUSH,
+				VanillaMaterials.TALL_GRASS,
+				VanillaMaterials.REDSTONE_WIRE);
 	}
-	
+
 	@Override
 	public void onUpdate(Block block) {
 		if (VanillaConfiguration.CACTUS_PHYSICS.getBoolean()) {
 			super.onUpdate(block);
 		}
 	}
-	
+
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		if (super.canAttachTo(material, face)) {
-			return material.equals(VanillaMaterials.SAND) ||  material.equals(VanillaMaterials.CACTUS);
+			return material.equals(VanillaMaterials.SAND) || material.equals(VanillaMaterials.CACTUS);
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace attachedFace, boolean seekAlternative) {
 		if (super.canPlace(block, data, attachedFace, seekAlternative)) {
@@ -76,7 +82,7 @@ public class Cactus extends GroundAttachable {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
 		return face == BlockFace.TOP && material.equals(VanillaMaterials.CACTUS);

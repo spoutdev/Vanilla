@@ -37,7 +37,7 @@ public class GroundAttachable extends AbstractAttachable {
 	public GroundAttachable(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
 	}
-	
+
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
 		return face == BlockFace.TOP && super.canAttachTo(block, face);

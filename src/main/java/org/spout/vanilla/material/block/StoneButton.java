@@ -26,10 +26,10 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.material.block.generic.Solid;
 
 public class StoneButton extends Solid {
-
 	public StoneButton(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
 	}

@@ -25,17 +25,10 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class CraftingTable extends Solid implements FurnaceFuel {
-
+public class CraftingTable extends Solid {
 	public CraftingTable(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public int getFuelTicks() {
-		return 300;
 	}
 }

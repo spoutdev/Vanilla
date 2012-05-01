@@ -26,10 +26,8 @@
 package org.spout.vanilla.material;
 
 public interface FurnaceFuel {
-	
 	/**
 	 * Gets the amount of ticks a furnace can run using this material as fuel
 	 */
 	public int getFuelTicks();
-
 }

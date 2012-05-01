@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
@@ -39,8 +40,12 @@ import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 	@Override
 	public void handleServer(Session session, Player player, CreativeMessage message) {
-		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
-
+		Entity entity = player.getEntity();
+		if (!(entity.getController() instanceof VanillaPlayer)) {
+			return;
+		}
+		
+		VanillaPlayer controller = (VanillaPlayer) entity.getController();
 		if (controller.isSurvival()) {
 			player.kick("Now now, don't try that here. Won't work.");
 			return;
@@ -48,12 +53,12 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 
 		Inventory inventory = controller.getActiveInventory();
 		if (inventory == null) {
-			inventory = player.getEntity().getInventory();
+			inventory = entity.getInventory();
 		}
 
 		int slot = message.getSlot();
 		slot = VanillaMessageHandlerUtils.getSpoutInventorySlot(inventory, slot);
-		if (slot < 0 || slot >= player.getEntity().getInventorySize()) {
+		if (slot < 0 || slot >= entity.getInventorySize()) {
 			return;
 		}
 
@@ -69,7 +74,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 			return;
 		}
 
-		player.getEntity().getInventory().setItem(newItem, slot);
+		entity.getInventory().setItem(newItem, slot);
 		/*
 		 * if (currentItem != null) { player.setItemOnCursor(currentItem); } else {
 		 * player.setItemOnCursor(null);

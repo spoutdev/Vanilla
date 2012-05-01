@@ -25,24 +25,19 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.Source;
-import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
-public class LilyPad extends Solid {
+public class LilyPad extends GroundAttachable {
 	public LilyPad() {
 		super("Lily Pad", 111);
 	}
-
+	
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Source source) {
-		if (super.canPlace(block, data, against, source)) {
-			return block.translate(BlockFace.BOTTOM).translate(against.getOpposite()).getMaterial() == VanillaMaterials.WATER;
-		} else {
-			return false;
-		}
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		return face == BlockFace.TOP && material.equals(VanillaMaterials.STATIONARY_WATER);
 	}
 }

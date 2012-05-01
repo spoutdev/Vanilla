@@ -36,6 +36,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.attachable.Attachable;
 import org.spout.vanilla.material.block.redstone.RedstoneTorch;
 import org.spout.vanilla.material.block.redstone.RedstoneWire;
 
@@ -51,7 +52,7 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	 * @param block to destroy
 	 */
 	public void onDestroyBlock(Block block) {
-		block.setMaterial(VanillaMaterials.AIR);
+		block.setMaterial(VanillaMaterials.AIR).update();
 	}
 	
 	/**
@@ -174,6 +175,16 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 		dropCount = count;
 
 		return this;
+	}
+	
+	/**
+	 * Gets whether this block material can support the attachable block material to the face given
+	 * @param material to attach
+	 * @param face of this block to attach to
+	 * @return
+	 */
+	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
+		return true;
 	}
 
 	@Override

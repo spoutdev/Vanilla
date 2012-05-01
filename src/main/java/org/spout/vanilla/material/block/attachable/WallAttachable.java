@@ -27,56 +27,29 @@ package org.spout.vanilla.material.block.attachable;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
 public class WallAttachable extends AbstractAttachable {
 	public WallAttachable(String name, int id) {
 		super(name, id);
 	}
-
-	@Override
-	public short getDataForFace(BlockFace face) {
-		switch (face) {
-			case NORTH:
-				return 0x1;
-			case SOUTH:
-				return 0x2;
-			case EAST:
-				return 0x3;
-			case WEST:
-				return 0x4;
-			default:
-				return 0x5; //Standing on floor, this will be default if other faces are passed, too
-		}
-	}
-
-	@Override
-	public BlockFace getFaceAttachedTo(short data) {
-		switch (data) {
-			case 0x1:
-				return BlockFace.NORTH;
-			case 0x2:
-				return BlockFace.SOUTH;
-			case 0x3:
-				return BlockFace.EAST;
-			case 0x4:
-				return BlockFace.WEST;
-			case 0x5:
-				return BlockFace.BOTTOM;
-			default:
-				return BlockFace.BOTTOM;
-		}
-	}
 	
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
-		switch (face) {
-		case BOTTOM :
-		case NORTH :
-		case EAST :
-		case SOUTH :
-		case WEST :
+		if (BlockFaces.contains(BlockFaces.NESWT, face)) {
 			return super.canAttachTo(block, face);
+		} else {
+			return false;
 		}
-		return false;
+	}
+
+	@Override
+	public void setAttachedFace(Block block, BlockFace attachedFace) {
+		block.setData((short) (BlockFaces.indexOf(BlockFaces.NSEWB, attachedFace, 4) + 1));
+	}
+
+	@Override
+	public BlockFace getAttachedFace(Block block) {
+		return BlockFaces.get(BlockFaces.NSEWB, block.getData() - 1, BlockFace.BOTTOM);
 	}
 }

@@ -25,7 +25,6 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.Source;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
@@ -57,7 +56,7 @@ public class Slab extends Solid {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Source source) {
+	public boolean onPlacement(Block block, short data, BlockFace against) {
 		if (against == BlockFace.BOTTOM) {
 			Block clicked = block.translate(against.getOpposite());
 			if (clicked.getSubMaterial().equals(this.getParentMaterial())) {
@@ -67,6 +66,6 @@ public class Slab extends Solid {
 				return true;
 			}
 		}
-		return super.onPlacement(block, data, against, source);
+		return super.onPlacement(block, data, against);
 	}
 }

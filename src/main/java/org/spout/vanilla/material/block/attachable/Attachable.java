@@ -32,51 +32,72 @@ import org.spout.api.material.block.BlockFace;
 public interface Attachable {
 
 	/**
-	 * Whether this material seeks an alternative attachment block
+	 * Whether this material seeks an alternative attachment block upon placement
 	 */
 	public boolean canSeekAttachedAlternative();
 	
 	/**
 	 * Checks if this material can be attached to certain face of a block material
-	 * @param world
 	 * @param material to attach to
-	 * @param face to attach to
-	 * @return if this material can be attached to face of the block given
+	 * @param face of the material to attach to
+	 * @return if this material can be attached to face of the block material given
 	 */
 	public boolean canAttachTo(BlockMaterial material, BlockFace face);
 	
 	/**
 	 * Checks if this material can be attached to certain face of a block
-	 * @param world
-	 * @param x coordinate of the block to place
-	 * @param y coordinate of the block to place
-	 * @param z coordinate of the block to place
-	 * @param face to attach to
+	 * @param block to attach to
+	 * @param face of the block to attach to
 	 * @return if this material can be attached to face of the block given
 	 */
 	public boolean canAttachTo(Block block, BlockFace face);
 
 	/**
-	 * Gets which data id should be set for the given face
-	 * @param face where the block will be attached to
-	 * @return data for the given face
+	 * Sets the face the block is attached to
+	 * 
+	 * @param block to set
+	 * @param attachedFace to set the block to
 	 */
-	public short getDataForFace(BlockFace face);
+	public void setAttachedFace(Block block, BlockFace attachedFace);
 
 	/**
-	 * Gets the face the block is attached to by given data
-	 * @param data that the block has
+	 * Gets the face the block is attached to
+	 * @param block to get it of
 	 * @return to which face the block is attached to
 	 */
-	public BlockFace getFaceAttachedTo(short data);
+	public BlockFace getAttachedFace(Block block);
 
 	/**
-	 * Returns the block that the attachable at x,y,z is attached to.
-	 * @param world
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @return the block the attachable at those coordinates is attached to.
+	 * Returns the block that this attachable is attached to
+	 * @param block of this attachable
+	 * @return the block
 	 */
 	public Block getBlockAttachedTo(Block block);
+	
+	/**
+	 * Finds out what face this attachable can properly attach to<br>
+	 * The north-east-south-west-bottom-top search pattern is used.
+	 * 
+	 * @param block of the attachable
+	 * @return the attached face, or null if not found
+	 */
+	public BlockFace findAttachedFace(Block block);
+	
+	/**
+	 * Performs placement of this attachable
+	 * @param block to place at
+	 * @param data to use
+	 * @param attachedFace to use
+	 */
+	public void handlePlacement(Block block, short data, BlockFace attachedFace);
+	
+	/**
+	 * Checks if placement is possible for this attachable
+	 * @param block to place at
+	 * @param data to use
+	 * @param attachedFace to use
+	 * @param seekAlternative whether an alternative attached face should be sought
+	 * @return whether placement is possible
+	 */
+	public boolean canPlace(Block block, short data, BlockFace attachedFace, boolean seekAlternative);
 }

@@ -41,6 +41,7 @@ import org.spout.vanilla.material.block.FenceGate;
 import org.spout.vanilla.material.block.Fire;
 import org.spout.vanilla.material.block.Flower;
 import org.spout.vanilla.material.block.Furnace;
+import org.spout.vanilla.material.block.Glass;
 import org.spout.vanilla.material.block.Grass;
 import org.spout.vanilla.material.block.Gravel;
 import org.spout.vanilla.material.block.Ice;
@@ -123,7 +124,7 @@ public final class VanillaMaterials {
 	public static final Tree LOG = Tree.DEFAULT;
 	public static final Leaves LEAVES = Leaves.DEFAULT;
 	public static final Solid SPONGE = (Solid) register(new Solid("Sponge", 19).setHardness(0.6F).setResistance(1.0F));
-	public static final Solid GLASS = (Solid) register(new Solid("Glass", 20).setHardness(0.3F).setResistance(0.5F));
+	public static final Glass GLASS = (Glass) register(new Glass("Glass", 20).setHardness(0.3F).setResistance(0.5F));
 	public static final Ore LAPIS_ORE = (Ore) register(new Ore("Lapis Lazuli Ore", 21).setMinDropCount(4).setMaxDropCount(8).setHardness(3.0F).setResistance(5.0F));
 	public static final Solid LAPIS_BLOCK = (Solid) register(new Solid("Lapis Lazuli Block", 22).setHardness(3.0F).setResistance(5.0F));
 	public static final Solid DISPENSER = (Solid) register(new Solid("Dispenser", 23).setHardness(3.5F).setResistance(5.8F));

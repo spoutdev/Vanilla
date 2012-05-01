@@ -77,9 +77,8 @@ public class Cactus extends GroundAttachable {
 	}
 	
 	@Override
-	public boolean canAttachTo(Block block, BlockFace attachedFace) {
-		if (super.canAttachTo(block, attachedFace)) {
-			//surrounded by air or non-occupying block?
+	public boolean canPlace(Block block, short data, BlockFace attachedFace, boolean seekAlternative) {
+		if (super.canPlace(block, data, attachedFace, seekAlternative)) {
 			BlockMaterial mat;
 			for (BlockFace face : BlockFaces.NESW) {
 				mat = block.translate(face).getMaterial();

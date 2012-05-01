@@ -25,38 +25,27 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.block.attachable.Attachable;
+import org.spout.vanilla.material.block.attachable.PointAttachable;
+import org.spout.vanilla.material.block.generic.Solid;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.attachable.WallAttachable;
+public class Glass extends Solid {
 
-public class SignBase extends WallAttachable {
-	public SignBase(String name, int id) {
+	public Glass(String name, int id) {
 		super(name, id);
+		this.setOccludes(false);
 	}
-
+	
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against) {
-		if (against == BlockFace.BOTTOM) {
-			block.setMaterial(VanillaMaterials.SIGN_POST, data).update(true);
+	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
+		if (super.canSupport(material, face)) {
+			if (face != BlockFace.TOP) {
+				return !(material instanceof PointAttachable);
+			}
 			return true;
-		} else if (against != BlockFace.TOP) {
-			block.setMaterial(VanillaMaterials.WALL_SIGN, data).update(true);
-			return true;
-		} else {
-			return false;
 		}
-	}
-
-	@Override
-	public boolean canPlace(Block block, short data, BlockFace against) {
-		if (super.canPlace(block, data, against)) {
-			return true;
-		} else if (block.translate(against.getOpposite()) instanceof SignBase) {
-			return true;
-		} else {
-			return false;
-		}
+		return false;
 	}
 }

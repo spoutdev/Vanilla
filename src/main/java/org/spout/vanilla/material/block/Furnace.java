@@ -29,7 +29,6 @@ import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.PlayerInventory;
@@ -56,7 +55,7 @@ public class Furnace extends Solid {
 	}
 
 	@Override
-	public void onInteract(Entity entity, Point pos, PlayerInteractEvent.Action action, BlockFace face) {
+	public void onInteract(Entity entity, Block block, PlayerInteractEvent.Action action, BlockFace face) {
 		Controller controller = entity.getController();
 		if (!(controller instanceof VanillaPlayer)) {
 			return;
@@ -65,7 +64,7 @@ public class Furnace extends Solid {
 		VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
 		vanillaPlayer.sendPacket(vanillaPlayer.getPlayer(), new OpenWindowMessage(1, 2, "Furnace", 38));
 		Inventory inventory = entity.getInventory();
-		FurnaceInventory newInventory = new FurnaceInventory(entity.getWorld().getBlock(pos));
+		FurnaceInventory newInventory = new FurnaceInventory(block);
 		if (!(inventory instanceof PlayerInventory)) {
 			for (int i = 0; i < inventory.getSize(); i++) {
 				ItemStack stack = inventory.getItem(i);

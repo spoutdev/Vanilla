@@ -68,13 +68,12 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		if (message.getState() == PlayerDiggingMessage.STATE_START_DIGGING) {
 			ItemStack holding = player.getEntity().getInventory().getCurrentItem();
 			Material holdingMat = holding == null ? VanillaMaterials.AIR : holding.getMaterial();
-			Point position = block.getPosition();
 			boolean isAir = false;
 			if (mat.equals(VanillaMaterials.AIR)) {
 				isAir = true;
 			}
 
-			PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, position, holding, Action.LEFT_CLICK, isAir);
+			PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, block.getPosition(), holding, Action.LEFT_CLICK, isAir);
 			eventManager.callEvent(interactEvent);
 			if (interactEvent.isCancelled()) {
 				return;
@@ -82,7 +81,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				holdingMat.onInteract(player.getEntity(), Action.LEFT_CLICK); //call onInteract on item held for air
 				return;
 			} else {
-				holdingMat.onInteract(player.getEntity(), position, Action.LEFT_CLICK, clickedface); //call onInteract on item held
+				holdingMat.onInteract(player.getEntity(), block, Action.LEFT_CLICK, clickedface); //call onInteract on item held
 				mat.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedface); //call onInteract on block clicked
 			}
 			if (player.getEntity().getController() instanceof VanillaPlayer && !((VanillaPlayer) player.getEntity().getController()).isSurvival()) {

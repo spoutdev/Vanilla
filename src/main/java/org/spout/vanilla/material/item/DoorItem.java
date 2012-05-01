@@ -27,9 +27,7 @@ package org.spout.vanilla.material.item;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 
@@ -47,16 +45,12 @@ public class DoorItem extends VanillaItemMaterial {
 	}
 
 	@Override
-	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
-		super.onInteract(entity, position, type, clickedFace);
+	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		super.onInteract(entity, block, type, clickedFace);
 		if (clickedFace != BlockFace.TOP) {
 			return;
 		}
-		World world = position.getWorld();
-		int x = (int) position.getX();
-		int y = (int) position.getY();
-		int z = (int) position.getZ();
-		Block b = world.getBlock(x, y - 1, z);
+		Block b = block.translate(BlockFace.BOTTOM);
 
 		if (b.getMaterial() instanceof Solid && (b = b.translate(BlockFace.TOP)).getMaterial() == VanillaMaterials.AIR && (b = b.translate(BlockFace.TOP)).getMaterial() == VanillaMaterials.AIR) {
 			System.out.println("Placing door!");
@@ -68,7 +62,7 @@ public class DoorItem extends VanillaItemMaterial {
 		 * * Blockface to sub-door-material ('hinge?')
 		 */
 		short hinge = (short) ((MathHelper.floor((double) ((entity.getYaw() + 180F) * 4F) - 0.5)) & 3);
-		placeDoorBlock(world.getBlock(x, y, z, entity), hinge, doorBlock);
+		placeDoorBlock(block, hinge, doorBlock);
 	}
 
 	public static void placeDoorBlock(Block block, short hinge, DoorBlock doorBlock) {

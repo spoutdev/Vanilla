@@ -76,7 +76,7 @@ public class Sapling extends GroundAttachable implements Plant, FurnaceFuel {
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		if (super.canAttachTo(material, face)) {
-			return material.equals(VanillaMaterials.GRASS) || material.equals(VanillaMaterials.DIRT);
+			return material.equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT);
 		}
 		return false;
 	}

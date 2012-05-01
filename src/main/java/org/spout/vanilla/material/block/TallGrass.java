@@ -58,7 +58,7 @@ public class TallGrass extends DeadBush {
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		if (face == BlockFace.TOP) {
-			if (material.equals(VanillaMaterials.GRASS) || material.equals(VanillaMaterials.DIRT)) {
+			if (material.equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT)) {
 				return ((VanillaBlockMaterial) material).canSupport(this, face);
 			}
 		}

@@ -30,16 +30,52 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.util.flag.ByteFlagContainer;
 
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
+
 	protected AbstractAttachable(String name, int id) {
 		super(name, id);
 	}
 
 	public AbstractAttachable(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
+	}
+	
+	private ByteFlagContainer attachableFaces = new ByteFlagContainer(BlockFace.MASK_NONE);
+
+	/**
+	 * Gets whether a certain face is attachable
+	 * @param face to get it of
+	 * @return attachable state
+	 */
+	public boolean isAttachable(BlockFace face) {
+		return this.attachableFaces.get(face);
+	}
+
+	/**
+	 * Sets multiple faces attachable to true
+	 * @param faces to set
+	 * @return this attachable material
+	 */
+	public AbstractAttachable setAttachable(BlockFace... faces) {
+		for (BlockFace face : faces) {
+			this.setAttachable(face, true);
+		}
+		return this;
+	}
+
+	/**
+	 * Sets whether a certain face is attachable
+	 * @param face to set
+	 * @param attachable state
+	 * @return this attachable material
+	 */
+	public AbstractAttachable setAttachable(BlockFace face, boolean attachable) {
+		this.attachableFaces.set(face, attachable);
+		return this;
 	}
 
 	@Override
@@ -85,7 +121,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
-		return this.canAttachTo(block.getSubMaterial(), face);
+		return this.isAttachable(face.getOpposite()) && this.canAttachTo(block.getSubMaterial(), face);
 	}
 
 	@Override

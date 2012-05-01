@@ -63,7 +63,7 @@ public class Cactus extends GroundAttachable {
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		if (super.canAttachTo(material, face)) {
-			return material.equals(VanillaMaterials.SAND) || material.equals(VanillaMaterials.CACTUS);
+			return material.equals(VanillaMaterials.SAND, VanillaMaterials.CACTUS);
 		}
 		return false;
 	}

@@ -28,11 +28,8 @@ package org.spout.vanilla.material.item;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.material.block.MinecartTrack;
@@ -52,15 +49,13 @@ public class Minecart extends VanillaItemMaterial {
 	}
 
 	@Override
-	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedface) {
-		super.onInteract(entity, position, type, clickedface);
+	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
+		super.onInteract(entity, block, type, clickedface);
 
 		//is clicked position a track?
-		World world = position.getWorld();
-		Block block = world.getBlock(position);
 		if (block.getMaterial() instanceof MinecartTrack) {
 			//spawn minecart on rails
-			world.createAndSpawnEntity(position.add(new Vector3(0.5, 0.5, 0.5)), this.getSpawnedEntity());
+			block.getWorld().createAndSpawnEntity(block.getPosition(), this.getSpawnedEntity());
 			//TODO: Subtracting one from the held item?
 			//Shouldn't the held item be passed to this function instead?
 		}

@@ -88,14 +88,13 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			//Get the target block and validate 
 			Block target;
 			BlockMaterial clickedMaterial = clickedBlock.getSubMaterial();
-			if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
-				return; //prevent placing when the clicked material suppresses this
-			} else if (clickedMaterial.isPlacementObstacle()) {
+			BlockFace targetFace;
+			if (clickedMaterial.isPlacementObstacle()) {
 				target = clickedBlock.translate(clickedFace);
-				clickedFace = clickedFace.getOpposite();
+				targetFace = clickedFace.getOpposite();
 			} else {
 				target = clickedBlock;
-				clickedFace = BlockFace.BOTTOM; //face is no longer valid at this point
+				targetFace = BlockFace.BOTTOM; //face is no longer valid at this point
 			}
 			if (target.getY() >= world.getHeight() || target.getY() < 0) {
 				return;
@@ -106,10 +105,14 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 				//perform interaction on the server
 				if (holdingMat != null) {
-					holdingMat.onInteract(player.getEntity(), clickedBlock.getPosition(), Action.RIGHT_CLICK, clickedFace);
+					holdingMat.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 				}
 				clickedMaterial.onInteractBy(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 
+				if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
+					return; //prevent placement if the material suppresses this
+				}
+				
 				//if the material is actually a block, place it
 				if (holdingMat != null && holdingMat instanceof BlockMaterial) {
 					short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?
@@ -117,13 +120,13 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 					BlockMaterial newBlock = (BlockMaterial) holdingMat;
 
 					//check if placement is even possible and handle the destruction of the old block
-					if (!oldBlock.isPlacementObstacle() && newBlock.canPlace(target, placedData, clickedFace)) {
+					if (!oldBlock.isPlacementObstacle() && newBlock.canPlace(target, placedData, targetFace)) {
 						if (!oldBlock.equals(VanillaMaterials.AIR)) {
 							oldBlock.onDestroy(target);
 						}
 
 						//perform actual placement
-						if (newBlock.onPlacement(target, placedData, clickedFace)) {
+						if (newBlock.onPlacement(target, placedData, targetFace)) {
 							//Remove block from inventory if not in creative mode.
 							if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
 								holding.setAmount(holding.getAmount() - 1);

@@ -32,15 +32,12 @@ import org.spout.api.material.block.BlockFace;
 public class GroundAttachable extends AbstractAttachable {
 	public GroundAttachable(String name, int id) {
 		super(name, id);
+		this.setAttachable(BlockFace.BOTTOM);
 	}
 
 	public GroundAttachable(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
-	}
-
-	@Override
-	public boolean canAttachTo(Block block, BlockFace face) {
-		return face == BlockFace.TOP && super.canAttachTo(block, face);
+		this.setAttachable(BlockFace.BOTTOM);
 	}
 
 	@Override

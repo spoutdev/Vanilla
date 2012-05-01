@@ -25,38 +25,51 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.Source;
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.attachable.WallAttachable;
+import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 
-public class SignBase extends WallAttachable {
+public class SignBase extends AbstractAttachable {
 	public SignBase(String name, int id) {
 		super(name, id);
+		this.setAttachable(BlockFaces.NESWB);
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against) {
-		if (against == BlockFace.BOTTOM) {
+	public void handlePlacement(Block block, short data, BlockFace attachedFace) {
+		this.setAttachedFace(block, attachedFace);
+	}
+
+	@Override
+	public void setAttachedFace(Block block, BlockFace attachedFace) {
+		if (attachedFace == BlockFace.BOTTOM) {
+			Source source = block.getSource();
+			short data = 0;
+			if (source instanceof Entity) {
+				Vector3 direction = block.getPosition().subtract(((Entity) source).getPosition());
+				//TODO: Get angle from direction, set data using this angle
+				
+			}
 			block.setMaterial(VanillaMaterials.SIGN_POST, data).update(true);
-			return true;
-		} else if (against != BlockFace.TOP) {
-			block.setMaterial(VanillaMaterials.WALL_SIGN, data).update(true);
-			return true;
 		} else {
-			return false;
+			//get the data for this face
+			short data = (short) (BlockFaces.indexOf(BlockFaces.NSWE, attachedFace, 0) + 2);
+			block.setMaterial(VanillaMaterials.WALL_SIGN, data).update(true);
 		}
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against) {
-		if (super.canPlace(block, data, against)) {
-			return true;
-		} else if (block.translate(against.getOpposite()) instanceof SignBase) {
-			return true;
+	public BlockFace getAttachedFace(Block block) {
+		if (block.getMaterial().equals(VanillaMaterials.SIGN_POST)) {
+			return BlockFace.BOTTOM;
 		} else {
-			return false;
+			return BlockFaces.get(BlockFaces.NSWE, block.getData() - 2);
 		}
 	}
 }

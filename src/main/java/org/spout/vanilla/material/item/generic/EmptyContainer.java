@@ -30,7 +30,6 @@ import java.util.HashMap;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -48,11 +47,10 @@ public class EmptyContainer extends BlockItem {
 	}
 
 	@Override
-	public void onInteract(Entity entity, Point position, Action type, BlockFace clickedFace) {
+	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		// TODO: ignore position and get the first non-air in the line of sight to prevent NPE's
-		Block block = entity.getWorld().getBlock(position);
 
-		super.onInteract(entity, position, type, clickedFace);
+		super.onInteract(entity, block, type, clickedFace);
 
 		Inventory inventory = entity.getInventory();
 		if (inventory.getCurrentItem() == null) {

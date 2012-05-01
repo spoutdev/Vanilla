@@ -60,7 +60,7 @@ public class SugarCane extends GroundAttachable {
 			BlockMaterial wmat;
 			for (BlockFace around : BlockFaces.NESW) {
 				wmat = block.translate(around).getMaterial();
-				if (wmat.equals(VanillaMaterials.STATIONARY_WATER) || wmat.equals(VanillaMaterials.WATER)) {
+				if (wmat.equals(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 					return true;
 				}
 			}

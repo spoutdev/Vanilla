@@ -25,17 +25,39 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.material.block.attachable.PointAttachable;
 
-public class StoneButton extends Solid {
+public class StoneButton extends AbstractAttachable implements PointAttachable {
+
 	public StoneButton(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
+		this.setAttachable(BlockFaces.NESW);
 	}
 
 	public StoneButton(String name, int id) {
 		super(name, id);
+		this.setAttachable(BlockFaces.NESW);
+	}
+
+	@Override
+	public boolean canAttachTo(Block block, BlockFace face) {
+		return face != BlockFace.TOP && super.canAttachTo(block, face);
+	}
+
+	@Override
+	public void setAttachedFace(Block block, BlockFace attachedFace) {
+		block.setData((short) (BlockFaces.indexOf(BlockFaces.NSEW, attachedFace, 3) + 1));
+	}
+
+	@Override
+	public BlockFace getAttachedFace(Block block) {
+		return BlockFaces.get(BlockFaces.NSEW, (block.getData() & ~0x8) - 1);
 	}
 
 	@Override

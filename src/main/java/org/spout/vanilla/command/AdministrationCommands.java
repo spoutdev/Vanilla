@@ -425,4 +425,10 @@ public class AdministrationCommands {
 			}
 		}
 	}
+
+	@Command(aliases = {"version", "vr"}, usage = "", desc = "Print out the version information for Vanilla", min = 0, max = 0)
+	@CommandPermissions("vanilla.command.version")
+	public void getVersion(CommandContext args, CommandSource source) throws CommandException {
+		source.sendMessage("This is a server running " + Spout.getEngine().getVersion() + " powering Vanilla b" + plugin.getDescription().getVersion());
+	}
 }

@@ -32,24 +32,32 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.msg.PlayerLookMessage;
+import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 
-public final class PlayerLookCodec extends MessageCodec<PlayerLookMessage> {
-	public PlayerLookCodec() {
-		super(PlayerLookMessage.class, 0x0C);
+public final class PlayerPositionLookCodec extends MessageCodec<PlayerPositionLookMessage> {
+	public PlayerPositionLookCodec() {
+		super(PlayerPositionLookMessage.class, 0x0D);
 	}
 
 	@Override
-	public PlayerLookMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerPositionLookMessage decode(ChannelBuffer buffer) throws IOException {
+		double x = buffer.readDouble();
+		double y = buffer.readDouble();
+		double stance = buffer.readDouble();
+		double z = buffer.readDouble();
 		float yaw = buffer.readFloat();
 		float pitch = buffer.readFloat();
 		boolean onGround = buffer.readByte() == 1;
-		return new PlayerLookMessage(yaw, pitch, onGround);
+		return new PlayerPositionLookMessage(x, y, z, stance, yaw, pitch, onGround);
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerLookMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(9);
+	public ChannelBuffer encode(PlayerPositionLookMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.buffer(41);
+		buffer.writeDouble(message.getX());
+		buffer.writeDouble(message.getY());
+		buffer.writeDouble(message.getStance());
+		buffer.writeDouble(message.getZ());
 		buffer.writeFloat(message.getYaw());
 		buffer.writeFloat(message.getPitch());
 		buffer.writeByte(message.isOnGround() ? 1 : 0);

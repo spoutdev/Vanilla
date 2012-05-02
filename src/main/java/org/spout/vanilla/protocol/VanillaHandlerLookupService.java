@@ -45,7 +45,7 @@ import org.spout.vanilla.protocol.handler.PlayerBlockPlacementMessageHandler;
 import org.spout.vanilla.protocol.handler.PlayerDiggingMessageHandler;
 import org.spout.vanilla.protocol.handler.PlayerLookMessageHandler;
 import org.spout.vanilla.protocol.handler.PlayerPositionMessageHandler;
-import org.spout.vanilla.protocol.handler.PlayerPositionRotationMessageHandler;
+import org.spout.vanilla.protocol.handler.PlayerPositionLookMessageHandler;
 import org.spout.vanilla.protocol.handler.RespawnMessageHandler;
 import org.spout.vanilla.protocol.handler.WindowClickMessageHandler;
 import org.spout.vanilla.protocol.msg.ChatMessage;
@@ -64,7 +64,7 @@ import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
-import org.spout.vanilla.protocol.msg.PlayerPositionRotationMessage;
+import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
 
@@ -79,7 +79,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(GroundMessage.class, GroundMessageHandler.class);
 			bind(PlayerPositionMessage.class, PlayerPositionMessageHandler.class);
 			bind(PlayerLookMessage.class, PlayerLookMessageHandler.class);
-			bind(PlayerPositionRotationMessage.class, PlayerPositionRotationMessageHandler.class);
+			bind(PlayerPositionLookMessage.class, PlayerPositionLookMessageHandler.class);
 			bind(KickMessage.class, KickMessageHandler.class);
 			bind(PlayerDiggingMessage.class, PlayerDiggingMessageHandler.class);
 			bind(PlayerBlockPlacementMessage.class, PlayerBlockPlacementMessageHandler.class);

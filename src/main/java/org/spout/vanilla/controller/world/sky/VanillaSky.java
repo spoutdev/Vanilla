@@ -28,16 +28,18 @@ package org.spout.vanilla.controller.world.sky;
 import java.util.HashMap;
 import java.util.Random;
 
+import org.spout.api.entity.Controller;
 import org.spout.api.geo.World;
 
 import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.world.Weather;
 
 /**
  * Represents a sky in Vanilla
  */
-public abstract class VanillaSky extends VanillaActionController {
+public abstract class VanillaSky extends Controller implements VanillaController {
 	protected long maxTime;
 	protected long time = 0;
 	protected long countdown = 20;
@@ -67,6 +69,11 @@ public abstract class VanillaSky extends VanillaActionController {
 
 	public VanillaSky(VanillaControllerType type) {
 		this(type, false, 24000, 20);
+	}
+
+	@Override
+	public void onAttached() {
+		getParent().setCollision(null);
 	}
 
 	@Override

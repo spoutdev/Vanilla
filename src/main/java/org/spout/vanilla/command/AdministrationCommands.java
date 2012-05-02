@@ -413,7 +413,7 @@ public class AdministrationCommands {
 	@Command(aliases = {"kill"}, usage = "<player>", desc = "Kill yourself or another player", min = 0, max = 1)
 	@CommandPermissions("vanilla.command.kill")
 	public void setHealth(CommandContext args, CommandSource source) throws CommandException {
-		if (args.length() > 1) {
+		if (args.length() < 1) {
 			if (!(source instanceof Player)) {
 				throw new CommandException("Don't be silly...you cannot kill yourself as the console.");
 			}

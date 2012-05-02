@@ -34,10 +34,6 @@ public class NetherSky extends VanillaSky {
 	}
 
 	@Override
-	public void onAttached() {
-	}
-
-	@Override
 	public void updateTime(long time) {
 	}
 

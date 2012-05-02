@@ -38,12 +38,8 @@ public class NormalSky extends VanillaSky {
 	}
 
 	@Override
-	public void onAttached() {
-	}
-
-	@Override
 	public void updateTime(long time) {
-		broadcastPacket(new TimeUpdateMessage(time));
+		//broadcastPacket(new TimeUpdateMessage(time));
 	}
 
 	@Override
@@ -54,6 +50,6 @@ public class NormalSky extends VanillaSky {
 		}
 
 		byte reason = newWeather.equals(Weather.RAIN) || newWeather.equals(Weather.THUNDERSTORM) ? ChangeGameStateMessage.BEGIN_RAINING : ChangeGameStateMessage.END_RAINING;
-		broadcastPacket(new ChangeGameStateMessage(reason));
+		//broadcastPacket(new ChangeGameStateMessage(reason));
 	}
 }

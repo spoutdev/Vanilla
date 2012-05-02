@@ -42,10 +42,12 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.player.Player;
 
+import org.spout.vanilla.controller.VanillaController;
+
 /**
  * Controller that spawns entities in regions.
  */
-public class RegionSpawner extends Controller {
+public class RegionSpawner extends Controller implements VanillaController {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(RegionSpawner.class, "Region Spawner");
 	private static final int SPAWN_TRIES = 6;
 	private final Region region;
@@ -59,7 +61,7 @@ public class RegionSpawner extends Controller {
 
 	@Override
 	public void onAttached() {
-
+		getParent().setCollision(null);
 	}
 
 	@Override

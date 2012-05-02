@@ -32,13 +32,14 @@ import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.geo.discrete.Point;
 
+import org.spout.vanilla.controller.VanillaController;
+
 /**
  * Controller that observes chunks around a point. It will always keep these chunks in memory.
  */
-public class PointObserver extends Controller {
+public class PointObserver extends Controller implements VanillaController {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(PointObserver.class, "Point Observer");
 	private Point currPoint;
-	private static CollisionModel model = new CollisionModel();
 
 	public PointObserver() {
 		super(TYPE);
@@ -55,8 +56,7 @@ public class PointObserver extends Controller {
 
 	@Override
 	public void onAttached() {
-		model.setStrategy(CollisionStrategy.NOCOLLIDE);
-		getParent().setCollision(model);
+		getParent().setCollision(null);
 		getParent().setObserver(true);
 		getParent().setViewDistance(256);
 		currPoint = getParent().getPosition();

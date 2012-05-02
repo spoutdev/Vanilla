@@ -71,7 +71,7 @@ public class Item extends Substance {
 
 		super.onTick(dt);
 
-		//this.move();
+		this.move();
 
 		World world = getParent().getWorld();
 		if (world == null) {

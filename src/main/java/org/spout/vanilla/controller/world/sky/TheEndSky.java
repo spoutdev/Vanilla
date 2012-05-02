@@ -34,14 +34,12 @@ public class TheEndSky extends VanillaSky {
 	}
 
 	@Override
-	public void onAttached() {
+	protected void updateTime(long time) {
+		//To change body of implemented methods use File | Settings | File Templates.
 	}
 
 	@Override
-	public void updateTime(long time) {
-	}
-
-	@Override
-	public void updateWeather(Weather oldWeather, Weather newWeather) {
+	protected void updateWeather(Weather oldWeather, Weather newWeather) {
+		//To change body of implemented methods use File | Settings | File Templates.
 	}
 }

@@ -70,7 +70,7 @@ import org.spout.vanilla.protocol.codec.PlayerDiggingCodec;
 import org.spout.vanilla.protocol.codec.PlayerListCodec;
 import org.spout.vanilla.protocol.codec.PlayerLookCodec;
 import org.spout.vanilla.protocol.codec.PlayerPositionCodec;
-import org.spout.vanilla.protocol.codec.PlayerPositionRotationCodec;
+import org.spout.vanilla.protocol.codec.PlayerPositionLookCodec;
 import org.spout.vanilla.protocol.codec.ProgressBarCodec;
 import org.spout.vanilla.protocol.codec.RelativeEntityPositionCodec;
 import org.spout.vanilla.protocol.codec.RelativeEntityPositionRotationCodec;
@@ -126,7 +126,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x0C */
 			bind(PlayerLookCodec.class); //TODO rename Player Look on the minecraft protocol page
 			/* 0x0D */
-			bind(PlayerPositionRotationCodec.class);
+			bind(PlayerPositionLookCodec.class);
 			/* 0x0E */
 			bind(PlayerDiggingCodec.class);
 			/* 0x0F */

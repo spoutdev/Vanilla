@@ -23,36 +23,22 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec;
+package org.spout.vanilla.protocol.handler;
 
-import java.io.IOException;
+import org.spout.api.player.Player;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
+import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+public final class PlayerPositionLookMessageHandler extends MessageHandler<PlayerPositionLookMessage> {
 
-import org.spout.api.protocol.MessageCodec;
-
-import org.spout.vanilla.protocol.msg.PlayerLookMessage;
-
-public final class PlayerLookCodec extends MessageCodec<PlayerLookMessage> {
-	public PlayerLookCodec() {
-		super(PlayerLookMessage.class, 0x0C);
+	@Override
+	public void handleServer(Session session, Player player, PlayerPositionLookMessage message) {
+		new PlayerPositionMessageHandler().handleServer(session, player, message.getPlayerPositionMessage());
+		new PlayerLookMessageHandler().handleServer(session, player, message.getPlayerLookMessage());
 	}
 
 	@Override
-	public PlayerLookMessage decode(ChannelBuffer buffer) throws IOException {
-		float yaw = buffer.readFloat();
-		float pitch = buffer.readFloat();
-		boolean onGround = buffer.readByte() == 1;
-		return new PlayerLookMessage(yaw, pitch, onGround);
-	}
-
-	@Override
-	public ChannelBuffer encode(PlayerLookMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(9);
-		buffer.writeFloat(message.getYaw());
-		buffer.writeFloat(message.getPitch());
-		buffer.writeByte(message.isOnGround() ? 1 : 0);
-		return buffer;
+	public void handleClient(Session session, Player player, PlayerPositionLookMessage message) {
 	}
 }

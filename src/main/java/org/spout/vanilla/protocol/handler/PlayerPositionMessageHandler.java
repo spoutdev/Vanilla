@@ -32,7 +32,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
-import org.spout.vanilla.protocol.msg.PlayerPositionRotationMessage;
+import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 
 public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPositionMessage> {
 	@Override
@@ -76,6 +76,6 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 		entity.setPosition(p);
 	}
 
-	public void handleClient(Session session, Player player, PlayerPositionRotationMessage message) {
+	public void handleClient(Session session, Player player, PlayerPositionLookMessage message) {
 	}
 }

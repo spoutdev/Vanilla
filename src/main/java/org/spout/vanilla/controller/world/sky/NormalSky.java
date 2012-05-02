@@ -26,6 +26,7 @@
 package org.spout.vanilla.controller.world.sky;
 
 import org.spout.api.Spout;
+import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
@@ -39,7 +40,7 @@ public class NormalSky extends VanillaSky {
 
 	@Override
 	public void updateTime(long time) {
-		//broadcastPacket(new TimeUpdateMessage(time));
+
 	}
 
 	@Override

@@ -165,9 +165,7 @@ public abstract class VanillaActionController extends ActionController implement
 		//Check controller health, send messages to the client based on current state.
 		if (getParent().getHealth() <= 0) {
 			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
-			if (!(this instanceof Player)) {
-				getParent().kill();
-			}
+			getParent().kill();
 		}
 
 		this.oldPosition = getParent().getPosition();

@@ -38,6 +38,7 @@ import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
 import org.spout.vanilla.generator.theend.TheEndGenerator;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
+import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 
 public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 	@Override
@@ -46,7 +47,7 @@ public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 			return;
 		}
 
-		PlayerRespawnEvent event = new PlayerRespawnEvent(player.getEntity(), player.getEntity().getPosition());
+		PlayerRespawnEvent event = new PlayerRespawnEvent(player.getEntity(), player.getEntity().getLastTransform().getPosition().getWorld().getSpawnPoint().getPosition());
 		Spout.getEngine().getEventManager().callEvent(event);
 
 		//Set position for the server
@@ -58,16 +59,19 @@ public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 		//TODO We need worlds associated with vanilla storing characteristics
 		RespawnMessage respawn;
 		if (point.getWorld().getGenerator() instanceof NormalGenerator) {
-			respawn = new RespawnMessage(0, (byte) 1, (((VanillaPlayer) player.getEntity()).getGameMode().getId()), 256, "DEFAULT");
+			respawn = new RespawnMessage(0, (byte) 1, (((VanillaPlayer) player.getEntity().getController()).getGameMode().getId()), 256, "DEFAULT");
 		} else if (point.getWorld().getGenerator() instanceof FlatGenerator) {
-			respawn = new RespawnMessage(0, (byte) 1, (((VanillaPlayer) player.getEntity()).getGameMode().getId()), 256, "SUPERFLAT");
+			respawn = new RespawnMessage(0, (byte) 1, (((VanillaPlayer) player.getEntity().getController()).getGameMode().getId()), 256, "SUPERFLAT");
 		} else if (point.getWorld().getGenerator() instanceof NetherGenerator) {
-			respawn = new RespawnMessage(-1, (byte) 1, (((VanillaPlayer) player.getEntity()).getGameMode().getId()), 256, "DEFAULT");
+			respawn = new RespawnMessage(-1, (byte) 1, (((VanillaPlayer) player.getEntity().getController()).getGameMode().getId()), 256, "DEFAULT");
 		} else if (point.getWorld().getGenerator() instanceof TheEndGenerator) {
-			respawn = new RespawnMessage(1, (byte) 1, (((VanillaPlayer) player.getEntity()).getGameMode().getId()), 256, "DEFAULT");
+			respawn = new RespawnMessage(1, (byte) 1, (((VanillaPlayer) player.getEntity().getController()).getGameMode().getId()), 256, "DEFAULT");
 		} else {
 			return;
 		}
 		session.send(respawn);
+
+		SpawnPositionMessage SPMsg = new SpawnPositionMessage((int) point.getX(), (int) point.getY(), (int) point.getZ());
+		session.send(SPMsg);
 	}
 }

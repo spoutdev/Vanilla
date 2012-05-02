@@ -91,7 +91,7 @@ import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
-import org.spout.vanilla.protocol.msg.PlayerPositionRotationMessage;
+import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
@@ -131,7 +131,7 @@ public class VanillaProtocolTest {
 			new GroundMessage(true),
 			new PlayerPositionMessage(128, 256, 512, 3.4D, true),
 			new PlayerLookMessage(1F, 2F, false),
-			new PlayerPositionRotationMessage(1, 2, 5, 3.62, 4, 3, false),
+			new PlayerPositionLookMessage(1, 2, 5, 3.62, 4, 3, false),
 			new PlayerDiggingMessage(PlayerDiggingMessage.STATE_START_DIGGING, 1, 2, 3, 4),
 			new PlayerBlockPlacementMessage(1, 2, 3, 4, 89, 2, 7, null),
 			new HeldItemChangeMessage(4),

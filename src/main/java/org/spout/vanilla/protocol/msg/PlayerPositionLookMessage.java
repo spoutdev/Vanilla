@@ -28,47 +28,57 @@ package org.spout.vanilla.protocol.msg;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 
-public final class PlayerLookMessage extends Message {
-	private final float yaw, pitch, roll;
-	private final boolean onGround;
-	private final Vector3 lookingAt;
+public final class PlayerPositionLookMessage extends Message {
+	private final PlayerPositionMessage position;
+	private final PlayerLookMessage rotation;
 
-	public PlayerLookMessage(float yaw, float pitch, boolean onGround) {
-		this.yaw = yaw;
-		this.pitch = pitch;
-		this.onGround = onGround;
-		//Calculate looking Vector
-		double rp = Math.toRadians(pitch);
-		double ry = Math.toRadians(yaw);
-		float x = (float) (-Math.cos(rp) * Math.sin(ry));
-		float y = (float) (-Math.sin(ry));
-		float z = (float) (Math.cos(rp) * Math.cos(ry));
-		lookingAt = new Vector3(x, y, z);
-		roll = lookingAt.getZ();
+	public PlayerPositionLookMessage(double x, double y, double z, double stance, float yaw, float pitch, boolean onGround) {
+		position = new PlayerPositionMessage(x,y,z,stance, onGround);
+		rotation = new PlayerLookMessage(yaw,pitch, onGround);
+	}
+
+	public PlayerPositionMessage getPlayerPositionMessage() {
+		return position;
+	}
+
+	public PlayerLookMessage getPlayerLookMessage() {
+		return rotation;
+	}
+
+	public double getX() {
+		return position.getX();
+	}
+
+	public double getY() {
+		return position.getY();
+	}
+
+	public double getStance() {
+		return position.getStance();
+	}
+
+	public double getZ() {
+		return position.getZ();
 	}
 
 	public float getYaw() {
-		return yaw;
+		return rotation.getYaw();
 	}
 
 	public float getPitch() {
-		return pitch;
-	}
-
-	public float getRoll() {
-		return roll;
-	}
-
-	public Vector3 getLookingAtVector() {
-		return lookingAt;
+		return rotation.getPitch();
 	}
 
 	public boolean isOnGround() {
-		return onGround;
+		return position.isOnGround();
 	}
 
 	@Override
 	public String toString() {
-		return "PlayerLookMessage{yaw=" + yaw + ",pitch=" + pitch + ",onGround=" + onGround + "}";
+		return "PositionRotationMessage{x=" + getX() + ",y=" + getY() + ",z=" + getZ() + ",stance=" + getStance() + ",rotation=" + rotation + ",pitch=" + getPitch() + ",onGround=" + isOnGround() + "}";
+	}
+
+	public Vector3 getLookingAtVector() {
+		return rotation.getLookingAtVector();
 	}
 }

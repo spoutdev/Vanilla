@@ -39,7 +39,6 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder MOTD = new ConfigurationHolder("A Spout Server", "general", "motd");
 	public static final ConfigurationHolder ENABLE_END_CREDITS = new ConfigurationHolder(true, "general", "enable-ending-credits");
 	public static final ConfigurationHolder FLATWORLD = new ConfigurationHolder(false, "general", "flatworld");
-	public static final ConfigurationHolder ROOTCOMMAND = new ConfigurationHolder("vanilla", "general", "root-command");
 	// Physics
 	public static final ConfigurationHolder GRAVEL_PHYSICS = new ConfigurationHolder(true, "physics", "gravel");
 	public static final ConfigurationHolder FIRE_PHYSICS = new ConfigurationHolder(true, "physics", "fire");

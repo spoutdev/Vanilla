@@ -26,6 +26,7 @@
 package org.spout.vanilla.controller.world.sky;
 
 import org.spout.api.Spout;
+import org.spout.api.player.Player;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -40,7 +41,10 @@ public class NormalSky extends VanillaSky {
 
 	@Override
 	public void updateTime(long time) {
-
+		TimeUpdateMessage timeMessage = new TimeUpdateMessage(time);
+		for (Player plr : Spout.getEngine().getOnlinePlayers()) {
+			plr.getSession().send(timeMessage);
+		}
 	}
 
 	@Override
@@ -51,6 +55,10 @@ public class NormalSky extends VanillaSky {
 		}
 
 		byte reason = newWeather.equals(Weather.RAIN) || newWeather.equals(Weather.THUNDERSTORM) ? ChangeGameStateMessage.BEGIN_RAINING : ChangeGameStateMessage.END_RAINING;
-		//broadcastPacket(new ChangeGameStateMessage(reason));
+		ChangeGameStateMessage cgsm = new ChangeGameStateMessage(reason);
+
+		for (Player plr : Spout.getEngine().getOnlinePlayers()) {
+			plr.getSession().send(cgsm);
+		}
 	}
 }

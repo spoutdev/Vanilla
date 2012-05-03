@@ -31,6 +31,7 @@ import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.generator.WorldGenerator;
@@ -455,5 +456,38 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 		session.send(new SetWindowSlotsMessage(getInventoryId(inventory.getClass()), newSlots));
 		queuedInventoryUpdates.clear();
+	}
+
+	/**
+	 * This method takes any amount of messages and sends them to every online player on the server.
+	 * @param messages
+	 */
+	public static void broadcastPacket(Message... messages) {
+		sendPacket(Spout.getEngine().getOnlinePlayers(), messages);
+	}
+
+	/**
+	 * This method takes in any amount of messages and sends them to any amount of
+	 * players.
+	 * @param players  specific players to send a message to.
+	 * @param messages the message(s) to send
+	 */
+	public static void sendPacket(Player[] players, Message... messages) {
+		for (Player player : players) {
+			for (Message message : messages) {
+				sendPacket(player, message);
+			}
+		}
+	}
+
+	/**
+	 * This method takes in a message and sends it to a specific player
+	 * @param player  specific player to relieve message
+	 * @param messages specific message to send.
+	 */
+	public static void sendPacket(Player player, Message... messages) {
+		for (Message message : messages) {
+			player.getSession().send(message);
+		}
 	}
 }

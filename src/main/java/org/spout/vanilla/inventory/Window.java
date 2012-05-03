@@ -23,48 +23,22 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.block;
+package org.spout.vanilla.inventory;
 
-import org.spout.vanilla.controller.VanillaBlockController;
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.inventory.FurnaceInventory;
-import org.spout.vanilla.material.VanillaMaterials;
+public enum Window {
+	CHEST(0),
+	WORKBENCH(1),
+	FURNACE(2),
+	DISPENSER(3),
+	ENCHANTMENT_TABLE(4);
 
-public class FurnaceController extends VanillaBlockController {
-	private final FurnaceInventory inventory = new FurnaceInventory(this);
-	private short progress = 100, burnTime = 100;
-
-	public FurnaceController() {
-		super(VanillaControllerTypes.FURNACE, VanillaMaterials.FURNACE);
+	private final int id;
+	
+	private Window(int id) {
+		this.id = id;
 	}
-
-	@Override
-	public void onTick(float dt) {
-
-	}
-
-	@Override
-	public void onAttached() {
-		System.out.println("Furnace entity spawned and controller attached to: " + getParent().getPosition().toString());
-	}
-
-	public FurnaceInventory getInventory() {
-		return inventory;
-	}
-
-	public void setBurnTime(short burnTime) {
-		this.burnTime = burnTime;
-	}
-
-	public short getBurnTime() {
-		return burnTime;
-	}
-
-	public void setProgress(short progress) {
-		this.progress = progress;
-	}
-
-	public short getProgress() {
-		return progress;
+	
+	public int getId() {
+		return id;
 	}
 }

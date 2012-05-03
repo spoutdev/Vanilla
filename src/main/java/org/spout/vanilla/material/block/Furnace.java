@@ -37,10 +37,16 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;
+import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.protocol.msg.OpenWindowMessage;
+import org.spout.vanilla.protocol.msg.ProgressBarMessage;
+import org.spout.vanilla.util.InventoryUtil;
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class Furnace extends Solid {
+	public static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
+	
 	public Furnace() {
 		super("Furnace", 61);
 	}
@@ -51,6 +57,7 @@ public class Furnace extends Solid {
 			block.getWorld().createAndSpawnEntity(block.getPosition(), new FurnaceController());
 			return true;
 		}
+
 		return false;
 	}
 
@@ -61,20 +68,33 @@ public class Furnace extends Solid {
 			return;
 		}
 
+		// Get the controller and assign a new window id for the session.
 		VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
-		vanillaPlayer.sendPacket(vanillaPlayer.getPlayer(), new OpenWindowMessage(1, 2, "Furnace", 38));
+		int windowId = InventoryUtil.nextWindowId();
+		vanillaPlayer.setWindowId(windowId);
 		Inventory inventory = entity.getInventory();
-		FurnaceInventory newInventory = new FurnaceInventory(block);
+		FurnaceController furnace = (FurnaceController) block.getController();
+		Window window = Window.FURNACE;
+
+		// Dispose items into new inventory
+		if (furnace == null) {
+			System.out.println("Furnace is null");
+			return;
+		}
+		
+		FurnaceInventory furnaceInventory = furnace.getInventory();
 		if (!(inventory instanceof PlayerInventory)) {
 			for (int i = 0; i < inventory.getSize(); i++) {
 				ItemStack stack = inventory.getItem(i);
 				if (stack != null) {
-					newInventory.setItem(stack, i);
+					furnaceInventory.setItem(stack, i);
 				}
 			}
 		}
 
-		vanillaPlayer.setActiveInventory(newInventory);
+		vanillaPlayer.setActiveInventory(furnaceInventory);
+		vanillaPlayer.setActiveWindow(window);
+		sendPacket(vanillaPlayer.getPlayer(), new OpenWindowMessage(windowId, window.getId(), "Furnace", inventory.getSize()), new ProgressBarMessage(windowId, FIRE_ICON, furnace.getBurnTime()), new ProgressBarMessage(windowId, PROGRESS_ARROW, furnace.getProgress()));
 	}
 
 	@Override

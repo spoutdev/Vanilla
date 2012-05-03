@@ -43,15 +43,16 @@ import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
-import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
-import org.spout.vanilla.protocol.msg.KeepAliveMessage;
-import org.spout.vanilla.protocol.msg.PlayerListMessage;
-import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
-import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import org.spout.vanilla.inventory.FurnaceInventory;
+import org.spout.vanilla.inventory.Window;
+import org.spout.vanilla.material.block.Furnace;
+import org.spout.vanilla.protocol.msg.*;
+
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to
@@ -68,10 +69,11 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected ItemStack itemOnCursor;
 	protected String tabListName;
 	protected GameMode gameMode;
-	protected int distanceMoved;
+	protected int distanceMoved, windowId;
 	protected Set<Player> invisibleFor = new HashSet<Player>();
 	protected Point compassTarget;
 	protected Vector3 lookingAt;
+	protected Window activeWindow;
 
 	public VanillaPlayer(Player p, GameMode gameMode) {
 		super(VanillaControllerTypes.PLAYER);
@@ -164,6 +166,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (foodTimer >= 80) {
 			updateHealth();
 			foodTimer = 0;
+		}
+
+		// Update furnace window if opened
+		if (activeWindow != null && activeWindow.equals(Window.FURNACE) && activeInventory instanceof FurnaceInventory) {
+			FurnaceInventory inventory = (FurnaceInventory) activeInventory;
+			FurnaceController furnace = inventory.getOwner();
+			sendPacket(owner, new ProgressBarMessage(windowId, Furnace.PROGRESS_ARROW, furnace.getProgress()), new ProgressBarMessage(windowId, Furnace.FIRE_ICON, furnace.getBurnTime()));
 		}
 	}
 
@@ -486,6 +495,22 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void setExhaustion(float exhaustion) {
 		this.exhaustion = exhaustion;
+	}
+	
+	public void setActiveWindow(Window activeWindow) {
+		this.activeWindow = activeWindow;
+	}
+	
+	public Window getActiveWindow() {
+		return activeWindow;
+	}
+	
+	public void setWindowId(int windowId) {
+		this.windowId = windowId;
+	}
+	
+	public int getWindowId() {
+		return windowId;
 	}
 
 	public Inventory getActiveInventory() {

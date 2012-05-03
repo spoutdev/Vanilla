@@ -35,6 +35,7 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;
+import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.item.generic.Armor;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
@@ -87,31 +88,29 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 
 		// Pass to inventory specific functions which will then respond to the transaction.
 		if (inventory instanceof PlayerInventory) {
-			handlePlayerInventory((PlayerInventory) inventory, message, clickedSlot, cursorStack, slotStack, controller);
+			handlePlayerInventory(controller, clickedSlot, (PlayerInventory) inventory, message, cursorStack, slotStack);
 		}
 
 		if (inventory instanceof FurnaceInventory) {
-			handleFurnaceInventory((FurnaceInventory) inventory, message, controller);
+			handleFurnaceInventory(controller, clickedSlot, (FurnaceInventory) inventory, message, cursorStack, slotStack);
 		}
 	}
 
-	private void handlePlayerInventory(PlayerInventory inventory, WindowClickMessage message, int clickedSlot, ItemStack cursorStack, ItemStack slotStack, VanillaPlayer controller) {
+	private void handlePlayerInventory(VanillaPlayer controller, int clickedSlot, PlayerInventory inventory, WindowClickMessage message, ItemStack cursorStack, ItemStack slotStack) {
 
 		Player player = controller.getPlayer();
 		boolean armorSlot = clickedSlot == 36 || clickedSlot == 37 || clickedSlot == 41 || clickedSlot == 44;
-		if (inventory instanceof PlayerInventory) {
 
-			// Only allow armor in the armor slots
-			if (armorSlot && cursorStack != null && !(cursorStack.getMaterial() instanceof Armor)) {
-				respond(player.getSession(), message, false);
-				return;
-			}
+		// Only allow armor in the armor slots
+		if (armorSlot && cursorStack != null && !(cursorStack.getMaterial() instanceof Armor)) {
+			respond(player.getSession(), message, false);
+			return;
+		}
 
-			// Do not allow input in the output slot.
-			if (clickedSlot == 40 && cursorStack != null) {
-				respond(player.getSession(), message, false);
-				return;
-			}
+		// Do not allow input in the output slot.
+		if (clickedSlot == 40 && cursorStack != null) {
+			respond(player.getSession(), message, false);
+			return;
 		}
 
 		cursorStack = InventoryUtil.nullIfEmpty(cursorStack);
@@ -121,28 +120,19 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		respond(player.getSession(), message, true);
 	}
 
-	private void handleFurnaceInventory(FurnaceInventory inventory, WindowClickMessage message, VanillaPlayer controller) {
+	private void handleFurnaceInventory(VanillaPlayer controller, int clickedSlot, FurnaceInventory inventory, WindowClickMessage message, ItemStack cursorStack, ItemStack slotStack) {
 
 		Player player = controller.getPlayer();
-		int clickedSlot = VanillaMessageHandlerUtils.getSpoutInventorySlot(inventory, message.getSlot());
-		System.out.println("Furnace inventory clicked!");
-		System.out.println("Minecraft slot: " + message.getSlot());
-		System.out.println("Spout slot: " + clickedSlot);
-		if (clickedSlot < 0) {
-			System.out.println("Error: Invalid slot!");
-			return;
+		if (clickedSlot == 37 && cursorStack != null) {
+			respond(player.getSession(), message, false);
 		}
-
-		ItemStack slotStack = inventory.getItem(clickedSlot);
-		ItemStack cursorStack = controller.getItemOnCursor();
-
-		// TODO: Don't let input in the output
 
 		cursorStack = InventoryUtil.nullIfEmpty(cursorStack);
 		slotStack = InventoryUtil.nullIfEmpty(slotStack);
 		controller.setItemOnCursor(cursorStack);
 		inventory.setItem(slotStack, clickedSlot);
 		respond(player.getSession(), message, true);
+		System.out.println("Responded to furnace click");
 	}
 
 	private ItemStack[] handleClick(WindowClickMessage message, Inventory inventory, int clickedSlot, ItemStack cursorStack, ItemStack slotStack) {

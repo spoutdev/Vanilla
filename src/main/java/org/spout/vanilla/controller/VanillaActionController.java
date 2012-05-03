@@ -29,7 +29,6 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import org.spout.api.Spout;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
@@ -42,12 +41,12 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
-import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
 
 /**
  * Controller that is the parent of all entity controllers.
@@ -279,39 +278,8 @@ public abstract class VanillaActionController extends ActionController implement
 	public void damage(int amount, boolean sendHurtMessage) {
 		getParent().setHealth(getParent().getHealth() - amount, new HealthChangeReason(HealthChangeReason.Type.UNKNOWN));
 		if (sendHurtMessage) {
-			this.broadcastPacket(new EntityAnimationMessage(this.getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(this.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
+			broadcastPacket(new EntityAnimationMessage(this.getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(this.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
 		}
-	}
-
-	/**
-	 * This method takes any amount of messages and sends them to every online player on the server.
-	 * @param messages
-	 */
-	public void broadcastPacket(Message... messages) {
-		sendPacket(Spout.getEngine().getOnlinePlayers(), messages);
-	}
-
-	/**
-	 * This method takes in any amount of messages and sends them to any amount of
-	 * players.
-	 * @param players  specific players to send a message to.
-	 * @param messages the message(s) to send
-	 */
-	public void sendPacket(Player[] players, Message... messages) {
-		for (Player player : players) {
-			for (Message message : messages) {
-				sendPacket(player, message);
-			}
-		}
-	}
-
-	/**
-	 * This method takes in a message and sends it to a specific player
-	 * @param player  specific player to relieve message
-	 * @param message specific message to send.
-	 */
-	public void sendPacket(Player player, Message message) {
-		player.getSession().send(message);
 	}
 
 	/**

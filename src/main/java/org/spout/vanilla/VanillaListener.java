@@ -58,6 +58,7 @@ import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class VanillaListener implements Listener {
 	@SuppressWarnings("unused")
@@ -85,7 +86,7 @@ public class VanillaListener implements Listener {
 
 		// Set protocol and send packets
 		if (vanillaPlayer.isSurvival()) {
-			vanillaPlayer.sendPacket(vanillaPlayer.getPlayer(), new UpdateHealthMessage((short) playerEntity.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
+			sendPacket(vanillaPlayer.getPlayer(), new UpdateHealthMessage((short) playerEntity.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
 		}
 
 		// Make them visible to everyone by default
@@ -160,7 +161,7 @@ public class VanillaListener implements Listener {
 			VanillaPlayer sp = (VanillaPlayer) c;
 			short health = (short) sp.getParent().getHealth();
 			health += (short) event.getChange();
-			sp.sendPacket(sp.getPlayer(), new UpdateHealthMessage(health, sp.getHunger(), sp.getFoodSaturation()));
+			sendPacket(sp.getPlayer(), new UpdateHealthMessage(health, sp.getHunger(), sp.getFoodSaturation()));
 		}
 	}
 }

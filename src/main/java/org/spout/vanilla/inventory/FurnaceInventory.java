@@ -25,11 +25,31 @@
  */
 package org.spout.vanilla.inventory;
 
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.controller.block.FurnaceController;
 
 public class FurnaceInventory extends Inventory {
-	public FurnaceInventory(Block block) {
+	private final FurnaceController owner;
+
+	public FurnaceInventory(FurnaceController owner) {
 		super(39);
+		this.owner = owner;
+	}
+
+	public FurnaceController getOwner() {
+		return owner;
+	}
+
+	public ItemStack getOutput() {
+		return getItem(37);
+	}
+
+	public ItemStack getFuel() {
+		return getItem(35);
+	}
+
+	public ItemStack getIngredient() {
+		return getItem(38);
 	}
 }

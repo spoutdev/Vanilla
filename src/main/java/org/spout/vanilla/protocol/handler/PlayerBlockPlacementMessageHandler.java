@@ -100,6 +100,8 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				return;
 			}
 
+			clickedMaterial.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
+
 			//check if the interaction can possibly result in placement
 			if (!interactEvent.isCancelled()) {
 
@@ -107,7 +109,6 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				if (holdingMat != null) {
 					holdingMat.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 				}
-				clickedMaterial.onInteractBy(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 
 				if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
 					return; //prevent placement if the material suppresses this

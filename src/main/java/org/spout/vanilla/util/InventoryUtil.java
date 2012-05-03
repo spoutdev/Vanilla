@@ -32,6 +32,8 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 public class InventoryUtil {
+	private static int windowId = -1;
+	
 	private InventoryUtil() {
 
 	}
@@ -96,5 +98,9 @@ public class InventoryUtil {
 				inv.setHiddenSlot(i, false);
 			}
 		}
+	}
+	
+	public static int nextWindowId() {
+		return windowId++;
 	}
 }

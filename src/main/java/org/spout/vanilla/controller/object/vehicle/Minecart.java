@@ -54,8 +54,6 @@ public abstract class Minecart extends Substance implements Vehicle {
 
 	protected Minecart(VanillaControllerType type) {
 		super(type);
-		this.setMaxSpeed(0.4f);
-		this.getBounds().set(-0.35f, 0.0f, -0.49f, 0.35f, 0.49f, 0.49f);
 	}
 
 	public final Vector3 getGroundFrictionModifier() {
@@ -81,7 +79,9 @@ public abstract class Minecart extends Substance implements Vehicle {
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		this.getBounds().set(-0.35f, 0.0f, -0.49f, 0.35f, 0.49f, 0.49f);
 		this.setVelocity(new Vector3(0, 0, 0.2));
+		this.setMaxSpeed(new Vector3(0, 0, 0.4));
 		this.getParent().setHealth(40, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 

@@ -26,12 +26,13 @@
 package org.spout.vanilla.controller.object.projectile;
 
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.object.Projectile;
 
 public class Potion extends Projectile {
-	public Potion(Quaternion rotation, int maxSpeed) {
+	public Potion(Quaternion rotation, Vector3 maxSpeed) {
 		super(new VanillaControllerType(-1, Potion.class, "Potion"), rotation, maxSpeed);
 	}
 }

@@ -26,19 +26,20 @@
 package org.spout.vanilla.controller.object.projectile;
 
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Projectile;
 
 public class Arrow extends Projectile {
-	private static final int MAX_ARROW_SPEED = 10;
+	private static final Vector3 MAX_ARROW_SPEED = new Vector3(10, 10, 10); //TODO are these numbers right?
 
 	public Arrow(Quaternion rotation, float charge) {
 		super(VanillaControllerTypes.SHOT_ARROW, rotation, MAX_ARROW_SPEED);
 		setVelocity(getVelocity().multiply(charge));
 	}
 
-	public Arrow(Quaternion rotation, int maxSpeed, float charge) {
+	public Arrow(Quaternion rotation, Vector3 maxSpeed, float charge) {
 		super(VanillaControllerTypes.SHOT_ARROW, rotation, maxSpeed);
 		setVelocity(getVelocity().multiply(charge));
 	}

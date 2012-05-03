@@ -26,12 +26,13 @@
 package org.spout.vanilla.controller.object.projectile;
 
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Projectile;
 
 public class EyeOfEnder extends Projectile {
-	public EyeOfEnder(Quaternion rotation, int maxSpeed) {
+	public EyeOfEnder(Quaternion rotation, Vector3 maxSpeed) {
 		super(VanillaControllerTypes.THROWN_EYE_OF_ENDER, rotation, maxSpeed);
 	}
 }

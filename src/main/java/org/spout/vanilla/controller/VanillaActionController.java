@@ -52,30 +52,19 @@ import org.spout.vanilla.protocol.msg.EntityStatusMessage;
  * Controller that is the parent of all entity controllers.
  */
 public abstract class VanillaActionController extends ActionController implements VanillaController {
-	private static Random rand = new Random();
-	//Collision box for controllers
+	private final VanillaControllerType type;
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
+	private static Random rand = new Random();
 	//Controller flags
-	private boolean isFlammable = true, canMove = true;
+	private boolean isFlammable = true;
 	//Tick effects
 	private int fireTicks = 0;
-	private final VanillaControllerType type;
-	private int velocityTicks = 0;
 	private int positionTicks = 0;
-	private Vector3 oldPosition;
-	private Quaternion oldRotation;
-	private Vector3 movedVelocity = Vector3.ZERO;
+	private int velocityTicks = 0;
+	//Velocity-related
 	private Vector3 velocity = Vector3.ZERO;
-	private float maxSpeed = Float.MAX_VALUE; //might turn this into a vector too?
-	private Point lastKnownPosition;
-
-	public boolean needsVelocityUpdate() {
-		return velocityTicks++ % 5 == 0;
-	}
-
-	public boolean needsPositionUpdate() {
-		return positionTicks++ % 60 == 0;
-	}
+	private Vector3 movementSpeed = Vector3.ZERO;
+	private Vector3 maxSpeed = Vector3.ZERO;
 
 	protected VanillaActionController(VanillaControllerType type) {
 		super(type);
@@ -83,67 +72,26 @@ public abstract class VanillaActionController extends ActionController implement
 	}
 
 	@Override
-	public void onDeath() {
-		for (ItemStack drop : getDrops()) {
-			if (drop == null) {
-				continue;
-			}
-			Item item = new Item(drop, Vector3.ZERO);
-			if (lastKnownPosition != null) {
-				lastKnownPosition.getWorld().createAndSpawnEntity(lastKnownPosition, item);
-			}
-		}
-	}
-
-	public float getMaxSpeed() {
-		return this.maxSpeed;
-	}
-
-	public void setMaxSpeed(float maxSpeed) {
-		this.maxSpeed = maxSpeed;
-	}
-
-	public Vector3 getVelocity() {
-		return velocity;
-	}
-
-	public Vector3 getPreviousPosition() {
-		return this.oldPosition;
-	}
-
-	public Quaternion getPreviousRotation() {
-		return this.oldRotation;
-	}
-
-	public void setVelocity(Vector3 velocity) {
-		this.velocity = velocity;
-	}
-
-	public Vector3 getMovedVelocity() {
-		return this.movedVelocity;
-	}
-
-	@Override
-	public VanillaControllerType getType() {
-		return type;
-	}
-
-	public BoundingBox getBounds() {
-		return this.area;
-	}
-
-	@Override
 	public void onAttached() {
 		getParent().setCollision(new CollisionModel(area));
 		getParent().getCollision().setStrategy(CollisionStrategy.SOLID);
 		getParent().setData(VanillaControllerTypes.KEY, getType().getID());
-		this.oldPosition = getParent().getPosition();
-		this.oldRotation = getParent().getRotation();
+	}
+
+	@Override
+	public void onTick(float dt) {
+		//Check controller health, send messages to the client based on current state.
+		if (getParent().getHealth() <= 0) {
+			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
+			getParent().kill();
+		}
+
+		super.onTick(dt);
 	}
 
 	@Override
 	public void onCollide(Block block) {
-		this.setVelocity(Vector3.ZERO);
+		setVelocity(Vector3.ZERO);
 	}
 
 	@Override
@@ -155,27 +103,65 @@ public abstract class VanillaActionController extends ActionController implement
 		if (distance > 0.1f) {
 			double factor = Math.min(1f / distance, 1f) / distance * 0.05;
 			diff = diff.multiply(factor);
-			this.setVelocity(this.getVelocity().add(diff.toVector3()));
+			setVelocity(getVelocity().add(diff.toVector3()));
 		}
 	}
 
 	@Override
-	public void onTick(float dt) {
-		//Check controller health, send messages to the client based on current state.
-		if (getParent().getHealth() <= 0) {
-			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
-			getParent().kill();
+	public void onDeath() {
+		for (ItemStack drop : getDrops()) {
+			if (drop == null) {
+				continue;
+			}
+			Item item = new Item(drop, Vector3.ZERO);
+			getParent().getLastTransform().getPosition().getWorld().createAndSpawnEntity(getParent().getLastTransform().getPosition(), item);
 		}
+	}
 
-		this.oldPosition = getParent().getPosition();
-		this.oldRotation = getParent().getRotation();
+	@Override
+	public VanillaControllerType getType() {
+		return type;
+	}
 
-		//HACK: Store Position for later purposes
-		if (getParent().getPosition() != null && getParent().getPosition() != Point.invalid) {
-			lastKnownPosition = getParent().getPosition();
-		}
+	public BoundingBox getBounds() {
+		return this.area;
+	}
 
-		super.onTick(dt);
+	public boolean needsVelocityUpdate() {
+		return velocityTicks++ % 5 == 0;
+	}
+
+	public boolean needsPositionUpdate() {
+		return positionTicks++ % 60 == 0;
+	}
+
+	public Vector3 getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(Vector3 velocity) {
+		this.velocity = velocity;
+	}
+
+	/**
+	 * Gets the speed of the controller during the prior movement. This will always be
+	 * lower than the maximum speed.
+	 * @return
+	 */
+	public Vector3 getMovementSpeed() {
+		return movementSpeed;
+	}
+
+	/**
+	 * Gets the maximum speed this controller is allowed to move at once.
+	 * @return
+	 */
+	public Vector3 getMaxSpeed() {
+		return maxSpeed;
+	}
+
+	public void setMaxSpeed(Vector3 maxSpeed) {
+		this.maxSpeed = maxSpeed;
 	}
 
 	/**
@@ -219,23 +205,6 @@ public abstract class VanillaActionController extends ActionController implement
 	 */
 	public void setFireTicks(int fireTicks) {
 		this.fireTicks = fireTicks;
-	}
-
-	/**
-	 * This sets if a controller moves.
-	 * @param canMove true if the controller can move, false otherwise.
-	 */
-	public void setMoveable(boolean canMove) {
-		this.canMove = canMove;
-	}
-
-	/**
-	 * Returns if the controller can move.
-	 * @return true if the controller moves, false if the controller is
-	 *         stationary.
-	 */
-	public boolean isMoveable() {
-		return canMove;
 	}
 
 	@SuppressWarnings("unused")
@@ -291,11 +260,11 @@ public abstract class VanillaActionController extends ActionController implement
 	}
 
 	/**
-	 * Uses the current velocity and maximum speed to move this entity
+	 * Uses the current velocity and maximum speed to move this entity.
 	 */
 	public void move() {
-		this.movedVelocity = Vector3.min(this.velocity, new Vector3(this.maxSpeed, this.maxSpeed, this.maxSpeed));
-		this.move(this.movedVelocity);
+		movementSpeed = Vector3.min(velocity, maxSpeed);
+		move(movementSpeed);
 	}
 
 	/**
@@ -327,12 +296,28 @@ public abstract class VanillaActionController extends ActionController implement
 		getParent().rotate(degrees, x, y, z);
 	}
 
+	public void yaw(float angle) {
+		getParent().yaw(angle);
+	}
+
+	public void pitch(float angle) {
+		getParent().pitch(angle);
+	}
+
 	/**
 	 * Rolls this controller along an angle.
 	 * @param angle the angle in-which to roll
 	 */
 	public void roll(float angle) {
 		getParent().roll(angle);
+	}
+
+	public Vector3 getPreviousPosition() {
+		return getParent().getLastTransform().getPosition();
+	}
+
+	public Quaternion getPreviousRotation() {
+		return getParent().getLastTransform().getRotation();
 	}
 
 	/**

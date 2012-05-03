@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.generator.theend;
 
-import org.spout.vanilla.generator.NoiseSelector;
+import org.spout.vanilla.generator.selector.NoiseSelector;
 import org.spout.vanilla.generator.VanillaBiomes;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
 

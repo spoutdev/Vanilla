@@ -38,7 +38,6 @@ public class XPOrb extends Substance {
 	public XPOrb(int amount) {
 		super(VanillaControllerTypes.XP_ORB);
 		this.amount = amount;
-		setMoveable(true);
 	}
 
 	@Override

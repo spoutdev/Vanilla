@@ -25,7 +25,7 @@
  */
 package org.spout.vanilla.generator.nether;
 
-import org.spout.vanilla.generator.NoiseSelector;
+import org.spout.vanilla.generator.selector.NoiseSelector;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
 import org.spout.vanilla.generator.nether.biome.NetherrackBiome;
 

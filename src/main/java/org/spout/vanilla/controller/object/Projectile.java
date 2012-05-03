@@ -38,19 +38,19 @@ public class Projectile extends Substance {
 	private Entity shooter;
 	private Quaternion rotation;
 
-	public Projectile(VanillaControllerType type, Quaternion rotation, int maxSpeed) {
+	public Projectile(VanillaControllerType type, Quaternion rotation, Vector3 maxSpeed) {
 		super(type);
 		this.setMaxSpeed(maxSpeed);
 		this.rotation = rotation;
-		this.setVelocity(new Vector3(maxSpeed, 0, 0));
+		this.setVelocity(new Vector3(maxSpeed.getX(), 0, 0));
 	}
 
 	@Override
 	public void onAttached() {
 		Vector3 rotation = this.rotation.getAxisAngles();
-		getParent().roll(rotation.getX());
-		getParent().yaw(rotation.getY());
-		getParent().pitch(rotation.getZ());
+		yaw(rotation.getX());
+		pitch(rotation.getY());
+		roll(rotation.getZ());
 	}
 
 	@Override

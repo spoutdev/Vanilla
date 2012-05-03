@@ -60,7 +60,6 @@ public class Item extends Substance {
 		this.roll = 1;
 		unpickable = 10;
 		setVelocity(initial);
-		setMoveable(true);
 	}
 
 	@Override

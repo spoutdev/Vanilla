@@ -26,12 +26,13 @@
 package org.spout.vanilla.controller.object.projectile;
 
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Projectile;
 
 public class Egg extends Projectile {
-	public Egg(Quaternion rotation, int maxSpeed) {
+	public Egg(Quaternion rotation, Vector3 maxSpeed) {
 		super(VanillaControllerTypes.EGG, rotation, maxSpeed);
 	}
 }

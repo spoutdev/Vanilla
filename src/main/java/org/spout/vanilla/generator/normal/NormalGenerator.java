@@ -29,7 +29,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.generator.VanillaBiomes;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
-import org.spout.vanilla.generator.WhittakerNoiseSelector;
+import org.spout.vanilla.generator.selector.WhittakerNoiseSelector;
 
 public class NormalGenerator extends VanillaGeneratorBase {
 	private static WhittakerNoiseSelector selector;

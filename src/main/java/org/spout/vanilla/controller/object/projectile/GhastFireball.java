@@ -26,12 +26,13 @@
 package org.spout.vanilla.controller.object.projectile;
 
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Projectile;
 
 public class GhastFireball extends Projectile {
-	public GhastFireball(Quaternion rotation, int maxSpeed) {
+	public GhastFireball(Quaternion rotation, Vector3 maxSpeed) {
 		super(VanillaControllerTypes.GHAST_FIREBALL, rotation, maxSpeed);
 	}
 }

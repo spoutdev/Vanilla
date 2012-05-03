@@ -72,7 +72,7 @@ public class Item extends Substance {
 
 		super.onTick(dt);
 
-		this.move();
+		//move();
 
 		World world = getParent().getWorld();
 		if (world == null) {

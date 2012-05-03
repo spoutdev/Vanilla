@@ -29,11 +29,7 @@ import net.royawesome.jlibnoise.module.combiner.Select;
 import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.modifier.ScaleBias;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
-import net.royawesome.jlibnoise.module.source.Const;
-import net.royawesome.jlibnoise.module.source.Perlin;
-import net.royawesome.jlibnoise.module.source.RidgedMulti;
-import net.royawesome.jlibnoise.module.source.Voronoi;
-import net.royawesome.jlibnoise.module.source.Billow;
+import net.royawesome.jlibnoise.module.source.*;
 import org.spout.api.generator.biome.BiomeSelector;
 
 public class WhittakerNoiseSelector extends BiomeSelector {
@@ -175,34 +171,34 @@ public class WhittakerNoiseSelector extends BiomeSelector {
         //TODO: make these conditions use the values from the biome classes themselves
 
         if (elevation > 0.8) return 3; //mountains
-        else if (elevation > 0.65) return 20; //small mountains
+        else if (elevation > 0.65) return 9; //small mountains
         else if (elevation == 0.1) {
             if (rain > 0.6) return 6; //swamp
-            else return 16; //beach
+            else return 8; //beach
         }
         else if (elevation == -1) return 0; //ocean
         else {
             if (temp < 0.2) {
                 if (rain > 0.6) return 5; //taiga
-                else return 12; //tundra
+                else return 7; //tundra
             }
             else if (temp < 0.4) {
                 if (rain > 0.6) return 4; //forest
                 else return 5; //taiga
             }
             else if (temp < 0.6) {
-                if (rain > 0.8) return 21; //jungle
+                if (rain > 0.8) return 10; //jungle
                 else if (rain > 0.4) return 4; //forest
                 else return 1; //plains
             }
             else if (temp < 0.8) {
-                if (rain > 0.8) return 21; //jungle
+                if (rain > 0.8) return 10; //jungle
                 else if (rain > 0.6) return 4; //forest
                 else if (rain > 0.2) return 1; //plains
                 else return 2; //desert
             }
             else {
-                if (rain > 0.8) return 21; //jungle
+                if (rain > 0.8) return 10; //jungle
                 else if (rain > 0.6) return 4; //forest
                 else if (rain > 0.4) return 1; //plains
                 else return 2; //desert

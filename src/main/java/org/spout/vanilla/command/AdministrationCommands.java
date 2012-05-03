@@ -242,6 +242,7 @@ public class AdministrationCommands {
 		}
 
 		sky.setTime(relative ? (sky.getTime() + time) : time);
+		source.sendMessage("Set time to: " + sky.getTime());
 	}
 
 	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|survival|creative> (0 = SURVIVAL, 1 = CREATIVE)", desc = "Change a player's game mode", min = 1, max = 2)

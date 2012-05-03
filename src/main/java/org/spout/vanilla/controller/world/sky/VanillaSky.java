@@ -40,14 +40,9 @@ import org.spout.vanilla.world.Weather;
  * Represents a sky in Vanilla
  */
 public abstract class VanillaSky extends Controller implements VanillaController {
-	protected long maxTime;
-	protected long time = 0;
-	protected long countdown = 20;
-	protected long rate;
-	protected boolean hasWeather;
-	protected boolean forceWeatherUpdate = false;
-	protected Weather weather = Weather.CLEAR;
-	protected Weather forecast = Weather.CLEAR;
+	protected long maxTime, time = 0, countdown = 20, rate;
+	protected boolean hasWeather, forceWeatherUpdate = false;
+	protected Weather weather = Weather.CLEAR, forecast = Weather.CLEAR;
 	protected final Random random = new Random();
 	protected float ticksUntilWeatherChange = random.nextFloat() * 5 * 60;
 	private static final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();

@@ -31,7 +31,12 @@ import org.spout.api.generator.biome.BiomeType;
 public abstract class VanillaBiomeType extends BiomeType {
 	private final int biomeId;
 
-	protected VanillaBiomeType(int biomeId, BiomeDecorator... decorators) {
+    //TODO: actually implement these in the selector instead of hard coding them in
+    private float minTemp = 0f, maxTemp = 0f;
+    private float minHumiditiy = 0f, maxHumidity = 0f;
+    private float minElevation = 0f, maxElevation = 0f;
+
+    protected VanillaBiomeType(int biomeId, BiomeDecorator... decorators) {
 		super(decorators);
 		this.biomeId = biomeId;
 	}
@@ -39,4 +44,46 @@ public abstract class VanillaBiomeType extends BiomeType {
 	public int getBiomeId() {
 		return biomeId;
 	}
+
+    public float getMinTemp() {
+        return this.minTemp;
+    }
+
+    public float getMaxTemp() {
+        return this.maxTemp;
+    }
+
+    public float getMinHumiditiy() {
+        return this.minHumiditiy;
+    }
+
+    public float getMaxHumidity()  {
+        return this.maxHumidity;
+    }
+
+    public float getMinElevation() {
+        return this.minElevation;
+    }
+
+    public float getMaxElevation() {
+        return this.maxElevation;
+    }
+
+    public VanillaBiomeType setTemp(float min, float max) {
+        this.minTemp = min;
+        this.maxTemp = max;
+        return this;
+    }
+
+    public VanillaBiomeType setHumidity(float min, float max) {
+        this.minHumiditiy = min;
+        this.maxHumidity = max;
+        return this;
+    }
+
+    public VanillaBiomeType setElevation(float min, float max) {
+        this.minElevation = min;
+        this.maxElevation = max;
+        return this;
+    }
 }

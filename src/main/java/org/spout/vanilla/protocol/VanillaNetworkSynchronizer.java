@@ -482,7 +482,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method takes in a message and sends it to a specific player
-	 * @param player  specific player to relieve message
+	 * @param player   specific player to relieve message
 	 * @param messages specific message to send.
 	 */
 	public static void sendPacket(Player player, Message... messages) {

@@ -67,7 +67,7 @@ public class BlockItem extends VanillaItemMaterial {
 				block = block.translate(clickedFace);
 				clicked = block.getSubMaterial();
 			}
-			
+
 			ItemStack holding = entity.getInventory().getCurrentItem();
 			if (holding == null || holding.getMaterial() != this) {
 				throw new IllegalStateException("Interaction with an controller that is not holding this block!");

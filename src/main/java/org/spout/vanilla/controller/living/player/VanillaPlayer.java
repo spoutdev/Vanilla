@@ -29,6 +29,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
@@ -49,10 +52,14 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.material.block.Furnace;
-import org.spout.vanilla.protocol.msg.*;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
+import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
+import org.spout.vanilla.protocol.msg.KeepAliveMessage;
+import org.spout.vanilla.protocol.msg.PlayerListMessage;
+import org.spout.vanilla.protocol.msg.ProgressBarMessage;
+import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
+import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
+import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to
@@ -496,19 +503,19 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public void setExhaustion(float exhaustion) {
 		this.exhaustion = exhaustion;
 	}
-	
+
 	public void setActiveWindow(Window activeWindow) {
 		this.activeWindow = activeWindow;
 	}
-	
+
 	public Window getActiveWindow() {
 		return activeWindow;
 	}
-	
+
 	public void setWindowId(int windowId) {
 		this.windowId = windowId;
 	}
-	
+
 	public int getWindowId() {
 		return windowId;
 	}

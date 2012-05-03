@@ -26,11 +26,11 @@
 package org.spout.vanilla.generator.normal.biome;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class TundraBiome extends PlainBiome {
-
-    public TundraBiome(int biomeId) {
+	public TundraBiome(int biomeId) {
 		super(biomeId);
 	}
 

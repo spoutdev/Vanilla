@@ -31,13 +31,12 @@ public enum Window {
 	FURNACE(2),
 	DISPENSER(3),
 	ENCHANTMENT_TABLE(4);
-
 	private final int id;
-	
+
 	private Window(int id) {
 		this.id = id;
 	}
-	
+
 	public int getId() {
 		return id;
 	}

@@ -29,181 +29,196 @@ import net.royawesome.jlibnoise.module.combiner.Select;
 import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.modifier.ScaleBias;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
-import net.royawesome.jlibnoise.module.source.*;
+import net.royawesome.jlibnoise.module.source.Billow;
+import net.royawesome.jlibnoise.module.source.Const;
+import net.royawesome.jlibnoise.module.source.Perlin;
+import net.royawesome.jlibnoise.module.source.RidgedMulti;
+import net.royawesome.jlibnoise.module.source.Voronoi;
+
 import org.spout.api.generator.biome.BiomeSelector;
 
 public class WhittakerNoiseSelector extends BiomeSelector {
+	private static double scale;
+	private static Voronoi rainfall;
+	private static Const uniformOcean, shoreline;
+	private static Perlin temp;
+	private static RidgedMulti mountain;
+	private static Billow continentSelector, hills;
+	private static Turbulence rainfallTurbulence, tempTurbulence;
+	private static ScaleBias rainfallModifier, hillsModifier, mountainModifier, continentSelectorModifier, tempModifier;
+	private static Clamp hillsClamp, elevationClamp, finalRainfall, finalTemp;
+	private static Select oceanBeachDivide, mountainRangeSelector, finalElevationNoise;
 
-    private static double scale;
+	public WhittakerNoiseSelector(double scale) {
+		this.scale = scale;
 
-    private static Voronoi rainfall;
+		//Creates the noise for rainfall distribution
+		rainfall = new Voronoi();
+		rainfall.setDisplacement(1.0);
+		rainfall.setFrequency(1.0);
+		rainfallModifier = new ScaleBias();
+		rainfallModifier.SetSourceModule(0, rainfall);
+		rainfallModifier.setScale(0.5);
+		rainfallModifier.setBias(0.5);
+		rainfallTurbulence = new Turbulence();
+		rainfallTurbulence.SetSourceModule(0, rainfallModifier);
+		rainfallTurbulence.setFrequency(0.5);
+		rainfallTurbulence.setPower(0.75);
+		finalRainfall = new Clamp();
+		finalRainfall.SetSourceModule(0, rainfallTurbulence);
+		finalRainfall.setLowerBound(0);
+		finalRainfall.setUpperBound(1.0);
 
-    private static Const uniformOcean, shoreline;
+		//Creates the noise module for temperature distribution
+		temp = new Perlin();
+		temp.setFrequency(0.4);
+		temp.setOctaveCount(4);
+		tempModifier = new ScaleBias();
+		tempModifier.SetSourceModule(0, temp);
+		tempModifier.setScale(0.5);
+		tempModifier.setBias(0.5);
+		tempTurbulence = new Turbulence();
+		tempTurbulence.SetSourceModule(0, tempModifier);
+		tempTurbulence.setFrequency(0.4);
+		tempTurbulence.setPower(0.5);
+		finalTemp = new Clamp();
+		finalTemp.SetSourceModule(0, tempTurbulence);
+		finalTemp.setLowerBound(0);
+		finalTemp.setUpperBound(1.0);
 
-    private static Perlin temp;
+		//Creates the noise modules for the elevation
+		uniformOcean = new Const();
+		uniformOcean.setValue(-1);
+		shoreline = new Const();
+		shoreline.setValue(0.1);
+		mountain = new RidgedMulti();
+		mountain.setFrequency(0.3);
+		mountain.setLacunarity(3.5);
+		mountain.setOctaveCount(4);
+		mountainModifier = new ScaleBias();
+		mountainModifier.SetSourceModule(0, mountain);
+		mountainModifier.setBias(0.5);
+		mountainModifier.setScale(0.5);
+		hills = new Billow();
+		hills.setFrequency(0.45);
+		hills.setPersistence(0.5);
+		hills.setLacunarity(2.5);
+		hills.setOctaveCount(6);
+		hillsModifier = new ScaleBias();
+		hillsModifier.SetSourceModule(0, hills);
+		hillsModifier.setBias(0.5);
+		hillsModifier.setScale(0.5);
+		hillsClamp = new Clamp();
+		hillsClamp.SetSourceModule(0, hillsModifier);
+		hillsClamp.setLowerBound(0);
+		hillsClamp.setUpperBound(0.65);
 
-    private static RidgedMulti mountain;
+		//Puts the elevation noises together
+		mountainRangeSelector = new Select();
+		mountainRangeSelector.SetSourceModule(1, mountainModifier);
+		mountainRangeSelector.SetSourceModule(0, hillsClamp);
+		mountainRangeSelector.setControlModule(mountainModifier);
+		mountainRangeSelector.setBounds(100, 0.75);
+		mountainRangeSelector.setEdgeFalloff(0.4);
+		elevationClamp = new Clamp();
+		elevationClamp.SetSourceModule(0, mountainRangeSelector);
+		elevationClamp.setLowerBound(0.11); //just more than for beach biomes
+		elevationClamp.setUpperBound(1.0);
 
-    private static Billow continentSelector, hills;
+		//Creates the noise module for separating continents & oceans
+		continentSelector = new Billow();
+		continentSelector.setFrequency(0.2);
+		continentSelector.setOctaveCount(10);
+		continentSelectorModifier = new ScaleBias();
+		continentSelectorModifier.SetSourceModule(0, continentSelector);
+		continentSelectorModifier.setScale(0.5);
+		continentSelectorModifier.setBias(0.5);
 
-    private static Turbulence rainfallTurbulence, tempTurbulence;
+		//Divides the ocean and continents, starting with the beach level
+		oceanBeachDivide = new Select();
+		oceanBeachDivide.SetSourceModule(0, uniformOcean);
+		oceanBeachDivide.SetSourceModule(1, shoreline);
+		oceanBeachDivide.setControlModule(continentSelectorModifier);
+		oceanBeachDivide.setBounds(100, 0.52);
 
-    private static ScaleBias rainfallModifier, hillsModifier, mountainModifier, continentSelectorModifier, tempModifier;
+		//Creates the final elevation noise for biome selection
+		finalElevationNoise = new Select();
+		finalElevationNoise.SetSourceModule(0, oceanBeachDivide);
+		finalElevationNoise.SetSourceModule(1, elevationClamp);
+		finalElevationNoise.setControlModule(continentSelectorModifier);
+		finalElevationNoise.setBounds(100, 0.55);
+	}
 
-    private static Clamp hillsClamp, elevationClamp, finalRainfall, finalTemp;
+	@Override
+	public int pickBiome(int x, int y, int z, long seed) {
+		continentSelector.setSeed((int) seed);
+		rainfall.setSeed((int) seed * 2);
+		temp.setSeed((int) seed * 7);
+		mountain.setSeed((int) seed * 5);
+		hills.setSeed((int) seed * 13);
 
-    private static Select oceanBeachDivide, mountainRangeSelector, finalElevationNoise;
+		double elevation, rain, temp, divisor = scale * 128.0;
 
-    public WhittakerNoiseSelector(double scale) {
-        this.scale = scale;
+		elevation = finalElevationNoise.GetValue(x / divisor + 0.05, 0.05, z / divisor + 0.05);
+		rain = finalRainfall.GetValue(x / divisor + 0.05, 0.05, z / divisor + 0.05);
+		temp = finalTemp.GetValue(x / divisor + 0.05, 0.05, z / divisor + 0.05);
 
-        //Creates the noise for rainfall distribution
-        rainfall = new Voronoi();
-        rainfall.setDisplacement(1.0);
-        rainfall.setFrequency(1.0);
-        rainfallModifier = new ScaleBias();
-        rainfallModifier.SetSourceModule(0,rainfall);
-        rainfallModifier.setScale(0.5);
-        rainfallModifier.setBias(0.5);
-        rainfallTurbulence = new Turbulence();
-        rainfallTurbulence.SetSourceModule(0,rainfallModifier);
-        rainfallTurbulence.setFrequency(0.5);
-        rainfallTurbulence.setPower(0.75);
-        finalRainfall = new Clamp();
-        finalRainfall.SetSourceModule(0,rainfallTurbulence);
-        finalRainfall.setLowerBound(0);
-        finalRainfall.setUpperBound(1.0);
+		//TODO: make these conditions use the values from the biome classes themselves
 
-        //Creates the noise module for temperature distribution
-        temp = new Perlin();
-        temp.setFrequency(0.4);
-        temp.setOctaveCount(4);
-        tempModifier = new ScaleBias();
-        tempModifier.SetSourceModule(0,temp);
-        tempModifier.setScale(0.5);
-        tempModifier.setBias(0.5);
-        tempTurbulence = new Turbulence();
-        tempTurbulence.SetSourceModule(0,tempModifier);
-        tempTurbulence.setFrequency(0.4);
-        tempTurbulence.setPower(0.5);
-        finalTemp = new Clamp();
-        finalTemp.SetSourceModule(0,tempTurbulence);
-        finalTemp.setLowerBound(0);
-        finalTemp.setUpperBound(1.0);
-
-        //Creates the noise modules for the elevation
-        uniformOcean = new Const();
-        uniformOcean.setValue(-1);
-        shoreline = new Const();
-        shoreline.setValue(0.1);
-        mountain = new RidgedMulti();
-        mountain.setFrequency(0.3);
-        mountain.setLacunarity(3.5);
-        mountain.setOctaveCount(4);
-        mountainModifier = new ScaleBias();
-        mountainModifier.SetSourceModule(0,mountain);
-        mountainModifier.setBias(0.5);
-        mountainModifier.setScale(0.5);
-        hills = new Billow();
-        hills.setFrequency(0.45);
-        hills.setPersistence(0.5);
-        hills.setLacunarity(2.5);
-        hills.setOctaveCount(6);
-        hillsModifier = new ScaleBias();
-        hillsModifier.SetSourceModule(0,hills);
-        hillsModifier.setBias(0.5);
-        hillsModifier.setScale(0.5);
-        hillsClamp = new Clamp();
-        hillsClamp.SetSourceModule(0,hillsModifier);
-        hillsClamp.setLowerBound(0);
-        hillsClamp.setUpperBound(0.65);
-
-        //Puts the elevation noises together
-        mountainRangeSelector = new Select();
-        mountainRangeSelector.SetSourceModule(1,mountainModifier);
-        mountainRangeSelector.SetSourceModule(0,hillsClamp);
-        mountainRangeSelector.setControlModule(mountainModifier);
-        mountainRangeSelector.setBounds(100, 0.75);
-        mountainRangeSelector.setEdgeFalloff(0.4);
-        elevationClamp = new Clamp();
-        elevationClamp.SetSourceModule(0,mountainRangeSelector);
-        elevationClamp.setLowerBound(0.11); //just more than for beach biomes
-        elevationClamp.setUpperBound(1.0);
-
-        //Creates the noise module for separating continents & oceans
-        continentSelector = new Billow();
-        continentSelector.setFrequency(0.2);
-        continentSelector.setOctaveCount(10);
-        continentSelectorModifier = new ScaleBias();
-        continentSelectorModifier.SetSourceModule(0,continentSelector);
-        continentSelectorModifier.setScale(0.5);
-        continentSelectorModifier.setBias(0.5);
-
-        //Divides the ocean and continents, starting with the beach level
-        oceanBeachDivide = new Select();
-        oceanBeachDivide.SetSourceModule(0,uniformOcean);
-        oceanBeachDivide.SetSourceModule(1,shoreline);
-        oceanBeachDivide.setControlModule(continentSelectorModifier);
-        oceanBeachDivide.setBounds(100,0.52);
-
-        //Creates the final elevation noise for biome selection
-        finalElevationNoise = new Select();
-        finalElevationNoise.SetSourceModule(0,oceanBeachDivide);
-        finalElevationNoise.SetSourceModule(1,elevationClamp);
-        finalElevationNoise.setControlModule(continentSelectorModifier);
-        finalElevationNoise.setBounds(100,0.55);
-    }
-
-    @Override
-    public int pickBiome(int x, int y, int z, long seed) {
-        continentSelector.setSeed((int) seed);
-        rainfall.setSeed((int) seed * 2);
-        temp.setSeed((int) seed * 7);
-        mountain.setSeed((int) seed * 5);
-        hills.setSeed((int) seed * 13);
-
-        double elevation, rain, temp, divisor = scale * 128.0;
-
-        elevation = finalElevationNoise.GetValue(x / divisor + 0.05, 0.05, z / divisor + 0.05);
-        rain = finalRainfall.GetValue(x / divisor + 0.05, 0.05, z / divisor + 0.05);
-        temp = finalTemp.GetValue(x / divisor + 0.05, 0.05, z / divisor + 0.05);
-
-        //TODO: make these conditions use the values from the biome classes themselves
-
-        if (elevation > 0.8) return 3; //mountains
-        else if (elevation > 0.65) return 9; //small mountains
-        else if (elevation == 0.1) {
-            if (rain > 0.6) return 6; //swamp
-            else return 8; //beach
-        }
-        else if (elevation == -1) return 0; //ocean
-        else {
-            if (temp < 0.2) {
-                if (rain > 0.6) return 5; //taiga
-                else return 7; //tundra
-            }
-            else if (temp < 0.4) {
-                if (rain > 0.6) return 4; //forest
-                else return 5; //taiga
-            }
-            else if (temp < 0.6) {
-                if (rain > 0.8) return 10; //jungle
-                else if (rain > 0.4) return 4; //forest
-                else return 1; //plains
-            }
-            else if (temp < 0.8) {
-                if (rain > 0.8) return 10; //jungle
-                else if (rain > 0.6) return 4; //forest
-                else if (rain > 0.2) return 1; //plains
-                else return 2; //desert
-            }
-            else {
-                if (rain > 0.8) return 10; //jungle
-                else if (rain > 0.6) return 4; //forest
-                else if (rain > 0.4) return 1; //plains
-                else return 2; //desert
-            }
-        }
-
-    }
+		if (elevation > 0.8) {
+			return 3; //mountains
+		} else if (elevation > 0.65) {
+			return 9; //small mountains
+		} else if (elevation == 0.1) {
+			if (rain > 0.6) {
+				return 6; //swamp
+			} else {
+				return 8; //beach
+			}
+		} else if (elevation == -1) {
+			return 0; //ocean
+		} else {
+			if (temp < 0.2) {
+				if (rain > 0.6) {
+					return 5; //taiga
+				} else {
+					return 7; //tundra
+				}
+			} else if (temp < 0.4) {
+				if (rain > 0.6) {
+					return 4; //forest
+				} else {
+					return 5; //taiga
+				}
+			} else if (temp < 0.6) {
+				if (rain > 0.8) {
+					return 10; //jungle
+				} else if (rain > 0.4) {
+					return 4; //forest
+				} else {
+					return 1; //plains
+				}
+			} else if (temp < 0.8) {
+				if (rain > 0.8) {
+					return 10; //jungle
+				} else if (rain > 0.6) {
+					return 4; //forest
+				} else if (rain > 0.2) {
+					return 1; //plains
+				} else {
+					return 2; //desert
+				}
+			} else {
+				if (rain > 0.8) {
+					return 10; //jungle
+				} else if (rain > 0.6) {
+					return 4; //forest
+				} else if (rain > 0.4) {
+					return 1; //plains
+				} else {
+					return 2; //desert
+				}
+			}
+		}
+	}
 }

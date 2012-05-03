@@ -43,23 +43,20 @@ import org.spout.vanilla.generator.normal.biome.TundraBiome;
 import org.spout.vanilla.generator.theend.biome.EndStoneBiome;
 
 public class VanillaBiomes {
-
-    public static final VanillaBiomeType BEACH = new BeachBiome(16);
-    public static final VanillaBiomeType DESERT = new DesertBiome(2);
-    public static final VanillaBiomeType FOREST = new ForestBiome(4);
+	public static final VanillaBiomeType BEACH = new BeachBiome(16);
+	public static final VanillaBiomeType DESERT = new DesertBiome(2);
+	public static final VanillaBiomeType FOREST = new ForestBiome(4);
 	public static final VanillaBiomeType JUNGLE = new JungleBiome(21);
 	public static final VanillaBiomeType MOUNTAINS = new MountainsBiome(3);
 	public static final VanillaBiomeType MUSHROOM = new MushroomBiome(14);
 	public static final VanillaBiomeType OCEAN = new OceanBiome(0);
 	public static final VanillaBiomeType PLAIN = new PlainBiome(1);
-    public static final VanillaBiomeType RIVER = new RiverBiome(7);
-    public static final VanillaBiomeType SMALL_MOUNTAINS = new SmallMountainsBiome(20);
+	public static final VanillaBiomeType RIVER = new RiverBiome(7);
+	public static final VanillaBiomeType SMALL_MOUNTAINS = new SmallMountainsBiome(20);
 	public static final VanillaBiomeType SWAMP = new SwampBiome(6);
 	public static final VanillaBiomeType TAIGA = new TaigaBiome(5);
 	public static final VanillaBiomeType TUNDRA = new TundraBiome(12);
-
-    public static final VanillaBiomeType ENDSTONE = new EndStoneBiome();
-    public static final VanillaBiomeType NETHERRACK = new NetherrackBiome();
-
-    public static final VanillaBiomeType FLATGRASS = new FlatGrassBiome();
+	public static final VanillaBiomeType ENDSTONE = new EndStoneBiome();
+	public static final VanillaBiomeType NETHERRACK = new NetherrackBiome();
+	public static final VanillaBiomeType FLATGRASS = new FlatGrassBiome();
 }

@@ -25,8 +25,6 @@
  */
 package org.spout.vanilla.controller.world;
 
-import org.spout.api.collision.CollisionModel;
-import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;

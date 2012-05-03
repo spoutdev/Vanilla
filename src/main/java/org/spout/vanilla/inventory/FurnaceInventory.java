@@ -27,6 +27,7 @@ package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.controller.block.FurnaceController;
 
 public class FurnaceInventory extends Inventory {

@@ -26,51 +26,50 @@
 package org.spout.vanilla.generator.normal;
 
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.generator.VanillaBiomes;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
 import org.spout.vanilla.generator.WhittakerNoiseSelector;
 
 public class NormalGenerator extends VanillaGeneratorBase {
+	private static WhittakerNoiseSelector selector;
+	private long seed = 1337;
 
-    private static WhittakerNoiseSelector selector;
+	@Override
+	public void registerBiomes() {
+		selector = new WhittakerNoiseSelector(2.0);
+		setSelector(selector);
+		register(VanillaBiomes.OCEAN);
+		register(VanillaBiomes.PLAIN);
+		register(VanillaBiomes.DESERT);
+		register(VanillaBiomes.MOUNTAINS);
+		register(VanillaBiomes.FOREST);
+		register(VanillaBiomes.TAIGA);
+		register(VanillaBiomes.SWAMP);
+		register(VanillaBiomes.TUNDRA);
+		register(VanillaBiomes.BEACH);
+		register(VanillaBiomes.SMALL_MOUNTAINS);
+		register(VanillaBiomes.JUNGLE);
+	}
 
-    private long seed = 1337;
+	@Override
+	public String getName() {
+		return "VanillaNormal";
+	}
 
-    @Override
-    public void registerBiomes() {
-        selector = new WhittakerNoiseSelector(2.0);
-        setSelector(selector);
-        register(VanillaBiomes.OCEAN);
-        register(VanillaBiomes.PLAIN);
-        register(VanillaBiomes.DESERT);
-        register(VanillaBiomes.MOUNTAINS);
-        register(VanillaBiomes.FOREST);
-        register(VanillaBiomes.TAIGA);
-        register(VanillaBiomes.SWAMP);
-        register(VanillaBiomes.TUNDRA);
-        register(VanillaBiomes.BEACH);
-        register(VanillaBiomes.SMALL_MOUNTAINS);
-        register(VanillaBiomes.JUNGLE);
-    }
+	public Vector3 getSafeSpawn() {
+		int shift = 0;
+		while (selector.pickBiome(shift, 0, this.seed) == 0) {
+			shift += 16;
+		}
+		return new Vector3((float) shift + 0.5F, 75.5F, 0.5F);
+	}
 
-    @Override
-    public String getName() {
-        return "VanillaNormal";
-    }
+	public void setSeed(long s) {
+		this.seed = s;
+	}
 
-    public Vector3 getSafeSpawn() {
-        int shift = 0;
-        while (selector.pickBiome(shift,0,this.seed) == 0) {
-            shift += 16;
-        }
-        return new Vector3((float) shift + 0.5F, 75.5F, 0.5F);
-    }
-
-    public void setSeed(long s) {
-        this.seed = s;
-    }
-
-    public long getSeed() {
-        return this.seed;
-    }
+	public long getSeed() {
+		return this.seed;
+	}
 }

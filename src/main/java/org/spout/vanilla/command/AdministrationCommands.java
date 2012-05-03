@@ -434,16 +434,16 @@ public class AdministrationCommands {
 		source.sendMessage("This is a server running " + Spout.getEngine().getVersion() + " powering Vanilla b" + plugin.getDescription().getVersion());
 	}
 
-    @Command(aliases = {"biome"}, usage = "", desc = "Print out the name of the biome at the current location", min = 0, max = 0)
-    @CommandPermissions("vanilla.command.biome")
-    public void getBiomeName(CommandContext args, CommandSource source) throws CommandException {
-        if (!(source instanceof Player)) {
-            throw new CommandException("Only a player may call this command.");
-        }
-        Player player = (Player) source;
-        if (!(player.getEntity().getPosition().getWorld().getGenerator() instanceof BiomeGenerator)) {
-            throw new CommandException("This map does not appear to have any biome data.");
-        }
-        source.sendMessage("Current biome: " + ((BiomeGenerator)player.getEntity().getPosition().getWorld().getGenerator()).getBiome(player.getEntity().getPosition().getBlockX(), player.getEntity().getPosition().getBlockY(), player.getEntity().getPosition().getBlockZ(), player.getEntity().getWorld().getSeed()).getName());
-    }
+	@Command(aliases = {"biome"}, usage = "", desc = "Print out the name of the biome at the current location", min = 0, max = 0)
+	@CommandPermissions("vanilla.command.biome")
+	public void getBiomeName(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("Only a player may call this command.");
+		}
+		Player player = (Player) source;
+		if (!(player.getEntity().getPosition().getWorld().getGenerator() instanceof BiomeGenerator)) {
+			throw new CommandException("This map does not appear to have any biome data.");
+		}
+		source.sendMessage("Current biome: " + ((BiomeGenerator) player.getEntity().getPosition().getWorld().getGenerator()).getBiome(player.getEntity().getPosition().getBlockX(), player.getEntity().getPosition().getBlockY(), player.getEntity().getPosition().getBlockZ(), player.getEntity().getWorld().getSeed()).getName());
+	}
 }

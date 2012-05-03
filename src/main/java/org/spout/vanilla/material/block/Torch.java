@@ -28,11 +28,11 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
 
 public class Torch extends AbstractAttachable implements PointAttachable {
-
 	public Torch(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NSEWB);

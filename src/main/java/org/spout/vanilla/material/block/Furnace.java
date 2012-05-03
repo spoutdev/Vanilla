@@ -25,6 +25,8 @@
  */
 package org.spout.vanilla.material.block;
 
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
@@ -42,11 +44,10 @@ import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 import org.spout.vanilla.util.InventoryUtil;
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class Furnace extends Solid {
 	public static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
-	
+
 	public Furnace() {
 		super("Furnace", 61);
 	}
@@ -81,7 +82,7 @@ public class Furnace extends Solid {
 			System.out.println("Furnace is null");
 			return;
 		}
-		
+
 		FurnaceInventory furnaceInventory = furnace.getInventory();
 		if (!(inventory instanceof PlayerInventory)) {
 			for (int i = 0; i < inventory.getSize(); i++) {

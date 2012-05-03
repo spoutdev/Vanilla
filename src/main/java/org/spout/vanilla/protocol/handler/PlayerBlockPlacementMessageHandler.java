@@ -113,7 +113,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
 					return; //prevent placement if the material suppresses this
 				}
-				
+
 				//if the material is actually a block, place it
 				if (holdingMat != null && holdingMat instanceof BlockMaterial) {
 					short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?

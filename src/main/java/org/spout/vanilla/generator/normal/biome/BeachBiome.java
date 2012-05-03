@@ -26,42 +26,42 @@
 package org.spout.vanilla.generator.normal.biome;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class BeachBiome extends VanillaBiomeType {
+	public BeachBiome(int biomeId) {
+		super(biomeId);
+	}
 
-    public BeachBiome(int biomeId) {
-        super(biomeId);
-    }
+	@Override
+	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		int y = chunkY * 16, height = 64;
 
-    @Override
-    public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-        int y = chunkY * 16, height = 64;
+		for (int dy = y; dy < y + 16; dy++) {
+			blockData.set(x, dy, z, getBlockId(height, dy));
+		}
+	}
 
-        for (int dy = y; dy < y + 16; dy++) {
-            blockData.set(x, dy, z, getBlockId(height,dy));
-        }
-    }
+	@Override
+	public String getName() {
+		return "Beach";
+	}
 
-    @Override
-    public String getName() {
-        return "Beach";
-    }
-
-    protected short getBlockId(int top, int dy) {
-        short id;
-        if (dy > top) {
-            id = VanillaMaterials.AIR.getId();
-        } else if (dy == top) {
-            id = VanillaMaterials.SAND.getId();
-        } else if (dy + 4 >= top) {
-            id = VanillaMaterials.DIRT.getId();
-        } else if (dy != 0) {
-            id = VanillaMaterials.STONE.getId();
-        } else {
-            id = VanillaMaterials.BEDROCK.getId();
-        }
-        return id;
-    }
+	protected short getBlockId(int top, int dy) {
+		short id;
+		if (dy > top) {
+			id = VanillaMaterials.AIR.getId();
+		} else if (dy == top) {
+			id = VanillaMaterials.SAND.getId();
+		} else if (dy + 4 >= top) {
+			id = VanillaMaterials.DIRT.getId();
+		} else if (dy != 0) {
+			id = VanillaMaterials.STONE.getId();
+		} else {
+			id = VanillaMaterials.BEDROCK.getId();
+		}
+		return id;
+	}
 }

@@ -37,7 +37,6 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 
 public class Lever extends AbstractAttachable {
-
 	public Lever(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
 		this.setAttachable(BlockFaces.NESWB);
@@ -75,7 +74,9 @@ public class Lever extends AbstractAttachable {
 			data &= ~0x8;
 		}
 		block.setData(data);
-		if (update) block.update();
+		if (update) {
+			block.update();
+		}
 	}
 
 	public void toggle(Block block) {
@@ -90,11 +91,13 @@ public class Lever extends AbstractAttachable {
 			data |= 0x8;
 		}
 		block.setData(data);
-		if (update) block.update();
+		if (update) {
+			block.update();
+		}
 	}
-	
+
 	public static short datat = 0;
-	
+
 	@Override
 	public void setAttachedFace(Block block, BlockFace attachedFace) {
 		short data;

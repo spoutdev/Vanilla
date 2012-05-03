@@ -31,7 +31,6 @@ import java.util.Random;
 import org.spout.api.entity.Controller;
 import org.spout.api.geo.World;
 
-import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.world.Weather;

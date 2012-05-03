@@ -33,8 +33,8 @@ public final class PlayerPositionLookMessage extends Message {
 	private final PlayerLookMessage rotation;
 
 	public PlayerPositionLookMessage(double x, double y, double z, double stance, float yaw, float pitch, boolean onGround) {
-		position = new PlayerPositionMessage(x,y,z,stance, onGround);
-		rotation = new PlayerLookMessage(yaw,pitch, onGround);
+		position = new PlayerPositionMessage(x, y, z, stance, onGround);
+		rotation = new PlayerLookMessage(yaw, pitch, onGround);
 	}
 
 	public PlayerPositionMessage getPlayerPositionMessage() {

@@ -34,7 +34,6 @@ import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
 
 public class StoneButton extends AbstractAttachable implements PointAttachable {
-
 	public StoneButton(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
 		this.setAttachable(BlockFaces.NESW);

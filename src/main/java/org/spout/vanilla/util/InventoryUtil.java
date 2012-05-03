@@ -33,7 +33,7 @@ import org.spout.api.inventory.ItemStack;
 
 public class InventoryUtil {
 	private static int windowId = -1;
-	
+
 	private InventoryUtil() {
 
 	}
@@ -99,7 +99,7 @@ public class InventoryUtil {
 			}
 		}
 	}
-	
+
 	public static int nextWindowId() {
 		return windowId++;
 	}

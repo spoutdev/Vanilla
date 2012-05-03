@@ -26,21 +26,21 @@
 package org.spout.vanilla.generator.normal.biome;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
 import org.spout.vanilla.generator.VanillaBiomeType;
 
 public class RiverBiome extends VanillaBiomeType {
+	public RiverBiome(int biomeId) {
+		super(biomeId);
+	}
 
-    public RiverBiome(int biomeId) {
-        super(biomeId);
-    }
+	@Override
+	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    @Override
-    public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public String getName() {
-        return "River";
-    }
+	@Override
+	public String getName() {
+		return "River";
+	}
 }

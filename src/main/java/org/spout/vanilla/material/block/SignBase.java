@@ -54,7 +54,7 @@ public class SignBase extends AbstractAttachable {
 			if (source instanceof Entity) {
 				Vector3 direction = block.getPosition().subtract(((Entity) source).getPosition());
 				//TODO: Get angle from direction, set data using this angle
-				
+
 			}
 			block.setMaterial(VanillaMaterials.SIGN_POST, data).update(true);
 		} else {

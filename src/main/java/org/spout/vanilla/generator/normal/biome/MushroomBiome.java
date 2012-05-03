@@ -26,11 +26,11 @@
 package org.spout.vanilla.generator.normal.biome;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
 import org.spout.vanilla.generator.VanillaBiomeType;
 
 public class MushroomBiome extends VanillaBiomeType {
-
-    public MushroomBiome(int biomeId) {
+	public MushroomBiome(int biomeId) {
 		super(biomeId);
 	}
 

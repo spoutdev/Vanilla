@@ -35,6 +35,7 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.generic.Armor;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
@@ -124,6 +125,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		Player player = controller.getPlayer();
 		if (clickedSlot == 37 && cursorStack != null) {
 			respond(player.getSession(), message, false);
+			return;
 		}
 
 		cursorStack = InventoryUtil.nullIfEmpty(cursorStack);
@@ -131,7 +133,6 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		controller.setItemOnCursor(cursorStack);
 		inventory.setItem(slotStack, clickedSlot);
 		respond(player.getSession(), message, true);
-		System.out.println("Responded to furnace click");
 	}
 
 	private ItemStack[] handleClick(WindowClickMessage message, Inventory inventory, int clickedSlot, ItemStack cursorStack, ItemStack slotStack) {

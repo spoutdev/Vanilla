@@ -28,11 +28,12 @@ package org.spout.vanilla.controller.block;
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.inventory.FurnaceInventory;
+import org.spout.vanilla.material.FurnaceFuel;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class FurnaceController extends VanillaBlockController {
 	private final FurnaceInventory inventory = new FurnaceInventory(this);
-	private short progress = 100, burnTime = 100;
+	private int progress = 0, burnTime = 0;
 
 	public FurnaceController() {
 		super(VanillaControllerTypes.FURNACE, VanillaMaterials.FURNACE);
@@ -40,7 +41,16 @@ public class FurnaceController extends VanillaBlockController {
 
 	@Override
 	public void onTick(float dt) {
+		// Start the burn timer
+		if (inventory.hasFuel() && burnTime <= 0) {
+			FurnaceFuel fuel = (FurnaceFuel) inventory.getFuel().getMaterial();
+			burnTime = 250 / fuel.getFuelTicks();
+		}
 
+		// Decrement the burn timer
+		if (burnTime > 0) {
+			burnTime--;
+		}
 	}
 
 	@Override
@@ -52,19 +62,19 @@ public class FurnaceController extends VanillaBlockController {
 		return inventory;
 	}
 
-	public void setBurnTime(short burnTime) {
+	public void setBurnTime(int burnTime) {
 		this.burnTime = burnTime;
 	}
 
-	public short getBurnTime() {
+	public int getBurnTime() {
 		return burnTime;
 	}
 
-	public void setProgress(short progress) {
+	public void setProgress(int progress) {
 		this.progress = progress;
 	}
 
-	public short getProgress() {
+	public int getProgress() {
 		return progress;
 	}
 }

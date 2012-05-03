@@ -84,15 +84,11 @@ public class Furnace extends Solid {
 		}
 
 		FurnaceInventory furnaceInventory = furnace.getInventory();
-		if (!(inventory instanceof PlayerInventory)) {
-			for (int i = 0; i < inventory.getSize(); i++) {
-				ItemStack stack = inventory.getItem(i);
-				if (stack != null) {
-					furnaceInventory.setItem(stack, i);
-				}
-			}
+		for (int slot = 0; slot < furnaceInventory.getSize() - 4; slot++) {
+			furnaceInventory.setItem(inventory.getItem(slot), slot);
 		}
 
+		furnaceInventory.addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
 		vanillaPlayer.setActiveInventory(furnaceInventory);
 		vanillaPlayer.setActiveWindow(window);
 		sendPacket(vanillaPlayer.getPlayer(), new OpenWindowMessage(windowId, window.getId(), "Furnace", inventory.getSize()), new ProgressBarMessage(windowId, FIRE_ICON, furnace.getBurnTime()), new ProgressBarMessage(windowId, PROGRESS_ARROW, furnace.getProgress()));

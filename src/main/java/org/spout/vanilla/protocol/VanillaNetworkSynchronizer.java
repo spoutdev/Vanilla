@@ -25,8 +25,6 @@
  */
 package org.spout.vanilla.protocol;
 
-import static org.spout.vanilla.util.VanillaMessageHandlerUtils.getInventoryId;
-
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
@@ -43,6 +41,7 @@ import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Quaternion;
 import org.spout.api.player.Player;
@@ -425,36 +424,77 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	public void onSlotSet(Inventory inventory, int slot) {
+		Controller c = owner.getEntity().getController();
+		if (!(c instanceof VanillaPlayer)) {
+			return;
+		}
+		
+		VanillaPlayer controller = (VanillaPlayer) c;
 		ItemStack item = inventory.getItem(slot);
 		Message message;
 		final int networkSlot = VanillaMessageHandlerUtils.getNetworkInventorySlot(inventory, slot);
-		if (item == null) {
-			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot);
-		} else {
-			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot, item.getMaterial().getId(), item.getAmount(), item.getData(), item.getAuxData());
+		int id = 0;
+		if (!(inventory instanceof PlayerInventory)) {
+			id = controller.getWindowId();
 		}
+		
+		System.out.println("ID: " + id);
+
+		if (item == null) {
+			message = new SetWindowSlotMessage(id, networkSlot);
+		} else {
+			message = new SetWindowSlotMessage(id, networkSlot, item.getMaterial().getId(), item.getAmount(), item.getData(), item.getAuxData());
+		}
+
 		queuedInventoryUpdates.put(slot, message);
 	}
 
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
+		System.out.println("Setting slot: " + slot);
+		Controller c = owner.getEntity().getController();
+		if (!(c instanceof VanillaPlayer)) {
+			return;
+		}
+		
+		VanillaPlayer controller = (VanillaPlayer) c;
 		Message message;
 		final int networkSlot = VanillaMessageHandlerUtils.getNetworkInventorySlot(inventory, slot);
-		if (item == null) {
-			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot);
-		} else {
-			message = new SetWindowSlotMessage(getInventoryId(inventory.getClass()), networkSlot, item.getMaterial().getId(), item.getAmount(), item.getData(), item.getAuxData());
+		int id = 0;
+		if (!(inventory instanceof PlayerInventory)) {
+			id = controller.getWindowId();
 		}
+
+		System.out.println("ID: " + id);
+		
+		if (item == null) {
+			message = new SetWindowSlotMessage(id, networkSlot);
+		} else {
+			message = new SetWindowSlotMessage(id, networkSlot, item.getMaterial().getId(), item.getAmount(), item.getData(), item.getAuxData());
+		}
+
 		queuedInventoryUpdates.put(slot, message);
 	}
 
 	@Override
 	public void updateAll(Inventory inventory, ItemStack[] slots) {
+		Controller c = owner.getEntity().getController();
+		if (!(c instanceof VanillaPlayer)) {
+			return;
+		}
+		
+		VanillaPlayer controller = (VanillaPlayer) c;
+		byte id = 0;
+		if (!(inventory instanceof PlayerInventory)) {
+			id = (byte) controller.getWindowId();
+		}
+
 		ItemStack[] newSlots = new ItemStack[slots.length];
 		for (int i = 0; i < slots.length; ++i) {
 			newSlots[VanillaMessageHandlerUtils.getNetworkInventorySlot(inventory, i)] = slots[i];
 		}
-		session.send(new SetWindowSlotsMessage(getInventoryId(inventory.getClass()), newSlots));
+
+		session.send(new SetWindowSlotsMessage(id, newSlots));
 		queuedInventoryUpdates.clear();
 	}
 

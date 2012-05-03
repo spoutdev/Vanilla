@@ -32,7 +32,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 public class InventoryUtil {
-	private static int windowId = -1;
+	private static int windowId = 0;
 
 	private InventoryUtil() {
 

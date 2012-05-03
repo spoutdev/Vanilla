@@ -95,25 +95,4 @@ public class VanillaMessageHandlerUtils {
 
 		return -1;
 	}
-
-	private static final TObjectIntMap<Class<? extends Inventory>> INVENTORY_MAPPING = new TObjectIntHashMap<Class<? extends Inventory>>();
-
-	static {
-		INVENTORY_MAPPING.put(PlayerInventory.class, 0);
-		INVENTORY_MAPPING.put(FurnaceInventory.class, 1);
-	}
-
-	/**
-	 * Gets the network inventory id of the inventory!
-	 * @param inventory The inventory's class.
-	 * @return The returned inventory id!
-	 */
-	public static byte getInventoryId(Class<? extends Inventory> inventory) {
-		int result = INVENTORY_MAPPING.get(inventory);
-		if (result == INVENTORY_MAPPING.getNoEntryValue()) {
-			result = 0;
-		}
-
-		return (byte) result;
-	}
 }

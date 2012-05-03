@@ -29,6 +29,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.block.FurnaceController;
+import org.spout.vanilla.material.FurnaceFuel;
 
 public class FurnaceInventory extends Inventory {
 	private final FurnaceController owner;
@@ -52,5 +53,9 @@ public class FurnaceInventory extends Inventory {
 
 	public ItemStack getIngredient() {
 		return getItem(38);
+	}
+
+	public boolean hasFuel() {
+		return getFuel() != null && getFuel().getMaterial() instanceof FurnaceFuel;
 	}
 }

@@ -25,17 +25,15 @@
  */
 package org.spout.vanilla.generator.normal.biome;
 
-import java.util.Random;
-
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
-
 import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.normal.decorator.BeachDecorator;
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.Random;
 
 public class OceanBiome extends VanillaBiomeType {
 	private Perlin base = new Perlin();
@@ -45,8 +43,8 @@ public class OceanBiome extends VanillaBiomeType {
 	@SuppressWarnings("unused")
 	private static Random rand = new Random();
 
-	public OceanBiome() {
-		super(0, new BeachDecorator());
+	public OceanBiome(int biomeId) {
+		super(biomeId, new BeachDecorator());
 		base.setNoiseQuality(NoiseQuality.BEST);
 		base.setOctaveCount(6);
 		base.setFrequency(0.3);

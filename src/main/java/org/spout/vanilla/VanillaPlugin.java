@@ -132,39 +132,42 @@ public class VanillaPlugin extends CommonPlugin {
 	}
 
 	private void setupWorlds() {
-		World normal;
-		World flat;
+        World normalWorld;
+        World flatWorld;
+        NormalGenerator normalGen = new NormalGenerator();
 
-		//TODO This is bad...SpoutEngine should have a "setDefaultWorld"
-		if (VanillaConfiguration.FLATWORLD.getBoolean()) {
-			flat = game.loadWorld("world_flat", new FlatGenerator());
-			normal = game.loadWorld("world", new NormalGenerator());
-		} else {
-			normal = game.loadWorld("world", new NormalGenerator());
-			flat = game.loadWorld("world_flat", new FlatGenerator());
-		}
+        //TODO This is bad...SpoutEngine should have a "setDefaultWorld"
+        if (VanillaConfiguration.FLATWORLD.getBoolean()) {
+            flatWorld = game.loadWorld("world_flat", new FlatGenerator());
+            normalWorld = game.loadWorld("world", normalGen);
+        } else {
+            normalWorld = game.loadWorld("world", normalGen);
+            flatWorld = game.loadWorld("world_flat", new FlatGenerator());
+        }
 
-		World nether = game.loadWorld("world_nether", new NetherGenerator());
-		World end = game.loadWorld("world_end", new TheEndGenerator());
+        World nether = game.loadWorld("world_nether", new NetherGenerator());
+        World end = game.loadWorld("world_end", new TheEndGenerator());
 
-		//Create the sky.
-		NormalSky normSky = new NormalSky();
-		NetherSky netherSky = new NetherSky();
-		TheEndSky endSky = new TheEndSky();
+        //Create the sky.
+        NormalSky normSky = new NormalSky();
+        NetherSky netherSky = new NetherSky();
+        TheEndSky endSky = new TheEndSky();
 
-		//Register skys to the map
-		VanillaSky.setSky(normal, normSky);
-		VanillaSky.setSky(nether, netherSky);
-		VanillaSky.setSky(end, endSky);
+        //Register skies to the map
+        VanillaSky.setSky(normalWorld, normSky);
+        VanillaSky.setSky(nether, netherSky);
+        VanillaSky.setSky(end, endSky);
 
-		//TODO Have spawn point set by generator.
-		normal.setSpawnPoint(new Transform(new Point(normal, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
-		normal.createAndSpawnEntity(new Point(normal, 0.f, 0.f, 0.f), normSky);
-		normal.createAndSpawnEntity(new Point(normal, 0.5F, 64.5F, 0.5F), new PointObserver());
+        //Workaround for setting the spawn within the generator
+        normalGen.setSeed(normalWorld.getSeed());
+        normalWorld.setSpawnPoint(new Transform(new Point(normalGen.getSafeSpawn(),normalWorld), Quaternion.IDENTITY, Vector3.ONE));
+        normalWorld.createAndSpawnEntity(new Point(normalGen.getSafeSpawn(),normalWorld), normSky);
+        normalWorld.createAndSpawnEntity(new Point(normalGen.getSafeSpawn(),normalWorld), new PointObserver());
 
-		flat.setSpawnPoint(new Transform(new Point(flat, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
-		flat.createAndSpawnEntity(new Point(normal, 0.f, 0.f, 0.f), normSky);
-		flat.createAndSpawnEntity(new Point(normal, 0.5F, 64.5F, 0.5F), new PointObserver());
+        //TODO Have these spawn point set by their generators.
+		flatWorld.setSpawnPoint(new Transform(new Point(flatWorld, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
+		flatWorld.createAndSpawnEntity(new Point(normalWorld, 0.f, 0.f, 0.f), normSky);
+		flatWorld.createAndSpawnEntity(new Point(normalWorld, 0.5F, 64.5F, 0.5F), new PointObserver());
 
 		nether.setSpawnPoint(new Transform(new Point(nether, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
 		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), netherSky);

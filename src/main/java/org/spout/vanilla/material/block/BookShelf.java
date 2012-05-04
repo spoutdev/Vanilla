@@ -29,12 +29,13 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.generic.Solid;
 
 public class BookShelf extends Solid implements Fuel {
+	public final float BURN_TIME = 15.f;
 	public BookShelf(String name, int id) {
 		super(name, id);
 	}
 
 	@Override
-	public int getFuelTicks() {
-		return 300;
+	public float getFuelTime() {
+		return BURN_TIME;
 	}
 }

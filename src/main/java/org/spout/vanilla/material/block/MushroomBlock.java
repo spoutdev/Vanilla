@@ -29,13 +29,15 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.generic.Ore;
 
 public class MushroomBlock extends Ore implements Fuel {
+	public final float BURN_TIME = 15.f;
+	
 	public MushroomBlock(String name, int id) {
 		super(name, id);
 		this.setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F); //Placeholder, block resistance unknown
 	}
 
 	@Override
-	public int getFuelTicks() {
-		return 300;
+	public float getFuelTime() {
+		return BURN_TIME;
 	}
 }

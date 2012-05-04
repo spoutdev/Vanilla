@@ -38,6 +38,8 @@ public class Tree extends Solid implements Plant, Fuel, TimedCraftable {
 	public static final Tree BIRCH = register(new Tree("Birch Wood", 2, DEFAULT));
 	public static final Tree JUNGLE = register(new Tree("Jungle Wood", 3, DEFAULT));
 
+	public final float BURN_TIME = 15.f;
+	
 	private Tree(String name) {
 		super(name, 17);
 		this.setDefault();
@@ -68,8 +70,8 @@ public class Tree extends Solid implements Plant, Fuel, TimedCraftable {
 	}
 
 	@Override
-	public int getFuelTicks() {
-		return 300;
+	public float getFuelTime() {
+		return BURN_TIME;
 	}
 
 	@Override

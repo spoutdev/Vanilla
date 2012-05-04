@@ -35,6 +35,8 @@ public class Plank extends Solid implements Fuel {
 	public static final Plank BIRCH = register(new Plank("Birch Plank", WoodType.BIRCH, PLANK));
 	public static final Plank JUNGLE = register(new Plank("Jungle Plank", WoodType.JUNGLE, PLANK));
 	private final WoodType type;
+	
+	public final float BURN_TIME = 15.f;
 
 	public Plank(String name) {
 		super(name, 05);
@@ -84,7 +86,7 @@ public class Plank extends Solid implements Fuel {
 	}
 
 	@Override
-	public int getFuelTicks() {
-		return 300;
+	public float getFuelTime() {
+		return BURN_TIME;
 	}
 }

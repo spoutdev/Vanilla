@@ -171,7 +171,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (activeWindow != null && activeWindow.equals(Window.FURNACE) && activeInventory instanceof FurnaceInventory) {
 			FurnaceInventory inventory = (FurnaceInventory) activeInventory;
 			FurnaceController furnace = inventory.getOwner();
-			sendPacket(owner, new ProgressBarMessage(windowId, Furnace.PROGRESS_ARROW, furnace.getProgress()), new ProgressBarMessage(windowId, Furnace.FIRE_ICON, furnace.getBurnTime()));
+			sendPacket(owner, new ProgressBarMessage(windowId, Furnace.PROGRESS_ARROW, furnace.getProgressTicks()), new ProgressBarMessage(windowId, Furnace.FIRE_ICON, furnace.getBurnTimeTicks()));
 		}
 	}
 

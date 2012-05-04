@@ -29,7 +29,9 @@ import org.spout.api.material.Material;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class WoodenStairs extends Solid implements Fuel {
+public class WoodenStairs extends Solid implements Fuel {	
+	public final float BURN_TIME = 15.f;
+	
 	public WoodenStairs(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
 	}
@@ -39,7 +41,7 @@ public class WoodenStairs extends Solid implements Fuel {
 	}
 
 	@Override
-	public int getFuelTicks() {
-		return 300;
+	public float getFuelTime() {
+		return BURN_TIME;
 	}
 }

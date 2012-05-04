@@ -29,12 +29,14 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
 public class BlazeRod extends VanillaItemMaterial implements Fuel {
+	public final float BURN_TIME = 120.f;
+	
 	public BlazeRod(String name, int id) {
 		super(name, id);
 	}
 
 	@Override
-	public int getFuelTicks() {
-		return 2400;
+	public float getFuelTime() {
+		return BURN_TIME;
 	}
 }

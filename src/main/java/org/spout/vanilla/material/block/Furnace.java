@@ -89,7 +89,7 @@ public class Furnace extends Solid {
 		furnaceInventory.addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
 		vanillaPlayer.setActiveInventory(furnaceInventory);
 		vanillaPlayer.setActiveWindow(window);
-		sendPacket(vanillaPlayer.getPlayer(), new OpenWindowMessage(windowId, window.getId(), "Furnace", inventory.getSize()), new ProgressBarMessage(windowId, FIRE_ICON, furnace.getBurnTime()), new ProgressBarMessage(windowId, PROGRESS_ARROW, furnace.getProgress()));
+		sendPacket(vanillaPlayer.getPlayer(), new OpenWindowMessage(windowId, window.getId(), "Furnace", inventory.getSize()), new ProgressBarMessage(windowId, FIRE_ICON, furnace.getBurnTimeTicks()), new ProgressBarMessage(windowId, PROGRESS_ARROW, furnace.getProgressTicks()));
 	}
 
 	@Override

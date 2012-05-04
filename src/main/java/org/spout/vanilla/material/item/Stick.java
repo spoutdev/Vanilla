@@ -29,12 +29,14 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
 public class Stick extends VanillaItemMaterial implements Fuel {
+	public final float BURN_TIME = 5.f;
+	
 	public Stick(String name, int id) {
 		super(name, id);
 	}
 
 	@Override
-	public int getFuelTicks() {
-		return 100;
+	public float getFuelTime() {
+		return BURN_TIME;
 	}
 }

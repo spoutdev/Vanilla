@@ -28,8 +28,8 @@ package org.spout.vanilla.world.generator.flat.biome;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.VanillaBiome;
 
 public class FlatGrassBiome extends VanillaBiome {
 	private final int height;

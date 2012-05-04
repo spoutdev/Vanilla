@@ -26,6 +26,7 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.material.source.DataSource;
+
 import org.spout.vanilla.material.block.generic.Solid;
 
 public class Sandstone extends Solid {

@@ -25,6 +25,8 @@
  */
 package org.spout.vanilla.command;
 
+import java.util.Set;
+
 import org.spout.api.Spout;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
@@ -40,6 +42,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -47,8 +50,6 @@ import org.spout.vanilla.controller.living.player.GameMode;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.sky.VanillaSky;
 import org.spout.vanilla.world.Weather;
-
-import java.util.Set;
 
 public class AdministrationCommands {
 	private final VanillaPlugin plugin;
@@ -303,7 +304,8 @@ public class AdministrationCommands {
 		// If source is player
 		if (args.length() == 1) {
 			if (source instanceof Player) {
-				@SuppressWarnings("unused") Player sender = (Player) source;
+				@SuppressWarnings("unused")
+				Player sender = (Player) source;
 				int amount = args.getInteger(0);
 				source.sendMessage("You have been given " + amount + " xp.");
 				// TODO: Give player 'amount' of xp.

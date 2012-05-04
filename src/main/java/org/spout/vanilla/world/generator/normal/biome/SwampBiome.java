@@ -27,8 +27,8 @@ package org.spout.vanilla.world.generator.normal.biome;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.VanillaBiome;
 
 public class SwampBiome extends VanillaBiome {
 	public SwampBiome(int biomeId) {

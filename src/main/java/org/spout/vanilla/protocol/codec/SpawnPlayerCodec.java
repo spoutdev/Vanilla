@@ -25,13 +25,15 @@
  */
 package org.spout.vanilla.protocol.codec;
 
+import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.protocol.MessageCodec;
+
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
-
-import java.io.IOException;
 
 public final class SpawnPlayerCodec extends MessageCodec<SpawnPlayerMessage> {
 	public SpawnPlayerCodec() {

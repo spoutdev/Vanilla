@@ -28,16 +28,13 @@ package org.spout.vanilla.world.generator;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
-import org.spout.vanilla.material.VanillaMaterials;
 
 public abstract class VanillaGenerator extends BiomeGenerator {
 	@Override
 	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
 		super.generate(blockData, chunkX, chunkY, chunkZ);
 	}
-
 
 	public abstract Point getSafeSpawn(World world);
 }

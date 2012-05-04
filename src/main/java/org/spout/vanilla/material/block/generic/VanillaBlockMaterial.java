@@ -32,6 +32,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterial;
@@ -49,7 +50,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	/**
 	 * Called when this block is destroyed to perform the actual block destruction
-	 *
 	 * @param block to destroy
 	 */
 	public void onDestroyBlock(Block block) {
@@ -58,7 +58,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	/**
 	 * Called when this block is destroyed to perform the drops spawning
-	 *
 	 * @param block to spawn drops for
 	 */
 	public void onDestroySpawnDrops(Block block) {
@@ -103,7 +102,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	/**
 	 * Represents power that comes into the block from a redstone wire or a torch that is below the block
 	 * Indirect power from below powers redstone wire, but level indirect power just inverts adjacent redstone torches.
-	 *
 	 * @return the indirect redstone power.
 	 */
 	public short getIndirectRedstonePower(Block block) {
@@ -128,7 +126,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	/**
 	 * Represents power that comes from a repeater that points to this block.
 	 * This power can be used by all neighbors that are redstone targets, even if they wouldn't attach.
-	 *
 	 * @return the direct redstone power.
 	 */
 	public short getDirectRedstonePower(Block block) {
@@ -185,9 +182,8 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	/**
 	 * Gets whether this block material can support the attachable block material to the face given
-	 *
 	 * @param material to attach
-	 * @param face	 of this block to attach to
+	 * @param face     of this block to attach to
 	 * @return
 	 */
 	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {

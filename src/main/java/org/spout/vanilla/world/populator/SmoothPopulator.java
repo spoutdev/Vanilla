@@ -25,10 +25,10 @@
  */
 package org.spout.vanilla.world.populator;
 
+import java.util.Random;
+
 import org.spout.api.generator.Populator;
 import org.spout.api.geo.cuboid.Chunk;
-
-import java.util.Random;
 
 /**
  * Populator ran at stage 2 of world generation which serves to smooth

@@ -25,14 +25,15 @@
  */
 package org.spout.vanilla.world.generator.normal.decorator;
 
+import java.util.Random;
+
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
-import org.spout.vanilla.material.VanillaMaterials;
 
-import java.util.Random;
+import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * Decorator that decorates a biome with a well structure.

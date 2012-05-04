@@ -27,7 +27,6 @@ package org.spout.vanilla.world.generator.theend;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;

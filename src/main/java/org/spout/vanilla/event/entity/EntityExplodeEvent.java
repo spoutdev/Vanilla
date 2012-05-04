@@ -25,14 +25,14 @@
  */
 package org.spout.vanilla.event.entity;
 
+import java.util.Set;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-
-import java.util.Set;
 
 public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
@@ -47,7 +47,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets a set of blocks that explode during this event.
-	 *
 	 * @return
 	 */
 	public Set<Block> getBlocks() {
@@ -56,7 +55,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets which blocks to explode.
-	 *
 	 * @param blocks
 	 */
 	public void setBlocks(Set<Block> blocks) {
@@ -65,7 +63,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the epicenter of the explosion.
-	 *
 	 * @return epicenter of explosion.
 	 */
 	public Point getEpicenter() {
@@ -74,7 +71,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the epicenter of the explosion.
-	 *
 	 * @param epicenter
 	 */
 	public void setEpicenter(Point epicenter) {
@@ -83,7 +79,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Whether or not the explosion is incendiary.
-	 *
 	 * @return true if incendiary.
 	 */
 	public boolean isIncendiary() {
@@ -92,7 +87,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets whether or not the explosion is incendiary.
-	 *
 	 * @param incendiary
 	 */
 	public void setIncendiary(boolean incendiary) {
@@ -101,7 +95,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the yield of the explosion.
-	 *
 	 * @return yield of explosion.
 	 */
 	public float getYield() {
@@ -110,7 +103,6 @@ public class EntityExplodeEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the yield of the explosion.
-	 *
 	 * @param yield
 	 */
 	public void setYield(float yield) {

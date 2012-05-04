@@ -26,6 +26,7 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.block.generic.Plant;
@@ -37,9 +38,8 @@ public class Tree extends Solid implements Plant, Fuel, TimedCraftable {
 	public static final Tree SPRUCE = register(new Tree("Spruce Wood", 1, DEFAULT));
 	public static final Tree BIRCH = register(new Tree("Birch Wood", 2, DEFAULT));
 	public static final Tree JUNGLE = register(new Tree("Jungle Wood", 3, DEFAULT));
-
 	public final float BURN_TIME = 15.f;
-	
+
 	private Tree(String name) {
 		super(name, 17);
 		this.setDefault();
@@ -78,7 +78,7 @@ public class Tree extends Solid implements Plant, Fuel, TimedCraftable {
 	public ItemStack getResult() {
 		return new ItemStack(Coal.CHARCOAL, 1);
 	}
-	
+
 	@Override
 	public float getCraftTime() {
 		return Furnace.SMELT_TIME;

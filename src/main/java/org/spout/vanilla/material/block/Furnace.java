@@ -25,12 +25,15 @@
  */
 package org.spout.vanilla.material.block;
 
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;
@@ -39,8 +42,6 @@ import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 import org.spout.vanilla.util.InventoryUtil;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class Furnace extends Solid {
 	public static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;

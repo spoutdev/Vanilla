@@ -30,6 +30,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.exception.InvalidControllerException;
+
 import org.spout.vanilla.controller.living.creature.hostile.Slime;
 
 public class SlimeSplitEvent extends EntityEvent implements Cancellable {
@@ -47,7 +48,6 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the amount of slimes to spawn.
-	 *
 	 * @return The amount of slimes to spawn.
 	 */
 	public int getAmount() {
@@ -56,7 +56,6 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the amount of slimes to spawn
-	 *
 	 * @param amount The amount of slimes to spawn.
 	 */
 	public void setAmount(int amount) {
@@ -65,7 +64,6 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the size of slimes to spawn.
-	 *
 	 * @return The size of the slimes to spawn.
 	 */
 	public int getSize() {
@@ -74,7 +72,6 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the size of slimes to spawn.
-	 *
 	 * @param size The size of the slimes to spawn.
 	 */
 	public void setSize(int size) {

@@ -26,6 +26,7 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.cuboid.Block;
+
 import org.spout.vanilla.material.block.data.PoweredRails;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 

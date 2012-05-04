@@ -25,19 +25,19 @@
  */
 package org.spout.vanilla.configuration;
 
+import java.io.File;
+
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.util.config.ConfigurationHolder;
 import org.spout.api.util.config.ConfigurationHolderConfiguration;
 import org.spout.api.util.config.yaml.YamlConfiguration;
-import org.spout.vanilla.VanillaPlugin;
 
-import java.io.File;
+import org.spout.vanilla.VanillaPlugin;
 
 public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	// General
 	public static final ConfigurationHolder MOTD = new ConfigurationHolder("A Spout Server", "general", "motd");
 	public static final ConfigurationHolder ENABLE_END_CREDITS = new ConfigurationHolder(true, "general", "enable-ending-credits");
-
 	// Physics
 	public static final ConfigurationHolder GRAVEL_PHYSICS = new ConfigurationHolder(true, "physics", "gravel");
 	public static final ConfigurationHolder FIRE_PHYSICS = new ConfigurationHolder(true, "physics", "fire");

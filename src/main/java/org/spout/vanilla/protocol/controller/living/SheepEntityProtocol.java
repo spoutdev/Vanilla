@@ -25,12 +25,13 @@
  */
 package org.spout.vanilla.protocol.controller.living;
 
+import java.util.List;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.util.Parameter;
+
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.protocol.controller.BasicMobEntityProtocol;
-
-import java.util.List;
 
 public class SheepEntityProtocol extends BasicMobEntityProtocol {
 	public SheepEntityProtocol() {

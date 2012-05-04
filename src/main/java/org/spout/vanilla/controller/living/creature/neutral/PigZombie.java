@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.hostile.Zombie;

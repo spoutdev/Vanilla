@@ -30,8 +30,6 @@ import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
-import org.spout.vanilla.world.selector.NoiseSelector;
-import org.spout.vanilla.world.selector.WhittakerNoiseSelector;
 
 public class FlatGenerator extends VanillaGenerator {
 	@Override

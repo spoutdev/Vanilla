@@ -26,6 +26,7 @@
 package org.spout.vanilla.controller.object;
 
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.action.MovingBlockAction;
@@ -48,7 +49,6 @@ public class MovingBlock extends Substance {
 
 	/**
 	 * Gets the block that is moving.
-	 *
 	 * @return moving block.
 	 */
 	public BlockMaterial getBlock() {

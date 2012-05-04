@@ -29,6 +29,7 @@ import org.spout.api.entity.Controller;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.geo.discrete.Point;
+
 import org.spout.vanilla.controller.VanillaController;
 
 /**

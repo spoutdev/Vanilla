@@ -25,6 +25,9 @@
  */
 package org.spout.vanilla.command;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spout.api.ChatColor;
 import org.spout.api.Spout;
 import org.spout.api.command.CommandContext;
@@ -41,12 +44,10 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.util.explosion.ExplosionModels;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class TestCommands {
 	private final Set<String> invisible = new HashSet<String>();

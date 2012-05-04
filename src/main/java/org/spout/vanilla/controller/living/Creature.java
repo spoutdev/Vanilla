@@ -25,15 +25,16 @@
  */
 package org.spout.vanilla.controller.living;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-import org.spout.vanilla.controller.VanillaControllerType;
-import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 
 public abstract class Creature extends Living {
 	private boolean baby = false;
@@ -63,7 +64,6 @@ public abstract class Creature extends Living {
 
 	/**
 	 * Sets if the entity is a baby.
-	 *
 	 * @param baby
 	 */
 	public void setBaby(boolean baby) {
@@ -73,7 +73,6 @@ public abstract class Creature extends Living {
 
 	/**
 	 * Whether or not the creature is a baby.
-	 *
 	 * @return true if a baby
 	 */
 	public boolean isBaby() {
@@ -82,7 +81,6 @@ public abstract class Creature extends Living {
 
 	/**
 	 * Returns the amount of time until the baby is an adult. Fully grown is 0 and not grown is 23999.
-	 *
 	 * @return time until adult
 	 */
 	public long getTimeUntilAdult() {
@@ -91,7 +89,6 @@ public abstract class Creature extends Living {
 
 	/**
 	 * Sets the time until the entity is an adult. Fully grown is 0 and not grown is 23999.
-	 *
 	 * @param timeUntilAdult
 	 */
 	public void setTimeUntilAdult(long timeUntilAdult) {

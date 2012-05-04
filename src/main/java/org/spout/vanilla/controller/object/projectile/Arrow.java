@@ -27,6 +27,7 @@ package org.spout.vanilla.controller.object.projectile;
 
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Projectile;
 

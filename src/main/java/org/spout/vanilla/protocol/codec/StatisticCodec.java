@@ -25,12 +25,14 @@
  */
 package org.spout.vanilla.protocol.codec;
 
+import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-import org.spout.api.protocol.MessageCodec;
-import org.spout.vanilla.protocol.msg.StatisticMessage;
 
-import java.io.IOException;
+import org.spout.api.protocol.MessageCodec;
+
+import org.spout.vanilla.protocol.msg.StatisticMessage;
 
 public final class StatisticCodec extends MessageCodec<StatisticMessage> {
 	public StatisticCodec() {

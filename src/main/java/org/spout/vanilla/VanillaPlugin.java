@@ -25,6 +25,9 @@
  */
 package org.spout.vanilla;
 
+import java.net.InetSocketAddress;
+import java.util.logging.Level;
+
 import org.spout.api.Engine;
 import org.spout.api.Server;
 import org.spout.api.command.CommandRegistrationsFactory;
@@ -32,7 +35,6 @@ import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
 import org.spout.api.entity.type.ControllerType;
-import org.spout.api.event.world.WorldLoadEvent;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
@@ -41,6 +43,7 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
+
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -49,16 +52,13 @@ import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
 import org.spout.vanilla.controller.world.sky.VanillaSky;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.protocol.VanillaProtocol;
+import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.theend.TheEndGenerator;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
-
-import java.net.InetSocketAddress;
-import java.util.logging.Level;
 
 /**
  * Vanilla - The Minecraft implementation for Spout.

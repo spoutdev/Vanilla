@@ -28,8 +28,45 @@ package org.spout.vanilla.protocol;
 import org.spout.api.protocol.HandlerLookupService;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.vanilla.protocol.handler.*;
-import org.spout.vanilla.protocol.msg.*;
+
+import org.spout.vanilla.protocol.handler.AnimateEntityMessageHandler;
+import org.spout.vanilla.protocol.handler.ChatMessageHandler;
+import org.spout.vanilla.protocol.handler.CloseWindowMessageHandler;
+import org.spout.vanilla.protocol.handler.CreativeMessageHandler;
+import org.spout.vanilla.protocol.handler.EntityActionMessageHandler;
+import org.spout.vanilla.protocol.handler.EntityHeadYawMessageHandler;
+import org.spout.vanilla.protocol.handler.EntityInteractionMessageHandler;
+import org.spout.vanilla.protocol.handler.GroundMessageHandler;
+import org.spout.vanilla.protocol.handler.HeldItemChangeMessageHandler;
+import org.spout.vanilla.protocol.handler.KeepAliveMessageHandler;
+import org.spout.vanilla.protocol.handler.KickMessageHandler;
+import org.spout.vanilla.protocol.handler.PlayerAbilityMessageHandler;
+import org.spout.vanilla.protocol.handler.PlayerBlockPlacementMessageHandler;
+import org.spout.vanilla.protocol.handler.PlayerDiggingMessageHandler;
+import org.spout.vanilla.protocol.handler.PlayerLookMessageHandler;
+import org.spout.vanilla.protocol.handler.PlayerPositionLookMessageHandler;
+import org.spout.vanilla.protocol.handler.PlayerPositionMessageHandler;
+import org.spout.vanilla.protocol.handler.RespawnMessageHandler;
+import org.spout.vanilla.protocol.handler.WindowClickMessageHandler;
+import org.spout.vanilla.protocol.msg.ChatMessage;
+import org.spout.vanilla.protocol.msg.CloseWindowMessage;
+import org.spout.vanilla.protocol.msg.CreativeMessage;
+import org.spout.vanilla.protocol.msg.EntityActionMessage;
+import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
+import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
+import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
+import org.spout.vanilla.protocol.msg.GroundMessage;
+import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
+import org.spout.vanilla.protocol.msg.KeepAliveMessage;
+import org.spout.vanilla.protocol.msg.KickMessage;
+import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
+import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
+import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
+import org.spout.vanilla.protocol.msg.PlayerLookMessage;
+import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
+import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
+import org.spout.vanilla.protocol.msg.RespawnMessage;
+import org.spout.vanilla.protocol.msg.WindowClickMessage;
 
 public class VanillaHandlerLookupService extends HandlerLookupService {
 	public VanillaHandlerLookupService() {

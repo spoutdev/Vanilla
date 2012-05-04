@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import org.spout.api.protocol.Message;
-
 import java.util.Arrays;
+
+import org.spout.api.protocol.Message;
 
 public class ItemDataMessage extends Message {
 	private final short type, id;

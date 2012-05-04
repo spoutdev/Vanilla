@@ -26,13 +26,13 @@
 package org.spout.vanilla.material.item;
 
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Furnace;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
 public class Clay extends VanillaItemMaterial implements TimedCraftable {
-
 	public Clay() {
 		super("Clay", 337);
 	}
@@ -41,7 +41,7 @@ public class Clay extends VanillaItemMaterial implements TimedCraftable {
 	public ItemStack getResult() {
 		return new ItemStack(VanillaMaterials.CLAY_BRICK, 1);
 	}
-	
+
 	@Override
 	public float getCraftTime() {
 		return Furnace.SMELT_TIME;

@@ -28,6 +28,7 @@ package org.spout.vanilla.controller;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.protocol.EntityProtocol;
+
 import org.spout.vanilla.VanillaPlugin;
 
 /**

@@ -25,10 +25,10 @@
  */
 package org.spout.vanilla.event.game;
 
+import java.net.InetAddress;
+
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
-
-import java.net.InetAddress;
 
 public class ServerListPingEvent extends Event {
 	private static HandlerList handlers = new HandlerList();
@@ -45,7 +45,6 @@ public class ServerListPingEvent extends Event {
 
 	/**
 	 * Gets the address that requested the ping response
-	 *
 	 * @return address
 	 */
 	public InetAddress getAddress() {
@@ -54,7 +53,6 @@ public class ServerListPingEvent extends Event {
 
 	/**
 	 * Gets the message of the day to send.
-	 *
 	 * @return message of the day
 	 */
 	public String getMotd() {
@@ -63,7 +61,6 @@ public class ServerListPingEvent extends Event {
 
 	/**
 	 * Sets the message of the day to send.
-	 *
 	 * @param motd message of the day to set, can not be null.
 	 */
 	public void setMotd(String motd) {
@@ -75,7 +72,6 @@ public class ServerListPingEvent extends Event {
 
 	/**
 	 * Gets the number of players reported to be online.
-	 *
 	 * @return players online
 	 */
 	public int getNumPlayers() {
@@ -84,7 +80,6 @@ public class ServerListPingEvent extends Event {
 
 	/**
 	 * Sets the number of players online
-	 *
 	 * @param numPlayers online
 	 */
 	public void setNumPlayers(int numPlayers) {
@@ -93,7 +88,6 @@ public class ServerListPingEvent extends Event {
 
 	/**
 	 * Gets the maximum number of players that can log in for this server.
-	 *
 	 * @return maximum number of players.
 	 */
 	public int getMaxPlayers() {
@@ -102,7 +96,6 @@ public class ServerListPingEvent extends Event {
 
 	/**
 	 * Sets the maximum number of players.
-	 *
 	 * @param maxPlayers maximum amount of people that can log in.
 	 */
 	public void setMaxPlayers(int maxPlayers) {
@@ -111,7 +104,6 @@ public class ServerListPingEvent extends Event {
 
 	/**
 	 * Gets the full message response that will be sent to the packet.
-	 *
 	 * @return packet message
 	 */
 	public String getMessage() {

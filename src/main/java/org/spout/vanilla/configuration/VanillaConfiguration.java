@@ -64,14 +64,15 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 
 	@Override
 	public void load() throws ConfigurationException {
-		super.load();
 		OPS.load();
+		OPS.save();
+		super.load();
 		super.save();
 	}
 
 	@Override
 	public void save() throws ConfigurationException {
-		super.save();
 		OPS.save();
+		super.save();
 	}
 }

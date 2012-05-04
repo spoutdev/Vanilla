@@ -30,10 +30,12 @@ import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
+import org.spout.vanilla.world.selector.NoiseSelector;
 
 public class FlatGenerator extends VanillaGenerator {
 	@Override
 	public void registerBiomes() {
+		setSelector(new NoiseSelector(1, 1, 1, 1, 1));
 		register(VanillaBiomes.FLATGRASS);
 	}
 

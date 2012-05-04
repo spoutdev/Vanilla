@@ -75,31 +75,6 @@ public class VanillaPlugin extends CommonPlugin {
 	}
 
 	@Override
-	public void onLoad() {
-		game = getGame();
-		config = new VanillaConfiguration(getDataFolder());
-		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
-
-		if (game instanceof Server) {
-			int port = 25565;
-			String[] split = game.getAddress().split(":");
-			if (split.length > 1) {
-				try {
-					port = Integer.parseInt(split[1]);
-				} catch (NumberFormatException e) {
-					getLogger().warning(split[1] + " is not a valid port number! Defaulting to " + port + "!");
-				}
-			}
-
-			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
-		}
-		//TODO if (game instanceof Client) do stuff?
-
-		VanillaMaterials.initialize();
-		getLogger().info("Loaded");
-	}
-
-	@Override
 	public void onDisable() {
 		try {
 			config.save();
@@ -128,7 +103,32 @@ public class VanillaPlugin extends CommonPlugin {
 
 		setupWorlds();
 
-		getLogger().info("b" + this.getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
+		getLogger().info("b" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
+	}
+
+	@Override
+	public void onLoad() {
+		game = getGame();
+		config = new VanillaConfiguration(getDataFolder());
+		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
+
+		if (game instanceof Server) {
+			int port = 25565;
+			String[] split = game.getAddress().split(":");
+			if (split.length > 1) {
+				try {
+					port = Integer.parseInt(split[1]);
+				} catch (NumberFormatException e) {
+					getLogger().warning(split[1] + " is not a valid port number! Defaulting to " + port + "!");
+				}
+			}
+
+			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
+		}
+		//TODO if (game instanceof Client) do stuff?
+
+		VanillaMaterials.initialize();
+		getLogger().info("Loaded");
 	}
 
 	private void setupWorlds() {

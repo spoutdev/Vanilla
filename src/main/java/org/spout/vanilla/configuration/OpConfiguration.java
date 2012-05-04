@@ -41,12 +41,6 @@ public class OpConfiguration extends ConfigurationHolderConfiguration {
 		super(new YamlConfiguration(new File(dataFolder, "ops.yml")));
 	}
 
-	@Override
-	public void load() throws ConfigurationException {
-		super.load();
-		super.save();
-	}
-
 	public List<String> getOps() {
 		return OPS.getStringList();
 	}

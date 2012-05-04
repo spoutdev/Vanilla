@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.bootstrap.handler;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
 
 public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMessage> {

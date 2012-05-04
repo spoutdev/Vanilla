@@ -49,6 +49,7 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Get the resulting bucket in hand after the bucket event.
+	 *
 	 * @return Bucket held in hand after the event.
 	 */
 	public ItemStack getBucket() {
@@ -57,6 +58,7 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Set the item in hand after the event.
+	 *
 	 * @param bucket the new bucket after the bucket event.
 	 */
 	public void setBucket(ItemStack bucket) {
@@ -65,6 +67,7 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Return the block clicked.
+	 *
 	 * @return the clicked block.
 	 */
 	public Block getBlockClicked() {
@@ -73,6 +76,7 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Sets the block that is clicked.
+	 *
 	 * @param blockClicked the new block that is clicked.
 	 */
 	public void setBlockClicked(Block blockClicked) {
@@ -81,6 +85,7 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Get the face on the clicked block
+	 *
 	 * @return the clicked face
 	 */
 	public BlockFace getBlockFace() {
@@ -89,6 +94,7 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Sets the face of the clicked block
+	 *
 	 * @param blockFace The new blockface that was clicked.
 	 */
 	public void setBlockFace(BlockFace blockFace) {
@@ -97,6 +103,7 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Returns true if the bucket was filled.
+	 *
 	 * @return True if the bucket was filled.
 	 */
 	public boolean isFilled() {
@@ -105,6 +112,7 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Returns true if the bucket was emptied.
+	 *
 	 * @return True if the bucket was emptied.
 	 */
 	public boolean isEmptied() {
@@ -113,6 +121,7 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Sets the status of whether the bucket is filled or not.
+	 *
 	 * @param filled True means the bucket is filled, false means the bucket is empty.
 	 */
 	public void setFilled(boolean filled) {

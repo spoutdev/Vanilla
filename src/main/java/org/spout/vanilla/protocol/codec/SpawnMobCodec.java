@@ -25,17 +25,15 @@
  */
 package org.spout.vanilla.protocol.codec;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Parameter;
-
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
+
+import java.io.IOException;
+import java.util.List;
 
 public final class SpawnMobCodec extends MessageCodec<SpawnMobMessage> {
 	public SpawnMobCodec() {

@@ -48,6 +48,7 @@ public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable 
 
 	/**
 	 * Gets the player associated in this event.
+	 *
 	 * @return The player of the event.
 	 */
 	public Player getPlayer() {
@@ -56,6 +57,7 @@ public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable 
 
 	/**
 	 * Gets the point where the player respawned.
+	 *
 	 * @return
 	 */
 	public Point getPoint() {
@@ -64,6 +66,7 @@ public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable 
 
 	/**
 	 * Sets the point where the player respawns.
+	 *
 	 * @param point The new location where spawning will take place.
 	 */
 	public void setPoint(Point point) {

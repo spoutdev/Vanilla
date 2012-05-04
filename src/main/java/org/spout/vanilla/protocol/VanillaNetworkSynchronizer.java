@@ -28,13 +28,12 @@ package org.spout.vanilla.protocol;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
-
 import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.generator.WorldGenerator;
-import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.generator.biome.Biome;
+import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
@@ -52,24 +51,13 @@ import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEventListener;
 import org.spout.api.util.map.TIntPairHashSet;
 import org.spout.api.util.map.TIntPairObjectHashMap;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.generator.flat.FlatGenerator;
 import org.spout.vanilla.generator.nether.NetherGenerator;
 import org.spout.vanilla.generator.normal.NormalGenerator;
-import org.spout.vanilla.protocol.msg.BlockChangeMessage;
-import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
-import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
-import org.spout.vanilla.protocol.msg.KeepAliveMessage;
-import org.spout.vanilla.protocol.msg.LoadChunkMessage;
-import org.spout.vanilla.protocol.msg.LoginRequestMessage;
-import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
-import org.spout.vanilla.protocol.msg.RespawnMessage;
-import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
-import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
-import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
+import org.spout.vanilla.protocol.msg.*;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
@@ -428,7 +416,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (!(c instanceof VanillaPlayer)) {
 			return;
 		}
-		
+
 		VanillaPlayer controller = (VanillaPlayer) c;
 		ItemStack item = inventory.getItem(slot);
 		Message message;
@@ -437,7 +425,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (!(inventory instanceof PlayerInventory)) {
 			id = controller.getWindowId();
 		}
-		
+
 		System.out.println("ID: " + id);
 
 		if (item == null) {
@@ -456,7 +444,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (!(c instanceof VanillaPlayer)) {
 			return;
 		}
-		
+
 		VanillaPlayer controller = (VanillaPlayer) c;
 		Message message;
 		final int networkSlot = VanillaMessageHandlerUtils.getNetworkInventorySlot(inventory, slot);
@@ -466,7 +454,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 
 		System.out.println("ID: " + id);
-		
+
 		if (item == null) {
 			message = new SetWindowSlotMessage(id, networkSlot);
 		} else {
@@ -482,7 +470,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (!(c instanceof VanillaPlayer)) {
 			return;
 		}
-		
+
 		VanillaPlayer controller = (VanillaPlayer) c;
 		byte id = 0;
 		if (!(inventory instanceof PlayerInventory)) {
@@ -500,6 +488,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method takes any amount of messages and sends them to every online player on the server.
+	 *
 	 * @param messages
 	 */
 	public static void broadcastPacket(Message... messages) {
@@ -509,6 +498,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	/**
 	 * This method takes in any amount of messages and sends them to any amount of
 	 * players.
+	 *
 	 * @param players  specific players to send a message to.
 	 * @param messages the message(s) to send
 	 */
@@ -522,6 +512,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method takes in a message and sends it to a specific player
+	 *
 	 * @param player   specific player to relieve message
 	 * @param messages specific message to send.
 	 */

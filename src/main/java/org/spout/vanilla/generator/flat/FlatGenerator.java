@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.generator.flat;
 
-import org.spout.vanilla.generator.selector.NoiseSelector;
 import org.spout.vanilla.generator.VanillaBiomes;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
+import org.spout.vanilla.generator.selector.NoiseSelector;
 
 public class FlatGenerator extends VanillaGeneratorBase {
 	@Override

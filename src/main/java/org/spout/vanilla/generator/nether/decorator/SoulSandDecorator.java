@@ -25,10 +25,10 @@
  */
 package org.spout.vanilla.generator.nether.decorator;
 
-import java.util.Random;
-
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.cuboid.Chunk;
+
+import java.util.Random;
 
 public class SoulSandDecorator implements BiomeDecorator {
 	@Override

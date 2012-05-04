@@ -40,6 +40,7 @@ public class VanillaEntityDeathEvent extends EntityDeathEvent implements Cancell
 
 	/**
 	 * Gets the amount of experience to drop.
+	 *
 	 * @return The amount of experience to drop.
 	 */
 	public int getDropExp() {
@@ -48,6 +49,7 @@ public class VanillaEntityDeathEvent extends EntityDeathEvent implements Cancell
 
 	/**
 	 * Sets the amount of experience to drop.
+	 *
 	 * @param dropExp The experience to set.
 	 */
 	public void setDropExp(int dropExp) {

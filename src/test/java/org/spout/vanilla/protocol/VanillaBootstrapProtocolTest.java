@@ -25,37 +25,27 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.junit.Test;
-
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
-
+import org.spout.api.protocol.common.message.CustomDataMessage;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapCodecLookupService;
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
-import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
+import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
-import org.spout.api.protocol.common.message.CustomDataMessage;
+
+import java.io.IOException;
+
+import static org.junit.Assert.*;
 
 public class VanillaBootstrapProtocolTest {
 	private static final TIntSet testedOpcodes = new TIntHashSet();
 	private static final VanillaBootstrapCodecLookupService CODEC_LOOKUP = new VanillaBootstrapCodecLookupService();
-	private static final Message[] TEST_MESSAGES = new Message[]{
-			new LoginRequestMessage(0, "Tester", 0, -1, 0, 128, 20, "MAGICAL"),
-			new HandshakeMessage("Player"),
-			new ServerListPingMessage(),
-			new KickMessage("This is a test"),
-			new CustomDataMessage("CHANNEL:ONE", new byte[] {(byte)1, (byte)2, (byte)3, (byte)4})};
+	private static final Message[] TEST_MESSAGES = new Message[]{new LoginRequestMessage(0, "Tester", 0, -1, 0, 128, 20, "MAGICAL"), new HandshakeMessage("Player"), new ServerListPingMessage(), new KickMessage("This is a test"), new CustomDataMessage("CHANNEL:ONE", new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 4})};
 
 	@Test
 	public void testMessageCodecLookup() {
@@ -82,7 +72,7 @@ public class VanillaBootstrapProtocolTest {
 			assertEquals(message.toString(), decoded.toString());
 		}
 	}
-	
+
 	@Test
 	public void testTestCompleteness() {
 		final TIntSet testedOpcodes = new TIntHashSet();

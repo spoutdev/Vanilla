@@ -28,7 +28,6 @@ package org.spout.vanilla.controller.object;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.controller.VanillaControllerType;
 
 /**
@@ -61,6 +60,7 @@ public class Projectile extends Substance {
 
 	/**
 	 * Sets the controller that shot this projectile
+	 *
 	 * @param entity - the shooter
 	 */
 	public void setShooter(Entity entity) {
@@ -69,6 +69,7 @@ public class Projectile extends Substance {
 
 	/**
 	 * Gets the controller that shot this projectile
+	 *
 	 * @return the shooter controller
 	 */
 	public Entity getShooter() {

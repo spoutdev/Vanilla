@@ -30,7 +30,6 @@ import org.spout.api.entity.action.EntityAction;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.controller.VanillaActionController;
 
 public class WanderAction extends EntityAction<VanillaActionController> {

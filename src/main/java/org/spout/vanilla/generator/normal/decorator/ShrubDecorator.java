@@ -25,15 +25,14 @@
  */
 package org.spout.vanilla.generator.normal.decorator;
 
-import java.util.Random;
-
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.Random;
 
 public class ShrubDecorator implements BiomeDecorator {
 	// How many shrub decorations per chunk
@@ -69,8 +68,7 @@ public class ShrubDecorator implements BiomeDecorator {
 		for (byte yy = SIZE; yy > -1; yy--) {
 			for (byte xx = (byte) -yy; xx < yy + 1; xx++) {
 				for (byte zz = (byte) -yy; zz < yy + 1; zz++) {
-					if (Math.abs(xx) == yy && Math.abs(zz) == yy
-							&& random.nextBoolean()) {
+					if (Math.abs(xx) == yy && Math.abs(zz) == yy && random.nextBoolean()) {
 						continue;
 					}
 					Block block = world.getBlock(x + xx, y - yy + SIZE, z + zz);
@@ -91,8 +89,7 @@ public class ShrubDecorator implements BiomeDecorator {
 	private int getHighestWorkableBlock(World world, int x, int z) {
 		int y = world.getHeight() - 1;
 		BlockMaterial material;
-		while ((material = world.getBlockMaterial(x, y, z)) == VanillaMaterials.AIR
-				|| material == VanillaMaterials.LEAVES) {
+		while ((material = world.getBlockMaterial(x, y, z)) == VanillaMaterials.AIR || material == VanillaMaterials.LEAVES) {
 			y--;
 			if (y == 0 || world.getBlockMaterial(x, y, z) == VanillaMaterials.WATER) {
 				return -1;

@@ -29,7 +29,6 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 import org.spout.api.material.source.MaterialData;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.MinecartTrackBase;
 import org.spout.vanilla.util.RailsState;
@@ -84,6 +83,7 @@ public class Rails implements MaterialData {
 
 	/**
 	 * Sets the direction in such a way that both directions are connected
+	 *
 	 * @param dir1
 	 * @param dir2
 	 * @return true if the operation succeeded

@@ -42,6 +42,7 @@ public class EntityTameEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the owner of this controller
+	 *
 	 * @return The owner of the controller.
 	 */
 	public Controller getOwner() {
@@ -50,6 +51,7 @@ public class EntityTameEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the owner of this controller.
+	 *
 	 * @param owner The owner of the controller.
 	 */
 	public void setOwner(Controller owner) {

@@ -37,7 +37,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;

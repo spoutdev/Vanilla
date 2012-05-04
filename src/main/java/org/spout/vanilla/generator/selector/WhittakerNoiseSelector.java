@@ -29,12 +29,7 @@ import net.royawesome.jlibnoise.module.combiner.Select;
 import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.modifier.ScaleBias;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
-import net.royawesome.jlibnoise.module.source.Billow;
-import net.royawesome.jlibnoise.module.source.Const;
-import net.royawesome.jlibnoise.module.source.Perlin;
-import net.royawesome.jlibnoise.module.source.RidgedMulti;
-import net.royawesome.jlibnoise.module.source.Voronoi;
-
+import net.royawesome.jlibnoise.module.source.*;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.vanilla.generator.VanillaBiomes;
@@ -52,7 +47,7 @@ public class WhittakerNoiseSelector extends BiomeSelector {
 	private static Select oceanBeachDivide, mountainRangeSelector, finalElevationNoise;
 
 	public WhittakerNoiseSelector(double scale) {
-		
+
 		//Creates the noise for rainfall distribution
 		rainfall = new Voronoi();
 		rainfall.setDisplacement(1.0);

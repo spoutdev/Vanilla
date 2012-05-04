@@ -26,7 +26,6 @@
 package org.spout.vanilla.material.item.generic;
 
 import org.spout.api.material.Material;
-
 import org.spout.vanilla.material.VanillaMaterial;
 
 public class VanillaItemMaterial extends Material implements VanillaMaterial {

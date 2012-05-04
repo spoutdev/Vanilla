@@ -29,7 +29,6 @@ import org.spout.api.Spout;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.game.ServerListPingEvent;
 import org.spout.vanilla.protocol.msg.KickMessage;

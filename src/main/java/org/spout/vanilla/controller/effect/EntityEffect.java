@@ -62,6 +62,7 @@ public enum EntityEffect {
 
 	/**
 	 * Gets the type of effect by it's mapped numerical value.
+	 *
 	 * @param id
 	 * @return effect of id.
 	 */
@@ -75,6 +76,7 @@ public enum EntityEffect {
 
 	/**
 	 * Gets a entity effects numerical identification number.
+	 *
 	 * @return id
 	 */
 	public byte getId() {

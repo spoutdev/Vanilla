@@ -25,17 +25,16 @@
  */
 package org.spout.vanilla.controller.living.creature.neutral;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.hostile.Zombie;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class PigZombie extends Zombie implements Neutral {
 	private Entity parent;

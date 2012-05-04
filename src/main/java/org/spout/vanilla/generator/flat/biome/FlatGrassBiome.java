@@ -27,7 +27,6 @@ package org.spout.vanilla.generator.flat.biome;
 
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.generator.VanillaBiomeType;
 import org.spout.vanilla.material.VanillaMaterials;
 

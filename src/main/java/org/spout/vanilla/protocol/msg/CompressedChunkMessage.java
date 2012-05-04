@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import java.util.Arrays;
-
 import org.spout.api.protocol.Message;
+
+import java.util.Arrays;
 
 public final class CompressedChunkMessage extends Message {
 	private final int x, z;

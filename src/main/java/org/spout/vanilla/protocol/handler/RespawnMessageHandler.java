@@ -30,7 +30,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.generator.flat.FlatGenerator;

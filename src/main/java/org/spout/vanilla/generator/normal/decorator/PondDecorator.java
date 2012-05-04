@@ -25,16 +25,15 @@
  */
 package org.spout.vanilla.generator.normal.decorator;
 
-import java.util.Random;
-
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.generic.Liquid;
+
+import java.util.Random;
 
 public class PondDecorator implements BiomeDecorator {
 	@Override
@@ -48,8 +47,7 @@ public class PondDecorator implements BiomeDecorator {
 		final PondHole hole = new PondHole(random);
 		final byte[] waterBlocks = getNoiseMap(hole);
 		final byte[] airBlocks = getNoiseMap(hole);
-		if (!canBuildPondHole(world, x, y, z, waterBlocks, VanillaMaterials.STATIONARY_WATER)
-				|| !canBuildPondTop(world, x, y, z, airBlocks)) {
+		if (!canBuildPondHole(world, x, y, z, waterBlocks, VanillaMaterials.STATIONARY_WATER) || !canBuildPondTop(world, x, y, z, airBlocks)) {
 			return;
 		}
 		for (byte px = 0; px < 16; px++) {
@@ -72,8 +70,7 @@ public class PondDecorator implements BiomeDecorator {
 		final PondHole hole = new PondHole(random);
 		final byte[] lavaBlocks = getNoiseMap(hole);
 		final byte[] airBlocks = getNoiseMap(hole);
-		if (!canBuildPondHole(world, x, y, z, lavaBlocks, VanillaMaterials.STATIONARY_LAVA)
-				|| !canBuildPondTop(world, x, y, z, airBlocks)) {
+		if (!canBuildPondHole(world, x, y, z, lavaBlocks, VanillaMaterials.STATIONARY_LAVA) || !canBuildPondTop(world, x, y, z, airBlocks)) {
 			return;
 		}
 		for (byte px = 0; px < 16; px++) {
@@ -107,8 +104,7 @@ public class PondDecorator implements BiomeDecorator {
 			for (byte pz = 0; pz < 16; pz++) {
 				for (byte py = -1; py < 4; py++) {
 					final Block block = world.getBlock(x + px, y + py, z + pz);
-					if (block.getMaterial() == VanillaMaterials.DIRT
-							&& world.getBlockSkyLight(x + px, y + py + 1, z + pz) > 0) {
+					if (block.getMaterial() == VanillaMaterials.DIRT && world.getBlockSkyLight(x + px, y + py + 1, z + pz) > 0) {
 						/*Biome biome = block.getBiome(); Waiting for getBiome() method
 						if (biome == Biome.MUSHROOM_ISLAND || biome == Biome.MUSHROOM_SHORE) {
 						block.setMaterial(VanillaMaterials.MYCEL);
@@ -252,9 +248,7 @@ public class PondDecorator implements BiomeDecorator {
 				final float radiusNoise = random.nextFloat() * 0.8f;
 				final float multiXNoise = 1f - random.nextFloat() * 0.1f;
 				final float multiZNoise = 1f - random.nextFloat() * 0.1f;
-				final float value = (float) Math.sqrt(Math.pow(radius + radiusNoise, 2)
-						- Math.pow((xMultiplier * multiXNoise) * x - xOffset - xOffNoise, 2)
-						- Math.pow((zMultiplier * multiZNoise) * z - zOffset - zOffNoise, 2));
+				final float value = (float) Math.sqrt(Math.pow(radius + radiusNoise, 2) - Math.pow((xMultiplier * multiXNoise) * x - xOffset - xOffNoise, 2) - Math.pow((zMultiplier * multiZNoise) * z - zOffset - zOffNoise, 2));
 				return (byte) ((value + yOffset) / yMultiplier);
 			}
 		}

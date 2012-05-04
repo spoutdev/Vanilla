@@ -27,19 +27,7 @@ package org.spout.vanilla.generator;
 
 import org.spout.vanilla.generator.flat.biome.FlatGrassBiome;
 import org.spout.vanilla.generator.nether.biome.NetherrackBiome;
-import org.spout.vanilla.generator.normal.biome.BeachBiome;
-import org.spout.vanilla.generator.normal.biome.DesertBiome;
-import org.spout.vanilla.generator.normal.biome.ForestBiome;
-import org.spout.vanilla.generator.normal.biome.JungleBiome;
-import org.spout.vanilla.generator.normal.biome.MountainsBiome;
-import org.spout.vanilla.generator.normal.biome.MushroomBiome;
-import org.spout.vanilla.generator.normal.biome.OceanBiome;
-import org.spout.vanilla.generator.normal.biome.PlainBiome;
-import org.spout.vanilla.generator.normal.biome.RiverBiome;
-import org.spout.vanilla.generator.normal.biome.SmallMountainsBiome;
-import org.spout.vanilla.generator.normal.biome.SwampBiome;
-import org.spout.vanilla.generator.normal.biome.TaigaBiome;
-import org.spout.vanilla.generator.normal.biome.TundraBiome;
+import org.spout.vanilla.generator.normal.biome.*;
 import org.spout.vanilla.generator.theend.biome.EndStoneBiome;
 
 public class VanillaBiomes {

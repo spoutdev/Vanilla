@@ -25,9 +25,6 @@
  */
 package org.spout.vanilla;
 
-import java.net.InetSocketAddress;
-import java.util.logging.Level;
-
 import org.spout.api.Engine;
 import org.spout.api.Server;
 import org.spout.api.command.CommandRegistrationsFactory;
@@ -43,7 +40,6 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
-
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -59,6 +55,9 @@ import org.spout.vanilla.generator.theend.TheEndGenerator;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
+
+import java.net.InetSocketAddress;
+import java.util.logging.Level;
 
 /**
  * Vanilla - The Minecraft implementation for Spout.

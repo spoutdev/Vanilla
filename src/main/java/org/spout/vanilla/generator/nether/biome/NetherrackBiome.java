@@ -26,7 +26,6 @@
 package org.spout.vanilla.generator.nether.biome;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.generator.VanillaBiomeType;
 
 public class NetherrackBiome extends VanillaBiomeType {

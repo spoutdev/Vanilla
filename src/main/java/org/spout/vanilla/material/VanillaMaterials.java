@@ -25,29 +25,18 @@
  */
 package org.spout.vanilla.material;
 
-import static org.spout.api.material.MaterialRegistry.register;
-
 import org.spout.api.material.BlockMaterial;
-
 import org.spout.vanilla.material.block.*;
-import org.spout.vanilla.material.block.Furnace;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.generic.Ore;
 import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.material.block.redstone.RedstoneTorch;
 import org.spout.vanilla.material.block.redstone.RedstoneWire;
 import org.spout.vanilla.material.item.*;
-import org.spout.vanilla.material.item.generic.Armor;
-import org.spout.vanilla.material.item.generic.BlockItem;
-import org.spout.vanilla.material.item.generic.EmptyContainer;
-import org.spout.vanilla.material.item.generic.Food;
+import org.spout.vanilla.material.item.generic.*;
 import org.spout.vanilla.material.item.generic.Food.FoodEffectType;
-import org.spout.vanilla.material.item.generic.FullContainer;
-import org.spout.vanilla.material.item.generic.Liquid;
-import org.spout.vanilla.material.item.generic.RangedWeapon;
-import org.spout.vanilla.material.item.generic.Tool;
-import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
-import org.spout.vanilla.material.item.generic.Weapon;
+
+import static org.spout.api.material.MaterialRegistry.register;
 
 public final class VanillaMaterials {
 	public static final BlockMaterial AIR = BlockMaterial.AIR;

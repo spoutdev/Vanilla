@@ -25,20 +25,19 @@
  */
 package org.spout.vanilla.protocol.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
-
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.SpawnMobMessage;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class BasicMobEntityProtocol extends BasicEntityProtocol {
 	public BasicMobEntityProtocol(int mobSpawnID) {
@@ -47,6 +46,7 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 
 	/**
 	 * Gets a list of parameters used for the creation of a mob spawn message
+	 *
 	 * @param controller - The controller controller to obtain the parameters from
 	 * @return a list of parameters
 	 */

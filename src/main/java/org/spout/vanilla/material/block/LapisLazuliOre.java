@@ -27,7 +27,6 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.material.Transformable;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Ore;
 import org.spout.vanilla.material.item.Dye;
 

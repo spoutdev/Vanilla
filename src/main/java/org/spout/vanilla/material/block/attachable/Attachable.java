@@ -37,14 +37,16 @@ public interface Attachable {
 
 	/**
 	 * Checks if this material can be attached to certain face of a block material
+	 *
 	 * @param material to attach to
-	 * @param face     of the material to attach to
+	 * @param face	 of the material to attach to
 	 * @return if this material can be attached to face of the block material given
 	 */
 	public boolean canAttachTo(BlockMaterial material, BlockFace face);
 
 	/**
 	 * Checks if this material can be attached to certain face of a block
+	 *
 	 * @param block to attach to
 	 * @param face  of the block to attach to
 	 * @return if this material can be attached to face of the block given
@@ -53,13 +55,15 @@ public interface Attachable {
 
 	/**
 	 * Sets the face the block is attached to
-	 * @param block        to set
+	 *
+	 * @param block		to set
 	 * @param attachedFace to set the block to
 	 */
 	public void setAttachedFace(Block block, BlockFace attachedFace);
 
 	/**
 	 * Gets the face the block is attached to
+	 *
 	 * @param block to get it of
 	 * @return to which face the block is attached to
 	 */
@@ -67,6 +71,7 @@ public interface Attachable {
 
 	/**
 	 * Returns the block that this attachable is attached to
+	 *
 	 * @param block of this attachable
 	 * @return the block
 	 */
@@ -75,6 +80,7 @@ public interface Attachable {
 	/**
 	 * Finds out what face this attachable can properly attach to<br>
 	 * The north-east-south-west-bottom-top search pattern is used.
+	 *
 	 * @param block of the attachable
 	 * @return the attached face, or null if not found
 	 */
@@ -82,17 +88,19 @@ public interface Attachable {
 
 	/**
 	 * Performs placement of this attachable
-	 * @param block        to place at
-	 * @param data         to use
+	 *
+	 * @param block		to place at
+	 * @param data		 to use
 	 * @param attachedFace to use
 	 */
 	public void handlePlacement(Block block, short data, BlockFace attachedFace);
 
 	/**
 	 * Checks if placement is possible for this attachable
-	 * @param block           to place at
-	 * @param data            to use
-	 * @param attachedFace    to use
+	 *
+	 * @param block		   to place at
+	 * @param data			to use
+	 * @param attachedFace	to use
 	 * @param seekAlternative whether an alternative attached face should be sought
 	 * @return whether placement is possible
 	 */

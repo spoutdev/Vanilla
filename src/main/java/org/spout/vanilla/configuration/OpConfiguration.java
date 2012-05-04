@@ -25,14 +25,14 @@
  */
 package org.spout.vanilla.configuration;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.util.config.ConfigurationHolder;
 import org.spout.api.util.config.ConfigurationHolderConfiguration;
 import org.spout.api.util.config.yaml.YamlConfiguration;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 public class OpConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder OPS = new ConfigurationHolder(Arrays.asList("Notch", "jeb", "ez"), "ops");

@@ -26,7 +26,6 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.cuboid.Block;
-
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 
 public class MinecartTrack extends MinecartTrackBase implements RedstoneTarget {

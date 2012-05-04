@@ -27,7 +27,6 @@ package org.spout.vanilla.protocol.bootstrap;
 
 import org.spout.api.protocol.CodecLookupService;
 import org.spout.api.protocol.common.codec.CustomDataCodec;
-
 import org.spout.vanilla.protocol.codec.HandshakeCodec;
 import org.spout.vanilla.protocol.codec.KickCodec;
 import org.spout.vanilla.protocol.codec.LoginRequestCodec;

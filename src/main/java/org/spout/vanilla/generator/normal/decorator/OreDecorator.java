@@ -25,14 +25,13 @@
  */
 package org.spout.vanilla.generator.normal.decorator;
 
-import java.util.Random;
-
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.Random;
 
 public class OreDecorator implements BiomeDecorator {
 	@Override

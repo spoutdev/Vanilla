@@ -31,7 +31,6 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.flag.ByteFlagContainer;
-
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
@@ -47,6 +46,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	/**
 	 * Gets whether a certain face is attachable
+	 *
 	 * @param face to get it of
 	 * @return attachable state
 	 */
@@ -56,6 +56,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	/**
 	 * Sets multiple faces attachable to true
+	 *
 	 * @param faces to set
 	 * @return this attachable material
 	 */
@@ -68,7 +69,8 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	/**
 	 * Sets whether a certain face is attachable
-	 * @param face       to set
+	 *
+	 * @param face	   to set
 	 * @param attachable state
 	 * @return this attachable material
 	 */

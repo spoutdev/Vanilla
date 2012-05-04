@@ -25,16 +25,15 @@
  */
 package org.spout.vanilla.controller.living.creature.neutral;
 
-import java.util.Set;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.Tameable;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+
+import java.util.Set;
 
 public class Wolf extends Creature implements Tameable, Neutral {
 	private Entity parent;

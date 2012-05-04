@@ -30,6 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 public interface RedstoneTarget {
 	/**
 	 * Gets if the block provides an attach point for redstone wire.
+	 *
 	 * @param world  the blocks are in
 	 * @param source this block
 	 * @param target the wire

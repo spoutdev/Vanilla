@@ -25,16 +25,15 @@
  */
 package org.spout.vanilla.generator.normal.decorator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MushroomDecorator implements BiomeDecorator {
 	/*
@@ -116,8 +115,7 @@ public class MushroomDecorator implements BiomeDecorator {
 					if (yy != y + height) {
 						int xDif = Math.abs(x - xx);
 						int zDif = Math.abs(z - zz);
-						if ((xDif < capSize && zDif < capSize)
-								|| (xDif == capSize && zDif == capSize)) {
+						if ((xDif < capSize && zDif < capSize) || (xDif == capSize && zDif == capSize)) {
 							continue;
 						}
 					}
@@ -138,8 +136,7 @@ public class MushroomDecorator implements BiomeDecorator {
 		for (int yy = capYStart; yy < y + 1 + height; yy++) { // generate cap
 			for (int xx = x - capSize; xx < x + 1 + capSize; xx++) {
 				for (int zz = z - capSize; zz < z + 1 + capSize; zz++) {
-					if (Math.abs(x - xx) == capSize
-							&& Math.abs(z - zz) == capSize) {
+					if (Math.abs(x - xx) == capSize && Math.abs(z - zz) == capSize) {
 						continue;
 					}
 					short data = getBrownMushroomCapData(x, y, z, xx, yy, zz, height, capSize);
@@ -175,13 +172,10 @@ public class MushroomDecorator implements BiomeDecorator {
 
 	private boolean canPlaceMushroom(World world, int x, int y, int z) {
 		BlockMaterial material = world.getBlockMaterial(x, y, z);
-		return material == VanillaMaterials.DIRT
-				|| material == VanillaMaterials.GRASS
-				|| material == VanillaMaterials.MYCELIUM;
+		return material == VanillaMaterials.DIRT || material == VanillaMaterials.GRASS || material == VanillaMaterials.MYCELIUM;
 	}
 
-	private short getRedMushroomCapData(int x, int y, int z, int xx,
-										int yy, int zz, int height, int capSize) {
+	private short getRedMushroomCapData(int x, int y, int z, int xx, int yy, int zz, int height, int capSize) {
 		if (yy == y + height) { // top blocks
 			if (Math.abs(x - xx) < capSize && Math.abs(z - zz) < capSize) { // interior blocks
 				return 5;
@@ -247,8 +241,7 @@ public class MushroomDecorator implements BiomeDecorator {
 		}
 	}
 
-	private short getBrownMushroomCapData(int x, int y, int z, int xx,
-										  int yy, int zz, int height, int capSize) {
+	private short getBrownMushroomCapData(int x, int y, int z, int xx, int yy, int zz, int height, int capSize) {
 		if (Math.abs(x - xx) < capSize && Math.abs(z - zz) < capSize) { // interior blocks
 			if (yy < y + height) {
 				return 0;

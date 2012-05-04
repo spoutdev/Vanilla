@@ -44,6 +44,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Gets the reason for the change of level.
+	 *
 	 * @return A LevelChangeReason that is the reason for the change in level.
 	 */
 	public LevelChangeReason getReason() {
@@ -52,6 +53,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Sets the reason for the change of level.
+	 *
 	 * @param reason A LevelChangeReason that sets the reason for the change of level.
 	 */
 	public void setReason(LevelChangeReason reason) {
@@ -60,6 +62,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Gets the previous level before the level change occurred.
+	 *
 	 * @return an int that is the number of the last level.
 	 */
 	public int getPreviousLevel() {
@@ -68,6 +71,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Gets the new level after the level change occurred.
+	 *
 	 * @return an int that is the number of the new level.
 	 */
 	public int getNewLevel() {
@@ -76,6 +80,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Sets the level of the player regardless of what level was set in the event.
+	 *
 	 * @param customLevel an int that is the custom number of the level to set.
 	 */
 	public void setLevel(int customLevel) {

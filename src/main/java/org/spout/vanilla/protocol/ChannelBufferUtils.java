@@ -25,17 +25,7 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.awt.Color;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jboss.netty.buffer.ChannelBuffer;
-
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
@@ -43,14 +33,21 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
-
 import org.spout.nbt.CompoundMap;
 import org.spout.nbt.CompoundTag;
 import org.spout.nbt.Tag;
 import org.spout.nbt.stream.NBTInputStream;
 import org.spout.nbt.stream.NBTOutputStream;
-
 import org.spout.vanilla.material.VanillaMaterial;
+
+import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class ChannelBufferUtils {
 	/**
@@ -60,7 +57,8 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Writes a list of parameters (e.g. mob metadata) to the buffer.
-	 * @param buf        The buffer.
+	 *
+	 * @param buf		The buffer.
 	 * @param parameters The parameters.
 	 */
 	@SuppressWarnings("unchecked")
@@ -104,6 +102,7 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Reads a list of parameters from the buffer.
+	 *
 	 * @param buf The buffer.
 	 * @return The parameters.
 	 */
@@ -145,6 +144,7 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Writes a string to the buffer.
+	 *
 	 * @param buf The buffer.
 	 * @param str The string.
 	 * @throws IllegalArgumentException if the string is too long <em>after</em>
@@ -164,10 +164,11 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Writes a UTF-8 string to the buffer.
+	 *
 	 * @param buf The buffer.
 	 * @param str The string.
 	 * @throws UnsupportedEncodingException if the encoding isn't supported.
-	 * @throws IllegalArgumentException     if the string is too long <em>after</em>
+	 * @throws IllegalArgumentException	 if the string is too long <em>after</em>
 	 *                                      it is encoded.
 	 */
 	public static void writeUtf8String(ChannelBuffer buf, String str) throws UnsupportedEncodingException {
@@ -182,6 +183,7 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Reads a string from the buffer.
+	 *
 	 * @param buf The buffer.
 	 * @return The string.
 	 */
@@ -198,6 +200,7 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Reads a UTF-8 encoded string from the buffer.
+	 *
 	 * @param buf The buffer.
 	 * @return The string.
 	 * @throws UnsupportedEncodingException if the encoding isn't supported.

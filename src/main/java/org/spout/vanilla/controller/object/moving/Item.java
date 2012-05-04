@@ -25,14 +25,8 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
-
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
-
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.World;
@@ -40,11 +34,15 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
-
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 /**
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).
@@ -119,6 +117,7 @@ public class Item extends Substance {
 
 	/**
 	 * Gets what block the item is.
+	 *
 	 * @return block of item.
 	 */
 	public Material getMaterial() {
@@ -127,6 +126,7 @@ public class Item extends Substance {
 
 	/**
 	 * Gets the amount of the block there is in the ItemStack.
+	 *
 	 * @return amount of items
 	 */
 	public int getAmount() {
@@ -135,6 +135,7 @@ public class Item extends Substance {
 
 	/**
 	 * Gets the data of the item
+	 *
 	 * @return item data
 	 */
 	public short getData() {
@@ -143,6 +144,7 @@ public class Item extends Substance {
 
 	/**
 	 * Gets the roll of the item
+	 *
 	 * @return roll of item.
 	 */
 	public int getRoll() {

@@ -25,15 +25,14 @@
  */
 package org.spout.vanilla.generator.normal.decorator;
 
-import java.util.Random;
-
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
-
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.Random;
 
 /**
  * Decorator that decorates a biome with a well structure.
@@ -74,9 +73,7 @@ public class WellDecorator implements BiomeDecorator {
 						world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.SANDSTONE);
 					}
 					if (yy == y) {
-						if ((xx == x && z == zz)
-								|| ((xx == x - 1 || xx == x + 1) && zz == z)
-								|| ((zz == z + 1 || zz == z - 1) && x == xx)) {
+						if ((xx == x && z == zz) || ((xx == x - 1 || xx == x + 1) && zz == z) || ((zz == z + 1 || zz == z - 1) && x == xx)) {
 							world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.WATER);
 						}
 					}
@@ -84,8 +81,7 @@ public class WellDecorator implements BiomeDecorator {
 						if (xx == x - 2 || xx == x + 2 || zz == z - 2 || zz == z + 2) {
 							world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.SANDSTONE);
 						}
-						if (((xx == x - 2 || xx == x + 2) && zz == z)
-								|| ((zz == z + 2 || zz == z - 2) && x == xx)) {
+						if (((xx == x - 2 || xx == x + 2) && zz == z) || ((zz == z + 2 || zz == z - 2) && x == xx)) {
 							world.getBlock(xx, yy, zz).setMaterial(VanillaMaterials.SLAB, (short) 1); //FIXME: MAKE SUB MAT!
 						}
 					}
@@ -110,8 +106,7 @@ public class WellDecorator implements BiomeDecorator {
 		for (int xx = x - 2; xx < x + 3; xx++) {
 			for (int zz = z - 2; zz < z + 3; zz++) {
 				Block block = world.getBlock(xx, y - 1, zz);
-				if (block.getMaterial() == VanillaMaterials.AIR
-						&& block.translate(BlockFace.BOTTOM).getMaterial() == VanillaMaterials.AIR) {
+				if (block.getMaterial() == VanillaMaterials.AIR && block.translate(BlockFace.BOTTOM).getMaterial() == VanillaMaterials.AIR) {
 					return false;
 				}
 			}

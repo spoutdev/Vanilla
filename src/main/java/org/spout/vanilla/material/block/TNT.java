@@ -27,7 +27,6 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Solid;

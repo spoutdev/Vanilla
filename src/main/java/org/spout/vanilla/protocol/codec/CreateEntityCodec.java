@@ -25,14 +25,12 @@
  */
 package org.spout.vanilla.protocol.codec;
 
-import java.io.IOException;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-
 import org.spout.api.protocol.MessageCodec;
-
 import org.spout.vanilla.protocol.msg.CreateEntityMessage;
+
+import java.io.IOException;
 
 public final class CreateEntityCodec extends MessageCodec<CreateEntityMessage> {
 	public CreateEntityCodec() {

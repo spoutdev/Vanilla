@@ -26,7 +26,6 @@
 package org.spout.vanilla.generator.normal;
 
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.generator.VanillaBiomes;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
 import org.spout.vanilla.generator.selector.WhittakerNoiseSelector;

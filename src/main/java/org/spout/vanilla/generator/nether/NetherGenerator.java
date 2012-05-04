@@ -25,9 +25,9 @@
  */
 package org.spout.vanilla.generator.nether;
 
-import org.spout.vanilla.generator.selector.NoiseSelector;
 import org.spout.vanilla.generator.VanillaGeneratorBase;
 import org.spout.vanilla.generator.nether.biome.NetherrackBiome;
+import org.spout.vanilla.generator.selector.NoiseSelector;
 
 public class NetherGenerator extends VanillaGeneratorBase {
 	@Override

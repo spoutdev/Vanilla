@@ -27,7 +27,6 @@ package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Transformable;
@@ -54,7 +53,7 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 
 	/**
 	 * Returns the {@link ItemStack} in the output slot (slot 37); can return null.
-	 * 
+	 *
 	 * @return output item stack
 	 */
 	public ItemStack getOutput() {

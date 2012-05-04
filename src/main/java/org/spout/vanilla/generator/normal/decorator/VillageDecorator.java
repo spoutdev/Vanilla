@@ -25,10 +25,10 @@
  */
 package org.spout.vanilla.generator.normal.decorator;
 
-import java.util.Random;
-
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.cuboid.Chunk;
+
+import java.util.Random;
 
 /**
  * Decorator that decorates a biome with a village.

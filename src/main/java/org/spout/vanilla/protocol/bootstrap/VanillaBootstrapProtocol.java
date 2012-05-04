@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.bootstrap;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.protocol.bootstrap.BootstrapProtocol;
-
 import org.spout.vanilla.protocol.VanillaProtocol;
 
 public class VanillaBootstrapProtocol extends BootstrapProtocol {

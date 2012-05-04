@@ -25,14 +25,13 @@
  */
 package org.spout.vanilla.controller.living.creature.passive;
 
-import java.util.Set;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.living.creature.Tamed;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+
+import java.util.Set;
 
 public class Cat extends Ocelot implements Tamed, Passive {
 	private Entity sovereign = null;

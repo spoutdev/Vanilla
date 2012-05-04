@@ -29,7 +29,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.generic.Solid;
@@ -83,6 +82,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 
 	/**
 	 * Sets the wire at x,y,z to the given power and initiates an update process that will recalculate the wire.
+	 *
 	 * @param world
 	 * @param x
 	 * @param y

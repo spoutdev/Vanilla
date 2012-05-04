@@ -25,20 +25,17 @@
  */
 package org.spout.vanilla.protocol.codec;
 
-import java.io.IOException;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.protocol.MessageCodec;
-
 import org.spout.nbt.CompoundMap;
-
 import org.spout.vanilla.material.item.generic.Tool;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
+
+import java.io.IOException;
 
 public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessage> {
 	public SetWindowSlotsCodec() {

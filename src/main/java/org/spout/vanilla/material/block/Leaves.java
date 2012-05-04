@@ -25,12 +25,11 @@
  */
 package org.spout.vanilla.material.block;
 
-import java.util.Random;
-
 import org.spout.api.material.Material;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Solid;
+
+import java.util.Random;
 
 public class Leaves extends Solid {
 	public static final Leaves DEFAULT = register(new Leaves("Leaves"));

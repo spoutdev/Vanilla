@@ -41,6 +41,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the reason for the targeting.
+	 *
 	 * @return The target reason.
 	 */
 	public TargetReason getReason() {
@@ -49,6 +50,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the reason for the targeting.
+	 *
 	 * @param reason The reason for the targeting.
 	 */
 	public void setReason(TargetReason reason) {
@@ -57,6 +59,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Returns true if the controller has targeted.
+	 *
 	 * @return True it the controller has targeted, false if not.
 	 */
 	public boolean isTarget() {
@@ -65,6 +68,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Returns true if the controller has untargeted.
+	 *
 	 * @return True is the controller has untargeted, false if not.
 	 */
 	public boolean isUntarget() {
@@ -106,6 +110,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 
 		/**
 		 * Whether or not it is target
+		 *
 		 * @return true if target
 		 */
 		public boolean isTarget() {

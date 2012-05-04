@@ -29,7 +29,6 @@ import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
-
 import org.spout.vanilla.controller.object.Projectile;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 

@@ -25,8 +25,8 @@
  */
 package org.spout.vanilla.generator;
 
-import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.generator.biome.Biome;
+import org.spout.api.generator.biome.BiomeDecorator;
 
 public abstract class VanillaBiomeType extends Biome {
 	private final int biomeId;

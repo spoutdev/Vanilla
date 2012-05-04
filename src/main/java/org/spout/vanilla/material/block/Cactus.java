@@ -25,15 +25,11 @@
  */
 package org.spout.vanilla.material.block;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.Transformable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -41,19 +37,15 @@ import org.spout.vanilla.material.block.attachable.Attachable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.Dye;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Cactus extends GroundAttachable implements Transformable {
 	private Set<BlockMaterial> allowedNeighbours = new HashSet<BlockMaterial>();
 
 	public Cactus() {
 		super("Cactus", 81);
-		addAllowedNeighbour(VanillaMaterials.AIR,
-				VanillaMaterials.TORCH,
-				VanillaMaterials.REDSTONE_TORCH_OFF,
-				VanillaMaterials.REDSTONE_TORCH_ON,
-				VanillaMaterials.LEVER,
-				VanillaMaterials.DEAD_BUSH,
-				VanillaMaterials.TALL_GRASS,
-				VanillaMaterials.REDSTONE_WIRE);
+		addAllowedNeighbour(VanillaMaterials.AIR, VanillaMaterials.TORCH, VanillaMaterials.REDSTONE_TORCH_OFF, VanillaMaterials.REDSTONE_TORCH_ON, VanillaMaterials.LEVER, VanillaMaterials.DEAD_BUSH, VanillaMaterials.TALL_GRASS, VanillaMaterials.REDSTONE_WIRE);
 	}
 
 	@Override

@@ -14,7 +14,7 @@
  *
  * Vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PUR	POSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
@@ -23,30 +23,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.inventory;
 
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
+public interface VanillaInventory {
 
-public class Coal extends VanillaItemMaterial implements Fuel {
-	public static final Coal COAL = register(new Coal("Coal"));
-	public static final Coal CHARCOAL = register(new Coal("Charcoal", 1, COAL));
-
-	private Coal(String name) {
-		super(name, 263);
-	}
-
-	private Coal(String name, int data, Coal parent) {
-		super(name, 263, data, parent);
-	}
-
-	@Override
-	public Coal getParentMaterial() {
-		return (Coal) super.getParentMaterial();
-	}
-
-	@Override
-	public int getFuelTicks() {
-		return 1600;
-	}
+	/**
+	 * Gets the window associated with the inventory
+	 *
+	 * @return window of inventory
+	 */
+	public Window getWindow();
 }

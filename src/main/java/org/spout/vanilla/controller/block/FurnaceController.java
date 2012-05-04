@@ -28,7 +28,7 @@ package org.spout.vanilla.controller.block;
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.inventory.FurnaceInventory;
-import org.spout.vanilla.material.FurnaceFuel;
+import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class FurnaceController extends VanillaBlockController {
@@ -43,7 +43,7 @@ public class FurnaceController extends VanillaBlockController {
 	public void onTick(float dt) {
 		// Start the burn timer
 		if (inventory.hasFuel() && burnTime <= 0) {
-			FurnaceFuel fuel = (FurnaceFuel) inventory.getFuel().getMaterial();
+			Fuel fuel = (Fuel) inventory.getFuel().getMaterial();
 			burnTime = 250 / fuel.getFuelTicks();
 		}
 

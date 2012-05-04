@@ -25,10 +25,10 @@
  */
 package org.spout.vanilla.material.item;
 
-import org.spout.vanilla.material.FurnaceFuel;
+import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
-public class BlazeRod extends VanillaItemMaterial implements FurnaceFuel {
+public class BlazeRod extends VanillaItemMaterial implements Fuel {
 	public BlazeRod(String name, int id) {
 		super(name, id);
 	}

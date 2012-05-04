@@ -50,6 +50,7 @@ import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.inventory.FurnaceInventory;
+import org.spout.vanilla.inventory.VanillaPlayerInventory;
 import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.material.block.Furnace;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
@@ -236,8 +237,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	@Override
-	public PlayerInventory createInventory(int size) {
-		PlayerInventory inventory = new PlayerInventory(size);
+	public VanillaPlayerInventory createInventory(int size) {
+		VanillaPlayerInventory inventory = new VanillaPlayerInventory();
 		for (int i = 37; i < inventory.getSize(); i++) {
 			inventory.setHiddenSlot(i, true);
 		}

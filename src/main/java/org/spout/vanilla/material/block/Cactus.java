@@ -29,16 +29,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.material.Transformable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.Attachable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.item.Dye;
 
-public class Cactus extends GroundAttachable {
+public class Cactus extends GroundAttachable implements Transformable {
 	private Set<BlockMaterial> allowedNeighbours = new HashSet<BlockMaterial>();
 
 	public Cactus() {
@@ -92,5 +95,10 @@ public class Cactus extends GroundAttachable {
 		for (BlockMaterial mat : additions) {
 			this.allowedNeighbours.add(mat);
 		}
+	}
+
+	@Override
+	public ItemStack getResult() {
+		return new ItemStack(Dye.CACTUS_GREEN, 1);
 	}
 }

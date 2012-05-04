@@ -26,6 +26,7 @@
 package org.spout.vanilla.inventory;
 
 public enum Window {
+	PLAYER_INVENTORY(-1),
 	CHEST(0),
 	WORKBENCH(1),
 	FURNACE(2),

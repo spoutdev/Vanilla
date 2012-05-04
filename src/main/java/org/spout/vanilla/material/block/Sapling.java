@@ -28,12 +28,12 @@ package org.spout.vanilla.material.block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.FurnaceFuel;
+import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.generic.Plant;
 
-public class Sapling extends GroundAttachable implements Plant, FurnaceFuel {
+public class Sapling extends GroundAttachable implements Plant, Fuel {
 	public static final Sapling DEFAULT = register(new Sapling("Sapling"));
 	public static final Sapling SPRUCE = register(new Sapling("Spruce Sapling", 1, DEFAULT));
 	public static final Sapling BIRCH = register(new Sapling("Birch Sapling", 2, DEFAULT));

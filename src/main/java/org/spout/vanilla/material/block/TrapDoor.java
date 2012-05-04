@@ -27,10 +27,10 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.material.Material;
 
-import org.spout.vanilla.material.FurnaceFuel;
+import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class TrapDoor extends Solid implements FurnaceFuel {
+public class TrapDoor extends Solid implements Fuel {
 	public TrapDoor(String name, int id, int data, Material parent) {
 		super(name, id, data, parent);
 	}

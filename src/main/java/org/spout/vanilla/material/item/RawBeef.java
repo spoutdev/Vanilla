@@ -23,58 +23,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.item;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Transformable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Plant;
-import org.spout.vanilla.material.block.generic.Solid;
-import org.spout.vanilla.material.item.Coal;
+import org.spout.vanilla.material.item.generic.Food;
 
-public class Tree extends Solid implements Plant, Fuel, Transformable {
-	public static final Tree DEFAULT = register(new Tree("Wood"));
-	public static final Tree SPRUCE = register(new Tree("Spruce Wood", 1, DEFAULT));
-	public static final Tree BIRCH = register(new Tree("Birch Wood", 2, DEFAULT));
-	public static final Tree JUNGLE = register(new Tree("Jungle Wood", 3, DEFAULT));
+public class RawBeef extends Food implements Transformable {
 
-	private Tree(String name) {
-		super(name, 17);
-		this.setDefault();
-	}
-
-	private Tree(String name, int data, Tree parent) {
-		super(name, 17, data, parent);
-		this.setDefault();
-	}
-
-	private void setDefault() {
-		this.setHardness(2.0F).setResistance(3.3F).setOpacity((byte) 1);
-	}
-
-	@Override
-	public boolean hasGrowthStages() {
-		return false;
-	}
-
-	@Override
-	public int getNumGrowthStages() {
-		return 0;
-	}
-
-	@Override
-	public int getMinimumLightToGrow() {
-		return 0;
-	}
-
-	@Override
-	public int getFuelTicks() {
-		return 300;
+	public RawBeef() {
+		super("Raw Beef", 363, 3, FoodEffectType.HUNGER);
 	}
 
 	@Override
 	public ItemStack getResult() {
-		return new ItemStack(Coal.CHARCOAL, 1);
+		return new ItemStack(VanillaMaterials.STEAK, 1);
 	}
 }

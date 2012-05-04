@@ -40,7 +40,7 @@ public class OreDecorator implements BiomeDecorator {
 		World world = source.getWorld();
 		int[] iterations = new int[]{10, 20, 20, 2, 8, 1, 1, 1};
 		int[] amount = new int[]{32, 16, 8, 8, 7, 7, 6};
-		BlockMaterial[] type = new BlockMaterial[]{VanillaMaterials.GRAVEL, VanillaMaterials.COAL_ORE, VanillaMaterials.IRON_ORE, VanillaMaterials.GOLD_ORE, VanillaMaterials.REDSTONE_ORE, VanillaMaterials.DIAMOND_ORE, VanillaMaterials.LAPIS_ORE};
+		BlockMaterial[] type = new BlockMaterial[]{VanillaMaterials.GRAVEL, VanillaMaterials.COAL_ORE, VanillaMaterials.IRON_ORE, VanillaMaterials.GOLD_ORE, VanillaMaterials.REDSTONE_ORE, VanillaMaterials.DIAMOND_ORE, VanillaMaterials.LAPIS_LAZULI_ORE};
 
 		int[] maxHeight = new int[]{128, 128, 128, 128, 128, 64, 32, 16, 16, 32};
 

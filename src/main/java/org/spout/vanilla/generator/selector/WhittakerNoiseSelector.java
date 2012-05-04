@@ -35,7 +35,9 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 import net.royawesome.jlibnoise.module.source.RidgedMulti;
 import net.royawesome.jlibnoise.module.source.Voronoi;
 
+import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeSelector;
+import org.spout.vanilla.generator.VanillaBiomes;
 
 public class WhittakerNoiseSelector extends BiomeSelector {
 	private static double scale;
@@ -50,8 +52,7 @@ public class WhittakerNoiseSelector extends BiomeSelector {
 	private static Select oceanBeachDivide, mountainRangeSelector, finalElevationNoise;
 
 	public WhittakerNoiseSelector(double scale) {
-		this.scale = scale;
-
+		
 		//Creates the noise for rainfall distribution
 		rainfall = new Voronoi();
 		rainfall.setDisplacement(1.0);
@@ -150,7 +151,7 @@ public class WhittakerNoiseSelector extends BiomeSelector {
 	}
 
 	@Override
-	public int pickBiome(int x, int y, int z, long seed) {
+	public Biome pickBiome(int x, int y, int z, long seed) {
 		continentSelector.setSeed((int) seed);
 		rainfall.setSeed((int) seed * 2);
 		temp.setSeed((int) seed * 7);
@@ -166,57 +167,57 @@ public class WhittakerNoiseSelector extends BiomeSelector {
 		//TODO: make these conditions use the values from the biome classes themselves
 
 		if (elevation > 0.8) {
-			return 3; //mountains
+			return VanillaBiomes.MOUNTAINS; //mountains
 		} else if (elevation > 0.65) {
-			return 9; //small mountains
+			return VanillaBiomes.SMALL_MOUNTAINS; //small mountains
 		} else if (elevation == 0.1) {
 			if (rain > 0.6) {
-				return 6; //swamp
+				return VanillaBiomes.SWAMP; //swamp
 			} else {
-				return 8; //beach
+				return VanillaBiomes.BEACH; //beach
 			}
 		} else if (elevation == -1) {
-			return 0; //ocean
+			return VanillaBiomes.OCEAN; //ocean
 		} else {
 			if (temp < 0.2) {
 				if (rain > 0.6) {
-					return 5; //taiga
+					return VanillaBiomes.TAIGA; //taiga
 				} else {
-					return 7; //tundra
+					return VanillaBiomes.TUNDRA; //tundra
 				}
 			} else if (temp < 0.4) {
 				if (rain > 0.6) {
-					return 4; //forest
+					return VanillaBiomes.FOREST; //forest
 				} else {
-					return 5; //taiga
+					return VanillaBiomes.TAIGA; //taiga
 				}
 			} else if (temp < 0.6) {
 				if (rain > 0.8) {
-					return 10; //jungle
+					return VanillaBiomes.JUNGLE; //jungle
 				} else if (rain > 0.4) {
-					return 4; //forest
+					return VanillaBiomes.FOREST; //forest
 				} else {
-					return 1; //plains
+					return VanillaBiomes.PLAIN; //plains
 				}
 			} else if (temp < 0.8) {
 				if (rain > 0.8) {
-					return 10; //jungle
+					return VanillaBiomes.JUNGLE; //jungle
 				} else if (rain > 0.6) {
-					return 4; //forest
+					return VanillaBiomes.FOREST; //forest
 				} else if (rain > 0.2) {
-					return 1; //plains
+					return VanillaBiomes.PLAIN; //plains
 				} else {
-					return 2; //desert
+					return VanillaBiomes.DESERT; //desert
 				}
 			} else {
 				if (rain > 0.8) {
-					return 10; //jungle
+					return VanillaBiomes.JUNGLE; //jungle
 				} else if (rain > 0.6) {
-					return 4; //forest
+					return VanillaBiomes.FOREST; //forest
 				} else if (rain > 0.4) {
-					return 1; //plains
+					return VanillaBiomes.PLAIN; //plains
 				} else {
-					return 2; //desert
+					return VanillaBiomes.DESERT; //desert
 				}
 			}
 		}

@@ -59,7 +59,7 @@ public class NormalGenerator extends VanillaGeneratorBase {
 
 	public Vector3 getSafeSpawn() {
 		int shift = 0;
-		while (selector.pickBiome(shift, 0, this.seed) == 0) {
+		while (selector.pickBiome(shift, 0, this.seed) == VanillaBiomes.OCEAN) {
 			shift += 16;
 		}
 		return new Vector3((float) shift + 0.5F, 75.5F, 0.5F);

@@ -26,9 +26,9 @@
 package org.spout.vanilla.generator;
 
 import org.spout.api.generator.biome.BiomeDecorator;
-import org.spout.api.generator.biome.BiomeType;
+import org.spout.api.generator.biome.Biome;
 
-public abstract class VanillaBiomeType extends BiomeType {
+public abstract class VanillaBiomeType extends Biome {
 	private final int biomeId;
 	//TODO: actually implement these in the selector instead of hard coding them in
 	private float minTemp = 0f, maxTemp = 0f;

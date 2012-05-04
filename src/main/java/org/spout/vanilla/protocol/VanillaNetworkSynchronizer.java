@@ -34,7 +34,7 @@ import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.generator.biome.BiomeGenerator;
-import org.spout.api.generator.biome.BiomeType;
+import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
@@ -161,7 +161,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 					final long seed = p.getWorld().getSeed();
 					for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
 						for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
-							BiomeType biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
+							Biome biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
 							if (biome instanceof VanillaBiomeType) {
 								biomeData[(dz & (Chunk.CHUNK_SIZE - 1)) << 4 | (dx & (Chunk.CHUNK_SIZE - 1))] = (byte) ((VanillaBiomeType) biome).getBiomeId();
 							}
@@ -247,7 +247,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				final long seed = c.getWorld().getSeed();
 				for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
 					for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
-						BiomeType biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
+						Biome biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
 						if (biome instanceof VanillaBiomeType) {
 							biomeData[(dz & (Chunk.CHUNK_SIZE - 1)) << 4 | (dx & (Chunk.CHUNK_SIZE - 1))] = (byte) ((VanillaBiomeType) biome).getBiomeId();
 						}

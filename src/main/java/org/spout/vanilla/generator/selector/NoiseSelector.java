@@ -28,6 +28,7 @@ package org.spout.vanilla.generator.selector;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Voronoi;
 
+import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeSelector;
 
 /**
@@ -59,10 +60,10 @@ public class NoiseSelector extends BiomeSelector {
 	}
 
 	@Override
-	public int pickBiome(int x, int y, int z, long seed) {
+	public Biome pickBiome(int x, int y, int z, long seed) {
 		base.setSeed((int) seed);
 		noise.setSeed((int) seed);
 		//Pick a biome at 256 height for both x and z
-		return (int) (noise.GetValue(x / 256.0 + 0.05, y + 0.05, z / 256.0 + 0.05) * 64);
+		return parent.getBiomeRaw((int) (noise.GetValue(x / 256.0 + 0.05, y + 0.05, z / 256.0 + 0.05) * 64));
 	}
 }

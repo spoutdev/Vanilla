@@ -25,11 +25,11 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import java.util.List;
+
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
-
-import java.util.List;
 
 public final class SpawnMobMessage extends Message {
 	private final int id, type, x, y, z, yaw, pitch, headYaw;

@@ -31,7 +31,6 @@ import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 public class Coal extends VanillaItemMaterial implements Fuel {
 	public static final Coal COAL = register(new Coal("Coal"));
 	public static final Coal CHARCOAL = register(new Coal("Charcoal", 1, COAL));
-	
 	public final float BURN_TIME = 80;
 
 	private Coal(String name) {

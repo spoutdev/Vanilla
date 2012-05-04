@@ -25,7 +25,9 @@
  */
 package org.spout.vanilla.controller.living.creature.neutral;
 
-import org.spout.api.entity.Entity;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Neutral;
@@ -33,12 +35,7 @@ import org.spout.vanilla.controller.living.creature.hostile.Zombie;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class PigZombie extends Zombie implements Neutral {
-	private Entity parent;
-
 	public PigZombie() {
 		super(VanillaControllerTypes.PIG_ZOMBIE);
 	}
@@ -46,9 +43,8 @@ public class PigZombie extends Zombie implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(20);
-		parent.setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		getParent().setMaxHealth(20);
+		getParent().setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

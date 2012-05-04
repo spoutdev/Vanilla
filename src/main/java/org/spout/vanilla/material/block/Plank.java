@@ -26,6 +26,7 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.material.source.DataSource;
+
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.generic.Solid;
 
@@ -35,7 +36,6 @@ public class Plank extends Solid implements Fuel {
 	public static final Plank BIRCH = register(new Plank("Birch Plank", WoodType.BIRCH, PLANK));
 	public static final Plank JUNGLE = register(new Plank("Jungle Plank", WoodType.JUNGLE, PLANK));
 	private final WoodType type;
-	
 	public final float BURN_TIME = 15.f;
 
 	public Plank(String name) {

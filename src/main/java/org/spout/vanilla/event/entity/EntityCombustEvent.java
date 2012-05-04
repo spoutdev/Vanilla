@@ -42,7 +42,6 @@ public class EntityCombustEvent extends EntityEvent {
 
 	/**
 	 * Gets the source of this event.
-	 *
 	 * @return An Source that is the source of the event.
 	 */
 	public Source getSource() {
@@ -51,7 +50,6 @@ public class EntityCombustEvent extends EntityEvent {
 
 	/**
 	 * Sets the source of this event.
-	 *
 	 * @param source The source of this event.
 	 */
 	public void setSource(Source source) {
@@ -60,7 +58,6 @@ public class EntityCombustEvent extends EntityEvent {
 
 	/**
 	 * Gets the time that the controller should burn for.
-	 *
 	 * @return The time in seconds.
 	 */
 	public int getDuration() {
@@ -69,7 +66,6 @@ public class EntityCombustEvent extends EntityEvent {
 
 	/**
 	 * Sets the time that the controller should burn for.
-	 *
 	 * @param duration The time in seconds.
 	 */
 	public void setDuration(int duration) {

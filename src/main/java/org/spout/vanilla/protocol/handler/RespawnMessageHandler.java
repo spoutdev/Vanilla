@@ -32,10 +32,10 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
-import org.spout.vanilla.generator.flat.FlatGenerator;
-import org.spout.vanilla.generator.nether.NetherGenerator;
-import org.spout.vanilla.generator.normal.NormalGenerator;
-import org.spout.vanilla.generator.theend.TheEndGenerator;
+import org.spout.vanilla.world.generator.flat.FlatGenerator;
+import org.spout.vanilla.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 

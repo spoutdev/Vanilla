@@ -37,7 +37,6 @@ public class HealthChangeReason extends Reason {
 
 	/**
 	 * Returns the type of reason.
-	 *
 	 * @return
 	 */
 	public Type getType() {

@@ -70,7 +70,6 @@ public abstract class Living extends VanillaActionController {
 
 	/**
 	 * Sets the yaw of a controller's head for the next tick.
-	 *
 	 * @param headYaw
 	 */
 	public void setHeadYaw(int headYaw) {

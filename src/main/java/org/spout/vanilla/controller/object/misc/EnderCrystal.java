@@ -25,11 +25,51 @@
  */
 package org.spout.vanilla.controller.object.misc;
 
+import java.util.Set;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.action.GravityAction;
 import org.spout.vanilla.controller.object.Substance;
+import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.util.explosion.ExplosionModels;
 
 public class EnderCrystal extends Substance {
-	protected EnderCrystal() {
+	public EnderCrystal() {
 		super(VanillaControllerTypes.ENDER_CRYSTAL);
+	}
+
+	@Override
+	public void onAttached() {
+		//TODO Remove when collisions are fixed.
+		registerAction(new GravityAction());
+		getParent().setMaxHealth(1);
+		getParent().setHealth(1, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+	}
+
+	@Override
+	public void onTick(float dt) {
+		super.onTick(dt);
+		if (getParent().isDead()) {
+			Point point = getParent().getLastTransform().getPosition();
+			ExplosionModels.SPHERICAL.execute(point, 4.0f);
+
+			Set<Entity> entities = point.getWorld().getRegion((int) point.getX(), (int) point.getY(), (int) point.getZ()).getAll();
+
+			Vector3 explosionMaximun = new Vector3(point.getX() + 6, point.getY() + 6, point.getZ() + 6);
+			for (Entity e : entities) {
+				Point p = e.getPosition();
+				if (Vector3.distance(p, explosionMaximun) <= 6) {
+					//TODO move this to an explosion utility class as it will calculate both damage and knockback of entities
+				}
+			}
+		}
+		if (getParent().getPitch() != 0) {
+			pitch(0.0f);
+		}
+		yaw(getRandom().nextFloat() * 360f);
 	}
 }

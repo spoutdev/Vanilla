@@ -53,10 +53,10 @@ import org.spout.api.util.map.TIntPairHashSet;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.generator.VanillaBiomeType;
-import org.spout.vanilla.generator.flat.FlatGenerator;
-import org.spout.vanilla.generator.nether.NetherGenerator;
-import org.spout.vanilla.generator.normal.NormalGenerator;
+import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.flat.FlatGenerator;
+import org.spout.vanilla.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.protocol.msg.*;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
@@ -150,8 +150,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 					for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
 						for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
 							Biome biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
-							if (biome instanceof VanillaBiomeType) {
-								biomeData[(dz & (Chunk.CHUNK_SIZE - 1)) << 4 | (dx & (Chunk.CHUNK_SIZE - 1))] = (byte) ((VanillaBiomeType) biome).getBiomeId();
+							if (biome instanceof VanillaBiome) {
+								biomeData[(dz & (Chunk.CHUNK_SIZE - 1)) << 4 | (dx & (Chunk.CHUNK_SIZE - 1))] = (byte) ((VanillaBiome) biome).getBiomeId();
 							}
 						}
 					}
@@ -236,8 +236,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
 					for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
 						Biome biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
-						if (biome instanceof VanillaBiomeType) {
-							biomeData[(dz & (Chunk.CHUNK_SIZE - 1)) << 4 | (dx & (Chunk.CHUNK_SIZE - 1))] = (byte) ((VanillaBiomeType) biome).getBiomeId();
+						if (biome instanceof VanillaBiome) {
+							biomeData[(dz & (Chunk.CHUNK_SIZE - 1)) << 4 | (dx & (Chunk.CHUNK_SIZE - 1))] = (byte) ((VanillaBiome) biome).getBiomeId();
 						}
 					}
 				}

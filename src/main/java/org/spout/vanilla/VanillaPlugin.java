@@ -32,6 +32,7 @@ import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
 import org.spout.api.entity.type.ControllerType;
+import org.spout.api.event.world.WorldLoadEvent;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
@@ -48,10 +49,10 @@ import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
 import org.spout.vanilla.controller.world.sky.VanillaSky;
-import org.spout.vanilla.generator.flat.FlatGenerator;
-import org.spout.vanilla.generator.nether.NetherGenerator;
-import org.spout.vanilla.generator.normal.NormalGenerator;
-import org.spout.vanilla.generator.theend.TheEndGenerator;
+import org.spout.vanilla.world.generator.flat.FlatGenerator;
+import org.spout.vanilla.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
@@ -65,7 +66,7 @@ import java.util.logging.Level;
 public class VanillaPlugin extends CommonPlugin {
 	public static final int MINECRAFT_PROTOCOL_ID = 29;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
-	private static CommonPlugin instance;
+	private static VanillaPlugin instance;
 	private Engine game;
 	private VanillaConfiguration config;
 
@@ -131,21 +132,17 @@ public class VanillaPlugin extends CommonPlugin {
 	}
 
 	private void setupWorlds() {
-		World normalWorld;
-		World flatWorld;
-		NormalGenerator normalGen = new NormalGenerator();
+		//Initialize generators.
+		NormalGenerator normGen = new NormalGenerator();
+		FlatGenerator flatGen = new FlatGenerator();
+		NetherGenerator netherGen = new NetherGenerator();
+		TheEndGenerator endGen = new TheEndGenerator();
 
-		//TODO This is bad...SpoutEngine should have a "setDefaultWorld"
-		if (VanillaConfiguration.FLATWORLD.getBoolean()) {
-			flatWorld = game.loadWorld("world_flat", new FlatGenerator());
-			normalWorld = game.loadWorld("world", normalGen);
-		} else {
-			normalWorld = game.loadWorld("world", normalGen);
-			flatWorld = game.loadWorld("world_flat", new FlatGenerator());
-		}
-
-		World nether = game.loadWorld("world_nether", new NetherGenerator());
-		World end = game.loadWorld("world_end", new TheEndGenerator());
+		//Load worlds
+		World normal = game.loadWorld("world", normGen);
+		World flat = game.loadWorld("world_flat", flatGen);
+		World nether = game.loadWorld("world_nether", netherGen);
+		World end = game.loadWorld("world_end", endGen);
 
 		//Create the sky.
 		NormalSky normSky = new NormalSky();
@@ -153,31 +150,35 @@ public class VanillaPlugin extends CommonPlugin {
 		TheEndSky endSky = new TheEndSky();
 
 		//Register skies to the map
-		VanillaSky.setSky(normalWorld, normSky);
+		VanillaSky.setSky(normal, normSky);
 		VanillaSky.setSky(nether, netherSky);
 		VanillaSky.setSky(end, endSky);
 
-		//Workaround for setting the spawn within the generator
-		normalGen.setSeed(normalWorld.getSeed());
-		normalWorld.setSpawnPoint(new Transform(new Point(normalGen.getSafeSpawn(), normalWorld), Quaternion.IDENTITY, Vector3.ONE));
-		normalWorld.createAndSpawnEntity(new Point(normalGen.getSafeSpawn(), normalWorld), normSky);
-		normalWorld.createAndSpawnEntity(new Point(normalGen.getSafeSpawn(), normalWorld), new PointObserver());
+		//Spawn points
+		Point normalSpawn = normGen.getSafeSpawn(normal);
+		Point flatSpawn = flatGen.getSafeSpawn(flat);
+		Point netherSpawn = netherGen.getSafeSpawn(nether); //TODO Is this set based on the nether portal? Does the nether actually have a "spawn point"?
+		Point endSpawn = endGen.getSafeSpawn(end); //TODO Needs to probably be set per end portal?
 
-		//TODO Have these spawn point set by their generators.
-		flatWorld.setSpawnPoint(new Transform(new Point(flatWorld, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
-		flatWorld.createAndSpawnEntity(new Point(normalWorld, 0.f, 0.f, 0.f), normSky);
-		flatWorld.createAndSpawnEntity(new Point(normalWorld, 0.5F, 64.5F, 0.5F), new PointObserver());
+		//Set world spawns, spawn the skies' entity, have spawn's observed by the point observer.
+		normal.setSpawnPoint(new Transform(normalSpawn, Quaternion.IDENTITY, Vector3.ONE));
+		normal.createAndSpawnEntity(new Point(normal, 0, 0, 0), normSky);
+		normal.createAndSpawnEntity(normalSpawn, new PointObserver());
 
-		nether.setSpawnPoint(new Transform(new Point(nether, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
-		nether.createAndSpawnEntity(new Point(nether, 0.f, 0.f, 0.f), netherSky);
-		nether.createAndSpawnEntity(new Point(nether, 0.5F, 64.5F, 0.5F), new PointObserver());
+		flat.setSpawnPoint(new Transform(flatSpawn, Quaternion.IDENTITY, Vector3.ONE));
+		flat.createAndSpawnEntity(new Point(flat, 0, 0, 0), normSky);
+		flat.createAndSpawnEntity(flatSpawn, new PointObserver());
 
-		end.setSpawnPoint(new Transform(new Point(end, 0.5F, 64.5F, 0.5F), Quaternion.IDENTITY, Vector3.ONE));
-		end.createAndSpawnEntity(new Point(end, 0.f, 0.f, 0.f), endSky);
-		end.createAndSpawnEntity(new Point(end, 0.5F, 64.5F, 0.5F), new PointObserver());
+		nether.setSpawnPoint(new Transform(netherSpawn, Quaternion.IDENTITY, Vector3.ONE));
+		nether.createAndSpawnEntity(new Point(nether, 0, 0, 0), netherSky);
+		nether.createAndSpawnEntity(netherSpawn, new PointObserver());
+
+		end.setSpawnPoint(new Transform(endSpawn, Quaternion.IDENTITY, Vector3.ONE));
+		end.createAndSpawnEntity(new Point(end, 0, 0, 0), endSky);
+		end.createAndSpawnEntity(endSpawn, new PointObserver());
 	}
 
-	public static CommonPlugin getInstance() {
+	public static VanillaPlugin getInstance() {
 		return instance;
 	}
 }

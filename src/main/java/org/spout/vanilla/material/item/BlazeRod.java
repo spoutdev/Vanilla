@@ -30,7 +30,7 @@ import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
 public class BlazeRod extends VanillaItemMaterial implements Fuel {
 	public final float BURN_TIME = 120.f;
-	
+
 	public BlazeRod(String name, int id) {
 		super(name, id);
 	}

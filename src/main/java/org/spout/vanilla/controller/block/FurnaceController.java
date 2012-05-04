@@ -44,7 +44,7 @@ public class FurnaceController extends VanillaBlockController {
 		// Start the burn timer
 		if (inventory.hasFuel() && burnTime <= 0) {
 			Fuel fuel = (Fuel) inventory.getFuel().getMaterial();
-			burnTime =  fuel.getFuelTime();
+			burnTime = fuel.getFuelTime();
 		}
 
 		// Decrement the burn timer
@@ -69,14 +69,13 @@ public class FurnaceController extends VanillaBlockController {
 	public float getBurnTime() {
 		return burnTime;
 	}
-	
+
 	/**
 	 * Returns the burn time in Minecraft Ticks
 	 * @return
 	 */
-	public int getBurnTimeTicks(){
-		return (int)(burnTime * 20);
-		
+	public int getBurnTimeTicks() {
+		return (int) (burnTime * 20);
 	}
 
 	public void setProgress(int progress) {
@@ -86,11 +85,12 @@ public class FurnaceController extends VanillaBlockController {
 	public float getProgress() {
 		return progress;
 	}
+
 	/**
 	 * Returns the progress in Minecraft Ticks
 	 * @return
 	 */
-	public int getProgressTicks() {		
-		return (int)(progress * 20);
+	public int getProgressTicks() {
+		return (int) (progress * 20);
 	}
 }

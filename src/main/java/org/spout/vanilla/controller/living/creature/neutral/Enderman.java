@@ -39,28 +39,9 @@ import java.util.Set;
 public class Enderman extends Creature implements Neutral {
 	private BlockMaterial heldItem;
 	private BlockMaterial previouslyHeldItem;
-	//private Entity parent; @Zidane: This doesn't seem right, it's always null bc you don't override attachToEntity to give it a value, also seems not needed... we got getParent
 
 	public Enderman() {
 		super(VanillaControllerTypes.ENDERMAN);
-	}
-
-	public BlockMaterial getPreviouslyHeldItem() {
-		return previouslyHeldItem;
-	}
-
-	public BlockMaterial getHeldItem() {
-		return heldItem;
-	}
-
-	public void setHeldItem(BlockMaterial heldItem) {
-		this.heldItem = heldItem;
-	}
-
-	@Override
-	public void finalizeTick() {
-		super.finalizeTick();
-		this.previouslyHeldItem = heldItem;
 	}
 
 	@Override
@@ -68,6 +49,12 @@ public class Enderman extends Creature implements Neutral {
 		super.onAttached();
 		getParent().setMaxHealth(40);
 		getParent().setHealth(40, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+	}
+
+	@Override
+	public void finalizeTick() {
+		super.finalizeTick();
+		this.previouslyHeldItem = heldItem;
 	}
 
 	@Override
@@ -85,5 +72,17 @@ public class Enderman extends Creature implements Neutral {
 		}
 
 		return drops;
+	}
+
+	public BlockMaterial getPreviouslyHeldItem() {
+		return previouslyHeldItem;
+	}
+
+	public BlockMaterial getHeldItem() {
+		return heldItem;
+	}
+
+	public void setHeldItem(BlockMaterial heldItem) {
+		this.heldItem = heldItem;
 	}
 }

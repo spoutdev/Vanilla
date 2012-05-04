@@ -26,13 +26,13 @@
 package org.spout.vanilla.material.item;
 
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Furnace;
 import org.spout.vanilla.material.item.generic.Food;
 
 public class RawBeef extends Food implements TimedCraftable {
-
 	public RawBeef() {
 		super("Raw Beef", 363, 3, FoodEffectType.HUNGER);
 	}
@@ -41,7 +41,7 @@ public class RawBeef extends Food implements TimedCraftable {
 	public ItemStack getResult() {
 		return new ItemStack(VanillaMaterials.STEAK, 1);
 	}
-	
+
 	@Override
 	public float getCraftTime() {
 		return Furnace.SMELT_TIME;

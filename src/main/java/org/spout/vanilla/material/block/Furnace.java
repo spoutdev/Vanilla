@@ -44,6 +44,7 @@ import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class Furnace extends Solid {
 	public static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
+	public static final float SMELT_TIME = 10.f;
 
 	public Furnace() {
 		super("Furnace", 61);

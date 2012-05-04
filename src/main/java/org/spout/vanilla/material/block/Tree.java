@@ -27,12 +27,12 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.Transformable;
+import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.block.generic.Plant;
 import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.material.item.Coal;
 
-public class Tree extends Solid implements Plant, Fuel, Transformable {
+public class Tree extends Solid implements Plant, Fuel, TimedCraftable {
 	public static final Tree DEFAULT = register(new Tree("Wood"));
 	public static final Tree SPRUCE = register(new Tree("Spruce Wood", 1, DEFAULT));
 	public static final Tree BIRCH = register(new Tree("Birch Wood", 2, DEFAULT));
@@ -75,5 +75,10 @@ public class Tree extends Solid implements Plant, Fuel, Transformable {
 	@Override
 	public ItemStack getResult() {
 		return new ItemStack(Coal.CHARCOAL, 1);
+	}
+	
+	@Override
+	public float getCraftTime() {
+		return Furnace.SMELT_TIME;
 	}
 }

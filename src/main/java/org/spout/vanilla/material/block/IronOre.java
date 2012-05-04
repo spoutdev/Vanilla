@@ -26,11 +26,11 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.material.Transformable;
+import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Ore;
 
-public class IronOre extends Ore implements Transformable {
+public class IronOre extends Ore implements TimedCraftable {
 
 	public IronOre() {
 		super("Iron Ore", 15);
@@ -39,5 +39,10 @@ public class IronOre extends Ore implements Transformable {
 	@Override
 	public ItemStack getResult() {
 		return new ItemStack(VanillaMaterials.IRON_INGOT, 1);
+	}
+	
+	@Override
+	public float getCraftTime() {
+		return Furnace.SMELT_TIME;
 	}
 }

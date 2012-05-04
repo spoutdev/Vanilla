@@ -26,11 +26,11 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.material.Transformable;
+import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.block.generic.Ore;
 import org.spout.vanilla.material.item.Dye;
 
-public class LapisLazuliOre extends Ore implements Transformable {
+public class LapisLazuliOre extends Ore implements TimedCraftable {
 
 	public LapisLazuliOre() {
 		super("Lapis Lazuli Ore", 21);
@@ -39,5 +39,10 @@ public class LapisLazuliOre extends Ore implements Transformable {
 	@Override
 	public ItemStack getResult() {
 		return new ItemStack(Dye.LAPIS_LAZULI, 1);
+	}
+	
+	@Override
+	public float getCraftTime() {
+		return Furnace.SMELT_TIME;
 	}
 }

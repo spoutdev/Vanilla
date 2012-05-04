@@ -26,11 +26,11 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.material.Transformable;
+import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class Cobblestone extends Solid implements Transformable {
+public class Cobblestone extends Solid implements TimedCraftable {
 
 	public Cobblestone() {
 		super("Cobblestone", 4);
@@ -39,5 +39,10 @@ public class Cobblestone extends Solid implements Transformable {
 	@Override
 	public ItemStack getResult() {
 		return new ItemStack(VanillaMaterials.STONE, 1);
+	}
+	
+	@Override
+	public float getCraftTime() {
+		return Furnace.SMELT_TIME;
 	}
 }

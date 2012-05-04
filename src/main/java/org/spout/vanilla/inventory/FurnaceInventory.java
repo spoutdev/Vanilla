@@ -29,7 +29,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.Transformable;
+import org.spout.vanilla.material.TimedCraftable;
 
 /**
  * Represents a furnace inventory belonging to a furnace controller.
@@ -93,7 +93,7 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 	 * @return true if has ingredient in slot.
 	 */
 	public boolean hasIngredient() {
-		return getIngredient() != null && getIngredient().getMaterial() instanceof Transformable;
+		return getIngredient() != null && getIngredient().getMaterial() instanceof TimedCraftable;
 	}
 
 	@Override

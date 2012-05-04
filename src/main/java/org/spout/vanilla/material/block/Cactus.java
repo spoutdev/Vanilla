@@ -31,7 +31,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.material.Transformable;
+import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.Attachable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
@@ -40,7 +40,7 @@ import org.spout.vanilla.material.item.Dye;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Cactus extends GroundAttachable implements Transformable {
+public class Cactus extends GroundAttachable implements TimedCraftable {
 	private Set<BlockMaterial> allowedNeighbours = new HashSet<BlockMaterial>();
 
 	public Cactus() {
@@ -92,5 +92,10 @@ public class Cactus extends GroundAttachable implements Transformable {
 	@Override
 	public ItemStack getResult() {
 		return new ItemStack(Dye.CACTUS_GREEN, 1);
+	}
+
+	@Override
+	public float getCraftTime() {
+		return Furnace.SMELT_TIME;
 	}
 }

@@ -26,11 +26,12 @@
 package org.spout.vanilla.material.item;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.material.Transformable;
+import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Furnace;
 import org.spout.vanilla.material.item.generic.Food;
 
-public class RawPorkchop extends Food implements Transformable {
+public class RawPorkchop extends Food implements TimedCraftable {
 
 	public RawPorkchop() {
 		super("Raw Porkchop", 319, 3, FoodEffectType.HUNGER);
@@ -39,5 +40,10 @@ public class RawPorkchop extends Food implements Transformable {
 	@Override
 	public ItemStack getResult() {
 		return new ItemStack(VanillaMaterials.COOKED_PORKCHOP, 1);
+	}
+	
+	@Override
+	public float getCraftTime() {
+		return Furnace.SMELT_TIME;
 	}
 }

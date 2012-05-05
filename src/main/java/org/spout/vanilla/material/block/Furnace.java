@@ -70,27 +70,25 @@ public class Furnace extends Solid {
 
 		// Get the controller and assign a new window id for the session.
 		VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
-		int windowId = InventoryUtil.nextWindowId();
-		vanillaPlayer.setWindowId(windowId);
 		Inventory inventory = entity.getInventory();
 		FurnaceController furnace = (FurnaceController) block.getController();
 		Window window = Window.FURNACE;
 
-		// Dispose items into new inventory
 		if (furnace == null) {
 			System.out.println("Furnace is null");
 			return;
 		}
 
+		// Dispose items into new inventory
 		FurnaceInventory furnaceInventory = furnace.getInventory();
 		for (int slot = 0; slot < furnaceInventory.getSize() - 4; slot++) {
 			furnaceInventory.setItem(inventory.getItem(slot), slot);
 		}
 
+		// Add the player who opened the inventory as a viewer
 		furnaceInventory.addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
 		vanillaPlayer.setActiveInventory(furnaceInventory);
-		vanillaPlayer.setActiveWindow(window);
-		sendPacket(vanillaPlayer.getPlayer(), new OpenWindowMessage(windowId, window.getId(), "Furnace", inventory.getSize()), new ProgressBarMessage(windowId, FIRE_ICON, furnace.getBurnTimeTicks()), new ProgressBarMessage(windowId, PROGRESS_ARROW, furnace.getProgressTicks()));
+		vanillaPlayer.openWindow(window, "Furnace", furnaceInventory.getSize());
 	}
 
 	@Override

@@ -43,6 +43,7 @@ public class FurnaceController extends VanillaBlockController {
 	public void onTick(float dt) {
 		// Start the burn timer
 		if (inventory.hasFuel() && burnTime <= 0) {
+			System.out.println("Has fuel");
 			Fuel fuel = (Fuel) inventory.getFuel().getMaterial();
 			burnTime = fuel.getFuelTime();
 		}

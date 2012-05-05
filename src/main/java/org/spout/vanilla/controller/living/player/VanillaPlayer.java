@@ -31,6 +31,7 @@ import java.util.Set;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+import static org.spout.vanilla.util.InventoryUtil.nextWindowId;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
@@ -52,14 +53,7 @@ import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.inventory.VanillaPlayerInventory;
 import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.material.block.Furnace;
-import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
-import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
-import org.spout.vanilla.protocol.msg.KeepAliveMessage;
-import org.spout.vanilla.protocol.msg.PlayerListMessage;
-import org.spout.vanilla.protocol.msg.ProgressBarMessage;
-import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
-import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import org.spout.vanilla.protocol.msg.*;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to
@@ -145,6 +139,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 			lastUserList = 0;
 		}
 
+		// Update window if opened
+		if (activeWindow != null && activeWindow.equals(Window.FURNACE) && activeInventory instanceof FurnaceInventory) {
+			FurnaceInventory inventory = (FurnaceInventory) activeInventory;
+			FurnaceController furnace = inventory.getOwner();
+			sendPacket(owner, new ProgressBarMessage(windowId, Furnace.PROGRESS_ARROW, furnace.getProgressTicks()), new ProgressBarMessage(windowId, Furnace.FIRE_ICON, furnace.getBurnTimeTicks()));
+		}
+
 		if (isSurvival()) {
 			survivalTick(dt);
 		} else {
@@ -173,13 +174,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (foodTimer >= 80) {
 			updateHealth();
 			foodTimer = 0;
-		}
-
-		// Update furnace window if opened
-		if (activeWindow != null && activeWindow.equals(Window.FURNACE) && activeInventory instanceof FurnaceInventory) {
-			FurnaceInventory inventory = (FurnaceInventory) activeInventory;
-			FurnaceController furnace = inventory.getOwner();
-			sendPacket(owner, new ProgressBarMessage(windowId, Furnace.PROGRESS_ARROW, furnace.getProgressTicks()), new ProgressBarMessage(windowId, Furnace.FIRE_ICON, furnace.getBurnTimeTicks()));
 		}
 	}
 
@@ -488,18 +482,18 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.exhaustion = exhaustion;
 	}
 
-	public void setActiveWindow(Window activeWindow) {
+	public void openWindow(Window activeWindow, String title, int slots) {
 		this.activeWindow = activeWindow;
+		this.windowId = nextWindowId();
+		sendPacket(owner, new OpenWindowMessage(windowId, activeWindow.getId(), title, slots));
 	}
-
-	public Window getActiveWindow() {
-		return activeWindow;
+	
+	public void closeWindow() {
+		this.activeWindow = null;
+		sendPacket(owner, new CloseWindowMessage(windowId));
+		this.windowId = 0;
 	}
-
-	public void setWindowId(int windowId) {
-		this.windowId = windowId;
-	}
-
+	
 	public int getWindowId() {
 		return windowId;
 	}

@@ -36,6 +36,8 @@ public abstract class Living extends VanillaActionController {
 	private int nextHeadYaw = 0;
 	private boolean headYawChanged;
 
+	protected boolean crouching;
+
 	protected Living(VanillaControllerType type) {
 		super(type);
 	}
@@ -82,5 +84,13 @@ public abstract class Living extends VanillaActionController {
 
 	public boolean headYawChanged() {
 		return headYawChanged;
+	}
+
+	public boolean isCrouching() {
+		return crouching;
+	}
+
+	public void setCrouching(boolean crouching) {
+		this.crouching = crouching;
 	}
 }

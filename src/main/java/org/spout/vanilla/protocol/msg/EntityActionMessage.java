@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.msg;
 import org.spout.api.protocol.Message;
 
 public final class EntityActionMessage extends Message {
-	public static final int ACTION_SNEAKING = 1;
-	public static final int ACTION_STOP_SNEAKING = 2;
+	public static final int ACTION_CROUCH = 1;
+	public static final int ACTION_UNCROUCH = 2;
 	public static final int ACTION_LEAVE_BED = 3;
 	public static final int ACTION_START_SPRINTING = 4;
 	public static final int ACTION_STOP_SPRINTING = 5;

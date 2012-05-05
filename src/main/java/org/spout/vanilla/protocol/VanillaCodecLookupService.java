@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol;
 import org.spout.api.protocol.CodecLookupService;
 import org.spout.api.protocol.common.codec.CustomDataCodec;
 
+import org.spout.vanilla.protocol.codec.AnimationCodec;
 import org.spout.vanilla.protocol.codec.AttachEntityCodec;
 import org.spout.vanilla.protocol.codec.BlockActionCodec;
 import org.spout.vanilla.protocol.codec.BlockChangeCodec;
@@ -41,7 +42,6 @@ import org.spout.vanilla.protocol.codec.CreativeCodec;
 import org.spout.vanilla.protocol.codec.DestroyEntityCodec;
 import org.spout.vanilla.protocol.codec.EnchantItemCodec;
 import org.spout.vanilla.protocol.codec.EntityActionCodec;
-import org.spout.vanilla.protocol.codec.EntityAnimationCodec;
 import org.spout.vanilla.protocol.codec.EntityEffectCodec;
 import org.spout.vanilla.protocol.codec.EntityEquipmentCodec;
 import org.spout.vanilla.protocol.codec.EntityHeadYawCodec;
@@ -124,7 +124,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x0B */
 			bind(PlayerPositionCodec.class);
 			/* 0x0C */
-			bind(PlayerLookCodec.class); //TODO rename Player Look on the minecraft protocol page
+			bind(PlayerLookCodec.class);
 			/* 0x0D */
 			bind(PlayerPositionLookCodec.class);
 			/* 0x0E */
@@ -136,7 +136,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x11 */
 			bind(UseBedCodec.class);
 			/* 0x12 */
-			bind(EntityAnimationCodec.class);
+			bind(AnimationCodec.class);
 			/* 0x13 */
 			bind(EntityActionCodec.class);
 			/* 0x14 */

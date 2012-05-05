@@ -201,8 +201,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int y = c.getY();// + SEALEVEL_CHUNK;
 		int z = c.getZ();
 
-		//System.out.println("Sending chunk (" + x + ", " + y + ", " + z + ") " + c);
-
 		if (y < 0 || y >= c.getWorld().getHeight() >> 4) {
 			return;
 		}

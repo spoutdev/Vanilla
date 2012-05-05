@@ -59,8 +59,6 @@ public class Snow extends Solid implements VanillaMaterial {
 			ItemStack holding = entity.getInventory().getCurrentItem();
 
 			if (holding != null && holding.getMaterial() instanceof Spade) {
-				System.out.println(block.toString());
-				System.out.println(holding.getMaterial().toString());
 				VanillaMaterials.SNOW.setDrop(VanillaMaterials.SNOWBALL);
 			} else {
 				VanillaMaterials.SNOW.setDrop(null);

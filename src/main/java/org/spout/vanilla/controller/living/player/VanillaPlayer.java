@@ -70,7 +70,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected long unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt(), lastPing = 0, lastUserList = 0, foodTimer = 0;
 	protected short count = 0, ping, hunger = 20;
 	protected float foodSaturation = 5.0f, exhaustion = 0.0f;
-	protected boolean sneaking, sprinting, onGround, poisoned;
+	protected boolean crouching, sprinting, onGround, poisoned;
 	protected final Vector3 moveSpeed = new Vector3(10, 0, 0), horizSpeed = new Vector3(0, 0, -10);
 	protected Inventory activeInventory;
 	protected ItemStack itemOnCursor;
@@ -331,22 +331,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public boolean isVisibleFor(Player player) {
 		return !invisibleFor.contains(player);
-	}
-
-	/**
-	 * Sets whether or not the player is sneaking.
-	 * @param sneaking
-	 */
-	public void setSneaking(boolean sneaking) {
-		this.sneaking = sneaking;
-	}
-
-	/**
-	 * Whether or not the player is sneaking.
-	 * @return true if player is sneaking
-	 */
-	public boolean isSneaking() {
-		return sneaking;
 	}
 
 	/**

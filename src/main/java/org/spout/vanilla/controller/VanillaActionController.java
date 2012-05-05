@@ -44,7 +44,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.protocol.msg.EntityAnimationMessage;
+import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 
 /**
@@ -219,7 +219,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 			if (fireTicks % 20 == 0) {
 				damage(1);
-				broadcastPacket(new EntityAnimationMessage(getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_HURT));
+				broadcastPacket(new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_HURT), new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_HURT));
 			}
 
 			--fireTicks;
@@ -246,7 +246,7 @@ public abstract class VanillaActionController extends ActionController implement
 	public void damage(int amount, boolean sendHurtMessage) {
 		getParent().setHealth(getParent().getHealth() - amount, new HealthChangeReason(HealthChangeReason.Type.UNKNOWN));
 		if (sendHurtMessage) {
-			broadcastPacket(new EntityAnimationMessage(this.getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(this.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
+			broadcastPacket(new AnimationMessage(this.getParent().getId(), AnimationMessage.ANIMATION_HURT), new EntityStatusMessage(this.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
 		}
 	}
 

@@ -30,32 +30,38 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
 
 public final class EntityActionMessageHandler extends MessageHandler<EntityActionMessage> {
 	@Override
 	public void handleServer(Session session, Player player, EntityActionMessage message) {
-		if (player.getEntity().getController() == null) {
+		if (player.getEntity() == null) {
 			return;
 		}
-		if (!(player.getEntity().getController() instanceof VanillaActionController)) {
+		if (!(player.getEntity().getController() instanceof Living)) {
 			return;
 		}
+
 		VanillaPlayer ve = (VanillaPlayer) player.getEntity().getController();
+
 		switch (message.getAction()) {
-			case EntityActionMessage.ACTION_SNEAKING:
-				ve.setSneaking(true);
+			case EntityActionMessage.ACTION_CROUCH:
+				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_CROUCH));
 				break;
-			case EntityActionMessage.ACTION_STOP_SNEAKING:
-				ve.setSneaking(false);
+			case EntityActionMessage.ACTION_UNCROUCH:
+				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_UNCROUCH));
 				break;
 			case EntityActionMessage.ACTION_LEAVE_BED:
+				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_LEAVE_BED));
 				break;
 			case EntityActionMessage.ACTION_START_SPRINTING:
+				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_START_SPRINTING));
 				ve.setSprinting(true);
 				break;
 			case EntityActionMessage.ACTION_STOP_SPRINTING:
+				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_STOP_SPRINTING));
 				ve.setSprinting(false);
 				break;
 			default:

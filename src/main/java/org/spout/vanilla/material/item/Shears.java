@@ -66,7 +66,7 @@ public class Shears extends Tool {
 			ItemStack holding = entity.getInventory().getCurrentItem();
 			if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
 				holding.setData((short) (holding.getData() + 1));
-				entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
+				entity.getInventory().setCurrentItem(holding);
 			}
 		}
 	}

@@ -106,12 +106,7 @@ public class Dye extends VanillaItemMaterial {
 			System.out.println("Sheep go baaaa!");
 
 			if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
-				if (holding.getAmount() > 1) {
-					holding.setAmount(holding.getAmount() - 1);
-					entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
-				} else if (holding.getAmount() == 1) {
-					entity.getInventory().setItem(null, entity.getInventory().getCurrentSlot());
-				}
+				entity.getInventory().addCurrentItemAmount(-1);
 			}
 		}
 	}

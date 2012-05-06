@@ -25,11 +25,41 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.vanilla.material.Flammable;
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 public class Fire extends VanillaBlockMaterial {
 	public Fire() {
 		super("Fire", 51);
+		this.setDrop(null);
+	}
+
+	@Override
+	public void onUpdate(Block block) {
+		super.onUpdate(block);
+		if (!this.canPlace(block, block.getData(), BlockFace.BOTTOM)) {
+			this.onDestroy(block);
+		}
+	}
+
+	@Override
+	public boolean canPlace(Block block, short data, BlockFace attachedFace) {
+		if (super.canPlace(block, data, attachedFace)) {
+			BlockMaterial mat;
+			for (BlockFace face : BlockFaces.BTNSWE) {
+				mat = block.translate(face).getSubMaterial();
+				if (mat instanceof Flammable) {
+					if (((Flammable) mat).canSupportFire(face.getOpposite())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override

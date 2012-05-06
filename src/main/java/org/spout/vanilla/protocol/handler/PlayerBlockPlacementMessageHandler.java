@@ -42,6 +42,7 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
+import org.spout.vanilla.material.item.generic.BlockItem;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
@@ -114,6 +115,12 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 					return; //prevent placement if the material suppresses this
 				}
 
+				//handle placement by block items
+				if (holdingMat instanceof BlockItem) {
+					((BlockItem) holdingMat).onPlacement(player.getEntity(), target, clickedFace);
+					return;
+				}
+
 				//if the material is actually a block, place it
 				if (holdingMat != null && holdingMat instanceof BlockMaterial) {
 					short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?
@@ -130,8 +137,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 						if (newBlock.onPlacement(target, placedData, targetFace)) {
 							//Remove block from inventory if not in creative mode.
 							if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
-								holding.setAmount(holding.getAmount() - 1);
-								inventory.setItem(holding, inventory.getCurrentSlot());
+								inventory.addCurrentItemAmount(-1);
 							}
 							return; //prevent undoing our placement
 						}
@@ -144,7 +150,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			int y = target.getY();
 			int z = target.getZ();
 			player.getSession().send(new BlockChangeMessage(x, y, z, target.getMaterial().getId(), target.getData()));
-			inventory.setItem(holding, inventory.getCurrentSlot());
+			inventory.setCurrentItem(holding);
 			return;
 		}
 	}

@@ -47,8 +47,8 @@ public class Furnace extends Solid {
 	public static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
 	public static final float SMELT_TIME = 10.f;
 
-	public Furnace() {
-		super("Furnace", 61);
+	public Furnace(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class Furnace extends Solid {
 		// Dispose items into new inventory
 		FurnaceInventory furnaceInventory = furnace.getInventory();
 		for (int slot = 0; slot < furnaceInventory.getSize() - 4; slot++) {
-			furnaceInventory.setItem(inventory.getItem(slot), slot);
+			furnaceInventory.setItem(slot, inventory.getItem(slot));
 		}
 
 		// Add the player who opened the inventory as a viewer

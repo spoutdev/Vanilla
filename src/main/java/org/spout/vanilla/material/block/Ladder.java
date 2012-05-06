@@ -25,36 +25,25 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.Fuel;
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-import org.spout.vanilla.material.block.attachable.Attachable;
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 
-public class Fence extends Solid implements Fuel {
-	public final float BURN_TIME = 15.f;
+public class Ladder extends AbstractAttachable {
 
-	public Fence(String name, int id) {
+	public Ladder(String name, int id) {
 		super(name, id);
+		this.setAttachable(BlockFaces.NESW);
 	}
 
 	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
+	public void setAttachedFace(Block block, BlockFace attachedFace) {
+		block.setData((short) (BlockFaces.indexOf(BlockFaces.SNEW, attachedFace, 0) - 2));
 	}
 
 	@Override
-	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
-		if (super.canSupport(material, face)) {
-			if (material instanceof SignBase) {
-				return true;
-			}
-			if (face == BlockFace.TOP) {
-				if (material instanceof Torch) {
-					return true;
-				}
-			}
-		}		
-		return false;
+	public BlockFace getAttachedFace(Block block) {
+		return BlockFaces.get(BlockFaces.SNEW, block.getData() - 2);
 	}
 }

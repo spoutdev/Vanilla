@@ -115,7 +115,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		cursorStack = InventoryUtil.nullIfEmpty(cursorStack);
 		slotStack = InventoryUtil.nullIfEmpty(slotStack);
 		controller.setItemOnCursor(cursorStack);
-		inventory.setItem(slotStack, clickedSlot);
+		inventory.setItem(clickedSlot, slotStack);
 		respond(player.getSession(), message, true);
 	}
 
@@ -130,7 +130,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		cursorStack = InventoryUtil.nullIfEmpty(cursorStack);
 		slotStack = InventoryUtil.nullIfEmpty(slotStack);
 		controller.setItemOnCursor(cursorStack);
-		inventory.setItem(slotStack, clickedSlot);
+		inventory.setItem(clickedSlot, slotStack);
 		respond(player.getSession(), message, true);
 	}
 

@@ -57,7 +57,7 @@ public class FullContainer extends BlockItem {
 
 		Inventory inventory = entity.getInventory();
 		if (inventory.getCurrentItem() == null) {
-			inventory.setItem(new ItemStack(getContainer(), 1), inventory.getCurrentSlot());
+			inventory.setCurrentItem(new ItemStack(getContainer(), 1));
 		}
 	}
 }

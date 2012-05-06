@@ -28,12 +28,14 @@ package org.spout.vanilla.material.block;
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.material.block.attachable.Attachable;
 
 public class SignBase extends AbstractAttachable {
 	public SignBase(String name, int id) {
@@ -53,8 +55,9 @@ public class SignBase extends AbstractAttachable {
 			short data = 0;
 			if (source instanceof Entity) {
 				Vector3 direction = block.getPosition().subtract(((Entity) source).getPosition());
-				//TODO: Get angle from direction, set data using this angle
-
+				float rotation = direction.rotationTo(Vector3.RIGHT).getYaw();
+				rotation = rotation / 360f * 16f;
+				data = (short) rotation;
 			}
 			block.setMaterial(VanillaMaterials.SIGN_POST, data).update(true);
 		} else {
@@ -71,5 +74,13 @@ public class SignBase extends AbstractAttachable {
 		} else {
 			return BlockFaces.get(BlockFaces.NSWE, block.getData() - 2);
 		}
+	}
+	
+	@Override
+	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
+	    if (face == BlockFace.TOP && this.equals(VanillaMaterials.SIGN_POST)) {
+	    	return material instanceof SignBase || material instanceof Torch;
+	    }
+	    return false;
 	}
 }

@@ -74,7 +74,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 			return;
 		}
 
-		entity.getInventory().setItem(newItem, slot);
+		entity.getInventory().setItem(slot, newItem);
 		/*
 		 * if (currentItem != null) { player.setItemOnCursor(currentItem); } else {
 		 * player.setItemOnCursor(null);

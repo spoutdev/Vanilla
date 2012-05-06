@@ -26,7 +26,6 @@
 package org.spout.vanilla.material.item.generic;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -36,7 +35,6 @@ import org.spout.api.material.source.MaterialSource;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 public class BlockItem extends VanillaItemMaterial {
 	GenericMaterialSource onPlace;
@@ -54,42 +52,26 @@ public class BlockItem extends VanillaItemMaterial {
 		}
 	}
 
-	@Override
-	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedFace) {
-		if (type == Action.RIGHT_CLICK) {
-			BlockMaterial clicked = block.getSubMaterial();
-			if (clicked instanceof VanillaBlockMaterial) {
-				if (((VanillaBlockMaterial) clicked).isPlacementSuppressed()) {
-					return;
-				}
+	public void onPlacement(Entity entity, Block target, BlockFace attachedFace) {
+		if (!entity.getInventory().isCurrentItem(this)) {
+			throw new IllegalStateException("Interaction with an controller that is not holding this block!");
+		}
+		if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
+			if (!entity.getInventory().addCurrentItemAmount(-1)) {
+				throw new IllegalStateException("ControllerType is holding zero or negative sized item!");
 			}
-			if (clicked.isPlacementObstacle()) {
-				block = block.translate(clickedFace);
-				clicked = block.getSubMaterial();
-			}
+		}
 
-			ItemStack holding = entity.getInventory().getCurrentItem();
-			if (holding == null || holding.getMaterial() != this) {
-				throw new IllegalStateException("Interaction with an controller that is not holding this block!");
-			}
-			if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
-				if (holding.getAmount() > 1) {
-					holding.setAmount(holding.getAmount() - 1);
-					entity.getInventory().setItem(holding, entity.getInventory().getCurrentSlot());
-				} else if (holding.getAmount() == 1) {
-					entity.getInventory().setItem(null, entity.getInventory().getCurrentSlot());
-				} else {
-					throw new IllegalStateException("ControllerType is holding zero or negative sized item!");
-				}
-			}
+		System.out.println("Placing Block " + getBlock() + " on Interact at " + target);
 
-			System.out.println("Placing Block " + getBlock() + " on Interact at " + block);
-
-			//placement logic
-			if (!clicked.equals(VanillaMaterials.AIR)) {
-				clicked.onDestroy(block);
+		//placement logic
+		BlockMaterial mat = (BlockMaterial) this.onPlace.getSubMaterial();
+		if (mat.canPlace(target, this.onPlace.getData(), attachedFace)) {
+			BlockMaterial targetMat = target.getSubMaterial();
+			if (!targetMat.equals(VanillaMaterials.AIR)) {
+				targetMat.onDestroy(target);
 			}
-			block.setMaterial(this.getBlock());
+			target.setMaterial(this.getBlock());
 		}
 	}
 

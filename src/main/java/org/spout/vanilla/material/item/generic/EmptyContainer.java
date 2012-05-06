@@ -60,7 +60,7 @@ public class EmptyContainer extends BlockItem {
 				return;
 			}
 
-			inventory.setItem(new ItemStack(full, 1), inventory.getCurrentSlot());
+			inventory.setCurrentItem(new ItemStack(full, 1));
 		}
 	}
 

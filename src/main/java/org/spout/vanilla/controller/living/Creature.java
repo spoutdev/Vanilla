@@ -55,9 +55,8 @@ public abstract class Creature extends Living {
 			if (timeUntilAdult >= 0) {
 				baby = false;
 				List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-				parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 12, (int) timeUntilAdult));
-				Entity parent = getParent();
-				broadcastPacket(new EntityMetadataMessage(parent.getId(), parameters));
+				parameters.add(EntityMetadataMessage.META_BABYANIMALSTAGE);
+				broadcastPacket(new EntityMetadataMessage(getParent().getId(), parameters));
 			}
 		}
 	}

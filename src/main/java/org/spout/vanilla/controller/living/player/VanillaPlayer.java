@@ -84,6 +84,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected Point compassTarget;
 	protected Vector3 lookingAt;
 	protected Window activeWindow;
+	protected boolean isDigging;
+	protected long diggingTicks = 0;
 
 	public VanillaPlayer(Player p, GameMode gameMode) {
 		super(VanillaControllerTypes.PLAYER);
@@ -118,20 +120,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 			return;
 		}
 
-		/* TODO COMMENTED OUT PENDING TESTING
-		if(player.input().getForward() > 0){
-			getParent().translate(moveSpeed.transform(getParent().getRotation()));
-		}
-		if(player.input().getForward() < 0){
-			getParent().translate(moveSpeed.transform(getParent().getRotation()).multiply(-1));
-		}
-		if(player.input().getHorizantal() < 0){
-			getParent().translate(horizSpeed.transform(getParent().getRotation()).multiply(-1));
-		}
-		if(player.input().getHorizantal() > 0){
-			getParent().translate(horizSpeed.transform(getParent().getRotation()));
-		}*/
-
 		if (lastPing++ > VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt() / 2) {
 			sendPacket(player, new KeepAliveMessage(getRandom().nextInt()));
 			lastPing = 0;
@@ -153,6 +141,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 			FurnaceInventory inventory = (FurnaceInventory) activeInventory;
 			FurnaceController furnace = inventory.getOwner();
 			sendPacket(owner, new ProgressBarMessage(windowId, Furnace.PROGRESS_ARROW, furnace.getProgressTicks()), new ProgressBarMessage(windowId, Furnace.FIRE_ICON, furnace.getBurnTimeTicks()));
+		}
+
+		if (isDigging) {
+			diggingTicks += dt;
+		} else {
+			diggingTicks = 0;
 		}
 
 		if (isSurvival()) {
@@ -529,5 +523,17 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	public Vector3 getLookingAt() {
 		return lookingAt;
+	}
+
+	public boolean isDigging() {
+		return isDigging;
+	}
+
+	public void setDigging(boolean digging) {
+		isDigging = digging;
+	}
+
+	public long getDiggingTicks() {
+		return diggingTicks;
 	}
 }

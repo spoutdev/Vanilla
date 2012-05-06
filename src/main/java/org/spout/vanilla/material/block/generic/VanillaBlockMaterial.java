@@ -42,10 +42,62 @@ import org.spout.vanilla.material.block.redstone.RedstoneTorch;
 import org.spout.vanilla.material.block.redstone.RedstoneWire;
 
 public class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
+	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
+	private float resistance;
+	private Material dropMaterial;
+	private int dropCount;
+
+	public VanillaBlockMaterial(String name, int id) {
+		super(name, id);
+		dropMaterial = this;
+		dropCount = 1;
+		this.setCollision(CollisionStrategy.SOLID);
+	}
+
+	public VanillaBlockMaterial(String name, int id, int data, Material parent) {
+		super(name, id, data, parent);
+		this.setCollision(CollisionStrategy.SOLID);
+	}
+
 	@Override
 	public void onDestroy(Block block) {
 		this.onDestroyBlock(block);
 		this.onDestroySpawnDrops(block);
+	}
+
+	@Override
+	public VanillaBlockMaterial setFriction(float friction) {
+		return (VanillaBlockMaterial) super.setFriction(friction);
+	}
+
+	@Override
+	public VanillaBlockMaterial setHardness(float hardness) {
+		return (VanillaBlockMaterial) super.setHardness(hardness);
+	}
+
+	@Override
+	public VanillaBlockMaterial setLightLevel(byte level) {
+		return (VanillaBlockMaterial) super.setLightLevel(level);
+	}
+
+	@Override
+	public boolean isPlacementObstacle() {
+		return true;
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return false;
+	}
+
+	@Override
+	public boolean getNBTData() {
+		return false;
+	}
+
+	@Override
+	public int getDamage() {
+		return 1;
 	}
 
 	/**
@@ -78,23 +130,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 				block.getWorld().createAndSpawnEntity(block.getPosition(), new Item(new ItemStack(dropMat, 1), block.getPosition().normalize().add(0, 5, 0)));
 			}
 		}
-	}
-
-	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
-	private float resistance;
-	private Material dropMaterial;
-	private int dropCount;
-
-	public VanillaBlockMaterial(String name, int id) {
-		super(name, id);
-		dropMaterial = this;
-		dropCount = 1;
-		this.setCollision(CollisionStrategy.SOLID);
-	}
-
-	public VanillaBlockMaterial(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
-		this.setCollision(CollisionStrategy.SOLID);
 	}
 
 	/**
@@ -140,42 +175,12 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 		return resistance;
 	}
 
-	@Override
-	public VanillaBlockMaterial setFriction(float friction) {
-		return (VanillaBlockMaterial) super.setFriction(friction);
-	}
-
-	@Override
-	public VanillaBlockMaterial setHardness(float hardness) {
-		return (VanillaBlockMaterial) super.setHardness(hardness);
-	}
-
-	public VanillaBlockMaterial setLightLevel(int level) {
-		return setLightLevel((byte) level);
-	}
-
-	@Override
-	public VanillaBlockMaterial setLightLevel(byte level) {
-		return (VanillaBlockMaterial) super.setLightLevel(level);
-	}
-
 	public Material getDrop() {
 		return dropMaterial;
 	}
 
 	public int getDropCount() {
 		return dropCount;
-	}
-
-	public VanillaBlockMaterial setDrop(Material id) {
-		dropMaterial = id;
-		return this;
-	}
-
-	public VanillaBlockMaterial setDropCount(int count) {
-		dropCount = count;
-
-		return this;
 	}
 
 	/**
@@ -188,30 +193,24 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 		return true;
 	}
 
-	@Override
-	public boolean isPlacementObstacle() {
-		return true;
-	}
-
-	@Override
-	public boolean hasPhysics() {
-		return false;
-	}
-
-	@Override
-	public boolean getNBTData() {
-		return false;
-	}
-
-	@Override
-	public int getDamage() {
-		return 1;
-	}
-
 	/**
 	 * Gets whether this block material cancels block placement when clicked
 	 */
 	public boolean isPlacementSuppressed() {
 		return false;
+	}
+
+	public VanillaBlockMaterial setLightLevel(int level) {
+		return setLightLevel((byte) level);
+	}
+
+	public VanillaBlockMaterial setDrop(Material id) {
+		dropMaterial = id;
+		return this;
+	}
+
+	public VanillaBlockMaterial setDropCount(int count) {
+		dropCount = count;
+		return this;
 	}
 }

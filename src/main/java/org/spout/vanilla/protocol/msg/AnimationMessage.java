@@ -54,6 +54,6 @@ public final class AnimationMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "AnimateEntityMessage{id=" + id + ",animation=" + animation + "}";
+		return "AnimationMessage{id=" + id + ",animation=" + animation + "}";
 	}
 }

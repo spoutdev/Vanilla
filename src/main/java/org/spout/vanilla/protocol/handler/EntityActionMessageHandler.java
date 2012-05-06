@@ -25,14 +25,18 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
+import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 
 public final class EntityActionMessageHandler extends MessageHandler<EntityActionMessage> {
 	@Override
@@ -45,23 +49,28 @@ public final class EntityActionMessageHandler extends MessageHandler<EntityActio
 		}
 
 		VanillaPlayer ve = (VanillaPlayer) player.getEntity().getController();
+		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
 		switch (message.getAction()) {
 			case EntityActionMessage.ACTION_CROUCH:
-				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_CROUCH));
+				parameters.add(EntityMetadataMessage.META_CROUCHED);
+				session.send(new EntityMetadataMessage(player.getEntity().getId(), parameters));
 				break;
 			case EntityActionMessage.ACTION_UNCROUCH:
-				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_UNCROUCH));
+				parameters.add(EntityMetadataMessage.META_CROUCHED);
+				session.send(new EntityMetadataMessage(player.getEntity().getId(), parameters));
 				break;
 			case EntityActionMessage.ACTION_LEAVE_BED:
 				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_LEAVE_BED));
 				break;
 			case EntityActionMessage.ACTION_START_SPRINTING:
-				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_START_SPRINTING));
+				parameters.add(EntityMetadataMessage.META_SPRINTING);
+				session.send(new EntityMetadataMessage(player.getEntity().getId(), parameters));
 				ve.setSprinting(true);
 				break;
 			case EntityActionMessage.ACTION_STOP_SPRINTING:
-				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_STOP_SPRINTING));
+				parameters.add(EntityMetadataMessage.META_SPRINTING);
+				session.send(new EntityMetadataMessage(player.getEntity().getId(), parameters));
 				ve.setSprinting(false);
 				break;
 			default:

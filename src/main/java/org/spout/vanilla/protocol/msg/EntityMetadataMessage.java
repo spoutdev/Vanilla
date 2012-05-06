@@ -31,6 +31,34 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 public final class EntityMetadataMessage extends Message {
+	//Entity flags
+	public static final Parameter<Byte> META_INFLAMED = new Parameter<Byte>(Parameter.TYPE_BYTE, 0, (byte) 0x01);
+	public static final Parameter<Byte> META_CROUCHED = new Parameter<Byte>(Parameter.TYPE_BYTE, 0, (byte) 0x02);
+	public static final Parameter<Byte> META_MOBRIDER = new Parameter<Byte>(Parameter.TYPE_BYTE, 0, (byte) 0x04);
+	public static final Parameter<Byte> META_SPRINTING = new Parameter<Byte>(Parameter.TYPE_BYTE, 0, (byte) 0x08);
+	public static final Parameter<Byte> META_RIGHTCLICKACTION = new Parameter<Byte>(Parameter.TYPE_BYTE, 0, (byte) 0x10);
+
+	/**
+	 * 	Drowning counter for entities. This should be sent when an entity spawns and be decremented
+	 * 	per tick. If the value hits -19, send a 0x26 and reset this to 0
+	 */
+	public static final Parameter<Short> META_FULLDROWNINGCOUNTER = new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 300);
+	public static final Parameter<Short> META_DROWNINGCOUNTEDDEPLETED = new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) -19);
+	public static final Parameter<Short> META_STARTDROWNING = new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 0);
+
+	/**
+	 * Potion color for effect. The value is composed of RRGGBB (in that order).
+	 */
+	public static final Parameter<Integer> META_NOPOTIONEFFECT = new Parameter<Integer>(Parameter.TYPE_INT, 8, (int) 000000);
+
+	/**
+	 * Animal growth and control. -23999 is the value for babies, 6000 is the value for adults. When set
+	 * to 6000, decrease over time (to determine when to breed again). Value of 0 means the adult can breed.
+	 */
+	public static final Parameter<Integer> META_BABYANIMALSTAGE = new Parameter<Integer>(Parameter.TYPE_INT, 12, (int) -23999);
+	public static final Parameter<Integer> META_PARENTANIMALSTAGE = new Parameter<Integer>(Parameter.TYPE_INT, 12, (int) 6000);
+	public static final Parameter<Integer> META_BREEDANIMALSTAGE = new Parameter<Integer>(Parameter.TYPE_INT, 12, (int) 0);
+
 	private final int id;
 	private final List<Parameter<?>> parameters;
 
@@ -49,7 +77,7 @@ public final class EntityMetadataMessage extends Message {
 
 	@Override
 	public String toString() {
-		StringBuilder build = new StringBuilder("EntityInteractionMessage{id=");
+		StringBuilder build = new StringBuilder("EntityMetadataMessage{id=");
 		build.append(id).append(",metadata=[");
 
 		for (Parameter<?> param : parameters) {

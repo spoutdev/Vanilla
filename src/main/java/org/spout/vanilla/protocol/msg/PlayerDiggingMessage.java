@@ -63,6 +63,6 @@ public final class PlayerDiggingMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "DiggingMessage{state=" + state + ",x=" + x + ",y=" + y + ",z=" + z + ",face=" + face + "}";
+		return "PlayerDiggingMessage{state=" + state + ",x=" + x + ",y=" + y + ",z=" + z + ",face=" + face + "}";
 	}
 }

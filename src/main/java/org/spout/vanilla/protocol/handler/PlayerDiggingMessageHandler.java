@@ -25,6 +25,7 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.Spout;
 import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -33,73 +34,80 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
+import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
+import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
 	@Override
 	public void handleServer(Session session, Player player, PlayerDiggingMessage message) {
-		if (player == null) {
+		if (player == null || player.getEntity() == null) {
 			return;
 		}
 
-		boolean blockBroken = false;
-
-		EventManager eventManager = player.getSession().getGame().getEventManager();
-		World world = player.getEntity().getWorld();
-
-		BlockFace clickedface = VanillaMessageHandlerUtils.messageToBlockFace(message.getFace());
 		int x = message.getX();
 		int y = message.getY();
 		int z = message.getZ();
 
-		Block block = world.getBlock(x, y, z, player.getEntity());
-		BlockMaterial mat = block.getSubMaterial();
+		Block block = player.getEntity().getWorld().getBlock(x, y, z, player.getEntity());
+		BlockMaterial blockMaterial = block.getSubMaterial();
+		boolean isInteractable = true;
 
-		//TODO Need to have some sort of verification to deal with malicious clients.
+		if (blockMaterial == VanillaMaterials.AIR || blockMaterial == BasicAir.AIR || blockMaterial == VanillaMaterials.WATER || blockMaterial == VanillaMaterials.LAVA) {
+			isInteractable = false;
+		}
+
+		ItemStack heldItem = player.getEntity().getInventory().getCurrentItem();
+
 		if (message.getState() == PlayerDiggingMessage.STATE_START_DIGGING) {
-			ItemStack holding = player.getEntity().getInventory().getCurrentItem();
-			Material holdingMat = holding == null ? VanillaMaterials.AIR : holding.getMaterial();
-			boolean isAir = false;
-			if (mat.equals(VanillaMaterials.AIR)) {
-				isAir = true;
-			}
+			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable);
+			Spout.getEngine().getEventManager().callEvent(event);
 
-			PlayerInteractEvent interactEvent = new PlayerInteractEvent(player, block.getPosition(), holding, Action.LEFT_CLICK, isAir);
-			eventManager.callEvent(interactEvent);
-			if (interactEvent.isCancelled()) {
+			//Call interactions.
+			if (event.isCancelled() || (!isInteractable && heldItem == null)) {
 				return;
-			} else if (isAir) {
-				holdingMat.onInteract(player.getEntity(), Action.LEFT_CLICK); //call onInteract on item held for air
-				return;
+			//punching with our fist
+			} else if (heldItem == null) {
+				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
+			} else if (!isInteractable) {
+				heldItem.getMaterial().onInteract(player.getEntity(), Action.LEFT_CLICK);
 			} else {
-				holdingMat.onInteract(player.getEntity(), block, Action.LEFT_CLICK, clickedface); //call onInteract on item held
-				mat.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedface); //call onInteract on block clicked
+				heldItem.getMaterial().onInteract(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
+				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
 			}
-			if (player.getEntity().getController() instanceof VanillaPlayer && !((VanillaPlayer) player.getEntity().getController()).isSurvival()) {
-				blockBroken = true;
-			}
+
+			((VanillaPlayer) player.getEntity().getController()).setDigging(true);
 		} else if (message.getState() == PlayerDiggingMessage.STATE_DONE_DIGGING) {
-			//TODO: Timing checks!
-			blockBroken = true;
-		}
+			long diggingTicks = ((VanillaPlayer) player.getEntity().getController()).getDiggingTicks();
+			int damageDone = 0;
+			int totalDamage = 0;
 
-		BlockMaterial material = block.getMaterial();
-		if (material == VanillaMaterials.WATER || material == VanillaMaterials.LAVA) {
-			blockBroken = false; //deny digging for water or lava
-		} else if (material.getHardness() == 0.0f) {
-			blockBroken = true; //insta-break
-		}
+			if (isInteractable) {
+				if (heldItem == null) {
+					damageDone = ((int) diggingTicks * 1);
+				} else {
+					damageDone = ((int) diggingTicks * ((VanillaMaterial) heldItem.getMaterial()).getDamage());
+				}
 
-		if (blockBroken) {
-			block.getMaterial().onDestroy(block);
+				totalDamage = ((int) blockMaterial.getHardness() - damageDone);
+				if (totalDamage <= 0) {
+					blockMaterial.onDestroy(block);
+				}
+			}
 		}
+	}
+
+	private void animate() {
+		//Call getNearbyPlayers and send an animation.
 	}
 }

@@ -54,25 +54,7 @@ public final class AnimationMessageHandler extends MessageHandler<AnimationMessa
 				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_UNCROUCH));
 				//TODO Set this in VanillaActionController as apparently any entity can crouch?
 				break;
-			case AnimationMessage.ANIMATION_SWING_ARM:
-				session.send(new EntityActionMessage(player.getEntity().getId(), AnimationMessage.ANIMATION_SWING_ARM));
-				break;
-			case AnimationMessage.ANIMATION_EAT_FOOD:
-				session.send(new EntityActionMessage(player.getEntity().getId(), AnimationMessage.ANIMATION_EAT_FOOD));
-				break;
-			case AnimationMessage.ANIMATION_HURT:
-				session.send(new AnimationMessage(player.getEntity().getId(), AnimationMessage.ANIMATION_HURT));
-				break;
-			case AnimationMessage.ANIMATION_LEAVE_BED:
-				session.send(new AnimationMessage(player.getEntity().getId(), AnimationMessage.ANIMATION_LEAVE_BED));
-				break;
-			case AnimationMessage.ANIMATION_NONE:
-				session.send(new AnimationMessage(player.getEntity().getId(), AnimationMessage.ANIMATION_NONE));
-				break;
-			case AnimationMessage.ANIMATION_UNKNOWN:
-				session.send(new AnimationMessage(player.getEntity().getId(), AnimationMessage.ANIMATION_UNKNOWN));
 			default:
-				break;
 		}
 	}
 }

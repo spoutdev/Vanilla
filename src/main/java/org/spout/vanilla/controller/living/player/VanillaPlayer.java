@@ -53,7 +53,16 @@ import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.inventory.VanillaPlayerInventory;
 import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.material.block.Furnace;
-import org.spout.vanilla.protocol.msg.*;
+import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
+import org.spout.vanilla.protocol.msg.CloseWindowMessage;
+import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
+import org.spout.vanilla.protocol.msg.KeepAliveMessage;
+import org.spout.vanilla.protocol.msg.OpenWindowMessage;
+import org.spout.vanilla.protocol.msg.PlayerListMessage;
+import org.spout.vanilla.protocol.msg.ProgressBarMessage;
+import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
+import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
+import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to

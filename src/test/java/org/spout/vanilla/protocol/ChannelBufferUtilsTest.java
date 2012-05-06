@@ -37,7 +37,7 @@ import org.spout.nbt.IntTag;
 import org.spout.nbt.StringTag;
 import org.spout.vanilla.material.VanillaMaterials;
 
-import java.awt.*;
+import java.awt.Color;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;

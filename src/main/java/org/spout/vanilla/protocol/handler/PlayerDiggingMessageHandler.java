@@ -88,6 +88,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 			((VanillaPlayer) player.getEntity().getController()).setDigging(true);
 		} else if (message.getState() == PlayerDiggingMessage.STATE_DONE_DIGGING) {
+			((VanillaPlayer) player.getEntity().getController()).setDigging(false);
 			long diggingTicks = ((VanillaPlayer) player.getEntity().getController()).getDiggingTicks();
 			int damageDone = 0;
 			int totalDamage = 0;

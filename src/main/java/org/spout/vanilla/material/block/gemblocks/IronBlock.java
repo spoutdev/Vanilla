@@ -25,9 +25,10 @@
  */
 package org.spout.vanilla.material.block.gemblocks;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class IronBlock extends Solid {
+public class IronBlock extends Solid implements Mineable{
 
 	public IronBlock(String name, int id) {
 		super(name, id);

@@ -23,40 +23,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material;
 
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.block.BlockFace;
+/**
+ * This class simply indicate that a certain block is mineable for Tool damage.
+ * @author greatman
+ *
+ */
+public interface Mineable {
 
-import org.spout.vanilla.material.Flammable;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
-import org.spout.vanilla.material.block.interactive.Furnace;
-
-public class Cobblestone extends Solid implements TimedCraftable, Flammable, Mineable {
-	public Cobblestone() {
-		super("Cobblestone", 4);
-	}
-
-	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.STONE, 1);
-	}
-
-	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
-	}
-
-	@Override
-	public boolean canSupportFire(BlockFace face) {
-		return face == BlockFace.TOP;
-	}
-
-	@Override
-	public boolean canBurn() {
-		return false;
-	}
 }

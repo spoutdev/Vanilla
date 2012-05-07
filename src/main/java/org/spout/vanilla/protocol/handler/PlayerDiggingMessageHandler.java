@@ -26,25 +26,22 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.Spout;
-import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.Material;
 import org.spout.api.material.basic.BasicAir;
-import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
-import org.spout.vanilla.protocol.msg.AnimationMessage;
+import org.spout.vanilla.material.item.Spade;
+import org.spout.vanilla.material.item.generic.Tool;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
@@ -92,6 +89,53 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			int damageDone = 0;
 			int totalDamage = 0;
 
+			if (heldItem != null) {
+                
+			    
+                if (heldItem.getMaterial() instanceof Tool) {
+                    
+                    Tool item = (Tool) heldItem.getMaterial();
+                    
+                    if (blockMaterial == VanillaMaterials.CLAY_BLOCK || blockMaterial == VanillaMaterials.GRASS || blockMaterial == VanillaMaterials.MYCELIUM || blockMaterial == VanillaMaterials.GRAVEL || blockMaterial == VanillaMaterials.DIRT || blockMaterial == VanillaMaterials.SAND || blockMaterial == VanillaMaterials.SOUL_SAND || blockMaterial == VanillaMaterials.SNOW_BLOCK || blockMaterial == VanillaMaterials.SNOW) {
+                            
+                        if (item instanceof Spade) {
+                            heldItem.setData(((short) (heldItem.getData() + 1)));
+                        }
+                        else {
+                            heldItem.setData(((short) (heldItem.getData() + 2)));
+                        }
+                    }
+                    else if (blockMaterial instanceof Mineable)
+                    {
+                        if (item.equals(VanillaMaterials.WOODEN_PICKAXE) || item.equals(VanillaMaterials.IRON_PICKAXE) || item.equals(VanillaMaterials.GOLD_PICKAXE) || item.equals(VanillaMaterials.DIAMOND_PICKAXE) ) {
+                            heldItem.setData(((short) (heldItem.getData() + 1)));
+                        }
+                        else {
+                            heldItem.setData(((short) (heldItem.getData() + 2)));
+                        }
+                    }
+                    else if (blockMaterial == VanillaMaterials.LOG || blockMaterial == VanillaMaterials.CHEST || blockMaterial == VanillaMaterials.PLANK) {
+                        
+                        if (item.equals(VanillaMaterials.WOODEN_AXE) || item.equals(VanillaMaterials.IRON_AXE) || item.equals(VanillaMaterials.GOLD_AXE) || item.equals(VanillaMaterials.DIAMOND_AXE)) {
+                            heldItem.setData(((short) (heldItem.getData() + 1)));
+                        }
+                        else {
+                            heldItem.setData(((short) (heldItem.getData() + 2)));
+                        }
+                    
+                    }
+                    
+                    //Let's update the player window with the new data.
+                    if (item.getDurability() <= heldItem.getData()) {
+                        player.getEntity().getInventory().setCurrentItem(null);
+                    }
+                    else {
+                        player.getEntity().getInventory().setCurrentItem(heldItem);
+                    }
+                }
+                
+            }
+			
 			if (isInteractable) {
 				if (heldItem == null) {
 					damageDone = ((int) diggingTicks * 1);

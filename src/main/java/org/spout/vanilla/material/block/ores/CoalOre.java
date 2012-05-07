@@ -27,12 +27,13 @@ package org.spout.vanilla.material.block.ores;
 
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Ore;
 import org.spout.vanilla.material.block.interactive.Furnace;
 
-public class CoalOre extends Ore implements TimedCraftable {
+public class CoalOre extends Ore implements TimedCraftable, Mineable {
 	public CoalOre() {
 		super("Coal Ore", 16);
 	}

@@ -23,40 +23,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.block.pressureplate;
 
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.block.BlockFace;
-
-import org.spout.vanilla.material.Flammable;
+import org.spout.api.material.Material;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
-import org.spout.vanilla.material.block.interactive.Furnace;
 
-public class Cobblestone extends Solid implements TimedCraftable, Flammable, Mineable {
-	public Cobblestone() {
-		super("Cobblestone", 4);
-	}
+public class StonePressurePlate extends PressurePlate implements Mineable{
 
-	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.STONE, 1);
-	}
+    public StonePressurePlate(String name, int id, boolean canMove) {
+	super(name, id, canMove);
+    }
 
-	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
-	}
+    public StonePressurePlate(String name, int id) {
+	super(name, id);
+    }
 
-	@Override
-	public boolean canSupportFire(BlockFace face) {
-		return face == BlockFace.TOP;
-	}
+    public StonePressurePlate(String name, int id, int data, Material parent) {
+	super(name, id, data, parent);
+    }
 
-	@Override
-	public boolean canBurn() {
-		return false;
-	}
+    public StonePressurePlate(String name, int id, int data, Material parent,
+	    boolean canMove) {
+	super(name, id, data, parent, canMove);
+    }
+
 }

@@ -25,38 +25,17 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.block.BlockFace;
-
-import org.spout.vanilla.material.Flammable;
+import org.spout.api.material.Material;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Solid;
-import org.spout.vanilla.material.block.interactive.Furnace;
 
-public class Cobblestone extends Solid implements TimedCraftable, Flammable, Mineable {
-	public Cobblestone() {
-		super("Cobblestone", 4);
+public class Stair extends Solid implements Mineable{
+
+	public Stair(String name, int id) {
+	    super(name, id);
 	}
 
-	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.STONE, 1);
-	}
-
-	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
-	}
-
-	@Override
-	public boolean canSupportFire(BlockFace face) {
-		return face == BlockFace.TOP;
-	}
-
-	@Override
-	public boolean canBurn() {
-		return false;
+	public Stair(String name, int id, int data, Material parent) {
+	    super(name, id, data, parent);
 	}
 }

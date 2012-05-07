@@ -25,38 +25,31 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.block.BlockFace;
-
-import org.spout.vanilla.material.Flammable;
+import org.spout.api.material.Material;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Solid;
-import org.spout.vanilla.material.block.interactive.Furnace;
 
-public class Cobblestone extends Solid implements TimedCraftable, Flammable, Mineable {
-	public Cobblestone() {
-		super("Cobblestone", 4);
-	}
+public class NetherBrick extends Solid implements Mineable {
 
-	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.STONE, 1);
-	}
+    public NetherBrick(String name, int id, boolean canMove) {
+	super(name, id, canMove);
+	// TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
-	}
+    public NetherBrick(String name, int id) {
+	super(name, id);
+	// TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public boolean canSupportFire(BlockFace face) {
-		return face == BlockFace.TOP;
-	}
+    public NetherBrick(String name, int id, int data, Material parent) {
+	super(name, id, data, parent);
+	// TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public boolean canBurn() {
-		return false;
-	}
+    public NetherBrick(String name, int id, int data, Material parent,
+	    boolean canMove) {
+	super(name, id, data, parent, canMove);
+	// TODO Auto-generated constructor stub
+    }
+
 }

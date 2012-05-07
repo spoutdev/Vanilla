@@ -27,7 +27,9 @@ package org.spout.vanilla.material.block.generic;
 
 import java.util.Random;
 
-public class Ore extends Solid {
+import org.spout.vanilla.material.Mineable;
+
+public class Ore extends Solid implements Mineable{
 	private Random rand = new Random();
 	private int max = 1;
 	private int min = 1;

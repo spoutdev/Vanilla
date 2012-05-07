@@ -28,11 +28,12 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
-public class Ice extends Solid {
+public class Ice extends Solid implements Mineable{
 	public Ice() {
 		super("Ice", 79);
 	}

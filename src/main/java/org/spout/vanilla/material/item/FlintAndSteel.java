@@ -29,33 +29,26 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.generic.BlockItem;
+import org.spout.vanilla.material.item.generic.Tool;
 
-public class FlintAndSteel extends BlockItem {
+public class FlintAndSteel extends Tool {
 
 	public FlintAndSteel(String name, int id, short durability) {
-		super(name, id, VanillaMaterials.FIRE);
-		//TODO: handle durability!
+		super(name, id, durability);
 	}
 
 	@Override
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
 		super.onInteract(entity, block, type, clickedface);
-		if (VanillaMaterials.FIRE.canPlace(block, (short) 0, clickedface)) {
-			
-		}
-		
-		Inventory inv = entity.getInventory();
-		ItemStack item = inv.getCurrentItem();
-		if (item != null) {
-			item.setData((short) (item.getData() - 1));
-			if (item.getData() <= 0) {
-				item = null;
-			}
-			inv.setItem(inv.getCurrentSlot(), item);
+		Block target = block.translate(clickedface);
+		if (!target.getMaterial().equals(VanillaMaterials.AIR)) return;
+		clickedface = clickedface.getOpposite();
+		if (!VanillaMaterials.FIRE.canPlace(target, (short) 0, clickedface)) return;
+		if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, clickedface)) {
+			Inventory inv = entity.getInventory();
+			inv.addCurrentItemData(1);
 		}
 	}
 }

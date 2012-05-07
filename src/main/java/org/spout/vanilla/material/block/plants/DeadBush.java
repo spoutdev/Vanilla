@@ -23,27 +23,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.block.plants;
 
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.interactive.Furnace;
-import org.spout.vanilla.material.item.generic.Food;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.block.generic.Plant;
 
-public class RawBeef extends Food implements TimedCraftable {
-	public RawBeef() {
-		super("Raw Beef", 363, 3, FoodEffectType.HUNGER);
+public class DeadBush extends GroundAttachable implements Plant {
+	public DeadBush(String name, int id) {
+		super(name, id);
+	}
+
+	public DeadBush(String name, int id, int data, Material parent) {
+		super(name, id, data, parent);
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.STEAK, 1);
+	public int getNumGrowthStages() {
+		return 0;
 	}
 
 	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+	public int getMinimumLightToGrow() {
+		return 0;
+	}
+
+	@Override
+	public boolean hasGrowthStages() {
+		return false;
+	}
+
+	@Override
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		if (super.canAttachTo(material, face)) {
+			return material.equals(VanillaMaterials.SAND);
+		}
+		return false;
 	}
 }

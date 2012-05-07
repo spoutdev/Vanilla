@@ -23,51 +23,50 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.block.plants;
 
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.TimedCraftable;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.generic.Plant;
-import org.spout.vanilla.material.block.generic.Solid;
-import org.spout.vanilla.material.block.interactive.Furnace;
-import org.spout.vanilla.material.item.Coal;
 
-public class Tree extends Solid implements Plant, Fuel, TimedCraftable {
-	public static final Tree DEFAULT = register(new Tree("Wood"));
-	public static final Tree SPRUCE = register(new Tree("Spruce Wood", 1, DEFAULT));
-	public static final Tree BIRCH = register(new Tree("Birch Wood", 2, DEFAULT));
-	public static final Tree JUNGLE = register(new Tree("Jungle Wood", 3, DEFAULT));
-	public final float BURN_TIME = 15.f;
-
-	private Tree(String name) {
-		super(name, 17);
-		this.setDefault();
-	}
-
-	private Tree(String name, int data, Tree parent) {
-		super(name, 17, data, parent);
-		this.setDefault();
-	}
+public class Sapling extends GroundAttachable implements Plant, Fuel {
+	public static final Sapling DEFAULT = register(new Sapling("Sapling"));
+	public static final Sapling SPRUCE = register(new Sapling("Spruce Sapling", 1, DEFAULT));
+	public static final Sapling BIRCH = register(new Sapling("Birch Sapling", 2, DEFAULT));
+	public static final Sapling JUNGLE = register(new Sapling("Jungle Sapling", 3, DEFAULT));
+	public final float BURN_TIME = 5.f;
 
 	private void setDefault() {
-		this.setHardness(2.0F).setResistance(3.3F).setOpacity((byte) 1);
+		this.setHardness(0.0F).setResistance(0.0F);
+	}
+
+	private Sapling(String name) {
+		super(name, 6);
+		this.setDefault();
+	}
+
+	private Sapling(String name, int data, Sapling parent) {
+		super(name, 6, data, parent);
+		this.setDefault();
 	}
 
 	@Override
 	public boolean hasGrowthStages() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public int getNumGrowthStages() {
-		return 0;
+		return 3;
 	}
 
 	@Override
 	public int getMinimumLightToGrow() {
-		return 0;
+		return 8;
 	}
 
 	@Override
@@ -76,12 +75,10 @@ public class Tree extends Solid implements Plant, Fuel, TimedCraftable {
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(Coal.CHARCOAL, 1);
-	}
-
-	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		if (super.canAttachTo(material, face)) {
+			return material.equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT);
+		}
+		return false;
 	}
 }

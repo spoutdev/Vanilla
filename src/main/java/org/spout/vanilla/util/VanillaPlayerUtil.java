@@ -23,47 +23,33 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.util;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
-import org.spout.vanilla.material.Flammable;
-import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
+import org.spout.api.Source;
+import org.spout.api.entity.Entity;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
-public class Fire extends VanillaBlockMaterial {
-	public Fire() {
-		super("Fire", 51);
-		this.setDrop(null);
+public class VanillaPlayerUtil {
+
+	/**
+	 * Checks if the source is an entity with a vanilla player controller in survival mode
+	 * @param entity to check
+	 * @return True if vanilla survival player entity
+	 */
+	public static boolean isSurvival(Source source) {
+		if (!(source instanceof Entity)) return false;
+		Entity entity = (Entity) source;
+		return entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival();
 	}
 
-	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
-		if (!this.canPlace(block, block.getData(), BlockFace.BOTTOM)) {
-			this.onDestroy(block);
-		}
-	}
-
-	@Override
-	public boolean canPlace(Block block, short data, BlockFace attachedFace) {
-		if (super.canPlace(block, data, attachedFace)) {
-			BlockMaterial mat = block.getMaterial();
-			for (BlockFace face : BlockFaces.BTNSWE) {
-				mat = block.translate(face).getSubMaterial();
-				if (mat instanceof Flammable) {
-					if (((Flammable) mat).canSupportFire(face.getOpposite())) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public boolean isPlacementObstacle() {
-		return false;
+	/**
+	 * Checks if the source is an entity with a vanilla player controller in creative mode
+	 * @param entity to check
+	 * @return True if vanilla creative player entity
+	 */
+	public static boolean isCreative(Source source) {
+		if (!(source instanceof Entity)) return false;
+		Entity entity = (Entity) source;
+		return entity.getController() instanceof VanillaPlayer && !((VanillaPlayer) entity.getController()).isSurvival();
 	}
 }

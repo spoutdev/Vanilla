@@ -25,26 +25,22 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.block.generic.Plant;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.Flammable;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class Grass extends Solid implements Plant {
+public class Grass extends Solid implements Flammable {
 	public Grass() {
 		super("Grass", 2);
 	}
 
 	@Override
-	public boolean hasGrowthStages() {
+	public boolean canSupportFire(BlockFace face) {
+		return face == BlockFace.TOP;
+	}
+
+	@Override
+	public boolean canBurn() {
 		return false;
-	}
-
-	@Override
-	public int getNumGrowthStages() {
-		return 0;
-	}
-
-	@Override
-	public int getMinimumLightToGrow() {
-		return 9;
 	}
 }

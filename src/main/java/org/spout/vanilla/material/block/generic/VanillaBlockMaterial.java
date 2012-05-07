@@ -26,20 +26,19 @@
 package org.spout.vanilla.material.block.generic;
 
 import org.spout.api.collision.CollisionStrategy;
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.Attachable;
 import org.spout.vanilla.material.block.redstone.RedstoneTorch;
 import org.spout.vanilla.material.block.redstone.RedstoneWire;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
@@ -113,14 +112,8 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	 * @param block to spawn drops for
 	 */
 	public void onDestroySpawnDrops(Block block) {
-		//don't block drops for creative players
-		if (block.getSource() instanceof Entity) {
-			Entity entity = (Entity) block.getSource();
-			if (entity.getController() instanceof VanillaPlayer) {
-				if (!((VanillaPlayer) entity.getController()).isSurvival()) {
-					return;
-				}
-			}
+		if (VanillaPlayerUtil.isCreative(block.getSource())) {
+			return;
 		}
 
 		Material dropMat = getDrop();

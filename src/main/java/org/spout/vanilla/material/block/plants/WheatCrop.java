@@ -23,27 +23,49 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.block.plants;
 
-import org.spout.api.inventory.ItemStack;
+import java.util.Random;
 
-import org.spout.vanilla.material.TimedCraftable;
+import org.spout.api.material.Material;
+
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.interactive.Furnace;
-import org.spout.vanilla.material.item.generic.Food;
+import org.spout.vanilla.material.block.generic.Plant;
+import org.spout.vanilla.material.block.generic.Solid;
 
-public class RawBeef extends Food implements TimedCraftable {
-	public RawBeef() {
-		super("Raw Beef", 363, 3, FoodEffectType.HUNGER);
+public class WheatCrop extends Solid implements Plant {
+	private Random rand = new Random();
+
+	public WheatCrop() {
+		super("Wheat Crop", 59);
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.STEAK, 1);
+	public boolean hasGrowthStages() {
+		return true;
 	}
 
 	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+	public int getNumGrowthStages() {
+		return 8;
 	}
+
+	@Override
+	public int getMinimumLightToGrow() {
+		return 9;
+	}
+
+	@Override
+	public Material getDrop() {
+		return VanillaMaterials.SEEDS;
+	}
+
+	@Override
+	public int getDropCount() {
+		return rand.nextInt(4);
+	}
+
+	// TODO: Grow
+	// TODO: Trampling
+	// TODO: Multiple drops
 }

@@ -25,10 +25,12 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.Flammable;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.generic.Ore;
 
-public class MushroomBlock extends Ore implements Fuel {
+public class MushroomBlock extends Ore implements Fuel, Flammable {
 	public final float BURN_TIME = 15.f;
 
 	public MushroomBlock(String name, int id) {
@@ -39,5 +41,15 @@ public class MushroomBlock extends Ore implements Fuel {
 	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
+	}
+
+	@Override
+	public boolean canSupportFire(BlockFace face) {
+		return face == BlockFace.TOP;
+	}
+
+	@Override
+	public boolean canBurn() {
+		return false;
 	}
 }

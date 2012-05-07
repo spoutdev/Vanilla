@@ -25,10 +25,12 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.Flammable;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class BookShelf extends Solid implements Fuel {
+public class BookShelf extends Solid implements Fuel, Flammable {
 	public final float BURN_TIME = 15.f;
 
 	public BookShelf(String name, int id) {
@@ -38,5 +40,15 @@ public class BookShelf extends Solid implements Fuel {
 	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
+	}
+
+	@Override
+	public boolean canSupportFire(BlockFace face) {
+		return true;
+	}
+
+	@Override
+	public boolean canBurn() {
+		return true;
 	}
 }

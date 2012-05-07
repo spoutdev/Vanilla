@@ -23,27 +23,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.block.plants;
 
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.interactive.Furnace;
-import org.spout.vanilla.material.item.generic.Food;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
-public class RawBeef extends Food implements TimedCraftable {
-	public RawBeef() {
-		super("Raw Beef", 363, 3, FoodEffectType.HUNGER);
+public class LilyPad extends GroundAttachable {
+	public LilyPad() {
+		super("Lily Pad", 111);
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.STEAK, 1);
-	}
-
-	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		return face == BlockFace.TOP && material.equals(VanillaMaterials.STATIONARY_WATER);
 	}
 }

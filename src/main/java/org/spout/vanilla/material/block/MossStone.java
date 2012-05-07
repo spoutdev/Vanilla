@@ -25,11 +25,23 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.Flammable;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class MossStone extends Solid {
+public class MossStone extends Solid implements Flammable {
 
 	public MossStone(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public boolean canSupportFire(BlockFace face) {
+		return face == BlockFace.TOP;
+	}
+
+	@Override
+	public boolean canBurn() {
+		return false;
 	}
 }

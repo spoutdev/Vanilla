@@ -23,27 +23,48 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.block.plants;
 
-import org.spout.api.inventory.ItemStack;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.spout.vanilla.material.TimedCraftable;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.interactive.Furnace;
-import org.spout.vanilla.material.item.generic.Food;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
-public class RawBeef extends Food implements TimedCraftable {
-	public RawBeef() {
-		super("Raw Beef", 363, 3, FoodEffectType.HUNGER);
+public class SugarCane extends GroundAttachable {
+	private final Set<Material> validBases = new HashSet<Material>(4);
+
+	public SugarCane() {
+		super("Sugar Cane", 83);
+
+		validBases.add(VanillaMaterials.DIRT);
+		validBases.add(VanillaMaterials.GRASS);
+		validBases.add(VanillaMaterials.SAND);
+		validBases.add(VanillaMaterials.SUGAR_CANE_BLOCK);
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.STEAK, 1);
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		return super.canAttachTo(material, face) && this.validBases.contains(material);
 	}
 
 	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+	public boolean canAttachTo(Block block, BlockFace face) {
+		if (super.canAttachTo(block, face)) {
+			BlockMaterial wmat;
+			for (BlockFace around : BlockFaces.NESW) {
+				wmat = block.translate(around).getMaterial();
+				if (wmat.equals(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

@@ -23,39 +23,72 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.block.plants;
 
-import org.spout.api.inventory.ItemStack;
+import java.util.Random;
+
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.material.Flammable;
-import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
-import org.spout.vanilla.material.block.interactive.Furnace;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.block.generic.Plant;
 
-public class Cobblestone extends Solid implements TimedCraftable, Flammable {
-	public Cobblestone() {
-		super("Cobblestone", 4);
+public class NetherWart extends GroundAttachable implements Plant {
+	private GrowthStage stage = GrowthStage.SEEDLING;
+
+	public NetherWart() {
+		super("Nether Wart", 115);
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.STONE, 1);
+	public boolean hasGrowthStages() {
+		return true;
 	}
 
 	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+	public int getNumGrowthStages() {
+		return 3;
 	}
 
 	@Override
-	public boolean canSupportFire(BlockFace face) {
-		return face == BlockFace.TOP;
+	public int getMinimumLightToGrow() {
+		return 0;
 	}
 
 	@Override
-	public boolean canBurn() {
-		return false;
+	public short getData() {
+		return stage.getData();
+	}
+
+	@Override
+	public int getDropCount() {
+		return stage == GrowthStage.LAST ? new Random().nextInt(4) + 2 : 1;
+	}
+
+	@Override
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		return material.equals(VanillaMaterials.SOUL_SAND) && super.canAttachTo(material, face);
+	}
+
+	public GrowthStage getGrowthStage() {
+		return stage;
+	}
+
+	public enum GrowthStage implements DataSource {
+		SEEDLING(1),
+		MIDDLE(2),
+		LAST(3);
+		private final short data;
+
+		GrowthStage(int data) {
+			this.data = (short) data;
+		}
+
+		@Override
+		public short getData() {
+			return data;
+		}
 	}
 }

@@ -25,13 +25,14 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.vanilla.material.Flammable;
 import org.spout.vanilla.material.Fuel;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.block.attachable.Attachable;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class Fence extends Solid implements Fuel {
+public class Fence extends Solid implements Fuel, Flammable {
 	public final float BURN_TIME = 15.f;
 
 	public Fence(String name, int id) {
@@ -56,5 +57,15 @@ public class Fence extends Solid implements Fuel {
 			}
 		}		
 		return false;
+	}
+
+	@Override
+	public boolean canSupportFire(BlockFace face) {
+		return true;
+	}
+
+	@Override
+	public boolean canBurn() {
+		return true;
 	}
 }

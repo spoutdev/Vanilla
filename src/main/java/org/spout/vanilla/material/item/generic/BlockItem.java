@@ -27,14 +27,13 @@ package org.spout.vanilla.material.item.generic;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class BlockItem extends VanillaItemMaterial {
 	GenericMaterialSource onPlace;
@@ -56,7 +55,7 @@ public class BlockItem extends VanillaItemMaterial {
 		if (!entity.getInventory().isCurrentItem(this)) {
 			throw new IllegalStateException("Interaction with an controller that is not holding this block!");
 		}
-		if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
+		if (VanillaPlayerUtil.isSurvival(entity)) {
 			if (!entity.getInventory().addCurrentItemAmount(-1)) {
 				throw new IllegalStateException("ControllerType is holding zero or negative sized item!");
 			}

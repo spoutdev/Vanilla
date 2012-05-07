@@ -25,11 +25,23 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.Flammable;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class Dispenser extends Solid {
+public class Dispenser extends Solid implements Flammable {
 
 	public Dispenser(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public boolean canSupportFire(BlockFace face) {
+		return face == BlockFace.TOP;
+	}
+
+	@Override
+	public boolean canBurn() {
+		return false;
 	}
 }

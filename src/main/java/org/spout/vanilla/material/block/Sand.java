@@ -30,6 +30,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.block.interactive.Furnace;
 
 public class Sand extends Solid implements TimedCraftable {
 	public Sand() {

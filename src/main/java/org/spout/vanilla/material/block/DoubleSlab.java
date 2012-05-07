@@ -25,9 +25,11 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.Flammable;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class DoubleSlab extends Solid {
+public class DoubleSlab extends Solid implements Flammable {
 	public static final DoubleSlab STONE = register(new DoubleSlab("Stone Double Slab", Slab.STONE));
 	public static final DoubleSlab SANDSTONE = register(new DoubleSlab("Sandstone Double Slab", 1, STONE, Slab.SANDSTONE));
 	public static final DoubleSlab WOOD = register(new DoubleSlab("Wooden Double Slab", 2, STONE, Slab.WOOD));
@@ -49,5 +51,16 @@ public class DoubleSlab extends Solid {
 
 	private void setDefault() {
 		this.setHardness(2.0F).setResistance(10.0F);
+	}
+
+	@Override
+	public boolean canSupportFire(BlockFace face) {
+		if (this == WOOD) return true;
+		return face == BlockFace.TOP;
+	}
+
+	@Override
+	public boolean canBurn() {
+		return this == WOOD;
 	}
 }

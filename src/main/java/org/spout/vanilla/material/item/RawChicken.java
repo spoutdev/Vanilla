@@ -29,7 +29,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Furnace;
+import org.spout.vanilla.material.block.interactive.Furnace;
 import org.spout.vanilla.material.item.generic.Food;
 
 public class RawChicken extends Food implements TimedCraftable {

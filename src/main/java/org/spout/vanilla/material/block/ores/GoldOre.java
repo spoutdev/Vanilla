@@ -23,23 +23,23 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.block.ores;
 
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.generic.Ore;
 import org.spout.vanilla.material.block.interactive.Furnace;
-import org.spout.vanilla.material.item.generic.Food;
 
-public class RawBeef extends Food implements TimedCraftable {
-	public RawBeef() {
-		super("Raw Beef", 363, 3, FoodEffectType.HUNGER);
+public class GoldOre extends Ore implements TimedCraftable {
+	public GoldOre() {
+		super("Gold Ore", 14);
 	}
 
 	@Override
 	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.STEAK, 1);
+		return new ItemStack(VanillaMaterials.GOLD_INGOT, 1);
 	}
 
 	@Override

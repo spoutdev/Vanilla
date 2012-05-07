@@ -81,12 +81,11 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 				buffer.writeShort(item.getMaterial().getId());
 				buffer.writeByte(item.getAmount());
 				if (item.getMaterial() instanceof Tool) {
-					System.out.println("damage");
-					buffer.writeShort(item.getData());
+					System.out.println("durability");
 				} else {
 					System.out.println("data");
-					buffer.writeShort(item.getData());
 				}
+				buffer.writeShort(item.getData());
 				if (ChannelBufferUtils.hasNbtData(item.getData())) {
 					ChannelBufferUtils.writeCompound(buffer, item.getAuxData());
 				}

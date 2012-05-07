@@ -28,11 +28,13 @@ package org.spout.vanilla.material.block;
 import java.util.Random;
 
 import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.Flammable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.Solid;
 
-public class Gravel extends Solid {
+public class Gravel extends Solid implements Flammable {
 	private Random rand = new Random();
 
 	public Gravel() {
@@ -42,5 +44,15 @@ public class Gravel extends Solid {
 	@Override
 	public Material getDrop() {
 		return (rand.nextInt(10) == 0) ? VanillaMaterials.FLINT : VanillaMaterials.GRAVEL;
+	}
+
+	@Override
+	public boolean canSupportFire(BlockFace face) {
+		return face == BlockFace.TOP;
+	}
+
+	@Override
+	public boolean canBurn() {
+		return false;
 	}
 }

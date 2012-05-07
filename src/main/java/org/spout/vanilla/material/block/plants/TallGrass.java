@@ -23,27 +23,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.block.plants;
 
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.interactive.Furnace;
-import org.spout.vanilla.material.item.generic.Food;
+import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
-public class RawBeef extends Food implements TimedCraftable {
-	public RawBeef() {
-		super("Raw Beef", 363, 3, FoodEffectType.HUNGER);
+public class TallGrass extends DeadBush {
+	public static final TallGrass DEAD_GRASS = register(new TallGrass("Dead Grass"));
+	public static final TallGrass TALL_GRASS = register(new TallGrass("Tall Grass", 1, DEAD_GRASS));
+	public static final TallGrass FERN = register(new TallGrass("Fern", 2, DEAD_GRASS));
+
+	private TallGrass(String name) {
+		super(name, 31);
+		this.setDefault();
+	}
+
+	private TallGrass(String name, int data, TallGrass parent) {
+		super(name, 31, data, parent);
+		this.setDefault();
+	}
+
+	private void setDefault() {
+		this.setHardness(0.0F).setResistance(0.0F);
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.STEAK, 1);
+	public TallGrass getParentMaterial() {
+		return (TallGrass) super.getParentMaterial();
 	}
 
 	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		if (face == BlockFace.TOP) {
+			if (material.equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT)) {
+				return ((VanillaBlockMaterial) material).canSupport(this, face);
+			}
+		}
+		return false;
 	}
 }

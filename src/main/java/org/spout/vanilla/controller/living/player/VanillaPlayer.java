@@ -544,7 +544,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 	private void animate(byte animation) {
 		//TODO limit when animations are sent?
 		//TODO send based on controller view distance? May need research.
-		for (Player plr : getParent().getRegion().getNearbyPlayers(getParent(), getParent().getViewDistance())) {
+		if (getParent() == null || getParent().getRegion() == null) {
+			return;
+		}
+
+		Set<Player> players = getParent().getRegion().getNearbyPlayers(getParent(), getParent().getViewDistance());
+		for (Player plr : players) {
 			plr.getSession().send(new AnimationMessage(getParent().getId(), animation));
 		}
 	}

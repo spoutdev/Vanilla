@@ -53,6 +53,7 @@ import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.inventory.VanillaPlayerInventory;
 import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.material.block.Furnace;
+import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
@@ -145,8 +146,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 		if (isDigging) {
 			diggingTicks += dt;
+			animate(AnimationMessage.ANIMATION_SWING_ARM);
 		} else {
 			diggingTicks = 0;
+			animate(AnimationMessage.ANIMATION_NONE);
 		}
 
 		if (isSurvival()) {
@@ -535,5 +538,14 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	public long getDiggingTicks() {
 		return diggingTicks;
+	}
+
+	//TODO handle this more efficiently.
+	private void animate(byte animation) {
+		//TODO limit when animations are sent?
+		//TODO send based on controller view distance? May need research.
+		for (Player plr : getParent().getRegion().getNearbyPlayers(getParent(), getParent().getViewDistance())) {
+			plr.getSession().send(new AnimationMessage(getParent().getId(), animation));
+		}
 	}
 }

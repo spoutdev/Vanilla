@@ -72,6 +72,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		if (message.getState() == PlayerDiggingMessage.STATE_START_DIGGING) {
 			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable);
 			Spout.getEngine().getEventManager().callEvent(event);
+			((VanillaPlayer) player.getEntity().getController()).setDigging(true);
 
 			//Call interactions.
 			if (event.isCancelled() || (!isInteractable && heldItem == null)) {
@@ -85,8 +86,6 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				heldItem.getMaterial().onInteract(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
 				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
 			}
-
-			((VanillaPlayer) player.getEntity().getController()).setDigging(true);
 		} else if (message.getState() == PlayerDiggingMessage.STATE_DONE_DIGGING) {
 			((VanillaPlayer) player.getEntity().getController()).setDigging(false);
 			long diggingTicks = ((VanillaPlayer) player.getEntity().getController()).getDiggingTicks();
@@ -106,9 +105,5 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				}
 			}
 		}
-	}
-
-	private void animate() {
-		//Call getNearbyPlayers and send an animation.
 	}
 }

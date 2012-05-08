@@ -46,6 +46,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
@@ -80,6 +81,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 			//Call interactions.
 			if (event.isCancelled() || (!isInteractable && heldItem == null)) {
+				vp.setDigging(false);
 				return;
 			//punching with our fist
 			} else if (heldItem == null) {
@@ -106,13 +108,8 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				totalDamage = ((int) blockMaterial.getHardness() - damageDone);
 				if (totalDamage <= 0) {
 					blockMaterial.onDestroy(block);
-					if (vp.getParent() == null || vp.getParent().getRegion() == null) {
-						return;
-					}
-					Set<Player> players = vp.getParent().getRegion().getNearbyPlayers(vp.getParent(), vp.getParent().getViewDistance());
-					for (Player plr : players) {
-						plr.getSession().send(new PlayEffectMessage(2001, block.getX(), block.getY(), block.getZ(), 1));
-					}
+					PlayEffectMessage pem = new PlayEffectMessage(player.getEntity().getId(), block.getX(), block.getY(), block.getZ(), block.getMaterial().getId());
+					VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
 				}
 			}
 		}

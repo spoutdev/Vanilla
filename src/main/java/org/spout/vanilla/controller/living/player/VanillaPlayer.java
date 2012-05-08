@@ -31,6 +31,7 @@ import java.util.Set;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers;
 import static org.spout.vanilla.util.InventoryUtil.nextWindowId;
 
 import org.spout.api.Spout;
@@ -52,6 +53,7 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.inventory.VanillaPlayerInventory;
 import org.spout.vanilla.inventory.Window;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.material.block.interactive.Furnace;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
@@ -144,14 +146,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 			sendPacket(owner, new ProgressBarMessage(windowId, Furnace.PROGRESS_ARROW, furnace.getProgressTicks()), new ProgressBarMessage(windowId, Furnace.FIRE_ICON, furnace.getBurnTimeTicks()));
 		}
 
-		if (isDigging) {
-			diggingTicks += dt;
-			animate(AnimationMessage.ANIMATION_SWING_ARM);
-		} else {
-			diggingTicks = 0;
-			animate(AnimationMessage.ANIMATION_NONE);
-		}
-
 		if (isSurvival()) {
 			survivalTick(dt);
 		} else {
@@ -160,6 +154,14 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	private void survivalTick(float dt) {
+		if (isDigging) {
+			diggingTicks += dt;
+			sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_SWING_ARM));
+		} else {
+			diggingTicks = 0;
+			sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_NONE));
+		}
+
 		if ((distanceMoved += getPreviousPosition().distanceSquared(getParent().getPosition())) >= 1) {
 			exhaustion += 0.01;
 			distanceMoved = 0;
@@ -538,18 +540,5 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	public long getDiggingTicks() {
 		return diggingTicks;
-	}
-
-	//TODO handle this more efficiently.
-	private void animate(byte animation) {
-		//TODO limit when animations are sent?
-		//TODO send based on controller view distance? May need research.
-		if (getParent() == null || getParent().getRegion() == null) {
-			return;
-		}
-		Set<Player> players = getParent().getRegion().getNearbyPlayers(getParent(), getParent().getViewDistance());
-		for (Player plr : players) {
-			plr.getSession().send(new AnimationMessage(getParent().getId(), animation));
-		}
 	}
 }

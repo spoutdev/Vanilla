@@ -25,6 +25,8 @@
  */
 package org.spout.vanilla.protocol;
 
+import java.util.Set;
+
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
@@ -55,6 +57,7 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
@@ -526,6 +529,45 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public static void sendPacket(Player player, Message... messages) {
 		for (Message message : messages) {
 			player.getSession().send(message);
+		}
+	}
+
+	/**
+	 * This method sends any amount of packets to all nearby players of an entity (within a specified range).
+	 * @param entity The entity that the packet relates to. It will be used as the central point to send packets in a range from.
+	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param messages The messages that should be sent to the discovered nearest player.
+	 */
+	public static void sendPacketsToNearbyPlayers(Entity entity, int range, Message... messages) {
+		if (entity == null || entity.getRegion() == null) {
+			return;
+		}
+
+		Set<Player> players = entity.getRegion().getNearbyPlayers(entity, range);
+		for (Player plr : players) {
+			for (Message msg : messages) {
+				plr.getSession().send(msg);
+			}
+		}
+	}
+
+	/**
+	 * This method sends any amount of packets and sends them to the nearest player from the entity specified.
+	 * @param entity The entity that the packet relates to. It will be used as the central point to send packets in a range from.
+	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param messages The messages that should be sent to the discovered nearest player.
+	 */
+	public static void sendPacketsToNearestPlayer(Entity entity, int range, Message... messages) {
+		if (entity == null || entity.getRegion() == null) {
+			return;
+		}
+
+		Player plr = entity.getRegion().getNearestPlayer(entity, range);
+		//Only send if we have a player nearby.
+		if (plr != null) {
+			for (Message msg : messages) {
+				plr.getSession().send(msg);
+			}
 		}
 	}
 }

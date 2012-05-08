@@ -2,7 +2,7 @@
 	Maven build file for Vanilla
 
 	Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
-	Vanilla is licensed under GNU LESSER GENERAL PUBLIC LICENSE Version 3, but with a provision that files are released under the MIT license 180 days after they are published. Please see the `LICENSE.txt` file for details.
+	Vanilla is licensed under GNU Lesser General Public License Version 3, but with a provision that files are released under the MIT license 180 days after they are published. Please see the `LICENSE.txt` file for details.
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -29,7 +29,7 @@
 			<name>SpoutDev License Version 1</name>
 			<url>http://www.spout.org/SpoutDevLicenseV1.txt</url>
 			<distribution>repo</distribution>
-			<comments>GNU LESSER GENERAL PUBLIC LICENSE Version 3, but with a provision that files are released under the MIT license 180 days after they are published.</comments>
+			<comments>GNU Lesser General Public License Version 3, but with a provision that files are released under the MIT license 180 days after they are published.</comments>
 		</license>
 	</licenses>
 
@@ -127,6 +127,7 @@
 					<properties>
 						<name>${project.name}</name>
 						<url>${project.url}</url>
+						<license>SpoutDev License Version 1</license>
 						<licenseUrl>http://www.spout.org/SpoutDevLicenseV1.txt</licenseUrl>
 						<copyright>Copyright (c) 2011-2012, SpoutDev</copyright>
 					</properties>

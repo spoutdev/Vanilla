@@ -101,8 +101,6 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			//Get the target block and validate 
 			BlockMaterial clickedMaterial = clickedBlock.getSubMaterial();
 
-			clickedMaterial.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
-
 			//alternative block to place at may the clicked block deny placement
 			Block alterBlock = clickedBlock.translate(clickedFace);
 			BlockFace alterFace = clickedFace.getOpposite();
@@ -117,6 +115,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			if (holdingMat != null) {
 				holdingMat.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 			}
+			clickedMaterial.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 
 			if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
 				undoPlacement(player, clickedBlock, alterBlock);

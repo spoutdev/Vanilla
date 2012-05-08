@@ -63,6 +63,7 @@ import org.spout.vanilla.controller.living.creature.util.SnowGolem;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.MovingBlock;
 import org.spout.vanilla.controller.object.misc.EnderCrystal;
+import org.spout.vanilla.controller.object.misc.Painting;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
 import org.spout.vanilla.controller.object.moving.XPOrb;
@@ -93,6 +94,7 @@ import org.spout.vanilla.protocol.controller.living.SpiderEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.VanillaPlayerEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.WolfEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.FallingBlockProtocol;
+import org.spout.vanilla.protocol.controller.object.PaintingEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.PickupEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.XPOrbEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.vehicle.BoatEntityProtocol;
@@ -142,6 +144,7 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType VILLAGER = new MobControllerType(120, Villager.class, "Villager");
 	public static final VanillaControllerType IRON_GOLEM = new MobControllerType(99, IronGolem.class, "Iron Golem");
 	public static final VanillaControllerType ENDER_CRYSTAL = new VanillaControllerType(200, EnderCrystal.class, "Ender Crystal", new BasicObjectEntityProtocol(51));
+	public static final VanillaControllerType PAINTINGS = new VanillaControllerType(-1, Painting.class, "Painting", new PaintingEntityProtocol());
 	public static final VanillaControllerType PLAYER = new VanillaControllerType(-1, VanillaPlayer.class, "Player", new VanillaPlayerEntityProtocol());
 	// World
 	public static final VanillaControllerType NORMAL_SKY = new VanillaControllerType(-2, NormalSky.class, "Normal Sky", null);

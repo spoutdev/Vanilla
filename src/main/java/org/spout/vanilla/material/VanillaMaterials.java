@@ -131,6 +131,7 @@ import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 import org.spout.vanilla.material.item.generic.Weapon;
 
 import static org.spout.api.material.MaterialRegistry.register;
+import org.spout.vanilla.material.item.Paintings;
 
 public final class VanillaMaterials {
 	public static final BlockMaterial AIR = BlockMaterial.AIR;
@@ -329,7 +330,7 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial FLINT = register(new VanillaItemMaterial("Flint", 318));
 	public static final RawPorkchop RAW_PORKCHOP = register(new RawPorkchop());
 	public static final Food COOKED_PORKCHOP = register(new Food("Cooked Porkchop", 320, 8, FoodEffectType.HUNGER));
-	public static final VanillaItemMaterial PAINTINGS = register(new VanillaItemMaterial("Paintings", 321));
+	public static final VanillaItemMaterial PAINTINGS = register(new Paintings());
 	public static final Food GOLDEN_APPLE = register(new Food("Golden Apple", 322, 10, FoodEffectType.HUNGER));
 	public static final Sign SIGN = register(new Sign("Sign", 323));
 	public static final DoorItem WOODEN_DOOR = register(new DoorItem("Wooden Door", 324, WOODEN_DOOR_BLOCK));

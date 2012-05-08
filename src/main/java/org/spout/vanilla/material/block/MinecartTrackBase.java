@@ -59,8 +59,8 @@ public abstract class MinecartTrackBase extends GroundAttachable {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against) {
-		if (super.onPlacement(block, data, against)) {
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		if (super.onPlacement(block, data, against, isClickedBlock)) {
 			this.doTrackLogic(block);
 			return true;
 		} else {

@@ -39,20 +39,31 @@ public class DoubleSlab extends Solid implements Flammable {
 	public static final DoubleSlab BRICK = register(new DoubleSlab("Brick Double Slab", 4, STONE, Slab.BRICK));
 	public static final DoubleSlab STONE_BRICK = register(new DoubleSlab("Stone Brick Double Slab", 5, STONE, Slab.STONE_BRICK));
 
+	private Slab singletype;
+
+	public Slab getSingleType() {
+		return this.singletype;
+	}
+
+	public DoubleSlab setSingleType(Slab slab) {
+		this.singletype = slab;
+		slab.setDoubleType(this);
+		this.setDrop(slab);
+		return this;
+	}
+
 	private DoubleSlab(String name, Slab slab) {
 		super(name, 43);
-		this.setDrop(slab).setDropCount(2);
-		this.setDefault();
+		this.setSingleType(slab).setDefault();
 	}
 
 	private DoubleSlab(String name, int data, DoubleSlab parent, Slab slab) {
 		super(name, 43, data, parent);
-		this.setDrop(slab).setDropCount(2);
-		this.setDefault();
+		this.setSingleType(slab).setDefault();
 	}
 
 	private void setDefault() {
-		this.setHardness(2.0F).setResistance(10.0F);
+		this.setHardness(2.0F).setResistance(10.0F).setDropCount(2);
 	}
 
 	@Override

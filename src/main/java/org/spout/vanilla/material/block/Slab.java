@@ -32,23 +32,30 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.Solid;
 
 public class Slab extends Solid {
-	public static final Slab STONE = register(new Slab("Stone Slab", DoubleSlab.STONE));
-	public static final Slab SANDSTONE = register(new Slab("Sandstone Slab", 1, STONE, DoubleSlab.SANDSTONE));
-	public static final Slab WOOD = register(new Slab("Wooden Slab", 2, STONE, DoubleSlab.WOOD));
-	public static final Slab COBBLESTONE = register(new Slab("Cobblestone Slab", 3, STONE, DoubleSlab.COBBLESTONE));
-	public static final Slab BRICK = register(new Slab("Brick Slab", 4, STONE, DoubleSlab.BRICK));
-	public static final Slab STONE_BRICK = register(new Slab("Stone Brick Slab", 5, STONE, DoubleSlab.STONE_BRICK));
+	public static final Slab STONE = register(new Slab("Stone Slab"));
+	public static final Slab SANDSTONE = register(new Slab("Sandstone Slab", 1, STONE));
+	public static final Slab WOOD = register(new Slab("Wooden Slab", 2, STONE));
+	public static final Slab COBBLESTONE = register(new Slab("Cobblestone Slab", 3, STONE));
+	public static final Slab BRICK = register(new Slab("Brick Slab", 4, STONE));
+	public static final Slab STONE_BRICK = register(new Slab("Stone Brick Slab", 5, STONE));
 	private DoubleSlab doubletype;
 
-	private Slab(String name, DoubleSlab doubletype) {
-		super(name, 44);
+	public Slab setDoubleType(DoubleSlab doubletype) {
 		this.doubletype = doubletype;
+		return this;
+	}
+
+	public DoubleSlab getDoubleType() {
+		return this.doubletype;
+	}
+
+	private Slab(String name) {
+		super(name, 44);
 		this.setDefault();
 	}
 
-	private Slab(String name, int data, Slab parent, DoubleSlab doubletype) {
+	private Slab(String name, int data, Slab parent) {
 		super(name, 44, data, parent);
-		this.doubletype = doubletype;
 		this.setDefault();
 	}
 
@@ -64,21 +71,21 @@ public class Slab extends Solid {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against) {
+	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (block.getSubMaterial().equals(this)) {
-			return true;
+			return !isClickedBlock || against == BlockFace.TOP;
 		} else {
-			return super.canPlace(block, data, against);
+			return super.canPlace(block, data, against, isClickedBlock);
 		}
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against) {
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (block.getSubMaterial().equals(this)) {
 			block.setMaterial(this.doubletype).update();
 			return true;
 		} else {
-			return super.onPlacement(block, data, against);
+			return super.onPlacement(block, data, against, isClickedBlock);
 		}
 	}
 }

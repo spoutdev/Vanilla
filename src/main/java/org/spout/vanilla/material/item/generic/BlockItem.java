@@ -28,14 +28,14 @@ package org.spout.vanilla.material.item.generic;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class BlockItem extends VanillaItemMaterial {
+public class BlockItem extends VanillaItemMaterial implements Placeable {
 	GenericMaterialSource onPlace;
 
 	public BlockItem(String name, int id, BlockMaterial onPlaceMaterial) {
@@ -51,27 +51,30 @@ public class BlockItem extends VanillaItemMaterial {
 		}
 	}
 
-	public void onPlacement(Entity entity, Block target, BlockFace attachedFace) {
-		if (!entity.getInventory().isCurrentItem(this)) {
-			throw new IllegalStateException("Interaction with an controller that is not holding this block!");
-		}
-		if (VanillaPlayerUtil.isSurvival(entity)) {
-			if (!entity.getInventory().addCurrentItemAmount(-1)) {
-				throw new IllegalStateException("ControllerType is holding zero or negative sized item!");
+	@Override
+	public boolean canPlace(Block block, short data, BlockFace against) {
+		return ((BlockMaterial) this.onPlace.getSubMaterial()).canPlace(block, data, against);
+	}
+	
+	@Override
+	public boolean onPlacement(Block block, short data, BlockFace against) {
+		if (block.getSource() instanceof Entity) {
+			Entity entity = (Entity) block.getSource();
+			if (!entity.getInventory().isCurrentItem(this)) {
+				throw new IllegalStateException("Interaction with an controller that is not holding this block!");
+			}
+			if (VanillaPlayerUtil.isSurvival(entity)) {
+				if (!entity.getInventory().addCurrentItemAmount(-1)) {
+					throw new IllegalStateException("ControllerType is holding zero or negative sized item!");
+				}
 			}
 		}
 
-		System.out.println("Placing Block " + getBlock() + " on Interact at " + target);
 
-		//placement logic
-		BlockMaterial mat = (BlockMaterial) this.onPlace.getSubMaterial();
-		if (mat.canPlace(target, this.onPlace.getData(), attachedFace)) {
-			BlockMaterial targetMat = target.getSubMaterial();
-			if (!targetMat.equals(VanillaMaterials.AIR)) {
-				targetMat.onDestroy(target);
-			}
-			target.setMaterial(this.getBlock());
-		}
+		System.out.println("Placing Block " + getBlock() + " on Interact at " + block);
+		
+		block.setMaterial(this.getBlock()).update();
+		return true;
 	}
 
 	public MaterialSource getBlock() {

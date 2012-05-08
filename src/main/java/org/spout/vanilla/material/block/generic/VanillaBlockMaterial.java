@@ -41,6 +41,7 @@ import org.spout.vanilla.material.block.redstone.RedstoneWire;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
+
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
 	private float resistance;
 	private Material dropMaterial;
@@ -62,6 +63,11 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	public void onDestroy(Block block) {
 		this.onDestroyBlock(block);
 		this.onDestroySpawnDrops(block);
+	}
+
+	@Override
+	public boolean canPlace(Block block, short data, BlockFace against) {
+		return !block.getSubMaterial().isPlacementObstacle();
 	}
 
 	@Override

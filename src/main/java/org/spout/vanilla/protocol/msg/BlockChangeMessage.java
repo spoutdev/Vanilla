@@ -25,10 +25,15 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.Message;
 
 public final class BlockChangeMessage extends Message {
 	private final int x, y, z, type, metadata;
+
+	public BlockChangeMessage(Block block) {
+		this(block.getX(), block.getY(), block.getZ(), block.getMaterial().getId(), block.getData());
+	}
 
 	public BlockChangeMessage(int x, int y, int z, int type, int metadata) {
 		this.x = x;

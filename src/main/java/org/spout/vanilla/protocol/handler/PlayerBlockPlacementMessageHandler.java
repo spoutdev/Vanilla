@@ -35,19 +35,27 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
+import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
-import org.spout.vanilla.material.item.generic.BlockItem;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class PlayerBlockPlacementMessageHandler extends MessageHandler<PlayerBlockPlacementMessage> {
+
+	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock) {
+		//refresh the client just in case it assumed something
+		player.getSession().send(new BlockChangeMessage(clickedBlock));
+		player.getSession().send(new BlockChangeMessage(alterBlock));
+		Inventory inv = player.getEntity().getInventory();
+		inv.setCurrentItem(inv.getCurrentItem());
+	}
+
 	@Override
 	public void handleServer(Session session, Player player, PlayerBlockPlacementMessage message) {
 		EventManager eventManager = session.getGame().getEventManager();
@@ -83,75 +91,75 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			if (clickedFace == BlockFace.THIS) {
 				return;
 			}
+			if (clickedBlock.getY() >= world.getHeight() || clickedBlock.getY() < 0) {
+				return;
+			}
+
 			//Perform interaction event
 			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), inventory.getCurrentItem(), Action.RIGHT_CLICK, false));
 
 			//Get the target block and validate 
-			Block target;
 			BlockMaterial clickedMaterial = clickedBlock.getSubMaterial();
-			BlockFace targetFace;
-			if (clickedMaterial.isPlacementObstacle()) {
-				target = clickedBlock.translate(clickedFace);
-				targetFace = clickedFace.getOpposite();
-			} else {
-				target = clickedBlock;
-				targetFace = BlockFace.BOTTOM; //face is no longer valid at this point
-			}
-			if (target.getY() >= world.getHeight() || target.getY() < 0) {
-				return;
-			}
 
 			clickedMaterial.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 
-			//check if the interaction can possibly result in placement
-			if (!interactEvent.isCancelled()) {
+			//alternative block to place at may the clicked block deny placement
+			Block alterBlock = clickedBlock.translate(clickedFace);
+			BlockFace alterFace = clickedFace.getOpposite();
 
-				//perform interaction on the server
-				if (holdingMat != null) {
-					holdingMat.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
-				}
+			//check if the interaction was cancelled by the event
+			if (interactEvent.isCancelled()) {
+				undoPlacement(player, clickedBlock, alterBlock);
+				return;
+			}
 
-				if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
-					return; //prevent placement if the material suppresses this
-				}
+			//perform interaction on the server
+			if (holdingMat != null) {
+				holdingMat.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
+			}
 
-				//handle placement by block items
-				if (holdingMat instanceof BlockItem) {
-					((BlockItem) holdingMat).onPlacement(player.getEntity(), target, clickedFace);
+			if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
+				undoPlacement(player, clickedBlock, alterBlock);
+				return;
+			}
+
+			//if the material can be placed, place it
+			if (holdingMat != null && holdingMat instanceof Placeable) {
+				short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?
+				Placeable toPlace = (Placeable) holdingMat;
+
+				Block target;
+				BlockFace targetFace;
+
+				if (toPlace.canPlace(clickedBlock, placedData, clickedFace)) {
+					target = clickedBlock;
+					targetFace = clickedFace;
+				} else if (toPlace.canPlace(alterBlock, placedData, alterFace)) {
+					target = alterBlock;
+					targetFace = alterFace;
+				} else {
+					undoPlacement(player, clickedBlock, alterBlock);
 					return;
 				}
 
-				//if the material is actually a block, place it
-				if (holdingMat != null && holdingMat instanceof BlockMaterial) {
-					short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?
-					BlockMaterial oldBlock = target.getMaterial();
-					BlockMaterial newBlock = (BlockMaterial) holdingMat;
+				if (target.getY() >= world.getHeight() || target.getY() < 0) {
+					return;
+				}
 
-					//check if placement is even possible and handle the destruction of the old block
-					if (!oldBlock.isPlacementObstacle() && newBlock.canPlace(target, placedData, targetFace)) {
-						if (!oldBlock.equals(VanillaMaterials.AIR)) {
-							oldBlock.onDestroy(target);
-						}
+				BlockMaterial oldBlock = target.getSubMaterial();
 
-						//perform actual placement
-						if (newBlock.onPlacement(target, placedData, targetFace)) {
-							//Remove block from inventory if not in creative mode.
-							if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
-								inventory.addCurrentItemAmount(-1);
-							}
-							return; //prevent undoing our placement
-						}
+				//perform actual placement
+				if (toPlace.onPlacement(target, placedData, targetFace)) {
+					oldBlock.onDestroy(target);
+
+					//Remove block from inventory if not in creative mode.
+					if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
+						inventory.addCurrentItemAmount(-1);
 					}
+				} else {
+					undoPlacement(player, clickedBlock, alterBlock);
 				}
 			}
-
-			//refresh the client just in case it assumed something
-			int x = target.getX();
-			int y = target.getY();
-			int z = target.getZ();
-			player.getSession().send(new BlockChangeMessage(x, y, z, target.getMaterial().getId(), target.getData()));
-			inventory.setCurrentItem(holding);
-			return;
 		}
 	}
 }

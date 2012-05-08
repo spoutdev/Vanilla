@@ -56,16 +56,28 @@ public class Slab extends Solid {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against) {
-		if (against == BlockFace.BOTTOM) {
-			Block clicked = block.translate(against.getOpposite());
-			if (clicked.getSubMaterial().equals(this.getParentMaterial())) {
-				//we are stacking on top of another of the same type
-				//turn this block into the double type
-				clicked.setMaterial(this.doubletype).update(true);
-				return true;
-			}
+	public void onDestroy(Block block) {
+		if (!block.getSubMaterial().equals(this.doubletype)) {
+			super.onDestroy(block);
 		}
-		return super.onPlacement(block, data, against);
+	}
+	
+	@Override
+	public boolean canPlace(Block block, short data, BlockFace against) {
+		if (block.getSubMaterial().equals(this)) {
+			return true;
+		} else {
+			return super.canPlace(block, data, against);
+		}
+	}
+
+	@Override
+	public boolean onPlacement(Block block, short data, BlockFace against) {
+		if (block.getSubMaterial().equals(this)) {
+			block.setMaterial(this.doubletype).update();
+			return true;
+		} else {
+			return super.onPlacement(block, data, against);
+		}
 	}
 }

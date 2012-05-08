@@ -545,9 +545,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		Set<Player> players = entity.getRegion().getNearbyPlayers(entity, range);
 		for (Player plr : players) {
-			for (Message msg : messages) {
-				plr.getSession().send(msg);
-			}
+			plr.getSession().sendAll(messages);
 		}
 	}
 
@@ -565,9 +563,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Player plr = entity.getRegion().getNearestPlayer(entity, range);
 		//Only send if we have a player nearby.
 		if (plr != null) {
-			for (Message msg : messages) {
-				plr.getSession().send(msg);
-			}
+			plr.getSession().sendAll(messages);
 		}
 	}
 }

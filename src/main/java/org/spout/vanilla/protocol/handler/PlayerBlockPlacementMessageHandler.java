@@ -130,10 +130,10 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				Block target;
 				BlockFace targetFace;
 
-				if (toPlace.canPlace(clickedBlock, placedData, clickedFace)) {
+				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, true)) {
 					target = clickedBlock;
 					targetFace = clickedFace;
-				} else if (toPlace.canPlace(alterBlock, placedData, alterFace)) {
+				} else if (toPlace.canPlace(alterBlock, placedData, alterFace, false)) {
 					target = alterBlock;
 					targetFace = alterFace;
 				} else {
@@ -148,7 +148,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				BlockMaterial oldBlock = target.getSubMaterial();
 
 				//perform actual placement
-				if (toPlace.onPlacement(target, placedData, targetFace)) {
+				if (toPlace.onPlacement(target, placedData, targetFace, target == clickedBlock)) {
 					oldBlock.onDestroy(target);
 
 					//Remove block from inventory if not in creative mode.

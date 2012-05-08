@@ -64,7 +64,7 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against) {
+	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		return !block.getSubMaterial().isPlacementObstacle();
 	}
 

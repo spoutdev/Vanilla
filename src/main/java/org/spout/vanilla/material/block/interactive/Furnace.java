@@ -53,8 +53,8 @@ public class Furnace extends Solid {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against) {
-		if (super.onPlacement(block, data, against)) {
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		if (super.onPlacement(block, data, against, isClickedBlock)) {
 			block.getWorld().createAndSpawnEntity(block.getPosition(), new FurnaceController());
 			return true;
 		}

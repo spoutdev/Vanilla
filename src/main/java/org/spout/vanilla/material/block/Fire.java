@@ -43,14 +43,14 @@ public class Fire extends VanillaBlockMaterial {
 	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
-		if (!this.canPlace(block, block.getData(), BlockFace.BOTTOM)) {
+		if (!this.canPlace(block, block.getData(), BlockFace.BOTTOM, false)) {
 			this.onDestroy(block);
 		}
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace attachedFace) {
-		if (super.canPlace(block, data, attachedFace)) {
+	public boolean canPlace(Block block, short data, BlockFace attachedFace, boolean isClickedBlock) {
+		if (super.canPlace(block, data, attachedFace, isClickedBlock)) {
 			BlockMaterial mat = block.getMaterial();
 			for (BlockFace face : BlockFaces.BTNSWE) {
 				mat = block.translate(face).getSubMaterial();

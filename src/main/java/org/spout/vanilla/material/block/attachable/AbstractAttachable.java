@@ -125,8 +125,8 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against) {
-		if (super.canPlace(block, data, against)) {
+	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		if (super.canPlace(block, data, against, isClickedBlock)) {
 			return this.isValidPosition(block, against, this.canSeekAttachedAlternative());
 		} else {
 			return false;
@@ -147,7 +147,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against) {
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (!this.canAttachTo(block.translate(against), against.getOpposite())) {
 			if (this.canSeekAttachedAlternative()) {
 				against = this.findAttachedFace(block);

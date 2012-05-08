@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block.interactive;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.Solid;
 
 public class Chest extends Solid implements Fuel {
 	public final float BURN_TIME = 15.f;

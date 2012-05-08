@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block;
 import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.Solid;
 
 public class Plank extends Solid implements Fuel {
 	public static final Plank PLANK = register(new Plank("Oak Plank"));

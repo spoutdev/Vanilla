@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.Solid;
 
 public class MonsterSpawner extends Solid {
 	public MonsterSpawner(String name, int id) {

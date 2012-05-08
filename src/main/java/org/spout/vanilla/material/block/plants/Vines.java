@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.plants;
 
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.Solid;
 
 public class Vines extends Solid {
 	public Vines(String name, int id) {

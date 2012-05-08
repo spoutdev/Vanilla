@@ -28,8 +28,8 @@ package org.spout.vanilla.material.block.ores;
 
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.material.Ore;
 import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.block.generic.Ore;
 import org.spout.vanilla.material.block.interactive.Furnace;
 import org.spout.vanilla.material.item.Dye;
 

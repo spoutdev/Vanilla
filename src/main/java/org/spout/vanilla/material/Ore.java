@@ -24,22 +24,41 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.generic;
+package org.spout.vanilla.material;
 
-public class Liquid extends VanillaBlockMaterial {
-	private final boolean flowing;
+import java.util.Random;
 
-	public Liquid(String name, int id, boolean flowing) {
+public class Ore extends Solid {
+	private Random rand = new Random();
+	private int max = 1;
+	private int min = 1;
+
+	public Ore(String name, int id) {
 		super(name, id);
-		this.flowing = flowing;
-	}
-
-	public boolean isFlowing() {
-		return flowing;
 	}
 
 	@Override
-	public boolean isPlacementObstacle() {
-		return false;
+	public int getDropCount() {
+		return rand.nextInt(max - min + 1) + min;
+	}
+
+	public Ore setMinDropCount(int min) {
+		this.min = min;
+
+		return this;
+	}
+
+	public Ore setMaxDropCount(int max) {
+		this.max = max;
+
+		return this;
+	}
+
+	public int getMinDropCount() {
+		return min;
+	}
+
+	public int getMaxDropCount() {
+		return max;
 	}
 }

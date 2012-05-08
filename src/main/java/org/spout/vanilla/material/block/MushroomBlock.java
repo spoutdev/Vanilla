@@ -30,7 +30,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Flammable;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.generic.Ore;
+import org.spout.vanilla.material.Ore;
 
 public class MushroomBlock extends Ore implements Fuel, Flammable {
 	public final float BURN_TIME = 15.f;

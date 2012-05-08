@@ -31,8 +31,8 @@ import java.util.Map;
 
 import org.spout.api.material.source.DataSource;
 
+import org.spout.vanilla.material.Solid;
 import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.block.generic.Solid;
 
 public class Wool extends Solid implements VanillaMaterial {
 	public static final Wool WHITE = register(new Wool("White Wool"));

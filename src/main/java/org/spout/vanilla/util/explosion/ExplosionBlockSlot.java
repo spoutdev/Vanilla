@@ -32,8 +32,8 @@ import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 /**
  * This is a permanent block slot whose information is loaded from a world dynamically

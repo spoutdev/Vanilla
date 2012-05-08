@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Flammable;
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.Solid;
 
 public class Bedrock extends Solid implements Flammable {
 	public Bedrock(String name, int id) {

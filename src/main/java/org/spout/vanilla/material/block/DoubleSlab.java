@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Flammable;
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.Solid;
 
 public class DoubleSlab extends Solid implements Flammable {
 	public static final DoubleSlab STONE = register(new DoubleSlab("Stone Double Slab", Slab.STONE));

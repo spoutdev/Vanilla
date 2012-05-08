@@ -32,9 +32,9 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 
+import org.spout.vanilla.material.Solid;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.DoorBlock;
-import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 
 public class DoorItem extends VanillaItemMaterial {

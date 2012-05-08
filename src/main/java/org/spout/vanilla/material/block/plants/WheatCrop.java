@@ -30,9 +30,9 @@ import java.util.Random;
 
 import org.spout.api.material.Material;
 
+import org.spout.vanilla.material.Plant;
+import org.spout.vanilla.material.Solid;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Plant;
-import org.spout.vanilla.material.block.generic.Solid;
 
 public class WheatCrop extends Solid implements Plant {
 	private Random rand = new Random();

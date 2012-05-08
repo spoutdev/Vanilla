@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.interactive;
 
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.Solid;
 
 public class BedBlock extends Solid {
 	public BedBlock(String name, int id) {

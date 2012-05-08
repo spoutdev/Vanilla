@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.gemblocks;
 
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.Solid;
 
 public class IronBlock extends Solid {
 	public IronBlock(String name, int id) {

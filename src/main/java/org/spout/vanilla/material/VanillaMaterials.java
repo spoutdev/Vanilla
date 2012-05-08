@@ -70,8 +70,6 @@ import org.spout.vanilla.material.block.gemblocks.DiamondBlock;
 import org.spout.vanilla.material.block.gemblocks.GoldBlock;
 import org.spout.vanilla.material.block.gemblocks.IronBlock;
 import org.spout.vanilla.material.block.gemblocks.LapisLazuliBlock;
-import org.spout.vanilla.material.block.generic.Ore;
-import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.material.block.interactive.BedBlock;
 import org.spout.vanilla.material.block.interactive.Chest;
 import org.spout.vanilla.material.block.interactive.CraftingTable;

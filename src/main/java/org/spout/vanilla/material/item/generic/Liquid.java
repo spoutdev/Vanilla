@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.item.generic;
 
-import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class Liquid extends VanillaBlockMaterial {
 	private final boolean flowing;

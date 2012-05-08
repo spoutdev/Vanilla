@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.generic;
+package org.spout.vanilla.material;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;

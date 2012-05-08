@@ -29,9 +29,9 @@ package org.spout.vanilla.material.block.plants;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.Plant;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.block.generic.Plant;
 
 public class Flower extends GroundAttachable implements Plant {
 	public Flower(String name, int id) {

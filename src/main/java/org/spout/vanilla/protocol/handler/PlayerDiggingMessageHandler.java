@@ -26,19 +26,13 @@
  */
 package org.spout.vanilla.protocol.handler;
 
-import java.util.Set;
-
 import org.spout.api.Spout;
-import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.Material;
 import org.spout.api.material.basic.BasicAir;
-import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -46,10 +40,9 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
-import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
@@ -68,30 +61,46 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		BlockMaterial blockMaterial = block.getSubMaterial();
 		boolean isInteractable = true;
 
+		//FIXME: How so not interactable? I am pretty sure I can interact with water to place a boat, no?
 		if (blockMaterial == VanillaMaterials.AIR || blockMaterial == BasicAir.AIR || blockMaterial == VanillaMaterials.WATER || blockMaterial == VanillaMaterials.LAVA) {
 			isInteractable = false;
 		}
 
 		ItemStack heldItem = player.getEntity().getInventory().getCurrentItem();
 		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
-
+		
 		if (message.getState() == PlayerDiggingMessage.STATE_START_DIGGING) {
 			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable);
-			Spout.getEngine().getEventManager().callEvent(event);
-			vp.setDigging(true);
-
-			//Call interactions.
-			if (event.isCancelled() || (!isInteractable && heldItem == null)) {
-				vp.setDigging(false);
+			if (Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
 				return;
-			//punching with our fist
+			}
+
+			//Perform interactions
+			if (!isInteractable && heldItem == null) {
+				//interacting with nothing using fist
+				return;
 			} else if (heldItem == null) {
+				//interacting with block using fist
 				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
 			} else if (!isInteractable) {
-				heldItem.getMaterial().onInteract(player.getEntity(), Action.LEFT_CLICK);
+				//interacting with nothing using item
+				heldItem.getSubMaterial().onInteract(player.getEntity(), Action.LEFT_CLICK);
 			} else {
-				heldItem.getMaterial().onInteract(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
+				//interacting with block using item
+				heldItem.getSubMaterial().onInteract(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
 				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
+			}
+
+			if (isInteractable) {
+				//only dig if in survival mode and block has hardness
+				if (vp.isSurvival() && blockMaterial.getHardness() != 0.0f) {
+					vp.setDigging(true);
+				} else {
+					//insta-break
+					blockMaterial.onDestroy(block);
+					PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
+					VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
+				}
 			}
 		} else if (message.getState() == PlayerDiggingMessage.STATE_DONE_DIGGING) {
 			vp.setDigging(false);
@@ -109,7 +118,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				totalDamage = ((int) blockMaterial.getHardness() - damageDone);
 				if (totalDamage <= 0) {
 					blockMaterial.onDestroy(block);
-					PlayEffectMessage pem = new PlayEffectMessage(player.getEntity().getId(), block.getX(), block.getY(), block.getZ(), block.getMaterial().getId());
+					PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
 					VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
 				}
 			}

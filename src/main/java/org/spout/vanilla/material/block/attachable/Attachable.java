@@ -90,12 +90,15 @@ public interface Attachable {
 	public void handlePlacement(Block block, short data, BlockFace attachedFace);
 
 	/**
-	 * Checks if placement is possible for this attachable
+	 * Checks if this attachable is at a position it can actually be<br>
+	 * This is called in the underlying physics function to check if the block has to be broken<br>
+	 * No checks on the block itself should be performed other than the face it is attached to
+	 * 
 	 * @param block           to place at
 	 * @param data            to use
 	 * @param attachedFace    to use
 	 * @param seekAlternative whether an alternative attached face should be sought
 	 * @return whether placement is possible
 	 */
-	public boolean canPlace(Block block, short data, BlockFace attachedFace, boolean seekAlternative);
+	public boolean isValidPosition(Block block, BlockFace attachedFace, boolean seekAlternative);
 }

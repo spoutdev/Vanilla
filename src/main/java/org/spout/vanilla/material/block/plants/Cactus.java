@@ -67,8 +67,8 @@ public class Cactus extends GroundAttachable implements TimedCraftable {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace attachedFace, boolean seekAlternative) {
-		if (super.canPlace(block, data, attachedFace, seekAlternative)) {
+	public boolean isValidPosition(Block block, BlockFace attachedFace, boolean seekAlternative) {
+		if (super.isValidPosition(block, attachedFace, seekAlternative)) {
 			BlockMaterial mat;
 			for (BlockFace face : BlockFaces.NESW) {
 				mat = block.translate(face).getMaterial();

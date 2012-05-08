@@ -32,9 +32,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Torch;
-import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget {
 	public static final short REDSTONE_POWER = 15;

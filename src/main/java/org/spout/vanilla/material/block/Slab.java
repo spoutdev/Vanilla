@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.Solid;
 
 public class Slab extends Solid {
 	public static final Slab STONE = register(new Slab("Stone Slab", DoubleSlab.STONE));

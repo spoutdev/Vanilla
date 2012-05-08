@@ -36,8 +36,8 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.Flammable;
+import org.spout.vanilla.material.Solid;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Leaves extends Solid implements Flammable {

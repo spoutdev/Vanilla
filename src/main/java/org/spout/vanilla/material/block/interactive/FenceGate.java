@@ -28,7 +28,7 @@ package org.spout.vanilla.material.block.interactive;
 
 import org.spout.api.material.Material;
 
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.Solid;
 
 public class FenceGate extends Solid {
 	public FenceGate(String name, int id, int data, Material parent) {

@@ -29,8 +29,8 @@ package org.spout.vanilla.material.block.plants;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 
 public class TallGrass extends DeadBush {
 	public static final TallGrass DEAD_GRASS = register(new TallGrass("Dead Grass"));

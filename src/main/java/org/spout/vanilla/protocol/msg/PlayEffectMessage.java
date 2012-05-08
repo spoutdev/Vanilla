@@ -26,12 +26,17 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.Message;
 
 public final class PlayEffectMessage extends Message {
 	private final int id;
 	private final int x, y, z;
 	private final int data;
+
+	public PlayEffectMessage(int id, Block block, int data) {
+		this(id, block.getX(), block.getY(), block.getZ(), data);
+	}
 
 	public PlayEffectMessage(int id, int x, int y, int z, int data) {
 		this.id = id;
@@ -64,5 +69,21 @@ public final class PlayEffectMessage extends Message {
 	@Override
 	public String toString() {
 		return "PlayEffectMessage{id=" + id + ",x=" + x + ",y=" + y + ",z=" + z + ",data=" + data + "}";
+	}
+
+	public static enum Messages {
+		RANDOM_CLICK_1(1000), RANDOM_CLICK_2(1001), RANDOM_BOW(1002), RANDOM_DOOR(1003), RANDOM_FIZZ(1004), MUSIC_DISC(1005), 
+		GHAST_CHARGE(1007), GHAST_FIREBALL(1008), ZOMBIE_DAMAGE_WOOD(1010), ZOMBIE_DAMAGE_METAL(1011), ZOMBIE_BREAK(1012),
+		PARTICLE_SMOKE(2000), PARTICLE_BREAKBLOCK(2001), PARTICLE_SPLASHPOTION(2002), PARTICLE_ENDEREYE(2003), MOB_SPAWN(2004);	
+
+		private int id;
+
+		private Messages(int id) {
+			this.id = id;
+		}
+
+		public int getId() {
+			return this.id;
+		}
 	}
 }

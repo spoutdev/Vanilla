@@ -32,8 +32,8 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Flammable;
+import org.spout.vanilla.material.Solid;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
 
 public class Gravel extends Solid implements Flammable {
 	private Random rand = new Random();

@@ -29,9 +29,9 @@ package org.spout.vanilla.material.block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.Plant;
+import org.spout.vanilla.material.Solid;
 import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.block.generic.Plant;
-import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.material.block.interactive.Furnace;
 import org.spout.vanilla.material.item.Coal;
 

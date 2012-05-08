@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.gemblocks;
 
-import org.spout.vanilla.material.block.generic.Solid;
+import org.spout.vanilla.material.Solid;
 
 public class LapisLazuliBlock extends Solid {
 	public LapisLazuliBlock(String name, int id) {

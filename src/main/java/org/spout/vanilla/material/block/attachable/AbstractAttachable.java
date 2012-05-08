@@ -33,7 +33,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.flag.ByteFlagContainer;
 
-import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
 	protected AbstractAttachable(String name, int id) {
@@ -90,7 +90,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	@Override
 	public void onUpdate(Block block) {
-		if (!this.canPlace(block, block.getData(), this.getAttachedFace(block), false)) {
+		if (!this.isValidPosition(block, this.getAttachedFace(block), false)) {
 			this.onDestroy(block);
 		}
 	}
@@ -126,19 +126,21 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against) {
-		return this.canPlace(block, data, against, this.canSeekAttachedAlternative());
+		if (super.canPlace(block, data, against)) {
+			return this.isValidPosition(block, against, this.canSeekAttachedAlternative());
+		} else {
+			return false;
+		}
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace attachedFace, boolean seekAlternative) {
-		if (super.canPlace(block, data, attachedFace)) {
-			if (this.canAttachTo(block.translate(attachedFace), attachedFace.getOpposite())) {
+	public boolean isValidPosition(Block block, BlockFace attachedFace, boolean seekAlternative) {
+		if (this.canAttachTo(block.translate(attachedFace), attachedFace.getOpposite())) {
+			return true;
+		} else if (seekAlternative) {
+			attachedFace = this.findAttachedFace(block);
+			if (attachedFace != null) {
 				return true;
-			} else if (seekAlternative) {
-				attachedFace = this.findAttachedFace(block);
-				if (attachedFace != null) {
-					return true;
-				}
 			}
 		}
 		return false;

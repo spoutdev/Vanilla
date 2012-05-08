@@ -29,8 +29,8 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.Solid;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 public class Ice extends Solid {

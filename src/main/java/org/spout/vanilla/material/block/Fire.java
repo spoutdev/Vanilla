@@ -32,7 +32,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.Flammable;
-import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class Fire extends VanillaBlockMaterial {
 	public Fire() {

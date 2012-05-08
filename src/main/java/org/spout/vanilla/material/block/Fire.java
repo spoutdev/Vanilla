@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -29,6 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.Flammable;
 import org.spout.vanilla.material.block.generic.VanillaBlockMaterial;
 

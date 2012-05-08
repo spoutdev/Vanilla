@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -44,7 +45,6 @@ import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
 	@Override
 	public void handleServer(Session session, Player player, WindowClickMessage message) {
-
 		// Get the clicker
 		Entity entity = player.getEntity();
 		if (!(entity.getController() instanceof VanillaPlayer)) {
@@ -96,7 +96,6 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 	}
 
 	private void handlePlayerInventory(VanillaPlayer controller, int clickedSlot, PlayerInventory inventory, WindowClickMessage message, ItemStack cursorStack, ItemStack slotStack) {
-
 		Player player = controller.getPlayer();
 		boolean armorSlot = clickedSlot == 36 || clickedSlot == 37 || clickedSlot == 41 || clickedSlot == 44;
 
@@ -120,7 +119,6 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 	}
 
 	private void handleFurnaceInventory(VanillaPlayer controller, int clickedSlot, FurnaceInventory inventory, WindowClickMessage message, ItemStack cursorStack, ItemStack slotStack) {
-
 		Player player = controller.getPlayer();
 		if (clickedSlot == 37 && cursorStack != null) {
 			respond(player.getSession(), message, false);
@@ -135,7 +133,6 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 	}
 
 	private ItemStack[] handleClick(WindowClickMessage message, Inventory inventory, int clickedSlot, ItemStack cursorStack, ItemStack slotStack) {
-
 		// Right click
 		if (message.isRightClick()) {
 			if (!message.isShift()) {

@@ -1,9 +1,10 @@
 /*
- * This file is part of vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
- * vanilla is licensed under the SpoutDev License Version 1.
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
- * vanilla is free software: you can redistribute it and/or modify
+ * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -12,7 +13,7 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * vanilla is distributed in the hope that it will be useful,
+ * Vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
@@ -31,9 +32,6 @@ import org.spout.api.protocol.EntityProtocol;
 
 import org.spout.vanilla.VanillaPlugin;
 
-/**
- * @author zml2008
- */
 public class VanillaControllerType extends EmptyConstructorControllerType {
 	private final int id;
 

@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -31,7 +32,6 @@ import org.spout.api.material.block.BlockFace;
  * Indicates the direction of a minecart track, and several helper methods to get info about it.
  */
 public enum RailsState {
-
 	WEST(BlockFace.WEST, BlockFace.EAST, false),
 	SOUTH(BlockFace.SOUTH, BlockFace.NORTH, false),
 	SOUTH_SLOPED(BlockFace.SOUTH, BlockFace.NORTH, true),
@@ -145,5 +145,4 @@ public enum RailsState {
 		}
 		return null;
 	}
-
 }

@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -73,7 +74,7 @@ public class Leaves extends Solid implements Flammable {
 				dropMat = block.getSubMaterial();
 			}
 		}
-		
+
 		if (dropMat != null) {
 			int count = this.getDropCount();
 			for (int i = 0; i < count && dropMat.getId() != 0; ++i) {

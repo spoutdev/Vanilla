@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -29,7 +30,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.generic.BlockItem;
 
 public class Sign extends BlockItem {
-
 	public Sign(String name, int id) {
 		super(name, id, VanillaMaterials.WALL_SIGN);
 	}

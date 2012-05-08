@@ -1,9 +1,10 @@
 /*
- * This file is part of SpoutAPI (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
- * SpoutAPI is licensed under the SpoutDev License Version 1.
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
- * SpoutAPI is free software: you can redistribute it and/or modify
+ * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -12,7 +13,7 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * SpoutAPI is distributed in the hope that it will be useful,
+ * Vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
@@ -30,11 +31,11 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.generic.Tool;
 
 public class FlintAndSteel extends Tool {
-
 	public FlintAndSteel(String name, int id, short durability) {
 		super(name, id, durability);
 	}

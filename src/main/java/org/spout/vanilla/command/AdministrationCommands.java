@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -161,7 +162,7 @@ public class AdministrationCommands {
 		if (args.length() != 1) {
 			throw new CommandException("Please only provide a player to OP!");
 		}
-		
+
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		ops.setOp(playerName, false);
@@ -178,7 +179,7 @@ public class AdministrationCommands {
 		if (args.length() != 1) {
 			throw new CommandException("Please only provide a player to OP!");
 		}
-		
+
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		ops.setOp(playerName, true);

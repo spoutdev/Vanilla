@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -32,7 +33,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import static org.junit.Assert.assertEquals;
 
 public class InventoryUtilTest {
-
 	@Test
 	public void testInventoryUtil() {
 		ItemStack stack1 = new ItemStack(VanillaMaterials.CAKE, 20);
@@ -50,5 +50,4 @@ public class InventoryUtilTest {
 		assertEquals(InventoryUtil.nullIfEmpty(stack1), null);
 		assertEquals(InventoryUtil.nullIfEmpty(stack2), stack2);
 	}
-
 }

@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -41,7 +42,6 @@ import org.spout.vanilla.material.block.redstone.RedstoneWire;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
-
 	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
 	private float resistance;
 	private Material dropMaterial;

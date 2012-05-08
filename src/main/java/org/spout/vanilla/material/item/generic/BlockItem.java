@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -55,7 +56,7 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 	public boolean canPlace(Block block, short data, BlockFace against) {
 		return ((BlockMaterial) this.onPlace.getSubMaterial()).canPlace(block, data, against);
 	}
-	
+
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against) {
 		if (block.getSource() instanceof Entity) {
@@ -70,9 +71,8 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 			}
 		}
 
-
 		System.out.println("Placing Block " + getBlock() + " on Interact at " + block);
-		
+
 		block.setMaterial(this.getBlock()).update();
 		return true;
 	}

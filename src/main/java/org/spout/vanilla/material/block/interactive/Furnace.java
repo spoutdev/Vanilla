@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -25,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.interactive;
 
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
-
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
@@ -42,6 +41,8 @@ import org.spout.vanilla.material.block.generic.Solid;
 import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 import org.spout.vanilla.util.InventoryUtil;
+
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class Furnace extends Solid {
 	public static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;

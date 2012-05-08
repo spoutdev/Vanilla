@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -25,23 +26,26 @@
  */
 package org.spout.vanilla.protocol;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.junit.Test;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Vector2;
-import org.spout.api.math.Vector3;
-import org.spout.api.util.Parameter;
-import org.spout.nbt.CompoundMap;
-import org.spout.nbt.IntTag;
-import org.spout.nbt.StringTag;
-import org.spout.vanilla.material.VanillaMaterials;
-
 import java.awt.Color;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
+import org.junit.Test;
+
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector2;
+import org.spout.api.math.Vector3;
+import org.spout.api.util.Parameter;
+
+import org.spout.nbt.CompoundMap;
+import org.spout.nbt.IntTag;
+import org.spout.nbt.StringTag;
+
+import org.spout.vanilla.material.VanillaMaterials;
 
 import static org.junit.Assert.assertEquals;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.*;

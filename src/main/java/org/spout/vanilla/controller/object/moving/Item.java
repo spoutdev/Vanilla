@@ -1,9 +1,10 @@
 /*
- * This file is part of vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
- * vanilla is licensed under the SpoutDev License Version 1.
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
+ * Vanilla is licensed under the SpoutDev License Version 1.
  *
- * vanilla is free software: you can redistribute it and/or modify
+ * Vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -12,7 +13,7 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * vanilla is distributed in the hope that it will be useful,
+ * Vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
@@ -27,8 +28,6 @@ package org.spout.vanilla.controller.object.moving;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -45,6 +44,8 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
+
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 /**
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).

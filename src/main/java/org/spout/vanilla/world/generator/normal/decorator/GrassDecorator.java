@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -39,7 +40,6 @@ public class GrassDecorator implements BiomeDecorator {
 
 	@Override
 	public void populate(Chunk source, Random random) {
-
 		if (source.getY() < 4) {
 			return;
 		}

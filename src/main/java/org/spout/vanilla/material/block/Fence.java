@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -25,10 +26,11 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.Flammable;
-import org.spout.vanilla.material.Fuel;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+
+import org.spout.vanilla.material.Flammable;
+import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.attachable.Attachable;
 import org.spout.vanilla.material.block.generic.Solid;
 
@@ -55,7 +57,7 @@ public class Fence extends Solid implements Fuel, Flammable {
 					return true;
 				}
 			}
-		}		
+		}
 		return false;
 	}
 

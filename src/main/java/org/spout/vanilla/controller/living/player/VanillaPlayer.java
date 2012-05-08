@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -28,11 +29,6 @@ package org.spout.vanilla.controller.living.player;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers;
-import static org.spout.vanilla.util.InventoryUtil.nextWindowId;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
@@ -66,6 +62,11 @@ import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers;
+import static org.spout.vanilla.util.InventoryUtil.nextWindowId;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to
@@ -495,13 +496,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.windowId = nextWindowId();
 		sendPacket(owner, new OpenWindowMessage(windowId, activeWindow.getId(), title, slots));
 	}
-	
+
 	public void closeWindow() {
 		this.activeWindow = null;
 		sendPacket(owner, new CloseWindowMessage(windowId));
 		this.windowId = 0;
 	}
-	
+
 	public int getWindowId() {
 		return windowId;
 	}

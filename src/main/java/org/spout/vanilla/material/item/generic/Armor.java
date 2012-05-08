@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -32,16 +33,6 @@ public class Armor extends VanillaItemMaterial {
 		super(name, id);
 		this.protection = protection;
 	}
-
-	/*
-		 * 	VanillaMaterials.FLINT_AND_STEEL.getTypeId()
-		 * VanillaMaterials.BOW.getId()
-		 * VanillaMaterials.FISHING_ROD.getId()
-		 * VanillaMaterials.SHEARS.getId()
-
-
-			}
-		 */
 
 	public int getProtection() {
 		return protection;

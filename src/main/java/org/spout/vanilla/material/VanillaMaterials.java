@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -24,8 +25,6 @@
  * including the MIT license.
  */
 package org.spout.vanilla.material;
-
-import static org.spout.api.material.MaterialRegistry.register;
 
 import org.spout.api.material.BlockMaterial;
 
@@ -132,6 +131,8 @@ import org.spout.vanilla.material.item.generic.Liquid;
 import org.spout.vanilla.material.item.generic.RangedWeapon;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 import org.spout.vanilla.material.item.generic.Weapon;
+
+import static org.spout.api.material.MaterialRegistry.register;
 
 public final class VanillaMaterials {
 	public static final BlockMaterial AIR = BlockMaterial.AIR;

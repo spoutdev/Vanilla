@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -47,7 +48,6 @@ import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class PlayerBlockPlacementMessageHandler extends MessageHandler<PlayerBlockPlacementMessage> {
-
 	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock) {
 		//refresh the client just in case it assumed something
 		player.getSession().send(new BlockChangeMessage(clickedBlock));

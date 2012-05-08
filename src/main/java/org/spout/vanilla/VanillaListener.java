@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -26,8 +27,6 @@
 package org.spout.vanilla;
 
 import java.util.HashSet;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 import org.spout.api.Source;
 import org.spout.api.entity.Controller;
@@ -61,6 +60,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+
 public class VanillaListener implements Listener {
 	@SuppressWarnings("unused")
 	private final VanillaPlugin plugin;
@@ -71,7 +72,6 @@ public class VanillaListener implements Listener {
 
 	@EventHandler(order = Order.EARLIEST)
 	public void playerJoin(PlayerJoinEvent event) {
-
 		// Set their mode
 		Player player = event.getPlayer();
 		Entity playerEntity = player.getEntity();

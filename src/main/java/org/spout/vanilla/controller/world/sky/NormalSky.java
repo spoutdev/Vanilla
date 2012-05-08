@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -25,14 +26,14 @@
  */
 package org.spout.vanilla.controller.world.sky;
 
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
-
 import org.spout.api.Spout;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
 import org.spout.vanilla.world.Weather;
+
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
 
 public class NormalSky extends VanillaSky {
 	public NormalSky() {

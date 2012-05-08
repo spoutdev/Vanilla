@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -70,8 +71,6 @@ public class TileEntityDataMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "TileEntityDataMessage{" + "x=" + x + ",y=" + y + ",z=" + z +
-				",action=" + action + ",custom1=" + custom1 + ",custom2=" + custom2 +
-				",custom3=" + custom3 + "}";
+		return "TileEntityDataMessage{" + "x=" + x + ",y=" + y + ",z=" + z + ",action=" + action + ",custom1=" + custom1 + ",custom2=" + custom2 + ",custom3=" + custom3 + "}";
 	}
 }

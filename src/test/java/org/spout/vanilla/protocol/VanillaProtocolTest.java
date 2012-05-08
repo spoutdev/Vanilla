@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -25,14 +26,18 @@
  */
 package org.spout.vanilla.protocol;
 
+import java.io.IOException;
+
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.junit.Test;
+
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.common.message.CustomDataMessage;
+
 import org.spout.vanilla.controller.effect.EntityEffect;
 import org.spout.vanilla.controller.living.player.GameMode;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -103,8 +108,6 @@ import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.UseBedMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
-
-import java.io.IOException;
 
 import static org.junit.Assert.*;
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;

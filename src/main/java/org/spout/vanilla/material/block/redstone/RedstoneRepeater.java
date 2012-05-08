@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -29,7 +30,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class RedstoneRepeater extends GroundAttachable implements RedstoneSource, RedstoneTarget {
-	
 	public RedstoneRepeater(String name, int id) {
 		super(name, id);
 	}
@@ -51,5 +51,4 @@ public class RedstoneRepeater extends GroundAttachable implements RedstoneSource
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

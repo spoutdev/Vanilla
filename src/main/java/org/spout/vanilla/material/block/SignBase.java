@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -75,12 +76,12 @@ public class SignBase extends AbstractAttachable {
 			return BlockFaces.get(BlockFaces.NSWE, block.getData() - 2);
 		}
 	}
-	
+
 	@Override
 	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
-	    if (face == BlockFace.TOP && this.equals(VanillaMaterials.SIGN_POST)) {
-	    	return material instanceof SignBase || material instanceof Torch;
-	    }
-	    return false;
+		if (face == BlockFace.TOP && this.equals(VanillaMaterials.SIGN_POST)) {
+			return material instanceof SignBase || material instanceof Torch;
+		}
+		return false;
 	}
 }

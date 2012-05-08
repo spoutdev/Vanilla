@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -67,9 +68,7 @@ public class DungeonDecorator implements BiomeDecorator {
 			}
 
 			chunk.getBlock(cx + width / 2, cy + 1, cz + height / 2).setMaterial(VanillaMaterials.MONSTER_SPAWNER).update(true);
-
 			chunk.getBlock(cx + 1, cy + 1, cz + height / 2).setMaterial(VanillaMaterials.CHEST).update(true);
-
 			chunk.getBlock(cx + width / 2, cy + 1, cz + 1).setMaterial(VanillaMaterials.CHEST).update(true);
 
 			//TODO Fill Chests with stuff, kinda waiting for inventories in worlds.

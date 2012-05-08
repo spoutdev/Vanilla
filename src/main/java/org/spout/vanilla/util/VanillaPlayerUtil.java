@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -27,10 +28,10 @@ package org.spout.vanilla.util;
 
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
 public class VanillaPlayerUtil {
-
 	/**
 	 * Checks if the source is an entity with a vanilla player controller in survival mode
 	 * @param entity to check

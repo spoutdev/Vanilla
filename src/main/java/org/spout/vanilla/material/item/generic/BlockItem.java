@@ -53,12 +53,12 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against) {
-		return ((BlockMaterial) this.onPlace.getSubMaterial()).canPlace(block, data, against);
+	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		return ((BlockMaterial) this.onPlace.getSubMaterial()).canPlace(block, data, against, isClickedBlock);
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against) {
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (block.getSource() instanceof Entity) {
 			Entity entity = (Entity) block.getSource();
 			if (!entity.getInventory().isCurrentItem(this)) {

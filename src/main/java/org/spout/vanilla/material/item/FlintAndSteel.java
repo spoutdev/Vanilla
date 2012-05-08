@@ -46,8 +46,8 @@ public class FlintAndSteel extends Tool {
 		Block target = block.translate(clickedface);
 		if (target.getMaterial().equals(VanillaMaterials.AIR)) {
 			clickedface = clickedface.getOpposite();
-			if (VanillaMaterials.FIRE.canPlace(target, (short) 0, clickedface)) {
-				if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, clickedface)) {
+			if (VanillaMaterials.FIRE.canPlace(target, (short) 0, clickedface, false)) {
+				if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, clickedface, false)) {
 					Inventory inv = entity.getInventory();
 					inv.addCurrentItemData(1);
 				}

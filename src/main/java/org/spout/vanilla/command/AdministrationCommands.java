@@ -424,7 +424,7 @@ public class AdministrationCommands {
 	@Command(aliases = {"version", "vr"}, usage = "", desc = "Print out the version information for Vanilla", min = 0, max = 0)
 	@CommandPermissions("vanilla.command.version")
 	public void getVersion(CommandContext args, CommandSource source) throws CommandException {
-		source.sendMessage("This is a server running " + Spout.getEngine().getVersion() + " powering Vanilla b" + plugin.getDescription().getVersion());
+		source.sendMessage("This server is running " + plugin.getDescription().getName() + " " + plugin.getDescription().getVersion() + " (Implementing Minecraft protocol v" + plugin.getDescription().getData("protocol").get() + "), powered by Spout " + Spout.getEngine().getVersion() +" (Implementing SpoutAPI " + Spout.getAPIVersion() + ")");
 	}
 
 	@Command(aliases = {"biome"}, usage = "", desc = "Print out the name of the biome at the current location", min = 0, max = 0)

@@ -1,7 +1,7 @@
 [![Vanilla][Project Logo]][Website]
 What is Vanilla?
 ----------------
-Vanilla is a plugin for the Spout server that provides Vanilla Minecraft functionality.
+Vanilla is a plugin for the Spout server that provides vanilla Minecraft functionality.
 
 Copyright (c) 2011-2012, SpoutDev <http://www.spout.org>
  
@@ -9,7 +9,7 @@ Vanilla is licensed under [GNU LESSER GENERAL PUBLIC LICENSE Version 3][License]
 
 Who is SpoutDev?
 ----------------
-SpoutDev is the team behind Spout, SpoutAPI, Spoutcraft, SpoutcraftAPI, Spoutcraft Launcher, SpoutPlugin, SpoutPluginAPI, Vanilla, and BukkitBridge.  
+SpoutDev is the team behind the Spout and Spoutcraft projects, Vanilla, BukkitBridge, I See You, and Pipe.    
 [![Afforess](https://secure.gravatar.com/avatar/ea0be49e1e4deac42ed9204ffd95b56c?d=mm&r=pg&s=48)](http://forums.spout.org/members/afforess.2/) 
 [![alta189](https://secure.gravatar.com/avatar/7a087430b2bf9456b8879c5469aadb95?d=mm&r=pg&s=48)](http://forums.spout.org/members/alta189.3/) 
 [![Wulfspider](https://secure.gravatar.com/avatar/6f2a0dcb60cd1ebee57875f9326bc98c?d=mm&r=pg&s=48)](http://forums.spout.org/members/wulfspider.1/) 
@@ -38,6 +38,7 @@ Source
 ------
 The latest and greatest source can be found on [GitHub].  
 Download the latest builds from [Jenkins].  
+View the latest [Javadoc].
 
 Compiling
 ---------
@@ -56,17 +57,18 @@ Coding and Pull Request Formatting
 * Pull requests must be formatted properly.
 * No merges should be included in pull requests unless the pull request's purpose is a merge.
 * Number of commits in a pull request should be kept to *one commit* and all additional commits must be *squashed and signed off*.
-* For clarification, see the full pull request guidelines [here](http://forums.spout.org/threads/license-and-pull-requests.643/)
+* For clarification, see the full pull request guidelines [here](http://forums.spout.org/threads/643/)
 
 **Please follow the above conventions if you want your pull request(s) accepted.**
 
 [Project Logo]: http://cdn.spout.org/img/logo/vanilla_630x150.png
-[License]: http://www.gnu.org/licenses/lgpl.html
+[License]: http://www.spout.org/SpoutDevLicenseV1.txt
 [Website]: http://www.spout.org
 [Forums]: http://forums.spout.org
 [GitHub]: https://github.com/SpoutDev/Vanilla
-[Jenkins]: http://spout.in/ci
-[Issues]: http://spout.in/issues
+[Javadoc]: http://jd.spout.org/vanilla/latest
+[Jenkins]: http://build.spout.org/job/Vanilla
+[Issues]: http://issues.spout.org
 [Twitter]: http://spout.in/twitter
 [Twitter Logo]: http://cdn.spout.org/img/button/twitter_follow_us.png
 [Facebook]: http://spout.in/facebook

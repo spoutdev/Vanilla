@@ -145,7 +145,7 @@ public class VanillaListener implements Listener {
 	@EventHandler(order = Order.EARLIEST)
 	public void checkPermission(PermissionNodeEvent event) {
 		PermissionsSubject subject = event.getSubject();
-		if (VanillaConfiguration.OPS.isOp(subject.getName()) && event.getResult() == Result.DEFAULT) {
+		if (VanillaConfiguration.OPS.isOp(subject.getName())) {
 			event.setResult(Result.ALLOW);
 		}
 	}

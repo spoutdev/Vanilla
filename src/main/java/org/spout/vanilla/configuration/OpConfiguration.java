@@ -34,26 +34,24 @@ import org.spout.api.util.config.ConfigurationHolder;
 import org.spout.api.util.config.ConfigurationHolderConfiguration;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 
-public class OpConfiguration extends ConfigurationHolderConfiguration {
-	public static final ConfigurationHolder OPS = new ConfigurationHolder(Arrays.asList("Notch", "jeb", "ez"), "ops");
-
+public class OpConfiguration extends YamlConfiguration {
 	public OpConfiguration(File dataFolder) {
-		super(new YamlConfiguration(new File(dataFolder, "ops.yml")));
+		super(new File(dataFolder, "ops.yml"));
 	}
 
 	public List<String> getOps() {
-		return OPS.getStringList();
+		return getNode("ops").getStringList();
 	}
 
 	public boolean setOp(String playerName, boolean op) {
 		List<String> list = getOps();
 		if (op) {
-			list.add(playerName);
+			list.add(playerName.toLowerCase());
 		} else {
-			list.remove(playerName);
+			list.remove(playerName.toLowerCase());
 		}
 
-		OPS.setValue(list);
+		getNode("ops").setValue(list);
 
 		try {
 			this.save();
@@ -64,6 +62,6 @@ public class OpConfiguration extends ConfigurationHolderConfiguration {
 	}
 
 	public boolean isOp(String playerName) {
-		return getOps().contains(playerName);
+		return getOps().contains(playerName.toLowerCase());
 	}
 }

@@ -27,6 +27,7 @@ package org.spout.vanilla.command;
 
 import java.util.Set;
 
+import org.spout.api.ChatColor;
 import org.spout.api.Spout;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
@@ -160,18 +161,14 @@ public class AdministrationCommands {
 		if (args.length() != 1) {
 			throw new CommandException("Please only provide a player to OP!");
 		}
-
-		OpConfiguration ops = VanillaConfiguration.OPS;
+		
 		String playerName = args.getString(0);
-		if (!ops.getOps().contains(playerName)) {
-			throw new CommandException(playerName + " is not an operator!");
-		}
-
+		OpConfiguration ops = VanillaConfiguration.OPS;
 		ops.setOp(playerName, false);
-		source.sendMessage(playerName + " is no longer an operator!");
+		source.sendMessage(ChatColor.YELLOW + playerName + " had their operator status revoked!");
 		Player player = Spout.getEngine().getPlayer(playerName, true);
-		if (player != null) {
-			player.sendMessage("You are no longer an operator!");
+		if (player != null && !source.equals(player)) {
+			player.sendMessage(ChatColor.YELLOW + "You have your operator status revoked!");
 		}
 	}
 
@@ -181,18 +178,14 @@ public class AdministrationCommands {
 		if (args.length() != 1) {
 			throw new CommandException("Please only provide a player to OP!");
 		}
-
-		OpConfiguration ops = VanillaConfiguration.OPS;
+		
 		String playerName = args.getString(0);
-		if (ops.getOps().contains(playerName)) {
-			throw new CommandException(playerName + " is already an operator!");
-		}
-
+		OpConfiguration ops = VanillaConfiguration.OPS;
 		ops.setOp(playerName, true);
-		source.sendMessage(playerName + " is now an operator!");
-		Player op = Spout.getEngine().getPlayer(playerName, true);
-		if (op != null) {
-			op.sendMessage("You are now an operator!");
+		source.sendMessage(ChatColor.YELLOW + playerName + " is now an operator!");
+		Player player = Spout.getEngine().getPlayer(playerName, true);
+		if (player != null && !source.equals(player)) {
+			player.sendMessage(ChatColor.YELLOW + "You are now an operator!");
 		}
 	}
 

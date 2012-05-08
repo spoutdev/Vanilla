@@ -35,7 +35,7 @@ import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 public class KeepAliveMessageHandler extends MessageHandler<KeepAliveMessage> {
 	@Override
 	public void handleServer(Session session, Player player, KeepAliveMessage message) {
-		if (!(player.getEntity().getController() instanceof VanillaPlayer)) {
+		if (player == null || player.getEntity() == null || (!(player.getEntity().getController() instanceof VanillaPlayer))) {
 			return;
 		}
 

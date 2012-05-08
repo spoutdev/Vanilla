@@ -547,7 +547,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (getParent() == null || getParent().getRegion() == null) {
 			return;
 		}
-
 		Set<Player> players = getParent().getRegion().getNearbyPlayers(getParent(), getParent().getViewDistance());
 		for (Player plr : players) {
 			plr.getSession().send(new AnimationMessage(getParent().getId(), animation));

@@ -25,6 +25,8 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import java.util.Set;
+
 import org.spout.api.Spout;
 import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
@@ -45,6 +47,7 @@ import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.generic.VanillaItemMaterial;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
@@ -68,11 +71,12 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		}
 
 		ItemStack heldItem = player.getEntity().getInventory().getCurrentItem();
+		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
 
 		if (message.getState() == PlayerDiggingMessage.STATE_START_DIGGING) {
 			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable);
 			Spout.getEngine().getEventManager().callEvent(event);
-			((VanillaPlayer) player.getEntity().getController()).setDigging(true);
+			vp.setDigging(true);
 
 			//Call interactions.
 			if (event.isCancelled() || (!isInteractable && heldItem == null)) {
@@ -87,7 +91,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
 			}
 		} else if (message.getState() == PlayerDiggingMessage.STATE_DONE_DIGGING) {
-			((VanillaPlayer) player.getEntity().getController()).setDigging(false);
+			vp.setDigging(false);
 			long diggingTicks = ((VanillaPlayer) player.getEntity().getController()).getDiggingTicks();
 			int damageDone = 0;
 			int totalDamage = 0;
@@ -102,6 +106,13 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				totalDamage = ((int) blockMaterial.getHardness() - damageDone);
 				if (totalDamage <= 0) {
 					blockMaterial.onDestroy(block);
+					if (vp.getParent() == null || vp.getParent().getRegion() == null) {
+						return;
+					}
+					Set<Player> players = vp.getParent().getRegion().getNearbyPlayers(vp.getParent(), vp.getParent().getViewDistance());
+					for (Player plr : players) {
+						plr.getSession().send(new PlayEffectMessage(2001, block.getX(), block.getY(), block.getZ(), 1));
+					}
 				}
 			}
 		}

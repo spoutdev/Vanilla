@@ -106,7 +106,7 @@
 				<version>1.10.b1</version>
 				<executions>
 					<execution>
-						<phase>verify</phase>
+						<phase>clean</phase>
 						<goals>
 							<goal>format</goal>
 						</goals>

@@ -30,12 +30,13 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Flammable;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.Solid;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.interactive.Furnace;
 
-public class Cobblestone extends Solid implements TimedCraftable, Flammable {
+public class Cobblestone extends Solid implements TimedCraftable, Flammable, Mineable {
 	public Cobblestone() {
 		super("Cobblestone", 4);
 	}

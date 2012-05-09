@@ -29,9 +29,10 @@ package org.spout.vanilla.material.block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Flammable;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.Solid;
 
-public class DoubleSlab extends Solid implements Flammable {
+public class DoubleSlab extends Solid implements Flammable, Mineable {
 	public static final DoubleSlab STONE = register(new DoubleSlab("Stone Double Slab", Slab.STONE));
 	public static final DoubleSlab SANDSTONE = register(new DoubleSlab("Sandstone Double Slab", 1, STONE, Slab.SANDSTONE));
 	public static final DoubleSlab WOOD = register(new DoubleSlab("Wooden Double Slab", 2, STONE, Slab.WOOD));

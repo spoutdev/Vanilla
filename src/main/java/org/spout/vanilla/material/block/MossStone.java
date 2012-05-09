@@ -29,9 +29,10 @@ package org.spout.vanilla.material.block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Flammable;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.Solid;
 
-public class MossStone extends Solid implements Flammable {
+public class MossStone extends Solid implements Flammable, Mineable {
 	public MossStone(String name, int id) {
 		super(name, id);
 	}

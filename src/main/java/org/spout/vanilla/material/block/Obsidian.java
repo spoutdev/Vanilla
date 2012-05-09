@@ -26,9 +26,10 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.Solid;
 
-public class Obsidian extends Solid {
+public class Obsidian extends Solid implements Mineable{
 	public Obsidian(String name, int id) {
 		super(name, id);
 	}

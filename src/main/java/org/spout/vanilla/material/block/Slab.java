@@ -29,9 +29,10 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.Solid;
 
-public class Slab extends Solid {
+public class Slab extends Solid implements Mineable{
 	public static final Slab STONE = register(new Slab("Stone Slab"));
 	public static final Slab SANDSTONE = register(new Slab("Sandstone Slab", 1, STONE));
 	public static final Slab WOOD = register(new Slab("Wooden Slab", 2, STONE));

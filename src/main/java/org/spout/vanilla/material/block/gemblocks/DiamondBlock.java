@@ -26,9 +26,10 @@
  */
 package org.spout.vanilla.material.block.gemblocks;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.Solid;
 
-public class DiamondBlock extends Solid {
+public class DiamondBlock extends Solid implements Mineable{
 	public DiamondBlock(String name, int id) {
 		super(name, id);
 	}

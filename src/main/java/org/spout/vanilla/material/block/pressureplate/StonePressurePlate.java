@@ -1,7 +1,6 @@
 /*
- * This file is part of Vanilla.
+ * This file is part of Vanilla (http://www.spout.org/).
  *
- * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -24,41 +23,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material;
+package org.spout.vanilla.material.block.pressureplate;
 
-import java.util.Random;
+import org.spout.api.material.Material;
+import org.spout.vanilla.material.Mineable;
 
-public class Ore extends Solid implements Mineable{
-	private Random rand = new Random();
-	private int max = 1;
-	private int min = 1;
+public class StonePressurePlate extends PressurePlate implements Mineable{
 
-	public Ore(String name, int id) {
-		super(name, id);
-	}
+    public StonePressurePlate(String name, int id, boolean canMove) {
+	super(name, id, canMove);
+    }
 
-	@Override
-	public int getDropCount() {
-		return rand.nextInt(max - min + 1) + min;
-	}
+    public StonePressurePlate(String name, int id) {
+	super(name, id);
+    }
 
-	public Ore setMinDropCount(int min) {
-		this.min = min;
+    public StonePressurePlate(String name, int id, int data, Material parent) {
+	super(name, id, data, parent);
+    }
 
-		return this;
-	}
+    public StonePressurePlate(String name, int id, int data, Material parent, boolean canMove) {
+	super(name, id, data, parent, canMove);
+    }
 
-	public Ore setMaxDropCount(int max) {
-		this.max = max;
-
-		return this;
-	}
-
-	public int getMinDropCount() {
-		return min;
-	}
-
-	public int getMaxDropCount() {
-		return max;
-	}
 }

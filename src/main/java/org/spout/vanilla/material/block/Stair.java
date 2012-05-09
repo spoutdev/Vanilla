@@ -1,7 +1,6 @@
 /*
- * This file is part of Vanilla.
+ * This file is part of Vanilla (http://www.spout.org/).
  *
- * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -24,41 +23,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material;
+package org.spout.vanilla.material.block;
 
-import java.util.Random;
+import org.spout.api.material.Material;
+import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.Solid;
 
-public class Ore extends Solid implements Mineable{
-	private Random rand = new Random();
-	private int max = 1;
-	private int min = 1;
+public class Stair extends Solid implements Mineable{
 
-	public Ore(String name, int id) {
-		super(name, id);
+	public Stair(String name, int id) {
+	    super(name, id);
 	}
 
-	@Override
-	public int getDropCount() {
-		return rand.nextInt(max - min + 1) + min;
-	}
-
-	public Ore setMinDropCount(int min) {
-		this.min = min;
-
-		return this;
-	}
-
-	public Ore setMaxDropCount(int max) {
-		this.max = max;
-
-		return this;
-	}
-
-	public int getMinDropCount() {
-		return min;
-	}
-
-	public int getMaxDropCount() {
-		return max;
+	public Stair(String name, int id, int data, Material parent) {
+	    super(name, id, data, parent);
 	}
 }

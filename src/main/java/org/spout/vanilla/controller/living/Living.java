@@ -26,6 +26,10 @@
  */
 package org.spout.vanilla.controller.living;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Transform;
+import org.spout.api.math.Quaternion;
+import org.spout.api.util.BlockIterator;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.action.GravityAction;
@@ -36,6 +40,7 @@ public abstract class Living extends VanillaActionController {
 	private int lastHeadYaw = 0;
 	private int nextHeadYaw = 0;
 	private boolean headYawChanged;
+	private float headHeight = 1.0f;
 
 	protected boolean crouching;
 
@@ -79,6 +84,41 @@ public abstract class Living extends VanillaActionController {
 		this.nextHeadYaw = headYaw;
 	}
 
+	/**
+	 * Sets the current height of the head above the main position
+	 * @param height
+	 */
+	public void setHeadHeight(float height) {
+		this.headHeight = height;
+	}
+
+	/**
+	 * Gets the current height of the head above the main position
+	 * @return the head height
+	 */
+	public float getHeadHeight() {
+		return this.headHeight;
+	}
+
+	public Transform getHeadTransform() {
+		Transform trans = new Transform();
+		Entity parent = this.getParent();
+		trans.setPosition(parent.getPosition().add(0.0f, this.getHeadHeight(), 0.0f));
+		trans.setRotation(Quaternion.rotation(parent.getPitch(), -parent.getYaw(), parent.getRoll()));
+		//TODO: Should the head yaw int (?!) be used during this calculation???
+		//TODO: Why is the parent yaw inverted? We most likely have to tweak the protocol to convert between X-dimensions
+		//trans.setRotation(Quaternion.rotation(parent.getPitch(), this.headYaw, getParent().getRoll()));
+		return trans;
+	}
+
+	public BlockIterator getHeadBlockView() {
+		return getHeadBlockView(8); //assume a max block radius of 8
+	}
+
+	public BlockIterator getHeadBlockView(int maxDistance) {
+		return new BlockIterator(this.getParent().getWorld(), this.getHeadTransform(), maxDistance);
+	}
+	
 	public int getHeadYaw() {
 		return headYaw;
 	}

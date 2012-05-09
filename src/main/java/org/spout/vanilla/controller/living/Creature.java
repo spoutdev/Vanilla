@@ -29,7 +29,6 @@ package org.spout.vanilla.controller.living;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.VanillaControllerType;

@@ -38,10 +38,9 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.attachable.Attachable;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.block.interactive.Furnace;
-import org.spout.vanilla.material.item.Dye;
+import org.spout.vanilla.material.block.GroundAttachable;
+import org.spout.vanilla.material.block.solid.Furnace;
+import org.spout.vanilla.material.item.other.Dye;
 
 public class Cactus extends GroundAttachable implements TimedCraftable {
 	private Set<BlockMaterial> allowedNeighbours = new HashSet<BlockMaterial>();
@@ -82,7 +81,7 @@ public class Cactus extends GroundAttachable implements TimedCraftable {
 	}
 
 	@Override
-	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
 		return face == BlockFace.TOP && material.equals(VanillaMaterials.CACTUS);
 	}
 

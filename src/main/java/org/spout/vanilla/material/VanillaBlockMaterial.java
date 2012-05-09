@@ -34,7 +34,6 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.material.block.attachable.Attachable;
 import org.spout.vanilla.material.block.redstone.RedstoneTorch;
 import org.spout.vanilla.material.block.redstone.RedstoneWire;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -44,6 +43,7 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	private float resistance;
 	private Material dropMaterial;
 	private int dropCount;
+	private int meleeDamage = 1;
 
 	public VanillaBlockMaterial(String name, int id) {
 		super(name, id);
@@ -100,7 +100,13 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	@Override
 	public int getDamage() {
-		return 1;
+		return this.meleeDamage;
+	}
+
+	@Override
+	public VanillaBlockMaterial setDamage(int damage) {
+		this.meleeDamage = damage;
+		return this;
 	}
 
 	/**
@@ -186,8 +192,15 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	 * @param face     of this block to attach to
 	 * @return
 	 */
-	public <T extends BlockMaterial & Attachable> boolean canSupport(T material, BlockFace face) {
-		return true;
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		return false;
+	}
+
+	/**
+	 * Gets if this block material can burn and be destroyed as a result of fire
+	 */
+	public boolean canBurn() {
+		return false;
 	}
 
 	/**

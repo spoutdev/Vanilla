@@ -36,7 +36,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.material.item.Dye;
+import org.spout.vanilla.material.item.other.Dye;
 
 public class Squid extends Creature implements Passive {
 	private Entity parent;

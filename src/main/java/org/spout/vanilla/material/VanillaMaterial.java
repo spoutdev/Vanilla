@@ -36,4 +36,9 @@ public interface VanillaMaterial {
 	 * Gets the amount of damage this material can deal as an item
 	 */
 	public int getDamage();
+
+	/**
+	 * Sets the amount of damage this material can deal as an item
+	 */
+	public VanillaMaterial setDamage(int damage);
 }

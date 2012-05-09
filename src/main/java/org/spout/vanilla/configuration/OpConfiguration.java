@@ -27,12 +27,9 @@
 package org.spout.vanilla.configuration;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.exception.ConfigurationException;
-import org.spout.api.util.config.ConfigurationHolder;
-import org.spout.api.util.config.ConfigurationHolderConfiguration;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 
 public class OpConfiguration extends YamlConfiguration {

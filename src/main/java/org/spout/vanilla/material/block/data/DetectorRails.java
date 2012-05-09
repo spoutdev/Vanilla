@@ -27,7 +27,7 @@
 package org.spout.vanilla.material.block.data;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.MinecartTrackDetector;
+import org.spout.vanilla.material.block.other.MinecartTrackDetector;
 import org.spout.vanilla.util.RailsState;
 
 public class DetectorRails extends Rails {

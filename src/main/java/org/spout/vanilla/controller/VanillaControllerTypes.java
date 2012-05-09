@@ -31,8 +31,6 @@ import java.lang.reflect.Modifier;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-import org.spout.api.entity.type.ControllerRegistry;
-
 import org.spout.vanilla.controller.block.DispenserController;
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.MobControllerType;
@@ -155,19 +153,19 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType FURNACE = new VanillaControllerType(-5, FurnaceController.class, "Furnace", null);
 	public static final VanillaControllerType DISPENSER = new VanillaControllerType(-6, DispenserController.class, "Dispenser", null);
 	public static final String KEY = "ControllerID";
-	private static final TIntObjectHashMap<VanillaControllerType> map = new TIntObjectHashMap<VanillaControllerType>();
+	private static final TIntObjectHashMap<VanillaControllerType> ID_LOOKUP = new TIntObjectHashMap<VanillaControllerType>();
 
 	public static VanillaControllerType getByID(int id) {
-		return map.get(id);
+		return ID_LOOKUP.get(id);
 	}
 
 	static {
 		for (Field field : VanillaControllerTypes.class.getFields()) {
+			field.setAccessible(true);
 			if (Modifier.isStatic(field.getModifiers()) && VanillaControllerType.class.isAssignableFrom(field.getType())) {
 				try {
 					VanillaControllerType type = (VanillaControllerType) field.get(null);
-					ControllerRegistry.register(type);
-					map.put(type.getID(), type);
+					ID_LOOKUP.put(type.getID(), type);
 				} catch (IllegalAccessException e) {
 					continue;
 				}

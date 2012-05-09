@@ -35,7 +35,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.generic.Liquid;
+import org.spout.vanilla.material.block.Liquid;
 
 public class PondDecorator implements BiomeDecorator {
 	@Override

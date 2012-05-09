@@ -27,23 +27,21 @@ package org.spout.vanilla.material.block.pressureplate;
 
 import org.spout.api.material.Material;
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tools.Pickaxe;
 
-public class StonePressurePlate extends PressurePlate implements Mineable{
-
-    public StonePressurePlate(String name, int id, boolean canMove) {
-	super(name, id, canMove);
-    }
+public class StonePressurePlate extends PressurePlate implements Mineable {
 
     public StonePressurePlate(String name, int id) {
-	super(name, id);
+    	super(name, id);
     }
 
     public StonePressurePlate(String name, int id, int data, Material parent) {
-	super(name, id, data, parent);
+    	super(name, id, data, parent);
     }
 
-    public StonePressurePlate(String name, int id, int data, Material parent, boolean canMove) {
-	super(name, id, data, parent, canMove);
-    }
-
+	@Override
+	public short getDurabilityPenalty(MiningTool tool) {
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
 }

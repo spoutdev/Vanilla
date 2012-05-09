@@ -28,12 +28,15 @@ package org.spout.vanilla.material.block.ores;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.material.Ore;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.interactive.Furnace;
+import org.spout.vanilla.material.block.Ore;
+import org.spout.vanilla.material.block.solid.Furnace;
+import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tools.Pickaxe;
 
-public class RedstoneOre extends Ore implements TimedCraftable {
+public class RedstoneOre extends Ore implements TimedCraftable, Mineable {
 	public RedstoneOre() {
 		super("Redstone Ore", 73);
 	}
@@ -46,5 +49,10 @@ public class RedstoneOre extends Ore implements TimedCraftable {
 	@Override
 	public float getCraftTime() {
 		return Furnace.SMELT_TIME;
+	}
+
+	@Override
+	public short getDurabilityPenalty(MiningTool tool) {
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

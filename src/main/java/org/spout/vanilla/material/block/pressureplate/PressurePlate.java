@@ -26,25 +26,15 @@
 package org.spout.vanilla.material.block.pressureplate;
 
 import org.spout.api.material.Material;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.Solid;
+import org.spout.vanilla.material.block.GroundAttachable;
 
-public class PressurePlate extends Solid implements Mineable{
-
-    public PressurePlate(String name, int id, boolean canMove) {
-	super(name, id, canMove);
-    }
+public class PressurePlate extends GroundAttachable {
 
     public PressurePlate(String name, int id) {
-	super(name, id);
+    	super(name, id);
     }
 
     public PressurePlate(String name, int id, int data, Material parent) {
-	super(name, id, data, parent);
+    	super(name, id, data, parent);
     }
-
-    public PressurePlate(String name, int id, int data, Material parent, boolean canMove) {
-	super(name, id, data, parent, canMove);
-    }
-
 }

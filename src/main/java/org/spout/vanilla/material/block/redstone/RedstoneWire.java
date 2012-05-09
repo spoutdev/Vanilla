@@ -32,9 +32,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.material.Solid;
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.block.GroundAttachable;
+import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.material.block.RedstoneTarget;
+import org.spout.vanilla.material.block.Solid;
 
 public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget {
 	private final Vector3[] possibleIncoming = {new Vector3(1, 0, 0), new Vector3(0, 0, 1), new Vector3(-1, 0, 0), new Vector3(0, 0, -1), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1), new Vector3(0, 1, 0), //Redstone torch from above

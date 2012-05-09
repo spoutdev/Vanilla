@@ -30,6 +30,7 @@ import org.spout.api.Spout;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.basic.BasicAir;
@@ -41,8 +42,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.Spade;
-import org.spout.vanilla.material.item.generic.Tool;
+import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
@@ -69,9 +69,10 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			isInteractable = false;
 		}
 
-		ItemStack heldItem = player.getEntity().getInventory().getCurrentItem();
+		Inventory inv = player.getEntity().getInventory();
+		ItemStack heldItem = inv.getCurrentItem();
 		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
-		
+
 		if (message.getState() == PlayerDiggingMessage.STATE_START_DIGGING) {
 			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable);
 			if (Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
@@ -111,50 +112,13 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			int damageDone = 0;
 			int totalDamage = 0;
 
-			
+
 			if (heldItem != null) {
-                            if (heldItem.getMaterial() instanceof Tool) {
-                                
-                                Tool item = (Tool) heldItem.getMaterial();
-                                
-                                if (blockMaterial == VanillaMaterials.CLAY_BLOCK || blockMaterial == VanillaMaterials.GRASS || blockMaterial == VanillaMaterials.MYCELIUM || blockMaterial == VanillaMaterials.GRAVEL || blockMaterial == VanillaMaterials.DIRT || blockMaterial == VanillaMaterials.SAND || blockMaterial == VanillaMaterials.SOUL_SAND || blockMaterial == VanillaMaterials.SNOW_BLOCK || blockMaterial == VanillaMaterials.SNOW) {
-                                        
-                                    if (item instanceof Spade) {
-                                        heldItem.setData(((short) (heldItem.getData() + 1)));
-                                    }
-                                    else {
-                                        heldItem.setData(((short) (heldItem.getData() + 2)));
-                                    }
-                                }
-                                else if (blockMaterial instanceof Mineable)
-                                {
-                                    if (item.equals(VanillaMaterials.WOODEN_PICKAXE) || item.equals(VanillaMaterials.IRON_PICKAXE) || item.equals(VanillaMaterials.GOLD_PICKAXE) || item.equals(VanillaMaterials.DIAMOND_PICKAXE) ) {
-                                        heldItem.setData(((short) (heldItem.getData() + 1)));
-                                    }
-                                    else {
-                                        heldItem.setData(((short) (heldItem.getData() + 2)));
-                                    }
-                                }
-                                else if (blockMaterial == VanillaMaterials.LOG || blockMaterial == VanillaMaterials.CHEST || blockMaterial == VanillaMaterials.PLANK) {
-                                    
-                                    if (item.equals(VanillaMaterials.WOODEN_AXE) || item.equals(VanillaMaterials.IRON_AXE) || item.equals(VanillaMaterials.GOLD_AXE) || item.equals(VanillaMaterials.DIAMOND_AXE)) {
-                                        heldItem.setData(((short) (heldItem.getData() + 1)));
-                                    }
-                                    else {
-                                        heldItem.setData(((short) (heldItem.getData() + 2)));
-                                    }
-                                
-                                }
-                                
-                                //Let's update the player window with the new data.
-                                if (item.getDurability() <= heldItem.getData()) {
-                                    player.getEntity().getInventory().setCurrentItem(null);
-                                }
-                                else {
-                                    player.getEntity().getInventory().setCurrentItem(heldItem);
-                                }
-                            }
-                        
+				if (heldItem.getMaterial() instanceof MiningTool && blockMaterial instanceof Mineable) {
+					MiningTool tool = (MiningTool) heldItem.getMaterial();
+					Mineable mineable = (Mineable) blockMaterial;
+					inv.addCurrentItemData(mineable.getDurabilityPenalty(tool));
+				}
 			}
 			if (isInteractable) {
 				if (heldItem == null) {

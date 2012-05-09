@@ -29,12 +29,12 @@ package org.spout.vanilla.controller.living;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
+
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
 
 public abstract class Creature extends Living {
 	private boolean baby = false;

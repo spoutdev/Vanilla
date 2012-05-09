@@ -32,7 +32,6 @@ import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Spade;
 
 public class ClayBlock extends Solid implements Mineable {
-
 	public ClayBlock(String name, int id) {
 		super(name, id);
 	}

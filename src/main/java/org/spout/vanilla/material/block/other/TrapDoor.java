@@ -84,7 +84,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable {
 
 	@Override
 	public void setAttachedFace(Block block, BlockFace attachedFace) {
-		block.setData((short) BlockFaces.WESN.indexOf(attachedFace, 0)); 
+		block.setData((short) BlockFaces.WESN.indexOf(attachedFace, 0));
 	}
 
 	@Override

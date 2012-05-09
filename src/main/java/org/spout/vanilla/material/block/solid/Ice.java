@@ -37,7 +37,7 @@ import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Pickaxe;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
-public class Ice extends Solid implements Mineable{
+public class Ice extends Solid implements Mineable {
 	public Ice() {
 		super("Ice", 79);
 	}

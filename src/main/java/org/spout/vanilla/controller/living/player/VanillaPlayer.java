@@ -30,6 +30,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers;
+import static org.spout.vanilla.util.InventoryUtil.nextWindowId;
+
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
@@ -49,8 +54,8 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.inventory.VanillaPlayerInventory;
 import org.spout.vanilla.inventory.Window;
-import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.material.block.solid.Furnace;
+import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
@@ -62,17 +67,11 @@ import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers;
-import static org.spout.vanilla.util.InventoryUtil.nextWindowId;
-
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to
  * Vanilla.
  */
 public class VanillaPlayer extends Human implements PlayerController {
-
 	@Override
 	public float getHeadHeight() {
 		float height = super.getHeadHeight();

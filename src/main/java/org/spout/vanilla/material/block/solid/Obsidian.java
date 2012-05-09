@@ -31,7 +31,7 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Pickaxe;
 
-public class Obsidian extends Solid implements Mineable{
+public class Obsidian extends Solid implements Mineable {
 	public Obsidian(String name, int id) {
 		super(name, id);
 	}

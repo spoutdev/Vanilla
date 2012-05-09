@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -110,13 +111,18 @@ import org.spout.vanilla.material.block.solid.StoneBrick;
 import org.spout.vanilla.material.block.solid.TNT;
 import org.spout.vanilla.material.block.solid.Tree;
 import org.spout.vanilla.material.block.solid.Wool;
+import org.spout.vanilla.material.block.stairs.BrickStairs;
+import org.spout.vanilla.material.block.stairs.CobblestoneStairs;
+import org.spout.vanilla.material.block.stairs.NetherBrickStairs;
+import org.spout.vanilla.material.block.stairs.StoneBrickStairs;
+import org.spout.vanilla.material.block.stairs.WoodenStairs;
 import org.spout.vanilla.material.item.BlockItem;
 import org.spout.vanilla.material.item.EmptyContainer;
 import org.spout.vanilla.material.item.Food;
+import org.spout.vanilla.material.item.Food.FoodEffectType;
 import org.spout.vanilla.material.item.FullContainer;
 import org.spout.vanilla.material.item.Tool;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
-import org.spout.vanilla.material.item.Food.FoodEffectType;
 import org.spout.vanilla.material.item.armor.Chestwear;
 import org.spout.vanilla.material.item.armor.Footwear;
 import org.spout.vanilla.material.item.armor.Headwear;
@@ -147,11 +153,6 @@ import org.spout.vanilla.material.item.tools.Pickaxe;
 import org.spout.vanilla.material.item.tools.Spade;
 import org.spout.vanilla.material.item.weapons.Bow;
 import org.spout.vanilla.material.item.weapons.Sword;
-import org.spout.vanilla.material.block.stairs.BrickStairs;
-import org.spout.vanilla.material.block.stairs.CobblestoneStairs;
-import org.spout.vanilla.material.block.stairs.NetherBrickStairs;
-import org.spout.vanilla.material.block.stairs.StoneBrickStairs;
-import org.spout.vanilla.material.block.stairs.WoodenStairs;
 
 public final class VanillaMaterials {
 	public static final BlockMaterial AIR = BlockMaterial.AIR;
@@ -293,7 +294,6 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial DIAMOND = register(new VanillaItemMaterial("Diamond", 264));
 	public static final VanillaItemMaterial IRON_INGOT = register(new VanillaItemMaterial("Iron Ingot", 265));
 	public static final VanillaItemMaterial GOLD_INGOT = register(new VanillaItemMaterial("Gold Ingot", 266));
-
 	//Swords
 	public static final Sword WOODEN_SWORD = (Sword) register(new Sword("Wooden Sword", 268, (short) 60).setDamage(4));
 	public static final Sword GOLD_SWORD = (Sword) register(new Sword("Gold Sword", 283, (short) 33).setDamage(4));
@@ -348,7 +348,6 @@ public final class VanillaMaterials {
 	public static final Footwear IRON_BOOTS = register(new Footwear("Iron Boots", 309, 2));
 	public static final Footwear DIAMOND_BOOTS = register(new Footwear("Diamond Boots", 313, 3));
 	public static final Footwear GOLD_BOOTS = register(new Footwear("Gold Boots", 317, 1));
-
 	public static final Stick STICK = register(new Stick("Stick", 280));
 	public static final VanillaItemMaterial BOWL = register(new VanillaItemMaterial("Bowl", 281));
 	public static final Food MUSHROOM_SOUP = register(new Food("Mushroom Soup", 282, 8, FoodEffectType.HUNGER));

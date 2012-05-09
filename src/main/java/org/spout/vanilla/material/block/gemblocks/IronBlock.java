@@ -31,7 +31,7 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Pickaxe;
 
-public class IronBlock extends Solid implements Mineable{
+public class IronBlock extends Solid implements Mineable {
 	public IronBlock(String name, int id) {
 		super(name, id);
 	}

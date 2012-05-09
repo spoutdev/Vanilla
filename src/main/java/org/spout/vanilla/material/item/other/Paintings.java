@@ -27,36 +27,36 @@
 package org.spout.vanilla.material.item.other;
 
 import java.util.Random;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.controller.object.misc.Painting;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
-
-
-public class Paintings extends VanillaItemMaterial{
-	
+public class Paintings extends VanillaItemMaterial {
 	private Random random = new Random();
-	
+
 	public enum PaintingStyle {
 		KEBAB, AZTEC, ALBAN, AZTEC2, BOMB, PLANT, WASTELAND, WANDERER, GRAHAM, POOL, COURBET, SUNSET, SEA, CREEBET, MATCH, BUST, STAGE, VOID, SKULLANDROSES, FIGHTERS, SKELETON,
 		DONKEYKONG, POINTER, PIGSCENE, FLAMINGSKULL
-	};
-	
-	
+	}
+
+	;
+
 	public Paintings() {
-		super("Paintings",321);
+		super("Paintings", 321);
 	}
 
 	@Override
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
 		Painting painting = new Painting(PaintingStyle.values()[random.nextInt(PaintingStyle.values().length)], 0);//TODO fix the 0 here, and the position on the next line
 		block.getWorld().createAndSpawnEntity(block.getPosition(), painting);
-		if(entity.getInventory().getCurrentItem().getAmount() >1)
+		if (entity.getInventory().getCurrentItem().getAmount() > 1) {
 			entity.getInventory().addCurrentItemAmount(-1);
-		else {
+		} else {
 			entity.getInventory().setCurrentItem(null);
 		}
 	}

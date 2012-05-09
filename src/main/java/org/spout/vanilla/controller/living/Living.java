@@ -30,6 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.math.Quaternion;
 import org.spout.api.util.BlockIterator;
+
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.action.GravityAction;
@@ -41,7 +42,6 @@ public abstract class Living extends VanillaActionController {
 	private int nextHeadYaw = 0;
 	private boolean headYawChanged;
 	private float headHeight = 1.0f;
-
 	protected boolean crouching;
 
 	protected Living(VanillaControllerType type) {
@@ -118,7 +118,7 @@ public abstract class Living extends VanillaActionController {
 	public BlockIterator getHeadBlockView(int maxDistance) {
 		return new BlockIterator(this.getParent().getWorld(), this.getHeadTransform(), maxDistance);
 	}
-	
+
 	public int getHeadYaw() {
 		return headYaw;
 	}

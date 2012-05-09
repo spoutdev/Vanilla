@@ -30,17 +30,16 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.material.item.other.Paintings.PaintingStyle;
 
-
-
 public class Painting extends Substance {
 	private PaintingStyle style;
 	private int face;
+
 	public Painting(PaintingStyle style, int face) {
 		super(VanillaControllerTypes.PAINTINGS);
 		this.style = style;
 		this.face = face;
 	}
-	
+
 	public PaintingStyle getPaintingStyle() {
 		return style;
 	}

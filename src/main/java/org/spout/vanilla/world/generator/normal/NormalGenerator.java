@@ -35,7 +35,6 @@ import org.spout.vanilla.world.populator.SmoothPopulator;
 import org.spout.vanilla.world.selector.WhittakerNoiseSelector;
 
 public class NormalGenerator extends VanillaGenerator {
-
 	@Override
 	public void registerBiomes() {
 		setSelector(new WhittakerNoiseSelector(2.0));

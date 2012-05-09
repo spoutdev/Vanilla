@@ -38,7 +38,6 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.material.Mineable;
-
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Pickaxe;

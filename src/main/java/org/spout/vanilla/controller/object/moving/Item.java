@@ -29,6 +29,8 @@ package org.spout.vanilla.controller.object.moving;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
@@ -44,8 +46,6 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 /**
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).

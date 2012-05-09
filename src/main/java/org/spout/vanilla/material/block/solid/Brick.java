@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -26,20 +27,20 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Pickaxe;
 
 public class Brick extends Solid implements Mineable {
+	public Brick(String name, int id) {
+		super(name, id);
+	}
 
-    public Brick(String name, int id) {
-    	super(name, id);
-    }
-
-    public Brick(String name, int id, int data, Material parent) {
-    	super(name, id, data, parent);
-    }
+	public Brick(String name, int id, int data, Material parent) {
+		super(name, id, data, parent);
+	}
 
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {

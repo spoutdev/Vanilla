@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -26,19 +27,19 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Pickaxe;
 
 public class Stairs extends VanillaBlockMaterial implements Mineable {
-
 	public Stairs(String name, int id) {
-	    super(name, id);
+		super(name, id);
 	}
 
 	public Stairs(String name, int id, int data, Material parent) {
-	    super(name, id, data, parent);
+		super(name, id, data, parent);
 	}
 
 	@Override

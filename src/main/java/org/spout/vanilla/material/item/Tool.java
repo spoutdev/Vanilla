@@ -35,7 +35,7 @@ import org.spout.api.material.BlockMaterial;
 public class Tool extends VanillaItemMaterial {
 	private short durability;
 	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
-	
+
 	public Tool(String name, int id, short durability) {
 		super(name, id);
 		this.durability = durability;

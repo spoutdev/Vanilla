@@ -29,6 +29,9 @@ package org.spout.vanilla.protocol.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
+import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
@@ -44,9 +47,6 @@ import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
-
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	@Override

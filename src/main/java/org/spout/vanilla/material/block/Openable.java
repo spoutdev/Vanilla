@@ -33,7 +33,6 @@ import org.spout.api.geo.cuboid.Block;
  * For example: doors and trapdoors
  */
 public interface Openable {
-
 	/**
 	 * Toggles the open state of this block
 	 * @param block to toggle it of
@@ -43,7 +42,7 @@ public interface Openable {
 	/**
 	 * Sets whether this material is open
 	 * @param block to apply to
-	 * @param open whether the block should be open
+	 * @param open  whether the block should be open
 	 */
 	public void setOpen(Block block, boolean open);
 

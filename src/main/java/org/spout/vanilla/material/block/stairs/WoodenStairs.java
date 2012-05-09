@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -30,7 +31,7 @@ import org.spout.api.material.Material;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Stairs;
 
-public class WoodenStairs extends Stairs implements Fuel{
+public class WoodenStairs extends Stairs implements Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public WoodenStairs(String name, int id, int data, Material parent) {

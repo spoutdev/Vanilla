@@ -112,7 +112,6 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			int damageDone = 0;
 			int totalDamage = 0;
 
-
 			if (heldItem != null) {
 				if (heldItem.getMaterial() instanceof MiningTool && blockMaterial instanceof Mineable) {
 					MiningTool tool = (MiningTool) heldItem.getMaterial();

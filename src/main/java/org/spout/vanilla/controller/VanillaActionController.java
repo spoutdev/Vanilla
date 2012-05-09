@@ -30,6 +30,8 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
+
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
@@ -45,8 +47,6 @@ import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
 
 /**
  * Controller that is the parent of all entity controllers.

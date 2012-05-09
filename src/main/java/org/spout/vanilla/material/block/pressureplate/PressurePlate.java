@@ -1,6 +1,7 @@
 /*
- * This file is part of Vanilla (http://www.spout.org/).
+ * This file is part of Vanilla.
  *
+ * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify
@@ -26,15 +27,15 @@
 package org.spout.vanilla.material.block.pressureplate;
 
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.material.block.GroundAttachable;
 
 public class PressurePlate extends GroundAttachable {
+	public PressurePlate(String name, int id) {
+		super(name, id);
+	}
 
-    public PressurePlate(String name, int id) {
-    	super(name, id);
-    }
-
-    public PressurePlate(String name, int id, int data, Material parent) {
-    	super(name, id, data, parent);
-    }
+	public PressurePlate(String name, int id, int data, Material parent) {
+		super(name, id, data, parent);
+	}
 }

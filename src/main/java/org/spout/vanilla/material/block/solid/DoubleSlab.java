@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.other.Slab;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Pickaxe;
-import org.spout.vanilla.material.Mineable;
 
 public class DoubleSlab extends Solid implements Mineable {
 	public static final DoubleSlab STONE = register(new DoubleSlab("Stone Double Slab", Slab.STONE));
@@ -39,7 +39,6 @@ public class DoubleSlab extends Solid implements Mineable {
 	public static final DoubleSlab COBBLESTONE = register(new DoubleSlab("Cobblestone Double Slab", 3, STONE, Slab.COBBLESTONE));
 	public static final DoubleSlab BRICK = register(new DoubleSlab("Brick Double Slab", 4, STONE, Slab.BRICK));
 	public static final DoubleSlab STONE_BRICK = register(new DoubleSlab("Stone Brick Double Slab", 5, STONE, Slab.STONE_BRICK));
-
 	private Slab singletype;
 
 	public Slab getSingleType() {

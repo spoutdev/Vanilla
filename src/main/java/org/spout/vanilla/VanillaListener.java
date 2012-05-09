@@ -28,6 +28,8 @@ package org.spout.vanilla;
 
 import java.util.HashSet;
 
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+
 import org.spout.api.Source;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
@@ -59,8 +61,6 @@ import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class VanillaListener implements Listener {
 	@SuppressWarnings("unused")

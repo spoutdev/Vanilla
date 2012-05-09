@@ -34,6 +34,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 /**
@@ -41,7 +42,6 @@ import org.spout.vanilla.material.VanillaMaterials;
  * the borders between biomes.
  */
 public class SmoothPopulator implements Populator {
-
 	// area to smooth per populate call
 	private final static byte SMOOTH_SIZE = 16;
 	// the floor of half the value of the side of the square
@@ -99,7 +99,7 @@ public class SmoothPopulator implements Populator {
 				final short index = (short) (x + z * SMOOTH_SIZE);
 				shiftBlockColumnOnY(world, worldX + x, worldZ + z,
 						(byte) (smoothedHeightMap[index]
-						- heightMap[index]));
+								- heightMap[index]));
 			}
 		}
 	}

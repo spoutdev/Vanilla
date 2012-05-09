@@ -28,7 +28,6 @@ package org.spout.vanilla.controller.living;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.math.Quaternion;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.controller.VanillaActionController;
@@ -104,9 +103,8 @@ public abstract class Living extends VanillaActionController {
 		Transform trans = new Transform();
 		Entity parent = this.getParent();
 		trans.setPosition(parent.getPosition().add(0.0f, this.getHeadHeight(), 0.0f));
-		trans.setRotation(Quaternion.rotation(parent.getPitch(), -parent.getYaw(), parent.getRoll()));
+		trans.setRotation(parent.getRotation());
 		//TODO: Should the head yaw int (?!) be used during this calculation???
-		//TODO: Why is the parent yaw inverted? We most likely have to tweak the protocol to convert between X-dimensions
 		//trans.setRotation(Quaternion.rotation(parent.getPitch(), this.headYaw, getParent().getRoll()));
 		return trans;
 	}

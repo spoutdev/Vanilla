@@ -30,6 +30,7 @@ import static org.spout.api.material.MaterialRegistry.register;
 
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.material.block.DoorBlock;
 import org.spout.vanilla.material.block.GroundAttachable;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.Ore;
@@ -46,7 +47,6 @@ import org.spout.vanilla.material.block.ores.LapisLazuliOre;
 import org.spout.vanilla.material.block.ores.RedstoneOre;
 import org.spout.vanilla.material.block.other.BedBlock;
 import org.spout.vanilla.material.block.other.Chest;
-import org.spout.vanilla.material.block.other.DoorBlock;
 import org.spout.vanilla.material.block.other.FarmLand;
 import org.spout.vanilla.material.block.other.Fence;
 import org.spout.vanilla.material.block.other.FenceGate;
@@ -222,14 +222,14 @@ public final class VanillaMaterials {
 	public static final Furnace FURNACE = (Furnace) register(new Furnace("Furnace", 61).setHardness(3.5F).setResistance(5.8F));
 	public static final Furnace BURNINGFURNACE = (Furnace) register(new Furnace("Burning Furnace", 62).setHardness(3.5F).setResistance(5.8F).setLightLevel(13));
 	public static final SignBase SIGN_POST = (SignBase) register(new SignBase("Sign Post", 63).setHardness(1.0F).setResistance(1.6F));
-	public static final DoorBlock WOODEN_DOOR_BLOCK = (DoorBlock) register(new DoorBlock("Wooden Door", 64, true).setHardness(3.0F));
+	public static final DoorBlock WOODEN_DOOR_BLOCK = (DoorBlock) register(new DoorBlock("Wooden Door", 64).setHardness(3.0F));
 	public static final Ladder LADDERS = (Ladder) register(new Ladder("Ladders", 65).setHardness(0.4F).setResistance(0.7F));
 	public static final MinecartTrack RAILS = (MinecartTrack) register(new MinecartTrack().setHardness(0.7F).setResistance(1.2F));
 	public static final CobblestoneStairs COBBLESTONE_STAIRS = (CobblestoneStairs) register(new CobblestoneStairs("Cobblestone Stairs", 67).setResistance(10.0F));
 	public static final SignBase WALL_SIGN = (SignBase) register(new SignBase("Wall Sign", 68).setHardness(1.0F));
 	public static final Lever LEVER = (Lever) register(new Lever("Lever", 69).setHardness(0.5F).setResistance(1.7F));
 	public static final StonePressurePlate STONE_PRESSURE_PLATE = (StonePressurePlate) register(new StonePressurePlate("Stone Pressure Plate", 70).setHardness(0.5F).setResistance(0.8F));
-	public static final DoorBlock IRON_DOOR_BLOCK = (DoorBlock) register(new DoorBlock("Iron Door", 71, false).setHardness(5.0F).setResistance(8.3F));
+	public static final DoorBlock IRON_DOOR_BLOCK = (DoorBlock) register(new DoorBlock("Iron Door", 71).setHardness(5.0F).setResistance(8.3F));
 	public static final WoodenPressurePlate WOODEN_PRESSURE_PLATE = (WoodenPressurePlate) register(new WoodenPressurePlate("Wooden Pressure Plate", 72).setHardness(0.5F).setResistance(0.8F));
 	public static final RedstoneOre REDSTONE_ORE = (RedstoneOre) register(new RedstoneOre().setMinDropCount(4).setMaxDropCount(5).setHardness(3.0F).setResistance(5.0F));
 	public static final Ore GLOWING_REDSTONE_ORE = (Ore) register(new Ore("Glowing Redstone Ore", 74).setMinDropCount(4).setMaxDropCount(5).setHardness(3.0F).setResistance(5.0F).setLightLevel(3));

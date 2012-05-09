@@ -47,7 +47,7 @@ public class VanillaPlayerEntityProtocol extends VanillaEntityProtocol implement
 		int x = (int) (entity.getPosition().getX() * 32);
 		int y = (int) (entity.getPosition().getY() * 32);
 		int z = (int) (entity.getPosition().getZ() * 32);
-		int r = (int) (entity.getYaw() * 32);
+		int r = (int) (-entity.getYaw() * 32); //cardinal directions differ
 		int p = (int) (entity.getPitch() * 32);
 
 		if (c instanceof VanillaPlayer) {

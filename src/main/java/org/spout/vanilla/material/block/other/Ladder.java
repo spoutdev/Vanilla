@@ -40,7 +40,7 @@ public class Ladder extends AbstractAttachable {
 
 	@Override
 	public void setAttachedFace(Block block, BlockFace attachedFace) {
-		block.setData((short) (BlockFaces.WESN.indexOf(attachedFace, 0) - 2));
+		block.setData((short) (BlockFaces.WESN.indexOf(attachedFace, 0) + 2));
 	}
 
 	@Override

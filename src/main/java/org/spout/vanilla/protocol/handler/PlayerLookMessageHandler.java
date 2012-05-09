@@ -48,7 +48,7 @@ public final class PlayerLookMessageHandler extends MessageHandler<PlayerLookMes
 		}
 
 		entity.setPitch(message.getPitch());
-		entity.setYaw(message.getYaw());
+		entity.setYaw(-message.getYaw()); //cardinal direction adjustment
 		entity.setRoll(message.getRoll());
 		((VanillaPlayer) entity.getController()).setLookingAtVector(message.getLookingAtVector());
 	}

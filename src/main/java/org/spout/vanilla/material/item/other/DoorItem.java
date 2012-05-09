@@ -33,8 +33,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.DoorBlock;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.other.DoorBlock;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class DoorItem extends VanillaItemMaterial {

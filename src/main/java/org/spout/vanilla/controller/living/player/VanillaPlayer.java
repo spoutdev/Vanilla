@@ -49,9 +49,8 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.inventory.VanillaPlayerInventory;
 import org.spout.vanilla.inventory.Window;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
-import org.spout.vanilla.material.block.interactive.Furnace;
+import org.spout.vanilla.material.block.solid.Furnace;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
@@ -73,6 +72,16 @@ import static org.spout.vanilla.util.InventoryUtil.nextWindowId;
  * Vanilla.
  */
 public class VanillaPlayer extends Human implements PlayerController {
+
+	@Override
+	public float getHeadHeight() {
+		float height = super.getHeadHeight();
+		if (this.crouching) {
+			height -= 0.08f;
+		}
+		return height;
+	}
+
 	protected final Player owner;
 	protected long unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt(), lastPing = 0, lastUserList = 0, foodTimer = 0;
 	protected short count = 0, ping, hunger = 20;
@@ -96,6 +105,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		owner = p;
 		tabListName = owner.getName();
 		compassTarget = owner.getEntity().getWorld().getSpawnPoint().getPosition();
+		this.setHeadHeight(1.62f);
 		this.gameMode = gameMode;
 		p.getEntity().setInventorySize(45);
 	}

@@ -40,7 +40,7 @@ public class VanillaMessageHandlerUtils {
 	 * @return The spout one!
 	 */
 	public static BlockFace messageToBlockFace(int messageFace) {
-		return BlockFaces.get(BlockFaces.BTEWNS, messageFace, BlockFace.THIS);
+		return BlockFaces.BTEWNS.get(messageFace, BlockFace.THIS);
 	}
 
 	private static final int PLAYER_INVENTORY_SLOTS[] = {36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7, 3, 4, 0, 6, 1, 2, 5};

@@ -52,6 +52,7 @@ import org.spout.vanilla.util.explosion.ExplosionModels;
 
 public class TestCommands {
 	private final Set<String> invisible = new HashSet<String>();
+	@SuppressWarnings("unused")
 	private final VanillaPlugin plugin;
 
 	public TestCommands(VanillaPlugin instance) {

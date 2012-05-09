@@ -27,7 +27,9 @@
 package org.spout.vanilla.material.block.redstone;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.block.GroundAttachable;
+import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.material.block.RedstoneTarget;
 
 public class RedstoneRepeater extends GroundAttachable implements RedstoneSource, RedstoneTarget {
 	public RedstoneRepeater(String name, int id) {

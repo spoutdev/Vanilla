@@ -36,7 +36,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.block.GroundAttachable;
 
 public class SugarCane extends GroundAttachable {
 	private final Set<Material> validBases = new HashSet<Material>(4);
@@ -53,6 +53,11 @@ public class SugarCane extends GroundAttachable {
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		return super.canAttachTo(material, face) && this.validBases.contains(material);
+	}
+
+	@Override
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		return face == BlockFace.TOP && material.equals(VanillaMaterials.SUGAR_CANE_BLOCK);
 	}
 
 	@Override

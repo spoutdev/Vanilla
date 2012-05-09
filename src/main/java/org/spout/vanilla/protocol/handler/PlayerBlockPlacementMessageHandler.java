@@ -115,7 +115,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			if (holdingMat != null) {
 				holdingMat.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 			}
-			clickedMaterial.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
+			clickedMaterial.onInteractBy(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 
 			if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
 				undoPlacement(player, clickedBlock, alterBlock);
@@ -145,12 +145,8 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 					return;
 				}
 
-				BlockMaterial oldBlock = target.getSubMaterial();
-
 				//perform actual placement
 				if (toPlace.onPlacement(target, placedData, targetFace, target == clickedBlock)) {
-					oldBlock.onDestroy(target);
-
 					//Remove block from inventory if not in creative mode.
 					if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
 						inventory.addCurrentItemAmount(-1);

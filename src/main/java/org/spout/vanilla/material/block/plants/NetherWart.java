@@ -32,9 +32,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.material.Plant;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.block.GroundAttachable;
+import org.spout.vanilla.material.block.Plant;
 
 public class NetherWart extends GroundAttachable implements Plant {
 	private GrowthStage stage = GrowthStage.SEEDLING;

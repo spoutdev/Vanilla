@@ -37,6 +37,8 @@ import org.spout.vanilla.material.TimedCraftable;
  * Represents a furnace inventory belonging to a furnace controller.
  */
 public class FurnaceInventory extends Inventory implements VanillaInventory {
+	private static final long serialVersionUID = 1L;
+
 	private final FurnaceController owner;
 
 	public FurnaceInventory(FurnaceController owner) {

@@ -33,6 +33,8 @@ import org.spout.api.inventory.PlayerInventory;
  * Represents a players inventory
  */
 public class VanillaPlayerInventory extends PlayerInventory implements VanillaInventory {
+	private static final long serialVersionUID = 1L;
+
 	public VanillaPlayerInventory() {
 		super(45);
 	}

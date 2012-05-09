@@ -38,8 +38,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.block.MinecartTrack;
 import org.spout.vanilla.material.block.data.Rails;
+import org.spout.vanilla.material.block.other.MinecartTrack;
 
 public class MinecartTrackLogic implements Source {
 	public int x, y, z;

@@ -36,7 +36,7 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;
-import org.spout.vanilla.material.item.generic.Armor;
+import org.spout.vanilla.material.item.Armor;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
 import org.spout.vanilla.util.InventoryUtil;

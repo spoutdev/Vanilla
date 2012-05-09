@@ -37,6 +37,7 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.normal.decorator.BeachDecorator;
+import org.spout.vanilla.world.populator.SmoothPopulator;
 
 public class OceanBiome extends VanillaBiome {
 	private Perlin base = new Perlin();
@@ -47,7 +48,7 @@ public class OceanBiome extends VanillaBiome {
 	private static Random rand = new Random();
 
 	public OceanBiome(int biomeId) {
-		super(biomeId, new BeachDecorator());
+		super(biomeId, new SmoothPopulator(), new BeachDecorator());
 		base.setNoiseQuality(NoiseQuality.BEST);
 		base.setOctaveCount(6);
 		base.setFrequency(0.3);

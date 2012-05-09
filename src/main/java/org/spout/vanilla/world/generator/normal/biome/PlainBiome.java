@@ -41,13 +41,14 @@ import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.GrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PondDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.world.populator.SmoothPopulator;
 
 public class PlainBiome extends VanillaBiome {
 	private Perlin base = new Perlin();
 	private Turbulence noise = new Turbulence();
 
 	public PlainBiome(int id) {
-		super(id, new CaveDecorator(), new GrassDecorator(), new FlowerDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
+		super(id, new SmoothPopulator(), new CaveDecorator(), new GrassDecorator(), new FlowerDecorator(), new PondDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator());
 		base.setNoiseQuality(NoiseQuality.BEST);
 		base.setOctaveCount(6);
 		base.setFrequency(0.3);

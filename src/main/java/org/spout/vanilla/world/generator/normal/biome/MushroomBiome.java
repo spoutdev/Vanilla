@@ -29,10 +29,11 @@ package org.spout.vanilla.world.generator.normal.biome;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.populator.SmoothPopulator;
 
 public class MushroomBiome extends VanillaBiome {
 	public MushroomBiome(int biomeId) {
-		super(biomeId);
+		super(biomeId, new SmoothPopulator());
 	}
 
 	@Override

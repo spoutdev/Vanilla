@@ -38,13 +38,14 @@ import org.spout.vanilla.world.generator.normal.decorator.CactusDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.CaveDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.DungeonDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
+import org.spout.vanilla.world.populator.SmoothPopulator;
 
 public class DesertBiome extends VanillaBiome {
 	private Perlin base = new Perlin();
 	private Turbulence noise = new Turbulence();
 
 	public DesertBiome(int biomeId) {
-		super(biomeId, new CactusDecorator(), new OreDecorator(), new CaveDecorator(), new DungeonDecorator());
+		super(biomeId, new SmoothPopulator(), new CactusDecorator(), new OreDecorator(), new CaveDecorator(), new DungeonDecorator());
 		base.setNoiseQuality(NoiseQuality.BEST);
 		base.setOctaveCount(6);
 		base.setFrequency(0.3);

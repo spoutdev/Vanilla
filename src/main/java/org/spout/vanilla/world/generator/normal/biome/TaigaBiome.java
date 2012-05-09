@@ -30,10 +30,11 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.populator.SmoothPopulator;
 
 public class TaigaBiome extends VanillaBiome {
 	public TaigaBiome(int biomeId) {
-		super(biomeId);
+		super(biomeId, new SmoothPopulator());
 	}
 
 	@Override

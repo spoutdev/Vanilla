@@ -37,12 +37,13 @@ import org.spout.vanilla.world.generator.normal.decorator.CaveDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.world.populator.SmoothPopulator;
 
 public class MountainsBiome extends VanillaBiome {
 	private RidgedMulti noise = new RidgedMulti();
 
 	public MountainsBiome(int biomeId) {
-		super(biomeId, new FlowerDecorator(), new TreeDecorator(), new CaveDecorator(), new OreDecorator());
+		super(biomeId, new SmoothPopulator(), new FlowerDecorator(), new TreeDecorator(), new CaveDecorator(), new OreDecorator());
 		noise.setNoiseQuality(NoiseQuality.BEST);
 		noise.setOctaveCount(10);
 		noise.setFrequency(0.4);

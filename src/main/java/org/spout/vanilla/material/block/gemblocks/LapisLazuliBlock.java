@@ -26,9 +26,10 @@
  */
 package org.spout.vanilla.material.block.gemblocks;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.Solid;
 
-public class LapisLazuliBlock extends Solid {
+public class LapisLazuliBlock extends Solid implements Mineable{
 	public LapisLazuliBlock(String name, int id) {
 		super(name, id);
 	}

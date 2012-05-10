@@ -105,7 +105,7 @@ import org.spout.vanilla.material.block.solid.Plank;
 import org.spout.vanilla.material.block.solid.Sand;
 import org.spout.vanilla.material.block.solid.Sandstone;
 import org.spout.vanilla.material.block.solid.SnowBlock;
-import org.spout.vanilla.material.block.solid.SoalSand;
+import org.spout.vanilla.material.block.solid.SoulSand;
 import org.spout.vanilla.material.block.solid.Stone;
 import org.spout.vanilla.material.block.solid.StoneBrick;
 import org.spout.vanilla.material.block.solid.TNT;
@@ -246,7 +246,7 @@ public final class VanillaMaterials {
 	public static final Fence FENCE = (Fence) register(new Fence("Fence", 85).setResistance(5.0F).setResistance(5.0F));
 	public static final Solid PUMPKIN = (Solid) register(new Solid("Pumpkin", 86).setHardness(1.0F).setResistance(1.7F));
 	public static final NetherRack NETHERRACK = (NetherRack) register(new NetherRack("Netherrack", 87).setHardness(0.7F));
-	public static final SoalSand SOUL_SAND = (SoalSand) register(new SoalSand("Soul Sand", 88).setHardness(0.5F).setResistance(0.8F));
+	public static final SoulSand SOUL_SAND = (SoulSand) register(new SoulSand("Soul Sand", 88).setHardness(0.5F).setResistance(0.8F));
 	public static final Ore GLOWSTONE_BLOCK = (Ore) register(new Ore("Glowstone Block", 89).setMinDropCount(2).setMaxDropCount(4).setHardness(0.3F).setResistance(0.5F).setLightLevel(15));
 	public static final Solid PORTAL = (Solid) register(new Solid("Portal", 90).setHardness(-1.0F).setResistance(0.0F).setLightLevel(11));
 	public static final Solid JACK_O_LANTERN = (Solid) register(new Solid("Jack 'o' Lantern", 91).setHardness(1.0F).setResistance(1.7F).setLightLevel(15));

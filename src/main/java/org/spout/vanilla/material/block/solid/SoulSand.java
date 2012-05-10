@@ -31,8 +31,8 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Spade;
 
-public class SoalSand extends Solid implements Mineable {
-	public SoalSand(String name, int id) {
+public class SoulSand extends Solid implements Mineable {
+	public SoulSand(String name, int id) {
 		super(name, id);
 	}
 

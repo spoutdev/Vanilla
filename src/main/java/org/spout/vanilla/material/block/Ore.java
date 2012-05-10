@@ -38,6 +38,12 @@ public class Ore extends Solid {
 	}
 
 	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setHardness(3.0F).setResistance(5.0F);
+	}
+
+	@Override
 	public int getDropCount() {
 		return rand.nextInt(max - min + 1) + min;
 	}

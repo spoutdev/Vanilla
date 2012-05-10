@@ -44,6 +44,12 @@ public abstract class MinecartTrackBase extends GroundAttachable {
 		bb.set(0.0f, 0.0f, 0.0f, 1.0f, 0.125f, 1.0f);
 	}
 
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setHardness(0.7F).setResistance(1.2F);
+	}
+
 	public abstract boolean canCurve();
 
 	public void doTrackLogic(Block block) {

@@ -26,10 +26,17 @@
  */
 package org.spout.vanilla.material.block.other;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 
 public class Web extends Solid {
 	public Web(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(VanillaMaterials.STRING);
 	}
 }

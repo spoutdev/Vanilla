@@ -45,4 +45,10 @@ public class Glass extends Solid {
 		}
 		return false;
 	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(null);
+	}
 }

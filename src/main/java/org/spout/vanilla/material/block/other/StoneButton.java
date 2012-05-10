@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block.other;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
@@ -35,11 +34,6 @@ import org.spout.vanilla.material.block.AbstractAttachable;
 import org.spout.vanilla.material.block.PointAttachable;
 
 public class StoneButton extends AbstractAttachable implements PointAttachable {
-	public StoneButton(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
-		this.setAttachable(BlockFaces.NESW);
-	}
-
 	public StoneButton(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESW);

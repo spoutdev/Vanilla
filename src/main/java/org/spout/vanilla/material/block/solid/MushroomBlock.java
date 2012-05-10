@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 
 public class MushroomBlock extends Ore implements Fuel {
@@ -34,7 +35,17 @@ public class MushroomBlock extends Ore implements Fuel {
 
 	public MushroomBlock(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
 		this.setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F); //Placeholder, block resistance unknown
+		if (this.equals(VanillaMaterials.HUGE_RED_MUSHROOM)) {
+			this.setDrop(VanillaMaterials.RED_MUSHROOM);
+		} else {
+			this.setDrop(VanillaMaterials.BROWN_MUSHROOM);
+		}
 	}
 
 	@Override

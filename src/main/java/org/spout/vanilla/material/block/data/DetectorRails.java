@@ -62,6 +62,6 @@ public class DetectorRails extends Rails {
 
 	@Override
 	public MinecartTrackDetector getMaterial() {
-		return VanillaMaterials.DETECTOR_RAIL;
+		return VanillaMaterials.RAILS_DETECTOR;
 	}
 }

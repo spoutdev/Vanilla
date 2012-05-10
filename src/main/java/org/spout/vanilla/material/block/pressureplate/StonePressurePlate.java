@@ -26,19 +26,14 @@
  */
 package org.spout.vanilla.material.block.pressureplate;
 
-import org.spout.api.material.Material;
-
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.block.PressurePlate;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Pickaxe;
 
 public class StonePressurePlate extends PressurePlate implements Mineable {
 	public StonePressurePlate(String name, int id) {
 		super(name, id);
-	}
-
-	public StonePressurePlate(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
 	}
 
 	@Override

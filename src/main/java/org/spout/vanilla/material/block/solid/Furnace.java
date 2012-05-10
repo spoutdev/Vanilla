@@ -38,6 +38,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Pickaxe;
@@ -48,6 +49,12 @@ public class Furnace extends Solid implements Mineable {
 
 	public Furnace(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setHardness(3.5F).setResistance(5.8F).setDrop(VanillaMaterials.FURNACE);
 	}
 
 	@Override

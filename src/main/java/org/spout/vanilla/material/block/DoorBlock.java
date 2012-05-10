@@ -26,19 +26,13 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.MathHelper;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class DoorBlock extends GroundAttachable {
-	public static final short HINGE_NORTH_WEST = 0x0;
-	public static final short HINGE_NORTH_EAST = 0x1;
-	public static final short HINGE_SOUTH_EAST = 0x2;
-	public static final short HINGE_SOUTH_WEST = 0x3;
-
 	public DoorBlock(String name, int id) {
 		super(name, id);
 	}
@@ -46,6 +40,12 @@ public class DoorBlock extends GroundAttachable {
 	@Override
 	public boolean isPlacementSuppressed() {
 		return true;
+	}
+
+	@Override
+	public void onDestroyBlock(Block block) {
+		getCorrectHalf(block, true).setMaterial(VanillaMaterials.AIR).update();
+		getCorrectHalf(block, false).setMaterial(VanillaMaterials.AIR).update();
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class DoorBlock extends GroundAttachable {
 		}
 		if (!doorBlock.getMaterial().equals(this)) {
 			//create default door block to 'fix' things up
-			doorBlock.setMaterial(this, top ? (short) 8 : (short) 0);
+			doorBlock.setMaterial(this, top ? (short) 0x8 : (short) 0x0);
 		}
 		return doorBlock;
 	}
@@ -133,49 +133,11 @@ public class DoorBlock extends GroundAttachable {
 		short bottomData = opened ? (short) 0x4 : (short) 0x0;
 		bottomData += BlockFaces.NESW.indexOf(facing, 0);
 		bottomHalf.setMaterial(this, bottomData);
-
-		/*
-
-    The bottom two bits determine which direction the door faces (these directions given for which direction the door faces while closed)
-
-        0: Facing west
-        1: Facing north
-        2: Facing east
-        3: Facing south 
-
-
-		 */
-	}
-
-	//TODO: Place in math helper or maybe even Quaternion?
-	public static BlockFace getYawFace(float yaw) {
-		yaw = MathHelper.wrapAngle(yaw);
-		//Faster method to get the face if applicable
-		switch ((int) yaw) {
-		case -90 : return BlockFace.NORTH;
-		case 0 : return BlockFace.WEST;
-		case 90 : return BlockFace.SOUTH;
-		case 180 : return BlockFace.EAST;
-		}
-		//Let's apply angle differences
-		if (yaw >= -135 && yaw < -45) {
-			return BlockFace.NORTH;
-		} else if (yaw >= -45 && yaw < 45) {
-			return BlockFace.WEST;
-		} else if (yaw >= 45 && yaw < 135) {
-			return BlockFace.SOUTH;
-		} else {
-			return BlockFace.EAST;
-		}
 	}
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace face, boolean isClicked) {
-		BlockFace facing = BlockFace.NORTH;
-		if (block.getSource() instanceof Entity) {
-			facing = getYawFace(((Entity) block.getSource()).getYaw());
-		}
-
+		BlockFace facing = getFacingFromSource(block);
 		setAll(block, block.translate(BlockFace.TOP), facing.getOpposite(), false, false);
 
 		return true;

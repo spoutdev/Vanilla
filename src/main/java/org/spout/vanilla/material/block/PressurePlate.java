@@ -24,18 +24,10 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.pressureplate;
-
-import org.spout.api.material.Material;
-
-import org.spout.vanilla.material.block.GroundAttachable;
+package org.spout.vanilla.material.block;
 
 public class PressurePlate extends GroundAttachable {
 	public PressurePlate(String name, int id) {
 		super(name, id);
-	}
-
-	public PressurePlate(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
 	}
 }

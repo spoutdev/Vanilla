@@ -42,6 +42,12 @@ public class LapisLazuliOre extends Ore implements TimedCraftable, Mineable {
 	}
 
 	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setMinDropCount(4).setMaxDropCount(8).setDrop(Dye.LAPIS_LAZULI);
+	}
+
+	@Override
 	public ItemStack getResult() {
 		return new ItemStack(Dye.LAPIS_LAZULI, 1);
 	}

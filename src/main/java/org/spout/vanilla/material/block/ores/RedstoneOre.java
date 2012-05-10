@@ -37,13 +37,19 @@ import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Pickaxe;
 
 public class RedstoneOre extends Ore implements TimedCraftable, Mineable {
-	public RedstoneOre() {
-		super("Redstone Ore", 73);
+	public RedstoneOre(String name, int id) {
+		super(name, id);
+	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setMinDropCount(4).setMaxDropCount(5);
 	}
 
 	@Override
 	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.REDSTONE, 1);
+		return new ItemStack(VanillaMaterials.REDSTONE_DUST, 1);
 	}
 
 	@Override

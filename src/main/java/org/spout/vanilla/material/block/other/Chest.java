@@ -26,10 +26,9 @@
  */
 package org.spout.vanilla.material.block.other;
 
-import org.spout.api.material.Material;
-
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Axe;
@@ -37,7 +36,7 @@ import org.spout.vanilla.material.item.tools.Axe;
 public class Chest extends Solid implements Fuel, Mineable {
 	public final float BURN_TIME = 15.f;
 
-	public Chest(String name, int id, int data, Material parent) {
+	public Chest(String name, int id, int data, VanillaBlockMaterial parent) {
 		super(name, id, data, parent);
 	}
 

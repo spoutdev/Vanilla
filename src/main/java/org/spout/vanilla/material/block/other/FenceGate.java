@@ -26,14 +26,11 @@
  */
 package org.spout.vanilla.material.block.other;
 
-import org.spout.api.material.Material;
-
+import org.spout.api.geo.cuboid.Block;
+import org.spout.vanilla.material.block.Openable;
 import org.spout.vanilla.material.block.Solid;
 
-public class FenceGate extends Solid {
-	public FenceGate(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
-	}
+public class FenceGate extends Solid implements Openable {
 
 	public FenceGate(String name, int id) {
 		super(name, id);
@@ -42,5 +39,20 @@ public class FenceGate extends Solid {
 	@Override
 	public boolean isPlacementSuppressed() {
 		return true;
+	}
+
+	@Override
+	public void toggleOpen(Block block) {
+		
+	}
+
+	@Override
+	public void setOpen(Block block, boolean open) {
+		
+	}
+
+	@Override
+	public boolean isOpen(Block block) {
+		return false;
 	}
 }

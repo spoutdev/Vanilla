@@ -70,6 +70,6 @@ public class EmptyContainer extends BlockItem {
 	}
 
 	public void register(FullContainer item) {
-		this.fullContainers.put(item.getBlock(), item);
+		this.fullContainers.put(item.getPlacedBlock(), item);
 	}
 }

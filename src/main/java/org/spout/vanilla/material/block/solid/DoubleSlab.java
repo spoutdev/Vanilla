@@ -54,15 +54,17 @@ public class DoubleSlab extends Solid implements Mineable {
 
 	private DoubleSlab(String name, Slab slab) {
 		super(name, 43);
-		this.setSingleType(slab).setDefault();
+		this.setSingleType(slab);
 	}
 
 	private DoubleSlab(String name, int data, DoubleSlab parent, Slab slab) {
 		super(name, 43, data, parent);
-		this.setSingleType(slab).setDefault();
+		this.setSingleType(slab);
 	}
 
-	private void setDefault() {
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
 		this.setHardness(2.0F).setResistance(10.0F).setDropCount(2);
 	}
 

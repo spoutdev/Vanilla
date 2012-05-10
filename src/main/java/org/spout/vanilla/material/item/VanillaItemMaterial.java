@@ -55,4 +55,8 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 		this.meleeDamage = damage;
 		return this;
 	}
+
+	@Override
+	public void loadProperties() {
+	}
 }

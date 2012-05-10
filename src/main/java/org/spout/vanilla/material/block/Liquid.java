@@ -36,6 +36,13 @@ public class Liquid extends VanillaBlockMaterial {
 		this.flowing = flowing;
 	}
 
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setHardness(100.0F).setResistance(166.7F);
+		this.setDrop(null);
+	}
+
 	public boolean isFlowing() {
 		return flowing;
 	}

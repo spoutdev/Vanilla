@@ -32,4 +32,10 @@ public class Bedrock extends Solid {
 	public Bedrock(String name, int id) {
 		super(name, id);
 	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setResistance(6000000.0F);
+	}
 }

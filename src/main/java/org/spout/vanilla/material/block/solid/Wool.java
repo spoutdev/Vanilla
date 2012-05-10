@@ -54,17 +54,17 @@ public class Wool extends Solid {
 
 	private Wool(String name) {
 		super(name, 35);
-		this.setDefault();
 		this.color = WoolColor.WHITE;
 	}
 
 	private Wool(String name, WoolColor color, Wool parent) {
 		super(name, 35, color.getData(), parent);
-		this.setDefault();
 		this.color = color;
 	}
 
-	private void setDefault() {
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
 		this.setHardness(0.8F).setResistance(1.3F);
 	}
 

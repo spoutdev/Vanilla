@@ -26,17 +26,11 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.api.material.Material;
-
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
 
 public class Jukebox extends Solid implements Fuel {
 	public final float BURN_TIME = 15.f;
-
-	public Jukebox(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
-	}
 
 	public Jukebox(String name, int id) {
 		super(name, id);

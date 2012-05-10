@@ -36,8 +36,13 @@ import org.spout.api.material.source.MaterialSource;
 
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
+/**
+ * A simplistic class which redirects placement requests to another (official) block material<br>
+ * Can be used to store multi-block creations
+ */
 public class BlockItem extends VanillaItemMaterial implements Placeable {
-	GenericMaterialSource onPlace;
+	private MaterialSource onPlace;
+	private BlockMaterial onPlaceBlock;
 
 	public BlockItem(String name, int id, BlockMaterial onPlaceMaterial) {
 		this(name, id, onPlaceMaterial, (short) 0);
@@ -45,16 +50,12 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 
 	public BlockItem(String name, int id, BlockMaterial onPlaceMaterial, short onPlaceData) {
 		super(name, id);
-		if (onPlaceMaterial == null) {
-			throw new NullPointerException("Block block can not be null");
-		} else {
-			this.onPlace = new GenericMaterialSource(onPlaceMaterial, onPlaceData);
-		}
+		this.setPlacedBlock(new GenericMaterialSource(onPlaceMaterial, onPlaceData));
 	}
 
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		return ((BlockMaterial) this.onPlace.getSubMaterial()).canPlace(block, data, against, isClickedBlock);
+		return this.onPlaceBlock.canPlace(block, data, against, isClickedBlock);
 	}
 
 	@Override
@@ -64,20 +65,48 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 			if (!entity.getInventory().isCurrentItem(this)) {
 				throw new IllegalStateException("Interaction with an controller that is not holding this block!");
 			}
-			if (VanillaPlayerUtil.isSurvival(entity)) {
-				if (!entity.getInventory().addCurrentItemAmount(-1)) {
-					throw new IllegalStateException("ControllerType is holding zero or negative sized item!");
+		}
+		if (this.onPlaceBlock.onPlacement(block, data, against, isClickedBlock)) {
+			if (block.getSource() instanceof Entity) {
+				Entity entity = (Entity) block.getSource();
+				if (VanillaPlayerUtil.isSurvival(entity)) {
+					if (!entity.getInventory().addCurrentItemAmount(-1)) {
+						throw new IllegalStateException("ControllerType is holding zero or negative sized item!");
+					}
 				}
 			}
 		}
-
-		System.out.println("Placing Block " + getBlock() + " on Interact at " + block);
-
-		block.setMaterial(this.getBlock()).update();
 		return true;
 	}
 
-	public MaterialSource getBlock() {
+	/**
+	 * Sets the block material this block item places
+	 * @param blockmaterial to set to
+	 * @return this block item
+	 */
+	public BlockItem setPlacedBlock(MaterialSource blockmaterial) {
+		if (blockmaterial == null || blockmaterial.getMaterial() == null) {
+			throw new NullPointerException("Block block can not be null");
+		} else {
+			this.onPlace = blockmaterial;
+			this.onPlaceBlock = (BlockMaterial) this.onPlace.getSubMaterial();
+		}
+		return this;
+	}
+
+	/**
+	 * Gets the block material this block item places
+	 * @return the Block material
+	 */
+	public BlockMaterial getPlacedBlockMaterial() {
+		return this.onPlaceBlock;
+	}
+
+	/**
+	 * Gets the material and data this block item placed
+	 * @return the Block material and data
+	 */
+	public MaterialSource getPlacedBlock() {
 		return onPlace;
 	}
 }

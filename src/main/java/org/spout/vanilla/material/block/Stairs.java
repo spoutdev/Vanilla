@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.material.Material;
-
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.MiningTool;
@@ -38,7 +36,7 @@ public class Stairs extends VanillaBlockMaterial implements Mineable {
 		super(name, id);
 	}
 
-	public Stairs(String name, int id, int data, Material parent) {
+	public Stairs(String name, int id, int data, VanillaBlockMaterial parent) {
 		super(name, id, data, parent);
 	}
 

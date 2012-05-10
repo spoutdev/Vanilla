@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.api.material.Material;
-
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
@@ -36,10 +34,6 @@ import org.spout.vanilla.material.item.tools.Pickaxe;
 public class NetherBrick extends Solid implements Mineable {
 	public NetherBrick(String name, int id) {
 		super(name, id);
-	}
-
-	public NetherBrick(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
 	}
 
 	@Override

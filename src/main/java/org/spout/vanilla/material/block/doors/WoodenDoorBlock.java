@@ -24,44 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.data;
+package org.spout.vanilla.material.block.doors;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.other.MinecartTrackPowered;
-import org.spout.vanilla.util.RailsState;
+import org.spout.vanilla.material.block.DoorBlock;
 
-public class PoweredRails extends Rails {
-	private boolean powered;
+public class WoodenDoorBlock extends DoorBlock {
 
-	public PoweredRails(short data) {
-		super((short) (data & 0x7));
-		this.powered = (data & 0x8) == 0x8;
-	}
-
-	public PoweredRails(RailsState state, boolean powered) {
-		super(state);
-		this.powered = powered;
-	}
-
-	public boolean isPowered() {
-		return this.powered;
-	}
-
-	public void setPowered(boolean pressed) {
-		this.powered = pressed;
+	public WoodenDoorBlock(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
-	public short getData() {
-		short data = super.getData();
-		if (this.powered) {
-			data |= 0x8;
-		}
-		return data;
+	public void onInteractBy(Entity entity, Block block, Action action, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, action, clickedFace);
+		this.toggleOpened(block);
 	}
 
 	@Override
-	public MinecartTrackPowered getMaterial() {
-		return VanillaMaterials.RAILS_POWERED;
+	public void loadProperties() {
+		super.loadProperties();
+		this.setHardness(3.0F).setDrop(VanillaMaterials.WOODEN_DOOR);
 	}
 }

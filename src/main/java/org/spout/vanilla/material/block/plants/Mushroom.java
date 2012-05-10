@@ -24,27 +24,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.block.plants;
 
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tools.Spade;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
 
-public class Grass extends Solid implements Mineable {
-	public Grass() {
-		super("Grass", 2);
+import org.spout.vanilla.material.block.GroundAttachable;
+import org.spout.vanilla.material.block.Plant;
+
+public class Mushroom extends GroundAttachable implements Plant {
+	public Mushroom(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
+	public boolean hasGrowthStages() {
+		return false;
 	}
 
 	@Override
 	public void loadProperties() {
 		super.loadProperties();
-		this.setDrop(VanillaMaterials.DIRT);
+		this.setHardness(0.0f).setResistance(0.0f);
+	}
+
+	@Override
+	public int getNumGrowthStages() {
+		return 0;
+	}
+
+	@Override
+	public int getMinimumLightToGrow() {
+		return 8;
+	}
+
+	@Override
+	public boolean isValidPosition(Block block, BlockFace attachedFace, boolean seekAlternative) {
+		if (super.isValidPosition(block, attachedFace, seekAlternative)) {
+			return block.getLight() <= 12 && block.getSkyLight() <= 12;
+		}
+		return false;
 	}
 }

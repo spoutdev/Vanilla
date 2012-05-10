@@ -46,15 +46,15 @@ public class Tree extends Solid implements Plant, Fuel, TimedCraftable, Mineable
 
 	private Tree(String name) {
 		super(name, 17);
-		this.setDefault();
 	}
 
 	private Tree(String name, int data, Tree parent) {
 		super(name, 17, data, parent);
-		this.setDefault();
 	}
 
-	private void setDefault() {
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
 		this.setHardness(2.0F).setResistance(3.3F).setOpacity((byte) 1);
 	}
 

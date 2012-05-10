@@ -27,8 +27,8 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class GroundAttachable extends AbstractAttachable {
 	public GroundAttachable(String name, int id) {
@@ -36,7 +36,7 @@ public class GroundAttachable extends AbstractAttachable {
 		this.setAttachable(BlockFace.BOTTOM);
 	}
 
-	public GroundAttachable(String name, int id, int data, Material parent) {
+	public GroundAttachable(String name, int id, int data, VanillaBlockMaterial parent) {
 		super(name, id, data, parent);
 		this.setAttachable(BlockFace.BOTTOM);
 	}

@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.material.block.stairs;
 
-import org.spout.api.material.Material;
-
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Stairs;
 
 public class CobblestoneStairs extends Stairs {
@@ -35,7 +34,7 @@ public class CobblestoneStairs extends Stairs {
 		super(name, id);
 	}
 
-	public CobblestoneStairs(String name, int id, int data, Material parent) {
+	public CobblestoneStairs(String name, int id, int data, VanillaBlockMaterial parent) {
 		super(name, id, data, parent);
 	}
 }

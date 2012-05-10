@@ -24,44 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.data;
+package org.spout.vanilla.material.block.doors;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.other.MinecartTrackPowered;
-import org.spout.vanilla.util.RailsState;
+import org.spout.vanilla.material.block.DoorBlock;
 
-public class PoweredRails extends Rails {
-	private boolean powered;
+public class IronDoorBlock extends DoorBlock {
 
-	public PoweredRails(short data) {
-		super((short) (data & 0x7));
-		this.powered = (data & 0x8) == 0x8;
-	}
-
-	public PoweredRails(RailsState state, boolean powered) {
-		super(state);
-		this.powered = powered;
-	}
-
-	public boolean isPowered() {
-		return this.powered;
-	}
-
-	public void setPowered(boolean pressed) {
-		this.powered = pressed;
+	public IronDoorBlock(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
-	public short getData() {
-		short data = super.getData();
-		if (this.powered) {
-			data |= 0x8;
-		}
-		return data;
-	}
-
-	@Override
-	public MinecartTrackPowered getMaterial() {
-		return VanillaMaterials.RAILS_POWERED;
+	public void loadProperties() {
+		super.loadProperties();
+		this.setHardness(5.0F).setResistance(8.3F).setDrop(VanillaMaterials.IRON_DOOR);
 	}
 }

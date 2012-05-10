@@ -24,44 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.data;
+package org.spout.vanilla.material.block.other;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.other.MinecartTrackPowered;
-import org.spout.vanilla.util.RailsState;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
-public class PoweredRails extends Rails {
-	private boolean powered;
-
-	public PoweredRails(short data) {
-		super((short) (data & 0x7));
-		this.powered = (data & 0x8) == 0x8;
-	}
-
-	public PoweredRails(RailsState state, boolean powered) {
-		super(state);
-		this.powered = powered;
-	}
-
-	public boolean isPowered() {
-		return this.powered;
-	}
-
-	public void setPowered(boolean pressed) {
-		this.powered = pressed;
+public class GlassPane extends VanillaBlockMaterial {
+	public GlassPane(String name, int id) {
+		super(name, id);
+		this.setOccludes(false);
 	}
 
 	@Override
-	public short getData() {
-		short data = super.getData();
-		if (this.powered) {
-			data |= 0x8;
-		}
-		return data;
-	}
-
-	@Override
-	public MinecartTrackPowered getMaterial() {
-		return VanillaMaterials.RAILS_POWERED;
+	public void loadProperties() {
+		super.loadProperties();
+		this.setHardness(0.3F).setResistance(0.3F); //Placeholder, block resistance unknown
+		this.setDrop(null);
 	}
 }

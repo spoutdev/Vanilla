@@ -44,17 +44,17 @@ public class Plank extends Solid implements Fuel, Mineable {
 
 	public Plank(String name) {
 		super(name, 05);
-		this.setDefault();
 		this.type = WoodType.OAK;
 	}
 
 	public Plank(String name, WoodType type, Plank parent) {
 		super(name, 05, type.getData(), parent);
-		this.setDefault();
 		this.type = type;
 	}
 
-	private void setDefault() {
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
 		this.setHardness(0.8F).setResistance(1.3F);
 	}
 

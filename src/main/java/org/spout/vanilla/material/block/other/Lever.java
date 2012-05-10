@@ -30,7 +30,6 @@ import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
@@ -38,14 +37,9 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.block.AbstractAttachable;
 
 public class Lever extends AbstractAttachable {
-	public Lever(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
-		this.setAttachable(BlockFaces.NESWB);
-	}
 
 	public Lever(String name, int id) {
 		super(name, id);
-		this.setAttachable(BlockFaces.NESWB);
 	}
 
 	@Override
@@ -53,6 +47,12 @@ public class Lever extends AbstractAttachable {
 		return true;
 	}
 
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setAttachable(BlockFaces.NESWB);
+	}
+	
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);

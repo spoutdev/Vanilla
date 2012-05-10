@@ -44,6 +44,12 @@ public class Flower extends GroundAttachable implements Plant {
 	}
 
 	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setHardness(0.0f).setResistance(0.0f);
+	}
+
+	@Override
 	public int getNumGrowthStages() {
 		return 0;
 	}

@@ -41,18 +41,18 @@ public class Sapling extends GroundAttachable implements Plant, Fuel {
 	public static final Sapling JUNGLE = register(new Sapling("Jungle Sapling", 3, DEFAULT));
 	public final float BURN_TIME = 5.f;
 
-	private void setDefault() {
-		this.setHardness(0.0F).setResistance(0.0F);
-	}
-
 	private Sapling(String name) {
 		super(name, 6);
-		this.setDefault();
 	}
 
 	private Sapling(String name, int data, Sapling parent) {
 		super(name, 6, data, parent);
-		this.setDefault();
+	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setHardness(0.0F).setResistance(0.0F);
 	}
 
 	@Override

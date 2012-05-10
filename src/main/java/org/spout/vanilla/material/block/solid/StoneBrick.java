@@ -35,15 +35,15 @@ public class StoneBrick extends Solid {
 
 	private StoneBrick(String name) {
 		super(name, 98);
-		this.setDefault();
 	}
 
 	private StoneBrick(String name, int data, StoneBrick parent) {
 		super(name, 98, data, parent);
-		this.setDefault();
 	}
 
-	private void setDefault() {
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
 		this.setHardness(1.5F);
 		this.setResistance(10.0F);
 	}

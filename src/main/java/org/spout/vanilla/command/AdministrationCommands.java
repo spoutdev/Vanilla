@@ -146,6 +146,9 @@ public class AdministrationCommands {
 				data = Short.parseShort(parts[1]);
 			} else {
 				material = Material.get(args.getString(index));
+				if (material != null) {
+					data = material.getData();
+				}
 			}
 		}
 

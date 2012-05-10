@@ -31,6 +31,7 @@ import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.inventory.DispenserInventory;
 import org.spout.vanilla.inventory.FurnaceInventory;
 
 public class VanillaMessageHandlerUtils {
@@ -45,6 +46,12 @@ public class VanillaMessageHandlerUtils {
 
 	private static final int PLAYER_INVENTORY_SLOTS[] = {36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7, 3, 4, 0, 6, 1, 2, 5};
 	private static final int FURNACE_INVENTORY_SLOTS[] = {30, 31, 32, 33, 34, 35, 36, 37, 38, 21, 22, 23, 24, 25, 26, 27, 28, 29, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 0};
+	private static final int DISPENSER_INVENTORY_SLOTS[] = {
+		36, 37, 38, 39, 40, 41, 42, 43, 44, 
+		27, 28, 29, 30, 31, 32, 33, 34, 35, 
+		18, 19, 20, 21, 22, 23, 24, 25, 26, 
+		9, 10, 11, 12, 13, 14, 15, 16, 17, 
+		0, 1, 2, 3, 4, 5, 6, 7, 8};
 
 	public static int getSpoutInventorySlot(Inventory inventory, int slot) {
 		if (inventory instanceof PlayerInventory) {
@@ -77,6 +84,10 @@ public class VanillaMessageHandlerUtils {
 
 		if (inventory instanceof FurnaceInventory) {
 			return FURNACE_INVENTORY_SLOTS[slot];
+		}
+
+		if (inventory instanceof DispenserInventory) {
+			return DISPENSER_INVENTORY_SLOTS[slot];
 		}
 
 		return -1;

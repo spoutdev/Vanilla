@@ -28,10 +28,11 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -39,62 +40,97 @@ import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Pickaxe;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Furnace extends Solid implements Mineable {
+public class Furnace extends Solid implements Mineable, Directional {
 	public static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
 	public static final float SMELT_TIME = 10.f;
 
-	public Furnace(String name, int id) {
+	private final boolean burning;
+
+	public Furnace(String name, int id, boolean burning) {
 		super(name, id);
+		this.burning = burning;
 	}
 
 	@Override
 	public void loadProperties() {
 		super.loadProperties();
 		this.setHardness(3.5F).setResistance(5.8F).setDrop(VanillaMaterials.FURNACE);
+		if (this.burning) {
+			this.setLightLevel(13);
+		}
+	}
+
+	@Override
+	public void onDestroy(Block block) {
+		super.onDestroy(block);
+		block.setController(null);
+	}
+
+	/**
+	 * Gets if this furnace block material is burning
+	 * @return True if burning
+	 */
+	public boolean isBurning() {
+		return this.burning;
+	}
+	
+	@Override
+	public BlockFace getFacing(Block block) {
+		return BlockFaces.EWNS.get(block.getData() - 2);
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
+		block.setData((short) (BlockFaces.EWNS.indexOf(facing, 0) + 2));
 	}
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
+			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
+			//TODO: Get block.setController to function correctly
 			block.getWorld().createAndSpawnEntity(block.getPosition(), new FurnaceController());
 			return true;
 		}
-
 		return false;
 	}
 
 	@Override
-	public void onInteract(Entity entity, Block block, PlayerInteractEvent.Action action, BlockFace face) {
-		Controller controller = entity.getController();
-		if (!(controller instanceof VanillaPlayer)) {
-			return;
+	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
+		if (action == Action.RIGHT_CLICK) {
+			Controller controller = entity.getController();
+			if (!(controller instanceof VanillaPlayer)) {
+				return;
+			}
+
+			// Get the controller and assign a new window id for the session.
+			VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
+			Inventory inventory = entity.getInventory();
+			FurnaceController furnace = (FurnaceController) block.getController();
+			Window window = Window.FURNACE;
+
+			if (furnace == null) {
+				System.out.println("Furnace is null");
+				return;
+			}
+
+			// Dispose items into new inventory
+			FurnaceInventory furnaceInventory = furnace.getInventory();
+			for (int slot = 0; slot < 36; slot++) {
+				furnaceInventory.setItem(slot, inventory.getItem(slot));
+			}
+
+			// Add the player who opened the inventory as a viewer
+			furnaceInventory.addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
+			vanillaPlayer.setActiveInventory(furnaceInventory);
+			vanillaPlayer.openWindow(window, "Furnace", furnaceInventory.getSize());
 		}
-
-		// Get the controller and assign a new window id for the session.
-		VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
-		Inventory inventory = entity.getInventory();
-		FurnaceController furnace = (FurnaceController) block.getController();
-		Window window = Window.FURNACE;
-
-		if (furnace == null) {
-			System.out.println("Furnace is null");
-			return;
-		}
-
-		// Dispose items into new inventory
-		FurnaceInventory furnaceInventory = furnace.getInventory();
-		for (int slot = 0; slot < furnaceInventory.getSize() - 4; slot++) {
-			furnaceInventory.setItem(slot, inventory.getItem(slot));
-		}
-
-		// Add the player who opened the inventory as a viewer
-		furnaceInventory.addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
-		vanillaPlayer.setActiveInventory(furnaceInventory);
-		vanillaPlayer.openWindow(window, "Furnace", furnaceInventory.getSize());
 	}
 
 	@Override

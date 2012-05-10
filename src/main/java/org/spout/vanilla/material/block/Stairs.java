@@ -26,12 +26,17 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.api.util.LogicUtil;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Pickaxe;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Stairs extends VanillaBlockMaterial implements Mineable {
+public class Stairs extends VanillaBlockMaterial implements Mineable, Directional {
 	public Stairs(String name, int id) {
 		super(name, id);
 	}
@@ -43,5 +48,42 @@ public class Stairs extends VanillaBlockMaterial implements Mineable {
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	/**
+	 * Gets if this half slab is the top-half
+	 * @param block to get it of
+	 * @return True if it is the block half
+	 */
+	public boolean isTop(Block block) {
+		return LogicUtil.getBit(block.getData(), 0x4);
+	}
+
+	/**
+	 * Sets if this half slab is the top-half
+	 * @param block to set it for
+	 * @param top state
+	 */
+	public void setTop(Block block, boolean top) {
+		block.setData(LogicUtil.setBit(block.getData(), 0x4, top));
+	}
+
+	@Override
+	public BlockFace getFacing(Block block) {
+		return BlockFaces.NSEW.get(block.getData());
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
+		block.setData((short) (BlockFaces.NSEW.indexOf(facing, 0)));
+	}
+
+	@Override
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedMaterial) {
+		block.setMaterial(this);
+		this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
+		this.setTop(block, against == BlockFace.TOP);
+		block.update();
+		return true;
 	}
 }

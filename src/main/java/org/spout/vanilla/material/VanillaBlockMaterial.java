@@ -57,6 +57,13 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	public void loadProperties() {
 		this.setDrop(this).setDropCount(1).setDamage(1);
 		this.setCollision(CollisionStrategy.SOLID);
+		if (this.hasSubMaterials()) {
+		    for (Material material : this.getSubMaterials()) {
+		    	if (material instanceof VanillaMaterial) {
+		    		((VanillaMaterial) material).loadProperties();
+		    	}
+		    }
+		}
 	}
 
 	@Override

@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.other;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -44,27 +45,50 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	public static final Slab STONE_BRICK = register(new Slab("Stone Brick Slab", 5, STONE));
 	private DoubleSlab doubletype;
 
+	private Slab(String name) {
+		super(name, 44);
+	}
+
+	private Slab(String name, int data, Slab parent) {
+		super(name, 44, data, parent);
+	}
+
 	public Slab setDoubleType(DoubleSlab doubletype) {
 		this.doubletype = doubletype;
 		return this;
+	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setHardness(2.0F).setResistance(10.0F);
 	}
 
 	public DoubleSlab getDoubleType() {
 		return this.doubletype;
 	}
 
-	private Slab(String name) {
-		super(name, 44);
-		this.setDefault();
+	/**
+	 * Gets if this half slab is the top-half
+	 * @param block to get it of
+	 * @return True if it is the block half
+	 */
+	public boolean isTop(Block block) {
+		return LogicUtil.getBit(block.getData(), 0x8);
 	}
 
-	private Slab(String name, int data, Slab parent) {
-		super(name, 44, data, parent);
-		this.setDefault();
+	/**
+	 * Sets if this half slab is the top-half
+	 * @param block to set it for
+	 * @param top state
+	 */
+	public void setTop(Block block, boolean top) {
+		block.setData(LogicUtil.setBit(block.getData(), 0x8, top));
 	}
 
-	private void setDefault() {
-		this.setHardness(2.0F).setResistance(10.0F);
+	@Override
+	public Slab getSubMaterial(short data) {
+		return (Slab) super.getSubMaterial(LogicUtil.setBit(data, 0x8, false));
 	}
 
 	@Override
@@ -77,7 +101,15 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (block.getSubMaterial().equals(this)) {
-			return !isClickedBlock || against == BlockFace.TOP;
+			if (isClickedBlock) {
+				if (this.isTop(block)) {
+					return against == BlockFace.BOTTOM;
+				} else {
+					return against == BlockFace.TOP;
+				}
+			} else {
+				return true;
+			}
 		} else {
 			return super.canPlace(block, data, against, isClickedBlock);
 		}
@@ -87,10 +119,12 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (block.getSubMaterial().equals(this)) {
 			block.setMaterial(this.doubletype).update();
-			return true;
 		} else {
-			return super.onPlacement(block, data, against, isClickedBlock);
+			block.setMaterial(this);
+			this.setTop(block, against == BlockFace.TOP);
+			block.update();
 		}
+		return true;
 	}
 
 	@Override

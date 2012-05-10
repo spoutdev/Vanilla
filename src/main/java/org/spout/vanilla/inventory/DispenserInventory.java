@@ -24,46 +24,34 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.inventory;
 
-import org.spout.api.material.Material;
+import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.material.VanillaMaterial;
+import org.spout.vanilla.controller.block.DispenserController;
 
-public class VanillaItemMaterial extends Material implements VanillaMaterial {
-	private int meleeDamage = 1;
+/**
+ * Represents a dispenser inventory belonging to a dispenser controller.
+ */
+public class DispenserInventory extends Inventory implements VanillaInventory {
+	private static final long serialVersionUID = 1L;
+	private final DispenserController owner;
 
-	public VanillaItemMaterial(String name, int id) {
-		super(name, id);
+	public DispenserInventory(DispenserController owner) {
+		super(45);
+		this.owner = owner;
 	}
 
-	public VanillaItemMaterial(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
-	}
-
-	@Override
-	public void loadProperties() {
-		if (this.hasSubMaterials()) {
-		    for (Material material : this.getSubMaterials()) {
-		    	if (material instanceof VanillaMaterial) {
-		    		((VanillaMaterial) material).loadProperties();
-		    	}
-		    }
-		}
-	}
-
-	public boolean getNBTData() {
-		return false;
+	/**
+	 * Returns the dispenser controller that this inventory belongs to.
+	 * @return owner the dispenser controller
+	 */
+	public DispenserController getOwner() {
+		return owner;
 	}
 
 	@Override
-	public int getDamage() {
-		return this.meleeDamage;
-	}
-
-	@Override
-	public VanillaItemMaterial setDamage(int damage) {
-		this.meleeDamage = damage;
-		return this;
+	public Window getWindow() {
+		return Window.DISPENSER;
 	}
 }

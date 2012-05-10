@@ -173,7 +173,7 @@ public final class VanillaMaterials {
 	public static final Leaves LEAVES = Leaves.DEFAULT;
 	public static final Solid SPONGE = (Solid) register(new Solid("Sponge", 19).setHardness(0.6F).setResistance(1.0F));
 	public static final Glass GLASS = (Glass) register(new Glass("Glass", 20).setHardness(0.3F).setResistance(0.5F));
-	public static final Dispenser DISPENSER = (Dispenser) register(new Dispenser("Dispenser", 23).setHardness(3.5F).setResistance(5.8F));
+	public static final Dispenser DISPENSER = register(new Dispenser("Dispenser", 23));
 	public static final Sandstone SANDSTONE = Sandstone.SANDSTONE;
 	public static final NoteBlock NOTEBLOCK = (NoteBlock) register(new NoteBlock("Note Block", 25).setHardness(0.8F).setResistance(1.3F));
 	public static final BedBlock BED_BLOCK = register(new BedBlock("Bed", 26));
@@ -227,13 +227,13 @@ public final class VanillaMaterials {
 	public static final Fire FIRE = (Fire) register(new Fire().setHardness(0.0F).setResistance(0.0F).setLightLevel(15));
 	public static final MonsterSpawner MONSTER_SPAWNER = (MonsterSpawner) register(new MonsterSpawner("MonsterEntity Spawner", 52).setHardness(5.0F).setResistance(8.3F));
 	public static final WoodenStairs WOODEN_STAIRS = (WoodenStairs) register(new WoodenStairs("Wooden Stairs", 53).setResistance(3.0F));
-	public static final Chest CHEST = (Chest) register(new Chest("Chest", 54).setHardness(2.5F).setResistance(4.2F));
+	public static final Chest CHEST = register(new Chest("Chest", 54));
 	public static final RedstoneWire REDSTONE_WIRE = (RedstoneWire) register(new RedstoneWire().setHardness(0.0F).setResistance(0.0F));
 	public static final CraftingTable CRAFTING_TABLE = (CraftingTable) register(new CraftingTable("Crafting Table", 58).setHardness(4.2F));
 	public static final WheatCrop WHEATCROP = (WheatCrop) register(new WheatCrop().setResistance(0.0F));
 	public static final FarmLand FARMLAND = (FarmLand) register(new FarmLand("Farmland", 60).setHardness(0.6F).setResistance(1.0F));
-	public static final Furnace FURNACE = register(new Furnace("Furnace", 61));
-	public static final Furnace FURNACE_BURNING = (Furnace) register(new Furnace("Burning Furnace", 62).setLightLevel(13));
+	public static final Furnace FURNACE = register(new Furnace("Furnace", 61, false));
+	public static final Furnace FURNACE_BURNING = register(new Furnace("Burning Furnace", 62, true));
 	public static final SignBase SIGN_POST = (SignBase) register(new SignBase("Sign Post", 63).setHardness(1.0F).setResistance(1.6F));
 	public static final Ladder LADDER = (Ladder) register(new Ladder("Ladder", 65).setHardness(0.4F).setResistance(0.7F));
 	public static final CobblestoneStairs COBBLESTONE_STAIRS = (CobblestoneStairs) register(new CobblestoneStairs("Cobblestone Stairs", 67).setResistance(10.0F));

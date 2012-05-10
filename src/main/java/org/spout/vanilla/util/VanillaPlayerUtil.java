@@ -28,6 +28,7 @@ package org.spout.vanilla.util;
 
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
@@ -58,5 +59,19 @@ public class VanillaPlayerUtil {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Tries to find the facing direction by inspecting the source<br>
+	 * If no facing can be found, NORTH is returned
+	 * 
+	 * @param block to get it of
+	 * @return the face
+	 */
+	public static BlockFace getFacing(Source source) {
+		if (source instanceof Entity) {
+			return BlockFace.fromYaw(((Entity)source).getYaw());
+		}
+		return BlockFace.NORTH;
 	}
 }

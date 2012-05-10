@@ -139,7 +139,6 @@ import org.spout.vanilla.material.item.food.RawPorkchop;
 import org.spout.vanilla.material.item.other.BlazeRod;
 import org.spout.vanilla.material.item.other.Clay;
 import org.spout.vanilla.material.item.other.Coal;
-import org.spout.vanilla.material.item.other.DoorItem;
 import org.spout.vanilla.material.item.other.Dye;
 import org.spout.vanilla.material.item.other.FlintAndSteel;
 import org.spout.vanilla.material.item.other.LavaBucket;
@@ -382,8 +381,8 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial FLINT = register(new VanillaItemMaterial("Flint", 318));
 	public static final VanillaItemMaterial PAINTINGS = register(new Paintings());
 	public static final Sign SIGN = register(new Sign("Sign", 323));
-	public static final DoorItem WOODEN_DOOR = register(new DoorItem("Wooden Door", 324, WOODEN_DOOR_BLOCK));
-	public static final DoorItem IRON_DOOR = register(new DoorItem("Iron Door", 330, IRON_DOOR_BLOCK));
+	public static final BlockItem WOODEN_DOOR = register(new BlockItem("Wooden Door", 324, WOODEN_DOOR_BLOCK));
+	public static final BlockItem IRON_DOOR = register(new BlockItem("Iron Door", 330, IRON_DOOR_BLOCK));
 	public static final VanillaItemMaterial SADDLE = register(new VanillaItemMaterial("Saddle", 329));
 	public static final VanillaItemMaterial SNOWBALL = register(new VanillaItemMaterial("Snowball", 332));
 	public static final VanillaItemMaterial BOAT = register(new VanillaItemMaterial("Boat", 333));

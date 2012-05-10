@@ -34,18 +34,16 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
 
-import org.spout.vanilla.util.VanillaPlayerUtil;
-
 /**
  * A simplistic class which redirects placement requests to another (official) block material<br>
  * Can be used to store multi-block creations
  */
 public class BlockItem extends VanillaItemMaterial implements Placeable {
-	private MaterialSource onPlace;
-	private BlockMaterial onPlaceBlock;
+	private short onPlaceData;
+	private BlockMaterial onPlaceMaterial;
 
 	public BlockItem(String name, int id, BlockMaterial onPlaceMaterial) {
-		this(name, id, onPlaceMaterial, (short) 0);
+		this(name, id, onPlaceMaterial, onPlaceMaterial.getData());
 	}
 
 	public BlockItem(String name, int id, BlockMaterial onPlaceMaterial, short onPlaceData) {
@@ -55,7 +53,7 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		return this.onPlaceBlock.canPlace(block, data, against, isClickedBlock);
+		return this.onPlaceMaterial.canPlace(block, this.onPlaceData, against, isClickedBlock);
 	}
 
 	@Override
@@ -66,17 +64,7 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 				throw new IllegalStateException("Interaction with an controller that is not holding this block!");
 			}
 		}
-		if (this.onPlaceBlock.onPlacement(block, data, against, isClickedBlock)) {
-			if (block.getSource() instanceof Entity) {
-				Entity entity = (Entity) block.getSource();
-				if (VanillaPlayerUtil.isSurvival(entity)) {
-					if (!entity.getInventory().addCurrentItemAmount(-1)) {
-						throw new IllegalStateException("ControllerType is holding zero or negative sized item!");
-					}
-				}
-			}
-		}
-		return true;
+		return this.onPlaceMaterial.onPlacement(block, this.onPlaceData, against, isClickedBlock);
 	}
 
 	/**
@@ -88,8 +76,8 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 		if (blockmaterial == null || blockmaterial.getMaterial() == null) {
 			throw new NullPointerException("Block block can not be null");
 		} else {
-			this.onPlace = blockmaterial;
-			this.onPlaceBlock = (BlockMaterial) this.onPlace.getSubMaterial();
+			this.onPlaceMaterial = (BlockMaterial) blockmaterial.getSubMaterial();
+			this.onPlaceData = blockmaterial.getData();
 		}
 		return this;
 	}
@@ -98,8 +86,16 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 	 * Gets the block material this block item places
 	 * @return the Block material
 	 */
-	public BlockMaterial getPlacedBlockMaterial() {
-		return this.onPlaceBlock;
+	public BlockMaterial getPlacedMaterial() {
+		return this.onPlaceMaterial;
+	}
+
+	/**
+	 * Gets the block data this block item places
+	 * @return the Block data
+	 */
+	public short getPlacedData() {
+		return this.onPlaceData;
 	}
 
 	/**
@@ -107,6 +103,6 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 	 * @return the Block material and data
 	 */
 	public MaterialSource getPlacedBlock() {
-		return onPlace;
+		return new GenericMaterialSource(this.onPlaceMaterial, this.onPlaceData);
 	}
 }

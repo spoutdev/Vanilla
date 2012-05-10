@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.block.AbstractAttachable;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Lever extends AbstractAttachable {
 
@@ -54,8 +55,11 @@ public class Lever extends AbstractAttachable {
 	}
 	
 	@Override
-	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
-		super.onInteractBy(entity, block, type, clickedFace);
+	public void onInteractBy(Entity entity, Block block, Action action, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, action, clickedFace);
+		if (action == Action.LEFT_CLICK && VanillaPlayerUtil.isCreative(block.getSource())) {
+			return;
+		}
 		this.toggle(block);
 	}
 

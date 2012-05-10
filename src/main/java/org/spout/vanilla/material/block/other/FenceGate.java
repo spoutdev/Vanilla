@@ -26,11 +26,16 @@
  */
 package org.spout.vanilla.material.block.other;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Openable;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class FenceGate extends Solid implements Openable {
+public class FenceGate extends VanillaBlockMaterial implements Openable {
 
 	public FenceGate(String name, int id) {
 		super(name, id);
@@ -42,17 +47,49 @@ public class FenceGate extends Solid implements Openable {
 	}
 
 	@Override
+	public void onInteractBy(Entity entity, Block block, Action action, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, action, clickedFace);
+		if (action == Action.LEFT_CLICK && VanillaPlayerUtil.isCreative(block.getSource())) {
+			return;
+		}
+		this.toggleOpen(block);
+	}
+
+	public BlockFace getFacing(Block block) {
+		return BlockFaces.WNES.get(block.getData() & 0x3);
+	}
+
+	public void setFacing(Block block, BlockFace facing) {
+		short data = (short) (block.getData() & ~0x3);
+		data += BlockFaces.WNES.indexOf(facing, 0);
+		block.setData(data);
+	}
+
+	@Override
 	public void toggleOpen(Block block) {
-		
+		this.setOpen(block, !this.isOpen(block));
 	}
 
 	@Override
 	public void setOpen(Block block, boolean open) {
-		
+		short data = block.getData();
+		if (open) {
+			data |= 0x4;
+		} else {
+			data &= ~0x4;
+		}
+		block.setData(data);
+	}
+
+	@Override
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		block.setMaterial(this);
+		this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()));
+		return true;
 	}
 
 	@Override
 	public boolean isOpen(Block block) {
-		return false;
+		return (block.getData() & 0x4) == 0x4;
 	}
 }

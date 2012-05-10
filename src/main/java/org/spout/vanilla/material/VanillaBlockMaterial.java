@@ -27,13 +27,11 @@
 package org.spout.vanilla.material;
 
 import org.spout.api.collision.CollisionStrategy;
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.block.redstone.RedstoneTorch;
@@ -46,42 +44,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	private Material dropMaterial;
 	private int dropCount;
 	private int meleeDamage;
-
-	/**
-	 * Tries to find the facing direction by inspecting the block source<br>
-	 * If no facing can be found, NORTH is returned
-	 * 
-	 * @param block to get it of
-	 * @return the face
-	 */
-	public static BlockFace getFacingFromSource(Block block) {
-		if (block.getSource() instanceof Entity) {
-			return getYawFace(((Entity) block.getSource()).getYaw());
-		}
-		return BlockFace.NORTH;
-	}
-
-	//TODO: Place in math helper or maybe even Quaternion of SpoutAPI
-	public static BlockFace getYawFace(float yaw) {
-		yaw = MathHelper.wrapAngle(yaw);
-		//Faster method to get the face if applicable
-		switch ((int) yaw) {
-		case -90 : return BlockFace.NORTH;
-		case 0 : return BlockFace.WEST;
-		case 90 : return BlockFace.SOUTH;
-		case 180 : return BlockFace.EAST;
-		}
-		//Let's apply angle differences
-		if (yaw >= -135 && yaw < -45) {
-			return BlockFace.NORTH;
-		} else if (yaw >= -45 && yaw < 45) {
-			return BlockFace.WEST;
-		} else if (yaw >= 45 && yaw < 135) {
-			return BlockFace.SOUTH;
-		} else {
-			return BlockFace.EAST;
-		}
-	}
 
 	public VanillaBlockMaterial(String name, int id) {
 		super(name, id);

@@ -27,10 +27,12 @@
 package org.spout.vanilla.material.block.other;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class BedBlock extends VanillaBlockMaterial {
 	public BedBlock(String name, int id) {
@@ -45,8 +47,10 @@ public class BedBlock extends VanillaBlockMaterial {
 
 	@Override
 	public void onDestroyBlock(Block block) {
-		getCorrectHalf(block, true).setMaterial(VanillaMaterials.AIR).update();
-		getCorrectHalf(block, false).setMaterial(VanillaMaterials.AIR).update();
+		Block head = getCorrectHalf(block, true);
+		Block foot = getCorrectHalf(block, false);
+		head.setMaterial(VanillaMaterials.AIR).update();
+		foot.setMaterial(VanillaMaterials.AIR).update();
 	}
 
 	/**
@@ -82,7 +86,7 @@ public class BedBlock extends VanillaBlockMaterial {
 	 * @return the face
 	 */
 	public BlockFace getFacing(Block bedBlock) {
-		return BlockFaces.NESW.get(bedBlock.getData() & 0x3);
+		return BlockFaces.WNES.get(bedBlock.getData() & 0x3);
 	}
 
 	/**
@@ -94,7 +98,7 @@ public class BedBlock extends VanillaBlockMaterial {
 	 */
 	public void setFacing(Block bedBlock, BlockFace facing) {
 		short data = bedBlock.getData();
-		data = (short) ((data & ~0x3) + BlockFaces.NESW.indexOf(facing, 0));
+		data = (short) ((data & ~0x3) + BlockFaces.WNES.indexOf(facing, 0));
 		bedBlock.setData(data);
 	}
 
@@ -106,9 +110,21 @@ public class BedBlock extends VanillaBlockMaterial {
 	}
 
 	@Override
+	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		if (against == BlockFace.BOTTOM && super.canPlace(block, data, against, isClickedBlock)) {
+			Block below = block.translate(BlockFace.BOTTOM);
+			BlockMaterial material = below.getSubMaterial();
+			if (material instanceof VanillaBlockMaterial) {
+				return ((VanillaBlockMaterial) material).canSupport(this, BlockFace.TOP);
+			}
+		}
+		return false;
+	}
+
+	@Override
 	public boolean onPlacement(Block block, short data, BlockFace face, boolean isClicked) {
 		if (face == BlockFace.BOTTOM) {
-			BlockFace facing = getFacingFromSource(block);
+			BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource());
 			Block head = block.translate(facing);
 			if (this.canPlace(head, data, face, false)) {
 				create(block, head, facing);

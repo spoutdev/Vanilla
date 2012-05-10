@@ -31,8 +31,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class DoorBlock extends GroundAttachable {
+public class DoorBlock extends GroundAttachable implements Openable {
 	public DoorBlock(String name, int id) {
 		super(name, id);
 	}
@@ -44,8 +45,10 @@ public class DoorBlock extends GroundAttachable {
 
 	@Override
 	public void onDestroyBlock(Block block) {
-		getCorrectHalf(block, true).setMaterial(VanillaMaterials.AIR).update();
-		getCorrectHalf(block, false).setMaterial(VanillaMaterials.AIR).update();
+		Block top = getCorrectHalf(block, true);
+		Block bottom = getCorrectHalf(block, false);
+		top.setMaterial(VanillaMaterials.AIR).update();
+		bottom.setMaterial(VanillaMaterials.AIR).update();
 	}
 
 	@Override
@@ -96,12 +99,14 @@ public class DoorBlock extends GroundAttachable {
 		doorHalf.setData(data);
 	}
 
-	public boolean isOpened(Block doorHalf) {
+	@Override
+	public boolean isOpen(Block doorHalf) {
 		short data = getCorrectHalf(doorHalf, false).getData();
 		return (data & 0x4) == 0x4;
 	}
 
-	public void setOpened(Block doorHalf, boolean opened) {
+	@Override
+	public void setOpen(Block doorHalf, boolean opened) {
 		doorHalf = getCorrectHalf(doorHalf, false);
 		short data = doorHalf.getData();
 		if (opened) {
@@ -112,7 +117,8 @@ public class DoorBlock extends GroundAttachable {
 		doorHalf.setData(data);
 	}
 
-	public void toggleOpened(Block doorHalf) {
+	@Override
+	public void toggleOpen(Block doorHalf) {
 		doorHalf = getCorrectHalf(doorHalf, false);
 		short data = doorHalf.getData();
 		if ((data & 0x4) == 0x4) {
@@ -137,11 +143,12 @@ public class DoorBlock extends GroundAttachable {
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace face, boolean isClicked) {
-		BlockFace facing = getFacingFromSource(block);
-		setAll(block, block.translate(BlockFace.TOP), facing.getOpposite(), false, false);
-
-		return true;
-		//setAll(block, block.translate(BlockFace.TOP), BlockFace.NORTH, true, false);
-		//return true;
+		BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource());
+		Block above = block.translate(BlockFace.TOP);
+		if (!above.getSubMaterial().isPlacementObstacle()) {
+			setAll(block, above, facing.getOpposite(), false, false);
+			return true;
+		}
+		return false;
 	}
 }

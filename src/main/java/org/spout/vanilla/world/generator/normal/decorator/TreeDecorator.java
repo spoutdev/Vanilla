@@ -28,88 +28,86 @@ package org.spout.vanilla.world.generator.normal.decorator;
 
 import java.util.Random;
 
+import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.VanillaBiomes;
+import org.spout.vanilla.world.generator.normal.object.SmallTreeObject;
+import org.spout.vanilla.world.generator.normal.object.SmallTreeObject.SmallTreeType;
 
 public class TreeDecorator implements BiomeDecorator {
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
-		if (chunk.getY() < 4) {
+		if (chunk.getY() != 4) {
 			return;
 		}
-		int genInChunk = random.nextInt(100);
-		if (genInChunk <= 30) {
+		final Biome biome = chunk.getBiomeType(8, 8, 8);
+		final SmallTreeObject tree = getTree(random, biome);
+		if (tree == null) {
 			return;
 		}
-		int px = random.nextInt(16);
-		int pz = random.nextInt(16);
-		int py = getHighestWorkableBlock(chunk, px, pz);
-		px = chunk.getX() * 16 + px;
-		pz = chunk.getZ() * 16 + pz;
-		if (py == -1) {
-			return;
-		}
-		generateSmallTree(chunk, random, px, py, pz);
-	}
-
-	private void generateSmallTree(Chunk c, Random ra, int cx, int cy, int cz) {
-		int height = 5 + ra.nextInt(2), oneWidth, twoWidth;
-		if (height == 0) {
-			return;
-		}
-		oneWidth = 1;
-		twoWidth = 2;
-		World w = c.getWorld();
-		Block b = w.getBlock(cx, cy + height, cz);
-		b.setMaterial(VanillaMaterials.LEAVES);
-		b.translate(BlockFace.NORTH).setMaterial(VanillaMaterials.LEAVES);
-		b.translate(BlockFace.EAST).setMaterial(VanillaMaterials.LEAVES);
-		b.translate(BlockFace.SOUTH).setMaterial(VanillaMaterials.LEAVES);
-		b.translate(BlockFace.WEST).setMaterial(VanillaMaterials.LEAVES);
-
-		for (int k = 1; k <= oneWidth; k++) {
-			for (int i = -1; i <= 1; i++) {
-				for (int j = -1; j <= 1; j++) {
-					Block bc = b.translate(i, -k, j);
-					if (bc.getMaterial() == VanillaMaterials.AIR || bc == VanillaMaterials.LEAVES) {
-						bc.setMaterial(VanillaMaterials.LEAVES);
-					}
-				}
+		final World world = chunk.getWorld();
+		byte amount = getNumberOfTrees(biome);
+		for (byte i = 0; i < amount; i++) {
+			final int worldX = chunk.getX() * 16 + random.nextInt(16);
+			final int worldZ = chunk.getZ() * 16 + random.nextInt(16);
+			final int worldY = getHighestWorkableBlock(world, worldX, worldZ);
+			if (!tree.canPlaceObject(world, worldX, worldY, worldZ)) {
+				continue;
+			} else {
+				tree.placeObject(world, worldX, worldY, worldZ);
+				tree.findNewRandomHeight();
 			}
-		}
-		for (int k = oneWidth + 1; k <= oneWidth + twoWidth; k++) {
-			for (int i = -2; i <= 2; i++) {
-				for (int j = -2; j <= 2; j++) {
-					if (!(j == 2 && i == 2) && !(j == -2 && i == 2) && !(j == 2 && i == -2) && !(j == -2 && i == -2)) {
-						Block bc = b.translate(i, -k, j);
-						if (bc.getMaterial() == VanillaMaterials.AIR || bc.getMaterial() == VanillaMaterials.LEAVES) {
-							bc.setMaterial(VanillaMaterials.LEAVES);
-						}
-					}
-				}
-			}
-		}
-		for (int i = 0; i < height; i++) {
-			b = b.translate(BlockFace.BOTTOM).setMaterial(VanillaMaterials.LOG);
 		}
 	}
 
-	private int getHighestWorkableBlock(Chunk c, int px, int pz) {
-		int y = c.getY() * 16 + 15;
-		int pozx = c.getX() * 16 + px;
-		int pozz = c.getZ() * 16 + pz;
-		while (c.getWorld().getBlockMaterial(pozx, y, pozz) != VanillaMaterials.DIRT && c.getWorld().getBlockMaterial(pozx, y, pozz) != VanillaMaterials.GRASS) {
+	private int getHighestWorkableBlock(World w, int x, int z) {
+		int y = 127;
+		while (w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
 			y--;
-			if (y == 0 || c.getWorld().getBlockMaterial(pozx, y, pozz) == VanillaMaterials.WATER) {
+			if (y == 0) {
 				return -1;
 			}
 		}
 		y++;
 		return y;
+	}
+
+	// trees in jungle : 50
+	//		jungle trees have a custom height of random.nextInt(3) + random.nextInt(7) + 4 (according to mc)
+	// trees in forest : 10
+	// trees in swamp : 2
+	// plains don't have trees!!!
+	private byte getNumberOfTrees(Biome biome) {
+		if (biome == VanillaBiomes.FOREST) {
+			return 10;
+		} else if (biome == VanillaBiomes.SWAMP) {
+			return 2;
+		} else if (biome == VanillaBiomes.JUNGLE) {
+			return 50;
+		} else {
+			return 0;
+		}
+	}
+
+	private SmallTreeObject getTree(Random random, Biome biome) {
+		if (biome == VanillaBiomes.FOREST) {
+			return new SmallTreeObject(random, SmallTreeType.OAK);
+		} else if (biome == VanillaBiomes.SWAMP) {
+			final SmallTreeObject tree = new SmallTreeObject(random, SmallTreeType.OAK);
+			tree.addVines(true);
+			return tree;
+		} else if (biome == VanillaBiomes.JUNGLE) {
+			final SmallTreeObject tree = new SmallTreeObject(random, SmallTreeType.JUNGLE);
+			tree.setBaseHeight((byte) 4);
+			tree.setRandHeight((byte) 10);
+			return tree;
+		} else {
+			return null;
+		}
 	}
 }

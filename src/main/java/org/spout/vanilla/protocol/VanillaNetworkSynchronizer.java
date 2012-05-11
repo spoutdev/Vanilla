@@ -39,8 +39,10 @@ import org.spout.api.generator.WorldGenerator;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
+import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
@@ -64,6 +66,7 @@ import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
 import org.spout.vanilla.protocol.msg.LoginRequestMessage;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
@@ -533,6 +536,50 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	/**
+	 * This method sends an effect play message for a block to all nearby players in a 16-block radius
+	 * @param block   The block that the effect comes from.
+	 * @param effect	The effect to play
+	 */
+	public static void playBlockEffect(Block block, PlayEffectMessage.Messages effect) {
+		playBlockEffect(block, 16, effect, 0);
+	}
+
+	/**
+	 * This method sends an effect play message for a block to all nearby players
+	 * @param block   The block that the effect comes from.
+	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param effect	The effect to play
+	 */
+	public static void playBlockEffect(Block block, int range, PlayEffectMessage.Messages effect) {
+		playBlockEffect(block, range, effect, 0);
+	}
+
+	/**
+	 * This method sends an effect play message for a block to all nearby players
+	 * @param block   The block that the effect comes from.
+	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param effect	The effect to play
+	 * @param data	The data to use for the effect
+	 */
+	public static void playBlockEffect(Block block, int range, PlayEffectMessage.Messages effect, int data) {
+		sendPacketsToNearbyPlayers(block.getPosition(), range, new PlayEffectMessage(effect.getId(), block, data));
+	}
+
+	/**
+	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
+	 * @param position   The position that the packet relates to. It will be used as the central point to send packets in a range from.
+	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param messages The messages that should be sent to the discovered nearest player.
+	 */
+	public static void sendPacketsToNearbyPlayers(Point position, int range, Message... messages) {
+		Region region = position.getWorld().getRegionFromBlock(position);
+		Set<Player> players = region.getNearbyPlayers(position, range);
+		for (Player plr : players) {
+			plr.getSession().sendAll(messages);
+		}
+	}
+
+	/**
 	 * This method sends any amount of packets to all nearby players of an entity (within a specified range).
 	 * @param entity   The entity that the packet relates to. It will be used as the central point to send packets in a range from.
 	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
@@ -542,7 +589,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (entity == null || entity.getRegion() == null) {
 			return;
 		}
-
 		Set<Player> players = entity.getRegion().getNearbyPlayers(entity, range);
 		for (Player plr : players) {
 			plr.getSession().sendAll(messages);

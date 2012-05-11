@@ -53,7 +53,7 @@ public class TNT extends Solid {
 	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
-		if (this.getIndirectRedstonePower(block) > 0) {
+		if (this.hasRedstonePower(block)) {
 			this.onIgnite(block);
 		}
 	}

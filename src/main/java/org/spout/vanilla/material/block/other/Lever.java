@@ -33,14 +33,23 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.block.AbstractAttachable;
+import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Lever extends AbstractAttachable {
+public class Lever extends AbstractAttachable implements RedstoneSource {
 
 	public Lever(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void onDestroy(Block block) {
+		this.doRedstoneUpdates(block);
+		super.onDestroy(block);
 	}
 
 	@Override
@@ -53,7 +62,7 @@ public class Lever extends AbstractAttachable {
 		super.loadProperties();
 		this.setAttachable(BlockFaces.NESWB);
 	}
-	
+
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action action, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, action, clickedFace);
@@ -61,47 +70,20 @@ public class Lever extends AbstractAttachable {
 			return;
 		}
 		this.toggle(block);
+		this.doRedstoneUpdates(block);
 	}
 
-	public boolean isToggled(Block block) {
-		return (block.getData() & 0x8) == 0x8;
+	public boolean isDown(Block block) {
+		return LogicUtil.getBit(block.getData(), 0x8);
 	}
 
-	public void setToggled(Block block, boolean toggled) {
-		this.setToggled(block, toggled, true);
-	}
-
-	public void setToggled(Block block, boolean toggled, boolean update) {
-		short data = block.getData();
-		if (toggled) {
-			data |= 0x8;
-		} else {
-			data &= ~0x8;
-		}
-		block.setData(data);
-		if (update) {
-			block.update();
-		}
+	public void setDown(Block block, boolean toggled) {
+		block.setData(LogicUtil.setBit(block.getData(), 0x8, toggled));
 	}
 
 	public void toggle(Block block) {
-		this.toggle(block, true);
+		block.setData(block.getData() ^ 0x8);
 	}
-
-	public void toggle(Block block, boolean update) {
-		short data = block.getData();
-		if ((data & 0x8) == 0x8) {
-			data &= ~0x8;
-		} else {
-			data |= 0x8;
-		}
-		block.setData(data);
-		if (update) {
-			block.update();
-		}
-	}
-
-	public static short datat = 0;
 
 	@Override
 	public void setAttachedFace(Block block, BlockFace attachedFace) {
@@ -128,5 +110,30 @@ public class Lever extends AbstractAttachable {
 	@Override
 	public BlockFace getAttachedFace(Block block) {
 		return BlockFaces.NSEWB.get((block.getData() & ~0x8) - 1);
+	}
+
+	@Override
+	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
+
+	@Override
+	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.isDown(block);
+	}
+
+	@Override
+	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.hasRedstonePowerTo(block, direction, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
+
+	@Override
+	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.isDown(block) && this.getAttachedFace(block) == direction;
+	}
+
+	@Override
+	public void doRedstoneUpdates(Block block) {
+		block.setSource(this).update().translate(this.getAttachedFace(block)).update();
 	}
 }

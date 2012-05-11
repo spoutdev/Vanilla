@@ -24,30 +24,15 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.rails;
+package org.spout.vanilla.util;
 
-import org.spout.api.geo.cuboid.Block;
-
-import org.spout.vanilla.material.block.RailsBase;
-import org.spout.vanilla.util.RailsState;
-
-public class Rails extends RailsBase {
-	public Rails() {
-		super("Rails", 66);
-	}
-
-	@Override
-	public boolean canCurve() {
-		return true;
-	}
-
-	@Override
-	public void setState(Block block, RailsState state) {
-		block.setData(state.getData());
-	}
-
-	@Override
-	public RailsState getState(Block block) {
-		return RailsState.get(block.getData());
-	}
+public enum RedstonePowerMode {
+	/**
+	 * Power of all Redstone sources
+	 */
+	ALL, 
+	/**
+	 * Power of all Redstone sources except wire
+	 */
+	ALLEXCEPTWIRE;
 }

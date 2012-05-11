@@ -30,22 +30,15 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.block.RailsBase;
-import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.util.RailsState;
 
-public class PoweredRails extends RailsBase implements RedstoneTarget {
+public class PoweredRails extends RailsBase {
 	public PoweredRails() {
 		super("Powered Rail", 27);
 	}
 
 	@Override
 	public boolean canCurve() {
-		return false;
-	}
-
-	@Override
-	public boolean providesAttachPoint(Block source, Block target) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

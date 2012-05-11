@@ -48,13 +48,13 @@ public class MinecartTrackLogic implements Source {
 	public boolean changed = false;
 	public MinecartTrackLogic parent = null;
 	public List<MinecartTrackLogic> neighbours = new ArrayList<MinecartTrackLogic>();
-	
+
 	private MinecartTrackLogic(Block block, RailsBase material) {
 		this.block = block;
 		this.rails = material;
 		this.isPowered = false;
 		if (this.rails instanceof Rails) {
-			this.isPowered = ((Rails) this.rails).getIndirectRedstonePower(this.block) > 0;
+			this.isPowered = material.hasRedstonePower(block);
 		}
 		this.direction = BlockFace.THIS;
 	}

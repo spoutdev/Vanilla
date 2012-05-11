@@ -30,10 +30,13 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.util.LogicUtil;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class DoorBlock extends GroundAttachable implements Openable {
+public class DoorBlock extends GroundAttachable implements Openable, RedstoneTarget {
 	public DoorBlock(String name, int id) {
 		super(name, id);
 	}
@@ -44,11 +47,26 @@ public class DoorBlock extends GroundAttachable implements Openable {
 	}
 
 	@Override
+	public void onUpdate(Block block) {
+		super.onUpdate(block);
+		boolean powered = this.isReceivingPower(block);
+		if (powered  != this.isOpen(block)) {
+			this.setOpen(block, powered);
+		}
+	}
+
+	@Override
 	public void onDestroyBlock(Block block) {
 		Block top = getCorrectHalf(block, true);
 		Block bottom = getCorrectHalf(block, false);
 		top.setMaterial(VanillaMaterials.AIR).update();
 		bottom.setMaterial(VanillaMaterials.AIR).update();
+	}
+
+	@Override
+	public boolean isReceivingPower(Block block) {
+		block = this.getCorrectHalf(block, false);
+		return isReceivingRedstonePower(block) || isReceivingRedstonePower(block.translate(BlockFace.TOP));
 	}
 
 	@Override
@@ -67,7 +85,7 @@ public class DoorBlock extends GroundAttachable implements Openable {
 	 * @return the requested door half block
 	 */
 	private Block getCorrectHalf(Block doorBlock, boolean top) {
-		if ((doorBlock.getData() & 0x8) == 0x8) {
+		if (LogicUtil.getBit(doorBlock.getData(), 0x8)) {
 			if (!top) {
 				doorBlock = doorBlock.translate(BlockFace.BOTTOM);
 			}
@@ -101,32 +119,25 @@ public class DoorBlock extends GroundAttachable implements Openable {
 
 	@Override
 	public boolean isOpen(Block doorHalf) {
-		short data = getCorrectHalf(doorHalf, false).getData();
-		return (data & 0x4) == 0x4;
+		return LogicUtil.getBit(getCorrectHalf(doorHalf, false).getData(), 0x4);
 	}
 
 	@Override
 	public void setOpen(Block doorHalf, boolean opened) {
 		doorHalf = getCorrectHalf(doorHalf, false);
 		short data = doorHalf.getData();
-		if (opened) {
-			data |= 0x4;
-		} else {
-			data &= ~0x4;
+		short newdata = LogicUtil.setBit(data, 0x4, opened);
+		if (data != newdata) {
+			doorHalf.setData(newdata);
+			VanillaNetworkSynchronizer.playBlockEffect(doorHalf, PlayEffectMessage.Messages.RANDOM_DOOR);
 		}
-		doorHalf.setData(data);
 	}
 
 	@Override
 	public void toggleOpen(Block doorHalf) {
 		doorHalf = getCorrectHalf(doorHalf, false);
-		short data = doorHalf.getData();
-		if ((data & 0x4) == 0x4) {
-			data &= ~0x4;
-		} else {
-			data |= 0x4;
-		}
-		doorHalf.setData(data);
+		doorHalf.setData(doorHalf.getData() ^ 0x4);
+		VanillaNetworkSynchronizer.playBlockEffect(doorHalf, PlayEffectMessage.Messages.RANDOM_DOOR);
 	}
 
 	public BlockFace getFacing(Block doorHalf) {
@@ -134,7 +145,7 @@ public class DoorBlock extends GroundAttachable implements Openable {
 		return BlockFaces.NESW.get(data & ~0x4);
 	}
 
-	public void setAll(Block bottomHalf, Block topHalf, BlockFace facing, boolean hingeLeft, boolean opened) {
+	public void create(Block bottomHalf, Block topHalf, BlockFace facing, boolean hingeLeft, boolean opened) {
 		topHalf.setMaterial(this, hingeLeft ? (short) 9 : (short) 8);
 		short bottomData = opened ? (short) 0x4 : (short) 0x0;
 		bottomData += BlockFaces.NESW.indexOf(facing, 0);
@@ -146,7 +157,8 @@ public class DoorBlock extends GroundAttachable implements Openable {
 		BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource());
 		Block above = block.translate(BlockFace.TOP);
 		if (!above.getSubMaterial().isPlacementObstacle()) {
-			setAll(block, above, facing.getOpposite(), false, false);
+			//TODO: Check if relative left is a door
+			create(block, above, facing.getOpposite(), false, false);
 			return true;
 		}
 		return false;

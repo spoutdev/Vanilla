@@ -27,13 +27,17 @@
 package org.spout.vanilla.material.block.rails;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
 
+import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.material.block.RailsBase;
 import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.util.RailsState;
+import org.spout.vanilla.util.RedstonePowerMode;
 
-public class DetectorRails extends RailsBase implements RedstoneSource {
+public class DetectorRails extends RailsBase implements RedstoneSource, ScheduleUpdated {
 	public DetectorRails() {
 		super("Detector Rail", 28);
 	}
@@ -44,23 +48,25 @@ public class DetectorRails extends RailsBase implements RedstoneSource {
 	}
 
 	@Override
-	public short getRedstonePower(Block source, Block target) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void doRedstoneUpdates(Block block) {
+		block.setSource(this).update().translate(BlockFace.BOTTOM).update();
 	}
 
 	@Override
-	public boolean providesPowerTo(Block source, Block target) {
-		// TODO Auto-generated method stub
-		return false;
+	public void onDelayedUpdate(Block block) {
+		if (this.isPowering(block)) {
+			//TODO: Check if a minecart is on top of this block right now...
+			this.setPowering(block, false);
+			this.doRedstoneUpdates(block);
+		}
 	}
 
-	@Override
-	public boolean providesAttachPoint(Block source, Block target) {
-		// TODO Auto-generated method stub
-		return false;
+	public void activate(Block block) {
+		this.setPowering(block, true);
+		this.doRedstoneUpdates(block);
+		BlockUpdater.schedule(block, 20);
 	}
-
+	
 	/**
 	 * Gets if this block is supplying power
 	 * @param block to get it of
@@ -92,5 +98,25 @@ public class DetectorRails extends RailsBase implements RedstoneSource {
 	@Override
 	public RailsState getState(Block block) {
 		return RailsState.get(block.getData() & 0x7);
+	}
+
+	@Override
+	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
+
+	@Override
+	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.isPowering(block);
+	}
+
+	@Override
+	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.hasRedstonePowerTo(block, direction, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
+
+	@Override
+	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.isPowering(block) && direction == BlockFace.BOTTOM;
 	}
 }

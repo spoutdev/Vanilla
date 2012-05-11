@@ -33,11 +33,15 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
 
+import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.material.block.AbstractAttachable;
 import org.spout.vanilla.material.block.PointAttachable;
+import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.material.block.ScheduleUpdated;
+import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class StoneButton extends AbstractAttachable implements PointAttachable {
+public class StoneButton extends AbstractAttachable implements PointAttachable, ScheduleUpdated, RedstoneSource {
 	public StoneButton(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESW);
@@ -50,6 +54,38 @@ public class StoneButton extends AbstractAttachable implements PointAttachable {
 	}
 
 	@Override
+	public void onDelayedUpdate(Block block) {
+		this.setPressed(block, false);
+		block.update();
+		this.getBlockAttachedTo(block).update();
+	}
+
+	@Override
+	public void doRedstoneUpdates(Block block) {
+		block.setSource(this).update().translate(this.getAttachedFace(block)).update();
+	}
+
+	@Override
+	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
+
+	@Override
+	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.isPressed(block);
+	}
+
+	@Override
+	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
+
+	@Override
+	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.getAttachedFace(block) == direction && this.isPressed(block);
+	}
+
+	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
 		return face != BlockFace.TOP && super.canAttachTo(block, face);
 	}
@@ -58,7 +94,10 @@ public class StoneButton extends AbstractAttachable implements PointAttachable {
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		if (type != Action.LEFT_CLICK || !VanillaPlayerUtil.isCreative(entity)) {
-			this.setPressed(block, !this.isPressed(block));
+			if (!this.isPressed(block)) {
+				this.setPressed(block, true);
+				BlockUpdater.schedule(block, 20);
+			}
 		}
 	}
 

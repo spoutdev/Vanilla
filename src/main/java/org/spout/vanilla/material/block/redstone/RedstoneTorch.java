@@ -27,20 +27,19 @@
 package org.spout.vanilla.material.block.redstone;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.RedstoneTarget;
+import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.other.Torch;
+import org.spout.vanilla.util.RedstonePowerMode;
 
-public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget {
-	public static final short REDSTONE_POWER = 15;
-	private static final Vector3 possibleOutgoing[] = {new Vector3(1, 0, 0), new Vector3(-1, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, -1), new Vector3(0, -1, 0), new Vector3(0, 2, 0),};
+public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget, ScheduleUpdated {
+	public static final int TICK_DELAY = 2;
+	
 	private boolean powered;
 
 	public RedstoneTorch(String name, int id, boolean powered) {
@@ -49,78 +48,80 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	}
 
 	@Override
+	public void onDestroy(Block block) {
+		this.doRedstoneUpdates(block);
+		super.onDestroy(block);
+	}
+
+	@Override
+	public void handlePlacement(Block block, short data, BlockFace against) {
+		block.setMaterial(VanillaMaterials.REDSTONE_TORCH_ON);
+		this.setAttachedFace(block, against);
+		this.doRedstoneUpdates(block);
+	}
+
+	@Override
 	public void loadProperties() {
 		super.loadProperties();
+		this.setHardness(0.0F).setResistance(0.0F);
 		this.setDrop(VanillaMaterials.REDSTONE_TORCH_OFF);
 	}
 
-	@Override
-	public boolean providesAttachPoint(Block source, Block target) {
-		return source.getY() == target.getY();
+	public boolean isPowered() {
+		return this.powered;
 	}
 
-	@Override
-	public short getRedstonePower(Block source, Block target) {
-		if (providesPowerTo(source, target)) {
-			return (short) (powered ? REDSTONE_POWER : 0);
-		}
-		return 0;
-	}
-
-	@Override
-	public boolean providesPowerTo(Block source, Block target) {
-		if (source.getY() == target.getY()) {
-			return true;
-		}
-		if (source.getX() == target.getX() && source.getZ() == target.getZ()) {
-			//1 below or two above this block?
-			//TODO: THIS NEEDS A SERIOUS REDO GUIZ!
-			//Instead, it should power the block wire is attached to
-			//it doesn't provide power to the wire!
-			return Math.abs(target.getY() - source.getY()) == 1;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean hasPhysics() {
-		return true;
+	public void setPowered(Block block, boolean powered) {
+		BlockFace att = this.getAttachedFace(block);
+		block.setMaterial(powered ? VanillaMaterials.REDSTONE_TORCH_ON : VanillaMaterials.REDSTONE_TORCH_OFF);
+		this.setAttachedFace(block, att);
 	}
 
 	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
-		if (!VanillaConfiguration.REDSTONE_PHYSICS.getBoolean()) {
-			return;
+		boolean receiving = this.isReceivingPower(block);
+		if (this.isPowered() == receiving) {
+			BlockUpdater.schedule(block, TICK_DELAY);
 		}
+	}
 
-		BlockFace face = this.getAttachedFace(block);
-		Block tblock = block.translate(face);
-
-		BlockMaterial mat = tblock.getMaterial();
-		if (mat instanceof VanillaBlockMaterial) {
-			BlockMaterial newmat;
-			VanillaBlockMaterial va = (VanillaBlockMaterial) mat;
-			if (va.getIndirectRedstonePower(tblock) > 0) {
-				//Power off.
-				newmat = VanillaMaterials.REDSTONE_TORCH_OFF;
-			} else {
-				//Seems to be no incoming power, turn on!
-				newmat = VanillaMaterials.REDSTONE_TORCH_ON;
-			}
-			if (newmat != this) {
-				short data = block.getData();
-				block.setMaterial(newmat, data);
-
-				//Update other redstone inputs
-				for (Vector3 offset2 : possibleOutgoing) {//TODO changed the values below from offset to offset2
-					tblock = block.translate(offset2);
-					mat = tblock.getMaterial();
-					if (mat instanceof RedstoneTarget) {
-						tblock.update(false);
-					}
-				}
-			}
+	@Override
+	public void onDelayedUpdate(Block block) {
+		boolean receiving = this.isReceivingPower(block);
+		if (this.isPowered() == receiving) {
+			this.setPowered(block, !receiving);
+			this.doRedstoneUpdates(block);
 		}
+	}
+
+	@Override
+	public boolean isReceivingPower(Block block) {
+		return isRedstonePowered(this.getBlockAttachedTo(block));
+	}
+
+	@Override
+	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
+
+	@Override
+	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.isPowered();
+	}
+
+	@Override
+	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.hasRedstonePowerTo(block, direction, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
+
+	@Override
+	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.isPowered() && direction == BlockFace.TOP;
+	}
+
+	@Override
+	public void doRedstoneUpdates(Block block) {
+		block.setSource(this).update().translate(BlockFace.TOP).update();
 	}
 }

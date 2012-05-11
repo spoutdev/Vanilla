@@ -36,10 +36,10 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.GroundAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
-import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.RedstonePowerMode;
 
-public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget {
+public class RedstoneWire extends GroundAttachable implements RedstoneSource {
 	private final Vector3[] possibleIncoming = {new Vector3(1, 0, 0), new Vector3(0, 0, 1), new Vector3(-1, 0, 0), new Vector3(0, 0, -1), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(-1, 1, 0), new Vector3(0, 1, -1), new Vector3(0, 1, 0), //Redstone torch from above
 	};
 	@SuppressWarnings("unused")
@@ -62,153 +62,145 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	}
 
 	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
-		if (!VanillaConfiguration.REDSTONE_PHYSICS.getBoolean()) {
-			return;
-		}
-
-		System.out.println("Updating " + block.getX() + "/" + block.getY() + "/" + block.getZ());
-		short maxPower = 0;
-		Block below = block.translate(BlockFace.BOTTOM);
-		if (below.getMaterial() instanceof VanillaBlockMaterial) {
-			maxPower = ((VanillaBlockMaterial) below.getMaterial()).getIndirectRedstonePower(below); //Check for indirect power from below
-		}
-		Block incoming;
-		for (Vector3 vec : possibleIncoming) {
-			incoming = block.translate(vec);
-			BlockMaterial incmat = incoming.getMaterial();
-			short power = 0;
-			if (incmat instanceof RedstoneSource) {
-				RedstoneSource source = (RedstoneSource) incmat;
-				power = source.getRedstonePower(incoming, block);
-			} else if (incmat instanceof VanillaBlockMaterial) {
-				VanillaBlockMaterial Vanilla = (VanillaBlockMaterial) incmat;
-				power = Vanilla.getDirectRedstonePower(incoming);
-			}
-			maxPower = (short) Math.max(maxPower, power);
-		}
-		setPowerAndUpdate(block, maxPower);
-	}
-
-	/**
-	 * Sets the wire at x,y,z to the given power and initiates an update process that will recalculate the wire.
-	 * @param world
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param power
-	 */
-	public void setPowerAndUpdate(Block block, short power) {
-		short current = block.getData();
-		if (current != power) {
-			System.out.println("Old: " + current + " new: " + power);
-			block.setMaterial(this);
-			//Trace signal
-			Block target;
-			for (int j = 0; j < 3; j++) {
-				int ty = block.getY();
-				switch (j) {
-					case 0:
-						ty--;
-						break;
-					case 1: //ty = ty;
-						break;
-					case 2:
-						ty++;
-						break;
-				}
-				for (int i = 0; i < 4; i++) {
-					int tx = block.getX();
-					int tz = block.getZ();
-					switch (i) {
-						case 0:
-							tx--;
-							break;
-						case 1:
-							tx++;
-							break;
-						case 2:
-							tz--;
-							break;
-						case 3:
-							tz++;
-							break;
-					}
-					target = block.getWorld().getBlock(tx, ty, tz);
-					if (target.getMaterial() instanceof RedstoneWire) {
-						if (providesPowerTo(block, target)) {
-							onUpdate(target);
-						}
-					}
-				}
-			}
-
-			//Update redstone torches.
-			for (Vector3 torch : possibleOutgoingTorch) {
-				target = block.translate(torch).update(false);
-			}
-		}
+	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
-	public boolean providesPowerTo(Block source, Block target) {
-		return attachesTo(source, target);
-	}
-
-	@Override
-	public short getRedstonePower(Block source, Block target) {
-		short power = 0;
-		if (providesPowerTo(source, target)) {
-			power = (short) Math.max(0, source.getData() - 1);
-		}
-		if (source.getX() == target.getX() && source.getY() == target.getY() && source.getZ() == target.getZ()) {
-			power = source.getData();
-		}
-		return power;
-	}
-
-	public boolean attachesTo(Block source, Block target) {
-		BlockMaterial targetmat = target.getMaterial();
-		if (targetmat instanceof RedstoneTarget) {
-			return ((RedstoneTarget) targetmat).providesAttachPoint(source, target);
-		}
+	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean providesAttachPoint(Block source, Block target) {
-		if (source.getY() == target.getY()) { //source and target are level
-			if (source.getX() == target.getX()) {
-				return source.getZ() - 1 == target.getZ() || source.getZ() + 1 == target.getZ();
-			}
-			if (source.getZ() == target.getZ()) {
-				return source.getX() - 1 == target.getX() || source.getX() + 1 == target.getX();
-			}
-		} else {
-			BlockMaterial targetmat = target.getMaterial();
-			if (targetmat instanceof RedstoneWire) { //only send power down/up for other redstone wires
-				if (source.getY() < target.getY()) {
-					//This is the below block
-					if (source.translate(BlockFace.TOP).getMaterial() instanceof Solid) { //Current does not walk through solids
-						return false;
-					}
-				} else {
-					//This is the upper block
-					if (target.translate(BlockFace.TOP).getMaterial() instanceof Solid) { //Current does not walk through solids
-						return false;
-					}
-				}
-				if (source.getX() == target.getX()) {
-					return source.getZ() - 1 == target.getZ() || source.getZ() + 1 == target.getZ();
-				}
-				if (source.getZ() == target.getZ()) {
-					return source.getX() - 1 == target.getX() || source.getX() + 1 == target.getX();
-				}
-			} else {
-				return false;
-			}
-		}
-		return false;
+	public void doRedstoneUpdates(Block block) {
+		block.setSource(this).update().translate(BlockFace.BOTTOM).update();
 	}
+
+//	@Override
+//	public void onUpdate(Block block) {
+//		super.onUpdate(block);
+//		if (!VanillaConfiguration.REDSTONE_PHYSICS.getBoolean()) {
+//			return;
+//		}
+//
+//		System.out.println("Updating " + block.getX() + "/" + block.getY() + "/" + block.getZ());
+//		short maxPower = 0;
+//		Block below = block.translate(BlockFace.BOTTOM);
+//		if (below.getMaterial() instanceof VanillaBlockMaterial) {
+//			maxPower = ((VanillaBlockMaterial) below.getMaterial()).getIndirectRedstonePower(below); //Check for indirect power from below
+//		}
+//		Block incoming;
+//		for (Vector3 vec : possibleIncoming) {
+//			incoming = block.translate(vec);
+//			BlockMaterial incmat = incoming.getMaterial();
+//			short power = 0;
+//			if (incmat instanceof RedstoneSource) {
+//				RedstoneSource source = (RedstoneSource) incmat;
+//				power = source.getRedstonePower(incoming, block);
+//			} else if (incmat instanceof VanillaBlockMaterial) {
+//				VanillaBlockMaterial Vanilla = (VanillaBlockMaterial) incmat;
+//				power = Vanilla.getDirectRedstonePower(incoming);
+//			}
+//			maxPower = (short) Math.max(maxPower, power);
+//		}
+//		setPowerAndUpdate(block, maxPower);
+//	}
+
+//	/**
+//	 * Sets the wire at x,y,z to the given power and initiates an update process that will recalculate the wire.
+//	 * @param world
+//	 * @param x
+//	 * @param y
+//	 * @param z
+//	 * @param power
+//	 */
+//	public void setPowerAndUpdate(Block block, short power) {
+//		short current = block.getData();
+//		if (current != power) {
+//			System.out.println("Old: " + current + " new: " + power);
+//			block.setMaterial(this);
+//			//Trace signal
+//			Block target;
+//			for (int j = 0; j < 3; j++) {
+//				int ty = block.getY();
+//				switch (j) {
+//					case 0:
+//						ty--;
+//						break;
+//					case 1: //ty = ty;
+//						break;
+//					case 2:
+//						ty++;
+//						break;
+//				}
+//				for (int i = 0; i < 4; i++) {
+//					int tx = block.getX();
+//					int tz = block.getZ();
+//					switch (i) {
+//						case 0:
+//							tx--;
+//							break;
+//						case 1:
+//							tx++;
+//							break;
+//						case 2:
+//							tz--;
+//							break;
+//						case 3:
+//							tz++;
+//							break;
+//					}
+//					target = block.getWorld().getBlock(tx, ty, tz);
+//					if (target.getMaterial() instanceof RedstoneWire) {
+//						if (providesPowerTo(block, target)) {
+//							onUpdate(target);
+//						}
+//					}
+//				}
+//			}
+//
+//			//Update redstone torches.
+//			for (Vector3 torch : possibleOutgoingTorch) {
+//				target = block.translate(torch).update(false);
+//			}
+//		}
+//	}
+
+//	@Override
+//	public boolean providesAttachPoint(Block source, Block target) {
+//		if (source.getY() == target.getY()) { //source and target are level
+//			if (source.getX() == target.getX()) {
+//				return source.getZ() - 1 == target.getZ() || source.getZ() + 1 == target.getZ();
+//			}
+//			if (source.getZ() == target.getZ()) {
+//				return source.getX() - 1 == target.getX() || source.getX() + 1 == target.getX();
+//			}
+//		} else {
+//			BlockMaterial targetmat = target.getMaterial();
+//			if (targetmat instanceof RedstoneWire) { //only send power down/up for other redstone wires
+//				if (source.getY() < target.getY()) {
+//					//This is the below block
+//					if (source.translate(BlockFace.TOP).getMaterial() instanceof Solid) { //Current does not walk through solids
+//						return false;
+//					}
+//				} else {
+//					//This is the upper block
+//					if (target.translate(BlockFace.TOP).getMaterial() instanceof Solid) { //Current does not walk through solids
+//						return false;
+//					}
+//				}
+//				if (source.getX() == target.getX()) {
+//					return source.getZ() - 1 == target.getZ() || source.getZ() + 1 == target.getZ();
+//				}
+//				if (source.getZ() == target.getZ()) {
+//					return source.getX() - 1 == target.getX() || source.getX() + 1 == target.getX();
+//				}
+//			} else {
+//				return false;
+//			}
+//		}
+//		return false;
+//	}
 }

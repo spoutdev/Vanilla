@@ -26,15 +26,15 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.Source;
 import org.spout.api.geo.cuboid.Block;
 
-public interface RedstoneTarget {
+public interface RedstoneTarget extends Source {
+
 	/**
-	 * Gets if the block provides an attach point for redstone wire.
-	 * @param world  the blocks are in
-	 * @param source this block
-	 * @param target the wire
-	 * @return if the block provides an attachment point from the given face
+	 * Checks if a block is receiving power from neighbouring blocks.
+	 * @param block to check
+	 * @return True if the block is receiving power
 	 */
-	boolean providesAttachPoint(Block source, Block target);
+	public boolean isReceivingPower(Block block);
 }

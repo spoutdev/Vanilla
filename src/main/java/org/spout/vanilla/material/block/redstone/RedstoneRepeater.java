@@ -26,39 +26,142 @@
  */
 package org.spout.vanilla.material.block.redstone;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.GroundAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.RedstoneTarget;
+import org.spout.vanilla.material.block.ScheduleUpdated;
+import org.spout.vanilla.util.RedstonePowerMode;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class RedstoneRepeater extends GroundAttachable implements RedstoneSource, RedstoneTarget {
-	public RedstoneRepeater(String name, int id) {
+public class RedstoneRepeater extends GroundAttachable implements RedstoneSource, RedstoneTarget, Directional, ScheduleUpdated {
+
+	private final boolean powered;
+
+	public RedstoneRepeater(String name, int id, boolean powered) {
 		super(name, id);
+		this.powered = powered;
+	}
+
+	public boolean isPowered() {
+		return this.powered;
+	}
+
+	public void onDestroy(Block block) {
+		this.doRedstoneUpdates(block);
+		super.onDestroy(block);
+	}
+
+	public void setPowered(Block block, boolean powered) {
+		block.setMaterial(powered ? VanillaMaterials.REDSTONE_REPEATER_ON : VanillaMaterials.REDSTONE_REPEATER_OFF, block.getData());
 	}
 
 	@Override
 	public void loadProperties() {
 		super.loadProperties();
+		this.setHardness(0.0F).setResistance(0.0F);
 		this.setDrop(VanillaMaterials.REDSTONE_REPEATER);
 	}
 
 	@Override
-	public short getRedstonePower(Block source, Block target) {
-		// TODO Auto-generated method stub
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		block.setMaterial(this);
+		this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()));
+		this.doRedstoneUpdates(block);
+		return true;
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, type, clickedFace);
+		if (type == Action.RIGHT_CLICK) {
+			int index = this.getTickDelayIndex(block);
+			index++;
+			if (index >= TICK_DELAYS.length) {
+				index = 0;
+			}
+			this.setTickDelayIndex(block, index);
+			block.update();
+		}
+	}
+
+	@Override
+	public void onDelayedUpdate(Block block) {
+		boolean powered = this.isReceivingPower(block);
+		if (powered != this.isPowered()) {
+			this.setPowered(block, powered);
+			this.doRedstoneUpdates(block);
+		}
+	}
+
+	@Override
+	public void onUpdate(Block block) {
+		super.onUpdate(block);
+		if (this.isPowered() != this.isReceivingPower(block)) {
+			BlockUpdater.schedule(block, this.getTickDelay(block));
+		}
+	}
+
+	public static final int[] TICK_DELAYS = {2, 4, 6, 8};
+
+	public int getTickDelay(Block block) {
+		return TICK_DELAYS[this.getTickDelayIndex(block)];
+	}
+
+	public int getTickDelayIndex(Block block) {
+		return (block.getData() & 12) >> 2;
+	}
+
+	public void setTickDelayIndex(Block block, int tickDelayIndex) {
+		block.setData((tickDelayIndex << 2 & 12) | (block.getData() & 0x3));
+	}
+
+	@Override
+	public BlockFace getFacing(Block block) {
+		return BlockFaces.ESWN.get(block.getData() & 0x3);
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
+		block.setData((block.getData() & ~0x3) + BlockFaces.ESWN.indexOf(facing, 0));
+	}
+
+	@Override
+	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
 		return 0;
 	}
 
 	@Override
-	public boolean providesPowerTo(Block source, Block target) {
-		// TODO Auto-generated method stub
+	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
 		return false;
 	}
 
 	@Override
-	public boolean providesAttachPoint(Block source, Block target) {
-		// TODO Auto-generated method stub
-		return false;
+	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.hasRedstonePowerTo(block, direction, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
+
+	@Override
+	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.isPowered() && this.getFacing(block) == direction;
+	}
+
+	@Override
+	public void doRedstoneUpdates(Block block) {
+		block.setSource(this).update().translate(this.getFacing(block)).update();
+	}
+
+	@Override
+	public boolean isReceivingPower(Block block) {
+		BlockFace face = this.getFacing(block).getOpposite();
+		return isRedstonePowered(block.translate(face), face.getOpposite());
 	}
 }

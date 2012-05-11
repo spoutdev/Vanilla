@@ -31,11 +31,15 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.util.LogicUtil;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Openable;
+import org.spout.vanilla.material.block.RedstoneTarget;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class FenceGate extends VanillaBlockMaterial implements Openable {
+public class FenceGate extends VanillaBlockMaterial implements Openable, RedstoneTarget {
 
 	public FenceGate(String name, int id) {
 		super(name, id);
@@ -53,6 +57,20 @@ public class FenceGate extends VanillaBlockMaterial implements Openable {
 			return;
 		}
 		this.toggleOpen(block);
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return true;
+	}
+
+	@Override
+	public void onUpdate(Block block) {
+		super.onUpdate(block);
+		boolean powered = this.isReceivingPower(block);
+		if (powered != this.isOpen(block)) {
+			this.setOpen(block, powered);
+		}
 	}
 
 	public BlockFace getFacing(Block block) {
@@ -73,12 +91,11 @@ public class FenceGate extends VanillaBlockMaterial implements Openable {
 	@Override
 	public void setOpen(Block block, boolean open) {
 		short data = block.getData();
-		if (open) {
-			data |= 0x4;
-		} else {
-			data &= ~0x4;
+		short newdata = LogicUtil.setBit(data, 0x4, open);
+		if (data != newdata) {
+			block.setData(newdata);
+			VanillaNetworkSynchronizer.playBlockEffect(block, PlayEffectMessage.Messages.RANDOM_DOOR);
 		}
-		block.setData(data);
 	}
 
 	@Override
@@ -90,6 +107,11 @@ public class FenceGate extends VanillaBlockMaterial implements Openable {
 
 	@Override
 	public boolean isOpen(Block block) {
-		return (block.getData() & 0x4) == 0x4;
+		return LogicUtil.getBit(block.getData(), 0x4);
+	}
+
+	@Override
+	public boolean isReceivingPower(Block block) {
+		return isReceivingRedstonePower(block);
 	}
 }

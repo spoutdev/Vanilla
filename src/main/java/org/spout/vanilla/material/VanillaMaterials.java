@@ -81,6 +81,7 @@ import org.spout.vanilla.material.block.pressureplate.WoodenPressurePlate;
 import org.spout.vanilla.material.block.rails.Rails;
 import org.spout.vanilla.material.block.rails.DetectorRails;
 import org.spout.vanilla.material.block.rails.PoweredRails;
+import org.spout.vanilla.material.block.redstone.RedstoneRepeater;
 import org.spout.vanilla.material.block.redstone.RedstoneTorch;
 import org.spout.vanilla.material.block.redstone.RedstoneWire;
 import org.spout.vanilla.material.block.solid.Bedrock;
@@ -248,8 +249,8 @@ public final class VanillaMaterials {
 	public static final IronDoorBlock IRON_DOOR_BLOCK = register(new IronDoorBlock("Iron Door", 71));
 	public static final WoodenDoorBlock WOODEN_DOOR_BLOCK = register(new WoodenDoorBlock("Wooden Door", 64));
 	public static final WoodenPressurePlate WOODEN_PRESSURE_PLATE = (WoodenPressurePlate) register(new WoodenPressurePlate("Wooden Pressure Plate", 72).setHardness(0.5F).setResistance(0.8F));
-	public static final RedstoneTorch REDSTONE_TORCH_OFF = (RedstoneTorch) register(new RedstoneTorch("Redstone Torch", 75, false).setHardness(0.0F).setResistance(0.0F));
-	public static final RedstoneTorch REDSTONE_TORCH_ON = (RedstoneTorch) register(new RedstoneTorch("Redstone Torch (On)", 76, true).setHardness(0.0F).setResistance(0.0F).setLightLevel(7));
+	public static final RedstoneTorch REDSTONE_TORCH_OFF = register(new RedstoneTorch("Redstone Torch", 75, false));
+	public static final RedstoneTorch REDSTONE_TORCH_ON = (RedstoneTorch) register(new RedstoneTorch("Redstone Torch (On)", 76, true).setLightLevel(7));
 	public static final StoneButton STONE_BUTTON = register(new StoneButton("Stone Button", 77));
 	public static final Snow SNOW = (Snow) register(new Snow().setHardness(0.1F).setResistance(0.2F));
 	public static final Ice ICE = (Ice) register(new Ice().setHardness(0.5F).setResistance(0.8F));
@@ -266,8 +267,8 @@ public final class VanillaMaterials {
 	public static final Solid PORTAL = (Solid) register(new Solid("Portal", 90).setHardness(-1.0F).setResistance(0.0F).setLightLevel(11));
 	public static final Solid JACK_O_LANTERN = (Solid) register(new Solid("Jack 'o' Lantern", 91).setHardness(1.0F).setResistance(1.7F).setLightLevel(15));
 	public static final Solid CAKE_BLOCK = (Solid) register(new Solid("Cake Block", 92).setHardness(0.5F).setResistance(0.8F));
-	public static final Solid REDSTONE_REPEATER_OFF = (Solid) register(new Solid("Redstone Repeater", 93).setHardness(0.0F).setResistance(0.0F));
-	public static final Solid REDSTONE_REPEATER_ON = (Solid) register(new Solid("Redstone Repeater (On)", 94).setHardness(0.0F).setResistance(0.0F).setLightLevel(9));
+	public static final RedstoneRepeater REDSTONE_REPEATER_OFF = register(new RedstoneRepeater("Redstone Repeater", 93, false));
+	public static final RedstoneRepeater REDSTONE_REPEATER_ON = (RedstoneRepeater) register(new RedstoneRepeater("Redstone Repeater (On)", 94, true).setLightLevel(9));
 	public static final Solid LOCKED_CHEST = (Solid) register(new Solid("Locked Chest", 95).setHardness(0.0F).setResistance(0.0F).setLightLevel(15));
 	public static final TrapDoor TRAPDOOR = (TrapDoor) register(new TrapDoor("Trapdoor", 96).setHardness(3.0F).setResistance(5.0F));
 	public static final Solid SILVERFISH_STONE = (Solid) register(new Solid("Silverfish Stone", 97).setHardness(0.75F).setResistance(10.0F)); //Placeholder, block resistance unknown

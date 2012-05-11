@@ -26,8 +26,94 @@
  */
 package org.spout.vanilla.material.block;
 
-public class PressurePlate extends GroundAttachable {
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.util.LogicUtil;
+import org.spout.vanilla.controller.world.BlockUpdater;
+import org.spout.vanilla.util.RedstonePowerMode;
+
+public class PressurePlate extends GroundAttachable implements RedstoneSource, ScheduleUpdated {
+
 	public PressurePlate(String name, int id) {
 		super(name, id);
+	}
+
+	/**
+	 * Gets whether this pressure plate is pressed down
+	 * @param block to get it of
+	 * @return True if pressed down, False if not
+	 */
+	public boolean isPressed(Block block) {
+		return LogicUtil.getBit(block.getData(), 0x1);
+	}
+
+	/**
+	 * Sets whether this pressure plate is pressed down
+	 * @param block to set it of
+	 * @param pressed whether it is pressed
+	 */
+	public void setPressed(Block block, boolean pressed) {
+		this.setPressed(block, pressed, true);
+	}
+
+	/**
+	 * Sets whether this pressure plate is pressed down
+	 * @param block to set it of
+	 * @param pressed whether it is pressed
+	 * @param doPhysics whether to perform redstone physics
+	 */
+	public void setPressed(Block block, boolean pressed, boolean doPhysics) {
+		block.setData(LogicUtil.setBit(block.getData(), 0x1, pressed));
+		if (doPhysics) {
+			block.setSource(this).update().translate(BlockFace.BOTTOM).update();
+		}
+	}
+
+	@Override
+	public void onDelayedUpdate(Block block) {
+		if (this.isPressed(block)) {
+			//TODO: Check if an entity is on top and don't undo it then
+			this.setPressed(block, false);
+		}
+	}
+
+	public void press(Block block) {
+		if (!this.isPressed(block)) {
+			this.setPressed(block, true);
+			BlockUpdater.schedule(block, 20);
+		}
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, type, clickedFace);
+		this.press(block); //TESTING ONLY - REMOVE AFTER
+	}
+
+	@Override
+	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
+
+	@Override
+	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.isPressed(block);
+	}
+
+	@Override
+	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
+
+	@Override
+	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return direction == BlockFace.BOTTOM && this.isPressed(block);
+	}
+
+	@Override
+	public void doRedstoneUpdates(Block block) {
+		block.setSource(this).update().translate(BlockFace.BOTTOM).update();
 	}
 }

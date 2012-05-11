@@ -26,33 +26,37 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.Source;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.util.RedstonePowerMode;
 
-public interface RedstoneSource {
-	/**
-	 * Gets how much redstone power the block at x, y, z provides to block tx, ty, tz
-	 * @param world  world the blocks are in
-	 * @param source source block
-	 * @param target target block
-	 * @return how much power source block provides to target block
-	 */
-	short getRedstonePower(Block source, Block target);
+public interface RedstoneSource extends Source {
 
 	/**
-	 * Gets if the block provides power to the target block
-	 * @param world  world the blocks are in
-	 * @param source source block
-	 * @param target target block
-	 * @return if the source block provides power to the target block
+	 * Gets how much redstone power this redstone source block provides to the direction given.<br>
+	 * 
+	 * @param block of this redstone source
+	 * @param direction it provides power to
+	 * @param powerMode to use to get the power
+	 * @return how much power this block provides to the given direction
 	 */
-	boolean providesPowerTo(Block source, Block target);
+	short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode);
 
 	/**
-	 * Gets if the block provides an attach point for redstone wire.
-	 * @param world  the blocks are in
-	 * @param south  this block
-	 * @param target the wire
-	 * @return if the block provides an attachment point from the given face
+	 * Gets if this redstone source block provides power to the direction given.<br>
+	 * 
+	 * @param block of this redstone source
+	 * @param direction it provides power to
+	 * @param powerMode to use to get the power
+	 * @return True if this redstone source block provides power
 	 */
-	boolean providesAttachPoint(Block source, Block target);
+	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode);
+
+	/**
+	 * Performs redstone updates on all receiving blocks
+	 * 
+	 * @param block of this material
+	 */
+	public void doRedstoneUpdates(Block block);
 }

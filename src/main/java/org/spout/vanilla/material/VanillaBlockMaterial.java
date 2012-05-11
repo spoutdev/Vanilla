@@ -32,14 +32,42 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.material.block.redstone.RedstoneTorch;
-import org.spout.vanilla.material.block.redstone.RedstoneWire;
+import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
-	private static BlockFace indirectSourcesWire[] = {BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH};
+	public static final short REDSTONE_POWER_MAX = 15;
+	public static final short REDSTONE_POWER_MIN = 0;
+
+	public static boolean isReceivingRedstonePower(Block block) {
+		for (BlockFace face : BlockFaces.BTEWNS) {
+			if (isRedstonePowered(block.translate(face), face.getOpposite())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean isRedstonePowered(Block block) {
+		return isRedstonePowered(block, BlockFace.THIS);
+	}
+
+	public static boolean isRedstonePowered(Block block, BlockFace to) {
+		BlockMaterial mat = block.getSubMaterial();
+		if (mat instanceof VanillaBlockMaterial) {
+			if (((VanillaBlockMaterial) mat).hasRedstonePower(block)) {
+				return true;
+			} else if (to != BlockFace.THIS && mat instanceof RedstoneSource) {
+				return ((RedstoneSource) mat).hasRedstonePowerTo(block, to, RedstonePowerMode.ALL);
+			}
+		}
+		return false;
+	}
+
 	private float resistance;
 	private Material dropMaterial;
 	private int dropCount;
@@ -72,6 +100,11 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 		this.onDestroySpawnDrops(block);
 	}
 
+	@Override
+	public void onUpdate(Block block) {
+		super.onUpdate(block);
+	}
+	
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		return !block.getSubMaterial().isPlacementObstacle();
@@ -145,37 +178,66 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	}
 
 	/**
-	 * Represents power that comes into the block from a redstone wire or a torch that is below the block
-	 * Indirect power from below powers redstone wire, but level indirect power just inverts adjacent redstone torches.
-	 * @return the indirect redstone power.
+	 * Gets the power level of this block<br>
+	 * 
+	 * @param block to get it of
+	 * @return the redstone power level
 	 */
-	public short getIndirectRedstonePower(Block block) {
-		short indirect = 0;
-		for (BlockFace face : indirectSourcesWire) {
-			Block tblock = block.translate(face);
-			BlockMaterial material = tblock.getMaterial();
-			if (material instanceof RedstoneWire) {
-				indirect = (short) Math.max(indirect, tblock.getData());
-			}
-		}
-
-		Block torchblock = block.translate(BlockFace.BOTTOM);
-		BlockMaterial material = torchblock.getMaterial(); //Check for redstone torch below
-		if (material instanceof RedstoneTorch) {
-			RedstoneTorch torch = (RedstoneTorch) material;
-			indirect = (short) Math.max(indirect, torch.getRedstonePower(torchblock, block));
-		}
-		return (short) Math.max(indirect, getDirectRedstonePower(block));
+	public short getRedstonePower(Block block) {
+		return this.getRedstonePower(block, RedstonePowerMode.ALL);
 	}
 
 	/**
-	 * Represents power that comes from a repeater that points to this block.
-	 * This power can be used by all neighbors that are redstone targets, even if they wouldn't attach.
-	 * @return the direct redstone power.
+	 * Gets the power level of a single block
+	 * 
+	 * @param block to get it of
+	 * @param powerMode to use to find the power
+	 * @return the redstone power level
 	 */
-	public short getDirectRedstonePower(Block block) {
-		// TODO Waiting for repeaters
-		return 0;
+	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
+		short power = 0;
+		Block neigh;
+		BlockMaterial mat;
+		for (BlockFace face : BlockFaces.NESWBT) {
+			neigh = block.translate(face);
+			mat = neigh.getSubMaterial();
+			if (mat instanceof RedstoneSource) {
+				power = (short) Math.max(power, ((RedstoneSource) mat).getRedstonePowerTo(neigh, face.getOpposite(), powerMode));
+			}
+		}
+		return power;
+	}
+
+	/**
+	 * Gets if this block is being powered or not
+	 * 
+	 * @param block to get it of
+	 * @return True if the block receives power
+	 */
+	public boolean hasRedstonePower(Block block) {
+		return this.hasRedstonePower(block, RedstonePowerMode.ALL);
+	}
+
+	/**
+	 * Gets if this block is being powered or not
+	 * 
+	 * @param block to get it of
+	 * @param powerMode to use to find out the power levels
+	 * @return True if the block receives power
+	 */
+	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
+		Block neigh;
+		BlockMaterial mat;
+		for (BlockFace face : BlockFaces.NESWBT) {
+			neigh = block.translate(face);
+			mat = neigh.getSubMaterial();
+			if (mat instanceof RedstoneSource) {
+				if (((RedstoneSource) mat).hasRedstonePowerTo(neigh, face.getOpposite(), powerMode)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public VanillaBlockMaterial setResistance(Float newResistance) {

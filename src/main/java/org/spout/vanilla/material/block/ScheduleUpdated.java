@@ -24,30 +24,15 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.rails;
+package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.material.block.RailsBase;
-import org.spout.vanilla.util.RailsState;
+public interface ScheduleUpdated {
 
-public class Rails extends RailsBase {
-	public Rails() {
-		super("Rails", 66);
-	}
-
-	@Override
-	public boolean canCurve() {
-		return true;
-	}
-
-	@Override
-	public void setState(Block block, RailsState state) {
-		block.setData(state.getData());
-	}
-
-	@Override
-	public RailsState getState(Block block) {
-		return RailsState.get(block.getData());
-	}
+	/**
+	 * Is called by the block scheduler after the block was requested for a delayed update
+	 * @param block that was updated
+	 */
+	public void onDelayedUpdate(Block block);
 }

@@ -43,6 +43,7 @@ import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.player.PlayerLeaveEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
+import org.spout.api.event.world.RegionUnloadEvent;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
@@ -57,6 +58,7 @@ import org.spout.vanilla.controller.living.player.GameMode;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.ControllerInitialization;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
@@ -103,11 +105,17 @@ public class VanillaListener implements Listener {
 	}
 
 	@EventHandler
+	public void regionUnload(RegionUnloadEvent event) {
+		BlockUpdater.remove(event.getRegion());
+	}
+
+	@EventHandler
 	public void regionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
 		if (region.getAll(RegionSpawner.class).isEmpty()) {
 			region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE), new RegionSpawner(region));
 		}
+		BlockUpdater.get(region);
 	}
 
 	@EventHandler(order = Order.MONITOR)

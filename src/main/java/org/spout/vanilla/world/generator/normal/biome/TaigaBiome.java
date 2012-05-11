@@ -43,6 +43,10 @@ public class TaigaBiome extends VanillaBiome {
 		for (int dy = y; dy < y + 16; dy++) {
 			blockData.set(x, dy, z, getBlockId(height, dy));
 		}
+
+		if (x % 16 == 0 && height << 4 == chunkY) {
+			blockData.set(x, height, z, VanillaMaterials.NETHERRACK.getId()); // until biome is implemented
+		}
 	}
 
 	@Override

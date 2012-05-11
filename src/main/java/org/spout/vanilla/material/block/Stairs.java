@@ -41,10 +41,6 @@ public class Stairs extends VanillaBlockMaterial implements Mineable, Directiona
 		super(name, id);
 	}
 
-	public Stairs(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, id, data, parent);
-	}
-
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;

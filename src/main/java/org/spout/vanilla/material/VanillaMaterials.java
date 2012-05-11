@@ -43,6 +43,7 @@ import org.spout.vanilla.material.block.gemblocks.IronBlock;
 import org.spout.vanilla.material.block.gemblocks.LapisLazuliBlock;
 import org.spout.vanilla.material.block.ores.CoalOre;
 import org.spout.vanilla.material.block.ores.DiamondOre;
+import org.spout.vanilla.material.block.ores.Glowstone;
 import org.spout.vanilla.material.block.ores.GoldOre;
 import org.spout.vanilla.material.block.ores.IronOre;
 import org.spout.vanilla.material.block.ores.LapisLazuliOre;
@@ -213,8 +214,14 @@ public final class VanillaMaterials {
 	public static final Flower ROSE = register(new Flower("Rose", 38));
 	public static final Mushroom BROWN_MUSHROOM = (Mushroom) register(new Mushroom("Brown Mushroom", 39).setLightLevel(1));
 	public static final Mushroom RED_MUSHROOM = register(new Mushroom("Red Mushroom", 40));
+	//== Stairs ==
+	public static final NetherBrickStairs STAIRS_NETHER_BRICK = register(new NetherBrickStairs("Nether Brick Stairs", 114));
+	public static final BrickStairs STAIRS_BRICK = register(new BrickStairs("Brick Stairs", 108));
+	public static final CobblestoneStairs STAIRS_COBBLESTONE = register(new CobblestoneStairs("Cobblestone Stairs", 67));
+	public static final WoodenStairs STAIRS_WOODEN = register(new WoodenStairs("Wooden Stairs", 53));
+	public static final StoneBrickStairs STAIRS_STONE_BRICK = register(new StoneBrickStairs("Stone Brick Stairs", 109));
 	//================
-	
+
 	public static final DoubleSlab DOUBLE_SLABS = DoubleSlab.STONE;
 	public static final Slab SLAB = Slab.STONE;
 	public static final Wool WOOL = Wool.WHITE;
@@ -226,7 +233,6 @@ public final class VanillaMaterials {
 	public static final Torch TORCH = (Torch) register(new Torch("Torch", 50).setHardness(0.0F).setResistance(0.0F).setLightLevel(14));
 	public static final Fire FIRE = (Fire) register(new Fire().setHardness(0.0F).setResistance(0.0F).setLightLevel(15));
 	public static final MonsterSpawner MONSTER_SPAWNER = (MonsterSpawner) register(new MonsterSpawner("MonsterEntity Spawner", 52).setHardness(5.0F).setResistance(8.3F));
-	public static final WoodenStairs WOODEN_STAIRS = (WoodenStairs) register(new WoodenStairs("Wooden Stairs", 53).setResistance(3.0F));
 	public static final Chest CHEST = register(new Chest("Chest", 54));
 	public static final RedstoneWire REDSTONE_WIRE = (RedstoneWire) register(new RedstoneWire().setHardness(0.0F).setResistance(0.0F));
 	public static final CraftingTable CRAFTING_TABLE = (CraftingTable) register(new CraftingTable("Crafting Table", 58).setHardness(4.2F));
@@ -236,7 +242,6 @@ public final class VanillaMaterials {
 	public static final Furnace FURNACE_BURNING = register(new Furnace("Burning Furnace", 62, true));
 	public static final SignBase SIGN_POST = (SignBase) register(new SignBase("Sign Post", 63).setHardness(1.0F).setResistance(1.6F));
 	public static final Ladder LADDER = (Ladder) register(new Ladder("Ladder", 65).setHardness(0.4F).setResistance(0.7F));
-	public static final CobblestoneStairs COBBLESTONE_STAIRS = (CobblestoneStairs) register(new CobblestoneStairs("Cobblestone Stairs", 67).setResistance(10.0F));
 	public static final SignBase WALL_SIGN = (SignBase) register(new SignBase("Wall Sign", 68).setHardness(1.0F));
 	public static final Lever LEVER = (Lever) register(new Lever("Lever", 69).setHardness(0.5F).setResistance(1.7F));
 	public static final StonePressurePlate STONE_PRESSURE_PLATE = (StonePressurePlate) register(new StonePressurePlate("Stone Pressure Plate", 70).setHardness(0.5F).setResistance(0.8F));
@@ -257,7 +262,7 @@ public final class VanillaMaterials {
 	public static final Solid PUMPKIN = (Solid) register(new Solid("Pumpkin", 86).setHardness(1.0F).setResistance(1.7F));
 	public static final NetherRack NETHERRACK = (NetherRack) register(new NetherRack("Netherrack", 87).setHardness(0.7F));
 	public static final SoulSand SOUL_SAND = (SoulSand) register(new SoulSand("Soul Sand", 88).setHardness(0.5F).setResistance(0.8F));
-	public static final Ore GLOWSTONE_BLOCK = (Ore) register(new Ore("Glowstone Block", 89).setMinDropCount(2).setMaxDropCount(4).setHardness(0.3F).setResistance(0.5F).setLightLevel(15));
+	public static final Glowstone GLOWSTONE_BLOCK = register(new Glowstone("Glowstone Block", 89));
 	public static final Solid PORTAL = (Solid) register(new Solid("Portal", 90).setHardness(-1.0F).setResistance(0.0F).setLightLevel(11));
 	public static final Solid JACK_O_LANTERN = (Solid) register(new Solid("Jack 'o' Lantern", 91).setHardness(1.0F).setResistance(1.7F).setLightLevel(15));
 	public static final Solid CAKE_BLOCK = (Solid) register(new Solid("Cake Block", 92).setHardness(0.5F).setResistance(0.8F));
@@ -276,13 +281,10 @@ public final class VanillaMaterials {
 	public static final Solid MELON_STEM = (Solid) register(new Solid("Melon Stem", 105).setHardness(0.0F).setResistance(0.3F));
 	public static final Vines VINES = (Vines) register(new Vines("Vines", 106).setHardness(0.2F).setResistance(0.3F));
 	public static final FenceGate FENCE_GATE = (FenceGate) register(new FenceGate("Fence Gate", 107).setHardness(2.0F).setResistance(3.0F));
-	public static final BrickStairs BRICK_STAIRS = (BrickStairs) register(new BrickStairs("Brick Stairs", 108).setResistance(10.0F));
-	public static final StoneBrickStairs STONE_BRICK_STAIRS = (StoneBrickStairs) register(new StoneBrickStairs("Stone Brick Stairs", 109).setResistance(10.0F));
 	public static final Mycelium MYCELIUM = (Mycelium) register(new Mycelium("Mycelium", 110).setHardness(0.6F).setResistance(0.8F));
 	public static final LilyPad LILY_PAD = (LilyPad) register(new LilyPad().setHardness(0.0F).setResistance(0.3F)); //Placeholder, block resistance unknown
 	public static final NetherBrick NETHER_BRICK = (NetherBrick) register(new NetherBrick("Nether Brick", 112).setHardness(2.0F).setResistance(10.0F));
 	public static final Solid NETHER_BRICK_FENCE = (Solid) register(new Solid("Nether Brick Fence", 113).setHardness(2.0F).setResistance(10.0F));
-	public static final NetherBrickStairs NETHER_BRICK_STAIRS = (NetherBrickStairs) register(new NetherBrickStairs("Nether Brick Stairs", 114).setResistance(10.0F));
 	public static final NetherWart NETHER_WART_BLOCK = (NetherWart) register(new NetherWart().setResistance(0.0F));
 	public static final Solid ENCHANTMENT_TABLE = (Solid) register(new Solid("Enchantment Table", 116).setHardness(5.0F).setResistance(2000.0F));
 	public static final Solid BREWING_STAND_BLOCK = (Solid) register(new Solid("Brewing Stand", 117).setHardness(0.5F).setResistance(0.8F).setLightLevel(1));
@@ -483,38 +485,13 @@ public final class VanillaMaterials {
 			}
 		}
 
-		VanillaMaterials.BOOKSHELF.setDrop(VanillaMaterials.BOOK).setDropCount(3);
-		VanillaMaterials.FIRE.setDrop(VanillaMaterials.AIR);
-		VanillaMaterials.MONSTER_SPAWNER.setDrop(VanillaMaterials.AIR);
-		VanillaMaterials.REDSTONE_WIRE.setDrop(VanillaMaterials.REDSTONE_DUST);
-		VanillaMaterials.DIAMOND_ORE.setDrop(VanillaMaterials.DIAMOND);
-		VanillaMaterials.SUGAR_CANE_BLOCK.setDrop(VanillaMaterials.SUGAR_CANE);
-		VanillaMaterials.WHEATCROP.setDrop(VanillaMaterials.WHEAT);
-		VanillaMaterials.FARMLAND.setDrop(VanillaMaterials.DIRT);
-		VanillaMaterials.FURNACE_BURNING.setDrop(VanillaMaterials.FURNACE);
-		VanillaMaterials.SIGN_POST.setDrop(VanillaMaterials.SIGN);
-		VanillaMaterials.WALL_SIGN.setDrop(VanillaMaterials.SIGN);
-		VanillaMaterials.REDSTONE_ORE.setDrop(VanillaMaterials.REDSTONE_DUST);
-		VanillaMaterials.GLOWING_REDSTONE_ORE.setDrop(VanillaMaterials.REDSTONE_DUST);
-		VanillaMaterials.REDSTONE_TORCH_OFF.setDrop(VanillaMaterials.REDSTONE_TORCH_ON);
-		VanillaMaterials.SNOW.setDrop(VanillaMaterials.SNOWBALL);
-		VanillaMaterials.ICE.setDrop(VanillaMaterials.AIR);
-		VanillaMaterials.CLAY_BLOCK.setDrop(VanillaMaterials.CLAY).setDropCount(4);
-		VanillaMaterials.GLOWSTONE_BLOCK.setDrop(VanillaMaterials.GLOWSTONE_DUST);
 		VanillaMaterials.PORTAL.setDrop(VanillaMaterials.AIR);
-		VanillaMaterials.CAKE_BLOCK.setDrop(VanillaMaterials.AIR);
-		VanillaMaterials.REDSTONE_REPEATER_OFF.setDrop(VanillaMaterials.REDSTONE_REPEATER);
-		VanillaMaterials.REDSTONE_REPEATER_ON.setDrop(VanillaMaterials.REDSTONE_REPEATER);
-		VanillaMaterials.SILVERFISH_STONE.setDrop(VanillaMaterials.STONE); // TODO: Get drop item based on data
-		VanillaMaterials.MELON.setDrop(VanillaMaterials.MELON_SLICE);
-		VanillaMaterials.PUMPKIN_STEM.setDrop(VanillaMaterials.AIR);
-		VanillaMaterials.MELON_STEM.setDrop(VanillaMaterials.MELON_SEEDS);
-		VanillaMaterials.VINES.setDrop(VanillaMaterials.AIR);
-		VanillaMaterials.MYCELIUM.setDrop(VanillaMaterials.DIRT);
 		VanillaMaterials.END_PORTAL.setDrop(VanillaMaterials.AIR);
 		VanillaMaterials.END_PORTAL_FRAME.setDrop(VanillaMaterials.AIR);
-		VanillaMaterials.REDSTONE_LAMP_ON.setDrop(VanillaMaterials.REDSTONE_LAMP_OFF);
-		VanillaMaterials.NETHER_WART_BLOCK.setDrop(VanillaMaterials.NETHER_WART);
+		VanillaMaterials.SILVERFISH_STONE.setDrop(VanillaMaterials.STONE); // TODO: Get drop item based on data
+		VanillaMaterials.PUMPKIN_STEM.setDrop(VanillaMaterials.AIR);
+		VanillaMaterials.MELON.setDrop(VanillaMaterials.MELON_SLICE);
+		VanillaMaterials.MELON_STEM.setDrop(VanillaMaterials.MELON_SEEDS);
 		initialized = true;
 	}
 }

@@ -36,6 +36,11 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 public class Fire extends VanillaBlockMaterial {
 	public Fire() {
 		super("Fire", 51);
+	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
 		this.setDrop(null);
 	}
 

@@ -27,18 +27,20 @@
 package org.spout.vanilla.material.block.stairs;
 
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Stairs;
 
 public class WoodenStairs extends Stairs implements Fuel {
 	public final float BURN_TIME = 15.f;
 
-	public WoodenStairs(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, id, data, parent);
-	}
-
 	public WoodenStairs(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		//TODO: Hardness?
+		this.setResistance(3.0F);
 	}
 
 	@Override

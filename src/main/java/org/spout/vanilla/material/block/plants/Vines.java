@@ -43,6 +43,12 @@ public class Vines extends VanillaBlockMaterial {
 		this.setDrop(null);
 	}
 
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(null);
+	}
+
 	private int getMask(BlockFace face) {
 		switch (face) {
 			case WEST:

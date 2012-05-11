@@ -42,6 +42,12 @@ public class WheatCrop extends Solid implements Plant {
 	}
 
 	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(VanillaMaterials.WHEAT);
+	}
+
+	@Override
 	public boolean hasGrowthStages() {
 		return true;
 	}

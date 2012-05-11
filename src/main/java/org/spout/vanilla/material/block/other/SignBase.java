@@ -44,6 +44,12 @@ public class SignBase extends AbstractAttachable {
 	}
 
 	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(VanillaMaterials.SIGN);
+	}
+
+	@Override
 	public void handlePlacement(Block block, short data, BlockFace attachedFace) {
 		this.setAttachedFace(block, attachedFace);
 	}

@@ -49,6 +49,12 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	}
 
 	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(VanillaMaterials.REDSTONE_TORCH_OFF);
+	}
+
+	@Override
 	public boolean providesAttachPoint(Block source, Block target) {
 		return source.getY() == target.getY();
 	}

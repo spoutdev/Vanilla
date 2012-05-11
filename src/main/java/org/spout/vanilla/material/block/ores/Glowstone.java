@@ -24,32 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.block.ores;
 
-import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.Ore;
 
-public class BookShelf extends Solid implements Fuel {
-	public final float BURN_TIME = 15.f;
-
-	public BookShelf(String name, int id) {
+public class Glowstone extends Ore {
+	public Glowstone(String name, int id) {
 		super(name, id);
 	}
 
 	@Override
 	public void loadProperties() {
 		super.loadProperties();
-		this.setDrop(VanillaMaterials.BOOK).setDropCount(3);
-	}
-	
-	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
-	}
-
-	@Override
-	public boolean canBurn() {
-		return true;
+		this.setMinDropCount(2).setMaxDropCount(4).setHardness(0.3F).setResistance(0.5F).setLightLevel(15);
+		this.setDrop(VanillaMaterials.GLOWSTONE_DUST);
 	}
 }

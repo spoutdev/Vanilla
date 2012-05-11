@@ -43,6 +43,12 @@ public class Ice extends Solid implements Mineable {
 	}
 
 	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(null);
+	}
+
+	@Override
 	public boolean canSupport(BlockMaterial material, BlockFace face) {
 		return false;
 	}

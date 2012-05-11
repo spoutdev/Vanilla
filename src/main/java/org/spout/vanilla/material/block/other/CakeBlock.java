@@ -24,32 +24,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.block.other;
 
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
-public class BookShelf extends Solid implements Fuel {
-	public final float BURN_TIME = 15.f;
-
-	public BookShelf(String name, int id) {
+public class CakeBlock extends VanillaBlockMaterial {
+	public CakeBlock(String name, int id) {
 		super(name, id);
 	}
 
 	@Override
 	public void loadProperties() {
 		super.loadProperties();
-		this.setDrop(VanillaMaterials.BOOK).setDropCount(3);
-	}
-	
-	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
-	}
-
-	@Override
-	public boolean canBurn() {
-		return true;
+		this.setDrop(null);
 	}
 }

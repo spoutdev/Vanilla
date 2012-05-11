@@ -45,6 +45,12 @@ public class Snow extends GroundAttachable implements Mineable {
 	}
 
 	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(VanillaMaterials.SNOWBALL);
+	}
+
+	@Override
 	public boolean hasPhysics() {
 		return true;
 	}

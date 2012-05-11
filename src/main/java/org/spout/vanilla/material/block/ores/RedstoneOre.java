@@ -44,6 +44,7 @@ public class RedstoneOre extends Ore implements TimedCraftable, Mineable {
 	@Override
 	public void loadProperties() {
 		super.loadProperties();
+		this.setDrop(VanillaMaterials.REDSTONE_DUST);
 		this.setMinDropCount(4).setMaxDropCount(5);
 	}
 

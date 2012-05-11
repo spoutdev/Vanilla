@@ -44,6 +44,12 @@ public class NetherWart extends GroundAttachable implements Plant {
 	}
 
 	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(VanillaMaterials.NETHER_WART);
+	}
+
+	@Override
 	public boolean hasGrowthStages() {
 		return true;
 	}

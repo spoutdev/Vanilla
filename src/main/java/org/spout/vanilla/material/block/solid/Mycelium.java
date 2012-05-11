@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tools.Spade;
@@ -34,6 +35,12 @@ import org.spout.vanilla.material.item.tools.Spade;
 public class Mycelium extends Solid implements Mineable {
 	public Mycelium(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(VanillaMaterials.DIRT);
 	}
 
 	@Override

@@ -26,10 +26,17 @@
  */
 package org.spout.vanilla.material.block.other;
 
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class FarmLand extends Solid {
+public class FarmLand extends VanillaBlockMaterial {
 	public FarmLand(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(VanillaMaterials.DIRT);
 	}
 }

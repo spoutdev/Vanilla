@@ -51,6 +51,12 @@ public class SugarCane extends GroundAttachable {
 	}
 
 	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(VanillaMaterials.SUGAR_CANE);
+	}
+
+	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		return super.canAttachTo(material, face) && this.validBases.contains(material);
 	}

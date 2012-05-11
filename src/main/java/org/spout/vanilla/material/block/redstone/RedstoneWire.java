@@ -33,6 +33,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.GroundAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.RedstoneTarget;
@@ -47,6 +48,12 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 
 	public RedstoneWire() {
 		super("Redstone Wire", 55);
+	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(VanillaMaterials.REDSTONE_DUST);
 	}
 
 	@Override

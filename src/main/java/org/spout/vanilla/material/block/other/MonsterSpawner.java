@@ -32,4 +32,10 @@ public class MonsterSpawner extends Solid {
 	public MonsterSpawner(String name, int id) {
 		super(name, id);
 	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(null);
+	}
 }

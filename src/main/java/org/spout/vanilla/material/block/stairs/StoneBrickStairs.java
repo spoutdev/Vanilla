@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.stairs;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Stairs;
 
 public class StoneBrickStairs extends Stairs {
@@ -34,7 +33,10 @@ public class StoneBrickStairs extends Stairs {
 		super(name, id);
 	}
 
-	public StoneBrickStairs(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, id, data, parent);
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		//TODO: Hardness?
+		this.setResistance(10.0F);
 	}
 }

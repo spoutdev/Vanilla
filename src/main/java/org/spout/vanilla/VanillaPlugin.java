@@ -135,7 +135,7 @@ public class VanillaPlugin extends CommonPlugin {
 	private void setupWorlds() {
 		//Initialize generators.
 		NormalGenerator normGen = new NormalGenerator();
-		FlatGenerator flatGen = new FlatGenerator();
+		FlatGenerator flatGen = new FlatGenerator(50);
 		NetherGenerator netherGen = new NetherGenerator();
 		TheEndGenerator endGen = new TheEndGenerator();
 

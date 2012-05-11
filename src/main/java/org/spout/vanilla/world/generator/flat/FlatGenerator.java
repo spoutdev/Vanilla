@@ -26,18 +26,48 @@
  */
 package org.spout.vanilla.world.generator.flat;
 
+import org.spout.api.generator.Populator;
+import org.spout.api.generator.WorldGenerator;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 
+import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.selector.NoiseSelector;
 
-public class FlatGenerator extends VanillaGenerator {
+public class FlatGenerator implements WorldGenerator, VanillaGenerator {
+	private final int height;
+
+	public FlatGenerator(int height) {
+		this.height = height;
+	}
+
 	@Override
-	public void registerBiomes() {
-		setSelector(new NoiseSelector(1, 1, 1, 1, 1));
-		register(VanillaBiomes.FLATGRASS);
+	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+		int x = chunkX << 4, z = chunkZ << 4;
+		for (int dx = x; dx < x + 16; ++dx) {
+			for (int dz = z; dz < z + 16; ++dz) {
+				final int startY = chunkY * Chunk.CHUNK_SIZE;
+				final int endY = Math.min(Chunk.CHUNK_SIZE + startY, height);
+				for (int y = startY; y < endY; y++) {
+					if (y <= 0) {
+						blockData.set(dx, y, dz, VanillaMaterials.BEDROCK.getId());
+					} else if (y == height - 1) {
+						blockData.set(dx, y, dz, VanillaMaterials.GRASS.getId());
+					} else {
+						blockData.set(dx, y, dz, VanillaMaterials.DIRT.getId());
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public Populator[] getPopulators() {
+		return new Populator[0];
 	}
 
 	@Override

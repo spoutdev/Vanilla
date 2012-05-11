@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.generator.normal;
 
+import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
@@ -34,7 +35,7 @@ import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.populator.SmoothPopulator;
 import org.spout.vanilla.world.selector.WhittakerNoiseSelector;
 
-public class NormalGenerator extends VanillaGenerator {
+public class NormalGenerator extends BiomeGenerator implements VanillaGenerator {
 	@Override
 	public void registerBiomes() {
 		setSelector(new WhittakerNoiseSelector(2.0));

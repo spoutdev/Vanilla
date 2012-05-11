@@ -93,7 +93,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();
-	private TIntPairHashSet biomesSentChunks = new TIntPairHashSet();
 	private final TIntObjectHashMap<Message> queuedInventoryUpdates = new TIntObjectHashMap<Message>();
 
 	@Override
@@ -110,26 +109,42 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (column != null) {
 			column.remove(y);
 			if (column.isEmpty()) {
-				biomesSentChunks.remove(x, z);
 				activeChunks.remove(x, z);
 				LoadChunkMessage unLoadChunk = new LoadChunkMessage(x, z, false);
 				owner.getSession().send(unLoadChunk);
+			} else {
+				byte[][] data = new byte[16][];
+				data[y] = AIR_CHUNK_DATA;
+				CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], 0, data, null);
+				session.send(CCMsg);
 			}
 		}
 	}
 
-	private byte[] getBiomeData(Chunk chunk, int x, int z) {
-		byte[] biomeData = new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
-		final int chunkMask = (Chunk.CHUNK_SIZE - 1);
-		for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
-			for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
-				Biome biome = chunk.getBiomeType(dx & chunkMask, 0, dz & chunkMask);
-				if (biome instanceof VanillaBiome) {
-					biomeData[(dz & chunkMask) << 4 | (dx & chunkMask)] = (byte) ((VanillaBiome) biome).getBiomeId();
-				}
-			}
+	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.CHUNK_VOLUME * 5 /2];
+	private static final byte[] AIR_CHUNK_DATA = new byte[Chunk.CHUNK_VOLUME * 5 /2];
+
+	static {
+		int i = 0;
+		for (int c = 0; c < Chunk.CHUNK_VOLUME; c++) { // blocks
+			SOLID_CHUNK_DATA[i] = 1;
+			AIR_CHUNK_DATA[i++] = 0;
 		}
-		return biomeData;
+
+		for (int c = 0; c < Chunk.CHUNK_VOLUME / 2; c++) { // block data
+			SOLID_CHUNK_DATA[i] = 0x00;
+			AIR_CHUNK_DATA[i++] = 0x00;
+		}
+
+		for (int c = 0; c < Chunk.CHUNK_VOLUME / 2; c++) { // block light
+			SOLID_CHUNK_DATA[i] = 0x00;
+			AIR_CHUNK_DATA[i++] = 0x00;
+		}
+
+		for (int c = 0; c < Chunk.CHUNK_VOLUME / 2; c++) { // sky light
+			SOLID_CHUNK_DATA[i] = 0x00;
+			AIR_CHUNK_DATA[i++] = (byte) 0xFF;
+		}
 	}
 
 	@Override
@@ -177,16 +192,19 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
 			owner.getSession().send(loadChunk);
 
-			final boolean sendBiomes = !biomesSentChunks.contains(x, z);
-			final byte[] biomeData;
-			if (sendBiomes) {
-				biomesSentChunks.add(x, z);
-				biomeData = getBiomeData(p.getWorld().getChunkFromBlock(p), x, z);
-			} else {
-				biomeData = null;
+			Chunk chunk = p.getWorld().getChunkFromBlock(p);
+			byte[] biomeData = new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
+			final int chunkMask = (Chunk.CHUNK_SIZE - 1);
+			for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
+				for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
+					Biome biome = chunk.getBiomeType(dx & chunkMask, 0, dz & chunkMask);
+					if (biome instanceof VanillaBiome) {
+						biomeData[(dz & chunkMask) << 4 | (dx & chunkMask)] = (byte) ((VanillaBiome) biome).getBiomeId();
+					}
+				}
 			}
 
-			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, sendBiomes, new boolean[16], 0, packetChunkData, biomeData);
+			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, new boolean[16], 0, packetChunkData, biomeData);
 			owner.getSession().send(CCMsg);
 		}
 		column.add(y);
@@ -230,20 +248,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		arrIndex += rawBlockLight.length;
 
 		System.arraycopy(rawSkyLight, 0, fullChunkData, arrIndex, rawSkyLight.length);
-		arrIndex += rawSkyLight.length;
 
-		final boolean sendBiomes = !biomesSentChunks.contains(x, z);
-		final byte[] biomeData;
-		if (sendBiomes) {
-			biomeData = getBiomeData(c, x, z);
-			biomesSentChunks.add(x, z);
-		} else {
-			biomeData = null;
-		}
+		arrIndex += rawSkyLight.length;
 
 		byte[][] packetChunkData = new byte[16][];
 		packetChunkData[y] = fullChunkData;
-		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, sendBiomes, new boolean[16], 0, packetChunkData, biomeData);
+		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], 0, packetChunkData, null);
 		owner.getSession().send(CCMsg);
 	}
 

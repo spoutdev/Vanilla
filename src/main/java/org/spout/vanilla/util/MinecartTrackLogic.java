@@ -37,35 +37,32 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.block.data.Rails;
-import org.spout.vanilla.material.block.other.MinecartTrack;
+import org.spout.vanilla.material.block.RailsBase;
+import org.spout.vanilla.material.block.rails.Rails;
 
 public class MinecartTrackLogic implements Source {
-	public int x, y, z;
-	public World world;
-	public Rails data;
+	public Block block;
+	public RailsBase rails;
 	public boolean isPowered;
 	public BlockFace direction;
 	public boolean changed = false;
 	public MinecartTrackLogic parent = null;
 	public List<MinecartTrackLogic> neighbours = new ArrayList<MinecartTrackLogic>();
-
-	private MinecartTrackLogic(World world, int x, int y, int z, Rails data) {
-		this.world = world;
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.isPowered = ((VanillaBlockMaterial) data.getMaterial()).getIndirectRedstonePower(world.getBlock(x, y, z)) > 0;
-		this.data = data;
+	
+	private MinecartTrackLogic(Block block, RailsBase material) {
+		this.block = block;
+		this.rails = material;
+		this.isPowered = false;
+		if (this.rails instanceof Rails) {
+			this.isPowered = ((Rails) this.rails).getIndirectRedstonePower(this.block) > 0;
+		}
 		this.direction = BlockFace.THIS;
 	}
 
 	public static MinecartTrackLogic create(Block block) {
 		BlockMaterial mat = block.getMaterial();
-		if (mat instanceof MinecartTrack) {
-			Rails rails = ((MinecartTrack) mat).createData(block.getData());
-			return new MinecartTrackLogic(block.getWorld(), block.getX(), block.getY(), block.getZ(), rails);
+		if (mat instanceof RailsBase) {
+			return new MinecartTrackLogic(block, (RailsBase) mat);
 		} else {
 			return null;
 		}
@@ -92,7 +89,6 @@ public class MinecartTrackLogic implements Source {
 						continue; //already connected to two other track pieces
 					}
 					MinecartTrackLogic self = logic.getLogic(logic.direction.getOpposite());
-					self.data = this.data;
 					self.parent = logic;
 					self.direction = logic.direction.getOpposite();
 					logic.neighbours.add(self);
@@ -100,7 +96,7 @@ public class MinecartTrackLogic implements Source {
 				}
 			}
 		} else {
-			for (BlockFace direction : this.data.getDirections()) {
+			for (BlockFace direction : this.getState().getDirections()) {
 				if (direction == this.direction.getOpposite()) {
 					continue;
 				}
@@ -108,12 +104,27 @@ public class MinecartTrackLogic implements Source {
 				if (logic != null) {
 					logic.parent = this;
 					logic.direction = direction;
-					if (logic.data.isConnected(direction.getOpposite())) {
+					if (logic.getState().isConnected(direction.getOpposite())) {
 						this.neighbours.add(logic);
 					}
 				}
 			}
 		}
+	}
+
+	public boolean setState(RailsState state) {
+		System.out.println("SETTING TO " + state);
+		if (state != this.getState()) {
+			this.rails.setState(this.block, state);
+			this.changed = true;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public RailsState getState() {
+		return this.rails.getState(this.block);
 	}
 
 	/**
@@ -131,43 +142,30 @@ public class MinecartTrackLogic implements Source {
 	}
 
 	public MinecartTrackLogic getLogic(BlockFace direction) {
-		int x = this.x + (int) direction.getOffset().getX();
-		int y = this.y + (int) direction.getOffset().getY();
-		int z = this.z + (int) direction.getOffset().getZ();
+		Block block = this.block.translate(direction);
 		MinecartTrackLogic logic;
-		logic = create(this.world, x, y, z);
+		logic = create(block);
 		if (logic != null) {
 			return logic;
 		}
-		logic = create(this.world, x, y + 1, z);
+		logic = create(block.translate(BlockFace.TOP));
 		if (logic != null) {
 			return logic;
 		}
-		logic = create(this.world, x, y - 1, z);
+		logic = create(block.translate(BlockFace.BOTTOM));
 		return logic;
 	}
 
 	public boolean setDirection(BlockFace dir1, BlockFace dir2) {
-		return this.setDirection(RailsState.get(dir1, dir2));
+		return this.setState(RailsState.get(dir1, dir2));
 	}
 
 	public boolean setDirection(BlockFace direction, boolean sloped) {
-		return this.setDirection(RailsState.get(direction, sloped));
-	}
-
-	public boolean setDirection(RailsState state) {
-		System.out.println("SETTING TO " + state);
-		if (state != this.data.getState()) {
-			this.data.setState(state);
-			this.changed = true;
-			return true;
-		} else {
-			return false;
-		}
+		return this.setState(RailsState.get(direction, sloped));
 	}
 
 	public String toString() {
-		return this.world.getName() + " " + this.x + "/" + this.y + "/" + this.z + " neighbours: " + this.neighbours.size();
+		return this.block.toString() + " neighbours: " + this.neighbours.size();
 	}
 
 	/**
@@ -183,23 +181,23 @@ public class MinecartTrackLogic implements Source {
 		}
 		if (rails1 == null) {
 			//both rails null - switch to default
-			this.setDirection(RailsState.WEST);
+			this.setState(RailsState.WEST);
 		} else if (rails2 == null) {
 			//connect to rails 1
-			this.setDirection(rails1.direction, rails1.y > this.y);
+			this.setDirection(rails1.direction, rails1.block.getY() > this.block.getY());
 		} else if (rails1.direction == rails2.direction.getOpposite()) {
 			//connect the two rails, sloped if needed
-			if (rails1.y > this.y) {
+			if (rails1.block.getY() > this.block.getY()) {
 				this.setDirection(rails1.direction, true);
-			} else if (rails2.y > this.y) {
+			} else if (rails2.block.getY() > this.block.getY()) {
 				this.setDirection(rails2.direction, true);
 			} else {
 				this.setDirection(rails1.direction, false);
 			}
-		} else if (this.data.canCurve()) {
+		} else if (this.rails.canCurve()) {
 			this.setDirection(rails1.direction, rails2.direction);
 		} else {
-			this.setDirection(rails1.direction, rails1.y > this.y);
+			this.setDirection(rails1.direction, rails1.block.getY() > this.block.getY());
 		}
 	}
 
@@ -215,7 +213,7 @@ public class MinecartTrackLogic implements Source {
 	 */
 	public void connect(BlockFace direction) {
 		if (this.neighbours.isEmpty()) {
-			this.setDirection(RailsState.WEST);
+			this.setState(RailsState.WEST);
 			return;
 		}
 		MinecartTrackLogic from = this.getNeighbour(direction);
@@ -285,7 +283,7 @@ public class MinecartTrackLogic implements Source {
 
 	private void refreshData() {
 		if (this.changed) {
-			this.world.getBlock(this.x, this.y, this.z).setData(data).update(true);
+			this.block.update();
 		}
 		for (MinecartTrackLogic logic : this.neighbours) {
 			logic.refreshData();

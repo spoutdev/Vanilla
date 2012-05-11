@@ -24,15 +24,17 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.other;
+package org.spout.vanilla.material.block.rails;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.util.LogicUtil;
 
+import org.spout.vanilla.material.block.RailsBase;
 import org.spout.vanilla.material.block.RedstoneTarget;
-import org.spout.vanilla.material.block.data.PoweredRails;
+import org.spout.vanilla.util.RailsState;
 
-public class MinecartTrackPowered extends MinecartTrackBase implements RedstoneTarget {
-	public MinecartTrackPowered() {
+public class PoweredRails extends RailsBase implements RedstoneTarget {
+	public PoweredRails() {
 		super("Powered Rail", 27);
 	}
 
@@ -47,8 +49,36 @@ public class MinecartTrackPowered extends MinecartTrackBase implements RedstoneT
 		return false;
 	}
 
+	/**
+	 * Gets if this block is powered
+	 * @param block to get it of
+	 * @return True if powered, False if not
+	 */
+	public boolean isPowered(Block block) {
+		return LogicUtil.getBit(block.getData(), 0x8);
+	}
+
+	/**
+	 * Sets if this block is powered
+	 * @param block to set it of
+	 * @param powered Whether to power the block or not
+	 */
+	public void setPowered(Block block, boolean powered) {
+		block.setData(LogicUtil.setBit(block.getData(), 0x8, powered));
+	}
+
 	@Override
-	public PoweredRails createData(short data) {
-		return new PoweredRails(data);
+	public void setState(Block block, RailsState state) {
+		if (state.isCurved()) {
+			throw new IllegalArgumentException("A powered rail can not curve!");
+		}
+		short data = (short) (block.getData() & ~0x7);
+		data += state.getData();
+		block.setData(data);
+	}
+
+	@Override
+	public RailsState getState(Block block) {
+		return RailsState.get(block.getData() & 0x7);
 	}
 }

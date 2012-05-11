@@ -24,44 +24,37 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.data;
+package org.spout.vanilla.material.block.rails;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.other.MinecartTrackPowered;
+import org.spout.api.geo.cuboid.Block;
+
+import org.spout.vanilla.material.block.RailsBase;
+import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.util.RailsState;
 
-public class PoweredRails extends Rails {
-	private boolean powered;
-
-	public PoweredRails(short data) {
-		super((short) (data & 0x7));
-		this.powered = (data & 0x8) == 0x8;
-	}
-
-	public PoweredRails(RailsState state, boolean powered) {
-		super(state);
-		this.powered = powered;
-	}
-
-	public boolean isPowered() {
-		return this.powered;
-	}
-
-	public void setPowered(boolean pressed) {
-		this.powered = pressed;
+public class Rails extends RailsBase implements RedstoneTarget {
+	public Rails() {
+		super("Rails", 66);
 	}
 
 	@Override
-	public short getData() {
-		short data = super.getData();
-		if (this.powered) {
-			data |= 0x8;
-		}
-		return data;
+	public boolean canCurve() {
+		return true;
 	}
 
 	@Override
-	public MinecartTrackPowered getMaterial() {
-		return VanillaMaterials.RAILS_POWERED;
+	public boolean providesAttachPoint(Block source, Block target) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setState(Block block, RailsState state) {
+		block.setData(state.getData());
+	}
+
+	@Override
+	public RailsState getState(Block block) {
+		return RailsState.get(block.getData());
 	}
 }

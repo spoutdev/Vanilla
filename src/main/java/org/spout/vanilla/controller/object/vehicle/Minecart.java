@@ -38,15 +38,15 @@ import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.RailsBase;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.data.PoweredRails;
-import org.spout.vanilla.material.block.data.Rails;
-import org.spout.vanilla.material.block.other.MinecartTrack;
+import org.spout.vanilla.material.block.rails.PoweredRails;
 import org.spout.vanilla.util.RailsState;
 
 public abstract class Minecart extends Substance implements Vehicle {
-	private Material railType = VanillaMaterials.AIR;
-	private Rails railData;
+	private Material blockType = VanillaMaterials.AIR;
+	private RailsBase railMaterial;
+	private RailsState railState;
 	private Vector3 groundFrictionModifier = new Vector3(0.5, 0.5, 0.5);
 	private Vector3 airFrictionModifier = new Vector3(0.95, 0.95, 0.95);
 	private Vector2[] railMovement = new Vector2[]{Vector2.ZERO, Vector2.ZERO};
@@ -74,31 +74,33 @@ public abstract class Minecart extends Substance implements Vehicle {
 	}
 
 	public boolean isOnRail() {
-		return this.railData != null;
+		return this.railState != null;
 	}
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		this.getBounds().set(-0.35f, 0.0f, -0.49f, 0.35f, 0.49f, 0.49f);
-		this.setVelocity(new Vector3(0, 0, 0.2));
-		this.setMaxSpeed(new Vector3(0, 0, 0.4));
+		this.setVelocity(new Vector3(0, 0, 0.2)); //temporary!
+		this.setMaxSpeed(new Vector3(0.4, 0.4, 0.4)); //first two 0.4 need to be 0 - TODO: Use yaw instead?
 		this.getParent().setHealth(40, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	public void generateRailData(Point position) {
 		this.railsBlock = position.getWorld().getBlock(position);
-		this.railType = this.railsBlock.getMaterial();
-		if (!(this.railType instanceof MinecartTrack)) {
+		this.blockType = this.railsBlock.getMaterial();
+		if (!(this.blockType instanceof RailsBase)) {
 			this.railsBlock = this.railsBlock.translate(BlockFace.BOTTOM);
-			this.railType = this.railsBlock.getMaterial();
+			this.blockType = this.railsBlock.getMaterial();
 		}
-		if (this.railType instanceof MinecartTrack) {
-			this.railData = (Rails) this.railsBlock.createData();
-			this.railMovement[0] = this.railData.getDirections()[0].getOffset().toVector2();
-			this.railMovement[1] = this.railData.getDirections()[1].getOffset().toVector2();
+		if (this.blockType instanceof RailsBase) {
+			this.railMaterial = (RailsBase) blockType;
+			this.railState = this.railMaterial.getState(this.railsBlock);
+			this.railMovement[0] = this.railState.getDirections()[0].getOffset().toVector2();
+			this.railMovement[1] = this.railState.getDirections()[1].getOffset().toVector2();
 		} else {
-			this.railData = null;
+			this.railState = null;
+			this.railMaterial = null;
 		}
 	}
 
@@ -128,14 +130,14 @@ public abstract class Minecart extends Substance implements Vehicle {
 		Vector2 velocity = this.getVelocity().toVector2();
 		float velocityY = this.getVelocity().getY() - 0.04f;
 
-		if (this.railData != null) {
+		if (this.railState != null) {
 			//on tracks
 			this.previousPosY = position.getY();
 
 			final float slopedMotion = 0.0078125f;
 
 			//Move a minecart up or down sloped tracks
-			if (this.railData.isSloped()) {
+			if (this.railState.isSloped()) {
 				velocity = velocity.subtract(this.railMovement[0].multiply(slopedMotion));
 			}
 
@@ -155,7 +157,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 			velocity = railMotion.multiply(railFactor);
 
 			//slows down minecarts on unpowered booster rails
-			if (this.railData instanceof PoweredRails && !((PoweredRails) this.railData).isPowered()) {
+			if (this.blockType instanceof PoweredRails && !((PoweredRails) this.blockType).isPowered(this.railsBlock)) {
 				if (velocity.lengthSquared() < 0.0009) {
 					velocity = Vector2.ZERO;
 				} else {
@@ -164,20 +166,20 @@ public abstract class Minecart extends Substance implements Vehicle {
 				velocityY = 0f;
 			}
 
-			Vector3 railsPosition = this.railsBlock.getPosition().add(0.5f, this.getBounds().getSize().getY(), 0.5f);
+			Vector3 railsPosition = this.railsBlock.getPosition().add(0f, this.getBounds().getSize().getY() - 0.5f, 0f);
 
 			//position is adjusted to snap to the rails
 			Vector3 adjustment = railsPosition.subtract(position);
 
 			if (railMotion.getX() == 0) {
 				//traveling along Z
-				if (this.railData.isSloped()) {
+				if (this.railState.isSloped()) {
 					adjustment = adjustment.add(Vector3.UP);
 				}
 				adjustment = adjustment.multiply(1f, 1f, 0f);
 			} else if (railMotion.getY() == 0) {
 				//traveling along X
-				if (this.railData.isSloped()) {
+				if (this.railState.isSloped()) {
 					adjustment = adjustment.add(Vector3.UP);
 				}
 				adjustment = adjustment.multiply(0f, 1f, 1f);
@@ -190,7 +192,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 
 			//apply adjustment
 			this.getParent().setPosition(position = position.add(adjustment));
-		} else if (this.railType == VanillaMaterials.AIR) {
+		} else if (this.blockType == VanillaMaterials.AIR) {
 			//in the air
 			velocity = velocity.multiply(this.airFrictionModifier.toVector2());
 			velocityY *= this.airFrictionModifier.getY();
@@ -212,28 +214,26 @@ public abstract class Minecart extends Substance implements Vehicle {
 		velocityY = this.getVelocity().getY();
 
 		//post-move updates
-		if (this.railData != null) {
+		if (this.railState != null) {
 			//snap to correct Y when changing sloped rails downwards
 			Block newBlock = position.getWorld().getBlock(position);
 
 			Vector2 blockChange = new Vector2(newBlock.getX() - this.railsBlock.getX(), newBlock.getZ() - this.railsBlock.getZ());
 
 			//moved down the slope? Go one down if so
-			if (this.railData.isSloped() && blockChange.equals(this.railMovement[0])) {
+			if (this.railState.isSloped() && blockChange.equals(this.railMovement[0])) {
 				position = position.add(new Vector3(0f, -1f, 0f));
 				newBlock = newBlock.translate(BlockFace.BOTTOM);
 				this.getParent().setPosition(position);
 			}
 
-			if (newBlock.getMaterial() instanceof MinecartTrack) {
+			if (newBlock.getMaterial() instanceof RailsBase) {
 				//x and z motion slowing down when moving up slopes
 				//snap to correct Y (required for proper Y measures)
 
 				//calculate the current Y from the rails (triangle)
-				Rails rails = (Rails) newBlock.createData();
-				RailsState state = rails.getState();
+				RailsState state = ((RailsBase) newBlock.getMaterial()).getState(newBlock);
 				float changeY = (newBlock.getY() - position.getY()) + this.getBounds().getSize().getY();
-				System.out.println("state=" + state);
 				if (state == RailsState.NORTH_SLOPED) {
 					changeY += (position.getX() - newBlock.getX()) + 1;
 				} else if (state == RailsState.EAST_SLOPED) {
@@ -263,7 +263,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 
 			//powered track boosting
 			//Launch on powered rails
-			if (this.railData instanceof PoweredRails && ((PoweredRails) this.railData).isPowered()) {
+			if (this.blockType instanceof PoweredRails && ((PoweredRails) this.blockType).isPowered(this.railsBlock)) {
 				double velLength = velocity.toVector3(velocityY).length();
 				if (velLength > 0.01) {
 					//simple motion boosting when already moving
@@ -271,7 +271,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 					velocity = velocity.add(velocity.multiply(0.06 / velLength));
 				} else {
 					//push a minecart slightly forward when hitting a solid block
-					for (BlockFace dir : this.railData.getDirections()) {
+					for (BlockFace dir : this.railState.getDirections()) {
 						if (this.railsBlock.translate(dir).getMaterial() instanceof Solid) {
 							velocity = dir.getOpposite().getOffset().toVector2().multiply(0.02);
 							break;

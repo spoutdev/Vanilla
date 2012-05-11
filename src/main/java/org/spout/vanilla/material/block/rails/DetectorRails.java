@@ -24,15 +24,17 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.other;
+package org.spout.vanilla.material.block.rails;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.util.LogicUtil;
 
+import org.spout.vanilla.material.block.RailsBase;
 import org.spout.vanilla.material.block.RedstoneSource;
-import org.spout.vanilla.material.block.data.DetectorRails;
+import org.spout.vanilla.util.RailsState;
 
-public class MinecartTrackDetector extends MinecartTrackBase implements RedstoneSource {
-	public MinecartTrackDetector() {
+public class DetectorRails extends RailsBase implements RedstoneSource {
+	public DetectorRails() {
 		super("Detector Rail", 28);
 	}
 
@@ -59,8 +61,36 @@ public class MinecartTrackDetector extends MinecartTrackBase implements Redstone
 		return false;
 	}
 
+	/**
+	 * Gets if this block is supplying power
+	 * @param block to get it of
+	 * @return True if powered, False if not
+	 */
+	public boolean isPowering(Block block) {
+		return LogicUtil.getBit(block.getData(), 0x8);
+	}
+
+	/**
+	 * Sets if this block is supplying power
+	 * @param block to set it of
+	 * @param powering Whether the block is supplying power
+	 */
+	public void setPowering(Block block, boolean powering) {
+		block.setData(LogicUtil.setBit(block.getData(), 0x8, powering));
+	}
+
 	@Override
-	public DetectorRails createData(short data) {
-		return new DetectorRails(data);
+	public void setState(Block block, RailsState state) {
+		if (state.isCurved()) {
+			throw new IllegalArgumentException("A detector rail can not curve!");
+		}
+		short data = (short) (block.getData() & ~0x7);
+		data += state.getData();
+		block.setData(data);
+	}
+
+	@Override
+	public RailsState getState(Block block) {
+		return RailsState.get(block.getData() & 0x7);
 	}
 }

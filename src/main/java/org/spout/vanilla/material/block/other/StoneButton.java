@@ -26,12 +26,16 @@
  */
 package org.spout.vanilla.material.block.other;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.block.AbstractAttachable;
 import org.spout.vanilla.material.block.PointAttachable;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class StoneButton extends AbstractAttachable implements PointAttachable {
 	public StoneButton(String name, int id) {
@@ -40,8 +44,22 @@ public class StoneButton extends AbstractAttachable implements PointAttachable {
 	}
 
 	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setHardness(0.5F).setResistance(0.8F);
+	}
+
+	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
 		return face != BlockFace.TOP && super.canAttachTo(block, face);
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, type, clickedFace);
+		if (type != Action.LEFT_CLICK || !VanillaPlayerUtil.isCreative(entity)) {
+			this.setPressed(block, !this.isPressed(block));
+		}
 	}
 
 	@Override
@@ -52,6 +70,14 @@ public class StoneButton extends AbstractAttachable implements PointAttachable {
 	@Override
 	public BlockFace getAttachedFace(Block block) {
 		return BlockFaces.NSEW.get((block.getData() & ~0x8) - 1);
+	}
+
+	public boolean isPressed(Block block) {
+		return LogicUtil.getBit(block.getData(), 0x8);
+	}
+
+	public void setPressed(Block block, boolean pressed) {
+		block.setData(LogicUtil.setBit(block.getData(), 0x8, pressed));
 	}
 
 	@Override

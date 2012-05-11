@@ -57,9 +57,6 @@ import org.spout.vanilla.material.block.other.Fire;
 import org.spout.vanilla.material.block.other.GlassPane;
 import org.spout.vanilla.material.block.other.Ladder;
 import org.spout.vanilla.material.block.other.Lever;
-import org.spout.vanilla.material.block.other.MinecartTrack;
-import org.spout.vanilla.material.block.other.MinecartTrackDetector;
-import org.spout.vanilla.material.block.other.MinecartTrackPowered;
 import org.spout.vanilla.material.block.other.MonsterSpawner;
 import org.spout.vanilla.material.block.other.SignBase;
 import org.spout.vanilla.material.block.other.Slab;
@@ -81,6 +78,9 @@ import org.spout.vanilla.material.block.plants.Vines;
 import org.spout.vanilla.material.block.plants.WheatCrop;
 import org.spout.vanilla.material.block.pressureplate.StonePressurePlate;
 import org.spout.vanilla.material.block.pressureplate.WoodenPressurePlate;
+import org.spout.vanilla.material.block.rails.Rails;
+import org.spout.vanilla.material.block.rails.DetectorRails;
+import org.spout.vanilla.material.block.rails.PoweredRails;
 import org.spout.vanilla.material.block.redstone.RedstoneTorch;
 import org.spout.vanilla.material.block.redstone.RedstoneWire;
 import org.spout.vanilla.material.block.solid.Bedrock;
@@ -185,9 +185,9 @@ public final class VanillaMaterials {
 	public static final Solid PISTON_EXTENSION = (Solid) register(new Solid("Piston (Head)", 34).setResistance(0.8F));
 	public static final Solid MOVED_BY_PISTON = (Solid) register(new Solid("Moved By Piston", 36).setResistance(0.0F));
 	//== Rails ==
-	public static final MinecartTrack RAILS = register(new MinecartTrack());
-	public static final MinecartTrackPowered RAILS_POWERED = register(new MinecartTrackPowered());
-	public static final MinecartTrackDetector RAILS_DETECTOR = register(new MinecartTrackDetector());
+	public static final Rails RAILS = register(new Rails());
+	public static final PoweredRails RAILS_POWERED = register(new PoweredRails());
+	public static final DetectorRails RAILS_DETECTOR = register(new DetectorRails());
 	//== Liquids ==
 	public static final Liquid WATER = (Liquid) register(new Liquid("Water", 8, true).setOpacity((byte) 2));
 	public static final Liquid STATIONARY_WATER = (Liquid) register(new Liquid("Stationary Water", 9, false).setOpacity((byte) 2));
@@ -250,7 +250,7 @@ public final class VanillaMaterials {
 	public static final WoodenPressurePlate WOODEN_PRESSURE_PLATE = (WoodenPressurePlate) register(new WoodenPressurePlate("Wooden Pressure Plate", 72).setHardness(0.5F).setResistance(0.8F));
 	public static final RedstoneTorch REDSTONE_TORCH_OFF = (RedstoneTorch) register(new RedstoneTorch("Redstone Torch", 75, false).setHardness(0.0F).setResistance(0.0F));
 	public static final RedstoneTorch REDSTONE_TORCH_ON = (RedstoneTorch) register(new RedstoneTorch("Redstone Torch (On)", 76, true).setHardness(0.0F).setResistance(0.0F).setLightLevel(7));
-	public static final StoneButton STONE_BUTTON = (StoneButton) register(new StoneButton("Stone Button", 77).setHardness(0.5F).setResistance(0.8F));
+	public static final StoneButton STONE_BUTTON = register(new StoneButton("Stone Button", 77));
 	public static final Snow SNOW = (Snow) register(new Snow().setHardness(0.1F).setResistance(0.2F));
 	public static final Ice ICE = (Ice) register(new Ice().setHardness(0.5F).setResistance(0.8F));
 	public static final SnowBlock SNOW_BLOCK = (SnowBlock) register(new SnowBlock("Snow Block", 80).setHardness(0.2F).setResistance(0.3F));

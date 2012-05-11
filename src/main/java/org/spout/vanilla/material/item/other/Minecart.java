@@ -33,7 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
-import org.spout.vanilla.material.block.other.MinecartTrack;
+import org.spout.vanilla.material.block.rails.Rails;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Minecart extends VanillaItemMaterial {
@@ -54,7 +54,7 @@ public class Minecart extends VanillaItemMaterial {
 		super.onInteract(entity, block, type, clickedface);
 
 		//is clicked position a track?
-		if (block.getMaterial() instanceof MinecartTrack) {
+		if (block.getMaterial() instanceof Rails) {
 			//spawn minecart on rails
 			block.getWorld().createAndSpawnEntity(block.getPosition(), this.getSpawnedEntity());
 			//TODO: Subtracting one from the held item?

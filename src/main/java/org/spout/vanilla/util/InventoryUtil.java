@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.util;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class InventoryUtil {
 	private static int windowId = 0;

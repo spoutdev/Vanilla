@@ -50,7 +50,7 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
 		boolean powered = this.isReceivingPower(block);
-		if (powered  != this.isOpen(block)) {
+		if (powered != this.isOpen(block)) {
 			this.setOpen(block, powered);
 		}
 	}
@@ -80,8 +80,9 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 
 	/**
 	 * Gets the top or face door block when either of the blocks is given
+	 *
 	 * @param doorBlock the top or bottom door block
-	 * @param top whether to get the top block, if false, gets the bottom block
+	 * @param top	   whether to get the top block, if false, gets the bottom block
 	 * @return the requested door half block
 	 */
 	private Block getCorrectHalf(Block doorBlock, boolean top) {

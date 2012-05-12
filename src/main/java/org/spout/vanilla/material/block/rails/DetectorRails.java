@@ -29,7 +29,6 @@ package org.spout.vanilla.material.block.rails;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
-
 import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.material.block.RailsBase;
 import org.spout.vanilla.material.block.RedstoneSource;
@@ -66,9 +65,10 @@ public class DetectorRails extends RailsBase implements RedstoneSource, Schedule
 		this.doRedstoneUpdates(block);
 		BlockUpdater.schedule(block, 20);
 	}
-	
+
 	/**
 	 * Gets if this block is supplying power
+	 *
 	 * @param block to get it of
 	 * @return True if powered, False if not
 	 */
@@ -78,7 +78,8 @@ public class DetectorRails extends RailsBase implements RedstoneSource, Schedule
 
 	/**
 	 * Sets if this block is supplying power
-	 * @param block to set it of
+	 *
+	 * @param block	to set it of
 	 * @param powering Whether the block is supplying power
 	 */
 	public void setPowering(Block block, boolean powering) {

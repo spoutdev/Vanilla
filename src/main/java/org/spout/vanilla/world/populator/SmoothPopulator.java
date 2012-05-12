@@ -26,16 +26,15 @@
  */
 package org.spout.vanilla.world.populator;
 
-import java.util.Random;
-
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.Random;
 
 /**
  * Populator ran at stage 2 of world generation which serves to smooth
@@ -97,9 +96,7 @@ public class SmoothPopulator implements Populator {
 		for (byte x = 0; x < SMOOTH_SIZE; x++) {
 			for (byte z = 0; z < SMOOTH_SIZE; z++) {
 				final short index = (short) (x + z * SMOOTH_SIZE);
-				shiftBlockColumnOnY(world, worldX + x, worldZ + z,
-						(byte) (smoothedHeightMap[index]
-								- heightMap[index]));
+				shiftBlockColumnOnY(world, worldX + x, worldZ + z, (byte) (smoothedHeightMap[index] - heightMap[index]));
 			}
 		}
 	}
@@ -108,9 +105,7 @@ public class SmoothPopulator implements Populator {
 	private byte getHighestNonFluidBlock(World world, int x, int z) {
 		byte y = 127;
 		BlockMaterial material;
-		while ((material = world.getBlockMaterial(x, y, z)) == VanillaMaterials.AIR
-				|| material == VanillaMaterials.STATIONARY_WATER
-				|| material == VanillaMaterials.STATIONARY_LAVA) {
+		while ((material = world.getBlockMaterial(x, y, z)) == VanillaMaterials.AIR || material == VanillaMaterials.STATIONARY_WATER || material == VanillaMaterials.STATIONARY_LAVA) {
 			y--;
 			if (y == 0) {
 				return -1;
@@ -158,9 +153,7 @@ public class SmoothPopulator implements Populator {
 			for (byte y = (byte) (lowestBedrock - shift); y < 127; y++) {
 				final Block block = world.getBlock(x, y, z);
 				final BlockMaterial currentMaterial = block.getMaterial();
-				if (currentMaterial == VanillaMaterials.AIR
-						|| currentMaterial == VanillaMaterials.STATIONARY_WATER
-						|| currentMaterial == VanillaMaterials.STATIONARY_LAVA) {
+				if (currentMaterial == VanillaMaterials.AIR || currentMaterial == VanillaMaterials.STATIONARY_WATER || currentMaterial == VanillaMaterials.STATIONARY_LAVA) {
 					return;
 				}
 				lastMaterial = block.getMaterial();
@@ -172,13 +165,10 @@ public class SmoothPopulator implements Populator {
 			for (byte y = 127; y >= 0; y--) {
 				final Block block = world.getBlock(x, y, z);
 				final BlockMaterial currentMaterial = block.getMaterial();
-				if (currentMaterial == VanillaMaterials.AIR
-						|| currentMaterial == VanillaMaterials.STATIONARY_WATER
-						|| currentMaterial == VanillaMaterials.STATIONARY_LAVA) {
+				if (currentMaterial == VanillaMaterials.AIR || currentMaterial == VanillaMaterials.STATIONARY_WATER || currentMaterial == VanillaMaterials.STATIONARY_LAVA) {
 					continue;
 				}
-				if (currentMaterial == VanillaMaterials.BEDROCK
-						&& lastMaterial != null) {
+				if (currentMaterial == VanillaMaterials.BEDROCK && lastMaterial != null) {
 					for (byte yy = 1; yy < shift + 1; yy++) {
 						block.translate(0, yy, 0).setMaterial(lastMaterial);
 					}

@@ -26,14 +26,13 @@
  */
 package org.spout.vanilla.controller.living.creature.hostile;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class MagmaCube extends Slime implements Hostile {
 	public MagmaCube() {

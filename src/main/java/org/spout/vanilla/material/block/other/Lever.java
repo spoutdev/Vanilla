@@ -34,7 +34,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
-
 import org.spout.vanilla.material.block.AbstractAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.util.RedstonePowerMode;

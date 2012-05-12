@@ -28,7 +28,6 @@ package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
@@ -47,6 +46,7 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 
 	/**
 	 * Returns the furnace controller that this inventory belongs to.
+	 *
 	 * @return owner the furnace controller
 	 */
 	public FurnaceController getOwner() {
@@ -55,6 +55,7 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 
 	/**
 	 * Returns the {@link ItemStack} in the output slot (slot 37); can return null.
+	 *
 	 * @return output item stack
 	 */
 	public ItemStack getOutput() {
@@ -72,6 +73,7 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 
 	/**
 	 * Returns the {@link ItemStack} in the fuel slot (slot 35); can return null.
+	 *
 	 * @return fuel item stack
 	 */
 	public ItemStack getFuel() {
@@ -89,18 +91,20 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 
 	/**
 	 * Returns the {@link ItemStack} in the ingredient slot (slot 38); can return null.
+	 *
 	 * @return ingredient item stack
 	 */
 	public ItemStack getIngredient() {
 		return getItem(38);
 	}
-	
+
 	public void setIngredient(ItemStack ingredient) {
 		setItem(38, ingredient);
 	}
 
 	/**
 	 * Whether or not the inventory is fueled and ready to go!
+	 *
 	 * @return true if has fuel in slot.
 	 */
 	public boolean hasFuel() {
@@ -109,6 +113,7 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 
 	/**
 	 * Whether or not the inventory has an ingredient and ready to cook!
+	 *
 	 * @return true if has ingredient in slot.
 	 */
 	public boolean hasIngredient() {

@@ -32,6 +32,7 @@ public interface ScheduleUpdated {
 
 	/**
 	 * Is called by the block scheduler after the block was requested for a delayed update
+	 *
 	 * @param block that was updated
 	 */
 	public void onDelayedUpdate(Block block);

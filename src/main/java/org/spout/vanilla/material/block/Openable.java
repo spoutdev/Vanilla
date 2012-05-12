@@ -35,12 +35,14 @@ import org.spout.api.geo.cuboid.Block;
 public interface Openable {
 	/**
 	 * Toggles the open state of this block
+	 *
 	 * @param block to toggle it of
 	 */
 	public void toggleOpen(Block block);
 
 	/**
 	 * Sets whether this material is open
+	 *
 	 * @param block to apply to
 	 * @param open  whether the block should be open
 	 */
@@ -48,6 +50,7 @@ public interface Openable {
 
 	/**
 	 * Gets whether or not this material is opened
+	 *
 	 * @param block to get it of
 	 */
 	public boolean isOpen(Block block);

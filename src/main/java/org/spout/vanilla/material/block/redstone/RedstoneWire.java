@@ -27,16 +27,11 @@
 package org.spout.vanilla.material.block.redstone;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
-
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.GroundAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.RedstonePowerMode;
 
 public class RedstoneWire extends GroundAttachable implements RedstoneSource {

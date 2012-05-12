@@ -48,7 +48,7 @@ public class Dispenser extends Solid implements Mineable, Directional {
 	public Dispenser(String name, int id) {
 		super(name, id);
 	}
-	
+
 	@Override
 	public void loadProperties() {
 		super.loadProperties();

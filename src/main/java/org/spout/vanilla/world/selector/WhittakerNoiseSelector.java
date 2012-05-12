@@ -30,15 +30,9 @@ import net.royawesome.jlibnoise.module.combiner.Select;
 import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.modifier.ScaleBias;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
-import net.royawesome.jlibnoise.module.source.Billow;
-import net.royawesome.jlibnoise.module.source.Const;
-import net.royawesome.jlibnoise.module.source.Perlin;
-import net.royawesome.jlibnoise.module.source.RidgedMulti;
-import net.royawesome.jlibnoise.module.source.Voronoi;
-
+import net.royawesome.jlibnoise.module.source.*;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeSelector;
-
 import org.spout.vanilla.world.generator.VanillaBiomes;
 
 public class WhittakerNoiseSelector extends BiomeSelector {

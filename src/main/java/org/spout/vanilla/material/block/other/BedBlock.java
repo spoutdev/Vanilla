@@ -55,6 +55,7 @@ public class BedBlock extends VanillaBlockMaterial {
 
 	/**
 	 * Sets whether or not a bed is occupied by a player
+	 *
 	 * @param bedBlock to get it of
 	 * @return True if occupied
 	 */
@@ -73,6 +74,7 @@ public class BedBlock extends VanillaBlockMaterial {
 
 	/**
 	 * Gets whether or not a bed block is occupied by a player
+	 *
 	 * @param bedBlock to get it of
 	 * @return True if occupied
 	 */
@@ -82,6 +84,7 @@ public class BedBlock extends VanillaBlockMaterial {
 
 	/**
 	 * Gets the facing state of a single bed block
+	 *
 	 * @param bedBlock to get it of
 	 * @return the face
 	 */
@@ -92,8 +95,9 @@ public class BedBlock extends VanillaBlockMaterial {
 	/**
 	 * Sets the facing state of a single bed block<br>
 	 * Note that this does not affect the other half
+	 *
 	 * @param bedBlock to set it of
-	 * @param facing to set to
+	 * @param facing   to set to
 	 * @return the face
 	 */
 	public void setFacing(Block bedBlock, BlockFace facing) {
@@ -137,8 +141,9 @@ public class BedBlock extends VanillaBlockMaterial {
 
 	/**
 	 * Gets the top or face door block when either of the blocks is given
+	 *
 	 * @param doorBlock the top or bottom door block
-	 * @param top whether to get the top block, if false, gets the bottom block
+	 * @param top	   whether to get the top block, if false, gets the bottom block
 	 * @return the requested door half block
 	 */
 	private Block getCorrectHalf(Block bedBlock, boolean head) {
@@ -168,5 +173,5 @@ public class BedBlock extends VanillaBlockMaterial {
 			}
 		}
 		return bedBlock;
-	}	
+	}
 }

@@ -32,7 +32,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.BlockIterator;
-
 import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -71,8 +70,9 @@ public class Vines extends VanillaBlockMaterial {
 
 	/**
 	 * Sets whether a certain face is attached or not
-	 * @param block    of this material
-	 * @param face     to attach to
+	 *
+	 * @param block	of this material
+	 * @param face	 to attach to
 	 * @param attached whether or not to attach
 	 */
 	public void setFaceAttached(Block block, BlockFace face, boolean attached) {

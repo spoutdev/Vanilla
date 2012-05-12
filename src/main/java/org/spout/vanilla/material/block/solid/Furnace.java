@@ -33,7 +33,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;
@@ -74,12 +73,13 @@ public class Furnace extends Solid implements Mineable, Directional {
 
 	/**
 	 * Gets if this furnace block material is burning
+	 *
 	 * @return True if burning
 	 */
 	public boolean isBurning() {
 		return this.burning;
 	}
-	
+
 	@Override
 	public BlockFace getFacing(Block block) {
 		return BlockFaces.EWNS.get(block.getData() - 2);

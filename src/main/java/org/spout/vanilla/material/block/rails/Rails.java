@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block.rails;
 
 import org.spout.api.geo.cuboid.Block;
-
 import org.spout.vanilla.material.block.RailsBase;
 import org.spout.vanilla.util.RailsState;
 

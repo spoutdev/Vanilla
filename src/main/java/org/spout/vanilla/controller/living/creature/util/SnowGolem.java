@@ -27,7 +27,6 @@
 package org.spout.vanilla.controller.living.creature.util;
 
 import org.spout.api.entity.Entity;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;

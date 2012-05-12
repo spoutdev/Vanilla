@@ -26,17 +26,16 @@
  */
 package org.spout.vanilla.event.entity;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Map;
-
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.exception.InvalidControllerException;
-
 import org.spout.vanilla.controller.object.projectile.Potion;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Map;
 
 public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
@@ -55,6 +54,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Gets the potion that was thrown
+	 *
 	 * @return The potion thrown.
 	 */
 	public Potion getPotionThrown() {
@@ -63,6 +63,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Sets the potion that was thrown.
+	 *
 	 * @param potion The potion that is thrown.
 	 */
 	public void setPotionThrown(Potion potion) {
@@ -71,6 +72,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Gets a list of all of the effected entities.
+	 *
 	 * @return A list of the affected entities.
 	 */
 	public Collection<Entity> getAffectedEntities() {
@@ -79,6 +81,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Gets the intensity of the potion effect for an controller.
+	 *
 	 * @param entity The controller to get the intensity for
 	 * @return The intensity of the potion effect. 0.0 symbolizes no effect, 1.0 symbolizes full effect.
 	 */
@@ -92,7 +95,8 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Sets the intensity of the potion effect for an controller.
-	 * @param entity    The controller that will have a new defined intensity.
+	 *
+	 * @param entity	The controller that will have a new defined intensity.
 	 * @param intensity The intensity of the potion effect.
 	 */
 	public void setIntensityFor(Entity entity, double intensity) {

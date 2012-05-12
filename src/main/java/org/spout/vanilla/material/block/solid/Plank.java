@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.material.source.DataSource;
-
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;

@@ -26,14 +26,12 @@
  */
 package org.spout.vanilla.protocol.codec;
 
-import java.io.IOException;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-
 import org.spout.api.protocol.MessageCodec;
-
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
+
+import java.io.IOException;
 
 public class ServerListPingCodec extends MessageCodec<ServerListPingMessage> {
 	private static final ServerListPingMessage LIST_PING_MESSAGE = new ServerListPingMessage();

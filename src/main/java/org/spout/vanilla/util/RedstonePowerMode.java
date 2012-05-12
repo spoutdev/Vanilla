@@ -30,7 +30,7 @@ public enum RedstonePowerMode {
 	/**
 	 * Power of all Redstone sources
 	 */
-	ALL, 
+	ALL,
 	/**
 	 * Power of all Redstone sources except wire
 	 */

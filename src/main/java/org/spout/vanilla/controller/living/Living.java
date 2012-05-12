@@ -29,7 +29,6 @@ package org.spout.vanilla.controller.living;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.util.BlockIterator;
-
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.action.GravityAction;
@@ -77,6 +76,7 @@ public abstract class Living extends VanillaActionController {
 
 	/**
 	 * Sets the yaw of a controller's head for the next tick.
+	 *
 	 * @param headYaw
 	 */
 	public void setHeadYaw(int headYaw) {
@@ -85,6 +85,7 @@ public abstract class Living extends VanillaActionController {
 
 	/**
 	 * Sets the current height of the head above the main position
+	 *
 	 * @param height
 	 */
 	public void setHeadHeight(float height) {
@@ -93,6 +94,7 @@ public abstract class Living extends VanillaActionController {
 
 	/**
 	 * Gets the current height of the head above the main position
+	 *
 	 * @return the head height
 	 */
 	public float getHeadHeight() {

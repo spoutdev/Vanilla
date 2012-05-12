@@ -26,15 +26,14 @@
  */
 package org.spout.vanilla.material.block.plants;
 
-import java.util.Random;
-
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.GroundAttachable;
 import org.spout.vanilla.material.block.Plant;
+
+import java.util.Random;
 
 public class NetherWart extends GroundAttachable implements Plant {
 	private GrowthStage stage = GrowthStage.SEEDLING;

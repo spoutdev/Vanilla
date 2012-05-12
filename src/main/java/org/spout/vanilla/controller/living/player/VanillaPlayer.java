@@ -26,15 +26,6 @@
  */
 package org.spout.vanilla.controller.living.player;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers;
-import static org.spout.vanilla.util.InventoryUtil.nextWindowId;
-
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
@@ -45,27 +36,20 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
-
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.inventory.VanillaPlayerInventory;
 import org.spout.vanilla.inventory.Window;
-import org.spout.vanilla.material.block.solid.Furnace;
-import org.spout.vanilla.protocol.msg.AnimationMessage;
-import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
-import org.spout.vanilla.protocol.msg.CloseWindowMessage;
-import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
-import org.spout.vanilla.protocol.msg.KeepAliveMessage;
-import org.spout.vanilla.protocol.msg.OpenWindowMessage;
-import org.spout.vanilla.protocol.msg.PlayerListMessage;
-import org.spout.vanilla.protocol.msg.ProgressBarMessage;
-import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
-import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import org.spout.vanilla.protocol.msg.*;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.*;
+import static org.spout.vanilla.util.InventoryUtil.nextWindowId;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to
@@ -272,6 +256,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the position of player's compass target.
+	 *
 	 * @param compassTarget The new compass target position
 	 */
 	public void setCompassTarget(Point compassTarget) {
@@ -281,6 +266,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Gets the position of the player's compass target.
+	 *
 	 * @return
 	 */
 	public Point getCompassTarget() {
@@ -289,6 +275,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Gets the amount of ticks it takes the client to respond to the server.
+	 *
 	 * @return ping of player.
 	 */
 	public short getPing() {
@@ -297,6 +284,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether the player is visible for the collection of players given.
+	 *
 	 * @param visible
 	 * @param players
 	 */
@@ -323,6 +311,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether the player is visible for everyone.
+	 *
 	 * @param visible
 	 */
 	public void setVisible(boolean visible) {
@@ -331,6 +320,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is visible for that player.
+	 *
 	 * @param player
 	 * @return true if visible for that player
 	 */
@@ -340,6 +330,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not th player is
+	 *
 	 * @param sprinting
 	 */
 	public void setSprinting(boolean sprinting) {
@@ -348,6 +339,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is sprinting.
+	 *
 	 * @return true if sprinting
 	 */
 	public boolean isSprinting() {
@@ -356,6 +348,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not the player is on the ground.
+	 *
 	 * @param onGround
 	 */
 	public void setOnGround(boolean onGround) {
@@ -364,6 +357,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is on the ground.
+	 *
 	 * @return true if on ground.
 	 */
 	public boolean isOnGround() {
@@ -372,6 +366,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Makes the player a server operator.
+	 *
 	 * @param op
 	 */
 	public void setOp(boolean op) {
@@ -381,6 +376,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is a server operator.
+	 *
 	 * @return true if an operator.
 	 */
 	public boolean isOp() {
@@ -390,6 +386,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * The list displayed in the user list on the client when a client presses TAB.
+	 *
 	 * @return user list name
 	 */
 	public String getTabListName() {
@@ -398,6 +395,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the list displayed in the user list on the client when a client presses TAB.
+	 *
 	 * @param tabListName
 	 */
 	public void setTabListName(String tabListName) {
@@ -406,6 +404,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Returns the current game-mode the controller is in.
+	 *
 	 * @return game mode of controller
 	 */
 	public GameMode getGameMode() {
@@ -414,6 +413,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the current game-mode the controller is in.
+	 *
 	 * @param gameMode
 	 */
 	public void setGameMode(GameMode gameMode) {
@@ -423,6 +423,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the controller is in survival mode.
+	 *
 	 * @return true if in survival mode
 	 */
 	public boolean isSurvival() {
@@ -431,6 +432,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the controller is poisoned.
+	 *
 	 * @return true if poisoned.
 	 */
 	public boolean isPoisoned() {
@@ -439,6 +441,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets whether or not the controller is poisoned.
+	 *
 	 * @param poisoned
 	 */
 	public void setPoisoned(boolean poisoned) {
@@ -447,6 +450,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Returns the hunger of the player attached to the controller.
+	 *
 	 * @return hunger
 	 */
 	public short getHunger() {
@@ -455,6 +459,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the hunger of the controller.
+	 *
 	 * @param hunger
 	 */
 	public void setHunger(short hunger) {
@@ -463,6 +468,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Returns the food saturation level of the player attached to the controller. The food bar "jitters" when the bar reaches 0.
+	 *
 	 * @return food saturation level
 	 */
 	public float getFoodSaturation() {
@@ -471,6 +477,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the food saturation of the controller. The food bar "jitters" when the bar reaches 0.
+	 *
 	 * @param foodSaturation
 	 */
 	public void setFoodSaturation(float foodSaturation) {
@@ -479,6 +486,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Returns the exhaustion of the controller; affects hunger loss.
+	 *
 	 * @return
 	 */
 	public float getExhaustion() {
@@ -487,6 +495,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the exhaustion of the controller; affects hunger loss.
+	 *
 	 * @param exhaustion
 	 */
 	public void setExhaustion(float exhaustion) {

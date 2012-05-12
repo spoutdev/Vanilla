@@ -32,7 +32,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
-
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.AbstractAttachable;
 import org.spout.vanilla.material.block.Openable;
@@ -52,7 +51,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
 		boolean powered = this.isReceivingPower(block);
-		if (powered  != this.isOpen(block)) {
+		if (powered != this.isOpen(block)) {
 			this.setOpen(block, powered);
 		}
 	}

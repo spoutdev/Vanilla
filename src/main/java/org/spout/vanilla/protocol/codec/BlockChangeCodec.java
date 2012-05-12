@@ -26,14 +26,12 @@
  */
 package org.spout.vanilla.protocol.codec;
 
-import java.io.IOException;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-
 import org.spout.api.protocol.MessageCodec;
-
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
+
+import java.io.IOException;
 
 public final class BlockChangeCodec extends MessageCodec<BlockChangeMessage> {
 	public BlockChangeCodec() {

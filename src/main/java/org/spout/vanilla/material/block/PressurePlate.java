@@ -42,6 +42,7 @@ public class PressurePlate extends GroundAttachable implements RedstoneSource, S
 
 	/**
 	 * Gets whether this pressure plate is pressed down
+	 *
 	 * @param block to get it of
 	 * @return True if pressed down, False if not
 	 */
@@ -51,7 +52,8 @@ public class PressurePlate extends GroundAttachable implements RedstoneSource, S
 
 	/**
 	 * Sets whether this pressure plate is pressed down
-	 * @param block to set it of
+	 *
+	 * @param block   to set it of
 	 * @param pressed whether it is pressed
 	 */
 	public void setPressed(Block block, boolean pressed) {
@@ -60,8 +62,9 @@ public class PressurePlate extends GroundAttachable implements RedstoneSource, S
 
 	/**
 	 * Sets whether this pressure plate is pressed down
-	 * @param block to set it of
-	 * @param pressed whether it is pressed
+	 *
+	 * @param block	 to set it of
+	 * @param pressed   whether it is pressed
 	 * @param doPhysics whether to perform redstone physics
 	 */
 	public void setPressed(Block block, boolean pressed, boolean doPhysics) {

@@ -28,9 +28,7 @@ package org.spout.vanilla.world.generator.normal.biome;
 
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.source.RidgedMulti;
-
 import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.normal.decorator.CaveDecorator;

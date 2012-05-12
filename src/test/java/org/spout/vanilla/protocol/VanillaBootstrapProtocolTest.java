@@ -26,22 +26,20 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.io.IOException;
-
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.junit.Test;
-
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.common.message.CustomDataMessage;
-
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapCodecLookupService;
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
+
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 

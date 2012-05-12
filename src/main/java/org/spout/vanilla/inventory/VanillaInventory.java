@@ -29,6 +29,7 @@ package org.spout.vanilla.inventory;
 public interface VanillaInventory {
 	/**
 	 * Gets the window associated with the inventory
+	 *
 	 * @return window of inventory
 	 */
 	public Window getWindow();

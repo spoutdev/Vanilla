@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.util.explosion;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExplosionLayer {
 	public ExplosionLayer(final ExplosionModelSpherical model) {
@@ -84,6 +84,7 @@ public class ExplosionLayer {
 
 	/**
 	 * Creates a new slot using a given direction
+	 *
 	 * @param dx is the delta x motion
 	 * @param dy is the delta y motion
 	 * @param dz is the delta z motion

@@ -28,7 +28,6 @@ package org.spout.vanilla.controller.living;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.protocol.EntityProtocol;
-
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.protocol.controller.BasicMobEntityProtocol;
 

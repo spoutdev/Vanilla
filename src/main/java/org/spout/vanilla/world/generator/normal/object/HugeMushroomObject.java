@@ -26,15 +26,14 @@
  */
 package org.spout.vanilla.world.generator.normal.object;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 public class HugeMushroomObject extends WorldGeneratorObject {
 
@@ -75,9 +74,7 @@ public class HugeMushroomObject extends WorldGeneratorObject {
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		final BlockMaterial under = w.getBlockMaterial(x, y - 1, z);
-		if (under != VanillaMaterials.DIRT
-				&& under != VanillaMaterials.GRASS
-				&& under != VanillaMaterials.MYCELIUM) {
+		if (under != VanillaMaterials.DIRT && under != VanillaMaterials.GRASS && under != VanillaMaterials.MYCELIUM) {
 			return false;
 		}
 		byte radiusToCheck = initCheckRadius;
@@ -275,10 +272,7 @@ public class HugeMushroomObject extends WorldGeneratorObject {
 	}
 
 	private void checkIfUseTextureMetadata() {
-		if ((capMaterial == VanillaMaterials.HUGE_BROWN_MUSHROOM
-				|| capMaterial == VanillaMaterials.HUGE_RED_MUSHROOM)
-				&& (stemMaterial == VanillaMaterials.HUGE_BROWN_MUSHROOM
-				|| stemMaterial == VanillaMaterials.HUGE_RED_MUSHROOM)) {
+		if ((capMaterial == VanillaMaterials.HUGE_BROWN_MUSHROOM || capMaterial == VanillaMaterials.HUGE_RED_MUSHROOM) && (stemMaterial == VanillaMaterials.HUGE_BROWN_MUSHROOM || stemMaterial == VanillaMaterials.HUGE_RED_MUSHROOM)) {
 			useTextureMetadata = true;
 		} else {
 			useTextureMetadata = false;
@@ -347,8 +341,7 @@ public class HugeMushroomObject extends WorldGeneratorObject {
 		private final byte capRadius;
 		private final byte capThickness;
 
-		private HugeMushroomType(HugeMushroomShape shape, BlockMaterial material,
-				byte capRadius, byte capThickness) {
+		private HugeMushroomType(HugeMushroomShape shape, BlockMaterial material, byte capRadius, byte capThickness) {
 			this.shape = shape;
 			this.material = material;
 			this.capRadius = capRadius;

@@ -32,7 +32,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
-
 import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.material.block.AbstractAttachable;
 import org.spout.vanilla.material.block.PointAttachable;

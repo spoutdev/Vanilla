@@ -26,14 +26,13 @@
  */
 package org.spout.vanilla.util.explosion;
 
-import java.util.Random;
-
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.Random;
 
 /**
  * This is a permanent block slot whose information is loaded from a world dynamically
@@ -53,10 +52,11 @@ public class ExplosionBlockSlot {
 
 	/**
 	 * Generates the material and initial damage factor for this block
+	 *
 	 * @param world  to use
-	 * @param x      coordinate of the middle
-	 * @param y      coordinate of the middle
-	 * @param z      coordinate of the middle
+	 * @param x	  coordinate of the middle
+	 * @param y	  coordinate of the middle
+	 * @param z	  coordinate of the middle
 	 * @param random to use when generating the damage factor
 	 */
 	public void prepare(World world, int x, int y, int z, Random random) {

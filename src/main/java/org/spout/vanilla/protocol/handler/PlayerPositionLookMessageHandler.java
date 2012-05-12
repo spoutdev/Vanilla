@@ -29,7 +29,6 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 
 public final class PlayerPositionLookMessageHandler extends MessageHandler<PlayerPositionLookMessage> {

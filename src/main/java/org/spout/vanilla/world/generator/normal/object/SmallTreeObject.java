@@ -26,16 +26,15 @@
  */
 package org.spout.vanilla.world.generator.normal.object;
 
-import java.util.HashSet;
-import java.util.Random;
-
-import java.util.Set;
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 public class SmallTreeObject extends WorldGeneratorObject {
 
@@ -100,8 +99,7 @@ public class SmallTreeObject extends WorldGeneratorObject {
 			final byte xzRadius = (byte) ((radiusIncrease + 1) - yRadius / 2);
 			for (byte xx = (byte) -xzRadius; xx < xzRadius + 1; xx++) {
 				for (byte zz = (byte) -xzRadius; zz < xzRadius + 1; zz++) {
-					if (Math.abs(xx) != xzRadius || Math.abs(zz) != xzRadius
-							|| random.nextBoolean() && yRadius != 0) {
+					if (Math.abs(xx) != xzRadius || Math.abs(zz) != xzRadius || random.nextBoolean() && yRadius != 0) {
 						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LEAVES, leavesMetadata, w);
 					}
 				}
@@ -196,7 +194,7 @@ public class SmallTreeObject extends WorldGeneratorObject {
 		leavesMetadata = type.metadata;
 		logMetadata = type.metadata;
 	}
-	
+
 	public void setLeavesMetadata(short leavesMetadata) {
 		this.leavesMetadata = leavesMetadata;
 	}

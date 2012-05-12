@@ -26,17 +26,16 @@
  */
 package org.spout.vanilla.controller.living.creature.passive;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Sheep extends Creature implements Passive {
 	private int color;
@@ -65,6 +64,7 @@ public class Sheep extends Creature implements Passive {
 
 	/**
 	 * Whether or not the sheep's wool has been sheared.
+	 *
 	 * @return true if sheared.
 	 */
 	public boolean isSheared() {
@@ -73,6 +73,7 @@ public class Sheep extends Creature implements Passive {
 
 	/**
 	 * Sets whether or not the sheep's wool has been sheared.
+	 *
 	 * @param sheared
 	 */
 	public void setSheared(boolean sheared) {
@@ -81,6 +82,7 @@ public class Sheep extends Creature implements Passive {
 
 	/**
 	 * Gets the color of the sheep.
+	 *
 	 * @return color of the sheep.
 	 */
 	public Wool.WoolColor getColor() {
@@ -89,6 +91,7 @@ public class Sheep extends Creature implements Passive {
 
 	/**
 	 * Sets the color of the sheep.
+	 *
 	 * @param color
 	 */
 	public void setColor(Wool.WoolColor color) {

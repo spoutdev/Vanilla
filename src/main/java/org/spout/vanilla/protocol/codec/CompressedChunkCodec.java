@@ -26,18 +26,16 @@
  */
 package org.spout.vanilla.protocol.codec;
 
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
+import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.protocol.MessageCodec;
+import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
+
 import java.io.IOException;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
-
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-
-import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.protocol.MessageCodec;
-
-import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 
 public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMessage> {
 	private static final int COMPRESSION_LEVEL = Deflater.BEST_SPEED;

@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import java.util.List;
-
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
+
+import java.util.List;
 
 public final class EntityMetadataMessage extends Message {
 

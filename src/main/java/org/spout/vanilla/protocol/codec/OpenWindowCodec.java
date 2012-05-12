@@ -26,15 +26,13 @@
  */
 package org.spout.vanilla.protocol.codec;
 
-import java.io.IOException;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-
 import org.spout.api.protocol.MessageCodec;
-
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.OpenWindowMessage;
+
+import java.io.IOException;
 
 public final class OpenWindowCodec extends MessageCodec<OpenWindowMessage> {
 	public OpenWindowCodec() {

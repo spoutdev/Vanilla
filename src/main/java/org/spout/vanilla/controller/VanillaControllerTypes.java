@@ -26,37 +26,15 @@
  */
 package org.spout.vanilla.controller;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
 import gnu.trove.map.hash.TIntObjectHashMap;
-
 import org.spout.vanilla.controller.block.DispenserController;
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.MobControllerType;
-import org.spout.vanilla.controller.living.creature.hostile.Blaze;
-import org.spout.vanilla.controller.living.creature.hostile.CaveSpider;
-import org.spout.vanilla.controller.living.creature.hostile.Creeper;
-import org.spout.vanilla.controller.living.creature.hostile.Enderdragon;
-import org.spout.vanilla.controller.living.creature.hostile.Ghast;
-import org.spout.vanilla.controller.living.creature.hostile.Giant;
-import org.spout.vanilla.controller.living.creature.hostile.MagmaCube;
-import org.spout.vanilla.controller.living.creature.hostile.Silverfish;
-import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
-import org.spout.vanilla.controller.living.creature.hostile.Slime;
-import org.spout.vanilla.controller.living.creature.hostile.Spider;
-import org.spout.vanilla.controller.living.creature.hostile.Zombie;
+import org.spout.vanilla.controller.living.creature.hostile.*;
 import org.spout.vanilla.controller.living.creature.neutral.Enderman;
 import org.spout.vanilla.controller.living.creature.neutral.PigZombie;
 import org.spout.vanilla.controller.living.creature.neutral.Wolf;
-import org.spout.vanilla.controller.living.creature.passive.Chicken;
-import org.spout.vanilla.controller.living.creature.passive.Cow;
-import org.spout.vanilla.controller.living.creature.passive.Mooshroom;
-import org.spout.vanilla.controller.living.creature.passive.Ocelot;
-import org.spout.vanilla.controller.living.creature.passive.Pig;
-import org.spout.vanilla.controller.living.creature.passive.Sheep;
-import org.spout.vanilla.controller.living.creature.passive.Squid;
-import org.spout.vanilla.controller.living.creature.passive.Villager;
+import org.spout.vanilla.controller.living.creature.passive.*;
 import org.spout.vanilla.controller.living.creature.util.IronGolem;
 import org.spout.vanilla.controller.living.creature.util.SnowGolem;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -66,13 +44,7 @@ import org.spout.vanilla.controller.object.misc.Painting;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
 import org.spout.vanilla.controller.object.moving.XPOrb;
-import org.spout.vanilla.controller.object.projectile.Arrow;
-import org.spout.vanilla.controller.object.projectile.BlazeFireball;
-import org.spout.vanilla.controller.object.projectile.Egg;
-import org.spout.vanilla.controller.object.projectile.EnderPearl;
-import org.spout.vanilla.controller.object.projectile.EyeOfEnder;
-import org.spout.vanilla.controller.object.projectile.GhastFireball;
-import org.spout.vanilla.controller.object.projectile.Snowball;
+import org.spout.vanilla.controller.object.projectile.*;
 import org.spout.vanilla.controller.object.vehicle.Boat;
 import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.controller.world.sky.NetherSky;
@@ -80,24 +52,16 @@ import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
 import org.spout.vanilla.protocol.controller.BasicObjectEntityProtocol;
 import org.spout.vanilla.protocol.controller.BasicProjectileEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.BlazeEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.CreeperEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.EnderdragonEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.EndermanEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.GhastEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.MagmaCubeEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.PigEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.SheepEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.SlimeEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.SpiderEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.VanillaPlayerEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.WolfEntityProtocol;
+import org.spout.vanilla.protocol.controller.living.*;
 import org.spout.vanilla.protocol.controller.object.FallingBlockProtocol;
 import org.spout.vanilla.protocol.controller.object.PaintingEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.PickupEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.XPOrbEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.vehicle.BoatEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.vehicle.TransportMinecartEntityProtocol;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 /**
  * Enum that serves as a lookup for all controllers in Vanilla.

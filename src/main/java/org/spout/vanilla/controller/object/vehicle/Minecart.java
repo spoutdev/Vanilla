@@ -33,7 +33,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.controller.source.HealthChangeReason;
@@ -306,6 +305,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 	/**
 	 * Fired when all velocity updating is finished
 	 * Velocity changes at this point have no effect for the current tick
+	 *
 	 * @param dt
 	 */
 	public void onVelocityUpdated(float dt) {

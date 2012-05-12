@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.PlayerProtocol;
-
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 

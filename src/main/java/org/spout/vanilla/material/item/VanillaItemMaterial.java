@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.item;
 
 import org.spout.api.material.Material;
-
 import org.spout.vanilla.material.VanillaMaterial;
 
 public class VanillaItemMaterial extends Material implements VanillaMaterial {
@@ -44,11 +43,11 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	@Override
 	public void loadProperties() {
 		if (this.hasSubMaterials()) {
-		    for (Material material : this.getSubMaterials()) {
-		    	if (material instanceof VanillaMaterial) {
-		    		((VanillaMaterial) material).loadProperties();
-		    	}
-		    }
+			for (Material material : this.getSubMaterials()) {
+				if (material instanceof VanillaMaterial) {
+					((VanillaMaterial) material).loadProperties();
+				}
+			}
 		}
 	}
 

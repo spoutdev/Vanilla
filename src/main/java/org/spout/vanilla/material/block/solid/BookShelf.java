@@ -42,7 +42,7 @@ public class BookShelf extends Solid implements Fuel {
 		super.loadProperties();
 		this.setDrop(VanillaMaterials.BOOK).setDropCount(3);
 	}
-	
+
 	@Override
 	public float getFuelTime() {
 		return BURN_TIME;

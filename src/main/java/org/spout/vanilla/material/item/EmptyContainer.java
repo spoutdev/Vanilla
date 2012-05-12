@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.item;
 
-import java.util.HashMap;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
@@ -37,8 +35,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
-
 import org.spout.vanilla.material.VanillaMaterials;
+
+import java.util.HashMap;
 
 public class EmptyContainer extends BlockItem {
 	private HashMap<MaterialSource, FullContainer> fullContainers = new HashMap<MaterialSource, FullContainer>();

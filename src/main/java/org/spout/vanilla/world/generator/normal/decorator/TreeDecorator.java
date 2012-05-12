@@ -45,13 +45,13 @@ public class TreeDecorator implements BiomeDecorator {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		final Biome biome = chunk.getBiomeType(8, 8, 8);
+		final Biome biome = chunk.getBiomeType(7, 7, 7);
 		final SmallTreeObject tree = getTree(random, biome);
 		if (tree == null) {
 			return;
 		}
 		final World world = chunk.getWorld();
-		byte amount = getNumberOfTrees(biome);
+		final byte amount = getNumberOfTrees(biome);
 		for (byte i = 0; i < amount; i++) {
 			final int worldX = chunk.getX() * 16 + random.nextInt(16);
 			final int worldZ = chunk.getZ() * 16 + random.nextInt(16);

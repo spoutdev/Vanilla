@@ -299,12 +299,12 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 			return this.isConnectedToSource(block, BlockFace.EAST) || this.isConnectedToSource(block, BlockFace.WEST);
 		case EAST :
 		case WEST :
-			return this.isConnectedToSource(block, BlockFace.WEST) || this.isConnectedToSource(block, BlockFace.EAST);
+			return this.isConnectedToSource(block, BlockFace.NORTH) || this.isConnectedToSource(block, BlockFace.SOUTH);
 		default :
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Checks if a redstone wire is connected to a
 	 * @param block

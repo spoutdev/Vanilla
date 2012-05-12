@@ -30,11 +30,12 @@ import java.lang.reflect.Field;
 
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.door.IronDoorBlock;
 import org.spout.vanilla.material.block.door.WoodenDoorBlock;
+import org.spout.vanilla.material.block.liquid.Lava;
+import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.block.misc.BedBlock;
 import org.spout.vanilla.material.block.misc.Chest;
 import org.spout.vanilla.material.block.misc.FarmLand;
@@ -190,10 +191,10 @@ public final class VanillaMaterials {
 	public static final PoweredRails RAILS_POWERED = register(new PoweredRails());
 	public static final DetectorRails RAILS_DETECTOR = register(new DetectorRails());
 	//== Liquids ==
-	public static final Liquid WATER = (Liquid) register(new Liquid("Water", 8, true).setOpacity((byte) 2));
-	public static final Liquid STATIONARY_WATER = (Liquid) register(new Liquid("Stationary Water", 9, false).setOpacity((byte) 2));
-	public static final Liquid LAVA = (Liquid) register(new Liquid("Lava", 10, true).setHardness(0.0F).setLightLevel(15).setResistance(0.0F));
-	public static final Liquid STATIONARY_LAVA = (Liquid) register(new Liquid("Stationary Lava", 11, false).setLightLevel(15));
+	public static final Water WATER = register(new Water("Water", 8, true));
+	public static final Water STATIONARY_WATER = register(new Water("Stationary Water", 9, false));
+	public static final Lava LAVA = (Lava) register(new  Lava("Lava", 10, true).setHardness(0.0F).setResistance(0.0F));
+	public static final Lava STATIONARY_LAVA = register(new  Lava("Stationary Lava", 11, false));
 	//== Ores ==
 	public static final CoalOre COAL_ORE = register(new CoalOre());
 	public static final IronOre IRON_ORE = register(new IronOre());

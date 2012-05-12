@@ -85,9 +85,11 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		if (!VanillaConfiguration.REDSTONE_PHYSICS.getBoolean()) {
 			return;
 		}
-
-		short receiving = this.getReceivingPower(block);
-		setPowerAndUpdate(block, receiving);
+		
+		if (block.getMaterial().equals(this)) {
+			short receiving = this.getReceivingPower(block);
+			setPowerAndUpdate(block, receiving);
+		}
 	}
 
 	@Override

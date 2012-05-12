@@ -24,47 +24,62 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util;
+package org.spout.vanilla.material.block.liquid;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Liquid;
 
-public class RedstoneUtil {
+public class Lava extends Liquid {
 
-	public static boolean isReceivingPower(Block block) {
-		for (BlockFace face : BlockFaces.BTEWNS) {
-			if (isPowered(block.translate(face), face.getOpposite())) {
-				return true;
-			}
-		}
-		return false;
+	public Lava(String name, int id, boolean flowing) {
+		super(name, id, flowing);
 	}
 
-	public static boolean isPowered(Block block) {
-		return isPowered(block, RedstonePowerMode.ALL);
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setLightLevel(15);
 	}
 
-	public static boolean isPowered(Block block, BlockFace to) {
-		return isPowered(block, to, RedstonePowerMode.ALL);
+	@Override
+	public Liquid getSourceMaterial() {
+		return VanillaMaterials.STATIONARY_LAVA;
 	}
 
-	public static boolean isPowered(Block block, RedstonePowerMode powerMode) {
-		return isPowered(block, BlockFace.THIS, powerMode);
+	@Override
+	public Liquid getFlowingMaterial() {
+		return VanillaMaterials.LAVA;
 	}
 
-	public static boolean isPowered(Block block, BlockFace to, RedstonePowerMode powerMode) {
-		BlockMaterial mat = block.getSubMaterial();
-		if (mat instanceof VanillaBlockMaterial) {
-			if (((VanillaBlockMaterial) mat).hasRedstonePower(block, powerMode)) {
-				return true;
-			} else if (to != BlockFace.THIS && mat instanceof RedstoneSource) {
-				return ((RedstoneSource) mat).hasRedstonePowerTo(block, to, powerMode);
-			}
-		}
-		return false;
+	@Override
+	public void onFlow(Block block, BlockFace to) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getMaxLevel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getLevel(Block block) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getReceivingLevel(Block block) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setLevel(Block block, int level) {
+		// TODO Auto-generated method stub
+		
 	}
 }

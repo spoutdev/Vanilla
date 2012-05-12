@@ -26,9 +26,13 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
-public class Liquid extends VanillaBlockMaterial {
+public abstract class Liquid extends VanillaBlockMaterial {
 	private final boolean flowing;
 
 	public Liquid(String name, int id, boolean flowing) {
@@ -42,6 +46,60 @@ public class Liquid extends VanillaBlockMaterial {
 		this.setHardness(100.0F).setResistance(166.7F);
 		this.setDrop(null);
 	}
+
+	@Override
+	public boolean hasPhysics() {
+		return true;
+	}
+
+	@Override
+	public void onUpdate(Block block) {
+		super.onUpdate(block);
+		int level = this.getReceivingLevel(block);
+		this.setLevel(block, level);
+		if (level > 0) {
+			
+		}
+	}
+
+	public abstract Liquid getSourceMaterial();
+
+	public abstract Liquid getFlowingMaterial();
+
+	public boolean isMaterial(BlockMaterial material) {
+		return material.equals(this.getFlowingMaterial(), this.getSourceMaterial());
+	}
+
+	public abstract void onFlow(Block block, BlockFace to);
+	
+	/**
+	 * Gets the maximum possible water level
+	 * @return the max level
+	 */
+	public abstract int getMaxLevel();
+	
+	/**
+	 * Gets the level of a liquid
+	 * @param block of the liquid
+	 * @return the level
+	 */
+	public abstract int getLevel(Block block);
+
+	/**
+	 * Gets the level a liquid receives from nearby blocks
+	 * @param block of the liquid
+	 * @return the level
+	 */
+	public abstract int getReceivingLevel(Block block);
+
+	/**
+	 * Sets the level of a liquid<br>
+	 * A level of 0 or below converts the liquid into air
+	 * 
+	 * @param block of the liquid
+	 * @param level to set to
+	 */
+	public abstract void setLevel(Block block, int level);
 
 	public boolean isFlowing() {
 		return flowing;

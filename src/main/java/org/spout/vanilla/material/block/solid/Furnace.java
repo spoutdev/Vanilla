@@ -93,7 +93,7 @@ public class Furnace extends Solid implements Mineable, Directional {
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
 			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-			block.setController(new FurnaceController());
+			block.getWorld().createAndSpawnEntity(block.getPosition(), new FurnaceController());
 			return true;
 		}
 
@@ -116,14 +116,13 @@ public class Furnace extends Solid implements Mineable, Directional {
 
 			if (furnace == null) {
 				FurnaceController newFurnace = new FurnaceController();
-				block.setController(newFurnace);
+				block.getWorld().createAndSpawnEntity(block.getPosition(), new FurnaceController());
 				furnace = newFurnace;
-				return;
 			}
 
 			// Transfer the items
 			FurnaceInventory furnaceInventory = furnace.getInventory();
-			for (int slot = 0; slot < inventory.getSize() - 1; slot++) {
+			for (int slot = 0; slot < 36; slot++) {
 				furnaceInventory.setItem(slot, inventory.getItem(slot));
 			}
 

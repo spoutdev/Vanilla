@@ -40,6 +40,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Furnace;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
+import org.spout.vanilla.util.InventoryUtil;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
@@ -47,90 +48,95 @@ public class FurnaceController extends VanillaBlockController {
 	private final FurnaceInventory inventory = new FurnaceInventory(this);
 	private float burnTime = 0, burnIncrement = 0, burnStartTime = 0;
 	private float progress = 0, progressIncrement = 0, craftTime = 0;
-	private boolean burning;
 
 	public FurnaceController() {
 		super(VanillaControllerTypes.FURNACE, VanillaMaterials.FURNACE);
 	}
 
 	@Override
-	public void onTick(float dt) {
-		if (inventory.hasIngredient()) {
-			// Increment progress if something is cooking
-			if (burning) {
-				progress += dt;
-				progressIncrement += 180 / (craftTime * 20);
-			}
-
-			// Start the burner.
-			if (inventory.hasFuel()) {
-				if (burnTime <= 0) {
-					ItemStack fuelStack = inventory.getFuel();
-					Fuel fuel = (Fuel) fuelStack.getMaterial();
-					burnTime = fuel.getFuelTime();
-					burnStartTime = burnTime;
-					burnIncrement = 250;
-					burning = true;
-
-					ItemStack ingredientStack = inventory.getIngredient();
-					TimedCraftable ingredient = (TimedCraftable) ingredientStack.getMaterial();
-					progress = 0;
-					progressIncrement = 0;
-					craftTime = ingredient.getCraftTime();
-
-					int amount = fuelStack.getAmount();
-					inventory.setFuel(fuelStack.setAmount(amount - 1));
-				} else {
-					// Decrement burn time
-					burnTime -= dt;
-					burnIncrement -= 250 / (burnStartTime * 20);
-				}
-			}
-		}
-
-		//Update viewers
-		for (InventoryViewer viewer : inventory.getViewers()) {
-			if (viewer instanceof VanillaNetworkSynchronizer) {
-				VanillaNetworkSynchronizer network = (VanillaNetworkSynchronizer) viewer;
-				Controller c = network.getEntity().getController();
-				if (c instanceof VanillaPlayer && burnTime > 0) {
-					VanillaPlayer controller = (VanillaPlayer) c;
-					int window = controller.getWindowId();
-					sendPacket(controller.getPlayer(), new ProgressBarMessage(window, Furnace.FIRE_ICON, (int) burnIncrement), new ProgressBarMessage(window, Furnace.PROGRESS_ARROW, (int) progressIncrement));
-				}
-			}
-		}
-
-		// Make sure everything gets reset properly, because of the floating points, not everything is always 100% accurate.
-		if (burnTime <= 0) {
-			burnIncrement = 0;
-			burnStartTime = 0;
-			burning = false;
-		}
-
-		if (progress >= craftTime) {
-			progress = 0;
-			progressIncrement = 0;
-			craftTime = 0;
-			ItemStack ingredientStack = inventory.getIngredient();
-			if (ingredientStack == null) {
-				return;
-			}
-
-			int amount = ingredientStack.getAmount();
-			inventory.setIngredient(ingredientStack.setAmount(amount - 1));
-			ItemStack output = null;
-			if (ingredientStack.getMaterial() instanceof TimedCraftable) {
-				output = ((TimedCraftable) ingredientStack.getMaterial()).getResult();
-			}
-
-			inventory.setOutput(output);
-		}
+	public void onAttached() {
 	}
 
 	@Override
-	public void onAttached() {
-		System.out.println("Furnace entity spawned and controller attached to: " + getParent().getPosition().toString());
+	public void onTick(float dt) {
+		ItemStack input = inventory.getIngredient(), output = inventory.getOutput();
+		if (burnTime <= 0) {
+			// Start burning
+			if (inventory.hasIngredient() && inventory.hasFuel()) {
+				ItemStack fuelStack = inventory.getFuel();
+				Fuel fuel = (Fuel) fuelStack.getMaterial();
+				burnTime = fuel.getFuelTime();
+				burnStartTime = burnTime;
+				burnIncrement = 250;
+
+				TimedCraftable ingredient = (TimedCraftable) input.getMaterial();
+				progress = 0;
+				progressIncrement = 0;
+				craftTime = ingredient.getCraftTime();
+
+				int amount = fuelStack.getAmount();
+				inventory.setFuel(fuelStack.setAmount(amount - 1));
+			}
+		}
+
+		if (burnTime > 0) {
+
+			// Decrement the burn
+			burnTime -= dt;
+			burnIncrement -= 250 / (burnStartTime * 20);
+
+			if (inventory.hasIngredient()) {
+				// Check for new ingredients
+				if (progress <= 0) {
+					progress += dt;
+					progressIncrement = 0;
+					craftTime = ((TimedCraftable) inventory.getIngredient().getMaterial()).getCraftTime();
+				} else {
+					progress += dt;
+					progressIncrement += 180 / (craftTime * 20);
+				}
+			} else {
+				progress = 0;
+				progressIncrement = 0;
+				craftTime = 0;
+			}
+
+			// Reset the burn timer, this is necessary because of the floating points.
+			if (burnTime <= 0) {
+				burnIncrement = 0;
+				burnStartTime = 0;
+			}
+
+			if (progress >= craftTime && inventory.hasIngredient()) {
+				progress = 0;
+				progressIncrement = 0;
+				craftTime = 0;
+				ItemStack result = ((TimedCraftable) input.getMaterial()).getResult();
+				if (output == null) {
+					output = result;
+				} else {
+					output.setAmount(output.getAmount() + result.getAmount());
+				}
+
+				int inputAmount = input.getAmount();
+				int outputAmount = output.getAmount();
+				inventory.setIngredient(input.setAmount(inputAmount - 1));
+				inventory.setOutput(output.setAmount(outputAmount));
+			}
+
+			// Update viewers
+			for (InventoryViewer viewer : inventory.getViewers()) {
+				if (viewer instanceof VanillaNetworkSynchronizer) {
+					VanillaNetworkSynchronizer network = (VanillaNetworkSynchronizer) viewer;
+					Controller c = network.getEntity().getController();
+					if (c instanceof VanillaPlayer) {
+						VanillaPlayer controller = (VanillaPlayer) c;
+						int window = controller.getWindowId();
+						sendPacket(controller.getPlayer(), new ProgressBarMessage(window, Furnace.FIRE_ICON, (int) burnIncrement), new ProgressBarMessage(window, Furnace.PROGRESS_ARROW, (int) progressIncrement));
+					}
+				}
+			}
+		}
 	}
 
 	public FurnaceInventory getInventory() {
@@ -154,6 +160,6 @@ public class FurnaceController extends VanillaBlockController {
 	}
 
 	public boolean isBurning() {
-		return burning;
+		return burnTime > 0;
 	}
 }

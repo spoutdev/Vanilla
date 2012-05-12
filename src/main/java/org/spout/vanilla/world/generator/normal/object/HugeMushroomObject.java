@@ -99,6 +99,7 @@ public class HugeMushroomObject extends WorldGeneratorObject {
 		switch (shape) {
 			case FLAT:
 				generateHugeFlatMushroom(w, x, y, z);
+				return;
 			case ROUND:
 				generateHugeRoundMushroom(w, x, y, z);
 		}

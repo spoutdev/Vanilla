@@ -32,15 +32,16 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
-
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Openable;
 import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
+import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class FenceGate extends VanillaBlockMaterial implements Openable, RedstoneTarget {
+
 	public FenceGate(String name, int id) {
 		super(name, id);
 	}
@@ -67,9 +68,11 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
-		boolean powered = this.isReceivingPower(block);
-		if (powered != this.isOpen(block)) {
-			this.setOpen(block, powered);
+		if (block.getMaterial().equals(this)) {
+			boolean powered = this.isReceivingPower(block);
+			if (powered != this.isOpen(block)) {
+				this.setOpen(block, powered);
+			}
 		}
 	}
 
@@ -112,6 +115,7 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 
 	@Override
 	public boolean isReceivingPower(Block block) {
-		return isReceivingRedstonePower(block);
+		return RedstoneUtil.isReceivingPower(block);
 	}
 }
+

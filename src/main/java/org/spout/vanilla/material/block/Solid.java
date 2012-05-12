@@ -34,6 +34,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Solid extends VanillaBlockMaterial {
+
 	public Solid(String name, int id) {
 		super(name, id);
 	}
@@ -47,6 +48,11 @@ public class Solid extends VanillaBlockMaterial {
 	 */
 	public boolean isMoving() {
 		return false;
+	}
+
+	@Override
+	public boolean isRedstoneConductor() {
+		return true;
 	}
 
 	@Override

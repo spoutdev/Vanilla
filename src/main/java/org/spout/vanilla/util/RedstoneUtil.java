@@ -24,36 +24,47 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.util;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.block.RedstoneSource;
 
-import org.spout.vanilla.material.block.PointAttachable;
-import org.spout.vanilla.material.block.Solid;
+public class RedstoneUtil {
 
-public class Glass extends Solid {
-	public Glass(String name, int id) {
-		super(name, id);
-		this.setOccludes(false);
-	}
-
-	@Override
-	public boolean canSupport(BlockMaterial material, BlockFace face) {
-		if (face == BlockFace.TOP) {
-			return material instanceof PointAttachable;
+	public static boolean isReceivingPower(Block block) {
+		for (BlockFace face : BlockFaces.BTEWNS) {
+			if (isPowered(block.translate(face), face.getOpposite())) {
+				return true;
+			}
 		}
 		return false;
 	}
 
-	@Override
-	public boolean isRedstoneConductor() {
-		return false;
+	public static boolean isPowered(Block block) {
+		return isPowered(block, RedstonePowerMode.ALL);
 	}
 
-	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(null);
+	public static boolean isPowered(Block block, BlockFace to) {
+		return isPowered(block, to, RedstonePowerMode.ALL);
+	}
+
+	public static boolean isPowered(Block block, RedstonePowerMode powerMode) {
+		return isPowered(block, BlockFace.THIS, powerMode);
+	}
+
+	public static boolean isPowered(Block block, BlockFace to, RedstonePowerMode powerMode) {
+		BlockMaterial mat = block.getSubMaterial();
+		if (mat instanceof VanillaBlockMaterial) {
+			if (((VanillaBlockMaterial) mat).hasRedstonePower(block, powerMode)) {
+				return true;
+			} else if (to != BlockFace.THIS && mat instanceof RedstoneSource) {
+				return ((RedstoneSource) mat).hasRedstonePowerTo(block, to, powerMode);
+			}
+		}
+		return false;
 	}
 }

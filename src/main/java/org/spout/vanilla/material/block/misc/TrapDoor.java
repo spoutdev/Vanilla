@@ -39,6 +39,7 @@ import org.spout.vanilla.material.block.Openable;
 import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
+import org.spout.vanilla.util.RedstoneUtil;
 
 public class TrapDoor extends AbstractAttachable implements Fuel, Openable, RedstoneTarget {
 	public final float BURN_TIME = 15.f;
@@ -51,9 +52,11 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
-		boolean powered = this.isReceivingPower(block);
-		if (powered != this.isOpen(block)) {
-			this.setOpen(block, powered);
+		if (block.getMaterial().equals(this)) {
+			boolean powered = this.isReceivingPower(block);
+			if (powered  != this.isOpen(block)) {
+				this.setOpen(block, powered);
+			}
 		}
 	}
 
@@ -69,7 +72,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 
 	@Override
 	public boolean isReceivingPower(Block block) {
-		return isReceivingRedstonePower(block);
+		return RedstoneUtil.isReceivingPower(block);
 	}
 
 	@Override
@@ -109,3 +112,4 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 		return BlockFaces.WESN.get(block.getData() & ~0x4);
 	}
 }
+

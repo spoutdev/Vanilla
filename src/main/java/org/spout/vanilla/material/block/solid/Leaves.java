@@ -60,6 +60,11 @@ public class Leaves extends Solid {
 	}
 
 	@Override
+	public boolean isRedstoneConductor() {
+		return false;
+	}
+
+	@Override
 	public void onDestroySpawnDrops(Block block) {
 		Material dropMat = getDrop();
 		if (block.getSource() instanceof Entity) {

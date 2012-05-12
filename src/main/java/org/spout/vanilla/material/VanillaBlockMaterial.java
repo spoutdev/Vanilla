@@ -43,31 +43,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	public static final short REDSTONE_POWER_MAX = 15;
 	public static final short REDSTONE_POWER_MIN = 0;
 
-	public static boolean isReceivingRedstonePower(Block block) {
-		for (BlockFace face : BlockFaces.BTEWNS) {
-			if (isRedstonePowered(block.translate(face), face.getOpposite())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public static boolean isRedstonePowered(Block block) {
-		return isRedstonePowered(block, BlockFace.THIS);
-	}
-
-	public static boolean isRedstonePowered(Block block, BlockFace to) {
-		BlockMaterial mat = block.getSubMaterial();
-		if (mat instanceof VanillaBlockMaterial) {
-			if (((VanillaBlockMaterial) mat).hasRedstonePower(block)) {
-				return true;
-			} else if (to != BlockFace.THIS && mat instanceof RedstoneSource) {
-				return ((RedstoneSource) mat).hasRedstonePowerTo(block, to, RedstonePowerMode.ALL);
-			}
-		}
-		return false;
-	}
-
 	private float resistance;
 	private Material dropMaterial;
 	private int dropCount;
@@ -178,6 +153,14 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	}
 
 	/**
+	 * Gets whether this block material acts as a solid redstone conductor
+	 * @return True if it is a conductor
+	 */
+	public boolean isRedstoneConductor() {
+		return false;
+	}
+
+	/**
 	 * Gets the power level of this block<br>
 	 * @param block to get it of
 	 * @return the redstone power level
@@ -193,17 +176,21 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	 * @return the redstone power level
 	 */
 	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
-		short power = 0;
-		Block neigh;
-		BlockMaterial mat;
-		for (BlockFace face : BlockFaces.NESWBT) {
-			neigh = block.translate(face);
-			mat = neigh.getSubMaterial();
-			if (mat instanceof RedstoneSource) {
-				power = (short) Math.max(power, ((RedstoneSource) mat).getRedstonePowerTo(neigh, face.getOpposite(), powerMode));
+		if (this.isRedstoneConductor()) {
+			short power = 0;
+			Block neigh;
+			BlockMaterial mat;
+			for (BlockFace face : BlockFaces.NESWBT) {
+				neigh = block.translate(face);
+				mat = neigh.getSubMaterial();
+				if (mat instanceof RedstoneSource) {
+					power = (short) Math.max(power, ((RedstoneSource) mat).getRedstonePowerTo(neigh, face.getOpposite(), powerMode));
+				}
 			}
+			return power;
+		} else {
+			return REDSTONE_POWER_MIN;
 		}
-		return power;
 	}
 
 	/**
@@ -222,14 +209,16 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	 * @return True if the block receives power
 	 */
 	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
-		Block neigh;
-		BlockMaterial mat;
-		for (BlockFace face : BlockFaces.NESWBT) {
-			neigh = block.translate(face);
-			mat = neigh.getSubMaterial();
-			if (mat instanceof RedstoneSource) {
-				if (((RedstoneSource) mat).hasRedstonePowerTo(neigh, face.getOpposite(), powerMode)) {
-					return true;
+		if (this.isRedstoneConductor()) {
+			Block neigh;
+			BlockMaterial mat;
+			for (BlockFace face : BlockFaces.NESWBT) {
+				neigh = block.translate(face);
+				mat = neigh.getSubMaterial();
+				if (mat instanceof RedstoneSource) {
+					if (((RedstoneSource) mat).hasRedstonePowerTo(neigh, face.getOpposite(), powerMode)) {
+						return true;
+					}
 				}
 			}
 		}

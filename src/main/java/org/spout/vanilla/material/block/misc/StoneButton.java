@@ -56,8 +56,7 @@ public class StoneButton extends AbstractAttachable implements PointAttachable, 
 	@Override
 	public void onDelayedUpdate(Block block) {
 		this.setPressed(block, false);
-		block.update();
-		this.getBlockAttachedTo(block).update();
+		this.doRedstoneUpdates(block);
 	}
 
 	@Override
@@ -96,6 +95,7 @@ public class StoneButton extends AbstractAttachable implements PointAttachable, 
 		if (type != Action.LEFT_CLICK || !VanillaPlayerUtil.isCreative(entity)) {
 			if (!this.isPressed(block)) {
 				this.setPressed(block, true);
+				this.doRedstoneUpdates(block);
 				BlockUpdater.schedule(block, 20);
 			}
 		}

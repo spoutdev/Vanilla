@@ -26,12 +26,25 @@
  */
 package org.spout.vanilla.material.block.ore;
 
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
+import org.spout.vanilla.material.block.misc.SignBase;
 
 public class Glowstone extends Ore {
 	public Glowstone(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		return material instanceof SignBase || material.equals(VanillaMaterials.REDSTONE_WIRE);
+	}
+
+	@Override
+	public boolean isRedstoneConductor() {
+		return false;
 	}
 
 	@Override

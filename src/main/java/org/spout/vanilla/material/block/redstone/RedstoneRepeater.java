@@ -40,6 +40,7 @@ import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.util.RedstonePowerMode;
+import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class RedstoneRepeater extends GroundAttachable implements RedstoneSource, RedstoneTarget, Directional, ScheduleUpdated {
@@ -161,6 +162,6 @@ public class RedstoneRepeater extends GroundAttachable implements RedstoneSource
 	@Override
 	public boolean isReceivingPower(Block block) {
 		BlockFace face = this.getFacing(block).getOpposite();
-		return isRedstonePowered(block.translate(face), face.getOpposite());
+		return RedstoneUtil.isPowered(block.translate(face), face.getOpposite());
 	}
 }

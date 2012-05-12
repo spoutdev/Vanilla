@@ -88,7 +88,6 @@ public class FurnaceController extends VanillaBlockController {
 			}
 		}
 
-		// Update viewers
 		for (InventoryViewer viewer : inventory.getViewers()) {
 			if (viewer instanceof VanillaNetworkSynchronizer) {
 				VanillaNetworkSynchronizer network = (VanillaNetworkSynchronizer) viewer;

@@ -234,7 +234,7 @@ public final class VanillaMaterials {
 	public static final Fire FIRE = (Fire) register(new Fire().setHardness(0.0F).setResistance(0.0F).setLightLevel(15));
 	public static final MonsterSpawner MONSTER_SPAWNER = (MonsterSpawner) register(new MonsterSpawner("MonsterEntity Spawner", 52).setHardness(5.0F).setResistance(8.3F));
 	public static final Chest CHEST = register(new Chest("Chest", 54));
-	public static final RedstoneWire REDSTONE_WIRE = (RedstoneWire) register(new RedstoneWire().setHardness(0.0F).setResistance(0.0F));
+	public static final RedstoneWire REDSTONE_WIRE = register(new RedstoneWire());
 	public static final CraftingTable CRAFTING_TABLE = (CraftingTable) register(new CraftingTable("Crafting Table", 58).setHardness(4.2F));
 	public static final WheatCrop WHEATCROP = (WheatCrop) register(new WheatCrop().setResistance(0.0F));
 	public static final FarmLand FARMLAND = (FarmLand) register(new FarmLand("Farmland", 60).setHardness(0.6F).setResistance(1.0F));

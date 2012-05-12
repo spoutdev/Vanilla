@@ -35,6 +35,7 @@ import org.spout.api.util.LogicUtil;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
+import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class DoorBlock extends GroundAttachable implements Openable, RedstoneTarget {
@@ -50,9 +51,11 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
-		boolean powered = this.isReceivingPower(block);
-		if (powered != this.isOpen(block)) {
-			this.setOpen(block, powered);
+		if (block.getMaterial().equals(this)) {
+			boolean powered = this.isReceivingPower(block);
+			if (powered  != this.isOpen(block)) {
+				this.setOpen(block, powered);
+			}
 		}
 	}
 
@@ -67,7 +70,7 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 	@Override
 	public boolean isReceivingPower(Block block) {
 		block = this.getCorrectHalf(block, false);
-		return isReceivingRedstonePower(block) || isReceivingRedstonePower(block.translate(BlockFace.TOP));
+		return RedstoneUtil.isReceivingPower(block) || RedstoneUtil.isReceivingPower(block.translate(BlockFace.TOP));
 	}
 
 	@Override

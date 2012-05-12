@@ -36,6 +36,7 @@ import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.misc.Torch;
 import org.spout.vanilla.util.RedstonePowerMode;
+import org.spout.vanilla.util.RedstoneUtil;
 
 public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget, ScheduleUpdated {
 	public static final int TICK_DELAY = 2;
@@ -96,7 +97,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 
 	@Override
 	public boolean isReceivingPower(Block block) {
-		return isRedstonePowered(this.getBlockAttachedTo(block));
+		return RedstoneUtil.isPowered(this.getBlockAttachedTo(block));
 	}
 
 	@Override

@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import java.util.Arrays;
+
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
-
-import java.util.Arrays;
 
 public final class SetWindowSlotsMessage extends Message {
 	private final byte id;

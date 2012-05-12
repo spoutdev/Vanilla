@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.item.EmptyContainer;
 import org.spout.vanilla.material.item.FullContainer;

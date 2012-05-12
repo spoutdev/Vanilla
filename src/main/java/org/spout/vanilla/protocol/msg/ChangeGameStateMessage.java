@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.spout.api.protocol.Message;
+
 import org.spout.vanilla.controller.living.player.GameMode;
 
 public final class ChangeGameStateMessage extends Message {

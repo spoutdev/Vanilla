@@ -26,12 +26,14 @@
  */
 package org.spout.vanilla.protocol.codec;
 
+import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-import org.spout.api.protocol.MessageCodec;
-import org.spout.vanilla.protocol.msg.SpawnLightningStrikeMessage;
 
-import java.io.IOException;
+import org.spout.api.protocol.MessageCodec;
+
+import org.spout.vanilla.protocol.msg.SpawnLightningStrikeMessage;
 
 public final class SpawnLightningStrikeCodec extends MessageCodec<SpawnLightningStrikeMessage> {
 	public SpawnLightningStrikeCodec() {

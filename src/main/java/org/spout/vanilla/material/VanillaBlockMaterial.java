@@ -33,6 +33,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.util.RedstonePowerMode;
@@ -152,7 +153,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	/**
 	 * Called when this block is destroyed to perform the actual block destruction
-	 *
 	 * @param block to destroy
 	 */
 	public void onDestroyBlock(Block block) {
@@ -161,7 +161,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	/**
 	 * Called when this block is destroyed to perform the drops spawning
-	 *
 	 * @param block to spawn drops for
 	 */
 	public void onDestroySpawnDrops(Block block) {
@@ -180,7 +179,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	/**
 	 * Gets the power level of this block<br>
-	 *
 	 * @param block to get it of
 	 * @return the redstone power level
 	 */
@@ -190,7 +188,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	/**
 	 * Gets the power level of a single block
-	 *
 	 * @param block	 to get it of
 	 * @param powerMode to use to find the power
 	 * @return the redstone power level
@@ -211,7 +208,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	/**
 	 * Gets if this block is being powered or not
-	 *
 	 * @param block to get it of
 	 * @return True if the block receives power
 	 */
@@ -221,7 +217,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	/**
 	 * Gets if this block is being powered or not
-	 *
 	 * @param block	 to get it of
 	 * @param powerMode to use to find out the power levels
 	 * @return True if the block receives power
@@ -260,7 +255,6 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	/**
 	 * Gets whether this block material can support the attachable block material to the face given
-	 *
 	 * @param material to attach
 	 * @param face	 of this block to attach to
 	 * @return

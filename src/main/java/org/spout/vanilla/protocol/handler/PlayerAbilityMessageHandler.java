@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
@@ -42,7 +43,8 @@ public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbil
 		if (!(player.getEntity().getController() instanceof VanillaActionController)) {
 			return;
 		}
-		@SuppressWarnings("unused") VanillaPlayer ve = (VanillaPlayer) player.getEntity().getController();
+		@SuppressWarnings("unused")
+		VanillaPlayer ve = (VanillaPlayer) player.getEntity().getController();
 
 		//TODO Implement this.
 	}

@@ -29,13 +29,12 @@ package org.spout.vanilla.material.block;
 import org.spout.api.Source;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.util.RedstonePowerMode;
 
 public interface RedstoneSource extends Source {
-
 	/**
 	 * Gets how much redstone power this redstone source block provides to the direction given.<br>
-	 *
 	 * @param block	 of this redstone source
 	 * @param direction it provides power to
 	 * @param powerMode to use to get the power
@@ -45,7 +44,6 @@ public interface RedstoneSource extends Source {
 
 	/**
 	 * Gets if this redstone source block provides power to the direction given.<br>
-	 *
 	 * @param block	 of this redstone source
 	 * @param direction it provides power to
 	 * @param powerMode to use to get the power
@@ -55,7 +53,6 @@ public interface RedstoneSource extends Source {
 
 	/**
 	 * Performs redstone updates on all receiving blocks
-	 *
 	 * @param block of this material
 	 */
 	public void doRedstoneUpdates(Block block);

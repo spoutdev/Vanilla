@@ -26,16 +26,17 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.Random;
+
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
-
-import java.util.Random;
 
 public class Gravel extends Solid implements Mineable {
 	private Random rand = new Random();

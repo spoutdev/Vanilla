@@ -26,14 +26,15 @@
  */
 package org.spout.vanilla.world.generator.theend.decorator;
 
+import java.util.Random;
+
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
+
 import org.spout.vanilla.controller.object.misc.EnderCrystal;
 import org.spout.vanilla.material.VanillaMaterials;
-
-import java.util.Random;
 
 public class SpireDecorator implements BiomeDecorator {
 	// Generation odds, chunk per 'ODD' chunk

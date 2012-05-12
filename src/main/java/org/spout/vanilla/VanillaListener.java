@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla;
 
+import java.util.HashSet;
+
 import org.spout.api.Source;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
@@ -45,6 +47,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
@@ -58,8 +61,6 @@ import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
-
-import java.util.HashSet;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 

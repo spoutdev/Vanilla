@@ -26,6 +26,11 @@
  */
 package org.spout.vanilla.controller.world;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
@@ -34,13 +39,9 @@ import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.list.concurrent.ConcurrentList;
+
 import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.material.block.ScheduleUpdated;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class BlockUpdater extends Controller implements VanillaController {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(BlockUpdater.class, "Block Updater");

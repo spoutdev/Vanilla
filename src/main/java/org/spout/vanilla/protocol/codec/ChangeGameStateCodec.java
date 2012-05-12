@@ -26,13 +26,15 @@
  */
 package org.spout.vanilla.protocol.codec;
 
+import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.protocol.MessageCodec;
+
 import org.spout.vanilla.controller.living.player.GameMode;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
-
-import java.io.IOException;
 
 public final class ChangeGameStateCodec extends MessageCodec<ChangeGameStateMessage> {
 	public ChangeGameStateCodec() {

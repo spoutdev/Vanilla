@@ -26,15 +26,15 @@
  */
 package org.spout.vanilla.world.generator.normal.object;
 
+import java.util.Random;
+
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
-import java.util.Random;
-
 public class DungeonObject extends WorldGeneratorObject {
-
 	// rng
 	private final Random random;
 	// dimensions

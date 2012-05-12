@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.world.generator.normal.decorator;
 
+import java.util.Random;
+
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.cuboid.Chunk;
-
-import java.util.Random;
 
 public class StrongholdDecorator implements BiomeDecorator {
 	@Override

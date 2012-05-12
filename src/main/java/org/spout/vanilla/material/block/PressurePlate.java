@@ -31,18 +31,17 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
+
 import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.util.RedstonePowerMode;
 
 public class PressurePlate extends GroundAttachable implements RedstoneSource, ScheduleUpdated {
-
 	public PressurePlate(String name, int id) {
 		super(name, id);
 	}
 
 	/**
 	 * Gets whether this pressure plate is pressed down
-	 *
 	 * @param block to get it of
 	 * @return True if pressed down, False if not
 	 */
@@ -52,7 +51,6 @@ public class PressurePlate extends GroundAttachable implements RedstoneSource, S
 
 	/**
 	 * Sets whether this pressure plate is pressed down
-	 *
 	 * @param block   to set it of
 	 * @param pressed whether it is pressed
 	 */
@@ -62,7 +60,6 @@ public class PressurePlate extends GroundAttachable implements RedstoneSource, S
 
 	/**
 	 * Sets whether this pressure plate is pressed down
-	 *
 	 * @param block	 to set it of
 	 * @param pressed   whether it is pressed
 	 * @param doPhysics whether to perform redstone physics

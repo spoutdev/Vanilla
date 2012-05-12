@@ -29,6 +29,7 @@ package org.spout.vanilla.controller.action;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.EntityAction;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.controller.VanillaActionController;
 
 public class GravityAction extends EntityAction<VanillaActionController> {

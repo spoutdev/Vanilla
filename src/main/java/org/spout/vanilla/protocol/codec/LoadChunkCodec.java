@@ -28,7 +28,9 @@ package org.spout.vanilla.protocol.codec;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.protocol.MessageCodec;
+
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
 
 public final class LoadChunkCodec extends MessageCodec<LoadChunkMessage> {

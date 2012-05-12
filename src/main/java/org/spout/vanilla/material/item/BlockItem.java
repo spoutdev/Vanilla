@@ -69,7 +69,6 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 
 	/**
 	 * Sets the block material this block item places
-	 *
 	 * @param blockmaterial to set to
 	 * @return this block item
 	 */
@@ -85,7 +84,6 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 
 	/**
 	 * Gets the block material this block item places
-	 *
 	 * @return the Block material
 	 */
 	public BlockMaterial getPlacedMaterial() {
@@ -94,7 +92,6 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 
 	/**
 	 * Gets the block data this block item places
-	 *
 	 * @return the Block data
 	 */
 	public short getPlacedData() {
@@ -103,7 +100,6 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 
 	/**
 	 * Gets the material and data this block item placed
-	 *
 	 * @return the Block material and data
 	 */
 	public MaterialSource getPlacedBlock() {

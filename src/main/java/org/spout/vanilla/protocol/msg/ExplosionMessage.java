@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import java.util.Arrays;
+
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
-
-import java.util.Arrays;
 
 public final class ExplosionMessage extends Message {
 	private final double x, y, z;

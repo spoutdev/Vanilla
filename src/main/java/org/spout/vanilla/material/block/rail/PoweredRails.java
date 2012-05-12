@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.rail;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.util.LogicUtil;
+
 import org.spout.vanilla.material.block.RailsBase;
 import org.spout.vanilla.util.RailsState;
 
@@ -43,7 +44,6 @@ public class PoweredRails extends RailsBase {
 
 	/**
 	 * Gets if this block is powered
-	 *
 	 * @param block to get it of
 	 * @return True if powered, False if not
 	 */
@@ -53,7 +53,6 @@ public class PoweredRails extends RailsBase {
 
 	/**
 	 * Sets if this block is powered
-	 *
 	 * @param block   to set it of
 	 * @param powered Whether to power the block or not
 	 */

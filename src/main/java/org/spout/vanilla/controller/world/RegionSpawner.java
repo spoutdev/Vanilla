@@ -26,6 +26,12 @@
  */
 package org.spout.vanilla.controller.world;
 
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.type.ControllerType;
@@ -36,13 +42,8 @@ import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.player.Player;
-import org.spout.vanilla.controller.VanillaController;
 
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import org.spout.vanilla.controller.VanillaController;
 
 /**
  * Controller that spawns entities in regions.
@@ -75,7 +76,6 @@ public class RegionSpawner extends Controller implements VanillaController {
 
 	/**
 	 * Adds a controller type to the list of controller types this region spawner will try to spawn.
-	 *
 	 * @param type	   to spawn
 	 * @param canSpawnOn a set of block materials that this controller can spawn on
 	 * @param amount	 of this type of controller that should be spawned per chunk, on average
@@ -90,7 +90,6 @@ public class RegionSpawner extends Controller implements VanillaController {
 
 	/**
 	 * Region this spawner manages.
-	 *
 	 * @return region
 	 */
 	public Region getRegion() {

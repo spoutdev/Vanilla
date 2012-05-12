@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.redstone;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.RedstoneSource;
@@ -38,7 +39,6 @@ import org.spout.vanilla.util.RedstonePowerMode;
 
 public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget, ScheduleUpdated {
 	public static final int TICK_DELAY = 2;
-
 	private boolean powered;
 
 	public RedstoneTorch(String name, int id, boolean powered) {

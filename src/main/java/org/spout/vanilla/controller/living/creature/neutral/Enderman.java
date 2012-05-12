@@ -26,16 +26,17 @@
  */
 package org.spout.vanilla.controller.living.creature.neutral;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class Enderman extends Creature implements Neutral {
 	private BlockMaterial heldItem;

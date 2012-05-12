@@ -26,13 +26,12 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import java.util.List;
+
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import java.util.List;
-
 public final class EntityMetadataMessage extends Message {
-
 	public static enum Parameters {
 		//Entity flags
 		META_INFLAMED(0, (byte) 0x01),
@@ -58,7 +57,6 @@ public final class EntityMetadataMessage extends Message {
 		META_BABYANIMALSTAGE(12, (int) -23999),
 		META_PARENTANIMALSTAGE(12, (int) 6000),
 		META_BREEDANIMALSTAGE(12, (int) 0);
-
 		private Parameter<?> parameter;
 
 		private Parameters(int index, int value) {

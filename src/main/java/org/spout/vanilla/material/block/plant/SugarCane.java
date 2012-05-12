@@ -26,16 +26,17 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.GroundAttachable;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class SugarCane extends GroundAttachable {
 	private final Set<Material> validBases = new HashSet<Material>(4);

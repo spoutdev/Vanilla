@@ -41,7 +41,6 @@ public class VanillaPlayerInventory extends PlayerInventory implements VanillaIn
 
 	/**
 	 * Returns the current {@link ItemStack} in the helmet slot (slot 44) ; can return null.
-	 *
 	 * @return helmet item stack
 	 */
 	public ItemStack getHelmet() {
@@ -50,7 +49,6 @@ public class VanillaPlayerInventory extends PlayerInventory implements VanillaIn
 
 	/**
 	 * Returns the current {@link ItemStack} in the chest plate slot (slot 41) ; can return null.
-	 *
 	 * @return chest plate item stack
 	 */
 	public ItemStack getChestPlate() {
@@ -59,7 +57,6 @@ public class VanillaPlayerInventory extends PlayerInventory implements VanillaIn
 
 	/**
 	 * Returns the current {@link ItemStack} in the leggings slot (slot 37) ; can return null.
-	 *
 	 * @return leggings item stack
 	 */
 	public ItemStack getLeggings() {
@@ -68,7 +65,6 @@ public class VanillaPlayerInventory extends PlayerInventory implements VanillaIn
 
 	/**
 	 * Returns the current {@link ItemStack} in the boots slot (slot 36) ; can return null.
-	 *
 	 * @return boots item stack
 	 */
 	public ItemStack getBoots() {
@@ -77,7 +73,6 @@ public class VanillaPlayerInventory extends PlayerInventory implements VanillaIn
 
 	/**
 	 * Returns the current {@link ItemStack} in the top left input in the crafting grid slot (slot 42) ; can return null.
-	 *
 	 * @return top left input item stack
 	 */
 	public ItemStack getTopLeftInput() {
@@ -86,7 +81,6 @@ public class VanillaPlayerInventory extends PlayerInventory implements VanillaIn
 
 	/**
 	 * Returns the current {@link ItemStack} in the top right input in the crafting grid slot (slot 43) ; can return null.
-	 *
 	 * @return top right item stack
 	 */
 	public ItemStack getTopRightInput() {
@@ -95,7 +89,6 @@ public class VanillaPlayerInventory extends PlayerInventory implements VanillaIn
 
 	/**
 	 * Returns the current {@link ItemStack} in the bottom left input in the crafting grid slot (slot 38) ; can return null.
-	 *
 	 * @return bottom left input item stack
 	 */
 	public ItemStack getBottomLeftInput() {
@@ -104,7 +97,6 @@ public class VanillaPlayerInventory extends PlayerInventory implements VanillaIn
 
 	/**
 	 * Returns the current {@link ItemStack} in the bottom right input in the crafting grid slot (slot 39) ; can return null.
-	 *
 	 * @return bottom right input item stack
 	 */
 	public ItemStack getBottomRightInput() {
@@ -113,7 +105,6 @@ public class VanillaPlayerInventory extends PlayerInventory implements VanillaIn
 
 	/**
 	 * Returns the current {@link ItemStack} in the output slot (slot 40) ; can return null.
-	 *
 	 * @return output item stack
 	 */
 	public ItemStack getOutput() {

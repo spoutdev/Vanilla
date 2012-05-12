@@ -30,6 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
+
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.MiningTool;
@@ -48,7 +49,6 @@ public class Stairs extends VanillaBlockMaterial implements Mineable, Directiona
 
 	/**
 	 * Gets if this half slab is the top-half
-	 *
 	 * @param block to get it of
 	 * @return True if it is the block half
 	 */
@@ -58,7 +58,6 @@ public class Stairs extends VanillaBlockMaterial implements Mineable, Directiona
 
 	/**
 	 * Sets if this half slab is the top-half
-	 *
 	 * @param block to set it for
 	 * @param top   state
 	 */

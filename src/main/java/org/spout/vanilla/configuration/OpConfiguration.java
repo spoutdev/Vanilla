@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.configuration;
 
-import org.spout.api.exception.ConfigurationException;
-import org.spout.api.util.config.yaml.YamlConfiguration;
-
 import java.io.File;
 import java.util.List;
+
+import org.spout.api.exception.ConfigurationException;
+import org.spout.api.util.config.yaml.YamlConfiguration;
 
 public class OpConfiguration extends YamlConfiguration {
 	public OpConfiguration(File dataFolder) {

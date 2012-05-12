@@ -31,6 +31,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.material.block.rail.Rails;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
@@ -42,7 +43,6 @@ public class Minecart extends VanillaItemMaterial {
 
 	/**
 	 * Creates a new minecart controller to spawn when interacted
-	 *
 	 * @return a new Minecart controller
 	 */
 	protected Controller getSpawnedEntity() {

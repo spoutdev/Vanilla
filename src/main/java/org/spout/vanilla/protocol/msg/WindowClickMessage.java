@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.spout.api.protocol.Message;
+
 import org.spout.nbt.CompoundMap;
 
 public final class WindowClickMessage extends Message {

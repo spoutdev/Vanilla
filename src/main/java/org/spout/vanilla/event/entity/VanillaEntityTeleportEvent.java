@@ -43,7 +43,6 @@ public class VanillaEntityTeleportEvent extends EntityTeleportEvent implements C
 
 	/**
 	 * Gets the reason behind the teleport of the controller.
-	 *
 	 * @return The reason behind the teleport.
 	 */
 	public TeleportReason getReason() {
@@ -52,7 +51,6 @@ public class VanillaEntityTeleportEvent extends EntityTeleportEvent implements C
 
 	/**
 	 * Sets the reason for the teleport of the controller.
-	 *
 	 * @param reason The new reason for the teleport of the controller.
 	 */
 	public void setReason(TeleportReason reason) {

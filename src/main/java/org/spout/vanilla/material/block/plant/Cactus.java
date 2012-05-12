@@ -26,20 +26,21 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.GroundAttachable;
 import org.spout.vanilla.material.block.solid.Furnace;
 import org.spout.vanilla.material.item.misc.Dye;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class Cactus extends GroundAttachable implements TimedCraftable {
 	private Set<BlockMaterial> allowedNeighbours = new HashSet<BlockMaterial>();

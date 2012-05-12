@@ -26,25 +26,25 @@
  */
 package org.spout.vanilla.world.generator.normal.decorator;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.object.HugeMushroomObject;
 import org.spout.vanilla.world.generator.normal.object.HugeMushroomObject.HugeMushroomType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 public class MushroomDecorator implements BiomeDecorator {
-
 	/*
-	 * Stores the differant types of mushrooms.
-	 */
+		 * Stores the differant types of mushrooms.
+		 */
 	private static final List<BlockMaterial> MUSHROOMS = new ArrayList<BlockMaterial>();
 	private static final List<HugeMushroomType> HUGE_MUSHROOMS = new ArrayList<HugeMushroomType>();
 

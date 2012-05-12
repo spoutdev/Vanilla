@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
+
 import org.spout.vanilla.controller.block.DispenserController;
 
 /**
@@ -43,7 +44,6 @@ public class DispenserInventory extends Inventory implements VanillaInventory {
 
 	/**
 	 * Returns the dispenser controller that this inventory belongs to.
-	 *
 	 * @return owner the dispenser controller
 	 */
 	public DispenserController getOwner() {

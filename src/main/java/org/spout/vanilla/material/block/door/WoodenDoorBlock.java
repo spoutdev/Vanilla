@@ -30,12 +30,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.DoorBlock;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class WoodenDoorBlock extends DoorBlock {
-
 	public WoodenDoorBlock(String name, int id) {
 		super(name, id);
 	}

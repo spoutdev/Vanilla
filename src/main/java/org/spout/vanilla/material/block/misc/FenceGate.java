@@ -32,6 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
+
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Openable;
 import org.spout.vanilla.material.block.RedstoneTarget;
@@ -40,7 +41,6 @@ import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class FenceGate extends VanillaBlockMaterial implements Openable, RedstoneTarget {
-
 	public FenceGate(String name, int id) {
 		super(name, id);
 	}

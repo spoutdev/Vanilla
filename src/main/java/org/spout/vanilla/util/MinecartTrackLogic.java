@@ -26,18 +26,19 @@
  */
 package org.spout.vanilla.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.block.RailsBase;
 import org.spout.vanilla.material.block.rail.Rails;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class MinecartTrackLogic implements Source {
 	public Block block;
@@ -73,7 +74,6 @@ public class MinecartTrackLogic implements Source {
 
 	/**
 	 * Generates all neighbours around this rail
-	 *
 	 * @param deep whether to perform a deep search
 	 */
 	public void genNeighbours(boolean deep) {
@@ -130,7 +130,6 @@ public class MinecartTrackLogic implements Source {
 	/**
 	 * Tries to find a neighbour in the direction given.
 	 * Returns null if none was found
-	 *
 	 * @param direction
 	 */
 	public MinecartTrackLogic getNeighbour(BlockFace direction) {
@@ -172,7 +171,6 @@ public class MinecartTrackLogic implements Source {
 	/**
 	 * Connects the two neighbouring rail using this piece of track
 	 * It is allowed to pass in null for the rail to connect to one rail, or to none
-	 *
 	 * @param rails1
 	 * @param rails2
 	 */

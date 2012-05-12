@@ -31,14 +31,18 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.*;
+import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.material.block.GroundAttachable;
+import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.material.block.RedstoneTarget;
+import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class RedstoneRepeater extends GroundAttachable implements RedstoneSource, RedstoneTarget, Directional, ScheduleUpdated {
-
 	private final boolean powered;
 
 	public RedstoneRepeater(String name, int id, boolean powered) {

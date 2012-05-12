@@ -26,12 +26,14 @@
  */
 package org.spout.vanilla.protocol.codec;
 
+import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-import org.spout.api.protocol.MessageCodec;
-import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 
-import java.io.IOException;
+import org.spout.api.protocol.MessageCodec;
+
+import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 
 public final class EntityTeleportCodec extends MessageCodec<EntityTeleportMessage> {
 	public EntityTeleportCodec() {

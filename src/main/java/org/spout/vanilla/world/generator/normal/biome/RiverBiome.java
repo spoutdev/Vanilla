@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.normal.biome;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
 import org.spout.vanilla.world.generator.VanillaBiome;
 
 public class RiverBiome extends VanillaBiome {

@@ -43,7 +43,6 @@ public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the source of this event.
-	 *
 	 * @return An Source that is the source of the event.
 	 */
 	public Source getSource() {
@@ -52,7 +51,6 @@ public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the source of this event.
-	 *
 	 * @param source The source of this event.
 	 */
 	public void setSource(Source source) {

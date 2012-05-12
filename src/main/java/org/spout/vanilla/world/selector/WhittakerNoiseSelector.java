@@ -31,8 +31,10 @@ import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.modifier.ScaleBias;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.*;
+
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeSelector;
+
 import org.spout.vanilla.world.generator.VanillaBiomes;
 
 public class WhittakerNoiseSelector extends BiomeSelector {

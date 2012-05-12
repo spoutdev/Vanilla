@@ -29,6 +29,7 @@ package org.spout.vanilla.material.block.misc;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.block.AbstractAttachable;
 import org.spout.vanilla.material.block.PointAttachable;
 

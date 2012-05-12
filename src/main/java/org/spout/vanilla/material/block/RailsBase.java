@@ -30,6 +30,7 @@ import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.util.MinecartTrackLogic;
 import org.spout.vanilla.util.RailsState;
 
@@ -50,7 +51,6 @@ public abstract class RailsBase extends GroundAttachable {
 
 	/**
 	 * Gets the directions the minecart track is connected to
-	 *
 	 * @param block to get the directions of
 	 * @return an array of BlockFace directions that the minecart track connects
 	 */
@@ -60,7 +60,6 @@ public abstract class RailsBase extends GroundAttachable {
 
 	/**
 	 * Sets the direction of a minecart track to face into a non-curved direction
-	 *
 	 * @param block	 to set it of
 	 * @param direction to set to
 	 */
@@ -70,7 +69,6 @@ public abstract class RailsBase extends GroundAttachable {
 
 	/**
 	 * Sets the direction of a minecart track to face into a non-curved direction, possibly sloped.
-	 *
 	 * @param block	 to set it of
 	 * @param direction to set to
 	 * @param sloped	whether the track slopes up the direction given
@@ -82,7 +80,6 @@ public abstract class RailsBase extends GroundAttachable {
 	/**
 	 * Sets the direction of a minecart track to face into a curved direction<br>
 	 * The from and to are combined into a curved rail state if applicable.
-	 *
 	 * @param block to set it of
 	 * @param from  direction
 	 * @param to	direction
@@ -93,7 +90,6 @@ public abstract class RailsBase extends GroundAttachable {
 
 	/**
 	 * Gets if this minecart track is connected to the direction specified.
-	 *
 	 * @param block	 to get it of
 	 * @param direction to check
 	 * @return True if the direction is connected, False if not
@@ -104,7 +100,6 @@ public abstract class RailsBase extends GroundAttachable {
 
 	/**
 	 * Gets if the minecart track is curved
-	 *
 	 * @param block to get it of
 	 * @return True if curved, False if not
 	 */
@@ -114,7 +109,6 @@ public abstract class RailsBase extends GroundAttachable {
 
 	/**
 	 * Gets if the minecart track is sloped
-	 *
 	 * @param block to get it of
 	 * @return True if sloped, False if not
 	 */
@@ -124,14 +118,12 @@ public abstract class RailsBase extends GroundAttachable {
 
 	/**
 	 * Gets whether this type of rail can curve
-	 *
 	 * @return True if it can curve
 	 */
 	public abstract boolean canCurve();
 
 	/**
 	 * Sets the rail state of this minecart track material
-	 *
 	 * @param block to set it of
 	 * @param state to set to
 	 */
@@ -139,7 +131,6 @@ public abstract class RailsBase extends GroundAttachable {
 
 	/**
 	 * Gets the rail state of this minecart track material
-	 *
 	 * @param block to get it of
 	 * @return the rail state
 	 */

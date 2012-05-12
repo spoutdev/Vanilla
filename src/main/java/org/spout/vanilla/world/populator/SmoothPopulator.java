@@ -26,15 +26,16 @@
  */
 package org.spout.vanilla.world.populator;
 
+import java.util.Random;
+
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
 
-import java.util.Random;
+import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * Populator ran at stage 2 of world generation which serves to smooth

@@ -26,6 +26,12 @@
  */
 package org.spout.vanilla.util.explosion;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import org.spout.api.Source;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
@@ -33,10 +39,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.ExplosionMessage;
-
-import java.util.*;
 
 public abstract class ExplosionModel {
 	private List<ExplosionBlockSlot> blockList = new ArrayList<ExplosionBlockSlot>();

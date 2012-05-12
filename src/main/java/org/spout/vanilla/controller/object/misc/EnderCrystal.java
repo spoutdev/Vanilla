@@ -26,16 +26,17 @@
  */
 package org.spout.vanilla.controller.object.misc;
 
+import java.util.Set;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.action.GravityAction;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.util.explosion.ExplosionModels;
-
-import java.util.Set;
 
 public class EnderCrystal extends Substance {
 	public EnderCrystal() {

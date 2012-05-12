@@ -44,7 +44,6 @@ public class ExplosionSlot {
 
 	/**
 	 * Adds the next linked block slot to the chain
-	 *
 	 * @param next slot to add
 	 */
 	public void addNext(ExplosionSlot next) {

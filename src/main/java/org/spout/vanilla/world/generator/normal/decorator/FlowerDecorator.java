@@ -26,14 +26,15 @@
  */
 package org.spout.vanilla.world.generator.normal.decorator;
 
-import org.spout.api.generator.biome.BiomeDecorator;
-import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.material.BlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import org.spout.api.generator.biome.BiomeDecorator;
+import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
+
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class FlowerDecorator implements BiomeDecorator {
 	private static final List<BlockMaterial> flowers = new ArrayList<BlockMaterial>();

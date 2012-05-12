@@ -26,9 +26,12 @@
  */
 package org.spout.vanilla.protocol;
 
+import java.util.Set;
+
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
+
 import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
@@ -54,16 +57,26 @@ import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEventListener;
 import org.spout.api.util.map.TIntPairHashSet;
 import org.spout.api.util.map.TIntPairObjectHashMap;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.*;
+import org.spout.vanilla.protocol.msg.BlockChangeMessage;
+import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
+import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
+import org.spout.vanilla.protocol.msg.KeepAliveMessage;
+import org.spout.vanilla.protocol.msg.LoadChunkMessage;
+import org.spout.vanilla.protocol.msg.LoginRequestMessage;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage;
+import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
+import org.spout.vanilla.protocol.msg.RespawnMessage;
+import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
+import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
+import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
-
-import java.util.Set;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	@SuppressWarnings("unused")
@@ -491,7 +504,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method takes any amount of messages and sends them to every online player on the server.
-	 *
 	 * @param messages
 	 */
 	public static void broadcastPacket(Message... messages) {
@@ -501,7 +513,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	/**
 	 * This method takes in any amount of messages and sends them to any amount of
 	 * players.
-	 *
 	 * @param players  specific players to send a message to.
 	 * @param messages the message(s) to send
 	 */
@@ -515,7 +526,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method takes in a message and sends it to a specific player
-	 *
 	 * @param player   specific player to relieve message
 	 * @param messages specific message to send.
 	 */
@@ -527,7 +537,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method sends an effect play message for a block to all nearby players in a 16-block radius
-	 *
 	 * @param block  The block that the effect comes from.
 	 * @param effect The effect to play
 	 */
@@ -537,7 +546,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method sends an effect play message for a block to all nearby players
-	 *
 	 * @param block  The block that the effect comes from.
 	 * @param range  The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param effect The effect to play
@@ -548,7 +556,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method sends an effect play message for a block to all nearby players
-	 *
 	 * @param block  The block that the effect comes from.
 	 * @param range  The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param effect The effect to play
@@ -560,7 +567,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
-	 *
 	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
 	 * @param range	The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param messages The messages that should be sent to the discovered nearest player.
@@ -575,7 +581,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method sends any amount of packets to all nearby players of an entity (within a specified range).
-	 *
 	 * @param entity   The entity that the packet relates to. It will be used as the central point to send packets in a range from.
 	 * @param range	The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param messages The messages that should be sent to the discovered nearest player.
@@ -592,7 +597,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method sends any amount of packets and sends them to the nearest player from the entity specified.
-	 *
 	 * @param entity   The entity that the packet relates to. It will be used as the central point to send packets in a range from.
 	 * @param range	The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param messages The messages that should be sent to the discovered nearest player.

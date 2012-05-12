@@ -29,7 +29,9 @@ package org.spout.vanilla.world.generator.theend.biome;
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
+
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.theend.decorator.SpireDecorator;

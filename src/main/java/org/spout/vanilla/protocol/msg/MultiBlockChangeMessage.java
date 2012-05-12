@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import org.spout.api.protocol.Message;
-
 import java.util.Arrays;
+
+import org.spout.api.protocol.Message;
 
 public final class MultiBlockChangeMessage extends Message {
 	private final int chunkX, chunkZ;
@@ -38,7 +38,6 @@ public final class MultiBlockChangeMessage extends Message {
 
 	/**
 	 * Creates a MultiBlockChangeMessage using the specified data
-	 *
 	 * @param chunkX	  The x coordinate of the chunk containing these changes
 	 * @param chunkZ	  The z coordinate of the chunk containing these changes
 	 * @param coordinates An array of change coordinates. Length should be 3 * types.length, with coordinates in x y z format

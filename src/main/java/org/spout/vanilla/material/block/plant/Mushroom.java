@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.plant;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.block.GroundAttachable;
 import org.spout.vanilla.material.block.Plant;
 

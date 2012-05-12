@@ -30,7 +30,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.DoorBlock;
 
 public class IronDoorBlock extends DoorBlock {
-
 	public IronDoorBlock(String name, int id) {
 		super(name, id);
 	}

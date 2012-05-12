@@ -26,18 +26,18 @@
  */
 package org.spout.vanilla.world.generator.normal.object;
 
-import org.spout.api.generator.WorldGeneratorObject;
-import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class SmallTreeObject extends WorldGeneratorObject {
+import org.spout.api.generator.WorldGeneratorObject;
+import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.material.VanillaMaterials;
+
+public class SmallTreeObject extends WorldGeneratorObject {
 	// rng
 	private final Random random;
 	// size control

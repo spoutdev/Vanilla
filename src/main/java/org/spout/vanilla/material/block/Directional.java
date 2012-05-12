@@ -33,10 +33,8 @@ import org.spout.api.material.block.BlockFace;
  * Defines a block material that can face into a cartain direction
  */
 public interface Directional {
-
 	/**
 	 * Gets the face to which this block material faces
-	 *
 	 * @param block to get it of
 	 * @return the facing direction
 	 */
@@ -44,7 +42,6 @@ public interface Directional {
 
 	/**
 	 * Sets the face to which this block material faces
-	 *
 	 * @param block  to set it for
 	 * @param facing direction to set to
 	 */

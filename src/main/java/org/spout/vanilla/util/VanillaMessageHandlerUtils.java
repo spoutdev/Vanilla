@@ -30,13 +30,13 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.inventory.DispenserInventory;
 import org.spout.vanilla.inventory.FurnaceInventory;
 
 public class VanillaMessageHandlerUtils {
 	/**
 	 * Converts a network block face to a spout one!
-	 *
 	 * @param messageFace The network face!
 	 * @return The spout one!
 	 */

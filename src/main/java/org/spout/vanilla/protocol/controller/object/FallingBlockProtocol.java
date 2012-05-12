@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.protocol.controller.object;
 
+import java.util.Arrays;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
@@ -33,13 +35,12 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
+
 import org.spout.vanilla.controller.object.MovingBlock;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.controller.BasicVehicleEntityProtocol;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
-
-import java.util.Arrays;
 
 public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 	public static final int BLOCK_TYPE_METADATA_INDEX = 30;

@@ -26,13 +26,13 @@
  */
 package org.spout.vanilla.util.explosion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ExplosionModelSpherical extends ExplosionModel implements Source {
 	public ExplosionModelSpherical() {

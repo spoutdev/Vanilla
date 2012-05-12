@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.Random;
+
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Solid;
-
-import java.util.Random;
 
 public class WheatCrop extends Solid implements Plant {
 	private Random rand = new Random();

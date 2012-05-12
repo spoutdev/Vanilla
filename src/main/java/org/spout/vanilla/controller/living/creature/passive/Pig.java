@@ -26,16 +26,17 @@
  */
 package org.spout.vanilla.controller.living.creature.passive;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class Pig extends Creature implements Passive {
 	private Entity parent;

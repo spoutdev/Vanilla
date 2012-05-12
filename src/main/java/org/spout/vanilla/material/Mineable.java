@@ -31,7 +31,6 @@ import org.spout.vanilla.material.item.MiningTool;
 public interface Mineable {
 	/**
 	 * Gets the durability that is lost as a result of digging using a certain tool
-	 *
 	 * @param tool with which has been digged
 	 * @return the durability penalty
 	 */

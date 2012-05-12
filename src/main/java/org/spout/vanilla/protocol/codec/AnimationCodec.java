@@ -26,12 +26,14 @@
  */
 package org.spout.vanilla.protocol.codec;
 
+import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-import org.spout.api.protocol.MessageCodec;
-import org.spout.vanilla.protocol.msg.AnimationMessage;
 
-import java.io.IOException;
+import org.spout.api.protocol.MessageCodec;
+
+import org.spout.vanilla.protocol.msg.AnimationMessage;
 
 public final class AnimationCodec extends MessageCodec<AnimationMessage> {
 	public AnimationCodec() {

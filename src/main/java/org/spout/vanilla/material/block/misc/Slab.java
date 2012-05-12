@@ -29,6 +29,7 @@ package org.spout.vanilla.material.block.misc;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
+
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
@@ -69,7 +70,6 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 
 	/**
 	 * Gets if this half slab is the top-half
-	 *
 	 * @param block to get it of
 	 * @return True if it is the block half
 	 */
@@ -79,7 +79,6 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 
 	/**
 	 * Sets if this half slab is the top-half
-	 *
 	 * @param block to set it for
 	 * @param top   state
 	 */

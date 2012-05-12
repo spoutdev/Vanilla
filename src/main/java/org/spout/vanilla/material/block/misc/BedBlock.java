@@ -30,6 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -55,7 +56,6 @@ public class BedBlock extends VanillaBlockMaterial {
 
 	/**
 	 * Sets whether or not a bed is occupied by a player
-	 *
 	 * @param bedBlock to get it of
 	 * @return True if occupied
 	 */
@@ -74,7 +74,6 @@ public class BedBlock extends VanillaBlockMaterial {
 
 	/**
 	 * Gets whether or not a bed block is occupied by a player
-	 *
 	 * @param bedBlock to get it of
 	 * @return True if occupied
 	 */
@@ -84,7 +83,6 @@ public class BedBlock extends VanillaBlockMaterial {
 
 	/**
 	 * Gets the facing state of a single bed block
-	 *
 	 * @param bedBlock to get it of
 	 * @return the face
 	 */
@@ -95,7 +93,6 @@ public class BedBlock extends VanillaBlockMaterial {
 	/**
 	 * Sets the facing state of a single bed block<br>
 	 * Note that this does not affect the misc half
-	 *
 	 * @param bedBlock to set it of
 	 * @param facing   to set to
 	 * @return the face
@@ -141,7 +138,6 @@ public class BedBlock extends VanillaBlockMaterial {
 
 	/**
 	 * Gets the top or face door block when either of the blocks is given
-	 *
 	 * @param doorBlock the top or bottom door block
 	 * @param top	   whether to get the top block, if false, gets the bottom block
 	 * @return the requested door half block

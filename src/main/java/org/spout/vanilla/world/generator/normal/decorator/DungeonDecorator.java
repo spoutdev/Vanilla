@@ -26,16 +26,16 @@
  */
 package org.spout.vanilla.world.generator.normal.decorator;
 
+import java.util.Random;
+
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;
 
-import java.util.Random;
-
 public class DungeonDecorator implements BiomeDecorator {
-
 	private final static int PROBABILITY = 2000;
 
 	@Override

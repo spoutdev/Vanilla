@@ -45,7 +45,6 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Returns the bed block involved in this event.
-	 *
 	 * @return the bed block involved in this event
 	 */
 	public Block getBed() {
@@ -58,7 +57,6 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Gets if the player entered the bed.
-	 *
 	 * @return True if the bed was entered.
 	 */
 	public boolean isEntered() {
@@ -67,7 +65,6 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Gets if the player left the bed.
-	 *
 	 * @return False if the bed was left.
 	 */
 	public boolean isLeft() {
@@ -76,7 +73,6 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Sets if a player has entered the bed.
-	 *
 	 * @param entered The new status of if the player has entered a bed (true or false).
 	 */
 	public void setEntered(boolean entered) {

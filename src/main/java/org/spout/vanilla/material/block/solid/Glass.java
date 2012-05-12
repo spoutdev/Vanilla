@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.block.PointAttachable;
 import org.spout.vanilla.material.block.Solid;
 

@@ -26,14 +26,15 @@
  */
 package org.spout.vanilla.controller.living.creature.passive;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.living.creature.Tameable;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class Ocelot extends Creature implements Tameable, Passive {
 	public Ocelot() {

@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class SpawnEgg extends VanillaItemMaterial {

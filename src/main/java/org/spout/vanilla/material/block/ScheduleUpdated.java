@@ -29,10 +29,8 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.cuboid.Block;
 
 public interface ScheduleUpdated {
-
 	/**
 	 * Is called by the block scheduler after the block was requested for a delayed update
-	 *
 	 * @param block that was updated
 	 */
 	public void onDelayedUpdate(Block block);

@@ -30,7 +30,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tools.Pickaxe;
+import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class Stone extends Solid implements Mineable {
 	public Stone(String name, int id) {

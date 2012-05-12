@@ -41,7 +41,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tools.Pickaxe;
+import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Dispenser extends Solid implements Mineable, Directional {

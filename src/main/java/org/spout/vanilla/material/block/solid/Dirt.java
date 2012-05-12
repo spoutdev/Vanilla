@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block.solid;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tools.Spade;
+import org.spout.vanilla.material.item.tool.Spade;
 
 public class Dirt extends Solid implements Mineable {
 	public Dirt(String name, int id) {

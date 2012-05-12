@@ -30,7 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 
 /**
  * Defines a block material that can be opened and closed<br>
- * For example: doors and trapdoors
+ * For example: door and trapdoors
  */
 public interface Openable {
 	/**

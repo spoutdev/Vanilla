@@ -32,7 +32,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.material.item.other.Dye;
+import org.spout.vanilla.material.item.misc.Dye;
 
 import java.util.HashSet;
 import java.util.Set;

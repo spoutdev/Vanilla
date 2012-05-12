@@ -33,7 +33,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.material.block.ScheduleUpdated;
-import org.spout.vanilla.material.block.other.Torch;
+import org.spout.vanilla.material.block.misc.Torch;
 import org.spout.vanilla.util.RedstonePowerMode;
 
 public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget, ScheduleUpdated {

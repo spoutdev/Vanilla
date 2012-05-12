@@ -107,7 +107,7 @@ public class MushroomDecorator implements BiomeDecorator {
 	 *  Swamp biome:
 	 *	  mushroom: 0 to 7
 	 *	  huge mushroom: 0 to 0
-	 *  All other biomes:
+	 *  All misc biomes:
 	 *	  huge mushroom: 0 to 0
 	 *	  mushroom: 0 to 3
 	 */

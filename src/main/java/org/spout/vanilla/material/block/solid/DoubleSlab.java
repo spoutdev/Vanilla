@@ -28,9 +28,9 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.other.Slab;
+import org.spout.vanilla.material.block.misc.Slab;
 import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tools.Pickaxe;
+import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class DoubleSlab extends Solid implements Mineable {
 	public static final DoubleSlab STONE = register(new DoubleSlab("Stone Double Slab", Slab.STONE));

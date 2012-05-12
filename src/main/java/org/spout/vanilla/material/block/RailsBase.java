@@ -81,7 +81,7 @@ public abstract class RailsBase extends GroundAttachable {
 
 	/**
 	 * Sets the direction of a minecart track to face into a curved direction<br>
-	 * The from and to are combined into a curved rails state if applicable.
+	 * The from and to are combined into a curved rail state if applicable.
 	 *
 	 * @param block to set it of
 	 * @param from  direction
@@ -123,14 +123,14 @@ public abstract class RailsBase extends GroundAttachable {
 	}
 
 	/**
-	 * Gets whether this type of rails can curve
+	 * Gets whether this type of rail can curve
 	 *
 	 * @return True if it can curve
 	 */
 	public abstract boolean canCurve();
 
 	/**
-	 * Sets the rails state of this minecart track material
+	 * Sets the rail state of this minecart track material
 	 *
 	 * @param block to set it of
 	 * @param state to set to
@@ -138,10 +138,10 @@ public abstract class RailsBase extends GroundAttachable {
 	public abstract void setState(Block block, RailsState state);
 
 	/**
-	 * Gets the rails state of this minecart track material
+	 * Gets the rail state of this minecart track material
 	 *
 	 * @param block to get it of
-	 * @return the rails state
+	 * @return the rail state
 	 */
 	public abstract RailsState getState(Block block);
 

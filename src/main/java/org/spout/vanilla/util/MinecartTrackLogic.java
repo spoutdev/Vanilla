@@ -33,7 +33,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.material.block.RailsBase;
-import org.spout.vanilla.material.block.rails.Rails;
+import org.spout.vanilla.material.block.rail.Rails;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,7 +72,7 @@ public class MinecartTrackLogic implements Source {
 	}
 
 	/**
-	 * Generates all neighbours around this rails
+	 * Generates all neighbours around this rail
 	 *
 	 * @param deep whether to perform a deep search
 	 */
@@ -83,10 +83,10 @@ public class MinecartTrackLogic implements Source {
 				if (logic != null) {
 					logic.parent = this;
 					logic.direction = direction;
-					//find out what connections this rails has
+					//find out what connections this rail has
 					logic.genNeighbours(false);
 					if (logic.neighbours.size() >= 2) {
-						continue; //already connected to two other track pieces
+						continue; //already connected to two misc track pieces
 					}
 					MinecartTrackLogic self = logic.getLogic(logic.direction.getOpposite());
 					self.parent = logic;
@@ -170,8 +170,8 @@ public class MinecartTrackLogic implements Source {
 	}
 
 	/**
-	 * Connects the two neighbouring rails using this piece of track
-	 * It is allowed to pass in null for the rails to connect to one rails, or to none
+	 * Connects the two neighbouring rail using this piece of track
+	 * It is allowed to pass in null for the rail to connect to one rail, or to none
 	 *
 	 * @param rails1
 	 * @param rails2
@@ -182,13 +182,13 @@ public class MinecartTrackLogic implements Source {
 			rails2 = null;
 		}
 		if (rails1 == null) {
-			//both rails null - switch to default
+			//both rail null - switch to default
 			this.setState(RailsState.WEST);
 		} else if (rails2 == null) {
-			//connect to rails 1
+			//connect to rail 1
 			this.setDirection(rails1.direction, rails1.block.getY() > this.block.getY());
 		} else if (rails1.direction == rails2.direction.getOpposite()) {
-			//connect the two rails, sloped if needed
+			//connect the two rail, sloped if needed
 			if (rails1.block.getY() > this.block.getY()) {
 				this.setDirection(rails1.direction, true);
 			} else if (rails2.block.getY() > this.block.getY()) {

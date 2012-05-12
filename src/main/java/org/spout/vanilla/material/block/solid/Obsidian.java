@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block.solid;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tools.Pickaxe;
+import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class Obsidian extends Solid implements Mineable {
 	public Obsidian(String name, int id) {

@@ -151,4 +151,8 @@ public class FurnaceController extends VanillaBlockController {
 	public float getProgress() {
 		return progress;
 	}
+
+	public boolean isBurning() {
+		return burning;
+	}
 }

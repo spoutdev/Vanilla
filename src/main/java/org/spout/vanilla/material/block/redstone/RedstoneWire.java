@@ -174,7 +174,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource {
 //			}
 //		} else {
 //			BlockMaterial targetmat = target.getMaterial();
-//			if (targetmat instanceof RedstoneWire) { //only send power down/up for other redstone wires
+//			if (targetmat instanceof RedstoneWire) { //only send power down/up for misc redstone wires
 //				if (source.getY() < target.getY()) {
 //					//This is the below block
 //					if (source.translate(BlockFace.TOP).getMaterial() instanceof Solid) { //Current does not walk through solids

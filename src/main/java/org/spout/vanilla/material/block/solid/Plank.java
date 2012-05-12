@@ -31,7 +31,7 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tools.Axe;
+import org.spout.vanilla.material.item.tool.Axe;
 
 public class Plank extends Solid implements Fuel, Mineable {
 	public static final Plank PLANK = register(new Plank("Oak Plank"));

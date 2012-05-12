@@ -52,7 +52,7 @@ public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 	public Message[] getSpawnMessage(Entity entity) {
 		final Controller controller = entity.getController();
 		BlockMaterial block = VanillaMaterials.SAND;
-		int spawnId = 70; //TODO: support for other moving block types?
+		int spawnId = 70; //TODO: support for misc moving block types?
 		if (controller instanceof MovingBlock) {
 			block = ((MovingBlock) controller).getBlock();
 			if (block == VanillaMaterials.DRAGON_EGG) {

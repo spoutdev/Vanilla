@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block.pressureplate;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.PressurePlate;
 import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tools.Axe;
+import org.spout.vanilla.material.item.tool.Axe;
 
 public class WoodenPressurePlate extends PressurePlate implements Mineable {
 	public WoodenPressurePlate(String name, int id) {

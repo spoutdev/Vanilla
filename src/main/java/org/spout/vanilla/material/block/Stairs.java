@@ -33,7 +33,7 @@ import org.spout.api.util.LogicUtil;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tools.Pickaxe;
+import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Stairs extends VanillaBlockMaterial implements Mineable, Directional {

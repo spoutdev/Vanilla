@@ -42,13 +42,12 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tools.Pickaxe;
+import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Furnace extends Solid implements Mineable, Directional {
 	public static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
 	public static final float SMELT_TIME = 10.f;
-
 	private final boolean burning;
 
 	public Furnace(String name, int id, boolean burning) {
@@ -94,7 +93,7 @@ public class Furnace extends Solid implements Mineable, Directional {
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
 			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-			block.getWorld().createAndSpawnEntity(block.getPosition(), new FurnaceController());
+			block.setController(new FurnaceController());
 			return true;
 		}
 
@@ -116,13 +115,15 @@ public class Furnace extends Solid implements Mineable, Directional {
 			Window window = Window.FURNACE;
 
 			if (furnace == null) {
-				System.out.println("Furnace is null");
+				FurnaceController newFurnace = new FurnaceController();
+				block.setController(newFurnace);
+				furnace = newFurnace;
 				return;
 			}
 
-			// Dispose items into new inventory
+			// Transfer the items
 			FurnaceInventory furnaceInventory = furnace.getInventory();
-			for (int slot = 0; slot < 38; slot++) {
+			for (int slot = 0; slot < inventory.getSize() - 1; slot++) {
 				furnaceInventory.setItem(slot, inventory.getItem(slot));
 			}
 

@@ -99,7 +99,7 @@ public interface Attachable {
 	/**
 	 * Checks if this attachable is at a position it can actually be<br>
 	 * This is called in the underlying physics function to check if the block has to be broken<br>
-	 * No checks on the block itself should be performed other than the face it is attached to
+	 * No checks on the block itself should be performed misc than the face it is attached to
 	 *
 	 * @param block		   to place at
 	 * @param data			to use

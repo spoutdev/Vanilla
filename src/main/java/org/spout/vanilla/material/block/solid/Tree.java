@@ -33,8 +33,8 @@ import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.other.Coal;
-import org.spout.vanilla.material.item.tools.Axe;
+import org.spout.vanilla.material.item.misc.Coal;
+import org.spout.vanilla.material.item.tool.Axe;
 
 public class Tree extends Solid implements Plant, Fuel, TimedCraftable, Mineable {
 	public static final Tree DEFAULT = register(new Tree("Wood"));

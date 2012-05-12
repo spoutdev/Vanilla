@@ -30,7 +30,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tools.Spade;
+import org.spout.vanilla.material.item.tool.Spade;
 
 public class Grass extends Solid implements Mineable {
 	public Grass() {

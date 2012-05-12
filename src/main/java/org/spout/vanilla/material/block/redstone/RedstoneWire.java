@@ -59,15 +59,16 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	}
 
 	private void update(Block middle) {
-		Block block;
-		for (BlockFace face : BlockFaces.NESWBT) {
-			block = middle.translate(face);
-			if (block.getMaterial().equals(this)) {
-				VanillaMaterials.REDSTONE_WIRE.onUpdate(block);
-			} else {
-				block.update(false);
-			}
-		}
+		middle.update();
+//		Block block;
+//		for (BlockFace face : BlockFaces.NESWBT) {
+//			block = middle.translate(face);
+//			if (block.getMaterial().equals(this)) {
+//				VanillaMaterials.REDSTONE_WIRE.onUpdate(block);
+//			} else {
+//				block.update(false);
+//			}
+//		}
 	}
 	
 	@Override

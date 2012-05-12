@@ -30,7 +30,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -96,7 +95,6 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		return this.getRedstonePowerTo(block, direction, powerMode) > 0;
 	}
 
-	//Checks if this wire is actually going into the block or not
 	@Override
 	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
 		if (powerMode == RedstonePowerMode.ALLEXCEPTWIRE) {
@@ -132,37 +130,45 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	}
 
 	public short getReceivingPower(Block block) {
-		Block below = block.translate(BlockFace.BOTTOM);
 		short maxPower = 0;
-		if (below.getMaterial() instanceof VanillaBlockMaterial) {
-			maxPower = ((VanillaBlockMaterial) below.getMaterial()).getRedstonePower(below, RedstonePowerMode.ALLEXCEPTWIRE);
+		Block rel, relvert;
+		BlockMaterial mat;
+		//detect power from direct neighbouring sources
+		boolean topIsConductor = false;
+		for (BlockFace face : BlockFaces.BTEWNS) {
+			rel = block.translate(face);
+			mat = rel.getSubMaterial();
+			if (mat.equals(this)) {
+				//handle neighbouring redstone wires
+				maxPower = (short) Math.max(maxPower, this.getRedstonePower(rel) - 1);
+			} else if (mat instanceof VanillaBlockMaterial) {
+				//handle solid blocks and redstone sources
+				maxPower = (short) Math.max(maxPower, ((VanillaBlockMaterial) mat).getRedstonePower(rel, RedstonePowerMode.ALLEXCEPTWIRE));
+				if (mat instanceof RedstoneSource) {
+					maxPower = (short) Math.max(maxPower, ((RedstoneSource) mat).getRedstonePowerTo(rel, face.getOpposite(), RedstonePowerMode.ALL));
+				}
+			}
+			//shortcut just in case the answer is simple
 			if (maxPower == REDSTONE_POWER_MAX) {
 				return maxPower;
 			}
-		}
-		//check for neighbouring sources
-		Block neigh;
-		BlockMaterial mat;
-		for (BlockFace face : BlockFaces.NESW) {
-			neigh = block.translate(face);
-			mat = neigh.getSubMaterial();
-			if (mat.equals(this)) {
-				maxPower = (short) Math.max(maxPower, this.getRedstonePower(neigh) - 1);
-			} else if (mat instanceof VanillaBlockMaterial) {
-				maxPower = (short) Math.max(maxPower, ((VanillaBlockMaterial) mat).getRedstonePower(neigh, RedstonePowerMode.ALLEXCEPTWIRE));
-			}
-			//check below
-			if (!isConductor(mat)) {
-				below = neigh.translate(BlockFace.BOTTOM);
-				if (below.getMaterial().equals(this)) {
-					maxPower = (short) Math.max(maxPower, this.getRedstonePower(below) - 1);
+			//check relatively up and down faces
+			if (face == BlockFace.TOP) {
+				topIsConductor = isConductor(mat);
+			} else if (face != BlockFace.BOTTOM) {
+				//check below for wire
+				if (!isConductor(mat)) {
+					relvert = rel.translate(BlockFace.BOTTOM);
+					if (relvert.getMaterial().equals(this)) {
+						maxPower = (short) Math.max(maxPower, this.getRedstonePower(relvert) - 1);
+					}
 				}
-			}
-			//check above
-			if (!isConductor(block.translate(BlockFace.TOP).getSubMaterial())) {
-				Block above = neigh.translate(BlockFace.TOP);
-				if (above.getMaterial().equals(this)) {
-					maxPower = (short) Math.max(maxPower, this.getRedstonePower(above) - 1);
+				//check above for wire
+				if (!topIsConductor) {
+					relvert = rel.translate(BlockFace.TOP);
+					if (relvert.getMaterial().equals(this)) {
+						maxPower = (short) Math.max(maxPower, this.getRedstonePower(relvert) - 1);
+					}
 				}
 			}
 		}
@@ -179,84 +185,10 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		if (current != power) {
 			block.setMaterial(this, power);
 			
-			
-			//TODO: Make this updating instant. (but it is truly epic now with the fading! XD)
+			//TODO: Make sure updating is not done by performing 15 ever-lessening power updates...
 			this.doRedstoneUpdates(block);			
 			if (true) return;
-			
-			//Trace signal
-			Block target;
-			for (int j = 0; j < 3; j++) {
-				int ty = block.getY();
-				switch (j) {
-					case 0:
-						ty--;
-						break;
-					case 1: //ty = ty;
-						break;
-					case 2:
-						ty++;
-						break;
-				}
-				for (int i = 0; i < 4; i++) {
-					int tx = block.getX();
-					int tz = block.getZ();
-					switch (i) {
-						case 0:
-							tx--;
-							break;
-						case 1:
-							tx++;
-							break;
-						case 2:
-							tz--;
-							break;
-						case 3:
-							tz++;
-							break;
-					}
-					target = block.getWorld().getBlock(tx, ty, tz);
-					if (target.getMaterial() instanceof RedstoneWire) {
-						if (this.isConnectedTo(block, target)) {
-							onUpdate(target);
-						}
-					}
-				}
-			}
-
-//			//Update redstone torches.
-//			for (Vector3 torch : possibleOutgoingTorch) {
-//				target = block.translate(torch).update(false);
-//			}
 		}
-	}
-
-	/**
-	 * Checks if a redstone wire is a connected to a certain target block
-	 * @param block of the wire
-	 * @param target to connect to
-	 * @return True if connected
-	 */
-	public boolean isConnectedTo(Block block, Block target) {
-		//find vertical
-		BlockFace vertface;
-		int dy = target.getY() - block.getY();
-		if (dy == 0) {
-			vertface = BlockFace.THIS;
-		} else if (dy == 1) {
-			vertface = BlockFace.TOP;
-		} else if (dy == -1) {
-			vertface = BlockFace.BOTTOM;
-		} else {
-			return false;
-		}
-		Vector3 offsethor = new Vector3(target.getX() - block.getX(), 0, target.getZ() - block.getZ());
-		for (BlockFace horface : BlockFaces.NESW) {
-			if (horface.getOffset().equals(offsethor)) {
-				return isConnectedTo(block, horface, vertface);
-			}
-		}
-		return false;
 	}
 
 	/**
@@ -313,40 +245,6 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		case WEST :
 			return this.isConnectedToSource(block, BlockFace.NORTH) || this.isConnectedToSource(block, BlockFace.SOUTH);
 		default :
-			return false;
-		}
-	}
-
-	/**
-	 * Checks if a redstone wire is connected to a
-	 * @param block
-	 * @param horizontal
-	 * @param vertical
-	 * @return
-	 */
-	public boolean isConnectedTo(Block block, BlockFace horizontal, BlockFace vertical) {
-		if (vertical == BlockFace.THIS) {
-			//same level
-			Block target = block.translate(horizontal);
-			BlockMaterial mat = target.getSubMaterial();
-			if (mat instanceof RedstoneSource || mat instanceof RedstoneTarget) {
-				return true;
-			} else {
-				//check if the wire is distracted
-				return !isDistractedFrom(block, horizontal);
-			}
-		} else {
-			//connecting to a wire?
-			Block target = block.translate(vertical).translate(horizontal);
-			if (target.getMaterial().equals(this)) {
-				BlockMaterial mat = this;
-				if (vertical == BlockFace.TOP) {
-					mat = block.translate(BlockFace.TOP).getSubMaterial();
-				} else if (vertical == BlockFace.BOTTOM) {
-					mat = block.translate(horizontal).getSubMaterial();
-				}
-				return !isConductor(mat);
-			}
 			return false;
 		}
 	}

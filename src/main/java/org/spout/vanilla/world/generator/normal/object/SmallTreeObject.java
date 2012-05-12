@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.world.generator.normal.object;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Random;
 
+import java.util.Set;
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -53,7 +53,7 @@ public class SmallTreeObject extends WorldGeneratorObject {
 	// extras
 	private boolean addVines = false;
 	// for canPlaceObject check
-	private final List<BlockMaterial> overridable = new ArrayList<BlockMaterial>();
+	private final Set<BlockMaterial> overridable = new HashSet<BlockMaterial>();
 
 	public SmallTreeObject(Random random, SmallTreeType treeType) {
 		this.random = random;
@@ -209,7 +209,7 @@ public class SmallTreeObject extends WorldGeneratorObject {
 		this.radiusIncrease = radiusIncrease;
 	}
 
-	public List<BlockMaterial> getOverridableMaterials() {
+	public Set<BlockMaterial> getOverridableMaterials() {
 		return overridable;
 	}
 

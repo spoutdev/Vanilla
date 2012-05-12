@@ -72,15 +72,6 @@ import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
  * Vanilla.
  */
 public class VanillaPlayer extends Human implements PlayerController {
-	@Override
-	public float getHeadHeight() {
-		float height = super.getHeadHeight();
-		if (this.crouching) {
-			height -= 0.08f;
-		}
-		return height;
-	}
-
 	protected final Player owner;
 	protected long unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt(), lastPing = 0, lastUserList = 0, foodTimer = 0;
 	protected short count = 0, ping, hunger = 20;
@@ -147,13 +138,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (lastUserList++ > 20) {
 			broadcastPacket(new PlayerListMessage(tabListName, true, ping));
 			lastUserList = 0;
-		}
-
-		// Update window if opened
-		if (activeWindow != null && activeWindow.equals(Window.FURNACE) && activeInventory instanceof FurnaceInventory) {
-			FurnaceInventory inventory = (FurnaceInventory) activeInventory;
-			FurnaceController furnace = inventory.getOwner();
-			sendPacket(owner, new ProgressBarMessage(windowId, Furnace.PROGRESS_ARROW, furnace.getProgressTicks()), new ProgressBarMessage(windowId, Furnace.FIRE_ICON, furnace.getBurnTimeTicks()));
 		}
 
 		if (isSurvival()) {
@@ -232,6 +216,15 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	private void creativeTick(float dt) {
 
+	}
+
+	@Override
+	public float getHeadHeight() {
+		float height = super.getHeadHeight();
+		if (this.crouching) {
+			height -= 0.08f;
+		}
+		return height;
 	}
 
 	@Override

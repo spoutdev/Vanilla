@@ -62,11 +62,29 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 	}
 
 	/**
+	 * Sets the output of the inventory.
+	 *
+	 * @param output
+	 */
+	public void setOutput(ItemStack output) {
+		setItem(37, output);
+	}
+
+	/**
 	 * Returns the {@link ItemStack} in the fuel slot (slot 35); can return null.
 	 * @return fuel item stack
 	 */
 	public ItemStack getFuel() {
-		return getItem(35);
+		return getItem(36);
+	}
+
+	/**
+	 * Sets the fuel slot of the inventory
+	 *
+	 * @param fuel
+	 */
+	public void setFuel(ItemStack fuel) {
+		setItem(36, fuel);
 	}
 
 	/**
@@ -75,6 +93,10 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 	 */
 	public ItemStack getIngredient() {
 		return getItem(38);
+	}
+	
+	public void setIngredient(ItemStack ingredient) {
+		setItem(38, ingredient);
 	}
 
 	/**

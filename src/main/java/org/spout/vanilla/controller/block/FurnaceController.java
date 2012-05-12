@@ -26,15 +26,28 @@
  */
 package org.spout.vanilla.controller.block;
 
+import org.spout.api.entity.Controller;
+import org.spout.api.inventory.InventoryViewer;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.player.Player;
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.solid.Furnace;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.msg.ProgressBarMessage;
+
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class FurnaceController extends VanillaBlockController {
 	private final FurnaceInventory inventory = new FurnaceInventory(this);
-	private float progress = 0, burnTime = 0;
+	private float burnTime = 0, burnIncrement = 0, burnStartTime = 0;
+	private float progress = 0, progressIncrement = 0, craftTime = 0;
+	private boolean burning;
 
 	public FurnaceController() {
 		super(VanillaControllerTypes.FURNACE, VanillaMaterials.FURNACE);
@@ -42,16 +55,76 @@ public class FurnaceController extends VanillaBlockController {
 
 	@Override
 	public void onTick(float dt) {
-		// Start the burn timer
-		if (inventory.hasFuel() && burnTime <= 0) {
-			System.out.println("Has fuel");
-			Fuel fuel = (Fuel) inventory.getFuel().getMaterial();
-			burnTime = fuel.getFuelTime();
+		if (inventory.hasIngredient()) {
+			// Increment progress if something is cooking
+			if (burning) {
+				progress += dt;
+				progressIncrement += 180 / (craftTime * 20);
+			}
+
+			// Start the burner.
+			if (inventory.hasFuel()) {
+				if (burnTime <= 0) {
+					ItemStack fuelStack = inventory.getFuel();
+					Fuel fuel = (Fuel) fuelStack.getMaterial();
+					burnTime = fuel.getFuelTime();
+					burnStartTime = burnTime;
+					burnIncrement = 250;
+					burning = true;
+
+					ItemStack ingredientStack = inventory.getIngredient();
+					TimedCraftable ingredient = (TimedCraftable) ingredientStack.getMaterial();
+					progress = 0;
+					progressIncrement = 0;
+					craftTime = ingredient.getCraftTime();
+
+					int amount = fuelStack.getAmount();
+					inventory.setFuel(fuelStack.setAmount(amount - 1));
+				} else {
+					// Decrement burn time
+					burnTime -= dt;
+					burnIncrement -= 250 / (burnStartTime * 20);
+				}
+			}
 		}
 
-		// Decrement the burn timer
-		if (burnTime > 0) {
-			burnTime -= dt;
+		// Update viewers
+		for (InventoryViewer viewer : inventory.getViewers()) {
+			if (viewer instanceof VanillaNetworkSynchronizer) {
+				VanillaNetworkSynchronizer network = (VanillaNetworkSynchronizer) viewer;
+				Controller c = network.getEntity().getController();
+				if (c instanceof VanillaPlayer && burnTime > 0) {
+					VanillaPlayer controller = (VanillaPlayer) c;
+					int window = controller.getWindowId();
+					sendPacket(controller.getPlayer(), new ProgressBarMessage(window, Furnace.FIRE_ICON, (int) burnIncrement), new ProgressBarMessage(window, Furnace.PROGRESS_ARROW, (int) progressIncrement));
+				}
+			}
+		}
+
+		// Make sure everything gets reset properly, because of the floating points, not everything is always 100% accurate.
+		if (burnTime <= 0) {
+			burnIncrement = 0;
+			burnStartTime = 0;
+			burning = false;
+		}
+
+		if (progress >= craftTime) {
+			progress = 0;
+			progressIncrement = 0;
+			craftTime = 0;
+			ItemStack ingredientStack = inventory.getIngredient();
+			if (ingredientStack == null) {
+				return;
+			}
+
+			int amount = ingredientStack.getAmount();
+			inventory.setIngredient(ingredientStack.setAmount(amount - 1));
+			ItemStack output = null;
+			if (ingredientStack.getMaterial() instanceof TimedCraftable) {
+				output = ((TimedCraftable) ingredientStack.getMaterial()).getResult();
+			}
+
+			inventory.setOutput(output);
 		}
 	}
 
@@ -72,27 +145,11 @@ public class FurnaceController extends VanillaBlockController {
 		return burnTime;
 	}
 
-	/**
-	 * Returns the burn time in Minecraft Ticks
-	 * @return
-	 */
-	public int getBurnTimeTicks() {
-		return (int) (burnTime * 20);
-	}
-
 	public void setProgress(int progress) {
 		this.progress = progress;
 	}
 
 	public float getProgress() {
 		return progress;
-	}
-
-	/**
-	 * Returns the progress in Minecraft Ticks
-	 * @return
-	 */
-	public int getProgressTicks() {
-		return (int) (progress * 20);
 	}
 }

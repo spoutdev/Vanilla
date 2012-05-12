@@ -72,9 +72,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	}
 
 	public void setPowered(Block block, boolean powered) {
-		BlockFace att = this.getAttachedFace(block);
-		block.setMaterial(powered ? VanillaMaterials.REDSTONE_TORCH_ON : VanillaMaterials.REDSTONE_TORCH_OFF);
-		this.setAttachedFace(block, att);
+		block.setMaterial(powered ? VanillaMaterials.REDSTONE_TORCH_ON : VanillaMaterials.REDSTONE_TORCH_OFF, block.getData());
 	}
 
 	@Override

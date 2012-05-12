@@ -455,7 +455,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
-		System.out.println("Setting slot: " + slot);
 		Controller c = owner.getEntity().getController();
 		if (!(c instanceof VanillaPlayer)) {
 			return;
@@ -468,8 +467,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (!(inventory instanceof PlayerInventory)) {
 			id = controller.getWindowId();
 		}
-
-		System.out.println("ID: " + id);
 
 		if (item == null) {
 			message = new SetWindowSlotMessage(id, networkSlot);

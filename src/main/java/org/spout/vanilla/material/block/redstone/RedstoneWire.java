@@ -59,11 +59,24 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		return true;
 	}
 
+	private void update(Block middle) {
+		Block block;
+		for (BlockFace face : BlockFaces.NESWBT) {
+			block = middle.translate(face);
+			if (block.getMaterial().equals(this)) {
+				VanillaMaterials.REDSTONE_WIRE.onUpdate(block);
+			} else {
+				block.update(false);
+			}
+		}
+	}
+	
 	@Override
 	public void doRedstoneUpdates(Block block) {
-		block = block.setSource(this).update();
+		block = block.setSource(this);
+		this.update(block);
 		for (BlockFace face : BlockFaces.NESWB) {
-			block.translate(face).update();
+			this.update(block.translate(face));
 		}
 	}
 
@@ -164,7 +177,6 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	public void setPowerAndUpdate(Block block, short power) {
 		short current = this.getRedstonePower(block);
 		if (current != power) {
-			System.out.println("Old: " + current + " new: " + power);
 			block.setMaterial(this, power);
 			
 			

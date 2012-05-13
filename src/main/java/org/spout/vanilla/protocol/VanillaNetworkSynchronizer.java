@@ -117,6 +117,23 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 	}
 
+	private byte[] getBiomeData(World world, int x, int z) {
+		byte[] biomeData = new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
+		WorldGenerator gen = world.getGenerator();
+		if (gen instanceof BiomeGenerator) {
+			final long seed = world.getSeed();
+			for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
+				for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
+					Biome biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
+					if (biome instanceof VanillaBiome) {
+						biomeData[(dz & (Chunk.CHUNK_SIZE - 1)) << 4 | (dx & (Chunk.CHUNK_SIZE - 1))] = (byte) ((VanillaBiome) biome).getBiomeId();
+					}
+				}
+			}
+		}
+		return biomeData;
+	}
+
 	@Override
 	protected void initChunk(Point p) {
 		int x = (int) p.getX() >> Chunk.CHUNK_SIZE_BITS;
@@ -159,21 +176,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			owner.getSession().send(loadChunk);
 
 			final boolean sendBiomes = !biomesSentChunks.contains(x, z);
-			byte[] biomeData = sendBiomes ? new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE] : null;
+			final byte[] biomeData;
 			if (sendBiomes) {
 				biomesSentChunks.add(x, z);
-				WorldGenerator gen = p.getWorld().getGenerator();
-				if (gen instanceof BiomeGenerator) {
-					final long seed = p.getWorld().getSeed();
-					for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
-						for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
-							Biome biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
-							if (biome instanceof VanillaBiome) {
-								biomeData[(dz & (Chunk.CHUNK_SIZE - 1)) << 4 | (dx & (Chunk.CHUNK_SIZE - 1))] = (byte) ((VanillaBiome) biome).getBiomeId();
-							}
-						}
-					}
-				}
+				biomeData = getBiomeData(p.getWorld(), x, z);
+			} else {
+				biomeData = null;
 			}
 
 			byte[][] packetChunkData = new byte[16][];
@@ -223,15 +231,16 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int arrIndex = 0;
 		for (int i = 0; i < rawBlockIdArray.length; i++) {
 			// TODO - conversion code
+			fullChunkData[arrIndex++] = (byte) (rawBlockIdArray[i] & 0xFF);
 			if ((rawBlockIdArray[i] & 0xFF) != 0) {
 				hasData = true;
 			}
-			fullChunkData[arrIndex++] = (byte) (rawBlockIdArray[i] & 0xFF);
 		}
 		if (!hasData) {
 			return;
 		}
 
+		//TODO: This conversion is WRONG! Data is getting scrambled!!!
 		for (int i = 0; i < rawBlockData.length; i += 2) {
 			fullChunkData[arrIndex++] = (byte) ((byte) rawBlockData[i] << 4 | (byte) rawBlockData[i + 1] & 0xF);
 		}
@@ -243,21 +252,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		arrIndex += rawSkyLight.length;
 
 		final boolean sendBiomes = !biomesSentChunks.contains(x, z);
-		byte[] biomeData = sendBiomes ? new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE] : null;
+		final byte[] biomeData;
 		if (sendBiomes) {
+			biomeData = getBiomeData(c.getWorld(), x, z);
 			biomesSentChunks.add(x, z);
-			WorldGenerator gen = c.getWorld().getGenerator();
-			if (gen instanceof BiomeGenerator) {
-				final long seed = c.getWorld().getSeed();
-				for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
-					for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
-						Biome biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
-						if (biome instanceof VanillaBiome) {
-							biomeData[(dz & (Chunk.CHUNK_SIZE - 1)) << 4 | (dx & (Chunk.CHUNK_SIZE - 1))] = (byte) ((VanillaBiome) biome).getBiomeId();
-						}
-					}
-				}
-			}
+		} else {
+			biomeData = null;
 		}
 
 		byte[][] packetChunkData = new byte[16][];

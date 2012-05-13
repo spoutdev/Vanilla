@@ -55,7 +55,7 @@ public class Leaves extends Solid {
 	private Leaves(String name, int data, Leaves parent) {
 		super(name, 18, data, parent);
 	}
-	
+
 	@Override
 	public void loadProperties() {
 		super.loadProperties();

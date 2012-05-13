@@ -56,6 +56,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isOpen(block)) {
 				this.setOpen(block, powered);
+				VanillaNetworkSynchronizer.playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_FIZZ);
 			}
 		}
 	}
@@ -80,6 +81,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 		super.onInteractBy(entity, block, type, clickedFace);
 		toggleOpen(block);
 		block.update();
+		VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_FIZZ);
 	}
 
 	@Override
@@ -93,7 +95,6 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 		short newdata = LogicUtil.setBit(data, 0x4, open);
 		if (data != newdata) {
 			block.setData(newdata);
-			VanillaNetworkSynchronizer.playBlockEffect(block, PlayEffectMessage.Messages.RANDOM_DOOR);
 		}
 	}
 

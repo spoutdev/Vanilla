@@ -103,6 +103,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				if (fire) {
 					//put out fire
 					VanillaMaterials.FIRE.onDestroy(neigh);
+					VanillaNetworkSynchronizer.playBlockEffect(block, player.getEntity(), PlayEffectMessage.Messages.RANDOM_FIZZ);
 				}
 
 				//only dig if in survival mode and block has hardness

@@ -536,8 +536,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	 * @param block  The block that the effect comes from.
 	 * @param effect The effect to play
 	 */
-	public static void playBlockEffect(Block block, PlayEffectMessage.Messages effect) {
-		playBlockEffect(block, 16, effect, 0);
+	public static void playBlockEffect(Block block, Entity ignore, PlayEffectMessage.Messages effect) {
+		playBlockEffect(block, ignore, 16, effect, 0);
 	}
 
 	/**
@@ -546,8 +546,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	 * @param range  The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param effect The effect to play
 	 */
-	public static void playBlockEffect(Block block, int range, PlayEffectMessage.Messages effect) {
-		playBlockEffect(block, range, effect, 0);
+	public static void playBlockEffect(Block block, Entity ignore, int range, PlayEffectMessage.Messages effect) {
+		playBlockEffect(block, ignore, range, effect, 0);
 	}
 
 	/**
@@ -557,8 +557,22 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	 * @param effect The effect to play
 	 * @param data   The data to use for the effect
 	 */
-	public static void playBlockEffect(Block block, int range, PlayEffectMessage.Messages effect, int data) {
-		sendPacketsToNearbyPlayers(block.getPosition(), range, new PlayEffectMessage(effect.getId(), block, data));
+	public static void playBlockEffect(Block block, Entity ignore, int range, PlayEffectMessage.Messages effect, int data) {
+		sendPacketsToNearbyPlayers(block.getPosition(), ignore, range, new PlayEffectMessage(effect.getId(), block, data));
+	}
+
+	/**
+	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
+	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
+	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param messages The messages that should be sent to the discovered nearest player.
+	 */
+	public static void sendPacketsToNearbyPlayers(Point position, Entity ignore, int range, Message... messages) {
+		Region region = position.getWorld().getRegionFromBlock(position);
+		Set<Player> players = region.getNearbyPlayers(position, ignore, range);
+		for (Player plr : players) {
+			plr.getSession().sendAll(messages);
+		}
 	}
 
 	/**

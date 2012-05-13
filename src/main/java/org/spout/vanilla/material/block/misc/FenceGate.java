@@ -58,6 +58,7 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 			return;
 		}
 		this.toggleOpen(block);
+		VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_DOOR);
 	}
 
 	@Override
@@ -72,6 +73,7 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isOpen(block)) {
 				this.setOpen(block, powered);
+				VanillaNetworkSynchronizer.playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_DOOR);
 			}
 		}
 	}
@@ -97,7 +99,6 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 		short newdata = LogicUtil.setBit(data, 0x4, open);
 		if (data != newdata) {
 			block.setData(newdata);
-			VanillaNetworkSynchronizer.playBlockEffect(block, PlayEffectMessage.Messages.RANDOM_DOOR);
 		}
 	}
 

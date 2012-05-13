@@ -32,6 +32,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 
 public class Fire extends VanillaBlockMaterial {
 	public Fire() {
@@ -39,9 +41,20 @@ public class Fire extends VanillaBlockMaterial {
 	}
 
 	@Override
+	public void onDestroy(Block block) {
+		super.onDestroy(block);
+		VanillaNetworkSynchronizer.playBlockEffect(block, PlayEffectMessage.Messages.RANDOM_FIZZ);
+	}
+
+	@Override
 	public void loadProperties() {
 		super.loadProperties();
 		this.setDrop(null);
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return true;
 	}
 
 	@Override

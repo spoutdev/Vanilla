@@ -34,6 +34,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.basic.BasicAir;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -62,6 +63,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 		Block block = player.getEntity().getWorld().getBlock(x, y, z, player.getEntity());
 		BlockMaterial blockMaterial = block.getSubMaterial();
+		BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(message.getFace());
 		boolean isInteractable = true;
 
 		//FIXME: How so not interactable? I am pretty sure I can interact with water to place a boat, no?
@@ -85,21 +87,28 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				return;
 			} else if (heldItem == null) {
 				//interacting with block using fist
-				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
+				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
 			} else if (!isInteractable) {
 				//interacting with nothing using item
 				heldItem.getSubMaterial().onInteract(player.getEntity(), Action.LEFT_CLICK);
 			} else {
 				//interacting with block using item
-				heldItem.getSubMaterial().onInteract(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
-				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, VanillaMessageHandlerUtils.messageToBlockFace(message.getFace()));
+				heldItem.getSubMaterial().onInteract(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
+				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
 			}
 
-			if (isInteractable) {
+			if (isInteractable) {				
+				Block neigh = block.translate(clickedFace);
+				boolean fire = neigh.getMaterial().equals(VanillaMaterials.FIRE);
+				if (fire) {
+					//put out fire
+					VanillaMaterials.FIRE.onDestroy(neigh);
+				}
+
 				//only dig if in survival mode and block has hardness
 				if (vp.isSurvival() && blockMaterial.getHardness() != 0.0f) {
 					vp.setDigging(true);
-				} else {
+				} else if (!fire) {
 					//insta-break
 					blockMaterial.onDestroy(block);
 					PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());

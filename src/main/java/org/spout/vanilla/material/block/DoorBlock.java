@@ -60,6 +60,11 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 	}
 
 	@Override
+	public boolean canSeekAttachedAlternative() {
+		return false;
+	}
+
+	@Override
 	public void onDestroyBlock(Block block) {
 		Block top = getCorrectHalf(block, true);
 		Block bottom = getCorrectHalf(block, false);
@@ -156,13 +161,48 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 		bottomHalf.setMaterial(this, bottomData);
 	}
 
+	//TODO: Place in SpoutAPI
+	public static BlockFace rotate(BlockFace from, int notchCount) {
+		while (notchCount > 0) {
+			switch (from) {
+			case NORTH : from = BlockFace.EAST; break;
+			case EAST : from = BlockFace.SOUTH; break;
+			case SOUTH : from = BlockFace.WEST; break;
+			case WEST : from = BlockFace.NORTH; break;
+			default : return from;
+			}
+			if (notchCount-- == 0) return from;
+		}
+		while (notchCount < 0) {
+			switch (from) {
+			case NORTH : from = BlockFace.WEST; break;
+			case WEST : from = BlockFace.SOUTH; break;
+			case SOUTH : from = BlockFace.EAST; break;
+			case EAST : from = BlockFace.NORTH; break;
+			default : return from;
+			}
+			if (notchCount++ == 0) return from;
+		}
+		return from;
+	}
+
+	private boolean isDoorBlock(Block bottomBlock) {
+		return bottomBlock.getMaterial().equals(this) || bottomBlock.translate(BlockFace.TOP).getMaterial().equals(this);
+	}
+
+	private boolean isHingeBlock(Block bottomBlock) {
+		return RedstoneUtil.isConductor(bottomBlock) || RedstoneUtil.isConductor(bottomBlock.translate(BlockFace.TOP));
+	}
+
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace face, boolean isClicked) {
-		BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource());
+		BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource()).getOpposite();
 		Block above = block.translate(BlockFace.TOP);
 		if (!above.getSubMaterial().isPlacementObstacle()) {
-			//TODO: Check if relative left is a door
-			create(block, above, facing.getOpposite(), false, false);
+			Block left = block.translate(rotate(facing, -1));
+			Block right = block.translate(rotate(facing, 1));
+			boolean hingeLeft = isDoorBlock(right) || (!isDoorBlock(left) && !isHingeBlock(right) && isHingeBlock(left));
+			create(block, above, facing, hingeLeft, false);
 			return true;
 		}
 		return false;

@@ -38,6 +38,7 @@ import org.spout.vanilla.material.block.GroundAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.util.RedstonePowerMode;
+import org.spout.vanilla.util.RedstoneUtil;
 
 public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget {
 	public RedstoneWire() {
@@ -155,10 +156,10 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 			}
 			//check relatively up and down faces
 			if (face == BlockFace.TOP) {
-				topIsConductor = isConductor(mat);
+				topIsConductor = RedstoneUtil.isConductor(mat);
 			} else if (face != BlockFace.BOTTOM) {
 				//check below for wire
-				if (!isConductor(mat)) {
+				if (!RedstoneUtil.isConductor(mat)) {
 					relvert = rel.translate(BlockFace.BOTTOM);
 					if (relvert.getMaterial().equals(this)) {
 						maxPower = (short) Math.max(maxPower, this.getRedstonePower(relvert) - 1);
@@ -208,28 +209,19 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 			return true;
 		} else {
 			//check below
-			if (!isConductor(mat)) {
+			if (!RedstoneUtil.isConductor(mat)) {
 				if (target.translate(BlockFace.BOTTOM).getMaterial().equals(this)) {
 					return true;
 				}
 			}
 			//check above
 			if (target.translate(BlockFace.TOP).getMaterial().equals(this)) {
-				if (!isConductor(block.translate(BlockFace.TOP).getSubMaterial())) {
+				if (!RedstoneUtil.isConductor(block.translate(BlockFace.TOP))) {
 					return true;
 				}
 			}
 			return false;
 		}
-	}
-
-	/**
-	 * Checks if the block material given is a redstone conductor
-	 * @param mat to check
-	 * @return True if it is a redstone conductor
-	 */
-	public boolean isConductor(BlockMaterial mat) {
-		return mat instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) mat).isRedstoneConductor();
 	}
 
 	/**

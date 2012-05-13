@@ -54,7 +54,7 @@ public class MinecartTrackLogic implements Source {
 		this.rails = material;
 		this.isPowered = false;
 		if (this.rails instanceof Rails) {
-			this.isPowered = material.hasRedstonePower(block);
+			this.isPowered = ((Rails) material).isReceivingPower(block);
 		}
 		this.direction = BlockFace.THIS;
 	}

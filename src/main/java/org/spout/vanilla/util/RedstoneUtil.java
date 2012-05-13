@@ -35,6 +35,25 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.RedstoneSource;
 
 public class RedstoneUtil {
+
+	/**
+	 * Checks if the block given is a redstone conductor
+	 * @param block to check
+	 * @return True if it is a redstone conductor
+	 */
+	public static boolean isConductor(Block block) {
+		return isConductor(block.getSubMaterial());
+	}
+
+	/**
+	 * Checks if the block material given is a redstone conductor
+	 * @param mat to check
+	 * @return True if it is a redstone conductor
+	 */
+	public static boolean isConductor(BlockMaterial mat) {
+		return mat instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) mat).isRedstoneConductor();
+	}
+
 	public static boolean isReceivingPower(Block block) {
 		for (BlockFace face : BlockFaces.BTEWNS) {
 			if (isPowered(block.translate(face), face.getOpposite())) {

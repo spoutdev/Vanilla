@@ -27,12 +27,15 @@
 package org.spout.vanilla.material.block.rail;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.block.RailsBase;
+import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.util.RailsState;
+import org.spout.vanilla.util.RedstoneUtil;
 
-public class PoweredRails extends RailsBase {
+public class PoweredRails extends RailsBase implements RedstoneTarget {
 	public PoweredRails() {
 		super("Powered Rail", 27);
 	}
@@ -40,6 +43,53 @@ public class PoweredRails extends RailsBase {
 	@Override
 	public boolean canCurve() {
 		return false;
+	}
+
+	@Override
+	public void onUpdate(Block block) {
+		super.onUpdate(block);
+		if (block.getMaterial().equals(this)) {
+			boolean powered = this.isReceivingPower(block);
+			if (powered != this.isPowered(block)) {
+				this.setPowered(block, powered);
+				block.update();
+			} else {
+				Block neigh;
+				for (BlockFace face : this.getState(block).getDirections()) {
+					neigh = block.translate(face);
+					if (neigh.getMaterial().equals(this)) {
+						if (this.isConnected(neigh, face)) {
+							if (this.isReceivingPower(neigh) != this.isPowered(neigh)) {
+								neigh.update();
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private boolean isReceivingPower(Block block, BlockFace face) {
+		final int maxRange = 8;
+		for (int i = 0; i < maxRange; i++) {
+			block = block.translate(face);
+			if (!block.getMaterial().equals(this) || !this.isConnected(block, face)) {
+				return false;
+			} else if (RedstoneUtil.isReceivingPower(block)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isReceivingPower(Block block) {
+		if (RedstoneUtil.isReceivingPower(block)) {
+			return true;
+		} else {
+			BlockFace[] facing = this.getState(block).getDirections();
+			return isReceivingPower(block, facing[0]) || isReceivingPower(block, facing[1]);
+		}
 	}
 
 	/**

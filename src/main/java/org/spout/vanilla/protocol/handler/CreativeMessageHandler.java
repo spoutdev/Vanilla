@@ -64,7 +64,10 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 		}
 
 		ItemStack newItem;
-		if (checkValidId(message.getId(), message.getDamage())) {
+		if (message.getId() == -1) {
+			//something to be done here?
+			newItem = null;
+		} else if (checkValidId(message.getId(), message.getDamage())) {
 			if (message.getDamage() != 0) {
 				newItem = new ItemStack(Material.get(message.getId()).getSubMaterial(message.getDamage()), message.getDamage(), message.getAmount());
 			} else {

@@ -29,11 +29,21 @@ package org.spout.vanilla.material.block.rail;
 import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.material.block.RailsBase;
+import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.util.RailsState;
+import org.spout.vanilla.util.RedstoneUtil;
 
-public class Rails extends RailsBase {
+public class Rails extends RailsBase implements RedstoneTarget {
 	public Rails() {
 		super("Rails", 66);
+	}
+
+	@Override
+	public void onUpdate(Block block) {
+		super.onUpdate(block);
+		if (block.getMaterial().equals(this)) {
+			this.doTrackLogic(block);
+		}
 	}
 
 	@Override
@@ -49,5 +59,10 @@ public class Rails extends RailsBase {
 	@Override
 	public RailsState getState(Block block) {
 		return RailsState.get(block.getData());
+	}
+
+	@Override
+	public boolean isReceivingPower(Block block) {
+		return RedstoneUtil.isReceivingPower(block);
 	}
 }

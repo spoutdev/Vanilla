@@ -30,66 +30,40 @@ import java.util.Random;
 
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.object.ShrubObject;
 
 public class ShrubDecorator implements BiomeDecorator {
+
 	// How many shrub decorations per chunk
-	private static final byte AMOUNT = 1;
-	// Control the size of the shrubs (pyramids, basically)
-	private static final byte SIZE = 2;
+	// this number is valid for jungles only
+	private static final byte AMOUNT = 20;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
-		if (chunk.getY() < 4) {
-			return;
-		}
-		if (random.nextInt(4) != 0) {
+		if (chunk.getY() != 4) {
 			return;
 		}
 		final World world = chunk.getWorld();
-		final int x = random.nextInt(16) + chunk.getX() * 16;
-		final int z = random.nextInt(16) + chunk.getZ() * 16;
-		final int y = getHighestWorkableBlock(world, x, z);
-		if (y == -1) {
-			return;
-		}
-		for (int i = 0; i < AMOUNT; i++) {
-			generateShrub(world, random, x, y, z, (short) 3, (short) 0);
-		}
-	}
-
-	private void generateShrub(World world, Random random, int x, int y, int z, short leaves, short wood) {
-		if (canBuildShrub(world, x, y, z)) {
-			return;
-		}
-		world.getBlock(x, y, z).setMaterial(VanillaMaterials.LOG, wood);
-		for (byte yy = SIZE; yy > -1; yy--) {
-			for (byte xx = (byte) -yy; xx < yy + 1; xx++) {
-				for (byte zz = (byte) -yy; zz < yy + 1; zz++) {
-					if (Math.abs(xx) == yy && Math.abs(zz) == yy && random.nextBoolean()) {
-						continue;
-					}
-					Block block = world.getBlock(x + xx, y - yy + SIZE, z + zz);
-					BlockMaterial material = block.getMaterial();
-					if (!material.isOpaque() && material != VanillaMaterials.LOG) {
-						block.setMaterial(VanillaMaterials.LEAVES, leaves);
-					}
-				}
+		final ShrubObject shrub = new ShrubObject(random);
+		for (byte i = 0; i < AMOUNT; i++) {
+			final int x = random.nextInt(16) + chunk.getX() * 16;
+			final int z = random.nextInt(16) + chunk.getZ() * 16;
+			final int y = getHighestWorkableBlock(world, x, z);
+			if (y == -1) {
+				continue;
+			}
+			if (shrub.canPlaceObject(world, x, y, z)) {
+				shrub.placeObject(world, x, y, z);
 			}
 		}
 	}
 
-	private boolean canBuildShrub(World world, int x, int y, int z) {
-		BlockMaterial material = world.getBlockMaterial(x, y - 1, z);
-		return material == VanillaMaterials.DIRT || material == VanillaMaterials.GRASS;
-	}
-
 	private int getHighestWorkableBlock(World world, int x, int z) {
-		int y = world.getHeight() - 1;
+		byte y = 127;
 		BlockMaterial material;
 		while ((material = world.getBlockMaterial(x, y, z)) == VanillaMaterials.AIR || material == VanillaMaterials.LEAVES) {
 			y--;

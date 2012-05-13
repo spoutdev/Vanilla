@@ -26,10 +26,27 @@
  */
 package org.spout.vanilla.material.item.tool;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.Tool;
 
 public class Hoe extends Tool {
 	public Hoe(String name, int id, short durability) {
 		super(name, id, durability);
+	}
+
+	@Override
+	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
+		super.onInteract(entity, block, type, clickedface);
+		if (type == Action.RIGHT_CLICK) {
+			BlockMaterial mat = block.getMaterial();
+			if (mat.equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
+				block.setMaterial(VanillaMaterials.FARMLAND);
+			}
+		}
 	}
 }

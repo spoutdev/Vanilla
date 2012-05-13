@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.material.item.tool;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -43,13 +43,15 @@ public class FlintAndSteel extends Tool {
 	@Override
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
 		super.onInteract(entity, block, type, clickedface);
-		Block target = block.translate(clickedface);
-		if (target.getMaterial().equals(VanillaMaterials.AIR)) {
-			clickedface = clickedface.getOpposite();
-			if (VanillaMaterials.FIRE.canPlace(target, (short) 0, clickedface, false)) {
-				if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, clickedface, false)) {
-					Inventory inv = entity.getInventory();
-					inv.addCurrentItemData(1);
+		if (type == Action.RIGHT_CLICK) {
+			Block target = block.translate(clickedface);
+			if (target.getMaterial().equals(VanillaMaterials.AIR)) {
+				clickedface = clickedface.getOpposite();
+				if (VanillaMaterials.FIRE.canPlace(target, (short) 0, clickedface, false)) {
+					if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, clickedface, false)) {
+						Inventory inv = entity.getInventory();
+						inv.addCurrentItemData(1);
+					}
 				}
 			}
 		}

@@ -40,7 +40,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Furnace;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
-import org.spout.vanilla.util.InventoryUtil;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 

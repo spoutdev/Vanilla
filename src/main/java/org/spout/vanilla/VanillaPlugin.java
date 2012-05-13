@@ -67,13 +67,8 @@ import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 public class VanillaPlugin extends CommonPlugin {
 	public static final int MINECRAFT_PROTOCOL_ID = 29;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
-	private static VanillaPlugin instance;
 	private Engine game;
 	private VanillaConfiguration config;
-
-	public VanillaPlugin() {
-		instance = this;
-	}
 
 	@Override
 	public void onDisable() {
@@ -82,29 +77,31 @@ public class VanillaPlugin extends CommonPlugin {
 		} catch (ConfigurationException e) {
 			getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);
 		}
-		getLogger().info("Disabled");
+		getLogger().info("disabled");
 	}
 
 	@Override
 	public void onEnable() {
-		// IO
+		//Config
 		try {
 			config.load();
 		} catch (ConfigurationException e) {
 			getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
 		}
-
-		//Register commands
+		//Commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
 		game.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);
-		game.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
+		if (game.debugMode()) {
+			game.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
+		}
 
-		//Register events
+		//Events
 		game.getEventManager().registerEvents(new VanillaListener(this), this);
 
+		//Worlds
 		setupWorlds();
 
-		getLogger().info("b" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
+		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
 	}
 
 	@Override
@@ -129,7 +126,7 @@ public class VanillaPlugin extends CommonPlugin {
 		//TODO if (game instanceof Client) do stuff?
 
 		VanillaMaterials.initialize();
-		getLogger().info("Loaded");
+		getLogger().info("loaded");
 	}
 
 	private void setupWorlds() {
@@ -177,9 +174,5 @@ public class VanillaPlugin extends CommonPlugin {
 		end.setSpawnPoint(new Transform(endSpawn, Quaternion.IDENTITY, Vector3.ONE));
 		end.createAndSpawnEntity(new Point(end, 0, 0, 0), endSky);
 		end.createAndSpawnEntity(endSpawn, new PointObserver());
-	}
-
-	public static VanillaPlugin getInstance() {
-		return instance;
 	}
 }

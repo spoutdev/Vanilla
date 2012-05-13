@@ -30,11 +30,11 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.RedstoneSource;
 
 public class RedstoneUtil {
-
 	public static boolean isReceivingPower(Block block) {
 		for (BlockFace face : BlockFaces.BTEWNS) {
 			if (isPowered(block.translate(face), face.getOpposite())) {

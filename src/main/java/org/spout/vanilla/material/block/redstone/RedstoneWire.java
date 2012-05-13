@@ -37,11 +37,9 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.GroundAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.RedstoneTarget;
-
 import org.spout.vanilla.util.RedstonePowerMode;
 
 public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget {
-
 	public RedstoneWire() {
 		super("Redstone Wire", 55);
 	}
@@ -60,17 +58,17 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 
 	private void update(Block middle) {
 		middle.update();
-//		Block block;
-//		for (BlockFace face : BlockFaces.NESWBT) {
-//			block = middle.translate(face);
-//			if (block.getMaterial().equals(this)) {
-//				VanillaMaterials.REDSTONE_WIRE.onUpdate(block);
-//			} else {
-//				block.update(false);
-//			}
-//		}
+		//		Block block;
+		//		for (BlockFace face : BlockFaces.NESWBT) {
+		//			block = middle.translate(face);
+		//			if (block.getMaterial().equals(this)) {
+		//				VanillaMaterials.REDSTONE_WIRE.onUpdate(block);
+		//			} else {
+		//				block.update(false);
+		//			}
+		//		}
 	}
-	
+
 	@Override
 	public void doRedstoneUpdates(Block block) {
 		block = block.setSource(this);
@@ -86,7 +84,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		if (!VanillaConfiguration.REDSTONE_PHYSICS.getBoolean()) {
 			return;
 		}
-		
+
 		if (block.getMaterial().equals(this)) {
 			short receiving = this.getReceivingPower(block);
 			setPowerAndUpdate(block, receiving);
@@ -187,19 +185,20 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		short current = this.getRedstonePower(block);
 		if (current != power) {
 			block.setMaterial(this, power);
-			
+
 			//TODO: Make sure updating is not done by performing 15 ever-lessening power updates...
-			this.doRedstoneUpdates(block);			
-			if (true) return;
+			this.doRedstoneUpdates(block);
+			if (true) {
+				return;
+			}
 		}
 	}
 
 	/**
 	 * Checks if a redstone wire is connected to a certain block<br>
 	 * No solid block connections are checked.
-	 * 
 	 * @param block of the wire
-	 * @param face to connect to
+	 * @param face  to connect to
 	 * @return True if connected
 	 */
 	public boolean isConnectedToSource(Block block, BlockFace face) {
@@ -235,20 +234,20 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 
 	/**
 	 * Checks if this wire is distracted from connecting to a certain solid block
-	 * @param block of the wire
+	 * @param block     of the wire
 	 * @param direction it tries to connect to a solid block
 	 * @return True if the wire is distracted
 	 */
 	public boolean isDistractedFrom(Block block, BlockFace direction) {
 		switch (direction) {
-		case NORTH :
-		case SOUTH :
-			return this.isConnectedToSource(block, BlockFace.EAST) || this.isConnectedToSource(block, BlockFace.WEST);
-		case EAST :
-		case WEST :
-			return this.isConnectedToSource(block, BlockFace.NORTH) || this.isConnectedToSource(block, BlockFace.SOUTH);
-		default :
-			return false;
+			case NORTH:
+			case SOUTH:
+				return this.isConnectedToSource(block, BlockFace.EAST) || this.isConnectedToSource(block, BlockFace.WEST);
+			case EAST:
+			case WEST:
+				return this.isConnectedToSource(block, BlockFace.NORTH) || this.isConnectedToSource(block, BlockFace.SOUTH);
+			default:
+				return false;
 		}
 	}
 }

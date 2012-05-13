@@ -33,22 +33,22 @@ import java.util.Random;
 import org.spout.api.generator.biome.BiomeDecorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.PondObject;
 import org.spout.vanilla.world.generator.normal.object.PondObject.PondType;
 
 public class PondDecorator implements BiomeDecorator {
-	
 	// generation odd, 'ODD' chunk per chunk
 	private static final byte ODD = 14;
 	// stores the different types of ponds
 	private final static List<PondType> PONDS = new ArrayList<PondType>();
-	
+
 	static {
 		PONDS.add(PondType.LAVA);
 		PONDS.add(PondType.WATER);
 	}
-	
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
@@ -72,7 +72,7 @@ public class PondDecorator implements BiomeDecorator {
 	private PondType getPondType(Random random) {
 		return PONDS.get(random.nextInt(PONDS.size()));
 	}
-	
+
 	private int getHighestWorkableBlock(World w, int x, int z) {
 		int y = 127;
 		while (w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {

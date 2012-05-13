@@ -54,7 +54,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 		super.onUpdate(block);
 		if (block.getMaterial().equals(this)) {
 			boolean powered = this.isReceivingPower(block);
-			if (powered  != this.isOpen(block)) {
+			if (powered != this.isOpen(block)) {
 				this.setOpen(block, powered);
 			}
 		}

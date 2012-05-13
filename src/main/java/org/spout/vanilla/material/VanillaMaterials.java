@@ -193,8 +193,8 @@ public final class VanillaMaterials {
 	//== Liquids ==
 	public static final Water WATER = register(new Water("Water", 8, true));
 	public static final Water STATIONARY_WATER = register(new Water("Stationary Water", 9, false));
-	public static final Lava LAVA = (Lava) register(new  Lava("Lava", 10, true).setHardness(0.0F).setResistance(0.0F));
-	public static final Lava STATIONARY_LAVA = register(new  Lava("Stationary Lava", 11, false));
+	public static final Lava LAVA = (Lava) register(new Lava("Lava", 10, true).setHardness(0.0F).setResistance(0.0F));
+	public static final Lava STATIONARY_LAVA = register(new Lava("Stationary Lava", 11, false));
 	//== Ores ==
 	public static final CoalOre COAL_ORE = register(new CoalOre());
 	public static final IronOre IRON_ORE = register(new IronOre());

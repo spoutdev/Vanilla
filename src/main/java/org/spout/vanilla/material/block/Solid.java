@@ -34,7 +34,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Solid extends VanillaBlockMaterial {
-
 	public Solid(String name, int id) {
 		super(name, id);
 	}

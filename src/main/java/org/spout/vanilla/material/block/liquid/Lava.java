@@ -28,11 +28,11 @@ package org.spout.vanilla.material.block.liquid;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
 public class Lava extends Liquid {
-
 	public Lava(String name, int id, boolean flowing) {
 		super(name, id, flowing);
 	}
@@ -56,7 +56,7 @@ public class Lava extends Liquid {
 	@Override
 	public void onFlow(Block block, BlockFace to) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -80,6 +80,6 @@ public class Lava extends Liquid {
 	@Override
 	public void setLevel(Block block, int level) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

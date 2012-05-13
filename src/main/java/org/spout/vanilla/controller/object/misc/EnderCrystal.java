@@ -54,8 +54,8 @@ public class EnderCrystal extends Substance {
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
+		Point point = getParent().getLastTransform().getPosition();
 		if (getParent().isDead()) {
-			Point point = getParent().getLastTransform().getPosition();
 			ExplosionModels.SPHERICAL.execute(point, 4.0f);
 
 			Set<Entity> entities = point.getWorld().getRegion((int) point.getX(), (int) point.getY(), (int) point.getZ()).getAll();

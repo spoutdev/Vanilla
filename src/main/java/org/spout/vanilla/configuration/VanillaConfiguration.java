@@ -27,13 +27,13 @@
 package org.spout.vanilla.configuration;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.util.config.ConfigurationHolder;
 import org.spout.api.util.config.ConfigurationHolderConfiguration;
 import org.spout.api.util.config.yaml.YamlConfiguration;
-
-import org.spout.vanilla.VanillaPlugin;
 
 public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	// General
@@ -55,12 +55,40 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder PLAYER_SURVIVAL_ENABLE_HUNGER = new ConfigurationHolder(true, "player", "survival", "enable-hunger");
 	public static final ConfigurationHolder PLAYER_SURVIVAL_ENABLE_XP = new ConfigurationHolder(true, "player", "survival", "enable-xp");
 	public static final ConfigurationHolder PLAYER_TIMEOUT_TICKS = new ConfigurationHolder(120, "player", "timeout-ticks");
-	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
+	public static final OpConfiguration OPS = null;
 	// Controller-specific
 	public static final ConfigurationHolder ITEM_PICKUP_RANGE = new ConfigurationHolder(3, "controller", "item-pickup-range");
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));
+		/**
+		 * OPConfiguration is a public static final field which normally forces us to provide a getInstance method within the
+		 * VanillaPlugin class file. This is a bad approach (should never need getInstance) but since we need the data folder for
+		 * OPConfiguration, reflection is the only way. This is guaranteed to not fail due to how VanillaConfiguration is initialized
+		 * (within onLoad) and since it is static final, the value will NEVER be re-created/changed (as onLoad is only called on
+		 * plugin load and not within an onReload). An if check is also provided to make sure that the field isn't reflected again.
+		 */
+		if (OPS == null) {
+			//Commence dark magic
+			try {
+				Field workaround = getClass().getDeclaredField("OPS");
+				//Set the OPs field to accessable (bypass final).
+				workaround.setAccessible(true);
+				//Get the static modifier
+				Field staticFinalModifier = workaround.getClass().getDeclaredField("modifiers");
+				//Set the final aspect to modifiable
+				staticFinalModifier.setAccessible(true);
+				//Remove the final
+				staticFinalModifier.setInt(workaround, workaround.getModifiers() & ~Modifier.FINAL);
+
+				//OPS is a static final field and as such java ignores it for the first object parameter.
+				workaround.set(null, new OpConfiguration(dataFolder));
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (NoSuchFieldException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override

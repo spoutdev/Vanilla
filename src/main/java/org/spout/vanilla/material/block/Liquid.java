@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public abstract class Liquid extends VanillaBlockMaterial {
@@ -58,7 +58,7 @@ public abstract class Liquid extends VanillaBlockMaterial {
 		int level = this.getReceivingLevel(block);
 		this.setLevel(block, level);
 		if (level > 0) {
-			
+
 		}
 	}
 
@@ -71,13 +71,13 @@ public abstract class Liquid extends VanillaBlockMaterial {
 	}
 
 	public abstract void onFlow(Block block, BlockFace to);
-	
+
 	/**
 	 * Gets the maximum possible water level
 	 * @return the max level
 	 */
 	public abstract int getMaxLevel();
-	
+
 	/**
 	 * Gets the level of a liquid
 	 * @param block of the liquid
@@ -95,7 +95,6 @@ public abstract class Liquid extends VanillaBlockMaterial {
 	/**
 	 * Sets the level of a liquid<br>
 	 * A level of 0 or below converts the liquid into air
-	 * 
 	 * @param block of the liquid
 	 * @param level to set to
 	 */

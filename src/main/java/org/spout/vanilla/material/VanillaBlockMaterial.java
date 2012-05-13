@@ -42,7 +42,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
 	public static final short REDSTONE_POWER_MAX = 15;
 	public static final short REDSTONE_POWER_MIN = 0;
-
 	private float resistance;
 	private Material dropMaterial;
 	private int dropCount;
@@ -171,7 +170,7 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	/**
 	 * Gets the power level of a single block
-	 * @param block	 to get it of
+	 * @param block     to get it of
 	 * @param powerMode to use to find the power
 	 * @return the redstone power level
 	 */
@@ -204,7 +203,7 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 
 	/**
 	 * Gets if this block is being powered or not
-	 * @param block	 to get it of
+	 * @param block     to get it of
 	 * @param powerMode to use to find out the power levels
 	 * @return True if the block receives power
 	 */
@@ -245,7 +244,7 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	/**
 	 * Gets whether this block material can support the attachable block material to the face given
 	 * @param material to attach
-	 * @param face	 of this block to attach to
+	 * @param face     of this block to attach to
 	 * @return
 	 */
 	public boolean canSupport(BlockMaterial material, BlockFace face) {

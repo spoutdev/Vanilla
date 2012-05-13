@@ -39,7 +39,6 @@ import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 
 public class PondObject extends WorldGeneratorObject {
-
 	// rng
 	private final Random random;
 	// pond instance for generating the height maps
@@ -184,7 +183,6 @@ public class PondObject extends WorldGeneratorObject {
 	 * Represents a hole in the shape of a pond
 	 */
 	private class PondHole {
-
 		private final SphericalNoise[] noise;
 
 		private PondHole() {
@@ -207,7 +205,6 @@ public class PondObject extends WorldGeneratorObject {
 		 * Noise used to generate the pond hole
 		 */
 		private class SphericalNoise {
-
 			private final float radius;
 			private final int xOffset;
 			private final int yOffset;

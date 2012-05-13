@@ -45,7 +45,7 @@ public class NoiseSelector extends BiomeSelector {
 
 	/**
 	 * Constructor that will setup the noise generator to construct a world.
-	 * @param vorFreq	  Number of cycles per unit length that a the base Voronoi function will output
+	 * @param vorFreq      Number of cycles per unit length that a the base Voronoi function will output
 	 * @param displacement
 	 * @param roughness
 	 * @param turFreq

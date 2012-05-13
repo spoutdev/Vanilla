@@ -240,9 +240,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 
-		//TODO: This conversion is WRONG! Data is getting scrambled!!!
 		for (int i = 0; i < rawBlockData.length; i += 2) {
-			fullChunkData[arrIndex++] = (byte) ((byte) rawBlockData[i] << 4 | (byte) rawBlockData[i + 1] & 0xF);
+			fullChunkData[arrIndex++] = (byte) ((rawBlockData[i + 1] << 4) | (rawBlockData[i] & 0xF));
 		}
 
 		System.arraycopy(rawBlockLight, 0, fullChunkData, arrIndex, rawBlockLight.length);

@@ -28,6 +28,7 @@ package org.spout.vanilla.world.generator.normal;
 
 import java.util.Random;
 import org.spout.api.generator.biome.BiomeGenerator;
+import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
@@ -40,9 +41,12 @@ import org.spout.vanilla.world.selector.WhittakerNoiseSelector;
 
 public class NormalGenerator extends BiomeGenerator implements VanillaGenerator {
 
+	private static BiomeSelector selector;
+
 	@Override
 	public void registerBiomes() {
-		setSelector(new WhittakerNoiseSelector(2.0));
+		selector = new WhittakerNoiseSelector(this, 2.0);
+		setSelector(selector);
 		addPopulator(new SmoothPopulator());
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.PLAIN);
@@ -65,15 +69,22 @@ public class NormalGenerator extends BiomeGenerator implements VanillaGenerator 
 	@Override
 	public Point getSafeSpawn(World world) {
 		final Random random = new Random();
+
+		//Moves the spawn out of the ocean (and likely on to a beach, as in MC).
+		int shift = 0;
+		while (selector.pickBiome(shift,0,world.getSeed()) == VanillaBiomes.OCEAN && shift < 16000) {
+			shift += 16;
+		}
+
 		for (byte attempts = 0; attempts < 10; attempts++) {
 			final int x = random.nextBoolean() ? -random.nextInt(16) : random.nextInt(16);
 			final int z = random.nextBoolean() ? -random.nextInt(16) : random.nextInt(16);
-			final int y = getHighestSolidBlock(world, x, z);
+			final int y = getHighestSolidBlock(world, x + shift, z);
 			if (y != -1) {
-				return new Point(world, x, y, z);
+				return new Point(world, x + shift, y + 0.5f, z);
 			}
 		}
-		return new Point(world, 0, 80, 0);
+		return new Point(world, shift, 80, 0);
 	}
 
 	private int getHighestSolidBlock(World world, int x, int z) {

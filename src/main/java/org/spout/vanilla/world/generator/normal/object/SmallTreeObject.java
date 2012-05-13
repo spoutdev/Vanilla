@@ -28,8 +28,8 @@ package org.spout.vanilla.world.generator.normal.object;
 
 import java.util.HashSet;
 import java.util.Random;
-
 import java.util.Set;
+
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;

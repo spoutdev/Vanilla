@@ -26,16 +26,20 @@
  */
 package org.spout.vanilla.world.generator.normal;
 
+import java.util.Random;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.populator.SmoothPopulator;
 import org.spout.vanilla.world.selector.WhittakerNoiseSelector;
 
 public class NormalGenerator extends BiomeGenerator implements VanillaGenerator {
+
 	@Override
 	public void registerBiomes() {
 		setSelector(new WhittakerNoiseSelector(2.0));
@@ -60,7 +64,26 @@ public class NormalGenerator extends BiomeGenerator implements VanillaGenerator 
 
 	@Override
 	public Point getSafeSpawn(World world) {
-		//TODO Implement suitable normal world generator safe spawn point.
+		final Random random = new Random();
+		for (byte attempts = 0; attempts < 10; attempts++) {
+			final int x = random.nextBoolean() ? -random.nextInt(16) : random.nextInt(16);
+			final int z = random.nextBoolean() ? -random.nextInt(16) : random.nextInt(16);
+			final int y = getHighestSolidBlock(world, x, z);
+			if (y != -1) {
+				return new Point(world, x, y, z);
+			}
+		}
 		return new Point(world, 0, 80, 0);
+	}
+
+	private int getHighestSolidBlock(World world, int x, int z) {
+		int y = world.getHeight() - 1;
+		while (world.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
+			y--;
+			if (y == 0 || world.getBlockMaterial(x, y, z) instanceof Liquid) {
+				return -1;
+			}
+		}
+		return y + 2;
 	}
 }

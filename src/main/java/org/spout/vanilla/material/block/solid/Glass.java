@@ -31,6 +31,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.block.PointAttachable;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.Instrument;
 
 public class Glass extends Solid {
 	public Glass(String name, int id) {
@@ -55,5 +56,10 @@ public class Glass extends Solid {
 	public void loadProperties() {
 		super.loadProperties();
 		this.setDrop(null);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.CLICK;
 	}
 }

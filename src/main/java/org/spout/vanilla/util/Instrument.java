@@ -24,18 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.util;
 
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.Instrument;
+public enum Instrument {
+	PIANO(0, "harp"),
+	BASSDRUM(1, "bd"),
+	SNAREDRUM(2, "snare"),
+	CLICK(3, "hat"),
+	BASSGUITAR(4, "bassattack");
 
-public class CraftingTable extends Solid {
-	public CraftingTable(String name, int id) {
-		super(name, id);
+	private byte id;
+	private String name;
+
+	private Instrument(int id, String name) {
+		this.id = (byte) id;
+		this.name = name;
 	}
 
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+	public String getName() {
+		return this.name;
+	}
+
+	public byte getId() {
+		return this.id;
 	}
 }

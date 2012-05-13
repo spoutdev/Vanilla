@@ -36,6 +36,7 @@ import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -123,6 +124,14 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	public VanillaBlockMaterial setDamage(int damage) {
 		this.meleeDamage = damage;
 		return this;
+	}
+
+	/**
+	 * Gets the instrument note blocks play with this block material below
+	 * @return the instrument
+	 */
+	public Instrument getInstrument() {
+		return Instrument.PIANO;
 	}
 
 	/**

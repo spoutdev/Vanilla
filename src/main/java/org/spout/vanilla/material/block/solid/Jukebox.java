@@ -28,12 +28,18 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.Instrument;
 
 public class Jukebox extends Solid implements Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public Jukebox(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
 	}
 
 	@Override

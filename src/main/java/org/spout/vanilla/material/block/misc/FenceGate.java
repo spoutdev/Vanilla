@@ -38,6 +38,7 @@ import org.spout.vanilla.material.block.Openable;
 import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
+import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -64,6 +65,11 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 	@Override
 	public boolean hasPhysics() {
 		return true;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
 	}
 
 	@Override

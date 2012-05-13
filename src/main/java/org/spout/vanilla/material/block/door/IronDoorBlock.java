@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.door;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.DoorBlock;
+import org.spout.vanilla.util.Instrument;
 
 public class IronDoorBlock extends DoorBlock {
 	public IronDoorBlock(String name, int id) {

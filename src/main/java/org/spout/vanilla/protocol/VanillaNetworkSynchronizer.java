@@ -60,6 +60,7 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
@@ -559,6 +560,20 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	 */
 	public static void playBlockEffect(Block block, Entity ignore, int range, PlayEffectMessage.Messages effect, int data) {
 		sendPacketsToNearbyPlayers(block.getPosition(), ignore, range, new PlayEffectMessage(effect.getId(), block, data));
+	}
+
+	/**
+	 * Sends a block action message to all nearby players in a 48-block radius
+	 */
+	public static void playBlockAction(Block block, byte arg1, byte arg2) {
+		sendPacketsToNearbyPlayers(block.getPosition(), 48, new BlockActionMessage(block, arg1, arg2));
+	}
+
+	/**
+	 * Sends a block action message to all nearby players
+	 */
+	public static void playBlockAction(Block block, int range, byte arg1, byte arg2) {
+		sendPacketsToNearbyPlayers(block.getPosition(), range, new BlockActionMessage(block, arg1, arg2));
 	}
 
 	/**

@@ -33,6 +33,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.vanilla.controller.block.DispenserController;
 import org.spout.vanilla.controller.block.FurnaceController;
+import org.spout.vanilla.controller.block.NoteBlockController;
 import org.spout.vanilla.controller.living.MobControllerType;
 import org.spout.vanilla.controller.living.creature.hostile.Blaze;
 import org.spout.vanilla.controller.living.creature.hostile.CaveSpider;
@@ -155,6 +156,7 @@ public class VanillaControllerTypes {
 	// Block
 	public static final VanillaControllerType FURNACE = new VanillaControllerType(-5, FurnaceController.class, "Furnace", null);
 	public static final VanillaControllerType DISPENSER = new VanillaControllerType(-6, DispenserController.class, "Dispenser", null);
+	public static final VanillaControllerType NOTEBLOCK = new VanillaControllerType(-7, NoteBlockController.class, "Note Block", null);
 	public static final String KEY = "ControllerID";
 	private static final TIntObjectHashMap<VanillaControllerType> ID_LOOKUP = new TIntObjectHashMap<VanillaControllerType>();
 

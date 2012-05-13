@@ -26,11 +26,16 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.Message;
 
 public final class BlockActionMessage extends Message {
 	private final int x, y, z;
 	byte firstByte, secondByte;
+
+	public BlockActionMessage(Block block, byte firstByte, byte secondByte) {
+		this(block.getX(), block.getY(), block.getZ(), firstByte, secondByte);
+	}
 
 	public BlockActionMessage(int x, int y, int z, byte firstByte, byte secondByte) {
 		this.x = x;

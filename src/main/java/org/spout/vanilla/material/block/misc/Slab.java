@@ -35,6 +35,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.util.Instrument;
 
 public class Slab extends VanillaBlockMaterial implements Mineable {
 	public static final Slab STONE = register(new Slab("Stone Slab"));
@@ -62,6 +63,11 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	public void loadProperties() {
 		super.loadProperties();
 		this.setHardness(2.0F).setResistance(10.0F);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSDRUM;
 	}
 
 	public DoubleSlab getDoubleType() {

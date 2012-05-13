@@ -33,6 +33,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.util.Instrument;
 
 public class Plank extends Solid implements Fuel, Mineable {
 	public static final Plank PLANK = register(new Plank("Oak Plank"));
@@ -56,6 +57,11 @@ public class Plank extends Solid implements Fuel, Mineable {
 	public void loadProperties() {
 		super.loadProperties();
 		this.setHardness(0.8F).setResistance(1.3F);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
 	}
 
 	public WoodType getType() {

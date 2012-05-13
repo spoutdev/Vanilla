@@ -30,6 +30,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
+import org.spout.vanilla.util.Instrument;
 
 public class SoulSand extends Solid implements Mineable {
 	public SoulSand(String name, int id) {
@@ -39,5 +40,10 @@ public class SoulSand extends Solid implements Mineable {
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Spade ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.SNAREDRUM;
 	}
 }

@@ -40,6 +40,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Directional {
@@ -57,6 +58,11 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
 	}
 
 	@Override

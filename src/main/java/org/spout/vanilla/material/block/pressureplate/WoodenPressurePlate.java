@@ -30,10 +30,16 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.PressurePlate;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.util.Instrument;
 
 public class WoodenPressurePlate extends PressurePlate implements Mineable {
 	public WoodenPressurePlate(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
 	}
 
 	@Override

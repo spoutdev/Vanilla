@@ -42,6 +42,10 @@ import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 public final class EntityActionMessageHandler extends MessageHandler<EntityActionMessage> {
 	@Override
 	public void handleServer(Session session, Player player, EntityActionMessage message) {
+		if (player == null) {
+			return;
+		}
+		
 		if (player.getEntity() == null) {
 			return;
 		}

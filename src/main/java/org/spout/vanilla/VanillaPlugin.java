@@ -144,6 +144,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 		//Create the sky.
 		NormalSky normSky = new NormalSky();
+		NormalSky flatSky = new NormalSky();
 		NetherSky netherSky = new NetherSky();
 		TheEndSky endSky = new TheEndSky();
 
@@ -151,6 +152,7 @@ public class VanillaPlugin extends CommonPlugin {
 		VanillaSky.setSky(normal, normSky);
 		VanillaSky.setSky(nether, netherSky);
 		VanillaSky.setSky(end, endSky);
+		VanillaSky.setSky(flat, flatSky);
 
 		//Spawn points
 		Point normalSpawn = normGen.getSafeSpawn(normal);
@@ -164,7 +166,7 @@ public class VanillaPlugin extends CommonPlugin {
 		normal.createAndSpawnEntity(normalSpawn, new PointObserver());
 
 		flat.setSpawnPoint(new Transform(flatSpawn, Quaternion.IDENTITY, Vector3.ONE));
-		flat.createAndSpawnEntity(new Point(flat, 0, 0, 0), normSky);
+		flat.createAndSpawnEntity(new Point(flat, 0, 0, 0), flatSky);
 		flat.createAndSpawnEntity(flatSpawn, new PointObserver());
 
 		nether.setSpawnPoint(new Transform(netherSpawn, Quaternion.IDENTITY, Vector3.ONE));

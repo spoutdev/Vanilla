@@ -62,6 +62,7 @@ import org.spout.vanilla.controller.living.creature.util.SnowGolem;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.MovingBlock;
 import org.spout.vanilla.controller.object.misc.EnderCrystal;
+import org.spout.vanilla.controller.object.misc.Lightning;
 import org.spout.vanilla.controller.object.misc.Painting;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
@@ -93,6 +94,7 @@ import org.spout.vanilla.protocol.controller.living.SpiderEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.VanillaPlayerEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.WolfEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.FallingBlockProtocol;
+import org.spout.vanilla.protocol.controller.object.LightningEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.PaintingEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.PickupEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.XPOrbEntityProtocol;
@@ -149,6 +151,7 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType NORMAL_SKY = new VanillaControllerType(-2, NormalSky.class, "Normal Sky", null);
 	public static final VanillaControllerType NETHER_SKY = new VanillaControllerType(-3, NetherSky.class, "Nether Sky", null);
 	public static final VanillaControllerType THE_END_SKY = new VanillaControllerType(-4, TheEndSky.class, "The End Sky", null);
+	public static final VanillaControllerType LIGHTNING = new VanillaControllerType(-7, Lightning.class, "Lightning", new LightningEntityProtocol());
 	// Block
 	public static final VanillaControllerType FURNACE = new VanillaControllerType(-5, FurnaceController.class, "Furnace", null);
 	public static final VanillaControllerType DISPENSER = new VanillaControllerType(-6, DispenserController.class, "Dispenser", null);

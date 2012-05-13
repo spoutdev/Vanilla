@@ -53,7 +53,14 @@ public class WhittakerNoiseSelector extends BiomeSelector {
 	private static Clamp hillsClamp, elevationClamp, finalRainfall, finalTemp;
 	private static Select oceanBeachDivide, mountainRangeSelector, finalElevationNoise;
 
+	/**
+	 * Selects biomes based on Whittaker's humidity-temperature model.
+	 *
+	 * @param scale		Make this bigger if you'd like bigger biomes.
+	 */
 	public WhittakerNoiseSelector(double scale) {
+		this.scale = scale;
+
 		//Creates the noise for rainfall distribution
 		rainfall = new Voronoi();
 		rainfall.setDisplacement(1.0);

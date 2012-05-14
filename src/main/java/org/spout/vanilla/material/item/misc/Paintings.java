@@ -27,24 +27,46 @@
 package org.spout.vanilla.material.item.misc;
 
 import java.util.Random;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-
+import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.controller.object.misc.Painting;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Paintings extends VanillaItemMaterial {
+
 	private Random random = new Random();
 
 	public enum PaintingStyle {
-		KEBAB, AZTEC, ALBAN, AZTEC2, BOMB, PLANT, WASTELAND, WANDERER, GRAHAM, POOL, COURBET, SUNSET, SEA, CREEBET, MATCH, BUST, STAGE, VOID, SKULLANDROSES, FIGHTERS, SKELETON,
-		DONKEYKONG, POINTER, PIGSCENE, FLAMINGSKULL
-	}
 
-	;
+		Kebab,
+		Aztec,
+		Alban,
+		Aztec2,
+		Bomb,
+		Plant,
+		Wasteland,
+		Pool,
+		Courbet,
+		Sea,
+		Sunset,
+		Creebet,
+		Wanderer,
+		Graham,
+		Match,
+		Bust,
+		Stage,
+		Void,
+		SkullAndRoses,
+		Fighters,
+		Pointer,
+		Pigscene,
+		BurningSkull,
+		Skeleton,
+		DonkeyKong;
+	};
 
 	public Paintings() {
 		super("Paintings", 321);
@@ -52,8 +74,10 @@ public class Paintings extends VanillaItemMaterial {
 
 	@Override
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
-		Painting painting = new Painting(PaintingStyle.values()[random.nextInt(PaintingStyle.values().length)], 0);//TODO fix the 0 here, and the position on the next line
-		block.getWorld().createAndSpawnEntity(block.getPosition(), painting);
+		if(type != Action.RIGHT_CLICK)
+			return;
+		Painting painting = new Painting(PaintingStyle.values()[random.nextInt(PaintingStyle.values().length)], BlockFaces.NESW.indexOf(clickedface,-1));//TODO fix the 0 here, and the position on the next line
+		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), painting);
 		if (entity.getInventory().getCurrentItem().getAmount() > 1) {
 			entity.getInventory().addCurrentItemAmount(-1);
 		} else {

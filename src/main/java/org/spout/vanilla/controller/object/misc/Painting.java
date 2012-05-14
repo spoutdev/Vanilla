@@ -26,11 +26,14 @@
  */
 package org.spout.vanilla.controller.object.misc;
 
+import java.io.Serializable;
+import java.util.Map;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.material.item.misc.Paintings.PaintingStyle;
 
 public class Painting extends Substance {
+
 	private PaintingStyle style;
 	private int face;
 
@@ -38,6 +41,25 @@ public class Painting extends Substance {
 		super(VanillaControllerTypes.PAINTINGS);
 		this.style = style;
 		this.face = face;
+	}
+
+	@Override
+	public boolean isSavable() {
+		return true;
+	}
+
+	@Override
+	public boolean read(Map<String, Serializable> map) {
+		style = (PaintingStyle) map.get("Style");
+		face = (Integer) map.get("Face");
+		return true;
+	}
+
+	@Override
+	public boolean save(Map<String, Serializable> map) {
+		map.put("Style", style);
+		map.put("Face", face);
+		return true;
 	}
 
 	public PaintingStyle getPaintingStyle() {

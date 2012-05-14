@@ -34,6 +34,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.DispenserController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.DispenserInventory;
@@ -54,12 +55,12 @@ public class Dispenser extends Solid implements Mineable, Directional {
 	public void loadProperties() {
 		super.loadProperties();
 		this.setHardness(3.5F).setResistance(5.8F);
+		this.setController(VanillaControllerTypes.DISPENSER);
 	}
 
 	@Override
-	public void onDestroy(Block block) {
-		super.onDestroy(block);
-		block.setController(null);
+	public DispenserController getController(Block block) {
+		return (DispenserController) super.getController(block);
 	}
 
 	@Override
@@ -86,8 +87,7 @@ public class Dispenser extends Solid implements Mineable, Directional {
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
 			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-			//TODO: Get block.setController to function correctly
-			block.getWorld().createAndSpawnEntity(block.getPosition(), new DispenserController());
+			this.getController(block);
 			return true;
 		}
 		return false;
@@ -104,13 +104,7 @@ public class Dispenser extends Solid implements Mineable, Directional {
 			// Get the controller and assign a new window id for the session.
 			VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
 			Inventory inventory = entity.getInventory();
-			DispenserController dispenser = (DispenserController) block.getController();
-			Window window = Window.DISPENSER;
-
-			if (dispenser == null) {
-				System.out.println("Dispenser is null");
-				return;
-			}
+			DispenserController dispenser = this.getController(block);
 
 			// Dispose items into new inventory
 			DispenserInventory dispenserInventory = dispenser.getInventory();
@@ -121,7 +115,7 @@ public class Dispenser extends Solid implements Mineable, Directional {
 			// Add the player who opened the inventory as a viewer
 			dispenserInventory.addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
 			vanillaPlayer.setActiveInventory(dispenserInventory);
-			vanillaPlayer.openWindow(window, "Dispenser", dispenserInventory.getSize());
+			vanillaPlayer.openWindow(Window.DISPENSER, dispenserInventory.getSize());
 		}
 	}
 }

@@ -489,10 +489,14 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.exhaustion = exhaustion;
 	}
 
-	public void openWindow(Window activeWindow, String title, int slots) {
+	public void openWindow(Window activeWindow, int slotCount) {
+		this.openWindow(activeWindow, activeWindow.getTitle(), slotCount);
+	}
+
+	public void openWindow(Window activeWindow, String title, int slotCount) {
 		this.activeWindow = activeWindow;
 		this.windowId = nextWindowId();
-		sendPacket(owner, new OpenWindowMessage(windowId, activeWindow.getId(), title, slots));
+		sendPacket(owner, new OpenWindowMessage(windowId, activeWindow.getId(), title, slotCount));
 	}
 
 	public void closeWindow() {

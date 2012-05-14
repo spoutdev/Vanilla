@@ -27,19 +27,25 @@
 package org.spout.vanilla.inventory;
 
 public enum Window {
-	PLAYER_INVENTORY(-1),
-	CHEST(0),
-	WORKBENCH(1),
-	FURNACE(2),
-	DISPENSER(3),
-	ENCHANTMENT_TABLE(4);
+	PLAYER_INVENTORY(-1, "Inventory"),
+	CHEST(0, "Chest"),
+	WORKBENCH(1, "Crafting"),
+	FURNACE(2, "Furnace"),
+	DISPENSER(3, "Dispenser"),
+	ENCHANTMENT_TABLE(4, "Enchant");
 	private final int id;
+	private final String title;
 
-	private Window(int id) {
+	private Window(int id, String title) {
 		this.id = id;
+		this.title = title;
 	}
 
 	public int getId() {
 		return id;
+	}
+
+	public String getTitle() {
+		return this.title;
 	}
 }

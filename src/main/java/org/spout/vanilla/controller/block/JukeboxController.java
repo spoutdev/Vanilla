@@ -59,15 +59,21 @@ public class JukeboxController extends VanillaBlockController {
 	 */
 	public Music getMusic() {
 		ItemStack current = inventory.getCurrentItem();
-		if (current != null) {
-			Material mat = current.getSubMaterial();
-			if (mat instanceof MusicDisc) {
-				return ((MusicDisc) mat).getMusic();
-			}
+		if (canPlay(current)) {
+			return ((MusicDisc) current.getSubMaterial()).getMusic();
+		} else {
+			return Music.NONE;
 		}
-		return Music.NONE;
 	}
 
+	public boolean canPlay(ItemStack item) {
+		return item != null && this.canPlay(item.getSubMaterial());
+	}
+
+	public boolean canPlay(Material material) {
+		return material instanceof MusicDisc;
+	}
+	
 	/**
 	 * Ejects the currently playing music disc
 	 */
@@ -77,7 +83,15 @@ public class JukeboxController extends VanillaBlockController {
 		if (current != null) {
 			Point position = this.getParent().getPosition();
 			position.getWorld().createAndSpawnEntity(position, new Item(current, Vector3.UP.multiply(0.5)));
+			this.update();
 		}
+	}
+
+	/**
+	 * Updates the playing state of this Jukebox with the current item
+	 */
+	public void update() {
+		this.setPlaying(true);
 	}
 
 	/**

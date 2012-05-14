@@ -34,6 +34,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;
@@ -60,15 +61,15 @@ public class Furnace extends Solid implements Mineable, Directional {
 	public void loadProperties() {
 		super.loadProperties();
 		this.setHardness(3.5F).setResistance(5.8F).setDrop(VanillaMaterials.FURNACE);
+		this.setController(VanillaControllerTypes.FURNACE);
 		if (this.burning) {
 			this.setLightLevel(13);
 		}
 	}
 
 	@Override
-	public void onDestroy(Block block) {
-		super.onDestroy(block);
-		block.setController(null);
+	public FurnaceController getController(Block block) {
+		return (FurnaceController) super.getController(block);
 	}
 
 	/**
@@ -111,14 +112,7 @@ public class Furnace extends Solid implements Mineable, Directional {
 			// Get the controller and assign a new window id for the session.
 			VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
 			Inventory inventory = entity.getInventory();
-			FurnaceController furnace = (FurnaceController) block.getController();
-			Window window = Window.FURNACE;
-
-			if (furnace == null) {
-				FurnaceController newFurnace = new FurnaceController();
-				block.getWorld().createAndSpawnEntity(block.getPosition(), new FurnaceController());
-				furnace = newFurnace;
-			}
+			FurnaceController furnace = this.getController(block);
 
 			// Transfer the items
 			FurnaceInventory furnaceInventory = furnace.getInventory();
@@ -129,7 +123,7 @@ public class Furnace extends Solid implements Mineable, Directional {
 			// Add the player who opened the inventory as a viewer
 			furnaceInventory.addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
 			vanillaPlayer.setActiveInventory(furnaceInventory);
-			vanillaPlayer.openWindow(window, "Furnace", furnaceInventory.getSize());
+			vanillaPlayer.openWindow(Window.FURNACE, furnaceInventory.getSize());
 		}
 	}
 

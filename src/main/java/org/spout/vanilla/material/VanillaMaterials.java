@@ -179,7 +179,7 @@ public final class VanillaMaterials {
 	public static final Glass GLASS = (Glass) register(new Glass("Glass", 20).setHardness(0.3F).setResistance(0.5F));
 	public static final Dispenser DISPENSER = register(new Dispenser("Dispenser", 23));
 	public static final Sandstone SANDSTONE = Sandstone.SANDSTONE;
-	public static final NoteBlock NOTEBLOCK = (NoteBlock) register(new NoteBlock("Note Block", 25).setHardness(0.8F).setResistance(1.3F));
+	public static final NoteBlock NOTEBLOCK = register(new NoteBlock("Note Block", 25));
 	public static final BedBlock BED_BLOCK = register(new BedBlock("Bed", 26));
 	public static final Web WEB = (Web) register(new Web("Cobweb", 30).setHardness(4.0F).setResistance(20.0F));
 	//== Piston ==

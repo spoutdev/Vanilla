@@ -26,15 +26,62 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.block.JukeboxController;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
 
 public class Jukebox extends Solid implements Fuel {
 	public final float BURN_TIME = 15.f;
-
+	
 	public Jukebox(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void loadProperties() {
+		super.loadProperties();
+		this.setController(VanillaControllerTypes.JUKEBOX);
+	}
+
+	@Override
+	public JukeboxController getController(Block block) {
+		return (JukeboxController) super.getController(block);
+	}
+
+	@Override
+	public void onDestroy(Block block) {
+		super.onDestroy(block);
+	}
+
+	@Override
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		if (super.onPlacement(block, data, against, isClickedBlock)) {
+			this.getController(block);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, type, clickedFace);
+		if (type == Action.RIGHT_CLICK) {
+			JukeboxController controller = this.getController(block);
+			controller.eject();
+			ItemStack item = entity.getInventory().getCurrentItem();
+			if (controller.canPlay(item)) {
+				controller.getInventory().setCurrentItem(item.clone().setAmount(1));
+				controller.update();
+				entity.getInventory().addCurrentItemAmount(-1);
+			}
+		}
 	}
 
 	@Override

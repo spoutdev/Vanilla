@@ -94,6 +94,11 @@ public class BlockUpdater extends Controller implements VanillaController {
 		super(TYPE);
 	}
 
+	@Override
+	public boolean isSavable() {
+		return false;
+	}
+
 	public static void schedule(Block block, int delay) {
 		get(block.getRegion()).add(block, delay);
 	}

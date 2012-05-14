@@ -32,4 +32,18 @@ public interface VanillaInventory {
 	 * @return window of inventory
 	 */
 	public Window getWindow();
+
+	/**
+	 * Gets the native protocol slot index
+	 * @param index of the slot
+	 * @return the native index
+	 */
+	public int getNativeSlotIndex(int index);
+
+	/**
+	 * Gets the slot index from a native slot index
+	 * @param nativeIndex of the item
+	 * @return the Spout item index
+	 */
+	public int getSlotIndex(int nativeIndex);
 }

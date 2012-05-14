@@ -35,6 +35,8 @@ import org.spout.vanilla.controller.block.DispenserController;
  */
 public class DispenserInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
+	private static final int SLOTS[] = {36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 7, 8};
+
 	private final DispenserController owner;
 
 	public DispenserInventory(DispenserController owner) {
@@ -48,6 +50,21 @@ public class DispenserInventory extends Inventory implements VanillaInventory {
 	 */
 	public DispenserController getOwner() {
 		return owner;
+	}
+
+	@Override
+	public int getNativeSlotIndex(int index) {
+		return SLOTS[index];
+	}
+
+	@Override
+	public int getSlotIndex(int nativeIndex) {
+		for (int i = 0; i < SLOTS.length; i++) {
+			if (SLOTS[i] == nativeIndex) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	@Override

@@ -27,12 +27,10 @@
 package org.spout.vanilla.util;
 
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.PlayerInventory;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.inventory.DispenserInventory;
-import org.spout.vanilla.inventory.FurnaceInventory;
+import org.spout.vanilla.inventory.VanillaInventory;
 
 public class VanillaMessageHandlerUtils {
 	/**
@@ -44,47 +42,17 @@ public class VanillaMessageHandlerUtils {
 		return BlockFaces.BTEWNS.get(messageFace, BlockFace.THIS);
 	}
 
-	private static final int PLAYER_INVENTORY_SLOTS[] = {36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7, 3, 4, 0, 6, 1, 2, 5};
-	private static final int FURNACE_INVENTORY_SLOTS[] = {30, 31, 32, 33, 34, 35, 36, 37, 38, 21, 22, 23, 24, 25, 26, 27, 28, 29, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 0};
-	private static final int DISPENSER_INVENTORY_SLOTS[] = {36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 7, 8};
-
 	public static int getSpoutInventorySlot(Inventory inventory, int slot) {
-		if (inventory instanceof PlayerInventory) {
-			for (int a = 0; a < PLAYER_INVENTORY_SLOTS.length; a++) {
-				if (slot == PLAYER_INVENTORY_SLOTS[a]) {
-					return a;
-				}
-			}
+		if (inventory instanceof VanillaInventory) {
+			return ((VanillaInventory) inventory).getSlotIndex(slot);
 		}
-
-		if (inventory instanceof FurnaceInventory) {
-			for (int b = -1; b < FURNACE_INVENTORY_SLOTS.length; b++) {
-				if (b == -1) {
-					continue;
-				}
-
-				if (slot == FURNACE_INVENTORY_SLOTS[b]) {
-					return b;
-				}
-			}
-		}
-
 		return -1;
 	}
 
 	public static int getNetworkInventorySlot(Inventory inventory, int slot) {
-		if (inventory instanceof PlayerInventory) {
-			return PLAYER_INVENTORY_SLOTS[slot];
+		if (inventory instanceof VanillaInventory) {
+			return ((VanillaInventory) inventory).getNativeSlotIndex(slot);
 		}
-
-		if (inventory instanceof FurnaceInventory) {
-			return FURNACE_INVENTORY_SLOTS[slot];
-		}
-
-		if (inventory instanceof DispenserInventory) {
-			return DISPENSER_INVENTORY_SLOTS[slot];
-		}
-
 		return -1;
 	}
 }

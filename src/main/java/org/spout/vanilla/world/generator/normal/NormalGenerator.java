@@ -37,7 +37,7 @@ import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.populator.SmoothPopulator;
-import org.spout.vanilla.world.selector.WhittakerNoiseSelector;
+import org.spout.vanilla.world.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends BiomeGenerator implements VanillaGenerator {
 
@@ -45,7 +45,7 @@ public class NormalGenerator extends BiomeGenerator implements VanillaGenerator 
 
 	@Override
 	public void registerBiomes() {
-		selector = new WhittakerNoiseSelector(this, 2.0);
+		selector = new VanillaBiomeSelector(this, 2.0f);
 		setSelector(selector);
 		addPopulator(new SmoothPopulator());
 		register(VanillaBiomes.OCEAN);

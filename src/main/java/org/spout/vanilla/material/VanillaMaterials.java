@@ -159,6 +159,7 @@ import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.weapon.Bow;
 import org.spout.vanilla.material.item.weapon.Sword;
+import org.spout.vanilla.util.Music;
 
 import static org.spout.api.material.MaterialRegistry.register;
 
@@ -425,6 +426,18 @@ public final class VanillaMaterials {
 	public static final RawChicken RAW_CHICKEN = register(new RawChicken());
 	public static final Food COOKED_CHICKEN = register(new Food("Cooked Chicken", 366, 6, FoodEffectType.HUNGER));
 	public static final Food ROTTEN_FLESH = register(new Food("Rotten Flesh", 367, 4, FoodEffectType.HUNGER));
+	//== Music Discs ==
+	public static final MusicDisc GOLD_MUSIC_DISC = register(new MusicDisc("Music Disc", 2256).setMusic(Music.THIRTEEN));
+	public static final MusicDisc GREEN_MUSIC_DISC = register(new MusicDisc("Music Disc", 2257).setMusic(Music.CAT));
+	public static final MusicDisc ORANGE_MUSIC_DISC = register(new MusicDisc("Music Disc", 2258).setMusic(Music.BLOCKS));
+	public static final MusicDisc RED_MUSIC_DISC = register(new MusicDisc("Music Disc", 2259).setMusic(Music.CHIRP));
+	public static final MusicDisc CYAN_MUSIC_DISC = register(new MusicDisc("Music Disc", 2260).setMusic(Music.FAR));
+	public static final MusicDisc BLUE_MUSIC_DISC = register(new MusicDisc("Music Disc", 2261).setMusic(Music.MALL));
+	public static final MusicDisc PURPLE_MUSIC_DISC = register(new MusicDisc("Music Disc", 2262).setMusic(Music.MELLOHI));
+	public static final MusicDisc BLACK_MUSIC_DISC = register(new MusicDisc("Music Disc", 2263).setMusic(Music.STAL));
+	public static final MusicDisc WHITE_MUSIC_DISC = register(new MusicDisc("Music Disc", 2264).setMusic(Music.STRAD));
+	public static final MusicDisc FOREST_GREEN_MUSIC_DISC = register(new MusicDisc("Music Disc", 2265).setMusic(Music.WARD));
+	public static final MusicDisc BROKEN_MUSIC_DISC = register(new MusicDisc("Music Disc", 2266).setMusic(Music.ELEVEN));
 	//== Potions and special items ==
 	public static final VanillaItemMaterial ENDER_PEARL = register(new VanillaItemMaterial("Ender Pearl", 368));
 	public static final BlazeRod BLAZE_ROD = register(new BlazeRod("Blaze Rod", 369));
@@ -443,17 +456,6 @@ public final class VanillaMaterials {
 	public static final SpawnEgg SPAWN_EGG = SpawnEgg.PIG;
 	public static final VanillaItemMaterial BOTTLE_O_ENCHANTING = register(new VanillaItemMaterial("Bottle o' Enchanting", 384));
 	public static final BlockItem FIRE_CHARGE = register(new BlockItem("Fire Charge", 385, VanillaMaterials.FIRE)); //Basic Implementation
-	public static final MusicDisc GOLD_MUSIC_DISC = register(new MusicDisc("Music Disc", 2256));
-	public static final MusicDisc GREEN_MUSIC_DISC = register(new MusicDisc("Music Disc", 2257));
-	public static final MusicDisc ORANGE_MUSIC_DISC = register(new MusicDisc("Music Disc", 2258));
-	public static final MusicDisc RED_MUSIC_DISC = register(new MusicDisc("Music Disc", 2259));
-	public static final MusicDisc CYAN_MUSIC_DISC = register(new MusicDisc("Music Disc", 2260));
-	public static final MusicDisc BLUE_MUSIC_DISC = register(new MusicDisc("Music Disc", 2261));
-	public static final MusicDisc PURPLE_MUSIC_DISC = register(new MusicDisc("Music Disc", 2262));
-	public static final MusicDisc BLACK_MUSIC_DISC = register(new MusicDisc("Music Disc", 2263));
-	public static final MusicDisc WHITE_MUSIC_DISC = register(new MusicDisc("Music Disc", 2264));
-	public static final MusicDisc FOREST_GREEN_MUSIC_DISC = register(new MusicDisc("Music Disc", 2265));
-	public static final MusicDisc BROKEN_MUSIC_DISC = register(new MusicDisc("Music Disc", 2266));
 	public static final Potion POTION = Potion.EMPTY;
 	private static boolean initialized = false;
 

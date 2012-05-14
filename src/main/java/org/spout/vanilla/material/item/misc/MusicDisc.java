@@ -27,9 +27,21 @@
 package org.spout.vanilla.material.item.misc;
 
 import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.util.Music;
 
 public class MusicDisc extends VanillaItemMaterial {
+	private Music music;
+
 	public MusicDisc(String name, int id) {
 		super(name, id);
+	}
+
+	public Music getMusic() {
+		return this.music;
+	}
+
+	public MusicDisc setMusic(Music music) {
+		this.music = music;
+		return this;
 	}
 }

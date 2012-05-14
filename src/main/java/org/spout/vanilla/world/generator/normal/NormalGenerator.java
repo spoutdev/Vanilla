@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.normal;
 
 import java.util.Random;
+
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.api.geo.World;
@@ -36,18 +37,17 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
-import org.spout.vanilla.world.populator.SmoothPopulator;
-import org.spout.vanilla.world.selector.WhittakerNoiseSelector;
+import org.spout.vanilla.world.selector.WhittakerBiomeSelector;
 
 public class NormalGenerator extends BiomeGenerator implements VanillaGenerator {
 
 	private static BiomeSelector selector;
 
 	@Override
-	public void registerBiomes() {
-		selector = new WhittakerNoiseSelector(this, 2.0);
+	public void registerBiomes() {	
+		selector = new WhittakerBiomeSelector(this, 2.0f);
 		setSelector(selector);
-		addPopulator(new SmoothPopulator());
+		//addPopulator(new SmoothPopulator());
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.PLAIN);
 		register(VanillaBiomes.DESERT);

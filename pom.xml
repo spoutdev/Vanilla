@@ -77,6 +77,11 @@
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>net.royawesome</groupId>
+            <artifactId>jlibnoise</artifactId>
+            <version>dev-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

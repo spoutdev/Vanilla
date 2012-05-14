@@ -40,6 +40,7 @@ import org.spout.vanilla.world.generator.VanillaGenerator;
 public class NetherGenerator extends BiomeGenerator implements VanillaGenerator {
 	@Override
 	public void registerBiomes() {
+
 		setSelector(new SingleSelector(VanillaBiomes.NETHERRACK));
 		register(VanillaBiomes.NETHERRACK);
 	}

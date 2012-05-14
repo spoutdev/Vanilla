@@ -105,6 +105,11 @@ public abstract class VanillaSky extends Controller implements VanillaController
 		if(hasWeather && simulator != null)
 			simulator.onTick();
 	}
+	
+	@Override
+	public boolean isSavable() {
+		return false;
+	}
 
 	/**
 	 * Sets the time of the sky.

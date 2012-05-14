@@ -26,54 +26,51 @@
  */
 package org.spout.vanilla.configuration;
 
-import java.io.File;
 import java.util.List;
 
 import org.spout.api.exception.ConfigurationException;
-import org.spout.api.util.config.yaml.YamlConfiguration;
 
-public class OpConfiguration {
-	private final YamlConfiguration config;
-	
-	protected OpConfiguration() {
-		this.config = null;
+class OpConfigurationWrapper extends OpConfiguration {
+	private OpConfiguration wrapped = null;
+	public OpConfigurationWrapper() {
+		super();
 	}
 	
-	public OpConfiguration(File dataFolder) {
-		config = new YamlConfiguration(new File(dataFolder, "ops.yml"));
+	protected void setWrapped(OpConfiguration ops) {
+		this.wrapped = ops;
 	}
-
+	
+	@Override
 	public List<String> getOps() {
-		return config.getNode("ops").getStringList();
+		validate();
+		return wrapped.getOps();
 	}
-
+	
+	@Override
 	public boolean setOp(String playerName, boolean op) {
-		List<String> list = getOps();
-		if (op) {
-			list.add(playerName.toLowerCase());
-		} else {
-			list.remove(playerName.toLowerCase());
-		}
-
-		config.getNode("ops").setValue(list);
-
-		try {
-			this.save();
-			return true;
-		} catch (ConfigurationException e) {
-			return false;
-		}
+		validate();
+		return wrapped.setOp(playerName, op);
 	}
-
+	
+	@Override
 	public boolean isOp(String playerName) {
-		return getOps().contains(playerName.toLowerCase());
+		validate();
+		return wrapped.isOp(playerName);
 	}
 	
+	@Override
 	public void save() throws ConfigurationException {
-		config.save();
+		validate();
+		wrapped.save();
 	}
 	
+	@Override
 	public void load() throws ConfigurationException {
-		config.load();
+		validate();
+		wrapped.load();
+	}
+	
+	private void validate() {
+		if (wrapped == null) throw new NullPointerException("No op configuration available");
 	}
 }

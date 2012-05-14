@@ -24,34 +24,29 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.protocol.controller.object;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.Inventory;
-import org.spout.api.material.block.BlockFace;
+import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.protocol.Message;
+import org.spout.vanilla.controller.object.misc.Lightning;
+import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
+import org.spout.vanilla.protocol.msg.SpawnLightningStrikeMessage;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.Tool;
 
-public class FlintAndSteel extends Tool {
-	public FlintAndSteel(String name, int id, short durability) {
-		super(name, id, durability);
-	}
+
+public class LightningEntityProtocol  extends VanillaEntityProtocol implements EntityProtocol {
 
 	@Override
-	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
-		super.onInteract(entity, block, type, clickedface);
-		Block target = block.translate(clickedface);
-		if (target.getMaterial().equals(VanillaMaterials.AIR)) {
-			clickedface = clickedface.getOpposite();
-			if (VanillaMaterials.FIRE.canPlace(target, (short) 0, clickedface, false)) {
-				if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, clickedface, false)) {
-					Inventory inv = entity.getInventory();
-					inv.addCurrentItemData(1);
-				}
-			}
-		}
+	public Message[] getSpawnMessage(Entity entity) {
+		if(entity.getController() == null)
+			return null;
+		if(!(entity.getController() instanceof Lightning))
+			return null;
+		Message[] toSend = new Message[1];
+		toSend[0] = new SpawnLightningStrikeMessage(entity.getId(), entity.getPosition().getBlockX(), entity.getPosition().getBlockY(), entity.getPosition().getBlockZ());
+		return toSend;
+		
 	}
+
 }

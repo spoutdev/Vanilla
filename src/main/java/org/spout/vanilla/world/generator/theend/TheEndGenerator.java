@@ -28,6 +28,7 @@ package org.spout.vanilla.world.generator.theend;
 
 import java.util.Random;
 import org.spout.api.generator.biome.BiomeGenerator;
+import org.spout.api.generator.biome.SingleSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
@@ -35,12 +36,11 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
-import org.spout.vanilla.world.selector.NoiseSelector;
 
 public class TheEndGenerator extends BiomeGenerator implements VanillaGenerator {
 	@Override
 	public void registerBiomes() {
-		setSelector(new NoiseSelector(0.9, 1.5, 5, 0.9, 1.5));
+		setSelector(new SingleSelector(VanillaBiomes.ENDSTONE));
 		register(VanillaBiomes.ENDSTONE);
 	}
 

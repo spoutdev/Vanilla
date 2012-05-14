@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.stair;
 
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Stairs;
+import org.spout.vanilla.util.Instrument;
 
 public class WoodenStairs extends Stairs implements Fuel {
 	public final float BURN_TIME = 15.f;
@@ -41,6 +42,11 @@ public class WoodenStairs extends Stairs implements Fuel {
 		super.loadProperties();
 		//TODO: Hardness?
 		this.setResistance(3.0F);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
 	}
 
 	@Override

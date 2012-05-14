@@ -31,16 +31,19 @@ import java.util.HashMap;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
+import org.spout.api.util.BlockIterator;
 
+import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class EmptyContainer extends BlockItem {
+
 	private HashMap<MaterialSource, FullContainer> fullContainers = new HashMap<MaterialSource, FullContainer>();
 
 	public EmptyContainer(String name, int id) {
@@ -48,21 +51,44 @@ public class EmptyContainer extends BlockItem {
 	}
 
 	@Override
-	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedFace) {
-		// TODO: ignore position and get the first non-air in the line of sight to prevent NPE's
+	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		return false;
+	}
 
-		super.onInteract(entity, block, type, clickedFace);
+	@Override
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		return false;
+	}
 
-		Inventory inventory = entity.getInventory();
-		if (inventory.getCurrentItem() == null) {
-			FullContainer full = this.getFullItem(block.getMaterial(), block.getData());
-
-			if (full == null) {
-				return;
+	@Override
+	public void onInteract(Entity entity, Action type) {
+		super.onInteract(entity, type);
+		if (type == Action.RIGHT_CLICK && entity.getController() instanceof Living) {
+			//TODO: Possibly use hitboxes?
+			BlockIterator iter = ((Living) entity.getController()).getHeadBlockView();
+			Block block;
+			while (iter.hasNext()) {
+				block = iter.next();
+				if (block.getMaterial().equals(VanillaMaterials.AIR)) {
+					continue;
+				} else {
+					FullContainer cont = this.getFullItem(block.getMaterial(), block.getData());
+					if (cont != null) {
+						block.setMaterial(VanillaMaterials.AIR);
+						if (!VanillaPlayerUtil.isCreative(entity)) {
+							entity.getInventory().setCurrentItem(new ItemStack(cont, 1));
+						}
+					}
+					return;
+				}
 			}
-
-			inventory.setCurrentItem(new ItemStack(full, 1));
 		}
+	}
+
+	@Override
+	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		super.onInteract(entity, block, type, clickedFace);
+		this.onInteract(entity, type);
 	}
 
 	public FullContainer getFullItem(BlockMaterial material, short data) {

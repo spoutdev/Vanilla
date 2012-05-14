@@ -31,11 +31,14 @@ import java.util.Random;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.misc.SignBase;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Leaves extends Solid {
@@ -57,6 +60,11 @@ public class Leaves extends Solid {
 	public void loadProperties() {
 		super.loadProperties();
 		this.setHardness(0.2F).setResistance(0.3F).setOpacity((byte) 0);
+	}
+
+	@Override
+	public boolean canSupport(BlockMaterial mat, BlockFace face) {
+		return mat.equals(VanillaMaterials.VINES) || mat instanceof SignBase;
 	}
 
 	@Override

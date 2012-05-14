@@ -27,11 +27,17 @@
 package org.spout.vanilla.material.block.misc;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.util.Instrument;
 
 public class GlassPane extends VanillaBlockMaterial {
 	public GlassPane(String name, int id) {
 		super(name, id);
 		this.setOccludes(false);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.CLICK;
 	}
 
 	@Override

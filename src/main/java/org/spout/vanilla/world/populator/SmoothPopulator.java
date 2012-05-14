@@ -38,6 +38,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Liquid;
 
 /**
  * Populator ran at stage 2 of world generation which serves to smooth
@@ -128,17 +129,16 @@ public class SmoothPopulator implements Populator {
 		return y;
 	}
 
-	private void mark(World world, int x, int z) {
-		byte y = 127;
-		while (world.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
-			y--;
-			if (y == 0) {
-				return;
-			}
-		}
-		world.setBlockMaterial(x, y, z, VanillaMaterials.GOLD_BLOCK, (short) 0, world);
+	/*private void mark(World world, int x, int z) {
+	byte y = 127;
+	while (world.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
+	y--;
+	if (y == 0) {
+	return;
 	}
-
+	}
+	world.setBlockMaterial(x, y, z, VanillaMaterials.GOLD_BLOCK, (short) 0, world);
+	}*/
 	// get the lowest non bedrock block, at world level
 	private byte getLowestNonBedrockBlock(World world, int x, int z) {
 		byte y = 0;
@@ -205,6 +205,43 @@ public class SmoothPopulator implements Populator {
 		}
 	}
 
+	// fix the liquid level by replacing the air block
+	// with the most present adjacent liquid
+	/*private void fixLiquids(World world, int x, int y, int z) {
+	if (world.getBlockMaterial(x, y, z) != VanillaMaterials.AIR) {
+	return;
+	}
+	final BlockMaterial[] adjacent = {
+	world.getBlockMaterial(x - 1, y, z),
+	world.getBlockMaterial(x + 1, y, z),
+	world.getBlockMaterial(x, y, z - 1),
+	world.getBlockMaterial(x, y, z + 1)
+	};
+	boolean hasLiquidAdjacent = false;
+	for (BlockMaterial material : adjacent) {
+	if (material instanceof Liquid) {
+	hasLiquidAdjacent = true;
+	break;
+	}
+	}
+	if (!hasLiquidAdjacent) {
+	return;
+	}
+	BlockMaterial mostOf = null;
+	byte mostOfCount = 0;
+	for (BlockMaterial current : adjacent) {
+	byte currentCount = 0;
+	for (byte i = 0; i < 4; i++) {
+	if (current == adjacent[i]) {
+	currentCount++;
+	}
+	}
+	if (currentCount > mostOfCount) {
+	mostOf = current;
+	}
+	}
+	world.setBlockMaterial(x, y, z, mostOf, (short) 0, world);
+	}*/
 	// simple smoothing based on the 'box filtering' algorithm
 	// will ruin rough terrain
 	private byte[] smooth(byte[] heightMap, byte width, byte height) {

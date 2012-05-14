@@ -39,9 +39,19 @@ public class Fire extends VanillaBlockMaterial {
 	}
 
 	@Override
+	public void onDestroy(Block block) {
+		super.onDestroy(block);
+	}
+
+	@Override
 	public void loadProperties() {
 		super.loadProperties();
 		this.setDrop(null);
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return true;
 	}
 
 	@Override

@@ -28,6 +28,8 @@ package org.spout.vanilla.material.block;
 
 import java.util.Random;
 
+import org.spout.vanilla.util.Instrument;
+
 public class Ore extends Solid {
 	private Random rand = new Random();
 	private int max = 1;
@@ -41,6 +43,11 @@ public class Ore extends Solid {
 	public void loadProperties() {
 		super.loadProperties();
 		this.setHardness(3.0F).setResistance(5.0F);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSDRUM;
 	}
 
 	@Override

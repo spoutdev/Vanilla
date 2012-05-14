@@ -61,6 +61,8 @@ public class OceanBiome extends VanillaBiome {
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		/* Disabled until a safe spawn function is written, because spawning in deep ocean sucks.
+
 		base.setSeed((int) blockData.getWorld().getSeed());
 		noise.setSeed((int) blockData.getWorld().getSeed());
 		final int height = (int) ((noise.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 4.0 + 4);
@@ -73,6 +75,12 @@ public class OceanBiome extends VanillaBiome {
 			}
 			blockData.set(x, dy, z, getBlockIdByLayer(height, dy));
 		}
+		*/
+		int y = chunkY * 16, height = 63;
+
+		for (int dy = y; dy < y + 16; dy++) {
+			blockData.set(x, dy, z, getTemporaryBlockId(height, dy));
+		}
 	}
 
 	protected short getBlockIdByLayer(int top, int dy) {
@@ -84,6 +92,22 @@ public class OceanBiome extends VanillaBiome {
 		} else if (dy + 7 >= top) {
 			id = VanillaMaterials.DIRT.getId();
 		} else if (dy > 0) {
+			id = VanillaMaterials.STONE.getId();
+		} else {
+			id = VanillaMaterials.BEDROCK.getId();
+		}
+		return id;
+	}
+
+	protected short getTemporaryBlockId(int top, int dy) {
+		short id;
+		if (dy > top) {
+			id = VanillaMaterials.AIR.getId();
+		} else if (dy == top) {
+			id = VanillaMaterials.WATER.getId();
+		} else if (dy + 4 >= top) {
+			id = VanillaMaterials.SAND.getId();
+		} else if (dy != 0) {
 			id = VanillaMaterials.STONE.getId();
 		} else {
 			id = VanillaMaterials.BEDROCK.getId();

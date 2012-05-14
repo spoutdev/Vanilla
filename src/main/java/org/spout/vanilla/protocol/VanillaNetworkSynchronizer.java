@@ -60,6 +60,7 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
@@ -536,8 +537,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	 * @param block  The block that the effect comes from.
 	 * @param effect The effect to play
 	 */
-	public static void playBlockEffect(Block block, PlayEffectMessage.Messages effect) {
-		playBlockEffect(block, 16, effect, 0);
+	public static void playBlockEffect(Block block, Entity ignore, PlayEffectMessage.Messages effect) {
+		playBlockEffect(block, ignore, 16, effect, 0);
 	}
 
 	/**
@@ -546,8 +547,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	 * @param range  The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param effect The effect to play
 	 */
-	public static void playBlockEffect(Block block, int range, PlayEffectMessage.Messages effect) {
-		playBlockEffect(block, range, effect, 0);
+	public static void playBlockEffect(Block block, Entity ignore, int range, PlayEffectMessage.Messages effect) {
+		playBlockEffect(block, ignore, range, effect, 0);
 	}
 
 	/**
@@ -557,8 +558,36 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	 * @param effect The effect to play
 	 * @param data   The data to use for the effect
 	 */
-	public static void playBlockEffect(Block block, int range, PlayEffectMessage.Messages effect, int data) {
-		sendPacketsToNearbyPlayers(block.getPosition(), range, new PlayEffectMessage(effect.getId(), block, data));
+	public static void playBlockEffect(Block block, Entity ignore, int range, PlayEffectMessage.Messages effect, int data) {
+		sendPacketsToNearbyPlayers(block.getPosition(), ignore, range, new PlayEffectMessage(effect.getId(), block, data));
+	}
+
+	/**
+	 * Sends a block action message to all nearby players in a 48-block radius
+	 */
+	public static void playBlockAction(Block block, byte arg1, byte arg2) {
+		sendPacketsToNearbyPlayers(block.getPosition(), 48, new BlockActionMessage(block, arg1, arg2));
+	}
+
+	/**
+	 * Sends a block action message to all nearby players
+	 */
+	public static void playBlockAction(Block block, int range, byte arg1, byte arg2) {
+		sendPacketsToNearbyPlayers(block.getPosition(), range, new BlockActionMessage(block, arg1, arg2));
+	}
+
+	/**
+	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
+	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
+	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param messages The messages that should be sent to the discovered nearest player.
+	 */
+	public static void sendPacketsToNearbyPlayers(Point position, Entity ignore, int range, Message... messages) {
+		Region region = position.getWorld().getRegionFromBlock(position);
+		Set<Player> players = region.getNearbyPlayers(position, ignore, range);
+		for (Player plr : players) {
+			plr.getSession().sendAll(messages);
+		}
 	}
 
 	/**

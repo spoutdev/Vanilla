@@ -32,13 +32,19 @@ import java.util.List;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 
-public class OpConfiguration extends YamlConfiguration {
+public class OpConfiguration {
+	private final YamlConfiguration config;
+	
+	protected OpConfiguration() {
+		this.config = null;
+	}
+	
 	public OpConfiguration(File dataFolder) {
-		super(new File(dataFolder, "ops.yml"));
+		config = new YamlConfiguration(new File(dataFolder, "ops.yml"));
 	}
 
 	public List<String> getOps() {
-		return getNode("ops").getStringList();
+		return config.getNode("ops").getStringList();
 	}
 
 	public boolean setOp(String playerName, boolean op) {
@@ -49,7 +55,7 @@ public class OpConfiguration extends YamlConfiguration {
 			list.remove(playerName.toLowerCase());
 		}
 
-		getNode("ops").setValue(list);
+		config.getNode("ops").setValue(list);
 
 		try {
 			this.save();
@@ -61,5 +67,13 @@ public class OpConfiguration extends YamlConfiguration {
 
 	public boolean isOp(String playerName) {
 		return getOps().contains(playerName.toLowerCase());
+	}
+	
+	public void save() throws ConfigurationException {
+		config.save();
+	}
+	
+	public void load() throws ConfigurationException {
+		config.load();
 	}
 }

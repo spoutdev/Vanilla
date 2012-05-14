@@ -55,6 +55,7 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isOpen(block)) {
 				this.setOpen(block, powered);
+				VanillaNetworkSynchronizer.playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_DOOR);
 			}
 		}
 	}
@@ -138,7 +139,6 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 		short newdata = LogicUtil.setBit(data, 0x4, opened);
 		if (data != newdata) {
 			doorHalf.setData(newdata);
-			VanillaNetworkSynchronizer.playBlockEffect(doorHalf, PlayEffectMessage.Messages.RANDOM_DOOR);
 		}
 	}
 
@@ -146,7 +146,6 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 	public void toggleOpen(Block doorHalf) {
 		doorHalf = getCorrectHalf(doorHalf, false);
 		doorHalf.setData(doorHalf.getData() ^ 0x4);
-		VanillaNetworkSynchronizer.playBlockEffect(doorHalf, PlayEffectMessage.Messages.RANDOM_DOOR);
 	}
 
 	public BlockFace getFacing(Block doorHalf) {
@@ -203,6 +202,8 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 			Block right = block.translate(rotate(facing, 1));
 			boolean hingeLeft = isDoorBlock(right) || (!isDoorBlock(left) && !isHingeBlock(right) && isHingeBlock(left));
 			create(block, above, facing, hingeLeft, false);
+			block.update();
+			above.update();
 			return true;
 		}
 		return false;

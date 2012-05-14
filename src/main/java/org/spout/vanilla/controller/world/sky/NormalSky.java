@@ -52,7 +52,7 @@ public class NormalSky extends VanillaSky {
 			return;
 		}
 
-		byte reason = newWeather.equals(Weather.RAIN) || newWeather.equals(Weather.THUNDERSTORM) ? ChangeGameStateMessage.BEGIN_RAINING : ChangeGameStateMessage.END_RAINING;
+		byte reason = (newWeather.equals(Weather.RAIN) || newWeather.equals(Weather.THUNDERSTORM)) ? ChangeGameStateMessage.BEGIN_RAINING : ChangeGameStateMessage.END_RAINING;
 		broadcastPacket(new ChangeGameStateMessage(reason));
 	}
 }

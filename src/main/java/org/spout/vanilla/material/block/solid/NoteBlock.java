@@ -26,10 +26,20 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.api.entity.BlockController;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.controller.block.NoteBlockController;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.RedstoneUtil;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class NoteBlock extends Solid implements Fuel {
+
 	public final float BURN_TIME = 15.f;
 
 	public NoteBlock(String name, int id) {
@@ -37,7 +47,68 @@ public class NoteBlock extends Solid implements Fuel {
 	}
 
 	@Override
+	public boolean hasPhysics() {
+		return true;
+	}
+
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
+	}
+
+	@Override
+	public void onDestroy(Block block) {
+		super.onDestroy(block);
+		block.setController(null);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, type, clickedFace);
+		if (type == Action.RIGHT_CLICK) {
+			NoteBlockController controller = getController(block);
+			controller.setNote(controller.getNote() + 1);
+			controller.play();
+		} else if (type == Action.LEFT_CLICK && VanillaPlayerUtil.isCreative(entity)) {
+			getController(block).play();
+		}
+	}
+
+	public NoteBlockController getController(Block block) {
+		BlockController controller = block.getController();
+		if (controller == null || !(controller instanceof NoteBlockController)) {
+			controller = new NoteBlockController();
+			block.setController(controller);
+		}
+		return (NoteBlockController) controller;
+	}
+
+	@Override
+	public void onUpdate(Block block) {
+		super.onUpdate(block);
+		getController(block).setPowered(this.isReceivingPower(block));
+	}
+
+	@Override
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		if (super.onPlacement(block, data, against, isClickedBlock)) {
+			block.setController(new NoteBlockController());
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
+	}
+
+	public boolean isReceivingPower(Block block) {
+		return RedstoneUtil.isReceivingPower(block, false);
 	}
 }

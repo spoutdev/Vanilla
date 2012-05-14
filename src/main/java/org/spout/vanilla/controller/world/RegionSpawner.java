@@ -73,6 +73,11 @@ public class RegionSpawner extends Controller implements VanillaController {
 			return;
 		}
 	}
+	
+	@Override
+	public boolean isSavable() {
+		return false;
+	}
 
 	/**
 	 * Adds a controller type to the list of controller types this region spawner will try to spawn.

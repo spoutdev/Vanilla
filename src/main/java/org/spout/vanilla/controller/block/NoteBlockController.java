@@ -24,38 +24,61 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.controller.block;
 
-import org.spout.vanilla.material.Fuel;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.controller.VanillaBlockController;
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.util.Instrument;
 
-public class BookShelf extends Solid implements Fuel {
-	public final float BURN_TIME = 15.f;
+public class NoteBlockController extends VanillaBlockController {
 
-	public BookShelf(String name, int id) {
-		super(name, id);
+	private int note = 0;
+	private boolean powered = false;
+
+	public NoteBlockController() {
+		super(VanillaControllerTypes.NOTEBLOCK, VanillaMaterials.NOTEBLOCK);
 	}
 
-	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(VanillaMaterials.BOOK).setDropCount(3);
-	}
-
-	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
-	}
-
-	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+		BlockMaterial below = this.getBlock().translate(BlockFace.BOTTOM).getSubMaterial();
+		return below instanceof VanillaBlockMaterial ? ((VanillaBlockMaterial) below).getInstrument() : Instrument.PIANO;
+	}
+
+	public void setPowered(boolean powered) {
+		if (this.powered != powered) {
+			this.powered = powered;
+			if (powered) {
+				this.play();
+			}
+		}
+	}
+
+	public boolean isPowered() {
+		return this.powered;
+	}
+
+	public int getNote() {
+		return this.note;
+	}
+
+	public void setNote(int note) {
+		this.note = note % 25;
+	}
+
+	public void play() {
+		VanillaNetworkSynchronizer.playBlockAction(this.getBlock(), this.getInstrument().getId(), (byte) this.getNote());
 	}
 
 	@Override
-	public boolean canBurn() {
-		return true;
+	public void onTick(float dt) {
+	}
+
+	@Override
+	public void onAttached() {
 	}
 }

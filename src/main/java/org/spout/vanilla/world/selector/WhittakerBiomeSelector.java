@@ -37,12 +37,18 @@ import net.royawesome.jlibnoise.module.source.RidgedMulti;
 import net.royawesome.jlibnoise.module.source.Voronoi;
 
 import org.spout.api.generator.biome.Biome;
+import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.generator.biome.BiomeSelector;
 
 import org.spout.vanilla.world.generator.VanillaBiomes;
 
+/*
+ * Whittaker Biome Classification which categorizes biome-types upon two abiotic factors:
+ * temperature and precipitation
+ */
 public class WhittakerBiomeSelector extends BiomeSelector {
 
+	private final BiomeGenerator parentGenerator;
 	private final float scale;
 	private final Voronoi rainfall;
 	private final Perlin temperature;
@@ -53,7 +59,13 @@ public class WhittakerBiomeSelector extends BiomeSelector {
 	private final Clamp finalTemp;
 	private final Select finalElevationNoise;
 
-	public WhittakerBiomeSelector(float scale) {
+	/**
+	 * Selects biomes based on Whittaker's humidity-temperature model.
+	 *
+	 * @param scale		Make this bigger if you'd like bigger biomes.
+	 */
+	public WhittakerBiomeSelector(BiomeGenerator parentGenerator, float scale) {
+		this.parentGenerator = parentGenerator;
 		this.scale = scale;
 		//Creates the noise for rainfall distribution
 		rainfall = new Voronoi();
@@ -157,58 +169,139 @@ public class WhittakerBiomeSelector extends BiomeSelector {
 		final double elevation = finalElevationNoise.GetValue(x / divisor + 0.05, 0.05, z / divisor + 0.05);
 		final double rain = finalRainfall.GetValue(x / divisor + 0.05, 0.05, z / divisor + 0.05);
 		final double temp = finalTemp.GetValue(x / divisor + 0.05, 0.05, z / divisor + 0.05);
+		//TODO: make these conditions use the values from the biome classes themselves
+		return getWhittakerBiome(elevation, temp, rain);
+	}
+
+	private Biome getWhittakerBiome(double elevation, double temp, double rain) {
 		if (elevation > 0.8) {
-			return VanillaBiomes.MOUNTAINS; //mountains
+			if (parentGenerator.getBiomes().contains(VanillaBiomes.MOUNTAINS)) {
+				return VanillaBiomes.MOUNTAINS; //mountains
+			} else {
+				return VanillaBiomes.OCEAN;
+			}
 		} else if (elevation > 0.65) {
-			return VanillaBiomes.SMALL_MOUNTAINS; //small mountains
+			if (parentGenerator.getBiomes().contains(VanillaBiomes.SMALL_MOUNTAINS)) {
+				return VanillaBiomes.SMALL_MOUNTAINS; //small mountains
+			} else {
+				return VanillaBiomes.OCEAN;
+			}
 		} else if (elevation == 0.1) {
 			if (rain > 0.6) {
-				return VanillaBiomes.SWAMP; //swamp
+				if (parentGenerator.getBiomes().contains(VanillaBiomes.SWAMP)) {
+					return VanillaBiomes.SWAMP; //swamp
+				} else {
+					return VanillaBiomes.OCEAN;
+				}
 			} else {
-				return VanillaBiomes.BEACH; //beach
+				if (parentGenerator.getBiomes().contains(VanillaBiomes.BEACH)) {
+					return VanillaBiomes.BEACH; //beach
+				} else {
+					return VanillaBiomes.OCEAN;
+				}
 			}
 		} else if (elevation == -1) {
 			return VanillaBiomes.OCEAN; //ocean
 		} else {
 			if (temp < 0.2) {
 				if (rain > 0.6) {
-					return VanillaBiomes.TAIGA; //taiga
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.TAIGA)) {
+						return VanillaBiomes.TAIGA; //taiga
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				} else {
-					return VanillaBiomes.TUNDRA; //tundra
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.TUNDRA)) {
+						return VanillaBiomes.TUNDRA; //tundra
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				}
 			} else if (temp < 0.4) {
 				if (rain > 0.6) {
-					return VanillaBiomes.FOREST; //forest
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.FOREST)) {
+						return VanillaBiomes.FOREST; //forest
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				} else {
-					return VanillaBiomes.TAIGA; //taiga
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.TAIGA)) {
+						return VanillaBiomes.TAIGA; //taiga
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				}
 			} else if (temp < 0.6) {
 				if (rain > 0.8) {
-					return VanillaBiomes.JUNGLE; //jungle
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.JUNGLE)) {
+						return VanillaBiomes.JUNGLE; //jungle
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				} else if (rain > 0.4) {
-					return VanillaBiomes.FOREST; //forest
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.FOREST)) {
+						return VanillaBiomes.FOREST; //forest
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				} else {
-					return VanillaBiomes.PLAIN; //plains
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.PLAIN)) {
+						return VanillaBiomes.PLAIN; //plains
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				}
 			} else if (temp < 0.8) {
 				if (rain > 0.8) {
-					return VanillaBiomes.JUNGLE; //jungle
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.JUNGLE)) {
+						return VanillaBiomes.JUNGLE; //jungle
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				} else if (rain > 0.6) {
-					return VanillaBiomes.FOREST; //forest
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.FOREST)) {
+						return VanillaBiomes.FOREST; //forest
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				} else if (rain > 0.2) {
-					return VanillaBiomes.PLAIN; //plains
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.PLAIN)) {
+						return VanillaBiomes.PLAIN; //plains
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				} else {
-					return VanillaBiomes.DESERT; //desert
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.DESERT)) {
+						return VanillaBiomes.DESERT; //desert
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				}
 			} else {
 				if (rain > 0.8) {
-					return VanillaBiomes.JUNGLE; //jungle
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.JUNGLE)) {
+						return VanillaBiomes.JUNGLE; //jungle
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				} else if (rain > 0.6) {
-					return VanillaBiomes.FOREST; //forest
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.FOREST)) {
+						return VanillaBiomes.FOREST; //forest
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				} else if (rain > 0.4) {
-					return VanillaBiomes.PLAIN; //plains
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.PLAIN)) {
+						return VanillaBiomes.PLAIN; //plains
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				} else {
-					return VanillaBiomes.DESERT; //desert
+					if (parentGenerator.getBiomes().contains(VanillaBiomes.DESERT)) {
+						return VanillaBiomes.DESERT; //desert
+					} else {
+						return VanillaBiomes.OCEAN;
+					}
 				}
 			}
 		}

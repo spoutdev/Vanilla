@@ -34,6 +34,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
+import org.spout.vanilla.util.Instrument;
 
 public class Sand extends Solid implements TimedCraftable, Mineable {
 	public Sand() {
@@ -58,5 +59,10 @@ public class Sand extends Solid implements TimedCraftable, Mineable {
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Spade ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.SNAREDRUM;
 	}
 }

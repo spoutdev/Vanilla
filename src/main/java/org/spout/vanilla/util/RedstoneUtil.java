@@ -32,6 +32,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.RedstoneSource;
 
 public class RedstoneUtil {
@@ -54,13 +55,31 @@ public class RedstoneUtil {
 		return mat instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) mat).isRedstoneConductor();
 	}
 
-	public static boolean isReceivingPower(Block block) {
-		for (BlockFace face : BlockFaces.BTEWNS) {
-			if (isPowered(block.translate(face), face.getOpposite())) {
-				return true;
+	public static boolean isReceivingPower(Block block, boolean wiresAttach) {
+		if (wiresAttach) {
+			for (BlockFace face : BlockFaces.BTEWNS) {
+				if (isPowered(block.translate(face), face.getOpposite())) {
+					return true;
+				}
+			}
+		} else if (isPowered(block.translate(BlockFace.TOP), BlockFace.BOTTOM)) {
+			return true;
+		} else {
+			Block relBlock;
+			for (BlockFace face : BlockFaces.NESWB) {
+				relBlock = block.translate(face);
+				if (relBlock.getMaterial().equals(VanillaMaterials.REDSTONE_WIRE)) {
+					return VanillaMaterials.REDSTONE_WIRE.hasRedstonePowerTo(relBlock, face.getOpposite(), RedstonePowerMode.ALL);
+				} else if (isPowered(relBlock, face.getOpposite(), RedstonePowerMode.ALLEXCEPTWIRE)) {
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+
+	public static boolean isReceivingPower(Block block) {
+		return isReceivingPower(block, true);
 	}
 
 	public static boolean isPowered(Block block) {

@@ -24,26 +24,53 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.configuration;
 
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tool.Spade;
-import org.spout.vanilla.util.Instrument;
+import java.util.List;
 
-public class SoulSand extends Solid implements Mineable {
-	public SoulSand(String name, int id) {
-		super(name, id);
+import org.spout.api.exception.ConfigurationException;
+
+class OpConfigurationWrapper extends OpConfiguration {
+	private OpConfiguration wrapped = null;
+	public OpConfigurationWrapper() {
+		super();
 	}
-
-	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
+	
+	protected void setWrapped(OpConfiguration ops) {
+		this.wrapped = ops;
 	}
-
+	
 	@Override
-	public Instrument getInstrument() {
-		return Instrument.SNAREDRUM;
+	public List<String> getOps() {
+		validate();
+		return wrapped.getOps();
+	}
+	
+	@Override
+	public boolean setOp(String playerName, boolean op) {
+		validate();
+		return wrapped.setOp(playerName, op);
+	}
+	
+	@Override
+	public boolean isOp(String playerName) {
+		validate();
+		return wrapped.isOp(playerName);
+	}
+	
+	@Override
+	public void save() throws ConfigurationException {
+		validate();
+		wrapped.save();
+	}
+	
+	@Override
+	public void load() throws ConfigurationException {
+		validate();
+		wrapped.load();
+	}
+	
+	private void validate() {
+		if (wrapped == null) throw new NullPointerException("No op configuration available");
 	}
 }

@@ -88,7 +88,33 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 
 		if (block.getMaterial().equals(this)) {
 			short receiving = this.getReceivingPower(block);
-			setPowerAndUpdate(block, receiving);
+			short current = this.getRedstonePower(block);
+			if (current == receiving) {
+				//to some updates for solid blocks around this block
+				Block neigh;
+				BlockMaterial mat;
+				for (BlockFace face : BlockFaces.NESW) {
+					neigh = block.translate(face);
+					mat = neigh.getSubMaterial();
+					if (mat instanceof RedstoneSource || mat instanceof RedstoneTarget) {
+						continue;
+					}
+					neigh.update(false);
+					for (BlockFace face2 : BlockFaces.NESWBT) {
+						if (face != face2.getOpposite()) {
+							neigh.translate(face2).update(false);
+						}
+					}
+				}
+			} else {
+				block.setMaterial(this, receiving);
+
+				//TODO: Make sure updating is not done by performing 15 ever-lessening power updates...
+				this.doRedstoneUpdates(block);
+				if (true) {
+					return;
+				}
+			}
 		}
 	}
 
@@ -175,24 +201,6 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 			}
 		}
 		return maxPower;
-	}
-
-	/**
-	 * Sets the wire at the block to the given power and initiates an update process that will recalculate the wire.
-	 * @param block of the wire
-	 * @param power to set to
-	 */
-	public void setPowerAndUpdate(Block block, short power) {
-		short current = this.getRedstonePower(block);
-		if (current != power) {
-			block.setMaterial(this, power);
-
-			//TODO: Make sure updating is not done by performing 15 ever-lessening power updates...
-			this.doRedstoneUpdates(block);
-			if (true) {
-				return;
-			}
-		}
 	}
 
 	/**

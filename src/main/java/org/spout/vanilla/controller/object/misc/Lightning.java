@@ -24,26 +24,22 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.controller.object.misc;
 
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tool.Spade;
-import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.object.Substance;
 
-public class SoulSand extends Solid implements Mineable {
-	public SoulSand(String name, int id) {
-		super(name, id);
+
+
+public class Lightning extends Substance {
+	public Lightning() {
+		super(VanillaControllerTypes.LIGHTNING);
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
+	public void onTick(float dt) {
+		if(getParent() != null && !getParent().isDead())
+			getParent().kill();
 	}
 
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.SNAREDRUM;
-	}
 }

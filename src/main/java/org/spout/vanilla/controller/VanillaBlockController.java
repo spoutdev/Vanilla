@@ -27,10 +27,19 @@
 package org.spout.vanilla.controller;
 
 import org.spout.api.entity.BlockController;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
 public abstract class VanillaBlockController extends BlockController implements VanillaController {
 	protected VanillaBlockController(VanillaControllerType type, BlockMaterial blockMaterial) {
 		super(type, blockMaterial);
+	}
+
+	/**
+	 * Gets the block of this vanilla block controller
+	 * @return the block
+	 */
+	public Block getBlock() {
+		return this.getParent().getWorld().getBlock(this.getParent().getPosition());
 	}
 }

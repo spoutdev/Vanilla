@@ -36,6 +36,7 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.misc.Coal;
 import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.util.Instrument;
 
 public class Tree extends Solid implements Plant, Fuel, TimedCraftable, Mineable {
 	public static final Tree DEFAULT = register(new Tree("Wood"));
@@ -56,6 +57,11 @@ public class Tree extends Solid implements Plant, Fuel, TimedCraftable, Mineable
 	public void loadProperties() {
 		super.loadProperties();
 		this.setHardness(2.0F).setResistance(3.3F).setOpacity((byte) 1);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
 	}
 
 	@Override

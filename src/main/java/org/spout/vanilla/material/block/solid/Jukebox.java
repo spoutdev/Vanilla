@@ -36,10 +36,11 @@ import org.spout.vanilla.controller.block.JukeboxController;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Jukebox extends Solid implements Fuel {
 	public final float BURN_TIME = 15.f;
-	
+
 	public Jukebox(String name, int id) {
 		super(name, id);
 	}
@@ -79,7 +80,9 @@ public class Jukebox extends Solid implements Fuel {
 			if (controller.canPlay(item)) {
 				controller.getInventory().setCurrentItem(item.clone().setAmount(1));
 				controller.update();
-				entity.getInventory().addCurrentItemAmount(-1);
+				if (!VanillaPlayerUtil.isCreative(entity)) {
+					entity.getInventory().addCurrentItemAmount(-1);
+				}
 			}
 		}
 	}

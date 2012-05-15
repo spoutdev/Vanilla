@@ -64,6 +64,8 @@ import org.spout.vanilla.material.block.ore.IronOre;
 import org.spout.vanilla.material.block.ore.LapisLazuliBlock;
 import org.spout.vanilla.material.block.ore.LapisLazuliOre;
 import org.spout.vanilla.material.block.ore.RedstoneOre;
+import org.spout.vanilla.material.block.piston.Piston;
+import org.spout.vanilla.material.block.piston.StickyPiston;
 import org.spout.vanilla.material.block.plant.Cactus;
 import org.spout.vanilla.material.block.plant.DeadBush;
 import org.spout.vanilla.material.block.plant.Flower;
@@ -183,8 +185,8 @@ public final class VanillaMaterials {
 	public static final BedBlock BED_BLOCK = register(new BedBlock("Bed", 26));
 	public static final Web WEB = (Web) register(new Web("Cobweb", 30).setHardness(4.0F).setResistance(20.0F));
 	//== Piston ==
-	public static final Solid PISTON_STICKY_BASE = (Solid) register(new Solid("Sticky Piston", 29).setResistance(0.8F));
-	public static final Solid PISTON_BASE = (Solid) register(new Solid("Piston", 33).setResistance(0.8F));
+	public static final StickyPiston PISTON_STICKY_BASE = register(new StickyPiston("Sticky Piston", 29));
+	public static final Piston PISTON_BASE = register(new Piston("Piston", 33));
 	public static final Solid PISTON_EXTENSION = (Solid) register(new Solid("Piston (Head)", 34).setResistance(0.8F));
 	public static final Solid MOVED_BY_PISTON = (Solid) register(new Solid("Moved By Piston", 36).setResistance(0.0F));
 	//== Rails ==

@@ -29,11 +29,14 @@ package org.spout.vanilla.controller.object.misc;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 
-
-
 public class Lightning extends Substance {
 	public Lightning() {
 		super(VanillaControllerTypes.LIGHTNING);
+	}
+
+	@Override
+	public boolean isSavable() {
+		return false;
 	}
 
 	@Override
@@ -41,5 +44,4 @@ public class Lightning extends Substance {
 		if(getParent() != null && !getParent().isDead())
 			getParent().kill();
 	}
-
 }

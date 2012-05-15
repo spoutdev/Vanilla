@@ -27,6 +27,7 @@
 package org.spout.vanilla.controller.living;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.util.BlockIterator;
 
@@ -99,11 +100,18 @@ public abstract class Living extends VanillaActionController {
 		return this.headHeight;
 	}
 
+	/**
+	 * Gets the position of the head of this living entity
+	 * @return the head position
+	 */
+	public Point getHeadPosition() {
+		return this.getParent().getPosition().add(0.0f, this.getHeadHeight(), 0.0f);
+	}
+
 	public Transform getHeadTransform() {
 		Transform trans = new Transform();
-		Entity parent = this.getParent();
-		trans.setPosition(parent.getPosition().add(0.0f, this.getHeadHeight(), 0.0f));
-		trans.setRotation(parent.getRotation());
+		trans.setPosition(this.getHeadPosition());
+		trans.setRotation(this.getParent().getRotation());
 		//TODO: Should the head yaw int (?!) be used during this calculation???
 		//trans.setRotation(Quaternion.rotation(parent.getPitch(), this.headYaw, getParent().getRoll()));
 		return trans;

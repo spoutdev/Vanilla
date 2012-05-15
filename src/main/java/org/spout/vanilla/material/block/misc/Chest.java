@@ -29,14 +29,22 @@ package org.spout.vanilla.material.block.misc;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.block.ChestController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.ChestInventory;
+import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Axe;
@@ -53,7 +61,18 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 
 	public void loadProperties() {
 		super.loadProperties();
-		this.setHardness(2.5F).setResistance(4.2F);
+		setHardness(2.5F).setResistance(4.2F);
+		setController(VanillaControllerTypes.CHEST);
+	}
+	
+	public boolean isDouble(Block block) {
+		Point pos = block.getPosition();
+		World world = pos.getWorld();
+		VanillaBlockMaterial chest = VanillaMaterials.CHEST;
+		if (world.getBlock(pos.add(1, 0, 0)).getMaterial() == chest || world.getBlock(pos.subtract(1, 0, 0)).getMaterial() == chest || world.getBlock(pos.add(0, 0, 1)).getMaterial() == chest || world.getBlock(pos.subtract(0, 0, 1)).getMaterial() == chest) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -90,8 +109,7 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
 			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-			//TODO: Spawn chest controller
-			//block.getWorld().createAndSpawnEntity(block.getPosition(), new FurnaceController());
+			block.setController(new ChestController(isDouble(block)));
 			return true;
 		}
 		return false;
@@ -106,30 +124,22 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 			}
 
 			// Get the controller and assign a new window id for the session.
-			//VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
-			//Inventory inventory = entity.getInventory();
-
-			//TODO: Implement the chest inventory
-			/*	
-			DispenserController dispenser = (DispenserController) block.getController();
-			Window window = Window.DISPENSER;
-
-			if (dispenser == null) {
-				System.out.println("Dispenser is null");
-				return;
-			}
+			VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
+			Inventory inventory = entity.getInventory();
+			ChestController chest = (ChestController) getController(block);
+			boolean doubleChest = isDouble(block);
+			chest.setOpened(true);
 
 			// Dispose items into new inventory
-			DispenserInventory dispenserInventory = dispenser.getInventory();
+			ChestInventory chestInventory = chest.getInventory();
 			for (int slot = 0; slot < 36; slot++) {
-				dispenserInventory.setItem(slot, inventory.getItem(slot));
+				chestInventory.setItem(slot, inventory.getItem(slot));
 			}
 
 			// Add the player who opened the inventory as a viewer
-			dispenserInventory.addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
-			vanillaPlayer.setActiveInventory(dispenserInventory);
-			vanillaPlayer.openWindow(window, "Dispenser", dispenserInventory.getSize());
-			 */
+			//chestInventory.addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
+			vanillaPlayer.setActiveInventory(chestInventory);
+			vanillaPlayer.openWindow(Window.CHEST, doubleChest ? "Large chest" : "Chest", doubleChest ? 54 : 27);
 		}
 	}
 

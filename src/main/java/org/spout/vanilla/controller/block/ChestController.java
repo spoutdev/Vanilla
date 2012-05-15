@@ -24,18 +24,42 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.controller.block;
 
+import org.spout.vanilla.controller.VanillaBlockController;
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.inventory.ChestInventory;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.BlockItem;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 
-public class Sign extends BlockItem {
-	public Sign(String name, int id) {
-		super(name, id, VanillaMaterials.WALL_SIGN);
+public class ChestController extends VanillaBlockController {
+	private final ChestInventory inventory;
+	private boolean opened = false;
+
+	public ChestController(boolean doubleChest) {
+		super(VanillaControllerTypes.CHEST, VanillaMaterials.CHEST);
+		inventory = new ChestInventory(this, doubleChest);
 	}
 
 	@Override
-	public void loadProperties() {
-		setMaxStackSize(1);
+	public void onAttached() {
+	}
+
+	@Override
+	public void onTick(float dt) {
+	}
+
+	public ChestInventory getInventory() {
+		return inventory;
+	}
+	
+	public void setOpened(boolean opened) {
+		this.opened = opened;
+		byte data = opened ? (byte) 1 : 0;
+		VanillaNetworkSynchronizer.playBlockAction(getBlock(), (byte) 1, data);
+	}
+
+	public boolean isOpened() {
+		return opened;
 	}
 }

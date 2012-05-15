@@ -93,7 +93,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		compassTarget = owner.getEntity().getWorld().getSpawnPoint().getPosition();
 		this.setHeadHeight(1.62f);
 		this.gameMode = gameMode;
-		p.getEntity().setInventorySize(45);
 	}
 
 	public VanillaPlayer(Player p) {
@@ -109,6 +108,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setScale(spawn.getScale());
 		getParent().setMaxHealth(20);
 		getParent().setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		owner.getEntity().setInventorySize(45);
 		// TODO: Persistent health
 	}
 

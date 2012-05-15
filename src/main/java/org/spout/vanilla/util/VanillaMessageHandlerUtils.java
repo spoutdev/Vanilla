@@ -31,6 +31,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.inventory.VanillaInventory;
+import org.spout.vanilla.inventory.WindowInventory;
 
 public class VanillaMessageHandlerUtils {
 	/**
@@ -43,15 +44,15 @@ public class VanillaMessageHandlerUtils {
 	}
 
 	public static int getSpoutInventorySlot(Inventory inventory, int slot) {
-		if (inventory instanceof VanillaInventory) {
-			return ((VanillaInventory) inventory).getSlotIndex(slot);
+		if (inventory instanceof WindowInventory) {
+			return ((WindowInventory) inventory).getSlotIndex(slot);
 		}
 		return -1;
 	}
 
 	public static int getNetworkInventorySlot(Inventory inventory, int slot) {
-		if (inventory instanceof VanillaInventory) {
-			return ((VanillaInventory) inventory).getNativeSlotIndex(slot);
+		if (inventory instanceof WindowInventory) {
+			return ((WindowInventory) inventory).getNativeSlotIndex(slot);
 		}
 		return -1;
 	}

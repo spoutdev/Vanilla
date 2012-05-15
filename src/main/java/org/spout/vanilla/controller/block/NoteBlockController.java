@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.block;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaBlockMaterial;

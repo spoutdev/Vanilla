@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.nether;
 
 import java.util.Random;
+
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.generator.biome.SingleSelector;
 import org.spout.api.geo.World;

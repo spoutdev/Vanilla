@@ -33,6 +33,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
+
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
@@ -44,9 +45,8 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Piston extends VanillaBlockMaterial implements Directional, RedstoneTarget {
 	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);
-
 	private final boolean sticky;
-	
+
 	public Piston(String name, int id, boolean sticky) {
 		super(name, id);
 		this.sticky = sticky;
@@ -88,8 +88,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 
 	/**
 	 * Extends or retracts a piston block, complete with the animation and block changes.
-	 * 
-	 * @param block of the piston
+	 * @param block	of the piston
 	 * @param extended True to extend, False to retract
 	 * @return True if the piston really got extended or retracted, False if not
 	 */
@@ -112,7 +111,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 			if (length > 0) {
 				BlockFace facing = this.getFacing(block);
 				MoveReaction reac;
-				
+
 				//the previous material
 				BlockMaterial prevMat = VanillaMaterials.PISTON_EXTENSION;
 				short prevData = (short) (block.getData() & 0x7);
@@ -186,7 +185,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 		final int maxlength = 13;
 		BlockFace face = this.getFacing(block);
 		MoveReaction reaction;
-		for (int i = 0;i < maxlength; i++) {
+		for (int i = 0; i < maxlength; i++) {
 			block = block.translate(face);
 			reaction = getReaction(block);
 			if (reaction == MoveReaction.DENY) {
@@ -221,15 +220,15 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 		Vector3 diff = pistonBlock.getPosition().subtract(entity.getPosition());
 		diff = diff.subtract(0.0f, 0.2f, 0.0f);
 		Vector3 diffabs = diff.abs();
-        if (diffabs.getX() < 2.0f && diffabs.getZ() < 2.0f) {
-        	if (diff.getY() < 0.0f) {
-        		return BlockFace.TOP;
-        	} else if (diff.getY() > 2.0f) {
-        		return BlockFace.BOTTOM;
-        	}
-        }
-        return VanillaPlayerUtil.getFacing(entity).getOpposite();
-    }
+		if (diffabs.getX() < 2.0f && diffabs.getZ() < 2.0f) {
+			if (diff.getY() < 0.0f) {
+				return BlockFace.TOP;
+			} else if (diff.getY() > 2.0f) {
+				return BlockFace.BOTTOM;
+			}
+		}
+		return VanillaPlayerUtil.getFacing(entity).getOpposite();
+	}
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {

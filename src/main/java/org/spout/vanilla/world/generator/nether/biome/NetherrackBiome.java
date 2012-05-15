@@ -39,7 +39,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
 public class NetherrackBiome extends VanillaBiome {
-
 	// main generation
 	private final Perlin mainBase = new Perlin();
 	private final Turbulence main = new Turbulence();

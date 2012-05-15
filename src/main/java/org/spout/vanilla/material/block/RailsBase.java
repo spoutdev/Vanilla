@@ -60,7 +60,7 @@ public abstract class RailsBase extends GroundAttachable {
 
 	/**
 	 * Sets the direction of a minecart track to face into a non-curved direction
-	 * @param block     to set it of
+	 * @param block	 to set it of
 	 * @param direction to set to
 	 */
 	public void setDirection(Block block, BlockFace direction) {
@@ -69,9 +69,9 @@ public abstract class RailsBase extends GroundAttachable {
 
 	/**
 	 * Sets the direction of a minecart track to face into a non-curved direction, possibly sloped.
-	 * @param block     to set it of
+	 * @param block	 to set it of
 	 * @param direction to set to
-	 * @param sloped    whether the track slopes up the direction given
+	 * @param sloped	whether the track slopes up the direction given
 	 */
 	public void setDirection(Block block, BlockFace direction, boolean sloped) {
 		this.setState(block, RailsState.get(direction, sloped));
@@ -82,7 +82,7 @@ public abstract class RailsBase extends GroundAttachable {
 	 * The from and to are combined into a curved rail state if applicable.
 	 * @param block to set it of
 	 * @param from  direction
-	 * @param to    direction
+	 * @param to	direction
 	 */
 	public void setDirection(Block block, BlockFace from, BlockFace to) {
 		this.setState(block, RailsState.get(from, to));
@@ -90,7 +90,7 @@ public abstract class RailsBase extends GroundAttachable {
 
 	/**
 	 * Gets if this minecart track is connected to the direction specified.
-	 * @param block     to get it of
+	 * @param block	 to get it of
 	 * @param direction to check
 	 * @return True if the direction is connected, False if not
 	 */

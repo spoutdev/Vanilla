@@ -29,9 +29,9 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.Spout;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.World;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -100,7 +100,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
 			}
 
-			if (isInteractable) {				
+			if (isInteractable) {
 				Block neigh = block.translate(clickedFace);
 				boolean fire = neigh.getMaterial().equals(VanillaMaterials.FIRE);
 				if (fire) {
@@ -117,7 +117,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				}
 			}
 		} else if (message.getState() == PlayerDiggingMessage.STATE_DONE_DIGGING) {
-			if(!vp.stopDigging(new Point(w, x, y, z))){
+			if (!vp.stopDigging(new Point(w, x, y, z))) {
 				return;
 			}
 			long diggingTicks = vp.getDiggingTicks();
@@ -149,7 +149,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 					if (totalDamage < -30) {// This can be removed after VANILLA-97 is fixed.
 						System.out.println("[DEBUG] Player spent much more time mining than expected: " + (-totalDamage) + " damage more. Block: " + blockMaterial.getClass().getName());
 					}
-					if(!vp.addAndCheckMiningSpeed(totalDamage)){
+					if (!vp.addAndCheckMiningSpeed(totalDamage)) {
 						player.kick("Stop speed-mining!");
 						return;
 					}

@@ -103,7 +103,7 @@ public class Dye extends VanillaItemMaterial {
 
 			ItemStack holding = entity.getInventory().getCurrentItem();
 			//get color from holding item
-			((Sheep)other.getController()).setColor(WoolColor.getById((short) (0xF - holding.getData())));
+			((Sheep) other.getController()).setColor(WoolColor.getById((short) (0xF - holding.getData())));
 
 			if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
 				entity.getInventory().addCurrentItemAmount(-1);

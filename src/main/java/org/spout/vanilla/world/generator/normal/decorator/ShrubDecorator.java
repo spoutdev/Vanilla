@@ -37,7 +37,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.ShrubObject;
 
 public class ShrubDecorator implements BiomeDecorator {
-
 	// How many shrub decorations per chunk
 	// this number is valid for jungles only
 	private static final byte AMOUNT = 20;

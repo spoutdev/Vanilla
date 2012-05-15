@@ -45,7 +45,7 @@ public final class EntityActionMessageHandler extends MessageHandler<EntityActio
 		if (player == null) {
 			return;
 		}
-		
+
 		if (player.getEntity() == null) {
 			return;
 		}

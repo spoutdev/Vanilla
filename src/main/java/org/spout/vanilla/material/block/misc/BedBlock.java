@@ -139,7 +139,7 @@ public class BedBlock extends VanillaBlockMaterial {
 	/**
 	 * Gets the top or face door block when either of the blocks is given
 	 * @param doorBlock the top or bottom door block
-	 * @param top       whether to get the top block, if false, gets the bottom block
+	 * @param top	   whether to get the top block, if false, gets the bottom block
 	 * @return the requested door half block
 	 */
 	private Block getCorrectHalf(Block bedBlock, boolean head) {

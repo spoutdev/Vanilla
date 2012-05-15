@@ -31,11 +31,11 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.controller.block.SignController;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 
 public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
-
 	@Override
 	public void handleServer(Session session, Player player, UpdateSignMessage message) {
 		if (session == null || player == null || message == null) {

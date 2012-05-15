@@ -35,53 +35,52 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class ShrubObject extends WorldGeneratorObject {
+	// rng
+	private final Random random;
+	// size control
+	private byte radius = 2;
+	// metadata
+	private short leaves = 3;
+	private short wood = 0;
 
-    // rng
-    private final Random random;
-    // size control
-    private byte radius = 2;
-    // metadata
-    private short leaves = 3;
-    private short wood = 0;
+	public ShrubObject(Random random) {
+		this.random = random;
+	}
 
-    public ShrubObject(Random random) {
-        this.random = random;
-    }
+	@Override
+	public boolean canPlaceObject(World w, int x, int y, int z) {
+		final BlockMaterial material = w.getBlockMaterial(x, y - 1, z);
+		return material == VanillaMaterials.DIRT || material == VanillaMaterials.GRASS;
+	}
 
-    @Override
-    public boolean canPlaceObject(World w, int x, int y, int z) {
-        final BlockMaterial material = w.getBlockMaterial(x, y - 1, z);
-        return material == VanillaMaterials.DIRT || material == VanillaMaterials.GRASS;
-    }
+	@Override
+	public void placeObject(World w, int x, int y, int z) {
+		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, w);
+		w.setBlockMaterial(x, y, z, VanillaMaterials.LOG, wood, w);
+		for (byte yy = radius; yy > -1; yy--) {
+			for (byte xx = (byte) -yy; xx < yy + 1; xx++) {
+				for (byte zz = (byte) -yy; zz < yy + 1; zz++) {
+					if (Math.abs(xx) == yy && Math.abs(zz) == yy && random.nextBoolean()) {
+						continue;
+					}
+					final BlockMaterial material = w.getBlockMaterial(x + xx, y - yy + radius, z + zz);
+					if (!material.isOpaque() && material != VanillaMaterials.LOG) {
+						w.setBlockMaterial(x + xx, y - yy + radius, z + zz, VanillaMaterials.LEAVES, leaves, w);
+					}
+				}
+			}
+		}
+	}
 
-    @Override
-    public void placeObject(World w, int x, int y, int z) {
-        w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, w);
-        w.setBlockMaterial(x, y, z, VanillaMaterials.LOG, wood, w);
-        for (byte yy = radius; yy > -1; yy--) {
-            for (byte xx = (byte) -yy; xx < yy + 1; xx++) {
-                for (byte zz = (byte) -yy; zz < yy + 1; zz++) {
-                    if (Math.abs(xx) == yy && Math.abs(zz) == yy && random.nextBoolean()) {
-                        continue;
-                    }
-                    final BlockMaterial material = w.getBlockMaterial(x + xx, y - yy + radius, z + zz);
-                    if (!material.isOpaque() && material != VanillaMaterials.LOG) {
-                        w.setBlockMaterial(x + xx, y - yy + radius, z + zz, VanillaMaterials.LEAVES, leaves, w);
-                    }
-                }
-            }
-        }
-    }
+	public void setLeavesMetadata(short leaves) {
+		this.leaves = leaves;
+	}
 
-    public void setLeavesMetadata(short leaves) {
-        this.leaves = leaves;
-    }
+	public void setWoodMetadata(short wood) {
+		this.wood = wood;
+	}
 
-    public void setWoodMetadata(short wood) {
-        this.wood = wood;
-    }
-
-    public void setRadius(byte radius) {
-        this.radius = radius;
-    }
+	public void setRadius(byte radius) {
+		this.radius = radius;
+	}
 }

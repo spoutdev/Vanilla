@@ -60,7 +60,7 @@ public class PressurePlate extends GroundAttachable implements RedstoneSource, S
 
 	/**
 	 * Sets whether this pressure plate is pressed down
-	 * @param block     to set it of
+	 * @param block	 to set it of
 	 * @param pressed   whether it is pressed
 	 * @param doPhysics whether to perform redstone physics
 	 */

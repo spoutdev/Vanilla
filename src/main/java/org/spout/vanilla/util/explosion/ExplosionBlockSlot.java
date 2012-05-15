@@ -54,9 +54,9 @@ public class ExplosionBlockSlot {
 	/**
 	 * Generates the material and initial damage factor for this block
 	 * @param world  to use
-	 * @param x      coordinate of the middle
-	 * @param y      coordinate of the middle
-	 * @param z      coordinate of the middle
+	 * @param x	  coordinate of the middle
+	 * @param y	  coordinate of the middle
+	 * @param z	  coordinate of the middle
 	 * @param random to use when generating the damage factor
 	 */
 	public void prepare(World world, int x, int y, int z, Random random) {

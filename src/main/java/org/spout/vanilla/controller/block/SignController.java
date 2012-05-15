@@ -26,20 +26,23 @@
  */
 package org.spout.vanilla.controller.block;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class SignController extends VanillaBlockController {
 	private String[] text = new String[4];
-	private Set<Player> dirty = new HashSet<Player>();
+	private HashSet<Player> dirty = new HashSet<Player>();
 	private int range = 20;
 
 	public SignController() {
@@ -48,18 +51,19 @@ public class SignController extends VanillaBlockController {
 
 	@Override
 	public void onAttached() {
-
+		System.out.println("Sign controller attached at: " + getParent().getPosition().toString());
 	}
 
 	@Override
 	public void onTick(float dt) {
 		Block block = getBlock();
-		Set<Player> nearby = block.getRegion().getNearbyPlayers(block.getPosition(), range);
+		HashSet<Player> nearby = new HashSet<Player>();
+		nearby.addAll(block.getRegion().getNearbyPlayers(block.getPosition(), range));
 		if (nearby == null || nearby.isEmpty()) {
 			return;
 		}
 
-		if (!dirty.containsAll(nearby)) {
+		if (dirty.isEmpty() || !dirty.containsAll(nearby)) {
 			nearby.removeAll(dirty);
 			dirty = nearby;
 			update();
@@ -80,6 +84,7 @@ public class SignController extends VanillaBlockController {
 
 	public void setText(String[] text) {
 		this.text = text;
+		update();
 	}
 
 	public String getLine(int line) {
@@ -88,11 +93,12 @@ public class SignController extends VanillaBlockController {
 
 	public void setLine(String text, int line) {
 		this.text[line + 1] = text;
+		update();
 	}
 
 	private void update() {
 		Block block = getBlock();
-		VanillaNetworkSynchronizer.sendPacket((Player[]) dirty.toArray(), new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), text));
+		VanillaNetworkSynchronizer.sendPacket(dirty.toArray(new Player[dirty.size()]), new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), text));
 	}
 }
 

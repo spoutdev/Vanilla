@@ -37,8 +37,8 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Quaternion;
 import org.spout.api.math.MathHelper;
+import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
@@ -544,7 +544,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public boolean isDigging() {
 		return isDigging;
 	}
-	
+
 	/**
 	 * Sets isDigging true and records start time, unless already digging
 	 * @return true if successful
@@ -583,7 +583,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (isDigging) {
 			//Is this correct?
 			return System.currentTimeMillis() - diggingStartTime;
-		} else{
+		} else {
 			return previousDiggingTime;
 		}
 	}
@@ -605,13 +605,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (!VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ENABLED.getBoolean()) {
 			return true;
 		}
-		
+
 		miningDamage[miningDamagePosition++] = damageRemaining;
-		
+
 		if (miningDamagePosition >= miningDamagePeriod) {
 			miningDamagePosition = 0;
 		}
-		
+
 		return checkMiningSpeed();
 	}
 

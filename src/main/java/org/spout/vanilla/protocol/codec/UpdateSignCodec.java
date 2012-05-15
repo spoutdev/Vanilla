@@ -48,7 +48,11 @@ public final class UpdateSignCodec extends MessageCodec<UpdateSignMessage> {
 		int z = buffer.readInt();
 		String[] message = new String[4];
 		for (int i = 0; i < message.length; i++) {
-			message[i] = ChannelBufferUtils.readString(buffer);
+			String line = ChannelBufferUtils.readString(buffer);
+			if (line == null) {
+				line = "";
+			}
+			message[i] = line;
 		}
 		return new UpdateSignMessage(x, y, z, message);
 	}
@@ -62,6 +66,9 @@ public final class UpdateSignCodec extends MessageCodec<UpdateSignMessage> {
 		buffer.writeShort(message.getY());
 		buffer.writeInt(message.getZ());
 		for (String line : lines) {
+			if (line == null) {
+				line = "";
+			}
 			ChannelBufferUtils.writeString(buffer, line);
 		}
 		return buffer;

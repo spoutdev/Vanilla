@@ -36,7 +36,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.RedstoneSource;
 
 public class RedstoneUtil {
-
 	/**
 	 * Checks if the block given is a redstone conductor
 	 * @param block to check

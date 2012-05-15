@@ -35,43 +35,41 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
-
 public class SpireDecorator implements BiomeDecorator {
+	// Generation odds, chunk per 'ODD' chunk
+	private static final byte ODD = 5;
 
-    // Generation odds, chunk per 'ODD' chunk
-    private static final byte ODD = 5;
+	@Override
+	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() != 4) {
+			return;
+		}
+		if (random.nextInt(ODD) != 0) {
+			return;
+		}
+		final World world = chunk.getWorld();
+		int x = chunk.getX() * 16 + random.nextInt(16);
+		int z = chunk.getZ() * 16 + random.nextInt(16);
+		int y = getHighestWorkableBlock(world, x, z);
+		if (y == -1) {
+			return;
+		}
+		final SpireObject spire = new SpireObject(random);
+		if (spire.canPlaceObject(world, x, y, z)) {
+			spire.placeObject(world, x, y, z);
+		}
+	}
 
-    @Override
-    public void populate(Chunk chunk, Random random) {
-        if (chunk.getY() != 4) {
-            return;
-        }
-        if (random.nextInt(ODD) != 0) {
-            return;
-        }
-        final World world = chunk.getWorld();
-        int x = chunk.getX() * 16 + random.nextInt(16);
-        int z = chunk.getZ() * 16 + random.nextInt(16);
-        int y = getHighestWorkableBlock(world, x, z);
-        if (y == -1) {
-            return;
-        }
-        final SpireObject spire = new SpireObject(random);
-        if (spire.canPlaceObject(world, x, y, z)) {
-            spire.placeObject(world, x, y, z);
-        }
-    }
-
-    private int getHighestWorkableBlock(World w, int x, int z) {
-        int y = 127;
-        while (w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
-            y--;
-            if (y == 0) {
-                return -1;
-            }
-        }
-        y++;
-        return y;
-    }
+	private int getHighestWorkableBlock(World w, int x, int z) {
+		int y = 127;
+		while (w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
+			y--;
+			if (y == 0) {
+				return -1;
+			}
+		}
+		y++;
+		return y;
+	}
 }
 

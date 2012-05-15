@@ -39,7 +39,6 @@ import org.spout.vanilla.material.TimedCraftable;
 public class FurnaceInventory extends Inventory implements WindowInventory {
 	private static final long serialVersionUID = 1L;
 	private static final int[] SLOTS = {30, 31, 32, 33, 34, 35, 36, 37, 38, 21, 22, 23, 24, 25, 26, 27, 28, 29, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 0};
-
 	private final FurnaceController owner;
 
 	public FurnaceInventory(FurnaceController owner) {

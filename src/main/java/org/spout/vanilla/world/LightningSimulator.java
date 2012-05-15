@@ -30,15 +30,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.controller.object.misc.Lightning;
 import org.spout.vanilla.controller.world.sky.VanillaSky;
 
 public class LightningSimulator {
-
 	private static final int MAX_LIGHTNING_BRANCHES = 5;
 	private static Random ra = new Random();
 	final World world;
@@ -59,7 +60,7 @@ public class LightningSimulator {
 
 	public void updatePlayerTimers() {
 		VanillaSky sky = VanillaSky.getSky(world);
-		if(sky == null) {
+		if (sky == null) {
 			return;
 		}
 		if (sky.hasWeather() && sky.getWeather() == Weather.THUNDERSTORM) {
@@ -128,7 +129,7 @@ public class LightningSimulator {
 							adjustY += (ra.nextBoolean() ? -1 : 1) * ra.nextInt(8);
 							adjustZ += (ra.nextBoolean() ? -1 : 1) * ra.nextInt(2);
 						}
-						world.createAndSpawnEntity(new Point(world, x+adjustX, y+adjustY, z+adjustZ), new Lightning());
+						world.createAndSpawnEntity(new Point(world, x + adjustX, y + adjustY, z + adjustZ), new Lightning());
 					}
 					//success, go to the next player
 					break;
@@ -142,7 +143,7 @@ public class LightningSimulator {
 	}
 
 	public boolean isRainingAt(int x, int y, int z) {
-		return VanillaSky.getSky(world).hasWeather() && !(VanillaSky.getSky(world).getWeather()==Weather.CLEAR);
+		return VanillaSky.getSky(world).hasWeather() && !(VanillaSky.getSky(world).getWeather() == Weather.CLEAR);
 	}
 }
 

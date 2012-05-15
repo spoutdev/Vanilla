@@ -35,7 +35,6 @@ import org.spout.vanilla.material.VanillaMaterials;
  * For the client we will most likely handle visual movement as well.
  */
 public class MovingPistonController extends VanillaBlockController {
-
 	protected MovingPistonController() {
 		super(VanillaControllerTypes.PISTON_MOVING, VanillaMaterials.PISTON_MOVING);
 	}

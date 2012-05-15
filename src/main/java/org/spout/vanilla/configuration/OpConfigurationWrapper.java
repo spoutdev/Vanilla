@@ -32,45 +32,48 @@ import org.spout.api.exception.ConfigurationException;
 
 class OpConfigurationWrapper extends OpConfiguration {
 	private OpConfiguration wrapped = null;
+
 	public OpConfigurationWrapper() {
 		super();
 	}
-	
+
 	protected void setWrapped(OpConfiguration ops) {
 		this.wrapped = ops;
 	}
-	
+
 	@Override
 	public List<String> getOps() {
 		validate();
 		return wrapped.getOps();
 	}
-	
+
 	@Override
 	public boolean setOp(String playerName, boolean op) {
 		validate();
 		return wrapped.setOp(playerName, op);
 	}
-	
+
 	@Override
 	public boolean isOp(String playerName) {
 		validate();
 		return wrapped.isOp(playerName);
 	}
-	
+
 	@Override
 	public void save() throws ConfigurationException {
 		validate();
 		wrapped.save();
 	}
-	
+
 	@Override
 	public void load() throws ConfigurationException {
 		validate();
 		wrapped.load();
 	}
-	
+
 	private void validate() {
-		if (wrapped == null) throw new NullPointerException("No op configuration available");
+		if (wrapped == null) {
+			throw new NullPointerException("No op configuration available");
+		}
 	}
 }

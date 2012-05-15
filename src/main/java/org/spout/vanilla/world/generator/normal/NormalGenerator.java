@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.normal;
 
 import java.util.Random;
+
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.api.geo.World;
@@ -40,7 +41,6 @@ import org.spout.vanilla.world.populator.SmoothPopulator;
 import org.spout.vanilla.world.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends BiomeGenerator implements VanillaGenerator {
-
 	private static BiomeSelector selector;
 
 	@Override
@@ -72,7 +72,7 @@ public class NormalGenerator extends BiomeGenerator implements VanillaGenerator 
 
 		//Moves the spawn out of the ocean (and likely on to a beach, as in MC).
 		int shift = 0;
-		while (selector.pickBiome(shift,0,world.getSeed()) == VanillaBiomes.OCEAN && shift < 16000) {
+		while (selector.pickBiome(shift, 0, world.getSeed()) == VanillaBiomes.OCEAN && shift < 16000) {
 			shift += 16;
 		}
 

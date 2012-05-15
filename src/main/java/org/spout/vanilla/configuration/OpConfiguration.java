@@ -34,11 +34,11 @@ import org.spout.api.util.config.yaml.YamlConfiguration;
 
 public class OpConfiguration {
 	private final YamlConfiguration config;
-	
+
 	protected OpConfiguration() {
 		this.config = null;
 	}
-	
+
 	public OpConfiguration(File dataFolder) {
 		config = new YamlConfiguration(new File(dataFolder, "ops.yml"));
 	}
@@ -68,11 +68,11 @@ public class OpConfiguration {
 	public boolean isOp(String playerName) {
 		return getOps().contains(playerName.toLowerCase());
 	}
-	
+
 	public void save() throws ConfigurationException {
 		config.save();
 	}
-	
+
 	public void load() throws ConfigurationException {
 		config.load();
 	}

@@ -39,7 +39,6 @@ import org.spout.vanilla.world.generator.normal.object.WellObject;
  * Decorator that decorates a biome with a well structure.
  */
 public class WellDecorator implements BiomeDecorator {
-	
 	// a well object for generation
 	// the object isn't random, so we can use a static instance
 	private static final WellObject well = new WellObject();

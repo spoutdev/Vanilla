@@ -41,7 +41,6 @@ import org.spout.vanilla.world.Weather;
  * Represents a sky in Vanilla
  */
 public abstract class VanillaSky extends Controller implements VanillaController {
-
 	protected long maxTime, time = 0, countdown = 20, rate;
 	protected boolean hasWeather, forceWeatherUpdate = false;
 	protected Weather weather = Weather.CLEAR, forecast = Weather.CLEAR;
@@ -102,10 +101,11 @@ public abstract class VanillaSky extends Controller implements VanillaController
 				forceWeatherUpdate = false;
 			}
 		}
-		if(hasWeather && simulator != null)
+		if (hasWeather && simulator != null) {
 			simulator.onTick();
+		}
 	}
-	
+
 	@Override
 	public boolean isSavable() {
 		return false;
@@ -113,7 +113,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 
 	/**
 	 * Sets the time of the sky.
-	 *
 	 * @param time
 	 */
 	public void setTime(long time) {
@@ -122,7 +121,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 
 	/**
 	 * Gets the time of the sky
-	 *
 	 * @return time
 	 */
 	public long getTime() {
@@ -132,7 +130,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	/**
 	 * Gets the max time of the sky. When the time reached the maxTime, the time
 	 * will be set to 0.
-	 *
 	 * @return
 	 */
 	public long getMaxTime() {
@@ -142,7 +139,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	/**
 	 * Sets the max time of the sky. When the time reaches the maxTime, the time
 	 * will be set to 0.
-	 *
 	 * @param maxTime
 	 */
 	public void setMaxTime(long maxTime) {
@@ -151,7 +147,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 
 	/**
 	 * Gets the rate of how many ticks the time is incremented each time update.
-	 *
 	 * @return
 	 */
 	public long getRate() {
@@ -161,7 +156,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	/**
 	 * Sets the rate of how many ticks the time is incremented by each time
 	 * update.
-	 *
 	 * @param rate
 	 */
 	public void setRate(long rate) {
@@ -170,7 +164,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 
 	/**
 	 * Whether or not the sky can produce weather
-	 *
 	 * @return true if sky has weather.
 	 */
 	public boolean hasWeather() {
@@ -179,7 +172,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 
 	/**
 	 * Sets whether or not the sky can produce weather.
-	 *
 	 * @param hasWeather
 	 */
 	public void setHasWeather(boolean hasWeather) {
@@ -188,7 +180,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 
 	/**
 	 * Gets the weather of the sky.
-	 *
 	 * @return weather
 	 */
 	public Weather getWeather() {
@@ -197,7 +188,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 
 	/**
 	 * Sets the forecast for the next weather change.
-	 *
 	 * @param forecast
 	 */
 	public void setWeather(Weather forecast) {
@@ -207,7 +197,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 
 	/**
 	 * Gets the forecast for the next weather change.
-	 *
 	 * @return forecast
 	 */
 	public Weather getForecast() {
@@ -216,7 +205,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 
 	/**
 	 * Gets the world in which the sky is attached.
-	 *
 	 * @return world
 	 */
 	public World getWorld() {

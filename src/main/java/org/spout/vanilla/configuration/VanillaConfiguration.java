@@ -27,6 +27,7 @@
 package org.spout.vanilla.configuration;
 
 import java.io.File;
+
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.util.config.ConfigurationHolder;
 import org.spout.api.util.config.ConfigurationHolderConfiguration;
@@ -61,7 +62,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));
-		((OpConfigurationWrapper)OPS).setWrapped(new OpConfiguration(dataFolder));
+		((OpConfigurationWrapper) OPS).setWrapped(new OpConfiguration(dataFolder));
 	}
 
 	@Override

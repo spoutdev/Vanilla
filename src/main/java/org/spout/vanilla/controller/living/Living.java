@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.controller.living;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.util.BlockIterator;

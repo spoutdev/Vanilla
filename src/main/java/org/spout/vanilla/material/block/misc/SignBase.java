@@ -36,11 +36,13 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.SignController;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.AbstractAttachable;
+import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.util.MoveReaction;
 
-public class SignBase extends AbstractAttachable {
+public class SignBase extends AbstractAttachable implements Mineable {
 	public SignBase(String name, int id) {
 		super(name, id);
 		setAttachable(BlockFaces.NESWB);
@@ -98,5 +100,10 @@ public class SignBase extends AbstractAttachable {
 			return material instanceof SignBase || material instanceof Torch;
 		}
 		return false;
+	}
+
+	@Override
+	public short getDurabilityPenalty(MiningTool tool) {
+		return 0;
 	}
 }

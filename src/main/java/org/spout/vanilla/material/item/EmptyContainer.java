@@ -43,7 +43,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class EmptyContainer extends BlockItem {
-
 	private HashMap<MaterialSource, FullContainer> fullContainers = new HashMap<MaterialSource, FullContainer>();
 
 	public EmptyContainer(String name, int id) {

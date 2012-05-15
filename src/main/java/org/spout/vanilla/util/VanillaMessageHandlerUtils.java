@@ -30,7 +30,6 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.inventory.VanillaInventory;
 import org.spout.vanilla.inventory.WindowInventory;
 
 public class VanillaMessageHandlerUtils {

@@ -106,7 +106,7 @@ public enum RailsState {
 	/**
 	 * Get the RailState from a BlockFace, and whether it is curved.
 	 * @param direction The BlockFace.
-	 * @param sloped    Whether the RailsState should be sloped.
+	 * @param sloped	Whether the RailsState should be sloped.
 	 * @return The RailState.
 	 */
 	public static RailsState get(BlockFace direction, boolean sloped) {

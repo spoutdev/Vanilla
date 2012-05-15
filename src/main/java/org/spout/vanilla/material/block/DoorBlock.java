@@ -91,7 +91,7 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 	/**
 	 * Gets the top or face door block when either of the blocks is given
 	 * @param doorBlock the top or bottom door block
-	 * @param top       whether to get the top block, if false, gets the bottom block
+	 * @param top	   whether to get the top block, if false, gets the bottom block
 	 * @return the requested door half block
 	 */
 	private Block getCorrectHalf(Block doorBlock, boolean top) {
@@ -164,23 +164,45 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 	public static BlockFace rotate(BlockFace from, int notchCount) {
 		while (notchCount > 0) {
 			switch (from) {
-			case NORTH : from = BlockFace.EAST; break;
-			case EAST : from = BlockFace.SOUTH; break;
-			case SOUTH : from = BlockFace.WEST; break;
-			case WEST : from = BlockFace.NORTH; break;
-			default : return from;
+				case NORTH:
+					from = BlockFace.EAST;
+					break;
+				case EAST:
+					from = BlockFace.SOUTH;
+					break;
+				case SOUTH:
+					from = BlockFace.WEST;
+					break;
+				case WEST:
+					from = BlockFace.NORTH;
+					break;
+				default:
+					return from;
 			}
-			if (notchCount-- == 0) return from;
+			if (notchCount-- == 0) {
+				return from;
+			}
 		}
 		while (notchCount < 0) {
 			switch (from) {
-			case NORTH : from = BlockFace.WEST; break;
-			case WEST : from = BlockFace.SOUTH; break;
-			case SOUTH : from = BlockFace.EAST; break;
-			case EAST : from = BlockFace.NORTH; break;
-			default : return from;
+				case NORTH:
+					from = BlockFace.WEST;
+					break;
+				case WEST:
+					from = BlockFace.SOUTH;
+					break;
+				case SOUTH:
+					from = BlockFace.EAST;
+					break;
+				case EAST:
+					from = BlockFace.NORTH;
+					break;
+				default:
+					return from;
 			}
-			if (notchCount++ == 0) return from;
+			if (notchCount++ == 0) {
+				return from;
+			}
 		}
 		return from;
 	}

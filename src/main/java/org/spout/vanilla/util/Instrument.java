@@ -32,7 +32,6 @@ public enum Instrument {
 	SNAREDRUM(2, "snare"),
 	CLICK(3, "hat"),
 	BASSGUITAR(4, "bassattack");
-
 	private byte id;
 	private String name;
 

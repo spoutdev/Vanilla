@@ -30,6 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.NoteBlockController;
 import org.spout.vanilla.material.Fuel;
@@ -40,7 +41,6 @@ import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class NoteBlock extends Solid implements Fuel {
-
 	public final float BURN_TIME = 15.f;
 
 	public NoteBlock(String name, int id) {

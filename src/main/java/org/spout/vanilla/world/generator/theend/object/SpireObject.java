@@ -37,114 +37,113 @@ import org.spout.vanilla.controller.object.misc.EnderCrystal;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class SpireObject extends WorldGeneratorObject {
+	private final Random random;
+	// These control the height of the spires
+	private byte baseHeight = 6;
+	private byte randHeight = 32;
+	private byte totalHeight;
+	// These control the radius of the spires
+	private byte baseRadius = 2;
+	private byte randRadius = 4;
+	private byte totalRadius;
+	// materials
+	private BlockMaterial main = VanillaMaterials.OBSIDIAN;
+	private BlockMaterial crystalBase = VanillaMaterials.BEDROCK;
+	// extras
+	private boolean spawnEnderCrystal = true;
 
-    private final Random random;
-    // These control the height of the spires
-    private byte baseHeight = 6;
-    private byte randHeight = 32;
-    private byte totalHeight;
-    // These control the radius of the spires
-    private byte baseRadius = 2;
-    private byte randRadius = 4;
-    private byte totalRadius;
-    // materials
-    private BlockMaterial main = VanillaMaterials.OBSIDIAN;
-    private BlockMaterial crystalBase = VanillaMaterials.BEDROCK;
-    // extras
-    private boolean spawnEnderCrystal = true;
+	public SpireObject(Random random) {
+		this.random = random;
+		findNewRandomHeight();
+		findNewRandomRadius();
+	}
 
-    public SpireObject(Random random) {
-        this.random = random;
-        findNewRandomHeight();
-        findNewRandomRadius();
-    }
+	@Override
+	public boolean canPlaceObject(World w, int x, int y, int z) {
+		final byte diameter = getDiameter();
+		final short radiusSquare = getRadiusSquare();
+		for (byte xx = 0; xx < diameter; xx++) {
+			for (byte zz = 0; zz < diameter; zz++) {
+				if (xx * xx + zz * zz <= radiusSquare) {
+					if (w.getBlockMaterial(x + xx, y - 1, z + zz) == VanillaMaterials.AIR) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
 
-    @Override
-    public boolean canPlaceObject(World w, int x, int y, int z) {
-        final byte diameter = getDiameter();
-        final short radiusSquare = getRadiusSquare();
-        for (byte xx = 0; xx < diameter; xx++) {
-            for (byte zz = 0; zz < diameter; zz++) {
-                if (xx * xx + zz * zz <= radiusSquare) {
-                    if (w.getBlockMaterial(x + xx, y - 1, z + zz) == VanillaMaterials.AIR) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
+	@Override
+	public void placeObject(World w, int x, int y, int z) {
+		x -= totalRadius;
+		z -= totalRadius;
+		final byte diameter = getDiameter();
+		final short radiusSquare = getRadiusSquare();
+		for (byte xx = (byte) -totalRadius; xx <= diameter; xx++) {
+			for (byte zz = (byte) -totalRadius; zz <= diameter; zz++) {
+				if (xx * xx + zz * zz <= radiusSquare) {
+					for (byte yy = 0; yy < totalHeight; yy++) {
+						w.setBlockMaterial(x + xx, y + yy, z + zz, main, (short) 0, w);
+					}
+				}
+			}
+		}
+		w.setBlockMaterial(x, y + totalHeight, z, crystalBase, (short) 0, w);
+		if (spawnEnderCrystal) {
+			w.createAndSpawnEntity(new Point(w, (float) x + 0.5f, y + totalHeight - 1, (float) z + 0.5f), new EnderCrystal());
+		}
+	}
 
-    @Override
-    public void placeObject(World w, int x, int y, int z) {
-        x -= totalRadius;
-        z -= totalRadius;
-        final byte diameter = getDiameter();
-        final short radiusSquare = getRadiusSquare();
-        for (byte xx = (byte) -totalRadius; xx <= diameter; xx++) {
-            for (byte zz = (byte) -totalRadius; zz <= diameter; zz++) {
-                if (xx * xx + zz * zz <= radiusSquare) {
-                    for (byte yy = 0; yy < totalHeight; yy++) {
-                        w.setBlockMaterial(x + xx, y + yy, z + zz, main, (short) 0, w);
-                    }
-                }
-            }
-        }
-        w.setBlockMaterial(x, y + totalHeight, z, crystalBase, (short) 0, w);
-        if (spawnEnderCrystal) {
-            w.createAndSpawnEntity(new Point(w, (float) x + 0.5f, y + totalHeight - 1, (float) z + 0.5f), new EnderCrystal());
-        }
-    }
+	private byte getDiameter() {
+		return (byte) (totalRadius * 2);
+	}
 
-    private byte getDiameter() {
-        return (byte) (totalRadius * 2);
-    }
+	private short getRadiusSquare() {
+		return (short) (totalRadius * totalRadius + 1);
+	}
 
-    private short getRadiusSquare() {
-        return (short) (totalRadius * totalRadius + 1);
-    }
+	public final void findNewRandomHeight() {
+		totalHeight = (byte) (baseHeight + random.nextInt(randHeight));
+	}
 
-    public final void findNewRandomHeight() {
-        totalHeight = (byte) (baseHeight + random.nextInt(randHeight));
-    }
+	public final void findNewRandomRadius() {
+		totalRadius = (byte) (baseRadius + random.nextInt(randRadius));
+	}
 
-    public final void findNewRandomRadius() {
-        totalRadius = (byte) (baseRadius + random.nextInt(randRadius));
-    }
+	public void setBaseHeight(byte baseHeight) {
+		this.baseHeight = baseHeight;
+	}
 
-    public void setBaseHeight(byte baseHeight) {
-        this.baseHeight = baseHeight;
-    }
+	public void setBaseRadius(byte baseRadius) {
+		this.baseRadius = baseRadius;
+	}
 
-    public void setBaseRadius(byte baseRadius) {
-        this.baseRadius = baseRadius;
-    }
+	public void setEnderCrystalBaseMaterial(BlockMaterial crystalBase) {
+		this.crystalBase = crystalBase;
+	}
 
-    public void setEnderCrystalBaseMaterial(BlockMaterial crystalBase) {
-        this.crystalBase = crystalBase;
-    }
+	public void setMainMaterial(BlockMaterial main) {
+		this.main = main;
+	}
 
-    public void setMainMaterial(BlockMaterial main) {
-        this.main = main;
-    }
+	public void setRandHeight(byte randHeight) {
+		this.randHeight = randHeight;
+	}
 
-    public void setRandHeight(byte randHeight) {
-        this.randHeight = randHeight;
-    }
+	public void setRandRadius(byte randRadius) {
+		this.randRadius = randRadius;
+	}
 
-    public void setRandRadius(byte randRadius) {
-        this.randRadius = randRadius;
-    }
+	public void spawnEnderCrystal(boolean spawnEnderCrystal) {
+		this.spawnEnderCrystal = spawnEnderCrystal;
+	}
 
-    public void spawnEnderCrystal(boolean spawnEnderCrystal) {
-        this.spawnEnderCrystal = spawnEnderCrystal;
-    }
+	public void setTotalHeight(byte totalHeight) {
+		this.totalHeight = totalHeight;
+	}
 
-    public void setTotalHeight(byte totalHeight) {
-        this.totalHeight = totalHeight;
-    }
-
-    public void setTotalRadius(byte totalRadius) {
-        this.totalRadius = totalRadius;
-    }
+	public void setTotalRadius(byte totalRadius) {
+		this.totalRadius = totalRadius;
+	}
 }

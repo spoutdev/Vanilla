@@ -31,6 +31,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.moving.Item;
@@ -73,7 +74,7 @@ public class JukeboxController extends VanillaBlockController {
 	public boolean canPlay(Material material) {
 		return material instanceof MusicDisc;
 	}
-	
+
 	/**
 	 * Ejects the currently playing music disc
 	 */

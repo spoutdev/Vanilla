@@ -39,7 +39,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
 
 public class Sheep extends Creature implements Passive {
-
 	public Sheep() {
 		this(0x0);
 	}
@@ -82,7 +81,7 @@ public class Sheep extends Creature implements Passive {
 	 * @return color of the sheep.
 	 */
 	public Wool.WoolColor getColor() {
-		return Wool.WoolColor.getById(((Number)data().get("SheepColor")).shortValue());
+		return Wool.WoolColor.getById(((Number) data().get("SheepColor")).shortValue());
 	}
 
 	/**
@@ -97,7 +96,7 @@ public class Sheep extends Creature implements Passive {
 	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		if (!isSheared()) {
-			drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial((short) ((Number)data().get("SheepColor")).shortValue()), 1));
+			drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial((short) ((Number) data().get("SheepColor")).shortValue()), 1));
 		}
 
 		return drops;

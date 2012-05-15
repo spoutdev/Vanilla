@@ -29,24 +29,22 @@ package org.spout.vanilla.protocol.controller.object;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
+
 import org.spout.vanilla.controller.object.misc.Lightning;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnLightningStrikeMessage;
 
-
-
-public class LightningEntityProtocol  extends VanillaEntityProtocol implements EntityProtocol {
-
+public class LightningEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
-		if(entity.getController() == null)
+		if (entity.getController() == null) {
 			return null;
-		if(!(entity.getController() instanceof Lightning))
+		}
+		if (!(entity.getController() instanceof Lightning)) {
 			return null;
+		}
 		Message[] toSend = new Message[1];
 		toSend[0] = new SpawnLightningStrikeMessage(entity.getId(), entity.getPosition().getBlockX(), entity.getPosition().getBlockY(), entity.getPosition().getBlockZ());
 		return toSend;
-		
 	}
-
 }

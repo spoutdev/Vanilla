@@ -30,6 +30,8 @@ import org.spout.api.Spout;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.geo.World;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -61,7 +63,8 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		int y = message.getY();
 		int z = message.getZ();
 
-		Block block = player.getEntity().getWorld().getBlock(x, y, z, player.getEntity());
+		World w = player.getEntity().getWorld();
+		Block block = w.getBlock(x, y, z, player.getEntity());
 		BlockMaterial blockMaterial = block.getSubMaterial();
 		BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(message.getFace());
 		boolean isInteractable = true;
@@ -104,12 +107,9 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 					//put out fire
 					VanillaMaterials.FIRE.onDestroy(neigh);
 					VanillaNetworkSynchronizer.playBlockEffect(block, player.getEntity(), PlayEffectMessage.Messages.RANDOM_FIZZ);
-				}
-
-				//only dig if in survival mode and block has hardness
-				if (vp.isSurvival() && blockMaterial.getHardness() != 0.0f) {
-					vp.setDigging(true);
-				} else if (!fire) {
+				} else if (vp.isSurvival() && blockMaterial.getHardness() != 0.0f) {
+					vp.startDigging(new Point(w, x, y, z));
+				} else {
 					//insta-break
 					blockMaterial.onDestroy(block);
 					PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
@@ -117,8 +117,10 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				}
 			}
 		} else if (message.getState() == PlayerDiggingMessage.STATE_DONE_DIGGING) {
-			vp.setDigging(false);
-			long diggingTicks = ((VanillaPlayer) player.getEntity().getController()).getDiggingTicks();
+			if(!vp.stopDigging(new Point(w, x, y, z))){
+				return;
+			}
+			long diggingTicks = vp.getDiggingTicks();
 			int damageDone = 0;
 			int totalDamage = 0;
 
@@ -136,8 +138,21 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 					damageDone = ((int) diggingTicks * ((VanillaMaterial) heldItem.getMaterial()).getDamage());
 				}
 
+				// TODO: Take into account enchantments
+
 				totalDamage = ((int) blockMaterial.getHardness() - damageDone);
-				if (totalDamage <= 0) {
+				if (totalDamage <= 40) { //Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
+					if (!(blockMaterial instanceof Mineable)) {
+						player.kick("The block you tried to dig is not MINEABLE. No blocks for you.");
+						return;
+					}
+					if (totalDamage < -30) {// This can be removed after VANILLA-97 is fixed.
+						System.out.println("[DEBUG] Player spent much more time mining than expected: " + (-totalDamage) + " damage more. Block: " + blockMaterial.getClass().getName());
+					}
+					if(!vp.addAndCheckMiningSpeed(totalDamage)){
+						player.kick("Stop speed-mining!");
+						return;
+					}
 					blockMaterial.onDestroy(block);
 					PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
 					VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);

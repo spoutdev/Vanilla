@@ -38,6 +38,7 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
@@ -78,13 +79,17 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected ItemStack itemOnCursor;
 	protected String tabListName;
 	protected GameMode gameMode;
-	protected int distanceMoved, windowId;
-	protected Set<Player> invisibleFor = new HashSet<Player>();
+	protected int distanceMoved, windowId, miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt(), miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt();
+	protected final Set<Player> invisibleFor = new HashSet<Player>();
 	protected Point compassTarget;
 	protected Vector3 lookingAt;
+	protected Point diggingPosition;
 	protected Window activeWindow;
+	protected long diggingStartTime;
 	protected boolean isDigging;
-	protected long diggingTicks = 0;
+	protected int[] miningDamage;
+	protected int miningDamagePosition = 0;
+	protected long previousDiggingTime = 0;
 
 	public VanillaPlayer(Player p, GameMode gameMode) {
 		super(VanillaControllerTypes.PLAYER);
@@ -93,6 +98,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		compassTarget = owner.getEntity().getWorld().getSpawnPoint().getPosition();
 		this.setHeadHeight(1.62f);
 		this.gameMode = gameMode;
+		miningDamage = new int[miningDamagePeriod];
 	}
 
 	public VanillaPlayer(Player p) {
@@ -145,10 +151,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	private void survivalTick(float dt) {
 		if (isDigging) {
-			diggingTicks += dt;
 			sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_SWING_ARM));
 		} else {
-			diggingTicks = 0;
 			sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_NONE));
 		}
 
@@ -533,15 +537,92 @@ public class VanillaPlayer extends Human implements PlayerController {
 		return lookingAt;
 	}
 
+	/**
+	 * Returns the digging state of the controller
+	 * @return true if player is digging
+	 */
 	public boolean isDigging() {
 		return isDigging;
 	}
-
-	public void setDigging(boolean digging) {
-		isDigging = digging;
+	
+	/**
+	 * Sets isDigging true and records start time, unless already digging
+	 * @return true if successful
+	 */
+	public boolean startDigging(Point position) {
+		if (owner.getEntity().getPosition().getDistance(position) > 6) { // TODO: Actually get block reach from somewhere instead of just using 6
+			return false;
+		}
+		isDigging = true;
+		diggingPosition = position;
+		diggingStartTime = System.currentTimeMillis();
+		return true;
 	}
 
+	/**
+	 * Sets isDigging false and records total time, unless the dig was invalid/never started.
+	 * @return true if successful
+	 */
+	public boolean stopDigging(Point position) {
+		if (!isDigging) {
+			return false;
+		}
+		previousDiggingTime = getDiggingTime();
+		isDigging = false;
+		if (!position.equals(diggingPosition)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Gets time spent digging
+	 * @return time spent digging
+	 */
+	public long getDiggingTime() {
+		if (isDigging) {
+			//Is this correct?
+			return System.currentTimeMillis() - diggingStartTime;
+		} else{
+			return previousDiggingTime;
+		}
+	}
+
+	/**
+	 * Gets last time spent digging in real(client) ticks
+	 * @return ticks spent digging
+	 */
 	public long getDiggingTicks() {
-		return diggingTicks;
+		return getDiggingTime() / 50;
+	}
+
+	/**
+	 * Adds and checks mining speed for cheating.
+	 * @param damageRemaining Remaining damage on block
+	 * @return false if player is cheating
+	 */
+	public boolean addAndCheckMiningSpeed(int damageRemaining) {
+		if (!VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ENABLED.getBoolean()) {
+			return true;
+		}
+		
+		miningDamage[miningDamagePosition++] = damageRemaining;
+		
+		if (miningDamagePosition >= miningDamagePeriod) {
+			miningDamagePosition = 0;
+		}
+		
+		return checkMiningSpeed();
+	}
+
+	/**
+	 * Checks mining speed for cheating.
+	 * @return false if player is cheating
+	 */
+	public boolean checkMiningSpeed() {
+		if (MathHelper.mean(miningDamage) > miningDamageAllowance) { // TODO: Make this configurable?
+			return false;
+		}
+		return true;
 	}
 }

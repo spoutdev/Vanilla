@@ -52,6 +52,9 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder PLAYER_SURVIVAL_ENABLE_HUNGER = new ConfigurationHolder(true, "player", "survival", "enable-hunger");
 	public static final ConfigurationHolder PLAYER_SURVIVAL_ENABLE_XP = new ConfigurationHolder(true, "player", "survival", "enable-xp");
 	public static final ConfigurationHolder PLAYER_TIMEOUT_TICKS = new ConfigurationHolder(120, "player", "timeout-ticks");
+	public static final ConfigurationHolder PLAYER_SPEEDMINING_PREVENTION_ENABLED = new ConfigurationHolder(true, "player", "speedmining-prevention-enabled");
+	public static final ConfigurationHolder PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE = new ConfigurationHolder(5, "player", "speedmining-prevention-allowance");
+	public static final ConfigurationHolder PLAYER_SPEEDMINING_PREVENTION_PERIOD = new ConfigurationHolder(50, "player", "speedmining-prevention-period");
 	public static final OpConfiguration OPS = new OpConfigurationWrapper();
 	// Controller-specific
 	public static final ConfigurationHolder ITEM_PICKUP_RANGE = new ConfigurationHolder(3, "controller", "item-pickup-range");

@@ -123,23 +123,11 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 				return;
 			}
 
-			// Get the controller and assign a new window id for the session.
+			// Open the chest
 			VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
-			Inventory inventory = entity.getInventory();
 			ChestController chest = (ChestController) getController(block);
-			boolean doubleChest = isDouble(block);
-			chest.setOpened(true);
-
-			// Dispose items into new inventory
 			ChestInventory chestInventory = chest.getInventory();
-			for (int slot = 0; slot < 36; slot++) {
-				chestInventory.setItem(slot, inventory.getItem(slot));
-			}
-
-			// Add the player who opened the inventory as a viewer
-			//chestInventory.addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
-			vanillaPlayer.setActiveInventory(chestInventory);
-			vanillaPlayer.openWindow(Window.CHEST, doubleChest ? "Large chest" : "Chest", doubleChest ? 54 : 27);
+			chestInventory.open(vanillaPlayer);
 		}
 	}
 

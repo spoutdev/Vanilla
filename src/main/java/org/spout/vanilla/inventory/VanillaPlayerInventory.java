@@ -29,6 +29,8 @@ package org.spout.vanilla.inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.PlayerInventory;
 
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+
 /**
  * Represents a players inventory
  */
@@ -115,6 +117,14 @@ public class VanillaPlayerInventory extends PlayerInventory implements WindowInv
 	@Override
 	public Window getWindow() {
 		return Window.PLAYER_INVENTORY;
+	}
+
+	@Override
+	public void open(VanillaPlayer player) {
+	}
+
+	@Override
+	public void onClosed(VanillaPlayer player) {
 	}
 
 	@Override

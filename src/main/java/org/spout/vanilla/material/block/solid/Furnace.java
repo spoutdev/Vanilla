@@ -110,21 +110,11 @@ public class Furnace extends Solid implements Mineable, Directional {
 				return;
 			}
 
-			// Get the controller and assign a new window id for the session.
+			// Open the furnace
 			VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
-			Inventory inventory = entity.getInventory();
 			FurnaceController furnace = this.getController(block);
-
-			// Transfer the items
 			FurnaceInventory furnaceInventory = furnace.getInventory();
-			for (int slot = 0; slot < 36; slot++) {
-				furnaceInventory.setItem(slot, inventory.getItem(slot));
-			}
-
-			// Add the player who opened the inventory as a viewer
-			furnaceInventory.addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
-			vanillaPlayer.setActiveInventory(furnaceInventory);
-			vanillaPlayer.openWindow(Window.FURNACE, furnaceInventory.getSize());
+			furnaceInventory.open(vanillaPlayer);
 		}
 	}
 

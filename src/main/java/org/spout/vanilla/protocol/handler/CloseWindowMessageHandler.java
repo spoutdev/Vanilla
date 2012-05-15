@@ -33,19 +33,20 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.ChestInventory;
+import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 
 public final class CloseWindowMessageHandler extends MessageHandler<CloseWindowMessage> {
 	@Override
 	public void handleServer(Session session, Player player, CloseWindowMessage message) {
-		VanillaPlayer vplr = (VanillaPlayer) player.getEntity().getController();
-		Inventory activeInventory = vplr.getActiveInventory();
-		if (activeInventory instanceof ChestInventory) {
-			ChestInventory inventory = (ChestInventory) activeInventory;
-			inventory.getOwner().setOpened(false);
+		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
+		Inventory activeInventory = controller.getActiveInventory();
+		if (activeInventory instanceof WindowInventory) {
+			WindowInventory inventory = (WindowInventory) activeInventory;
+			inventory.onClosed(controller);
 		}
-		vplr.setActiveInventory(player.getEntity().getInventory());
-		vplr.setItemOnCursor(null);
+		controller.setActiveInventory(player.getEntity().getInventory());
+		controller.setItemOnCursor(null);
 
 		//TODO drop item, code below ;D
 		/*if (player == null) {

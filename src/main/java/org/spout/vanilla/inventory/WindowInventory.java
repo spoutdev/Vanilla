@@ -26,12 +26,27 @@
  */
 package org.spout.vanilla.inventory;
 
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+
 public interface WindowInventory extends VanillaInventory {
 	/**
 	 * Gets the window associated with the inventory
 	 * @return window of inventory
 	 */
 	public Window getWindow();
+
+	/**
+	 * Opens the inventory and window
+	 * @param player to show the inventory
+	 */
+	public void open(VanillaPlayer player);
+
+	/**
+	 * Closes the inventory and window
+	 *
+	 * @param player to close the inventory on
+	 */
+	public void onClosed(VanillaPlayer player);
 
 	/**
 	 * Gets the native protocol slot index

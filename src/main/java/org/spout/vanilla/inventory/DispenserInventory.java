@@ -29,6 +29,7 @@ package org.spout.vanilla.inventory;
 import org.spout.api.inventory.Inventory;
 
 import org.spout.vanilla.controller.block.DispenserController;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
 /**
  * Represents a dispenser inventory belonging to a dispenser controller.
@@ -69,5 +70,20 @@ public class DispenserInventory extends Inventory implements WindowInventory {
 	@Override
 	public Window getWindow() {
 		return Window.DISPENSER;
+	}
+
+	@Override
+	public void open(VanillaPlayer player) {
+		Inventory inventory = player.getPlayer().getEntity().getInventory();
+		for (int slot = 0; slot < 36; slot++) {
+			setItem(slot, inventory.getItem(slot));
+		}
+		addViewer(player.getPlayer().getNetworkSynchronizer());
+		player.setActiveInventory(this);
+		player.openWindow(Window.DISPENSER, getSize());
+	}
+
+	@Override
+	public void onClosed(VanillaPlayer player) {
 	}
 }

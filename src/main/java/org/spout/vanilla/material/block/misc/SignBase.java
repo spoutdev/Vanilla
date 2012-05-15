@@ -34,23 +34,27 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.block.SignController;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.AbstractAttachable;
 
 public class SignBase extends AbstractAttachable {
 	public SignBase(String name, int id) {
 		super(name, id);
-		this.setAttachable(BlockFaces.NESWB);
+		setAttachable(BlockFaces.NESWB);
 	}
 
 	@Override
 	public void loadProperties() {
 		super.loadProperties();
-		this.setDrop(VanillaMaterials.SIGN);
+		setDrop(VanillaMaterials.SIGN);
+        setController(VanillaControllerTypes.SIGN);
 	}
 
 	@Override
 	public void handlePlacement(Block block, short data, BlockFace attachedFace) {
+        block.setController(new SignController());
 		this.setAttachedFace(block, attachedFace);
 	}
 

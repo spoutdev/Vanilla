@@ -43,11 +43,11 @@ public class DispenserController extends VanillaBlockController {
 		System.out.println("Dispenser entity spawned and controller attached to: " + getParent().getPosition().toString());
 	}
 
+    @Override
+    public void onTick(float dt) {
+    }
+
 	public DispenserInventory getInventory() {
 		return inventory;
-	}
-
-	@Override
-	public void onTick(float dt) {
 	}
 }

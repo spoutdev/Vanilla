@@ -24,7 +24,40 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory;
+package org.spout.vanilla.protocol.handler;
 
-public interface VanillaInventory {
+import org.spout.api.entity.BlockController;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.player.Player;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
+import org.spout.vanilla.controller.block.SignController;
+import org.spout.vanilla.protocol.msg.UpdateSignMessage;
+
+public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
+
+    @Override
+    public void handleServer(Session session, Player player, UpdateSignMessage message) {
+        if (session == null || player == null || message == null) {
+            return;
+        }
+
+        Block block = player.getEntity().getWorld().getBlock(message.getX(), message.getY(), message.getZ());
+        if (block == null) {
+            return;
+        }
+
+        BlockController controller = block.getController();
+        if (controller == null || !(controller instanceof SignController)) {
+            return;
+        }
+
+        String[] text = message.getMessage();
+        if (text.length != 4) {
+            return;
+        }
+
+        SignController sign = (SignController) controller;
+        sign.setText(text);
+    }
 }

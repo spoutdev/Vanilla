@@ -35,6 +35,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.inventory.JukeboxInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.misc.MusicDisc;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
@@ -42,7 +43,7 @@ import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.Music;
 
 public class JukeboxController extends VanillaBlockController {
-	private final Inventory inventory = new Inventory(1);
+	private final JukeboxInventory inventory = new JukeboxInventory();
 
 	public JukeboxController() {
 		super(VanillaControllerTypes.JUKEBOX, VanillaMaterials.JUKEBOX);
@@ -58,7 +59,7 @@ public class JukeboxController extends VanillaBlockController {
 	 * @return
 	 */
 	public Music getMusic() {
-		ItemStack current = inventory.getCurrentItem();
+		ItemStack current = inventory.getMusicSlot();
 		if (canPlay(current)) {
 			return ((MusicDisc) current.getSubMaterial()).getMusic();
 		} else {
@@ -78,8 +79,8 @@ public class JukeboxController extends VanillaBlockController {
 	 * Ejects the currently playing music disc
 	 */
 	public void eject() {
-		ItemStack current = this.inventory.getCurrentItem();
-		this.inventory.setCurrentItem(null);
+		ItemStack current = this.inventory.getMusicSlot();
+		this.inventory.setMusicSlot(null);
 		if (current != null) {
 			Point position = this.getParent().getPosition();
 			position.getWorld().createAndSpawnEntity(position, new Item(current, Vector3.UP.multiply(0.5)));
@@ -105,7 +106,7 @@ public class JukeboxController extends VanillaBlockController {
 		VanillaNetworkSynchronizer.playBlockEffect(block, null, 48, PlayEffectMessage.Messages.MUSIC_DISC, music.getId());
 	}
 
-	public Inventory getInventory() {
+	public JukeboxInventory getInventory() {
 		return inventory;
 	}
 

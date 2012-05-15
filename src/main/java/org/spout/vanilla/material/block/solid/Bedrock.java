@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.MoveReaction;
 
 public class Bedrock extends Solid {
 	public Bedrock(String name, int id) {
@@ -37,5 +39,10 @@ public class Bedrock extends Solid {
 	public void loadProperties() {
 		super.loadProperties();
 		this.setResistance(6000000.0F);
+	}
+
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
 	}
 }

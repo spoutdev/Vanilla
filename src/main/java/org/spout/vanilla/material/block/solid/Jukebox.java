@@ -36,6 +36,7 @@ import org.spout.vanilla.controller.block.JukeboxController;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Jukebox extends Solid implements Fuel {
@@ -68,6 +69,11 @@ public class Jukebox extends Solid implements Fuel {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
 	}
 
 	@Override

@@ -24,21 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.piston;
+package org.spout.vanilla.controller.block;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.util.LogicUtil;
-import org.spout.vanilla.material.block.PistonBase;
+import org.spout.vanilla.controller.VanillaBlockController;
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class StickyPiston extends PistonBase {
+/**
+ * This controller will manage the moving of the other entities on top of this piston.<br>
+ * For the client we will most likely handle visual movement as well.
+ */
+public class MovingPistonController extends VanillaBlockController {
 
-	public StickyPiston(String name, int id) {
-		super(name, id);
+	protected MovingPistonController() {
+		super(VanillaControllerTypes.PISTON_MOVING, VanillaMaterials.PISTON_MOVING);
 	}
 
 	@Override
-	public void setExtended(Block block, boolean extended) {
-		block.setData(LogicUtil.setBit(block.getData(), 0x8, extended));
-		
+	public boolean isSavable() {
+		return false; //for now...
+	}
+
+	@Override
+	public void onTick(float dt) {
+	}
+
+	@Override
+	public void onAttached() {
 	}
 }

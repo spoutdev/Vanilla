@@ -32,6 +32,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.MoveReaction;
 
 public class Solid extends VanillaBlockMaterial {
 	public Solid(String name, int id) {
@@ -52,6 +53,11 @@ public class Solid extends VanillaBlockMaterial {
 	@Override
 	public boolean isRedstoneConductor() {
 		return true;
+	}
+
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.ALLOW;
 	}
 
 	@Override

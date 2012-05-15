@@ -41,6 +41,7 @@ import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Directional {
@@ -68,6 +69,11 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Axe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
 	}
 
 	@Override

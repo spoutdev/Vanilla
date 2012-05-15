@@ -65,7 +65,7 @@ import org.spout.vanilla.material.block.ore.LapisLazuliBlock;
 import org.spout.vanilla.material.block.ore.LapisLazuliOre;
 import org.spout.vanilla.material.block.ore.RedstoneOre;
 import org.spout.vanilla.material.block.piston.Piston;
-import org.spout.vanilla.material.block.piston.StickyPiston;
+import org.spout.vanilla.material.block.piston.PistonMoving;
 import org.spout.vanilla.material.block.plant.Cactus;
 import org.spout.vanilla.material.block.plant.DeadBush;
 import org.spout.vanilla.material.block.plant.Flower;
@@ -185,10 +185,10 @@ public final class VanillaMaterials {
 	public static final BedBlock BED_BLOCK = register(new BedBlock("Bed", 26));
 	public static final Web WEB = (Web) register(new Web("Cobweb", 30).setHardness(4.0F).setResistance(20.0F));
 	//== Piston ==
-	public static final StickyPiston PISTON_STICKY_BASE = register(new StickyPiston("Sticky Piston", 29));
-	public static final Piston PISTON_BASE = register(new Piston("Piston", 33));
+	public static final Piston PISTON_STICKY_BASE = register(new Piston("Sticky Piston", 29, true));
+	public static final Piston PISTON_BASE = register(new Piston("Piston", 33, false));
 	public static final Solid PISTON_EXTENSION = (Solid) register(new Solid("Piston (Head)", 34).setResistance(0.8F));
-	public static final Solid MOVED_BY_PISTON = (Solid) register(new Solid("Moved By Piston", 36).setResistance(0.0F));
+	public static final PistonMoving PISTON_MOVING = register(new PistonMoving("Moved By Piston", 36));
 	//== Rails ==
 	public static final Rails RAILS = register(new Rails());
 	public static final PoweredRails RAILS_POWERED = register(new PoweredRails());
@@ -225,6 +225,12 @@ public final class VanillaMaterials {
 	public static final CobblestoneStairs STAIRS_COBBLESTONE = register(new CobblestoneStairs("Cobblestone Stairs", 67));
 	public static final WoodenStairs STAIRS_WOODEN = register(new WoodenStairs("Wooden Stairs", 53));
 	public static final StoneBrickStairs STAIRS_STONE_BRICK = register(new StoneBrickStairs("Stone Brick Stairs", 109));
+	//== Portals ==
+	//TODO: Set move reaction for below 4 blocks to DENY (or else pistons can move it!)
+	public static final Solid PORTAL = (Solid) register(new Solid("Portal", 90).setHardness(-1.0F).setResistance(0.0F).setLightLevel(11));
+	public static final Solid END_PORTAL = (Solid) register(new Solid("End Portal", 119).setHardness(-1.0F).setResistance(6000000.0F).setLightLevel(1));
+	public static final Solid END_PORTAL_FRAME = (Solid) register(new Solid("End Portal Frame", 120).setHardness(-1.0F));
+	public static final Solid END_STONE = (Solid) register(new Solid("End Stone", 121).setHardness(3.0F).setResistance(15.0F));
 	//================
 	public static final DoubleSlab DOUBLE_SLABS = DoubleSlab.STONE;
 	public static final Slab SLAB = Slab.STONE;
@@ -267,7 +273,6 @@ public final class VanillaMaterials {
 	public static final NetherRack NETHERRACK = (NetherRack) register(new NetherRack("Netherrack", 87).setHardness(0.7F));
 	public static final SoulSand SOUL_SAND = (SoulSand) register(new SoulSand("Soul Sand", 88).setHardness(0.5F).setResistance(0.8F));
 	public static final Glowstone GLOWSTONE_BLOCK = register(new Glowstone("Glowstone Block", 89));
-	public static final Solid PORTAL = (Solid) register(new Solid("Portal", 90).setHardness(-1.0F).setResistance(0.0F).setLightLevel(11));
 	public static final Solid JACK_O_LANTERN = (Solid) register(new Solid("Jack 'o' Lantern", 91).setHardness(1.0F).setResistance(1.7F).setLightLevel(15));
 	public static final Solid CAKE_BLOCK = (Solid) register(new Solid("Cake Block", 92).setHardness(0.5F).setResistance(0.8F));
 	public static final RedstoneRepeater REDSTONE_REPEATER_OFF = register(new RedstoneRepeater("Redstone Repeater", 93, false));
@@ -293,9 +298,6 @@ public final class VanillaMaterials {
 	public static final Solid ENCHANTMENT_TABLE = (Solid) register(new Solid("Enchantment Table", 116).setHardness(5.0F).setResistance(2000.0F));
 	public static final Solid BREWING_STAND_BLOCK = (Solid) register(new Solid("Brewing Stand", 117).setHardness(0.5F).setResistance(0.8F).setLightLevel(1));
 	public static final Solid CAULDRON_BLOCK = (Solid) register(new Solid("Cauldron", 118).setHardness(2.0F).setResistance(3.3F));
-	public static final Solid END_PORTAL = (Solid) register(new Solid("End Portal", 119).setHardness(-1.0F).setResistance(6000000.0F).setLightLevel(1));
-	public static final Solid END_PORTAL_FRAME = (Solid) register(new Solid("End Portal Frame", 120).setHardness(-1.0F));
-	public static final Solid END_STONE = (Solid) register(new Solid("End Stone", 121).setHardness(3.0F).setResistance(15.0F));
 	public static final Solid DRAGON_EGG = (Solid) register(new Solid("Dragon Egg", 122).setHardness(3.0F).setResistance(15.0F).setLightLevel(1));
 	public static final RedstoneLamp REDSTONE_LAMP_OFF = register(new RedstoneLamp("Redstone Lamp", 123));
 	public static final RedstoneLamp REDSTONE_LAMP_ON = (RedstoneLamp) register(new RedstoneLamp("Redstone Lamp (On)", 124).setLightLevel(15));

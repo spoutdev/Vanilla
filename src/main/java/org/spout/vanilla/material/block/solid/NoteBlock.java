@@ -35,6 +35,7 @@ import org.spout.vanilla.controller.block.NoteBlockController;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -61,6 +62,11 @@ public class NoteBlock extends Solid implements Fuel {
 	@Override
 	public boolean isPlacementSuppressed() {
 		return true;
+	}
+
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
 	}
 
 	@Override

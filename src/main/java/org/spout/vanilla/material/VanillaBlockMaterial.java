@@ -37,6 +37,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -265,6 +266,15 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 	 */
 	public boolean canBurn() {
 		return false;
+	}
+
+	/**
+	 * Gets the move reaction of block material for the block specified
+	 * @param block that is being moved
+	 * @return the move reaction
+	 */
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.BREAK;
 	}
 
 	/**

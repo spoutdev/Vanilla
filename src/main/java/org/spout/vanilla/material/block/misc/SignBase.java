@@ -38,6 +38,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.SignController;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.AbstractAttachable;
+import org.spout.vanilla.util.MoveReaction;
 
 public class SignBase extends AbstractAttachable {
 	public SignBase(String name, int id) {
@@ -56,6 +57,11 @@ public class SignBase extends AbstractAttachable {
 	public void handlePlacement(Block block, short data, BlockFace attachedFace) {
 		block.setController(new SignController());
 		this.setAttachedFace(block, attachedFace);
+	}
+
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
 	}
 
 	@Override

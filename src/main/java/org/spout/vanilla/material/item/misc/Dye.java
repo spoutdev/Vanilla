@@ -33,6 +33,7 @@ import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.material.block.solid.Wool.WoolColor;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Dye extends VanillaItemMaterial {
@@ -97,14 +98,12 @@ public class Dye extends VanillaItemMaterial {
 	public void onInteract(Entity entity, Entity other, Action action) {
 		if (action == Action.RIGHT_CLICK) {
 			if (!(other.getController() instanceof Sheep)) {
-				System.out.println("No sheep: " + other.getClass().getName() + " :(");
 				return;
 			}
 
 			ItemStack holding = entity.getInventory().getCurrentItem();
 			//get color from holding item
-			other.setData("SheepColor", 0xF - holding.getData());
-			System.out.println("Sheep go baaaa!");
+			((Sheep)other.getController()).setColor(WoolColor.getById((short) (0xF - holding.getData())));
 
 			if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
 				entity.getInventory().addCurrentItemAmount(-1);

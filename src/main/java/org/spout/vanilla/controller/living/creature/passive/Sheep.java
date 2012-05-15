@@ -39,7 +39,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
 
 public class Sheep extends Creature implements Passive {
-	private int color;
 
 	public Sheep() {
 		this(0x0);
@@ -51,14 +50,13 @@ public class Sheep extends Creature implements Passive {
 
 	public Sheep(int color) {
 		super(VanillaControllerTypes.SHEEP);
-		this.color = color;
+		data().put("SheepColor", color);
 	}
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setData("SheepSheared", false);
-		getParent().setData("SheepColor", color);
+		data().put("SheepSheared", false);
 		getParent().setMaxHealth(8);
 		getParent().setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
@@ -68,7 +66,7 @@ public class Sheep extends Creature implements Passive {
 	 * @return true if sheared.
 	 */
 	public boolean isSheared() {
-		return getParent().getData("SheepSheared").asBool();
+		return (Boolean) data().get("SheepSheared");
 	}
 
 	/**
@@ -76,7 +74,7 @@ public class Sheep extends Creature implements Passive {
 	 * @param sheared
 	 */
 	public void setSheared(boolean sheared) {
-		getParent().setData("SheepSheared", sheared);
+		data().put("SheepSheared", sheared);
 	}
 
 	/**
@@ -84,7 +82,7 @@ public class Sheep extends Creature implements Passive {
 	 * @return color of the sheep.
 	 */
 	public Wool.WoolColor getColor() {
-		return Wool.WoolColor.getById((short) color);
+		return Wool.WoolColor.getById(((Number)data().get("SheepColor")).shortValue());
 	}
 
 	/**
@@ -92,15 +90,14 @@ public class Sheep extends Creature implements Passive {
 	 * @param color
 	 */
 	public void setColor(Wool.WoolColor color) {
-		getParent().setData("SheepColor", color.getData());
-		this.color = color.getData();
+		data().put("SheepColor", color.getData());
 	}
 
 	@Override
 	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		if (!isSheared()) {
-			drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial((short) color), 1));
+			drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial((short) ((Number)data().get("SheepColor")).shortValue()), 1));
 		}
 
 		return drops;

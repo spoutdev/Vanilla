@@ -52,7 +52,7 @@ public class Slime extends Creature implements Hostile {
 		parent = getParent();
 		int size = getRandom().nextInt(4);
 		int health = size > 0 ? size * 4 : 1;
-		parent.setData("SlimeSize", size);
+		data().put("SlimeSize", size);
 		parent.setMaxHealth(health);
 		parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
@@ -81,7 +81,7 @@ public class Slime extends Creature implements Hostile {
 	 * @return slime's size.
 	 */
 	public byte getSize() {
-		return (byte) parent.getData("SlimeSize").asInt();
+		return ((Number) data().get("SlimeSize")).byteValue();
 	}
 
 	/**
@@ -93,6 +93,6 @@ public class Slime extends Creature implements Hostile {
 			throw new IllegalArgumentException("A Slime's size must be between 0 and 4");
 		}
 
-		parent.setData("SlimeSize", size);
+		data().put("SlimeSize", size);
 	}
 }

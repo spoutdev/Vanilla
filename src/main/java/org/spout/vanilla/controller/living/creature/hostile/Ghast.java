@@ -75,7 +75,7 @@ public class Ghast extends Creature implements Hostile {
 	 * @return true if it has red eyes
 	 */
 	public boolean hasRedEyes() {
-		return parent.getData("GhastRedEyes").asBool();
+		return data().containsKey("GhastRedEyes");
 	}
 
 	/**
@@ -83,6 +83,6 @@ public class Ghast extends Creature implements Hostile {
 	 * @param redEyes
 	 */
 	public void setRedEyes(boolean redEyes) {
-		parent.setData("GhastRedEyes", redEyes);
+		data().put("GhastRedEyes", redEyes);
 	}
 }

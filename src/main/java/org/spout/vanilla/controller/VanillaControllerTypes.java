@@ -31,7 +31,11 @@ import java.lang.reflect.Modifier;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-import org.spout.vanilla.controller.block.*;
+import org.spout.vanilla.controller.block.DispenserController;
+import org.spout.vanilla.controller.block.FurnaceController;
+import org.spout.vanilla.controller.block.JukeboxController;
+import org.spout.vanilla.controller.block.NoteBlockController;
+import org.spout.vanilla.controller.block.SignController;
 import org.spout.vanilla.controller.living.MobControllerType;
 import org.spout.vanilla.controller.living.creature.hostile.Blaze;
 import org.spout.vanilla.controller.living.creature.hostile.CaveSpider;

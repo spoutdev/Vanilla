@@ -49,12 +49,12 @@ public class SignBase extends AbstractAttachable {
 	public void loadProperties() {
 		super.loadProperties();
 		setDrop(VanillaMaterials.SIGN);
-        setController(VanillaControllerTypes.SIGN);
+		setController(VanillaControllerTypes.SIGN);
 	}
 
 	@Override
 	public void handlePlacement(Block block, short data, BlockFace attachedFace) {
-        block.setController(new SignController());
+		block.setController(new SignController());
 		this.setAttachedFace(block, attachedFace);
 	}
 

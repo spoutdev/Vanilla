@@ -38,60 +38,61 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SignController extends VanillaBlockController {
-    private String[] text = new String[4];
-    private Set<Player> dirty = new HashSet<Player>();
-    private int range = 20;
+	private String[] text = new String[4];
+	private Set<Player> dirty = new HashSet<Player>();
+	private int range = 20;
 
-    public SignController() {
-        super(VanillaControllerTypes.SIGN, VanillaMaterials.SIGN.getPlacedMaterial());
-    }
+	public SignController() {
+		super(VanillaControllerTypes.SIGN, VanillaMaterials.SIGN.getPlacedMaterial());
+	}
 
-    @Override
-    public void onAttached() {
-    }
+	@Override
+	public void onAttached() {
 
-    @Override
-    public void onTick(float dt) {
-        Block block = getBlock();
-        Set<Player> nearby = block.getRegion().getNearbyPlayers(block.getPosition(), range);
-        if (nearby == null || nearby.isEmpty()) {
-            return;
-        }
+	}
 
-        if (!dirty.containsAll(nearby)) {
-            nearby.removeAll(dirty);
-            dirty = nearby;
-            update();
-        }
-    }
+	@Override
+	public void onTick(float dt) {
+		Block block = getBlock();
+		Set<Player> nearby = block.getRegion().getNearbyPlayers(block.getPosition(), range);
+		if (nearby == null || nearby.isEmpty()) {
+			return;
+		}
 
-    public int getRange() {
-        return range;
-    }
+		if (!dirty.containsAll(nearby)) {
+			nearby.removeAll(dirty);
+			dirty = nearby;
+			update();
+		}
+	}
 
-    public void setRange(int range) {
-        this.range = range;
-    }
+	public int getRange() {
+		return range;
+	}
 
-    public String[] getText() {
-        return text;
-    }
+	public void setRange(int range) {
+		this.range = range;
+	}
 
-    public void setText(String[] text) {
-        this.text = text;
-    }
+	public String[] getText() {
+		return text;
+	}
 
-    public String getLine(int line) {
-        return text[line + 1];
-    }
+	public void setText(String[] text) {
+		this.text = text;
+	}
 
-    public void setLine(String text, int line) {
-        this.text[line + 1] = text;
-    }
+	public String getLine(int line) {
+		return text[line + 1];
+	}
 
-    private void update() {
-        Block block = getBlock();
-        VanillaNetworkSynchronizer.sendPacket((Player[]) dirty.toArray(), new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), text));
-    }
+	public void setLine(String text, int line) {
+		this.text[line + 1] = text;
+	}
+
+	private void update() {
+		Block block = getBlock();
+		VanillaNetworkSynchronizer.sendPacket((Player[]) dirty.toArray(), new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), text));
+	}
 }
 

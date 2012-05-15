@@ -44,55 +44,55 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class VanillaBootstrapProtocolTest {
-	private static final TIntSet testedOpcodes = new TIntHashSet();
-	private static final VanillaBootstrapCodecLookupService CODEC_LOOKUP = new VanillaBootstrapCodecLookupService();
-	private static final Message[] TEST_MESSAGES = new Message[]{new LoginRequestMessage(0, "Tester", 0, -1, 0, 128, 20, "MAGICAL"), new HandshakeMessage("Player"), new ServerListPingMessage(), new KickMessage("This is a test"), new CustomDataMessage("CHANNEL:ONE", new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 4})};
+    private static final TIntSet testedOpcodes = new TIntHashSet();
+    private static final VanillaBootstrapCodecLookupService CODEC_LOOKUP = new VanillaBootstrapCodecLookupService();
+    private static final Message[] TEST_MESSAGES = new Message[]{new LoginRequestMessage(0, "Tester", 0, -1, 0, 128, 20, "MAGICAL"), new HandshakeMessage("Player"), new ServerListPingMessage(), new KickMessage("This is a test"), new CustomDataMessage("CHANNEL:ONE", new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 4})};
 
-	@Test
-	public void testMessageCodecLookup() {
-		for (Message message : TEST_MESSAGES) {
-			MessageCodec<?> codec = CODEC_LOOKUP.find(message.getClass());
-			assertNotNull("Message " + message + " did not have a codec!", codec);
-			int opcode = codec.getOpcode();
-			if (!codec.isExpanded()) {
-				opcode <<= 8;
-			}
-			MessageCodec<?> idCodec = CODEC_LOOKUP.find(opcode);
-			assertNotNull("No codec for opcode " + opcode + " in codec lookup!", idCodec);
-			testedOpcodes.add(opcode);
-		}
-	}
+    @Test
+    public void testMessageCodecLookup() {
+        for (Message message : TEST_MESSAGES) {
+            MessageCodec<?> codec = CODEC_LOOKUP.find(message.getClass());
+            assertNotNull("Message " + message + " did not have a codec!", codec);
+            int opcode = codec.getOpcode();
+            if (!codec.isExpanded()) {
+                opcode <<= 8;
+            }
+            MessageCodec<?> idCodec = CODEC_LOOKUP.find(opcode);
+            assertNotNull("No codec for opcode " + opcode + " in codec lookup!", idCodec);
+            testedOpcodes.add(opcode);
+        }
+    }
 
-	@Test
-	@SuppressWarnings("unchecked")
-	public void testMessageEncoding() throws IOException {
-		for (Message message : TEST_MESSAGES) {
-			MessageCodec<Message> codec = (MessageCodec<Message>) CODEC_LOOKUP.find(message.getClass());
-			ChannelBuffer encoded = codec.encode(message);
-			Message decoded = codec.decode(encoded);
-			assertEquals(message.toString(), decoded.toString());
-		}
-	}
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testMessageEncoding() throws IOException {
+        for (Message message : TEST_MESSAGES) {
+            MessageCodec<Message> codec = (MessageCodec<Message>) CODEC_LOOKUP.find(message.getClass());
+            ChannelBuffer encoded = codec.encode(message);
+            Message decoded = codec.decode(encoded);
+            assertEquals(message.toString(), decoded.toString());
+        }
+    }
 
-	@Test
-	public void testTestCompleteness() {
-		final TIntSet testedOpcodes = new TIntHashSet();
-		for (Message message : TEST_MESSAGES) {
-			MessageCodec<?> codec = CODEC_LOOKUP.find(message.getClass());
-			if (codec != null) {
-				int opcode = codec.getOpcode();
-				if (!codec.isExpanded()) {
-					opcode <<= 8;
-				}
-				testedOpcodes.add(opcode);
-			}
-		}
-		for (MessageCodec<?> codec : CODEC_LOOKUP.getCodecs()) {
-			int opcode = codec.getOpcode();
-			if (!codec.isExpanded()) {
-				opcode <<= 8;
-			}
-			assertTrue("Opcode " + opcode + " (non-expanded: " + (opcode >> 8) + ") not tested", testedOpcodes.contains(opcode));
-		}
-	}
+    @Test
+    public void testTestCompleteness() {
+        final TIntSet testedOpcodes = new TIntHashSet();
+        for (Message message : TEST_MESSAGES) {
+            MessageCodec<?> codec = CODEC_LOOKUP.find(message.getClass());
+            if (codec != null) {
+                int opcode = codec.getOpcode();
+                if (!codec.isExpanded()) {
+                    opcode <<= 8;
+                }
+                testedOpcodes.add(opcode);
+            }
+        }
+        for (MessageCodec<?> codec : CODEC_LOOKUP.getCodecs()) {
+            int opcode = codec.getOpcode();
+            if (!codec.isExpanded()) {
+                opcode <<= 8;
+            }
+            assertTrue("Opcode " + opcode + " (non-expanded: " + (opcode >> 8) + ") not tested", testedOpcodes.contains(opcode));
+        }
+    }
 }

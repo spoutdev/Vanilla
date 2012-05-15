@@ -39,94 +39,94 @@ import org.spout.vanilla.material.VanillaMaterials;
 
 public class WellObject extends WorldGeneratorObject {
 
-	// main materials
-	private BlockMaterial main = VanillaMaterials.SANDSTONE;
-	private BlockMaterial slab = VanillaMaterials.SLAB.getSubMaterial((short) 1);
-	private BlockMaterial liquid = VanillaMaterials.STATIONARY_WATER;
-	// material we can place it on
-	private BlockMaterial placeableOn = VanillaMaterials.SAND;
-	// materials we can override
-	private final Set<BlockMaterial> overridable = new HashSet<BlockMaterial>();
+    // main materials
+    private BlockMaterial main = VanillaMaterials.SANDSTONE;
+    private BlockMaterial slab = VanillaMaterials.SLAB.getSubMaterial((short) 1);
+    private BlockMaterial liquid = VanillaMaterials.STATIONARY_WATER;
+    // material we can place it on
+    private BlockMaterial placeableOn = VanillaMaterials.SAND;
+    // materials we can override
+    private final Set<BlockMaterial> overridable = new HashSet<BlockMaterial>();
 
-	public WellObject() {
-		overridable.add(VanillaMaterials.AIR);
-		overridable.add(VanillaMaterials.SAND);
-		overridable.add(VanillaMaterials.SANDSTONE);
-	}
+    public WellObject() {
+        overridable.add(VanillaMaterials.AIR);
+        overridable.add(VanillaMaterials.SAND);
+        overridable.add(VanillaMaterials.SANDSTONE);
+    }
 
-	@Override
-	public boolean canPlaceObject(World w, int x, int y, int z) {
-		y -= 1;
-		if (w.getBlockMaterial(x, y, z) != placeableOn) {
-			return false;
-		}
-		for (int xx = x - 2; xx < x + 3; xx++) {
-			for (int zz = z - 2; zz < z + 3; zz++) {
-				final Block block = w.getBlock(xx, y - 1, zz);
-				if (!overridable.contains(block.getMaterial()) || !overridable.contains(block.translate(BlockFace.BOTTOM).getMaterial())) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
+    @Override
+    public boolean canPlaceObject(World w, int x, int y, int z) {
+        y -= 1;
+        if (w.getBlockMaterial(x, y, z) != placeableOn) {
+            return false;
+        }
+        for (int xx = x - 2; xx < x + 3; xx++) {
+            for (int zz = z - 2; zz < z + 3; zz++) {
+                final Block block = w.getBlock(xx, y - 1, zz);
+                if (!overridable.contains(block.getMaterial()) || !overridable.contains(block.translate(BlockFace.BOTTOM).getMaterial())) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
-	@Override
-	public void placeObject(World w, int x, int y, int z) {
-		y -= 1;
-		for (int xx = x - 2; xx < x + 3; xx++) {
-			for (int zz = z - 2; zz < z + 3; zz++) {
-				for (int yy = y - 1; yy < y + 5; yy++) {
-					if (yy > y - 2 && yy < y + 1) {
-						w.setBlockMaterial(xx, yy, zz, main, (short) 0, w);
-					}
-					if (yy == y) {
-						if ((xx == x && z == zz) || ((xx == x - 1 || xx == x + 1) && zz == z) || ((zz == z + 1 || zz == z - 1) && x == xx)) {
-							w.setBlockMaterial(xx, yy, zz, liquid, (short) 0, w);
-						}
-					}
-					if (yy == y + 1) {
-						if (xx == x - 2 || xx == x + 2 || zz == z - 2 || zz == z + 2) {
-							w.setBlockMaterial(xx, yy, zz, main, (short) 0, w);
-						}
-						if (((xx == x - 2 || xx == x + 2) && zz == z) || ((zz == z + 2 || zz == z - 2) && x == xx)) {
-							w.setBlockMaterial(xx, yy, zz, slab, slab.getData(), w);
-						}
-					}
-					if (yy == y + 4 && xx > x - 2 && xx < x + 2 && zz > z - 2 && zz < z + 2) {
-						if (xx == x && zz == z) {
-							w.setBlockMaterial(xx, yy, zz, main, (short) 0, w);
-						} else {
-							w.setBlockMaterial(xx, yy, zz, slab, slab.getData(), w);
-						}
-					}
-					if (yy > y && yy < y + 4) {
-						if ((xx == x - 1 || xx == x + 1) && (zz == z + 1 || zz == z - 1)) {
-							w.setBlockMaterial(xx, yy, zz, main, (short) 0, w);
-						}
-					}
-				}
-			}
-		}
-	}
+    @Override
+    public void placeObject(World w, int x, int y, int z) {
+        y -= 1;
+        for (int xx = x - 2; xx < x + 3; xx++) {
+            for (int zz = z - 2; zz < z + 3; zz++) {
+                for (int yy = y - 1; yy < y + 5; yy++) {
+                    if (yy > y - 2 && yy < y + 1) {
+                        w.setBlockMaterial(xx, yy, zz, main, (short) 0, w);
+                    }
+                    if (yy == y) {
+                        if ((xx == x && z == zz) || ((xx == x - 1 || xx == x + 1) && zz == z) || ((zz == z + 1 || zz == z - 1) && x == xx)) {
+                            w.setBlockMaterial(xx, yy, zz, liquid, (short) 0, w);
+                        }
+                    }
+                    if (yy == y + 1) {
+                        if (xx == x - 2 || xx == x + 2 || zz == z - 2 || zz == z + 2) {
+                            w.setBlockMaterial(xx, yy, zz, main, (short) 0, w);
+                        }
+                        if (((xx == x - 2 || xx == x + 2) && zz == z) || ((zz == z + 2 || zz == z - 2) && x == xx)) {
+                            w.setBlockMaterial(xx, yy, zz, slab, slab.getData(), w);
+                        }
+                    }
+                    if (yy == y + 4 && xx > x - 2 && xx < x + 2 && zz > z - 2 && zz < z + 2) {
+                        if (xx == x && zz == z) {
+                            w.setBlockMaterial(xx, yy, zz, main, (short) 0, w);
+                        } else {
+                            w.setBlockMaterial(xx, yy, zz, slab, slab.getData(), w);
+                        }
+                    }
+                    if (yy > y && yy < y + 4) {
+                        if ((xx == x - 1 || xx == x + 1) && (zz == z + 1 || zz == z - 1)) {
+                            w.setBlockMaterial(xx, yy, zz, main, (short) 0, w);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	public void setLiquid(BlockMaterial liquid) {
-		this.liquid = liquid;
-	}
+    public void setLiquid(BlockMaterial liquid) {
+        this.liquid = liquid;
+    }
 
-	public void setMain(BlockMaterial main) {
-		this.main = main;
-	}
+    public void setMain(BlockMaterial main) {
+        this.main = main;
+    }
 
-	public void setPlaceableOn(BlockMaterial placeableOn) {
-		this.placeableOn = placeableOn;
-	}
+    public void setPlaceableOn(BlockMaterial placeableOn) {
+        this.placeableOn = placeableOn;
+    }
 
-	public void setSlab(BlockMaterial slab) {
-		this.slab = slab;
-	}
+    public void setSlab(BlockMaterial slab) {
+        this.slab = slab;
+    }
 
-	public Set<BlockMaterial> getOverridableMaterials() {
-		return overridable;
-	}
+    public Set<BlockMaterial> getOverridableMaterials() {
+        return overridable;
+    }
 }

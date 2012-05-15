@@ -36,28 +36,28 @@ import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 
 public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
 
-    @Override
-    public void handleServer(Session session, Player player, UpdateSignMessage message) {
-        if (session == null || player == null || message == null) {
-            return;
-        }
+	@Override
+	public void handleServer(Session session, Player player, UpdateSignMessage message) {
+		if (session == null || player == null || message == null) {
+			return;
+		}
 
-        Block block = player.getEntity().getWorld().getBlock(message.getX(), message.getY(), message.getZ());
-        if (block == null) {
-            return;
-        }
+		Block block = player.getEntity().getWorld().getBlock(message.getX(), message.getY(), message.getZ());
+		if (block == null) {
+			return;
+		}
 
-        BlockController controller = block.getController();
-        if (controller == null || !(controller instanceof SignController)) {
-            return;
-        }
+		BlockController controller = block.getController();
+		if (controller == null || !(controller instanceof SignController)) {
+			return;
+		}
 
-        String[] text = message.getMessage();
-        if (text.length != 4) {
-            return;
-        }
+		String[] text = message.getMessage();
+		if (text.length != 4) {
+			return;
+		}
 
-        SignController sign = (SignController) controller;
-        sign.setText(text);
-    }
+		SignController sign = (SignController) controller;
+		sign.setText(text);
+	}
 }

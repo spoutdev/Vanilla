@@ -53,6 +53,7 @@ import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
 import org.spout.vanilla.controller.world.sky.VanillaSky;
+import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
@@ -69,6 +70,7 @@ public class VanillaPlugin extends CommonPlugin {
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
 	private Engine game;
 	private VanillaConfiguration config;
+	private VanillaRecipes recipes;
 
 	@Override
 	public void onDisable() {
@@ -126,6 +128,7 @@ public class VanillaPlugin extends CommonPlugin {
 		//TODO if (game instanceof Client) do stuff?
 
 		VanillaMaterials.initialize();
+		recipes = new VanillaRecipes(this);
 		getLogger().info("loaded");
 	}
 

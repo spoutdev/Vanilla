@@ -408,6 +408,7 @@ public final class VanillaMaterials {
 	public static final Food COOKED_FISH = register(new Food("Cooked Fish", 350, 5, FoodEffectType.HUNGER));
 	public static final Dye DYE = Dye.INK_SAC;
 	public static final VanillaItemMaterial BONE = register(new VanillaItemMaterial("Bone", 352));
+	public static final VanillaItemMaterial BONE_MEAL = register(new VanillaItemMaterial("Bone Meal", 351));
 	public static final VanillaItemMaterial SUGAR = register(new VanillaItemMaterial("Sugar", 353));
 	public static final BlockItem CAKE = register(new BlockItem("Cake", 354, VanillaMaterials.CAKE_BLOCK));
 	public static final BlockItem BED = register(new BlockItem("Bed", 355, VanillaMaterials.BED_BLOCK));

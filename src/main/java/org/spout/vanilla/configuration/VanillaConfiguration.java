@@ -58,7 +58,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder PLAYER_SPEEDMINING_PREVENTION_PERIOD = new ConfigurationHolder(50, "player", "speedmining-prevention-period");
 	public static final OpConfiguration OPS = new OpConfigurationWrapper();
 	// Controller-specific
-	public static final ConfigurationHolder ITEM_PICKUP_RANGE = new ConfigurationHolder(3, "controller", "item-pickup-range");
+	public static final ConfigurationHolder ITEM_PICKUP_RANGE = new ConfigurationHolder(2, "controller", "item-pickup-range");
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));

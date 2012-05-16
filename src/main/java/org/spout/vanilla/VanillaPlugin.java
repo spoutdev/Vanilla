@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.spout.api.Engine;
 import org.spout.api.Server;
@@ -55,6 +57,8 @@ import org.spout.vanilla.controller.world.sky.TheEndSky;
 import org.spout.vanilla.controller.world.sky.VanillaSky;
 import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.data.ExtraDataFactory;
+import org.spout.vanilla.material.item.data.MapDataHandler;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
@@ -76,6 +80,11 @@ public class VanillaPlugin extends CommonPlugin {
 	public void onDisable() {
 		try {
 			config.save();
+			try {
+				ExtraDataFactory.disable(this);
+			} catch (IOException ex) {
+				Logger.getLogger(VanillaPlugin.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		} catch (ConfigurationException e) {
 			getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);
 		}
@@ -179,5 +188,12 @@ public class VanillaPlugin extends CommonPlugin {
 		end.setSpawnPoint(new Transform(endSpawn, Quaternion.IDENTITY, Vector3.ONE));
 		end.createAndSpawnEntity(new Point(end, 0, 0, 0), endSky);
 		end.createAndSpawnEntity(endSpawn, new PointObserver());
+		
+		try {
+			ExtraDataFactory.registerHandler(new MapDataHandler());
+			ExtraDataFactory.enable(this);
+		} catch (IOException ex) {
+			Logger.getLogger(VanillaPlugin.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 }

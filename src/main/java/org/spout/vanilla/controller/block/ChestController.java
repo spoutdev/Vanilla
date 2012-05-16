@@ -43,6 +43,11 @@ public class ChestController extends VanillaBlockController {
 
 	@Override
 	public void onAttached() {
+		//if (this.getBlock().getMaterial().equals(VanillaMaterials.CHEST)) {
+			System.out.println("Chest entity spawned and controller attached to: " + getParent().getPosition().toString());
+		//} else {
+		//	this.getParent().kill();
+		//}
 	}
 
 	@Override

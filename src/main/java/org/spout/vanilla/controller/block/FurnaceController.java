@@ -54,6 +54,11 @@ public class FurnaceController extends VanillaBlockController {
 
 	@Override
 	public void onAttached() {
+		//if (this.getBlock().getMaterial().equals(VanillaMaterials.FURNACE, VanillaMaterials.FURNACE_BURNING)) {
+			System.out.println("Furnace entity spawned and controller attached to: " + getParent().getPosition().toString());
+		//} else {
+		//	this.getParent().kill();
+		//}
 	}
 
 	@Override

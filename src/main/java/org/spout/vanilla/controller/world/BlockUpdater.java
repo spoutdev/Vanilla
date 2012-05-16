@@ -109,17 +109,20 @@ public class BlockUpdater extends Controller implements VanillaController {
 
 	@Override
 	public void onTick(float dt) {
-		updates.sync();
-		Iterator<Update> iter = this.updates.iterator();
-		Update update;
-		while (iter.hasNext()) {
-			update = iter.next();
-			if (update.counter.decrementAndGet() <= 0) {
-				iter.remove();
-				//perform update
-				BlockMaterial mat = update.block.getSubMaterial();
-				if (mat instanceof ScheduleUpdated) {
-					((ScheduleUpdated) mat).onDelayedUpdate(update.block);
+		this.updates.sync();
+		if (!this.updates.isEmpty()) {
+			Iterator<Update> iter = this.updates.iterator();
+			Update update;
+			while (iter.hasNext()) {
+				update = iter.next();
+				if (update.counter.decrementAndGet() <= 0) {
+					System.out.println("EXECUTE: " + update.block);
+					iter.remove();
+					//perform update
+					BlockMaterial mat = update.block.getSubMaterial();
+					if (mat instanceof ScheduleUpdated) {
+						((ScheduleUpdated) mat).onDelayedUpdate(update.block);
+					}
 				}
 			}
 		}

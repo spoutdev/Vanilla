@@ -163,8 +163,8 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType NOTEBLOCK = new VanillaControllerType(-7, NoteBlockController.class, "Note Block", null);
 	public static final VanillaControllerType JUKEBOX = new VanillaControllerType(-8, JukeboxController.class, "Jukebox", null);
 	public static final VanillaControllerType SIGN = new VanillaControllerType(-9, SignController.class, "Sign", null);
-	public static final VanillaControllerType PISTON_MOVING = new VanillaControllerType(-9, MovingPistonController.class, "Moving Piston", null);
-	public static final VanillaControllerType CHEST = new VanillaControllerType(-10, ChestController.class, "Chest", null);
+	public static final VanillaControllerType PISTON_MOVING = new VanillaControllerType(-10, MovingPistonController.class, "Moving Piston", null);
+	public static final VanillaControllerType CHEST = new VanillaControllerType(-11, ChestController.class, "Chest", null);
 	public static final String KEY = "ControllerID";
 	private static final TIntObjectHashMap<VanillaControllerType> ID_LOOKUP = new TIntObjectHashMap<VanillaControllerType>();
 

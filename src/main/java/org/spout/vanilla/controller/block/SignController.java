@@ -26,10 +26,7 @@
  */
 package org.spout.vanilla.controller.block;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.player.Player;
@@ -37,6 +34,7 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.misc.SignBase;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 
@@ -51,7 +49,11 @@ public class SignController extends VanillaBlockController {
 
 	@Override
 	public void onAttached() {
-		System.out.println("Sign controller attached at: " + getParent().getPosition().toString());
+		//if (this.getBlock().getMaterial() instanceof SignBase) {
+			System.out.println("Sign entity spawned and controller attached to: " + getParent().getPosition().toString());
+		//} else {
+		//	this.getParent().kill();
+		//}
 	}
 
 	@Override

@@ -68,6 +68,17 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 	}
 
 	@Override
+	public void onDestroyBlock(Block block) {
+		if (this.isExtended(block)) {
+			Block extension = block.translate(this.getFacing(block));
+			if (extension.getMaterial() instanceof PistonExtension) {
+				extension.setMaterial(VanillaMaterials.AIR).update();
+			}
+		}
+		block.setMaterial(VanillaMaterials.AIR).update();
+	}
+
+	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
 		boolean powered = this.isReceivingPower(block);
@@ -96,12 +107,16 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 		if (extended == this.isExtended(block)) {
 			return true;
 		} else {
-			block.setData(LogicUtil.setBit(block.getData(), 0x8, extended));
+			boolean succ;
 			if (extended) {
-				return this.extend(block);
+				succ = this.extend(block);
 			} else {
-				return this.retract(block);
+				succ = this.retract(block);
 			}
+			if (succ) {
+				block.setData(LogicUtil.setBit(block.getData(), 0x8, extended));
+			}
+			return succ;
 		}
 	}
 
@@ -109,6 +124,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 		int length = this.getExtendableLength(block);
 		if (length != -1) {
 			if (length > 0) {
+				block.update();
 				BlockFace facing = this.getFacing(block);
 				MoveReaction reac;
 
@@ -132,11 +148,11 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 					if (reac == MoveReaction.BREAK) {
 						//break block
 						nextMat.getSubMaterial(nextData).onDestroy(previous);
-						previous.setMaterial(prevMat, prevData);
+						previous.setMaterial(prevMat, prevData).update();
 						break;
 					} else if (reac == MoveReaction.ALLOW) {
 						//transfer data over and continue
-						previous.setMaterial(prevMat, prevData);
+						previous.setMaterial(prevMat, prevData).update();
 						previous = next;
 						prevMat = nextMat;
 						prevData = nextData;
@@ -155,11 +171,13 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 		if (this.isSticky()) {
 			Block from = next.translate(facing);
 			if (this.getReaction(from) == MoveReaction.ALLOW) {
-				next.setMaterial(from);
+				next.setMaterial(from).update();
 				next = from;
 			}
 		}
 		next.setMaterial(VanillaMaterials.AIR);
+		next.update();
+		block.update();
 		VanillaNetworkSynchronizer.playBlockAction(block, (byte) 1, (byte) (block.getData() & 0x7));
 		return true;
 	}

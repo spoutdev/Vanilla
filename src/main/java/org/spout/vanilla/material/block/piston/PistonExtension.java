@@ -27,31 +27,27 @@
 package org.spout.vanilla.material.block.piston;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.MovingPistonController;
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.util.MoveReaction;
 
-/**
- * A temporary block type with controller which animates the extension of the piston
- */
-public class PistonMoving extends VanillaBlockMaterial {
-	public PistonMoving(String name, int id) {
+public class PistonExtension extends VanillaBlockMaterial implements Directional {
+
+	public PistonExtension(String name, int id) {
 		super(name, id);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setResistance(0.0F).setDrop(null);
-		this.setController(VanillaControllerTypes.PISTON_MOVING);
-	}
-
-	@Override
-	public MoveReaction getMoveReaction(Block block) {
-		return MoveReaction.DENY;
+	public void onDestroy(Block block) {
+		block = block.translate(this.getFacing(block).getOpposite());
+		BlockMaterial mat = block.getSubMaterial();
+		if (mat instanceof Piston) {
+			mat.onDestroy(block);
+		} else {
+			super.onDestroy(block);
+		}
 	}
 
 	@Override
@@ -60,12 +56,23 @@ public class PistonMoving extends VanillaBlockMaterial {
 	}
 
 	@Override
-	public MovingPistonController getController(Block block) {
-		return (MovingPistonController) super.getController(block);
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
 	}
 
-	public void create(Block block, short data) {
-		block.setMaterial(this, data);
-		this.getController(block);
+	public void loadProperties() {
+		super.loadProperties();
+		this.setDrop(null);
+		this.setResistance(0.8F);
+	}
+
+	@Override
+	public BlockFace getFacing(Block block) {
+		return Piston.BTEWNS.get(block.getData() & 0x7);
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
+		block.setData(Piston.BTEWNS.indexOf(facing, 1));
 	}
 }

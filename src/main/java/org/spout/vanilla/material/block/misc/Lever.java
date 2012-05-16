@@ -37,6 +37,8 @@ import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.block.AbstractAttachable;
 import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -69,6 +71,11 @@ public class Lever extends AbstractAttachable implements RedstoneSource {
 			return;
 		}
 		this.toggle(block);
+		if (this.isDown(block)) {
+			VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_1);
+		} else {
+			VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_2);
+		}
 		this.doRedstoneUpdates(block);
 	}
 

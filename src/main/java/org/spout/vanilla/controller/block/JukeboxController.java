@@ -51,7 +51,11 @@ public class JukeboxController extends VanillaBlockController {
 
 	@Override
 	public void onAttached() {
-		System.out.println("Jukebox entity spawned and controller attached to: " + getParent().getPosition().toString());
+		//if (this.getBlock().getMaterial().equals(VanillaMaterials.JUKEBOX)) {
+			System.out.println("Jukebox entity spawned and controller attached to: " + getParent().getPosition().toString());
+		//} else {
+		//	this.getParent().kill();
+		//}
 	}
 
 	/**

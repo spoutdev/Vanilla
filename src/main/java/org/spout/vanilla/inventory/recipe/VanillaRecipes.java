@@ -30,6 +30,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.misc.Dye;
 
 public class VanillaRecipes {
 	public final SingleShapelessInputOutputRecipe WOODEN_PLANK;
@@ -41,7 +42,7 @@ public class VanillaRecipes {
 		 * Examples...I need feedback!
 		 */
 		WOODEN_PLANK = new SingleShapelessInputOutputRecipe(instance, null, "Wooden Plank", VanillaMaterials.LOG, 1, 'L', VanillaMaterials.PLANK, 4);
-		BONE_MEAL = new SingleShapelessInputOutputRecipe(instance, null, "Bone Meal", VanillaMaterials.BONE, 1, 'B', VanillaMaterials.BONE_MEAL, 3);
+		BONE_MEAL = new SingleShapelessInputOutputRecipe(instance, null, "Bone Meal", VanillaMaterials.BONE, 1, 'B', Dye.BONE_MEAL, 3);
 		WOODEN_PICKAXE = new SimpleShapedToolRecipe(instance, null, "Wooden Pickaxe", VanillaMaterials.PLANK, VanillaMaterials.STICK, 'P', 'S', 'E', new ItemStack(VanillaMaterials.WOODEN_PICKAXE, 1), "PPP", "ESE", "ESE");
 	}
 }

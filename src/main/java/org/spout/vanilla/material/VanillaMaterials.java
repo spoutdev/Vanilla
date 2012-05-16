@@ -28,6 +28,7 @@ package org.spout.vanilla.material;
 
 import java.lang.reflect.Field;
 
+import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.block.Ore;
@@ -474,19 +475,19 @@ public final class VanillaMaterials {
 				}
 				VanillaMaterial material = (VanillaMaterial) field.get(null);
 				if (material == null) {
-					System.out.println("Vanilla Material field '" + field.getName() + "' is not yet initialized");
+					Spout.getLogger().severe("Vanilla Material field '" + field.getName() + "' is not yet initialized");
 					continue;
 				}
 				try {
 					material.loadProperties();
 				} catch (Throwable t) {
-					System.out.println("An exception occurred while loading the properties of Vanilla Material '" + field.getName() + "':");
+					Spout.getLogger().severe("An exception occurred while loading the properties of Vanilla Material '" + field.getName() + "':");
 					t.printStackTrace();
 				}
 			} catch (NullPointerException ex) {
 				continue; //ignore local fields
 			} catch (Throwable t) {
-				System.out.println("An exception occurred while reading Vanilla Material field '" + field.getName() + "':");
+				Spout.getLogger().severe("An exception occurred while reading Vanilla Material field '" + field.getName() + "':");
 				t.printStackTrace();
 			}
 		}

@@ -34,6 +34,8 @@ import com.google.common.collect.Iterables;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
@@ -43,6 +45,7 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
@@ -51,16 +54,44 @@ import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).
  */
 public class Item extends Substance {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(Item.class, "Item");
 	private final ItemStack is;
 	private final int roll;
 	private int unpickable;
+	
+	/**
+	 * Creates an item controller. Intended for deserialization only.
+	 */
+	protected Item() {
+		this(new ItemStack(VanillaMaterials.AIR, 1), Vector3.ZERO);
+	}
 
-	public Item(ItemStack is, Vector3 initial) {
+	/**
+	 * Creates an item controller
+	 * @param itemstack this item controller represents
+	 * @param initial velocity that this item has
+	 */
+	public Item(ItemStack itemstack, Vector3 initial) {
 		super(VanillaControllerTypes.DROPPED_ITEM);
-		this.is = is;
+		this.is = itemstack;
 		this.roll = 1;
 		unpickable = 10;
 		setVelocity(initial);
+	}
+	
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		if (data().containsKey("Itemstack")) {
+			
+			ItemStack item = (ItemStack) data().get("Itemstack");
+			System.out.println("Item: " + item + " IS: " + is);
+			is.setMaterial(item.getMaterial(), item.getData());
+			is.setAmount(item.getAmount());
+			is.setAuxData(item.getAuxData());
+		}
+
+		unpickable = (Integer) data().get("unpickable", unpickable);
 	}
 
 	@Override
@@ -148,5 +179,12 @@ public class Item extends Substance {
 	 */
 	public int getRoll() {
 		return roll;
+	}
+	
+	@Override
+	public void onSave() {
+		data().put("Itemstack", is);
+		data().put("unpickable", unpickable);
+		super.onSave();
 	}
 }

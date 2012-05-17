@@ -45,7 +45,9 @@ public class FlintAndSteel extends Tool {
 		super.onInteract(entity, block, type, clickedface);
 		if (type == Action.RIGHT_CLICK) {
 			Block target = block.translate(clickedface);
-			if (target.getMaterial().equals(VanillaMaterials.AIR)) {
+			if (target.getMaterial().equals(VanillaMaterials.TNT)) {
+				VanillaMaterials.TNT.onIgnite(target);
+			} else if (target.getMaterial().equals(VanillaMaterials.AIR)) {
 				clickedface = clickedface.getOpposite();
 				if (VanillaMaterials.FIRE.canPlace(target, (short) 0, clickedface, false)) {
 					if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, clickedface, false)) {

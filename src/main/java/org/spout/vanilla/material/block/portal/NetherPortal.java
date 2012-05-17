@@ -24,13 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.material.block.portal;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.block.Portal;
 import org.spout.vanilla.util.MoveReaction;
 
-public class NetherPortal extends VanillaBlockMaterial {
+public class NetherPortal extends Portal {
 
 	public NetherPortal(String name, int id) {
 		super(name, id);

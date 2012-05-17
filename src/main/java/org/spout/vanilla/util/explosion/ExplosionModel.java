@@ -38,9 +38,10 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
-import org.spout.api.player.Player;
 
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.ExplosionMessage;
 
 public abstract class ExplosionModel {
@@ -48,7 +49,6 @@ public abstract class ExplosionModel {
 	private Map<Vector3, ExplosionBlockSlot> blocks = new HashMap<Vector3, ExplosionBlockSlot>();
 	public List<Block> blocksToDestroy = new ArrayList<Block>(100);
 	public Random random = new Random();
-	private final double messageRadiusSquared = Math.pow(64, 2.0);
 
 	public synchronized ExplosionBlockSlot getBlock(Vector3 position) {
 		ExplosionBlockSlot block = this.blocks.get(position);
@@ -89,16 +89,16 @@ public abstract class ExplosionModel {
 				}
 			} else if (material != VanillaMaterials.FIRE) {
 				//TODO: Item dropping yield?
-				material.onDestroy(block);
+				if (material instanceof VanillaBlockMaterial) {
+					((VanillaBlockMaterial) material).onIgnite(block);
+				} else {
+					material.onDestroy(block);
+				}
 				block.setMaterial(VanillaMaterials.AIR);
 			}
 		}
 
 		//explosion packet (TODO: Limit the amount sent per tick? Don't want to lag-out clients!)
-		for (Player player : position.getWorld().getPlayers()) {
-			if (player.getEntity().getPosition().distanceSquared(position) < this.messageRadiusSquared) {
-				player.getSession().send(new ExplosionMessage(position, size, new byte[0]));
-			}
-		}
+		VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(position, 64, new ExplosionMessage(position, size, new byte[0]));
 	}
 }

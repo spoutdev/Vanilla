@@ -132,6 +132,9 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 				BlockMaterial prevMat = VanillaMaterials.PISTON_EXTENSION;
 				short prevData = (short) (block.getData() & 0x7);
 				Block previous = block.translate(facing);
+				if (this.isSticky()) {
+					prevData |= 0x8;
+				}
 
 				//temporary values to use while swapping
 				BlockMaterial nextMat;

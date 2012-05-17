@@ -70,6 +70,14 @@ public class VanillaBlockMaterial extends BlockMaterial implements VanillaMateri
 		}
 	}
 
+	/**
+	 * Called when this block is destroyed because of an explosion
+	 * @param block that got ignited
+	 */
+	public void onIgnite(Block block) {
+		this.onDestroy(block);
+	}
+
 	@Override
 	public void onDestroy(Block block) {
 		this.onDestroyBlock(block);

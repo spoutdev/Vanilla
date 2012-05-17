@@ -50,9 +50,4 @@ public class PistonExtensionMoving extends PistonExtension {
 	public MovingPistonController getController(Block block) {
 		return (MovingPistonController) super.getController(block);
 	}
-
-	public void create(Block block, short data) {
-		block.setMaterial(this, data);
-		this.getController(block);
-	}
 }

@@ -79,7 +79,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 
 	@Override
 	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isReceivingPower(block);
+		return RedstoneUtil.isReceivingPower(block, false);
 	}
 
 	@Override

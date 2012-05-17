@@ -28,12 +28,16 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.RedstoneUtil;
 
-public class TNT extends Solid {
+public class TNT extends Solid implements RedstoneTarget {
 	public TNT(String name, int id) {
 		super(name, id);
 	}
@@ -49,8 +53,14 @@ public class TNT extends Solid {
 		return true;
 	}
 
+	@Override
+	public boolean canSupport(BlockMaterial mat, BlockFace face) {
+		return false;
+	}
+
+	@Override
 	public void onIgnite(Block block) {
-		block.setMaterial(VanillaMaterials.AIR).update(true);
+		block.setMaterial(VanillaMaterials.AIR).update();
 		// spawn a primed TNT
 		Point point = block.getPosition();
 		point.getWorld().createAndSpawnEntity(point, new PrimedTnt());
@@ -59,7 +69,7 @@ public class TNT extends Solid {
 	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
-		if (this.hasRedstonePower(block)) {
+		if (this.isReceivingPower(block)) {
 			this.onIgnite(block);
 		}
 	}
@@ -67,5 +77,10 @@ public class TNT extends Solid {
 	@Override
 	public boolean canBurn() {
 		return true;
+	}
+
+	@Override
+	public boolean isReceivingPower(Block block) {
+		return RedstoneUtil.isReceivingPower(block, false);
 	}
 }

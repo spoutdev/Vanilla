@@ -27,6 +27,7 @@
 package org.spout.vanilla.material;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;
@@ -474,7 +475,7 @@ public final class VanillaMaterials {
 		}
 		for (Field field : VanillaMaterials.class.getFields()) {
 			try {
-				if (field == null || !VanillaMaterial.class.isAssignableFrom(field.getType())) {
+				if (field == null || ((field.getModifiers()&(Modifier.STATIC|Modifier.PUBLIC))!=(Modifier.STATIC|Modifier.PUBLIC)) || !VanillaMaterial.class.isAssignableFrom(field.getType())) {
 					continue;
 				}
 				VanillaMaterial material = (VanillaMaterial) field.get(null);
@@ -485,11 +486,9 @@ public final class VanillaMaterials {
 				try {
 					material.initialize();
 				} catch (Throwable t) {
-					Spout.getLogger().severe("An exception occurred while initializing the Vanilla Material '" + field.getName() + "':");
+					Spout.getLogger().severe("An exception occurred while loading the properties of Vanilla Material '" + field.getName() + "':");
 					t.printStackTrace();
 				}
-			} catch (NullPointerException ex) {
-				continue; //ignore local fields
 			} catch (Throwable t) {
 				Spout.getLogger().severe("An exception occurred while reading Vanilla Material field '" + field.getName() + "':");
 				t.printStackTrace();

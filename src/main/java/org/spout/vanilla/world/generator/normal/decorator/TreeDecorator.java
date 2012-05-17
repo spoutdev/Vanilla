@@ -59,7 +59,7 @@ public class TreeDecorator implements BiomeDecorator {
 				continue;
 			} else {
 				tree.placeObject(world, worldX, worldY, worldZ);
-				tree.findNewRandomHeight();
+				tree.randomizeHeight();
 			}
 		}
 	}
@@ -103,7 +103,7 @@ public class TreeDecorator implements BiomeDecorator {
 		} else if (biome == VanillaBiomes.JUNGLE) {
 			final SmallTreeObject tree = new SmallTreeObject(random, SmallTreeType.JUNGLE);
 			tree.setBaseHeight((byte) 4);
-			tree.setRandHeight((byte) 10);
+			tree.setRandomHeight((byte) 10);
 			return tree;
 		} else {
 			return null;

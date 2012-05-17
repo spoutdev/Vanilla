@@ -26,10 +26,65 @@
  */
 package org.spout.vanilla.world.generator.normal.object;
 
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 import org.spout.api.generator.WorldGeneratorObject;
+import org.spout.api.material.BlockMaterial;
 
 public abstract class TreeObject extends WorldGeneratorObject {
+	// random number generation
+	protected final Random random;
+	// size control
+	protected byte baseHeight;
+	protected byte randomHeight;
+	protected byte totalHeight;
+	// metadata control
+	protected short leavesMetadata;
+	protected short logMetadata;
+	// for canPlaceObject check
+	protected final Set<BlockMaterial> overridable = new HashSet<BlockMaterial>();
 
-	public abstract void randomize();
+	public TreeObject(Random random, byte baseHeight, byte randomHeight, short metadata) {
+		this(random, baseHeight, randomHeight, metadata, metadata);
+	}
+	
+	public TreeObject(Random random, byte baseHeight, byte randomHeight, short leavesMetadata, short logMetadata) {
+		this.random = random;
+		this.baseHeight = baseHeight;
+		this.randomHeight = randomHeight;
+		this.leavesMetadata = leavesMetadata;
+		this.logMetadata = logMetadata;
+		randomizeHeight();
+	}
 
+	public final void randomizeHeight() {
+		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));
+	}
+
+	public void setLeavesMetadata(short leavesMetadata) {
+		this.leavesMetadata = leavesMetadata;
+	}
+
+	public void setLogMetadata(short logMetadata) {
+		this.logMetadata = logMetadata;
+	}
+
+	public void setBaseHeight(byte baseHeight) {
+		this.baseHeight = baseHeight;
+		randomizeHeight();
+	}
+
+	public void setRandomHeight(byte randHeight) {
+		this.randomHeight = randHeight;
+		randomizeHeight();
+	}
+
+	public void setTotalHeight(byte height) {
+		this.totalHeight = height;
+	}
+	
+	public Set<BlockMaterial> getOverridableMaterials() {
+		return overridable;
+	}
 }

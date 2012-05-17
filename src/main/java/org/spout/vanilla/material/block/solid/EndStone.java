@@ -24,62 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.material.block.solid;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
+import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tool.Pickaxe;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
-
-public class Fire extends VanillaBlockMaterial {
-	public Fire(String name, int id) {
+public class EndStone extends Solid implements Mineable {
+	public EndStone(String name, int id) {
 		super(name, id);
 	}
 
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.0F).setResistance(0.0F).setLightLevel(15).setDrop(null);
+		this.setHardness(3.0F).setResistance(15.0F);
 	}
 
 	@Override
-	public void onDestroy(Block block) {
-		super.onDestroy(block);
-	}
-
-	@Override
-	public boolean hasPhysics() {
-		return true;
-	}
-
-	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
-		if (!this.canPlace(block, block.getData(), BlockFace.BOTTOM, false)) {
-			this.onDestroy(block);
-		}
-	}
-
-	@Override
-	public boolean canPlace(Block block, short data, BlockFace attachedFace, boolean isClickedBlock) {
-		if (super.canPlace(block, data, attachedFace, isClickedBlock)) {
-			BlockMaterial mat = block.getMaterial();
-			for (BlockFace face : BlockFaces.BTNSWE) {
-				mat = block.translate(face).getSubMaterial();
-				if (mat instanceof VanillaBlockMaterial) {
-					if (((VanillaBlockMaterial) mat).canSupport(this, face.getOpposite())) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public boolean isPlacementObstacle() {
-		return false;
+	public short getDurabilityPenalty(MiningTool tool) {
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

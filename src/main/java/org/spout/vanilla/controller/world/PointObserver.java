@@ -65,9 +65,4 @@ public class PointObserver extends Controller implements VanillaController {
 		getParent().setViewDistance(256);
 		currPoint = getParent().getPosition();
 	}
-	
-	@Override
-	public boolean isSavable() {
-		return false;
-	}
 }

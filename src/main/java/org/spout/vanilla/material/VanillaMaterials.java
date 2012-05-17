@@ -40,6 +40,7 @@ import org.spout.vanilla.material.block.liquid.Lava;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.block.misc.BedBlock;
 import org.spout.vanilla.material.block.misc.Chest;
+import org.spout.vanilla.material.block.misc.EndPortal;
 import org.spout.vanilla.material.block.misc.FarmLand;
 import org.spout.vanilla.material.block.misc.Fence;
 import org.spout.vanilla.material.block.misc.FenceGate;
@@ -48,6 +49,7 @@ import org.spout.vanilla.material.block.misc.GlassPane;
 import org.spout.vanilla.material.block.misc.Ladder;
 import org.spout.vanilla.material.block.misc.Lever;
 import org.spout.vanilla.material.block.misc.MonsterSpawner;
+import org.spout.vanilla.material.block.misc.Portal;
 import org.spout.vanilla.material.block.misc.SignBase;
 import org.spout.vanilla.material.block.misc.Slab;
 import org.spout.vanilla.material.block.misc.Snow;
@@ -98,6 +100,8 @@ import org.spout.vanilla.material.block.solid.Dirt;
 import org.spout.vanilla.material.block.solid.Dispenser;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
 import org.spout.vanilla.material.block.solid.EnchantmentTable;
+import org.spout.vanilla.material.block.solid.EndPortalFrame;
+import org.spout.vanilla.material.block.solid.EndStone;
 import org.spout.vanilla.material.block.solid.Furnace;
 import org.spout.vanilla.material.block.solid.Glass;
 import org.spout.vanilla.material.block.solid.Grass;
@@ -232,11 +236,10 @@ public final class VanillaMaterials {
 	public static final WoodenStairs STAIRS_WOODEN = register(new WoodenStairs("Wooden Stairs", 53));
 	public static final StoneBrickStairs STAIRS_STONE_BRICK = register(new StoneBrickStairs("Stone Brick Stairs", 109));
 	//== Portals ==
-	//TODO: Set move reaction for below 4 blocks to DENY (or else pistons can move it!)
-	public static final Solid PORTAL = (Solid) register(new Solid("Portal", 90).setHardness(-1.0F).setResistance(0.0F).setLightLevel(11));
-	public static final Solid END_PORTAL = (Solid) register(new Solid("End Portal", 119).setHardness(-1.0F).setResistance(6000000.0F).setLightLevel(1));
-	public static final Solid END_PORTAL_FRAME = (Solid) register(new Solid("End Portal Frame", 120).setHardness(-1.0F));
-	public static final Solid END_STONE = (Solid) register(new Solid("End Stone", 121).setHardness(3.0F).setResistance(15.0F));
+	public static final Portal PORTAL = register(new Portal("Portal", 90));
+	public static final EndPortal END_PORTAL = register(new EndPortal("End Portal", 119));
+	public static final EndPortalFrame END_PORTAL_FRAME = register(new EndPortalFrame("End Portal Frame", 120));
+	public static final EndStone END_STONE = register(new EndStone("End Stone", 121));
 	//================
 	public static final DoubleSlab DOUBLE_SLABS = DoubleSlab.STONE;
 	public static final Slab SLAB = Slab.STONE;
@@ -247,7 +250,7 @@ public final class VanillaMaterials {
 	public static final MossStone MOSS_STONE = register(new MossStone("Moss Stone", 48));
 	public static final Obsidian OBSIDIAN = register(new Obsidian("Obsidian", 49));
 	public static final Torch TORCH = register(new Torch("Torch", 50));
-	public static final Fire FIRE = register(new Fire());
+	public static final Fire FIRE = register(new Fire("Fire", 51));
 	public static final MonsterSpawner MONSTER_SPAWNER = register(new MonsterSpawner("Monster Spawner", 52));
 	public static final Chest CHEST = register(new Chest("Chest", 54));
 	public static final RedstoneWire REDSTONE_WIRE = register(new RedstoneWire("Redstone Wire", 55));
@@ -496,9 +499,6 @@ public final class VanillaMaterials {
 		}
 
 		// TODO: Give each own class
-		VanillaMaterials.PORTAL.setDrop(VanillaMaterials.AIR);
-		VanillaMaterials.END_PORTAL.setDrop(VanillaMaterials.AIR);
-		VanillaMaterials.END_PORTAL_FRAME.setDrop(VanillaMaterials.AIR);
 		VanillaMaterials.SILVERFISH_STONE.setDrop(VanillaMaterials.STONE); // TODO: Get drop item based on data
 		VanillaMaterials.PUMPKIN_STEM.setDrop(VanillaMaterials.AIR);
 		VanillaMaterials.MELON.setDrop(VanillaMaterials.MELON_SLICE);

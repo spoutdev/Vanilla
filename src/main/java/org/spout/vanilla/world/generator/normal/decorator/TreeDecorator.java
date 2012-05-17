@@ -98,7 +98,7 @@ public class TreeDecorator implements BiomeDecorator {
 			return new SmallTreeObject(random, SmallTreeType.OAK);
 		} else if (biome == VanillaBiomes.SWAMP) {
 			final SmallTreeObject tree = new SmallTreeObject(random, SmallTreeType.OAK);
-			tree.addVines(true);
+			tree.addLogVines(true);
 			return tree;
 		} else if (biome == VanillaBiomes.JUNGLE) {
 			final SmallTreeObject tree = new SmallTreeObject(random, SmallTreeType.JUNGLE);

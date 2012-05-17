@@ -42,6 +42,12 @@ public class Fence extends VanillaBlockMaterial implements Fuel {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setResistance(5.0F).setResistance(5.0F);
+	}
+
+	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
 	}

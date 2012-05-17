@@ -37,6 +37,12 @@ public class SnowBlock extends Solid implements Mineable {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.2F).setResistance(0.3F);
+	}
+
+	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Spade ? (short) 1 : (short) 2;
 	}

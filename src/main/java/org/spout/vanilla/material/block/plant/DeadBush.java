@@ -44,10 +44,9 @@ public class DeadBush extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setHardness(0.0F).setResistance(0.0F);
-		this.setDrop(null);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.0F).setResistance(0.0F).setDrop(null);
 	}
 
 	@Override

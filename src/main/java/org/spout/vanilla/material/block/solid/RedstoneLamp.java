@@ -30,14 +30,29 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 
 public class RedstoneLamp extends Solid {
-	public RedstoneLamp(String name, int id) {
+	private final boolean on;
+
+	public RedstoneLamp(String name, int id, boolean on) {
 		super(name, id);
+		this.on = on;
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		//TODO: The resistance is not correct (?)
+	public void initialize() {
+		super.initialize();
+		// TODO: The resistance is not correct (?)
 		this.setHardness(0.3F).setResistance(0.5F).setDrop(VanillaMaterials.REDSTONE_LAMP_OFF);
+		if (on) {
+			this.setLightLevel(15);
+		}
+	}
+
+	/**
+	 * Whether this redstone lamp block material is in the on state
+	 * 
+	 * @return true if on
+	 */
+	public boolean inOn() {
+		return on;
 	}
 }

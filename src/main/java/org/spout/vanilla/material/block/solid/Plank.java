@@ -54,8 +54,8 @@ public class Plank extends Solid implements Fuel, Mineable {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(0.8F).setResistance(1.3F);
 	}
 
@@ -87,7 +87,7 @@ public class Plank extends Solid implements Fuel, Mineable {
 		OAK(0),
 		PINE(1),
 		BIRCH(2),
-		JUNGLE(3),;
+		JUNGLE(3), ;
 		private final short data;
 
 		private WoodType(int data) {

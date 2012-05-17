@@ -34,8 +34,8 @@ import org.spout.vanilla.material.block.solid.Furnace;
 import org.spout.vanilla.material.item.Food;
 
 public class RawFish extends Food implements TimedCraftable {
-	public RawFish() {
-		super("Raw Fish", 349, 2, FoodEffectType.HUNGER);
+	public RawFish(String name, int id, int amount, FoodEffectType type) {
+		super(name, id, amount, type);
 	}
 
 	@Override

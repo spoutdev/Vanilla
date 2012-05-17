@@ -37,8 +37,14 @@ import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class CoalOre extends Ore implements TimedCraftable, Mineable {
-	public CoalOre() {
-		super("Coal Ore", 16);
+	public CoalOre(String name, int id) {
+		super(name, id);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setDrop(VanillaMaterials.COAL);
 	}
 
 	@Override
@@ -54,11 +60,5 @@ public class CoalOre extends Ore implements TimedCraftable, Mineable {
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(VanillaMaterials.COAL);
 	}
 }

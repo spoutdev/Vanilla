@@ -38,8 +38,8 @@ public class Water extends Liquid {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setOpacity((byte) 2);
 	}
 

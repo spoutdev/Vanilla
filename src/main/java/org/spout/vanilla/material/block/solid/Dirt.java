@@ -37,6 +37,12 @@ public class Dirt extends Solid implements Mineable {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.5F).setResistance(0.8F);
+	}
+
+	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Spade ? (short) 1 : (short) 2;
 	}

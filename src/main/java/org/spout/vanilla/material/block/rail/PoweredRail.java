@@ -30,14 +30,14 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
 
-import org.spout.vanilla.material.block.RailsBase;
+import org.spout.vanilla.material.block.RailBase;
 import org.spout.vanilla.material.block.RedstoneTarget;
 import org.spout.vanilla.util.RailsState;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class PoweredRails extends RailsBase implements RedstoneTarget {
-	public PoweredRails() {
-		super("Powered Rail", 27);
+public class PoweredRail extends RailBase implements RedstoneTarget {
+	public PoweredRail(String name, int id) {
+		super(name, id);
 	}
 
 	@Override

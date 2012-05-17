@@ -28,7 +28,7 @@ package org.spout.vanilla.controller.object.misc;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
-import org.spout.vanilla.material.item.misc.Paintings.PaintingStyle;
+import org.spout.vanilla.material.item.misc.PaintingItem.PaintingStyle;
 
 public class Painting extends Substance {
 	public Painting(PaintingStyle style, int face) {

@@ -39,6 +39,12 @@ public class Glowstone extends Ore {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setMinDropCount(2).setMaxDropCount(4).setHardness(0.3F).setResistance(0.5F).setLightLevel(15).setDrop(VanillaMaterials.GLOWSTONE_DUST);
+	}
+
+	@Override
 	public boolean canSupport(BlockMaterial material, BlockFace face) {
 		return material instanceof SignBase || material.equals(VanillaMaterials.REDSTONE_WIRE);
 	}
@@ -46,12 +52,5 @@ public class Glowstone extends Ore {
 	@Override
 	public boolean isRedstoneConductor() {
 		return false;
-	}
-
-	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setMinDropCount(2).setMaxDropCount(4).setHardness(0.3F).setResistance(0.5F).setLightLevel(15);
-		this.setDrop(VanillaMaterials.GLOWSTONE_DUST);
 	}
 }

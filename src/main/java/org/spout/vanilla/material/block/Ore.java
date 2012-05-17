@@ -40,8 +40,8 @@ public class Ore extends Solid {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(3.0F).setResistance(5.0F);
 	}
 

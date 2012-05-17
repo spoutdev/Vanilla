@@ -34,9 +34,9 @@ public class BrickStairs extends Stairs {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		//TODO: Hardness?
+	public void initialize() {
+		super.initialize();
+		// TODO: Hardness?
 		this.setResistance(10.0F);
 	}
 }

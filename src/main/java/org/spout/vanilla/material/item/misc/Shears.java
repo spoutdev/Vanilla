@@ -31,18 +31,18 @@ import java.util.Random;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.Tool;
 
 public class Shears extends Tool {
 	private Random rand = new Random();
 
-	public Shears() {
-		super("Shears", 359, (short) 238);
+	public Shears(String name, int id, short durability) {
+		super(name, id, durability);
 	}
 
 	@Override
@@ -61,8 +61,7 @@ public class Shears extends Tool {
 			sheep.setSheared(true);
 			short col = sheep.getColor().getData();
 
-			//TODO: use proper wool constant
-			other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(Material.get((short) 35), col, rand.nextInt(3) + 1), other.getPosition().normalize()));
+			other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1), other.getPosition().normalize()));
 
 			ItemStack holding = entity.getInventory().getCurrentItem();
 			if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {

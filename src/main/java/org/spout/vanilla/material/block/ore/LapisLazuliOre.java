@@ -37,13 +37,13 @@ import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class LapisLazuliOre extends Ore implements TimedCraftable, Mineable {
-	public LapisLazuliOre() {
-		super("Lapis Lazuli Ore", 21);
+	public LapisLazuliOre(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setMinDropCount(4).setMaxDropCount(8).setDrop(Dye.LAPIS_LAZULI);
 	}
 

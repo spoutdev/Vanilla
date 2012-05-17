@@ -41,15 +41,14 @@ import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget {
-	public RedstoneWire() {
-		super("Redstone Wire", 55);
+	public RedstoneWire(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setHardness(0.0F).setResistance(0.0F);
-		this.setDrop(VanillaMaterials.REDSTONE_DUST);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.REDSTONE_DUST);
 	}
 
 	@Override

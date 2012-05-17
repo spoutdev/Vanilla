@@ -37,14 +37,14 @@ import org.spout.vanilla.material.block.Solid;
 public class WheatCrop extends Solid implements Plant {
 	private Random rand = new Random();
 
-	public WheatCrop() {
-		super("Wheat Crop", 59);
+	public WheatCrop(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(VanillaMaterials.WHEAT);
+	public void initialize() {
+		super.initialize();
+		this.setResistance(0.0F).setDrop(VanillaMaterials.WHEAT);
 	}
 
 	@Override

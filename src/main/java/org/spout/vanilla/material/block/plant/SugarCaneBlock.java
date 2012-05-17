@@ -26,76 +26,60 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.source.DataSource;
+import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.GroundAttachable;
-import org.spout.vanilla.material.block.Plant;
 
-public class NetherWart extends GroundAttachable implements Plant {
-	private GrowthStage stage = GrowthStage.SEEDLING;
+public class SugarCaneBlock extends GroundAttachable {
+	private final Set<Material> allowedBases = new HashSet<Material>(4);
 
-	public NetherWart() {
-		super("Nether Wart", 115);
+	public SugarCaneBlock(String name, int id) {
+		super(name, id);
+
+		this.addAllowedBase(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND, VanillaMaterials.SUGAR_CANE_BLOCK);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(VanillaMaterials.NETHER_WART);
-	}
-
-	@Override
-	public boolean hasGrowthStages() {
-		return true;
-	}
-
-	@Override
-	public int getNumGrowthStages() {
-		return 3;
-	}
-
-	@Override
-	public int getMinimumLightToGrow() {
-		return 0;
-	}
-
-	@Override
-	public short getData() {
-		return stage.getData();
-	}
-
-	@Override
-	public int getDropCount() {
-		return stage == GrowthStage.LAST ? new Random().nextInt(4) + 2 : 1;
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.SUGAR_CANE);
 	}
 
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		return material.equals(VanillaMaterials.SOUL_SAND) && super.canAttachTo(material, face);
+		return super.canAttachTo(material, face) && this.allowedBases.contains(material);
 	}
 
-	public GrowthStage getGrowthStage() {
-		return stage;
+	@Override
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		return face == BlockFace.TOP && material.equals(VanillaMaterials.SUGAR_CANE_BLOCK);
 	}
 
-	public enum GrowthStage implements DataSource {
-		SEEDLING(1),
-		MIDDLE(2),
-		LAST(3);
-		private final short data;
-
-		GrowthStage(int data) {
-			this.data = (short) data;
+	@Override
+	public boolean canAttachTo(Block block, BlockFace face) {
+		if (super.canAttachTo(block, face)) {
+			BlockMaterial wmat;
+			for (BlockFace around : BlockFaces.NESW) {
+				wmat = block.translate(around).getMaterial();
+				if (wmat.equals(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+					return true;
+				}
+			}
 		}
+		return false;
+	}
 
-		@Override
-		public short getData() {
-			return data;
+	public void addAllowedBase(Material... materials) {
+		for (Material mat : materials) {
+			allowedBases.add(mat);
 		}
 	}
 }

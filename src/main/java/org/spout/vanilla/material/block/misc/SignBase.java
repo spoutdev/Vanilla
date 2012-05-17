@@ -49,10 +49,10 @@ public class SignBase extends AbstractAttachable implements Mineable {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		setDrop(VanillaMaterials.SIGN);
-		setController(VanillaControllerTypes.SIGN);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(1.0F).setResistance(1.6F).setDrop(VanillaMaterials.SIGN);
+		this.setController(VanillaControllerTypes.SIGN);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class SignBase extends AbstractAttachable implements Mineable {
 			}
 			block.setMaterial(VanillaMaterials.SIGN_POST, data).update(true);
 		} else {
-			//get the data for this face
+			// get the data for this face
 			short data = (short) (BlockFaces.NSWE.indexOf(attachedFace, 0) + 2);
 			block.setMaterial(VanillaMaterials.WALL_SIGN, data).update(true);
 		}

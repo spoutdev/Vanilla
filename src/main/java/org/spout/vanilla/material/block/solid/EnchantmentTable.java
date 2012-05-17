@@ -48,8 +48,8 @@ public class EnchantmentTable extends Solid implements Directional, Mineable {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(5.0F).setResistance(2000.0F);
 		this.setController(VanillaControllerTypes.ENCHANTMENT_TABLE);
 	}

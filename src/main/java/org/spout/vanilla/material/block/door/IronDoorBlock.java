@@ -35,8 +35,8 @@ public class IronDoorBlock extends DoorBlock {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(5.0F).setResistance(8.3F).setDrop(VanillaMaterials.IRON_DOOR);
 	}
 }

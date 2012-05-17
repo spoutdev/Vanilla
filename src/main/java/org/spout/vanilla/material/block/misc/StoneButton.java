@@ -50,8 +50,8 @@ public class StoneButton extends AbstractAttachable implements PointAttachable, 
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(0.5F).setResistance(0.8F);
 	}
 

@@ -40,6 +40,12 @@ public class Torch extends AbstractAttachable implements PointAttachable {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.0F).setResistance(0.0F).setLightLevel(14);
+	}
+
+	@Override
 	public void setAttachedFace(Block block, BlockFace attachedFace) {
 		block.setData((short) (BlockFaces.NSEWB.indexOf(attachedFace, 4) + 1));
 	}

@@ -45,9 +45,15 @@ import org.spout.vanilla.material.item.misc.Dye;
 public class Cactus extends GroundAttachable implements TimedCraftable {
 	private Set<BlockMaterial> allowedNeighbours = new HashSet<BlockMaterial>();
 
-	public Cactus() {
-		super("Cactus", 81);
+	public Cactus(String name, int id) {
+		super(name, id);
 		addAllowedNeighbour(VanillaMaterials.AIR, VanillaMaterials.TORCH, VanillaMaterials.REDSTONE_TORCH_OFF, VanillaMaterials.REDSTONE_TORCH_ON, VanillaMaterials.LEVER, VanillaMaterials.DEAD_BUSH, VanillaMaterials.TALL_GRASS, VanillaMaterials.REDSTONE_WIRE);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.4F).setResistance(0.7F);
 	}
 
 	@Override

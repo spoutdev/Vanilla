@@ -39,14 +39,14 @@ public class Fire extends VanillaBlockMaterial {
 	}
 
 	@Override
-	public void onDestroy(Block block) {
-		super.onDestroy(block);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.0F).setResistance(0.0F).setLightLevel(15).setDrop(null);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(null);
+	public void onDestroy(Block block) {
+		super.onDestroy(block);
 	}
 
 	@Override

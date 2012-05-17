@@ -48,6 +48,15 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.REDSTONE_TORCH_OFF);
+		if (powered) {
+			this.setLightLevel(7);
+		}
+	}
+
+	@Override
 	public void onDestroy(Block block) {
 		this.doRedstoneUpdates(block);
 		super.onDestroy(block);
@@ -58,13 +67,6 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 		block.setMaterial(VanillaMaterials.REDSTONE_TORCH_ON);
 		this.setAttachedFace(block, against);
 		this.doRedstoneUpdates(block);
-	}
-
-	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setHardness(0.0F).setResistance(0.0F);
-		this.setDrop(VanillaMaterials.REDSTONE_TORCH_OFF);
 	}
 
 	public boolean isPowered() {

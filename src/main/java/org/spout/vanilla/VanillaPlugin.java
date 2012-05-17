@@ -57,6 +57,7 @@ import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
+import org.spout.vanilla.world.Weather;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
@@ -156,6 +157,12 @@ public class VanillaPlugin extends CommonPlugin {
 		VanillaSky.setSky(nether, netherSky);
 		VanillaSky.setSky(end, endSky);
 		VanillaSky.setSky(flat, flatSky);
+		
+		//Set the sky worlds
+		normSky.setWorld(normal);
+		flatSky.setWorld(flat);
+		netherSky.setWorld(nether);
+		endSky.setWorld(end);
 
 		//Spawn points
 		Point normalSpawn = normGen.getSafeSpawn(normal);

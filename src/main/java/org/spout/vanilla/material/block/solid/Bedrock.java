@@ -37,8 +37,8 @@ public class Bedrock extends Solid {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setResistance(6000000.0F);
 	}
 

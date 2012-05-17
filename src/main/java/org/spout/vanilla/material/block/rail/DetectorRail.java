@@ -31,15 +31,15 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.controller.world.BlockUpdater;
-import org.spout.vanilla.material.block.RailsBase;
+import org.spout.vanilla.material.block.RailBase;
 import org.spout.vanilla.material.block.RedstoneSource;
 import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.util.RailsState;
 import org.spout.vanilla.util.RedstonePowerMode;
 
-public class DetectorRails extends RailsBase implements RedstoneSource, ScheduleUpdated {
-	public DetectorRails() {
-		super("Detector Rail", 28);
+public class DetectorRail extends RailBase implements RedstoneSource, ScheduleUpdated {
+	public DetectorRail(String name, int id) {
+		super(name, id);
 	}
 
 	@Override

@@ -63,8 +63,8 @@ public class DoubleSlab extends Solid implements Mineable {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(2.0F).setResistance(10.0F).setDropCount(2);
 	}
 

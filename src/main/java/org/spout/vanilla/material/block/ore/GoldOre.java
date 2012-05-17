@@ -37,8 +37,8 @@ import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class GoldOre extends Ore implements TimedCraftable, Mineable {
-	public GoldOre() {
-		super("Gold Ore", 14);
+	public GoldOre(String name, int id) {
+		super(name, id);
 	}
 
 	@Override

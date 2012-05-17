@@ -50,8 +50,8 @@ public class Dispenser extends Solid implements Mineable, Directional {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(3.5F).setResistance(5.8F);
 		this.setController(VanillaControllerTypes.DISPENSER);
 	}

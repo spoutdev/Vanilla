@@ -37,32 +37,32 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.block.RailsBase;
-import org.spout.vanilla.material.block.rail.Rails;
+import org.spout.vanilla.material.block.RailBase;
+import org.spout.vanilla.material.block.rail.Rail;
 
 public class MinecartTrackLogic implements Source {
 	public Block block;
-	public RailsBase rails;
+	public RailBase rails;
 	public boolean isPowered;
 	public BlockFace direction;
 	public boolean changed = false;
 	public MinecartTrackLogic parent = null;
 	public List<MinecartTrackLogic> neighbours = new ArrayList<MinecartTrackLogic>();
 
-	private MinecartTrackLogic(Block block, RailsBase material) {
+	private MinecartTrackLogic(Block block, RailBase material) {
 		this.block = block;
 		this.rails = material;
 		this.isPowered = false;
-		if (this.rails instanceof Rails) {
-			this.isPowered = ((Rails) material).isReceivingPower(block);
+		if (this.rails instanceof Rail) {
+			this.isPowered = ((Rail) material).isReceivingPower(block);
 		}
 		this.direction = BlockFace.THIS;
 	}
 
 	public static MinecartTrackLogic create(Block block) {
 		BlockMaterial mat = block.getMaterial();
-		if (mat instanceof RailsBase) {
-			return new MinecartTrackLogic(block, (RailsBase) mat);
+		if (mat instanceof RailBase) {
+			return new MinecartTrackLogic(block, (RailBase) mat);
 		} else {
 			return null;
 		}

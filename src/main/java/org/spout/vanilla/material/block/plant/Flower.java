@@ -44,8 +44,8 @@ public class Flower extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(0.0f).setResistance(0.0f);
 	}
 

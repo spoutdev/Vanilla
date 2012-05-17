@@ -29,14 +29,14 @@ package org.spout.vanilla.material.block.misc;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class FarmLand extends VanillaBlockMaterial {
-	public FarmLand(String name, int id) {
+public class Farmland extends VanillaBlockMaterial {
+	public Farmland(String name, int id) {
 		super(name, id);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(VanillaMaterials.DIRT);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.6F).setResistance(1.0F).setDrop(VanillaMaterials.DIRT);
 	}
 }

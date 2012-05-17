@@ -38,6 +38,12 @@ public class WoodenPressurePlate extends PressurePlate implements Mineable {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.5F).setResistance(0.8F);
+	}
+
+	@Override
 	public Instrument getInstrument() {
 		return Instrument.BASSGUITAR;
 	}

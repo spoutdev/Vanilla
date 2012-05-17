@@ -42,8 +42,14 @@ import org.spout.vanilla.util.Instrument;
 public class Gravel extends Solid implements Mineable {
 	private Random rand = new Random();
 
-	public Gravel() {
-		super("Gravel", 13);
+	public Gravel(String name, int id) {
+		super(name, id);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.6F).setResistance(1.0F);
 	}
 
 	@Override

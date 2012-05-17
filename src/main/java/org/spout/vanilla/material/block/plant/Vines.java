@@ -44,9 +44,9 @@ public class Vines extends VanillaBlockMaterial {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(null);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.2F).setResistance(0.3F).setDrop(null);
 	}
 
 	private int getMask(BlockFace face) {

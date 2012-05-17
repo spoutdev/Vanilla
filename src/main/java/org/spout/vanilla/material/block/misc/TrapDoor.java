@@ -50,6 +50,12 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(3.0F).setResistance(5.0F);
+	}
+
+	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
 		if (block.getMaterial().equals(this)) {
@@ -108,4 +114,3 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 		return BlockFaces.WESN.get(block.getData() & ~0x4);
 	}
 }
-

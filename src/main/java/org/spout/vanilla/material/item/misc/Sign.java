@@ -35,7 +35,8 @@ public class Sign extends BlockItem {
 	}
 
 	@Override
-	public void loadProperties() {
+	public void initialize() {
+		super.initialize();
 		setMaxStackSize(1);
 	}
 }

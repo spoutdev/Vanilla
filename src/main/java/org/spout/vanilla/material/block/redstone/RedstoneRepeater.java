@@ -51,6 +51,16 @@ public class RedstoneRepeater extends GroundAttachable implements RedstoneSource
 		this.powered = powered;
 	}
 
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.0F).setResistance(0.0F);
+		this.setDrop(VanillaMaterials.REDSTONE_REPEATER);
+		if (powered) {
+			this.setLightLevel(9);
+		}
+	}
+
 	public boolean isPowered() {
 		return this.powered;
 	}
@@ -62,13 +72,6 @@ public class RedstoneRepeater extends GroundAttachable implements RedstoneSource
 
 	public void setPowered(Block block, boolean powered) {
 		block.setMaterial(powered ? VanillaMaterials.REDSTONE_REPEATER_ON : VanillaMaterials.REDSTONE_REPEATER_OFF, block.getData());
-	}
-
-	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setHardness(0.0F).setResistance(0.0F);
-		this.setDrop(VanillaMaterials.REDSTONE_REPEATER);
 	}
 
 	@Override
@@ -110,7 +113,7 @@ public class RedstoneRepeater extends GroundAttachable implements RedstoneSource
 		}
 	}
 
-	public static final int[] TICK_DELAYS = {2, 4, 6, 8};
+	public static final int[] TICK_DELAYS = { 2, 4, 6, 8 };
 
 	public int getTickDelay(Block block) {
 		return TICK_DELAYS[this.getTickDelayIndex(block)];

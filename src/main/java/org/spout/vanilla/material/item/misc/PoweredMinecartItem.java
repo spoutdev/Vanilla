@@ -27,38 +27,15 @@
 package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.entity.Controller;
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.controller.object.vehicle.minecart.PoweredMinecart;
 
-import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
-import org.spout.vanilla.material.block.rail.Rails;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
-
-public class Minecart extends VanillaItemMaterial {
-	public Minecart(String name, int id) {
+public class PoweredMinecartItem extends MinecartItem {
+	public PoweredMinecartItem(String name, int id) {
 		super(name, id);
 	}
 
-	/**
-	 * Creates a new minecart controller to spawn when interacted
-	 * @return a new Minecart controller
-	 */
-	protected Controller getSpawnedEntity() {
-		return new TransportMinecart();
-	}
-
 	@Override
-	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
-		super.onInteract(entity, block, type, clickedface);
-
-		//is clicked position a track?
-		if (block.getMaterial() instanceof Rails) {
-			//spawn minecart on rail
-			block.getWorld().createAndSpawnEntity(block.getPosition(), this.getSpawnedEntity());
-			//TODO: Subtracting one from the held item?
-			//Shouldn't the held item be passed to this function instead?
-		}
+	protected Controller getSpawnedEntity() {
+		return new PoweredMinecart();
 	}
 }

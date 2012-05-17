@@ -63,8 +63,8 @@ public class Wool extends Solid {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(0.8F).setResistance(1.3F);
 	}
 

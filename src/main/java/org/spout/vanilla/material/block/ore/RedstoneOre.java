@@ -37,15 +37,20 @@ import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class RedstoneOre extends Ore implements TimedCraftable, Mineable {
-	public RedstoneOre(String name, int id) {
+	private final boolean glowing;
+
+	public RedstoneOre(String name, int id, boolean glowing) {
 		super(name, id);
+		this.glowing = glowing;
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(VanillaMaterials.REDSTONE_DUST);
-		this.setMinDropCount(4).setMaxDropCount(5);
+	public void initialize() {
+		super.initialize();
+		this.setMinDropCount(4).setMaxDropCount(5).setDrop(VanillaMaterials.REDSTONE_DUST);
+		if (glowing) {
+			this.setLightLevel(3);
+		}
 	}
 
 	@Override
@@ -61,5 +66,14 @@ public class RedstoneOre extends Ore implements TimedCraftable, Mineable {
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	/**
+	 * Whether this redstone ore block material is glowing
+	 * 
+	 * @return true if glowing
+	 */
+	public boolean isGlowing() {
+		return glowing;
 	}
 }

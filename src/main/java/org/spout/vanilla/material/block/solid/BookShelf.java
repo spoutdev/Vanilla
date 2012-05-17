@@ -31,17 +31,17 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
 
-public class BookShelf extends Solid implements Fuel {
+public class Bookshelf extends Solid implements Fuel {
 	public final float BURN_TIME = 15.f;
 
-	public BookShelf(String name, int id) {
+	public Bookshelf(String name, int id) {
 		super(name, id);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(VanillaMaterials.BOOK).setDropCount(3);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(1.5F).setResistance(2.5F).setDrop(VanillaMaterials.BOOK).setDropCount(3);
 	}
 
 	@Override

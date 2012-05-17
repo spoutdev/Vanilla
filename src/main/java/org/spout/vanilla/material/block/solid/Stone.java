@@ -38,13 +38,13 @@ public class Stone extends Solid implements Mineable {
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	public void initialize() {
+		super.initialize();
+		this.setHardness(1.5F).setResistance(10.0F).setDrop(VanillaMaterials.COBBLESTONE);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(VanillaMaterials.COBBLESTONE);
+	public short getDurabilityPenalty(MiningTool tool) {
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

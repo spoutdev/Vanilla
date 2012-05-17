@@ -34,16 +34,15 @@ public class GlassPane extends VanillaBlockMaterial {
 		super(name, id);
 		this.setOccludes(false);
 	}
+	
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.3F).setResistance(0.3F).setDrop(null); // TODO resistance unknown
+	}
 
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.CLICK;
-	}
-
-	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setHardness(0.3F).setResistance(0.3F); //Placeholder, block resistance unknown
-		this.setDrop(null);
 	}
 }

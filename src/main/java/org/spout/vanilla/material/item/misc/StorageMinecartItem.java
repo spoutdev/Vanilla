@@ -27,14 +27,15 @@
 package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.entity.Controller;
+import org.spout.vanilla.controller.object.vehicle.minecart.StorageMinecart;
 
-public class StorageMinecart extends Minecart {
-	public StorageMinecart() {
-		super("Minecart with Chest", 342);
+public class StorageMinecartItem extends MinecartItem {
+	public StorageMinecartItem(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
 	protected Controller getSpawnedEntity() {
-		return new org.spout.vanilla.controller.object.vehicle.minecart.StorageMinecart();
+		return new StorageMinecart();
 	}
 }

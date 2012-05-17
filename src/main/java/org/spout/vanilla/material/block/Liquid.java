@@ -41,8 +41,8 @@ public abstract class Liquid extends VanillaBlockMaterial {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(100.0F).setResistance(166.7F);
 		this.setDrop(null);
 	}

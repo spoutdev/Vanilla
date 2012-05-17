@@ -48,6 +48,13 @@ public class Lever extends AbstractAttachable implements RedstoneSource {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.5F).setResistance(1.7F);
+		this.setAttachable(BlockFaces.NESWB);
+	}
+
+	@Override
 	public void onDestroy(Block block) {
 		this.doRedstoneUpdates(block);
 		super.onDestroy(block);
@@ -56,12 +63,6 @@ public class Lever extends AbstractAttachable implements RedstoneSource {
 	@Override
 	public boolean isPlacementSuppressed() {
 		return true;
-	}
-
-	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setAttachable(BlockFaces.NESWB);
 	}
 
 	@Override
@@ -98,7 +99,7 @@ public class Lever extends AbstractAttachable implements RedstoneSource {
 			Source source = block.getSource();
 			data = (short) (5 + Math.random());
 			if (source instanceof Entity) {
-				//set data using direction
+				// set data using direction
 				Vector3 direction = block.getPosition().subtract(((Entity) source).getPosition());
 				direction = direction.abs();
 				if (direction.getX() > direction.getZ()) {

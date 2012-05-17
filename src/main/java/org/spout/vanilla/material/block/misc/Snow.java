@@ -39,15 +39,15 @@ import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
 
 public class Snow extends GroundAttachable implements Mineable {
-	public Snow() {
-		super("Snow", 78);
-		this.setOpacity((byte) 0);
+	public Snow(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(VanillaMaterials.SNOWBALL);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.1F).setResistance(0.2F).setDrop(VanillaMaterials.SNOWBALL);
+		this.setOpacity((byte) 0);
 	}
 
 	@Override

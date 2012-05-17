@@ -35,6 +35,12 @@ public class CraftingTable extends Solid {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(4.2F);
+	}
+
+	@Override
 	public Instrument getInstrument() {
 		return Instrument.BASSGUITAR;
 	}

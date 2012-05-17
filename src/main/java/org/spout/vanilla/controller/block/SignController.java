@@ -34,7 +34,6 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.misc.SignBase;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 
@@ -103,4 +102,3 @@ public class SignController extends VanillaBlockController {
 		VanillaNetworkSynchronizer.sendPacket(dirty.toArray(new Player[dirty.size()]), new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), text));
 	}
 }
-

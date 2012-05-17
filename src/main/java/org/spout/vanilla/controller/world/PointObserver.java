@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.world;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
@@ -53,8 +54,10 @@ public class PointObserver extends Controller implements VanillaController {
 	public void onTick(float dt) {
 		//Lets make sure the point observer never goes haywire...
 		if (!getParent().getPosition().equals(currPoint)) {
-			System.out.println("Point observer is moving! " + getParent().getPosition().toString());
-			currPoint = getParent().getPosition();
+			if (Spout.debugMode()) {
+				Spout.getLogger().severe("Point observer is moving! " + getParent().getPosition().toString());
+			}
+			getParent().setPosition(currPoint);
 		}
 	}
 
@@ -62,7 +65,7 @@ public class PointObserver extends Controller implements VanillaController {
 	public void onAttached() {
 		getParent().setCollision(null);
 		getParent().setObserver(true);
-		getParent().setViewDistance(256);
+		getParent().setViewDistance(16);
 		currPoint = getParent().getPosition();
 	}
 }

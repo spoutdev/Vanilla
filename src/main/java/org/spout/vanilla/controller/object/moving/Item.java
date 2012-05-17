@@ -83,9 +83,7 @@ public class Item extends Substance {
 	public void onAttached() {
 		super.onAttached();
 		if (data().containsKey("Itemstack")) {
-			
 			ItemStack item = (ItemStack) data().get("Itemstack");
-			System.out.println("Item: " + item + " IS: " + is);
 			is.setMaterial(item.getMaterial(), item.getData());
 			is.setAmount(item.getAmount());
 			is.setAuxData(item.getAuxData());

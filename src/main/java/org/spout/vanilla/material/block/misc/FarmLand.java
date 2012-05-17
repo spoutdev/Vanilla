@@ -29,8 +29,8 @@ package org.spout.vanilla.material.block.misc;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class Farmland extends VanillaBlockMaterial {
-	public Farmland(String name, int id) {
+public class FarmLand extends VanillaBlockMaterial {
+	public FarmLand(String name, int id) {
 		super(name, id);
 	}
 

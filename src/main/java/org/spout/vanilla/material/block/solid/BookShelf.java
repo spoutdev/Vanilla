@@ -31,10 +31,10 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
 
-public class Bookshelf extends Solid implements Fuel {
+public class BookShelf extends Solid implements Fuel {
 	public final float BURN_TIME = 15.f;
 
-	public Bookshelf(String name, int id) {
+	public BookShelf(String name, int id) {
 		super(name, id);
 	}
 

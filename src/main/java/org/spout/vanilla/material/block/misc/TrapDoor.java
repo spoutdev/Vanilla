@@ -80,22 +80,17 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		toggleOpen(block);
-		block.update();
-		VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_FIZZ);
+		VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_DOOR);
 	}
 
 	@Override
 	public void toggleOpen(Block block) {
-		this.setOpen(block, !this.isOpen(block));
+		block.setData(block.getData() ^ 0x4);
 	}
 
 	@Override
 	public void setOpen(Block block, boolean open) {
-		short data = block.getData();
-		short newdata = LogicUtil.setBit(data, 0x4, open);
-		if (data != newdata) {
-			block.setData(newdata);
-		}
+		block.setData(LogicUtil.setBit(block.getData(), 0x4, open));
 	}
 
 	@Override

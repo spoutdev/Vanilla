@@ -66,7 +66,8 @@ import org.spout.vanilla.material.block.ore.LapisLazuliBlock;
 import org.spout.vanilla.material.block.ore.LapisLazuliOre;
 import org.spout.vanilla.material.block.ore.RedstoneOre;
 import org.spout.vanilla.material.block.piston.Piston;
-import org.spout.vanilla.material.block.piston.PistonMoving;
+import org.spout.vanilla.material.block.piston.PistonExtension;
+import org.spout.vanilla.material.block.piston.PistonExtensionMoving;
 import org.spout.vanilla.material.block.plant.Cactus;
 import org.spout.vanilla.material.block.plant.DeadBush;
 import org.spout.vanilla.material.block.plant.Flower;
@@ -189,8 +190,8 @@ public final class VanillaMaterials {
 	//== Piston ==
 	public static final Piston PISTON_STICKY_BASE = register(new Piston("Sticky Piston", 29, true));
 	public static final Piston PISTON_BASE = register(new Piston("Piston", 33, false));
-	public static final Solid PISTON_EXTENSION = (Solid) register(new Solid("Piston (Head)", 34).setResistance(0.8F));
-	public static final PistonMoving PISTON_MOVING = register(new PistonMoving("Moved By Piston", 36));
+	public static final PistonExtension PISTON_EXTENSION = register(new PistonExtension("Piston (Head)", 34));
+	public static final PistonExtensionMoving PISTON_MOVING = register(new PistonExtensionMoving("Moved By Piston", 36));
 	//== Rails ==
 	public static final Rails RAILS = register(new Rails());
 	public static final PoweredRails RAILS_POWERED = register(new PoweredRails());

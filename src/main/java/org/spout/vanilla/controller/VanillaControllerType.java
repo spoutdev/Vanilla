@@ -50,4 +50,9 @@ public class VanillaControllerType extends EmptyConstructorControllerType {
 	public int getID() {
 		return this.id;
 	}
+
+	@Override
+	public String toString() {
+		return getClass().getName() + " {id = " + this.getID() +  " , name = " + this.getName() + "}";
+	}
 }

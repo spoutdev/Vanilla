@@ -104,6 +104,11 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public VanillaPlayer(Player p) {
 		this(p, GameMode.SURVIVAL);
 	}
+	
+	@Override
+	public boolean isSavable() {
+		return false; //Players are a special case, handled elsewhere
+	}
 
 	@Override
 	public void onAttached() {

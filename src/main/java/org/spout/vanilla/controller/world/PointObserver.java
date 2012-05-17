@@ -45,6 +45,11 @@ public class PointObserver extends Controller implements VanillaController {
 	}
 
 	@Override
+	public boolean isSavable() {
+		return false;
+	}
+
+	@Override
 	public void onTick(float dt) {
 		//Lets make sure the point observer never goes haywire...
 		if (!getParent().getPosition().equals(currPoint)) {
@@ -59,10 +64,5 @@ public class PointObserver extends Controller implements VanillaController {
 		getParent().setObserver(true);
 		getParent().setViewDistance(256);
 		currPoint = getParent().getPosition();
-	}
-	
-	@Override
-	public boolean isSavable() {
-		return false;
 	}
 }

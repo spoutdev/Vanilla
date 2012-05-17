@@ -45,6 +45,7 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.inventory.VanillaPlayerInventory;
 import org.spout.vanilla.inventory.Window;
@@ -631,5 +632,16 @@ public class VanillaPlayer extends Human implements PlayerController {
 			return false;
 		}
 		return true;
+	}
+
+	public void dropItem() {
+		ItemStack current = getParent().getInventory().getCurrentItem();
+		Item control = new Item(new ItemStack(current.getMaterial(), 1),getHeadPosition().add(getLookingAt()));
+		if(current.getAmount() > 1)
+			current.setAmount(current.getAmount()-1);
+		else
+			current = null;
+		getParent().getInventory().setCurrentItem(current);
+		getParent().getWorld().createAndSpawnEntity(getHeadPosition().add(0.0, -0.4, 0.0), control);
 	}
 }

@@ -67,8 +67,15 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		Block block = w.getBlock(x, y, z, player.getEntity());
 		BlockMaterial blockMaterial = block.getSubMaterial();
 		BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(message.getFace());
+		
+		
+		
+		if(x==0 && y==0 && z==0 && message.getFace() == 0 && message.getState() == 4) {
+			((VanillaPlayer)player.getEntity().getController()).dropItem();
+			return;
+		}
+		
 		boolean isInteractable = true;
-
 		//FIXME: How so not interactable? I am pretty sure I can interact with water to place a boat, no?
 		if (blockMaterial == VanillaMaterials.AIR || blockMaterial == BasicAir.AIR || blockMaterial == VanillaMaterials.WATER || blockMaterial == VanillaMaterials.LAVA) {
 			isInteractable = false;

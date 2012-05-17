@@ -29,9 +29,11 @@ package org.spout.vanilla.controller.world;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.geo.cuboid.Block;
@@ -54,23 +56,13 @@ public class BlockUpdater extends Controller implements VanillaController {
 
 		public final Block block;
 		public final AtomicInteger counter;
-
-		@Override
-		public boolean equals(Object o) {
-			if (o == this) {
-				return true;
-			} else if (o != null && o instanceof Update) {
-				return ((Update) o).block.equals(this.block);
-			} else {
-				return false;
-			}
-		}
 	}
 
 	private static Map<Region, BlockUpdater> updaters = new HashMap<Region, BlockUpdater>();
 
 	public static void remove(Region region) {
 		synchronized (updaters) {
+			System.out.println("Block updater removed from " + region);
 			updaters.remove(region);
 			//do something? Saving?
 		}
@@ -80,9 +72,18 @@ public class BlockUpdater extends Controller implements VanillaController {
 		synchronized (updaters) {
 			BlockUpdater u = updaters.get(region);
 			if (u == null) {
-				u = new BlockUpdater();
-				region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE), u);
-				updaters.put(region, u);
+				Set<Entity> regionupdaters = region.getAll(BlockUpdater.class);
+				if (regionupdaters.isEmpty()) {
+					u = new BlockUpdater();
+					region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE), u);
+					updaters.put(region, u);
+					System.out.println("Block updater bound to " + region);
+				} else {
+					for (Entity e : regionupdaters) {
+						u = (BlockUpdater) e.getController();
+						break;
+					}
+				}
 			}
 			return u;
 		}
@@ -100,6 +101,7 @@ public class BlockUpdater extends Controller implements VanillaController {
 	}
 
 	public static void schedule(Block block, int delay) {
+		System.out.println("SCHEDULING: " + block.getX() + "/" + block.getY() + "/" + block.getZ() + " in region " + block.getRegion());
 		get(block.getRegion()).add(block, delay);
 	}
 
@@ -111,6 +113,7 @@ public class BlockUpdater extends Controller implements VanillaController {
 	public void onTick(float dt) {
 		this.updates.sync();
 		if (!this.updates.isEmpty()) {
+			System.out.println("TICKING");
 			Iterator<Update> iter = this.updates.iterator();
 			Update update;
 			while (iter.hasNext()) {

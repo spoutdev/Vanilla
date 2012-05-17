@@ -345,11 +345,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if ((data & 0xF) > 15) {
 			data = 0;
 		}
-		x = (chunk.getX() << Chunk.CHUNK_SIZE_BITS) + x;
-		y = (chunk.getY() << Chunk.CHUNK_SIZE_BITS) + y;
-		z = (chunk.getZ() << Chunk.CHUNK_SIZE_BITS) + z;
+		x += chunk.getX() * Chunk.CHUNK_SIZE;
+		y += chunk.getY() * Chunk.CHUNK_SIZE;
+		z += chunk.getZ() * Chunk.CHUNK_SIZE;
 		if (y >= 0 && y < chunk.getWorld().getHeight()) {
 			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id & 0xFF, data & 0xF);
+			System.out.println("BLOCK UPDATE TO CLIENT AT " + x + "/" + y + "/" + z);
 			session.send(BCM);
 		}
 	}

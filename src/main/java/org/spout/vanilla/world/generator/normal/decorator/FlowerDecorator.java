@@ -30,13 +30,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.spout.api.generator.biome.BiomeDecorator;
+import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class FlowerDecorator implements BiomeDecorator {
+public class FlowerDecorator implements Decorator {
 	private static final List<BlockMaterial> flowers = new ArrayList<BlockMaterial>();
 
 	static {

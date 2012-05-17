@@ -29,7 +29,7 @@ package org.spout.vanilla.world.generator.nether;
 import java.util.Random;
 
 import org.spout.api.generator.biome.BiomeGenerator;
-import org.spout.api.generator.biome.SingleSelector;
+import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
@@ -41,7 +41,7 @@ import org.spout.vanilla.world.generator.VanillaGenerator;
 public class NetherGenerator extends BiomeGenerator implements VanillaGenerator {
 	@Override
 	public void registerBiomes() {
-		setSelector(new SingleSelector(VanillaBiomes.NETHERRACK));
+		setSelector(new PerBlockBiomeSelector(VanillaBiomes.NETHERRACK));
 		register(VanillaBiomes.NETHERRACK);
 	}
 

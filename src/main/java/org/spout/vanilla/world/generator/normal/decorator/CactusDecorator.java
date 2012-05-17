@@ -28,12 +28,12 @@ package org.spout.vanilla.world.generator.normal.decorator;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.BiomeDecorator;
+import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class CactusDecorator implements BiomeDecorator {
+public class CactusDecorator implements Decorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() < 4) {

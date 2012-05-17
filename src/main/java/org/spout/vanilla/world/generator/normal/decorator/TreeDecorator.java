@@ -29,7 +29,7 @@ package org.spout.vanilla.world.generator.normal.decorator;
 import java.util.Random;
 
 import org.spout.api.generator.biome.Biome;
-import org.spout.api.generator.biome.BiomeDecorator;
+import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
@@ -38,7 +38,7 @@ import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.object.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.SmallTreeObject.SmallTreeType;
 
-public class TreeDecorator implements BiomeDecorator {
+public class TreeDecorator implements Decorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {

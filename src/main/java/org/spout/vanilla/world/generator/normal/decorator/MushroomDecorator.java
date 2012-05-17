@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.spout.api.generator.biome.Biome;
-import org.spout.api.generator.biome.BiomeDecorator;
+import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
@@ -41,7 +41,7 @@ import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.object.HugeMushroomObject;
 import org.spout.vanilla.world.generator.normal.object.HugeMushroomObject.HugeMushroomType;
 
-public class MushroomDecorator implements BiomeDecorator {
+public class MushroomDecorator implements Decorator {
 	/*
 		 * Stores the differant types of mushrooms.
 		 */

@@ -27,7 +27,7 @@
 package org.spout.vanilla.world.generator;
 
 import org.spout.api.generator.biome.Biome;
-import org.spout.api.generator.biome.BiomeDecorator;
+import org.spout.api.generator.biome.Decorator;
 
 public abstract class VanillaBiome extends Biome {
 	private final int biomeId;
@@ -36,7 +36,7 @@ public abstract class VanillaBiome extends Biome {
 	private float minHumiditiy = 0f, maxHumidity = 0f;
 	private float minElevation = 0f, maxElevation = 0f;
 
-	protected VanillaBiome(int biomeId, BiomeDecorator... decorators) {
+	protected VanillaBiome(int biomeId, Decorator... decorators) {
 		super(decorators);
 		this.biomeId = biomeId;
 	}

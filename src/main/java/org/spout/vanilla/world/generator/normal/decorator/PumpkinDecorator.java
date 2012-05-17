@@ -28,7 +28,7 @@ package org.spout.vanilla.world.generator.normal.decorator;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.BiomeDecorator;
+import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
@@ -37,7 +37,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 /**
  * Decorator that decorates a biome with pumpkins.
  */
-public class PumpkinDecorator implements BiomeDecorator {
+public class PumpkinDecorator implements Decorator {
 	// Control how many pumpkins per patch
 	private static final byte BASE_AMOUNT = 1;
 	private static final byte RAND_AMOUNT = 8;

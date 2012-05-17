@@ -28,10 +28,10 @@ package org.spout.vanilla.world.generator.nether.decorator;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.BiomeDecorator;
+import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.cuboid.Chunk;
 
-public class FortressDecorator implements BiomeDecorator {
+public class FortressDecorator implements Decorator {
 	@Override
 	public void populate(Chunk c, Random random) {
 	}

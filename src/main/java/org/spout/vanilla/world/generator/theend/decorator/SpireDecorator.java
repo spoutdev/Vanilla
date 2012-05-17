@@ -28,14 +28,14 @@ package org.spout.vanilla.world.generator.theend.decorator;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.BiomeDecorator;
+import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
-public class SpireDecorator implements BiomeDecorator {
+public class SpireDecorator implements Decorator {
 	// Generation odds, chunk per 'ODD' chunk
 	private static final byte ODD = 5;
 

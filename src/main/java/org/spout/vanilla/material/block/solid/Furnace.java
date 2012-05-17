@@ -56,8 +56,8 @@ public class Furnace extends Solid implements Mineable, Directional {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(3.5F).setResistance(5.8F).setDrop(VanillaMaterials.FURNACE);
 		this.setController(VanillaControllerTypes.FURNACE);
 		if (this.burning) {
@@ -72,6 +72,7 @@ public class Furnace extends Solid implements Mineable, Directional {
 
 	/**
 	 * Gets if this furnace block material is burning
+	 * 
 	 * @return True if burning
 	 */
 	public boolean isBurning() {

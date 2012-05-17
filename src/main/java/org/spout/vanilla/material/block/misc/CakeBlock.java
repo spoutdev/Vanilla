@@ -34,8 +34,8 @@ public class CakeBlock extends VanillaBlockMaterial {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setDrop(null);
 	}
 }

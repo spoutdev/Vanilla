@@ -37,11 +37,10 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.controller.object.misc.Painting;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
-public class Paintings extends VanillaItemMaterial {
+public class PaintingItem extends VanillaItemMaterial {
 	private Random random = new Random();
 
 	public enum PaintingStyle {
-
 		Kebab,
 		Aztec,
 		Alban,
@@ -69,10 +68,8 @@ public class Paintings extends VanillaItemMaterial {
 		DonkeyKong;
 	}
 
-	;
-
-	public Paintings() {
-		super("Paintings", 321);
+	public PaintingItem(String name, int id) {
+		super(name, id);
 	}
 
 	@Override

@@ -38,14 +38,14 @@ import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 public class Ice extends Solid implements Mineable {
-	public Ice() {
-		super("Ice", 79);
+	public Ice(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(null);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.5F).setResistance(0.8F).setDrop(null);
 	}
 
 	@Override
@@ -56,11 +56,10 @@ public class Ice extends Solid implements Mineable {
 	@Override
 	public void onDestroy(Block block) {
 		/*
-		 * Only let ice break into water if the world isn't a nether generated world
-		 * or there isn't air under the material.
+		 * Only let ice break into water if the world isn't a nether generated world or there isn't air under the material.
 		 */
 		if (!(block.getWorld().getGenerator() instanceof NetherGenerator) || block.translate(BlockFace.BOTTOM).getMaterial() != VanillaMaterials.AIR) {
-			//TODO Setting the source to world correct?
+			// TODO Setting the source to world correct?
 			block.setMaterial(VanillaMaterials.STATIONARY_WATER).update(true);
 		}
 	}

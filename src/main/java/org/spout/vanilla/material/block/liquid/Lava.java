@@ -38,9 +38,9 @@ public class Lava extends Liquid {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setLightLevel(15);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.0F).setResistance(0.0F).setLightLevel(15);
 	}
 
 	@Override

@@ -38,9 +38,9 @@ public class WoodenStairs extends Stairs implements Fuel {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		//TODO: Hardness?
+	public void initialize() {
+		super.initialize();
+		// TODO: Hardness?
 		this.setResistance(3.0F);
 	}
 

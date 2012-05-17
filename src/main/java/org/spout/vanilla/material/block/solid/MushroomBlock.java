@@ -38,9 +38,9 @@ public class MushroomBlock extends Ore implements Fuel {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F); //Placeholder, block resistance unknown
+	public void initialize() {
+		super.initialize();
+		this.setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F); // Placeholder, block resistance unknown
 		if (this.equals(VanillaMaterials.HUGE_RED_MUSHROOM)) {
 			this.setDrop(VanillaMaterials.RED_MUSHROOM);
 		} else {

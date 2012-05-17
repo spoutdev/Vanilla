@@ -38,14 +38,14 @@ public class Mushroom extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public boolean hasGrowthStages() {
-		return false;
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.0f).setResistance(0.0f);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setHardness(0.0f).setResistance(0.0f);
+	public boolean hasGrowthStages() {
+		return false;
 	}
 
 	@Override

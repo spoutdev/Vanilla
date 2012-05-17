@@ -48,6 +48,12 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(2.0F).setResistance(3.0F);
+	}
+
+	@Override
 	public boolean isPlacementSuppressed() {
 		return true;
 	}
@@ -125,4 +131,3 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 		return RedstoneUtil.isReceivingPower(block);
 	}
 }
-

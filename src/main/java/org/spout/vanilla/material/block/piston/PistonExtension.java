@@ -38,6 +38,12 @@ public class PistonExtension extends VanillaBlockMaterial implements Directional
 	public PistonExtension(String name, int id) {
 		super(name, id);
 	}
+	
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setResistance(0.8F).setDrop(null);
+	}
 
 	@Override
 	public void onDestroy(Block block) {
@@ -58,13 +64,6 @@ public class PistonExtension extends VanillaBlockMaterial implements Directional
 	@Override
 	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
-	}
-
-	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(null);
-		this.setResistance(0.8F);
 	}
 
 	@Override

@@ -46,5 +46,5 @@ public interface VanillaMaterial {
 	 * Initializes the default properties of this material<br>
 	 * This is automatically called after the initial construction of all Vanilla materials
 	 */
-	public void loadProperties();
+	public void initialize();
 }

@@ -38,9 +38,9 @@ public class ClayBlock extends Solid implements Mineable {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(VanillaMaterials.CLAY).setDropCount(4);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.6F).setResistance(1.0F).setDrop(VanillaMaterials.CLAY).setDropCount(4);
 	}
 
 	@Override

@@ -50,8 +50,8 @@ public class Sandstone extends Solid implements Mineable {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(0.8F).setResistance(1.3F);
 	}
 
@@ -77,7 +77,7 @@ public class Sandstone extends Solid implements Mineable {
 	public static enum SandstoneType implements DataSource {
 		SANDSTONE(0),
 		DECORATIVE(1),
-		SMOOTH(2),;
+		SMOOTH(2), ;
 		private final short data;
 
 		private SandstoneType(int data) {

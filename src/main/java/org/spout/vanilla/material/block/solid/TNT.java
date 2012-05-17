@@ -34,8 +34,14 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 
 public class TNT extends Solid {
-	public TNT() {
-		super("TnT", 46);
+	public TNT(String name, int id) {
+		super(name, id);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.0F).setResistance(0.0F);
 	}
 
 	@Override
@@ -45,7 +51,7 @@ public class TNT extends Solid {
 
 	public void onIgnite(Block block) {
 		block.setMaterial(VanillaMaterials.AIR).update(true);
-		//spawn a primed TNT
+		// spawn a primed TNT
 		Point point = block.getPosition();
 		point.getWorld().createAndSpawnEntity(point, new PrimedTnt());
 	}

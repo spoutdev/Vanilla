@@ -40,6 +40,12 @@ public class Glass extends Solid {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.3F).setResistance(0.5F).setDrop(null);
+	}
+
+	@Override
 	public boolean canSupport(BlockMaterial material, BlockFace face) {
 		if (face == BlockFace.TOP) {
 			return material instanceof PointAttachable;
@@ -50,12 +56,6 @@ public class Glass extends Solid {
 	@Override
 	public boolean isRedstoneConductor() {
 		return false;
-	}
-
-	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(null);
 	}
 
 	@Override

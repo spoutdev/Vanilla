@@ -48,8 +48,9 @@ public class Jukebox extends Solid implements Fuel {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
+		this.setHardness(2.0F).setResistance(10.0F);
 		this.setController(VanillaControllerTypes.JUKEBOX);
 	}
 

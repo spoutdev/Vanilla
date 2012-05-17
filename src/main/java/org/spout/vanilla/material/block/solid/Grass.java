@@ -33,18 +33,18 @@ import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
 
 public class Grass extends Solid implements Mineable {
-	public Grass() {
-		super("Grass", 2);
+	public Grass(String name, int id) {
+		super(name, id);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.6F).setResistance(0.8F).setDrop(VanillaMaterials.DIRT);
 	}
 
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Spade ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(VanillaMaterials.DIRT);
 	}
 }

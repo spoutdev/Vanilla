@@ -34,8 +34,8 @@ public class MonsterSpawner extends Solid {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(null);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(5.0F).setResistance(8.3F).setDrop(null);
 	}
 }

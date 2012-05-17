@@ -57,8 +57,8 @@ public class Leaves extends Solid {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(0.2F).setResistance(0.3F).setOpacity((byte) 0);
 	}
 

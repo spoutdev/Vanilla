@@ -37,8 +37,14 @@ import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.util.Instrument;
 
 public class Sand extends Solid implements TimedCraftable, Mineable {
-	public Sand() {
-		super("Sand", 12);
+	public Sand(String name, int id) {
+		super(name, id);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.5F).setResistance(0.8F);
 	}
 
 	@Override

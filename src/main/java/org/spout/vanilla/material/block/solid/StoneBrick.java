@@ -42,9 +42,8 @@ public class StoneBrick extends Solid {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setHardness(1.5F);
-		this.setResistance(10.0F);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(1.5F).setResistance(10.0F);
 	}
 }

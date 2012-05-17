@@ -42,11 +42,11 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	}
 
 	@Override
-	public void loadProperties() {
+	public void initialize() {
 		if (this.hasSubMaterials()) {
 			for (Material material : this.getSubMaterials()) {
 				if (material instanceof VanillaMaterial) {
-					((VanillaMaterial) material).loadProperties();
+					((VanillaMaterial) material).initialize();
 				}
 			}
 		}

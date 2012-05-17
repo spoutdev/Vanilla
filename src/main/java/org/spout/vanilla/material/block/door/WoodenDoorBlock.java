@@ -59,8 +59,8 @@ public class WoodenDoorBlock extends DoorBlock {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(3.0F).setDrop(VanillaMaterials.WOODEN_DOOR);
 	}
 }

@@ -38,24 +38,24 @@ import org.spout.vanilla.material.item.misc.Coal;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.util.Instrument;
 
-public class Tree extends Solid implements Plant, Fuel, TimedCraftable, Mineable {
-	public static final Tree DEFAULT = register(new Tree("Wood"));
-	public static final Tree SPRUCE = register(new Tree("Spruce Wood", 1, DEFAULT));
-	public static final Tree BIRCH = register(new Tree("Birch Wood", 2, DEFAULT));
-	public static final Tree JUNGLE = register(new Tree("Jungle Wood", 3, DEFAULT));
+public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable {
+	public static final Log DEFAULT = register(new Log("Wood"));
+	public static final Log SPRUCE = register(new Log("Spruce Wood", 1, DEFAULT));
+	public static final Log BIRCH = register(new Log("Birch Wood", 2, DEFAULT));
+	public static final Log JUNGLE = register(new Log("Jungle Wood", 3, DEFAULT));
 	public final float BURN_TIME = 15.f;
 
-	private Tree(String name) {
+	private Log(String name) {
 		super(name, 17);
 	}
 
-	private Tree(String name, int data, Tree parent) {
+	private Log(String name, int data, Log parent) {
 		super(name, 17, data, parent);
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
+	public void initialize() {
+		super.initialize();
 		this.setHardness(2.0F).setResistance(3.3F).setOpacity((byte) 1);
 	}
 

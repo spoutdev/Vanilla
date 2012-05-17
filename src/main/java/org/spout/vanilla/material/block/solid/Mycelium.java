@@ -38,9 +38,9 @@ public class Mycelium extends Solid implements Mineable {
 	}
 
 	@Override
-	public void loadProperties() {
-		super.loadProperties();
-		this.setDrop(VanillaMaterials.DIRT);
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.6F).setResistance(0.8F).setDrop(VanillaMaterials.DIRT);
 	}
 
 	@Override

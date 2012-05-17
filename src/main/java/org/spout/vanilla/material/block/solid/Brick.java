@@ -37,6 +37,12 @@ public class Brick extends Solid implements Mineable {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(2.0F).setResistance(10.0F);
+	}
+
+	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}

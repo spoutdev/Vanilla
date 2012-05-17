@@ -34,8 +34,8 @@ import org.spout.vanilla.material.block.solid.Furnace;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Clay extends VanillaItemMaterial implements TimedCraftable {
-	public Clay() {
-		super("Clay", 337);
+	public Clay(String name, int id) {
+		super(name, id);
 	}
 
 	@Override

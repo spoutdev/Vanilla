@@ -26,9 +26,7 @@
  */
 package org.spout.vanilla.world.generator.normal.object;
 
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -37,27 +35,15 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class SmallTreeObject extends TreeObject {
-	// random
-	private final Random random;
-	// size control
-	private byte baseHeight = 3;
-	private byte randHeight = 4;
-	private byte totalHeight;
+	//size control
 	private byte leavesHeight = 3;
 	private byte radiusIncrease = 0;
-	// metadata control
-	private short leavesMetadata = 0;
-	private short logMetadata = 0;
 	// extras
-	private boolean addVines = false;
-	// for canPlaceObject check
-	private final Set<BlockMaterial> overridable = new HashSet<BlockMaterial>();
+	private boolean addLeavesVines = false;
+	private boolean addLogVines = false;
 
 	public SmallTreeObject(Random random, SmallTreeType treeType) {
-		this.random = random;
-		this.leavesMetadata = treeType.metadata;
-		this.logMetadata = treeType.metadata;
-		findNewRandomHeight();
+		super(random, (byte) 3, (byte) 4, treeType.metadata);
 		overridable.add(VanillaMaterials.AIR);
 		overridable.add(VanillaMaterials.LEAVES);
 		overridable.add(VanillaMaterials.LOG);
@@ -106,11 +92,11 @@ public class SmallTreeObject extends TreeObject {
 		}
 		for (byte yy = 0; yy < totalHeight; yy++) {
 			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.LOG, logMetadata, w);
-			if (addVines) {
+			if (addLogVines) {
 				placeVines(w, x, y + yy, z, (byte) 3, false);
 			}
 		}
-		if (addVines) {
+		if (addLeavesVines) {
 			for (byte yy = (byte) (totalHeight - leavesHeight); yy < totalHeight + 1; yy++) {
 				final byte yRadius = (byte) (yy - totalHeight);
 				final byte xzRadius = (byte) ((radiusIncrease + 2) - yRadius / 2);
@@ -167,31 +153,12 @@ public class SmallTreeObject extends TreeObject {
 		}
 	}
 
-	@Override
-	public void randomize() {
-		this.findNewRandomHeight();
+	public void addLogVines(boolean addVines) {
+		this.addLogVines = addVines;
 	}
 
-	public final void findNewRandomHeight() {
-		totalHeight = (byte) (baseHeight + random.nextInt(randHeight));
-	}
-
-	public void addVines(boolean addVines) {
-		this.addVines = addVines;
-	}
-
-	public void setBaseHeight(byte baseHeight) {
-		this.baseHeight = baseHeight;
-		findNewRandomHeight();
-	}
-
-	public void setRandHeight(byte randHeight) {
-		this.randHeight = randHeight;
-		findNewRandomHeight();
-	}
-
-	public void setTotalHeight(byte height) {
-		this.totalHeight = height;
+	public void addLeavesVines(boolean addLeavesVines) {
+		this.addLeavesVines = addLeavesVines;
 	}
 
 	public void setTreeType(SmallTreeType type) {
@@ -199,20 +166,8 @@ public class SmallTreeObject extends TreeObject {
 		logMetadata = type.metadata;
 	}
 
-	public void setLeavesMetadata(short leavesMetadata) {
-		this.leavesMetadata = leavesMetadata;
-	}
-
-	public void setLogMetadata(short logMetadata) {
-		this.logMetadata = logMetadata;
-	}
-
 	public void setLeavesRadiusIncreaseXZ(byte radiusIncrease) {
 		this.radiusIncrease = radiusIncrease;
-	}
-
-	public Set<BlockMaterial> getOverridableMaterials() {
-		return overridable;
 	}
 
 	public static enum SmallTreeType {

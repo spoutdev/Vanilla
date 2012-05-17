@@ -31,72 +31,69 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.FurnaceController;
+import org.spout.vanilla.controller.block.EnchantmentTableController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Furnace extends Solid implements Mineable, Directional {
-	public static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
-	public static final float SMELT_TIME = 10.f;
-	private final boolean burning;
-
-	public Furnace(String name, int id, boolean burning) {
+public class EnchantmentTable extends Solid implements Directional, Mineable {
+	public EnchantmentTable(String name, int id) {
 		super(name, id);
-		this.burning = burning;
 	}
 
 	@Override
 	public void loadProperties() {
 		super.loadProperties();
-		this.setHardness(3.5F).setResistance(5.8F).setDrop(VanillaMaterials.FURNACE);
-		this.setController(VanillaControllerTypes.FURNACE);
-		if (this.burning) {
-			this.setLightLevel(13);
-		}
+		this.setHardness(5.0F).setResistance(2000.0F);
+		this.setController(VanillaControllerTypes.ENCHANTMENT_TABLE);
 	}
 
 	@Override
-	public FurnaceController getController(Block block) {
-		return (FurnaceController) super.getController(block);
+	public EnchantmentTableController getController(Block block) {
+		return (EnchantmentTableController) super.getController(block);
 	}
 
-	/**
-	 * Gets if this furnace block material is burning
-	 * 
-	 * @return True if burning
-	 */
-	public boolean isBurning() {
-		return this.burning;
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
+	}
+
+	@Override
+	public short getDurabilityPenalty(MiningTool tool) {
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSDRUM;
+	}
+
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
 	}
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BlockFaces.EWNS.get(block.getData() - 2);
+		return BlockFace.TOP;
 	}
 
 	@Override
 	public void setFacing(Block block, BlockFace facing) {
-		block.setData((short) (BlockFaces.EWNS.indexOf(facing, 0) + 2));
 	}
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
-			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-			block.getWorld().createAndSpawnEntity(block.getPosition(), new FurnaceController());
+			block.getWorld().createAndSpawnEntity(block.getPosition(), new EnchantmentTableController());
 			return true;
 		}
-
 		return false;
 	}
 
@@ -108,22 +105,8 @@ public class Furnace extends Solid implements Mineable, Directional {
 				return;
 			}
 
+			// Open the enchantment table
 			this.getController(block).getInventory().open((VanillaPlayer) controller);
 		}
-	}
-
-	@Override
-	public boolean isPlacementSuppressed() {
-		return true;
-	}
-
-	@Override
-	public MoveReaction getMoveReaction(Block block) {
-		return MoveReaction.DENY;
-	}
-
-	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

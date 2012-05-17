@@ -44,12 +44,13 @@ import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class FurnaceController extends VanillaBlockController {
-	private final FurnaceInventory inventory = new FurnaceInventory(this);
+	private final FurnaceInventory inventory;
 	private float burnTime = 0, burnIncrement = 0, burnStartTime = 0;
 	private float progress = 0, progressIncrement = 0, craftTime = 0;
 
 	public FurnaceController() {
 		super(VanillaControllerTypes.FURNACE, VanillaMaterials.FURNACE);
+		inventory = new FurnaceInventory(this);
 	}
 
 	@Override
@@ -105,7 +106,8 @@ public class FurnaceController extends VanillaBlockController {
 				craftTime = 0;
 			}
 
-			// Reset the burn timer, this is necessary because of the floating points.
+			// Reset the burn timer, this is necessary because of the floating
+			// points.
 			if (burnTime <= 0) {
 				burnIncrement = 0;
 				burnStartTime = 0;
@@ -136,7 +138,8 @@ public class FurnaceController extends VanillaBlockController {
 					if (c instanceof VanillaPlayer) {
 						VanillaPlayer controller = (VanillaPlayer) c;
 						int window = controller.getWindowId();
-						sendPacket(controller.getPlayer(), new ProgressBarMessage(window, Furnace.FIRE_ICON, (int) burnIncrement), new ProgressBarMessage(window, Furnace.PROGRESS_ARROW, (int) progressIncrement));
+						sendPacket(controller.getPlayer(), new ProgressBarMessage(window, Furnace.FIRE_ICON, (int) burnIncrement), new ProgressBarMessage(window,
+								Furnace.PROGRESS_ARROW, (int) progressIncrement));
 					}
 				}
 			}

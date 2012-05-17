@@ -28,32 +28,27 @@ package org.spout.vanilla.controller.block;
 
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.inventory.DispenserInventory;
+import org.spout.vanilla.inventory.EnchantmentTableInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class DispenserController extends VanillaBlockController {
-	private final DispenserInventory inventory;
+public class EnchantmentTableController extends VanillaBlockController {
+	private final EnchantmentTableInventory inventory;
 
-	public DispenserController() {
-		super(VanillaControllerTypes.DISPENSER, VanillaMaterials.DISPENSER);
-		inventory = new DispenserInventory(this);
+	public EnchantmentTableController() {
+		super(VanillaControllerTypes.ENCHANTMENT_TABLE, VanillaMaterials.ENCHANTMENT_TABLE);
+		inventory = new EnchantmentTableInventory();
 	}
 
 	@Override
 	public void onTick(float dt) {
-
 	}
 
 	@Override
 	public void onAttached() {
-		//if (this.getBlock().getMaterial().equals(VanillaMaterials.DISPENSER)) {
-			System.out.println("Dispenser entity spawned and controller attached to: " + getParent().getPosition().toString());
-		//} else {
-		//	this.getParent().kill();
-		//}
+		System.out.println("Enchantment Table entity spawned and controller attached to: " + getParent().getPosition().toString());
 	}
 
-	public DispenserInventory getInventory() {
+	public EnchantmentTableInventory getInventory() {
 		return inventory;
 	}
 }

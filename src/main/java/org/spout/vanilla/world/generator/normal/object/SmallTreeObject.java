@@ -76,8 +76,8 @@ public class SmallTreeObject extends WorldGeneratorObject {
 			return false;
 		}
 		byte radiusToCheck = radiusIncrease;
-		for (byte yy = 0; yy < y + totalHeight + 2; yy++) {
-			if (yy == y + 1 || yy == y + totalHeight - 1) {
+		for (byte yy = 0; yy < totalHeight + 2; yy++) {
+			if (yy == 1 || yy == totalHeight - 1) {
 				radiusToCheck++;
 			}
 			for (byte xx = (byte) -radiusToCheck; xx < radiusToCheck + 1; xx++) {

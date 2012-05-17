@@ -33,6 +33,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.vanilla.controller.block.ChestController;
 import org.spout.vanilla.controller.block.DispenserController;
+import org.spout.vanilla.controller.block.EnchantmentTableController;
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.block.JukeboxController;
 import org.spout.vanilla.controller.block.MovingPistonController;
@@ -153,18 +154,19 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType PAINTINGS = new VanillaControllerType(-1, Painting.class, "Painting", new PaintingEntityProtocol());
 	public static final VanillaControllerType PLAYER = new VanillaControllerType(-1, VanillaPlayer.class, "Player", new VanillaPlayerEntityProtocol());
 	// World
-	public static final VanillaControllerType NORMAL_SKY = new VanillaControllerType(-2, NormalSky.class, "Normal Sky", null);
-	public static final VanillaControllerType NETHER_SKY = new VanillaControllerType(-3, NetherSky.class, "Nether Sky", null);
-	public static final VanillaControllerType THE_END_SKY = new VanillaControllerType(-4, TheEndSky.class, "The End Sky", null);
+	public static final VanillaControllerType NORMAL_SKY = new VanillaControllerType(-2, NormalSky.class, "Normal Sky");
+	public static final VanillaControllerType NETHER_SKY = new VanillaControllerType(-3, NetherSky.class, "Nether Sky");
+	public static final VanillaControllerType THE_END_SKY = new VanillaControllerType(-4, TheEndSky.class, "The End Sky");
 	public static final VanillaControllerType LIGHTNING = new VanillaControllerType(-7, Lightning.class, "Lightning", new LightningEntityProtocol());
 	// Block
-	public static final VanillaControllerType FURNACE = new VanillaControllerType(-5, FurnaceController.class, "Furnace", null);
-	public static final VanillaControllerType DISPENSER = new VanillaControllerType(-6, DispenserController.class, "Dispenser", null);
-	public static final VanillaControllerType NOTEBLOCK = new VanillaControllerType(-7, NoteBlockController.class, "Note Block", null);
-	public static final VanillaControllerType JUKEBOX = new VanillaControllerType(-8, JukeboxController.class, "Jukebox", null);
-	public static final VanillaControllerType SIGN = new VanillaControllerType(-9, SignController.class, "Sign", null);
-	public static final VanillaControllerType PISTON_MOVING = new VanillaControllerType(-10, MovingPistonController.class, "Moving Piston", null);
-	public static final VanillaControllerType CHEST = new VanillaControllerType(-11, ChestController.class, "Chest", null);
+	public static final VanillaControllerType FURNACE = new VanillaControllerType(-5, FurnaceController.class, "Furnace");
+	public static final VanillaControllerType DISPENSER = new VanillaControllerType(-6, DispenserController.class, "Dispenser");
+	public static final VanillaControllerType NOTEBLOCK = new VanillaControllerType(-7, NoteBlockController.class, "Note Block");
+	public static final VanillaControllerType JUKEBOX = new VanillaControllerType(-8, JukeboxController.class, "Jukebox");
+	public static final VanillaControllerType SIGN = new VanillaControllerType(-9, SignController.class, "Sign");
+	public static final VanillaControllerType PISTON_MOVING = new VanillaControllerType(-10, MovingPistonController.class, "Moving Piston");
+	public static final VanillaControllerType CHEST = new VanillaControllerType(-11, ChestController.class, "Chest");
+	public static final VanillaControllerType ENCHANTMENT_TABLE = new VanillaControllerType(-12, EnchantmentTableController.class, "Enchantment Table");
 	public static final String KEY = "ControllerID";
 	private static final TIntObjectHashMap<VanillaControllerType> ID_LOOKUP = new TIntObjectHashMap<VanillaControllerType>();
 

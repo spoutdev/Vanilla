@@ -32,7 +32,6 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.ChestInventory;
 import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 

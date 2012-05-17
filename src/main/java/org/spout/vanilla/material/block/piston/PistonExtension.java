@@ -60,6 +60,7 @@ public class PistonExtension extends VanillaBlockMaterial implements Directional
 		return MoveReaction.DENY;
 	}
 
+	@Override
 	public void loadProperties() {
 		super.loadProperties();
 		this.setDrop(null);

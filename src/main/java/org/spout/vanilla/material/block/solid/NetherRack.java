@@ -31,7 +31,7 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
-public class Netherrack extends Solid implements Mineable {
+public class NetherRack extends Solid implements Mineable {
 	public NetherRack(String name, int id) {
 		super(name, id);
 	}

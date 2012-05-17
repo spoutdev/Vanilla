@@ -27,62 +27,79 @@
 package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
-
-import org.spout.vanilla.controller.block.ChestController;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.object.moving.Item;
 
-public class ChestInventory extends Inventory implements WindowInventory {
+/**
+ * Represents a enchantment table inventory belonging to an enchantment table
+ * controller.
+ */
+public class EnchantmentTableInventory extends Inventory implements WindowInventory {
 	private static final long serialVersionUID = 1L;
-	private final ChestController owner;
-	private final boolean doubleChest;
-	private final static int[] SINGLE_CHEST_SLOTS = { 54, 55, 56, 57, 58, 59, 60, 61, 62, 45, 46, 47, 48, 49, 50, 51, 52, 53, 36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-	private final static int[] DOUBLE_CHEST_SLOTS = { 81, 82, 83, 84, 85, 86, 87, 88, 89, 72, 73, 74, 75, 76, 77, 78, 79, 80, 63, 64, 65, 66, 67, 68, 69, 70, 71, 54, 55, 56, 57, 58, 59, 60, 61, 62, 45, 46, 47, 48, 49, 50, 51, 52, 53, 36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+	private static final int[] SLOTS = { 28, 29, 30, 31, 32, 33, 34, 35, 36, 19, 20, 21, 22, 23, 24, 25, 26, 27, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
 
-	public ChestInventory(ChestController owner, boolean doubleChest) {
-		super(doubleChest ? 90 : 64);
-		this.doubleChest = doubleChest;
-		this.owner = owner;
-	}
-
-	public ChestController getOwner() {
-		return owner;
+	public EnchantmentTableInventory() {
+		super(37);
 	}
 
 	@Override
 	public Window getWindow() {
-		return Window.CHEST;
+		return Window.ENCHANTMENT_TABLE;
 	}
 
 	@Override
 	public void open(VanillaPlayer player) {
-		owner.setOpened(true);
 		Inventory inventory = player.getPlayer().getEntity().getInventory();
 		for (int slot = 0; slot < 36; slot++) {
 			setItem(slot, inventory.getItem(slot));
 		}
-		// addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
+		addViewer(player.getPlayer().getNetworkSynchronizer());
 		player.setActiveInventory(this);
-		player.openWindow(Window.CHEST, doubleChest ? "Large chest" : "Chest", doubleChest ? 54 : 27);
+		player.openWindow(Window.ENCHANTMENT_TABLE, getSize());
 	}
 
 	@Override
 	public void onClosed(VanillaPlayer player) {
-		owner.setOpened(false);
+		if (hasItem()) {
+			// Drop the item and remove the item from the inventory
+			player.getParent().getWorld().createAndSpawnEntity(player.getHeadPosition(), new Item(getItem(0), Vector3.FORWARD));
+			setItem(0, null);
+		}
 	}
 
 	@Override
 	public int getNativeSlotIndex(int index) {
-		return doubleChest ? DOUBLE_CHEST_SLOTS[index] : SINGLE_CHEST_SLOTS[index];
+		return SLOTS[index];
 	}
 
 	@Override
 	public int getSlotIndex(int nativeIndex) {
-		int[] slots = doubleChest ? DOUBLE_CHEST_SLOTS : SINGLE_CHEST_SLOTS;
-		for (int i = 0; i < slots.length; i++) {
-			if (slots[i] == nativeIndex) {
+		for (int i = 0; i < SLOTS.length; i++) {
+			if (SLOTS[i] == nativeIndex) {
 				return i;
 			}
 		}
 		return -1;
+	}
+
+	/**
+	 * Whether the inventory contains an item to enchant
+	 * 
+	 * @return true if an item is present
+	 */
+	public boolean hasItem() {
+		return this.getItem(36) != null;
+	}
+
+	/**
+	 * Returns the {@link ItemStack} in the enchantment slot (slot 36); can
+	 * return null.
+	 * 
+	 * @return ingredient item stack
+	 */
+	public ItemStack getItem() {
+		return getItem(36);
 	}
 }

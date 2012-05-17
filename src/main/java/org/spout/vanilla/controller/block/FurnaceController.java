@@ -44,12 +44,13 @@ import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class FurnaceController extends VanillaBlockController {
-	private final FurnaceInventory inventory = new FurnaceInventory(this);
+	private final FurnaceInventory inventory;
 	private float burnTime = 0, burnIncrement = 0, burnStartTime = 0;
 	private float progress = 0, progressIncrement = 0, craftTime = 0;
 
 	public FurnaceController() {
 		super(VanillaControllerTypes.FURNACE, VanillaMaterials.FURNACE);
+		inventory = new FurnaceInventory(this);
 	}
 
 	@Override

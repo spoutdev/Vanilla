@@ -66,7 +66,7 @@ public class Jukebox extends Solid implements Fuel {
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
-			this.getController(block);
+			block.setController(new JukeboxController());
 			return true;
 		}
 		return false;

@@ -32,10 +32,11 @@ import org.spout.vanilla.inventory.DispenserInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class DispenserController extends VanillaBlockController {
-	private final DispenserInventory inventory = new DispenserInventory(this);
+	private final DispenserInventory inventory;
 
 	public DispenserController() {
 		super(VanillaControllerTypes.DISPENSER, VanillaMaterials.DISPENSER);
+		inventory = new DispenserInventory(this);
 	}
 
 	@Override

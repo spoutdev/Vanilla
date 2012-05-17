@@ -24,23 +24,31 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory;
+package org.spout.vanilla.controller.block;
 
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.controller.VanillaBlockController;
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.inventory.EnchantmentTableInventory;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class JukeboxInventory extends Inventory implements VanillaInventory {
-	private static final long serialVersionUID = 1L;
+public class EnchantmentTableController extends VanillaBlockController {
+	private final EnchantmentTableInventory inventory;
 
-	public JukeboxInventory() {
-		super(1);
+	public EnchantmentTableController() {
+		super(VanillaControllerTypes.ENCHANTMENT_TABLE, VanillaMaterials.ENCHANTMENT_TABLE);
+		inventory = new EnchantmentTableInventory();
 	}
 
-	public ItemStack getMusicSlot() {
-		return getItem(0);
+	@Override
+	public void onTick(float dt) {
 	}
 
-	public void setMusicSlot(ItemStack item) {
-		setItem(0, item);
+	@Override
+	public void onAttached() {
+		System.out.println("Enchantment Table entity spawned and controller attached to: " + getParent().getPosition().toString());
+	}
+
+	public EnchantmentTableInventory getInventory() {
+		return inventory;
 	}
 }

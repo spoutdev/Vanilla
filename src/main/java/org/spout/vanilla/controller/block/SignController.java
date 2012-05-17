@@ -26,10 +26,7 @@
  */
 package org.spout.vanilla.controller.block;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.player.Player;
@@ -101,4 +98,3 @@ public class SignController extends VanillaBlockController {
 		VanillaNetworkSynchronizer.sendPacket(dirty.toArray(new Player[dirty.size()]), new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), text));
 	}
 }
-

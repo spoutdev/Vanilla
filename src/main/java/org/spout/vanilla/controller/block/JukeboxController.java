@@ -43,10 +43,11 @@ import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.Music;
 
 public class JukeboxController extends VanillaBlockController {
-	private final JukeboxInventory inventory = new JukeboxInventory();
+	private final JukeboxInventory inventory;
 
 	public JukeboxController() {
 		super(VanillaControllerTypes.JUKEBOX, VanillaMaterials.JUKEBOX);
+		inventory = new JukeboxInventory();
 	}
 
 	@Override

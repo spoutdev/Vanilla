@@ -95,6 +95,7 @@ import org.spout.vanilla.material.block.solid.CraftingTable;
 import org.spout.vanilla.material.block.solid.Dirt;
 import org.spout.vanilla.material.block.solid.Dispenser;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
+import org.spout.vanilla.material.block.solid.EnchantmentTable;
 import org.spout.vanilla.material.block.solid.Furnace;
 import org.spout.vanilla.material.block.solid.Glass;
 import org.spout.vanilla.material.block.solid.Grass;
@@ -296,7 +297,7 @@ public final class VanillaMaterials {
 	public static final NetherBrick NETHER_BRICK = (NetherBrick) register(new NetherBrick("Nether Brick", 112).setHardness(2.0F).setResistance(10.0F));
 	public static final Solid NETHER_BRICK_FENCE = (Solid) register(new Solid("Nether Brick Fence", 113).setHardness(2.0F).setResistance(10.0F));
 	public static final NetherWart NETHER_WART_BLOCK = (NetherWart) register(new NetherWart().setResistance(0.0F));
-	public static final Solid ENCHANTMENT_TABLE = (Solid) register(new Solid("Enchantment Table", 116).setHardness(5.0F).setResistance(2000.0F));
+	public static final EnchantmentTable ENCHANTMENT_TABLE = (EnchantmentTable) register(new EnchantmentTable("Enchantment Table", 116));
 	public static final Solid BREWING_STAND_BLOCK = (Solid) register(new Solid("Brewing Stand", 117).setHardness(0.5F).setResistance(0.8F).setLightLevel(1));
 	public static final Solid CAULDRON_BLOCK = (Solid) register(new Solid("Cauldron", 118).setHardness(2.0F).setResistance(3.3F));
 	public static final Solid DRAGON_EGG = (Solid) register(new Solid("Dragon Egg", 122).setHardness(3.0F).setResistance(15.0F).setLightLevel(1));

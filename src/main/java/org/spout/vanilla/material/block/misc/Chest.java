@@ -32,15 +32,12 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.ChestController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.ChestInventory;
-import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -64,15 +61,21 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 		setHardness(2.5F).setResistance(4.2F);
 		setController(VanillaControllerTypes.CHEST);
 	}
-	
+
 	public boolean isDouble(Block block) {
 		Point pos = block.getPosition();
 		World world = pos.getWorld();
 		VanillaBlockMaterial chest = VanillaMaterials.CHEST;
-		if (world.getBlock(pos.add(1, 0, 0)).getMaterial() == chest || world.getBlock(pos.subtract(1, 0, 0)).getMaterial() == chest || world.getBlock(pos.add(0, 0, 1)).getMaterial() == chest || world.getBlock(pos.subtract(0, 0, 1)).getMaterial() == chest) {
+		if (world.getBlock(pos.add(1, 0, 0)).getMaterial() == chest || world.getBlock(pos.subtract(1, 0, 0)).getMaterial() == chest
+				|| world.getBlock(pos.add(0, 0, 1)).getMaterial() == chest || world.getBlock(pos.subtract(0, 0, 1)).getMaterial() == chest) {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public ChestController getController(Block block) {
+		return (ChestController) super.getController(block);
 	}
 
 	@Override
@@ -124,10 +127,7 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 			}
 
 			// Open the chest
-			VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
-			ChestController chest = (ChestController) getController(block);
-			ChestInventory chestInventory = chest.getInventory();
-			chestInventory.open(vanillaPlayer);
+			this.getController(block).getInventory().open((VanillaPlayer) controller);
 		}
 	}
 

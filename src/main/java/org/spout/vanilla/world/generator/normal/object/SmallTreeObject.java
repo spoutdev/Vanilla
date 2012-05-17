@@ -30,15 +30,14 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class SmallTreeObject extends WorldGeneratorObject {
-	// rng
+public class SmallTreeObject extends TreeObject {
+	// random
 	private final Random random;
 	// size control
 	private byte baseHeight = 3;
@@ -166,6 +165,11 @@ public class SmallTreeObject extends WorldGeneratorObject {
 				block.setMaterial(VanillaMaterials.VINES, facing);
 			}
 		}
+	}
+
+	@Override
+	public void randomize() {
+		this.findNewRandomHeight();
 	}
 
 	public final void findNewRandomHeight() {

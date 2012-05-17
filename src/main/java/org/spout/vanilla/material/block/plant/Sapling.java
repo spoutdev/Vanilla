@@ -26,6 +26,12 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.Random;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -33,6 +39,10 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.GroundAttachable;
 import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.util.VanillaPlayerUtil;
+import org.spout.vanilla.world.generator.normal.object.SmallTreeObject;
+import org.spout.vanilla.world.generator.normal.object.SmallTreeObject.SmallTreeType;
 
 public class Sapling extends GroundAttachable implements Plant, Fuel {
 	public static final Sapling DEFAULT = register(new Sapling("Sapling"));
@@ -40,7 +50,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel {
 	public static final Sapling BIRCH = register(new Sapling("Birch Sapling", 2, DEFAULT));
 	public static final Sapling JUNGLE = register(new Sapling("Jungle Sapling", 3, DEFAULT));
 	public final float BURN_TIME = 5.f;
-
+	
 	private Sapling(String name) {
 		super(name, 6);
 	}
@@ -74,12 +84,45 @@ public class Sapling extends GroundAttachable implements Plant, Fuel {
 	public float getFuelTime() {
 		return BURN_TIME;
 	}
-
+	
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		if (super.canAttachTo(material, face)) {
 			return material.equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT);
 		}
 		return false;
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, type, clickedFace);
+		ItemStack current = entity.getInventory().getCurrentItem();
+		if (current != null && current.getSubMaterial().equals(Dye.BONE_MEAL)) {
+			if (!VanillaPlayerUtil.isCreative(entity)) {
+				entity.getInventory().addCurrentItemAmount(-1);
+			}
+			this.growTree(block);
+		}
+	}
+
+	/**
+	 * Grows a full-sized tree from the sapling at the block given
+	 * @param block to place a tree at
+	 */
+	public void growTree(Block block) {
+		BlockMaterial mat = block.getSubMaterial();
+		if (mat instanceof Sapling) {
+			this.growTree(block, (Sapling) mat);
+		}
+	}
+
+	/**
+	 * Grows a full-sized tree from the sapling type given
+	 * @param block to grow a tree at
+	 * @param type of tree
+	 */
+	public void growTree(Block block, Sapling type) {
+		SmallTreeObject object = new SmallTreeObject(new Random(), SmallTreeType.OAK);
+		object.placeObject(block.getWorld(), block.getX(), block.getY(), block.getZ());
 	}
 }

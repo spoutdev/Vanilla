@@ -34,8 +34,8 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class Fire extends VanillaBlockMaterial {
-	public Fire() {
-		super("Fire", 51);
+	public Fire(String name, int id) {
+		super(name, id);
 	}
 
 	@Override

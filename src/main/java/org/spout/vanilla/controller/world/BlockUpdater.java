@@ -101,7 +101,7 @@ public class BlockUpdater extends Controller implements VanillaController {
 	}
 
 	public static void schedule(Block block, int delay) {
-		System.out.println("SCHEDULING: " + block.getX() + "/" + block.getY() + "/" + block.getZ() + " in region " + block.getRegion());
+		System.out.println("SCHEDULING: " + block.getX() + "/" + block.getY() + "/" + block.getZ());
 		get(block.getRegion()).add(block, delay);
 	}
 
@@ -113,13 +113,12 @@ public class BlockUpdater extends Controller implements VanillaController {
 	public void onTick(float dt) {
 		this.updates.sync();
 		if (!this.updates.isEmpty()) {
-			System.out.println("TICKING");
 			Iterator<Update> iter = this.updates.iterator();
 			Update update;
 			while (iter.hasNext()) {
 				update = iter.next();
 				if (update.counter.decrementAndGet() <= 0) {
-					System.out.println("EXECUTE: " + update.block);
+					System.out.println("EXECUTE: " + update.block.getX() + "/" + update.block.getY() + "/" + update.block.getZ());
 					iter.remove();
 					//perform update
 					BlockMaterial mat = update.block.getSubMaterial();

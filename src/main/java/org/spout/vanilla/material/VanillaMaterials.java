@@ -39,7 +39,10 @@ import org.spout.vanilla.material.block.door.WoodenDoorBlock;
 import org.spout.vanilla.material.block.liquid.Lava;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.block.misc.BedBlock;
+import org.spout.vanilla.material.block.misc.CakeBlock;
 import org.spout.vanilla.material.block.misc.Chest;
+import org.spout.vanilla.material.block.misc.EndPortal;
+import org.spout.vanilla.material.block.misc.EndPortalFrame;
 import org.spout.vanilla.material.block.misc.FarmLand;
 import org.spout.vanilla.material.block.misc.Fence;
 import org.spout.vanilla.material.block.misc.FenceGate;
@@ -48,6 +51,7 @@ import org.spout.vanilla.material.block.misc.GlassPane;
 import org.spout.vanilla.material.block.misc.Ladder;
 import org.spout.vanilla.material.block.misc.Lever;
 import org.spout.vanilla.material.block.misc.MonsterSpawner;
+import org.spout.vanilla.material.block.misc.NetherPortal;
 import org.spout.vanilla.material.block.misc.SignBase;
 import org.spout.vanilla.material.block.misc.Slab;
 import org.spout.vanilla.material.block.misc.Snow;
@@ -232,11 +236,9 @@ public final class VanillaMaterials {
 	public static final WoodenStairs STAIRS_WOODEN = register(new WoodenStairs("Wooden Stairs", 53));
 	public static final StoneBrickStairs STAIRS_STONE_BRICK = register(new StoneBrickStairs("Stone Brick Stairs", 109));
 	//== Portals ==
-	//TODO: Set move reaction for below 4 blocks to DENY (or else pistons can move it!)
-	public static final Solid PORTAL = (Solid) register(new Solid("Portal", 90).setHardness(-1.0F).setResistance(0.0F).setLightLevel(11));
-	public static final Solid END_PORTAL = (Solid) register(new Solid("End Portal", 119).setHardness(-1.0F).setResistance(6000000.0F).setLightLevel(1));
-	public static final Solid END_PORTAL_FRAME = (Solid) register(new Solid("End Portal Frame", 120).setHardness(-1.0F));
-	public static final Solid END_STONE = (Solid) register(new Solid("End Stone", 121).setHardness(3.0F).setResistance(15.0F));
+	public static final NetherPortal PORTAL = register(new NetherPortal("Portal", 90));
+	public static final EndPortal END_PORTAL = register(new EndPortal("End Portal", 119));
+	public static final EndPortalFrame END_PORTAL_FRAME = register(new EndPortalFrame("End Portal Frame", 120));
 	//================
 	public static final DoubleSlab DOUBLE_SLABS = DoubleSlab.STONE;
 	public static final Slab SLAB = Slab.STONE;
@@ -247,7 +249,7 @@ public final class VanillaMaterials {
 	public static final MossStone MOSS_STONE = register(new MossStone("Moss Stone", 48));
 	public static final Obsidian OBSIDIAN = register(new Obsidian("Obsidian", 49));
 	public static final Torch TORCH = register(new Torch("Torch", 50));
-	public static final Fire FIRE = register(new Fire());
+	public static final Fire FIRE = register(new Fire("Fire", 51));
 	public static final MonsterSpawner MONSTER_SPAWNER = register(new MonsterSpawner("Monster Spawner", 52));
 	public static final Chest CHEST = register(new Chest("Chest", 54));
 	public static final RedstoneWire REDSTONE_WIRE = register(new RedstoneWire("Redstone Wire", 55));
@@ -280,7 +282,8 @@ public final class VanillaMaterials {
 	public static final SoulSand SOUL_SAND = register(new SoulSand("Soul Sand", 88));
 	public static final Glowstone GLOWSTONE_BLOCK = register(new Glowstone("Glowstone Block", 89));
 	public static final Pumpkin JACK_O_LANTERN = register(new Pumpkin("Jack 'o' Lantern", 91, true));
-	public static final Solid CAKE_BLOCK = (Solid) register(new Solid("Cake Block", 92).setHardness(0.5F).setResistance(0.8F));
+	public static final Solid END_STONE = (Solid) register(new Solid("End Stone", 121).setHardness(3.0F).setResistance(15.0F));
+	public static final CakeBlock CAKE_BLOCK = register(new CakeBlock("Cake Block", 92));
 	public static final RedstoneRepeater REDSTONE_REPEATER_OFF = register(new RedstoneRepeater("Redstone Repeater", 93, false));
 	public static final RedstoneRepeater REDSTONE_REPEATER_ON = register(new RedstoneRepeater("Redstone Repeater (On)", 94, true));
 	public static final Solid LOCKED_CHEST = (Solid) register(new Solid("Locked Chest", 95).setHardness(0.0F).setResistance(0.0F).setLightLevel(15));

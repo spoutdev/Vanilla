@@ -350,7 +350,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		z += chunk.getZ() * Chunk.CHUNK_SIZE;
 		if (y >= 0 && y < chunk.getWorld().getHeight()) {
 			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id & 0xFF, data & 0xF);
-			System.out.println("BLOCK UPDATE TO CLIENT AT " + x + "/" + y + "/" + z);
 			session.send(BCM);
 		}
 	}

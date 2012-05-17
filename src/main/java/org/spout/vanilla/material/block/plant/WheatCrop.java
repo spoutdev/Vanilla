@@ -28,13 +28,22 @@ package org.spout.vanilla.material.block.plant;
 
 import java.util.Random;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.GroundAttachable;
 import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class WheatCrop extends Solid implements Plant {
+public class WheatCrop extends GroundAttachable implements Plant {
+
 	private Random rand = new Random();
 
 	public WheatCrop(String name, int id) {
@@ -70,6 +79,37 @@ public class WheatCrop extends Solid implements Plant {
 	@Override
 	public int getDropCount() {
 		return rand.nextInt(4);
+	}
+
+	@Override
+	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+		return face == BlockFace.TOP && material.equals(VanillaMaterials.FARMLAND);
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, type, clickedFace);
+		ItemStack current = entity.getInventory().getCurrentItem();
+		if (current != null && current.getSubMaterial().equals(Dye.BONE_MEAL)) {
+			if (this.getGrowthStage(block) != 0x7) {
+				if (!VanillaPlayerUtil.isCreative(entity)) {
+					entity.getInventory().addCurrentItemAmount(-1);
+				}
+				this.setGrowthStage(block, 0x7);
+			}
+		}
+	}
+
+	public int getGrowthStage(Block block) {
+		return block.getData();
+	}
+
+	public void setGrowthStage(Block block, int stage) {
+		block.setData(stage & 0x7);
+	}
+
+	public boolean isFullyGrown(Block block) {
+		return block.getData() == 0x7;
 	}
 
 	// TODO: Grow

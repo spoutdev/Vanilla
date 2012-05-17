@@ -49,7 +49,7 @@ public class GroundAttachable extends AbstractAttachable {
 
 	@Override
 	public void setAttachedFace(Block block, BlockFace attachedFace) {
-		block.setData((short) 0);
+		block.setData(0);
 	}
 
 	@Override

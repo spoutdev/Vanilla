@@ -393,11 +393,11 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial STRING = register(new VanillaItemMaterial("String", 287));
 	public static final VanillaItemMaterial FEATHER = register(new VanillaItemMaterial("Feather", 288));
 	public static final VanillaItemMaterial GUNPOWDER = register(new VanillaItemMaterial("Gunpowder", 289));
-	public static final VanillaItemMaterial SEEDS = register(new VanillaItemMaterial("Seeds", 295));
 	public static final VanillaItemMaterial WHEAT = register(new VanillaItemMaterial("Wheat", 296));
 	public static final VanillaItemMaterial FLINT = register(new VanillaItemMaterial("Flint", 318));
 	public static final PaintingItem PAINTING = register(new PaintingItem("Painting", 321));
 	public static final Sign SIGN = register(new Sign("Sign", 323));
+	public static final BlockItem SEEDS = register(new BlockItem("Seeds", 295, WHEATCROP));
 	public static final BlockItem WOODEN_DOOR = register(new BlockItem("Wooden Door", 324, WOODEN_DOOR_BLOCK));
 	public static final BlockItem IRON_DOOR = register(new BlockItem("Iron Door", 330, IRON_DOOR_BLOCK));
 	public static final VanillaItemMaterial SADDLE = register(new VanillaItemMaterial("Saddle", 329));

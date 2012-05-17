@@ -50,7 +50,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel {
 	public static final Sapling BIRCH = register(new Sapling("Birch Sapling", 2, DEFAULT));
 	public static final Sapling JUNGLE = register(new Sapling("Jungle Sapling", 3, DEFAULT));
 	public final float BURN_TIME = 5.f;
-	
+
 	private Sapling(String name) {
 		super(name, 6);
 	}
@@ -84,7 +84,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel {
 	public float getFuelTime() {
 		return BURN_TIME;
 	}
-	
+
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		if (super.canAttachTo(material, face)) {

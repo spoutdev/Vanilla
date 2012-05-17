@@ -45,6 +45,7 @@ import org.spout.vanilla.material.block.Liquid;
  * the borders between biomes.
  */
 public class SmoothPopulator implements Populator {
+	
 	// area to smooth per populate call
 	private final static byte SMOOTH_SIZE = 16;
 	// the floor of half the value of the side of the square
@@ -82,11 +83,13 @@ public class SmoothPopulator implements Populator {
 		for (byte x = 0; x < SMOOTH_SIZE; x++) {
 			for (byte z = 0; z < SMOOTH_SIZE; z++) {
 				byte y = getHighestNonFluidBlock(world, worldX + x, worldZ + z);
-				final Biome currentBiome = world.getBiomeType(worldX + x, y, worldZ + z);
-				if (lastBiome != null) {
-					hasBiomeVariations = currentBiome != lastBiome;
+				if (!hasBiomeVariations) {
+					final Biome currentBiome = world.getBiomeType(worldX + x, y, worldZ + z);
+					if (lastBiome != null) {
+						hasBiomeVariations = currentBiome != lastBiome;
+					}
+					lastBiome = currentBiome;
 				}
-				lastBiome = currentBiome;
 				heightMap[x + z * SMOOTH_SIZE] = y;
 			}
 		}
@@ -127,16 +130,6 @@ public class SmoothPopulator implements Populator {
 		return y;
 	}
 
-	/*private void mark(World world, int x, int z) {
-		 byte y = 127;
-		 while (world.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
-		 y--;
-		 if (y == 0) {
-		 return;
-		 }
-		 }
-		 world.setBlockMaterial(x, y, z, VanillaMaterials.GOLD_BLOCK, (short) 0, world);
-		 }*/
 	// get the lowest non bedrock block, at world level
 	private byte getLowestNonBedrockBlock(World world, int x, int z) {
 		byte y = 0;
@@ -208,10 +201,10 @@ public class SmoothPopulator implements Populator {
 	// with the most present adjacent liquid
 	private void fixAdjacentLiquids(World world, int x, int y, int z) {
 		final BlockMaterial[] adjacent = {
-				world.getBlockMaterial(x - 1, y, z),
-				world.getBlockMaterial(x + 1, y, z),
-				world.getBlockMaterial(x, y, z - 1),
-				world.getBlockMaterial(x, y, z + 1)
+			world.getBlockMaterial(x - 1, y, z),
+			world.getBlockMaterial(x + 1, y, z),
+			world.getBlockMaterial(x, y, z - 1),
+			world.getBlockMaterial(x, y, z + 1)
 		};
 		boolean hasAdjacentLiquid = false;
 		for (BlockMaterial material : adjacent) {

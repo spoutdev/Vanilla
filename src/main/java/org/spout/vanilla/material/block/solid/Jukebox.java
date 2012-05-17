@@ -41,6 +41,7 @@ import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Jukebox extends Solid implements Fuel {
+
 	public final float BURN_TIME = 15.f;
 
 	public Jukebox(String name, int id) {
@@ -61,6 +62,7 @@ public class Jukebox extends Solid implements Fuel {
 	@Override
 	public void onDestroy(Block block) {
 		super.onDestroy(block);
+		getController(block).stopMusic();
 	}
 
 	@Override
@@ -91,6 +93,8 @@ public class Jukebox extends Solid implements Fuel {
 					entity.getInventory().addCurrentItemAmount(-1);
 				}
 			}
+		} else if (type == Action.RIGHT_CLICK) {
+			getController(block).stopMusic();
 		}
 	}
 

@@ -106,7 +106,7 @@ public class JukeboxController extends VanillaBlockController {
 	 */
 	public void setPlaying(boolean playing) {
 		Block block = this.getBlock();
-		block.setData(playing ? 1 : 0);
+		block.setData(playing ? 1 : 0); //TODO hmmm? doesn't seem useful at all, since you don't know when the music stops playing...
 		Music music = playing ? this.getMusic() : Music.NONE;
 		VanillaNetworkSynchronizer.playBlockEffect(block, null, 48, PlayEffectMessage.Messages.MUSIC_DISC, music.getId());
 	}
@@ -117,5 +117,9 @@ public class JukeboxController extends VanillaBlockController {
 
 	@Override
 	public void onTick(float dt) {
+	}
+
+	public void stopMusic() {
+		VanillaNetworkSynchronizer.playBlockEffect(getBlock(), null, 48, PlayEffectMessage.Messages.MUSIC_DISC, Music.NONE.getId());
 	}
 }

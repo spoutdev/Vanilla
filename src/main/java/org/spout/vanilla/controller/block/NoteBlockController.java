@@ -80,10 +80,5 @@ public class NoteBlockController extends VanillaBlockController {
 
 	@Override
 	public void onAttached() {
-		//if (this.getBlock().getMaterial().equals(VanillaMaterials.NOTEBLOCK)) {
-			System.out.println("Note Block entity spawned and controller attached to: " + getParent().getPosition().toString());
-		//} else {
-		//	this.getParent().kill();
-		//}
 	}
 }

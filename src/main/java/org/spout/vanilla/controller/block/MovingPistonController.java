@@ -41,7 +41,7 @@ public class MovingPistonController extends VanillaBlockController {
 
 	@Override
 	public boolean isSavable() {
-		return false; //for now...
+		return false;
 	}
 
 	@Override

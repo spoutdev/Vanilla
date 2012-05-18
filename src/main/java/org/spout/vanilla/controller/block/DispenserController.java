@@ -41,16 +41,10 @@ public class DispenserController extends VanillaBlockController {
 
 	@Override
 	public void onTick(float dt) {
-
 	}
 
 	@Override
 	public void onAttached() {
-		//if (this.getBlock().getMaterial().equals(VanillaMaterials.DISPENSER)) {
-			System.out.println("Dispenser entity spawned and controller attached to: " + getParent().getPosition().toString());
-		//} else {
-		//	this.getParent().kill();
-		//}
 	}
 
 	public DispenserInventory getInventory() {

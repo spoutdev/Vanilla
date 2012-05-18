@@ -29,6 +29,7 @@ package org.spout.vanilla.material.block.solid;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -72,7 +73,6 @@ public class Pumpkin extends Solid implements Directional {
 
 	/**
 	 * Whether this pumpkin block material is a jack o' lantern
-	 * 
 	 * @return true if jack o' lantern
 	 */
 	public boolean isLantern() {

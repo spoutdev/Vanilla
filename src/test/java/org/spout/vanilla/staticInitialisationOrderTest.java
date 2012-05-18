@@ -43,7 +43,7 @@ public class staticInitialisationOrderTest {
 			VanillaMaterials.initialize();
 			for (Field field : VanillaMaterials.class.getFields()) {
 				try {
-					if (field == null || ((field.getModifiers()&(Modifier.STATIC|Modifier.PUBLIC))!=(Modifier.STATIC|Modifier.PUBLIC)) || !VanillaMaterial.class.isAssignableFrom(field.getType())) {
+					if (field == null || ((field.getModifiers() & (Modifier.STATIC | Modifier.PUBLIC)) != (Modifier.STATIC | Modifier.PUBLIC)) || !VanillaMaterial.class.isAssignableFrom(field.getType())) {
 						continue;
 					}
 					VanillaMaterial material = (VanillaMaterial) field.get(null);

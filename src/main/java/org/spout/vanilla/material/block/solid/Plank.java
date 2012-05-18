@@ -87,7 +87,7 @@ public class Plank extends Solid implements Fuel, Mineable {
 		OAK(0),
 		PINE(1),
 		BIRCH(2),
-		JUNGLE(3), ;
+		JUNGLE(3),;
 		private final short data;
 
 		private WoodType(int data) {

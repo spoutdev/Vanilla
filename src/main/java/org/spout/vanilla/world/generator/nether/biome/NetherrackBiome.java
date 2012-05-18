@@ -52,55 +52,55 @@ public class NetherrackBiome extends VanillaBiome {
 
 	public NetherrackBiome(int id) {
 		super(id);
-		
+
 		mainBase.setFrequency(0.1D);
 		mainBase.setLacunarity(1D);
 		mainBase.setNoiseQuality(NoiseQuality.STANDARD);
 		mainBase.setPersistence(0.7D);
 		mainBase.setOctaveCount(1);
-		
+
 		mainDisplacer.setFrequency(0.1D);
 		mainDisplacer.setLacunarity(1D);
 		mainDisplacer.setNoiseQuality(NoiseQuality.STANDARD);
 		mainDisplacer.setPersistence(0.7D);
 		mainDisplacer.setOctaveCount(1);
-		
+
 		final ScalePoint mainScalePoint = new ScalePoint();
 		mainScalePoint.SetSourceModule(0, mainBase);
 		mainScalePoint.setxScale(0.27D);
 		mainScalePoint.setyScale(0.65D);
 		mainScalePoint.setzScale(0.27D);
-		
+
 		final Displace mainDisplace = new Displace();
 		mainDisplace.SetSourceModule(0, mainScalePoint);
 		mainDisplace.SetXDisplaceModule(mainDisplacer);
 		mainDisplace.SetZDisplaceModule(mainDisplacer);
 		mainDisplace.SetYDisplaceModule(mainDisplacer);
-		
+
 		main.SetSourceModule(0, mainDisplace);
 		main.setFrequency(0.025D);
 		main.setPower(2.5D);
-		
+
 		limits.SetSourceModule(0, mainBase);
 		limits.setScale(2.666666D);
 		limits.setBias(7D);
-		
+
 		bedrockBase.setFrequency(0.1D);
 		bedrockBase.setLacunarity(1D);
 		bedrockBase.setNoiseQuality(NoiseQuality.STANDARD);
 		bedrockBase.setPersistence(4D);
 		bedrockBase.setOctaveCount(1);
-		
+
 		final ScalePoint bedrockScalePoint = new ScalePoint();
 		bedrockScalePoint.SetSourceModule(0, bedrockBase);
 		bedrockScalePoint.setxScale(100D);
 		bedrockScalePoint.setzScale(100D);
-		
+
 		final ScaleBias bedrockScaleBias = new ScaleBias();
 		bedrockScaleBias.SetSourceModule(0, bedrockScalePoint);
 		bedrockScaleBias.setScale(6.666666D);
 		bedrockScaleBias.setBias(2D);
-		
+
 		bedrock.SetSourceModule(0, bedrockScaleBias);
 		bedrock.setLowerBound(0);
 		bedrock.setUpperBound(3);

@@ -49,7 +49,6 @@ public class RedstoneLamp extends Solid {
 
 	/**
 	 * Whether this redstone lamp block material is in the on state
-	 * 
 	 * @return true if on
 	 */
 	public boolean inOn() {

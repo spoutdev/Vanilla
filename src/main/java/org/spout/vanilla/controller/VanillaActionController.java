@@ -76,7 +76,7 @@ public abstract class VanillaActionController extends ActionController implement
 		getParent().setCollision(new CollisionModel(area));
 		getParent().getCollision().setStrategy(CollisionStrategy.SOLID);
 		data().put(VanillaControllerTypes.KEY, getType().getID());
-		
+
 		//Load data
 		isFlammable = (Boolean) data().get("Flammable", isFlammable);
 		fireTicks = (Integer) data().get("fireTicks", fireTicks);
@@ -86,7 +86,7 @@ public abstract class VanillaActionController extends ActionController implement
 		movementSpeed = (Vector3) data().get("movementSpeed", movementSpeed);
 		maxSpeed = (Vector3) data().get("maxSpeed", maxSpeed);
 	}
-	
+
 	@Override
 	public void onSave() {
 		data().put("Flammable", isFlammable);

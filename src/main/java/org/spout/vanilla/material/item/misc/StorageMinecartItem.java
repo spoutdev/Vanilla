@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.entity.Controller;
+
 import org.spout.vanilla.controller.object.vehicle.minecart.StorageMinecart;
 
 public class StorageMinecartItem extends MinecartItem {

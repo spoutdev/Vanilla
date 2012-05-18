@@ -109,6 +109,7 @@ import org.spout.vanilla.material.block.solid.Gravel;
 import org.spout.vanilla.material.block.solid.Ice;
 import org.spout.vanilla.material.block.solid.Jukebox;
 import org.spout.vanilla.material.block.solid.Leaves;
+import org.spout.vanilla.material.block.solid.Log;
 import org.spout.vanilla.material.block.solid.MossStone;
 import org.spout.vanilla.material.block.solid.MushroomBlock;
 import org.spout.vanilla.material.block.solid.Mycelium;
@@ -126,7 +127,6 @@ import org.spout.vanilla.material.block.solid.SoulSand;
 import org.spout.vanilla.material.block.solid.Stone;
 import org.spout.vanilla.material.block.solid.StoneBrick;
 import org.spout.vanilla.material.block.solid.TNT;
-import org.spout.vanilla.material.block.solid.Log;
 import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.material.block.stair.BrickStairs;
 import org.spout.vanilla.material.block.stair.CobblestoneStairs;
@@ -478,7 +478,7 @@ public final class VanillaMaterials {
 		}
 		for (Field field : VanillaMaterials.class.getFields()) {
 			try {
-				if (field == null || ((field.getModifiers()&(Modifier.STATIC|Modifier.PUBLIC))!=(Modifier.STATIC|Modifier.PUBLIC)) || !VanillaMaterial.class.isAssignableFrom(field.getType())) {
+				if (field == null || ((field.getModifiers() & (Modifier.STATIC | Modifier.PUBLIC)) != (Modifier.STATIC | Modifier.PUBLIC)) || !VanillaMaterial.class.isAssignableFrom(field.getType())) {
 					continue;
 				}
 				VanillaMaterial material = (VanillaMaterial) field.get(null);

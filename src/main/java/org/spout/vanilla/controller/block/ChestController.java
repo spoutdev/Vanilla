@@ -52,7 +52,7 @@ public class ChestController extends VanillaBlockController {
 	public ChestInventory getInventory() {
 		return inventory;
 	}
-	
+
 	public void setOpened(boolean opened) {
 		this.opened = opened;
 		byte data = opened ? (byte) 1 : 0;

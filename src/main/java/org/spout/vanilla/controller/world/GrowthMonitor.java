@@ -24,25 +24,33 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.controller.world;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.util.Instrument;
+import org.spout.api.entity.Controller;
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
+import org.spout.api.geo.cuboid.Region;
 
-public class GlassPane extends VanillaBlockMaterial {
-	public GlassPane(String name, int id) {
-		super(name, id);
-		this.setOccludes(false);
+import org.spout.vanilla.controller.VanillaController;
+
+public class GrowthMonitor extends Controller implements VanillaController {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(GrowthMonitor.class, "Growth Monitor");
+	private final Region region;
+
+	public GrowthMonitor(Region region) {
+		super(TYPE);
+		this.region = region;
+	}
+	
+	public Region getRegion() {
+		return region;
 	}
 
 	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(0.3F).setResistance(0.3F).setDrop(null); // TODO resistance unknown
+	public void onAttached() {
 	}
 
 	@Override
-	public Instrument getInstrument() {
-		return Instrument.CLICK;
+	public void onTick(float dt) {
 	}
 }

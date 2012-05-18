@@ -70,7 +70,6 @@ public class RedstoneOre extends Ore implements TimedCraftable, Mineable {
 
 	/**
 	 * Whether this redstone ore block material is glowing
-	 * 
 	 * @return true if glowing
 	 */
 	public boolean isGlowing() {

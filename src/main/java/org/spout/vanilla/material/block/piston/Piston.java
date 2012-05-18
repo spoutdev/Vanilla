@@ -51,7 +51,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 		super(name, id);
 		this.sticky = sticky;
 	}
-	
+
 	@Override
 	public void initialize() {
 		super.initialize();
@@ -220,9 +220,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 
 	/**
 	 * Gets whether this piston block is extended
-	 * 
-	 * @param block
-	 *            to get it of
+	 * @param block to get it of
 	 * @return True if extended, False if not
 	 */
 	public boolean isExtended(Block block) {

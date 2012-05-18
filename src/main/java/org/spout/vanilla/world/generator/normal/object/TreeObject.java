@@ -29,6 +29,7 @@ package org.spout.vanilla.world.generator.normal.object;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.material.BlockMaterial;
 
@@ -48,7 +49,7 @@ public abstract class TreeObject extends WorldGeneratorObject {
 	public TreeObject(Random random, byte baseHeight, byte randomHeight, short metadata) {
 		this(random, baseHeight, randomHeight, metadata, metadata);
 	}
-	
+
 	public TreeObject(Random random, byte baseHeight, byte randomHeight, short leavesMetadata, short logMetadata) {
 		this.random = random;
 		this.baseHeight = baseHeight;
@@ -83,7 +84,7 @@ public abstract class TreeObject extends WorldGeneratorObject {
 	public void setTotalHeight(byte height) {
 		this.totalHeight = height;
 	}
-	
+
 	public Set<BlockMaterial> getOverridableMaterials() {
 		return overridable;
 	}

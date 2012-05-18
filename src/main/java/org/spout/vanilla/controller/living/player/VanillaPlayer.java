@@ -105,7 +105,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public VanillaPlayer(Player p) {
 		this(p, GameMode.SURVIVAL);
 	}
-	
+
 	@Override
 	public boolean isSavable() {
 		return false; //Players are a special case, handled elsewhere
@@ -636,11 +636,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	public void dropItem() {
 		ItemStack current = getParent().getInventory().getCurrentItem();
-		Item control = new Item(new ItemStack(current.getMaterial(), 1),getHeadPosition().add(getLookingAt()));
-		if(current.getAmount() > 1)
-			current.setAmount(current.getAmount()-1);
-		else
+		Item control = new Item(new ItemStack(current.getMaterial(), 1), getHeadPosition().add(getLookingAt()));
+		if (current.getAmount() > 1) {
+			current.setAmount(current.getAmount() - 1);
+		} else {
 			current = null;
+		}
 		getParent().getInventory().setCurrentItem(current);
 		getParent().getWorld().createAndSpawnEntity(getHeadPosition().add(0.0, -0.4, 0.0), control);
 	}

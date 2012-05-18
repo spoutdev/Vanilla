@@ -29,16 +29,16 @@ package org.spout.vanilla.material.block.piston;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.util.MoveReaction;
 
 public class PistonExtension extends VanillaBlockMaterial implements Directional {
-
 	public PistonExtension(String name, int id) {
 		super(name, id);
 	}
-	
+
 	@Override
 	public void initialize() {
 		super.initialize();

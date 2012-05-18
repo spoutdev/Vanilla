@@ -45,7 +45,6 @@ import org.spout.vanilla.material.block.Liquid;
  * the borders between biomes.
  */
 public class SmoothPopulator implements Populator {
-	
 	// area to smooth per populate call
 	private final static byte SMOOTH_SIZE = 16;
 	// the floor of half the value of the side of the square
@@ -201,10 +200,10 @@ public class SmoothPopulator implements Populator {
 	// with the most present adjacent liquid
 	private void fixAdjacentLiquids(World world, int x, int y, int z) {
 		final BlockMaterial[] adjacent = {
-			world.getBlockMaterial(x - 1, y, z),
-			world.getBlockMaterial(x + 1, y, z),
-			world.getBlockMaterial(x, y, z - 1),
-			world.getBlockMaterial(x, y, z + 1)
+				world.getBlockMaterial(x - 1, y, z),
+				world.getBlockMaterial(x + 1, y, z),
+				world.getBlockMaterial(x, y, z - 1),
+				world.getBlockMaterial(x, y, z + 1)
 		};
 		boolean hasAdjacentLiquid = false;
 		for (BlockMaterial material : adjacent) {

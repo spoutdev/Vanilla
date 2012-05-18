@@ -72,7 +72,6 @@ public class Furnace extends Solid implements Mineable, Directional {
 
 	/**
 	 * Gets if this furnace block material is burning
-	 * 
 	 * @return True if burning
 	 */
 	public boolean isBurning() {

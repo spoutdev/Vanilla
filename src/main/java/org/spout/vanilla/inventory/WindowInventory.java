@@ -51,8 +51,6 @@ public interface WindowInventory extends VanillaInventory {
 
 	/**
 	 * Handles a click of the player's cursor on the window.
-	 *
-	 *
 	 * @param player
 	 * @param clickedSlot
 	 * @return true if click is permitted

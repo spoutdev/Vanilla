@@ -57,6 +57,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.ControllerInitialization;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.controller.world.BlockUpdater;
+import org.spout.vanilla.controller.world.GrowthMonitor;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
@@ -113,8 +114,13 @@ public class VanillaListener implements Listener {
 	@EventHandler
 	public void regionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
+		Point point = new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE);
 		if (region.getAll(RegionSpawner.class).isEmpty()) {
-			region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE), new RegionSpawner(region));
+			region.getWorld().createAndSpawnEntity(point, new RegionSpawner(region));
+		}
+
+		if (region.getAll(GrowthMonitor.class).isEmpty()) {
+			region.getWorld().createAndSpawnEntity(point, new GrowthMonitor(region));
 		}
 		BlockUpdater.get(region);
 	}

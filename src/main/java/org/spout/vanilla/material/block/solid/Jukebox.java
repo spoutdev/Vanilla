@@ -41,7 +41,6 @@ import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Jukebox extends Solid implements Fuel {
-
 	public final float BURN_TIME = 15.f;
 
 	public Jukebox(String name, int id) {

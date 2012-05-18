@@ -58,7 +58,7 @@ public class Item extends Substance {
 	private final ItemStack is;
 	private final int roll;
 	private int unpickable;
-	
+
 	/**
 	 * Creates an item controller. Intended for deserialization only.
 	 */
@@ -69,7 +69,7 @@ public class Item extends Substance {
 	/**
 	 * Creates an item controller
 	 * @param itemstack this item controller represents
-	 * @param initial velocity that this item has
+	 * @param initial   velocity that this item has
 	 */
 	public Item(ItemStack itemstack, Vector3 initial) {
 		super(VanillaControllerTypes.DROPPED_ITEM);
@@ -78,7 +78,7 @@ public class Item extends Substance {
 		unpickable = 10;
 		setVelocity(initial);
 	}
-	
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -178,7 +178,7 @@ public class Item extends Substance {
 	public int getRoll() {
 		return roll;
 	}
-	
+
 	@Override
 	public void onSave() {
 		data().put("Itemstack", is);

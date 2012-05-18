@@ -27,8 +27,10 @@
 package org.spout.vanilla.world.generator.normal.object;
 
 import java.util.Random;
+
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class HugeTreeObject extends TreeObject {
@@ -112,7 +114,7 @@ public class HugeTreeObject extends TreeObject {
 				for (byte zz = (byte) -radius; zz < radius + 1; zz++) {
 					final short circle = (short) (xx * xx + zz * zz - 1);
 					if (!world.getBlockMaterial(x + xx, y + yy, z + zz).isSolid()
-							&& (xx > - 1 || zz > - 1 || circle < radius * radius)
+							&& (xx > -1 || zz > -1 || circle < radius * radius)
 							&& ((xx < 1 && zz < 1) || circle < Math.pow(radius + 1, 2))
 							&& (random.nextInt(4) != 0 || circle < Math.pow(radius - 1, 2))) {
 						world.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LEAVES, leavesMetadata, world);

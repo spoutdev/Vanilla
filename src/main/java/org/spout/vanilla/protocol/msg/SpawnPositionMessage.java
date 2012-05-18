@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class SpawnPositionMessage extends Message {
 	private final int x, y, z;
@@ -51,6 +53,22 @@ public final class SpawnPositionMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "SpawnPositionMessage{x=" + x + ",y=" + y + ",z=" + z + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final SpawnPositionMessage other = (SpawnPositionMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.isEquals();
 	}
 }

@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 
+import org.spout.api.util.SpoutToStringStyle;
 import org.spout.nbt.CompoundMap;
 
 public class CreativeMessage extends Message {
@@ -64,6 +66,26 @@ public class CreativeMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "QuickBarMessage{slot=" + slot + ",id=" + id + ",amount=" + amount + ",damage=" + damage + ",nbtData=" + nbtData + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("slot", slot)
+				.append("id", id)
+				.append("amount", amount)
+				.append("damage", damage)
+				.append("nbtData", nbtData)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final CreativeMessage other = (CreativeMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.slot, other.slot)
+				.append(this.id, other.id)
+				.append(this.amount, other.amount)
+				.append(this.damage, other.damage)
+				.append(this.nbtData, other.nbtData)
+				.isEquals();
 	}
 }

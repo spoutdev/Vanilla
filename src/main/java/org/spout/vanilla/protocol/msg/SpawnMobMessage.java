@@ -28,9 +28,11 @@ package org.spout.vanilla.protocol.msg;
 
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class SpawnMobMessage extends Message {
 	private final int id, type, x, y, z, yaw, pitch, headYaw;
@@ -90,13 +92,34 @@ public final class SpawnMobMessage extends Message {
 
 	@Override
 	public String toString() {
-		StringBuilder build = new StringBuilder("SpawnMobMessage{id=").append(id).append(",type=").append(type).append(",x=").append(x).append(",y=").append(y).append(",z=").append(z).append(",yaw=").append(yaw).append(",pitch=").append(pitch).append(",parameters=[");
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("type", type)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.append("yaw", yaw)
+				.append("pitch", pitch)
+				.append("headYaw", headYaw)
+				.append("parameters", parameters)
+				.toString();
+	}
 
-		for (Parameter<?> parm : parameters) {
-			build.append(parm).append(",");
-		}
-
-		build.append("]}");
-		return build.toString();
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final SpawnMobMessage other = (SpawnMobMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.type, other.type)
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.append(this.yaw, other.yaw)
+				.append(this.pitch, other.pitch)
+				.append(this.headYaw, other.headYaw)
+				.append(this.parameters, other.parameters)
+				.isEquals();
 	}
 }

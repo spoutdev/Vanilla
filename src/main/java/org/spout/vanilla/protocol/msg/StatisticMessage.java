@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class StatisticMessage extends Message {
 	private final int id;
@@ -47,6 +49,20 @@ public final class StatisticMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "StatisticMessage{id=" + id + ",amount=" + amount + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("amount", amount)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final StatisticMessage other = (StatisticMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.amount, other.amount)
+				.isEquals();
 	}
 }

@@ -26,8 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
-
+import org.spout.api.util.SpoutToStringStyle;
 import org.spout.nbt.CompoundMap;
 
 public final class SetWindowSlotMessage extends Message {
@@ -73,6 +74,28 @@ public final class SetWindowSlotMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "SetWindowSlotMessage{id=" + id + ",slot=" + slot + ",item=" + item + ",count=" + count + ",damage=" + damage + ",nbtData=" + nbtData + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("slot", slot)
+				.append("item", item)
+				.append("count", count)
+				.append("damage", damage)
+				.append("nbtData", nbtData)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final SetWindowSlotMessage other = (SetWindowSlotMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.slot, other.slot)
+				.append(this.item, other.item)
+				.append(this.count, other.count)
+				.append(this.damage, other.damage)
+				.append(this.nbtData, other.nbtData)
+				.isEquals();
 	}
 }

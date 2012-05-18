@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class EntityVelocityMessage extends Message {
 	private final int id, velocityX, velocityY, velocityZ;
@@ -37,11 +39,8 @@ public final class EntityVelocityMessage extends Message {
 	}
 
 	public EntityVelocityMessage(int id, int velocityX, int velocityY, int velocityZ) {
-		/*try {
-			throw new Exception("Created EntityVelocityMessage");
-		} catch (Exception ex) {
-			Logger.getLogger(EntityVelocityMessage.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		/*
+		new Exception().fillInStackTrace().printStackTrace();
 		* This is for testing the random teleport behaviour of some mobs, uncomment if it happens!
 		*/
 		this.id = id;
@@ -68,6 +67,24 @@ public final class EntityVelocityMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "EntityVelocityMessage{id=" + id + ",velocityX=" + velocityX + ",velocityY=" + velocityY + ",velocityZ=" + velocityZ + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("velocityX", velocityX)
+				.append("velocityY", velocityY)
+				.append("velocityZ", velocityZ)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final EntityVelocityMessage other = (EntityVelocityMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.velocityX, other.velocityX)
+				.append(this.velocityY, other.velocityY)
+				.append(this.velocityZ, other.velocityZ)
+				.isEquals();
 	}
 }

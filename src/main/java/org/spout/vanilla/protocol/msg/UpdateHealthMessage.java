@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class UpdateHealthMessage extends Message {
 	private final short health, food;
@@ -52,6 +54,22 @@ public final class UpdateHealthMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "PlayerHealthMessage{health=" + health + ",food=" + food + ",foodSaturation=" + foodSaturation + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("health", health)
+				.append("food", food)
+				.append("foodSaturation", foodSaturation)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final UpdateHealthMessage other = (UpdateHealthMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.health, other.health)
+				.append(this.food, other.food)
+				.append(this.foodSaturation, other.foodSaturation)
+				.isEquals();
 	}
 }

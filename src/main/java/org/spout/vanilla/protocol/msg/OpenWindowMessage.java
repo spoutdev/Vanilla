@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class OpenWindowMessage extends Message {
 	private final int id, type, slots;
@@ -57,6 +59,24 @@ public final class OpenWindowMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "OpenWindowMessage{id=" + id + ",type=" + type + ",slots=" + slots + ",title=" + title + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("type", type)
+				.append("slots", slots)
+				.append("title", title)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final OpenWindowMessage other = (OpenWindowMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.type, other.type)
+				.append(this.slots, other.slots)
+				.append(this.title, other.title)
+				.isEquals();
 	}
 }

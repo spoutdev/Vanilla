@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class GroundMessage extends Message {
 	private final boolean onGround;
@@ -41,6 +43,16 @@ public final class GroundMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "GroundMessage{onGround=" + onGround + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("onGround", onGround)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final GroundMessage other = (GroundMessage) obj;
+		return this.onGround == other.onGround;
 	}
 }

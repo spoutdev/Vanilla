@@ -31,6 +31,11 @@ import org.spout.api.protocol.Message;
 public class ServerListPingMessage extends Message {
 	@Override
 	public String toString() {
-		return "ServerListPingMessage{}";
+		return getClass().getSimpleName() + "{}";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj != null && getClass().equals(obj.getClass());
 	}
 }

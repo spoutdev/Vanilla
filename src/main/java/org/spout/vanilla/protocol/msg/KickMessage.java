@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class KickMessage extends Message {
 	private final String reason;
@@ -41,6 +43,18 @@ public final class KickMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "KickMessage{reason=" + reason + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("reason", reason)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final KickMessage other = (KickMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.reason, other.reason)
+				.isEquals();
 	}
 }

@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import java.util.Arrays;
-
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class ExplosionMessage extends Message {
 	private final double x, y, z;
@@ -78,6 +78,26 @@ public final class ExplosionMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "ExplosionMessage{x=" + x + ",y=" + y + ",z=" + z + ",radius=" + radius + ",coordinates=" + Arrays.toString(coordinates) + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.append("radius", radius)
+				.append("coordinates", coordinates)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final ExplosionMessage other = (ExplosionMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.append(this.radius, other.radius)
+				.append(this.coordinates, other.coordinates)
+				.isEquals();
 	}
 }

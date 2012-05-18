@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class EntityTeleportMessage extends Message {
 	private final int id, x, y, z, rotation, pitch;
@@ -71,6 +73,28 @@ public final class EntityTeleportMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "EntityTeleportMessage{id=" + id + ",x=" + x + ",y=" + y + ",z=" + z + ",rotation=" + rotation + ",pitch=" + pitch + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.append("rotation", rotation)
+				.append("pitch", pitch)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final EntityTeleportMessage other = (EntityTeleportMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.append(this.rotation, other.rotation)
+				.append(this.pitch, other.pitch)
+				.isEquals();
 	}
 }

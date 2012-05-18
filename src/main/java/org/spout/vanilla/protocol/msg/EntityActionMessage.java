@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class EntityActionMessage extends Message {
 	public static final int ACTION_CROUCH = 1;
@@ -51,6 +53,20 @@ public final class EntityActionMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "EntityActionMessage{id=" + id + ",action=" + action + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("action", action)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final EntityActionMessage other = (EntityActionMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.action, other.action)
+				.isEquals();
 	}
 }

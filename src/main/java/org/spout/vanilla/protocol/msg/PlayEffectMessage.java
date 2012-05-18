@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class PlayEffectMessage extends Message {
 	private final int id;
@@ -68,7 +70,27 @@ public final class PlayEffectMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "PlayEffectMessage{id=" + id + ",x=" + x + ",y=" + y + ",z=" + z + ",data=" + data + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.append("data", data)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final PlayEffectMessage other = (PlayEffectMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.append(this.data, other.data)
+				.isEquals();
 	}
 
 	public static enum Messages {

@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import java.util.Arrays;
-
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class UpdateSignMessage extends Message {
 	private final int x, y, z;
@@ -63,6 +63,24 @@ public final class UpdateSignMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "UpdateSignMessage{x=" + x + ",y=" + y + ",z=" + z + ",message=" + Arrays.toString(message) + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.append("message", message, true)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final UpdateSignMessage other = (UpdateSignMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.append(this.message, other.message)
+				.isEquals();
 	}
 }

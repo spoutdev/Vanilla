@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class AnimationMessage extends Message {
 	public static final byte ANIMATION_NONE = 0;
@@ -55,6 +57,20 @@ public final class AnimationMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "AnimationMessage{id=" + id + ",animation=" + animation + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("animation", animation)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final AnimationMessage other = (AnimationMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.animation, other.animation)
+				.isEquals();
 	}
 }

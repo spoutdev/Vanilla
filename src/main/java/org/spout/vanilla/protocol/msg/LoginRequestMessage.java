@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class LoginRequestMessage extends Message {
 	private final int id, dimension, mode, difficulty, worldHeight, maxPlayers;
@@ -77,6 +79,32 @@ public final class LoginRequestMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "IdentificationMessage{id=" + id + ",name=" + name + ",gameMode=" + mode + ",dimension=" + dimension + ",difficulty=" + difficulty + ",worldHeight=" + worldHeight + ",maxPlayers=" + maxPlayers + ",worldtype=" + worldType + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("dimension", dimension)
+				.append("mode", mode)
+				.append("difficulty", difficulty)
+				.append("worldHeight", worldHeight)
+				.append("maxPlayers", maxPlayers)
+				.append("name", name)
+				.append("worldType", worldType)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (!getClass().equals(obj.getClass())) {return false;}
+		final LoginRequestMessage other = (LoginRequestMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.dimension, other.dimension)
+				.append(this.mode, other.mode)
+				.append(this.difficulty, other.difficulty)
+				.append(this.worldHeight, other.worldHeight)
+				.append(this.maxPlayers, other.maxPlayers)
+				.append(this.name, other.name)
+				.append(this.worldType, other.worldType)
+				.isEquals();
 	}
 }

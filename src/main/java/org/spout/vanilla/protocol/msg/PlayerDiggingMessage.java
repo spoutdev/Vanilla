@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.spout.api.util.SpoutToStringStyle;
 import org.spout.api.protocol.Message;
 
 public final class PlayerDiggingMessage extends Message {
@@ -64,6 +66,26 @@ public final class PlayerDiggingMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "PlayerDiggingMessage{state=" + state + ",x=" + x + ",y=" + y + ",z=" + z + ",face=" + face + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("state", state)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.append("face", face)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final PlayerDiggingMessage other = (PlayerDiggingMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.state, other.state)
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.append(this.face, other.face)
+				.isEquals();
 	}
 }

@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class SpawnDroppedItemMessage extends Message {
 	private final int id, x, y, z, rotation, pitch, roll;
@@ -93,6 +95,36 @@ public final class SpawnDroppedItemMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "SpawnItemMessage{id=" + id + ",item=[" + itemId + "," + count + "," + damage + "],x=" + x + ",y=" + y + ",z=" + z + ",rotation=" + rotation + ",pitch=" + pitch + ",roll=" + roll + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.append("rotation", rotation)
+				.append("pitch", pitch)
+				.append("roll", roll)
+				.append("itemId", itemId)
+				.append("count", count)
+				.append("damage", damage)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final SpawnDroppedItemMessage other = (SpawnDroppedItemMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.append(this.rotation, other.rotation)
+				.append(this.pitch, other.pitch)
+				.append(this.roll, other.roll)
+				.append(this.itemId, other.itemId)
+				.append(this.count, other.count)
+				.append(this.damage, other.damage)
+				.isEquals();
 	}
 }

@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class RelativeEntityPositionRotationMessage extends Message {
 	private final int id, deltaX, deltaY, deltaZ, rotation, pitch;
@@ -71,6 +73,28 @@ public final class RelativeEntityPositionRotationMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "RelativeEntityPositionRotationMessage{id=" + id + ",deltaX=" + deltaX + ",deltaY=" + deltaY + ",deltaZ=" + deltaZ + "rotation=" + rotation + ",pitch=" + pitch + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("deltaX", deltaX)
+				.append("deltaY", deltaY)
+				.append("deltaZ", deltaZ)
+				.append("rotation", rotation)
+				.append("pitch", pitch)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final RelativeEntityPositionRotationMessage other = (RelativeEntityPositionRotationMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.deltaX, other.deltaX)
+				.append(this.deltaY, other.deltaY)
+				.append(this.deltaZ, other.deltaZ)
+				.append(this.rotation, other.rotation)
+				.append(this.pitch, other.pitch)
+				.isEquals();
 	}
 }

@@ -92,4 +92,22 @@ public final class WindowClickMessage extends Message {
 	public String toString() {
 		return "WindowClickMessage{id=" + id + ",slot=" + slot + ",rightClick=" + rightClick + ",shift=" + shift + ",transaction=" + transaction + ",item=" + item + ",count=" + count + ",damage=" + damage + ",nbtData=" + nbtData + "}";
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final WindowClickMessage other = (WindowClickMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.slot, other.slot)
+				.append(this.rightClick, other.rightClick)
+				.append(this.shift, other.shift)
+				.append(this.transaction, other.transaction)
+				.append(this.item, other.item)
+				.append(this.count, other.count)
+				.append(this.damage, other.damage)
+				.append(this.nbtData, other.nbtData)
+				.isEquals();
+	}
 }

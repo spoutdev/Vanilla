@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public class TileEntityDataMessage extends Message {
 	private final int x, y, z, action, custom1, custom2, custom3;
@@ -71,6 +73,30 @@ public class TileEntityDataMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "TileEntityDataMessage{" + "x=" + x + ",y=" + y + ",z=" + z + ",action=" + action + ",custom1=" + custom1 + ",custom2=" + custom2 + ",custom3=" + custom3 + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.append("action", action)
+				.append("custom1", custom1)
+				.append("custom2", custom2)
+				.append("custom3", custom3)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final TileEntityDataMessage other = (TileEntityDataMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.append(this.action, other.action)
+				.append(this.custom1, other.custom1)
+				.append(this.custom2, other.custom2)
+				.append(this.custom3, other.custom3)
+				.isEquals();
 	}
 }

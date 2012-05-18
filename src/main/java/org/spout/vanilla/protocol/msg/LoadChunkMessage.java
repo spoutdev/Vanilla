@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class LoadChunkMessage extends Message {
 	private final int x, z;
@@ -52,6 +54,22 @@ public final class LoadChunkMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "LoadChunkMessage{x=" + x + ",z=" + z + ",loaded=" + loaded + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("x", x)
+				.append("z", z)
+				.append("loaded", loaded)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final LoadChunkMessage other = (LoadChunkMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.x, other.x)
+				.append(this.z, other.z)
+				.append(this.loaded, other.loaded)
+				.isEquals();
 	}
 }

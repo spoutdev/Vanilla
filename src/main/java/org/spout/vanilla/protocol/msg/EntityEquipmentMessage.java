@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class EntityEquipmentMessage extends Message {
 	public static final int HELD_ITEM = 0;
@@ -61,6 +63,24 @@ public final class EntityEquipmentMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "EntityEquipmentMessage{id=" + id + ",slot=" + slot + ",item=" + item + ",damage" + damage + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("slot", slot)
+				.append("item", item)
+				.append("damage", damage)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final EntityEquipmentMessage other = (EntityEquipmentMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.slot, other.slot)
+				.append(this.item, other.item)
+				.append(this.damage, other.damage)
+				.isEquals();
 	}
 }

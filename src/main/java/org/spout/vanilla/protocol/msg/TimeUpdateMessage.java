@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class TimeUpdateMessage extends Message {
 	private final long time;
@@ -41,6 +43,16 @@ public final class TimeUpdateMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "TimeMessage{time=" + time + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("time", time)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final TimeUpdateMessage other = (TimeUpdateMessage) obj;
+		return this.time == other.time;
 	}
 }

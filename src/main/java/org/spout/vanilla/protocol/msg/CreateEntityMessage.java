@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class CreateEntityMessage extends Message {
 	private final int id;
@@ -41,6 +43,16 @@ public final class CreateEntityMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "CreateEntityMessage{id=" + id + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final CreateEntityMessage other = (CreateEntityMessage) obj;
+		return this.id == other.id;
 	}
 }

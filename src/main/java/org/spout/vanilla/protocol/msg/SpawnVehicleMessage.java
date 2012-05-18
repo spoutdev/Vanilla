@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class SpawnVehicleMessage extends Message {
 	private final int id, type, x, y, z, fireballId, fireballX, fireballY, fireballZ;
@@ -98,15 +100,34 @@ public final class SpawnVehicleMessage extends Message {
 
 	@Override
 	public String toString() {
-		StringBuilder build = new StringBuilder("SpawnVehicleMessage{id=");
-		build.append(id).append(",type=").append(type).append(",x=").append(x).append(",y=").append(y);
-		build.append(",z=").append(z).append(",fireballId=").append(fireballId);
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("type", type)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.append("fireballId", fireballId)
+				.append("fireballX", fireballX)
+				.append("fireballY", fireballY)
+				.append("fireballZ", fireballZ)
+				.toString();
+	}
 
-		if (hasFireball()) {
-			build.append(",fireballX=").append(fireballX).append(",fireballY=").append(fireballY).append(",fireballZ=").append(fireballZ);
-		}
-
-		build.append("}");
-		return build.toString();
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final SpawnVehicleMessage other = (SpawnVehicleMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.type, other.type)
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.append(this.fireballId, other.fireballId)
+				.append(this.fireballX, other.fireballX)
+				.append(this.fireballY, other.fireballY)
+				.append(this.fireballZ, other.fireballZ)
+				.isEquals();
 	}
 }

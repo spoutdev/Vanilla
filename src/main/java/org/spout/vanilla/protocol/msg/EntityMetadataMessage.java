@@ -28,8 +28,10 @@ package org.spout.vanilla.protocol.msg;
 
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class EntityMetadataMessage extends Message {
 	public static enum Parameters {
@@ -94,14 +96,20 @@ public final class EntityMetadataMessage extends Message {
 
 	@Override
 	public String toString() {
-		StringBuilder build = new StringBuilder("EntityMetadataMessage{id=");
-		build.append(id).append(",metadata=[");
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("parameters", parameters, true)
+				.toString();
+	}
 
-		for (Parameter<?> param : parameters) {
-			build.append(param.toString()).append(",");
-		}
-
-		build.append("]}");
-		return build.toString();
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final EntityMetadataMessage other = (EntityMetadataMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.parameters, other.parameters)
+				.isEquals();
 	}
 }

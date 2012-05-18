@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class RespawnMessage extends Message {
 	private final byte difficulty, mode;
@@ -63,6 +65,26 @@ public final class RespawnMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "RespawnMessage{dimension=" + dimension + ",difficulty=" + difficulty + ",gameMode=" + mode + ",worldHeight=" + worldHeight + ",worldType=" + worldType + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("difficulty", difficulty)
+				.append("mode", mode)
+				.append("worldHeight", worldHeight)
+				.append("dimension", dimension)
+				.append("worldType", worldType)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final RespawnMessage other = (RespawnMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.difficulty, other.difficulty)
+				.append(this.mode, other.mode)
+				.append(this.worldHeight, other.worldHeight)
+				.append(this.dimension, other.dimension)
+				.append(this.worldType, other.worldType)
+				.isEquals();
 	}
 }

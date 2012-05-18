@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public class SetExperienceMessage extends Message {
 	private final float barValue;
@@ -52,6 +54,22 @@ public class SetExperienceMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "ExperienceMessage{barValue=" + barValue + ",level=" + level + ",totalExp=" + totalExp + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("barValue", barValue)
+				.append("level", level)
+				.append("totalExp", totalExp)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final SetExperienceMessage other = (SetExperienceMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.barValue, other.barValue)
+				.append(this.level, other.level)
+				.append(this.totalExp, other.totalExp)
+				.isEquals();
 	}
 }

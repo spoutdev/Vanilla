@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class PlayerPositionLookMessage extends Message {
 	private final PlayerPositionMessage position;
@@ -76,10 +78,24 @@ public final class PlayerPositionLookMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "PositionRotationMessage{x=" + getX() + ",y=" + getY() + ",z=" + getZ() + ",stance=" + getStance() + ",rotation=" + rotation + ",pitch=" + getPitch() + ",onGround=" + isOnGround() + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("position", position)
+				.append("rotation", rotation)
+				.toString();
 	}
 
 	public Vector3 getLookingAtVector() {
 		return rotation.getLookingAtVector();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final PlayerPositionLookMessage other = (PlayerPositionLookMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.position, other.position)
+				.append(this.rotation, other.rotation)
+				.isEquals();
 	}
 }

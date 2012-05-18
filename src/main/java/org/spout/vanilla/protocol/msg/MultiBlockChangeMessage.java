@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import java.util.Arrays;
-
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class MultiBlockChangeMessage extends Message {
 	private final int chunkX, chunkZ;
@@ -82,6 +82,26 @@ public final class MultiBlockChangeMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "MultiBlockChangeMessage{chunkX=" + chunkX + ",chunkZ=" + chunkZ + ",coordinates=" + Arrays.toString(coordinates) + ",types=" + Arrays.toString(types) + ",metadata=" + Arrays.toString(metadata) + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("chunkX", chunkX)
+				.append("chunkZ", chunkZ)
+				.append("coordinates", coordinates, false)
+				.append("types", types, false)
+				.append("metadata", metadata, false)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final MultiBlockChangeMessage other = (MultiBlockChangeMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.chunkX, other.chunkX)
+				.append(this.chunkZ, other.chunkZ)
+				.append(this.coordinates, other.coordinates)
+				.append(this.types, other.types)
+				.append(this.metadata, other.metadata)
+				.isEquals();
 	}
 }

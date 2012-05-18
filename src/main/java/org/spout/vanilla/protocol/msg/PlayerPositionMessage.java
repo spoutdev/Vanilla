@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class PlayerPositionMessage extends Message {
 	private final double x, y, z, stance;
@@ -62,6 +64,26 @@ public final class PlayerPositionMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "PlayerPositionMessage{x=" + x + ",y=" + y + ",z=" + z + ",stance=" + stance + ",onGround=" + onGround + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.append("stance", stance)
+				.append("onGround", onGround)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final PlayerPositionMessage other = (PlayerPositionMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.append(this.stance, other.stance)
+				.append(this.onGround, other.onGround)
+				.isEquals();
 	}
 }

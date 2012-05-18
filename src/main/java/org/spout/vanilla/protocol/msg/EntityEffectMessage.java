@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public class EntityEffectMessage extends Message {
 	private final int id;
@@ -58,6 +60,24 @@ public class EntityEffectMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "EntityEffectMessage{id=" + id + ",effect=" + effect + ",amplifier=" + amplifier + ",duration=" + duration + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("effect", effect)
+				.append("amplifier", amplifier)
+				.append("duration", duration)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final EntityEffectMessage other = (EntityEffectMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.effect, other.effect)
+				.append(this.amplifier, other.amplifier)
+				.append(this.duration, other.duration)
+				.isEquals();
 	}
 }

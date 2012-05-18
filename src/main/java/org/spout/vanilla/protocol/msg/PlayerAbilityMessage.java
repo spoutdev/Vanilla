@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public class PlayerAbilityMessage extends Message {
 	private final boolean isInvincible, isFlying, canFly, canInstantDestroy;
@@ -56,6 +58,24 @@ public class PlayerAbilityMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "PlayerAbilityMessage{isInvincible=" + isInvincible + " isFlying=" + isFlying + " canFly=" + canFly + " canInstantDestroy=" + canInstantDestroy + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("isInvincible", isInvincible)
+				.append("isFlying", isFlying)
+				.append("canFly", canFly)
+				.append("canInstantDestroy", canInstantDestroy)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final PlayerAbilityMessage other = (PlayerAbilityMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.isInvincible, other.isInvincible)
+				.append(this.isFlying, other.isFlying)
+				.append(this.canFly, other.canFly)
+				.append(this.canInstantDestroy, other.canInstantDestroy)
+				.isEquals();
 	}
 }

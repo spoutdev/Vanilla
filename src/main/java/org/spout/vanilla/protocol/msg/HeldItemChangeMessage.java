@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class HeldItemChangeMessage extends Message {
 	private final int slot;
@@ -41,6 +43,16 @@ public final class HeldItemChangeMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "ChangeItemMessage{slot=" + slot + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("slot", slot)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final HeldItemChangeMessage other = (HeldItemChangeMessage) obj;
+		return this.slot == other.slot;
 	}
 }

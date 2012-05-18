@@ -28,7 +28,9 @@ package org.spout.vanilla.protocol.msg;
 
 import java.util.Arrays;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class CompressedChunkMessage extends Message {
 	private final int x, z;
@@ -81,6 +83,30 @@ public final class CompressedChunkMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "CompressedChunkMessage{x=" + x + ",z=" + z + ",hasAdditionalData=" + Arrays.toString(hasAdditionalData) + ",contiguous=" + contiguous + ",unused=" + unused + ",data=" + (data == null ? null : data.length) + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("x", x)
+				.append("z", z)
+				.append("hasAdditionalData", hasAdditionalData)
+				.append("contiguous", contiguous)
+				.append("unusedValue", unused)
+				.append("data", data, false)
+				.append("biomeData", data, false)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final CompressedChunkMessage other = (CompressedChunkMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.x, other.x)
+				.append(this.z, other.z)
+				.append(this.contiguous, other.contiguous)
+				.append(this.hasAdditionalData, other.hasAdditionalData)
+				.append(this.unused, other.unused)
+				.append(this.data, other.data)
+				.append(this.biomeData, other.biomeData)
+				.isEquals();
 	}
 }

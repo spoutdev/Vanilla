@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class PlayerLookMessage extends Message {
 	private final float yaw, pitch, roll;
@@ -70,6 +72,26 @@ public final class PlayerLookMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "PlayerLookMessage{yaw=" + yaw + ",pitch=" + pitch + ",onGround=" + onGround + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("yaw", yaw)
+				.append("pitch", pitch)
+				.append("roll", roll)
+				.append("onGround", onGround)
+				.append("lookingAt", lookingAt)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final PlayerLookMessage other = (PlayerLookMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.yaw, other.yaw)
+				.append(this.pitch, other.pitch)
+				.append(this.roll, other.roll)
+				.append(this.onGround, other.onGround)
+				.append(this.lookingAt, other.lookingAt)
+				.isEquals();
 	}
 }

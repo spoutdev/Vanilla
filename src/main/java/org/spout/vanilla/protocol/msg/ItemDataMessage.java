@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import java.util.Arrays;
-
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public class ItemDataMessage extends Message {
 	private final short type, id;
@@ -54,6 +54,22 @@ public class ItemDataMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "MapDataMessage{type=" + type + ",id=" + ",data=" + Arrays.toString(data) + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("type", type)
+				.append("id", id)
+				.append("data", data)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final ItemDataMessage other = (ItemDataMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.type, other.type)
+				.append(this.id, other.id)
+				.append(this.data, other.data)
+				.isEquals();
 	}
 }

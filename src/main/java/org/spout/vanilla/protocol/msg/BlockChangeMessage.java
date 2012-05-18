@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class BlockChangeMessage extends Message {
 	private final int x, y, z, type, metadata;
@@ -66,6 +68,26 @@ public final class BlockChangeMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "BlockChangeMessage{x=" + x + ",y=" + y + ",z=" + z + ",type=" + type + ",metadata=" + metadata + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("x", x)
+				.append("y", y)
+				.append("z", z)
+				.append("type", type)
+				.append("metadata", metadata)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final BlockChangeMessage other = (BlockChangeMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.append(this.type, other.type)
+				.append(this.metadata, other.metadata)
+				.isEquals();
 	}
 }

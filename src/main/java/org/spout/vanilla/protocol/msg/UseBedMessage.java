@@ -64,4 +64,19 @@ public final class UseBedMessage extends Message {
 	public String toString() {
 		return "UseBedMessage{id=" + id + ",used=" + used + ",x=" + x + ",y=" + y + ",z=" + z + "}";
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final UseBedMessage other = (UseBedMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.used, other.used)
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.isEquals();
+	}
+
 }

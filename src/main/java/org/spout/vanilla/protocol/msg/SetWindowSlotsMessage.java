@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import java.util.Arrays;
-
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
 public final class SetWindowSlotsMessage extends Message {
 	private final byte id;
@@ -50,6 +50,20 @@ public final class SetWindowSlotsMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "SetWindowSlotsMessage{id=" + id + ",slots=" + Arrays.toString(items) + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", id)
+				.append("items", items, true)
+				.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {return false;}
+		if (getClass() != obj.getClass()) {return false;}
+		final SetWindowSlotsMessage other = (SetWindowSlotsMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.id, other.id)
+				.append(this.items, other.items)
+				.isEquals();
 	}
 }

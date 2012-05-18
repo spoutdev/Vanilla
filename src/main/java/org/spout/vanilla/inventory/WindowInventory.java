@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.inventory;
 
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
 public interface WindowInventory extends VanillaInventory {
@@ -43,10 +45,19 @@ public interface WindowInventory extends VanillaInventory {
 
 	/**
 	 * Closes the inventory and window
-	 *
 	 * @param player to close the inventory on
 	 */
 	public void onClosed(VanillaPlayer player);
+
+	/**
+	 * Handles a click of the player's cursor on the window.
+	 *
+	 *
+	 * @param player
+	 * @param clickedSlot
+	 * @return true if click is permitted
+	 */
+	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack);
 
 	/**
 	 * Gets the native protocol slot index

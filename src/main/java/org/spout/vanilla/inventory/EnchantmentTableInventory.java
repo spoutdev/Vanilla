@@ -70,6 +70,11 @@ public class EnchantmentTableInventory extends Inventory implements WindowInvent
 	}
 
 	@Override
+	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack) {
+		return true;
+	}
+
+	@Override
 	public int getNativeSlotIndex(int index) {
 		return SLOTS[index];
 	}

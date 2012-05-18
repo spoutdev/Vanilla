@@ -28,11 +28,13 @@ package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.player.Player;
 
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
+import org.spout.vanilla.util.InventoryUtil;
 
 /**
  * Represents a furnace inventory belonging to a furnace controller.
@@ -144,6 +146,18 @@ public class FurnaceInventory extends Inventory implements WindowInventory {
 		addViewer(player.getPlayer().getNetworkSynchronizer());
 		player.setActiveInventory(this);
 		player.openWindow(Window.FURNACE, getSize());
+	}
+
+	@Override
+	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {
+		ItemStack cursorStack = controller.getItemOnCursor();
+		if (clickedSlot == 37 && cursorStack != null) {
+			return false;
+		}
+
+		slotStack = InventoryUtil.nullIfEmpty(slotStack);
+		setItem(clickedSlot, slotStack);
+		return true;
 	}
 
 	@Override

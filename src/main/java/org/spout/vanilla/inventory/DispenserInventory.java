@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.block.DispenserController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -81,6 +82,11 @@ public class DispenserInventory extends Inventory implements WindowInventory {
 		addViewer(player.getPlayer().getNetworkSynchronizer());
 		player.setActiveInventory(this);
 		player.openWindow(Window.DISPENSER, getSize());
+	}
+
+	@Override
+	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack) {
+		return true;
 	}
 
 	@Override

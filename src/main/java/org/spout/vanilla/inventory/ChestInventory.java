@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.block.ChestController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -68,6 +69,11 @@ public class ChestInventory extends Inventory implements WindowInventory {
 	@Override
 	public void onClosed(VanillaPlayer player) {
 		owner.setOpened(false);
+	}
+
+	@Override
+	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack) {
+		return true;
 	}
 
 	@Override

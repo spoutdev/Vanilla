@@ -36,11 +36,11 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;
+import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.material.item.Armor;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
 import org.spout.vanilla.util.InventoryUtil;
-import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
 	@Override
@@ -48,6 +48,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		// Get the clicker
 		Entity entity = player.getEntity();
 		if (!(entity.getController() instanceof VanillaPlayer)) {
+			System.out.println("Invalid player");
 			return;
 		}
 
@@ -63,110 +64,61 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			controller.setItemOnCursor(null);
 			// TODO: Drop item
 			respond(session, message, true);
+			System.out.println("Clicked outside of window");
 			return;
 		}
 
-		// Check for validity of the slot
-		int clickedSlot = VanillaMessageHandlerUtils.getSpoutInventorySlot(inventory, message.getSlot());
-		System.out.println("Player inventory clicked!");
-		System.out.println("Minecraft slot: " + message.getSlot());
-		System.out.println("Spout slot: " + clickedSlot);
-		if (clickedSlot < 0) {
-			System.out.println("Error: Invalid slot!");
+		if (!(inventory instanceof WindowInventory)) {
+			System.out.println("Invalid inventory");
 			return;
 		}
 
-		// Get the stacks
-		ItemStack slotStack = inventory.getItem(clickedSlot);
-		ItemStack cursorStack = controller.getItemOnCursor();
-
-		// Handle the click
-		ItemStack[] stacks = handleClick(message, inventory, clickedSlot, cursorStack, slotStack);
-		cursorStack = stacks[0];
-		slotStack = stacks[1];
-
-		// Pass to inventory specific functions which will then respond to the transaction.
-		if (inventory instanceof PlayerInventory) {
-			handlePlayerInventory(controller, clickedSlot, (PlayerInventory) inventory, message, cursorStack, slotStack);
+		WindowInventory window = (WindowInventory) inventory;
+		int clickedSlot = window.getSlotIndex(message.getSlot());
+		ItemStack cursorStack = controller.getItemOnCursor(), slotStack = inventory.getItem(clickedSlot);
+		if (message.isShift()) {
+			// TODO: Fix Shift clicking
+			InventoryUtil.quickMoveStack(inventory, clickedSlot);
+			System.out.println("Shift click");
 		}
 
-		if (inventory instanceof FurnaceInventory) {
-			handleFurnaceInventory(controller, clickedSlot, (FurnaceInventory) inventory, message, cursorStack, slotStack);
-		}
-	}
-
-	private void handlePlayerInventory(VanillaPlayer controller, int clickedSlot, PlayerInventory inventory, WindowClickMessage message, ItemStack cursorStack, ItemStack slotStack) {
-		Player player = controller.getPlayer();
-		boolean armorSlot = clickedSlot == 36 || clickedSlot == 37 || clickedSlot == 41 || clickedSlot == 44;
-
-		// Only allow armor in the armor slots
-		if (armorSlot && cursorStack != null && !(cursorStack.getMaterial() instanceof Armor)) {
-			respond(player.getSession(), message, false);
-			return;
-		}
-
-		// Do not allow input in the output slot.
-		if (clickedSlot == 40 && cursorStack != null) {
-			respond(player.getSession(), message, false);
-			return;
-		}
-
-		cursorStack = InventoryUtil.nullIfEmpty(cursorStack);
-		slotStack = InventoryUtil.nullIfEmpty(slotStack);
-		controller.setItemOnCursor(cursorStack);
-		inventory.setItem(clickedSlot, slotStack);
-		respond(player.getSession(), message, true);
-	}
-
-	private void handleFurnaceInventory(VanillaPlayer controller, int clickedSlot, FurnaceInventory inventory, WindowClickMessage message, ItemStack cursorStack, ItemStack slotStack) {
-		Player player = controller.getPlayer();
-		if (clickedSlot == 37 && cursorStack != null) {
-			respond(player.getSession(), message, false);
-			return;
-		}
-
-		cursorStack = InventoryUtil.nullIfEmpty(cursorStack);
-		slotStack = InventoryUtil.nullIfEmpty(slotStack);
-		controller.setItemOnCursor(cursorStack);
-		inventory.setItem(clickedSlot, slotStack);
-		respond(player.getSession(), message, true);
-	}
-
-	private ItemStack[] handleClick(WindowClickMessage message, Inventory inventory, int clickedSlot, ItemStack cursorStack, ItemStack slotStack) {
-		// Right click
 		if (message.isRightClick()) {
-			if (!message.isShift()) {
-				if (slotStack != null && cursorStack != null && cursorStack.equalsIgnoreSize(slotStack)) {
-					InventoryUtil.mergeStack(cursorStack, slotStack, 1);
-				} else if (slotStack != null && cursorStack == null) {
+			// Right click
+			if (slotStack != null) {
+				if (cursorStack == null) {
+					System.out.println("Right click - slot not null; cursor null");
 					int amount = (slotStack.getAmount() + 1) / 2;
-					slotStack.setAmount(slotStack.getAmount() - amount);
+					slotStack = slotStack.setAmount(slotStack.getAmount() - amount);
 					cursorStack = new ItemStack(slotStack.getMaterial(), amount);
-				} else if (slotStack == null && cursorStack != null) {
-					slotStack = new ItemStack(cursorStack.getMaterial(), 1);
-					cursorStack.setAmount(cursorStack.getAmount() - 1);
+				} else {
+					System.out.println("Right click - slot not null; cursor not null");
+					slotStack = slotStack.setAmount(slotStack.getAmount() + 1);
+					cursorStack = cursorStack.setAmount(cursorStack.getAmount() - 1);
 				}
+			} else if (slotStack == null && cursorStack != null) {
+				System.out.println("Right click - slot null; cursor not null");
+				slotStack = new ItemStack(cursorStack.getMaterial(), 1);
+				cursorStack = cursorStack.setAmount(cursorStack.getAmount() - 1);
 			}
+		} else if (slotStack != null) { // Left click
+			if (cursorStack == null) {
+				System.out.println("Left click - slot not null; cursor null");
+				cursorStack = slotStack;
+				slotStack = null;
+			} else {
+				InventoryUtil.mergeStack(cursorStack, slotStack);
+				System.out.println("Left click - slot not null; cursor not null");
+			}
+		} else if (slotStack == null && cursorStack != null) {
+			System.out.println("Left click - slot null; cursor not null");
+			slotStack = cursorStack;
+			cursorStack = null;
 		}
 
-		// Left click
-		if (!message.isRightClick()) {
-			if (!message.isShift()) {
-				if (slotStack != null && cursorStack != null && cursorStack.equalsIgnoreSize(slotStack)) {
-					InventoryUtil.mergeStack(cursorStack, slotStack);
-				} else if (slotStack != null && cursorStack == null) {
-					cursorStack = slotStack;
-					slotStack = null;
-				} else if (slotStack == null && cursorStack != null) {
-					slotStack = cursorStack;
-					cursorStack = null;
-				}
-			} else if (slotStack != null) {
-				InventoryUtil.quickMoveStack(inventory, clickedSlot);
-			}
-		}
-
-		return new ItemStack[]{cursorStack, slotStack};
+		controller.setItemOnCursor(cursorStack);
+		boolean response = window.onClicked(controller, clickedSlot, slotStack);
+		System.out.println("Responded: " + response);
+		respond(player.getSession(), message, response);
 	}
 
 	private void respond(Session session, WindowClickMessage message, boolean success) {

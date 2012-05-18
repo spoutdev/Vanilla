@@ -30,6 +30,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.PlayerInventory;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.material.item.Armor;
+import org.spout.vanilla.util.InventoryUtil;
 
 /**
  * Represents a players inventory
@@ -125,6 +127,26 @@ public class VanillaPlayerInventory extends PlayerInventory implements WindowInv
 
 	@Override
 	public void onClosed(VanillaPlayer player) {
+	}
+
+	@Override
+	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {
+
+		// Only allow armor in the armor slots
+		ItemStack cursorStack = controller.getItemOnCursor();
+		boolean armorSlot = clickedSlot == 36 || clickedSlot == 37 || clickedSlot == 41 || clickedSlot == 44;
+		if (armorSlot && cursorStack != null && !(cursorStack.getMaterial() instanceof Armor)) {
+			return false;
+		}
+
+		// Do not allow input in the output slot.
+		if (clickedSlot == 40 && cursorStack != null) {
+			return false;
+		}
+
+		slotStack = InventoryUtil.nullIfEmpty(slotStack);
+		setItem(clickedSlot, slotStack);
+		return true;
 	}
 
 	@Override

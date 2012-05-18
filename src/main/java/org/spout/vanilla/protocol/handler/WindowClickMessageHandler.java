@@ -48,7 +48,6 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		// Get the clicker
 		Entity entity = player.getEntity();
 		if (!(entity.getController() instanceof VanillaPlayer)) {
-			System.out.println("Invalid player");
 			return;
 		}
 
@@ -64,12 +63,10 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			controller.setItemOnCursor(null);
 			// TODO: Drop item
 			respond(session, message, true);
-			System.out.println("Clicked outside of window");
 			return;
 		}
 
 		if (!(inventory instanceof WindowInventory)) {
-			System.out.println("Invalid inventory");
 			return;
 		}
 
@@ -79,45 +76,37 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		if (message.isShift()) {
 			// TODO: Fix Shift clicking
 			InventoryUtil.quickMoveStack(inventory, clickedSlot);
-			System.out.println("Shift click");
 		}
 
 		if (message.isRightClick()) {
 			// Right click
 			if (slotStack != null) {
 				if (cursorStack == null) {
-					System.out.println("Right click - slot not null; cursor null");
 					int amount = (slotStack.getAmount() + 1) / 2;
 					slotStack = slotStack.setAmount(slotStack.getAmount() - amount);
 					cursorStack = new ItemStack(slotStack.getMaterial(), amount);
 				} else {
-					System.out.println("Right click - slot not null; cursor not null");
 					slotStack = slotStack.setAmount(slotStack.getAmount() + 1);
 					cursorStack = cursorStack.setAmount(cursorStack.getAmount() - 1);
 				}
 			} else if (slotStack == null && cursorStack != null) {
-				System.out.println("Right click - slot null; cursor not null");
 				slotStack = new ItemStack(cursorStack.getMaterial(), 1);
 				cursorStack = cursorStack.setAmount(cursorStack.getAmount() - 1);
 			}
 		} else if (slotStack != null) { // Left click
 			if (cursorStack == null) {
-				System.out.println("Left click - slot not null; cursor null");
 				cursorStack = slotStack;
 				slotStack = null;
 			} else {
 				InventoryUtil.mergeStack(cursorStack, slotStack);
-				System.out.println("Left click - slot not null; cursor not null");
 			}
 		} else if (slotStack == null && cursorStack != null) {
-			System.out.println("Left click - slot null; cursor not null");
 			slotStack = cursorStack;
 			cursorStack = null;
 		}
 
 		controller.setItemOnCursor(cursorStack);
 		boolean response = window.onClicked(controller, clickedSlot, slotStack);
-		System.out.println("Responded: " + response);
 		respond(player.getSession(), message, response);
 	}
 

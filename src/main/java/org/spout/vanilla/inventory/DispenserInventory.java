@@ -86,6 +86,7 @@ public class DispenserInventory extends Inventory implements WindowInventory {
 
 	@Override
 	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack) {
+		setItem(clickedSlot, slotStack);
 		return true;
 	}
 

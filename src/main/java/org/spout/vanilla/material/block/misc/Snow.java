@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import java.util.ArrayList;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
@@ -34,7 +36,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.GroundAttachable;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
 
@@ -46,8 +48,7 @@ public class Snow extends GroundAttachable implements Mineable {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.1F).setResistance(0.2F).setDrop(VanillaMaterials.SNOWBALL);
-		this.setOpacity((byte) 0);
+		this.setHardness(0.1F).setResistance(0.2F).setOpacity((byte) 0);
 	}
 
 	@Override
@@ -66,18 +67,14 @@ public class Snow extends GroundAttachable implements Mineable {
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
-			Entity entity = (Entity) block.getSource();
-			ItemStack holding = entity.getInventory().getCurrentItem();
-
-			if (holding != null && holding.getMaterial() instanceof Spade) {
-				VanillaMaterials.SNOW.setDrop(VanillaMaterials.SNOWBALL);
-			} else {
-				VanillaMaterials.SNOW.setDrop(null);
+			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Spade) {
+				drops.add(new ItemStack(VanillaMaterials.SNOWBALL, block.getData(), 1));
 			}
-			super.onDestroy(block);
 		}
+		return drops;
 	}
 
 	@Override

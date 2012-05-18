@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.block.attachable;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -80,7 +80,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	/**
 	 * Sets whether a certain face is attachable
-	 * @param face	   to set
+	 * @param face       to set
 	 * @param attachable state
 	 * @return this attachable material
 	 */

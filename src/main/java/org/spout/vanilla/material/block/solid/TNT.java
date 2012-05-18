@@ -26,15 +26,17 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
+
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.RedstoneTarget;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class TNT extends Solid implements RedstoneTarget {
@@ -82,5 +84,12 @@ public class TNT extends Solid implements RedstoneTarget {
 	@Override
 	public boolean isReceivingPower(Block block) {
 		return RedstoneUtil.isReceivingPower(block, false);
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
+		return drops;
 	}
 }

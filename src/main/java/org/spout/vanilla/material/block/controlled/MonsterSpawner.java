@@ -31,7 +31,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.MonsterSpawnerController;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.solid.Solid;
 
 public class MonsterSpawner extends Solid {
 	public MonsterSpawner(String name, int id) {
@@ -41,7 +41,7 @@ public class MonsterSpawner extends Solid {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(5.0F).setResistance(8.3F).setDrop(null);
+		this.setHardness(5.0F).setResistance(8.3F);
 		setController(VanillaControllerTypes.MONSTER_SPAWNER);
 	}
 

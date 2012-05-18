@@ -24,52 +24,25 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.block.portal;
 
-import java.util.Random;
+import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
-public class Ore extends Solid {
-	private Random rand = new Random();
-	private int max = 1;
-	private int min = 1;
+public class Portal extends VanillaBlockMaterial {
+	private BlockMaterial frameMaterial;
 
-	public Ore(String name, int id) {
+	public Portal(String name, int id) {
 		super(name, id);
 	}
 
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(3.0F).setResistance(5.0F);
+	public BlockMaterial getFrameMaterial() {
+		return this.frameMaterial;
 	}
 
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSDRUM;
-	}
-
-	@Override
-	public int getDropCount() {
-		return rand.nextInt(max - min + 1) + min;
-	}
-
-	public Ore setMinDropCount(int min) {
-		this.min = min;
+	public Portal setFrameMaterial(BlockMaterial material) {
+		this.frameMaterial = material;
 		return this;
-	}
-
-	public Ore setMaxDropCount(int max) {
-		this.max = max;
-		return this;
-	}
-
-	public int getMinDropCount() {
-		return min;
-	}
-
-	public int getMaxDropCount() {
-		return max;
 	}
 }

@@ -26,7 +26,10 @@
  */
 package org.spout.vanilla.material.block.redstone;
 
+import java.util.ArrayList;
+
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -34,9 +37,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.GroundAttachable;
-import org.spout.vanilla.material.block.RedstoneSource;
-import org.spout.vanilla.material.block.RedstoneTarget;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 
@@ -48,7 +49,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.REDSTONE_DUST);
+		this.setHardness(0.0F).setResistance(0.0F);
 	}
 
 	@Override
@@ -156,6 +157,13 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		return this.getReceivingPower(block) > 0;
 	}
 
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.REDSTONE_DUST, 1));
+		return drops;
+	}
+
 	public short getReceivingPower(Block block) {
 		short maxPower = 0;
 		Block rel, relvert;
@@ -233,7 +241,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 
 	/**
 	 * Checks if this wire is distracted from connecting to a certain solid block
-	 * @param block	 of the wire
+	 * @param block     of the wire
 	 * @param direction it tries to connect to a solid block
 	 * @return True if the wire is distracted
 	 */

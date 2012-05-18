@@ -26,12 +26,15 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.ArrayList;
+
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.GroundAttachable;
-import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class Flower extends GroundAttachable implements Plant {
 	public Flower(String name, int id) {
@@ -65,5 +68,12 @@ public class Flower extends GroundAttachable implements Plant {
 			return material.equals(VanillaMaterials.GRASS) || material.equals(VanillaMaterials.DIRT);
 		}
 		return false;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		//drops.add(new ItemStack(block., block.getData(), 1)); TODO Need a way to get flower types
+		return drops;
 	}
 }

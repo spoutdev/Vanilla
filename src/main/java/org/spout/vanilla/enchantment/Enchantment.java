@@ -42,33 +42,26 @@ public abstract class Enchantment {
 
 	/**
 	 * Whether this enchantment can enchant the given material
-	 * 
-	 * @param material
-	 *            Material to check
+	 * @param material Material to check
 	 */
 	public abstract boolean canEnchant(VanillaMaterial material);
 
 	/**
 	 * Gets the maximum level this enchantment can be
-	 * 
 	 * @return maximum level
 	 */
 	public abstract int getMaximumLevel();
 
 	/**
 	 * Gets the weight of this enchantment, enchantments with higher weights have a greater chance of being selected during the enchantment process
-	 * 
 	 * @return Weight of this enchantment
 	 */
 	public abstract int getWeight();
 
 	/**
 	 * Whether this enchantment is compatible with the given enchantment while attached to the given material
-	 * 
-	 * @param enchantment
-	 *            Enchantment to check
-	 * @param material
-	 *            Material that this enchantment is attached to
+	 * @param enchantment Enchantment to check
+	 * @param material    Material that this enchantment is attached to
 	 * @return true if this enchantment is compatible with the given enchantment
 	 */
 	public boolean compatibleWith(Enchantment enchantment, VanillaMaterial material) {
@@ -77,7 +70,6 @@ public abstract class Enchantment {
 
 	/**
 	 * Gets the id of this enchantment
-	 * 
 	 * @return id of this enchantment
 	 */
 	public final int getId() {
@@ -86,7 +78,6 @@ public abstract class Enchantment {
 
 	/**
 	 * Gets the name of this enchantment
-	 * 
 	 * @return name of this enchantment
 	 */
 	public final String getName() {
@@ -95,9 +86,7 @@ public abstract class Enchantment {
 
 	/**
 	 * Whether this enchantment equals any of the given enchantments
-	 * 
-	 * @param enchantments
-	 *            Enchantments to check
+	 * @param enchantments Enchantments to check
 	 * @return true if this enchantment matches any a given enchantment
 	 */
 	public final boolean equals(Enchantment... enchantments) {

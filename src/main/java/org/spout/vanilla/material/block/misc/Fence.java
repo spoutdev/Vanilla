@@ -26,6 +26,10 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import java.util.ArrayList;
+
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -78,5 +82,12 @@ public class Fence extends VanillaBlockMaterial implements Fuel {
 	@Override
 	public boolean canBurn() {
 		return true;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.FENCE, block.getData(), 1));
+		return drops;
 	}
 }

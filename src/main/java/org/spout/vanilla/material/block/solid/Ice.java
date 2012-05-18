@@ -32,7 +32,6 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -45,7 +44,7 @@ public class Ice extends Solid implements Mineable {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.5F).setResistance(0.8F).setDrop(null);
+		this.setHardness(0.5F).setResistance(0.8F);
 	}
 
 	@Override

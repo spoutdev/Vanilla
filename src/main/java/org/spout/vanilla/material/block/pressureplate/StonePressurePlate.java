@@ -26,8 +26,13 @@
  */
 package org.spout.vanilla.material.block.pressureplate;
 
+import java.util.ArrayList;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.block.PressurePlate;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
@@ -45,5 +50,16 @@ public class StonePressurePlate extends PressurePlate implements Mineable {
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		if (block.getSource() instanceof Entity) {
+			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Pickaxe) {
+				drops.add(new ItemStack(this, 1));
+			}
+		}
+		return drops;
 	}
 }

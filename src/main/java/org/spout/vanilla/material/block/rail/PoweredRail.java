@@ -26,12 +26,14 @@
  */
 package org.spout.vanilla.material.block.rail;
 
+import java.util.ArrayList;
+
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
 
-import org.spout.vanilla.material.block.RailBase;
-import org.spout.vanilla.material.block.RedstoneTarget;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RailsState;
 import org.spout.vanilla.util.RedstoneUtil;
 
@@ -123,5 +125,12 @@ public class PoweredRail extends RailBase implements RedstoneTarget {
 	@Override
 	public RailsState getState(Block block) {
 		return RailsState.get(block.getData() & 0x7);
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
+		return drops;
 	}
 }

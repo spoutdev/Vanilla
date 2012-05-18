@@ -24,36 +24,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.block.redstone;
 
+import org.spout.api.Source;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
-
-public class GroundAttachable extends AbstractAttachable {
-	public GroundAttachable(String name, int id) {
-		super(name, id);
-		this.setAttachable(BlockFace.BOTTOM);
-	}
-
-	public GroundAttachable(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, id, data, parent);
-		this.setAttachable(BlockFace.BOTTOM);
-	}
-
-	@Override
-	public boolean canSeekAttachedAlternative() {
-		return true;
-	}
-
-	@Override
-	public void setAttachedFace(Block block, BlockFace attachedFace) {
-		block.setData(0);
-	}
-
-	@Override
-	public BlockFace getAttachedFace(Block block) {
-		return BlockFace.BOTTOM;
-	}
+public interface RedstoneTarget extends Source {
+	/**
+	 * Checks if a block is receiving power from neighbouring blocks.
+	 * @param block to check
+	 * @return True if the block is receiving power
+	 */
+	public boolean isReceivingPower(Block block);
 }

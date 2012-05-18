@@ -41,16 +41,14 @@ public class GrowthMonitor extends Controller implements VanillaController {
 		super(TYPE);
 		this.region = region;
 	}
-	
-	public Region getRegion() {
-		return region;
-	}
 
 	@Override
 	public void onAttached() {
+
 	}
 
 	@Override
 	public void onTick(float dt) {
+
 	}
 }

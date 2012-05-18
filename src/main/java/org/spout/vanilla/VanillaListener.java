@@ -57,7 +57,6 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.ControllerInitialization;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.controller.world.BlockUpdater;
-import org.spout.vanilla.controller.world.GrowthMonitor;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;

@@ -24,16 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.block.ore;
 
-import org.spout.api.Source;
-import org.spout.api.geo.cuboid.Block;
+import org.spout.vanilla.material.block.solid.Solid;
+import org.spout.vanilla.util.Instrument;
 
-public interface RedstoneTarget extends Source {
-	/**
-	 * Checks if a block is receiving power from neighbouring blocks.
-	 * @param block to check
-	 * @return True if the block is receiving power
-	 */
-	public boolean isReceivingPower(Block block);
+public class Ore extends Solid {
+	public Ore(String name, int id) {
+		super(name, id);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(3.0F).setResistance(5.0F);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSDRUM;
+	}
 }

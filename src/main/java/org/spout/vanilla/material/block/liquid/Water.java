@@ -30,7 +30,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
 
 public class Water extends Liquid {
 	public Water(String name, int id, boolean flowing) {

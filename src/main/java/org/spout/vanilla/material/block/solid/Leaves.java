@@ -26,18 +26,16 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.SignBase;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -73,40 +71,23 @@ public class Leaves extends Solid {
 	}
 
 	@Override
-	public void onDestroySpawnDrops(Block block) {
-		Material dropMat = getDrop();
-		if (block.getSource() instanceof Entity) {
-			Entity entity = (Entity) block.getSource();
-			if (VanillaPlayerUtil.isCreative(entity)) {
-				return;
-			}
-			ItemStack current = entity.getInventory().getCurrentItem();
-			if (current != null && current.getMaterial().equals(VanillaMaterials.SHEARS)) {
-				dropMat = block.getSubMaterial();
-			}
-		}
-
-		if (dropMat != null) {
-			int count = this.getDropCount();
-			for (int i = 0; i < count && dropMat.getId() != 0; ++i) {
-				block.getWorld().createAndSpawnEntity(block.getPosition(), new Item(new ItemStack(dropMat, 1), block.getPosition().normalize().add(0, 5, 0)));
-			}
-		}
-	}
-
-	@Override
-	public Material getDrop() {
-		if (rand.nextInt(20) == 0) {
-			return VanillaMaterials.SAPLING;
-		} else if (rand.nextInt(200) == 0) {
-			return VanillaMaterials.RED_APPLE;
-		}
-		return VanillaMaterials.AIR;
-	}
-
-	@Override
 	public boolean canBurn() {
 		return true;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial().equals(VanillaMaterials.SHEARS) && !VanillaPlayerUtil.isCreative(block.getSource())) {
+			drops.add(new ItemStack(this, 1));
+		} else {
+			if (rand.nextInt(20) == 0) {
+				drops.add(new ItemStack(VanillaMaterials.SAPLING, 1));
+			} else if (rand.nextInt(200) == 0) {
+				drops.add(new ItemStack(VanillaMaterials.RED_APPLE, 1));
+			}
+		}
+		return drops;
 	}
 
 	// TODO: Decay

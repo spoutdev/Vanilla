@@ -26,6 +26,11 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import java.util.ArrayList;
+
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -37,6 +42,13 @@ public class FarmLand extends VanillaBlockMaterial {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.6F).setResistance(1.0F).setDrop(VanillaMaterials.DIRT);
+		this.setHardness(0.6F).setResistance(1.0F);
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.DIRT, block.getData(), 1));
+		return drops;
 	}
 }

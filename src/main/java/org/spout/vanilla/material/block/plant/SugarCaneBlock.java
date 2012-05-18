@@ -26,17 +26,19 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.GroundAttachable;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class SugarCaneBlock extends GroundAttachable {
 	private final Set<Material> allowedBases = new HashSet<Material>(4);
@@ -50,7 +52,7 @@ public class SugarCaneBlock extends GroundAttachable {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.0F).setResistance(0.0F).setDrop(VanillaMaterials.SUGAR_CANE);
+		this.setHardness(0.0F).setResistance(0.0F);
 	}
 
 	@Override
@@ -75,6 +77,13 @@ public class SugarCaneBlock extends GroundAttachable {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
+		return drops;
 	}
 
 	public void addAllowedBase(Material... materials) {

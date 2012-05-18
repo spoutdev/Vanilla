@@ -38,9 +38,9 @@ import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.RailBase;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.rail.PoweredRail;
+import org.spout.vanilla.material.block.rail.RailBase;
+import org.spout.vanilla.material.block.solid.Solid;
 import org.spout.vanilla.util.RailsState;
 
 public abstract class Minecart extends Substance implements Vehicle {

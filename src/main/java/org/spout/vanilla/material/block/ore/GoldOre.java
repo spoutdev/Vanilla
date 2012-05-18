@@ -26,12 +26,16 @@
  */
 package org.spout.vanilla.material.block.ore;
 
+import java.util.ArrayList;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
@@ -54,5 +58,17 @@ public class GoldOre extends Ore implements TimedCraftable, Mineable {
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		if (block.getSource() instanceof Entity) {
+			Material held = ((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial();
+			if (held.equals(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
+				drops.add(new ItemStack(VanillaMaterials.GOLD_ORE, block.getData(), 1));
+			}
+		}
+		return drops;
 	}
 }

@@ -26,14 +26,18 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.item.MiningTool;
 
-public class Wool extends Solid {
+public class Wool extends Solid implements Mineable {
 	public static final Wool WHITE = register(new Wool("White Wool"));
 	public static final Wool ORANGE = register(new Wool("Orange Wool", WoolColor.ORANGE, WHITE));
 	public static final Wool MAGENTA = register(new Wool("Magenta Wool", WoolColor.MAGENTA, WHITE));
@@ -85,6 +89,18 @@ public class Wool extends Solid {
 	@Override
 	public boolean canBurn() {
 		return true;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
+		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(MiningTool tool) {
+		return 0;
 	}
 
 	public static enum WoolColor implements DataSource {

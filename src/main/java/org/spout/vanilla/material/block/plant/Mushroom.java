@@ -26,11 +26,13 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.ArrayList;
+
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.block.GroundAttachable;
-import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class Mushroom extends GroundAttachable implements Plant {
 	public Mushroom(String name, int id) {
@@ -64,5 +66,12 @@ public class Mushroom extends GroundAttachable implements Plant {
 			return block.getLight() <= 12 && block.getSkyLight() <= 12;
 		}
 		return false;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		//drops.add(new ItemStack(VanillaMaterials, block.getData(), 1)); TODO Need a way to get mushroom types
+		return drops;
 	}
 }

@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.block.pressureplate;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -33,6 +33,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.controller.world.BlockUpdater;
+import org.spout.vanilla.material.block.ScheduleUpdated;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.util.RedstonePowerMode;
 
 public class PressurePlate extends GroundAttachable implements RedstoneSource, ScheduleUpdated {
@@ -60,7 +63,7 @@ public class PressurePlate extends GroundAttachable implements RedstoneSource, S
 
 	/**
 	 * Sets whether this pressure plate is pressed down
-	 * @param block	 to set it of
+	 * @param block     to set it of
 	 * @param pressed   whether it is pressed
 	 * @param doPhysics whether to perform redstone physics
 	 */

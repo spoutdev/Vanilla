@@ -26,8 +26,11 @@
  */
 package org.spout.vanilla.material.block.piston;
 
+import java.util.ArrayList;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -37,7 +40,7 @@ import org.spout.api.util.LogicUtil;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.RedstoneTarget;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
@@ -69,6 +72,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 
 	@Override
 	public void onDestroyBlock(Block block) {
+		super.onDestroy(block);
 		if (this.isExtended(block)) {
 			Block extension = block.translate(this.getFacing(block));
 			if (extension.getMaterial() instanceof PistonExtension) {
@@ -99,7 +103,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 
 	/**
 	 * Extends or retracts a piston block, complete with the animation and block changes.
-	 * @param block	of the piston
+	 * @param block    of the piston
 	 * @param extended True to extend, False to retract
 	 * @return True if the piston really got extended or retracted, False if not
 	 */
@@ -262,5 +266,16 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		if (sticky) {
+			drops.add(new ItemStack(VanillaMaterials.PISTON_STICKY_BASE, block.getData(), 1));
+		} else {
+			drops.add(new ItemStack(VanillaMaterials.PISTON_BASE, block.getData(), 1));
+		}
+		return drops;
 	}
 }

@@ -26,17 +26,21 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import java.util.ArrayList;
+
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 
-import org.spout.vanilla.material.block.AbstractAttachable;
-import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstonePowerMode;
@@ -142,5 +146,12 @@ public class Lever extends AbstractAttachable implements RedstoneSource {
 	@Override
 	public void doRedstoneUpdates(Block block) {
 		block.setSource(this).update().translate(this.getAttachedFace(block)).update();
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.LEVER, block.getData(), 1));
+		return drops;
 	}
 }

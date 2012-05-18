@@ -26,12 +26,14 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
+
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
@@ -71,5 +73,12 @@ public class Sand extends Solid implements TimedCraftable, Mineable {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.SNAREDRUM;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
+		return drops;
 	}
 }

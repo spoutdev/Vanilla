@@ -37,8 +37,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.block.RailBase;
 import org.spout.vanilla.material.block.rail.Rail;
+import org.spout.vanilla.material.block.rail.RailBase;
 
 public class MinecartTrackLogic implements Source {
 	public Block block;

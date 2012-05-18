@@ -31,8 +31,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.GroundAttachable;
-import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class DeadBush extends GroundAttachable implements Plant {
 	public DeadBush(String name, int id) {
@@ -46,7 +45,7 @@ public class DeadBush extends GroundAttachable implements Plant {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.0F).setResistance(0.0F).setDrop(null);
+		this.setHardness(0.0F).setResistance(0.0F);
 	}
 
 	@Override

@@ -26,10 +26,13 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
+import java.util.ArrayList;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
@@ -38,7 +41,7 @@ import org.spout.vanilla.controller.block.DispenserController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.solid.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.util.MoveReaction;
@@ -107,5 +110,12 @@ public class Dispenser extends Solid implements Mineable, Directional {
 			// Open the dispenser
 			this.getController(block).getInventory().open((VanillaPlayer) controller);
 		}
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
+		return drops;
 	}
 }

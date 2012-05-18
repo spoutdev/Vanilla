@@ -33,7 +33,7 @@ import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.RedstoneSource;
+import org.spout.vanilla.material.block.redstone.RedstoneSource;
 
 public class RedstoneUtil {
 	/**

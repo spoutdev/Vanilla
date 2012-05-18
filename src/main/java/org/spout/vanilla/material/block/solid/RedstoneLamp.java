@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
+import java.util.ArrayList;
+
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 
 public class RedstoneLamp extends Solid {
 	private final boolean on;
@@ -41,7 +43,7 @@ public class RedstoneLamp extends Solid {
 	public void initialize() {
 		super.initialize();
 		// TODO: The resistance is not correct (?)
-		this.setHardness(0.3F).setResistance(0.5F).setDrop(VanillaMaterials.REDSTONE_LAMP_OFF);
+		this.setHardness(0.3F).setResistance(0.5F);
 		if (on) {
 			this.setLightLevel(15);
 		}
@@ -53,5 +55,12 @@ public class RedstoneLamp extends Solid {
 	 */
 	public boolean inOn() {
 		return on;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
+		return drops;
 	}
 }

@@ -43,7 +43,7 @@ public class PistonExtensionMoving extends PistonExtension {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setResistance(0.0F).setDrop(null);
+		this.setResistance(0.0F);
 		this.setController(VanillaControllerTypes.PISTON_MOVING);
 	}
 

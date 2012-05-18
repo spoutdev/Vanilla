@@ -26,7 +26,10 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import java.util.ArrayList;
+
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -43,7 +46,7 @@ public class BedBlock extends VanillaBlockMaterial {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.2F).setResistance(0.3F).setDrop(VanillaMaterials.BED);
+		this.setHardness(0.2F).setResistance(0.3F);
 	}
 
 	@Override
@@ -136,11 +139,18 @@ public class BedBlock extends VanillaBlockMaterial {
 		return false;
 	}
 
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.BED, block.getData(), 1));
+		return drops;
+	}
+
 	/**
 	 * Gets the top or face door block when either of the blocks is given
-	 * @param doorBlock the top or bottom door block
-	 * @param top	   whether to get the top block, if false, gets the bottom block
-	 * @return the requested door half block
+	 * @param bedBlock the top or bottom bed block
+	 * @param head     whether to get the top block, if false, gets the bottom block
+	 * @return the requested bed half block
 	 */
 	private Block getCorrectHalf(Block bedBlock, boolean head) {
 		BlockFace facing = getFacing(bedBlock);

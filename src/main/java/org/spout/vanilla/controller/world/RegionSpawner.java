@@ -81,9 +81,9 @@ public class RegionSpawner extends Controller implements VanillaController {
 
 	/**
 	 * Adds a controller type to the list of controller types this region spawner will try to spawn.
-	 * @param type	   to spawn
+	 * @param type       to spawn
 	 * @param canSpawnOn a set of block materials that this controller can spawn on
-	 * @param amount	 of this type of controller that should be spawned per chunk, on average
+	 * @param amount     of this type of controller that should be spawned per chunk, on average
 	 * @throws IllegalStateException if the controller cannot be spawned
 	 */
 	public void addSpawnableType(ControllerType type, Set<BlockMaterial> canSpawnOn, int amount) {

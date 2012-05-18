@@ -26,8 +26,11 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.ArrayList;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -40,13 +43,12 @@ import org.spout.vanilla.material.VanillaMaterials;
 public class Vines extends VanillaBlockMaterial {
 	public Vines(String name, int id) {
 		super(name, id);
-		this.setDrop(null);
 	}
 
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.2F).setResistance(0.3F).setDrop(null);
+		this.setHardness(0.2F).setResistance(0.3F);
 	}
 
 	private int getMask(BlockFace face) {
@@ -71,8 +73,8 @@ public class Vines extends VanillaBlockMaterial {
 
 	/**
 	 * Sets whether a certain face is attached or not
-	 * @param block	of this material
-	 * @param face	 to attach to
+	 * @param block    of this material
+	 * @param face     to attach to
 	 * @param attached whether or not to attach
 	 */
 	public void setFaceAttached(Block block, BlockFace face, boolean attached) {
@@ -224,5 +226,16 @@ public class Vines extends VanillaBlockMaterial {
 	@Override
 	public boolean isPlacementObstacle() {
 		return false;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		if (block.getSource() instanceof Entity) {
+			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial().equals(VanillaMaterials.SHEARS)) {
+				drops.add(new ItemStack(VanillaMaterials.VINES, block.getData(), 1));
+			}
+		}
+		return drops;
 	}
 }

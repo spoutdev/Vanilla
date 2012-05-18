@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
@@ -37,8 +38,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.GroundAttachable;
-import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.normal.object.SmallTreeObject;
@@ -103,6 +103,13 @@ public class Sapling extends GroundAttachable implements Plant, Fuel {
 			}
 			this.growTree(block);
 		}
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
+		return drops;
 	}
 
 	/**

@@ -26,17 +26,21 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import java.util.ArrayList;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.AbstractAttachable;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Openable;
-import org.spout.vanilla.material.block.RedstoneTarget;
+import org.spout.vanilla.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstoneUtil;
@@ -112,5 +116,12 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 	@Override
 	public BlockFace getAttachedFace(Block block) {
 		return BlockFaces.WESN.get(block.getData() & ~0x4);
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.TRAPDOOR, block.getData(), 1));
+		return drops;
 	}
 }

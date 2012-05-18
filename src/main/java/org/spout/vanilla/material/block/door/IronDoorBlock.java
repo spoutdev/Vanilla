@@ -26,8 +26,15 @@
  */
 package org.spout.vanilla.material.block.door;
 
+import java.util.ArrayList;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.DoorBlock;
+import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class IronDoorBlock extends DoorBlock {
 	public IronDoorBlock(String name, int id) {
@@ -37,6 +44,17 @@ public class IronDoorBlock extends DoorBlock {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(5.0F).setResistance(8.3F).setDrop(VanillaMaterials.IRON_DOOR);
+		this.setHardness(5.0F).setResistance(8.3F);
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		if (block.getSource() instanceof Entity) {
+			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Pickaxe) {
+				drops.add(new ItemStack(VanillaMaterials.IRON_DOOR, block.getData(), 1));
+			}
+		}
+		return drops;
 	}
 }

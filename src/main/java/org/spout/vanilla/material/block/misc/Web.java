@@ -26,8 +26,13 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import java.util.ArrayList;
+
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.solid.Solid;
 
 public class Web extends Solid {
 	public Web(String name, int id) {
@@ -37,6 +42,13 @@ public class Web extends Solid {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(4.0F).setResistance(20.0F).setDrop(VanillaMaterials.STRING);
+		this.setHardness(4.0F).setResistance(20.0F);
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.STRING, block.getData(), 1));
+		return drops;
 	}
 }

@@ -33,6 +33,8 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstoneUtil;
@@ -91,7 +93,7 @@ public class DoorBlock extends GroundAttachable implements Openable, RedstoneTar
 	/**
 	 * Gets the top or face door block when either of the blocks is given
 	 * @param doorBlock the top or bottom door block
-	 * @param top	   whether to get the top block, if false, gets the bottom block
+	 * @param top       whether to get the top block, if false, gets the bottom block
 	 * @return the requested door half block
 	 */
 	private Block getCorrectHalf(Block doorBlock, boolean top) {

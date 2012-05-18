@@ -26,15 +26,16 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
 import java.util.Random;
 
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.util.Instrument;
@@ -58,11 +59,6 @@ public class Gravel extends Solid implements Mineable {
 	}
 
 	@Override
-	public Material getDrop() {
-		return (rand.nextInt(10) == 0) ? VanillaMaterials.FLINT : VanillaMaterials.GRAVEL;
-	}
-
-	@Override
 	public boolean canSupport(BlockMaterial material, BlockFace face) {
 		if (material.equals(VanillaMaterials.FIRE)) {
 			return face == BlockFace.TOP;
@@ -79,5 +75,16 @@ public class Gravel extends Solid implements Mineable {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.SNAREDRUM;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		if (rand.nextInt(10) == 0) {
+			drops.add(new ItemStack(VanillaMaterials.FLINT, 1));
+		} else {
+			drops.add(new ItemStack(this, 1));
+		}
+		return drops;
 	}
 }

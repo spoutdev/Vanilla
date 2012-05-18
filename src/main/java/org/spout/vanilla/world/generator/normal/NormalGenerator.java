@@ -34,7 +34,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.material.block.liquid.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.populator.SmoothPopulator;

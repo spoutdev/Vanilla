@@ -29,8 +29,7 @@ package org.spout.vanilla.material.block.solid;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.block.PointAttachable;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.attachable.PointAttachable;
 import org.spout.vanilla.util.Instrument;
 
 public class Glass extends Solid {
@@ -42,7 +41,7 @@ public class Glass extends Solid {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.3F).setResistance(0.5F).setDrop(null);
+		this.setHardness(0.3F).setResistance(0.5F);
 	}
 
 	@Override

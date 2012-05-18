@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.GroundAttachable;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.misc.Dye;
 
@@ -47,7 +48,15 @@ public class Cactus extends GroundAttachable implements TimedCraftable {
 
 	public Cactus(String name, int id) {
 		super(name, id);
-		addAllowedNeighbour(VanillaMaterials.AIR, VanillaMaterials.TORCH, VanillaMaterials.REDSTONE_TORCH_OFF, VanillaMaterials.REDSTONE_TORCH_ON, VanillaMaterials.LEVER, VanillaMaterials.DEAD_BUSH, VanillaMaterials.TALL_GRASS, VanillaMaterials.REDSTONE_WIRE);
+		addAllowedNeighbour(VanillaMaterials.AIR,
+				VanillaMaterials.TORCH,
+				VanillaMaterials.REDSTONE_TORCH_OFF,
+				VanillaMaterials.REDSTONE_TORCH_ON,
+				VanillaMaterials.LEVER,
+				VanillaMaterials.DEAD_BUSH,
+				VanillaMaterials.TALL_GRASS,
+				VanillaMaterials.REDSTONE_WIRE
+		);
 	}
 
 	@Override
@@ -105,5 +114,12 @@ public class Cactus extends GroundAttachable implements TimedCraftable {
 	@Override
 	public float getCraftTime() {
 		return Furnace.SMELT_TIME;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.CACTUS, block.getData(), 1));
+		return drops;
 	}
 }

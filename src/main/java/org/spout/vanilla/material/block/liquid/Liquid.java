@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.block.liquid;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -44,7 +44,6 @@ public abstract class Liquid extends VanillaBlockMaterial {
 	public void initialize() {
 		super.initialize();
 		this.setHardness(100.0F).setResistance(166.7F);
-		this.setDrop(null);
 	}
 
 	@Override

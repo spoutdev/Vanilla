@@ -61,7 +61,7 @@ public final class ChannelBufferUtils {
 
 	/**
 	 * Writes a list of parameters (e.g. mob metadata) to the buffer.
-	 * @param buf		The buffer.
+	 * @param buf        The buffer.
 	 * @param parameters The parameters.
 	 */
 	@SuppressWarnings("unchecked")
@@ -168,7 +168,7 @@ public final class ChannelBufferUtils {
 	 * @param buf The buffer.
 	 * @param str The string.
 	 * @throws UnsupportedEncodingException if the encoding isn't supported.
-	 * @throws IllegalArgumentException	 if the string is too long <em>after</em>
+	 * @throws IllegalArgumentException     if the string is too long <em>after</em>
 	 *                                      it is encoded.
 	 */
 	public static void writeUtf8String(ChannelBuffer buf, String str) throws UnsupportedEncodingException {

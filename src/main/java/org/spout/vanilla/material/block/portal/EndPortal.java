@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.portal;
 
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.material.block.Portal;
 import org.spout.vanilla.util.MoveReaction;
 
 public class EndPortal extends Portal {
@@ -38,7 +37,7 @@ public class EndPortal extends Portal {
 
 	public void initialize() {
 		super.initialize();
-		this.setHardness(-1.0F).setResistance(6000000.0F).setLightLevel(1).setDrop(null);
+		this.setHardness(-1.0F).setResistance(6000000.0F).setLightLevel(1);
 	}
 
 	@Override

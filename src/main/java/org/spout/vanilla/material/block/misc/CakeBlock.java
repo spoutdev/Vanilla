@@ -36,6 +36,6 @@ public class CakeBlock extends VanillaBlockMaterial {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.5F).setResistance(0.8F).setDrop(null);
+		this.setHardness(0.5F).setResistance(0.8F);
 	}
 }

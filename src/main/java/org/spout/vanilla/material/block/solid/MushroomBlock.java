@@ -26,9 +26,15 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Ore;
+import org.spout.vanilla.material.block.ore.Ore;
 
 public class MushroomBlock extends Ore implements Fuel {
 	public final float BURN_TIME = 15.f;
@@ -40,16 +46,23 @@ public class MushroomBlock extends Ore implements Fuel {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setMinDropCount(0).setMaxDropCount(2).setHardness(0.2F).setResistance(0.3F); // Placeholder, block resistance unknown
-		if (this.equals(VanillaMaterials.HUGE_RED_MUSHROOM)) {
-			this.setDrop(VanillaMaterials.RED_MUSHROOM);
-		} else {
-			this.setDrop(VanillaMaterials.BROWN_MUSHROOM);
-		}
+		this.setHardness(0.2F).setResistance(0.3F);
 	}
 
 	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		int amount = new Random().nextInt(0 - 2 + 1) + 0;
+		if (this.equals(VanillaMaterials.HUGE_RED_MUSHROOM)) {
+			drops.add(new ItemStack(VanillaMaterials.RED_MUSHROOM, amount));
+		} else {
+			drops.add(new ItemStack(VanillaMaterials.BROWN_MUSHROOM, amount));
+		}
+		return drops;
 	}
 }

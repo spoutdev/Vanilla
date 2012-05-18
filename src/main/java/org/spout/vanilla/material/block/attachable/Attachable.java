@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.block.attachable;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -39,7 +39,7 @@ public interface Attachable {
 	/**
 	 * Checks if this material can be attached to certain face of a block material
 	 * @param material to attach to
-	 * @param face	 of the material to attach to
+	 * @param face     of the material to attach to
 	 * @return if this material can be attached to face of the block material given
 	 */
 	public boolean canAttachTo(BlockMaterial material, BlockFace face);
@@ -54,7 +54,7 @@ public interface Attachable {
 
 	/**
 	 * Sets the face the block is attached to
-	 * @param block		to set
+	 * @param block        to set
 	 * @param attachedFace to set the block to
 	 */
 	public void setAttachedFace(Block block, BlockFace attachedFace);
@@ -83,8 +83,8 @@ public interface Attachable {
 
 	/**
 	 * Performs placement of this attachable
-	 * @param block		to place at
-	 * @param data		 to use
+	 * @param block        to place at
+	 * @param data         to use
 	 * @param attachedFace to use
 	 */
 	public void handlePlacement(Block block, short data, BlockFace attachedFace);
@@ -93,9 +93,9 @@ public interface Attachable {
 	 * Checks if this attachable is at a position it can actually be<br>
 	 * This is called in the underlying physics function to check if the block has to be broken<br>
 	 * No checks on the block itself should be performed misc than the face it is attached to
-	 * @param block		   to place at
-	 * @param data			to use
-	 * @param attachedFace	to use
+	 * @param block           to place at
+	 * @param data            to use
+	 * @param attachedFace    to use
 	 * @param seekAlternative whether an alternative attached face should be sought
 	 * @return whether placement is possible
 	 */

@@ -35,7 +35,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.material.block.liquid.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 
 public class PondObject extends WorldGeneratorObject {

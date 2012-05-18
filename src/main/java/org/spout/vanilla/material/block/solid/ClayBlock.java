@@ -26,9 +26,13 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
+
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
 
@@ -40,11 +44,18 @@ public class ClayBlock extends Solid implements Mineable {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.6F).setResistance(1.0F).setDrop(VanillaMaterials.CLAY).setDropCount(4);
+		this.setHardness(0.6F).setResistance(1.0F);
 	}
 
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Spade ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.CLAY, 4));
+		return drops;
 	}
 }

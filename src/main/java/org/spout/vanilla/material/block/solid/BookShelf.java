@@ -26,9 +26,13 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
+
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
 
 public class BookShelf extends Solid implements Fuel {
@@ -41,7 +45,7 @@ public class BookShelf extends Solid implements Fuel {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(1.5F).setResistance(2.5F).setDrop(VanillaMaterials.BOOK).setDropCount(3);
+		this.setHardness(1.5F).setResistance(2.5F);
 	}
 
 	@Override
@@ -57,5 +61,12 @@ public class BookShelf extends Solid implements Fuel {
 	@Override
 	public boolean canBurn() {
 		return true;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.BOOK, 3));
+		return drops;
 	}
 }

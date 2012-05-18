@@ -38,7 +38,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.material.block.liquid.Liquid;
 
 /**
  * Populator ran at stage 2 of world generation which serves to smooth

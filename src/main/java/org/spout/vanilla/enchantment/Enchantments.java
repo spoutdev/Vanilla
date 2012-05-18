@@ -54,7 +54,6 @@ import org.spout.vanilla.enchantment.tool.Unbreaking;
 public class Enchantments {
 	private static final Map<Integer, Enchantment> idLookup = new HashMap<Integer, Enchantment>();
 	private static final Map<String, Enchantment> nameLookup = new HashMap<String, Enchantment>();
-
 	// ==Armor Enchantments==
 	public static final Protection PROTECTION = register(new Protection("Protection", 0));
 	public static final FireProtection FIRE_PROTECTION = register(new FireProtection("Fire Protection", 1));
@@ -63,7 +62,6 @@ public class Enchantments {
 	public static final ProjectileProtection PROJECTILE_PROTECTION = register(new ProjectileProtection("Projectile Protection", 4));
 	public static final Respiration RESPIRATION = register(new Respiration("Respiration", 5));
 	public static final AquaAffinity AQUA_AFFINITY = register(new AquaAffinity("Aqua Affinity", 6));
-
 	// ==Sword Enchantments==
 	public static final Sharpness SHARPNESS = register(new Sharpness("Sharpness", 16));
 	public static final Smite SMITE = register(new Smite("Smite", 17));
@@ -71,13 +69,11 @@ public class Enchantments {
 	public static final Knockback KNOCKBACK = register(new Knockback("Knockback", 19));
 	public static final FireAspect FIRE_ASPECT = register(new FireAspect("Fire Aspect", 20));
 	public static final Looting LOOTING = register(new Looting("Looting", 21));
-
 	// ==Tool Enchantments==
 	public static final Efficiency EFFICIENCY = register(new Efficiency("Efficiency", 32));
 	public static final SilkTouch SILK_TOUCH = register(new SilkTouch("Silk Touch", 33));
 	public static final Unbreaking UNBREAKING = register(new Unbreaking("Unbreaking", 34));
 	public static final Fortune FORTUNE = register(new Fortune("Fortune", 35));
-
 	// ==Bow Enchantments==
 	public static final Power POWER = register(new Power("Power", 48));
 	public static final Punch PUNCH = register(new Punch("Punch", 49));
@@ -86,9 +82,7 @@ public class Enchantments {
 
 	/**
 	 * Registers the given enchantment
-	 * 
-	 * @param enchantment
-	 *            Enchantment to register
+	 * @param enchantment Enchantment to register
 	 * @return Registered enchantment
 	 */
 	public static <T extends Enchantment> T register(T enchantment) {
@@ -103,9 +97,7 @@ public class Enchantments {
 
 	/**
 	 * Gets an enchantment with the given id
-	 * 
-	 * @param id
-	 *            id of the enchantment
+	 * @param id id of the enchantment
 	 * @return Enchantment with the given id, or null if not found
 	 */
 	public static Enchantment getById(int id) {
@@ -114,9 +106,7 @@ public class Enchantments {
 
 	/**
 	 * Gets an enchantment with the given name (case-insensitive)
-	 * 
-	 * @param name
-	 *            Name of the enchantment
+	 * @param name Name of the enchantment
 	 * @return Enchantment with the given name, or null if not found
 	 */
 	public static Enchantment getByName(String name) {
@@ -125,7 +115,6 @@ public class Enchantments {
 
 	/**
 	 * Gets all registered Enchantments
-	 * 
 	 * @return Array of enchantments
 	 */
 	public static Enchantment[] values() {

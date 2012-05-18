@@ -42,7 +42,7 @@ public class PistonExtension extends VanillaBlockMaterial implements Directional
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setResistance(0.8F).setDrop(null);
+		this.setResistance(0.8F);
 	}
 
 	@Override

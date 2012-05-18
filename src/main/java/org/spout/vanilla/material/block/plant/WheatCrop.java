@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
@@ -33,12 +34,10 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.GroundAttachable;
-import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -52,7 +51,7 @@ public class WheatCrop extends GroundAttachable implements Plant {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setResistance(0.0F).setDrop(VanillaMaterials.WHEAT);
+		this.setResistance(0.0F);
 	}
 
 	@Override
@@ -68,16 +67,6 @@ public class WheatCrop extends GroundAttachable implements Plant {
 	@Override
 	public int getMinimumLightToGrow() {
 		return 9;
-	}
-
-	@Override
-	public Material getDrop() {
-		return VanillaMaterials.SEEDS;
-	}
-
-	@Override
-	public int getDropCount() {
-		return rand.nextInt(4);
 	}
 
 	@Override
@@ -99,6 +88,19 @@ public class WheatCrop extends GroundAttachable implements Plant {
 		}
 	}
 
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		int stage = getGrowthStage(block);
+		//final stage
+		//TODO Make a nice enum of this...
+		//TODO Drop seeds based on growth stage
+		if (stage == 8) {
+			drops.add(new ItemStack(VanillaMaterials.WHEAT, 1));
+		}
+		return drops;
+	}
+
 	public int getGrowthStage(Block block) {
 		return block.getData();
 	}
@@ -113,5 +115,4 @@ public class WheatCrop extends GroundAttachable implements Plant {
 
 	// TODO: Grow
 	// TODO: Trampling
-	// TODO: Multiple drops
 }

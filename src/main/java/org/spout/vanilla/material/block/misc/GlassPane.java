@@ -38,7 +38,7 @@ public class GlassPane extends VanillaBlockMaterial {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.3F).setResistance(0.3F).setDrop(null); // TODO resistance unknown
+		this.setHardness(0.3F).setResistance(0.3F);
 	}
 
 	@Override

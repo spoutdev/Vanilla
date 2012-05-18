@@ -26,8 +26,14 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
 
@@ -45,5 +51,16 @@ public class SnowBlock extends Solid implements Mineable {
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Spade ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		if (block.getSource() instanceof Entity) {
+			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Spade) {
+				drops.add(new ItemStack(VanillaMaterials.SNOWBALL, 4));
+			}
+		}
+		return drops;
 	}
 }

@@ -57,7 +57,7 @@ Coding and Pull Request Formatting
 * Pull requests must be formatted properly.
 * No merges should be included in pull requests unless the pull request's purpose is a merge.
 * Number of commits in a pull request should be kept to *one commit* and all additional commits must be *squashed and signed off*.
-* For clarification, see the full pull request guidelines [here](http://forums.spout.org/threads/643/)
+* For clarification, see the full pull request guidelines [here](http://forums.spout.org/threads/2922/)
 
 **Please follow the above conventions if you want your pull request(s) accepted.**
 

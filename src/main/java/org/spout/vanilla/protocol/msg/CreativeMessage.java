@@ -27,9 +27,10 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.spout.api.protocol.Message;
 
+import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.nbt.CompoundMap;
 
 public class CreativeMessage extends Message {
@@ -77,8 +78,12 @@ public class CreativeMessage extends Message {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {return false;}
-		if (getClass() != obj.getClass()) {return false;}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
 		final CreativeMessage other = (CreativeMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.slot, other.slot)

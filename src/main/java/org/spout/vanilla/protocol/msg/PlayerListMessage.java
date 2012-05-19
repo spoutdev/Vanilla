@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
@@ -64,8 +65,12 @@ public class PlayerListMessage extends Message {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {return false;}
-		if (getClass() != obj.getClass()) {return false;}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
 		final PlayerListMessage other = (PlayerListMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.playerName, other.playerName)

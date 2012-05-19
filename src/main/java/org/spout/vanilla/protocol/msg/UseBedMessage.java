@@ -67,8 +67,12 @@ public final class UseBedMessage extends Message {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {return false;}
-		if (getClass() != obj.getClass()) {return false;}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
 		final UseBedMessage other = (UseBedMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.id, other.id)
@@ -78,5 +82,4 @@ public final class UseBedMessage extends Message {
 				.append(this.z, other.z)
 				.isEquals();
 	}
-
 }

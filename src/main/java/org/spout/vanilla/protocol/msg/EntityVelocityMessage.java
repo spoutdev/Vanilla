@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
@@ -77,8 +78,12 @@ public final class EntityVelocityMessage extends Message {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {return false;}
-		if (getClass() != obj.getClass()) {return false;}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
 		final EntityVelocityMessage other = (EntityVelocityMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.id, other.id)

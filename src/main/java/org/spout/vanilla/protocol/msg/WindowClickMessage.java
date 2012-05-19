@@ -95,8 +95,12 @@ public final class WindowClickMessage extends Message {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {return false;}
-		if (getClass() != obj.getClass()) {return false;}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
 		final WindowClickMessage other = (WindowClickMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.id, other.id)

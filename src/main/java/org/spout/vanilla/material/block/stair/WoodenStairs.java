@@ -28,13 +28,11 @@ package org.spout.vanilla.material.block.stair;
 
 import java.util.ArrayList;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Stairs;
-import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.util.Instrument;
 
 public class WoodenStairs extends Stairs implements Fuel {

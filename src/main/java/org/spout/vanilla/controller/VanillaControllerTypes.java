@@ -87,7 +87,6 @@ import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
-import org.spout.vanilla.material.block.solid.SilverfishStone;
 import org.spout.vanilla.protocol.controller.BasicObjectEntityProtocol;
 import org.spout.vanilla.protocol.controller.BasicProjectileEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.BlazeEntityProtocol;

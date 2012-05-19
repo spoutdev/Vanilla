@@ -37,7 +37,6 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.SignBase;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Leaves extends Solid {
 	public static final Leaves DEFAULT = register(new Leaves("Leaves"));

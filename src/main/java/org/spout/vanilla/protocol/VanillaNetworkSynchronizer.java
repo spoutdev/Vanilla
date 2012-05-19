@@ -145,10 +145,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 
-
-
 		byte[] solidChunkData = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
-		byte[] airChunkData = new byte[Chunk.CHUNK_VOLUME* 5 / 2];
+		byte[] airChunkData = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
 
 		int i = 0;
 		for (int c = 0; c < Chunk.CHUNK_VOLUME; c++) {

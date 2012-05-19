@@ -201,8 +201,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		column.add(y);
 	}
 
-	private final static byte[] dark = new byte[Chunk.CHUNK_VOLUME];
-	private final static byte[] light = new byte[Chunk.CHUNK_VOLUME];
+	private final static byte[] dark = new byte[Chunk.CHUNK_VOLUME / 2];
+	private final static byte[] light = new byte[Chunk.CHUNK_VOLUME / 2];
 
 	static {
 		for (int i = 0; i < light.length; i++) {

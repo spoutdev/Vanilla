@@ -133,7 +133,11 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				if (heldItem.getMaterial() instanceof MiningTool && blockMaterial instanceof Mineable) {
 					MiningTool tool = (MiningTool) heldItem.getMaterial();
 					Mineable mineable = (Mineable) blockMaterial;
-					inv.addCurrentItemData(mineable.getDurabilityPenalty(tool));
+					if (tool.getDamage() < 0) {
+						player.getEntity().getInventory().getCurrentItem().setMaterial(null);
+					} else {
+						inv.addCurrentItemData(mineable.getDurabilityPenalty(tool));
+					}
 				}
 			}
 			if (isInteractable) {

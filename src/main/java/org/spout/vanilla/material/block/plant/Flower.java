@@ -73,7 +73,7 @@ public class Flower extends GroundAttachable implements Plant {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		//drops.add(new ItemStack(block., block.getData(), 1)); TODO Need a way to get flower types
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 }

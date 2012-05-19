@@ -71,7 +71,7 @@ public class Snow extends GroundAttachable implements Mineable {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
 			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Spade) {
-				drops.add(new ItemStack(VanillaMaterials.SNOWBALL, block.getData(), 1));
+				drops.add(new ItemStack(VanillaMaterials.SNOWBALL, 1));
 			}
 		}
 		return drops;

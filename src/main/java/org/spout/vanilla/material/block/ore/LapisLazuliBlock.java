@@ -60,7 +60,7 @@ public class LapisLazuliBlock extends Solid implements Mineable {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
 			Material held = ((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial();
-			if (held.equals(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
+			if (held.equals(VanillaMaterials.STONE_PICKAXE, VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
 				drops.add(new ItemStack(VanillaMaterials.LAPIS_LAZULI_BLOCK, block.getData(), 1));
 			}
 		}

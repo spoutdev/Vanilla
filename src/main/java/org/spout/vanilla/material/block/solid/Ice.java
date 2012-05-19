@@ -54,9 +54,6 @@ public class Ice extends Solid implements Mineable {
 
 	@Override
 	public void onDestroy(Block block) {
-		/*
-		 * Only let ice break into water if the world isn't a nether generated world or there isn't air under the material.
-		 */
 		if (!(block.getWorld().getGenerator() instanceof NetherGenerator) || block.translate(BlockFace.BOTTOM).getMaterial() != VanillaMaterials.AIR) {
 			// TODO Setting the source to world correct?
 			block.setMaterial(VanillaMaterials.STATIONARY_WATER).update(true);

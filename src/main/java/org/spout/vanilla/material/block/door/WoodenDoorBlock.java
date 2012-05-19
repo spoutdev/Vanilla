@@ -70,7 +70,7 @@ public class WoodenDoorBlock extends DoorBlock {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.WOODEN_DOOR, block.getData(), 1));
+		drops.add(new ItemStack(VanillaMaterials.WOODEN_DOOR, 1));
 		return drops;
 	}
 }

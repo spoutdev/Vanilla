@@ -52,7 +52,7 @@ public class IronDoorBlock extends DoorBlock {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
 			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Pickaxe) {
-				drops.add(new ItemStack(VanillaMaterials.IRON_DOOR, block.getData(), 1));
+				drops.add(new ItemStack(VanillaMaterials.IRON_DOOR, 1));
 			}
 		}
 		return drops;

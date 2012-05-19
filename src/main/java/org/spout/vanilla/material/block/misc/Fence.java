@@ -87,7 +87,7 @@ public class Fence extends VanillaBlockMaterial implements Fuel {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.FENCE, block.getData(), 1));
+		drops.add(new ItemStack(VanillaMaterials.FENCE, 1));
 		return drops;
 	}
 }

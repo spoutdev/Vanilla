@@ -67,7 +67,6 @@ public class CoalOre extends Ore implements TimedCraftable, Mineable {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		//2 4
 		if (block.getSource() instanceof Entity) {
 			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Pickaxe) {
 				drops.add(new ItemStack(VanillaMaterials.COAL, block.getData(), 1));

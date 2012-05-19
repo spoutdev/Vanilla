@@ -67,7 +67,7 @@ public class Torch extends AbstractAttachable implements PointAttachable {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.TORCH, block.getData(), 1));
+		drops.add(new ItemStack(VanillaMaterials.TORCH, 1));
 		return drops;
 	}
 }

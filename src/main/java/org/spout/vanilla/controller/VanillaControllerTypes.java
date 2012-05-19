@@ -40,6 +40,7 @@ import org.spout.vanilla.controller.block.MonsterSpawnerController;
 import org.spout.vanilla.controller.block.MovingPistonController;
 import org.spout.vanilla.controller.block.NoteBlockController;
 import org.spout.vanilla.controller.block.SignController;
+import org.spout.vanilla.controller.block.SilverfishBlockController;
 import org.spout.vanilla.controller.living.MobControllerType;
 import org.spout.vanilla.controller.living.creature.hostile.Blaze;
 import org.spout.vanilla.controller.living.creature.hostile.CaveSpider;
@@ -86,6 +87,7 @@ import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
+import org.spout.vanilla.material.block.solid.SilverfishStone;
 import org.spout.vanilla.protocol.controller.BasicObjectEntityProtocol;
 import org.spout.vanilla.protocol.controller.BasicProjectileEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.BlazeEntityProtocol;
@@ -169,6 +171,7 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType CHEST = new VanillaControllerType(-11, ChestController.class, "Chest");
 	public static final VanillaControllerType ENCHANTMENT_TABLE = new VanillaControllerType(-12, EnchantmentTableController.class, "Enchantment Table");
 	public static final VanillaControllerType MONSTER_SPAWNER = new VanillaControllerType(-13, MonsterSpawnerController.class, "Monster Spawner");
+	public static final VanillaControllerType SILVERFISH_STONE = new VanillaControllerType(-14, SilverfishBlockController.class, "Silverfish Stone");
 	public static final String KEY = "ControllerID";
 	private static final TIntObjectHashMap<VanillaControllerType> ID_LOOKUP = new TIntObjectHashMap<VanillaControllerType>();
 

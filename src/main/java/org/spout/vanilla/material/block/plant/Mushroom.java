@@ -71,7 +71,7 @@ public class Mushroom extends GroundAttachable implements Plant {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		//drops.add(new ItemStack(VanillaMaterials, block.getData(), 1)); TODO Need a way to get mushroom types
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 }

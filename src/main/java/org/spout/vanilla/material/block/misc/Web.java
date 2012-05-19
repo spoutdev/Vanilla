@@ -28,11 +28,14 @@ package org.spout.vanilla.material.block.misc;
 
 import java.util.ArrayList;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Solid;
+import org.spout.vanilla.material.item.weapon.Sword;
 
 public class Web extends Solid {
 	public Web(String name, int id) {
@@ -48,7 +51,12 @@ public class Web extends Solid {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.STRING, block.getData(), 1));
+		if (block.getSource() instanceof Entity) {
+			Material held = ((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial();
+			if (held.equals(VanillaMaterials.SHEARS) || held instanceof Sword) {
+				drops.add(new ItemStack(this, 1));
+			}
+		}
 		return drops;
 	}
 }

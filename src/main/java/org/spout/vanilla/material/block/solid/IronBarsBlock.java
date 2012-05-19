@@ -26,8 +26,15 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class IronBarsBlock extends Solid implements Mineable {
 	public IronBarsBlock(String name, int id) {
@@ -37,5 +44,16 @@ public class IronBarsBlock extends Solid implements Mineable {
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return 0; //TODO this
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		if (block.getSource() instanceof Entity) {
+			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Pickaxe) {
+				drops.add(new ItemStack(this, 1));
+			}
+		}
+		return drops;
 	}
 }

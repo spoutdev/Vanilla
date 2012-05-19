@@ -78,7 +78,7 @@ public class Leaves extends Solid {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial().equals(VanillaMaterials.SHEARS) && !VanillaPlayerUtil.isCreative(block.getSource())) {
+		if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial().equals(VanillaMaterials.SHEARS)) {
 			drops.add(new ItemStack(this, 1));
 		} else {
 			if (rand.nextInt(20) == 0) {

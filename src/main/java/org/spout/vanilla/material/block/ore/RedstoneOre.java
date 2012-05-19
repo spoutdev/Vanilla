@@ -77,7 +77,7 @@ public class RedstoneOre extends Ore implements TimedCraftable, Mineable {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
 			Material held = ((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial();
-			if (held.equals(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.GOLD_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
+			if (held.equals(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
 				drops.add(new ItemStack(VanillaMaterials.REDSTONE_DUST, block.getData(), new Random().nextInt(4 - 5 + 1) + 4));
 			}
 		}

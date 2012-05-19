@@ -88,6 +88,7 @@ public class TNT extends Solid implements RedstoneTarget {
 
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
+		//TODO Check to make sure tnt didn't get destroyed by explosion source
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(this, 1));
 		return drops;

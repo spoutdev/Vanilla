@@ -61,7 +61,7 @@ public class Ladder extends AbstractAttachable {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.LADDER, block.getData(), 1));
+		drops.add(new ItemStack(VanillaMaterials.LADDER, 1));
 		return drops;
 	}
 }

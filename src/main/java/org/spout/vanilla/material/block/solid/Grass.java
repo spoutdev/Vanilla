@@ -55,7 +55,7 @@ public class Grass extends Solid implements Mineable {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.DIRT, block.getData(), 1));
+		drops.add(new ItemStack(VanillaMaterials.DIRT, 1));
 		return drops;
 	}
 }

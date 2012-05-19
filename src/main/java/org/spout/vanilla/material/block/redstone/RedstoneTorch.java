@@ -129,7 +129,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.REDSTONE_TORCH_OFF, 1));
+		drops.add(new ItemStack(VanillaMaterials.REDSTONE_TORCH_ON, 1));
 		return drops;
 	}
 }

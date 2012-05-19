@@ -36,6 +36,7 @@ public class EndPortalFrame extends VanillaBlockMaterial {
 		super(name, id);
 	}
 
+	@Override
 	public void initialize() {
 		super.initialize();
 		this.setHardness(-1.0F);

@@ -64,11 +64,7 @@ public class WoodenStairs extends Stairs implements Fuel {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Pickaxe) {
-				drops.add(new ItemStack(this, 1));
-			}
-		}
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 }

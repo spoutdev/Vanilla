@@ -56,7 +56,7 @@ public class Endstone extends Solid implements Mineable {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
 			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Pickaxe) {
-				drops.add(new ItemStack(block.getMaterial(), block.getData(), 1));
+				drops.add(new ItemStack(this, 1));
 			}
 		}
 		return drops;

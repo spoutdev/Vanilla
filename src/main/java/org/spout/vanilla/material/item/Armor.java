@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.material.item;
 
-public class Armor extends VanillaItemMaterial {
+public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 	private int protection;
 
-	public Armor(String name, int id, int protection) {
+	protected Armor(String name, int id, int protection) {
 		super(name, id);
 		this.protection = protection;
 	}

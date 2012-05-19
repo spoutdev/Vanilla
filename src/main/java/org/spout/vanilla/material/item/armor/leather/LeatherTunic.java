@@ -24,30 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.enchantment.armor;
+package org.spout.vanilla.material.item.armor.leather;
 
-import org.spout.vanilla.enchantment.ArmorEnchantment;
-import org.spout.vanilla.enchantment.Enchantment;
-import org.spout.vanilla.enchantment.Enchantments;
-import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.item.armor.Boots;
+import org.spout.vanilla.material.item.armor.Chestplate;
 
-public class BlastProtection extends ArmorEnchantment {
-	public BlastProtection(String name, int id) {
-		super(name, id);
-	}
-
-	@Override
-	public boolean compatibleWith(Enchantment enchantment, VanillaMaterial material) {
-		if (material instanceof Boots) {
-			return enchantment.equals(Enchantments.FEATHER_FALLING);
-		} else {
-			return !enchantment.equals(Enchantments.PROTECTION, Enchantments.FIRE_PROTECTION, Enchantments.PROJECTILE_PROTECTION);
-		}
-	}
-
-	@Override
-	public int getWeight() {
-		return 2;
+public class LeatherTunic extends LeatherArmor implements Chestplate {
+	public LeatherTunic(String name, int id, int protection) {
+		super(name, id, protection);
 	}
 }

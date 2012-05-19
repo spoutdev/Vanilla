@@ -28,7 +28,7 @@ package org.spout.vanilla.enchantment.armor;
 
 import org.spout.vanilla.enchantment.ArmorEnchantment;
 import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.item.armor.Headwear;
+import org.spout.vanilla.material.item.armor.Helmet;
 
 public class AquaAffinity extends ArmorEnchantment {
 	public AquaAffinity(String name, int id) {
@@ -37,7 +37,7 @@ public class AquaAffinity extends ArmorEnchantment {
 
 	@Override
 	public boolean canEnchant(VanillaMaterial material) {
-		return material instanceof Headwear;
+		return material instanceof Helmet;
 	}
 
 	@Override

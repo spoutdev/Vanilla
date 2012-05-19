@@ -30,7 +30,7 @@ import org.spout.vanilla.enchantment.ArmorEnchantment;
 import org.spout.vanilla.enchantment.Enchantment;
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.item.armor.Footwear;
+import org.spout.vanilla.material.item.armor.Boots;
 
 public class ProjectileProtection extends ArmorEnchantment {
 	public ProjectileProtection(String name, int id) {
@@ -39,7 +39,7 @@ public class ProjectileProtection extends ArmorEnchantment {
 
 	@Override
 	public boolean compatibleWith(Enchantment enchantment, VanillaMaterial material) {
-		if (material instanceof Footwear) {
+		if (material instanceof Boots) {
 			return enchantment.equals(Enchantments.FEATHER_FALLING);
 		} else {
 			return !enchantment.equals(Enchantments.PROTECTION, Enchantments.FIRE_PROTECTION, Enchantments.BLAST_PROTECTION);

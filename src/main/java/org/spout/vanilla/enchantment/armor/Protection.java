@@ -30,8 +30,8 @@ import org.spout.vanilla.enchantment.ArmorEnchantment;
 import org.spout.vanilla.enchantment.Enchantment;
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.item.armor.Footwear;
-import org.spout.vanilla.material.item.armor.Headwear;
+import org.spout.vanilla.material.item.armor.Boots;
+import org.spout.vanilla.material.item.armor.Helmet;
 
 public class Protection extends ArmorEnchantment {
 	public Protection(String name, int id) {
@@ -40,9 +40,9 @@ public class Protection extends ArmorEnchantment {
 
 	@Override
 	public boolean compatibleWith(Enchantment enchantment, VanillaMaterial material) {
-		if (material instanceof Headwear) {
+		if (material instanceof Helmet) {
 			return enchantment.equals(Enchantments.AQUA_AFFINITY, Enchantments.RESPIRATION);
-		} else if (material instanceof Footwear) {
+		} else if (material instanceof Boots) {
 			return enchantment.equals(Enchantments.FEATHER_FALLING);
 		} else {
 			return !enchantment.equals(Enchantments.FIRE_PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.PROJECTILE_PROTECTION);

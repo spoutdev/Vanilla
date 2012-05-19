@@ -28,7 +28,7 @@ package org.spout.vanilla.enchantment.armor;
 
 import org.spout.vanilla.enchantment.ArmorEnchantment;
 import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.item.armor.Footwear;
+import org.spout.vanilla.material.item.armor.Boots;
 
 public class FeatherFalling extends ArmorEnchantment {
 	public FeatherFalling(String name, int id) {
@@ -37,6 +37,6 @@ public class FeatherFalling extends ArmorEnchantment {
 
 	@Override
 	public boolean canEnchant(VanillaMaterial material) {
-		return material instanceof Footwear;
+		return material instanceof Boots;
 	}
 }

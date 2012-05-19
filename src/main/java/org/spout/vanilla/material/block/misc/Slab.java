@@ -66,7 +66,7 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(2.0F).setResistance(10.0F);
+		this.setHardness(2.0F).setResistance(10.0F).setOpacity((byte) 1);
 	}
 
 	@Override

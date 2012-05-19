@@ -44,7 +44,7 @@ public class WoodenPressurePlate extends PressurePlate implements Mineable {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.5F).setResistance(0.8F);
+		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 0);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class WoodenPressurePlate extends PressurePlate implements Mineable {
 
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
+		return tool instanceof Axe ? (short) 1 : (short) 1;
 	}
 
 	@Override

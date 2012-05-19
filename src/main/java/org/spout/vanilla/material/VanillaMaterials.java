@@ -193,7 +193,7 @@ import org.spout.vanilla.util.Music;
 
 import static org.spout.api.material.MaterialRegistry.register;
 
-// TODO: Remove all casts and separate remaining "set" methods out into each material's init() method
+-// TODO: Remove all casts and separate remaining "set" methods out into each material's init() method
 public final class VanillaMaterials {
 	public static final BlockMaterial AIR = BlockMaterial.AIR;
 	public static final Stone STONE = register(new Stone("Stone", 1));
@@ -246,7 +246,7 @@ public final class VanillaMaterials {
 	public static final Sapling SAPLING = Sapling.DEFAULT;
 	public static final Flower DANDELION = register(new Flower("Dandelion", 37));
 	public static final Flower ROSE = register(new Flower("Rose", 38));
-	public static final Mushroom BROWN_MUSHROOM = (Mushroom) register(new Mushroom("Brown Mushroom", 39).setLightLevel(1));
+	public static final Mushroom BROWN_MUSHROOM = (Mushroom) register(new Mushroom("Brown Mushroom", 39));
 	public static final Mushroom RED_MUSHROOM = register(new Mushroom("Red Mushroom", 40));
 	//== Stairs ==
 	public static final NetherBrickStairs STAIRS_NETHER_BRICK = register(new NetherBrickStairs("Nether Brick Stairs", 114));
@@ -314,14 +314,14 @@ public final class VanillaMaterials {
 	public static final MelonBlock MELON_BLOCK = register(new MelonBlock("MelonBlock", 103));
 	public static final IronBarsBlock IRON_BARS = register(new IronBarsBlock("Iron Bars", 101));
 	public static final GlassPane GLASS_PANE = register(new GlassPane("Glass Pane", 102));
-	public static final Solid PUMPKIN_STEM = (Solid) register(new Solid("Pumpkin Stem", 104).setHardness(0.0F).setResistance(0.0F));
-	public static final Solid MELON_STEM = (Solid) register(new Solid("MelonBlock Stem", 105).setHardness(0.0F).setResistance(0.3F));
+	public static final Solid PUMPKIN_STEM = (Solid) register(new Solid("Pumpkin Stem", 104).setHardness(2.0F).setResistance(10.0F));
+	public static final Solid MELON_STEM = (Solid) register(new Solid("MelonBlock Stem", 105).setHardness(2.0F).setResistance(10.0F));
 	public static final Vines VINES = register(new Vines("Vines", 106));
 	public static final FenceGate FENCE_GATE = register(new FenceGate("Fence Gate", 107));
 	public static final Mycelium MYCELIUM = register(new Mycelium("Mycelium", 110));
 	public static final LilyPad LILY_PAD = register(new LilyPad("Lily Pad", 111));
-	public static final NetherBrick NETHER_BRICK = register(new NetherBrick("Nether Brick", 112));
-	public static final Solid NETHER_BRICK_FENCE = (Solid) register(new Solid("Nether Brick Fence", 113).setHardness(2.0F).setResistance(10.0F));
+	public static final NetherBrick NETHER_BRICK = register(new NetherBrick("Nether Brick", 112).setHardness(2.0F).setResistance(10.0F));
+	public static final Solid NETHER_BRICK_FENCE = (Solid) register(new Solid("Nether Brick Fence", 113));
 	public static final NetherWartBlock NETHER_WART_BLOCK = register(new NetherWartBlock("Nether Wart", 115));
 	public static final EnchantmentTable ENCHANTMENT_TABLE = register(new EnchantmentTable("Enchantment Table", 116));
 	public static final Solid BREWING_STAND_BLOCK = (Solid) register(new Solid("Brewing Stand", 117).setHardness(0.5F).setResistance(0.8F).setLightLevel(1));

@@ -52,6 +52,7 @@ public class RedstoneOre extends Ore implements TimedCraftable, Mineable {
 	@Override
 	public void initialize() {
 		super.initialize();
+		this.setHardness(3.0F).setResistance(5.0F);
 		if (glowing) {
 			this.setLightLevel(3);
 		}

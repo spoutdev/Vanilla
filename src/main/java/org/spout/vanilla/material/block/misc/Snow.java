@@ -48,7 +48,7 @@ public class Snow extends GroundAttachable implements Mineable {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.1F).setResistance(0.2F).setOpacity((byte) 0);
+		this.setHardness(0.1F).setResistance(0.2F).setOpacity((byte) 1);
 	}
 
 	@Override

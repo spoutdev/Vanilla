@@ -32,6 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class Mushroom extends GroundAttachable implements Plant {
@@ -42,7 +43,10 @@ public class Mushroom extends GroundAttachable implements Plant {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.0f).setResistance(0.0f);
+		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
+		if (this.equals(VanillaMaterials.BROWN_MUSHROOM)) {
+			this.setLightLevel(1);
+		}
 	}
 
 	@Override

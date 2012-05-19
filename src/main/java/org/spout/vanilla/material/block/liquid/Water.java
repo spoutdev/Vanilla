@@ -39,7 +39,7 @@ public class Water extends Liquid {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setOpacity((byte) 2);
+		this.setHardness(100.0F).setResistance(166.7F).setOpacity((byte) 2);
 	}
 
 	@Override

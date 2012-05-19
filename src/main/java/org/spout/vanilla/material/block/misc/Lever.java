@@ -54,7 +54,7 @@ public class Lever extends AbstractAttachable implements RedstoneSource {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.5F).setResistance(1.7F);
+		this.setHardness(0.5F).setResistance(1.7F).setOpacity((byte) 1);
 		this.setAttachable(BlockFaces.NESWB);
 	}
 

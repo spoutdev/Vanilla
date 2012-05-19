@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -63,7 +64,8 @@ public class Obsidian extends Solid implements Mineable {
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
-			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial().equals(VanillaMaterials.DIAMOND_PICKAXE)) {
+			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
+			if (held != null && held.getMaterial().equals(VanillaMaterials.DIAMOND_PICKAXE)) {
 				drops.add(new ItemStack(this, 1));
 			}
 		}

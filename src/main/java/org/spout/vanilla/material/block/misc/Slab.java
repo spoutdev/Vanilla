@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
 
@@ -146,7 +147,8 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
-			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Pickaxe) {
+			Material held = ((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial();
+			if (held != null && held instanceof Pickaxe) {
 				drops.add(new ItemStack(this, 1));
 			}
 		}

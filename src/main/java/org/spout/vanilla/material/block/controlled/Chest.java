@@ -142,7 +142,7 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.CHEST, block.getData(), 1));
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 }

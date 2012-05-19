@@ -85,13 +85,17 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	@Override
 	public void onDestroy(Block block) {
 		//Grab the drops based on material classes' rules.
-		drops = getDrops(block);
+		if (!VanillaPlayerUtil.isCreative(block.getSource())) {
+			drops = getDrops(block);
+		}
 		BlockChangeEvent event = new BlockChangeEvent(block, block.getSource());
 		if (event.isCancelled()) {
 			return;
 		}
 		this.onDestroyBlock(block);
-		this.onDestroySpawnDrops(block);
+		if (!VanillaPlayerUtil.isCreative(block.getSource())) {
+			this.onDestroySpawnDrops(block);
+		}
 	}
 
 	@Override
@@ -166,7 +170,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @param block to spawn drops for
 	 */
 	public void onDestroySpawnDrops(Block block) {
-		if (VanillaPlayerUtil.isCreative(block.getSource()) || drops == null || drops.isEmpty() || drops.size() <= 0) {
+		if (drops == null || drops.isEmpty() || drops.size() <= 0) {
 			return;
 		}
 

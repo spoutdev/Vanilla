@@ -42,7 +42,7 @@ public class MelonBlock extends Ore {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.MELON_SLICE, block.getData(), new Random().nextInt(3 - 7 + 1) + 3));
+		drops.add(new ItemStack(VanillaMaterials.MELON_SLICE, new Random().nextInt(3 - 7 + 1) + 3));
 		return drops;
 	}
 }

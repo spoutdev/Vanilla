@@ -43,9 +43,7 @@ public class Sponge extends Solid implements Mineable {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			drops.add(new ItemStack(block.getMaterial(), block.getData(), 1));
-		}
+		drops.add(new ItemStack(block.getMaterial(), 1));
 		return drops;
 	}
 

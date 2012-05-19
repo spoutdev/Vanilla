@@ -57,7 +57,8 @@ public class SnowBlock extends Solid implements Mineable {
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
-			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Spade) {
+			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
+			if (held != null && held.getMaterial() instanceof Spade) {
 				drops.add(new ItemStack(VanillaMaterials.SNOWBALL, 4));
 			}
 		}

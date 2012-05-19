@@ -35,10 +35,13 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.SignBase;
+import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.misc.Shears;
 
-public class Leaves extends Solid {
+public class Leaves extends Solid implements Mineable {
 	public static final Leaves DEFAULT = register(new Leaves("Leaves"));
 	public static final Leaves SPRUCE = register(new Leaves("Spruce Leaves", 0, DEFAULT));
 	public static final Leaves BIRCH = register(new Leaves("Birch Leaves", 0, DEFAULT));
@@ -90,4 +93,14 @@ public class Leaves extends Solid {
 	}
 
 	// TODO: Decay
+
+	@Override
+	public short getDurabilityPenalty(MiningTool tool) {
+		if (tool instanceof Shears) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
 }

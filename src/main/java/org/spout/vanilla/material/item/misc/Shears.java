@@ -36,9 +36,10 @@ import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.Tool;
 
-public class Shears extends Tool {
+public class Shears extends MiningTool {
 	private Random rand = new Random();
 
 	public Shears(String name, int id, short durability) {

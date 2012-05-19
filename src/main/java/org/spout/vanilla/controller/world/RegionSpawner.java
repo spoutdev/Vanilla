@@ -121,9 +121,9 @@ public class RegionSpawner extends Controller implements VanillaController {
 						if (canSpawnAt(chunk, x, y, z)) {
 							try {
 								Controller controller = entry.getKey().createController();
-								x += chunk.getX() * 16 + 0.5F;
-								y += chunk.getY() * 16 + 1F;
-								z += chunk.getZ() * 16 + 0.5F;
+								x += chunk.getX() * Chunk.CHUNK_SIZE + 0.5F;
+								y += chunk.getY() * Chunk.CHUNK_SIZE + 1F;
+								z += chunk.getZ() * Chunk.CHUNK_SIZE + 0.5F;
 								region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), x, y, z), controller);
 							} catch (Exception e) {
 								throw new RuntimeException("Unable to spawn " + entry.getKey().getName(), e);
@@ -136,9 +136,9 @@ public class RegionSpawner extends Controller implements VanillaController {
 	}
 
 	private boolean canSpawnAt(Chunk chunk, int randX, int randY, int randZ) {
-		int x = chunk.getX() * 16 + randX;
-		int y = chunk.getY() * 16 + randY;
-		int z = chunk.getZ() * 16 + randZ;
+		int x = chunk.getX() * Chunk.CHUNK_SIZE + randX;
+		int y = chunk.getY() * Chunk.CHUNK_SIZE + randY;
+		int z = chunk.getZ() * Chunk.CHUNK_SIZE + randZ;
 		World world = chunk.getWorld();
 		if (world.getBlock(x, y + 1, z) != BlockMaterial.AIR) {
 			return false;

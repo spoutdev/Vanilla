@@ -102,7 +102,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int y = (int) p.getY() >> Chunk.CHUNK_SIZE_BITS;// + SEALEVEL_CHUNK;
 		int z = (int) p.getZ() >> Chunk.CHUNK_SIZE_BITS;
 
-		if (y < 0 || y > p.getWorld().getHeight() >> 4) {
+		if (y < 0 || y > p.getWorld().getHeight() >> Chunk.CHUNK_SIZE_BITS) {
 			return;
 		}
 
@@ -141,30 +141,32 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int y = (int) p.getY() >> Chunk.CHUNK_SIZE_BITS;// + SEALEVEL_CHUNK;
 		int z = (int) p.getZ() >> Chunk.CHUNK_SIZE_BITS;
 
-		if (y < 0 || y > p.getWorld().getHeight() >> 4) {
+		if (y < 0 || y > p.getWorld().getHeight() >> Chunk.CHUNK_SIZE_BITS) {
 			return;
 		}
 
-		byte[] solidChunkData = new byte[16 * 16 * 16 * 5 / 2];
-		byte[] airChunkData = new byte[16 * 16 * 16 * 5 / 2];
+
+
+		byte[] solidChunkData = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
+		byte[] airChunkData = new byte[Chunk.CHUNK_VOLUME* 5 / 2];
 
 		int i = 0;
-		for (int c = 0; c < 4096; c++) {
+		for (int c = 0; c < Chunk.CHUNK_VOLUME; c++) {
 			solidChunkData[i] = 1;
 			airChunkData[i++] = 0;
 		}
 
-		for (int c = 0; c < 2048; c++) {
+		for (int c = 0; c < Chunk.CHUNK_VOLUME / 2; c++) {
 			solidChunkData[i] = 0x00;
 			airChunkData[i++] = 0x00;
 		}
 
-		for (int c = 0; c < 2048; c++) {
+		for (int c = 0; c < Chunk.CHUNK_VOLUME / 2; c++) {
 			solidChunkData[i] = 0x00;
 			airChunkData[i++] = 0x00;
 		}
 
-		for (int c = 0; c < 2048; c++) {
+		for (int c = 0; c < Chunk.CHUNK_VOLUME / 2; c++) {
 			solidChunkData[i] = 0x00;
 			airChunkData[i++] = (byte) 0xFF;
 		}
@@ -201,8 +203,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		column.add(y);
 	}
 
-	private final static byte[] dark = new byte[2048];
-	private final static byte[] light = new byte[2048];
+	private final static byte[] dark = new byte[Chunk.CHUNK_VOLUME];
+	private final static byte[] light = new byte[Chunk.CHUNK_VOLUME];
 
 	static {
 		for (int i = 0; i < light.length; i++) {
@@ -216,7 +218,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int y = c.getY();// + SEALEVEL_CHUNK;
 		int z = c.getZ();
 
-		if (y < 0 || y >= c.getWorld().getHeight() >> 4) {
+		if (y < 0 || y >= c.getWorld().getHeight() >> Chunk.CHUNK_SIZE_BITS) {
 			return;
 		}
 
@@ -226,7 +228,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		// TODO do lighting right
 		byte[] rawBlockLight = dark; // snapshot.getBlockLight();
 		byte[] rawSkyLight = c.getY() < 4 ? dark : light; // snapshot.getSkyLight();
-		byte[] fullChunkData = new byte[16 * 16 * 16 * 5 / 2];
+		byte[] fullChunkData = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
 
 		boolean hasData = false;
 		int arrIndex = 0;

@@ -42,6 +42,12 @@ public class NetherRack extends Solid implements Mineable {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.6F).setResistance(0.6F);
+	}
+
+	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return 0;
 	}

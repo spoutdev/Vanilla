@@ -42,6 +42,12 @@ public class TallGrass extends DeadBush {
 	public static final TallGrass TALL_GRASS = register(new TallGrass("Tall Grass", 1, DEAD_GRASS));
 	public static final TallGrass FERN = register(new TallGrass("Fern", 2, DEAD_GRASS));
 
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
+	}
+
 	private TallGrass(String name) {
 		super(name, 31);
 	}

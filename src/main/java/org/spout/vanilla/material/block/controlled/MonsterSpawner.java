@@ -41,7 +41,7 @@ public class MonsterSpawner extends Solid {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(5.0F).setResistance(8.3F);
+		this.setHardness(5.0F).setResistance(8.3F).setOpacity((byte) 1);
 		setController(VanillaControllerTypes.MONSTER_SPAWNER);
 	}
 

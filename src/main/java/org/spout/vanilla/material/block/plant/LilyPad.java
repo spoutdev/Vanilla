@@ -44,7 +44,7 @@ public class LilyPad extends GroundAttachable {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.0F).setResistance(0.3F); // TODO: resistance unknown
+		this.setHardness(0.0F).setResistance(0.0F); // TODO: resistance unknown
 	}
 
 	@Override

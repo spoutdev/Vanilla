@@ -44,7 +44,7 @@ public class IronDoorBlock extends DoorBlock {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(5.0F).setResistance(8.3F);
+		this.setHardness(5.0F).setResistance(8.3F).setOpacity((byte) 1);
 	}
 
 	@Override

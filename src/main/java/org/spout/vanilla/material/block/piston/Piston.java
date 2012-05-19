@@ -58,7 +58,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setResistance(0.8F);
+		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
 	}
 
 	public boolean isSticky() {

@@ -45,7 +45,7 @@ public class Web extends Solid {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(4.0F).setResistance(20.0F);
+		this.setHardness(4.0F).setResistance(20.0F).setOpacity((byte) 1);
 	}
 
 	@Override

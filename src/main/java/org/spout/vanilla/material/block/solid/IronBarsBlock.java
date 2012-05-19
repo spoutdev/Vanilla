@@ -42,6 +42,12 @@ public class IronBarsBlock extends Solid implements Mineable {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(5.0F).setResistance(10.0F).setOpacity((byte) 1);
+	}
+
+	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return 0; //TODO this
 	}

@@ -62,7 +62,7 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 	@Override
 	public void initialize() {
 		super.initialize();
-		setHardness(2.5F).setResistance(4.2F);
+		setHardness(2.5F).setResistance(4.2F).setOpacity((byte) 1);
 		setController(VanillaControllerTypes.CHEST);
 	}
 

@@ -42,6 +42,12 @@ public class Endstone extends Solid implements Mineable {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(3.0F).setResistance(15.0F);
+	}
+
+	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		//TODO Is this right bergerkiller?
 		if (tool instanceof Pickaxe) {

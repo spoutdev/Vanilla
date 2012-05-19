@@ -37,7 +37,7 @@ public class NetherPortal extends Portal {
 
 	public void initialize() {
 		super.initialize();
-		this.setHardness(-1.0F).setResistance(0.0F).setLightLevel(11);
+		this.setHardness(-1.0F).setResistance(0.0F).setLightLevel(11).setOpacity((byte) 1);
 	}
 
 	@Override

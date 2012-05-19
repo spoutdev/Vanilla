@@ -46,6 +46,12 @@ public class DiamondOre extends Ore implements TimedCraftable, Mineable {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(3.0F).setResistance(5.0F);
+	}
+
+	@Override
 	public ItemStack getResult() {
 		return new ItemStack(VanillaMaterials.DIAMOND, 1);
 	}

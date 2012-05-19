@@ -43,8 +43,7 @@ public class NetherBrickStairs extends Stairs {
 	@Override
 	public void initialize() {
 		super.initialize();
-		// TODO: Hardness?
-		this.setResistance(10.0F);
+		this.setHardness(2.0F).setResistance(10.0F);
 	}
 
 	@Override

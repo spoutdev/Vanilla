@@ -45,8 +45,7 @@ public class WoodenStairs extends Stairs implements Fuel {
 	@Override
 	public void initialize() {
 		super.initialize();
-		// TODO: Hardness?
-		this.setResistance(3.0F);
+		this.setHardness(2.0F).setResistance(3.0F);
 	}
 
 	@Override

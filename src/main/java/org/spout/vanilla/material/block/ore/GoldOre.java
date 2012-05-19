@@ -46,6 +46,12 @@ public class GoldOre extends Ore implements TimedCraftable, Mineable {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(3.0F).setResistance(5.0F);
+	}
+
+	@Override
 	public ItemStack getResult() {
 		return new ItemStack(VanillaMaterials.GOLD_INGOT, 1);
 	}

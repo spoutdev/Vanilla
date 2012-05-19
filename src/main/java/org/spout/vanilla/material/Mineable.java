@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material;
 
-import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tool.MiningTool;
 
 public interface Mineable {
 	/**

@@ -43,9 +43,12 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.item.tool.InteractTool;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerBlockPlacementMessageHandler extends MessageHandler<PlayerBlockPlacementMessage> {
 	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock) {
@@ -110,12 +113,24 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				undoPlacement(player, clickedBlock, alterBlock);
 				return;
 			}
+			short durability = 0;
 
 			//perform interaction on the server
 			if (holdingMat != null) {
+				if (holdingMat instanceof InteractTool) {
+					durability = ((InteractTool) holdingMat).getDurability();
+				}
 				holdingMat.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 			}
 			clickedMaterial.onInteractBy(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
+
+			if (holdingMat instanceof InteractTool && VanillaPlayerUtil.isSurvival(clickedBlock.getSource())) { //TODO Total hack and is BADDDDDD
+				short newDurability = ((short) (durability - ((InteractTool) holdingMat).getDurability()));
+				player.getEntity().getInventory().addCurrentItemData(newDurability);
+				if (((InteractTool) holdingMat).getDurability() < 1 && durability != ((InteractTool) holdingMat).getDurability()) { //TODO Total hack!!!
+					player.getEntity().getInventory().setCurrentItem(null); //Break a tool if their onInteract takes away durability. TODO Probably not the best place to do this...
+				}
+			}
 
 			if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
 				undoPlacement(player, clickedBlock, alterBlock);

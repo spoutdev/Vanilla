@@ -33,9 +33,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.Tool;
 
-public class Hoe extends Tool {
+public class Hoe extends InteractTool {
 	public Hoe(String name, int id, short durability) {
 		super(name, id, durability);
 	}
@@ -47,6 +46,7 @@ public class Hoe extends Tool {
 			BlockMaterial mat = block.getMaterial();
 			if (mat.equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
 				block.setMaterial(VanillaMaterials.FARMLAND);
+				setDurability((short) (getDurability() - 1)); //TODO right place?
 			}
 		}
 	}

@@ -37,7 +37,7 @@ import org.spout.api.protocol.MessageCodec;
 
 import org.spout.nbt.CompoundMap;
 
-import org.spout.vanilla.material.item.Tool;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 

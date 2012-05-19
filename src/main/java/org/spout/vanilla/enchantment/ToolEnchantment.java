@@ -27,7 +27,7 @@
 package org.spout.vanilla.enchantment;
 
 import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tool.MiningTool;
 
 public abstract class ToolEnchantment extends Enchantment {
 	protected ToolEnchantment(String name, int id) {

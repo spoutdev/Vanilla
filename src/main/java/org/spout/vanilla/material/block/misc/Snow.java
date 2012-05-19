@@ -37,7 +37,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
 
 public class Snow extends GroundAttachable implements Mineable {

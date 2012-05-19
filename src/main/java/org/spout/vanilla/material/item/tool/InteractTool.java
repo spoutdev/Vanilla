@@ -24,23 +24,10 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.item.tool;
 
-import org.spout.vanilla.material.item.tool.Tool;
-
-public class RangedWeapon extends Tool {
-	private int rangedDamage = 1;
-
-	public RangedWeapon(String name, int id, short durability) {
+public class InteractTool extends Tool {
+	public InteractTool(String name, int id, short durability) {
 		super(name, id, durability);
-	}
-
-	public int getRangedDamage() {
-		return rangedDamage;
-	}
-
-	public RangedWeapon setRangedDamage(int damage) {
-		this.rangedDamage = damage;
-		return this;
 	}
 }

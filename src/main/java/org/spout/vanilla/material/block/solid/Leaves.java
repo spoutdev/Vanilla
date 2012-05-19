@@ -38,7 +38,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.SignBase;
-import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.misc.Shears;
 
 public class Leaves extends Solid implements Mineable {

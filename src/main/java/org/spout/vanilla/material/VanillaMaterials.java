@@ -141,7 +141,7 @@ import org.spout.vanilla.material.item.EmptyContainer;
 import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.Food.FoodEffectType;
 import org.spout.vanilla.material.item.FullContainer;
-import org.spout.vanilla.material.item.Tool;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.material.item.armor.chain.ChainBoots;
 import org.spout.vanilla.material.item.armor.chain.ChainChestplate;

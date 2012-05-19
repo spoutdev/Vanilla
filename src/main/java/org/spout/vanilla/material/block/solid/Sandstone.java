@@ -34,7 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class Sandstone extends Solid implements Mineable {

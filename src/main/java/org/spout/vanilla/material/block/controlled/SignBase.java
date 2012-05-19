@@ -43,7 +43,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.misc.Torch;
-import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.util.MoveReaction;
 
 public class SignBase extends AbstractAttachable implements Mineable {

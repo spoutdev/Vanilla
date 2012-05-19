@@ -24,23 +24,52 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.item.tool;
 
-import org.spout.vanilla.material.item.tool.Tool;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
-public class RangedWeapon extends Tool {
-	private int rangedDamage = 1;
+import org.spout.api.material.BlockMaterial;
 
-	public RangedWeapon(String name, int id, short durability) {
-		super(name, id, durability);
+import org.spout.vanilla.material.item.VanillaItemMaterial;
+
+public class Tool extends VanillaItemMaterial {
+	private short durability;
+	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
+
+	public Tool(String name, int id, short durability) {
+		super(name, id);
+		this.durability = durability;
 	}
 
-	public int getRangedDamage() {
-		return rangedDamage;
+	public short getDurability() {
+		return durability;
 	}
 
-	public RangedWeapon setRangedDamage(int damage) {
-		this.rangedDamage = damage;
+	public Tool setDurability(short durability) {
+		this.durability = durability;
 		return this;
+	}
+
+	public float getStrengthModifier(BlockMaterial block) {
+		if (!(strengthModifiers.containsKey(block))) {
+			return (float) 1.0;
+		}
+		return strengthModifiers.get(block);
+	}
+
+	public Tool setStrengthModifier(BlockMaterial block, float modifier) {
+		strengthModifiers.put(block, modifier);
+		return this;
+	}
+
+	public Set<BlockMaterial> getStrengthModifiedBlocks() {
+		return strengthModifiers.keySet();
+	}
+
+	@Override
+	public boolean getNBTData() {
+		return true;
 	}
 }

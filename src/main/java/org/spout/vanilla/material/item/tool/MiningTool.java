@@ -24,50 +24,10 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.item.tool;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
-import org.spout.api.material.BlockMaterial;
-
-public class Tool extends VanillaItemMaterial {
-	private short durability;
-	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
-
-	public Tool(String name, int id, short durability) {
-		super(name, id);
-		this.durability = durability;
-	}
-
-	public short getDurability() {
-		return durability;
-	}
-
-	public Tool setDurability(short durability) {
-		this.durability = durability;
-		return this;
-	}
-
-	public float getStrengthModifier(BlockMaterial block) {
-		if (!(strengthModifiers.containsKey(block))) {
-			return (float) 1.0;
-		}
-		return strengthModifiers.get(block);
-	}
-
-	public Tool setStrengthModifier(BlockMaterial block, float modifier) {
-		strengthModifiers.put(block, modifier);
-		return this;
-	}
-
-	public Set<BlockMaterial> getStrengthModifiedBlocks() {
-		return strengthModifiers.keySet();
-	}
-
-	@Override
-	public boolean getNBTData() {
-		return true;
+public class MiningTool extends Tool {
+	public MiningTool(String name, int id, short durability) {
+		super(name, id, durability);
 	}
 }

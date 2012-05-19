@@ -37,7 +37,7 @@ import org.spout.api.util.LogicUtil;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
-import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.util.Instrument;
 

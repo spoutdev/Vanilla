@@ -33,9 +33,8 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.Tool;
 
-public class FlintAndSteel extends Tool {
+public class FlintAndSteel extends InteractTool {
 	public FlintAndSteel(String name, int id, short durability) {
 		super(name, id, durability);
 	}

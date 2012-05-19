@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.item.tool;
 
-import org.spout.vanilla.material.item.MiningTool;
-
 public class Spade extends MiningTool {
 	public Spade(String name, int id, short durability) {
 		super(name, id, durability);

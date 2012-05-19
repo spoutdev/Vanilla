@@ -35,7 +35,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tool.MiningTool;
 
 public class Wool extends Solid implements Mineable {
 	public static final Wool WHITE = register(new Wool("White Wool"));

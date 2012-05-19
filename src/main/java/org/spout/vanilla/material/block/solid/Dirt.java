@@ -32,7 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.item.MiningTool;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
 
 public class Dirt extends Solid implements Mineable {

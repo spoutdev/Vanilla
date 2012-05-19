@@ -37,6 +37,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.ActionController;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
@@ -283,7 +284,7 @@ public abstract class VanillaActionController extends ActionController implement
 	 * Uses the current velocity and maximum speed to move this entity.
 	 */
 	public void move() {
-		movementSpeed = Vector3.min(velocity, maxSpeed);
+		movementSpeed = MathHelper.min(velocity, maxSpeed);
 		move(movementSpeed);
 	}
 

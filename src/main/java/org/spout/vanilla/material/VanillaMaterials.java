@@ -114,7 +114,6 @@ import org.spout.vanilla.material.block.solid.MossStone;
 import org.spout.vanilla.material.block.solid.MushroomBlock;
 import org.spout.vanilla.material.block.solid.Mycelium;
 import org.spout.vanilla.material.block.solid.NetherBrick;
-import org.spout.vanilla.material.block.solid.NetherRack;
 import org.spout.vanilla.material.block.solid.NoteBlock;
 import org.spout.vanilla.material.block.solid.Obsidian;
 import org.spout.vanilla.material.block.solid.Plank;
@@ -278,7 +277,7 @@ public final class VanillaMaterials {
 	public static final Jukebox JUKEBOX = register(new Jukebox("Jukebox", 84));
 	public static final Fence FENCE = register(new Fence("Fence", 85));
 	public static final Pumpkin PUMPKIN = register(new Pumpkin("Pumpkin", 86, false));
-	public static final NetherRack NETHERRACK = register(new NetherRack("Netherrack", 87));
+	public static final Solid NETHERRACK = (Solid) register(new Solid("Netherrack", 87));
 	public static final SoulSand SOUL_SAND = register(new SoulSand("Soul Sand", 88));
 	public static final Glowstone GLOWSTONE_BLOCK = register(new Glowstone("Glowstone Block", 89));
 	public static final Pumpkin JACK_O_LANTERN = register(new Pumpkin("Jack 'o' Lantern", 91, true));

@@ -42,7 +42,6 @@ import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMessage> {
 	private static final int COMPRESSION_LEVEL = Deflater.BEST_SPEED;
 	private static final int MAX_SECTIONS = 16;
-	private static final int SIXTEEN_CUBED = 16 * 16 * 16;
 
 	public CompressedChunkCodec() {
 		super(CompressedChunkMessage.class, 0x33);
@@ -67,10 +66,10 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		int size = 0;
 		for (int i = 0; i < MAX_SECTIONS; ++i) {
 			if ((primaryBitMap & 1 << i) != 0) { // This chunk exists! Let's initialize the data for it.
-				int sectionSize = SIXTEEN_CUBED * 5 / 2;
+				int sectionSize = Chunk.CHUNK_VOLUME * 5 / 2;
 				if ((addBitMap & 1 << i) != 0) {
 					hasAdditionalData[i] = true;
-					sectionSize += SIXTEEN_CUBED / 2;
+					sectionSize += Chunk.CHUNK_VOLUME / 2;
 				}
 
 				data[i] = new byte[sectionSize];
@@ -100,12 +99,19 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		}
 
 		size = 0;
+		// TODO - fix this total hack
+		size = readSectionData(uncompressedData, size, data, 0, 4096);
+		size = readSectionData(uncompressedData, size, data, 2 * 2048, 2048);
+		size = readSectionData(uncompressedData, size, data, 3 * 2048, 2048);
+		size = readSectionData(uncompressedData, size, data, 4 * 2048, 2048);
+
+		/*size = 0;
 		for (byte[] sectionData : data) {
 			if (sectionData != null && sectionData.length + size < uncompressedData.length) {
 				System.arraycopy(uncompressedData, size, sectionData, 0, sectionData.length);
 				size += sectionData.length;
 			}
-		}
+		}*/
 		byte[] biomeData = new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
 
 		if (contiguous) {
@@ -149,7 +155,7 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		int index = 0;
 
 		// TODO - fix this total hack
-		index = writeSectionData(data, 0 * 2048, uncompressedData, index, 4096);
+		index = writeSectionData(data, 0, uncompressedData, index, 4096);
 		index = writeSectionData(data, 2 * 2048, uncompressedData, index, 2048);
 		index = writeSectionData(data, 3 * 2048, uncompressedData, index, 2048);
 		index = writeSectionData(data, 4 * 2048, uncompressedData, index, 2048);
@@ -179,6 +185,17 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		buffer.writeBytes(compressedData, 0, compressed);
 
 		return buffer;
+	}
+
+	private int readSectionData(byte[] data, int off, byte[][] target, int targetOff, int len) {
+		for (byte[] sectionTarget : target) {
+			if (sectionTarget != null) {
+				for (int i = targetOff; i < targetOff + len && i < sectionTarget.length; ++i) {
+					sectionTarget[i] = data[off++];
+				}
+			}
+		}
+		return off;
 	}
 
 	private int writeSectionData(byte[][] data, int off, byte[] target, int targetOff, int len) {

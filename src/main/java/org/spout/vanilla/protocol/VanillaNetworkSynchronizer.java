@@ -223,10 +223,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		ChunkSnapshot snapshot = c.getSnapshot(false);
 		short[] rawBlockIdArray = snapshot.getBlockIds();
 		short[] rawBlockData = snapshot.getBlockData();
-		// TODO do lighting right
-		byte[] rawBlockLight = dark; // snapshot.getBlockLight();
-		byte[] rawSkyLight = c.getY() < 4 ? dark : light; // snapshot.getSkyLight();
-		byte[] fullChunkData = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
+		byte[] rawBlockLight = snapshot.getBlockLight();
+		byte[] rawSkyLight = snapshot.getSkyLight();
+		byte[] fullChunkData = new byte[16 * 16 * 16 * 5 / 2];
 
 		boolean hasData = false;
 		int arrIndex = 0;

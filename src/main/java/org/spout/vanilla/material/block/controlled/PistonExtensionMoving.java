@@ -24,12 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.piston;
+package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.MovingPistonController;
+import org.spout.vanilla.material.block.piston.PistonExtension;
 
 /**
  * A temporary block type with controller which animates the extension of the piston

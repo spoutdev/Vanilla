@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
@@ -39,6 +39,7 @@ import org.spout.vanilla.controller.block.SignController;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.AbstractAttachable;
+import org.spout.vanilla.material.block.misc.Torch;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.util.MoveReaction;
 
@@ -57,7 +58,7 @@ public class SignBase extends AbstractAttachable implements Mineable {
 
 	@Override
 	public void handlePlacement(Block block, short data, BlockFace attachedFace) {
-		block.setController(new SignController());
+		block.getWorld().createAndSpawnEntity(block.getPosition(), new SignController());
 		this.setAttachedFace(block, attachedFace);
 	}
 

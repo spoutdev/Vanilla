@@ -36,6 +36,7 @@ import org.spout.vanilla.controller.block.DispenserController;
 import org.spout.vanilla.controller.block.EnchantmentTableController;
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.block.JukeboxController;
+import org.spout.vanilla.controller.block.MonsterSpawnerController;
 import org.spout.vanilla.controller.block.MovingPistonController;
 import org.spout.vanilla.controller.block.NoteBlockController;
 import org.spout.vanilla.controller.block.SignController;
@@ -167,6 +168,7 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType PISTON_MOVING = new VanillaControllerType(-10, MovingPistonController.class, "Moving Piston");
 	public static final VanillaControllerType CHEST = new VanillaControllerType(-11, ChestController.class, "Chest");
 	public static final VanillaControllerType ENCHANTMENT_TABLE = new VanillaControllerType(-12, EnchantmentTableController.class, "Enchantment Table");
+	public static final VanillaControllerType MONSTER_SPAWNER = new VanillaControllerType(-13, MonsterSpawnerController.class, "Monster Spawner");
 	public static final String KEY = "ControllerID";
 	private static final TIntObjectHashMap<VanillaControllerType> ID_LOOKUP = new TIntObjectHashMap<VanillaControllerType>();
 

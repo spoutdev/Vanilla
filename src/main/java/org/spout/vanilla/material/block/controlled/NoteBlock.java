@@ -24,61 +24,39 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.DispenserController;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.controller.block.NoteBlockController;
+import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
+import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Dispenser extends Solid implements Mineable, Directional {
-	public Dispenser(String name, int id) {
+public class NoteBlock extends Solid implements Fuel {
+	public final float BURN_TIME = 15.f;
+
+	public NoteBlock(String name, int id) {
 		super(name, id);
 	}
 
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(3.5F).setResistance(5.8F);
-		this.setController(VanillaControllerTypes.DISPENSER);
+		this.setHardness(0.8F).setResistance(1.3F);
+		this.setController(VanillaControllerTypes.NOTEBLOCK);
 	}
 
 	@Override
-	public DispenserController getController(Block block) {
-		return (DispenserController) super.getController(block);
-	}
-
-	@Override
-	public MoveReaction getMoveReaction(Block block) {
-		return MoveReaction.DENY;
-	}
-
-	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public BlockFace getFacing(Block block) {
-		return BlockFaces.EWNS.get(block.getData() - 2);
-	}
-
-	@Override
-	public void setFacing(Block block, BlockFace facing) {
-		block.setData((short) (BlockFaces.EWNS.indexOf(facing, 0) + 2));
+	public boolean hasPhysics() {
+		return true;
 	}
 
 	@Override
@@ -87,25 +65,53 @@ public class Dispenser extends Solid implements Mineable, Directional {
 	}
 
 	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
+	}
+
+	@Override
+	public NoteBlockController getController(Block block) {
+		return (NoteBlockController) super.getController(block);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, type, clickedFace);
+		if (type == Action.RIGHT_CLICK) {
+			NoteBlockController controller = getController(block);
+			controller.setNote(controller.getNote() + 1);
+			controller.play();
+		} else if (type == Action.LEFT_CLICK && VanillaPlayerUtil.isCreative(entity)) {
+			getController(block).play();
+		}
+	}
+
+	@Override
+	public void onUpdate(Block block) {
+		super.onUpdate(block);
+		getController(block).setPowered(this.isReceivingPower(block));
+	}
+
+	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
-			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-			block.setController(new DispenserController());
+			block.getWorld().createAndSpawnEntity(block.getPosition(), new NoteBlockController());
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
-		if (action == Action.RIGHT_CLICK) {
-			Controller controller = entity.getController();
-			if (!(controller instanceof VanillaPlayer)) {
-				return;
-			}
+	public float getFuelTime() {
+		return BURN_TIME;
+	}
 
-			// Open the dispenser
-			this.getController(block).getInventory().open((VanillaPlayer) controller);
-		}
+	public boolean isReceivingPower(Block block) {
+		return RedstoneUtil.isReceivingPower(block, false);
 	}
 }

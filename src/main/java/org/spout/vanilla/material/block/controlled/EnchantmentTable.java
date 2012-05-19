@@ -24,73 +24,40 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.ChestController;
+import org.spout.vanilla.controller.block.EnchantmentTableController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.MiningTool;
-import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Directional {
-	public final float BURN_TIME = 15.f;
-
-	public Chest(String name, int id) {
+public class EnchantmentTable extends Solid implements Directional, Mineable {
+	public EnchantmentTable(String name, int id) {
 		super(name, id);
 	}
 
 	@Override
 	public void initialize() {
 		super.initialize();
-		setHardness(2.5F).setResistance(4.2F);
-		setController(VanillaControllerTypes.CHEST);
-	}
-
-	public boolean isDouble(Block block) {
-		Point pos = block.getPosition();
-		World world = pos.getWorld();
-		VanillaBlockMaterial chest = VanillaMaterials.CHEST;
-		if (world.getBlock(pos.add(1, 0, 0)).getMaterial() == chest || world.getBlock(pos.subtract(1, 0, 0)).getMaterial() == chest || world.getBlock(pos.add(0, 0, 1)).getMaterial() == chest || world.getBlock(pos.subtract(0, 0, 1)).getMaterial() == chest) {
-			return true;
-		}
-		return false;
+		this.setHardness(5.0F).setResistance(2000.0F);
+		this.setController(VanillaControllerTypes.ENCHANTMENT_TABLE);
 	}
 
 	@Override
-	public ChestController getController(Block block) {
-		return (ChestController) super.getController(block);
-	}
-
-	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
-	}
-
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
-	}
-
-	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
+	public EnchantmentTableController getController(Block block) {
+		return (EnchantmentTableController) super.getController(block);
 	}
 
 	@Override
@@ -99,20 +66,33 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 	}
 
 	@Override
+	public short getDurabilityPenalty(MiningTool tool) {
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSDRUM;
+	}
+
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
+	}
+
+	@Override
 	public BlockFace getFacing(Block block) {
-		return BlockFaces.EWNS.get(block.getData() - 2);
+		return BlockFace.TOP;
 	}
 
 	@Override
 	public void setFacing(Block block, BlockFace facing) {
-		block.setData((short) (BlockFaces.EWNS.indexOf(facing, 0) + 2));
 	}
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
-			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-			block.setController(new ChestController(isDouble(block)));
+			block.getWorld().createAndSpawnEntity(block.getPosition(), new EnchantmentTableController());
 			return true;
 		}
 		return false;
@@ -126,13 +106,8 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 				return;
 			}
 
-			// Open the chest
+			// Open the enchantment table
 			this.getController(block).getInventory().open((VanillaPlayer) controller);
 		}
-	}
-
-	@Override
-	public boolean isPlacementSuppressed() {
-		return true;
 	}
 }

@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -68,7 +68,7 @@ public class Jukebox extends Solid implements Fuel {
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
-			block.setController(new JukeboxController());
+			block.getWorld().createAndSpawnEntity(block.getPosition(), new JukeboxController());
 			return true;
 		}
 		return false;

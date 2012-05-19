@@ -32,6 +32,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.controlled.SignBase;
 import org.spout.vanilla.util.Instrument;
 
 public class Fence extends VanillaBlockMaterial implements Fuel {

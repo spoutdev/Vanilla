@@ -33,6 +33,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.MiningTool;
 import org.spout.vanilla.material.item.misc.Coal;
 import org.spout.vanilla.material.item.tool.Axe;

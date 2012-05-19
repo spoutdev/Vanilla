@@ -37,7 +37,7 @@ import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.solid.Furnace;
+import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 

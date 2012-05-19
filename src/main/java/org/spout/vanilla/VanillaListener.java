@@ -118,10 +118,6 @@ public class VanillaListener implements Listener {
 		if (region.getAll(RegionSpawner.class).isEmpty()) {
 			region.getWorld().createAndSpawnEntity(point, new RegionSpawner(region));
 		}
-
-		if (region.getAll(GrowthMonitor.class).isEmpty()) {
-			region.getWorld().createAndSpawnEntity(point, new GrowthMonitor(region));
-		}
 		BlockUpdater.get(region);
 	}
 

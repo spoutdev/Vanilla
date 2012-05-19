@@ -24,8 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.material.block.controlled;
 
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.block.MonsterSpawnerController;
 import org.spout.vanilla.material.block.Solid;
 
 public class MonsterSpawner extends Solid {
@@ -37,5 +42,16 @@ public class MonsterSpawner extends Solid {
 	public void initialize() {
 		super.initialize();
 		this.setHardness(5.0F).setResistance(8.3F).setDrop(null);
+		setController(VanillaControllerTypes.MONSTER_SPAWNER);
+	}
+
+	@Override
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		if (super.onPlacement(block, data, against, isClickedBlock)) {
+			block.getWorld().createAndSpawnEntity(block.getPosition(), new MonsterSpawnerController());
+			return true;
+		}
+
+		return false;
 	}
 }

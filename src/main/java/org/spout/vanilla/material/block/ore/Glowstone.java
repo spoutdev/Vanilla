@@ -31,7 +31,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
-import org.spout.vanilla.material.block.misc.SignBase;
+import org.spout.vanilla.material.block.controlled.SignBase;
 
 public class Glowstone extends Ore {
 	public Glowstone(String name, int id) {

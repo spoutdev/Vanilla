@@ -31,8 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
-
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -48,6 +46,7 @@ public class CoalOre extends Ore implements TimedCraftable, Mineable {
 	@Override
 	public void initialize() {
 		super.initialize();
+		this.setHardness(3.0F).setResistance(5.0F);
 	}
 
 	@Override

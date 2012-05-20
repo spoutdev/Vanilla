@@ -55,7 +55,7 @@ public class SignBase extends AbstractAttachable implements Mineable {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(1.0F).setResistance(1.6F);
+		this.setHardness(1.0F).setResistance(1.6F).setOpacity((byte) 1);
 		this.setController(VanillaControllerTypes.SIGN);
 	}
 

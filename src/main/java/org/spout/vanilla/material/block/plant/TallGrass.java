@@ -46,6 +46,12 @@ public class TallGrass extends DeadBush {
 		super(name, 31);
 	}
 
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setResistance(0.0F).setHardness(0.0F).setOpacity((byte) 1);
+	}
+
 	private TallGrass(String name, int data, TallGrass parent) {
 		super(name, 31, data, parent);
 	}

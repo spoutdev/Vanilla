@@ -42,7 +42,7 @@ public class Mushroom extends GroundAttachable implements Plant {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.0f).setResistance(0.0f);
+		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
 	}
 
 	@Override

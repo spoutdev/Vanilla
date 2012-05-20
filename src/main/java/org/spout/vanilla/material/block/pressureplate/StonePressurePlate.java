@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.tool.MiningTool;
@@ -45,7 +44,7 @@ public class StonePressurePlate extends PressurePlate implements Mineable {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.5F).setResistance(0.8F);
+		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
 	}
 
 	@Override

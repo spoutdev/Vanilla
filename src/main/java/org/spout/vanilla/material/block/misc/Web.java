@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Solid;
@@ -45,7 +44,7 @@ public class Web extends Solid {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(4.0F).setResistance(20.0F);
+		this.setHardness(4.0F).setResistance(20.0F).setOpacity((byte) 1);
 	}
 
 	@Override

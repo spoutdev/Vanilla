@@ -48,7 +48,7 @@ public class NetherWartBlock extends GroundAttachable implements Plant {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setResistance(0.0F);
+		this.setResistance(0.0F).setHardness(0.0F).setOpacity((byte) 1);
 	}
 
 	@Override

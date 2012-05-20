@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;

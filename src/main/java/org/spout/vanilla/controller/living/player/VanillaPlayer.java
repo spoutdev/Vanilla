@@ -636,6 +636,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	public void dropItem() {
 		ItemStack current = getParent().getInventory().getCurrentItem();
+		if (current == null) {
+			return;
+		}
 		Item control = new Item(new ItemStack(current.getMaterial(), 1), getHeadPosition().add(getLookingAt()));
 		if (current.getAmount() > 1) {
 			current.setAmount(current.getAmount() - 1);

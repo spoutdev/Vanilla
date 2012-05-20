@@ -53,7 +53,7 @@ public class PickupEntityProtocol extends VanillaEntityProtocol implements Entit
 			if (pi.getMaterial() == null) {
 				return null;
 			}
-			return new Message[]{new SpawnDroppedItemMessage(id, (int) pi.getMaterial().getId(), pi.getAmount(), pi.getData(), x, y, z, r, p, pi.getRoll())};
+			return new Message[]{new SpawnDroppedItemMessage(id, (int) pi.getMaterial().getId(), pi.getAmount(), pi.getData(), x, y, z, r, p, (int) pi.getParent().getRoll())};
 		}
 
 		return null;

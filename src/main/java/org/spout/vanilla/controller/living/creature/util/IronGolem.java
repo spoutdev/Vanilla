@@ -36,15 +36,14 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 public class IronGolem extends Creature implements Utility {
 	private Entity parent;
 
-	protected IronGolem() {
+	public IronGolem() {
 		super(VanillaControllerTypes.IRON_GOLEM);
 	}
 
 	@Override
 	public void onAttached() {
+		setHealth(100, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(100);
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(100);
-		parent.setHealth(100, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 }

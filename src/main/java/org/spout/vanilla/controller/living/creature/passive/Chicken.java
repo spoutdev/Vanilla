@@ -39,18 +39,15 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Chicken extends Creature implements Passive {
-	private Entity parent;
-
 	public Chicken() {
 		super(VanillaControllerTypes.CHICKEN);
 	}
 
 	@Override
 	public void onAttached() {
+		setHealth(4, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(4);
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(4);
-		parent.setHealth(4, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

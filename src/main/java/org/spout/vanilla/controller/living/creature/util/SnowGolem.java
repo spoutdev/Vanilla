@@ -26,25 +26,20 @@
  */
 package org.spout.vanilla.controller.living.creature.util;
 
-import org.spout.api.entity.Entity;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class SnowGolem extends Creature implements Passive {
-	private Entity parent;
-
-	protected SnowGolem() {
+	public SnowGolem() {
 		super(VanillaControllerTypes.SNOW_GOLEM);
 	}
 
 	@Override
 	public void onAttached() {
+		setHealth(6, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(6);
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(6);
-		parent.setHealth(6, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 }

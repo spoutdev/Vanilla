@@ -38,18 +38,15 @@ import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Silverfish extends Creature implements Hostile {
-	private Entity parent;
-
-	protected Silverfish() {
+	public Silverfish() {
 		super(VanillaControllerTypes.SILVERFISH);
 	}
 
 	@Override
 	public void onAttached() {
+		setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(8);
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(8);
-		parent.setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

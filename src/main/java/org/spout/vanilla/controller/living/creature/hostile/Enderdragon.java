@@ -39,18 +39,15 @@ import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Enderdragon extends Creature implements Hostile, Boss {
-	private Entity parent;
-
-	protected Enderdragon() {
+	public Enderdragon() {
 		super(VanillaControllerTypes.ENDERDRAGON);
 	}
 
 	@Override
 	public void onAttached() {
+		setHealth(200, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(200);
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(200);
-		parent.setHealth(200, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

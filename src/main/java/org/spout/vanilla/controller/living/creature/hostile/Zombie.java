@@ -40,22 +40,19 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Zombie extends Creature implements Hostile {
-	private Entity parent;
+	public Zombie() {
+		super(VanillaControllerTypes.ZOMBIE);
+	}
 
 	protected Zombie(VanillaControllerType type) {
 		super(type);
 	}
 
-	public Zombie() {
-		super(VanillaControllerTypes.ZOMBIE);
-	}
-
 	@Override
 	public void onAttached() {
+		setHealth(16, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(20);
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(20);
-		parent.setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

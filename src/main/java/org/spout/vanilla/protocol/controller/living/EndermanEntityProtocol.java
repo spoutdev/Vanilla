@@ -46,7 +46,7 @@ public class EndermanEntityProtocol extends BasicMobEntityProtocol {
 		//TODO: Index 17 (byte): Item data in hand
 		if (controller instanceof Enderman) {
 			Enderman enderman = (Enderman) controller;
-			BlockMaterial held = enderman.getHeldItem();
+			BlockMaterial held = (BlockMaterial) enderman.getHeldItem().getMaterial();
 			if (held != null && !held.equals(enderman.getPreviouslyHeldItem())) {
 				List<Parameter<?>> parameters = super.getSpawnParameters(controller);
 				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) held.getId()));

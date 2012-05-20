@@ -30,11 +30,14 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import org.spout.api.Source;
+import org.spout.api.Spout;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.ActionController;
+import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
@@ -66,6 +69,9 @@ public abstract class VanillaActionController extends ActionController implement
 	private Vector3 velocity = Vector3.ZERO;
 	private Vector3 movementSpeed = Vector3.ZERO;
 	private Vector3 maxSpeed = Vector3.ZERO;
+	//Controller characteristics
+	private int health = 1;
+	private int maxHealth = 1;
 
 	protected VanillaActionController(VanillaControllerType type) {
 		super(type);
@@ -86,6 +92,8 @@ public abstract class VanillaActionController extends ActionController implement
 		velocity = (Vector3) data().get("velocity", velocity);
 		movementSpeed = (Vector3) data().get("movementSpeed", movementSpeed);
 		maxSpeed = (Vector3) data().get("maxSpeed", maxSpeed);
+		health = (Integer) data().get("health", health);
+		maxHealth = (Integer) data().get("maxhealth", maxHealth);
 	}
 
 	@Override
@@ -97,12 +105,14 @@ public abstract class VanillaActionController extends ActionController implement
 		data().put("velocity", velocity);
 		data().put("movementSpeed", movementSpeed);
 		data().put("maxSpeed", maxSpeed);
+		data().put("health", health);
+		data().put("maxhealth", maxHealth);
 	}
 
 	@Override
 	public void onTick(float dt) {
 		//Check controller health, send messages to the client based on current state.
-		if (getParent().getHealth() <= 0) {
+		if (health <= 0) {
 			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 			getParent().kill();
 		}
@@ -112,6 +122,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	@Override
 	public void onCollide(Block block) {
+		System.out.println("Collisons work!");
 		setVelocity(Vector3.ZERO);
 	}
 
@@ -348,5 +359,29 @@ public abstract class VanillaActionController extends ActionController implement
 	 */
 	public Random getRandom() {
 		return rand;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setHealth(int health, Source source) {
+		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getParent(),  source, health);
+		Spout.getEngine().getEventManager().callEvent(event);
+		if (!event.isCancelled()) {
+			if (event.getChange() > maxHealth) {
+				this.health = maxHealth;
+			} else {
+				this.health = event.getChange();
+			}
+		}
+	}
+
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
 	}
 }

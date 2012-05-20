@@ -39,18 +39,15 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Blaze extends Creature implements Hostile {
-	private Entity parent;
-
 	public Blaze() {
 		super(VanillaControllerTypes.BLAZE);
 	}
 
 	@Override
 	public void onAttached() {
+		setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(20);
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(20);
-		parent.setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

@@ -39,33 +39,35 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
 
 public class Sheep extends Creature implements Passive {
+	private boolean isSheared = false;
+	private short sheepColor = 0;
+
 	public Sheep() {
-		this(0x0);
-	}
-
-	public Sheep(Wool.WoolColor color) {
-		this(color.getData());
-	}
-
-	public Sheep(int color) {
 		super(VanillaControllerTypes.SHEEP);
-		data().put("SheepColor", color);
 	}
 
 	@Override
 	public void onAttached() {
+		setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(8);
 		super.onAttached();
-		data().put("SheepSheared", false);
-		getParent().setMaxHealth(8);
-		getParent().setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		isSheared = (Boolean) data().get("sheepsheared", false);
+		sheepColor = (Short) data().get("sheepcolor", 0);
 	}
 
+	@Override
+	public void onSave() {
+		super.onSave();
+		data().put("sheepsheared", isSheared);
+		data().put("sheepcolor", sheepColor);
+
+	}
 	/**
 	 * Whether or not the sheep's wool has been sheared.
 	 * @return true if sheared.
 	 */
 	public boolean isSheared() {
-		return (Boolean) data().get("SheepSheared");
+		return isSheared;
 	}
 
 	/**
@@ -73,7 +75,7 @@ public class Sheep extends Creature implements Passive {
 	 * @param sheared
 	 */
 	public void setSheared(boolean sheared) {
-		data().put("SheepSheared", sheared);
+		this.isSheared = sheared;
 	}
 
 	/**
@@ -81,7 +83,7 @@ public class Sheep extends Creature implements Passive {
 	 * @return color of the sheep.
 	 */
 	public Wool.WoolColor getColor() {
-		return Wool.WoolColor.getById(((Number) data().get("SheepColor")).shortValue());
+		return Wool.WoolColor.getById(sheepColor);
 	}
 
 	/**
@@ -89,7 +91,7 @@ public class Sheep extends Creature implements Passive {
 	 * @param color
 	 */
 	public void setColor(Wool.WoolColor color) {
-		data().put("SheepColor", color.getData());
+		sheepColor = color.getData();
 	}
 
 	@Override

@@ -39,8 +39,8 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Enderman extends Creature implements Neutral {
-	private BlockMaterial heldItem;
-	private BlockMaterial previouslyHeldItem;
+	private ItemStack heldItem;
+	private ItemStack lastHeldItem;
 
 	public Enderman() {
 		super(VanillaControllerTypes.ENDERMAN);
@@ -48,15 +48,22 @@ public class Enderman extends Creature implements Neutral {
 
 	@Override
 	public void onAttached() {
+		setHealth(40, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(40);
+		heldItem = (ItemStack) data().get("helditem", heldItem);
 		super.onAttached();
-		getParent().setMaxHealth(40);
-		getParent().setHealth(40, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+	}
+
+	@Override
+	public void onSave() {
+		super.onSave();
+		data().put("helditem", heldItem);
 	}
 
 	@Override
 	public void finalizeTick() {
 		super.finalizeTick();
-		this.previouslyHeldItem = heldItem;
+		this.lastHeldItem = heldItem;
 	}
 
 	@Override
@@ -67,24 +74,23 @@ public class Enderman extends Creature implements Neutral {
 			drops.add(new ItemStack(VanillaMaterials.ENDER_PEARL, count));
 		}
 
-		BlockMaterial held = getHeldItem();
-		if (held != null && !held.equals(VanillaMaterials.AIR)) {
-			drops.add(new ItemStack(held, 1));
+		if (heldItem != null && !heldItem.getMaterial().equals(VanillaMaterials.AIR)) {
+			drops.add(heldItem);
 			setHeldItem(null);
 		}
 
 		return drops;
 	}
 
-	public BlockMaterial getPreviouslyHeldItem() {
-		return previouslyHeldItem;
+	public ItemStack getPreviouslyHeldItem() {
+		return lastHeldItem;
 	}
 
-	public BlockMaterial getHeldItem() {
+	public ItemStack getHeldItem() {
 		return heldItem;
 	}
 
-	public void setHeldItem(BlockMaterial heldItem) {
+	public void setHeldItem(ItemStack heldItem) {
 		this.heldItem = heldItem;
 	}
 }

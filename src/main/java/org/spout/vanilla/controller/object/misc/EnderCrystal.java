@@ -29,7 +29,6 @@ package org.spout.vanilla.controller.object.misc;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.action.GravityAction;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
@@ -41,7 +40,6 @@ public class EnderCrystal extends Substance {
 	@Override
 	public void onAttached() {
 		//TODO Remove when collisions are fixed.
-		registerAction(new GravityAction());
 		getParent().setMaxHealth(1);
 		getParent().setHealth(1, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}

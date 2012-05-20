@@ -33,11 +33,22 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Hostile;
+import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class MagmaCube extends Slime implements Hostile {
 	public MagmaCube() {
 		super(VanillaControllerTypes.MAGMA_CUBE);
+	}
+
+	@Override
+	public void onAttached() {
+		int size = getRandom().nextInt(4);
+		int health = size > 0 ? size * 4 : 1;
+		data().put("SlimeSize", size);
+		setHealth(health, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(health);
+		super.onAttached();
 	}
 
 	@Override

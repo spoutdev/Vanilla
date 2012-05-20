@@ -33,17 +33,14 @@ import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class CaveSpider extends Spider implements Hostile {
-	private Entity parent;
-
 	public CaveSpider() {
 		super(VanillaControllerTypes.CAVE_SPIDER);
 	}
 
 	@Override
 	public void onAttached() {
+		setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(20);
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(12);
-		parent.setHealth(12, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 }

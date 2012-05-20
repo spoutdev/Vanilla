@@ -28,9 +28,11 @@ package org.spout.vanilla.controller.living.creature.neutral;
 
 import java.util.Set;
 
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
@@ -38,24 +40,40 @@ import org.spout.vanilla.controller.living.creature.Tameable;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Wolf extends Creature implements Tameable, Neutral {
-	private Entity parent;
+	private Controller master;
 
-	protected Wolf() {
+	public Wolf() {
 		super(VanillaControllerTypes.WOLF);
 	}
 
 	@Override
 	public void onAttached() {
+		//master = data().get("controllingentity", master);
+		if (master != null) {
+			setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+			setMaxHealth(20);
+		} else {
+			setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+			setMaxHealth(8);
+		}
+
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(8);
-		parent.setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
-		// TODO: Health gets increased to 20 when tamed.
 	}
 
 	@Override
-	public void subjectTo(Entity entity) {
+	public void onSave() {
+		super.onSave();
+		//data().put("controllingentity", master);
+	}
 
+	@Override
+	public void controlledBy(Controller master) {
+		this.master = master;
+	}
+
+	@Override
+	public boolean isControlled() {
+		return master != null;
 	}
 
 	@Override
@@ -63,3 +81,4 @@ public class Wolf extends Creature implements Tameable, Neutral {
 		return null;
 	}
 }
+

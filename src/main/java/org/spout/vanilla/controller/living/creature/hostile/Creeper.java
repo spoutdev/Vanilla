@@ -39,18 +39,15 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Creeper extends Creature implements Hostile {
-	private Entity parent;
-
 	protected Creeper() {
 		super(VanillaControllerTypes.CREEPER);
 	}
 
 	@Override
 	public void onAttached() {
+		setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(20);
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(20);
-		parent.setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

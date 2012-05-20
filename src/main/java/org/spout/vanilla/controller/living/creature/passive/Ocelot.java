@@ -29,28 +29,57 @@ package org.spout.vanilla.controller.living.creature.passive;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.living.creature.Tameable;
+import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Ocelot extends Creature implements Tameable, Passive {
+	private Controller master;
+
 	public Ocelot() {
 		super(VanillaControllerTypes.OCELOT);
 	}
 
 	@Override
-	public void subjectTo(org.spout.api.entity.Entity entity) {
-		Cat cat = new Cat();
-		cat.subjectTo(entity);
-		getParent().setController(cat);
+	public void onAttached() {
+		//TODO Check these values...
+		//master = data().get("controllingentity", master);
+		if (master != null) {
+			setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+			setMaxHealth(20);
+		} else {
+			setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+			setMaxHealth(8);
+		}
+
+		super.onAttached();
+	}
+
+	@Override
+	public void onSave() {
+		super.onSave();
+		//data().put("controllingentity", master);
 	}
 
 	@Override
 	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		return drops;
+	}
+
+	@Override
+	public void controlledBy(Controller master) {
+		this.master = master;
+	}
+
+	@Override
+	public boolean isControlled() {
+		return master != null;
 	}
 }

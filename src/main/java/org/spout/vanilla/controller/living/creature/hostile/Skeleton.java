@@ -39,18 +39,15 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Skeleton extends Creature implements Hostile {
-	private Entity parent;
-
-	protected Skeleton() {
+	public Skeleton() {
 		super(VanillaControllerTypes.SKELETON);
 	}
 
 	@Override
 	public void onAttached() {
+		setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(20);
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(20);
-		parent.setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

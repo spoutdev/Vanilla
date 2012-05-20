@@ -40,8 +40,6 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Spider extends Creature implements Hostile {
-	private Entity parent;
-
 	protected Spider(VanillaControllerType type) {
 		super(type);
 	}
@@ -52,10 +50,9 @@ public class Spider extends Creature implements Hostile {
 
 	@Override
 	public void onAttached() {
+		setHealth(16, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(16);
 		super.onAttached();
-		parent = getParent();
-		parent.setMaxHealth(16);
-		parent.setHealth(16, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

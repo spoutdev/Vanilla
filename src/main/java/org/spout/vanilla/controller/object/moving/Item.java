@@ -46,6 +46,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
@@ -56,7 +57,6 @@ import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 public class Item extends Substance {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(Item.class, "Item");
 	private final ItemStack is;
-	private final int roll;
 	private int unpickable;
 
 	/**
@@ -74,7 +74,6 @@ public class Item extends Substance {
 	public Item(ItemStack itemstack, Vector3 initial) {
 		super(VanillaControllerTypes.DROPPED_ITEM);
 		this.is = itemstack;
-		this.roll = 1;
 		unpickable = 10;
 		setVelocity(initial);
 	}
@@ -102,50 +101,17 @@ public class Item extends Substance {
 
 		super.onTick(dt);
 
-		//move();
-
-		World world = getParent().getWorld();
-		if (world == null) {
+		double distance = VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble();
+		Player closestPlayer = getParent().getRegion().getNearestPlayer(getParent(), (int) distance);
+		if (closestPlayer == null) {
 			return;
 		}
-
-		List<Player> players = Arrays.asList(Spout.getEngine().getOnlinePlayers());
-		Iterable<Player> onlinePlayers = Iterables.filter(players, isValidPlayer);
-
-		double minDistance = -1;
-		Entity closestPlayer = null;
-		for (Player plr : onlinePlayers) {
-			Entity entity = plr.getEntity();
-			if (entity.getWorld().equals(world)) {
-				double distance = entity.getPosition().getSquaredDistance(getParent().getPosition());
-				if (distance < minDistance || minDistance == -1) {
-					closestPlayer = entity;
-					minDistance = distance;
-				}
-			}
-		}
-
-		double maxDistance = VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble();
-		if (closestPlayer != null && minDistance <= maxDistance * maxDistance) {
-			int collected = getParent().getId();
-			int collector = closestPlayer.getId();
-			for (Player plr : onlinePlayers) {
-				if (plr.getEntity().getWorld().equals(world)) {
-					sendPacket(plr, new CollectItemMessage(collected, collector));
-				}
-			}
-
-			closestPlayer.getInventory().addItem(is, false);
-			getParent().kill();
-		}
+		int collected = getParent().getId();
+		int collector = getParent().getRegion().getNearestPlayer(getParent(), (int) distance).getEntity().getId();
+		VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(getParent().getPosition(), closestPlayer.getEntity(), closestPlayer.getEntity().getViewDistance(), new CollectItemMessage(collected, collector));
+		closestPlayer.getEntity().getInventory().addItem(is, false);
+		getParent().kill();
 	}
-
-	private final Predicate<Player> isValidPlayer = new Predicate<Player>() {
-		@Override
-		public boolean apply(Player p) {
-			return p != null && p.getEntity() != null && p.getEntity().getWorld() != null;
-		}
-	};
 
 	/**
 	 * Gets what block the item is.
@@ -169,14 +135,6 @@ public class Item extends Substance {
 	 */
 	public short getData() {
 		return is.getData();
-	}
-
-	/**
-	 * Gets the roll of the item
-	 * @return roll of item.
-	 */
-	public int getRoll() {
-		return roll;
 	}
 
 	@Override

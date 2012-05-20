@@ -40,25 +40,29 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Slime extends Creature implements Hostile {
-	private Entity parent;
+	private byte size;
 
 	protected Slime(VanillaControllerType type) {
 		super(type);
 	}
 
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		parent = getParent();
-		int size = getRandom().nextInt(4);
-		int health = size > 0 ? size * 4 : 1;
-		data().put("SlimeSize", size);
-		parent.setMaxHealth(health);
-		parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
-	}
-
 	public Slime() {
 		super(VanillaControllerTypes.SLIME);
+	}
+
+	@Override
+	public void onAttached() {
+		byte size = ((Byte) data().get("slimesize", getRandom().nextInt(4)));
+		int health = size > 0 ? size * 4 : 1;
+		setHealth(health, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(health);
+		super.onAttached();
+	}
+
+	@Override
+	public void onSave() {
+		super.onSave();
+		data().put("slimesize", size);
 	}
 
 	@Override
@@ -81,7 +85,7 @@ public class Slime extends Creature implements Hostile {
 	 * @return slime's size.
 	 */
 	public byte getSize() {
-		return ((Number) data().get("SlimeSize")).byteValue();
+		return size;
 	}
 
 	/**
@@ -93,6 +97,6 @@ public class Slime extends Creature implements Hostile {
 			throw new IllegalArgumentException("A Slime's size must be between 0 and 4");
 		}
 
-		data().put("SlimeSize", size);
+		this.size = size;
 	}
 }

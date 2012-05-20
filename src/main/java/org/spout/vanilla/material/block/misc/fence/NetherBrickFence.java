@@ -24,10 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.block.misc.fence;
 
-public class LockedChest extends Chest {
-	public LockedChest(String name, int id) {
+import java.util.ArrayList;
+
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+
+public class NetherBrickFence extends Fence {
+	public NetherBrickFence(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setResistance(30.F);
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
+		return drops;
 	}
 }

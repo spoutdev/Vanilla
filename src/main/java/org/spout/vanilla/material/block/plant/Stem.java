@@ -26,11 +26,8 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -41,9 +38,8 @@ import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class WheatCrop extends GroundAttachable implements Plant {
-
-	public WheatCrop(String name, int id) {
+public class Stem extends GroundAttachable implements Plant {
+	public Stem(String name, int id) {
 		super(name, id);
 	}
 
@@ -65,7 +61,7 @@ public class WheatCrop extends GroundAttachable implements Plant {
 
 	@Override
 	public int getMinimumLightToGrow() {
-		return 9;
+		return 9;  //TODO Verify this.
 	}
 
 	@Override
@@ -74,7 +70,7 @@ public class WheatCrop extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+	public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		ItemStack current = entity.getInventory().getCurrentItem();
 		if (current != null && current.getSubMaterial().equals(Dye.BONE_MEAL)) {
@@ -85,19 +81,6 @@ public class WheatCrop extends GroundAttachable implements Plant {
 				this.setGrowthStage(block, 0x7);
 			}
 		}
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		int stage = getGrowthStage(block);
-		//final stage
-		//TODO Make a nice enum of this...
-		//TODO Drop seeds based on growth stage
-		if (stage == 8) {
-			drops.add(new ItemStack(VanillaMaterials.WHEAT, 1));
-		}
-		return drops;
 	}
 
 	public int getGrowthStage(Block block) {
@@ -111,7 +94,4 @@ public class WheatCrop extends GroundAttachable implements Plant {
 	public boolean isFullyGrown(Block block) {
 		return block.getData() == 0x7;
 	}
-
-	// TODO: Grow
-	// TODO: Trampling
 }

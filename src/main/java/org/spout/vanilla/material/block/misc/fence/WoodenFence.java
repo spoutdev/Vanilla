@@ -24,10 +24,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.block.misc.fence;
 
-public class LockedChest extends Chest {
-	public LockedChest(String name, int id) {
+import java.util.ArrayList;
+
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+
+import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.VanillaMaterials;
+
+public class WoodenFence extends Fence implements Fuel {
+	public final float BURN_TIME = 15.f;
+
+	public WoodenFence(String name, int id) {
 		super(name, id);
+		this.setResistance(5.0F);
+	}
+
+	@Override
+	public float getFuelTime() {
+		return BURN_TIME;
+	}
+
+	@Override
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		if (material.equals(VanillaMaterials.FIRE)) {
+			return true;
+		} else if (super.canSupport(material, face)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
+		return drops;
 	}
 }

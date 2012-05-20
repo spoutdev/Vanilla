@@ -32,7 +32,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.material.block.Stairs;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class BrickStairs extends Stairs {

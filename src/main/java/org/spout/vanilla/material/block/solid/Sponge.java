@@ -24,13 +24,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material;
+package org.spout.vanilla.material.block.solid;
 
 import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.solid.Solid;
 import org.spout.vanilla.material.item.tool.MiningTool;
 

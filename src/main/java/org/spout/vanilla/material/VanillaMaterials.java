@@ -32,6 +32,8 @@ import java.lang.reflect.Modifier;
 import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.material.block.controlled.LockedChest;
+import org.spout.vanilla.material.block.solid.Sponge;
 import org.spout.vanilla.material.block.controlled.Chest;
 import org.spout.vanilla.material.block.controlled.Dispenser;
 import org.spout.vanilla.material.block.controlled.EnchantmentTable;
@@ -305,7 +307,7 @@ public final class VanillaMaterials {
 	public static final CakeBlock CAKE_BLOCK = register(new CakeBlock("Cake Block", 92));
 	public static final RedstoneRepeater REDSTONE_REPEATER_OFF = register(new RedstoneRepeater("Redstone Repeater", 93, false));
 	public static final RedstoneRepeater REDSTONE_REPEATER_ON = register(new RedstoneRepeater("Redstone Repeater (On)", 94, true));
-	public static final Solid LOCKED_CHEST = (Solid) register(new Solid("Locked Chest", 95).setHardness(0.0F).setResistance(0.0F).setLightLevel(15));
+	public static final LockedChest LOCKED_CHEST = register(new LockedChest("Locked Chest", 95));
 	public static final TrapDoor TRAPDOOR = register(new TrapDoor("Trapdoor", 96));
 	public static final SilverfishStone SILVERFISH_STONE = register(new SilverfishStone("Silverfish Stone", 97));
 	public static final StoneBrick STONE_BRICK = StoneBrick.STONE;

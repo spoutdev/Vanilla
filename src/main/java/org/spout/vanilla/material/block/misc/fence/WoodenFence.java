@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.material.block.misc.fence;
 
 import java.util.ArrayList;
 
@@ -34,22 +34,14 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.controlled.SignBase;
-import org.spout.vanilla.util.Instrument;
 
-public class Fence extends VanillaBlockMaterial implements Fuel {
+public class WoodenFence extends Fence implements Fuel {
 	public final float BURN_TIME = 15.f;
 
-	public Fence(String name, int id) {
+	public WoodenFence(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setResistance(5.0F).setResistance(5.0F).setOpacity((byte) 1);
+		this.setResistance(5.0F);
 	}
 
 	@Override
@@ -58,30 +50,13 @@ public class Fence extends VanillaBlockMaterial implements Fuel {
 	}
 
 	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
-	}
-
-	@Override
 	public boolean canSupport(BlockMaterial material, BlockFace face) {
 		if (material.equals(VanillaMaterials.FIRE)) {
 			return true;
-		} else {
-			if (material instanceof SignBase) {
-				return true;
-			}
-			if (face == BlockFace.TOP) {
-				if (material instanceof Torch) {
-					return true;
-				}
-			}
-			return false;
+		} else if (super.canSupport(material, face)) {
+			return true;
 		}
-	}
-
-	@Override
-	public boolean canBurn() {
-		return true;
+		return false;
 	}
 
 	@Override

@@ -24,43 +24,23 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.block.misc.fence;
 
 import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.block.controlled.Furnace;
-import org.spout.vanilla.material.block.plant.Plant;
-import org.spout.vanilla.material.item.tool.MiningTool;
-import org.spout.vanilla.material.item.misc.Coal;
-import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.block.controlled.SignBase;
+import org.spout.vanilla.material.block.misc.Torch;
 import org.spout.vanilla.util.Instrument;
 
-public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable {
-	public static final Log DEFAULT = register(new Log("Wood"));
-	public static final Log SPRUCE = register(new Log("Spruce Wood", 1, DEFAULT));
-	public static final Log BIRCH = register(new Log("Birch Wood", 2, DEFAULT));
-	public static final Log JUNGLE = register(new Log("Jungle Wood", 3, DEFAULT));
-	public final float BURN_TIME = 15.f;
-
-	private Log(String name) {
-		super(name, 17);
-	}
-
-	private Log(String name, int data, Log parent) {
-		super(name, 17, data, parent);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(2.0F).setResistance(10.F).setOpacity((byte) 1);
+public class Fence extends VanillaBlockMaterial {
+	public Fence(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
@@ -69,38 +49,16 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable 
 	}
 
 	@Override
-	public boolean hasGrowthStages() {
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		if (material instanceof SignBase) {
+			return true;
+		}
+		if (face == BlockFace.TOP) {
+			if (material instanceof Torch) {
+				return true;
+			}
+		}
 		return false;
-	}
-
-	@Override
-	public int getNumGrowthStages() {
-		return 0;
-	}
-
-	@Override
-	public int getMinimumLightToGrow() {
-		return 0;
-	}
-
-	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
-	}
-
-	@Override
-	public ItemStack getResult() {
-		return new ItemStack(Coal.CHARCOAL, 1);
-	}
-
-	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
-	}
-
-	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 
 	@Override

@@ -27,12 +27,11 @@
 package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.block.ChestController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
-public class ChestInventory extends Inventory implements WindowInventory {
+public class ChestInventory extends VanillaInventory implements WindowInventory {
 	private static final long serialVersionUID = 1L;
 	private final ChestController owner;
 	private final boolean doubleChest;
@@ -72,7 +71,7 @@ public class ChestInventory extends Inventory implements WindowInventory {
 	}
 
 	@Override
-	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack) {
+	public boolean onClicked(VanillaPlayer player, int clickedSlot, VanillaItemStack slotStack) {
 		setItem(clickedSlot, slotStack);
 		return true;
 	}

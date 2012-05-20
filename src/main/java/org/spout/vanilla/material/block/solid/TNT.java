@@ -30,11 +30,11 @@ import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
@@ -87,10 +87,10 @@ public class TNT extends Solid implements RedstoneTarget {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
+	public ArrayList<VanillaItemStack> getDrops(Block block) {
 		//TODO Check to make sure tnt didn't get destroyed by explosion source
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(this, 1));
+		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
+		drops.add(new VanillaItemStack(this, 1));
 		return drops;
 	}
 }

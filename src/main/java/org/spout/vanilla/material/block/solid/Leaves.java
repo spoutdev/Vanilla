@@ -35,6 +35,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.SignBase;
@@ -78,16 +79,16 @@ public class Leaves extends Solid implements Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+	public ArrayList<VanillaItemStack> getDrops(Block block) {
+		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
 		ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
 		if (held != null && held.getMaterial().equals(VanillaMaterials.SHEARS)) {
-			drops.add(new ItemStack(this, 1));
+			drops.add(new VanillaItemStack(this, 1));
 		} else {
 			if (rand.nextInt(20) == 0) {
-				drops.add(new ItemStack(VanillaMaterials.SAPLING, 1));
+				drops.add(new VanillaItemStack(VanillaMaterials.SAPLING, 1));
 			} else if (rand.nextInt(200) == 0) {
-				drops.add(new ItemStack(VanillaMaterials.RED_APPLE, 1));
+				drops.add(new VanillaItemStack(VanillaMaterials.RED_APPLE, 1));
 			}
 		}
 		return drops;
@@ -97,11 +98,6 @@ public class Leaves extends Solid implements Mineable {
 
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
-		if (tool instanceof Shears) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+		return tool instanceof Shears ? (short) 1 : (short) 2;
 	}
 }

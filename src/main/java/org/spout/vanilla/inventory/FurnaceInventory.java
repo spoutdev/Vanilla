@@ -27,7 +27,6 @@
 package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -38,7 +37,7 @@ import org.spout.vanilla.util.InventoryUtil;
 /**
  * Represents a furnace inventory belonging to a furnace controller.
  */
-public class FurnaceInventory extends Inventory implements WindowInventory {
+public class FurnaceInventory extends VanillaInventory implements WindowInventory {
 	private static final long serialVersionUID = 1L;
 	private static final int[] SLOTS = {30, 31, 32, 33, 34, 35, 36, 37, 38, 21, 22, 23, 24, 25, 26, 27, 28, 29, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 0};
 	private final FurnaceController owner;
@@ -57,10 +56,10 @@ public class FurnaceInventory extends Inventory implements WindowInventory {
 	}
 
 	/**
-	 * Returns the {@link ItemStack} in the output slot (slot 37); can return null.
+	 * Returns the {@link VanillaItemStack} in the output slot (slot 37); can return null.
 	 * @return output item stack
 	 */
-	public ItemStack getOutput() {
+	public VanillaItemStack getOutput() {
 		return getItem(37);
 	}
 
@@ -68,15 +67,15 @@ public class FurnaceInventory extends Inventory implements WindowInventory {
 	 * Sets the output of the inventory.
 	 * @param output
 	 */
-	public void setOutput(ItemStack output) {
+	public void setOutput(VanillaItemStack output) {
 		setItem(37, output);
 	}
 
 	/**
-	 * Returns the {@link ItemStack} in the fuel slot (slot 35); can return null.
+	 * Returns the {@link VanillaItemStack} in the fuel slot (slot 35); can return null.
 	 * @return fuel item stack
 	 */
-	public ItemStack getFuel() {
+	public VanillaItemStack getFuel() {
 		return getItem(36);
 	}
 
@@ -84,19 +83,19 @@ public class FurnaceInventory extends Inventory implements WindowInventory {
 	 * Sets the fuel slot of the inventory
 	 * @param fuel
 	 */
-	public void setFuel(ItemStack fuel) {
+	public void setFuel(VanillaItemStack fuel) {
 		setItem(36, fuel);
 	}
 
 	/**
-	 * Returns the {@link ItemStack} in the ingredient slot (slot 38); can return null.
+	 * Returns the {@link VanillaItemStack} in the ingredient slot (slot 38); can return null.
 	 * @return ingredient item stack
 	 */
-	public ItemStack getIngredient() {
+	public VanillaItemStack getIngredient() {
 		return getItem(38);
 	}
 
-	public void setIngredient(ItemStack ingredient) {
+	public void setIngredient(VanillaItemStack ingredient) {
 		setItem(38, ingredient);
 	}
 
@@ -148,9 +147,8 @@ public class FurnaceInventory extends Inventory implements WindowInventory {
 	}
 
 	@Override
-	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {
-		ItemStack cursorStack = controller.getItemOnCursor();
-		if (clickedSlot == 37 && cursorStack != null) {
+	public boolean onClicked(VanillaPlayer controller, int clickedSlot, VanillaItemStack slotStack) {
+		if (clickedSlot == 37 && controller.getItemOnCursor() != null) {
 			return false;
 		}
 

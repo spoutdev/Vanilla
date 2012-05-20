@@ -39,6 +39,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.solid.Solid;
@@ -130,12 +131,12 @@ public class Furnace extends Solid implements Mineable, Directional {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+	public ArrayList<VanillaItemStack> getDrops(Block block) {
+		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
 		if (block.getSource() instanceof Entity) {
 			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
 			if (held != null && held.getMaterial() instanceof Pickaxe) {
-				drops.add(new ItemStack(this, 1));
+				drops.add(new VanillaItemStack(this, 1));
 			}
 		}
 		return drops;

@@ -26,5 +26,19 @@
  */
 package org.spout.vanilla.inventory;
 
-public interface VanillaInventory {
+import org.spout.api.inventory.Inventory;
+
+/**
+ * Represents a Vanilla inventory
+ */
+public class VanillaInventory extends Inventory {
+	private static final long serialVersionUID = 1L;
+
+	public VanillaInventory(int size) {
+		super(size);
+	}
+
+	public VanillaItemStack getItem(int slot) {
+		return (VanillaItemStack) super.getItem(slot);
+	}
 }

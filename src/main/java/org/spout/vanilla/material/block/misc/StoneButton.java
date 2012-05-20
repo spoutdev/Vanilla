@@ -31,12 +31,12 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.controller.world.BlockUpdater;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
@@ -132,9 +132,9 @@ public class StoneButton extends AbstractAttachable implements PointAttachable, 
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(this, 1));
+	public ArrayList<VanillaItemStack> getDrops(Block block) {
+		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
+		drops.add(new VanillaItemStack(this, 1));
 		return drops;
 	}
 }

@@ -28,12 +28,12 @@ package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
@@ -69,7 +69,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 
 		WindowInventory window = (WindowInventory) inventory;
 		int clickedSlot = window.getSlotIndex(message.getSlot());
-		ItemStack cursorStack = controller.getItemOnCursor(), slotStack = inventory.getItem(clickedSlot);
+		VanillaItemStack cursorStack = (VanillaItemStack) controller.getItemOnCursor(), slotStack = (VanillaItemStack) inventory.getItem(clickedSlot);
 		if (message.isShift()) {
 			// TODO: Fix Shift clicking
 			InventoryUtil.quickMoveStack(inventory, clickedSlot);
@@ -81,13 +81,13 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 				if (cursorStack == null) {
 					int amount = (slotStack.getAmount() + 1) / 2;
 					slotStack = slotStack.setAmount(slotStack.getAmount() - amount);
-					cursorStack = new ItemStack(slotStack.getMaterial(), amount);
+					cursorStack = new VanillaItemStack(slotStack.getMaterial(), amount);
 				} else {
 					slotStack = slotStack.setAmount(slotStack.getAmount() + 1);
 					cursorStack = cursorStack.setAmount(cursorStack.getAmount() - 1);
 				}
 			} else if (slotStack == null && cursorStack != null) {
-				slotStack = new ItemStack(cursorStack.getMaterial(), 1);
+				slotStack = new VanillaItemStack(cursorStack.getMaterial(), 1);
 				cursorStack = cursorStack.setAmount(cursorStack.getAmount() - 1);
 			}
 		} else if (slotStack != null) { // Left click

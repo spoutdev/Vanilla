@@ -26,7 +26,14 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import java.util.ArrayList;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.vanilla.enchantment.Enchantments;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.util.Instrument;
 
 public class GlassPane extends VanillaBlockMaterial {
@@ -44,5 +51,17 @@ public class GlassPane extends VanillaBlockMaterial {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.CLICK;
+	}
+
+	@Override
+	public ArrayList<VanillaItemStack> getDrops(Block block) {
+		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
+		if (block.getSource() instanceof Entity) {
+			VanillaItemStack held = (VanillaItemStack) ((Entity) block.getSource()).getInventory().getCurrentItem();
+			if (held != null && held.getMaterial() instanceof MiningTool && held.hasEnchantment(Enchantments.SILK_TOUCH)) {
+				drops.add(new VanillaItemStack(this, 1));
+			}
+		}
+		return drops;
 	}
 }

@@ -34,6 +34,7 @@ import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.FurnaceInventory;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -75,7 +76,7 @@ public class FurnaceController extends VanillaBlockController {
 				craftTime = ingredient.getCraftTime();
 
 				int amount = fuelStack.getAmount();
-				inventory.setFuel(fuelStack.setAmount(amount - 1));
+				inventory.setFuel((VanillaItemStack) fuelStack.setAmount(amount - 1));
 			}
 		}
 
@@ -120,8 +121,8 @@ public class FurnaceController extends VanillaBlockController {
 
 				int inputAmount = input.getAmount();
 				int outputAmount = output.getAmount();
-				inventory.setIngredient(input.setAmount(inputAmount - 1));
-				inventory.setOutput(output.setAmount(outputAmount));
+				inventory.setIngredient((VanillaItemStack) input.setAmount(inputAmount - 1));
+				inventory.setOutput((VanillaItemStack) output.setAmount(outputAmount));
 			}
 
 			// Update viewers

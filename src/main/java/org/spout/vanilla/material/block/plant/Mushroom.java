@@ -29,9 +29,9 @@ package org.spout.vanilla.material.block.plant;
 import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class Mushroom extends GroundAttachable implements Plant {
@@ -69,9 +69,9 @@ public class Mushroom extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(this, 1));
+	public ArrayList<VanillaItemStack> getDrops(Block block) {
+		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
+		drops.add(new VanillaItemStack(this, 1));
 		return drops;
 	}
 }

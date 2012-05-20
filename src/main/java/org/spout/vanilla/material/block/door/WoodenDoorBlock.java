@@ -31,9 +31,9 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
@@ -43,6 +43,12 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class WoodenDoorBlock extends DoorBlock {
 	public WoodenDoorBlock(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(3.0F).setResistance(5.0F).setOpacity((byte) 1);
 	}
 
 	@Override
@@ -61,15 +67,9 @@ public class WoodenDoorBlock extends DoorBlock {
 	}
 
 	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(3.0F).setResistance(5.0F).setOpacity((byte) 1);
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.WOODEN_DOOR, 1));
+	public ArrayList<VanillaItemStack> getDrops(Block block) {
+		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
+		drops.add(new VanillaItemStack(VanillaMaterials.WOODEN_DOOR, 1));
 		return drops;
 	}
 }

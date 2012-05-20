@@ -26,10 +26,17 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.enchantment.Enchantments;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.util.Instrument;
 
 public class Glass extends Solid {
@@ -60,5 +67,17 @@ public class Glass extends Solid {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.CLICK;
+	}
+
+	@Override
+	public ArrayList<VanillaItemStack> getDrops(Block block) {
+		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
+		if (block.getSource() instanceof Entity) {
+			VanillaItemStack held = (VanillaItemStack) ((Entity) block.getSource()).getInventory().getCurrentItem();
+			if (held != null && held.getMaterial() instanceof MiningTool && held.hasEnchantment(Enchantments.SILK_TOUCH)) {
+				drops.add(new VanillaItemStack(this, 1));
+			}
+		}
+		return drops;
 	}
 }

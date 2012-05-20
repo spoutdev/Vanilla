@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -41,6 +40,12 @@ import org.spout.vanilla.material.item.tool.Pickaxe;
 public class IronBarsBlock extends Solid implements Mineable {
 	public IronBarsBlock(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(5.0F).setResistance(10.0F).setOpacity((byte) 1);
 	}
 
 	@Override

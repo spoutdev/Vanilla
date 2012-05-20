@@ -38,7 +38,7 @@ public class Bedrock extends Solid {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setResistance(6000000.0F);
+		this.setResistance(6000000.0F).setHardness(-1.0F);
 	}
 
 	@Override

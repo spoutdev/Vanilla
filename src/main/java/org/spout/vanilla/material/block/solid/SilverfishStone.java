@@ -37,5 +37,6 @@ public class SilverfishStone extends Stone {
 	@Override
 	public void initialize() {
 		super.initialize();
+		this.setHardness(0.8F).setResistance(1.2F); //TODO Confirm that this is the correct value
 	}
 }

@@ -64,7 +64,7 @@ public class WoodenDoorBlock extends DoorBlock {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(3.0F);
+		this.setHardness(3.0F).setResistance(5.0F).setOpacity((byte) 1);
 	}
 
 	@Override

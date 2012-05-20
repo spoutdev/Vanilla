@@ -49,7 +49,7 @@ public class Fence extends VanillaBlockMaterial implements Fuel {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setResistance(5.0F).setResistance(5.0F);
+		this.setResistance(5.0F).setResistance(5.0F).setOpacity((byte) 1);
 	}
 
 	@Override

@@ -37,6 +37,12 @@ public class Portal extends VanillaBlockMaterial {
 		super(name, id);
 	}
 
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(-1.0F).setResistance(0.0F).setLightLevel(11).setOpacity((byte) 1);
+	}
+
 	public BlockMaterial getFrameMaterial() {
 		return this.frameMaterial;
 	}

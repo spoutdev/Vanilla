@@ -47,7 +47,7 @@ public abstract class RailBase extends GroundAttachable {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.7F).setResistance(1.2F);
+		this.setHardness(0.7F).setResistance(1.2F).setOpacity((byte) 0);
 	}
 
 	/**

@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.block.Stairs;
 import org.spout.vanilla.material.item.tool.Pickaxe;
@@ -44,8 +43,7 @@ public class NetherBrickStairs extends Stairs {
 	@Override
 	public void initialize() {
 		super.initialize();
-		// TODO: Hardness?
-		this.setResistance(10.0F);
+		this.setHardness(2.0F).setResistance(10.0F);
 	}
 
 	@Override

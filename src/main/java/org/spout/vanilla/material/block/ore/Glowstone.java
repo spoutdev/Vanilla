@@ -44,7 +44,7 @@ public class Glowstone extends Ore {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.3F).setResistance(0.5F).setLightLevel(15);
+		this.setHardness(0.3F).setResistance(0.5F).setLightLevel(15).setOpacity((byte) 0);
 	}
 
 	@Override

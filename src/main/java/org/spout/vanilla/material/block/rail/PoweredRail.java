@@ -43,6 +43,12 @@ public class PoweredRail extends RailBase implements RedstoneTarget {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.7F).setResistance(1.2F).setOpacity((byte) 0);
+	}
+
+	@Override
 	public boolean canCurve() {
 		return false;
 	}

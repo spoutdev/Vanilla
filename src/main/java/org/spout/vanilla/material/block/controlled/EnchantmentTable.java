@@ -33,12 +33,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.EnchantmentTableController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.solid.Solid;
@@ -116,12 +116,12 @@ public class EnchantmentTable extends Solid implements Directional, Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+	public ArrayList<VanillaItemStack> getDrops(Block block) {
+		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
 		if (block.getSource() instanceof Entity) {
-			Material held = ((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial();
-			if (held != null && held instanceof Pickaxe) {
-				drops.add(new ItemStack(this, 1));
+			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
+			if (held != null && held.getMaterial() instanceof Pickaxe) {
+				drops.add(new VanillaItemStack(this, 1));
 			}
 		}
 		return drops;

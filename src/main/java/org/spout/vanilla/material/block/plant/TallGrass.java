@@ -30,10 +30,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -72,11 +72,11 @@ public class TallGrass extends DeadBush {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+	public ArrayList<VanillaItemStack> getDrops(Block block) {
+		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
 		Random rand = new Random();
 		if (rand.nextInt(100) < (8 + rand.nextInt(7))) {
-			drops.add(new ItemStack(VanillaMaterials.SEEDS, 1));
+			drops.add(new VanillaItemStack(VanillaMaterials.SEEDS, 1));
 		}
 		return drops;
 	}

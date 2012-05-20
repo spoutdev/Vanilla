@@ -31,15 +31,15 @@ import java.util.Set;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.inventory.VanillaItemStack;
 
 public class InventoryUtil {
 	private static int windowId = 0;
 
 	private InventoryUtil() {
-
 	}
 
-	public static void mergeStack(ItemStack dump, ItemStack fill, int amount) {
+	public static void mergeStack(VanillaItemStack dump, VanillaItemStack fill, int amount) {
 		int dumpAmount = amount;
 		int amount1 = dump.getAmount();
 		int amount2 = fill.getAmount();
@@ -67,11 +67,11 @@ public class InventoryUtil {
 		dump.setAmount(amount1);
 	}
 
-	public static void mergeStack(ItemStack dump, ItemStack fill) {
+	public static void mergeStack(VanillaItemStack dump, VanillaItemStack fill) {
 		mergeStack(dump, fill, dump.getAmount());
 	}
 
-	public static ItemStack nullIfEmpty(ItemStack s) {
+	public static VanillaItemStack nullIfEmpty(VanillaItemStack s) {
 		return (s != null && s.getAmount() == 0) ? null : s;
 	}
 

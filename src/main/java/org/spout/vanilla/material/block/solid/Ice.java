@@ -26,10 +26,15 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
+
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.enchantment.Enchantments;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.MiningTool;
@@ -56,12 +61,30 @@ public class Ice extends Solid implements Mineable {
 	public void onDestroy(Block block) {
 		if (!(block.getWorld().getGenerator() instanceof NetherGenerator) || block.translate(BlockFace.BOTTOM).getMaterial() != VanillaMaterials.AIR) {
 			// TODO Setting the source to world correct?
-			block.setMaterial(VanillaMaterials.STATIONARY_WATER).update(true);
+			// Only spawn a water source block if the Ice was not broken by an item with Silk Touch
+			if (block.getSource() instanceof Entity) {
+				VanillaItemStack held = (VanillaItemStack) ((Entity) block.getSource()).getInventory().getCurrentItem();
+				if (held == null || !(held.getMaterial() instanceof MiningTool) || !held.hasEnchantment(Enchantments.SILK_TOUCH)) {
+					block.setMaterial(VanillaMaterials.STATIONARY_WATER).update(true);
+				}
+			}
 		}
 	}
 
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public ArrayList<VanillaItemStack> getDrops(Block block) {
+		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
+		if (block.getSource() instanceof Entity) {
+			VanillaItemStack held = (VanillaItemStack) ((Entity) block.getSource()).getInventory().getCurrentItem();
+			if (held != null && held.getMaterial() instanceof MiningTool && held.hasEnchantment(Enchantments.SILK_TOUCH)) {
+				drops.add(new VanillaItemStack(this, 1));
+			}
+		}
+		return drops;
 	}
 }

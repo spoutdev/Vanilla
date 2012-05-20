@@ -30,10 +30,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.MiningTool;
@@ -78,12 +78,12 @@ public class Gravel extends Solid implements Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+	public ArrayList<VanillaItemStack> getDrops(Block block) {
+		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
 		if (rand.nextInt(10) == 0) {
-			drops.add(new ItemStack(VanillaMaterials.FLINT, 1));
+			drops.add(new VanillaItemStack(VanillaMaterials.FLINT, 1));
 		} else {
-			drops.add(new ItemStack(this, 1));
+			drops.add(new VanillaItemStack(this, 1));
 		}
 		return drops;
 	}

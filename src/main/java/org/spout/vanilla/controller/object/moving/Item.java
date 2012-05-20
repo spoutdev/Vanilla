@@ -26,17 +26,8 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
-import java.util.Arrays;
-import java.util.List;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
-import org.spout.api.Spout;
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
-import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
@@ -48,8 +39,6 @@ import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 /**
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).

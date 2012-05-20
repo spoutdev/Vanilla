@@ -28,8 +28,7 @@ package org.spout.vanilla.util;
 
 import org.junit.Test;
 
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 
 import static org.junit.Assert.assertEquals;
@@ -37,8 +36,8 @@ import static org.junit.Assert.assertEquals;
 public class InventoryUtilTest {
 	@Test
 	public void testInventoryUtil() {
-		ItemStack stack1 = new ItemStack(VanillaMaterials.CAKE, 20);
-		ItemStack stack2 = new ItemStack(VanillaMaterials.CAKE, 20);
+		VanillaItemStack stack1 = new VanillaItemStack(VanillaMaterials.CAKE, 20);
+		VanillaItemStack stack2 = new VanillaItemStack(VanillaMaterials.CAKE, 20);
 		InventoryUtil.mergeStack(stack1, stack2);
 		assertEquals(stack1.getAmount(), 0);
 		assertEquals(stack2.getAmount(), 40);

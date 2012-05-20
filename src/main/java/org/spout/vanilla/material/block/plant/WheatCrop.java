@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block.plant;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -38,12 +37,12 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class WheatCrop extends GroundAttachable implements Plant {
-
 	public WheatCrop(String name, int id) {
 		super(name, id);
 	}

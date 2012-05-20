@@ -38,7 +38,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.JukeboxController;
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.solid.Solid;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;

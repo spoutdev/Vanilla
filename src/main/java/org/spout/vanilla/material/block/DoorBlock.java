@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.door;
+package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -33,7 +33,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Openable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;

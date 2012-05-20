@@ -34,6 +34,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.DoorBlock;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class IronDoorBlock extends DoorBlock {

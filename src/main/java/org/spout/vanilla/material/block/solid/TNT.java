@@ -36,6 +36,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
 

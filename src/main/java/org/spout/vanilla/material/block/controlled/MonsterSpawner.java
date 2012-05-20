@@ -31,7 +31,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.MonsterSpawnerController;
-import org.spout.vanilla.material.block.solid.Solid;
+import org.spout.vanilla.material.block.Solid;
 
 public class MonsterSpawner extends Solid {
 	public MonsterSpawner(String name, int id) {

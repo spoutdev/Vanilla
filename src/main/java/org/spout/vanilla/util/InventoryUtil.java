@@ -31,6 +31,7 @@ import java.util.Set;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.inventory.VanillaItemStack;
 
 public class InventoryUtil {

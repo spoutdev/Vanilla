@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.geo.cuboid.Block;
 
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.MoveReaction;
 
 public class Bedrock extends Solid {

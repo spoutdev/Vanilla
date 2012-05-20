@@ -33,8 +33,8 @@ import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.Ore;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.ore.Ore;
 
 public class MushroomBlock extends Ore implements Fuel {
 	public final float BURN_TIME = 15.f;

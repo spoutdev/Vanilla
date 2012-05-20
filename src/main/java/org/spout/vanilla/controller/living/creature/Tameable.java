@@ -30,5 +30,6 @@ import org.spout.api.entity.Controller;
 
 public interface Tameable {
 	public void controlledBy(Controller master);
+
 	public boolean isControlled();
 }

@@ -36,11 +36,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.Ore;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.Furnace;
-import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class LapisLazuliOre extends Ore implements TimedCraftable, Mineable {

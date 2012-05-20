@@ -36,6 +36,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.inventory.VanillaItemStack;
+import org.spout.vanilla.material.Ore;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.SignBase;
 import org.spout.vanilla.material.item.tool.MiningTool;

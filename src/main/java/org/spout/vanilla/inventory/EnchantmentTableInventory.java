@@ -37,7 +37,7 @@ import org.spout.vanilla.controller.object.moving.Item;
  */
 public class EnchantmentTableInventory extends VanillaInventory implements WindowInventory {
 	private static final long serialVersionUID = 1L;
-	private static final int[] SLOTS = { 28, 29, 30, 31, 32, 33, 34, 35, 36, 19, 20, 21, 22, 23, 24, 25, 26, 27, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+	private static final int[] SLOTS = {28, 29, 30, 31, 32, 33, 34, 35, 36, 19, 20, 21, 22, 23, 24, 25, 26, 27, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
 
 	public EnchantmentTableInventory() {
 		super(37);

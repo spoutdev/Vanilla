@@ -60,8 +60,8 @@ public class Sheep extends Creature implements Passive {
 		super.onSave();
 		data().put("sheepsheared", isSheared);
 		data().put("sheepcolor", sheepColor);
-
 	}
+
 	/**
 	 * Whether or not the sheep's wool has been sheared.
 	 * @return true if sheared.

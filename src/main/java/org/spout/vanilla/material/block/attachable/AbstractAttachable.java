@@ -33,6 +33,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.flag.ByteFlagContainer;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.block.Attachable;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
 	protected AbstractAttachable(String name, int id) {

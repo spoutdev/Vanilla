@@ -35,7 +35,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.solid.Solid;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.MiningTool;
 
 public class MelonBlock extends Solid {

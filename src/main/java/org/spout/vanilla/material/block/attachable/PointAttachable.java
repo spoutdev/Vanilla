@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.block.attachable;
 
+import org.spout.vanilla.material.block.Attachable;
+
 /**
  * Represents a block material that is attached to a single point
  * For example: torches and signs

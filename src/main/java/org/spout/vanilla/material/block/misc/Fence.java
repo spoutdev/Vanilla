@@ -24,20 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc.fence;
+package org.spout.vanilla.material.block.misc;
 
-import java.util.ArrayList;
-
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.inventory.VanillaItemStack;
-import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.SignBase;
-import org.spout.vanilla.material.block.misc.Torch;
 import org.spout.vanilla.util.Instrument;
 
 public class Fence extends VanillaBlockMaterial {

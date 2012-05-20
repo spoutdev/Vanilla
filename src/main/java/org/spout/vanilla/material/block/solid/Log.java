@@ -35,11 +35,12 @@ import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
+import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.Furnace;
-import org.spout.vanilla.material.block.plant.Plant;
-import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.misc.Coal;
 import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.util.Instrument;
 
 public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable {

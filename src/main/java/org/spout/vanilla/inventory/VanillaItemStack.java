@@ -31,6 +31,7 @@ import java.util.Map;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.enchantment.Enchantment;
 import org.spout.vanilla.material.VanillaMaterial;
 
@@ -39,7 +40,6 @@ import org.spout.vanilla.material.VanillaMaterial;
  */
 public class VanillaItemStack extends ItemStack {
 	private static final long serialVersionUID = 1L;
-
 	private final Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
 
 	public VanillaItemStack(Material material, int amount) {
@@ -62,7 +62,7 @@ public class VanillaItemStack extends ItemStack {
 	/**
 	 * Attempts to add the given enchantment with an option to force.
 	 * @param enchantment Enchantment to add
-	 * @param force Whether to ignore enchantment rules
+	 * @param force       Whether to ignore enchantment rules
 	 * @return true if the enchantment was successfully attached to this item stack
 	 */
 	public boolean addEnchantment(Enchantment enchantment, boolean force) {
@@ -72,8 +72,8 @@ public class VanillaItemStack extends ItemStack {
 	/**
 	 * Attempts to add the given enchantment with the given level to this item stack
 	 * @param enchantment Enchantment to add
-	 * @param level Level of the enchantment
-	 * @param force Whether to ignore enchantment rules and force the enchantment
+	 * @param level       Level of the enchantment
+	 * @param force       Whether to ignore enchantment rules and force the enchantment
 	 * @return true if the enchantment was successfully attached to this item stack
 	 */
 	public boolean addEnchantment(Enchantment enchantment, int level, boolean force) {

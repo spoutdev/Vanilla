@@ -31,6 +31,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class DeadBush extends GroundAttachable implements Plant {

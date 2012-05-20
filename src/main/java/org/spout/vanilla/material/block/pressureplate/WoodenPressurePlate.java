@@ -32,8 +32,9 @@ import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.PressurePlate;
 import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.util.Instrument;
 
 public class WoodenPressurePlate extends PressurePlate implements Mineable {

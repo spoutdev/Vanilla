@@ -370,7 +370,7 @@ public abstract class VanillaActionController extends ActionController implement
 	}
 
 	public void setHealth(int health, Source source) {
-		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getParent(),  source, health);
+		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getParent(), source, health);
 		Spout.getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
 			if (event.getChange() > maxHealth) {

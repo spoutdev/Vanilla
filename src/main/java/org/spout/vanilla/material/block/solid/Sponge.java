@@ -32,7 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.block.solid.Solid;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.MiningTool;
 
 public class Sponge extends Solid implements Mineable {

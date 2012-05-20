@@ -38,9 +38,10 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.SignBase;
-import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.misc.Shears;
+import org.spout.vanilla.material.item.tool.MiningTool;
 
 public class Leaves extends Solid implements Mineable {
 	public static final Leaves DEFAULT = register(new Leaves("Leaves"));

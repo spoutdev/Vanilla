@@ -34,8 +34,9 @@ import org.spout.api.material.source.DataSource;
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.util.Instrument;
 
 public class Plank extends Solid implements Fuel, Mineable {

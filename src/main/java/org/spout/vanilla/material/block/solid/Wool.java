@@ -35,6 +35,7 @@ import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.MiningTool;
 
 public class Wool extends Solid implements Mineable {

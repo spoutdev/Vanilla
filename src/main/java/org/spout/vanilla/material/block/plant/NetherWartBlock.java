@@ -36,6 +36,7 @@ import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class NetherWartBlock extends GroundAttachable implements Plant {

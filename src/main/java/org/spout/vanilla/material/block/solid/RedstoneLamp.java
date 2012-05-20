@@ -32,6 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Solid;
 
 public class RedstoneLamp extends Solid {
 	private final boolean on;

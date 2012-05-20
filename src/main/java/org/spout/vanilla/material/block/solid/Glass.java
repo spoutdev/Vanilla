@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.inventory.VanillaItemStack;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
 import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.util.Instrument;

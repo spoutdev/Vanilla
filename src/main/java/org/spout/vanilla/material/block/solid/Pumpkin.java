@@ -34,6 +34,7 @@ import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Pumpkin extends Solid implements Directional {

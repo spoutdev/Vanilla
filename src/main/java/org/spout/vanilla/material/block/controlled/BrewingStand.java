@@ -26,8 +26,17 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-public class LockedChest extends Chest {
-	public LockedChest(String name, int id) {
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.material.VanillaBlockMaterial;
+
+public class BrewingStand extends VanillaBlockMaterial {
+	public BrewingStand(String name, int id) {
 		super(name, id);
+		this.setController(VanillaControllerTypes.BREWING_STAND);
+	}
+
+	public void initialize() {
+		super.initialize();
+		this.setResistance(2.5F).setHardness(10.F);
 	}
 }

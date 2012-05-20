@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.tool.MiningTool;
@@ -40,6 +39,12 @@ import org.spout.vanilla.material.item.tool.Pickaxe;
 public class NetherRack extends Solid implements Mineable {
 	public NetherRack(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.6F).setResistance(0.6F);
 	}
 
 	@Override

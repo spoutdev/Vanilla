@@ -62,7 +62,7 @@ public class Cactus extends GroundAttachable implements TimedCraftable {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.4F).setResistance(0.7F);
+		this.setHardness(0.4F).setResistance(0.7F).setOpacity((byte) 1);
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class BookShelf extends Solid implements Fuel {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(1.5F).setResistance(2.5F);
+		this.setHardness(1.5F).setResistance(2.5F).setOpacity((byte) 1);
 	}
 
 	@Override

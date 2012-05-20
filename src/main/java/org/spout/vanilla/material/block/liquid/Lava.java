@@ -39,7 +39,7 @@ public class Lava extends Liquid {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.0F).setResistance(0.0F).setLightLevel(15);
+		this.setHardness(100.0F).setResistance(166.7F).setLightLevel(15).setOpacity((byte) 1);
 	}
 
 	@Override

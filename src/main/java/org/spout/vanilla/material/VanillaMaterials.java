@@ -246,7 +246,7 @@ public final class VanillaMaterials {
 	public static final Sapling SAPLING = Sapling.DEFAULT;
 	public static final Flower DANDELION = register(new Flower("Dandelion", 37));
 	public static final Flower ROSE = register(new Flower("Rose", 38));
-	public static final Mushroom BROWN_MUSHROOM = (Mushroom) register(new Mushroom("Brown Mushroom", 39).setLightLevel(1));
+	public static final Mushroom BROWN_MUSHROOM = register(new Mushroom("Brown Mushroom", 39));
 	public static final Mushroom RED_MUSHROOM = register(new Mushroom("Red Mushroom", 40));
 	//== Stairs ==
 	public static final NetherBrickStairs STAIRS_NETHER_BRICK = register(new NetherBrickStairs("Nether Brick Stairs", 114));

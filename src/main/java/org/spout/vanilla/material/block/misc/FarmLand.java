@@ -42,7 +42,7 @@ public class FarmLand extends VanillaBlockMaterial {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.6F).setResistance(1.0F);
+		this.setHardness(0.6F).setResistance(1.0F).setOpacity((byte) 15);
 	}
 
 	@Override

@@ -40,6 +40,12 @@ public class MelonBlock extends Ore {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(1.0F).setResistance(1.7F);
+	}
+
+	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(VanillaMaterials.MELON_SLICE, new Random().nextInt(3 - 7 + 1) + 3));

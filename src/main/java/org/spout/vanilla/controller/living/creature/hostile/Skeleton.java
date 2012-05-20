@@ -29,12 +29,11 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Skeleton extends Creature implements Hostile {
@@ -50,22 +49,22 @@ public class Skeleton extends Creature implements Hostile {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
+	public Set<VanillaItemStack> getDrops() {
+		Set<VanillaItemStack> drops = new HashSet<VanillaItemStack>();
 
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.ARROW, count));
+			drops.add(new VanillaItemStack(VanillaMaterials.ARROW, count));
 		}
 
 		count = getRandom().nextInt(3);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.BONE, count));
+			drops.add(new VanillaItemStack(VanillaMaterials.BONE, count));
 		}
 
 		// TODO: Enchantments
 		if (getRandom().nextInt(32) == 0) {
-			drops.add(new ItemStack(VanillaMaterials.BOW, 1));
+			drops.add(new VanillaItemStack(VanillaMaterials.BOW, 1));
 		}
 
 		return drops;

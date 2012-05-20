@@ -32,7 +32,6 @@ import java.util.Random;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -97,7 +96,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel {
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
-		ItemStack current = entity.getInventory().getCurrentItem();
+		VanillaItemStack current = (VanillaItemStack) entity.getInventory().getCurrentItem();
 		if (current != null && current.getSubMaterial().equals(Dye.BONE_MEAL)) {
 			if (!VanillaPlayerUtil.isCreative(entity)) {
 				entity.getInventory().addCurrentItemAmount(-1);
@@ -127,7 +126,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel {
 	/**
 	 * Grows a full-sized tree from the sapling type given
 	 * @param block to grow a tree at
-	 * @param type  of tree
+	 * @param type of tree
 	 */
 	public void growTree(Block block, Sapling type) {
 		SmallTreeObject object = new SmallTreeObject(new Random(), SmallTreeType.OAK);

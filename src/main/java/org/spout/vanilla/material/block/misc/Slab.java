@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
 
@@ -91,7 +90,7 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	/**
 	 * Sets if this half slab is the top-half
 	 * @param block to set it for
-	 * @param top   state
+	 * @param top state
 	 */
 	public void setTop(Block block, boolean top) {
 		block.setData(LogicUtil.setBit(block.getData(), 0x8, top));
@@ -147,7 +146,7 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	public ArrayList<VanillaItemStack> getDrops(Block block) {
 		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
 		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
+			VanillaItemStack held = (VanillaItemStack) ((Entity) block.getSource()).getInventory().getCurrentItem();
 			if (held != null && held.getMaterial() instanceof Pickaxe) {
 				drops.add(new VanillaItemStack(this, 1));
 			}

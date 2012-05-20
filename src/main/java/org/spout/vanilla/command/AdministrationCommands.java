@@ -40,7 +40,6 @@ import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
@@ -51,6 +50,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.living.player.GameMode;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.sky.VanillaSky;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.world.Weather;
 
 public class AdministrationCommands {
@@ -157,7 +157,7 @@ public class AdministrationCommands {
 			throw new CommandException(args.getString(index) + " is not a block!");
 		}
 
-		player.getEntity().getInventory().addItem(new ItemStack(material, data, args.getInteger(2, 1)), false);
+		player.getEntity().getInventory().addItem(new VanillaItemStack(material, data, args.getInteger(2, 1)), false);
 	}
 
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)

@@ -30,18 +30,18 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
+import org.spout.vanilla.inventory.VanillaItemStack;
 
 public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private ItemStack bucket;
+	private VanillaItemStack bucket;
 	private Block blockClicked;
 	private BlockFace blockFace;
 	private boolean filled = false;
 
-	public PlayerBucketEvent(Player p, ItemStack bucket, Block blockClicked, BlockFace blockFace) {
+	public PlayerBucketEvent(Player p, VanillaItemStack bucket, Block blockClicked, BlockFace blockFace) {
 		super(p);
 		this.bucket = bucket;
 		this.blockClicked = blockClicked;
@@ -52,7 +52,7 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 	 * Get the resulting bucket in hand after the bucket event.
 	 * @return Bucket held in hand after the event.
 	 */
-	public ItemStack getBucket() {
+	public VanillaItemStack getBucket() {
 		return bucket;
 	}
 
@@ -60,7 +60,7 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 	 * Set the item in hand after the event.
 	 * @param bucket the new bucket after the bucket event.
 	 */
-	public void setBucket(ItemStack bucket) {
+	public void setBucket(VanillaItemStack bucket) {
 		this.bucket = bucket;
 	}
 

@@ -29,13 +29,12 @@ package org.spout.vanilla.controller.living.creature.passive;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Cow extends Creature implements Passive {
@@ -55,17 +54,17 @@ public class Cow extends Creature implements Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
+	public Set<VanillaItemStack> getDrops() {
+		Set<VanillaItemStack> drops = new HashSet<VanillaItemStack>();
 
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.LEATHER, count));
+			drops.add(new VanillaItemStack(VanillaMaterials.LEATHER, count));
 		}
 
 		count = getRandom().nextInt(2) + 1;
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.RAW_BEEF, count));
+			drops.add(new VanillaItemStack(VanillaMaterials.RAW_BEEF, count));
 		}
 
 		return drops;

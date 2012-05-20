@@ -30,10 +30,10 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.inventory.VanillaItemStack;
 
 public class FullContainer extends BlockItem {
 	private Material container;
@@ -58,7 +58,7 @@ public class FullContainer extends BlockItem {
 
 		Inventory inventory = entity.getInventory();
 		if (inventory.getCurrentItem() == null) {
-			inventory.setCurrentItem(new ItemStack(getContainer(), 1));
+			inventory.setCurrentItem(new VanillaItemStack(getContainer(), 1));
 		}
 	}
 }

@@ -29,12 +29,11 @@ package org.spout.vanilla.controller.living.creature.neutral;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.hostile.Zombie;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class PigZombie extends Zombie implements Neutral {
@@ -50,28 +49,28 @@ public class PigZombie extends Zombie implements Neutral {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
+	public Set<VanillaItemStack> getDrops() {
+		Set<VanillaItemStack> drops = new HashSet<VanillaItemStack>();
 		int count = getRandom().nextInt(2);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.ROTTEN_FLESH, count));
+			drops.add(new VanillaItemStack(VanillaMaterials.ROTTEN_FLESH, count));
 		}
 
 		count = getRandom().nextInt(2);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.GOLD_NUGGET, count));
+			drops.add(new VanillaItemStack(VanillaMaterials.GOLD_NUGGET, count));
 		}
 
 		if (getRandom().nextInt(25) == 0) {
-			drops.add(new ItemStack(VanillaMaterials.GOLD_INGOT, 1));
+			drops.add(new VanillaItemStack(VanillaMaterials.GOLD_INGOT, 1));
 		}
 
 		if (getRandom().nextInt(50) == 0) {
-			drops.add(new ItemStack(VanillaMaterials.GOLD_SWORD, 1));
+			drops.add(new VanillaItemStack(VanillaMaterials.GOLD_SWORD, 1));
 		}
 
 		if (getRandom().nextInt(75) == 0) {
-			drops.add(new ItemStack(VanillaMaterials.GOLD_HELMET, 1));
+			drops.add(new VanillaItemStack(VanillaMaterials.GOLD_HELMET, 1));
 		}
 
 		return drops;

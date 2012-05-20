@@ -33,7 +33,6 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
@@ -42,6 +41,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.InteractTool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
@@ -63,7 +63,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		EventManager eventManager = session.getGame().getEventManager();
 		World world = player.getEntity().getWorld();
 		Inventory inventory = player.getEntity().getInventory();
-		ItemStack holding = inventory.getCurrentItem();
+		VanillaItemStack holding = (VanillaItemStack) inventory.getCurrentItem();
 		Material holdingMat = holding == null ? null : holding.getSubMaterial();
 
 		/**

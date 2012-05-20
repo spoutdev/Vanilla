@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -88,7 +87,7 @@ public class Jukebox extends Solid implements Fuel {
 		if (type == Action.RIGHT_CLICK) {
 			JukeboxController controller = this.getController(block);
 			controller.eject();
-			ItemStack item = entity.getInventory().getCurrentItem();
+			VanillaItemStack item = (VanillaItemStack) entity.getInventory().getCurrentItem();
 			if (controller.canPlay(item)) {
 				controller.getInventory().setCurrentItem(item.clone().setAmount(1));
 				controller.update();

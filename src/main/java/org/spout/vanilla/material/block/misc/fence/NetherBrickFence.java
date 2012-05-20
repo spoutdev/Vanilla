@@ -31,7 +31,6 @@ import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.item.tool.Pickaxe;

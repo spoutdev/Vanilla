@@ -33,7 +33,6 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
@@ -42,6 +41,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -80,7 +80,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		}
 
 		Inventory inv = player.getEntity().getInventory();
-		ItemStack heldItem = inv.getCurrentItem();
+		VanillaItemStack heldItem = (VanillaItemStack) inv.getCurrentItem();
 		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
 
 		if (message.getState() == PlayerDiggingMessage.STATE_START_DIGGING) {

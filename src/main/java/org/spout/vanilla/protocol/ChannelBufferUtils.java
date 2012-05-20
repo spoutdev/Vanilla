@@ -37,7 +37,6 @@ import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.math.MathHelper;
@@ -51,6 +50,7 @@ import org.spout.nbt.Tag;
 import org.spout.nbt.stream.NBTInputStream;
 import org.spout.nbt.stream.NBTOutputStream;
 
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterial;
 
 public final class ChannelBufferUtils {
@@ -92,7 +92,7 @@ public final class ChannelBufferUtils {
 					writeString(buf, ((Parameter<String>) parameter).getValue());
 					break;
 				case Parameter.TYPE_ITEM:
-					ItemStack item = ((Parameter<ItemStack>) parameter).getValue();
+					VanillaItemStack item = ((Parameter<VanillaItemStack>) parameter).getValue();
 					buf.writeShort(item.getMaterial().getId());
 					buf.writeByte(item.getAmount());
 					buf.writeShort(item.getData());
@@ -135,8 +135,8 @@ public final class ChannelBufferUtils {
 					int id = buf.readShort();
 					int count = buf.readByte();
 					short data = buf.readShort();
-					ItemStack item = new ItemStack(Material.get((short) id), data, count);
-					parameters.add(new Parameter<ItemStack>(type, index, item));
+					VanillaItemStack item = new VanillaItemStack(Material.get((short) id), data, count);
+					parameters.add(new Parameter<VanillaItemStack>(type, index, item));
 					break;
 			}
 		}

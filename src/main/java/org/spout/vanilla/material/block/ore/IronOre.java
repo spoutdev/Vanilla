@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
@@ -51,8 +51,8 @@ public class IronOre extends Ore implements TimedCraftable, Mineable {
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.IRON_INGOT, 1);
+	public VanillaItemStack getResult() {
+		return new VanillaItemStack(VanillaMaterials.IRON_INGOT, 1);
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class IronOre extends Ore implements TimedCraftable, Mineable {
 	public ArrayList<VanillaItemStack> getDrops(Block block) {
 		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
 		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
+			VanillaItemStack held = (VanillaItemStack) ((Entity) block.getSource()).getInventory().getCurrentItem();
 			if (held != null && held.getMaterial().equals(VanillaMaterials.STONE_PICKAXE, VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
 				drops.add(new VanillaItemStack(VanillaMaterials.IRON_ORE, 1));
 			}

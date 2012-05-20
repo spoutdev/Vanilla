@@ -28,11 +28,11 @@ package org.spout.vanilla.inventory.recipe;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.ShapelessRecipe;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.inventory.VanillaItemStack;
 
 /**
  * Takes in a variable material input amount and gives a variable material output amount (Shapeless).
@@ -47,7 +47,7 @@ public class SingleShapelessInputOutputRecipe {
 	 * @param outputAmount    Amount of the output material returned from this recipe.
 	 */
 	public SingleShapelessInputOutputRecipe(VanillaPlugin instance, Controller craftingEnabler, String name, Material output, int outputAmount, char key, Material input, int inputAmount) {
-		ShapelessRecipe shapeless = new ShapelessRecipe(instance, name, new ItemStack(output, outputAmount));
+		ShapelessRecipe shapeless = new ShapelessRecipe(instance, name, new VanillaItemStack(output, outputAmount));
 		//Keep looping through the specified input amount and add in ingredient requirements.
 		for (int i = 0; i < inputAmount; i++) {
 			shapeless.addIngredient(key, input);

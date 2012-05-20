@@ -30,11 +30,11 @@ import java.util.ArrayList;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.ShapedRecipe;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.inventory.VanillaItemStack;
 
 public class SimpleShapedToolRecipe {
 	/**
@@ -60,7 +60,7 @@ public class SimpleShapedToolRecipe {
 	 * @param rows            The rows that should be registered for the recipe. This can be any amount (variable).
 	 */
 	public SimpleShapedToolRecipe(VanillaPlugin instance, Controller craftingEnabler, String name, Material major, Material minor, char majorC, char minorC, char emptyC,
-								  ItemStack result, String... rows) {
+			VanillaItemStack result, String... rows) {
 		ShapedRecipe recipe = new ShapedRecipe(instance, name, result);
 		//Loop through the strings provided as rows.
 		for (String str : rows) {

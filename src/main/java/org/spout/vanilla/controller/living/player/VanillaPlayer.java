@@ -36,7 +36,6 @@ import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
@@ -47,6 +46,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.inventory.VanillaPlayerInventory;
 import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
@@ -66,8 +66,7 @@ import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsT
 import static org.spout.vanilla.util.InventoryUtil.nextWindowId;
 
 /**
- * Represents a player on a server with the VanillaPlugin; specific methods to
- * Vanilla.
+ * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
  */
 public class VanillaPlayer extends Human implements PlayerController {
 	protected final Player owner;
@@ -77,7 +76,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected boolean crouching, sprinting, onGround, poisoned;
 	protected final Vector3 moveSpeed = new Vector3(10, 0, 0), horizSpeed = new Vector3(0, 0, -10);
 	protected Inventory activeInventory;
-	protected ItemStack itemOnCursor;
+	protected VanillaItemStack itemOnCursor;
 	protected String tabListName;
 	protected GameMode gameMode;
 	protected int distanceMoved, windowId, miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt(), miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt();
@@ -108,7 +107,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public boolean isSavable() {
-		return false; //Players are a special case, handled elsewhere
+		return false; // Players are a special case, handled elsewhere
 	}
 
 	@Override
@@ -237,7 +236,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public void onDeath() {
-		//Don't count disconnects/unknown exceptions as dead (Yes that's a difference!)
+		// Don't count disconnects/unknown exceptions as dead (Yes that's a difference!)
 		if (owner.getSession() != null && owner.getSession().getPlayer() != null) {
 			super.onDeath();
 		}
@@ -271,10 +270,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		ItemStack[] contents = getParent().getInventory().getContents();
-		drops.addAll(Arrays.asList(contents));
+	public Set<VanillaItemStack> getDrops() {
+		Set<VanillaItemStack> drops = new HashSet<VanillaItemStack>();
+		drops.addAll(Arrays.asList((VanillaItemStack[]) getParent().getInventory().getContents()));
 		return drops;
 	}
 
@@ -314,7 +312,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			if (player.getEntity().getController() != this) {
 				if (visible) {
 					invisibleFor.remove(player);
-					ItemStack currentItem = parent.getInventory().getCurrentItem();
+					VanillaItemStack currentItem = (VanillaItemStack) parent.getInventory().getCurrentItem();
 					int itemId = 0;
 					if (currentItem != null) {
 						itemId = currentItem.getMaterial().getId();
@@ -529,11 +527,11 @@ public class VanillaPlayer extends Human implements PlayerController {
 		activeInventory = newActive;
 	}
 
-	public ItemStack getItemOnCursor() {
+	public VanillaItemStack getItemOnCursor() {
 		return itemOnCursor;
 	}
 
-	public void setItemOnCursor(ItemStack newItem) {
+	public void setItemOnCursor(VanillaItemStack newItem) {
 		itemOnCursor = newItem;
 	}
 
@@ -589,7 +587,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public long getDiggingTime() {
 		if (isDigging) {
-			//Is this correct?
+			// Is this correct?
 			return System.currentTimeMillis() - diggingStartTime;
 		} else {
 			return previousDiggingTime;
@@ -635,8 +633,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	public void dropItem() {
-		ItemStack current = getParent().getInventory().getCurrentItem();
-		Item control = new Item(new ItemStack(current.getMaterial(), 1), getHeadPosition().add(getLookingAt()));
+		VanillaItemStack current = (VanillaItemStack) getParent().getInventory().getCurrentItem();
+		Item control = new Item(new VanillaItemStack(current.getMaterial(), 1), getHeadPosition().add(getLookingAt()));
 		if (current.getAmount() > 1) {
 			current.setAmount(current.getAmount() - 1);
 		} else {

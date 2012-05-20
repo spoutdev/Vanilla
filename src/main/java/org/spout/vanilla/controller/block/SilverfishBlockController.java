@@ -37,11 +37,9 @@ public class SilverfishBlockController extends VanillaBlockController {
 
 	@Override
 	public void onAttached() {
-
 	}
 
 	@Override
 	public void onTick(float dt) {
-
 	}
 }

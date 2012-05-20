@@ -32,7 +32,6 @@ import java.util.List;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
@@ -172,7 +171,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		}
 
 		// TODO stack items together for more performance
-		for (ItemStack item : drops) {
+		for (VanillaItemStack item : drops) {
 			block.getPosition().getWorld().createAndSpawnEntity(block.getPosition(), new Item(item, new Vector3(0, 5, 0)));
 		}
 	}

@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -71,7 +70,7 @@ public class Snow extends GroundAttachable implements Mineable {
 	public ArrayList<VanillaItemStack> getDrops(Block block) {
 		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
 		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
+			VanillaItemStack held = (VanillaItemStack) ((Entity) block.getSource()).getInventory().getCurrentItem();
 			if (held != null && held.getMaterial() instanceof Spade) {
 				drops.add(new VanillaItemStack(VanillaMaterials.SNOWBALL, 1));
 			}

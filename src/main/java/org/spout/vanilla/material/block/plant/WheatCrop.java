@@ -27,12 +27,10 @@
 package org.spout.vanilla.material.block.plant;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -43,7 +41,6 @@ import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class WheatCrop extends GroundAttachable implements Plant {
-
 	public WheatCrop(String name, int id) {
 		super(name, id);
 	}
@@ -77,7 +74,7 @@ public class WheatCrop extends GroundAttachable implements Plant {
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
-		ItemStack current = entity.getInventory().getCurrentItem();
+		VanillaItemStack current = (VanillaItemStack) entity.getInventory().getCurrentItem();
 		if (current != null && current.getSubMaterial().equals(Dye.BONE_MEAL)) {
 			if (this.getGrowthStage(block) != 0x7) {
 				if (!VanillaPlayerUtil.isCreative(entity)) {
@@ -92,9 +89,9 @@ public class WheatCrop extends GroundAttachable implements Plant {
 	public ArrayList<VanillaItemStack> getDrops(Block block) {
 		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
 		int stage = getGrowthStage(block);
-		//final stage
-		//TODO Make a nice enum of this...
-		//TODO Drop seeds based on growth stage
+		// final stage
+		// TODO Make a nice enum of this...
+		// TODO Drop seeds based on growth stage
 		if (stage == 8) {
 			drops.add(new VanillaItemStack(VanillaMaterials.WHEAT, 1));
 		}

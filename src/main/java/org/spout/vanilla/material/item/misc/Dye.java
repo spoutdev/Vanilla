@@ -28,11 +28,11 @@ package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.block.solid.Wool.WoolColor;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
@@ -101,8 +101,8 @@ public class Dye extends VanillaItemMaterial {
 				return;
 			}
 
-			ItemStack holding = entity.getInventory().getCurrentItem();
-			//get color from holding item
+			VanillaItemStack holding = (VanillaItemStack) entity.getInventory().getCurrentItem();
+			// get color from holding item
 			((Sheep) other.getController()).setColor(WoolColor.getById((short) (0xF - holding.getData())));
 
 			if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {

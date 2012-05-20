@@ -26,10 +26,7 @@
  */
 package org.spout.vanilla.controller.block;
 
-import org.spout.api.material.BlockMaterial;
-
 import org.spout.vanilla.controller.VanillaBlockController;
-import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -40,11 +37,9 @@ public class BrewingStandController extends VanillaBlockController {
 
 	@Override
 	public void onAttached() {
-
 	}
 
 	@Override
 	public void onTick(float v) {
-
 	}
 }

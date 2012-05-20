@@ -67,7 +67,7 @@ public class Item extends Substance {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-			ItemStack item = (ItemStack) data().get("Itemstack");
+			ItemStack item = (ItemStack) data().get("Itemstack", is);
 			is.setMaterial(item.getMaterial(), item.getData());
 			is.setAmount(item.getAmount());
 			is.setAuxData(item.getAuxData());

@@ -26,14 +26,14 @@
  */
 package org.spout.vanilla.material;
 
-import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.inventory.VanillaItemStack;
 
 public interface TimedCraftable {
 	/**
 	 * Gets the result of smelting the ingredient
 	 * @return
 	 */
-	public ItemStack getResult();
+	public VanillaItemStack getResult();
 
 	/**
 	 * Returns the time in seconds until this object is crafted

@@ -28,13 +28,13 @@ package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
@@ -63,15 +63,15 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 			return;
 		}
 
-		ItemStack newItem;
+		VanillaItemStack newItem;
 		if (message.getId() == -1) {
 			//something to be done here?
 			newItem = null;
 		} else if (checkValidId(message.getId(), message.getDamage())) {
 			if (message.getDamage() != 0) {
-				newItem = new ItemStack(Material.get(message.getId()).getSubMaterial(message.getDamage()), message.getDamage(), message.getAmount());
+				newItem = new VanillaItemStack(Material.get(message.getId()).getSubMaterial(message.getDamage()), message.getDamage(), message.getAmount());
 			} else {
-				newItem = new ItemStack(Material.get(message.getId()), message.getDamage(), message.getAmount());
+				newItem = new VanillaItemStack(Material.get(message.getId()), message.getDamage(), message.getAmount());
 			}
 		} else {
 			player.kick("Unknown item ID: " + message.getId() + " and durability " + message.getDamage() + "!");

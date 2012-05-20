@@ -29,10 +29,9 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Hostile;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class MagmaCube extends Slime implements Hostile {
@@ -41,8 +40,8 @@ public class MagmaCube extends Slime implements Hostile {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
+	public Set<VanillaItemStack> getDrops() {
+		Set<VanillaItemStack> drops = new HashSet<VanillaItemStack>();
 
 		if (getSize() == 0) {
 			return drops;
@@ -50,7 +49,7 @@ public class MagmaCube extends Slime implements Hostile {
 
 		int count = getRandom().nextInt(2);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.MAGMA_CREAM, count));
+			drops.add(new VanillaItemStack(VanillaMaterials.MAGMA_CREAM, count));
 		}
 		return drops;
 	}

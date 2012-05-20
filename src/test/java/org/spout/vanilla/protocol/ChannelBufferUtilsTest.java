@@ -36,7 +36,6 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.junit.Test;
 
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
@@ -45,6 +44,7 @@ import org.spout.nbt.CompoundMap;
 import org.spout.nbt.IntTag;
 import org.spout.nbt.StringTag;
 
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 
 import static org.junit.Assert.assertEquals;
@@ -75,7 +75,7 @@ public class ChannelBufferUtilsTest {
 		TEST_PARAMS.add(new Parameter<Integer>(Parameter.TYPE_INT, 3, 22));
 		TEST_PARAMS.add(new Parameter<Float>(Parameter.TYPE_FLOAT, 4, 1.23F));
 		TEST_PARAMS.add(new Parameter<String>(Parameter.TYPE_STRING, 5, "Hello World"));
-		TEST_PARAMS.add(new Parameter<ItemStack>(Parameter.TYPE_ITEM, 6, new ItemStack(VanillaMaterials.BEDROCK, 5)));
+		TEST_PARAMS.add(new Parameter<VanillaItemStack>(Parameter.TYPE_ITEM, 6, new VanillaItemStack(VanillaMaterials.BEDROCK, 5)));
 	}
 
 	@Test

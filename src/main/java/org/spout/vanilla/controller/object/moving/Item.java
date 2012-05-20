@@ -28,7 +28,6 @@ package org.spout.vanilla.controller.object.moving;
 
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
@@ -36,6 +35,7 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
@@ -45,14 +45,14 @@ import org.spout.vanilla.protocol.msg.CollectItemMessage;
  */
 public class Item extends Substance {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(Item.class, "Item");
-	private final ItemStack is;
+	private final VanillaItemStack is;
 	private int unpickable;
 
 	/**
 	 * Creates an item controller. Intended for deserialization only.
 	 */
 	protected Item() {
-		this(new ItemStack(VanillaMaterials.AIR, 1), Vector3.ZERO);
+		this(new VanillaItemStack(VanillaMaterials.AIR, 1), Vector3.ZERO);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class Item extends Substance {
 	 * @param itemstack this item controller represents
 	 * @param initial   velocity that this item has
 	 */
-	public Item(ItemStack itemstack, Vector3 initial) {
+	public Item(VanillaItemStack itemstack, Vector3 initial) {
 		super(VanillaControllerTypes.DROPPED_ITEM);
 		this.is = itemstack;
 		unpickable = 10;
@@ -71,7 +71,7 @@ public class Item extends Substance {
 	public void onAttached() {
 		super.onAttached();
 		if (data().containsKey("Itemstack")) {
-			ItemStack item = (ItemStack) data().get("Itemstack");
+			VanillaItemStack item = (VanillaItemStack) data().get("Itemstack");
 			is.setMaterial(item.getMaterial(), item.getData());
 			is.setAmount(item.getAmount());
 			is.setAuxData(item.getAuxData());

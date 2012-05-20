@@ -29,13 +29,12 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Spider extends Creature implements Hostile {
@@ -55,17 +54,17 @@ public class Spider extends Creature implements Hostile {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
+	public Set<VanillaItemStack> getDrops() {
+		Set<VanillaItemStack> drops = new HashSet<VanillaItemStack>();
 
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.STRING, count));
+			drops.add(new VanillaItemStack(VanillaMaterials.STRING, count));
 		}
 
 		count = getRandom().nextInt(2);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.SPIDER_EYE, count));
+			drops.add(new VanillaItemStack(VanillaMaterials.SPIDER_EYE, count));
 		}
 
 		return drops;

@@ -31,7 +31,6 @@ import java.util.Random;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.inventory.VanillaItemStack;
@@ -55,8 +54,8 @@ public class LapisLazuliOre extends Ore implements TimedCraftable, Mineable {
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(Dye.LAPIS_LAZULI, 1);
+	public VanillaItemStack getResult() {
+		return new VanillaItemStack(Dye.LAPIS_LAZULI, 1);
 	}
 
 	@Override

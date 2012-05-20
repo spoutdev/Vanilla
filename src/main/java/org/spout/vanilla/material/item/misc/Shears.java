@@ -30,11 +30,11 @@ import java.util.Random;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.MiningTool;
 
@@ -61,9 +61,9 @@ public class Shears extends MiningTool {
 			sheep.setSheared(true);
 			short col = sheep.getColor().getData();
 
-			other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1), other.getPosition().normalize()));
+			other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new VanillaItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1), other.getPosition().normalize()));
 
-			ItemStack holding = entity.getInventory().getCurrentItem();
+			VanillaItemStack holding = (VanillaItemStack) entity.getInventory().getCurrentItem();
 			if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
 				holding.setData((short) (holding.getData() + 1));
 				entity.getInventory().setCurrentItem(holding);

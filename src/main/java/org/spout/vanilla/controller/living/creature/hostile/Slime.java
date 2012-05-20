@@ -29,13 +29,12 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Slime extends Creature implements Hostile {
@@ -65,15 +64,15 @@ public class Slime extends Creature implements Hostile {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
+	public Set<VanillaItemStack> getDrops() {
+		Set<VanillaItemStack> drops = new HashSet<VanillaItemStack>();
 		if (getSize() == 0) {
 			return drops;
 		}
 
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.SLIMEBALL, count));
+			drops.add(new VanillaItemStack(VanillaMaterials.SLIMEBALL, count));
 		}
 
 		return drops;

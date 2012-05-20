@@ -31,7 +31,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -108,8 +107,8 @@ public class Cactus extends GroundAttachable implements TimedCraftable {
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(Dye.CACTUS_GREEN, 1);
+	public VanillaItemStack getResult() {
+		return new VanillaItemStack(Dye.CACTUS_GREEN, 1);
 	}
 
 	@Override

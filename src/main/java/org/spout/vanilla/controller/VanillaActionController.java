@@ -39,7 +39,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.ActionController;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector2;
@@ -47,6 +46,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 
@@ -141,7 +141,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	@Override
 	public void onDeath() {
-		for (ItemStack drop : getDrops()) {
+		for (VanillaItemStack drop : getDrops()) {
 			if (drop == null) {
 				continue;
 			}
@@ -202,8 +202,8 @@ public abstract class VanillaActionController extends ActionController implement
 	 * this method for their own personal drops.
 	 * @return the drops to disperse.
 	 */
-	public Set<ItemStack> getDrops() {
-		return new HashSet<ItemStack>();
+	public Set<VanillaItemStack> getDrops() {
+		return new HashSet<VanillaItemStack>();
 	}
 
 	/**

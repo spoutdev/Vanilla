@@ -29,12 +29,11 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Creeper extends Creature implements Hostile {
@@ -50,11 +49,11 @@ public class Creeper extends Creature implements Hostile {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
+	public Set<VanillaItemStack> getDrops() {
+		Set<VanillaItemStack> drops = new HashSet<VanillaItemStack>();
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.GUNPOWDER, count));
+			drops.add(new VanillaItemStack(VanillaMaterials.GUNPOWDER, count));
 		}
 
 		// TODO: Check if killed by skeleton for music disk

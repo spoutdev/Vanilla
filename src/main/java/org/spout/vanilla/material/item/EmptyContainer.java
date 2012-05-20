@@ -31,7 +31,6 @@ import java.util.HashMap;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.GenericMaterialSource;
@@ -39,6 +38,7 @@ import org.spout.api.material.source.MaterialSource;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.controller.living.Living;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -75,7 +75,7 @@ public class EmptyContainer extends BlockItem {
 					if (cont != null) {
 						block.setMaterial(VanillaMaterials.AIR);
 						if (!VanillaPlayerUtil.isCreative(entity)) {
-							entity.getInventory().setCurrentItem(new ItemStack(cont, 1));
+							entity.getInventory().setCurrentItem(new VanillaItemStack(cont, 1));
 						}
 					}
 					return;

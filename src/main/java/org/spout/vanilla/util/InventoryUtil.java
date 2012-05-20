@@ -30,7 +30,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.inventory.VanillaItemStack;
 
 public class InventoryUtil {
@@ -76,7 +76,7 @@ public class InventoryUtil {
 	}
 
 	public static void quickMoveStack(Inventory inv, int pos) {
-		ItemStack theStack = inv.getItem(pos);
+		VanillaItemStack theStack = (VanillaItemStack) inv.getItem(pos);
 		// Assume item is in quick-bar.
 		int startSlot = 0, stopSlot = 8;
 		if (pos > stopSlot) {

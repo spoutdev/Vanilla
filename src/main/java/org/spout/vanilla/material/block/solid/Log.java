@@ -29,7 +29,6 @@ package org.spout.vanilla.material.block.solid;
 import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Fuel;
@@ -89,8 +88,8 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable 
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(Coal.CHARCOAL, 1);
+	public VanillaItemStack getResult() {
+		return new VanillaItemStack(Coal.CHARCOAL, 1);
 	}
 
 	@Override

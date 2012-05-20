@@ -32,7 +32,6 @@ import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -119,7 +118,7 @@ public class EnchantmentTable extends Solid implements Directional, Mineable {
 	public ArrayList<VanillaItemStack> getDrops(Block block) {
 		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
 		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
+			VanillaItemStack held = (VanillaItemStack) ((Entity) block.getSource()).getInventory().getCurrentItem();
 			if (held != null && held.getMaterial() instanceof Pickaxe) {
 				drops.add(new VanillaItemStack(this, 1));
 			}

@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.material.item.food;
 
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.Furnace;
@@ -39,8 +38,8 @@ public class RawFish extends Food implements TimedCraftable {
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.COOKED_FISH, 1);
+	public VanillaItemStack getResult() {
+		return new VanillaItemStack(VanillaMaterials.COOKED_FISH, 1);
 	}
 
 	@Override

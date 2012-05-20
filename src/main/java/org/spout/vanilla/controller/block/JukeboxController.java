@@ -28,7 +28,6 @@ package org.spout.vanilla.controller.block;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 
@@ -36,6 +35,7 @@ import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.inventory.JukeboxInventory;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.misc.MusicDisc;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
@@ -59,7 +59,7 @@ public class JukeboxController extends VanillaBlockController {
 	 * @return
 	 */
 	public Music getMusic() {
-		ItemStack current = inventory.getMusicSlot();
+		VanillaItemStack current = inventory.getMusicSlot();
 		if (canPlay(current)) {
 			return ((MusicDisc) current.getSubMaterial()).getMusic();
 		} else {
@@ -67,7 +67,7 @@ public class JukeboxController extends VanillaBlockController {
 		}
 	}
 
-	public boolean canPlay(ItemStack item) {
+	public boolean canPlay(VanillaItemStack item) {
 		return item != null && this.canPlay(item.getSubMaterial());
 	}
 
@@ -79,7 +79,7 @@ public class JukeboxController extends VanillaBlockController {
 	 * Ejects the currently playing music disc
 	 */
 	public void eject() {
-		ItemStack current = this.inventory.getMusicSlot();
+		VanillaItemStack current = this.inventory.getMusicSlot();
 		this.inventory.setMusicSlot(null);
 		if (current != null) {
 			Point position = this.getParent().getPosition();

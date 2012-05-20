@@ -29,7 +29,6 @@ package org.spout.vanilla.material.block.solid;
 import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
@@ -57,8 +56,8 @@ public class Sand extends Solid implements TimedCraftable, Mineable {
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.GLASS, 1);
+	public VanillaItemStack getResult() {
+		return new VanillaItemStack(VanillaMaterials.GLASS, 1);
 	}
 
 	@Override

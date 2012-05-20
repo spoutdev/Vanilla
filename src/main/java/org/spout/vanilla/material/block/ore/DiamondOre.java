@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.inventory.VanillaItemStack;
@@ -53,8 +52,8 @@ public class DiamondOre extends Ore implements TimedCraftable, Mineable {
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.DIAMOND, 1);
+	public VanillaItemStack getResult() {
+		return new VanillaItemStack(VanillaMaterials.DIAMOND, 1);
 	}
 
 	@Override

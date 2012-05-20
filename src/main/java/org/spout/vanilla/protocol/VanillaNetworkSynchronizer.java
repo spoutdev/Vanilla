@@ -60,6 +60,7 @@ import org.spout.api.util.set.TIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
@@ -294,7 +295,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			//Normal messages may be sent
 			owner.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 5; slot++) {
-				ItemStack slotItem = owner.getEntity().getInventory().getItem(5 + slot);
+				VanillaItemStack slotItem = (VanillaItemStack) owner.getEntity().getInventory().getItem(5 + slot);
 				EntityEquipmentMessage EEMsg;
 				if (slotItem == null) {
 					EEMsg = new EntityEquipmentMessage(entityId, slot, -1, 0);
@@ -433,7 +434,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 
 		VanillaPlayer controller = (VanillaPlayer) c;
-		ItemStack item = inventory.getItem(slot);
+		VanillaItemStack item = (VanillaItemStack) inventory.getItem(slot);
 		Message message;
 		final int networkSlot = VanillaMessageHandlerUtils.getNetworkInventorySlot(inventory, slot);
 		int id = 0;

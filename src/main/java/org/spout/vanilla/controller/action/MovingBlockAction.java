@@ -30,13 +30,13 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.EntityAction;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.MovingBlock;
 import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.inventory.VanillaItemStack;
 
 public class MovingBlockAction extends EntityAction<MovingBlock> {
 	@Override
@@ -55,7 +55,7 @@ public class MovingBlockAction extends EntityAction<MovingBlock> {
 			//can we place here?
 			if (block.getMaterial().isPlacementObstacle()) {
 				//spawn an item
-				Item item = new Item(new ItemStack(mat, data, 1), Vector3.ZERO);
+				Item item = new Item(new VanillaItemStack(mat, data, 1), Vector3.ZERO);
 				block.getWorld().createAndSpawnEntity(pos, item);
 			} else {
 				block.setMaterial(mat, data);

@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.material.item.misc;
 
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.Furnace;
@@ -39,8 +38,8 @@ public class Clay extends VanillaItemMaterial implements TimedCraftable {
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.CLAY_BRICK, 1);
+	public VanillaItemStack getResult() {
+		return new VanillaItemStack(VanillaMaterials.CLAY_BRICK, 1);
 	}
 
 	@Override

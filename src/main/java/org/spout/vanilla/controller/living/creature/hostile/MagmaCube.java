@@ -42,20 +42,13 @@ public class MagmaCube extends Slime implements Hostile {
 	}
 
 	@Override
-	public void onAttached() {
-		int size = getRandom().nextInt(4);
-		int health = size > 0 ? size * 4 : 1;
-		data().put("SlimeSize", size);
-		setHealth(health, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
-		setMaxHealth(health);
-		super.onAttached();
-	}
-
-	@Override
 	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 
-		// TODO: Check for small/big
+		if (getSize() == 0) {
+			return drops;
+		}
+
 		int count = getRandom().nextInt(2);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.MAGMA_CREAM, count));

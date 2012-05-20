@@ -24,10 +24,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.controller.block;
 
-public class LockedChest extends Chest {
-	public LockedChest(String name, int id) {
-		super(name, id);
+import org.spout.api.material.BlockMaterial;
+
+import org.spout.vanilla.controller.VanillaBlockController;
+import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.material.VanillaMaterials;
+
+public class BrewingStandController extends VanillaBlockController {
+	public BrewingStandController() {
+		super(VanillaControllerTypes.BREWING_STAND, VanillaMaterials.BREWING_STAND_BLOCK);
+	}
+
+	@Override
+	public void onAttached() {
+
+	}
+
+	@Override
+	public void onTick(float v) {
+
 	}
 }

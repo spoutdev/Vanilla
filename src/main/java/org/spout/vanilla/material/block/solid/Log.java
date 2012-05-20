@@ -59,7 +59,7 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable 
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(2.0F).setResistance(3.3F).setOpacity((byte) 1);
+		this.setHardness(2.0F).setResistance(10.F).setOpacity((byte) 1);
 	}
 
 	@Override

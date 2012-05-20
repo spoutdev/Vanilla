@@ -24,10 +24,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.block.plant;
 
-public class LockedChest extends Chest {
-	public LockedChest(String name, int id) {
+public class MelonStem extends Stem {
+	public MelonStem(String name, int id) {
 		super(name, id);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setHardness(0.3F);
 	}
 }

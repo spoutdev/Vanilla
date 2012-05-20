@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
@@ -110,9 +109,9 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable 
 	}
 
 	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
-		drops.add(new VanillaItemStack(this, 1));
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 }

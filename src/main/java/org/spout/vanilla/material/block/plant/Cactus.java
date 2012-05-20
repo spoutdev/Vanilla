@@ -37,7 +37,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
@@ -118,9 +117,9 @@ public class Cactus extends GroundAttachable implements TimedCraftable {
 	}
 
 	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
-		drops.add(new VanillaItemStack(this, 1));
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 }

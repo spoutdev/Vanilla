@@ -29,10 +29,10 @@ package org.spout.vanilla.material.block.solid;
 import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -83,9 +83,9 @@ public class Pumpkin extends Solid implements Directional {
 	}
 
 	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
-		drops.add(new VanillaItemStack(this, 1));
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 }

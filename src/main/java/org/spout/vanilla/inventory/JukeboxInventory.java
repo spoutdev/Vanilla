@@ -26,18 +26,21 @@
  */
 package org.spout.vanilla.inventory;
 
-public class JukeboxInventory extends VanillaInventory {
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
+
+public class JukeboxInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
 
 	public JukeboxInventory() {
 		super(1);
 	}
 
-	public VanillaItemStack getMusicSlot() {
+	public ItemStack getMusicSlot() {
 		return getItem(0);
 	}
 
-	public void setMusicSlot(VanillaItemStack item) {
+	public void setMusicSlot(ItemStack item) {
 		setItem(0, item);
 	}
 }

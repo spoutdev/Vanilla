@@ -34,7 +34,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
@@ -68,12 +67,11 @@ public class Snow extends GroundAttachable implements Mineable {
 	}
 
 	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof Spade) {
-				drops.add(new VanillaItemStack(VanillaMaterials.SNOWBALL, 1));
+			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Spade) {
+				drops.add(new ItemStack(VanillaMaterials.SNOWBALL, 1));
 			}
 		}
 		return drops;

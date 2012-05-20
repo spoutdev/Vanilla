@@ -36,7 +36,6 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.JukeboxController;
-import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
@@ -112,9 +111,9 @@ public class Jukebox extends Solid implements Fuel {
 	}
 
 	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
-		drops.add(new VanillaItemStack(this, 1));
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 }

@@ -29,8 +29,8 @@ package org.spout.vanilla.material.block.solid;
 import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 
@@ -61,9 +61,9 @@ public class RedstoneLamp extends Solid {
 	}
 
 	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
-		drops.add(new VanillaItemStack(VanillaMaterials.REDSTONE_LAMP_ON, 1));
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.REDSTONE_LAMP_ON, 1));
 		return drops;
 	}
 }

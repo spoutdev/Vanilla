@@ -34,13 +34,13 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.ChestController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -140,9 +140,9 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 	}
 
 	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
-		drops.add(new VanillaItemStack(this, 1));
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 }

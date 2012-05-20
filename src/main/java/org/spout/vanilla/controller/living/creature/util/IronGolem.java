@@ -26,12 +26,16 @@
  */
 package org.spout.vanilla.controller.living.creature.util;
 
+import org.spout.api.entity.Entity;
+
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Utility;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class IronGolem extends Creature implements Utility {
+	private Entity parent;
+
 	public IronGolem() {
 		super(VanillaControllerTypes.IRON_GOLEM);
 	}

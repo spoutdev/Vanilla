@@ -79,3 +79,4 @@ public class Wolf extends Creature implements Tameable, Neutral {
 		return null;
 	}
 }
+

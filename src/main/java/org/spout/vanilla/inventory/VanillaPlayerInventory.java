@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.inventory;
 
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.PlayerInventory;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -33,7 +34,7 @@ import org.spout.vanilla.material.item.Armor;
 import org.spout.vanilla.util.InventoryUtil;
 
 /**
- * Represents a player's inventory
+ * Represents a players inventory
  */
 public class VanillaPlayerInventory extends PlayerInventory implements WindowInventory {
 	private static final long serialVersionUID = 1L;
@@ -43,80 +44,75 @@ public class VanillaPlayerInventory extends PlayerInventory implements WindowInv
 		super(45);
 	}
 
-	@Override
-	public VanillaItemStack getItem(int slot) {
-		return (VanillaItemStack) super.getItem(slot);
-	}
-
 	/**
-	 * Returns the current {@link VanillaItemStack} in the helmet slot (slot 44) ; can return null.
+	 * Returns the current {@link ItemStack} in the helmet slot (slot 44) ; can return null.
 	 * @return helmet item stack
 	 */
-	public VanillaItemStack getHelmet() {
+	public ItemStack getHelmet() {
 		return getItem(44);
 	}
 
 	/**
-	 * Returns the current {@link VanillaItemStack} in the chest plate slot (slot 41) ; can return null.
+	 * Returns the current {@link ItemStack} in the chest plate slot (slot 41) ; can return null.
 	 * @return chest plate item stack
 	 */
-	public VanillaItemStack getChestPlate() {
+	public ItemStack getChestPlate() {
 		return getItem(41);
 	}
 
 	/**
-	 * Returns the current {@link VanillaItemStack} in the leggings slot (slot 37) ; can return null.
+	 * Returns the current {@link ItemStack} in the leggings slot (slot 37) ; can return null.
 	 * @return leggings item stack
 	 */
-	public VanillaItemStack getLeggings() {
+	public ItemStack getLeggings() {
 		return getItem(37);
 	}
 
 	/**
-	 * Returns the current {@link VanillaItemStack} in the boots slot (slot 36) ; can return null.
+	 * Returns the current {@link ItemStack} in the boots slot (slot 36) ; can return null.
 	 * @return boots item stack
 	 */
-	public VanillaItemStack getBoots() {
+	public ItemStack getBoots() {
 		return getItem(36);
 	}
 
 	/**
-	 * Returns the current {@link VanillaItemStack} in the top left input in the crafting grid slot (slot 42) ; can return null.
+	 * Returns the current {@link ItemStack} in the top left input in the crafting grid slot (slot 42) ; can return null.
 	 * @return top left input item stack
 	 */
-	public VanillaItemStack getTopLeftInput() {
+	public ItemStack getTopLeftInput() {
 		return getItem(42);
 	}
 
 	/**
-	 * Returns the current {@link VanillaItemStack} in the top right input in the crafting grid slot (slot 43) ; can return null.
+	 * Returns the current {@link ItemStack} in the top right input in the crafting grid slot (slot 43) ; can return null.
 	 * @return top right item stack
 	 */
-	public VanillaItemStack getTopRightInput() {
+	public ItemStack getTopRightInput() {
 		return getItem(43);
 	}
 
 	/**
-	 * Returns the current {@link VanillaItemStack} in the bottom left input in the crafting grid slot (slot 38) ; can return null.
+	 * Returns the current {@link ItemStack} in the bottom left input in the crafting grid slot (slot 38) ; can return null.
 	 * @return bottom left input item stack
 	 */
-	public VanillaItemStack getBottomLeftInput() {
+	public ItemStack getBottomLeftInput() {
 		return getItem(38);
 	}
 
 	/**
-	 * Returns the current {@link VanillaItemStack} in the bottom right input in the crafting grid slot (slot 39) ; can return null.
+	 * Returns the current {@link ItemStack} in the bottom right input in the crafting grid slot (slot 39) ; can return null.
 	 * @return bottom right input item stack
 	 */
-	public VanillaItemStack getBottomRightInput() {
+	public ItemStack getBottomRightInput() {
 		return getItem(39);
 	}
 
 	/**
-	 * Returns the current {@link VanillaItemStack} in the output slot (slot 40) ; can return null.
+	 * Returns the current {@link ItemStack} in the output slot (slot 40) ; can return null.
 	 * @return output item stack
 	 */
-	public VanillaItemStack getOutput() {
+	public ItemStack getOutput() {
 		return getItem(40);
 	}
 
@@ -134,9 +130,10 @@ public class VanillaPlayerInventory extends PlayerInventory implements WindowInv
 	}
 
 	@Override
-	public boolean onClicked(VanillaPlayer controller, int clickedSlot, VanillaItemStack slotStack) {
+	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {
+
 		// Only allow armor in the armor slots
-		VanillaItemStack cursorStack = (VanillaItemStack) controller.getItemOnCursor();
+		ItemStack cursorStack = controller.getItemOnCursor();
 		boolean armorSlot = clickedSlot == 36 || clickedSlot == 37 || clickedSlot == 41 || clickedSlot == 44;
 		if (armorSlot && cursorStack != null && !(cursorStack.getMaterial() instanceof Armor)) {
 			return false;

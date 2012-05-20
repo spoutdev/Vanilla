@@ -37,7 +37,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.controller.living.Living;
-import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -95,7 +94,7 @@ public class Vines extends VanillaBlockMaterial {
 
 	@Override
 	public void onUpdate(Block block) {
-		// check all directions if it still supports it
+		//check all directions if it still supports it
 		boolean changed = false;
 		Block above = block.translate(BlockFace.TOP);
 		if (block.getData() != 0) {
@@ -103,7 +102,7 @@ public class Vines extends VanillaBlockMaterial {
 			for (BlockFace face : BlockFaces.NESW) {
 				if (this.isAttachedTo(block, face)) {
 					if (!this.canAttachTo(block.translate(face), face.getOpposite())) {
-						// is there a vine block above to which it can support itself?
+						//is there a vine block above to which it can support itself?
 						if (!abovemat.equals(VanillaMaterials.VINES) || !this.isAttachedTo(above, face)) {
 							this.setFaceAttached(block, face, false);
 							changed = true;
@@ -113,7 +112,7 @@ public class Vines extends VanillaBlockMaterial {
 			}
 		}
 		if (block.getData() == 0) {
-			// check if there is a block above it can attach to, else destroy
+			//check if there is a block above it can attach to, else destroy
 			if (!this.canAttachTo(above, BlockFace.BOTTOM)) {
 				this.onDestroy(block);
 				return;
@@ -138,7 +137,7 @@ public class Vines extends VanillaBlockMaterial {
 
 	public BlockFace getTracedFace(Block block) {
 		if (block.getMaterial().equals(VanillaMaterials.VINES) && block.getSource() instanceof Entity) {
-			// get block by block tracing from the player view
+			//get block by block tracing from the player view
 			Entity entity = (Entity) block.getSource();
 			if (entity.getController() instanceof Living) {
 				BlockIterator iter = ((Living) entity.getController()).getHeadBlockView(7);
@@ -148,7 +147,7 @@ public class Vines extends VanillaBlockMaterial {
 					if (next.equals(block)) {
 						Block target = iter.hasNext() ? iter.next() : null;
 						if (target != null) {
-							// get what face this target is relative to the main block
+							//get what face this target is relative to the main block
 							for (BlockFace face : BlockFaces.NESWBT) {
 								if (block.translate(face).equals(target)) {
 									return face;
@@ -173,9 +172,9 @@ public class Vines extends VanillaBlockMaterial {
 		if (block.getMaterial().equals(VanillaMaterials.VINES)) {
 			return true;
 		} else if (face == BlockFace.BOTTOM) {
-			return false; // TODO: possibly place on top of vines?
+			return false; //TODO: possibly place on top of vines?
 		} else if (face == BlockFace.TOP) {
-			// place below block
+			//place below block
 			if (isClicked || !this.canAttachTo(block.translate(BlockFace.TOP), BlockFace.BOTTOM)) {
 				return false;
 			} else {
@@ -205,9 +204,9 @@ public class Vines extends VanillaBlockMaterial {
 				return false;
 			}
 		} else if (face == BlockFace.BOTTOM) {
-			return false; // TODO: possibly place on top of vines?
+			return false; //TODO: possibly place on top of vines?
 		} else if (face == BlockFace.TOP) {
-			// place below block
+			//place below block
 			if (isClicked || !this.canAttachTo(block.translate(BlockFace.TOP), BlockFace.BOTTOM)) {
 				return false;
 			} else {
@@ -230,12 +229,11 @@ public class Vines extends VanillaBlockMaterial {
 	}
 
 	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial().equals(VanillaMaterials.SHEARS)) {
-				drops.add(new VanillaItemStack(this, 1));
+			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial().equals(VanillaMaterials.SHEARS)) {
+				drops.add(new ItemStack(VanillaMaterials.VINES, block.getData(), 1));
 			}
 		}
 		return drops;

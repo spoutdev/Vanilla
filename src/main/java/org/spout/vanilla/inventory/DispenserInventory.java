@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.block.DispenserController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -34,7 +35,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 /**
  * Represents a dispenser inventory belonging to a dispenser controller.
  */
-public class DispenserInventory extends VanillaInventory implements WindowInventory {
+public class DispenserInventory extends Inventory implements WindowInventory {
 	private static final long serialVersionUID = 1L;
 	private static final int SLOTS[] = {36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 7, 8};
 	private final DispenserController owner;
@@ -84,7 +85,7 @@ public class DispenserInventory extends VanillaInventory implements WindowInvent
 	}
 
 	@Override
-	public boolean onClicked(VanillaPlayer player, int clickedSlot, VanillaItemStack slotStack) {
+	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack) {
 		setItem(clickedSlot, slotStack);
 		return true;
 	}

@@ -40,7 +40,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
@@ -50,7 +49,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
 	public static final short REDSTONE_POWER_MAX = 15;
 	public static final short REDSTONE_POWER_MIN = 0;
-	private List<VanillaItemStack> drops;
+	private List<ItemStack> drops;
 	private float resistance;
 	private int meleeDamage;
 
@@ -79,20 +78,24 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @param block that got ignited
 	 */
 	public void onIgnite(Block block) {
-		// TODO Remove percentage of drops from getDrops
+		//TODO Remove percentage of drops from getDrops
 		this.onDestroy(block);
 	}
 
 	@Override
 	public void onDestroy(Block block) {
-		// Grab the drops based on material classes' rules.
-		drops = getDrops(block);
+		//Grab the drops based on material classes' rules.
+		if (!VanillaPlayerUtil.isCreative(block.getSource())) {
+			drops = getDrops(block);
+		}
 		BlockChangeEvent event = new BlockChangeEvent(block, block.getSource());
 		if (event.isCancelled()) {
 			return;
 		}
 		this.onDestroyBlock(block);
-		this.onDestroySpawnDrops(block);
+		if (!VanillaPlayerUtil.isCreative(block.getSource())) {
+			this.onDestroySpawnDrops(block);
+		}
 	}
 
 	@Override
@@ -167,11 +170,11 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @param block to spawn drops for
 	 */
 	public void onDestroySpawnDrops(Block block) {
-		if (VanillaPlayerUtil.isCreative(block.getSource()) || drops == null || drops.isEmpty() || drops.size() <= 0) {
+		if (drops == null || drops.isEmpty() || drops.size() <= 0) {
 			return;
 		}
 
-		// TODO stack items together for more performance
+		//TODO stack items together for more performance
 		for (ItemStack item : drops) {
 			block.getPosition().getWorld().createAndSpawnEntity(block.getPosition(), new Item(item, new Vector3(0, 5, 0)));
 		}
@@ -301,16 +304,17 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @param drops The new drops to drop.
 	 * @return
 	 */
-	public void setDrops(List<VanillaItemStack> drops) {
+	public void setDrops(List<ItemStack> drops) {
 		this.drops = drops;
 	}
 
 	/**
-	 * Gets the drops that should be dropped. Override this method to provide rules for what should be dropped and when.
+	 * Gets the drops that should be dropped. Override this method to provide rules
+	 * for what should be dropped and when.
 	 * @param block
 	 * @return
 	 */
-	public List<VanillaItemStack> getDrops(Block block) {
-		return Collections.emptyList();
+	public List<ItemStack> getDrops(Block block) {
+		return Collections.EMPTY_LIST;
 	}
 }

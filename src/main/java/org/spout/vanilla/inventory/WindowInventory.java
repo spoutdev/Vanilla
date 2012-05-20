@@ -26,9 +26,11 @@
  */
 package org.spout.vanilla.inventory;
 
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
-public interface WindowInventory {
+public interface WindowInventory extends VanillaInventory {
 	/**
 	 * Gets the window associated with the inventory
 	 * @return window of inventory
@@ -51,10 +53,9 @@ public interface WindowInventory {
 	 * Handles a click of the player's cursor on the window.
 	 * @param player
 	 * @param clickedSlot
-	 * @param slotStack
 	 * @return true if click is permitted
 	 */
-	public boolean onClicked(VanillaPlayer player, int clickedSlot, VanillaItemStack slotStack);
+	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack);
 
 	/**
 	 * Gets the native protocol slot index

@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -38,7 +39,6 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.SignController;
-import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
@@ -112,9 +112,9 @@ public class SignBase extends AbstractAttachable implements Mineable {
 	}
 
 	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
-		drops.add(new VanillaItemStack(VanillaMaterials.SIGN, block.getData(), 1));
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.SIGN, block.getData(), 1));
 		return drops;
 	}
 }

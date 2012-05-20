@@ -30,13 +30,13 @@ import java.util.ArrayList;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 
-import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
@@ -269,12 +269,12 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 	}
 
 	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (sticky) {
-			drops.add(new VanillaItemStack(VanillaMaterials.PISTON_STICKY_BASE, 1));
+			drops.add(new ItemStack(VanillaMaterials.PISTON_STICKY_BASE, block.getData(), 1));
 		} else {
-			drops.add(new VanillaItemStack(VanillaMaterials.PISTON_BASE, 1));
+			drops.add(new ItemStack(VanillaMaterials.PISTON_BASE, block.getData(), 1));
 		}
 		return drops;
 	}

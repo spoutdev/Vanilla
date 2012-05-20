@@ -29,16 +29,13 @@ package org.spout.vanilla.material.block.ore;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.enchantment.Enchantments;
-import org.spout.vanilla.inventory.VanillaItemStack;
+import org.spout.vanilla.material.Ore;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.MiningTool;
 
-public class MelonBlock extends Solid {
+public class MelonBlock extends Ore {
 	public MelonBlock(String name, int id) {
 		super(name, id);
 	}
@@ -50,16 +47,9 @@ public class MelonBlock extends Solid {
 	}
 
 	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
-		if (block.getSource() instanceof Entity) {
-			VanillaItemStack held = (VanillaItemStack) ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof MiningTool && held.hasEnchantment(Enchantments.SILK_TOUCH)) {
-				drops.add(new VanillaItemStack(this, 1));
-			} else {
-				drops.add(new VanillaItemStack(VanillaMaterials.MELON_SLICE, new Random().nextInt(3 - 7 + 1) + 3));
-			}
-		}
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.MELON_SLICE, new Random().nextInt(3 - 7 + 1) + 3));
 		return drops;
 	}
 }

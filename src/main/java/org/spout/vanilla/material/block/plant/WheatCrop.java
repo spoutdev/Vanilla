@@ -35,7 +35,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.inventory.VanillaItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
@@ -88,14 +87,14 @@ public class WheatCrop extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		int stage = getGrowthStage(block);
 		//final stage
 		//TODO Make a nice enum of this...
 		//TODO Drop seeds based on growth stage
 		if (stage == 8) {
-			drops.add(new VanillaItemStack(VanillaMaterials.WHEAT, 1));
+			drops.add(new ItemStack(VanillaMaterials.WHEAT, 1));
 		}
 		return drops;
 	}

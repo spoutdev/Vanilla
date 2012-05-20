@@ -27,15 +27,17 @@
 package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
 
 /**
- * Represents a enchantment table inventory belonging to an enchantment table controller.
+ * Represents a enchantment table inventory belonging to an enchantment table
+ * controller.
  */
-public class EnchantmentTableInventory extends VanillaInventory implements WindowInventory {
+public class EnchantmentTableInventory extends Inventory implements WindowInventory {
 	private static final long serialVersionUID = 1L;
 	private static final int[] SLOTS = {28, 29, 30, 31, 32, 33, 34, 35, 36, 19, 20, 21, 22, 23, 24, 25, 26, 27, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
 
@@ -69,7 +71,7 @@ public class EnchantmentTableInventory extends VanillaInventory implements Windo
 	}
 
 	@Override
-	public boolean onClicked(VanillaPlayer player, int clickedSlot, VanillaItemStack slotStack) {
+	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack) {
 		setItem(clickedSlot, slotStack);
 		return true;
 	}
@@ -90,18 +92,19 @@ public class EnchantmentTableInventory extends VanillaInventory implements Windo
 	}
 
 	/**
-	 * Whether the inventory contains an {@link VanillaItemStack} to enchant
+	 * Whether the inventory contains an item to enchant
 	 * @return true if an item is present
 	 */
 	public boolean hasItem() {
-		return getItem(36) != null;
+		return this.getItem(36) != null;
 	}
 
 	/**
-	 * Returns the {@link VanillaItemStack} in the enchantment slot (slot 36); can return null.
+	 * Returns the {@link ItemStack} in the enchantment slot (slot 36); can
+	 * return null.
 	 * @return ingredient item stack
 	 */
-	public VanillaItemStack getItem() {
+	public ItemStack getItem() {
 		return getItem(36);
 	}
 }

@@ -29,6 +29,7 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.Collections;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -37,6 +38,8 @@ import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Giant extends Creature implements Hostile {
+	private Entity parent;
+
 	public Giant() {
 		super(VanillaControllerTypes.GIANT);
 	}

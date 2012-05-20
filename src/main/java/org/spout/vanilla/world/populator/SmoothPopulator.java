@@ -50,7 +50,7 @@ public class SmoothPopulator implements Populator {
 	// the floor of half the value of the side of the square
 	// to sample when smoothing. (byte) Math.floor((double) SIDE_LENGTH / 2D);
 	private final static byte SAMPLE_SIZE = 1;
-	private final static byte SMOOTHING_AMOUNT_DAMPENER = 3;
+	private final static byte SMOOTHING_AMOUNT_DAMPENER = 4;
 	// ignored blocks
 	private static final Set<BlockMaterial> IGNORED = new HashSet<BlockMaterial>();
 

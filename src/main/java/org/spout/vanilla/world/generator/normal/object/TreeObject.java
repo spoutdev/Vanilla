@@ -46,11 +46,11 @@ public abstract class TreeObject extends WorldGeneratorObject {
 	// for canPlaceObject check
 	protected final Set<BlockMaterial> overridable = new HashSet<BlockMaterial>();
 
-	public TreeObject(Random random, byte baseHeight, byte randomHeight, short metadata) {
+	protected TreeObject(Random random, byte baseHeight, byte randomHeight, short metadata) {
 		this(random, baseHeight, randomHeight, metadata, metadata);
 	}
 
-	public TreeObject(Random random, byte baseHeight, byte randomHeight, short leavesMetadata, short logMetadata) {
+	protected TreeObject(Random random, byte baseHeight, byte randomHeight, short leavesMetadata, short logMetadata) {
 		this.random = random;
 		this.baseHeight = baseHeight;
 		this.randomHeight = randomHeight;

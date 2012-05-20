@@ -31,6 +31,7 @@ import java.lang.reflect.Modifier;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+import org.spout.vanilla.controller.block.BrewingStandController;
 import org.spout.vanilla.controller.block.ChestController;
 import org.spout.vanilla.controller.block.DispenserController;
 import org.spout.vanilla.controller.block.EnchantmentTableController;
@@ -171,6 +172,7 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType ENCHANTMENT_TABLE = new VanillaControllerType(-12, EnchantmentTableController.class, "Enchantment Table");
 	public static final VanillaControllerType MONSTER_SPAWNER = new VanillaControllerType(-13, MonsterSpawnerController.class, "Monster Spawner");
 	public static final VanillaControllerType SILVERFISH_STONE = new VanillaControllerType(-14, SilverfishBlockController.class, "Silverfish Stone");
+	public static final VanillaControllerType BREWING_STAND = new VanillaControllerType(-15, BrewingStandController.class, "Brewing Stand");
 	public static final String KEY = "ControllerID";
 	private static final TIntObjectHashMap<VanillaControllerType> ID_LOOKUP = new TIntObjectHashMap<VanillaControllerType>();
 

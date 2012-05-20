@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.material.block.misc.fence;
 
 import java.util.ArrayList;
 
@@ -37,24 +37,12 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.SignBase;
+import org.spout.vanilla.material.block.misc.Torch;
 import org.spout.vanilla.util.Instrument;
 
-public class Fence extends VanillaBlockMaterial implements Fuel {
-	public final float BURN_TIME = 15.f;
-
+public class Fence extends VanillaBlockMaterial {
 	public Fence(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setResistance(5.0F).setResistance(5.0F).setOpacity((byte) 1);
-	}
-
-	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
 	}
 
 	@Override
@@ -64,30 +52,19 @@ public class Fence extends VanillaBlockMaterial implements Fuel {
 
 	@Override
 	public boolean canSupport(BlockMaterial material, BlockFace face) {
-		if (material.equals(VanillaMaterials.FIRE)) {
+		if (material instanceof SignBase) {
 			return true;
-		} else {
-			if (material instanceof SignBase) {
+		}
+		if (face == BlockFace.TOP) {
+			if (material instanceof Torch) {
 				return true;
 			}
-			if (face == BlockFace.TOP) {
-				if (material instanceof Torch) {
-					return true;
-				}
-			}
-			return false;
 		}
+		return false;
 	}
 
 	@Override
 	public boolean canBurn() {
 		return true;
-	}
-
-	@Override
-	public ArrayList<VanillaItemStack> getDrops(Block block) {
-		ArrayList<VanillaItemStack> drops = new ArrayList<VanillaItemStack>();
-		drops.add(new VanillaItemStack(this, 1));
-		return drops;
 	}
 }

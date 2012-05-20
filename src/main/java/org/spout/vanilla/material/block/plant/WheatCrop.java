@@ -42,7 +42,6 @@ import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class WheatCrop extends GroundAttachable implements Plant {
-	private Random rand = new Random();
 
 	public WheatCrop(String name, int id) {
 		super(name, id);

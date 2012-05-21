@@ -407,9 +407,6 @@ public class AdministrationCommands {
 		} else if (args.getString(0, "").contains("resend")) {
 			player.getNetworkSynchronizer().sendChunk(player.getEntity().getChunk());
 			source.sendMessage("Chunk resent");
-		} else if (args.getString(0, "").contains("relight")) {
-			player.getEntity().getChunk().initLighting();
-			source.sendMessage("Chunk lighting re-calculated");
 		}
 	}
 

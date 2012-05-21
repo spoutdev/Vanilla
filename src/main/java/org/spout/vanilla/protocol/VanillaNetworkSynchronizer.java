@@ -54,7 +54,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEventListener;
-import org.spout.api.util.map.TIntPairHashSet;
+import org.spout.api.util.set.TIntPairHashSet;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.VanillaPlugin;

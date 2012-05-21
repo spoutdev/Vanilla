@@ -26,22 +26,17 @@
  */
 package org.spout.vanilla.inventory;
 
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.block.ChestController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
-public class ChestInventory extends Inventory implements WindowInventory {
+public class ChestInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
 	private final ChestController owner;
-	private final boolean doubleChest;
-	private final static int[] SINGLE_CHEST_SLOTS = {54, 55, 56, 57, 58, 59, 60, 61, 62, 45, 46, 47, 48, 49, 50, 51, 52, 53, 36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 7, 8};
-	private final static int[] DOUBLE_CHEST_SLOTS = {81, 82, 83, 84, 85, 86, 87, 88, 89, 72, 73, 74, 75, 76, 77, 78, 79, 80, 63, 64, 65, 66, 67, 68, 69, 70, 71, 54, 55, 56, 57, 58, 59, 60, 61, 62, 45, 46, 47, 48, 49, 50, 51, 52, 53, 36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 7, 8};
+	public final static int[] SMALL_CHEST_SLOTS = {54, 55, 56, 57, 58, 59, 60, 61, 62, 45, 46, 47, 48, 49, 50, 51, 52, 53, 36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 7, 8};
+	public final static int[] LARGE_CHEST_SLOTS = {81, 82, 83, 84, 85, 86, 87, 88, 89, 72, 73, 74, 75, 76, 77, 78, 79, 80, 63, 64, 65, 66, 67, 68, 69, 70, 71, 54, 55, 56, 57, 58, 59, 60, 61, 62, 45, 46, 47, 48, 49, 50, 51, 52, 53, 36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 7, 8};
 
-	public ChestInventory(ChestController owner, boolean doubleChest) {
-		super(doubleChest ? 90 : 64);
-		this.doubleChest = doubleChest;
+	public ChestInventory(ChestController owner, int size, String title) {
+		super(Window.CHEST, size, title);
 		this.owner = owner;
 	}
 
@@ -50,41 +45,25 @@ public class ChestInventory extends Inventory implements WindowInventory {
 	}
 
 	@Override
-	public Window getWindow() {
-		return Window.CHEST;
-	}
-
-	@Override
 	public void open(VanillaPlayer player) {
+		super.open(player);
 		owner.setOpened(true);
-		Inventory inventory = player.getPlayer().getEntity().getInventory();
-		for (int slot = 0; slot < 36; slot++) {
-			setItem(slot, inventory.getItem(slot));
-		}
-		// addViewer(vanillaPlayer.getPlayer().getNetworkSynchronizer());
-		player.setActiveInventory(this);
-		player.openWindow(Window.CHEST, doubleChest ? "Large chest" : "Chest", doubleChest ? 54 : 27);
 	}
 
 	@Override
 	public void onClosed(VanillaPlayer player) {
+		super.onClosed(player);
 		owner.setOpened(false);
 	}
 
 	@Override
-	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack) {
-		setItem(clickedSlot, slotStack);
-		return true;
-	}
-
-	@Override
 	public int getNativeSlotIndex(int index) {
-		return doubleChest ? DOUBLE_CHEST_SLOTS[index] : SINGLE_CHEST_SLOTS[index];
+		return getSize() == SMALL_CHEST_SLOTS.length ? SMALL_CHEST_SLOTS[index] : LARGE_CHEST_SLOTS[index];
 	}
 
 	@Override
 	public int getSlotIndex(int nativeIndex) {
-		int[] slots = doubleChest ? DOUBLE_CHEST_SLOTS : SINGLE_CHEST_SLOTS;
+		int[] slots = getSize() == SMALL_CHEST_SLOTS.length ? SMALL_CHEST_SLOTS : LARGE_CHEST_SLOTS;
 		for (int i = 0; i < slots.length; i++) {
 			if (slots[i] == nativeIndex) {
 				return i;

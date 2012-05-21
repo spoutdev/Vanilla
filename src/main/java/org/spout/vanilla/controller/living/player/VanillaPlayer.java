@@ -47,7 +47,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.inventory.VanillaPlayerInventory;
+import org.spout.vanilla.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
@@ -118,8 +118,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setPosition(spawn.getPosition());
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
-		getParent().setMaxHealth(20);
-		getParent().setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(20);
+		setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 		getParent().setObserver(true);
 		getParent().setViewDistance(64);
 		owner.getEntity().setInventorySize(45);
@@ -190,7 +190,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	private void updateHealth() {
 		short health;
 		Entity parent = getParent();
-		health = (short) parent.getHealth();
+		health = (short) getHealth();
 
 		if (exhaustion > 4.0) {
 			exhaustion -= 4.0;
@@ -204,11 +204,11 @@ public class VanillaPlayer extends Human implements PlayerController {
 		boolean changed = false;
 		if (hunger <= 0 && health > 0) {
 			health = (short) Math.max(health - 1, 0);
-			parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.STARVE));
+			setHealth(health, new HealthChangeReason(HealthChangeReason.Type.STARVE));
 			changed = true;
 		} else if (hunger >= 18 && health < 20) {
 			health = (short) Math.min(health + 1, 20);
-			parent.setHealth(health, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
+			setHealth(health, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
 			changed = true;
 		}
 
@@ -249,8 +249,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	@Override
-	public VanillaPlayerInventory createInventory(int size) {
-		VanillaPlayerInventory inventory = new VanillaPlayerInventory();
+	public PlayerInventory createInventory(int size) {
+		PlayerInventory inventory = new PlayerInventory();
 		for (int i = 37; i < inventory.getSize(); i++) {
 			inventory.setHiddenSlot(i, true);
 		}

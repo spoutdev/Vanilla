@@ -68,6 +68,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		}
 
 		WindowInventory window = (WindowInventory) inventory;
+		System.out.println("Native slot: " + message.getSlot());
 		int clickedSlot = window.getSlotIndex(message.getSlot());
 		ItemStack cursorStack = controller.getItemOnCursor(), slotStack = inventory.getItem(clickedSlot);
 		if (message.isShift()) {

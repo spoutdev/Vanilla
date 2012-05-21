@@ -83,7 +83,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 		this.getBounds().set(-0.35f, 0.0f, -0.49f, 0.35f, 0.49f, 0.49f);
 		this.setVelocity(new Vector3(0, 0, 0.2)); //temporary!
 		this.setMaxSpeed(new Vector3(0.4, 0.4, 0.4)); //first two 0.4 need to be 0 - TODO: Use yaw instead?
-		this.getParent().setHealth(40, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(40, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	public void generateRailData(Point position) {
@@ -115,9 +115,9 @@ public abstract class Minecart extends Substance implements Vehicle {
 		}
 
 		//update health to regenerate
-		int health = this.getParent().getHealth();
+		int health = getHealth();
 		if (health < 40) {
-			this.getParent().setHealth(health + 1, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
+			setHealth(health + 1, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
 		}
 
 		//get current rail below minecart

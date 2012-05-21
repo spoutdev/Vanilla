@@ -38,13 +38,13 @@ import org.spout.vanilla.util.InventoryUtil;
 /**
  * Represents a furnace inventory belonging to a furnace controller.
  */
-public class FurnaceInventory extends Inventory implements WindowInventory {
+public class FurnaceInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
 	private static final int[] SLOTS = {30, 31, 32, 33, 34, 35, 36, 37, 38, 21, 22, 23, 24, 25, 26, 27, 28, 29, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 0};
 	private final FurnaceController owner;
 
 	public FurnaceInventory(FurnaceController owner) {
-		super(39);
+		super(Window.FURNACE, 39, "Furnace");
 		this.owner = owner;
 	}
 
@@ -96,6 +96,10 @@ public class FurnaceInventory extends Inventory implements WindowInventory {
 		return getItem(38);
 	}
 
+	/**
+	 * Sets the {@link ItemStack} in the ingredient slot (slot 39); can return null;
+	 * @param ingredient
+	 */
 	public void setIngredient(ItemStack ingredient) {
 		setItem(38, ingredient);
 	}
@@ -132,34 +136,12 @@ public class FurnaceInventory extends Inventory implements WindowInventory {
 	}
 
 	@Override
-	public Window getWindow() {
-		return Window.FURNACE;
-	}
-
-	@Override
-	public void open(VanillaPlayer player) {
-		Inventory inventory = player.getPlayer().getEntity().getInventory();
-		for (int slot = 0; slot < 36; slot++) {
-			setItem(slot, inventory.getItem(slot));
-		}
-		addViewer(player.getPlayer().getNetworkSynchronizer());
-		player.setActiveInventory(this);
-		player.openWindow(Window.FURNACE, getSize());
-	}
-
-	@Override
 	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {
 		ItemStack cursorStack = controller.getItemOnCursor();
 		if (clickedSlot == 37 && cursorStack != null) {
 			return false;
 		}
 
-		slotStack = InventoryUtil.nullIfEmpty(slotStack);
-		setItem(clickedSlot, slotStack);
-		return true;
-	}
-
-	@Override
-	public void onClosed(VanillaPlayer player) {
+		return super.onClicked(controller, clickedSlot, slotStack);
 	}
 }

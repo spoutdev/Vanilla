@@ -89,7 +89,7 @@ public class VanillaListener implements Listener {
 
 		// Set protocol and send packets
 		if (vanillaPlayer.isSurvival()) {
-			sendPacket(vanillaPlayer.getPlayer(), new UpdateHealthMessage((short) playerEntity.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
+			sendPacket(vanillaPlayer.getPlayer(), new UpdateHealthMessage((short) vanillaPlayer.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
 		}
 
 		// Make them visible to everyone by default
@@ -170,7 +170,7 @@ public class VanillaListener implements Listener {
 		Controller c = event.getEntity().getController();
 		if (c instanceof VanillaPlayer && ((VanillaPlayer) c).isSurvival()) {
 			VanillaPlayer sp = (VanillaPlayer) c;
-			short health = (short) sp.getParent().getHealth();
+			short health = (short) sp.getHealth();
 			health += (short) event.getChange();
 			sendPacket(sp.getPlayer(), new UpdateHealthMessage(health, sp.getHunger(), sp.getFoodSaturation()));
 		}

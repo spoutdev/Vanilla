@@ -277,7 +277,7 @@ public abstract class VanillaActionController extends ActionController implement
 	 * @param sendHurtMessage whether or not to send a hurt message
 	 */
 	public void damage(int amount, boolean sendHurtMessage) {
-		getParent().setHealth(getParent().getHealth() - amount, new HealthChangeReason(HealthChangeReason.Type.UNKNOWN));
+		setHealth(getHealth() - amount, new HealthChangeReason(HealthChangeReason.Type.UNKNOWN));
 		if (sendHurtMessage) {
 			broadcastPacket(new AnimationMessage(this.getParent().getId(), AnimationMessage.ANIMATION_HURT), new EntityStatusMessage(this.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
 		}

@@ -41,6 +41,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.ChestController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.ChestInventory;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -115,7 +116,7 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
 			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-			block.getWorld().createAndSpawnEntity(block.getPosition(), new ChestController(isDouble(block)));
+			block.getWorld().createAndSpawnEntity(block.getPosition(), new ChestController(isDouble(block) ? ChestInventory.LARGE_CHEST_SLOTS.length : ChestInventory.SMALL_CHEST_SLOTS.length));
 			return true;
 		}
 		return false;

@@ -36,9 +36,9 @@ public class ChestController extends VanillaBlockController {
 	private final ChestInventory inventory;
 	private boolean opened = false;
 
-	public ChestController(boolean doubleChest) {
+	public ChestController(int size) {
 		super(VanillaControllerTypes.CHEST, VanillaMaterials.CHEST);
-		inventory = new ChestInventory(this, doubleChest);
+		inventory = new ChestInventory(this, size, size == ChestInventory.SMALL_CHEST_SLOTS.length ? "Chest" : "Large chest");
 	}
 
 	@Override

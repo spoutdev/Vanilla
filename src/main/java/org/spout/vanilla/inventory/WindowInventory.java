@@ -26,28 +26,66 @@
  */
 package org.spout.vanilla.inventory;
 
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.util.InventoryUtil;
 
-public interface WindowInventory extends VanillaInventory {
+public abstract class WindowInventory extends Inventory implements VanillaInventory {
+	protected final Window window;
+	protected String title;
+
+	public WindowInventory(Window window, int size, String title) {
+		super(size);
+		this.window = window;
+		this.title = title;
+	}
+
 	/**
 	 * Gets the window associated with the inventory
 	 * @return window of inventory
 	 */
-	public Window getWindow();
+	public Window getWindow() {
+		return window;
+	}
+
+	/**
+	 * Gets the title displayed on the window of the inventory
+	 * @return inventory window title
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * Sets the title displayed on the window of the inventory
+	 * @param title
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	/**
 	 * Opens the inventory and window
 	 * @param player to show the inventory
 	 */
-	public void open(VanillaPlayer player);
+	public void open(VanillaPlayer player) {
+		Inventory inventory = player.getPlayer().getEntity().getInventory();
+		for (int slot = 0; slot < 36; slot++) {
+			setItem(slot, inventory.getItem(slot));
+		}
+		addViewer(player.getPlayer().getNetworkSynchronizer());
+		player.setActiveInventory(this);
+		player.openWindow(getWindow(), title, getSize());
+	}
 
 	/**
 	 * Closes the inventory and window
 	 * @param player to close the inventory on
 	 */
-	public void onClosed(VanillaPlayer player);
+	public void onClosed(VanillaPlayer player) {
+	}
 
 	/**
 	 * Handles a click of the player's cursor on the window.
@@ -55,19 +93,23 @@ public interface WindowInventory extends VanillaInventory {
 	 * @param clickedSlot
 	 * @return true if click is permitted
 	 */
-	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack);
+	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack) {
+		slotStack = InventoryUtil.nullIfEmpty(slotStack);
+		setItem(clickedSlot, slotStack);
+		return true;
+	}
 
 	/**
 	 * Gets the native protocol slot index
 	 * @param index of the slot
 	 * @return the native index
 	 */
-	public int getNativeSlotIndex(int index);
+	public abstract int getNativeSlotIndex(int index);
 
 	/**
 	 * Gets the slot index from a native slot index
 	 * @param nativeIndex of the item
 	 * @return the Spout item index
 	 */
-	public int getSlotIndex(int nativeIndex);
+	public abstract int getSlotIndex(int nativeIndex);
 }

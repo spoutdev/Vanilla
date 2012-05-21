@@ -26,54 +26,18 @@
  */
 package org.spout.vanilla.inventory;
 
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Vector3;
-
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.object.moving.Item;
 
 /**
  * Represents a enchantment table inventory belonging to an enchantment table
  * controller.
  */
-public class EnchantmentTableInventory extends Inventory implements WindowInventory {
+public class EnchantmentTableInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
 	private static final int[] SLOTS = {28, 29, 30, 31, 32, 33, 34, 35, 36, 19, 20, 21, 22, 23, 24, 25, 26, 27, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
 
 	public EnchantmentTableInventory() {
-		super(37);
-	}
-
-	@Override
-	public Window getWindow() {
-		return Window.ENCHANTMENT_TABLE;
-	}
-
-	@Override
-	public void open(VanillaPlayer player) {
-		Inventory inventory = player.getPlayer().getEntity().getInventory();
-		for (int slot = 0; slot < 36; slot++) {
-			setItem(slot, inventory.getItem(slot));
-		}
-		addViewer(player.getPlayer().getNetworkSynchronizer());
-		player.setActiveInventory(this);
-		player.openWindow(Window.ENCHANTMENT_TABLE, getSize());
-	}
-
-	@Override
-	public void onClosed(VanillaPlayer player) {
-		if (hasItem()) {
-			// Drop the item and remove the item from the inventory
-			player.getParent().getWorld().createAndSpawnEntity(player.getHeadPosition(), new Item(getItem(0), Vector3.FORWARD));
-			setItem(0, null);
-		}
-	}
-
-	@Override
-	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack) {
-		setItem(clickedSlot, slotStack);
-		return true;
+		super(Window.ENCHANTMENT_TABLE, 37, "Enchantment table");
 	}
 
 	@Override

@@ -40,8 +40,8 @@ public class EnderCrystal extends Substance {
 	@Override
 	public void onAttached() {
 		//TODO Remove when collisions are fixed.
-		getParent().setMaxHealth(1);
-		getParent().setHealth(1, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setMaxHealth(1);
+		setHealth(1, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 	}
 
 	@Override

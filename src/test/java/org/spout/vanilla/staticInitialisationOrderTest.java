@@ -34,12 +34,18 @@ import org.junit.Test;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
+import org.spout.vanilla.material.block.misc.fence.WoodenFence;
+import org.spout.vanilla.material.block.solid.Stone;
+
+import static org.spout.api.material.MaterialRegistry.register;
 import static org.junit.Assert.fail;
 
 public class staticInitialisationOrderTest {
 	@Test
 	public void materialStaticInitialisationTest() {
 		try {
+			register(new Stone("Stone", 87945));
+			register(new WoodenFence("Wooden Fence", 85945));
 			for (Field field : VanillaMaterials.class.getFields()) {
 				try {
 					if (field == null || ((field.getModifiers() & (Modifier.STATIC | Modifier.PUBLIC)) != (Modifier.STATIC | Modifier.PUBLIC)) || !VanillaMaterial.class.isAssignableFrom(field.getType())) {
@@ -57,18 +63,25 @@ public class staticInitialisationOrderTest {
 						fail("An exception occurred while loading the properties of Vanilla Material '" + field.getName() + "':");
 					}
 				} catch (NoClassDefFoundError ex) {
-					staticInitFail();
+					staticInitFail(ex);
 				} catch (Throwable t) {
 					t.printStackTrace();
 					fail("An exception occurred while reading Vanilla Material field '" + field.getName() + "':");
 				}
 			}
 		} catch (NoClassDefFoundError t) {
-			staticInitFail();
+			staticInitFail(t);
 		}
 	}
 
-	public static void staticInitFail() {
-		fail("Static initialisation of VanillaMaterials failed! WHAT DID YOU DO?!");//Exception type does not matter! Static initialisation failure loses the exception data, turns into ClassLoader fail. :(
+	public static void staticInitFail(Throwable t) {
+		String s = "";
+		while(t != null){
+			System.err.println(t.getMessage());
+			s += t.getMessage() + "\n";
+			t.printStackTrace();
+			t = t.getCause();
+		}
+		fail(s + ": Static initialisation of VanillaMaterials failed! WHAT DID YOU DO?!");//Exception type does not matter! Static initialisation failure loses the exception data, turns into ClassLoader fail. :(
 	}
 }

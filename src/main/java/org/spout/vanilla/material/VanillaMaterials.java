@@ -551,12 +551,7 @@ public final class VanillaMaterials {
 		}
 		short minecraftId = conversionTable.get(id);
 		if (minecraftId == 0) {
-			Material mat = MaterialRegistry.get(id);
-			if (mat instanceof VanillaMaterial) {
-				minecraftId = (short) ((VanillaMaterial)mat).getMinecraftId();
-			} else {
-				minecraftId = BlockMaterial.AIR.getId();
-			}
+			minecraftId = getMinecraftId(MaterialRegistry.get(id));
 			conversionTable.set(id, minecraftId);
 		}
 		return minecraftId;

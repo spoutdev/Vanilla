@@ -52,6 +52,7 @@ import org.spout.nbt.stream.NBTInputStream;
 import org.spout.nbt.stream.NBTOutputStream;
 
 import org.spout.vanilla.material.VanillaMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public final class ChannelBufferUtils {
 	/**
@@ -319,7 +320,7 @@ public final class ChannelBufferUtils {
 
 	public static boolean hasNbtData(int id) {
 		//VanillaMaterials.
-		Material mat = MaterialRegistry.get((short) id);
+		Material mat = VanillaMaterials.getMaterial((short) id);
 		if (!(mat instanceof VanillaMaterial)) {
 			return false;
 		}

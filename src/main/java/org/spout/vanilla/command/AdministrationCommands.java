@@ -52,6 +52,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.living.player.GameMode;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.sky.VanillaSky;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.Weather;
 
 public class AdministrationCommands {
@@ -138,13 +139,13 @@ public class AdministrationCommands {
 
 		short data = 0;
 		if (args.isInteger(index)) {
-			material = Material.get((short) args.getInteger(index));
+			material = VanillaMaterials.getMaterial((short) args.getInteger(index));
 		} else {
 			String name = args.getString(index);
 
 			if (name.contains(":")) {
 				String[] parts = args.getString(index).split(":");
-				material = Material.get(Short.parseShort(parts[0]));
+				material = VanillaMaterials.getMaterial(Short.parseShort(parts[0]));
 				data = Short.parseShort(parts[1]);
 			} else {
 				material = Material.get(args.getString(index));

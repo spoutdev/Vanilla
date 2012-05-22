@@ -334,13 +334,13 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	public void updateBlock(Chunk chunk, int x, int y, int z, BlockMaterial material, short data) {
-		int id = getMinecraftId(material.getId());
+		int id = getMinecraftId(material);
 		if ((data & 0xF) > 15) {
 			data = 0;
 		}
-		x += chunk.getX() * Chunk.CHUNK_SIZE;
-		y += chunk.getY() * Chunk.CHUNK_SIZE;
-		z += chunk.getZ() * Chunk.CHUNK_SIZE;
+		x += chunk.getBlockX();
+		y += chunk.getBlockY();
+		z += chunk.getBlockZ();
 		if (y >= 0 && y < chunk.getWorld().getHeight()) {
 			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id & 0xFF, data & 0xF);
 			session.send(BCM);

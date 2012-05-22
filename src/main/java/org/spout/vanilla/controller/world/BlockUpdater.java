@@ -40,14 +40,14 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.list.concurrent.ConcurrentList;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.material.block.ScheduleUpdated;
 
-public class BlockUpdater extends Controller implements VanillaController {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(BlockUpdater.class, "Block Updater");
-
+public class BlockUpdater implements Runnable {
 	private static class Update {
 		public Update(Block block, int delay) {
 			this.block = block;
@@ -72,33 +72,16 @@ public class BlockUpdater extends Controller implements VanillaController {
 		synchronized (updaters) {
 			BlockUpdater u = updaters.get(region);
 			if (u == null) {
-				Set<Entity> regionupdaters = region.getAll(BlockUpdater.class);
-				if (regionupdaters.isEmpty()) {
-					u = new BlockUpdater();
-					region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE), u);
-					updaters.put(region, u);
-					System.out.println("Block updater bound to " + region);
-				} else {
-					for (Entity e : regionupdaters) {
-						u = (BlockUpdater) e.getController();
-						break;
-					}
-				}
+				u = new BlockUpdater();
+				region.getTaskManager().scheduleSyncRepeatingTask(VanillaPlugin.getInstance(), u, 1, 1, TaskPriority.HIGH);
+				updaters.put(region, u);
+				System.out.println("Block updater bound to " + region);
 			}
 			return u;
 		}
 	}
 
 	private ConcurrentList<Update> updates = new ConcurrentList<Update>();
-
-	protected BlockUpdater() {
-		super(TYPE);
-	}
-
-	@Override
-	public boolean isSavable() {
-		return false;
-	}
 
 	public static void schedule(Block block, int delay) {
 		System.out.println("SCHEDULING: " + block.getX() + "/" + block.getY() + "/" + block.getZ());
@@ -110,7 +93,7 @@ public class BlockUpdater extends Controller implements VanillaController {
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public void run() {
 		this.updates.sync();
 		if (!this.updates.isEmpty()) {
 			Iterator<Update> iter = this.updates.iterator();
@@ -128,9 +111,5 @@ public class BlockUpdater extends Controller implements VanillaController {
 				}
 			}
 		}
-	}
-
-	@Override
-	public void onAttached() {
 	}
 }

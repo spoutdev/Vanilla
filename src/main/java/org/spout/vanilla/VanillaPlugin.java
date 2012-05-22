@@ -71,6 +71,7 @@ public class VanillaPlugin extends CommonPlugin {
 	private Engine game;
 	private VanillaConfiguration config;
 	private VanillaRecipes recipes;
+	private static VanillaPlugin instance;
 
 	@Override
 	public void onDisable() {
@@ -79,6 +80,7 @@ public class VanillaPlugin extends CommonPlugin {
 		} catch (ConfigurationException e) {
 			getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);
 		}
+		instance = null;
 		getLogger().info("disabled");
 	}
 
@@ -108,6 +110,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onLoad() {
+		instance = this;
 		game = getGame();
 		config = new VanillaConfiguration(getDataFolder());
 		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
@@ -130,6 +133,13 @@ public class VanillaPlugin extends CommonPlugin {
 		VanillaMaterials.initialize();
 		recipes = new VanillaRecipes(this);
 		getLogger().info("loaded");
+	}
+
+	/**
+	 * Gets the Vanilla Plugin instance
+	 */
+	public static VanillaPlugin getInstance() {
+		return instance;
 	}
 
 	private void setupWorlds() {

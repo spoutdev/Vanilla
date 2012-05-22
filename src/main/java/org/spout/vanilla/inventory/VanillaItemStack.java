@@ -62,7 +62,7 @@ public class VanillaItemStack extends ItemStack {
 	/**
 	 * Attempts to add the given enchantment with an option to force.
 	 * @param enchantment Enchantment to add
-	 * @param force       Whether to ignore enchantment rules
+	 * @param force	   Whether to ignore enchantment rules
 	 * @return true if the enchantment was successfully attached to this item stack
 	 */
 	public boolean addEnchantment(Enchantment enchantment, boolean force) {
@@ -72,8 +72,8 @@ public class VanillaItemStack extends ItemStack {
 	/**
 	 * Attempts to add the given enchantment with the given level to this item stack
 	 * @param enchantment Enchantment to add
-	 * @param level       Level of the enchantment
-	 * @param force       Whether to ignore enchantment rules and force the enchantment
+	 * @param level	   Level of the enchantment
+	 * @param force	   Whether to ignore enchantment rules and force the enchantment
 	 * @return true if the enchantment was successfully attached to this item stack
 	 */
 	public boolean addEnchantment(Enchantment enchantment, int level, boolean force) {

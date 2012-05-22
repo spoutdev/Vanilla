@@ -53,8 +53,9 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEventListener;
-import org.spout.api.util.set.TIntPairHashSet;
 import org.spout.api.util.map.TIntPairObjectHashMap;
+import org.spout.api.util.set.TIntPairHashSet;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.PlayerInventory;
@@ -572,7 +573,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	/**
 	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
 	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param range	The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param messages The messages that should be sent to the discovered nearest player.
 	 */
 	public static void sendPacketsToNearbyPlayers(Point position, Entity ignore, int range, Message... messages) {
@@ -586,7 +587,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	/**
 	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
 	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param range	The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param messages The messages that should be sent to the discovered nearest player.
 	 */
 	public static void sendPacketsToNearbyPlayers(Point position, int range, Message... messages) {
@@ -600,7 +601,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	/**
 	 * This method sends any amount of packets to all nearby players of an entity (within a specified range).
 	 * @param entity   The entity that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param range	The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param messages The messages that should be sent to the discovered nearest player.
 	 */
 	public static void sendPacketsToNearbyPlayers(Entity entity, int range, Message... messages) {
@@ -616,7 +617,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	/**
 	 * This method sends any amount of packets and sends them to the nearest player from the entity specified.
 	 * @param entity   The entity that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param range	The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param messages The messages that should be sent to the discovered nearest player.
 	 */
 	public static void sendPacketsToNearestPlayer(Entity entity, int range, Message... messages) {

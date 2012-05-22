@@ -179,11 +179,11 @@ public class VanillaPlugin extends CommonPlugin {
 		Point flatSpawn = flatGen.getSafeSpawn(flat);
 		Point netherSpawn = netherGen.getSafeSpawn(nether); //TODO Is this set based on the nether portal? Does the nether actually have a "spawn point"?
 		Point endSpawn = endGen.getSafeSpawn(end); //TODO Needs to probably be set per end portal?
-		
+
 		final int diameter = PointObserver.CHUNK_VIEW_DISTANCE + PointObserver.CHUNK_VIEW_DISTANCE;
 		final int total = diameter * diameter * diameter;
 		final int progressStep = total / 10;
-		
+
 		World[] worlds = {normal, nether, end, flat};
 		for (World world : worlds) {
 			int progress = 0;

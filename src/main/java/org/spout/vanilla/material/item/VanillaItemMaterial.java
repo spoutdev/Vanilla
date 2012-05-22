@@ -43,7 +43,7 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 		super(name, data, parent);
 		this.minecraftId = id;
 	}
-	
+
 	@Override
 	public final int getMinecraftId() {
 		return minecraftId;

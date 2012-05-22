@@ -33,7 +33,6 @@ import java.util.Random;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -62,7 +61,7 @@ public class FlowerDecorator implements Decorator {
 				continue;
 			}
 			Block block = chunk.getBlock(dx, dy, dz);
-			if (flower.canAttachTo(block,  BlockFace.TOP)) {
+			if (flower.canAttachTo(block, BlockFace.TOP)) {
 				block.translate(BlockFace.TOP).setMaterial(flower);
 			}
 		}

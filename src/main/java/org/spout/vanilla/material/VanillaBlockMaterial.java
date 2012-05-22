@@ -63,7 +63,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		super(name, data, parent);
 		this.minecraftId = id;
 	}
-	
+
 	@Override
 	public final int getMinecraftId() {
 		return minecraftId;
@@ -207,7 +207,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets the power level of a single block
-	 * @param block     to get it of
+	 * @param block	 to get it of
 	 * @param powerMode to use to find the power
 	 * @return the redstone power level
 	 */
@@ -240,7 +240,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets if this block is being powered or not
-	 * @param block     to get it of
+	 * @param block	 to get it of
 	 * @param powerMode to use to find out the power levels
 	 * @return True if the block receives power
 	 */
@@ -273,7 +273,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	/**
 	 * Gets whether this block material can support the attachable block material to the face given
 	 * @param material to attach
-	 * @param face     of this block to attach to
+	 * @param face	 of this block to attach to
 	 * @return
 	 */
 	public boolean canSupport(BlockMaterial material, BlockFace face) {

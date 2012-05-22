@@ -30,7 +30,6 @@ import java.util.List;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.living.creature.neutral.Enderman;

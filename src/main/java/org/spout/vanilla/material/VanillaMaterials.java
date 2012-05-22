@@ -26,16 +26,17 @@
  */
 package org.spout.vanilla.material;
 
-import gnu.trove.map.hash.TShortObjectHashMap;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+
+import gnu.trove.map.hash.TShortObjectHashMap;
 
 import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.map.concurrent.AtomicShortArray;
+
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.BrewingStand;
 import org.spout.vanilla.material.block.controlled.Chest;
@@ -498,10 +499,9 @@ public final class VanillaMaterials {
 	public static final BlockItem FIRE_CHARGE = new BlockItem("Fire Charge", 385, VanillaMaterials.FIRE); //Basic Implementation
 	public static final Potion POTION = Potion.EMPTY;
 	private static boolean initialized = false;
-	
 	private final static AtomicShortArray conversionTable = new AtomicShortArray(Short.MAX_VALUE);
 	private final static TShortObjectHashMap<Material> reverseTable = new TShortObjectHashMap<Material>(500);
-	
+
 	static {
 		for (Field field : VanillaMaterials.class.getFields()) {
 			try {
@@ -510,8 +510,8 @@ public final class VanillaMaterials {
 					if (temp instanceof VanillaMaterial) {
 						VanillaMaterial material = (VanillaMaterial) temp;
 						if (material != null) {
-							if (!((Material)material).isSubMaterial()) {
-								reverseTable.put((short)material.getMinecraftId(), (Material) material);
+							if (!((Material) material).isSubMaterial()) {
+								reverseTable.put((short) material.getMinecraftId(), (Material) material);
 							}
 						}
 					}
@@ -521,27 +521,26 @@ public final class VanillaMaterials {
 			}
 		}
 	}
-	
+
 	public static Material getMaterial(short minecraftId) {
 		return reverseTable.get(minecraftId);
 	}
 
 	/**
 	 * Gets the minecraft id associated with the Spout material
-	 * 
 	 * @param material to convert
 	 * @return minecraft id
 	 */
 	public static short getMinecraftId(Material material) {
 		if (material instanceof VanillaMaterial) {
-			return (short) ((VanillaMaterial)material).getMinecraftId();
+			return (short) ((VanillaMaterial) material).getMinecraftId();
 		} else {
 			return BlockMaterial.AIR.getId();
 		}
 	}
+
 	/**
 	 * Gets the minecraft id associated with the Spout material id
-	 * 
 	 * @param id to convert
 	 * @return minecraft id
 	 */

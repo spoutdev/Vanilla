@@ -61,7 +61,7 @@ public abstract class Enchantment {
 	/**
 	 * Whether this enchantment is compatible with the given enchantment while attached to the given material
 	 * @param enchantment Enchantment to check
-	 * @param material    Material that this enchantment is attached to
+	 * @param material	Material that this enchantment is attached to
 	 * @return true if this enchantment is compatible with the given enchantment
 	 */
 	public boolean compatibleWith(Enchantment enchantment, VanillaMaterial material) {

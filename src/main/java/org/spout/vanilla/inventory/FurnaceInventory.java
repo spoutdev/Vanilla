@@ -26,14 +26,12 @@
  */
 package org.spout.vanilla.inventory;
 
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.util.InventoryUtil;
 
 /**
  * Represents a furnace inventory belonging to a furnace controller.

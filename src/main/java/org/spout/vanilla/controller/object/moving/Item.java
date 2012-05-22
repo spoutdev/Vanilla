@@ -26,16 +26,8 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
-import java.util.Arrays;
-import java.util.List;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-
-import org.spout.api.Spout;
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
-import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;

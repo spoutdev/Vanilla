@@ -34,7 +34,6 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
-import org.spout.vanilla.world.generator.normal.decorator.BeachDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.CaveDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.DungeonDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
@@ -47,7 +46,7 @@ public class PlainBiome extends VanillaBiome {
 	private Turbulence noise = new Turbulence();
 
 	public PlainBiome(int id) {
-		super(id, new CaveDecorator(), new GrassDecorator(), new FlowerDecorator(), new BeachDecorator(), new TreeDecorator(), new DungeonDecorator(), new PondDecorator());
+		super(id, new CaveDecorator(), new GrassDecorator(), new FlowerDecorator(), new TreeDecorator(), new DungeonDecorator(), new PondDecorator());
 		base.setNoiseQuality(NoiseQuality.BEST);
 		base.setOctaveCount(6);
 		base.setFrequency(0.3);

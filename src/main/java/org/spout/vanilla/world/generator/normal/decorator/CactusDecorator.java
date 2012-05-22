@@ -29,7 +29,9 @@ package org.spout.vanilla.world.generator.normal.decorator;
 import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -53,7 +55,12 @@ public class CactusDecorator implements Decorator {
 		}
 		int height = random.nextInt(3) + 1;
 		for (int i = py; i < py + height; ++i) {
-			chunk.getBlock(px, i, pz).setMaterial(VanillaMaterials.CACTUS).update(true);
+			Block block = chunk.getBlock(px, i, pz);
+			if (!VanillaMaterials.CACTUS.canPlace(block, (short) 0, BlockFace.TOP, false)) {
+				break;
+			} else {
+				VanillaMaterials.CACTUS.onPlacement(block, (short) 0, BlockFace.TOP, false);
+			}
 		}
 	}
 

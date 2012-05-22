@@ -72,7 +72,7 @@ public abstract class WindowInventory extends Inventory implements VanillaInvent
 	 */
 	public void open(VanillaPlayer player) {
 		Inventory inventory = player.getPlayer().getEntity().getInventory();
-		for (int slot = 0; slot < 36; slot++) {
+		for (int slot = 0; slot < inventory.getSize() - 9; slot++) {
 			setItem(slot, inventory.getItem(slot));
 		}
 		addViewer(player.getPlayer().getNetworkSynchronizer());
@@ -85,6 +85,11 @@ public abstract class WindowInventory extends Inventory implements VanillaInvent
 	 * @param player to close the inventory on
 	 */
 	public void onClosed(VanillaPlayer player) {
+		Inventory inventory = player.getPlayer().getEntity().getInventory();
+		for (int slot = 0; slot < inventory.getSize() - 9; slot++) {
+			setItem(slot, null);
+		}
+		removeViewer(player.getPlayer().getNetworkSynchronizer());
 	}
 
 	/**

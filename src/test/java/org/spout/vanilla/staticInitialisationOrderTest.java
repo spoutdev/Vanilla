@@ -31,6 +31,7 @@ import java.lang.reflect.Modifier;
 
 import org.junit.Test;
 
+import org.spout.vanilla.material.block.solid.Stone;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -40,6 +41,7 @@ public class staticInitialisationOrderTest {
 	@Test
 	public void materialStaticInitialisationTest() {
 		try {
+			new Stone("Test Stone", 87945);
 			for (Field field : VanillaMaterials.class.getFields()) {
 				try {
 					if (field == null || ((field.getModifiers() & (Modifier.STATIC | Modifier.PUBLIC)) != (Modifier.STATIC | Modifier.PUBLIC)) || !VanillaMaterial.class.isAssignableFrom(field.getType())) {
@@ -47,28 +49,29 @@ public class staticInitialisationOrderTest {
 					}
 					VanillaMaterial material = (VanillaMaterial) field.get(null);
 					if (material == null) {
-						fail("Vanilla Material field '" + field.getName() + "' is not yet initialized");
-						continue;
+						fail("invalid material: VanillaMaterials field '" + field.getName() + "' is null");
 					}
-					try {
-						material.initialize();
-					} catch (Throwable t) {
-						t.printStackTrace();
-						fail("An exception occurred while loading the properties of Vanilla Material '" + field.getName() + "':");
-					}
+					material.initialize();
 				} catch (NoClassDefFoundError ex) {
-					staticInitFail();
+					staticInitFail(ex);
 				} catch (Throwable t) {
 					t.printStackTrace();
-					fail("An exception occurred while reading Vanilla Material field '" + field.getName() + "':");
+					fail("invalid material: An exception occurred while loading/reading VanillaMaterials field '" + field.getName() + "'");
 				}
 			}
 		} catch (NoClassDefFoundError t) {
-			staticInitFail();
+			staticInitFail(t);
 		}
 	}
 
-	public static void staticInitFail() {
-		fail("Static initialisation of VanillaMaterials failed! WHAT DID YOU DO?!");//Exception type does not matter! Static initialisation failure loses the exception data, turns into ClassLoader fail. :(
+	public static void staticInitFail(Throwable t) {
+		String s = "";
+		while(t != null) {
+			System.err.print(t);
+			s += t.getMessage() + "\n";
+			t.printStackTrace();
+			t = t.getCause();
+		}
+		fail(s + ": Static initialisation of VanillaMaterials failed.");//Exception type does not matter! Static initialisation failure loses the exception data, turns into ClassLoader fail. :(
 	}
 }

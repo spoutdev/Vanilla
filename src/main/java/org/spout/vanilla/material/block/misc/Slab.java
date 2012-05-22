@@ -43,12 +43,12 @@ import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.util.Instrument;
 
 public class Slab extends VanillaBlockMaterial implements Mineable {
-	public static final Slab STONE = register(new Slab("Stone Slab"));
-	public static final Slab SANDSTONE = register(new Slab("Sandstone Slab", 1, STONE));
-	public static final Slab WOOD = register(new Slab("Wooden Slab", 2, STONE));
-	public static final Slab COBBLESTONE = register(new Slab("Cobblestone Slab", 3, STONE));
-	public static final Slab BRICK = register(new Slab("Brick Slab", 4, STONE));
-	public static final Slab STONE_BRICK = register(new Slab("Stone Brick Slab", 5, STONE));
+	public static final Slab STONE = new Slab("Stone Slab");
+	public static final Slab SANDSTONE = new Slab("Sandstone Slab", 1, STONE);
+	public static final Slab WOOD = new Slab("Wooden Slab", 2, STONE);
+	public static final Slab COBBLESTONE = new Slab("Cobblestone Slab", 3, STONE);
+	public static final Slab BRICK = new Slab("Brick Slab", 4, STONE);
+	public static final Slab STONE_BRICK = new Slab("Stone Brick Slab", 5, STONE);
 	private DoubleSlab doubletype;
 
 	private Slab(String name) {

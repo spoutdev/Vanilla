@@ -50,15 +50,23 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public static final short REDSTONE_POWER_MAX = 15;
 	public static final short REDSTONE_POWER_MIN = 0;
 	private List<ItemStack> drops;
+	private final int minecraftId;
 	private float resistance;
 	private int meleeDamage;
 
 	public VanillaBlockMaterial(String name, int id) {
-		super(name, id);
+		super(name);
+		this.minecraftId = id;
 	}
 
 	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, id, data, parent);
+		super(name, data, parent);
+		this.minecraftId = id;
+	}
+	
+	@Override
+	public final int getMinecraftId() {
+		return minecraftId;
 	}
 
 	@Override

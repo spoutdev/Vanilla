@@ -31,14 +31,22 @@ import org.spout.api.material.Material;
 import org.spout.vanilla.material.VanillaMaterial;
 
 public class VanillaItemMaterial extends Material implements VanillaMaterial {
+	private final int minecraftId;
 	private int meleeDamage = 1;
 
 	public VanillaItemMaterial(String name, int id) {
-		super(name, id);
+		super(name);
+		this.minecraftId = id;
 	}
 
 	public VanillaItemMaterial(String name, int id, int data, Material parent) {
-		super(name, id, data, parent);
+		super(name, data, parent);
+		this.minecraftId = id;
+	}
+	
+	@Override
+	public final int getMinecraftId() {
+		return minecraftId;
 	}
 
 	@Override

@@ -36,6 +36,7 @@ import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.entity.Entity;
 import org.spout.api.exception.CommandException;
+import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -442,6 +443,8 @@ public class AdministrationCommands {
 		if (!(player.getEntity().getPosition().getWorld().getGenerator() instanceof BiomeGenerator)) {
 			throw new CommandException("This map does not appear to have any biome data.");
 		}
-		source.sendMessage("Current biome: " + ((BiomeGenerator) player.getEntity().getPosition().getWorld().getGenerator()).getBiome(player.getEntity().getPosition().getBlockX(), player.getEntity().getPosition().getBlockY(), player.getEntity().getPosition().getBlockZ(), player.getEntity().getWorld().getSeed()).getName());
+		Point pos = player.getEntity().getPosition();
+		Biome biome = pos.getWorld().getBiomeType(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
+		source.sendMessage("Current biome: " + (biome != null ? biome.getName() : "null"));
 	}
 }

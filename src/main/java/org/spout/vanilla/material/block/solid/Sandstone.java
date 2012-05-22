@@ -39,9 +39,9 @@ import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class Sandstone extends Solid implements Mineable {
-	public static final Sandstone SANDSTONE = register(new Sandstone("Sandstone"));
-	public static final Sandstone DECORATIVE = register(new Sandstone("Decorative Sandstone", SandstoneType.DECORATIVE, SANDSTONE));
-	public static final Sandstone SMOOTH = register(new Sandstone("Smooth Sandstone", SandstoneType.SMOOTH, SANDSTONE));
+	public static final Sandstone SANDSTONE = new Sandstone("Sandstone");
+	public static final Sandstone DECORATIVE = new Sandstone("Decorative Sandstone", SandstoneType.DECORATIVE, SANDSTONE);
+	public static final Sandstone SMOOTH = new Sandstone("Smooth Sandstone", SandstoneType.SMOOTH, SANDSTONE);
 	private final SandstoneType type;
 
 	private Sandstone(String name) {

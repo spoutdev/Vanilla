@@ -43,10 +43,10 @@ import org.spout.vanilla.material.item.misc.Shears;
 import org.spout.vanilla.material.item.tool.MiningTool;
 
 public class Leaves extends Solid implements Mineable {
-	public static final Leaves DEFAULT = register(new Leaves("Leaves"));
-	public static final Leaves SPRUCE = register(new Leaves("Spruce Leaves", 0, DEFAULT));
-	public static final Leaves BIRCH = register(new Leaves("Birch Leaves", 0, DEFAULT));
-	public static final Leaves JUNGLE = register(new Leaves("Jungle Leaves", 0, DEFAULT));
+	public static final Leaves DEFAULT = new Leaves("Leaves");
+	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 0, DEFAULT);
+	public static final Leaves BIRCH = new Leaves("Birch Leaves", 0, DEFAULT);
+	public static final Leaves JUNGLE = new Leaves("Jungle Leaves", 0, DEFAULT);
 	private Random rand = new Random();
 
 	private Leaves(String name) {

@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.material;
 
-public interface VanillaMaterial {
+import org.spout.api.material.source.MaterialSource;
+
+public interface VanillaMaterial extends MaterialSource{
 	/**
 	 * Gets whether or not this material stores additional NBT tag data
 	 */
@@ -47,4 +49,11 @@ public interface VanillaMaterial {
 	 * This is automatically called after the initial construction of all Vanilla materials
 	 */
 	public void initialize();
+	
+	/**
+	 * Gets the associated 'minecraft' or notchian id for this material
+	 * 
+	 * @return minecraft id
+	 */
+	public int getMinecraftId();
 }

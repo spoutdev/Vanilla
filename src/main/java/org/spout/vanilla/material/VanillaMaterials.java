@@ -26,12 +26,16 @@
  */
 package org.spout.vanilla.material;
 
+import gnu.trove.map.hash.TShortObjectHashMap;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;
-
+import org.spout.api.material.Material;
+import org.spout.api.material.MaterialRegistry;
+import org.spout.api.util.map.concurrent.AtomicShortArray;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.BrewingStand;
 import org.spout.vanilla.material.block.controlled.Chest;
@@ -197,123 +201,121 @@ import org.spout.vanilla.material.item.weapon.Bow;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.Music;
 
-import static org.spout.api.material.MaterialRegistry.register;
-
 // TODO: Remove all casts and separate remaining "set" methods out into each material's init() method
 public final class VanillaMaterials {
 	public static final BlockMaterial AIR = BlockMaterial.AIR;
-	public static final Stone STONE = register(new Stone("Stone", 1));
-	public static final Grass GRASS = register(new Grass("Grass", 2));
-	public static final Dirt DIRT = register(new Dirt("Dirt", 3));
-	public static final Cobblestone COBBLESTONE = register(new Cobblestone("Cobblestone", 4));
+	public static final Stone STONE = new Stone("Stone", 1);
+	public static final Grass GRASS = new Grass("Grass", 2);
+	public static final Dirt DIRT = new Dirt("Dirt", 3);
+	public static final Cobblestone COBBLESTONE = new Cobblestone("Cobblestone", 4);
 	public static final Plank PLANK = Plank.PLANK;
-	public static final Bedrock BEDROCK = register(new Bedrock("Bedrock", 7));
-	public static final Sand SAND = register(new Sand("Sand", 12));
-	public static final Gravel GRAVEL = register(new Gravel("Gravel", 13));
+	public static final Bedrock BEDROCK = new Bedrock("Bedrock", 7);
+	public static final Sand SAND = new Sand("Sand", 12);
+	public static final Gravel GRAVEL = new Gravel("Gravel", 13);
 	public static final Log LOG = Log.DEFAULT;
 	public static final Leaves LEAVES = Leaves.DEFAULT;
-	public static final Sponge SPONGE = register(new Sponge("Sponge", 19));
-	public static final Glass GLASS = register(new Glass("Glass", 20));
-	public static final Dispenser DISPENSER = register(new Dispenser("Dispenser", 23));
+	public static final Sponge SPONGE = new Sponge("Sponge", 19);
+	public static final Glass GLASS = new Glass("Glass", 20);
+	public static final Dispenser DISPENSER = new Dispenser("Dispenser", 23);
 	public static final Sandstone SANDSTONE = Sandstone.SANDSTONE;
-	public static final NoteBlock NOTEBLOCK = register(new NoteBlock("Note Block", 25));
-	public static final BedBlock BED_BLOCK = register(new BedBlock("Bed", 26));
-	public static final Web WEB = register(new Web("Cobweb", 30));
+	public static final NoteBlock NOTEBLOCK = new NoteBlock("Note Block", 25);
+	public static final BedBlock BED_BLOCK = new BedBlock("Bed", 26);
+	public static final Web WEB = new Web("Cobweb", 30);
 	//== Piston ==
-	public static final Piston PISTON_STICKY_BASE = register(new Piston("Sticky Piston", 29, true));
-	public static final Piston PISTON_BASE = register(new Piston("Piston", 33, false));
-	public static final PistonExtension PISTON_EXTENSION = register(new PistonExtension("Piston (Head)", 34));
-	public static final PistonExtensionMoving PISTON_MOVING = register(new PistonExtensionMoving("Moved By Piston", 36));
+	public static final Piston PISTON_STICKY_BASE = new Piston("Sticky Piston", 29, true);
+	public static final Piston PISTON_BASE = new Piston("Piston", 33, false);
+	public static final PistonExtension PISTON_EXTENSION = new PistonExtension("Piston (Head)", 34);
+	public static final PistonExtensionMoving PISTON_MOVING = new PistonExtensionMoving("Moved By Piston", 36);
 	//== Rails ==
-	public static final Rail RAIL = register(new Rail("Rail", 66));
-	public static final PoweredRail RAIL_POWERED = register(new PoweredRail("Powered Rail", 27));
-	public static final DetectorRail RAIL_DETECTOR = register(new DetectorRail("Detector Rail", 28));
+	public static final Rail RAIL = new Rail("Rail", 66);
+	public static final PoweredRail RAIL_POWERED = new PoweredRail("Powered Rail", 27);
+	public static final DetectorRail RAIL_DETECTOR = new DetectorRail("Detector Rail", 28);
 	//== Liquids ==
-	public static final Water WATER = register(new Water("Water", 8, true));
-	public static final Water STATIONARY_WATER = register(new Water("Stationary Water", 9, false));
-	public static final Lava LAVA = register(new Lava("Lava", 10, true));
-	public static final Lava STATIONARY_LAVA = register(new Lava("Stationary Lava", 11, false));
+	public static final Water WATER = new Water("Water", 8, true);
+	public static final Water STATIONARY_WATER = new Water("Stationary Water", 9, false);
+	public static final Lava LAVA = new Lava("Lava", 10, true);
+	public static final Lava STATIONARY_LAVA = new Lava("Stationary Lava", 11, false);
 	//== Ores ==
-	public static final CoalOre COAL_ORE = register(new CoalOre("Coal Ore", 16));
-	public static final IronOre IRON_ORE = register(new IronOre("Iron Ore", 15));
-	public static final GoldOre GOLD_ORE = register(new GoldOre("Gold Ore", 14));
-	public static final DiamondOre DIAMOND_ORE = register(new DiamondOre("Diamond Ore", 56));
-	public static final LapisLazuliOre LAPIS_LAZULI_ORE = register(new LapisLazuliOre("Lapis Lazuli Ore", 21));
-	public static final RedstoneOre REDSTONE_ORE = register(new RedstoneOre("Redstone Ore", 73, false));
-	public static final RedstoneOre GLOWING_REDSTONE_ORE = register(new RedstoneOre("Glowing Redstone Ore", 74, true));
+	public static final CoalOre COAL_ORE = new CoalOre("Coal Ore", 16);
+	public static final IronOre IRON_ORE = new IronOre("Iron Ore", 15);
+	public static final GoldOre GOLD_ORE = new GoldOre("Gold Ore", 14);
+	public static final DiamondOre DIAMOND_ORE = new DiamondOre("Diamond Ore", 56);
+	public static final LapisLazuliOre LAPIS_LAZULI_ORE = new LapisLazuliOre("Lapis Lazuli Ore", 21);
+	public static final RedstoneOre REDSTONE_ORE = new RedstoneOre("Redstone Ore", 73, false);
+	public static final RedstoneOre GLOWING_REDSTONE_ORE = new RedstoneOre("Glowing Redstone Ore", 74, true);
 	//== Solid blocks ==
-	public static final GoldBlock GOLD_BLOCK = register(new GoldBlock("Gold Block", 41));
-	public static final IronBlock IRON_BLOCK = register(new IronBlock("Iron Block", 42));
-	public static final DiamondBlock DIAMOND_BLOCK = register(new DiamondBlock("Diamond Block", 57));
-	public static final LapisLazuliBlock LAPIS_LAZULI_BLOCK = register(new LapisLazuliBlock("Lapis Lazuli Block", 22));
+	public static final GoldBlock GOLD_BLOCK = new GoldBlock("Gold Block", 41);
+	public static final IronBlock IRON_BLOCK = new IronBlock("Iron Block", 42);
+	public static final DiamondBlock DIAMOND_BLOCK = new DiamondBlock("Diamond Block", 57);
+	public static final LapisLazuliBlock LAPIS_LAZULI_BLOCK = new LapisLazuliBlock("Lapis Lazuli Block", 22);
 	//== Plants ==
 	public static final TallGrass TALL_GRASS = TallGrass.TALL_GRASS;
-	public static final DeadBush DEAD_BUSH = register(new DeadBush("Dead Shrubs", 32));
+	public static final DeadBush DEAD_BUSH = new DeadBush("Dead Shrubs", 32);
 	public static final Sapling SAPLING = Sapling.DEFAULT;
-	public static final Flower DANDELION = register(new Flower("Dandelion", 37));
-	public static final Flower ROSE = register(new Flower("Rose", 38));
-	public static final Mushroom BROWN_MUSHROOM = register(new Mushroom("Brown Mushroom", 39));
-	public static final Mushroom RED_MUSHROOM = register(new Mushroom("Red Mushroom", 40));
+	public static final Flower DANDELION = new Flower("Dandelion", 37);
+	public static final Flower ROSE = new Flower("Rose", 38);
+	public static final Mushroom BROWN_MUSHROOM = new Mushroom("Brown Mushroom", 39);
+	public static final Mushroom RED_MUSHROOM = new Mushroom("Red Mushroom", 40);
 	//== Stairs ==
-	public static final NetherBrickStairs STAIRS_NETHER_BRICK = register(new NetherBrickStairs("Nether Brick Stairs", 114));
-	public static final BrickStairs STAIRS_BRICK = register(new BrickStairs("Brick Stairs", 108));
-	public static final CobblestoneStairs STAIRS_COBBLESTONE = register(new CobblestoneStairs("Cobblestone Stairs", 67));
-	public static final WoodenStairs STAIRS_WOODEN = register(new WoodenStairs("Wooden Stairs", 53));
-	public static final StoneBrickStairs STAIRS_STONE_BRICK = register(new StoneBrickStairs("Stone Brick Stairs", 109));
+	public static final NetherBrickStairs STAIRS_NETHER_BRICK = new NetherBrickStairs("Nether Brick Stairs", 114);
+	public static final BrickStairs STAIRS_BRICK = new BrickStairs("Brick Stairs", 108);
+	public static final CobblestoneStairs STAIRS_COBBLESTONE = new CobblestoneStairs("Cobblestone Stairs", 67);
+	public static final WoodenStairs STAIRS_WOODEN = new WoodenStairs("Wooden Stairs", 53);
+	public static final StoneBrickStairs STAIRS_STONE_BRICK = new StoneBrickStairs("Stone Brick Stairs", 109);
 	//== Portals ==
-	public static final NetherPortal PORTAL = register(new NetherPortal("Portal", 90));
-	public static final EndPortal END_PORTAL = register(new EndPortal("End Portal", 119));
-	public static final EndPortalFrame END_PORTAL_FRAME = register(new EndPortalFrame("End Portal Frame", 120));
+	public static final NetherPortal PORTAL = new NetherPortal("Portal", 90);
+	public static final EndPortal END_PORTAL = new EndPortal("End Portal", 119);
+	public static final EndPortalFrame END_PORTAL_FRAME = new EndPortalFrame("End Portal Frame", 120);
 	//================
 	public static final DoubleSlab DOUBLE_SLABS = DoubleSlab.STONE;
 	public static final Slab SLAB = Slab.STONE;
 	public static final Wool WOOL = Wool.WHITE;
-	public static final Brick BRICK = register(new Brick("Brick Block", 45));
-	public static final TNT TNT = register(new TNT("TNT", 46));
-	public static final BookShelf BOOKSHELF = register(new BookShelf("Bookshelf", 47));
-	public static final MossStone MOSS_STONE = register(new MossStone("Moss Stone", 48));
-	public static final Obsidian OBSIDIAN = register(new Obsidian("Obsidian", 49));
-	public static final Torch TORCH = register(new Torch("Torch", 50));
-	public static final Fire FIRE = register(new Fire("Fire", 51));
-	public static final MonsterSpawner MONSTER_SPAWNER = register(new MonsterSpawner("Monster Spawner", 52));
-	public static final Chest CHEST = register(new Chest("Chest", 54));
-	public static final RedstoneWire REDSTONE_WIRE = register(new RedstoneWire("Redstone Wire", 55));
-	public static final CraftingTable CRAFTING_TABLE = register(new CraftingTable("Crafting Table", 58));
-	public static final WheatCrop WHEATCROP = register(new WheatCrop("Wheat Crop", 59));
-	public static final FarmLand FARMLAND = register(new FarmLand("Farmland", 60));
-	public static final Furnace FURNACE = register(new Furnace("Furnace", 61, false));
-	public static final Furnace FURNACE_BURNING = register(new Furnace("Burning Furnace", 62, true));
-	public static final SignBase SIGN_POST = register(new SignBase("Sign Post", 63));
-	public static final Ladder LADDER = register(new Ladder("Ladder", 65));
-	public static final SignBase WALL_SIGN = register(new SignBase("Wall Sign", 68));
-	public static final Lever LEVER = register(new Lever("Lever", 69));
-	public static final StonePressurePlate STONE_PRESSURE_PLATE = register(new StonePressurePlate("Stone Pressure Plate", 70));
-	public static final IronDoorBlock IRON_DOOR_BLOCK = register(new IronDoorBlock("Iron Door", 71));
-	public static final WoodenDoorBlock WOODEN_DOOR_BLOCK = register(new WoodenDoorBlock("Wooden Door", 64));
-	public static final WoodenPressurePlate WOODEN_PRESSURE_PLATE = register(new WoodenPressurePlate("Wooden Pressure Plate", 72));
-	public static final RedstoneTorch REDSTONE_TORCH_OFF = register(new RedstoneTorch("Redstone Torch", 75, false));
-	public static final RedstoneTorch REDSTONE_TORCH_ON = register(new RedstoneTorch("Redstone Torch (On)", 76, true));
-	public static final StoneButton STONE_BUTTON = register(new StoneButton("Stone Button", 77));
-	public static final Snow SNOW = register(new Snow("Snow", 78));
-	public static final Ice ICE = register(new Ice("Ice", 79));
-	public static final SnowBlock SNOW_BLOCK = register(new SnowBlock("Snow Block", 80));
-	public static final Cactus CACTUS = register(new Cactus("Cactus", 81));
-	public static final ClayBlock CLAY_BLOCK = register(new ClayBlock("Clay Block", 82));
-	public static final SugarCaneBlock SUGAR_CANE_BLOCK = register(new SugarCaneBlock("Sugar Cane", 83));
-	public static final Jukebox JUKEBOX = register(new Jukebox("Jukebox", 84));
-	public static final WoodenFence WOODEN_FENCE = register(new WoodenFence("Wooden Fence", 85));
-	public static final Pumpkin PUMPKIN = register(new Pumpkin("Pumpkin", 86, false));
-	public static final NetherRack NETHERRACK = register(new NetherRack("Netherrack", 87));
-	public static final SoulSand SOUL_SAND = register(new SoulSand("Soul Sand", 88));
-	public static final Glowstone GLOWSTONE_BLOCK = register(new Glowstone("Glowstone Block", 89));
-	public static final Pumpkin JACK_O_LANTERN = register(new Pumpkin("Jack 'o' Lantern", 91, true));
-	public static final Endstone END_STONE = register(new Endstone("End Stone", 121));
-	public static final CakeBlock CAKE_BLOCK = register(new CakeBlock("Cake Block", 92));
-	public static final RedstoneRepeater REDSTONE_REPEATER_OFF = register(new RedstoneRepeater("Redstone Repeater", 93, false));
-	public static final RedstoneRepeater REDSTONE_REPEATER_ON = register(new RedstoneRepeater("Redstone Repeater (On)", 94, true));
-	public static final LockedChest LOCKED_CHEST = register(new LockedChest("Locked Chest", 95));
-	public static final TrapDoor TRAPDOOR = register(new TrapDoor("Trapdoor", 96));
-	public static final SilverfishStone SILVERFISH_STONE = register(new SilverfishStone("Silverfish Stone", 97));
+	public static final Brick BRICK = new Brick("Brick Block", 45);
+	public static final TNT TNT = new TNT("TNT", 46);
+	public static final BookShelf BOOKSHELF = new BookShelf("Bookshelf", 47);
+	public static final MossStone MOSS_STONE = new MossStone("Moss Stone", 48);
+	public static final Obsidian OBSIDIAN = new Obsidian("Obsidian", 49);
+	public static final Torch TORCH = new Torch("Torch", 50);
+	public static final Fire FIRE = new Fire("Fire", 51);
+	public static final MonsterSpawner MONSTER_SPAWNER = new MonsterSpawner("Monster Spawner", 52);
+	public static final Chest CHEST = new Chest("Chest", 54);
+	public static final RedstoneWire REDSTONE_WIRE = new RedstoneWire("Redstone Wire", 55);
+	public static final CraftingTable CRAFTING_TABLE = new CraftingTable("Crafting Table", 58);
+	public static final WheatCrop WHEATCROP = new WheatCrop("Wheat Crop", 59);
+	public static final FarmLand FARMLAND = new FarmLand("Farmland", 60);
+	public static final Furnace FURNACE = new Furnace("Furnace", 61, false);
+	public static final Furnace FURNACE_BURNING = new Furnace("Burning Furnace", 62, true);
+	public static final SignBase SIGN_POST = new SignBase("Sign Post", 63);
+	public static final Ladder LADDER = new Ladder("Ladder", 65);
+	public static final SignBase WALL_SIGN = new SignBase("Wall Sign", 68);
+	public static final Lever LEVER = new Lever("Lever", 69);
+	public static final StonePressurePlate STONE_PRESSURE_PLATE = new StonePressurePlate("Stone Pressure Plate", 70);
+	public static final IronDoorBlock IRON_DOOR_BLOCK = new IronDoorBlock("Iron Door", 71);
+	public static final WoodenDoorBlock WOODEN_DOOR_BLOCK = new WoodenDoorBlock("Wooden Door", 64);
+	public static final WoodenPressurePlate WOODEN_PRESSURE_PLATE = new WoodenPressurePlate("Wooden Pressure Plate", 72);
+	public static final RedstoneTorch REDSTONE_TORCH_OFF = new RedstoneTorch("Redstone Torch", 75, false);
+	public static final RedstoneTorch REDSTONE_TORCH_ON = new RedstoneTorch("Redstone Torch (On)", 76, true);
+	public static final StoneButton STONE_BUTTON = new StoneButton("Stone Button", 77);
+	public static final Snow SNOW = new Snow("Snow", 78);
+	public static final Ice ICE = new Ice("Ice", 79);
+	public static final SnowBlock SNOW_BLOCK = new SnowBlock("Snow Block", 80);
+	public static final Cactus CACTUS = new Cactus("Cactus", 81);
+	public static final ClayBlock CLAY_BLOCK = new ClayBlock("Clay Block", 82);
+	public static final SugarCaneBlock SUGAR_CANE_BLOCK = new SugarCaneBlock("Sugar Cane", 83);
+	public static final Jukebox JUKEBOX = new Jukebox("Jukebox", 84);
+	public static final WoodenFence WOODEN_FENCE = new WoodenFence("Wooden Fence", 85);
+	public static final Pumpkin PUMPKIN = new Pumpkin("Pumpkin", 86, false);
+	public static final NetherRack NETHERRACK = new NetherRack("Netherrack", 87);
+	public static final SoulSand SOUL_SAND = new SoulSand("Soul Sand", 88);
+	public static final Glowstone GLOWSTONE_BLOCK = new Glowstone("Glowstone Block", 89);
+	public static final Pumpkin JACK_O_LANTERN = new Pumpkin("Jack 'o' Lantern", 91, true);
+	public static final Endstone END_STONE = new Endstone("End Stone", 121);
+	public static final CakeBlock CAKE_BLOCK = new CakeBlock("Cake Block", 92);
+	public static final RedstoneRepeater REDSTONE_REPEATER_OFF = new RedstoneRepeater("Redstone Repeater", 93, false);
+	public static final RedstoneRepeater REDSTONE_REPEATER_ON = new RedstoneRepeater("Redstone Repeater (On)", 94, true);
+	public static final LockedChest LOCKED_CHEST = new LockedChest("Locked Chest", 95);
+	public static final TrapDoor TRAPDOOR = new TrapDoor("Trapdoor", 96);
+	public static final SilverfishStone SILVERFISH_STONE = new SilverfishStone("Silverfish Stone", 97);
 	public static final StoneBrick STONE_BRICK = StoneBrick.STONE;
 	public static final MushroomBlock HUGE_BROWN_MUSHROOM = register(new MushroomBlock("Huge Brown Mushroom", 99));
 	public static final MushroomBlock HUGE_RED_MUSHROOM = register(new MushroomBlock("Huge Red Mushroom", 100));
@@ -339,35 +341,35 @@ public final class VanillaMaterials {
 	 * Items
 	 */
 	//== Swords ==
-	public static final Sword WOODEN_SWORD = (Sword) register(new Sword("Wooden Sword", 268, (short) 60).setDamage(4));
-	public static final Sword GOLD_SWORD = (Sword) register(new Sword("Gold Sword", 283, (short) 33).setDamage(4));
-	public static final Sword STONE_SWORD = (Sword) register(new Sword("Stone Sword", 272, (short) 132).setDamage(5));
-	public static final Sword IRON_SWORD = (Sword) register(new Sword("Iron Sword", 267, (short) 251).setDamage(6));
-	public static final Sword DIAMOND_SWORD = (Sword) register(new Sword("Diamond Sword", 276, (short) 1562).setDamage(7));
+	public static final Sword WOODEN_SWORD = (Sword) new Sword("Wooden Sword", 268, (short) 60).setDamage(4);
+	public static final Sword GOLD_SWORD = (Sword) new Sword("Gold Sword", 283, (short) 33).setDamage(4);
+	public static final Sword STONE_SWORD = (Sword) new Sword("Stone Sword", 272, (short) 132).setDamage(5);
+	public static final Sword IRON_SWORD = (Sword) new Sword("Iron Sword", 267, (short) 251).setDamage(6);
+	public static final Sword DIAMOND_SWORD = (Sword) new Sword("Diamond Sword", 276, (short) 1562).setDamage(7);
 	//== Spades ==
-	public static final Spade GOLD_SPADE = register(new Spade("Gold Spade", 284, (short) 33));
-	public static final Spade WOODEN_SPADE = register(new Spade("Wooden Spade", 269, (short) 60));
-	public static final Spade STONE_SPADE = register(new Spade("Stone Spade", 273, (short) 132));
-	public static final Spade IRON_SPADE = register(new Spade("Iron Spade", 256, (short) 251));
-	public static final Spade DIAMOND_SPADE = register(new Spade("Diamond Spade", 277, (short) 1562));
+	public static final Spade GOLD_SPADE = new Spade("Gold Spade", 284, (short) 33);
+	public static final Spade WOODEN_SPADE = new Spade("Wooden Spade", 269, (short) 60);
+	public static final Spade STONE_SPADE = new Spade("Stone Spade", 273, (short) 132);
+	public static final Spade IRON_SPADE = new Spade("Iron Spade", 256, (short) 251);
+	public static final Spade DIAMOND_SPADE = new Spade("Diamond Spade", 277, (short) 1562);
 	//== Pickaxes ==
-	public static final Pickaxe GOLD_PICKAXE = (Pickaxe) register(new Pickaxe("Gold Pickaxe", 285, (short) 33).setDamage(2));
-	public static final Pickaxe WOODEN_PICKAXE = (Pickaxe) register(new Pickaxe("Wooden Pickaxe", 270, (short) 60).setDamage(2));
-	public static final Pickaxe STONE_PICKAXE = (Pickaxe) register(new Pickaxe("Stone Pickaxe", 274, (short) 132).setDamage(3));
-	public static final Pickaxe IRON_PICKAXE = (Pickaxe) register(new Pickaxe("Iron Pickaxe", 257, (short) 251).setDamage(4));
-	public static final Pickaxe DIAMOND_PICKAXE = (Pickaxe) register(new Pickaxe("Diamond Pickaxe", 278, (short) 1562).setDamage(5));
+	public static final Pickaxe GOLD_PICKAXE = (Pickaxe) new Pickaxe("Gold Pickaxe", 285, (short) 33).setDamage(2);
+	public static final Pickaxe WOODEN_PICKAXE = (Pickaxe) new Pickaxe("Wooden Pickaxe", 270, (short) 60).setDamage(2);
+	public static final Pickaxe STONE_PICKAXE = (Pickaxe) new Pickaxe("Stone Pickaxe", 274, (short) 132).setDamage(3);
+	public static final Pickaxe IRON_PICKAXE = (Pickaxe) new Pickaxe("Iron Pickaxe", 257, (short) 251).setDamage(4);
+	public static final Pickaxe DIAMOND_PICKAXE = (Pickaxe) new Pickaxe("Diamond Pickaxe", 278, (short) 1562).setDamage(5);
 	//== Axes ==
-	public static final Axe GOLD_AXE = (Axe) register(new Axe("Gold Axe", 286, (short) 33).setDamage(3));
-	public static final Axe WOODEN_AXE = (Axe) register(new Axe("Wooden Axe", 271, (short) 60).setDamage(3));
-	public static final Axe STONE_AXE = (Axe) register(new Axe("Stone Axe", 275, (short) 132).setDamage(3));
-	public static final Axe IRON_AXE = (Axe) register(new Axe("Iron Axe", 258, (short) 251).setDamage(5));
-	public static final Axe DIAMOND_AXE = (Axe) register(new Axe("Diamond Axe", 279, (short) 1562).setDamage(6));
+	public static final Axe GOLD_AXE = (Axe) new Axe("Gold Axe", 286, (short) 33).setDamage(3);
+	public static final Axe WOODEN_AXE = (Axe) new Axe("Wooden Axe", 271, (short) 60).setDamage(3);
+	public static final Axe STONE_AXE = (Axe) new Axe("Stone Axe", 275, (short) 132).setDamage(3);
+	public static final Axe IRON_AXE = (Axe) new Axe("Iron Axe", 258, (short) 251).setDamage(5);
+	public static final Axe DIAMOND_AXE = (Axe) new Axe("Diamond Axe", 279, (short) 1562).setDamage(6);
 	//== Hoes ==
-	public static final Hoe GOLD_HOE = register(new Hoe("Gold Hoe", 294, (short) 33));
-	public static final Hoe WOODEN_HOE = register(new Hoe("Wooden Hoe", 290, (short) 60));
-	public static final Hoe STONE_HOE = register(new Hoe("Stone Hoe", 291, (short) 132));
-	public static final Hoe IRON_HOE = register(new Hoe("Iron Hoe", 292, (short) 251));
-	public static final Hoe DIAMOND_HOE = register(new Hoe("Diamond Hoe", 293, (short) 1562));
+	public static final Hoe GOLD_HOE = new Hoe("Gold Hoe", 294, (short) 33);
+	public static final Hoe WOODEN_HOE = new Hoe("Wooden Hoe", 290, (short) 60);
+	public static final Hoe STONE_HOE = new Hoe("Stone Hoe", 291, (short) 132);
+	public static final Hoe IRON_HOE = new Hoe("Iron Hoe", 292, (short) 251);
+	public static final Hoe DIAMOND_HOE = new Hoe("Diamond Hoe", 293, (short) 1562);
 	//== Headwear ==
 	public static final LeatherCap LEATHER_CAP = register(new LeatherCap("Leather Cap", 298, 1));
 	public static final ChainHelmet CHAIN_HELMET = register(new ChainHelmet("Chain Helmet", 302, 2));
@@ -398,48 +400,48 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial ARROW = register(new VanillaItemMaterial("Arrow", 262));
 	public static final Tool FISHING_ROD = register(new Tool("Fishing Rod", 346, (short) 65));
 	//== Buckets=
-	public static final EmptyContainer BUCKET = register(new EmptyContainer("Bucket", 325));
-	public static final FullContainer WATER_BUCKET = register(new FullContainer("Water Bucket", 326, WATER, BUCKET));
-	public static final LavaBucket LAVA_BUCKET = register(new LavaBucket("Lava Bucket", 327, LAVA, BUCKET));
-	public static final VanillaItemMaterial MILK_BUCKET = register(new VanillaItemMaterial("Milk", 335));
+	public static final EmptyContainer BUCKET = new EmptyContainer("Bucket", 325);
+	public static final FullContainer WATER_BUCKET = new FullContainer("Water Bucket", 326, WATER, BUCKET);
+	public static final LavaBucket LAVA_BUCKET = new LavaBucket("Lava Bucket", 327, LAVA, BUCKET);
+	public static final VanillaItemMaterial MILK_BUCKET = new VanillaItemMaterial("Milk", 335);
 	//== Minecarts ==
-	public static final MinecartItem MINECART = register(new MinecartItem("Minecart", 328));
-	public static final StorageMinecartItem MINECART_CHEST = register(new StorageMinecartItem("Minecart with Chest", 342));
-	public static final PoweredMinecartItem MINECART_FURNACE = register(new PoweredMinecartItem("Minecart with Furnace", 343));
+	public static final MinecartItem MINECART = new MinecartItem("Minecart", 328);
+	public static final StorageMinecartItem MINECART_CHEST = new StorageMinecartItem("Minecart with Chest", 342);
+	public static final PoweredMinecartItem MINECART_FURNACE = new PoweredMinecartItem("Minecart with Furnace", 343);
 	//== Others ==
 	public static final Coal COAL = Coal.COAL;
-	public static final Clay CLAY = register(new Clay("Clay", 337));
-	public static final BlockItem REDSTONE_DUST = register(new BlockItem("Redstone", 331, VanillaMaterials.REDSTONE_WIRE));
-	public static final VanillaItemMaterial DIAMOND = register(new VanillaItemMaterial("Diamond", 264));
-	public static final VanillaItemMaterial IRON_INGOT = register(new VanillaItemMaterial("Iron Ingot", 265));
-	public static final VanillaItemMaterial GOLD_INGOT = register(new VanillaItemMaterial("Gold Ingot", 266));
-	public static final Stick STICK = register(new Stick("Stick", 280));
-	public static final VanillaItemMaterial BOWL = register(new VanillaItemMaterial("Bowl", 281));
-	public static final VanillaItemMaterial STRING = register(new VanillaItemMaterial("String", 287));
-	public static final VanillaItemMaterial FEATHER = register(new VanillaItemMaterial("Feather", 288));
-	public static final VanillaItemMaterial GUNPOWDER = register(new VanillaItemMaterial("Gunpowder", 289));
-	public static final VanillaItemMaterial WHEAT = register(new VanillaItemMaterial("Wheat", 296));
-	public static final VanillaItemMaterial FLINT = register(new VanillaItemMaterial("Flint", 318));
-	public static final PaintingItem PAINTING = register(new PaintingItem("Painting", 321));
-	public static final Sign SIGN = register(new Sign("Sign", 323));
-	public static final BlockItem SEEDS = register(new BlockItem("Seeds", 295, WHEATCROP));
-	public static final BlockItem WOODEN_DOOR = register(new BlockItem("Wooden Door", 324, WOODEN_DOOR_BLOCK));
-	public static final BlockItem IRON_DOOR = register(new BlockItem("Iron Door", 330, IRON_DOOR_BLOCK));
-	public static final VanillaItemMaterial SADDLE = register(new VanillaItemMaterial("Saddle", 329));
-	public static final VanillaItemMaterial SNOWBALL = register(new VanillaItemMaterial("Snowball", 332));
-	public static final VanillaItemMaterial BOAT = register(new VanillaItemMaterial("Boat", 333));
-	public static final VanillaItemMaterial LEATHER = register(new VanillaItemMaterial("Leather", 334));
-	public static final VanillaItemMaterial CLAY_BRICK = register(new VanillaItemMaterial("Brick", 336));
-	public static final BlockItem SUGAR_CANE = register(new BlockItem("Sugar Cane", 338, VanillaMaterials.SUGAR_CANE_BLOCK));
-	public static final VanillaItemMaterial PAPER = register(new VanillaItemMaterial("Paper", 339));
-	public static final VanillaItemMaterial BOOK = register(new VanillaItemMaterial("Book", 340));
-	public static final VanillaItemMaterial SLIMEBALL = register(new VanillaItemMaterial("Slimeball", 341));
-	public static final VanillaItemMaterial EGG = register(new VanillaItemMaterial("Egg", 344));
-	public static final VanillaItemMaterial COMPASS = register(new VanillaItemMaterial("Compass", 345));
-	public static final VanillaItemMaterial CLOCK = register(new VanillaItemMaterial("Clock", 347));
-	public static final VanillaItemMaterial GLOWSTONE_DUST = register(new VanillaItemMaterial("Glowstone Dust", 348));
-	public static final RawFish RAW_FISH = register(new RawFish("Raw Fish", 349, 2, FoodEffectType.HUNGER));
-	public static final Food COOKED_FISH = register(new Food("Cooked Fish", 350, 5, FoodEffectType.HUNGER));
+	public static final Clay CLAY = new Clay("Clay", 337);
+	public static final BlockItem REDSTONE_DUST = new BlockItem("Redstone", 331, VanillaMaterials.REDSTONE_WIRE);
+	public static final VanillaItemMaterial DIAMOND = new VanillaItemMaterial("Diamond", 264);
+	public static final VanillaItemMaterial IRON_INGOT = new VanillaItemMaterial("Iron Ingot", 265);
+	public static final VanillaItemMaterial GOLD_INGOT = new VanillaItemMaterial("Gold Ingot", 266);
+	public static final Stick STICK = new Stick("Stick", 280);
+	public static final VanillaItemMaterial BOWL = new VanillaItemMaterial("Bowl", 281);
+	public static final VanillaItemMaterial STRING = new VanillaItemMaterial("String", 287);
+	public static final VanillaItemMaterial FEATHER = new VanillaItemMaterial("Feather", 288);
+	public static final VanillaItemMaterial GUNPOWDER = new VanillaItemMaterial("Gunpowder", 289);
+	public static final VanillaItemMaterial WHEAT = new VanillaItemMaterial("Wheat", 296);
+	public static final VanillaItemMaterial FLINT = new VanillaItemMaterial("Flint", 318);
+	public static final PaintingItem PAINTING = new PaintingItem("Painting", 321);
+	public static final Sign SIGN = new Sign("Sign", 323);
+	public static final BlockItem SEEDS = new BlockItem("Seeds", 295, WHEATCROP);
+	public static final BlockItem WOODEN_DOOR = new BlockItem("Wooden Door", 324, WOODEN_DOOR_BLOCK);
+	public static final BlockItem IRON_DOOR = new BlockItem("Iron Door", 330, IRON_DOOR_BLOCK);
+	public static final VanillaItemMaterial SADDLE = new VanillaItemMaterial("Saddle", 329);
+	public static final VanillaItemMaterial SNOWBALL = new VanillaItemMaterial("Snowball", 332);
+	public static final VanillaItemMaterial BOAT = new VanillaItemMaterial("Boat", 333);
+	public static final VanillaItemMaterial LEATHER = new VanillaItemMaterial("Leather", 334);
+	public static final VanillaItemMaterial CLAY_BRICK = new VanillaItemMaterial("Brick", 336);
+	public static final BlockItem SUGAR_CANE = new BlockItem("Sugar Cane", 338, VanillaMaterials.SUGAR_CANE_BLOCK);
+	public static final VanillaItemMaterial PAPER = new VanillaItemMaterial("Paper", 339);
+	public static final VanillaItemMaterial BOOK = new VanillaItemMaterial("Book", 340);
+	public static final VanillaItemMaterial SLIMEBALL = new VanillaItemMaterial("Slimeball", 341);
+	public static final VanillaItemMaterial EGG = new VanillaItemMaterial("Egg", 344);
+	public static final VanillaItemMaterial COMPASS = new VanillaItemMaterial("Compass", 345);
+	public static final VanillaItemMaterial CLOCK = new VanillaItemMaterial("Clock", 347);
+	public static final VanillaItemMaterial GLOWSTONE_DUST = new VanillaItemMaterial("Glowstone Dust", 348);
+	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, 2, FoodEffectType.HUNGER);
+	public static final Food COOKED_FISH = new Food("Cooked Fish", 350, 5, FoodEffectType.HUNGER);
 	public static final Dye DYE = Dye.INK_SAC;
 	public static final VanillaItemMaterial BONE = register(new VanillaItemMaterial("Bone", 352));
 	public static final VanillaItemMaterial SUGAR = register(new VanillaItemMaterial("Sugar", 353));
@@ -465,17 +467,17 @@ public final class VanillaMaterials {
 	public static final Food COOKED_CHICKEN = register(new Food("Cooked Chicken", 366, 6, FoodEffectType.HUNGER));
 	public static final Food ROTTEN_FLESH = register(new Food("Rotten Flesh", 367, 4, FoodEffectType.HUNGER));
 	//== Music Discs ==
-	public static final MusicDisc GOLD_MUSIC_DISC = register(new MusicDisc("Music Disc", 2256).setMusic(Music.THIRTEEN));
-	public static final MusicDisc GREEN_MUSIC_DISC = register(new MusicDisc("Music Disc", 2257).setMusic(Music.CAT));
-	public static final MusicDisc ORANGE_MUSIC_DISC = register(new MusicDisc("Music Disc", 2258).setMusic(Music.BLOCKS));
-	public static final MusicDisc RED_MUSIC_DISC = register(new MusicDisc("Music Disc", 2259).setMusic(Music.CHIRP));
-	public static final MusicDisc CYAN_MUSIC_DISC = register(new MusicDisc("Music Disc", 2260).setMusic(Music.FAR));
-	public static final MusicDisc BLUE_MUSIC_DISC = register(new MusicDisc("Music Disc", 2261).setMusic(Music.MALL));
-	public static final MusicDisc PURPLE_MUSIC_DISC = register(new MusicDisc("Music Disc", 2262).setMusic(Music.MELLOHI));
-	public static final MusicDisc BLACK_MUSIC_DISC = register(new MusicDisc("Music Disc", 2263).setMusic(Music.STAL));
-	public static final MusicDisc WHITE_MUSIC_DISC = register(new MusicDisc("Music Disc", 2264).setMusic(Music.STRAD));
-	public static final MusicDisc FOREST_GREEN_MUSIC_DISC = register(new MusicDisc("Music Disc", 2265).setMusic(Music.WARD));
-	public static final MusicDisc BROKEN_MUSIC_DISC = register(new MusicDisc("Music Disc", 2266).setMusic(Music.ELEVEN));
+	public static final MusicDisc GOLD_MUSIC_DISC = new MusicDisc("Music Disc - 13", 2256).setMusic(Music.THIRTEEN);
+	public static final MusicDisc GREEN_MUSIC_DISC = new MusicDisc("Music Disc - cat", 2257).setMusic(Music.CAT);
+	public static final MusicDisc ORANGE_MUSIC_DISC = new MusicDisc("Music Disc - blocks", 2258).setMusic(Music.BLOCKS);
+	public static final MusicDisc RED_MUSIC_DISC = new MusicDisc("Music Disc - chirp", 2259).setMusic(Music.CHIRP);
+	public static final MusicDisc CYAN_MUSIC_DISC = new MusicDisc("Music Disc - far", 2260).setMusic(Music.FAR);
+	public static final MusicDisc BLUE_MUSIC_DISC = new MusicDisc("Music Disc - mall", 2261).setMusic(Music.MALL);
+	public static final MusicDisc PURPLE_MUSIC_DISC = new MusicDisc("Music Disc - mellohi", 2262).setMusic(Music.MELLOHI);
+	public static final MusicDisc BLACK_MUSIC_DISC = new MusicDisc("Music Disc - stal", 2263).setMusic(Music.STAL);
+	public static final MusicDisc WHITE_MUSIC_DISC = new MusicDisc("Music Disc - strad", 2264).setMusic(Music.STRAD);
+	public static final MusicDisc FOREST_GREEN_MUSIC_DISC = new MusicDisc("Music Disc - ward", 2265).setMusic(Music.WARD);
+	public static final MusicDisc BROKEN_MUSIC_DISC = new MusicDisc("Music Disc - 11", 2266).setMusic(Music.ELEVEN);
 	//== Potions and special items ==
 	public static final VanillaItemMaterial ENDER_PEARL = register(new VanillaItemMaterial("Ender Pearl", 368));
 	public static final BlazeRod BLAZE_ROD = register(new BlazeRod("Blaze Rod", 369));
@@ -492,10 +494,73 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial EYE_OF_ENDER = register(new VanillaItemMaterial("Eye of Ender", 381));
 	public static final VanillaItemMaterial GLISTERING_MELON = register(new VanillaItemMaterial("Glistering MelonBlock", 382));
 	public static final SpawnEgg SPAWN_EGG = SpawnEgg.PIG;
-	public static final VanillaItemMaterial BOTTLE_O_ENCHANTING = register(new VanillaItemMaterial("Bottle o' Enchanting", 384));
-	public static final BlockItem FIRE_CHARGE = register(new BlockItem("Fire Charge", 385, VanillaMaterials.FIRE)); //Basic Implementation
+	public static final VanillaItemMaterial BOTTLE_O_ENCHANTING = new VanillaItemMaterial("Bottle o' Enchanting", 384);
+	public static final BlockItem FIRE_CHARGE = new BlockItem("Fire Charge", 385, VanillaMaterials.FIRE); //Basic Implementation
 	public static final Potion POTION = Potion.EMPTY;
 	private static boolean initialized = false;
+	
+	private final static AtomicShortArray conversionTable = new AtomicShortArray(Short.MAX_VALUE);
+	private final static TShortObjectHashMap<Material> reverseTable = new TShortObjectHashMap<Material>(500);
+	
+	static {
+		for (Field field : VanillaMaterials.class.getFields()) {
+			try {
+				if ((field.getModifiers() & (Modifier.STATIC | Modifier.PUBLIC)) > 0) {
+					Object temp = field.get(null);
+					if (temp instanceof VanillaMaterial) {
+						VanillaMaterial material = (VanillaMaterial) temp;
+						if (material != null) {
+							if (!((Material)material).isSubMaterial()) {
+								reverseTable.put((short)material.getMinecraftId(), (Material) material);
+							}
+						}
+					}
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+	
+	public static Material getMaterial(short minecraftId) {
+		return reverseTable.get(minecraftId);
+	}
+
+	/**
+	 * Gets the minecraft id associated with the Spout material
+	 * 
+	 * @param material to convert
+	 * @return minecraft id
+	 */
+	public static short getMinecraftId(Material material) {
+		if (material instanceof VanillaMaterial) {
+			return (short) ((VanillaMaterial)material).getMinecraftId();
+		} else {
+			return BlockMaterial.AIR.getId();
+		}
+	}
+	/**
+	 * Gets the minecraft id associated with the Spout material id
+	 * 
+	 * @param id to convert
+	 * @return minecraft id
+	 */
+	public static short getMinecraftId(short id) {
+		if (id <= 0) {
+			return 0;
+		}
+		short minecraftId = conversionTable.get(id);
+		if (minecraftId == 0) {
+			Material mat = MaterialRegistry.get(id);
+			if (mat instanceof VanillaMaterial) {
+				minecraftId = (short) ((VanillaMaterial)mat).getMinecraftId();
+			} else {
+				minecraftId = BlockMaterial.AIR.getId();
+			}
+			conversionTable.set(id, minecraftId);
+		}
+		return minecraftId;
+	}
 
 	public static void initialize() {
 		if (initialized) {

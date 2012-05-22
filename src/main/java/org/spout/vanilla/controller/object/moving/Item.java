@@ -26,6 +26,16 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
+import java.util.Arrays;
+import java.util.List;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
+import org.spout.api.Spout;
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
+import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
@@ -42,6 +52,7 @@ import org.spout.vanilla.protocol.msg.CollectItemMessage;
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).
  */
 public class Item extends Substance {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(Item.class, "Item");
 	private final ItemStack is;
 	private int unpickable;
 
@@ -67,11 +78,15 @@ public class Item extends Substance {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-			ItemStack item = (ItemStack) data().get("Itemstack", is);
+		if (data().containsKey("Itemstack")) {
+			ItemStack item = (ItemStack) data().get("Itemstack");
 			is.setMaterial(item.getMaterial(), item.getData());
 			is.setAmount(item.getAmount());
-			is.setAuxData(item.getAuxData());
-			unpickable = (Integer) data().get("unpickable", unpickable);
+			is.setNBTData(item.getNBTData());
+			is.getAuxData().putAll(item.getAuxData());
+		}
+
+		unpickable = (Integer) data().get("unpickable", unpickable);
 	}
 
 	@Override

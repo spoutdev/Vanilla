@@ -39,22 +39,22 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.MiningTool;
 
 public class Wool extends Solid implements Mineable {
-	public static final Wool WHITE = register(new Wool("White Wool"));
-	public static final Wool ORANGE = register(new Wool("Orange Wool", WoolColor.ORANGE, WHITE));
-	public static final Wool MAGENTA = register(new Wool("Magenta Wool", WoolColor.MAGENTA, WHITE));
-	public static final Wool LIGHTBLUE = register(new Wool("Light Blue Wool", WoolColor.LIGHTBLUE, WHITE));
-	public static final Wool YELLOW = register(new Wool("Yellow Wool", WoolColor.YELLOW, WHITE));
-	public static final Wool LIME = register(new Wool("Lime Wool", WoolColor.LIME, WHITE));
-	public static final Wool PINK = register(new Wool("Pink Wool", WoolColor.PINK, WHITE));
-	public static final Wool GRAY = register(new Wool("Gray Wool", WoolColor.GRAY, WHITE));
-	public static final Wool SILVER = register(new Wool("Silver Wool", WoolColor.SILVER, WHITE));
-	public static final Wool CYAN = register(new Wool("Cyan Wool", WoolColor.CYAN, WHITE));
-	public static final Wool PURPLE = register(new Wool("Purple Wool", WoolColor.PURPLE, WHITE));
-	public static final Wool BLUE = register(new Wool("Blue Wool", WoolColor.BLUE, WHITE));
-	public static final Wool BROWN = register(new Wool("Brown Wool", WoolColor.BROWN, WHITE));
-	public static final Wool GREEN = register(new Wool("Green Wool", WoolColor.GREEN, WHITE));
-	public static final Wool RED = register(new Wool("Red Wool", WoolColor.RED, WHITE));
-	public static final Wool BLACK = register(new Wool("Black Wool", WoolColor.BLACK, WHITE));
+	public static final Wool WHITE = new Wool("White Wool");
+	public static final Wool ORANGE = new Wool("Orange Wool", WoolColor.ORANGE, WHITE);
+	public static final Wool MAGENTA = new Wool("Magenta Wool", WoolColor.MAGENTA, WHITE);
+	public static final Wool LIGHTBLUE = new Wool("Light Blue Wool", WoolColor.LIGHTBLUE, WHITE);
+	public static final Wool YELLOW = new Wool("Yellow Wool", WoolColor.YELLOW, WHITE);
+	public static final Wool LIME = new Wool("Lime Wool", WoolColor.LIME, WHITE);
+	public static final Wool PINK = new Wool("Pink Wool", WoolColor.PINK, WHITE);
+	public static final Wool GRAY = new Wool("Gray Wool", WoolColor.GRAY, WHITE);
+	public static final Wool SILVER = new Wool("Silver Wool", WoolColor.SILVER, WHITE);
+	public static final Wool CYAN = new Wool("Cyan Wool", WoolColor.CYAN, WHITE);
+	public static final Wool PURPLE = new Wool("Purple Wool", WoolColor.PURPLE, WHITE);
+	public static final Wool BLUE = new Wool("Blue Wool", WoolColor.BLUE, WHITE);
+	public static final Wool BROWN = new Wool("Brown Wool", WoolColor.BROWN, WHITE);
+	public static final Wool GREEN = new Wool("Green Wool", WoolColor.GREEN, WHITE);
+	public static final Wool RED = new Wool("Red Wool", WoolColor.RED, WHITE);
+	public static final Wool BLACK = new Wool("Black Wool", WoolColor.BLACK, WHITE);
 	private final WoolColor color;
 
 	private Wool(String name) {

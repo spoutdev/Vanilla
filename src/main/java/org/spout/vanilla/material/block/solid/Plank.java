@@ -40,10 +40,10 @@ import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.util.Instrument;
 
 public class Plank extends Solid implements Fuel, Mineable {
-	public static final Plank PLANK = register(new Plank("Oak Plank"));
-	public static final Plank PINE = register(new Plank("Pine Plank", WoodType.PINE, PLANK));
-	public static final Plank BIRCH = register(new Plank("Birch Plank", WoodType.BIRCH, PLANK));
-	public static final Plank JUNGLE = register(new Plank("Jungle Plank", WoodType.JUNGLE, PLANK));
+	public static final Plank PLANK = new Plank("Oak Plank");
+	public static final Plank PINE = new Plank("Pine Plank", WoodType.PINE, PLANK);
+	public static final Plank BIRCH = new Plank("Birch Plank", WoodType.BIRCH, PLANK);
+	public static final Plank JUNGLE = new Plank("Jungle Plank", WoodType.JUNGLE, PLANK);
 	private final WoodType type;
 	public final float BURN_TIME = 15.f;
 

@@ -28,6 +28,8 @@ package org.spout.vanilla.world.generator.flat;
 
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGenerator;
+import org.spout.api.generator.biome.BiomeManager;
+import org.spout.api.generator.biome.EmptyBiomeManager;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
@@ -44,7 +46,7 @@ public class FlatGenerator implements WorldGenerator, VanillaGenerator {
 	}
 
 	@Override
-	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+	public BiomeManager generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
 		int x = chunkX << 4, z = chunkZ << 4;
 		for (int dx = x; dx < x + 16; ++dx) {
 			for (int dz = z; dz < z + 16; ++dz) {
@@ -61,6 +63,7 @@ public class FlatGenerator implements WorldGenerator, VanillaGenerator {
 				}
 			}
 		}
+		return new EmptyBiomeManager(chunkX, chunkY, chunkZ);
 	}
 
 	@Override

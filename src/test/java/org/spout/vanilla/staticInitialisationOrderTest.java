@@ -40,7 +40,6 @@ public class staticInitialisationOrderTest {
 	@Test
 	public void materialStaticInitialisationTest() {
 		try {
-			VanillaMaterials.initialize();
 			for (Field field : VanillaMaterials.class.getFields()) {
 				try {
 					if (field == null || ((field.getModifiers() & (Modifier.STATIC | Modifier.PUBLIC)) != (Modifier.STATIC | Modifier.PUBLIC)) || !VanillaMaterial.class.isAssignableFrom(field.getType())) {
@@ -54,14 +53,14 @@ public class staticInitialisationOrderTest {
 					try {
 						material.initialize();
 					} catch (Throwable t) {
-						fail("An exception occurred while loading the properties of Vanilla Material '" + field.getName() + "':");
 						t.printStackTrace();
+						fail("An exception occurred while loading the properties of Vanilla Material '" + field.getName() + "':");
 					}
 				} catch (NoClassDefFoundError ex) {
 					staticInitFail();
 				} catch (Throwable t) {
-					fail("An exception occurred while reading Vanilla Material field '" + field.getName() + "':");
 					t.printStackTrace();
+					fail("An exception occurred while reading Vanilla Material field '" + field.getName() + "':");
 				}
 			}
 		} catch (NoClassDefFoundError t) {

@@ -39,12 +39,12 @@ import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class DoubleSlab extends Solid implements Mineable {
-	public static final DoubleSlab STONE = register(new DoubleSlab("Stone Double Slab", Slab.STONE));
-	public static final DoubleSlab SANDSTONE = register(new DoubleSlab("Sandstone Double Slab", 1, STONE, Slab.SANDSTONE));
-	public static final DoubleSlab WOOD = register(new DoubleSlab("Wooden Double Slab", 2, STONE, Slab.WOOD));
-	public static final DoubleSlab COBBLESTONE = register(new DoubleSlab("Cobblestone Double Slab", 3, STONE, Slab.COBBLESTONE));
-	public static final DoubleSlab BRICK = register(new DoubleSlab("Brick Double Slab", 4, STONE, Slab.BRICK));
-	public static final DoubleSlab STONE_BRICK = register(new DoubleSlab("Stone Brick Double Slab", 5, STONE, Slab.STONE_BRICK));
+	public static final DoubleSlab STONE = new DoubleSlab("Stone Double Slab", Slab.STONE);
+	public static final DoubleSlab SANDSTONE = new DoubleSlab("Sandstone Double Slab", 1, STONE, Slab.SANDSTONE);
+	public static final DoubleSlab WOOD = new DoubleSlab("Wooden Double Slab", 2, STONE, Slab.WOOD);
+	public static final DoubleSlab COBBLESTONE = new DoubleSlab("Cobblestone Double Slab", 3, STONE, Slab.COBBLESTONE);
+	public static final DoubleSlab BRICK = new DoubleSlab("Brick Double Slab", 4, STONE, Slab.BRICK);
+	public static final DoubleSlab STONE_BRICK = new DoubleSlab("Stone Brick Double Slab", 5, STONE, Slab.STONE_BRICK);
 	private Slab singletype;
 
 	public Slab getSingleType() {

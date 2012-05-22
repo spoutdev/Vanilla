@@ -36,9 +36,9 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class StoneBrick extends Solid {
-	public static final StoneBrick STONE = register(new StoneBrick("Stone Brick"));
-	public static final StoneBrick MOSSY_STONE = register(new StoneBrick("Mossy Stone Brick", 1, STONE));
-	public static final StoneBrick CRACKED_STONE = register(new StoneBrick("Cracked Stone Brick", 2, STONE));
+	public static final StoneBrick STONE = new StoneBrick("Stone Brick");
+	public static final StoneBrick MOSSY_STONE = new StoneBrick("Mossy Stone Brick", 1, STONE);
+	public static final StoneBrick CRACKED_STONE = new StoneBrick("Cracked Stone Brick", 2, STONE);
 
 	private StoneBrick(String name) {
 		super(name, 98);

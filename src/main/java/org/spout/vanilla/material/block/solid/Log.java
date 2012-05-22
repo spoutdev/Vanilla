@@ -43,10 +43,10 @@ import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.util.Instrument;
 
 public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable {
-	public static final Log DEFAULT = register(new Log("Wood"));
-	public static final Log SPRUCE = register(new Log("Spruce Wood", 1, DEFAULT));
-	public static final Log BIRCH = register(new Log("Birch Wood", 2, DEFAULT));
-	public static final Log JUNGLE = register(new Log("Jungle Wood", 3, DEFAULT));
+	public static final Log DEFAULT = new Log("Wood");
+	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT);
+	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT);
+	public static final Log JUNGLE = new Log("Jungle Wood", 3, DEFAULT);
 	public final float BURN_TIME = 15.f;
 
 	private Log(String name) {

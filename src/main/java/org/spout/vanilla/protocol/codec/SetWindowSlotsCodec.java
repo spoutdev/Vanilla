@@ -32,12 +32,11 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.nbt.CompoundMap;
 
-import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 
@@ -62,7 +61,7 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 				if (ChannelBufferUtils.hasNbtData(item)) {
 					nbtData = ChannelBufferUtils.readCompound(buffer);
 				}
-				items[slot] = new ItemStack(Material.get(item), data, itemCount).setAuxData(nbtData);
+				items[slot] = new ItemStack(VanillaMaterials.getMaterial(item), data, itemCount).setNBTData(nbtData);
 			}
 		}
 		return new SetWindowSlotsMessage(id, items);
@@ -79,16 +78,11 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 			if (item == null) {
 				buffer.writeShort(-1);
 			} else {
-				buffer.writeShort(item.getMaterial().getId());
+				buffer.writeShort(VanillaMaterials.getMinecraftId(item.getMaterial()));
 				buffer.writeByte(item.getAmount());
-				if (item.getMaterial() instanceof Tool) {
-					System.out.println("durability");
-				} else {
-					System.out.println("data");
-				}
 				buffer.writeShort(item.getData());
 				if (ChannelBufferUtils.hasNbtData(item.getData())) {
-					ChannelBufferUtils.writeCompound(buffer, item.getAuxData());
+					ChannelBufferUtils.writeCompound(buffer, item.getNBTData());
 				}
 			}
 		}

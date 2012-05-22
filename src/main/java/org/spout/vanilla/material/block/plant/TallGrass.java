@@ -38,9 +38,9 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class TallGrass extends DeadBush {
-	public static final TallGrass DEAD_GRASS = register(new TallGrass("Dead Grass"));
-	public static final TallGrass TALL_GRASS = register(new TallGrass("Tall Grass", 1, DEAD_GRASS));
-	public static final TallGrass FERN = register(new TallGrass("Fern", 2, DEAD_GRASS));
+	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass");
+	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, DEAD_GRASS);
+	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS);
 
 	private TallGrass(String name) {
 		super(name, 31);

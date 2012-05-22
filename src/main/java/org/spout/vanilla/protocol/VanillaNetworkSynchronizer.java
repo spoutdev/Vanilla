@@ -37,7 +37,6 @@ import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.generator.biome.Biome;
-import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -56,7 +55,6 @@ import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEventListener;
 import org.spout.api.util.set.TIntPairHashSet;
 import org.spout.api.util.map.TIntPairObjectHashMap;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.PlayerInventory;
@@ -78,6 +76,8 @@ import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
+
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	@SuppressWarnings("unused")
@@ -118,17 +118,14 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 	}
 
-	private byte[] getBiomeData(World world, int x, int z) {
+	private byte[] getBiomeData(Chunk chunk, int x, int z) {
 		byte[] biomeData = new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
-		WorldGenerator gen = world.getGenerator();
-		if (gen instanceof BiomeGenerator) {
-			final long seed = world.getSeed();
-			for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
-				for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
-					Biome biome = ((BiomeGenerator) gen).getBiome(x, z, seed);
-					if (biome instanceof VanillaBiome) {
-						biomeData[(dz & (Chunk.CHUNK_SIZE - 1)) << 4 | (dx & (Chunk.CHUNK_SIZE - 1))] = (byte) ((VanillaBiome) biome).getBiomeId();
-					}
+		final int chunkMask = (Chunk.CHUNK_SIZE - 1);
+		for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
+			for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
+				Biome biome = chunk.getBiomeType(dx & chunkMask, 0, dz & chunkMask);
+				if (biome instanceof VanillaBiome) {
+					biomeData[(dz & chunkMask) << 4 | (dx & chunkMask)] = (byte) ((VanillaBiome) biome).getBiomeId();
 				}
 			}
 		}
@@ -180,7 +177,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			final byte[] biomeData;
 			if (sendBiomes) {
 				biomesSentChunks.add(x, z);
-				biomeData = getBiomeData(p.getWorld(), x, z);
+				biomeData = getBiomeData(p.getWorld().getChunkFromBlock(p), x, z);
 			} else {
 				biomeData = null;
 			}
@@ -231,8 +228,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		boolean hasData = false;
 		int arrIndex = 0;
 		for (int i = 0; i < rawBlockIdArray.length; i++) {
-			// TODO - conversion code
-			fullChunkData[arrIndex++] = (byte) (rawBlockIdArray[i] & 0xFF);
+			short convert = getMinecraftId(rawBlockIdArray[i]);
+			fullChunkData[arrIndex++] = (byte) (convert & 0xFF);
 			if ((rawBlockIdArray[i] & 0xFF) != 0) {
 				hasData = true;
 			}
@@ -254,7 +251,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		final boolean sendBiomes = !biomesSentChunks.contains(x, z);
 		final byte[] biomeData;
 		if (sendBiomes) {
-			biomeData = getBiomeData(c.getWorld(), x, z);
+			biomeData = getBiomeData(c, x, z);
 			biomesSentChunks.add(x, z);
 		} else {
 			biomeData = null;
@@ -300,7 +297,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				if (slotItem == null) {
 					EEMsg = new EntityEquipmentMessage(entityId, slot, -1, 0);
 				} else {
-					EEMsg = new EntityEquipmentMessage(entityId, slot, slotItem.getMaterial().getId(), slotItem.getData());
+					EEMsg = new EntityEquipmentMessage(entityId, slot, getMinecraftId(slotItem.getMaterial().getId()), slotItem.getData());
 				}
 				owner.getSession().send(EEMsg);
 			}
@@ -337,11 +334,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	public void updateBlock(Chunk chunk, int x, int y, int z, BlockMaterial material, short data) {
-		// TODO - proper translation
-		int id = material.getId();
-		if ((material.getId() & 0xFF) > 255) {
-			id = 1;
-		}
+		int id = getMinecraftId(material.getId());
 		if ((data & 0xF) > 15) {
 			data = 0;
 		}
@@ -447,7 +440,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (item == null) {
 			message = new SetWindowSlotMessage(id, networkSlot);
 		} else {
-			message = new SetWindowSlotMessage(id, networkSlot, item.getMaterial().getId(), item.getAmount(), item.getData(), item.getAuxData());
+			message = new SetWindowSlotMessage(id, networkSlot, getMinecraftId(item.getMaterial().getId()), item.getAmount(), item.getData(), item.getNBTData());
 		}
 
 		queuedInventoryUpdates.put(slot, message);
@@ -471,7 +464,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (item == null) {
 			message = new SetWindowSlotMessage(id, networkSlot);
 		} else {
-			message = new SetWindowSlotMessage(id, networkSlot, item.getMaterial().getId(), item.getAmount(), item.getData(), item.getAuxData());
+			message = new SetWindowSlotMessage(id, networkSlot, getMinecraftId(item.getMaterial().getId()), item.getAmount(), item.getData(), item.getNBTData());
 		}
 
 		queuedInventoryUpdates.put(slot, message);

@@ -31,6 +31,7 @@ import java.util.logging.Level;
 
 import org.spout.api.Engine;
 import org.spout.api.Server;
+import org.spout.api.Spout;
 import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
@@ -178,6 +179,26 @@ public class VanillaPlugin extends CommonPlugin {
 		Point flatSpawn = flatGen.getSafeSpawn(flat);
 		Point netherSpawn = netherGen.getSafeSpawn(nether); //TODO Is this set based on the nether portal? Does the nether actually have a "spawn point"?
 		Point endSpawn = endGen.getSafeSpawn(end); //TODO Needs to probably be set per end portal?
+		
+		final int diameter = PointObserver.CHUNK_VIEW_DISTANCE + PointObserver.CHUNK_VIEW_DISTANCE;
+		final int total = diameter * diameter * diameter;
+		final int progressStep = total / 10;
+		
+		World[] worlds = {normal, nether, end, flat};
+		for (World world : worlds) {
+			int progress = 0;
+			for (int dx = -PointObserver.CHUNK_VIEW_DISTANCE; dx < PointObserver.CHUNK_VIEW_DISTANCE; dx++) {
+				for (int dy = -PointObserver.CHUNK_VIEW_DISTANCE; dy < PointObserver.CHUNK_VIEW_DISTANCE; dy++) {
+					for (int dz = -PointObserver.CHUNK_VIEW_DISTANCE; dz < PointObserver.CHUNK_VIEW_DISTANCE; dz++) {
+						progress++;
+						if (progress % progressStep == 0) {
+							Spout.getLogger().info("Loading [" + world.getName() + "], " + (progress / progressStep) * 10 + "% Complete");
+						}
+						world.getChunk(dx, dy, dz, true);
+					}
+				}
+			}
+		}
 
 		//Set world spawns, spawn the skies' entity, have spawn's observed by the point observer.
 		normal.setSpawnPoint(new Transform(normalSpawn, Quaternion.IDENTITY, Vector3.ONE));

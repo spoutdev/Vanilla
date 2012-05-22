@@ -62,7 +62,6 @@ public class BlockUpdater implements Runnable {
 
 	public static void remove(Region region) {
 		synchronized (updaters) {
-			System.out.println("Block updater removed from " + region);
 			updaters.remove(region);
 			//do something? Saving?
 		}
@@ -75,7 +74,6 @@ public class BlockUpdater implements Runnable {
 				u = new BlockUpdater();
 				region.getTaskManager().scheduleSyncRepeatingTask(VanillaPlugin.getInstance(), u, 1, 1, TaskPriority.HIGH);
 				updaters.put(region, u);
-				System.out.println("Block updater bound to " + region);
 			}
 			return u;
 		}

@@ -63,7 +63,7 @@ public class FlowerDecorator implements Decorator {
 			}
 			Block block = chunk.getBlock(dx, dy, dz);
 			if (flower.canAttachTo(block,  BlockFace.TOP)) {
-				block.setMaterial(flower).update(true);
+				block.translate(BlockFace.TOP).setMaterial(flower);
 			}
 		}
 	}

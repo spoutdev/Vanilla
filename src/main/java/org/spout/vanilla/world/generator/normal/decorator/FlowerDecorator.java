@@ -31,13 +31,16 @@ import java.util.List;
 import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.plant.Flower;
 
 public class FlowerDecorator implements Decorator {
-	private static final List<BlockMaterial> flowers = new ArrayList<BlockMaterial>();
+	private static final List<Flower> flowers = new ArrayList<Flower>();
 
 	static {
 		flowers.add(VanillaMaterials.DANDELION);
@@ -50,7 +53,7 @@ public class FlowerDecorator implements Decorator {
 			return;
 		}
 		int howMany = random.nextInt(15);
-		BlockMaterial flower = getRandomFlower(random);
+		Flower flower = getRandomFlower(random);
 		for (int i = 0; i < howMany; i++) {
 			int dx = random.nextInt(16);
 			int dz = random.nextInt(16);
@@ -58,11 +61,14 @@ public class FlowerDecorator implements Decorator {
 			if (dy == -1) {
 				continue;
 			}
-			chunk.getBlock(dx, dy, dz).setMaterial(flower).update(true);
+			Block block = chunk.getBlock(dx, dy, dz);
+			if (flower.canAttachTo(block,  BlockFace.TOP)) {
+				block.setMaterial(flower).update(true);
+			}
 		}
 	}
 
-	private BlockMaterial getRandomFlower(Random random) {
+	private Flower getRandomFlower(Random random) {
 		int which = random.nextInt(flowers.size());
 		return flowers.get(which);
 	}

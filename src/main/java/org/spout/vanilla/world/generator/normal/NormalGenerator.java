@@ -52,13 +52,8 @@ public class NormalGenerator extends BiomeGenerator implements VanillaGenerator 
 		register(VanillaBiomes.PLAIN);
 		register(VanillaBiomes.DESERT);
 		register(VanillaBiomes.MOUNTAINS);
-		register(VanillaBiomes.FOREST);
-		register(VanillaBiomes.TAIGA);
-		register(VanillaBiomes.SWAMP);
-		register(VanillaBiomes.TUNDRA);
 		register(VanillaBiomes.BEACH);
 		register(VanillaBiomes.SMALL_MOUNTAINS);
-		register(VanillaBiomes.JUNGLE);
 	}
 
 	@Override

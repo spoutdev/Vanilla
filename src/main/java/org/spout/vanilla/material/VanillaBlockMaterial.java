@@ -323,6 +323,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @return
 	 */
 	public List<ItemStack> getDrops(Block block) {
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 }

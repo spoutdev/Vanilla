@@ -31,12 +31,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public final class BlockChangeMessage extends Message {
 	private final int x, y, z, type, metadata;
 
 	public BlockChangeMessage(Block block) {
-		this(block.getX(), block.getY(), block.getZ(), block.getMaterial().getId(), block.getData());
+		this(block.getX(), block.getY(), block.getZ(), VanillaMaterials.getMinecraftId(block.getMaterial()), block.getData());
 	}
 
 	public BlockChangeMessage(int x, int y, int z, int type, int metadata) {

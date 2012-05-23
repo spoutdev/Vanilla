@@ -334,7 +334,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		y += chunk.getBlockY();
 		z += chunk.getBlockZ();
 		if (y >= 0 && y < chunk.getWorld().getHeight()) {
-			System.out.println("SENDING BLOCK CHANGE FOR MAT " + material.getName() + " (" + id + ")");
 			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id & 0xFF, data & 0xF);
 			session.send(BCM);
 		}

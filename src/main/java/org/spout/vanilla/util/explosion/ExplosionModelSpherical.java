@@ -70,7 +70,7 @@ public class ExplosionModelSpherical extends ExplosionModel implements Source {
 		World world = position.getWorld();
 
 		this.blocksToDestroy.clear();
-		this.root.sourcedamage = (float) size * (0.7F + (float) Math.random() * 0.6F);
+		this.root.sourcedamage = size * (0.7F + (float) Math.random() * 0.6F);
 
 		//recursively operate on all blocks
 		float damageFactor;

@@ -189,7 +189,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	private void updateHealth() {
 		short health;
-		Entity parent = getParent();
 		health = (short) getHealth();
 
 		if (exhaustion > 4.0) {
@@ -639,7 +638,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (current == null) {
 			return;
 		}
-		Item control = new Item(new ItemStack(current.getMaterial(), 1), getHeadPosition().add(getLookingAt()));
+		ItemStack drop = new ItemStack(current.getMaterial(), 1);
+		drop.setNBTData(current.getNBTData());
+		Item control = new Item(drop, getHeadPosition().add(getLookingAt()));
 		if (current.getAmount() > 1) {
 			current.setAmount(current.getAmount() - 1);
 		} else {

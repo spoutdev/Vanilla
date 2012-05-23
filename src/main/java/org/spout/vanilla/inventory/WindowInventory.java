@@ -33,6 +33,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.util.InventoryUtil;
 
 public abstract class WindowInventory extends Inventory implements VanillaInventory {
+	private static final long serialVersionUID = 1L;
 	protected final Window window;
 	protected String title;
 

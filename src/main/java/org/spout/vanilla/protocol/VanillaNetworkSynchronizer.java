@@ -89,6 +89,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public VanillaNetworkSynchronizer(Player player, Entity entity) {
 		super(player, entity);
 		registerProtocolEvents(this);
+		initChunk(player.getEntity().getPosition());
 	}
 
 	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();

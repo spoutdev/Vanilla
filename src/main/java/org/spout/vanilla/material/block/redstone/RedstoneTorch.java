@@ -32,10 +32,10 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.misc.Torch;
+import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 
@@ -83,7 +83,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 		super.onUpdate(block);
 		boolean receiving = this.isReceivingPower(block);
 		if (this.isPowered() == receiving) {
-			BlockUpdater.schedule(block, TICK_DELAY);
+			BlockScheduler.schedule(block, TICK_DELAY);
 		}
 	}
 

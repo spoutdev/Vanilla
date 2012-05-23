@@ -46,6 +46,7 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
+import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
@@ -59,6 +60,7 @@ import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
+import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
@@ -103,6 +105,9 @@ public class VanillaPlugin extends CommonPlugin {
 
 		//Events
 		game.getEventManager().registerEvents(new VanillaListener(this), this);
+
+		//Block Scheduler
+		game.getParallelTaskManager().scheduleSyncRepeatingTask(this, new BlockScheduler(), 0L, 1L, TaskPriority.HIGH);
 
 		//Worlds
 		setupWorlds();

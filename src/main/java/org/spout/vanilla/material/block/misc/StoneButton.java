@@ -36,13 +36,13 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
 
-import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
+import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -102,7 +102,7 @@ public class StoneButton extends AbstractAttachable implements PointAttachable, 
 			if (!this.isPressed(block)) {
 				this.setPressed(block, true);
 				this.doRedstoneUpdates(block);
-				BlockUpdater.schedule(block, 20);
+				BlockScheduler.schedule(block, 20);
 				VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_1);
 			}
 		}

@@ -35,11 +35,11 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -109,7 +109,7 @@ public class RedstoneRepeater extends GroundAttachable implements RedstoneSource
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
 		if (this.isPowered() != this.isReceivingPower(block)) {
-			BlockUpdater.schedule(block, this.getTickDelay(block));
+			BlockScheduler.schedule(block, this.getTickDelay(block));
 		}
 	}
 

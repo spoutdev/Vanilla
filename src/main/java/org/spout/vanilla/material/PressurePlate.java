@@ -32,10 +32,10 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
 
-import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.RedstonePowerMode;
 
 public class PressurePlate extends GroundAttachable implements RedstoneSource, ScheduleUpdated {
@@ -91,7 +91,7 @@ public class PressurePlate extends GroundAttachable implements RedstoneSource, S
 	public void press(Block block) {
 		if (!this.isPressed(block)) {
 			this.setPressed(block, true);
-			BlockUpdater.schedule(block, 20);
+			BlockScheduler.schedule(block, 20);
 		}
 	}
 

@@ -56,11 +56,11 @@ import org.spout.vanilla.controller.living.player.GameMode;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.ControllerInitialization;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.controller.world.BlockUpdater;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import org.spout.vanilla.runnable.BlockScheduler;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
@@ -107,7 +107,7 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void regionUnload(RegionUnloadEvent event) {
-		BlockUpdater.remove(event.getRegion());
+		BlockScheduler.remove(event.getRegion());
 	}
 
 	@EventHandler
@@ -117,7 +117,6 @@ public class VanillaListener implements Listener {
 		if (region.getAll(RegionSpawner.class).isEmpty()) {
 			region.getWorld().createAndSpawnEntity(point, new RegionSpawner(region));
 		}
-		BlockUpdater.get(region);
 	}
 
 	@EventHandler(order = Order.MONITOR)

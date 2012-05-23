@@ -35,8 +35,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.scheduler.ParallelRunnable;
+import org.spout.api.scheduler.Task;
 import org.spout.api.util.list.concurrent.ConcurrentList;
-
 import org.spout.vanilla.material.block.ScheduleUpdated;
 
 public class BlockScheduler implements ParallelRunnable {
@@ -103,7 +103,7 @@ public class BlockScheduler implements ParallelRunnable {
 	}
 
 	@Override
-	public BlockScheduler newInstance(Region r) {
+	public BlockScheduler newInstance(Region r, Task t) {
 		BlockScheduler scheduler = new BlockScheduler(r);
 		synchronized (schedulers) {
 			schedulers.put(r, scheduler);

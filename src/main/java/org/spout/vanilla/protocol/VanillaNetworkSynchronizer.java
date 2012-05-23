@@ -200,15 +200,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		column.add(y);
 	}
 
-	private final static byte[] dark = new byte[Chunk.CHUNK_VOLUME / 2];
-	private final static byte[] light = new byte[Chunk.CHUNK_VOLUME / 2];
-
-	static {
-		for (int i = 0; i < light.length; i++) {
-			light[i] = -1;
-		}
-	}
-
 	@Override
 	public void sendChunk(Chunk c) {
 		int x = c.getX();
@@ -222,9 +213,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		ChunkSnapshot snapshot = c.getSnapshot(false);
 		short[] rawBlockIdArray = snapshot.getBlockIds();
 		short[] rawBlockData = snapshot.getBlockData();
-		// TODO do lighting right
-		byte[] rawBlockLight = dark; // snapshot.getBlockLight();
-		byte[] rawSkyLight = c.getY() < 4 ? dark : light; // snapshot.getSkyLight();
+		byte[] rawBlockLight = snapshot.getBlockLight();
+		byte[] rawSkyLight = snapshot.getSkyLight();
 		byte[] fullChunkData = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
 
 		boolean hasData = false;
@@ -344,6 +334,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		y += chunk.getBlockY();
 		z += chunk.getBlockZ();
 		if (y >= 0 && y < chunk.getWorld().getHeight()) {
+			System.out.println("SENDING BLOCK CHANGE FOR MAT " + material.getName() + " (" + id + ")");
 			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id & 0xFF, data & 0xF);
 			session.send(BCM);
 		}

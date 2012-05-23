@@ -39,6 +39,7 @@ import org.spout.api.command.annotated.SimpleInjector;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.math.Quaternion;
@@ -180,21 +181,26 @@ public class VanillaPlugin extends CommonPlugin {
 		Point netherSpawn = netherGen.getSafeSpawn(nether); //TODO Is this set based on the nether portal? Does the nether actually have a "spawn point"?
 		Point endSpawn = endGen.getSafeSpawn(end); //TODO Needs to probably be set per end portal?
 
-		final int diameter = PointObserver.CHUNK_VIEW_DISTANCE + PointObserver.CHUNK_VIEW_DISTANCE;
+		final int diameter = PointObserver.CHUNK_VIEW_DISTANCE + PointObserver.CHUNK_VIEW_DISTANCE + 1;
 		final int total = diameter * diameter * diameter;
 		final int progressStep = total / 10;
 
 		World[] worlds = {normal, nether, end, flat};
-		for (World world : worlds) {
+		Point[] spawns = {normalSpawn, netherSpawn, endSpawn, flatSpawn};
+		for (int i = 0; i < worlds.length; i++) {
 			int progress = 0;
-			for (int dx = -PointObserver.CHUNK_VIEW_DISTANCE; dx < PointObserver.CHUNK_VIEW_DISTANCE; dx++) {
-				for (int dy = -PointObserver.CHUNK_VIEW_DISTANCE; dy < PointObserver.CHUNK_VIEW_DISTANCE; dy++) {
-					for (int dz = -PointObserver.CHUNK_VIEW_DISTANCE; dz < PointObserver.CHUNK_VIEW_DISTANCE; dz++) {
+			World world = worlds[i];
+			int cx = (spawns[i].getBlockX() / Chunk.CHUNK_SIZE) - 1;
+			int cy = (spawns[i].getBlockY() / Chunk.CHUNK_SIZE) - 1;
+			int cz = (spawns[i].getBlockZ() / Chunk.CHUNK_SIZE) - 1;
+			for (int dx = -PointObserver.CHUNK_VIEW_DISTANCE; dx <= PointObserver.CHUNK_VIEW_DISTANCE; dx++) {
+				for (int dy = -PointObserver.CHUNK_VIEW_DISTANCE; dy <= PointObserver.CHUNK_VIEW_DISTANCE; dy++) {
+					for (int dz = -PointObserver.CHUNK_VIEW_DISTANCE; dz <= PointObserver.CHUNK_VIEW_DISTANCE; dz++) {
 						progress++;
 						if (progress % progressStep == 0) {
 							Spout.getLogger().info("Loading [" + world.getName() + "], " + (progress / progressStep) * 10 + "% Complete");
 						}
-						world.getChunk(dx, dy, dz, true);
+						world.getChunk(cx + dx, cy + dy, cz + dz, true);
 					}
 				}
 			}

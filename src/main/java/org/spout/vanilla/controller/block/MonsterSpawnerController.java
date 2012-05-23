@@ -100,6 +100,7 @@ public class MonsterSpawnerController extends VanillaBlockController {
 		return i + (random.nextFloat() * 4);
 	}
 
+	@SuppressWarnings("fallthrough")
 	private VanillaControllerType getSpawnType() {
 		Block block = getBlock();
 		World world = block.getWorld();

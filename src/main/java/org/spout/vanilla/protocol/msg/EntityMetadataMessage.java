@@ -52,14 +52,14 @@ public final class EntityMetadataMessage extends Message {
 		/**
 		 * Potion color for effect. The value is composed of RRGGBB (in that order).
 		 */
-		META_NOPOTIONEFFECT(8, (int) 000000),
+		META_NOPOTIONEFFECT(8, 000000),
 		/**
 		 * Animal growth and control. -23999 is the value for babies, 6000 is the value for adults. When set
 		 * to 6000, decrease over time (to determine when to breed again). Value of 0 means the adult can breed.
 		 */
-		META_BABYANIMALSTAGE(12, (int) -23999),
-		META_PARENTANIMALSTAGE(12, (int) 6000),
-		META_BREEDANIMALSTAGE(12, (int) 0);
+		META_BABYANIMALSTAGE(12, -23999),
+		META_PARENTANIMALSTAGE(12, 6000),
+		META_BREEDANIMALSTAGE(12, 0);
 		private Parameter<?> parameter;
 
 		private Parameters(int index, int value) {

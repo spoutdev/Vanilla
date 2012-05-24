@@ -37,7 +37,7 @@ public class DispenserInventory extends WindowInventory {
 	private final DispenserController owner;
 
 	public DispenserInventory(DispenserController owner) {
-		super(Window.DISPENSER, 45, "Dispenser");
+		super(Window.DISPENSER, 9, "Dispenser");
 		this.owner = owner;
 	}
 

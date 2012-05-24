@@ -116,7 +116,7 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
 			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-			block.getWorld().createAndSpawnEntity(block.getPosition(), new ChestController(isDouble(block) ? ChestInventory.LARGE_CHEST_SLOTS.length : ChestInventory.SMALL_CHEST_SLOTS.length));
+			block.getWorld().createAndSpawnEntity(block.getPosition(), new ChestController(isDouble(block) ? ChestInventory.LARGE_SIZE : ChestInventory.SMALL_SIZE));
 			return true;
 		}
 		return false;

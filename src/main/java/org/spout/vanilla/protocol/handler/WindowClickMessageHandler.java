@@ -52,7 +52,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		VanillaPlayer controller = (VanillaPlayer) entity.getController();
 		Inventory inventory = controller.getActiveInventory();
 		if (inventory == null) {
-			inventory = entity.getInventory();
+			inventory = controller.getInventory();
 		}
 
 		// Player clicked outside of window
@@ -70,7 +70,13 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		WindowInventory window = (WindowInventory) inventory;
 		System.out.println("Native slot: " + message.getSlot());
 		int clickedSlot = window.getSlotIndex(message.getSlot());
-		ItemStack cursorStack = controller.getItemOnCursor(), slotStack = inventory.getItem(clickedSlot);
+		ItemStack cursorStack = controller.getItemOnCursor(), slotStack;
+		if (clickedSlot < 36 && clickedSlot > -1) {
+			slotStack = controller.getInventory().getBase().getItem(clickedSlot);
+		} else {
+			slotStack = inventory.getItem(clickedSlot - 36);
+		}
+		
 		if (message.isShift()) {
 			// TODO: Fix Shift clicking
 			InventoryUtil.quickMoveStack(inventory, clickedSlot);

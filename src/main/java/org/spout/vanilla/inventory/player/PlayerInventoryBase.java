@@ -24,62 +24,38 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util;
-
-import java.util.HashSet;
-import java.util.Set;
+package org.spout.vanilla.inventory.player;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
-public class InventoryUtil {
-	private static int windowId = 0;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.util.InventoryUtil;
 
-	private InventoryUtil() {
+public class PlayerInventoryBase extends Inventory {
+	private static final long serialVersionUID = 1L;
+	private static final int[] SLOTS = {36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7, 3, 4, 0, 6, 1, 2, 5};
 
+	protected PlayerInventoryBase() {
+		super(36);
+	}
+	
+	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {
+		slotStack = InventoryUtil.nullIfEmpty(slotStack);
+		setItem(clickedSlot, slotStack);
+		return true;
 	}
 
-	public static void mergeStack(ItemStack dump, ItemStack fill, int amount) {
-		int dumpAmount = amount;
-		int amount1 = dump.getAmount();
-		int amount2 = fill.getAmount();
-		int maxAmount = fill.getMaterial().getMaxStackSize();
-		int freeSpace = maxAmount - amount2;
+	public int getNativeSlotIndex(int index) {
+		return SLOTS[index];
+	}
 
-		// Stop if the stack can't fit
-		if (freeSpace == 0 || dumpAmount > dump.getAmount()) {
-			return;
+	public int getSlotIndex(int nativeIndex) {
+		for (int i = 0; i < SLOTS.length; i++) {
+			if (SLOTS[i] == nativeIndex) {
+				return i;
+			}
 		}
-
-		// If the stack can fit
-		if (freeSpace >= dumpAmount) {
-			amount2 += dumpAmount;
-			amount1 -= dumpAmount;
-		}
-
-		// If only part of the stack can fit.
-		if (freeSpace < dumpAmount) {
-			amount2 = maxAmount;
-			amount1 -= freeSpace;
-		}
-
-		fill.setAmount(amount2);
-		dump.setAmount(amount1);
-	}
-
-	public static void mergeStack(ItemStack dump, ItemStack fill) {
-		mergeStack(dump, fill, dump.getAmount());
-	}
-
-	public static ItemStack nullIfEmpty(ItemStack s) {
-		return (s != null && s.getAmount() == 0) ? null : s;
-	}
-
-	public static void quickMoveStack(Inventory inv, int pos) {
-		// TODO: Fix shift-clicking
-	}
-
-	public static int nextWindowId() {
-		return windowId++;
+		return -1;
 	}
 }

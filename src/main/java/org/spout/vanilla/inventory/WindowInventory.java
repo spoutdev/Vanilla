@@ -72,10 +72,6 @@ public abstract class WindowInventory extends Inventory implements VanillaInvent
 	 * @param player to show the inventory
 	 */
 	public void open(VanillaPlayer player) {
-		Inventory inventory = player.getPlayer().getEntity().getInventory();
-		for (int slot = 0; slot < inventory.getSize() - 9; slot++) {
-			setItem(slot, inventory.getItem(slot));
-		}
 		addViewer(player.getPlayer().getNetworkSynchronizer());
 		player.setActiveInventory(this);
 		player.openWindow(getWindow(), title, getSize());
@@ -87,9 +83,6 @@ public abstract class WindowInventory extends Inventory implements VanillaInvent
 	 */
 	public void onClosed(VanillaPlayer player) {
 		Inventory inventory = player.getPlayer().getEntity().getInventory();
-		for (int slot = 0; slot < inventory.getSize() - 9; slot++) {
-			//setItem(slot, null);
-		}
 		removeViewer(player.getPlayer().getNetworkSynchronizer());
 	}
 
@@ -100,6 +93,10 @@ public abstract class WindowInventory extends Inventory implements VanillaInvent
 	 * @return true if click is permitted
 	 */
 	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack) {
+		if (clickedSlot < 36 && clickedSlot > -1) {
+			return player.getInventory().onClicked(player, clickedSlot, slotStack);
+		}
+		clickedSlot -= 36;
 		slotStack = InventoryUtil.nullIfEmpty(slotStack);
 		setItem(clickedSlot, slotStack);
 		return true;

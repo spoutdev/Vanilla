@@ -57,7 +57,8 @@ import org.spout.api.util.set.TIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.PlayerInventory;
+import org.spout.vanilla.inventory.player.PlayerInventory;
+import org.spout.vanilla.inventory.player.PlayerInventoryBase;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
@@ -283,7 +284,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			//Normal messages may be sent
 			owner.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 5; slot++) {
-				ItemStack slotItem = owner.getEntity().getInventory().getItem(5 + slot);
+				ItemStack slotItem = vc.getInventory().getBase().getItem(slot);
 				EntityEquipmentMessage EEMsg;
 				if (slotItem == null) {
 					EEMsg = new EntityEquipmentMessage(entityId, slot, -1, 0);
@@ -292,7 +293,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				}
 				owner.getSession().send(EEMsg);
 			}
-			entity.getInventory().addViewer(this);
+			if (entity.getController() instanceof VanillaPlayer) {
+				VanillaPlayer controller = (VanillaPlayer) entity.getController();
+				controller.getInventory().addViewer(this);
+			}
 		} else {
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
 			owner.getSession().send(new RespawnMessage(dimensionBit, (byte) 0, (byte) (vc.isSurvival() ? 0 : 1), world.getHeight(), "DEFAULT"));
@@ -426,8 +430,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			id = controller.getWindowId();
 		}
 
-		System.out.println("ID: " + id);
-
 		if (item == null) {
 			message = new SetWindowSlotMessage(id, networkSlot);
 		} else {
@@ -451,7 +453,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (!(inventory instanceof PlayerInventory)) {
 			id = controller.getWindowId();
 		}
-
+		
 		if (item == null) {
 			message = new SetWindowSlotMessage(id, networkSlot);
 		} else {
@@ -473,12 +475,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (!(inventory instanceof PlayerInventory)) {
 			id = (byte) controller.getWindowId();
 		}
-
-		ItemStack[] newSlots = new ItemStack[slots.length];
-		for (int i = 0; i < slots.length; ++i) {
-			newSlots[VanillaMessageHandlerUtils.getNetworkInventorySlot(inventory, i)] = slots[i];
+		
+		PlayerInventoryBase base = controller.getInventory().getBase();
+		ItemStack[] newSlots = new ItemStack[slots.length + base.getSize()];
+		for (int i = 0; i < slots.length; i++) {
+			newSlots[base.getNativeSlotIndex(i)] = slots[i];
 		}
-
 		session.send(new SetWindowSlotsMessage(id, newSlots));
 		queuedInventoryUpdates.clear();
 	}

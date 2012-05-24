@@ -24,22 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory;
+package org.spout.vanilla.inventory.player;
 
+import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.Window;
+import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.material.item.Armor;
+import org.spout.vanilla.util.InventoryUtil;
 
 /**
  * Represents a players inventory
  */
 public class PlayerInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
-	private static final int[] SLOTS = {36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7, 3, 4, 0, 6, 1, 2, 5};
+	private final PlayerInventoryBase base = new PlayerInventoryBase();
 
 	public PlayerInventory() {
-		super(Window.PLAYER_INVENTORY, 45, null);
+		super(Window.PLAYER_INVENTORY, 9, null);
 	}
 
 	/**
@@ -47,7 +51,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return helmet item stack
 	 */
 	public ItemStack getHelmet() {
-		return getItem(44);
+		return getItem(8);
 	}
 
 	/**
@@ -55,7 +59,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return chest plate item stack
 	 */
 	public ItemStack getChestPlate() {
-		return getItem(41);
+		return getItem(5);
 	}
 
 	/**
@@ -63,7 +67,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return leggings item stack
 	 */
 	public ItemStack getLeggings() {
-		return getItem(37);
+		return getItem(1);
 	}
 
 	/**
@@ -71,7 +75,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return boots item stack
 	 */
 	public ItemStack getBoots() {
-		return getItem(36);
+		return getItem(0);
 	}
 
 	/**
@@ -79,7 +83,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return top left input item stack
 	 */
 	public ItemStack getTopLeftInput() {
-		return getItem(42);
+		return getItem(6);
 	}
 
 	/**
@@ -87,7 +91,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return top right item stack
 	 */
 	public ItemStack getTopRightInput() {
-		return getItem(43);
+		return getItem(7);
 	}
 
 	/**
@@ -95,7 +99,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return bottom left input item stack
 	 */
 	public ItemStack getBottomLeftInput() {
-		return getItem(38);
+		return getItem(2);
 	}
 
 	/**
@@ -103,7 +107,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return bottom right input item stack
 	 */
 	public ItemStack getBottomRightInput() {
-		return getItem(39);
+		return getItem(3);
 	}
 
 	/**
@@ -111,40 +115,48 @@ public class PlayerInventory extends WindowInventory {
 	 * @return output item stack
 	 */
 	public ItemStack getOutput() {
-		return getItem(40);
+		return getItem(4);
+	}
+	
+	public PlayerInventoryBase getBase() {
+		return base;
 	}
 
 	@Override
-	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {
-
-		// Only allow armor in the armor slots
+	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {	
+		if (clickedSlot < 36 && clickedSlot > -1) {
+			return base.onClicked(controller, clickedSlot, slotStack);
+		}
+		
+		clickedSlot -= 36;
 		ItemStack cursorStack = controller.getItemOnCursor();
-		boolean armorSlot = clickedSlot == 36 || clickedSlot == 37 || clickedSlot == 41 || clickedSlot == 44;
+		boolean armorSlot = clickedSlot == 8 || clickedSlot == 5 || clickedSlot == 1 || clickedSlot == 0;
 		if (armorSlot && cursorStack != null && !(cursorStack.getMaterial() instanceof Armor)) {
 			return false;
 		}
 
-		// Do not allow input in the output slot.
-		if (clickedSlot == 40 && cursorStack != null) {
+		if (clickedSlot == 4 && cursorStack != null) {
 			return false;
 		}
-
-		return super.onClicked(controller, clickedSlot, slotStack);
+		slotStack = InventoryUtil.nullIfEmpty(slotStack);
+		setItem(clickedSlot, slotStack);
+		return true;
+	}
+	
+	@Override
+	public boolean addViewer(InventoryViewer viewer) {
+		base.addViewer(viewer, false);
+		return super.addViewer(viewer);
 	}
 
 	@Override
 	public int getNativeSlotIndex(int index) {
-		return SLOTS[index];
+		return base.getNativeSlotIndex(index);
 	}
 
 	@Override
 	public int getSlotIndex(int nativeIndex) {
-		for (int i = 0; i < SLOTS.length; i++) {
-			if (SLOTS[i] == nativeIndex) {
-				return i;
-			}
-		}
-		return -1;
+		return base.getSlotIndex(nativeIndex);
 	}
 
 	@Override

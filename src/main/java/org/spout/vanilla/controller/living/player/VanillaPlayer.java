@@ -47,7 +47,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.inventory.PlayerInventory;
+import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
@@ -77,6 +77,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected boolean crouching, sprinting, onGround, poisoned;
 	protected final Vector3 moveSpeed = new Vector3(10, 0, 0), horizSpeed = new Vector3(0, 0, -10);
 	protected Inventory activeInventory;
+	protected final PlayerInventory playerInventory = new PlayerInventory();
 	protected ItemStack itemOnCursor;
 	protected String tabListName;
 	protected GameMode gameMode;
@@ -526,6 +527,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	public void setActiveInventory(Inventory newActive) {
 		activeInventory = newActive;
+	}
+	
+	public PlayerInventory getInventory() {
+		return playerInventory;
 	}
 
 	public ItemStack getItemOnCursor() {

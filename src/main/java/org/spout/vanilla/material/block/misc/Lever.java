@@ -38,7 +38,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
@@ -151,7 +150,7 @@ public class Lever extends AbstractAttachable implements RedstoneSource {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.LEVER, 1));
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 }

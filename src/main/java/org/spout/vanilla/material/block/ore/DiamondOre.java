@@ -32,6 +32,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.Ore;
 import org.spout.vanilla.material.TimedCraftable;
@@ -39,6 +40,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.util.EnchantmentUtil;
 
 public class DiamondOre extends Ore implements TimedCraftable, Mineable {
 	public DiamondOre(String name, int id) {
@@ -71,8 +73,12 @@ public class DiamondOre extends Ore implements TimedCraftable, Mineable {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
 			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && (held.getMaterial().equals(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE))) {
-				drops.add(new ItemStack(VanillaMaterials.DIAMOND, block.getData(), 1));
+			if (held != null && held.getMaterial().equals(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
+				if (EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+					drops.add(new ItemStack(this, 1));
+				} else {
+					drops.add(new ItemStack(VanillaMaterials.DIAMOND, 1));
+				}
 			}
 		}
 		return drops;

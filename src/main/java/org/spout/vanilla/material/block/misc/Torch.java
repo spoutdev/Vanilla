@@ -33,7 +33,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
 
@@ -67,7 +66,7 @@ public class Torch extends AbstractAttachable implements PointAttachable {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.TORCH, 1));
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 }

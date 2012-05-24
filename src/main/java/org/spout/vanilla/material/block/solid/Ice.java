@@ -26,15 +26,21 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
+
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 public class Ice extends Solid implements Mineable {
@@ -57,12 +63,30 @@ public class Ice extends Solid implements Mineable {
 	public void onDestroy(Block block) {
 		if (!(block.getWorld().getGenerator() instanceof NetherGenerator) || block.translate(BlockFace.BOTTOM).getMaterial() != VanillaMaterials.AIR) {
 			// TODO Setting the source to world correct?
-			block.setMaterial(VanillaMaterials.STATIONARY_WATER).update(true);
+			// Only set material to water source block if the block was not destroyed by an item with Silk Touch
+			if (block.getSource() instanceof Entity) {
+				ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
+				if (held == null || !(held.getMaterial() instanceof MiningTool) || !EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+					block.setMaterial(VanillaMaterials.STATIONARY_WATER).update(true);
+				}
+			}
 		}
 	}
 
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		if (block.getSource() instanceof Entity) {
+			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
+			if (held != null && held.getMaterial() instanceof MiningTool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+				drops.add(new ItemStack(this, 1));
+			}
+		}
+		return drops;
 	}
 }

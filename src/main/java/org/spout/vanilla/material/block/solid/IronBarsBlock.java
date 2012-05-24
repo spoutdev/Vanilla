@@ -33,7 +33,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
@@ -51,7 +50,7 @@ public class IronBarsBlock extends Solid implements Mineable {
 
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
-		return 0; //TODO this
+		return 0; // TODO this
 	}
 
 	@Override
@@ -59,7 +58,7 @@ public class IronBarsBlock extends Solid implements Mineable {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
 			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof Pickaxe && !(held.getMaterial().equals(VanillaMaterials.WOODEN_PICKAXE))) {
+			if (held != null && held.getMaterial() instanceof Pickaxe) {
 				drops.add(new ItemStack(this, 1));
 			}
 		}

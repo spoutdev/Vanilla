@@ -33,7 +33,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 
 public class Ladder extends AbstractAttachable {
@@ -61,7 +60,7 @@ public class Ladder extends AbstractAttachable {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.LADDER, 1));
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 }

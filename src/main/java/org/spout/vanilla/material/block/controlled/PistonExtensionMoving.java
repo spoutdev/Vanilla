@@ -38,13 +38,13 @@ import org.spout.vanilla.material.block.piston.PistonExtension;
 public class PistonExtensionMoving extends PistonExtension {
 	public PistonExtensionMoving(String name, int id) {
 		super(name, id);
+		this.setController(VanillaControllerTypes.PISTON_MOVING);
 	}
 
 	@Override
 	public void initialize() {
 		super.initialize();
 		this.setResistance(0.0F);
-		this.setController(VanillaControllerTypes.PISTON_MOVING);
 	}
 
 	@Override

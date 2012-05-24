@@ -35,12 +35,14 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.SignBase;
 import org.spout.vanilla.material.item.misc.Shears;
 import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.util.EnchantmentUtil;
 
 public class Leaves extends Solid implements Mineable {
 	public static final Leaves DEFAULT = new Leaves("Leaves");
@@ -82,7 +84,7 @@ public class Leaves extends Solid implements Mineable {
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-		if (held != null && held.getMaterial().equals(VanillaMaterials.SHEARS)) {
+		if (held != null && (held.getMaterial().equals(VanillaMaterials.SHEARS) || EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH))) {
 			drops.add(new ItemStack(this, 1));
 		} else {
 			if (rand.nextInt(20) == 0) {
@@ -98,10 +100,6 @@ public class Leaves extends Solid implements Mineable {
 
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
-		if (tool instanceof Shears) {
-			return 1;
-		} else {
-			return 0;
-		}
+		return tool instanceof Shears ? (short) 1 : (short) 2;
 	}
 }

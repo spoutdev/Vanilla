@@ -43,12 +43,12 @@ public class Sponge extends Solid implements Mineable {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(block.getMaterial(), 1));
+		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
 
 	@Override
 	public short getDurabilityPenalty(MiningTool tool) {
-		return 0;
+		return 1;
 	}
 }

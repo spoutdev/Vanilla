@@ -29,11 +29,15 @@ package org.spout.vanilla.material.block.ore;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.Ore;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.util.EnchantmentUtil;
 
 public class MelonBlock extends Ore {
 	public MelonBlock(String name, int id) {
@@ -49,7 +53,16 @@ public class MelonBlock extends Ore {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.MELON_SLICE, new Random().nextInt(3 - 7 + 1) + 3));
+		if (block.getSource() instanceof Entity) {
+			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
+			if (held != null && held.getMaterial() instanceof MiningTool) {
+				if (EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+					drops.add(new ItemStack(this, 1));
+				} else {
+					drops.add(new ItemStack(VanillaMaterials.MELON_SLICE, new Random().nextInt(3 - 7 + 1) + 3));
+				}
+			}
+		}
 		return drops;
 	}
 }

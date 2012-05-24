@@ -24,9 +24,10 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.block.controlled;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.material.block.solid.Stone;
 
 public class SilverfishStone extends Stone {
 	public SilverfishStone(String name, int id) {
@@ -37,6 +38,6 @@ public class SilverfishStone extends Stone {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.setHardness(0.8F).setResistance(1.2F); //TODO Confirm that this is the correct value
+		this.setHardness(0.8F).setResistance(1.2F); // TODO Confirm that this is the correct value
 	}
 }

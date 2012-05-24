@@ -32,11 +32,13 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.util.EnchantmentUtil;
 
 public class Stone extends Solid implements Mineable {
 	public Stone(String name, int id) {
@@ -60,7 +62,11 @@ public class Stone extends Solid implements Mineable {
 		if (block.getSource() instanceof Entity) {
 			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
 			if (held != null && held.getMaterial() instanceof Pickaxe) {
-				drops.add(new ItemStack(VanillaMaterials.COBBLESTONE, 1));
+				if (EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+					drops.add(new ItemStack(this, 1));
+				} else {
+					drops.add(new ItemStack(VanillaMaterials.COBBLESTONE, 1));
+				}
 			}
 		}
 		return drops;

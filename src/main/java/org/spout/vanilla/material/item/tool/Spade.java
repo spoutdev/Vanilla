@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.item.tool;
 
-public class Spade extends MiningTool {
+public class Spade extends Tool {
 	public Spade(String name, int id, short durability) {
 		super(name, id, durability);
 	}

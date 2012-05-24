@@ -24,62 +24,52 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.util;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.controlled.Furnace;
+import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.material.item.weapon.Bow;
+import org.spout.vanilla.material.item.weapon.Sword;
 
-public class Sand extends Solid implements TimedCraftable, Mineable {
-	public Sand(String name, int id) {
-		super(name, id);
+public enum MiningType {
+	NONE(-1, Tool.class, Bow.class),
+	PICKAXE(0, Pickaxe.class),
+	AXE(1, Axe.class),
+	SPADE(2, Spade.class),
+	SWORD(3, Sword.class);
+	public final short id;
+	public final Class[] cls;
+	private static Map<Class<?>, MiningType> typeClassMap;//Not initialized here, see putClassType
+
+	private MiningType(int id, Class... cls) {
+		this.id = (short) id;
+		this.cls = cls;
+		putClassType(cls, this);
 	}
 
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(0.5F).setResistance(0.8F);
+	private static void putClassType(Class cls[], MiningType mt) {// Workaround for Java 6 limitation - no static variables accessed in enum constructor.
+		if (typeClassMap == null) {
+			typeClassMap = new HashMap<Class<?>, MiningType>();
+		}
+		for (Class<?> cl : cls) {
+			typeClassMap.put(cl, mt);
+		}
 	}
 
-	@Override
-	public boolean isMoving() {
-		return true;
+	public static MiningType getType(Tool tool) {
+		return typeClassMap.get(tool.getClass());
 	}
 
-	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.GLASS, 1);
+	public boolean isInstance(Tool o) {
+		return this.isInstance(o.getClass());
 	}
 
-	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.SNAREDRUM;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(this, 1));
-		return drops;
+	public boolean isInstance(Class<?> cls) {
+		return typeClassMap.get(cls) == this;
 	}
 }

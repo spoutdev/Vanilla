@@ -27,7 +27,7 @@
 package org.spout.vanilla.enchantment;
 
 import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.item.tool.Tool;
 
 public abstract class ToolEnchantment extends Enchantment {
 	protected ToolEnchantment(String name, int id) {
@@ -36,7 +36,7 @@ public abstract class ToolEnchantment extends Enchantment {
 
 	@Override
 	public boolean canEnchant(VanillaMaterial material) {
-		return material instanceof MiningTool;
+		return material instanceof Tool;
 	}
 
 	@Override

@@ -36,7 +36,7 @@ import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.Instrument;
 
@@ -73,7 +73,7 @@ public class BookShelf extends Solid implements Fuel {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
 			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof MiningTool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+			if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
 				drops.add(new ItemStack(this, 1));
 			} else {
 				drops.add(new ItemStack(VanillaMaterials.BOOK, 3));

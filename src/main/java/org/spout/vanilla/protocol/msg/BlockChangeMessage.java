@@ -31,6 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public final class BlockChangeMessage extends Message {

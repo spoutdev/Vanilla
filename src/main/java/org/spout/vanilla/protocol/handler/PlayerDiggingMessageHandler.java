@@ -45,7 +45,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
@@ -130,8 +130,8 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			int totalDamage = 0;
 
 			if (heldItem != null) {
-				if (heldItem.getMaterial() instanceof MiningTool && blockMaterial instanceof Mineable) {
-					MiningTool tool = (MiningTool) heldItem.getMaterial();
+				if (heldItem.getMaterial() instanceof Tool && blockMaterial instanceof Mineable) {
+					Tool tool = (Tool) heldItem.getMaterial();
 					Mineable mineable = (Mineable) blockMaterial;
 					if (tool.getDurability() < 1) {
 						player.getEntity().getInventory().setCurrentItem(null);

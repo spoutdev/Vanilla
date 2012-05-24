@@ -37,8 +37,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
 public class Gravel extends Solid implements Mineable {
@@ -69,7 +69,7 @@ public class Gravel extends Solid implements Mineable {
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
+	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Spade ? (short) 1 : (short) 2;
 	}
 

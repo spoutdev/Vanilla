@@ -41,7 +41,6 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
@@ -568,8 +567,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	 * @param messages The messages that should be sent to the discovered nearest player.
 	 */
 	public static void sendPacketsToNearbyPlayers(Point position, Entity ignore, int range, Message... messages) {
-		Region region = position.getWorld().getRegionFromBlock(position);
-		Set<Player> players = region.getNearbyPlayers(position, ignore, range);
+		Set<Player> players = position.getWorld().getNearbyPlayers(position, ignore, range);
 		for (Player plr : players) {
 			plr.getSession().sendAll(messages);
 		}
@@ -582,8 +580,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	 * @param messages The messages that should be sent to the discovered nearest player.
 	 */
 	public static void sendPacketsToNearbyPlayers(Point position, int range, Message... messages) {
-		Region region = position.getWorld().getRegionFromBlock(position);
-		Set<Player> players = region.getNearbyPlayers(position, range);
+		Set<Player> players = position.getWorld().getNearbyPlayers(position, range);
 		for (Player plr : players) {
 			plr.getSession().sendAll(messages);
 		}
@@ -599,7 +596,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (entity == null || entity.getRegion() == null) {
 			return;
 		}
-		Set<Player> players = entity.getRegion().getNearbyPlayers(entity, range);
+		Set<Player> players = entity.getWorld().getNearbyPlayers(entity, range);
 		for (Player plr : players) {
 			plr.getSession().sendAll(messages);
 		}
@@ -616,7 +613,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 
-		Player plr = entity.getRegion().getNearestPlayer(entity, range);
+		Player plr = entity.getWorld().getNearestPlayer(entity, range);
 		//Only send if we have a player nearby.
 		if (plr != null) {
 			plr.getSession().sendAll(messages);

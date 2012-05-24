@@ -54,7 +54,7 @@ public class SignController extends VanillaBlockController {
 	public void onTick(float dt) {
 		Block block = getBlock();
 		HashSet<Player> nearby = new HashSet<Player>();
-		nearby.addAll(block.getRegion().getNearbyPlayers(block.getPosition(), range));
+		nearby.addAll(block.getWorld().getNearbyPlayers(block.getPosition(), range));
 		if (nearby == null || nearby.isEmpty()) {
 			return;
 		}

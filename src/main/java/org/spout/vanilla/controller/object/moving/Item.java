@@ -45,6 +45,7 @@ import org.spout.vanilla.protocol.msg.CollectItemMessage;
  */
 public class Item extends Substance {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(Item.class, "Item");
+	private final int distance = (int)VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble();
 	private final ItemStack is;
 	private int unpickable;
 
@@ -91,13 +92,12 @@ public class Item extends Substance {
 
 		super.onTick(dt);
 
-		double distance = VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble();
-		Player closestPlayer = getParent().getRegion().getNearestPlayer(getParent(), (int) distance);
+		Player closestPlayer = getParent().getWorld().getNearestPlayer(getParent(), distance);
 		if (closestPlayer == null) {
 			return;
 		}
 		int collected = getParent().getId();
-		int collector = getParent().getRegion().getNearestPlayer(getParent(), (int) distance).getEntity().getId();
+		int collector = getParent().getWorld().getNearestPlayer(getParent(), distance).getEntity().getId();
 		VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(getParent().getPosition(), closestPlayer.getEntity(), closestPlayer.getEntity().getViewDistance(), new CollectItemMessage(collected, collector));
 		closestPlayer.getEntity().getInventory().addItem(is, false);
 		getParent().kill();

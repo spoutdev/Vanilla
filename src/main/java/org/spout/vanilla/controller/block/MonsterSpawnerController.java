@@ -66,7 +66,7 @@ public class MonsterSpawnerController extends VanillaBlockController {
 	@Override
 	public void onTick(float dt) {
 		Block block = getBlock();
-		Set<Player> nearbyPlayers = block.getRegion().getNearbyPlayers(block.getPosition(), range);
+		Set<Player> nearbyPlayers = block.getWorld().getNearbyPlayers(block.getPosition(), range);
 		if (nearbyPlayers == null || nearbyPlayers.isEmpty()) {
 			return;
 		}
@@ -141,7 +141,7 @@ public class MonsterSpawnerController extends VanillaBlockController {
 				case 5:
 					return VanillaControllerTypes.ZOMBIE;
 				case 6:
-					Set<Player> nearbyPlayers = block.getRegion().getNearbyPlayers(block.getPosition(), 5);
+					Set<Player> nearbyPlayers = block.getWorld().getNearbyPlayers(block.getPosition(), 5);
 					if (nearbyPlayers == null || nearbyPlayers.isEmpty()) {
 						return VanillaControllerTypes.SILVERFISH;
 					}

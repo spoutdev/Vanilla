@@ -50,13 +50,13 @@ import org.spout.vanilla.util.MoveReaction;
 public class EnchantmentTable extends Solid implements Directional, Mineable {
 	public EnchantmentTable(String name, int id) {
 		super(name, id);
+		this.setController(VanillaControllerTypes.ENCHANTMENT_TABLE);
 	}
 
 	@Override
 	public void initialize() {
 		super.initialize();
 		this.setHardness(5.0F).setResistance(2000.0F);
-		this.setController(VanillaControllerTypes.ENCHANTMENT_TABLE);
 	}
 
 	@Override

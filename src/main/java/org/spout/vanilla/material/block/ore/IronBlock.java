@@ -59,8 +59,8 @@ public class IronBlock extends Solid implements Mineable {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
 			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && (held.getMaterial().equals(VanillaMaterials.STONE_PICKAXE, VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE))) {
-				drops.add(new ItemStack(VanillaMaterials.IRON_BLOCK, block.getData(), 1));
+			if (held != null && held.getMaterial().equals(VanillaMaterials.STONE_PICKAXE, VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
+				drops.add(new ItemStack(this, 1));
 			}
 		}
 		return drops;

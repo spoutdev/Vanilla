@@ -232,10 +232,12 @@ public class Vines extends VanillaBlockMaterial {
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
-			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial().equals(VanillaMaterials.SHEARS)) {
-				drops.add(new ItemStack(VanillaMaterials.VINES, block.getData(), 1));
+			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
+			if (held != null && held.getMaterial().equals(VanillaMaterials.SHEARS)) {
+				drops.add(new ItemStack(this, 1));
 			}
 		}
+		
 		return drops;
 	}
 }

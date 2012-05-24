@@ -113,7 +113,7 @@ public class VanillaListener implements Listener {
 	public void regionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
 		RegionSpawner spawner = new RegionSpawner(region);
-		region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 0, 100, TaskPriority.LOW);
+		region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
 
 		HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
 		grass.add(VanillaMaterials.GRASS);

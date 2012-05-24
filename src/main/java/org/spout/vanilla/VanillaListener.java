@@ -43,10 +43,10 @@ import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
 import org.spout.api.event.world.RegionUnloadEvent;
 import org.spout.api.geo.cuboid.Region;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
+import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -65,7 +65,6 @@ import org.spout.vanilla.runnable.BlockScheduler;
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class VanillaListener implements Listener {
-	@SuppressWarnings("unused")
 	private final VanillaPlugin plugin;
 
 	public VanillaListener(VanillaPlugin plugin) {
@@ -113,10 +112,23 @@ public class VanillaListener implements Listener {
 	@EventHandler
 	public void regionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
-		Point point = new Point(region.getWorld(), region.getX() * Region.EDGE, region.getY() * Region.EDGE, region.getZ() * Region.EDGE);
-		if (region.getAll(RegionSpawner.class).isEmpty()) {
-			region.getWorld().createAndSpawnEntity(point, new RegionSpawner(region));
-		}
+		RegionSpawner spawner = new RegionSpawner(region);
+		region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 0, 100, TaskPriority.LOW);
+
+		HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
+		grass.add(VanillaMaterials.GRASS);
+		spawner.addSpawnableType(VanillaControllerTypes.SHEEP, grass, 5);
+
+		spawner.addSpawnableType(VanillaControllerTypes.PIG, grass, 5);
+
+		spawner.addSpawnableType(VanillaControllerTypes.COW, grass, 5);
+
+		spawner.addSpawnableType(VanillaControllerTypes.CHICKEN, grass, 5);
+
+		HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
+		endStone.add(VanillaMaterials.END_STONE);
+		spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
+
 	}
 
 	@EventHandler(order = Order.MONITOR)
@@ -127,19 +139,6 @@ public class VanillaListener implements Listener {
 
 		Entity entity = event.getEntity();
 		Controller c = entity.getController();
-		if (c != null) {
-			if (c instanceof RegionSpawner) {
-				RegionSpawner spawner = (RegionSpawner) c;
-				HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
-				grass.add(VanillaMaterials.GRASS);
-				spawner.addSpawnableType(VanillaControllerTypes.SHEEP, grass, 5);
-
-				HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
-				endStone.add(VanillaMaterials.END_STONE);
-				spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
-			}
-		}
-
 		if (c instanceof Sheep) {
 			Sheep sheep = (Sheep) c;
 			sheep.setTimeUntilAdult(100);

@@ -35,48 +35,36 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.type.ControllerType;
-import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.player.Player;
-
-import org.spout.vanilla.controller.VanillaController;
 
 /**
  * Controller that spawns entities in regions.
  */
-public class RegionSpawner extends Controller implements VanillaController {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(RegionSpawner.class, "Region Spawner");
+public class RegionSpawner implements Runnable{
 	private static final int SPAWN_TRIES = 6;
 	private final Region region;
 	private final Random rand = new Random();
 	private final Map<ControllerType, SpawnInformation> spawnableTypes = new ConcurrentHashMap<ControllerType, SpawnInformation>();
 
 	public RegionSpawner(Region region) {
-		super(TYPE);
 		this.region = region;
 	}
 
 	@Override
-	public void onAttached() {
-		getParent().setCollision(null);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		World world = region.getWorld();
-		Set<Player> players = world.getPlayers();
-		if (players.isEmpty()) {
-			return;
+	public void run() {
+		for (int chunks = 0; chunks < 10; chunks++) {
+			int randX = this.rand.nextInt(Region.REGION_SIZE);
+			int randY = this.rand.nextInt(Region.REGION_SIZE);
+			int randZ = this.rand.nextInt(Region.REGION_SIZE);
+			Chunk chunk = region.getChunk(randX, randY, randZ, false);
+			if (chunk != null) {
+				spawn(chunk);
+			}
 		}
-	}
-
-	@Override
-	public boolean isSavable() {
-		return false;
 	}
 
 	/**
@@ -109,8 +97,6 @@ public class RegionSpawner extends Controller implements VanillaController {
 				int randX = this.rand.nextInt(Chunk.CHUNK_SIZE);
 				int randY = this.rand.nextInt(Chunk.CHUNK_SIZE);
 				int randZ = this.rand.nextInt(Chunk.CHUNK_SIZE);
-
-				//TODO: check for nearby player?
 
 				BlockMaterial material = chunk.getBlockMaterial(randX, randY, randZ);
 				if (info.canSpawnOn.contains(material) && canSpawnAt(chunk, randX, randY + 1, randZ)) {

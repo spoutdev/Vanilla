@@ -72,7 +72,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 
 	@Override
 	public void onDestroyBlock(Block block) {
-		super.onDestroy(block);
+		super.onDestroyBlock(block);
 		if (this.isExtended(block)) {
 			Block extension = block.translate(this.getFacing(block));
 			if (extension.getMaterial() instanceof PistonExtension) {

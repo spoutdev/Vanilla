@@ -160,10 +160,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	private void survivalTick(float dt) {
-		if (isDigging) {
+		if (isDigging && (getDiggingTicks() % 20) == 0) {
 			sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_SWING_ARM));
-		} else {
-			sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_NONE));
 		}
 
 		if ((distanceMoved += getPreviousPosition().distanceSquared(getParent().getPosition())) >= 1) {
@@ -582,6 +580,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 		previousDiggingTime = getDiggingTime();
 		isDigging = false;
+		sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_NONE));
 		if (!position.equals(diggingPosition)) {
 			return false;
 		}

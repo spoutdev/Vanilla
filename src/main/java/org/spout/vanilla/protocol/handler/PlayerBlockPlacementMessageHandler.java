@@ -117,16 +117,16 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			//perform interaction on the server
 			if (holdingMat != null) {
 				if (holdingMat instanceof InteractTool) {
-					durability = ((InteractTool) holdingMat).getDurability();
+					durability = ((InteractTool) holdingMat).getMaxDurability();
 				}
 				holdingMat.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 			}
 			clickedMaterial.onInteractBy(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 
 			if (holdingMat instanceof InteractTool && VanillaPlayerUtil.isSurvival(clickedBlock.getSource())) { //TODO Total hack and is BADDDDDD
-				short newDurability = ((short) (durability - ((InteractTool) holdingMat).getDurability()));
+				short newDurability = ((short) (durability - ((InteractTool) holdingMat).getMaxDurability()));
 				player.getEntity().getInventory().addCurrentItemData(newDurability);
-				if (((InteractTool) holdingMat).getDurability() < 1 && durability != ((InteractTool) holdingMat).getDurability()) { //TODO Total hack!!!
+				if (((InteractTool) holdingMat).getMaxDurability() < 1 && durability != ((InteractTool) holdingMat).getMaxDurability()) { //TODO Total hack!!!
 					player.getEntity().getInventory().setCurrentItem(null); //Break a tool if their onInteract takes away durability. TODO Probably not the best place to do this...
 				}
 			}

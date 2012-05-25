@@ -46,7 +46,7 @@ public class Hoe extends InteractTool {
 			BlockMaterial mat = block.getMaterial();
 			if (mat.equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
 				block.setMaterial(VanillaMaterials.FARMLAND);
-				setDurability((short) (getDurability() - 1)); //TODO right place?
+				setMaxDurability((short) (getMaxDurability() - 1)); // TODO right place?
 			}
 		}
 	}

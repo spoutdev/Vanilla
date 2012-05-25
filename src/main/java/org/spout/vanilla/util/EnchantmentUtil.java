@@ -114,7 +114,7 @@ public class EnchantmentUtil {
 	 * @return Level of the enchantment, or 0 if the item does not contain the enchantment
 	 */
 	public static int getEnchantmentLevel(ItemStack item, Enchantment enchantment) {
-		return getEnchantments(item).get(enchantment);
+		return getEnchantments(item).containsKey(enchantment) ? getEnchantments(item).get(enchantment) : 0;
 	}
 
 	/**
@@ -122,15 +122,23 @@ public class EnchantmentUtil {
 	 * @param item Item to check
 	 * @return Map of the item's enchantments along with their level
 	 */
-	@SuppressWarnings("unchecked")
 	public static Map<Enchantment, Integer> getEnchantments(ItemStack item) {
 		Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
 		if (item.getNBTData() == null || !item.getNBTData().containsKey("ench")) {
 			return enchantments;
 		}
 
-		for (CompoundMap map : (List<CompoundMap>) item.getNBTData().get("ench")) {
-			enchantments.put(Enchantments.getById((Short) map.get("id").getValue()), (Integer) map.get("lvl").getValue());
+		List<Short> ids = new ArrayList<Short>();
+		List<Short> levels = new ArrayList<Short>();
+		for (Tag tag : ((CompoundMap) item.getNBTData().get("ench").getValue()).values()) {
+			if (tag.getName().equals("id")) {
+				ids.add((Short) tag.getValue());
+			} else if (tag.getName().equals("lvl")) {
+				levels.add((Short) tag.getValue());
+			}
+		}
+		for (int i = 0; i < ids.size(); i++) {
+			enchantments.put(Enchantments.getById(ids.get(i)), (int) levels.get(i));
 		}
 		return enchantments;
 	}
@@ -141,14 +149,13 @@ public class EnchantmentUtil {
 	 * @param enchantment Enchantment to check
 	 * @return true if the item contains the enchantment
 	 */
-	@SuppressWarnings("unchecked")
 	public static boolean hasEnchantment(ItemStack item, Enchantment enchantment) {
 		if (item.getNBTData() == null || !item.getNBTData().containsKey("ench")) {
 			return false;
 		}
 
-		for (CompoundMap map : (List<CompoundMap>) item.getNBTData().get("ench")) {
-			if ((Short) map.get("id").getValue() == enchantment.getId()) {
+		for (Tag tag : ((CompoundMap) item.getNBTData().get("ench").getValue()).values()) {
+			if (tag.getName().equals("id") && ((ShortTag) tag).getValue() == enchantment.getId()) {
 				return true;
 			}
 		}

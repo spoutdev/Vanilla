@@ -74,7 +74,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		}
 
 		boolean isInteractable = true;
-		//FIXME: How so not interactable? I am pretty sure I can interact with water to place a boat, no?
+		// FIXME: How so not interactable? I am pretty sure I can interact with water to place a boat, no?
 		if (blockMaterial == VanillaMaterials.AIR || blockMaterial == BasicAir.AIR || blockMaterial == VanillaMaterials.WATER || blockMaterial == VanillaMaterials.LAVA) {
 			isInteractable = false;
 		}
@@ -89,18 +89,18 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				return;
 			}
 
-			//Perform interactions
+			// Perform interactions
 			if (!isInteractable && heldItem == null) {
-				//interacting with nothing using fist
+				// interacting with nothing using fist
 				return;
 			} else if (heldItem == null) {
-				//interacting with block using fist
+				// interacting with block using fist
 				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
 			} else if (!isInteractable) {
-				//interacting with nothing using item
+				// interacting with nothing using item
 				heldItem.getSubMaterial().onInteract(player.getEntity(), Action.LEFT_CLICK);
 			} else {
-				//interacting with block using item
+				// interacting with block using item
 				heldItem.getSubMaterial().onInteract(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
 				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
 			}
@@ -109,13 +109,13 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				Block neigh = block.translate(clickedFace);
 				boolean fire = neigh.getMaterial().equals(VanillaMaterials.FIRE);
 				if (fire) {
-					//put out fire
+					// put out fire
 					VanillaMaterials.FIRE.onDestroy(neigh);
 					VanillaNetworkSynchronizer.playBlockEffect(block, player.getEntity(), PlayEffectMessage.Messages.RANDOM_FIZZ);
 				} else if (vp.isSurvival() && blockMaterial.getHardness() != 0.0f) {
 					vp.startDigging(new Point(w, x, y, z));
 				} else {
-					//insta-break
+					// insta-break
 					blockMaterial.onDestroy(block);
 					PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
 					VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
@@ -131,14 +131,13 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 			if (heldItem != null) {
 				if (heldItem.getMaterial() instanceof Tool && blockMaterial instanceof Mineable) {
-					Tool tool = (Tool) heldItem.getMaterial();
-					Mineable mineable = (Mineable) blockMaterial;
-					if (tool.getDurability() < 1) {
-						player.getEntity().getInventory().setCurrentItem(null);
-					} else {
-						short penalty = mineable.getDurabilityPenalty(tool);
-						inv.addCurrentItemData(penalty);
-						tool.setDurability((short) (tool.getDurability() - penalty));
+					short penalty = ((Tool) heldItem.getMaterial()).getDurabilityPenalty((Mineable) heldItem.getMaterial(), heldItem);
+					if (penalty != 0) {
+						if (heldItem.getData() - penalty < 1) {
+							player.getEntity().getInventory().setCurrentItem(null);
+						} else {
+							inv.addCurrentItemData(penalty);
+						}
 					}
 				}
 			}
@@ -152,7 +151,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				// TODO: Take into account enchantments
 
 				totalDamage = ((int) blockMaterial.getHardness() - damageDone);
-				if (totalDamage <= 40) { //Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
+				if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
 					if (!(blockMaterial instanceof Mineable)) {
 						player.kick("The block you tried to dig is not MINEABLE. No blocks for you.");
 						return;

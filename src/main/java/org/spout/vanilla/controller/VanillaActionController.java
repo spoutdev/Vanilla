@@ -85,28 +85,28 @@ public abstract class VanillaActionController extends ActionController implement
 		data().put(VanillaControllerTypes.KEY, getType().getID());
 
 		//Load data
-		isFlammable = (Boolean) data().get("Flammable", isFlammable);
-		fireTicks = (Integer) data().get("fireTicks", fireTicks);
-		positionTicks = (Integer) data().get("positionTicks", positionTicks);
-		velocityTicks = (Integer) data().get("velocityTicks", velocityTicks);
+		isFlammable = (Boolean) data().get("flammable", isFlammable);
+		fireTicks = (Integer) data().get("fire_ticks", fireTicks);
+		positionTicks = (Integer) data().get("position_ticks", positionTicks);
+		velocityTicks = (Integer) data().get("velocity_ticks", velocityTicks);
 		velocity = (Vector3) data().get("velocity", velocity);
-		movementSpeed = (Vector3) data().get("movementSpeed", movementSpeed);
-		maxSpeed = (Vector3) data().get("maxSpeed", maxSpeed);
-		health = (Integer) data().get("health", health);
-		maxHealth = (Integer) data().get("maxhealth", maxHealth);
+		movementSpeed = (Vector3) data().get("movement_speed", movementSpeed);
+		maxSpeed = (Vector3) data().get("max_speed", maxSpeed);
+		health = (Integer) data().get("health", maxHealth);
+		maxHealth = (Integer) data().get("max_health", maxHealth);
 	}
 
 	@Override
 	public void onSave() {
-		data().put("Flammable", isFlammable);
-		data().put("fireTicks", fireTicks);
-		data().put("positionTicks", positionTicks);
-		data().put("velocityTicks", velocityTicks);
+		data().put("flammable", isFlammable);
+		data().put("fire_ticks", fireTicks);
+		data().put("position_ticks", positionTicks);
+		data().put("velocity_ticks", velocityTicks);
 		data().put("velocity", velocity);
-		data().put("movementSpeed", movementSpeed);
-		data().put("maxSpeed", maxSpeed);
+		data().put("movement_speed", movementSpeed);
+		data().put("max_speed", maxSpeed);
 		data().put("health", health);
-		data().put("maxhealth", maxHealth);
+		data().put("max_health", maxHealth);
 	}
 
 	@Override

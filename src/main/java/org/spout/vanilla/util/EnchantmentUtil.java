@@ -43,7 +43,6 @@ import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.VanillaMaterial;
 
 public class EnchantmentUtil {
-
 	private EnchantmentUtil() {
 	}
 

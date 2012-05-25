@@ -38,6 +38,8 @@
     </value>
   </option>
   <option name="RIGHT_MARGIN" value="200" />
+  <option name="JD_ALIGN_PARAM_COMMENTS" value="false" />
+  <option name="JD_ALIGN_EXCEPTION_COMMENTS" value="false" />
   <option name="JD_ADD_BLANK_AFTER_DESCRIPTION" value="false" />
   <option name="DO_NOT_INDENT_TOP_LEVEL_CLASS_MEMBERS" value="true" />
   <XML>
@@ -60,11 +62,6 @@
     <option name="FOR_BRACE_FORCE" value="3" />
     <option name="PARAMETER_ANNOTATION_WRAP" value="2" />
     <option name="VARIABLE_ANNOTATION_WRAP" value="2" />
-    <indentOptions>
-      <option name="USE_TAB_CHARACTER" value="true" />
-    </indentOptions>
-  </codeStyleSettings>
-  <codeStyleSettings language="XML">
     <indentOptions>
       <option name="USE_TAB_CHARACTER" value="true" />
     </indentOptions>

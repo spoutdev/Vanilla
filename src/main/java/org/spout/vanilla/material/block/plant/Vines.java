@@ -49,16 +49,16 @@ public class Vines extends VanillaBlockMaterial {
 
 	private int getMask(BlockFace face) {
 		switch (face) {
-		case WEST:
-			return 0x1;
-		case NORTH:
-			return 0x2;
-		case EAST:
-			return 0x4;
-		case SOUTH:
-			return 0x8;
-		default:
-			return 0;
+			case WEST:
+				return 0x1;
+			case NORTH:
+				return 0x2;
+			case EAST:
+				return 0x4;
+			case SOUTH:
+				return 0x8;
+			default:
+				return 0;
 		}
 	}
 
@@ -69,8 +69,8 @@ public class Vines extends VanillaBlockMaterial {
 
 	/**
 	 * Sets whether a certain face is attached or not
-	 * @param block	of this material
-	 * @param face	 to attach to
+	 * @param block of this material
+	 * @param face to attach to
 	 * @param attached whether or not to attach
 	 */
 	public void setFaceAttached(Block block, BlockFace face, boolean attached) {

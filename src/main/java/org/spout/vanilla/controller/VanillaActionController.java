@@ -233,7 +233,7 @@ public abstract class VanillaActionController extends ActionController implement
 	/**
 	 * Sets the amount of ticks the controller has been on fire.
 	 * @param fireTicks the new amount of ticks the controller has been on fire
-	 *                  for.
+	 * for.
 	 */
 	public void setFireTicks(int fireTicks) {
 		this.fireTicks = fireTicks;
@@ -273,7 +273,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Damages this controller.
-	 * @param amount		  amount the controller will be damaged by.
+	 * @param amount amount the controller will be damaged by.
 	 * @param sendHurtMessage whether or not to send a hurt message
 	 */
 	public void damage(int amount, boolean sendHurtMessage) {
@@ -320,9 +320,9 @@ public abstract class VanillaActionController extends ActionController implement
 	/**
 	 * Rotates the controller
 	 * @param degrees the angle of which to do rotation.
-	 * @param x	   x-axis to rotate the controller along
-	 * @param y	   y-axis to rotate the controller along
-	 * @param z	   z-axis to rotate the controller along
+	 * @param x x-axis to rotate the controller along
+	 * @param y y-axis to rotate the controller along
+	 * @param z z-axis to rotate the controller along
 	 */
 	public void rotate(float degrees, float x, float y, float z) {
 		getParent().rotate(degrees, x, y, z);

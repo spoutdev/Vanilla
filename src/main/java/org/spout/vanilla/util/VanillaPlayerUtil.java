@@ -93,7 +93,6 @@ public class VanillaPlayerUtil {
 
 	/**
 	 * Tries to find the currently active item (held item) from a player entity source
-	 * 
 	 * @param source
 	 * @return the held item, or null if not found
 	 */

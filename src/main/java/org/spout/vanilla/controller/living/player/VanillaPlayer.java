@@ -529,7 +529,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public void setActiveInventory(Inventory newActive) {
 		activeInventory = newActive;
 	}
-	
+
 	public PlayerInventory getInventory() {
 		return playerInventory;
 	}

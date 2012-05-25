@@ -66,7 +66,7 @@ public class staticInitialisationOrderTest {
 
 	public static void staticInitFail(Throwable t) {
 		String s = "";
-		while(t != null) {
+		while (t != null) {
 			System.err.print(t);
 			s += t.getMessage() + "\n";
 			t.printStackTrace();

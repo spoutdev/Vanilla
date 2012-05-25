@@ -51,19 +51,19 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 		double x = message.getX();
 		double y = message.getY();
 		double z = message.getZ();
-		
+
 		Point ep = entity.getPosition();
 		double dx = x - ep.getX();
 		double dy = y - ep.getY();
 		double dz = z - ep.getZ();
-		
+
 		// Ignore position updates if more than 4 blocks away
 		if (dx * dx + dy * dy + dz * dz > 16.0D) {
 			// TODO - should probably kick for hacking?
 			//        This also happens on login
 			return;
 		}
-		
+
 		/*
 		//Figure out how much in X and Z the player has moved
 		Vector3 newPos = new Vector3(x,y,z);

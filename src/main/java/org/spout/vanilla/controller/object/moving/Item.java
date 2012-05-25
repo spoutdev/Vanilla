@@ -49,7 +49,7 @@ import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsT
  */
 public class Item extends Substance {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(Item.class, "Item");
-	private final int distance = (int)VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble();
+	private final int distance = (int) VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble();
 	private final ItemStack is;
 	private int unpickable;
 
@@ -63,7 +63,7 @@ public class Item extends Substance {
 	/**
 	 * Creates an item controller
 	 * @param itemstack this item controller represents
-	 * @param initial   velocity that this item has
+	 * @param initial velocity that this item has
 	 */
 	public Item(ItemStack itemstack, Vector3 initial) {
 		super(VanillaControllerTypes.DROPPED_ITEM);
@@ -105,12 +105,12 @@ public class Item extends Substance {
 		if (closestPlayer == null) {
 			return;
 		}
-		
+
 		Entity entity = closestPlayer.getEntity();
 		if (!(entity.getController() instanceof VanillaPlayer)) {
 			return;
 		}
-		
+
 		int collected = getParent().getId();
 		int collector = entity.getId();
 		sendPacketsToNearbyPlayers(entity.getPosition(), entity.getViewDistance(), new CollectItemMessage(collector, collected));

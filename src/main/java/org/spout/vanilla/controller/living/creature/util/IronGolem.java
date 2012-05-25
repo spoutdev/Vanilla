@@ -32,7 +32,6 @@ import org.spout.vanilla.controller.living.creature.Utility;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class IronGolem extends Creature implements Utility {
-
 	public IronGolem() {
 		super(VanillaControllerTypes.IRON_GOLEM);
 	}

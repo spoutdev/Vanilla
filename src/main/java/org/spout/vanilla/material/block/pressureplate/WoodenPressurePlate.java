@@ -34,7 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.PressurePlate;
 import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
 public class WoodenPressurePlate extends PressurePlate implements Mineable {
@@ -54,7 +54,7 @@ public class WoodenPressurePlate extends PressurePlate implements Mineable {
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
+	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 

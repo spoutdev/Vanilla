@@ -37,8 +37,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Spade;
+import org.spout.vanilla.material.item.tool.Tool;
 
 public class Snow extends GroundAttachable implements Mineable {
 	public Snow(String name, int id) {
@@ -62,7 +62,7 @@ public class Snow extends GroundAttachable implements Mineable {
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
+	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Spade ? (short) 1 : (short) 2;
 	}
 

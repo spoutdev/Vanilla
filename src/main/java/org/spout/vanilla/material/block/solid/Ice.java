@@ -38,8 +38,8 @@ import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
@@ -66,7 +66,7 @@ public class Ice extends Solid implements Mineable {
 			// Only set material to water source block if the block was not destroyed by an item with Silk Touch
 			if (block.getSource() instanceof Entity) {
 				ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-				if (held == null || !(held.getMaterial() instanceof MiningTool) || !EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+				if (held == null || !(held.getMaterial() instanceof Tool) || !EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
 					block.setMaterial(VanillaMaterials.STATIONARY_WATER).update(true);
 				}
 			}
@@ -74,7 +74,7 @@ public class Ice extends Solid implements Mineable {
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
+	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 
@@ -83,7 +83,7 @@ public class Ice extends Solid implements Mineable {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
 			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof MiningTool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+			if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
 				drops.add(new ItemStack(this, 1));
 			}
 		}

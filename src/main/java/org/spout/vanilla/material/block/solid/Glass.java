@@ -37,7 +37,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.Instrument;
 
@@ -76,7 +76,7 @@ public class Glass extends Solid {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
 			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof MiningTool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+			if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
 				drops.add(new ItemStack(this, 1));
 			}
 		}

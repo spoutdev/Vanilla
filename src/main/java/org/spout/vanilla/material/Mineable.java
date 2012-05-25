@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material;
 
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.item.tool.Tool;
 
 public interface Mineable {
 	/**
@@ -34,5 +34,5 @@ public interface Mineable {
 	 * @param tool with which has been digged
 	 * @return the durability penalty
 	 */
-	public short getDurabilityPenalty(MiningTool tool);
+	public short getDurabilityPenalty(Tool tool);
 }

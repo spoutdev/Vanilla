@@ -41,7 +41,6 @@ import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class RedstoneOre extends Ore implements TimedCraftable, Mineable {
 	private final boolean glowing;
@@ -71,11 +70,10 @@ public class RedstoneOre extends Ore implements TimedCraftable, Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
+	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial().equals(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
-			if (EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+		if (holding != null && holding.getMaterial().equals(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
+			if (EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
 				drops.add(new ItemStack(this, 1));
 			} else {
 				drops.add(new ItemStack(VanillaMaterials.REDSTONE_DUST, new Random().nextInt(4 - 5 + 1) + 4));

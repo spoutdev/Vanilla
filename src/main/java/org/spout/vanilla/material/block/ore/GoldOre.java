@@ -38,7 +38,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class GoldOre extends Ore implements TimedCraftable, Mineable {
 	public GoldOre(String name, int id) {
@@ -62,10 +61,9 @@ public class GoldOre extends Ore implements TimedCraftable, Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
+	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial().equals(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
+		if (holding != null && holding.getMaterial().equals(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
 			drops.add(new ItemStack(this, 1));
 		}
 		return drops;

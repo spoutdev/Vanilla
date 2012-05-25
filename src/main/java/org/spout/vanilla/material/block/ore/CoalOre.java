@@ -64,11 +64,10 @@ public class CoalOre extends Ore implements TimedCraftable, Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
+	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Pickaxe) {
-			if (EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+		if (holding != null && holding.getMaterial() instanceof Pickaxe) {
+			if (EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
 				drops.add(new ItemStack(this, 1));
 			} else {
 				drops.add(new ItemStack(VanillaMaterials.COAL, 1));

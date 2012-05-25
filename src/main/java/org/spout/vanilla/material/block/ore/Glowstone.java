@@ -40,7 +40,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.SignBase;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Glowstone extends Ore {
 	public Glowstone(String name, int id) {
@@ -59,11 +58,10 @@ public class Glowstone extends Ore {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
+	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Tool) {
-			if (EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+		if (holding != null && holding.getMaterial() instanceof Tool) {
+			if (EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
 				drops.add(new ItemStack(this, 1));
 			} else {
 				drops.add(new ItemStack(VanillaMaterials.GLOWSTONE_DUST, new Random().nextInt(3) + 2));

@@ -42,7 +42,6 @@ import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class LapisLazuliOre extends Ore implements TimedCraftable, Mineable {
 	public LapisLazuliOre(String name, int id) {
@@ -66,11 +65,10 @@ public class LapisLazuliOre extends Ore implements TimedCraftable, Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
+	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial().equals(VanillaMaterials.STONE_PICKAXE, VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
-			if (EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+		if (holding != null && holding.getMaterial().equals(VanillaMaterials.STONE_PICKAXE, VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
+			if (EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
 				drops.add(new ItemStack(this, 1));
 			} else {
 				drops.add(new ItemStack(Dye.LAPIS_LAZULI, new Random().nextInt(4 - 8 + 1) + 4));

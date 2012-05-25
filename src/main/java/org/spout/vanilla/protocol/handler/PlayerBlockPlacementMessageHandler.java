@@ -116,7 +116,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				return;
 			}
 			short durability = 0;
-			
+
 			//perform interaction on the server
 			if (holdingMat != null) {
 				if (holdingMat instanceof InteractTool) {

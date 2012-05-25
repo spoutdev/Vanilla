@@ -309,9 +309,20 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * Gets the drops that should be dropped. Override this method to provide rules
 	 * for what should be dropped and when.
 	 * @param block
-	 * @return
+	 * @return a list of drops
 	 */
 	public List<ItemStack> getDrops(Block block) {
+		return getDrops(block, VanillaPlayerUtil.getCurrentItem(block.getSource()));
+	}
+
+	/**
+	 * Gets the drops that should be dropped. Override this method to provide rules
+	 * for what should be dropped and when.
+	 * @param block
+	 * @param holding item that is held by the player
+	 * @return a list of drops
+	 */
+	public List<ItemStack> getDrops(Block block, ItemStack holding) {
 		return Collections.<ItemStack>emptyList();
 	}
 }

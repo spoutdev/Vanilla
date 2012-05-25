@@ -142,7 +142,6 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 			//if the material can be placed, place it
 			if (holdingMat != null && holdingMat instanceof Placeable) {
-				System.out.println("CHECK POST");
 				short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?
 				Placeable toPlace = (Placeable) holdingMat;
 

@@ -39,6 +39,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.util.Instrument;
@@ -47,8 +48,8 @@ import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
-	public static final short REDSTONE_POWER_MAX = 15;
-	public static final short REDSTONE_POWER_MIN = 0;
+	public static final short REDSTONE_POWER_MAX = (short) VanillaConfiguration.REDSTONE_MAX_RANGE.getInt();
+	public static final short REDSTONE_POWER_MIN = (short) VanillaConfiguration.REDSTONE_MIN_RANGE.getInt();
 	private List<ItemStack> drops;
 	private final int minecraftId;
 	private float resistance;

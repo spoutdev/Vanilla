@@ -59,6 +59,9 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final OpConfiguration OPS = new OpConfigurationWrapper();
 	// Controller-specific
 	public static final ConfigurationHolder ITEM_PICKUP_RANGE = new ConfigurationHolder(2, "controller", "item-pickup-range");
+	// Redstone-specific
+	public static final ConfigurationHolder REDSTONE_MIN_RANGE =  new ConfigurationHolder(0, "redstone", "redstone-min-power-range");
+	public static final ConfigurationHolder REDSTONE_MAX_RANGE = new ConfigurationHolder(15, "redstone", "redstone-max-power-range");
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));

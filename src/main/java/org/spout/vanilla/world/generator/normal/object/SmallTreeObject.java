@@ -43,7 +43,7 @@ public class SmallTreeObject extends TreeObject {
 	private boolean addLogVines = false;
 
 	public SmallTreeObject(Random random, SmallTreeType treeType) {
-		super(random, (byte) 3, (byte) 4, treeType.metadata);
+		super(random, (byte) 4, (byte) 3, treeType.metadata);
 		overridable.add(VanillaMaterials.AIR);
 		overridable.add(VanillaMaterials.LEAVES);
 		overridable.add(VanillaMaterials.LOG);

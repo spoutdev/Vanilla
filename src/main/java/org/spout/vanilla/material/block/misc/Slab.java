@@ -38,8 +38,8 @@ import org.spout.api.util.LogicUtil;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
-import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
 public class Slab extends VanillaBlockMaterial implements Mineable {
@@ -139,7 +139,7 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
+	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 

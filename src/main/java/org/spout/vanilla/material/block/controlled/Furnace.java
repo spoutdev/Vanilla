@@ -42,8 +42,8 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -125,7 +125,7 @@ public class Furnace extends Solid implements Mineable, Directional {
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
+	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 

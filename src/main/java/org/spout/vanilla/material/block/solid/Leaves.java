@@ -41,7 +41,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.SignBase;
 import org.spout.vanilla.material.item.misc.Shears;
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 
 public class Leaves extends Solid implements Mineable {
@@ -99,7 +99,7 @@ public class Leaves extends Solid implements Mineable {
 	// TODO: Decay
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
+	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Shears ? (short) 1 : (short) 2;
 	}
 }

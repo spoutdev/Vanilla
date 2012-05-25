@@ -37,8 +37,8 @@ import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.Furnace;
-import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.material.item.tool.Tool;
 
 public class Cobblestone extends Solid implements TimedCraftable, Mineable {
 	public Cobblestone(String name, int id) {
@@ -62,7 +62,7 @@ public class Cobblestone extends Solid implements TimedCraftable, Mineable {
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
+	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 

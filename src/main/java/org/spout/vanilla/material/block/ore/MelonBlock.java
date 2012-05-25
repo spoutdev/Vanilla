@@ -36,7 +36,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.Ore;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 
 public class MelonBlock extends Ore {
@@ -55,7 +55,7 @@ public class MelonBlock extends Ore {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (block.getSource() instanceof Entity) {
 			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof MiningTool) {
+			if (held != null && held.getMaterial() instanceof Tool) {
 				if (EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
 					drops.add(new ItemStack(this, 1));
 				} else {

@@ -33,7 +33,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.item.tool.Tool;
 
 public class Sponge extends Solid implements Mineable {
 	public Sponge(String name, int id) {
@@ -48,7 +48,7 @@ public class Sponge extends Solid implements Mineable {
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
+	public short getDurabilityPenalty(Tool tool) {
 		return 1;
 	}
 }

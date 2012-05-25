@@ -34,8 +34,8 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.material.item.tool.Tool;
 
 public class NetherRack extends Solid implements Mineable {
 	public NetherRack(String name, int id) {
@@ -49,7 +49,7 @@ public class NetherRack extends Solid implements Mineable {
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
+	public short getDurabilityPenalty(Tool tool) {
 		return 0;
 	}
 

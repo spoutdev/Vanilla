@@ -39,7 +39,7 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.misc.Coal;
 import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
 public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable {
@@ -99,7 +99,7 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable 
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
+	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 

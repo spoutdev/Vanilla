@@ -36,7 +36,7 @@ import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.MiningTool;
+import org.spout.vanilla.material.item.tool.Tool;
 
 public class Wool extends Solid implements Mineable {
 	public static final Wool WHITE = new Wool("White Wool");
@@ -100,7 +100,7 @@ public class Wool extends Solid implements Mineable {
 	}
 
 	@Override
-	public short getDurabilityPenalty(MiningTool tool) {
+	public short getDurabilityPenalty(Tool tool) {
 		return 0;
 	}
 

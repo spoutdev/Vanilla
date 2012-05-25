@@ -101,7 +101,6 @@ public class VanillaListener implements Listener {
 		if (entity != null) {
 			entity.getInventory().removeViewer(event.getPlayer().getNetworkSynchronizer());
 		}
-		event.getPlayer().getEntity().kill();
 	}
 
 	@EventHandler

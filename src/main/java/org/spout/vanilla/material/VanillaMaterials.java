@@ -586,12 +586,6 @@ public final class VanillaMaterials {
 					Spout.getLogger().severe("Vanilla Material field '" + field.getName() + "' is not yet initialized");
 					continue;
 				}
-				try {
-					material.initialize();
-				} catch (Throwable t) {
-					Spout.getLogger().severe("An exception occurred while loading the properties of Vanilla Material '" + field.getName() + "':");
-					t.printStackTrace();
-				}
 			} catch (Throwable t) {
 				Spout.getLogger().severe("An exception occurred while reading Vanilla Material field '" + field.getName() + "':");
 				t.printStackTrace();

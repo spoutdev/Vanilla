@@ -39,11 +39,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class NetherBrickFence extends Fence {
 	public NetherBrickFence(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setResistance(30.F);
 	}
 

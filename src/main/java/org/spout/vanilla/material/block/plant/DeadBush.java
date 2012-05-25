@@ -37,15 +37,11 @@ import org.spout.vanilla.material.block.attachable.GroundAttachable;
 public class DeadBush extends GroundAttachable implements Plant {
 	public DeadBush(String name, int id) {
 		super(name, id);
+		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
 	}
 
 	public DeadBush(String name, int id, int data, VanillaBlockMaterial parent) {
 		super(name, id, data, parent);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
 	}
 

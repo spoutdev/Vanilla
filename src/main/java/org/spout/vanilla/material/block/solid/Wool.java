@@ -60,16 +60,12 @@ public class Wool extends Solid implements Mineable {
 	private Wool(String name) {
 		super(name, 35);
 		this.color = WoolColor.WHITE;
+		this.setHardness(0.8F).setResistance(1.3F);
 	}
 
 	private Wool(String name, WoolColor color, Wool parent) {
 		super(name, 35, color.getData(), parent);
 		this.color = color;
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.8F).setResistance(1.3F);
 	}
 

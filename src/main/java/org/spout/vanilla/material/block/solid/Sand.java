@@ -43,11 +43,6 @@ import org.spout.vanilla.util.Instrument;
 public class Sand extends Solid implements TimedCraftable, Mineable {
 	public Sand(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.5F).setResistance(0.8F);
 	}
 

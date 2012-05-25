@@ -44,6 +44,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class WoodenDoorBlock extends DoorBlock {
 	public WoodenDoorBlock(String name, int id) {
 		super(name, id);
+		this.setHardness(3.0F).setResistance(5.0F).setOpacity((byte) 1);
 	}
 
 	@Override
@@ -59,12 +60,6 @@ public class WoodenDoorBlock extends DoorBlock {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.BASSGUITAR;
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(3.0F).setResistance(5.0F).setOpacity((byte) 1);
 	}
 
 	@Override

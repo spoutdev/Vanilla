@@ -46,11 +46,6 @@ public class Gravel extends Solid implements Mineable {
 
 	public Gravel(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.6F).setResistance(1.0F);
 	}
 

@@ -43,11 +43,6 @@ import org.spout.vanilla.util.RedstoneUtil;
 public class TNT extends Solid implements RedstoneTarget {
 	public TNT(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
 	}
 

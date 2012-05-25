@@ -40,11 +40,6 @@ public class RedstoneLamp extends Solid {
 	public RedstoneLamp(String name, int id, boolean on) {
 		super(name, id);
 		this.on = on;
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		// TODO: The resistance is not correct (?)
 		this.setHardness(0.3F).setResistance(0.5F);
 		if (on) {

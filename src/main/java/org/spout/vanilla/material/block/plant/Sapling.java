@@ -55,15 +55,11 @@ public class Sapling extends GroundAttachable implements Plant, Fuel {
 
 	private Sapling(String name) {
 		super(name, 6);
+		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
 	}
 
 	private Sapling(String name, int data, Sapling parent) {
 		super(name, 6, data, parent);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
 	}
 

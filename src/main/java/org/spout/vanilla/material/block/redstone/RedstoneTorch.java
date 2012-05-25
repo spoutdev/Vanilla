@@ -46,11 +46,6 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	public RedstoneTorch(String name, int id, boolean powered) {
 		super(name, id);
 		this.powered = powered;
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
 		if (powered) {
 			this.setLightLevel(7);

@@ -41,22 +41,12 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class Endstone extends Solid implements Mineable {
 	public Endstone(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(3.0F).setResistance(15.0F);
 	}
 
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
-		//TODO Is this right bergerkiller?
-		if (tool instanceof Pickaxe) {
-			return 1;
-		} else {
-			return 2;
-		}
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 
 	@Override

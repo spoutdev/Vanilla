@@ -43,11 +43,6 @@ public class Pumpkin extends Solid implements Directional {
 	public Pumpkin(String name, int id, boolean lantern) {
 		super(name, id);
 		this.lantern = lantern;
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(1.0F).setResistance(1.7F);
 		if (lantern) {
 			this.setLightLevel(15);

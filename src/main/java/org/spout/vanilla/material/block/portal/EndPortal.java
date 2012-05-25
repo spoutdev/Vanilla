@@ -34,10 +34,6 @@ import org.spout.vanilla.util.MoveReaction;
 public class EndPortal extends Portal {
 	public EndPortal(String name, int id) {
 		super(name, id);
-	}
-
-	public void initialize() {
-		super.initialize();
 		this.setHardness(-1.0F).setResistance(6000000.0F).setLightLevel(1);
 	}
 

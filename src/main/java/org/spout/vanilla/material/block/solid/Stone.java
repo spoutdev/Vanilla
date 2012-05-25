@@ -44,11 +44,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class Stone extends Solid implements Mineable {
 	public Stone(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(1.5F).setResistance(10.0F);
 	}
 

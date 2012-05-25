@@ -29,11 +29,6 @@ package org.spout.vanilla.material.block.plant;
 public class MelonStem extends Stem {
 	public MelonStem(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.3F);
 	}
 }

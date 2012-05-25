@@ -31,11 +31,6 @@ import org.spout.vanilla.material.item.tool.Pickaxe;
 public class WoodenPickaxe extends WoodenTool implements Pickaxe {
 	public WoodenPickaxe(String name, int id, short durability) {
 		super(name, id, durability);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setDamage(2);
 	}
 }

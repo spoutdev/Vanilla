@@ -41,11 +41,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class GoldBlock extends Solid implements Mineable {
 	public GoldBlock(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(3.0F).setResistance(10.0F);
 	}
 

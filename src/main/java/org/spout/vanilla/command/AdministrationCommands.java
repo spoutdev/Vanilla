@@ -136,6 +136,7 @@ public class AdministrationCommands {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
 		}
+		VanillaPlayer vplayer = (VanillaPlayer) player.getEntity().getController();
 
 		short data = 0;
 		if (args.isInteger(index)) {
@@ -159,7 +160,7 @@ public class AdministrationCommands {
 			throw new CommandException(args.getString(index) + " is not a block!");
 		}
 
-		player.getEntity().getInventory().addItem(new ItemStack(material, data, args.getInteger(2, 1)), false);
+		vplayer.getInventory().addItem(new ItemStack(material, data, args.getInteger(2, 1)), false);
 	}
 
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)

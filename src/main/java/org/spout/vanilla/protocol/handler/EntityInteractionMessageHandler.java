@@ -40,6 +40,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class EntityInteractionMessageHandler extends MessageHandler<EntityInteractionMessage> {
 	@Override
@@ -49,7 +50,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 			return;
 		}
 
-		ItemStack holding = player.getEntity().getInventory().getCurrentItem();
+		ItemStack holding = VanillaPlayerUtil.getCurrentItem(player.getEntity());
 		Material holdingMat = holding == null ? VanillaMaterials.AIR : holding.getMaterial();
 		if (holdingMat == null) {
 			holdingMat = VanillaMaterials.AIR;

@@ -132,11 +132,9 @@ public class Furnace extends Solid implements Mineable, Directional {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof Pickaxe) {
-				drops.add(new ItemStack(this, 1));
-			}
+		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
+		if (held != null && held.getMaterial() instanceof Pickaxe) {
+			drops.add(new ItemStack(this, 1));
 		}
 		return drops;
 	}

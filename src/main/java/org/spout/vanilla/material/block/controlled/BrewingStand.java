@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.controlled;
 
 import java.util.ArrayList;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
@@ -36,6 +35,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class BrewingStand extends VanillaBlockMaterial {
 	public BrewingStand(String name, int id) {
@@ -52,11 +52,9 @@ public class BrewingStand extends VanillaBlockMaterial {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof Pickaxe) {
-				drops.add(new ItemStack(VanillaMaterials.BREWING_STAND, 1));
-			}
+		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
+		if (held != null && held.getMaterial() instanceof Pickaxe) {
+			drops.add(new ItemStack(VanillaMaterials.BREWING_STAND, 1));
 		}
 		return drops;
 	}

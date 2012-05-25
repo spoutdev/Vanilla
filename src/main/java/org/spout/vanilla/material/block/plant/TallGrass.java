@@ -29,7 +29,6 @@ package org.spout.vanilla.material.block.plant;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -37,6 +36,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class TallGrass extends DeadBush {
 	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass");
@@ -75,15 +75,13 @@ public class TallGrass extends DeadBush {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial().equals(VanillaMaterials.SHEARS)) {
-				drops.add(new ItemStack(this, 1));
-			} else {
-				Random rand = new Random();
-				if (rand.nextInt(100) < (8 + rand.nextInt(7))) {
-					drops.add(new ItemStack(VanillaMaterials.SEEDS, 1));
-				}
+		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
+		if (held != null && held.getMaterial().equals(VanillaMaterials.SHEARS)) {
+			drops.add(new ItemStack(this, 1));
+		} else {
+			Random rand = new Random();
+			if (rand.nextInt(100) < (8 + rand.nextInt(7))) {
+				drops.add(new ItemStack(VanillaMaterials.SEEDS, 1));
 			}
 		}
 		return drops;

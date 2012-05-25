@@ -39,6 +39,7 @@ import org.spout.api.util.BlockIterator;
 import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Vines extends VanillaBlockMaterial {
 	public Vines(String name, int id) {
@@ -53,16 +54,16 @@ public class Vines extends VanillaBlockMaterial {
 
 	private int getMask(BlockFace face) {
 		switch (face) {
-			case WEST:
-				return 0x1;
-			case NORTH:
-				return 0x2;
-			case EAST:
-				return 0x4;
-			case SOUTH:
-				return 0x8;
-			default:
-				return 0;
+		case WEST:
+			return 0x1;
+		case NORTH:
+			return 0x2;
+		case EAST:
+			return 0x4;
+		case SOUTH:
+			return 0x8;
+		default:
+			return 0;
 		}
 	}
 
@@ -231,13 +232,10 @@ public class Vines extends VanillaBlockMaterial {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial().equals(VanillaMaterials.SHEARS)) {
-				drops.add(new ItemStack(this, 1));
-			}
+		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
+		if (held != null && held.getMaterial().equals(VanillaMaterials.SHEARS)) {
+			drops.add(new ItemStack(this, 1));
 		}
-		
 		return drops;
 	}
 }

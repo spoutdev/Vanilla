@@ -29,12 +29,12 @@ package org.spout.vanilla.material.block.misc.fence;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.block.misc.Fence;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class NetherBrickFence extends Fence {
 	public NetherBrickFence(String name, int id) {
@@ -55,11 +55,9 @@ public class NetherBrickFence extends Fence {
 	@Override
 	public List<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof Pickaxe) {
-				drops.add(new ItemStack(this, 1));
-			}
+		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
+		if (held != null && held.getMaterial() instanceof Pickaxe) {
+			drops.add(new ItemStack(this, 1));
 		}
 		return drops;
 	}

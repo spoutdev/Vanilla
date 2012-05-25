@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.item;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Placeable;
@@ -58,12 +57,6 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (block.getSource() instanceof Entity) {
-			Entity entity = (Entity) block.getSource();
-			if (!entity.getInventory().isCurrentItem(this)) {
-				throw new IllegalStateException("Interaction with an controller that is not holding this block!");
-			}
-		}
 		return this.onPlaceMaterial.onPlacement(block, this.onPlaceData, against, isClickedBlock);
 	}
 

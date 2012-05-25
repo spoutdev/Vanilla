@@ -54,15 +54,17 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		//refresh the client just in case it assumed something
 		player.getSession().send(new BlockChangeMessage(clickedBlock));
 		player.getSession().send(new BlockChangeMessage(alterBlock));
-		Inventory inv = player.getEntity().getInventory();
-		inv.setCurrentItem(inv.getCurrentItem());
+		Inventory inv = VanillaPlayerUtil.getInventory(player.getEntity());
+		if (inv != null) {
+			inv.setCurrentItem(inv.getCurrentItem());
+		}
 	}
 
 	@Override
 	public void handleServer(Session session, Player player, PlayerBlockPlacementMessage message) {
 		EventManager eventManager = session.getGame().getEventManager();
 		World world = player.getEntity().getWorld();
-		Inventory inventory = player.getEntity().getInventory();
+		Inventory inventory = VanillaPlayerUtil.getInventory(player.getEntity());
 		ItemStack holding = inventory.getCurrentItem();
 		Material holdingMat = holding == null ? null : holding.getSubMaterial();
 
@@ -84,6 +86,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				holdingMat.onInteract(player.getEntity(), Action.RIGHT_CLICK);
 			}
 		} else {
+
 			//TODO: Validate the x/y/z coordinates of the message to check if it is in range of the player
 			//This is an anti-hack requirement (else hackers can load far-away chunks and crash the server)
 
@@ -113,7 +116,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				return;
 			}
 			short durability = 0;
-
+			
 			//perform interaction on the server
 			if (holdingMat != null) {
 				if (holdingMat instanceof InteractTool) {
@@ -125,9 +128,10 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 			if (holdingMat instanceof InteractTool && VanillaPlayerUtil.isSurvival(clickedBlock.getSource())) { //TODO Total hack and is BADDDDDD
 				short newDurability = ((short) (durability - ((InteractTool) holdingMat).getMaxDurability()));
-				player.getEntity().getInventory().addCurrentItemData(newDurability);
+
+				inventory.addCurrentItemData(newDurability);
 				if (((InteractTool) holdingMat).getMaxDurability() < 1 && durability != ((InteractTool) holdingMat).getMaxDurability()) { //TODO Total hack!!!
-					player.getEntity().getInventory().setCurrentItem(null); //Break a tool if their onInteract takes away durability. TODO Probably not the best place to do this...
+					inventory.setCurrentItem(null); //Break a tool if their onInteract takes away durability. TODO Probably not the best place to do this...
 				}
 			}
 
@@ -138,6 +142,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 			//if the material can be placed, place it
 			if (holdingMat != null && holdingMat instanceof Placeable) {
+				System.out.println("CHECK POST");
 				short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?
 				Placeable toPlace = (Placeable) holdingMat;
 

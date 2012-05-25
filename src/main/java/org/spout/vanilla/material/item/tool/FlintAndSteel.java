@@ -33,6 +33,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class FlintAndSteel extends InteractTool {
 	public FlintAndSteel(String name, int id, short durability) {
@@ -50,8 +51,10 @@ public class FlintAndSteel extends InteractTool {
 				clickedface = clickedface.getOpposite();
 				if (VanillaMaterials.FIRE.canPlace(target, (short) 0, clickedface, false)) {
 					if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, clickedface, false)) {
-						Inventory inv = entity.getInventory();
-						inv.addCurrentItemData(1);
+						Inventory inv = VanillaPlayerUtil.getInventory(entity);
+						if (inv != null) {
+							inv.addCurrentItemData(1);
+						}
 					}
 				}
 			}

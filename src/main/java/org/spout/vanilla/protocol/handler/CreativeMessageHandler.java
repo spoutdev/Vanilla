@@ -55,7 +55,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 
 		Inventory inventory = controller.getActiveInventory();
 		if (inventory == null) {
-			inventory = entity.getInventory();
+			inventory = controller.getInventory();
 		}
 
 		int slot = message.getSlot();

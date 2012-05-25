@@ -28,6 +28,8 @@ package org.spout.vanilla.util;
 
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -72,5 +74,31 @@ public class VanillaPlayerUtil {
 			return BlockFace.fromYaw(((Entity) source).getYaw());
 		}
 		return BlockFace.NORTH;
+	}
+
+	/**
+	 * Tries to find the player inventory of the source
+	 * @param source
+	 * @return inventory
+	 */
+	public static Inventory getInventory(Source source) {
+		if (source instanceof Entity) {
+			Entity e = (Entity) source;
+			if (e.getController() instanceof VanillaPlayer) {
+				return ((VanillaPlayer) e.getController()).getInventory();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Tries to find the currently active item (held item) from a player entity source
+	 * 
+	 * @param source
+	 * @return the held item, or null if not found
+	 */
+	public static ItemStack getCurrentItem(Source source) {
+		Inventory inv = getInventory(source);
+		return inv == null ? null : inv.getCurrentItem();
 	}
 }

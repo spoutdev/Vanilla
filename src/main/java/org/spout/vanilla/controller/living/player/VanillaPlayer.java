@@ -59,6 +59,7 @@ import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
@@ -273,7 +274,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public Set<ItemStack> getDrops() {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		ItemStack[] contents = getParent().getInventory().getContents();
+		ItemStack[] contents = this.getInventory().getContents();
 		drops.addAll(Arrays.asList(contents));
 		return drops;
 	}
@@ -314,7 +315,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			if (player.getEntity().getController() != this) {
 				if (visible) {
 					invisibleFor.remove(player);
-					ItemStack currentItem = parent.getInventory().getCurrentItem();
+					ItemStack currentItem = VanillaPlayerUtil.getCurrentItem(player.getEntity());
 					int itemId = 0;
 					if (currentItem != null) {
 						itemId = currentItem.getMaterial().getId();
@@ -639,7 +640,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	public void dropItem() {
-		ItemStack current = getParent().getInventory().getCurrentItem();
+		ItemStack current = this.getInventory().getCurrentItem();
 		if (current == null) {
 			return;
 		}
@@ -651,7 +652,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		} else {
 			current = null;
 		}
-		getParent().getInventory().setCurrentItem(current);
+		this.getInventory().setCurrentItem(current);
 		getParent().getWorld().createAndSpawnEntity(getHeadPosition().add(0.0, -0.4, 0.0), control);
 	}
 }

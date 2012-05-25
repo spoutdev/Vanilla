@@ -30,6 +30,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 
 public final class HeldItemChangeMessageHandler extends MessageHandler<HeldItemChangeMessage> {
@@ -44,6 +45,6 @@ public final class HeldItemChangeMessageHandler extends MessageHandler<HeldItemC
 			return;
 		}
 
-		player.getEntity().getInventory().setCurrentSlot(newSlot);
+		((VanillaPlayer) player.getEntity().getController()).getInventory().setCurrentSlot(newSlot);
 	}
 }

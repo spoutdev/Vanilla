@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.misc;
 
 import java.util.ArrayList;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -39,6 +38,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Snow extends GroundAttachable implements Mineable {
 	public Snow(String name, int id) {
@@ -69,10 +69,9 @@ public class Snow extends GroundAttachable implements Mineable {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			if (((Entity) block.getSource()).getInventory().getCurrentItem().getMaterial() instanceof Spade) {
-				drops.add(new ItemStack(VanillaMaterials.SNOWBALL, 1));
-			}
+		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
+		if (held != null && held.getMaterial() instanceof Spade) {
+			drops.add(new ItemStack(VanillaMaterials.SNOWBALL, 1));
 		}
 		return drops;
 	}

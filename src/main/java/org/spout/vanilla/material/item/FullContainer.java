@@ -34,6 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class FullContainer extends BlockItem {
 	private Material container;
@@ -56,8 +57,8 @@ public class FullContainer extends BlockItem {
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteract(entity, block, type, clickedFace);
 
-		Inventory inventory = entity.getInventory();
-		if (inventory.getCurrentItem() == null) {
+		Inventory inventory = VanillaPlayerUtil.getInventory(block.getSource());
+		if (inventory != null && inventory.getCurrentItem() == null) {
 			inventory.setCurrentItem(new ItemStack(getContainer(), 1));
 		}
 	}

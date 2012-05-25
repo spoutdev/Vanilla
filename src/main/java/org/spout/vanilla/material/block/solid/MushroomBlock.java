@@ -29,7 +29,6 @@ package org.spout.vanilla.material.block.solid;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
@@ -39,6 +38,7 @@ import org.spout.vanilla.material.Ore;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class MushroomBlock extends Ore implements Fuel {
 	public final float BURN_TIME = 15.f;
@@ -61,17 +61,15 @@ public class MushroomBlock extends Ore implements Fuel {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-				drops.add(new ItemStack(this, 1));
+		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
+		if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+			drops.add(new ItemStack(this, 1));
+		} else {
+			int amount = new Random().nextInt(0 - 2 + 1) + 0;
+			if (this.equals(VanillaMaterials.HUGE_RED_MUSHROOM)) {
+				drops.add(new ItemStack(VanillaMaterials.RED_MUSHROOM, amount));
 			} else {
-				int amount = new Random().nextInt(0 - 2 + 1) + 0;
-				if (this.equals(VanillaMaterials.HUGE_RED_MUSHROOM)) {
-					drops.add(new ItemStack(VanillaMaterials.RED_MUSHROOM, amount));
-				} else {
-					drops.add(new ItemStack(VanillaMaterials.BROWN_MUSHROOM, amount));
-				}
+				drops.add(new ItemStack(VanillaMaterials.BROWN_MUSHROOM, amount));
 			}
 		}
 		return drops;

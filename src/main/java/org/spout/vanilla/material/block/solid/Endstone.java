@@ -36,6 +36,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Endstone extends Solid implements Mineable {
 	public Endstone(String name, int id) {
@@ -61,11 +62,9 @@ public class Endstone extends Solid implements Mineable {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof Pickaxe) {
-				drops.add(new ItemStack(this, 1));
-			}
+		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
+		if (held != null && held.getMaterial() instanceof Pickaxe) {
+			drops.add(new ItemStack(this, 1));
 		}
 		return drops;
 	}

@@ -44,7 +44,7 @@ public final class CloseWindowMessageHandler extends MessageHandler<CloseWindowM
 			WindowInventory inventory = (WindowInventory) activeInventory;
 			inventory.onClosed(controller);
 		}
-		controller.setActiveInventory(player.getEntity().getInventory());
+		controller.setActiveInventory(controller.getInventory());
 		controller.setItemOnCursor(null);
 
 		//TODO drop item, code below ;D

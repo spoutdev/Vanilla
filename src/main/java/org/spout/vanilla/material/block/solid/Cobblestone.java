@@ -39,6 +39,7 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Cobblestone extends Solid implements TimedCraftable, Mineable {
 	public Cobblestone(String name, int id) {
@@ -69,11 +70,9 @@ public class Cobblestone extends Solid implements TimedCraftable, Mineable {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof Pickaxe) {
-				drops.add(new ItemStack(this, 1));
-			}
+		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
+		if (held != null && held.getMaterial() instanceof Pickaxe) {
+			drops.add(new ItemStack(this, 1));
 		}
 		return drops;
 	}

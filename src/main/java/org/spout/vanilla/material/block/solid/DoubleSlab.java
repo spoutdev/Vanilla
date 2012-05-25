@@ -37,6 +37,7 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.misc.Slab;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class DoubleSlab extends Solid implements Mineable {
 	public static final DoubleSlab STONE = new DoubleSlab("Stone Double Slab", Slab.STONE);
@@ -86,11 +87,9 @@ public class DoubleSlab extends Solid implements Mineable {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof Pickaxe) {
-				drops.add(new ItemStack(this, 1));
-			}
+		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
+		if (held != null && held.getMaterial() instanceof Pickaxe) {
+			drops.add(new ItemStack(this, 1));
 		}
 		return drops;
 	}

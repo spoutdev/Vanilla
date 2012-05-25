@@ -28,13 +28,14 @@ package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.block.solid.Wool.WoolColor;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Dye extends VanillaItemMaterial {
 	public static final Dye INK_SAC = new Dye("Ink Sac");
@@ -101,12 +102,17 @@ public class Dye extends VanillaItemMaterial {
 				return;
 			}
 
-			ItemStack holding = entity.getInventory().getCurrentItem();
-			//get color from holding item
-			((Sheep) other.getController()).setColor(WoolColor.getById((short) (0xF - holding.getData())));
+			Inventory inv = VanillaPlayerUtil.getInventory(entity);
+			if (inv != null) {
+				ItemStack holding = inv.getCurrentItem();
+				if (holding != null) {
+					//get color from holding item
+					((Sheep) other.getController()).setColor(WoolColor.getById((short) (0xF - holding.getData())));
 
-			if (entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival()) {
-				entity.getInventory().addCurrentItemAmount(-1);
+					if (VanillaPlayerUtil.isSurvival(entity)) {
+						inv.addCurrentItemAmount(-1);
+					}
+				}
 			}
 		}
 	}

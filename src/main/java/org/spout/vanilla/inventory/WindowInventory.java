@@ -82,7 +82,6 @@ public abstract class WindowInventory extends Inventory implements VanillaInvent
 	 * @param player to close the inventory on
 	 */
 	public void onClosed(VanillaPlayer player) {
-		Inventory inventory = player.getPlayer().getEntity().getInventory();
 		removeViewer(player.getPlayer().getNetworkSynchronizer());
 	}
 

@@ -54,7 +54,7 @@ public class VanillaPlayerEntityProtocol extends VanillaEntityProtocol implement
 			VanillaPlayer mcp = (VanillaPlayer) c;
 			String name = mcp.getPlayer().getName();
 			int item = 0;
-			ItemStack hand = entity.getInventory().getCurrentItem();
+			ItemStack hand = mcp.getInventory().getCurrentItem();
 			if (hand != null) {
 				item = hand.getMaterial().getId();
 			}

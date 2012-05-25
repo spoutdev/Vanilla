@@ -39,6 +39,7 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class BookShelf extends Solid implements Fuel {
 	public final float BURN_TIME = 15.f;
@@ -71,13 +72,11 @@ public class BookShelf extends Solid implements Fuel {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (block.getSource() instanceof Entity) {
-			ItemStack held = ((Entity) block.getSource()).getInventory().getCurrentItem();
-			if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-				drops.add(new ItemStack(this, 1));
-			} else {
-				drops.add(new ItemStack(VanillaMaterials.BOOK, 3));
-			}
+		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
+		if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+			drops.add(new ItemStack(this, 1));
+		} else {
+			drops.add(new ItemStack(VanillaMaterials.BOOK, 3));
 		}
 		return drops;
 	}

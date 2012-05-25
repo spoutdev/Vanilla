@@ -79,7 +79,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			isInteractable = false;
 		}
 
-		Inventory inv = player.getEntity().getInventory();
+		Inventory inv = ((VanillaPlayer) player.getEntity().getController()).getInventory();
 		ItemStack heldItem = inv.getCurrentItem();
 		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
 
@@ -134,7 +134,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 					short penalty = ((Tool) heldItem.getMaterial()).getDurabilityPenalty((Mineable) heldItem.getMaterial(), heldItem);
 					if (penalty != 0) {
 						if (heldItem.getData() - penalty < 1) {
-							player.getEntity().getInventory().setCurrentItem(null);
+							inv.setCurrentItem(null);
 						} else {
 							inv.addCurrentItemData(penalty);
 						}

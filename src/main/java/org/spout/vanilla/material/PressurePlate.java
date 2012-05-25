@@ -41,11 +41,6 @@ import org.spout.vanilla.util.RedstonePowerMode;
 public class PressurePlate extends GroundAttachable implements RedstoneSource, ScheduleUpdated {
 	public PressurePlate(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
 	}
 

@@ -52,21 +52,17 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 
 	private Slab(String name) {
 		super(name, 44);
+		this.setHardness(2.0F).setResistance(10.0F).setOpacity((byte) 1);
 	}
 
 	private Slab(String name, int data, Slab parent) {
 		super(name, 44, data, parent);
+		this.setHardness(2.0F).setResistance(10.0F).setOpacity((byte) 1);
 	}
 
 	public Slab setDoubleType(DoubleSlab doubletype) {
 		this.doubletype = doubletype;
 		return this;
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(2.0F).setResistance(10.0F).setOpacity((byte) 1);
 	}
 
 	@Override

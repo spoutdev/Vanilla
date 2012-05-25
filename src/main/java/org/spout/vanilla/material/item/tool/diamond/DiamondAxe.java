@@ -31,11 +31,6 @@ import org.spout.vanilla.material.item.tool.Axe;
 public class DiamondAxe extends DiamondTool implements Axe {
 	public DiamondAxe(String name, int id, short durability) {
 		super(name, id, durability);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setDamage(6);
 	}
 }

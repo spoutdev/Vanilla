@@ -48,16 +48,12 @@ public class Sandstone extends Solid implements Mineable {
 	private Sandstone(String name) {
 		super(name, 24);
 		this.type = SandstoneType.SANDSTONE;
+		this.setHardness(0.8F).setResistance(1.3F);
 	}
 
 	private Sandstone(String name, SandstoneType type, Sandstone parent) {
 		super(name, 24, type.getData(), parent);
 		this.type = type;
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.8F).setResistance(1.3F);
 	}
 

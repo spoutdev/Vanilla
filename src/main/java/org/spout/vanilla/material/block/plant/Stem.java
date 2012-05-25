@@ -43,11 +43,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class Stem extends GroundAttachable implements Plant {
 	public Stem(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setResistance(0.0F).setHardness(0.0F).setOpacity((byte) 1);
 	}
 

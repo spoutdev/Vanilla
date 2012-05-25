@@ -41,11 +41,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class IronBarsBlock extends Solid implements Mineable {
 	public IronBarsBlock(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(5.0F).setResistance(10.0F).setOpacity((byte) 1);
 	}
 

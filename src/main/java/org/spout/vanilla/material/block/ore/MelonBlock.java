@@ -42,11 +42,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class MelonBlock extends Ore {
 	public MelonBlock(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(1.0F).setResistance(1.7F);
 	}
 

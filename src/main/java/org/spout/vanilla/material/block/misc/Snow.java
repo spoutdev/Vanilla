@@ -43,11 +43,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class Snow extends GroundAttachable implements Mineable {
 	public Snow(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.1F).setResistance(0.2F).setOpacity((byte) 1);
 	}
 

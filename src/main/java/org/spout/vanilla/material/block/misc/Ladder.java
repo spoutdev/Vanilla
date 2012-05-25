@@ -38,13 +38,7 @@ import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 public class Ladder extends AbstractAttachable {
 	public Ladder(String name, int id) {
 		super(name, id);
-		this.setAttachable(BlockFaces.WESN);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(0.4F).setResistance(0.7F).setOpacity((byte) 1);
+		this.setAttachable(BlockFaces.WESN).setHardness(0.4F).setResistance(0.7F).setOpacity((byte) 1);
 	}
 
 	@Override

@@ -47,11 +47,6 @@ import org.spout.vanilla.world.generator.nether.NetherGenerator;
 public class Ice extends Solid implements Mineable {
 	public Ice(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 2);
 	}
 

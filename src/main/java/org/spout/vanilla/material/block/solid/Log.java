@@ -51,15 +51,11 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable 
 
 	private Log(String name) {
 		super(name, 17);
+		this.setHardness(2.0F).setResistance(10.F).setOpacity((byte) 1);
 	}
 
 	private Log(String name, int data, Log parent) {
 		super(name, 17, data, parent);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(2.0F).setResistance(10.F).setOpacity((byte) 1);
 	}
 

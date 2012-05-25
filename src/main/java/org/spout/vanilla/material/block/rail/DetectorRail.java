@@ -42,11 +42,6 @@ import org.spout.vanilla.util.RedstonePowerMode;
 public class DetectorRail extends RailBase implements RedstoneSource, ScheduleUpdated {
 	public DetectorRail(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.7F).setResistance(1.2F).setOpacity((byte) 0);
 	}
 

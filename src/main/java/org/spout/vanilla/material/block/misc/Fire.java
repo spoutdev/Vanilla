@@ -36,11 +36,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 public class Fire extends VanillaBlockMaterial {
 	public Fire(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.0F).setResistance(0.0F).setLightLevel(15).setOpacity((byte) 1);
 	}
 

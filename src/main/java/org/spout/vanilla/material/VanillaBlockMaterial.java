@@ -34,7 +34,6 @@ import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
@@ -57,6 +56,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public VanillaBlockMaterial(String name, int id) {
 		super(name);
 		this.minecraftId = id;
+		
+		this.setCollision(CollisionStrategy.SOLID);
 	}
 
 	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent) {
@@ -67,18 +68,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	@Override
 	public final int getMinecraftId() {
 		return minecraftId;
-	}
-
-	@Override
-	public void initialize() {
-		this.setCollision(CollisionStrategy.SOLID);
-		if (this.hasSubMaterials()) {
-			for (Material material : this.getSubMaterials()) {
-				if (material instanceof VanillaMaterial) {
-					((VanillaMaterial) material).initialize();
-				}
-			}
-		}
 	}
 
 	/**

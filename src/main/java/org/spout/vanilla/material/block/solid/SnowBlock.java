@@ -44,11 +44,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class SnowBlock extends Solid implements Mineable {
 	public SnowBlock(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.2F).setResistance(0.3F);
 	}
 

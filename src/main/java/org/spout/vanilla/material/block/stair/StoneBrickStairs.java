@@ -38,11 +38,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class StoneBrickStairs extends Stairs {
 	public StoneBrickStairs(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(2.0F).setResistance(10.0F);
 	}
 

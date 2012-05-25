@@ -58,13 +58,7 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 
 	public Chest(String name, int id) {
 		super(name, id);
-		this.setController(VanillaControllerTypes.CHEST);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		setHardness(2.5F).setResistance(4.2F).setOpacity((byte) 1);
+		this.setHardness(2.5F).setResistance(4.2F).setOpacity((byte) 1).setController(VanillaControllerTypes.CHEST);
 	}
 
 	public boolean isDouble(Block block) {

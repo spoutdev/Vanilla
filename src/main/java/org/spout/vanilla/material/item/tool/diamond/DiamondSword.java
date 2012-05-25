@@ -31,11 +31,6 @@ import org.spout.vanilla.material.item.weapon.Sword;
 public class DiamondSword extends DiamondTool implements Sword {
 	public DiamondSword(String name, int id, short durability) {
 		super(name, id, durability);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setDamage(7);
 	}
 }

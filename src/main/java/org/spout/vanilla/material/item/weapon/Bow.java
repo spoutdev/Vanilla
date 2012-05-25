@@ -32,11 +32,6 @@ import org.spout.vanilla.material.item.RangedWeapon;
 public class Bow extends RangedWeapon implements Enchantable {
 	public Bow(String name, int id, short durability) {
 		super(name, id, durability);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setRangedDamage(9);
 	}
 

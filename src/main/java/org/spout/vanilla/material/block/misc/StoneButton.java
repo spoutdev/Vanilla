@@ -49,13 +49,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class StoneButton extends AbstractAttachable implements PointAttachable, ScheduleUpdated, RedstoneSource {
 	public StoneButton(String name, int id) {
 		super(name, id);
-		this.setAttachable(BlockFaces.NESW);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
+		this.setAttachable(BlockFaces.NESW).setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
 	}
 
 	@Override

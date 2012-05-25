@@ -37,11 +37,6 @@ import org.spout.vanilla.util.Instrument;
 public class CraftingTable extends Solid {
 	public CraftingTable(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(4.2F);
 	}
 

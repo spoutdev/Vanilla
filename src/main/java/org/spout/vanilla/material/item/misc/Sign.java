@@ -32,11 +32,6 @@ import org.spout.vanilla.material.item.BlockItem;
 public class Sign extends BlockItem {
 	public Sign(String name, int id) {
 		super(name, id, VanillaMaterials.WALL_SIGN);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		setMaxStackSize(1);
+		this.setMaxStackSize(1);
 	}
 }

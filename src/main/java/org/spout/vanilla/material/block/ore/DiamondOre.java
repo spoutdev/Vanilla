@@ -40,7 +40,6 @@ import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class DiamondOre extends Ore implements TimedCraftable, Mineable {
 	public DiamondOre(String name, int id) {

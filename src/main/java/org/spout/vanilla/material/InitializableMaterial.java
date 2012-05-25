@@ -24,37 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material;
 
-import java.util.ArrayList;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.VanillaPlayerUtil;
-
-public class IronBarsBlock extends Solid implements Mineable {
-	public IronBarsBlock(String name, int id) {
-		super(name, id);
-		this.setHardness(5.0F).setResistance(10.0F).setOpacity((byte) 1);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return 0; // TODO this
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Pickaxe) {
-			drops.add(new ItemStack(this, 1));
-		}
-		return drops;
-	}
+public interface InitializableMaterial {
+	/**
+	 * Initializes the default properties of this material<br>
+	 * This is automatically called after the initial construction of all Vanilla materials
+	 */
+	public void initialize();
 }

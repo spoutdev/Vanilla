@@ -34,6 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class FullContainer extends BlockItem {

@@ -42,6 +42,7 @@ public class staticInitialisationOrderTest {
 	public void materialStaticInitialisationTest() {
 		try {
 			new Stone("Test Stone", 87945);
+			VanillaMaterials.initialize();
 			for (Field field : VanillaMaterials.class.getFields()) {
 				try {
 					if (field == null || ((field.getModifiers() & (Modifier.STATIC | Modifier.PUBLIC)) != (Modifier.STATIC | Modifier.PUBLIC)) || !VanillaMaterial.class.isAssignableFrom(field.getType())) {

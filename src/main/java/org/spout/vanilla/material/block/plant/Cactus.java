@@ -57,7 +57,7 @@ public class Cactus extends GroundAttachable implements TimedCraftable {
 				VanillaMaterials.TALL_GRASS,
 				VanillaMaterials.REDSTONE_WIRE
 		);
-		this.setHardness(0.4F).setResistance(0.7F).setOpacity((byte) 1);
+		this.setHardness(0.4F).setResistance(0.7F).setOpacity((byte) 0);
 	}
 
 	@Override

@@ -40,7 +40,7 @@ import org.spout.vanilla.util.Instrument;
 public class WoodenPressurePlate extends PressurePlate implements Mineable {
 	public WoodenPressurePlate(String name, int id) {
 		super(name, id);
-		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
+		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 0);
 	}
 
 	@Override

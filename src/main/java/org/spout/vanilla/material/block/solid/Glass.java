@@ -44,7 +44,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class Glass extends Solid {
 	public Glass(String name, int id) {
 		super(name, id);
-		this.setHardness(0.3F).setResistance(0.5F).setOpacity((byte) 1).setOccludes(false);
+		this.setHardness(0.3F).setResistance(0.5F).setOpacity((byte) 0).setOccludes(false);
 	}
 
 	@Override

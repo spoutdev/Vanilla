@@ -39,7 +39,7 @@ import org.spout.vanilla.material.block.attachable.GroundAttachable;
 public class LilyPad extends GroundAttachable {
 	public LilyPad(String name, int id) {
 		super(name, id);
-		this.setHardness(0.0F).setResistance(0.3F).setOpacity((byte) 1);
+		this.setHardness(0.0F).setResistance(0.3F).setOpacity((byte) 0);
 	}
 
 	@Override

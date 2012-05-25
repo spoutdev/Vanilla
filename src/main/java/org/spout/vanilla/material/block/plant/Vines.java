@@ -44,7 +44,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class Vines extends VanillaBlockMaterial {
 	public Vines(String name, int id) {
 		super(name, id);
-		this.setHardness(0.2F).setResistance(0.3F).setOpacity((byte) 1);
+		this.setHardness(0.2F).setResistance(0.3F).setOpacity((byte) 0);
 	}
 
 	private int getMask(BlockFace face) {

@@ -26,8 +26,5 @@
  */
 package org.spout.vanilla.material.item.tool;
 
-public class Pickaxe extends Tool {
-	public Pickaxe(String name, int id, short durability) {
-		super(name, id, durability);
-	}
+public interface Pickaxe {
 }

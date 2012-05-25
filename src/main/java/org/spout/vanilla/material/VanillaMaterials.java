@@ -192,14 +192,30 @@ import org.spout.vanilla.material.item.misc.Sign;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
 import org.spout.vanilla.material.item.misc.Stick;
 import org.spout.vanilla.material.item.misc.StorageMinecartItem;
-import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.FlintAndSteel;
 import org.spout.vanilla.material.item.tool.Hoe;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.tool.diamond.DiamondAxe;
+import org.spout.vanilla.material.item.tool.diamond.DiamondPickaxe;
+import org.spout.vanilla.material.item.tool.diamond.DiamondSpade;
+import org.spout.vanilla.material.item.tool.diamond.DiamondSword;
+import org.spout.vanilla.material.item.tool.gold.GoldAxe;
+import org.spout.vanilla.material.item.tool.gold.GoldPickaxe;
+import org.spout.vanilla.material.item.tool.gold.GoldSpade;
+import org.spout.vanilla.material.item.tool.gold.GoldSword;
+import org.spout.vanilla.material.item.tool.iron.IronAxe;
+import org.spout.vanilla.material.item.tool.iron.IronPickaxe;
+import org.spout.vanilla.material.item.tool.iron.IronSpade;
+import org.spout.vanilla.material.item.tool.iron.IronSword;
+import org.spout.vanilla.material.item.tool.stone.StoneAxe;
+import org.spout.vanilla.material.item.tool.stone.StonePickaxe;
+import org.spout.vanilla.material.item.tool.stone.StoneSpade;
+import org.spout.vanilla.material.item.tool.stone.StoneSword;
+import org.spout.vanilla.material.item.tool.wood.WoodenAxe;
+import org.spout.vanilla.material.item.tool.wood.WoodenPickaxe;
+import org.spout.vanilla.material.item.tool.wood.WoodenSpade;
+import org.spout.vanilla.material.item.tool.wood.WoodenSword;
 import org.spout.vanilla.material.item.weapon.Bow;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.Music;
 
 // TODO: Remove all casts and separate remaining "set" methods out into each material's init() method
@@ -342,29 +358,29 @@ public final class VanillaMaterials {
 	 * Items
 	 */
 	//== Swords ==
-	public static final Sword WOODEN_SWORD = (Sword) new Sword("Wooden Sword", 268, (short) 60).setDamage(4);
-	public static final Sword GOLD_SWORD = (Sword) new Sword("Gold Sword", 283, (short) 33).setDamage(4);
-	public static final Sword STONE_SWORD = (Sword) new Sword("Stone Sword", 272, (short) 132).setDamage(5);
-	public static final Sword IRON_SWORD = (Sword) new Sword("Iron Sword", 267, (short) 251).setDamage(6);
-	public static final Sword DIAMOND_SWORD = (Sword) new Sword("Diamond Sword", 276, (short) 1562).setDamage(7);
+	public static final WoodenSword WOODEN_SWORD = new WoodenSword("Wooden Sword", 268, (short) 60);
+	public static final GoldSword GOLD_SWORD = new GoldSword("Gold Sword", 283, (short) 33);
+	public static final StoneSword STONE_SWORD = new StoneSword("Stone Sword", 272, (short) 132);
+	public static final IronSword IRON_SWORD = new IronSword("Iron Sword", 267, (short) 251);
+	public static final DiamondSword DIAMOND_SWORD = new DiamondSword("Diamond Sword", 276, (short) 1562);
 	//== Spades ==
-	public static final Spade GOLD_SPADE = new Spade("Gold Spade", 284, (short) 33);
-	public static final Spade WOODEN_SPADE = new Spade("Wooden Spade", 269, (short) 60);
-	public static final Spade STONE_SPADE = new Spade("Stone Spade", 273, (short) 132);
-	public static final Spade IRON_SPADE = new Spade("Iron Spade", 256, (short) 251);
-	public static final Spade DIAMOND_SPADE = new Spade("Diamond Spade", 277, (short) 1562);
+	public static final GoldSpade GOLD_SPADE = new GoldSpade("Gold Shovel", 284, (short) 33);
+	public static final WoodenSpade WOODEN_SPADE = new WoodenSpade("Wooden Shovel", 269, (short) 60);
+	public static final StoneSpade STONE_SPADE = new StoneSpade("Stone Shovel", 273, (short) 132);
+	public static final IronSpade IRON_SPADE = new IronSpade("Iron Shovel", 256, (short) 251);
+	public static final DiamondSpade DIAMOND_SPADE = new DiamondSpade("Diamond Shovel", 277, (short) 1562);
 	//== Pickaxes ==
-	public static final Pickaxe GOLD_PICKAXE = (Pickaxe) new Pickaxe("Gold Pickaxe", 285, (short) 33).setDamage(2);
-	public static final Pickaxe WOODEN_PICKAXE = (Pickaxe) new Pickaxe("Wooden Pickaxe", 270, (short) 60).setDamage(2);
-	public static final Pickaxe STONE_PICKAXE = (Pickaxe) new Pickaxe("Stone Pickaxe", 274, (short) 132).setDamage(3);
-	public static final Pickaxe IRON_PICKAXE = (Pickaxe) new Pickaxe("Iron Pickaxe", 257, (short) 251).setDamage(4);
-	public static final Pickaxe DIAMOND_PICKAXE = (Pickaxe) new Pickaxe("Diamond Pickaxe", 278, (short) 1562).setDamage(5);
+	public static final GoldPickaxe GOLD_PICKAXE = new GoldPickaxe("Gold Pickaxe", 285, (short) 33);
+	public static final WoodenPickaxe WOODEN_PICKAXE = new WoodenPickaxe("Wooden Pickaxe", 270, (short) 60);
+	public static final StonePickaxe STONE_PICKAXE = new StonePickaxe("Stone Pickaxe", 274, (short) 132);
+	public static final IronPickaxe IRON_PICKAXE = new IronPickaxe("Iron Pickaxe", 257, (short) 251);
+	public static final DiamondPickaxe DIAMOND_PICKAXE = new DiamondPickaxe("Diamond Pickaxe", 278, (short) 1562);
 	//== Axes ==
-	public static final Axe GOLD_AXE = (Axe) new Axe("Gold Axe", 286, (short) 33).setDamage(3);
-	public static final Axe WOODEN_AXE = (Axe) new Axe("Wooden Axe", 271, (short) 60).setDamage(3);
-	public static final Axe STONE_AXE = (Axe) new Axe("Stone Axe", 275, (short) 132).setDamage(3);
-	public static final Axe IRON_AXE = (Axe) new Axe("Iron Axe", 258, (short) 251).setDamage(5);
-	public static final Axe DIAMOND_AXE = (Axe) new Axe("Diamond Axe", 279, (short) 1562).setDamage(6);
+	public static final GoldAxe GOLD_AXE = new GoldAxe("Gold Axe", 286, (short) 33);
+	public static final WoodenAxe WOODEN_AXE = new WoodenAxe("Wooden Axe", 271, (short) 60);
+	public static final StoneAxe STONE_AXE = new StoneAxe("Stone Axe", 275, (short) 132);
+	public static final IronAxe IRON_AXE = new IronAxe("Iron Axe", 258, (short) 251);
+	public static final DiamondAxe DIAMOND_AXE = new DiamondAxe("Diamond Axe", 279, (short) 1562);
 	//== Hoes ==
 	public static final Hoe GOLD_HOE = new Hoe("Gold Hoe", 294, (short) 33);
 	public static final Hoe WOODEN_HOE = new Hoe("Wooden Hoe", 290, (short) 60);

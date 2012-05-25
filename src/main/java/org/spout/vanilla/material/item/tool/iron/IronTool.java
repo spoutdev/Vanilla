@@ -24,7 +24,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.tool;
+package org.spout.vanilla.material.item.tool.iron;
 
-public interface Axe {
+import org.spout.vanilla.material.item.Enchantable;
+import org.spout.vanilla.material.item.tool.Tool;
+
+public abstract class IronTool extends Tool implements Enchantable {
+	protected IronTool(String name, int id, short durability) {
+		super(name, id, durability);
+	}
+
+	@Override
+	public int getEnchantibility() {
+		return 14;
+	}
 }

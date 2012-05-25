@@ -34,10 +34,6 @@ import org.spout.vanilla.util.MoveReaction;
 public class NetherPortal extends Portal {
 	public NetherPortal(String name, int id) {
 		super(name, id);
-	}
-
-	public void initialize() {
-		super.initialize();
 		this.setHardness(-1.0F).setResistance(0.0F).setLightLevel(11).setOpacity((byte) 1);
 	}
 

@@ -44,11 +44,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class Vines extends VanillaBlockMaterial {
 	public Vines(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.2F).setResistance(0.3F).setOpacity((byte) 1);
 	}
 

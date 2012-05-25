@@ -34,11 +34,6 @@ import org.spout.vanilla.util.MoveReaction;
 public class Bedrock extends Solid {
 	public Bedrock(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setResistance(6000000.0F).setHardness(-1.0F);
 	}
 

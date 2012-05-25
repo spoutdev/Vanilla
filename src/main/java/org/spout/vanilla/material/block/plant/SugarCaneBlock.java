@@ -45,14 +45,8 @@ public class SugarCaneBlock extends GroundAttachable {
 
 	public SugarCaneBlock(String name, int id) {
 		super(name, id);
-
-		this.addAllowedBase(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND, VanillaMaterials.SUGAR_CANE_BLOCK);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1).setOpacity((byte) 1);
+		this.addAllowedBase(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND, VanillaMaterials.SUGAR_CANE_BLOCK);
 	}
 
 	@Override

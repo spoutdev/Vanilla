@@ -37,11 +37,6 @@ import org.spout.vanilla.util.MoveReaction;
 public class PistonExtension extends VanillaBlockMaterial implements Directional {
 	public PistonExtension(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
 	}
 

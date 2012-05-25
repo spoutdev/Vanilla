@@ -45,11 +45,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class DiamondOre extends Ore implements TimedCraftable, Mineable {
 	public DiamondOre(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(3.0F).setResistance(5.0F);
 	}
 

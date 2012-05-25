@@ -41,13 +41,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class GlassPane extends VanillaBlockMaterial {
 	public GlassPane(String name, int id) {
 		super(name, id);
-		this.setOccludes(false);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(0.3F).setResistance(0.3F).setOpacity((byte) 1);
+		this.setHardness(0.3F).setResistance(0.3F).setOpacity((byte) 1).setOccludes(false);
 	}
 
 	@Override

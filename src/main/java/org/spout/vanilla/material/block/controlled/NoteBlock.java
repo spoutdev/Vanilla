@@ -48,13 +48,7 @@ public class NoteBlock extends Solid implements Fuel {
 
 	public NoteBlock(String name, int id) {
 		super(name, id);
-		this.setController(VanillaControllerTypes.NOTEBLOCK);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(0.8F).setResistance(1.3F);
+		this.setHardness(0.8F).setResistance(1.3F).setController(VanillaControllerTypes.NOTEBLOCK);
 	}
 
 	@Override

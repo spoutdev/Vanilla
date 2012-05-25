@@ -39,11 +39,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class Web extends Solid {
 	public Web(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(4.0F).setResistance(20.0F).setOpacity((byte) 1);
 	}
 

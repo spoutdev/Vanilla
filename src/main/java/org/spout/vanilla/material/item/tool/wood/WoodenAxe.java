@@ -31,11 +31,6 @@ import org.spout.vanilla.material.item.tool.Axe;
 public class WoodenAxe extends WoodenTool implements Axe {
 	public WoodenAxe(String name, int id, short durability) {
 		super(name, id, durability);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setDamage(3);
 	}
 }

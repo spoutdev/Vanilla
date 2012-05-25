@@ -49,13 +49,7 @@ import org.spout.vanilla.util.MoveReaction;
 public class SignBase extends AbstractAttachable implements Mineable {
 	public SignBase(String name, int id) {
 		super(name, id);
-		setAttachable(BlockFaces.NESWB).setController(VanillaControllerTypes.SIGN);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(1.0F).setResistance(1.6F).setOpacity((byte) 1);
+		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setOpacity((byte) 1).setController(VanillaControllerTypes.SIGN);
 	}
 
 	@Override

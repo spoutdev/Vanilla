@@ -32,12 +32,6 @@ import org.spout.vanilla.material.block.solid.Stone;
 public class SilverfishStone extends Stone {
 	public SilverfishStone(String name, int id) {
 		super(name, id);
-		this.setController(VanillaControllerTypes.SILVERFISH_STONE);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setHardness(0.8F).setResistance(1.2F); // TODO Confirm that this is the correct value
+		this.setHardness(0.8F).setResistance(1.2F).setController(VanillaControllerTypes.SILVERFISH_STONE); // TODO Confirm resistance
 	}
 }

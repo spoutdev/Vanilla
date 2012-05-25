@@ -40,13 +40,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class BrewingStand extends VanillaBlockMaterial {
 	public BrewingStand(String name, int id) {
 		super(name, id);
-		this.setController(VanillaControllerTypes.BREWING_STAND);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.setResistance(2.5F).setHardness(10.F).setLightLevel(1);
+		this.setResistance(2.5F).setHardness(10.F).setLightLevel(1).setController(VanillaControllerTypes.BREWING_STAND);
 	}
 
 	@Override

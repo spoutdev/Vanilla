@@ -43,11 +43,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class Obsidian extends Solid implements Mineable {
 	public Obsidian(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(50.0F).setResistance(2000.0F);
 	}
 

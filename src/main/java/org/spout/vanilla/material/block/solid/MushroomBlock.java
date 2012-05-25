@@ -45,11 +45,6 @@ public class MushroomBlock extends Ore implements Fuel {
 
 	public MushroomBlock(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.2F).setResistance(0.3F);
 	}
 

@@ -54,15 +54,11 @@ public class Leaves extends Solid implements Mineable {
 
 	private Leaves(String name) {
 		super(name, 18);
+		this.setHardness(0.2F).setResistance(0.3F).setOpacity((byte) 1);
 	}
 
 	private Leaves(String name, int data, Leaves parent) {
 		super(name, 18, data, parent);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(0.2F).setResistance(0.3F).setOpacity((byte) 1);
 	}
 

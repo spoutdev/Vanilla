@@ -38,11 +38,6 @@ public abstract class Liquid extends VanillaBlockMaterial {
 	public Liquid(String name, int id, boolean flowing) {
 		super(name, id);
 		this.flowing = flowing;
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(100.0F).setResistance(166.7F).setOpacity((byte) 1);
 	}
 

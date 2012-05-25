@@ -49,17 +49,6 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 		return minecraftId;
 	}
 
-	@Override
-	public void initialize() {
-		if (this.hasSubMaterials()) {
-			for (Material material : this.getSubMaterials()) {
-				if (material instanceof VanillaMaterial) {
-					((VanillaMaterial) material).initialize();
-				}
-			}
-		}
-	}
-
 	public boolean getNBTData() {
 		return false;
 	}

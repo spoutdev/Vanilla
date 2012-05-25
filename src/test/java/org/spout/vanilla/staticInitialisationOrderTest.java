@@ -51,7 +51,6 @@ public class staticInitialisationOrderTest {
 					if (material == null) {
 						fail("invalid material: VanillaMaterials field '" + field.getName() + "' is null");
 					}
-					material.initialize();
 				} catch (NoClassDefFoundError ex) {
 					staticInitFail(ex);
 				} catch (Throwable t) {

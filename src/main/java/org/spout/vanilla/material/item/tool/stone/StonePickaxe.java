@@ -31,11 +31,6 @@ import org.spout.vanilla.material.item.tool.Pickaxe;
 public class StonePickaxe extends StoneTool implements Pickaxe {
 	public StonePickaxe(String name, int id, short durability) {
 		super(name, id, durability);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setDamage(3);
 	}
 }

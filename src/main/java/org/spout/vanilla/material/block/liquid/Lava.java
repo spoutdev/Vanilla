@@ -35,11 +35,6 @@ import org.spout.vanilla.material.block.Liquid;
 public class Lava extends Liquid {
 	public Lava(String name, int id, boolean flowing) {
 		super(name, id, flowing);
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
 		this.setHardness(100.0F).setResistance(166.7F).setLightLevel(15).setOpacity((byte) 1);
 	}
 

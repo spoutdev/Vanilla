@@ -57,6 +57,7 @@ import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
 import org.spout.vanilla.controller.world.sky.VanillaSky;
 import org.spout.vanilla.inventory.recipe.VanillaRecipes;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
@@ -102,6 +103,10 @@ public class VanillaPlugin extends CommonPlugin {
 		if (game.debugMode()) {
 			game.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
 		}
+
+		//Configuration
+		VanillaBlockMaterial.REDSTONE_POWER_MAX = (short) VanillaConfiguration.REDSTONE_MAX_RANGE.getInt();
+		VanillaBlockMaterial.REDSTONE_POWER_MIN = (short) VanillaConfiguration.REDSTONE_MIN_RANGE.getInt();
 
 		//Events
 		game.getEventManager().registerEvents(new VanillaListener(this), this);

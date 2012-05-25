@@ -144,32 +144,36 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 
-		byte[] solidChunkData = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
-		byte[] airChunkData = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
-
-		int i = 0;
-		for (int c = 0; c < Chunk.CHUNK_VOLUME; c++) {
-			solidChunkData[i] = 1;
-			airChunkData[i++] = 0;
-		}
-
-		for (int c = 0; c < Chunk.CHUNK_VOLUME / 2; c++) {
-			solidChunkData[i] = 0x00;
-			airChunkData[i++] = 0x00;
-		}
-
-		for (int c = 0; c < Chunk.CHUNK_VOLUME / 2; c++) {
-			solidChunkData[i] = 0x00;
-			airChunkData[i++] = 0x00;
-		}
-
-		for (int c = 0; c < Chunk.CHUNK_VOLUME / 2; c++) {
-			solidChunkData[i] = 0x00;
-			airChunkData[i++] = (byte) 0xFF;
-		}
-
 		TIntHashSet column = activeChunks.get(x, z);
 		if (column == null) {
+			int[][] heights = new int[Chunk.CHUNK_SIZE][Chunk.CHUNK_SIZE];
+			
+			World w = p.getWorld();
+			
+			for (int xx = 0; xx < Chunk.CHUNK_SIZE; xx++) {
+				for (int zz = 0; zz < Chunk.CHUNK_SIZE; zz++) {
+					heights[xx][zz] = w.getSurfaceHeight(xx, zz, true);
+				}
+			}
+			
+			byte[][] packetChunkData = new byte[16][Chunk.CHUNK_VOLUME * 5 / 2];
+			
+			for (int xx = 0; xx < Chunk.CHUNK_SIZE; xx++) {
+				for (int zz = 0; zz < Chunk.CHUNK_SIZE; zz++) {
+					for (int yy = 0; yy < Chunk.CHUNK_SIZE * 16; yy++) {
+						int cube = yy >> Chunk.CHUNK_SIZE_BITS;
+						int yOffset = yy & 0xF;
+						int dataOffset = xx | (yOffset << 8) | (zz << 4);
+						if (heights[xx][zz] < yy && yy > 0) {
+							byte mask = (dataOffset & 0x1) == 0 ? (byte)0x0F : (byte)0xF0;
+							packetChunkData[cube][(Chunk.CHUNK_VOLUME << 1) + (dataOffset >> 1)] |= mask;
+						} else {
+							packetChunkData[cube][dataOffset] = 1;
+						}
+					}
+				}
+			}
+			
 			column = new TIntHashSet();
 			activeChunks.put(x, z, column);
 			LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
@@ -182,16 +186,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				biomeData = getBiomeData(p.getWorld().getChunkFromBlock(p), x, z);
 			} else {
 				biomeData = null;
-			}
-
-			byte[][] packetChunkData = new byte[16][];
-
-			for (i = 0; i < 16; i++) {
-				if (i < 4) {
-					packetChunkData[i] = solidChunkData;
-				} else {
-					packetChunkData[i] = airChunkData;
-				}
 			}
 
 			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, sendBiomes, new boolean[16], 0, packetChunkData, biomeData);

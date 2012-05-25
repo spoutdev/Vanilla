@@ -24,7 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.tool;
+package org.spout.vanilla.material.item.tool.iron;
 
-public interface Axe {
+import org.spout.vanilla.material.item.tool.Spade;
+
+public class IronSpade extends IronTool implements Spade {
+	public IronSpade(String name, int id, short durability) {
+		super(name, id, durability);
+	}
 }

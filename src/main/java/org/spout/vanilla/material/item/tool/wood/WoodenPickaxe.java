@@ -24,7 +24,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.tool;
+package org.spout.vanilla.material.item.tool.wood;
 
-public interface Axe {
+import org.spout.vanilla.material.item.tool.Pickaxe;
+
+public class WoodenPickaxe extends WoodenTool implements Pickaxe {
+	public WoodenPickaxe(String name, int id, short durability) {
+		super(name, id, durability);
+	}
+
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.setDamage(2);
+	}
 }

@@ -28,13 +28,19 @@ package org.spout.vanilla.material.item.tool;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.enchantment.Enchantments;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.util.EnchantmentUtil;
 
 public class Tool extends VanillaItemMaterial {
+	private final Random rand = new Random();
 	private short durability;
 	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
 
@@ -43,11 +49,22 @@ public class Tool extends VanillaItemMaterial {
 		this.durability = durability;
 	}
 
-	public short getDurability() {
+	public short getDurabilityPenalty(Mineable mineable, ItemStack item) {
+		short penalty = mineable.getDurabilityPenalty(this);
+		if (EnchantmentUtil.hasEnchantment(item, Enchantments.UNBREAKING)) {
+			// Level 1 = 50%, Level 2 = 67%, Level 3 = 75% chance to not consume durability
+			if (100 - (100 / (EnchantmentUtil.getEnchantmentLevel(item, Enchantments.UNBREAKING) + 1)) > rand.nextInt(100)) {
+				penalty = 0;
+			}
+		}
+		return penalty;
+	}
+
+	public short getMaxDurability() {
 		return durability;
 	}
 
-	public Tool setDurability(short durability) {
+	public Tool setMaxDurability(short durability) {
 		this.durability = durability;
 		return this;
 	}

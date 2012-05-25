@@ -43,16 +43,16 @@ public enum MiningType {
 	SPADE(2, Spade.class),
 	SWORD(3, Sword.class);
 	public final short id;
-	public final Class[] cls;
+	public final Class<?>[] cls;
 	private static Map<Class<?>, MiningType> typeClassMap;//Not initialized here, see putClassType
 
-	private MiningType(int id, Class... cls) {
+	private MiningType(int id, Class<?>... cls) {
 		this.id = (short) id;
 		this.cls = cls;
 		putClassType(cls, this);
 	}
 
-	private static void putClassType(Class cls[], MiningType mt) {// Workaround for Java 6 limitation - no static variables accessed in enum constructor.
+	private static void putClassType(Class<?> cls[], MiningType mt) {// Workaround for Java 6 limitation - no static variables accessed in enum constructor.
 		if (typeClassMap == null) {
 			typeClassMap = new HashMap<Class<?>, MiningType>();
 		}

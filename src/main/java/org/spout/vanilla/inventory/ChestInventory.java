@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.inventory;
 
-import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.controller.block.ChestController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 

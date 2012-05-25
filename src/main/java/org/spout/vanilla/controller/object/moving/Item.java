@@ -29,8 +29,11 @@ package org.spout.vanilla.controller.object.moving;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
@@ -39,8 +42,9 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
+
+import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers;
 
 /**
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).
@@ -93,6 +97,12 @@ public class Item extends Substance {
 		}
 
 		super.onTick(dt);
+		Block block = getParent().getRegion().getBlock(getParent().getPosition().subtract(0, 1, 0));
+		if (!block.getMaterial().isPlacementObstacle()) {
+			Vector3 next = block.getPosition();
+			getParent().translate(block.getPosition().multiply(dt));
+		}
+
 		Player closestPlayer = getParent().getWorld().getNearestPlayer(getParent(), distance);
 		if (closestPlayer == null) {
 			return;
@@ -104,9 +114,9 @@ public class Item extends Substance {
 		}
 		
 		int collected = getParent().getId();
-		int collector = getParent().getWorld().getNearestPlayer(getParent(), distance).getEntity().getId();
-		VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(getParent().getPosition(), closestPlayer.getEntity(), closestPlayer.getEntity().getViewDistance(), new CollectItemMessage(collected, collector));
-		((VanillaPlayer) entity.getController()).getInventory().getBase().addItem(is, false);
+		int collector = entity.getId();
+		sendPacketsToNearbyPlayers(entity.getPosition(), entity.getViewDistance(), new CollectItemMessage(collector, collected));
+		((VanillaPlayer) entity.getController()).getInventory().getBase().addItem(is, true, true);
 		getParent().kill();
 	}
 
@@ -136,8 +146,8 @@ public class Item extends Substance {
 
 	@Override
 	public void onSave() {
+		super.onSave();
 		data().put("Itemstack", is);
 		data().put("unpickable", unpickable);
-		super.onSave();
 	}
 }

@@ -42,7 +42,7 @@ public class FurnaceInventory extends WindowInventory {
 	private final FurnaceController owner;
 
 	public FurnaceInventory(FurnaceController owner) {
-		super(Window.FURNACE, 39, "Furnace");
+		super(Window.FURNACE, 3, "Furnace");
 		this.owner = owner;
 	}
 
@@ -59,7 +59,7 @@ public class FurnaceInventory extends WindowInventory {
 	 * @return output item stack
 	 */
 	public ItemStack getOutput() {
-		return getItem(37);
+		return getItem(1);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class FurnaceInventory extends WindowInventory {
 	 * @param output
 	 */
 	public void setOutput(ItemStack output) {
-		setItem(37, output);
+		setItem(1, output);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class FurnaceInventory extends WindowInventory {
 	 * @return fuel item stack
 	 */
 	public ItemStack getFuel() {
-		return getItem(36);
+		return getItem(0);
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class FurnaceInventory extends WindowInventory {
 	 * @param fuel
 	 */
 	public void setFuel(ItemStack fuel) {
-		setItem(36, fuel);
+		setItem(0, fuel);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class FurnaceInventory extends WindowInventory {
 	 * @return ingredient item stack
 	 */
 	public ItemStack getIngredient() {
-		return getItem(38);
+		return getItem(2);
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class FurnaceInventory extends WindowInventory {
 	 * @param ingredient
 	 */
 	public void setIngredient(ItemStack ingredient) {
-		setItem(38, ingredient);
+		setItem(2, ingredient);
 	}
 
 	/**

@@ -47,15 +47,15 @@ public class PlayerInventoryBase extends Inventory {
 	}
 
 	public int getNativeSlotIndex(int index) {
-		return SLOTS[index];
-	}
-
-	public int getSlotIndex(int nativeIndex) {
 		for (int i = 0; i < SLOTS.length; i++) {
-			if (SLOTS[i] == nativeIndex) {
+			if (SLOTS[i] == index) {
 				return i;
 			}
 		}
-		return -1;
+		throw new ArrayIndexOutOfBoundsException(index);
+	}
+
+	public int getSlotIndex(int nativeIndex) {
+		return SLOTS[nativeIndex];
 	}
 }

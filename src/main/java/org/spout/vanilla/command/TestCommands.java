@@ -37,6 +37,7 @@ import org.spout.api.command.annotated.Command;
 import org.spout.api.entity.BlockController;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.PlayerController;
 import org.spout.api.entity.type.ControllerRegistry;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.exception.CommandException;
@@ -47,6 +48,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 
@@ -220,6 +222,44 @@ public class TestCommands {
 			invisible.add(name);
 			vanillaPlayer.setVisible(false);
 			player.sendMessage("You vanish into thin air!");
+		}
+	}
+
+	@Command(aliases = {"killall", "ka"}, desc = "Kill all non-player or world entities within a world", min = 0, max = 1)
+	public void killall(CommandContext args, CommandSource source) throws CommandException {
+		World world = null;
+		boolean isConsole = false;
+
+		if (!(source instanceof Player)) {
+			if (args.length() == 0) {
+				throw new CommandException("Need to provide a world when executing from the console");
+			}
+			String name = args.getString(0);
+			world = Spout.getEngine().getWorld(name);
+			isConsole = true;
+		}
+		if (world == null && isConsole) {
+			throw new CommandException("World specified is not loaded");
+		}
+		if (world == null) {
+			world = ((Player) source).getEntity().getWorld();
+		}
+		Set<Entity> entities = world.getAll();
+		int count = 0;
+		for (Entity entity : entities) {
+			if (entity.getController() instanceof PlayerController || (!(entity.getController() instanceof VanillaActionController))) {
+				continue;
+			}
+			count++;
+			entity.kill();
+			Spout.log(entity.getController().toString() + " was killed");
+		}
+		if (count > 0) {
+			if (!isConsole) {
+				source.sendMessage(count + " entity(es) have been killed. The console has a listing of what controllers were killed.");
+			}
+		} else {
+			source.sendMessage("No valid entities found to kill");
 		}
 	}
 }

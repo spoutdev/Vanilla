@@ -43,7 +43,7 @@ import org.spout.vanilla.material.block.solid.Wool;
 public class Sheep extends Creature implements Passive {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(Sheep.class, "Sheep");
 	private boolean isSheared = false;
-	private int sheepColor = 0;
+	private short sheepColor = 0;
 
 	public Sheep() {
 		super(VanillaControllerTypes.SHEEP);
@@ -55,7 +55,7 @@ public class Sheep extends Creature implements Passive {
 		setMaxHealth(8);
 		super.onAttached();
 		isSheared = (Boolean) data().get("sheepsheared", false);
-		sheepColor = (Integer) data().get("sheepcolor", 0);
+		sheepColor = (Short) data().get("sheepcolor", (short) 0);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class Sheep extends Creature implements Passive {
 	 * @return color of the sheep.
 	 */
 	public Wool.WoolColor getColor() {
-		return Wool.WoolColor.getById((short) sheepColor);
+		return Wool.WoolColor.getById(sheepColor);
 	}
 
 	/**

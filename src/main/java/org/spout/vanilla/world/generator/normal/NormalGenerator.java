@@ -44,7 +44,7 @@ public class NormalGenerator extends BiomeGenerator implements VanillaGenerator 
 
 	@Override
 	public void registerBiomes() {
-		selector = new VanillaBiomeSelector(this, 2.0f);
+		selector = new VanillaBiomeSelector(2.0, 2.0, 0.35, 0.05, false);
 		setSelector(selector);
 		//addPopulator(new SmoothPopulator());
 		register(VanillaBiomes.OCEAN);

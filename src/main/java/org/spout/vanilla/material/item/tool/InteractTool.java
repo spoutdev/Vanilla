@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.item.tool;
 
-public class InteractTool extends Tool {
+public abstract class InteractTool extends Tool {
 	public InteractTool(String name, int id, short durability) {
 		super(name, id, durability);
 	}

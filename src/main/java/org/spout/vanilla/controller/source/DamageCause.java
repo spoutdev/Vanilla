@@ -24,13 +24,59 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.armor.gold;
+package org.spout.vanilla.controller.source;
 
-import org.spout.vanilla.material.item.Armor;
+/**
+ * Represents a source of damage.
+ */
+public class DamageCause extends Reason {
+	private final Type type;
 
-public abstract class GoldArmor extends Armor {
-	protected GoldArmor(String name, int id, int protection) {
-		super(name, id, protection);
-		this.setEnchantability(25);
+	public DamageCause(Type type) {
+		this.type = type;
+	}
+
+	/**
+	 * Returns the type of damage.
+	 * @return Damage type
+	 */
+	public Type getType() {
+		return type;
+	}
+
+	public enum Type {
+		/**
+		 * Damaged by an arrow.
+		 */
+		ARROW,
+		/**
+		 * Damaged by another entity attacking.
+		 */
+		ATTACK,
+		/**
+		 * Damaged by fire.
+		 */
+		BURN,
+		/**
+		 * Damaged by touching cactus.
+		 */
+		CACTUS,
+		/**
+		 * Damaged by an explosion.
+		 */
+		EXPLOSION,
+		/**
+		 * Damaged due to starvation.
+		 */
+		STARVE,
+		/**
+		 * Damaged by an unknown source.
+		 */
+		UNKNOWN;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj.equals(type);
 	}
 }

@@ -32,10 +32,6 @@ import org.spout.vanilla.material.item.tool.Tool;
 public abstract class GoldTool extends Tool implements Enchantable {
 	protected GoldTool(String name, int id, short durability) {
 		super(name, id, durability);
-	}
-
-	@Override
-	public int getEnchantibility() {
-		return 22;
+		this.setEnchantability(22);
 	}
 }

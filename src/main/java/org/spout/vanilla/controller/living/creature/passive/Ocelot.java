@@ -26,13 +26,9 @@
  */
 package org.spout.vanilla.controller.living.creature.passive;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
@@ -50,8 +46,8 @@ public class Ocelot extends Creature implements Tameable, Passive {
 
 	@Override
 	public void onAttached() {
-		//TODO Check these values...
-		//master = data().get("controllingentity", master);
+		// TODO Check these values...
+		// master = data().get("controllingentity", master);
 		if (master != null) {
 			setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 			setMaxHealth(20);
@@ -66,13 +62,7 @@ public class Ocelot extends Creature implements Tameable, Passive {
 	@Override
 	public void onSave() {
 		super.onSave();
-		//data().put("controllingentity", master);
-	}
-
-	@Override
-	public Set<ItemStack> getDrops() {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		return drops;
+		// data().put("controllingentity", master);
 	}
 
 	@Override

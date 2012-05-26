@@ -26,12 +26,9 @@
  */
 package org.spout.vanilla.controller.living.creature.neutral;
 
-import java.util.Set;
-
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
@@ -49,7 +46,7 @@ public class Wolf extends Creature implements Tameable, Neutral {
 
 	@Override
 	public void onAttached() {
-		//master = data().get("controllingentity", master);
+		// master = data().get("controllingentity", master);
 		if (master != null) {
 			setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 			setMaxHealth(20);
@@ -64,7 +61,7 @@ public class Wolf extends Creature implements Tameable, Neutral {
 	@Override
 	public void onSave() {
 		super.onSave();
-		//data().put("controllingentity", master);
+		// data().put("controllingentity", master);
 	}
 
 	@Override
@@ -76,10 +73,4 @@ public class Wolf extends Creature implements Tameable, Neutral {
 	public boolean isControlled() {
 		return master != null;
 	}
-
-	@Override
-	public Set<ItemStack> getDrops() {
-		return null;
-	}
 }
-

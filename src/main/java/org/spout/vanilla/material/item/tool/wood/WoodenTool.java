@@ -26,16 +26,11 @@
  */
 package org.spout.vanilla.material.item.tool.wood;
 
-import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.tool.Tool;
 
-public abstract class WoodenTool extends Tool implements Enchantable {
+public abstract class WoodenTool extends Tool {
 	protected WoodenTool(String name, int id, short durability) {
 		super(name, id, durability);
-	}
-
-	@Override
-	public int getEnchantibility() {
-		return 15;
+		this.setEnchantability(15);
 	}
 }

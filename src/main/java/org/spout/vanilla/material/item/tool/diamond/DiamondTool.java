@@ -32,10 +32,6 @@ import org.spout.vanilla.material.item.tool.Tool;
 public abstract class DiamondTool extends Tool implements Enchantable {
 	protected DiamondTool(String name, int id, short durability) {
 		super(name, id, durability);
-	}
-
-	@Override
-	public int getEnchantibility() {
-		return 10;
+		this.setEnchantability(10);
 	}
 }

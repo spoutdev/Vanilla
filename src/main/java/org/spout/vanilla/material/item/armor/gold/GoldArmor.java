@@ -34,7 +34,7 @@ public abstract class GoldArmor extends Armor {
 	}
 
 	@Override
-	public int getEnchantibility() {
+	public int getEnchantability() {
 		return 25;
 	}
 }

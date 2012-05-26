@@ -43,6 +43,7 @@ public class Tool extends VanillaItemMaterial {
 	private final Random rand = new Random();
 	private short durability;
 	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
+	private int miningLevel;
 
 	public Tool(String name, int id, short durability) {
 		super(name, id);
@@ -83,6 +84,15 @@ public class Tool extends VanillaItemMaterial {
 
 	public Set<BlockMaterial> getStrengthModifiedBlocks() {
 		return strengthModifiers.keySet();
+	}
+
+	public int getMiningLevel() {
+		return miningLevel;
+	}
+
+	public Tool setMiningLevel(int miningLevel) {
+		this.miningLevel = miningLevel;
+		return this;
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public abstract class DiamondArmor extends Armor {
 	}
 
 	@Override
-	public int getEnchantibility() {
+	public int getEnchantability() {
 		return 10;
 	}
 }

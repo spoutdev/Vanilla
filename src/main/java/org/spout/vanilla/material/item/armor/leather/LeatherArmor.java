@@ -34,7 +34,7 @@ public abstract class LeatherArmor extends Armor {
 	}
 
 	@Override
-	public int getEnchantibility() {
+	public int getEnchantability() {
 		return 15;
 	}
 }

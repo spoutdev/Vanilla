@@ -113,7 +113,7 @@ public class Item extends Substance {
 
 		int collected = getParent().getId();
 		int collector = entity.getId();
-		sendPacketsToNearbyPlayers(entity.getPosition(), entity.getViewDistance(), new CollectItemMessage(collector, collected));
+		sendPacketsToNearbyPlayers(entity.getPosition(), entity.getViewDistance(), new CollectItemMessage(collected, collector));
 		((VanillaPlayer) entity.getController()).getInventory().getBase().addItem(is, true, true);
 		getParent().kill();
 	}

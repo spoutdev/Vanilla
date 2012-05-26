@@ -29,6 +29,8 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerType;
@@ -39,6 +41,8 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Spider extends Creature implements Hostile {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(Spider.class, "Spider");
+
 	protected Spider(VanillaControllerType type) {
 		super(type);
 	}

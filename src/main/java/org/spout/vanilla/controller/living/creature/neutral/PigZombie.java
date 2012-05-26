@@ -29,6 +29,8 @@ package org.spout.vanilla.controller.living.creature.neutral;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -38,6 +40,8 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class PigZombie extends Zombie implements Neutral {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(PigZombie.class, "Pig Zombie");
+
 	public PigZombie() {
 		super(VanillaControllerTypes.PIG_ZOMBIE);
 	}

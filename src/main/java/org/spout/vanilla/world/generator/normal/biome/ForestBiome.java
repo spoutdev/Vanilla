@@ -26,15 +26,14 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
-import org.spout.vanilla.world.generator.normal.decorator.GrassDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import net.royawesome.jlibnoise.module.modifier.ScalePoint;
+import org.spout.vanilla.world.generator.normal.decorator.GrassDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
 public class ForestBiome extends VanillaNormalBiome {
-
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {

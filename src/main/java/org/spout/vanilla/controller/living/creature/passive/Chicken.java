@@ -29,6 +29,8 @@ package org.spout.vanilla.controller.living.creature.passive;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -38,6 +40,8 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Chicken extends Creature implements Passive {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(Chicken.class, "Chicken");
+
 	public Chicken() {
 		super(VanillaControllerTypes.CHICKEN);
 	}

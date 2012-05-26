@@ -39,11 +39,11 @@ public final class MultiBlockChangeMessage extends Message {
 
 	/**
 	 * Creates a MultiBlockChangeMessage using the specified data
-	 * @param chunkX	  The x coordinate of the chunk containing these changes
-	 * @param chunkZ	  The z coordinate of the chunk containing these changes
+	 * @param chunkX The x coordinate of the chunk containing these changes
+	 * @param chunkZ The z coordinate of the chunk containing these changes
 	 * @param coordinates An array of change coordinates. Length should be 3 * types.length, with coordinates in x y z format
-	 * @param types	   An array of block types
-	 * @param metadata	An array of block metadata. No more than a nibble per entry
+	 * @param types An array of block types
+	 * @param metadata An array of block metadata. No more than a nibble per entry
 	 */
 	public MultiBlockChangeMessage(int chunkX, int chunkZ, short[] coordinates, short[] types, byte[] metadata) {
 		if (coordinates.length != (types.length * 3) || types.length != metadata.length) {

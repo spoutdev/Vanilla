@@ -39,7 +39,7 @@ public class PlayerInventoryBase extends Inventory {
 	protected PlayerInventoryBase() {
 		super(36);
 	}
-	
+
 	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {
 		slotStack = InventoryUtil.nullIfEmpty(slotStack);
 		setItem(clickedSlot, slotStack);

@@ -76,7 +76,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		} else {
 			slotStack = inventory.getItem(clickedSlot - 36);
 		}
-		
+
 		if (message.isShift()) {
 			// TODO: Fix Shift clicking
 			InventoryUtil.quickMoveStack(inventory, clickedSlot);

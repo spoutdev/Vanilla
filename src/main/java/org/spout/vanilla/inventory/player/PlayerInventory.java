@@ -117,17 +117,17 @@ public class PlayerInventory extends WindowInventory {
 	public ItemStack getOutput() {
 		return getItem(4);
 	}
-	
+
 	public PlayerInventoryBase getBase() {
 		return base;
 	}
 
 	@Override
-	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {	
+	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {
 		if (clickedSlot < 36 && clickedSlot > -1) {
 			return base.onClicked(controller, clickedSlot, slotStack);
 		}
-		
+
 		clickedSlot -= 36;
 		ItemStack cursorStack = controller.getItemOnCursor();
 		boolean armorSlot = clickedSlot == 8 || clickedSlot == 5 || clickedSlot == 1 || clickedSlot == 0;
@@ -142,7 +142,7 @@ public class PlayerInventory extends WindowInventory {
 		setItem(clickedSlot, slotStack);
 		return true;
 	}
-	
+
 	@Override
 	public boolean addViewer(InventoryViewer viewer) {
 		base.addViewer(viewer, false);

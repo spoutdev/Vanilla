@@ -29,6 +29,8 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.Collections;
 import java.util.Set;
 
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -38,6 +40,8 @@ import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Enderdragon extends Creature implements Hostile, Boss {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(Enderdragon.class, "EnderDragon");
+
 	public Enderdragon() {
 		super(VanillaControllerTypes.ENDERDRAGON);
 	}

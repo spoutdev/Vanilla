@@ -26,14 +26,6 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.VanillaBiome;
-
-import org.spout.api.generator.biome.Decorator;
-import org.spout.api.math.MathHelper;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
-import org.spout.api.geo.World;
-
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.Module;
 import net.royawesome.jlibnoise.module.combiner.Add;
@@ -42,6 +34,14 @@ import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
+
+import org.spout.api.generator.biome.Decorator;
+import org.spout.api.geo.World;
+import org.spout.api.math.MathHelper;
+import org.spout.api.util.cuboid.CuboidShortBuffer;
+
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.VanillaBiome;
 
 public abstract class VanillaNormalBiome extends VanillaBiome {
 	// the master noise to be used by biomes extending this class
@@ -78,23 +78,23 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 		ELEVATION.setNoiseQuality(NoiseQuality.STANDARD);
 		ELEVATION.setPersistence(0.7D);
 		ELEVATION.setOctaveCount(1);
-		
+
 		ROUGHNESS.setFrequency(0.2D);
 		ROUGHNESS.setLacunarity(1D);
 		ROUGHNESS.setNoiseQuality(NoiseQuality.STANDARD);
 		ROUGHNESS.setPersistence(0.9D);
 		ROUGHNESS.setOctaveCount(1);
-		
+
 		DETAIL.setFrequency(0.7D);
 		DETAIL.setLacunarity(1D);
 		DETAIL.setNoiseQuality(NoiseQuality.STANDARD);
 		DETAIL.setPersistence(0.7D);
 		DETAIL.setOctaveCount(1);
-		
+
 		Multiply multiply = new Multiply();
 		multiply.SetSourceModule(0, ROUGHNESS);
 		multiply.SetSourceModule(1, DETAIL);
-		
+
 		MASTER.SetSourceModule(0, multiply);
 		MASTER.SetSourceModule(1, ELEVATION);
 
@@ -228,10 +228,10 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 						groundCoverDepth++;
 					} else {
 						hasSurface = false;
-					}				
+					}
 				}
 			}
-		}	
+		}
 		// place bedrock
 		if (chunkY == 0) {
 			final byte bedrockDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 2 + 4, 1D, 5D);

@@ -158,9 +158,9 @@ public class VanillaBiomeSelector extends BiomeSelector {
 		mountain.setSeed((int) seed * 5);
 		hills.setSeed((int) seed * 13);
 
-		final double elevation = getElevation(x,z);
-		final double rain = getAvgRainfall(x,z);
-		final double temp = getAvgTemperature(x,z);
+		final double elevation = getElevation(x, z);
+		final double rain = getAvgRainfall(x, z);
+		final double temp = getAvgTemperature(x, z);
 
 		if (elevation > 0.8) {
 			return VanillaBiomes.MOUNTAINS; //mountains

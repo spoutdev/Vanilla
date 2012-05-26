@@ -35,7 +35,7 @@ import org.spout.vanilla.util.RedstonePowerMode;
 public interface RedstoneSource extends Source {
 	/**
 	 * Gets how much redstone power this redstone source block provides to the direction given.<br>
-	 * @param block	 of this redstone source
+	 * @param block of this redstone source
 	 * @param direction it provides power to
 	 * @param powerMode to use to get the power
 	 * @return how much power this block provides to the given direction
@@ -44,7 +44,7 @@ public interface RedstoneSource extends Source {
 
 	/**
 	 * Gets if this redstone source block provides power to the direction given.<br>
-	 * @param block	 of this redstone source
+	 * @param block of this redstone source
 	 * @param direction it provides power to
 	 * @param powerMode to use to get the power
 	 * @return True if this redstone source block provides power

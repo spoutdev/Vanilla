@@ -49,7 +49,7 @@ import org.spout.vanilla.controller.living.creature.hostile.Creeper;
 import org.spout.vanilla.controller.living.creature.hostile.Enderdragon;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.creature.hostile.Giant;
-import org.spout.vanilla.controller.living.creature.hostile.MagmaCube;
+import org.spout.vanilla.controller.living.creature.hostile.MagmaSlime;
 import org.spout.vanilla.controller.living.creature.hostile.Silverfish;
 import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
 import org.spout.vanilla.controller.living.creature.hostile.Slime;
@@ -140,7 +140,7 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType CAVE_SPIDER = new MobControllerType(59, CaveSpider.class, "Cave Spider");
 	public static final VanillaControllerType SILVERFISH = new MobControllerType(60, Silverfish.class, "Silverfish");
 	public static final VanillaControllerType BLAZE = new MobControllerType(61, Blaze.class, "Blaze", new BlazeEntityProtocol());
-	public static final VanillaControllerType MAGMA_CUBE = new MobControllerType(62, MagmaCube.class, "Magma Cube", new MagmaCubeEntityProtocol());
+	public static final VanillaControllerType MAGMA_CUBE = new MobControllerType(62, MagmaSlime.class, "Magma Cube", new MagmaCubeEntityProtocol());
 	public static final VanillaControllerType ENDERDRAGON = new MobControllerType(64, Enderdragon.class, "Enderdragon", new EnderdragonEntityProtocol());
 	public static final VanillaControllerType PIG = new MobControllerType(90, Pig.class, "Pig", new PigEntityProtocol());
 	public static final VanillaControllerType SHEEP = new MobControllerType(91, Sheep.class, "Sheep", new SheepEntityProtocol());

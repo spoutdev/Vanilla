@@ -26,11 +26,16 @@
  */
 package org.spout.vanilla.controller.living.creature.hostile;
 
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
+
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class CaveSpider extends Spider implements Hostile {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(CaveSpider.class, "Cave Spider");
+
 	public CaveSpider() {
 		super(VanillaControllerTypes.CAVE_SPIDER);
 	}

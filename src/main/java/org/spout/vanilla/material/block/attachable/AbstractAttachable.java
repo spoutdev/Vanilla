@@ -81,7 +81,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	/**
 	 * Sets whether a certain face is attachable
-	 * @param face	   to set
+	 * @param face to set
 	 * @param attachable state
 	 * @return this attachable material
 	 */

@@ -29,6 +29,8 @@ package org.spout.vanilla.controller.living.creature.neutral;
 import java.util.Set;
 
 import org.spout.api.entity.Controller;
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -38,6 +40,7 @@ import org.spout.vanilla.controller.living.creature.Tameable;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Wolf extends Creature implements Tameable, Neutral {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(Wolf.class, "Wolf");
 	private Controller master;
 
 	public Wolf() {

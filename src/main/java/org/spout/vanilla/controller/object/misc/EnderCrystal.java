@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.controller.object.misc;
 
+import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -33,6 +35,8 @@ import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class EnderCrystal extends Substance {
+	public static final ControllerType TYPE = new EmptyConstructorControllerType(EnderCrystal.class, "Ender Crystal");
+
 	public EnderCrystal() {
 		super(VanillaControllerTypes.ENDER_CRYSTAL);
 	}

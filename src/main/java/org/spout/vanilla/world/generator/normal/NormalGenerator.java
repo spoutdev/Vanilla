@@ -37,7 +37,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
-import org.spout.vanilla.world.populator.SmoothPopulator;
 import org.spout.vanilla.world.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends BiomeGenerator implements VanillaGenerator {
@@ -47,12 +46,13 @@ public class NormalGenerator extends BiomeGenerator implements VanillaGenerator 
 	public void registerBiomes() {
 		selector = new VanillaBiomeSelector(this, 2.0f);
 		setSelector(selector);
-		addPopulator(new SmoothPopulator());
+		//addPopulator(new SmoothPopulator());
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.PLAIN);
 		register(VanillaBiomes.DESERT);
 		register(VanillaBiomes.MOUNTAINS);
 		register(VanillaBiomes.BEACH);
+		register(VanillaBiomes.FOREST);
 		register(VanillaBiomes.SMALL_MOUNTAINS);
 	}
 

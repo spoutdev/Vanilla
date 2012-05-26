@@ -26,43 +26,35 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
+import org.spout.vanilla.world.generator.normal.decorator.GrassDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
+
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.VanillaBiome;
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-public class ForestBiome extends VanillaBiome {
+public class ForestBiome extends VanillaNormalBiome {
+
+	private final static ScalePoint NOISE = new ScalePoint();
+
+	static {
+		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.setxScale(0.1D);
+		NOISE.setyScale(0.17D);
+		NOISE.setzScale(0.1D);
+	}
+
 	public ForestBiome(int biomeId) {
-		super(biomeId);
+		super(biomeId, NOISE, new TreeDecorator(), new GrassDecorator());
 	}
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		int y = chunkY * 16, height = 65;
-
-		for (int dy = y; dy < y + 16; dy++) {
-			blockData.set(x, dy, z, getBlockId(height, dy));
-		}
+		super.generateColumn(blockData, x, chunkY, z);
 	}
 
 	@Override
 	public String getName() {
 		return "Forest";
-	}
-
-	protected short getBlockId(int top, int dy) {
-		short id;
-		if (dy > top) {
-			id = VanillaMaterials.AIR.getId();
-		} else if (dy == top) {
-			id = VanillaMaterials.GRASS.getId();
-		} else if (dy + 4 >= top) {
-			id = VanillaMaterials.DIRT.getId();
-		} else if (dy != 0) {
-			id = VanillaMaterials.STONE.getId();
-		} else {
-			id = VanillaMaterials.BEDROCK.getId();
-		}
-		return id;
 	}
 }

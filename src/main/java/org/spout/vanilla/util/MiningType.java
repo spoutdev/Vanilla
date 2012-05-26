@@ -65,11 +65,11 @@ public enum MiningType {
 		return typeClassMap.get(tool.getClass());
 	}
 
-	public boolean isInstance(Tool o) {
+	public boolean isInstance(Object o) {
 		return this.isInstance(o.getClass());
 	}
 
 	public boolean isInstance(Class<?> cls) {
-		return typeClassMap.get(cls) == this;
+		return (typeClassMap.get(cls) == this || typeClassMap.get(cls.getSuperclass()) == this);
 	}
 }

@@ -42,9 +42,9 @@ public class DungeonDecorator implements Decorator {
 	public void populate(Chunk chunk, Random random) {
 		if (random.nextInt(PROBABILITY) == 0) {
 			final World world = chunk.getWorld();
-			final int worldX = chunk.getX() * 16 + random.nextInt(16);
-			final int worldY = chunk.getY() * 16 + random.nextInt(16);
-			final int worldZ = chunk.getZ() * 16 + random.nextInt(16);
+			final int worldX = chunk.getBlockX() + random.nextInt(16);
+			final int worldY = chunk.getBlockY() + random.nextInt(16);
+			final int worldZ = chunk.getBlockZ() + random.nextInt(16);
 			WorldGeneratorObject dungeon = new DungeonObject(random);
 			if (dungeon.canPlaceObject(world, worldX, worldY, worldZ)) {
 				dungeon.placeObject(world, worldX, worldY, worldZ);

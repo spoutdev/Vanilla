@@ -64,9 +64,9 @@ public class SugarCaneDecorator implements Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		x = chunk.getX() * 16 + x;
-		y = chunk.getY() * 16 + y;
-		z = chunk.getZ() * 16 + z;
+		x += chunk.getBlockX();
+		y += chunk.getBlockY();
+		z += chunk.getBlockZ();
 		for (int i = 0; i < TRIES; i++) {
 			generateSugarCaneStack(world, random, x + (random.nextBoolean() ? random.nextInt(RAND_X) : -random.nextInt(RAND_X)), y, z + (random.nextBoolean() ? random.nextInt(RAND_Z) : -random.nextInt(RAND_Z)));
 		}

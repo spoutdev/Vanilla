@@ -50,9 +50,9 @@ public class CaveDecorator implements Decorator {
 	public void populate(Chunk chunk, Random random) {
 		noise.setSeed((int) chunk.getWorld().getSeed());
 
-		int x = chunk.getX() * 16;
-		int y = chunk.getY() * 16;
-		int z = chunk.getZ() * 16;
+		int x = chunk.getBlockX();
+		int y = chunk.getBlockY();
+		int z = chunk.getBlockZ();
 		Point pt = new Point(chunk.getWorld(), x + random.nextInt(16), y + random.nextInt(16), z + random.nextInt(16));
 		for (int dx = x; dx < x + 16; dx++) {
 			for (int dz = z; dz < z + 16; dz++) {

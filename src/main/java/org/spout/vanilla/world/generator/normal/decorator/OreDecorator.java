@@ -47,7 +47,7 @@ public class OreDecorator implements Decorator {
 
 		for (int i = 0; i < type.length; i++) {
 			for (int j = 0; j < iterations[i]; j++) {
-				generateOre(world, random, source.getX() * 16 + random.nextInt(16), random.nextInt(maxHeight[i]), source.getZ() * 16 + random.nextInt(16), amount[i], type[i]);
+				generateOre(world, random, source.getBlockX() + random.nextInt(16), random.nextInt(maxHeight[i]), source.getBlockZ() + random.nextInt(16), amount[i], type[i]);
 			}
 		}
 	}

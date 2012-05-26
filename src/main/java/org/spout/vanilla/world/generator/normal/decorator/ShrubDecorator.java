@@ -49,8 +49,8 @@ public class ShrubDecorator implements Decorator {
 		final World world = chunk.getWorld();
 		final ShrubObject shrub = new ShrubObject(random);
 		for (byte i = 0; i < AMOUNT; i++) {
-			final int x = random.nextInt(16) + chunk.getX() * 16;
-			final int z = random.nextInt(16) + chunk.getZ() * 16;
+			final int x = random.nextInt(16) + chunk.getBlockX();
+			final int z = random.nextInt(16) + chunk.getBlockZ();
 			final int y = getHighestWorkableBlock(world, x, z);
 			if (y == -1) {
 				continue;

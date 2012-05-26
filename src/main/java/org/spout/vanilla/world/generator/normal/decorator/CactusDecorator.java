@@ -48,8 +48,8 @@ public class CactusDecorator implements Decorator {
 		int px = random.nextInt(16);
 		int pz = random.nextInt(16);
 		int py = getHighestWorkableBlock(chunk, px, pz);
-		px = chunk.getX() * 16 + px;
-		pz = chunk.getZ() * 16 + pz;
+		px += chunk.getBlockX();
+		pz += chunk.getBlockZ();
 		if (py == -1) {
 			return;
 		}
@@ -66,8 +66,8 @@ public class CactusDecorator implements Decorator {
 
 	private int getHighestWorkableBlock(Chunk c, int px, int pz) {
 		int y = c.getWorld().getHeight();
-		int pozx = c.getX() * 16 + px;
-		int pozz = c.getZ() * 16 + pz;
+		int pozx = c.getBlockX() + px;
+		int pozz = c.getBlockZ() + pz;
 		while (c.getWorld().getBlockMaterial(pozx, y, pozz) != VanillaMaterials.SAND && c.getWorld().getBlockMaterial(pozx, y, pozz) != VanillaMaterials.SANDSTONE) {
 			y--;
 			if (y == 0 || c.getWorld().getBlockMaterial(pozx, y, pozz) == VanillaMaterials.WATER) {

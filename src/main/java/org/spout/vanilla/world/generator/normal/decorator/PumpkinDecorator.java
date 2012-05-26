@@ -52,7 +52,7 @@ public class PumpkinDecorator implements Decorator {
 		}
 		int x = random.nextInt(16) + 8;
 		int z = random.nextInt(16) + 8;
-		generatePumpkinPatch(chunk.getWorld(), random, chunk.getX() * 16 + x, chunk.getZ() * 16 + z);
+		generatePumpkinPatch(chunk.getWorld(), random, chunk.getBlockX() + x, chunk.getBlockZ() + z);
 	}
 
 	private void generatePumpkinPatch(World world, Random random, int x, int z) {

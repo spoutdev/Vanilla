@@ -47,17 +47,18 @@ public class GrassDecorator implements Decorator {
 			return;
 		}
 
-		int x = (source.getX() << Chunk.CHUNK_SIZE_BITS);
-		int z = (source.getZ() << Chunk.CHUNK_SIZE_BITS);
+		int x = source.getBlockX();
+		int z = source.getBlockZ();
 		int y;
 		int numSteps = random.nextInt(maxSteps - minSteps + 1) + minSteps;
 		for (int i = 0; i < numSteps; i++) {
 			x += random.nextInt(3) - 1;
 			z += random.nextInt(3) - 1;
-			y = (source.getY() << Chunk.CHUNK_SIZE_BITS) + 15;
+			y = source.getBlockY() + 15;
 			Block b = source.getWorld().getBlock(x, y, z);
 			while (b.getMaterial() == VanillaMaterials.AIR && y >= 0) {
 				b = b.translate(BlockFace.BOTTOM);
+				y = b.getY();
 			}
 			if (b.getY() == -1) {
 				return;

@@ -34,7 +34,7 @@ public abstract class IronArmor extends Armor {
 	}
 
 	@Override
-	public int getEnchantibility() {
+	public int getEnchantability() {
 		return 9;
 	}
 }

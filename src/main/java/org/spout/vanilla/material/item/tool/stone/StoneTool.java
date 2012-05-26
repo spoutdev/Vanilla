@@ -28,14 +28,16 @@ package org.spout.vanilla.material.item.tool.stone;
 
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.MiningType;
 
 public abstract class StoneTool extends Tool implements Enchantable {
 	protected StoneTool(String name, int id, short durability) {
 		super(name, id, durability);
+		this.setMiningLevel(MiningType.MiningLevel.STONE);
 	}
 
 	@Override
-	public int getEnchantibility() {
+	public int getEnchantability() {
 		return 5;
 	}
 }

@@ -36,7 +36,7 @@ public class Bow extends RangedWeapon implements Enchantable {
 	}
 
 	@Override
-	public int getEnchantibility() {
+	public int getEnchantability() {
 		return 1;
 	}
 }

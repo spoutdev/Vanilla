@@ -31,10 +31,6 @@ import org.spout.api.generator.biome.Decorator;
 
 public abstract class VanillaBiome extends Biome {
 	private final int biomeId;
-	//TODO: actually implement these in the selector instead of hard coding them in
-	private float minTemp = 0f, maxTemp = 0f;
-	private float minHumiditiy = 0f, maxHumidity = 0f;
-	private float minElevation = 0f, maxElevation = 0f;
 
 	protected VanillaBiome(int biomeId, Decorator... decorators) {
 		super(decorators);
@@ -43,47 +39,5 @@ public abstract class VanillaBiome extends Biome {
 
 	public int getBiomeId() {
 		return biomeId;
-	}
-
-	public float getMinTemp() {
-		return this.minTemp;
-	}
-
-	public float getMaxTemp() {
-		return this.maxTemp;
-	}
-
-	public float getMinHumiditiy() {
-		return this.minHumiditiy;
-	}
-
-	public float getMaxHumidity() {
-		return this.maxHumidity;
-	}
-
-	public float getMinElevation() {
-		return this.minElevation;
-	}
-
-	public float getMaxElevation() {
-		return this.maxElevation;
-	}
-
-	public VanillaBiome setTemp(float min, float max) {
-		this.minTemp = min;
-		this.maxTemp = max;
-		return this;
-	}
-
-	public VanillaBiome setHumidity(float min, float max) {
-		this.minHumiditiy = min;
-		this.maxHumidity = max;
-		return this;
-	}
-
-	public VanillaBiome setElevation(float min, float max) {
-		this.minElevation = min;
-		this.maxElevation = max;
-		return this;
 	}
 }

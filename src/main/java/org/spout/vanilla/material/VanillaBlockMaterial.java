@@ -116,11 +116,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	@Override
-	public VanillaBlockMaterial setLightLevel(byte level) {
-		return (VanillaBlockMaterial) super.setLightLevel(level);
-	}
-
-	@Override
 	public boolean isPlacementObstacle() {
 		return true;
 	}
@@ -290,10 +285,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 */
 	public boolean isPlacementSuppressed() {
 		return false;
-	}
-
-	public VanillaBlockMaterial setLightLevel(int level) {
-		return setLightLevel((byte) level);
 	}
 
 	/**

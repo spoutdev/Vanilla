@@ -35,7 +35,12 @@ public class Portal extends VanillaBlockMaterial {
 
 	public Portal(String name, int id) {
 		super(name, id);
-		this.setHardness(-1.0F).setResistance(0.0F).setLightLevel(11).setOpacity((byte) 1);
+		this.setHardness(-1.0F).setResistance(0.0F).setOpacity((byte) 1);
+	}
+
+	@Override
+	public byte getLightLevel(short data) {
+		return 11;
 	}
 
 	public BlockMaterial getFrameMaterial() {

@@ -56,14 +56,16 @@ public class Furnace extends Solid implements Mineable, Directional {
 		super(name, id);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F).setController(VanillaControllerTypes.FURNACE);
-		if (this.burning) {
-			this.setLightLevel(13);
-		}
 	}
 
 	@Override
 	public FurnaceController getController(Block block) {
 		return (FurnaceController) super.getController(block);
+	}
+
+	@Override
+	public byte getLightLevel(short data) {
+		return burning ? (byte) 13 : (byte) 0;
 	}
 
 	/**

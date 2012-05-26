@@ -51,13 +51,15 @@ public class RedstoneRepeater extends GroundAttachable implements RedstoneSource
 		super(name, id);
 		this.powered = powered;
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 0);
-		if (powered) {
-			this.setLightLevel(9);
-		}
 	}
 
 	public boolean isPowered() {
 		return this.powered;
+	}
+
+	@Override
+	public byte getLightLevel(short data) {
+		return powered ? (byte) 9 : (byte) 0;
 	}
 
 	public void onDestroy(Block block) {

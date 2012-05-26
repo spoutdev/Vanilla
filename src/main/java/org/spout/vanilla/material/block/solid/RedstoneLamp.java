@@ -42,9 +42,6 @@ public class RedstoneLamp extends Solid {
 		this.on = on;
 		// TODO: The resistance is not correct (?)
 		this.setHardness(0.3F).setResistance(0.5F);
-		if (on) {
-			this.setLightLevel(15);
-		}
 	}
 
 	/**
@@ -53,6 +50,11 @@ public class RedstoneLamp extends Solid {
 	 */
 	public boolean inOn() {
 		return on;
+	}
+
+	@Override
+	public byte getLightLevel(short data) {
+		return on ? (byte) 15 : (byte) 0;
 	}
 
 	@Override

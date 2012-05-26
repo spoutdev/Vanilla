@@ -36,7 +36,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 public class Fire extends VanillaBlockMaterial {
 	public Fire(String name, int id) {
 		super(name, id);
-		this.setHardness(0.0F).setResistance(0.0F).setLightLevel(15).setOpacity((byte) 1);
+		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
 	}
 
 	@Override
@@ -47,6 +47,11 @@ public class Fire extends VanillaBlockMaterial {
 	@Override
 	public boolean hasPhysics() {
 		return true;
+	}
+
+	@Override
+	public byte getLightLevel(short data) {
+		return 15;
 	}
 
 	@Override

@@ -56,6 +56,7 @@ import org.spout.vanilla.material.block.liquid.Lava;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.block.misc.BedBlock;
 import org.spout.vanilla.material.block.misc.CakeBlock;
+import org.spout.vanilla.material.block.misc.DragonEgg;
 import org.spout.vanilla.material.block.misc.EndPortalFrame;
 import org.spout.vanilla.material.block.misc.FarmLand;
 import org.spout.vanilla.material.block.misc.FenceGate;
@@ -351,7 +352,7 @@ public final class VanillaMaterials {
 	public static final EnchantmentTable ENCHANTMENT_TABLE = new EnchantmentTable("Enchantment Table", 116);
 	public static final BrewingStand BREWING_STAND_BLOCK = new BrewingStand("Brewing Stand", 117);
 	public static final Solid CAULDRON_BLOCK = (Solid) new Solid("Cauldron", 118).setHardness(2.0F).setResistance(3.3F);
-	public static final Solid DRAGON_EGG = (Solid) new Solid("Dragon Egg", 122).setHardness(3.0F).setResistance(15.0F).setLightLevel(1);
+	public static final DragonEgg DRAGON_EGG = new DragonEgg("Dragon Egg", 122);
 	public static final RedstoneLamp REDSTONE_LAMP_OFF = new RedstoneLamp("Redstone Lamp", 123, false);
 	public static final RedstoneLamp REDSTONE_LAMP_ON = new RedstoneLamp("Redstone Lamp (On)", 124, true);
 	/*

@@ -34,7 +34,9 @@ import org.spout.api.util.SpoutToStringStyle;
 public final class PlayerDiggingMessage extends Message {
 	public static final int STATE_START_DIGGING = 0;
 	public static final int STATE_DONE_DIGGING = 2;
+	public static final int STATE_UPDATE_BLOCK = 3;//This should be ignored - the client does not use it, and it could be abused.
 	public static final int STATE_DROP_ITEM = 4;
+	public static final int STATE_CANCEL_DIGGING = 5;
 	private final int state, x, y, z, face;
 
 	public PlayerDiggingMessage(int state, int x, int y, int z, int face) {

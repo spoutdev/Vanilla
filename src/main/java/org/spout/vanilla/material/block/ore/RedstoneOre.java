@@ -49,9 +49,6 @@ public class RedstoneOre extends Ore implements TimedCraftable, Mineable {
 		super(name, id);
 		this.glowing = glowing;
 		this.setHardness(3.0F).setResistance(5.0F);
-		if (glowing) {
-			this.setLightLevel(3);
-		}
 	}
 
 	@Override
@@ -67,6 +64,11 @@ public class RedstoneOre extends Ore implements TimedCraftable, Mineable {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public byte getLightLevel(short data) {
+		return glowing ? (byte) 13 : (byte) 0;
 	}
 
 	@Override

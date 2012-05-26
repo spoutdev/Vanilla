@@ -44,9 +44,6 @@ public class Pumpkin extends Solid implements Directional {
 		super(name, id);
 		this.lantern = lantern;
 		this.setHardness(1.0F).setResistance(1.7F);
-		if (lantern) {
-			this.setLightLevel(15);
-		}
 	}
 
 	@Override
@@ -57,6 +54,11 @@ public class Pumpkin extends Solid implements Directional {
 	@Override
 	public void setFacing(Block block, BlockFace facing) {
 		block.setData((short) (BlockFaces.EWNS.indexOf(facing, 0) + 2));
+	}
+
+	@Override
+	public byte getLightLevel(short data) {
+		return lantern ? (byte) 15 : (byte) 0;
 	}
 
 	@Override

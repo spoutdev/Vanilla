@@ -148,6 +148,11 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	}
 
 	@Override
+	public byte getLightLevel(short data) {
+		return (byte) data;
+	}
+
+	@Override
 	public boolean isReceivingPower(Block block) {
 		return this.getReceivingPower(block) > 0;
 	}

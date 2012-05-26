@@ -35,7 +35,7 @@ import org.spout.vanilla.material.block.Liquid;
 public class Lava extends Liquid {
 	public Lava(String name, int id, boolean flowing) {
 		super(name, id, flowing);
-		this.setHardness(100.0F).setResistance(166.7F).setLightLevel(15).setOpacity((byte) 1);
+		this.setHardness(100.0F).setResistance(166.7F).setOpacity((byte) 1);
 	}
 
 	@Override
@@ -46,6 +46,11 @@ public class Lava extends Liquid {
 	@Override
 	public Liquid getFlowingMaterial() {
 		return VanillaMaterials.LAVA;
+	}
+
+	@Override
+	public byte getLightLevel(short data) {
+		return 15;
 	}
 
 	@Override

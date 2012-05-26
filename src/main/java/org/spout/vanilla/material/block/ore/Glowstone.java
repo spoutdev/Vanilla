@@ -44,7 +44,7 @@ import org.spout.vanilla.util.EnchantmentUtil;
 public class Glowstone extends Ore {
 	public Glowstone(String name, int id) {
 		super(name, id);
-		this.setHardness(0.3F).setResistance(0.5F).setLightLevel(15).setOpacity((byte) 0);
+		this.setHardness(0.3F).setResistance(0.5F).setOpacity((byte) 0);
 	}
 
 	@Override
@@ -55,6 +55,11 @@ public class Glowstone extends Ore {
 	@Override
 	public boolean isRedstoneConductor() {
 		return false;
+	}
+
+	@Override
+	public byte getLightLevel(short data) {
+		return 15;
 	}
 
 	@Override

@@ -47,15 +47,17 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 		super(name, id);
 		this.powered = powered;
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 0);
-		if (powered) {
-			this.setLightLevel(7);
-		}
 	}
 
 	@Override
 	public void onDestroy(Block block) {
 		this.doRedstoneUpdates(block);
 		super.onDestroy(block);
+	}
+
+	@Override
+	public byte getLightLevel(short data) {
+		return powered ? (byte) 7 : (byte) 0;
 	}
 
 	@Override

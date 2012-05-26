@@ -24,26 +24,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.portal;
+package org.spout.vanilla.material.block.misc;
 
-import org.spout.api.geo.cuboid.Block;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
-import org.spout.vanilla.material.block.Portal;
-import org.spout.vanilla.util.MoveReaction;
+public class DragonEgg extends VanillaBlockMaterial {
 
-public class NetherPortal extends Portal {
-	public NetherPortal(String name, int id) {
+	public DragonEgg(String name, int id) {
 		super(name, id);
-		this.setHardness(-1.0F).setResistance(0.0F).setOpacity((byte) 1);
+		this.setHardness(3.0F).setResistance(15.0F);
 	}
 
 	@Override
 	public byte getLightLevel(short data) {
-		return 11;
-	}
-
-	@Override
-	public MoveReaction getMoveReaction(Block block) {
-		return MoveReaction.DENY;
+		return 1;
 	}
 }

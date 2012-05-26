@@ -61,7 +61,7 @@ public class CaveDecorator implements Decorator {
 						continue;
 					}
 					if (noise.GetValue(dx / 5.0 + 0.005, dy / 5.0 + 0.005, dz / 5.0 + 0.005) > 0 && chunk.getBlockMaterial(dx, dy, dz) == VanillaMaterials.STONE) {
-						chunk.getBlock(dx, dy, dz).setMaterial(VanillaMaterials.AIR).update(true);
+						//chunk.getBlock(dx, dy, dz).setMaterial(VanillaMaterials.AIR).update(true);
 					}
 				}
 			}

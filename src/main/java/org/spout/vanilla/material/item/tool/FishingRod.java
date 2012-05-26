@@ -24,13 +24,11 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.armor.gold;
+package org.spout.vanilla.material.item.tool;
 
-import org.spout.vanilla.material.item.Armor;
 
-public abstract class GoldArmor extends Armor {
-	protected GoldArmor(String name, int id, int protection) {
-		super(name, id, protection);
-		this.setEnchantability(25);
+public class FishingRod extends Tool {
+	public FishingRod(String name, int id, short durability) {
+		super(name, id, durability);
 	}
 }

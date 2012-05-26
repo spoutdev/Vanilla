@@ -192,9 +192,9 @@ import org.spout.vanilla.material.item.misc.Sign;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
 import org.spout.vanilla.material.item.misc.Stick;
 import org.spout.vanilla.material.item.misc.StorageMinecartItem;
+import org.spout.vanilla.material.item.tool.FishingRod;
 import org.spout.vanilla.material.item.tool.FlintAndSteel;
 import org.spout.vanilla.material.item.tool.Hoe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.tool.diamond.DiamondAxe;
 import org.spout.vanilla.material.item.tool.diamond.DiamondPickaxe;
 import org.spout.vanilla.material.item.tool.diamond.DiamondSpade;
@@ -415,7 +415,7 @@ public final class VanillaMaterials {
 	public static final FlintAndSteel FLINT_AND_STEEL = new FlintAndSteel("Flint and Steel", 259, (short) 64);
 	public static final Bow BOW = new Bow("Bow", 261, (short) 385);
 	public static final VanillaItemMaterial ARROW = new VanillaItemMaterial("Arrow", 262);
-	public static final Tool FISHING_ROD = new Tool("Fishing Rod", 346, (short) 65);
+	public static final FishingRod FISHING_ROD = new FishingRod("Fishing Rod", 346, (short) 65);
 	//== Buckets=
 	public static final EmptyContainer BUCKET = new EmptyContainer("Bucket", 325);
 	public static final FullContainer WATER_BUCKET = new FullContainer("Water Bucket", 326, WATER, BUCKET);

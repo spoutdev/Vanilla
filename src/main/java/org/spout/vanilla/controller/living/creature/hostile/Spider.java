@@ -70,7 +70,7 @@ public class Spider extends Creature implements Hostile {
 			drops.add(new ItemStack(VanillaMaterials.STRING, count));
 		}
 
-		if (lastDamager != null && lastDamager instanceof VanillaPlayer) {
+		if (lastDamager != null && lastDamager instanceof VanillaPlayer && getRandom().nextInt(100) < 33) {
 			count = getRandom().nextInt(2);
 			if (count > 0) {
 				drops.add(new ItemStack(VanillaMaterials.SPIDER_EYE, count));

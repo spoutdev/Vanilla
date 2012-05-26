@@ -32,10 +32,6 @@ import org.spout.vanilla.material.item.tool.Tool;
 public abstract class IronTool extends Tool implements Enchantable {
 	protected IronTool(String name, int id, short durability) {
 		super(name, id, durability);
-	}
-
-	@Override
-	public int getEnchantibility() {
-		return 14;
+		this.setEnchantability(14);
 	}
 }

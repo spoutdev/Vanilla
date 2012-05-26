@@ -28,6 +28,7 @@ package org.spout.vanilla.material.item;
 
 public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 	private int protection;
+	private int enchantability;
 
 	protected Armor(String name, int id, int protection) {
 		super(name, id);
@@ -41,5 +42,15 @@ public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 	@Override
 	public boolean getNBTData() {
 		return true;
+	}
+
+	@Override
+	public int getEnchantability() {
+		return enchantability;
+	}
+
+	@Override
+	public void setEnchantability(int enchantability) {
+		this.enchantability = enchantability;
 	}
 }

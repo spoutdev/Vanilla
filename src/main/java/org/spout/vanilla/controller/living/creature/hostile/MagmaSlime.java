@@ -53,10 +53,11 @@ public class MagmaSlime extends Slime implements Hostile {
 		if (getSize() == 0) {
 			return drops;
 		}
-
-		int count = getRandom().nextInt(2);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.MAGMA_CREAM, count));
+		if (getRandom().nextInt(100) < 25) {
+			int count = getRandom().nextInt(2);
+			if (count > 0) {
+				drops.add(new ItemStack(VanillaMaterials.MAGMA_CREAM, count));
+			}
 		}
 		return drops;
 	}

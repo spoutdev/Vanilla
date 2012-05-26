@@ -31,8 +31,14 @@ package org.spout.vanilla.material.item;
  */
 public interface Enchantable {
 	/**
-	 * Gets the enchantibility of this item material to use in the process of enchanting
-	 * @return Enchantibility level of this item material
+	 * Gets the enchantability of this item material to use in the process of enchanting
+	 * @return Enchantability level of this item material
 	 */
-	public int getEnchantibility();
+	public int getEnchantability();
+
+	/**
+	 * Sets the enchantability of this item material
+	 * @param enchantability Enchantability to set
+	 */
+	public void setEnchantability(int enchantability);
 }

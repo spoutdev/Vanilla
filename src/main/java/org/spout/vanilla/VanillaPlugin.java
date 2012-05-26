@@ -27,6 +27,8 @@
 package org.spout.vanilla;
 
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.logging.Level;
 
 import org.spout.api.Engine;
@@ -51,6 +53,7 @@ import org.spout.api.scheduler.TaskPriority;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.configuration.WorldConfiguration;
 import org.spout.vanilla.controller.world.PointObserver;
 import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
@@ -61,6 +64,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
+import org.spout.vanilla.protocol.codec.SpawnDroppedItemCodec;
 import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -75,6 +79,7 @@ public class VanillaPlugin extends CommonPlugin {
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
 	private Engine game;
 	private VanillaConfiguration config;
+	private WorldConfiguration worldConfig;
 	private VanillaRecipes recipes;
 	private static VanillaPlugin instance;
 
@@ -82,6 +87,7 @@ public class VanillaPlugin extends CommonPlugin {
 	public void onDisable() {
 		try {
 			config.save();
+			worldConfig.save();
 		} catch (ConfigurationException e) {
 			getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);
 		}
@@ -94,6 +100,7 @@ public class VanillaPlugin extends CommonPlugin {
 		//Config
 		try {
 			config.load();
+			worldConfig.load();
 		} catch (ConfigurationException e) {
 			getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
 		}
@@ -125,6 +132,7 @@ public class VanillaPlugin extends CommonPlugin {
 		instance = this;
 		game = getGame();
 		config = new VanillaConfiguration(getDataFolder());
+		worldConfig = new WorldConfiguration(getDataFolder());
 		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
 
 		if (game instanceof Server) {
@@ -147,62 +155,48 @@ public class VanillaPlugin extends CommonPlugin {
 		getLogger().info("loaded");
 	}
 
-	/**
-	 * Gets the Vanilla Plugin instance
-	 */
-	public static VanillaPlugin getInstance() {
-		return instance;
-	}
-
 	private void setupWorlds() {
-		//Initialize generators.
-		NormalGenerator normGen = new NormalGenerator();
-		FlatGenerator flatGen = new FlatGenerator(64);
-		NetherGenerator netherGen = new NetherGenerator();
-		TheEndGenerator endGen = new TheEndGenerator();
+		ArrayList<World> worlds = new ArrayList<World>();
+		ArrayList<Point> spawns  = new ArrayList<Point>();
 
-		//Load worlds
-		World normal = game.loadWorld("world", normGen);
-		World flat = game.loadWorld("world_flat", flatGen);
-		World nether = game.loadWorld("world_nether", netherGen);
-		World end = game.loadWorld("world_end", endGen);
+		if (WorldConfiguration.NORMAL_LOAD.getBoolean()) {
+			NormalGenerator normGen = new NormalGenerator();
+			World normal = game.loadWorld(WorldConfiguration.NORMAL_NAME.getString(), normGen);
+			worlds.add(normal);
+			spawns.add(normGen.getSafeSpawn(normal));
+		}
 
-		//Create the sky.
-		NormalSky normSky = new NormalSky();
-		NormalSky flatSky = new NormalSky();
-		NetherSky netherSky = new NetherSky();
-		TheEndSky endSky = new TheEndSky();
+		if (WorldConfiguration.FLAT_LOAD.getBoolean()) {
+			FlatGenerator flatGen = new FlatGenerator(64);
+			World flat = game.loadWorld(WorldConfiguration.FLAT_NAME.getString(), flatGen);
+			worlds.add(flat);
+			spawns.add(flatGen.getSafeSpawn(flat));
+		}
 
-		//Register skies to the map
-		VanillaSky.setSky(normal, normSky);
-		VanillaSky.setSky(nether, netherSky);
-		VanillaSky.setSky(end, endSky);
-		VanillaSky.setSky(flat, flatSky);
+		if (WorldConfiguration.NETHER_LOAD.getBoolean()) {
+			NetherGenerator netherGen = new NetherGenerator();
+			World nether = game.loadWorld(WorldConfiguration.NETHER_NAME.getString(), netherGen);
+			worlds.add(nether);
+			spawns.add(netherGen.getSafeSpawn(nether));
+		}
 
-		//Set the sky worlds
-		normSky.setWorld(normal);
-		flatSky.setWorld(flat);
-		netherSky.setWorld(nether);
-		endSky.setWorld(end);
-
-		//Spawn points
-		Point normalSpawn = normGen.getSafeSpawn(normal);
-		Point flatSpawn = flatGen.getSafeSpawn(flat);
-		Point netherSpawn = netherGen.getSafeSpawn(nether); //TODO Is this set based on the nether portal? Does the nether actually have a "spawn point"?
-		Point endSpawn = endGen.getSafeSpawn(end); //TODO Needs to probably be set per end portal?
+		if (WorldConfiguration.END_LOAD.getBoolean()) {
+			TheEndGenerator endGen = new TheEndGenerator();
+			World end = game.loadWorld(WorldConfiguration.END_NAME.getString(), endGen);
+			worlds.add(end);
+			spawns.add(endGen.getSafeSpawn(end));
+		}
 
 		final int diameter = PointObserver.CHUNK_VIEW_DISTANCE + PointObserver.CHUNK_VIEW_DISTANCE + 1;
 		final int total = diameter * diameter * diameter;
 		final int progressStep = total / 10;
-
-		World[] worlds = {normal, nether, end, flat};
-		Point[] spawns = {normalSpawn, netherSpawn, endSpawn, flatSpawn};
-		for (int i = 0; i < worlds.length; i++) {
+		for (int i = 0; i < worlds.size(); i++) {
 			int progress = 0;
-			World world = worlds[i];
-			int cx = (spawns[i].getBlockX() / Chunk.CHUNK_SIZE) - 1;
-			int cy = (spawns[i].getBlockY() / Chunk.CHUNK_SIZE) - 1;
-			int cz = (spawns[i].getBlockZ() / Chunk.CHUNK_SIZE) - 1;
+			World world = worlds.get(i);
+			Point point = spawns.get(i);
+			int cx = (point.getBlockX() / Chunk.CHUNK_SIZE) - 1;
+			int cy = (point.getBlockY() / Chunk.CHUNK_SIZE) - 1;
+			int cz = (point.getBlockZ() / Chunk.CHUNK_SIZE) - 1;
 			for (int dx = -PointObserver.CHUNK_VIEW_DISTANCE; dx <= PointObserver.CHUNK_VIEW_DISTANCE; dx++) {
 				for (int dy = -PointObserver.CHUNK_VIEW_DISTANCE; dy <= PointObserver.CHUNK_VIEW_DISTANCE; dy++) {
 					for (int dz = -PointObserver.CHUNK_VIEW_DISTANCE; dz <= PointObserver.CHUNK_VIEW_DISTANCE; dz++) {
@@ -214,23 +208,31 @@ public class VanillaPlugin extends CommonPlugin {
 					}
 				}
 			}
+			world.setSpawnPoint(new Transform(point, Quaternion.IDENTITY, Vector3.ONE));
+			world.createAndSpawnEntity(point, new PointObserver());
+
+			//TODO Remove this when Weather and Time are Region tasks.
+			if (world.getGenerator() instanceof NormalGenerator) {
+				NormalSky sky = new NormalSky();
+				sky.setWorld(world);
+				VanillaSky.setSky(world, sky);
+				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
+			} else if (world.getGenerator() instanceof FlatGenerator) {
+				NormalSky sky = new NormalSky();
+				sky.setWorld(world);
+				VanillaSky.setSky(world, sky);
+				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
+			} else if (world.getGenerator() instanceof NetherGenerator) {
+				NetherSky sky = new NetherSky();
+				sky.setWorld(world);
+				VanillaSky.setSky(world, sky);
+				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
+			} else if (world.getGenerator() instanceof TheEndGenerator) {
+				TheEndSky sky = new TheEndSky();
+				sky.setWorld(world);
+				VanillaSky.setSky(world, sky);
+				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
+			}
 		}
-
-		//Set world spawns, spawn the skies' entity, have spawn's observed by the point observer.
-		normal.setSpawnPoint(new Transform(normalSpawn, Quaternion.IDENTITY, Vector3.ONE));
-		normal.createAndSpawnEntity(new Point(normal, 0, 0, 0), normSky);
-		normal.createAndSpawnEntity(normalSpawn, new PointObserver());
-
-		flat.setSpawnPoint(new Transform(flatSpawn, Quaternion.IDENTITY, Vector3.ONE));
-		flat.createAndSpawnEntity(new Point(flat, 0, 0, 0), flatSky);
-		flat.createAndSpawnEntity(flatSpawn, new PointObserver());
-
-		nether.setSpawnPoint(new Transform(netherSpawn, Quaternion.IDENTITY, Vector3.ONE));
-		nether.createAndSpawnEntity(new Point(nether, 0, 0, 0), netherSky);
-		nether.createAndSpawnEntity(netherSpawn, new PointObserver());
-
-		end.setSpawnPoint(new Transform(endSpawn, Quaternion.IDENTITY, Vector3.ONE));
-		end.createAndSpawnEntity(new Point(end, 0, 0, 0), endSky);
-		end.createAndSpawnEntity(endSpawn, new PointObserver());
 	}
 }

@@ -152,7 +152,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			
 			for (int xx = 0; xx < Chunk.CHUNK_SIZE; xx++) {
 				for (int zz = 0; zz < Chunk.CHUNK_SIZE; zz++) {
-					heights[xx][zz] = w.getSurfaceHeight(xx, zz, true);
+					heights[xx][zz] = w.getSurfaceHeight(p.getBlockX() + xx, p.getBlockZ() + zz, true);
 				}
 			}
 			

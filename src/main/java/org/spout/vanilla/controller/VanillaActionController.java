@@ -46,6 +46,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
@@ -59,19 +60,22 @@ public abstract class VanillaActionController extends ActionController implement
 	private final VanillaControllerType type;
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();
-	//Controller flags
+	// Controller flags
 	private boolean isFlammable = true;
-	//Tick effects
+	// Tick effects
 	private int fireTicks = 0;
 	private int positionTicks = 0;
 	private int velocityTicks = 0;
-	//Velocity-related
+	// Velocity-related
 	private Vector3 velocity = Vector3.ZERO;
 	private Vector3 movementSpeed = Vector3.ZERO;
 	private Vector3 maxSpeed = Vector3.ZERO;
-	//Controller characteristics
+	// Controller characteristics
 	private int health = 1;
 	private int maxHealth = 1;
+	// Damage
+	private Source lastDamage = new DamageCause(DamageCause.Type.UNKNOWN);
+	private VanillaActionController lastDamager;
 
 	protected VanillaActionController(VanillaControllerType type) {
 		super(type);
@@ -84,7 +88,7 @@ public abstract class VanillaActionController extends ActionController implement
 		getParent().getCollision().setStrategy(CollisionStrategy.SOLID);
 		data().put(VanillaControllerTypes.KEY, getType().getID());
 
-		//Load data
+		// Load data
 		isFlammable = (Boolean) data().get("flammable", isFlammable);
 		fireTicks = (Integer) data().get("fire_ticks", fireTicks);
 		positionTicks = (Integer) data().get("position_ticks", positionTicks);
@@ -117,6 +121,7 @@ public abstract class VanillaActionController extends ActionController implement
 		if (health <= 0) {
 			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 			getParent().kill();
+			onDeath();
 		}
 
 		super.onTick(dt);
@@ -130,8 +135,8 @@ public abstract class VanillaActionController extends ActionController implement
 
 	@Override
 	public void onCollide(Entity entity) {
-		//push entities apart
-		//TODO: Ignore if this entity is a passenger?
+		// push entities apart
+		// TODO: Ignore if this entity is a passenger?
 		Vector2 diff = entity.getPosition().subtract(this.getParent().getPosition()).toVector2();
 		float distance = diff.length();
 		if (distance > 0.1f) {
@@ -143,12 +148,13 @@ public abstract class VanillaActionController extends ActionController implement
 
 	@Override
 	public void onDeath() {
-		for (ItemStack drop : getDrops()) {
+		for (ItemStack drop : getDrops(lastDamage, lastDamager)) {
 			if (drop == null) {
 				continue;
 			}
 			Item item = new Item(drop, Vector3.ZERO);
 			getParent().getLastTransform().getPosition().getWorld().createAndSpawnEntity(getParent().getLastTransform().getPosition(), item);
+			// TODO: Drop experience
 		}
 	}
 
@@ -178,8 +184,7 @@ public abstract class VanillaActionController extends ActionController implement
 	}
 
 	/**
-	 * Gets the speed of the controller during the prior movement. This will
-	 * always be lower than the maximum speed.
+	 * Gets the speed of the controller during the prior movement. This will always be lower than the maximum speed.
 	 * @return
 	 */
 	public Vector3 getMovementSpeed() {
@@ -199,12 +204,12 @@ public abstract class VanillaActionController extends ActionController implement
 	}
 
 	/**
-	 * Get the drops that Vanilla controllers disperse into the world when
-	 * un-attached (such as entity death). Children controllers should override
-	 * this method for their own personal drops.
+	 * Get the drops that Vanilla controllers disperse into the world when un-attached (such as entity death). Children controllers should override this method for their own personal drops.
+	 * @param source Source of death
+	 * @param lastDamager Controller that killed this controller, can be null if death was caused by natural sources such as drowning or burning
 	 * @return the drops to disperse.
 	 */
-	public Set<ItemStack> getDrops() {
+	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
 		return new HashSet<ItemStack>();
 	}
 
@@ -234,8 +239,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Sets the amount of ticks the controller has been on fire.
-	 * @param fireTicks the new amount of ticks the controller has been on fire
-	 * for.
+	 * @param fireTicks the new amount of ticks the controller has been on fire for.
 	 */
 	public void setFireTicks(int fireTicks) {
 		this.fireTicks = fireTicks;
@@ -253,7 +257,7 @@ public abstract class VanillaActionController extends ActionController implement
 			}
 
 			if (fireTicks % 20 == 0) {
-				damage(1);
+				damage(1, new DamageCause(DamageCause.Type.BURN));
 				broadcastPacket(new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_HURT), new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_HURT));
 			}
 
@@ -261,25 +265,47 @@ public abstract class VanillaActionController extends ActionController implement
 		}
 	}
 
-	//=========================
-	//Controller helper methods
-	//=========================
+	// =========================
+	// Controller helper methods
+	// =========================
 
 	/**
 	 * Damages this controller and doesn't send messages to the client.
 	 * @param amount amount the controller will be damaged by.
 	 */
 	public void damage(int amount) {
-		this.damage(amount, false);
+		this.damage(amount, new DamageCause(DamageCause.Type.UNKNOWN));
+	}
+
+	/**
+	 * Damages this controller and doesn't send messages to the client.
+	 * @param amount amount the controller will be damaged by.
+	 * @param cause cause of this controller being damaged
+	 */
+	public void damage(int amount, DamageCause cause) {
+		this.damage(amount, cause, null);
+	}
+
+	/**
+	 * Damages this controller and doesn't send messages to the client.
+	 * @param cause cause of this controller being damaged
+	 * @param damager controller that damaged this controller
+	 * @param amount amount the controller will be damaged by.
+	 */
+	public void damage(int amount, DamageCause cause, VanillaActionController damager) {
+		this.damage(amount, cause, damager, false);
 	}
 
 	/**
 	 * Damages this controller.
 	 * @param amount amount the controller will be damaged by.
+	 * @param cause cause of this controller being damaged
+	 * @param damager controller that damaged this controller
 	 * @param sendHurtMessage whether or not to send a hurt message
 	 */
-	public void damage(int amount, boolean sendHurtMessage) {
-		setHealth(getHealth() - amount, new HealthChangeReason(HealthChangeReason.Type.UNKNOWN));
+	public void damage(int amount, DamageCause cause, VanillaActionController damager, boolean sendHurtMessage) {
+		setHealth(getHealth() - amount, new HealthChangeReason(HealthChangeReason.Type.DAMAGE));
+		lastDamager = damager;
 		if (sendHurtMessage) {
 			broadcastPacket(new AnimationMessage(this.getParent().getId(), AnimationMessage.ANIMATION_HURT), new EntityStatusMessage(this.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
 		}
@@ -355,8 +381,7 @@ public abstract class VanillaActionController extends ActionController implement
 	}
 
 	/**
-	 * If a child controller needs a random number for anything, they should call
-	 * this method. This eliminates needless random objects created all the time.
+	 * If a child controller needs a random number for anything, they should call this method. This eliminates needless random objects created all the time.
 	 * @return random object.
 	 */
 	public Random getRandom() {

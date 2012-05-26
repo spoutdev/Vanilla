@@ -49,6 +49,15 @@ public class HealthChangeReason extends Reason {
 	 */
 	public enum Type {
 		/**
+		 * Health changed due to the execution of a command.
+		 */
+		COMMAND,
+		/**
+		 * Health changed due to being damaged.
+		 * @see {@link DamageCause}
+		 */
+		DAMAGE,
+		/**
 		 * Health changed due to regeneration cycle.
 		 */
 		REGENERATION,
@@ -56,14 +65,6 @@ public class HealthChangeReason extends Reason {
 		 * Health changed due to the entity spawning.
 		 */
 		SPAWN,
-		/**
-		 * Health changed due to starvation.
-		 */
-		STARVE,
-		/**
-		 * Health changed due to the execution of a command.
-		 */
-		COMMAND,
 		/**
 		 * Health changed due to some unknown reason.
 		 */

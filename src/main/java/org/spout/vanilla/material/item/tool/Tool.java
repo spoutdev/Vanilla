@@ -34,14 +34,21 @@ import java.util.Set;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.living.creature.hostile.Silverfish;
+import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
+import org.spout.vanilla.controller.living.creature.hostile.Spider;
+import org.spout.vanilla.controller.living.creature.hostile.Zombie;
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.EnchantmentUtil;
 
-public class Tool extends VanillaItemMaterial {
+public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	private final Random rand = new Random();
 	private short durability;
+	private int enchantability;
 	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
 
 	public Tool(String name, int id, short durability) {
@@ -86,7 +93,39 @@ public class Tool extends VanillaItemMaterial {
 	}
 
 	@Override
+	public int getEnchantability() {
+		return enchantability;
+	}
+
+	@Override
+	public void setEnchantability(int enchantability) {
+		this.enchantability = enchantability;
+	}
+
+	@Override
 	public boolean getNBTData() {
 		return true;
+	}
+
+	public int getDamageModifier(VanillaActionController damaged, ItemStack heldItem) {
+		// These enchantments conflict with each other, so only one is possible per item
+		int damage = 0;
+		if (EnchantmentUtil.hasEnchantment(heldItem, Enchantments.BANE_OF_ARTHROPODS)) {
+			if (damaged instanceof Spider || damaged instanceof Silverfish) {
+				damage = rand.nextInt(EnchantmentUtil.getEnchantmentLevel(heldItem, Enchantments.BANE_OF_ARTHROPODS) * 4);
+			}
+		} else if (EnchantmentUtil.hasEnchantment(heldItem, Enchantments.SHARPNESS)) {
+			damage = rand.nextInt(EnchantmentUtil.getEnchantmentLevel(heldItem, Enchantments.SHARPNESS) * 3);
+		} else if (EnchantmentUtil.hasEnchantment(heldItem, Enchantments.SMITE)) {
+			if (damaged instanceof Skeleton || damaged instanceof Zombie) {
+				damage = rand.nextInt(EnchantmentUtil.getEnchantmentLevel(heldItem, Enchantments.SMITE) * 4);
+			}
+		}
+
+		// These enchantments must give at least one health point of extra damage
+		if (damage == 0) {
+			damage = 1;
+		}
+		return damage;
 	}
 }

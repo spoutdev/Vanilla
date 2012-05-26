@@ -29,14 +29,17 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.Source;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -59,7 +62,7 @@ public class Zombie extends Creature implements Hostile {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
+	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 
 		int count = getRandom().nextInt(3);
@@ -67,21 +70,22 @@ public class Zombie extends Creature implements Hostile {
 			drops.add(new ItemStack(VanillaMaterials.ROTTEN_FLESH, count));
 		}
 
-		if (getRandom().nextInt(25) == 0) {
-			drops.add(new ItemStack(VanillaMaterials.IRON_INGOT, 1));
-		}
+		if (lastDamager != null && lastDamager instanceof VanillaPlayer) {
+			if (getRandom().nextInt(25) == 0) {
+				drops.add(new ItemStack(VanillaMaterials.IRON_INGOT, 1));
+			}
 
-		// TODO: Enchantments
-		if (getRandom().nextInt(50) == 0) {
-			drops.add(new ItemStack(VanillaMaterials.IRON_HELMET, 1));
-		}
+			if (getRandom().nextInt(50) == 0) {
+				drops.add(new ItemStack(VanillaMaterials.IRON_HELMET, 1));
+			}
 
-		if (getRandom().nextInt(75) == 0) {
-			drops.add(new ItemStack(VanillaMaterials.IRON_SPADE, 1));
-		}
+			if (getRandom().nextInt(75) == 0) {
+				drops.add(new ItemStack(VanillaMaterials.IRON_SPADE, 1));
+			}
 
-		if (getRandom().nextInt(100) == 0) {
-			drops.add(new ItemStack(VanillaMaterials.IRON_SWORD, 1));
+			if (getRandom().nextInt(100) == 0) {
+				drops.add(new ItemStack(VanillaMaterials.IRON_SWORD, 1));
+			}
 		}
 
 		return drops;

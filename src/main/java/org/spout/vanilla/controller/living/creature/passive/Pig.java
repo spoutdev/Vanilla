@@ -29,13 +29,16 @@ package org.spout.vanilla.controller.living.creature.passive;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.Source;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
+import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -54,12 +57,15 @@ public class Pig extends Creature implements Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
+	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		// TODO: Check if killed by fire
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.RAW_PORKCHOP, count));
+			if (source.equals(DamageCause.Type.BURN)) {
+				drops.add(new ItemStack(VanillaMaterials.COOKED_PORKCHOP, count));
+			} else {
+				drops.add(new ItemStack(VanillaMaterials.RAW_PORKCHOP, count));
+			}
 		}
 
 		return drops;

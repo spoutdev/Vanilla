@@ -31,10 +31,6 @@ import org.spout.vanilla.material.item.Armor;
 public abstract class DiamondArmor extends Armor {
 	protected DiamondArmor(String name, int id, int protection) {
 		super(name, id, protection);
-	}
-
-	@Override
-	public int getEnchantibility() {
-		return 10;
+		this.setEnchantability(10);
 	}
 }

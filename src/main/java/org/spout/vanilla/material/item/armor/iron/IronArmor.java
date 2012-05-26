@@ -31,10 +31,6 @@ import org.spout.vanilla.material.item.Armor;
 public abstract class IronArmor extends Armor {
 	protected IronArmor(String name, int id, int protection) {
 		super(name, id, protection);
-	}
-
-	@Override
-	public int getEnchantibility() {
-		return 9;
+		this.setEnchantability(9);
 	}
 }

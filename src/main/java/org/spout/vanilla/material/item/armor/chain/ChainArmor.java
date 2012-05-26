@@ -31,10 +31,6 @@ import org.spout.vanilla.material.item.Armor;
 public abstract class ChainArmor extends Armor {
 	protected ChainArmor(String name, int id, int protection) {
 		super(name, id, protection);
-	}
-
-	@Override
-	public int getEnchantibility() {
-		return 12;
+		this.setEnchantability(12);
 	}
 }

@@ -26,12 +26,8 @@
  */
 package org.spout.vanilla.controller.living.creature.passive;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
@@ -50,10 +46,5 @@ public class Villager extends Creature implements Passive {
 		setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 		setMaxHealth(20);
 		super.onAttached();
-	}
-
-	@Override
-	public Set<ItemStack> getDrops() {
-		return Collections.emptySet();
 	}
 }

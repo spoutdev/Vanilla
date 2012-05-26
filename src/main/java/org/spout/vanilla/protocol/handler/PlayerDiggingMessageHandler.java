@@ -47,6 +47,7 @@ import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
@@ -62,13 +63,15 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		int x = message.getX();
 		int y = message.getY();
 		int z = message.getZ();
+		int state = message.getState();
+		int face = message.getFace();
 
 		World w = player.getEntity().getWorld();
 		Block block = w.getBlock(x, y, z, player.getEntity());
 		BlockMaterial blockMaterial = block.getSubMaterial();
-		BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(message.getFace());
+		BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(face);
 
-		if (x == 0 && y == 0 && z == 0 && message.getFace() == 0 && message.getState() == 4) {
+		if (x == 0 && y == 0 && z == 0 && face == 0 && state == 4) {
 			((VanillaPlayer) player.getEntity().getController()).dropItem();
 			return;
 		}
@@ -83,7 +86,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		ItemStack heldItem = inv.getCurrentItem();
 		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
 
-		if (message.getState() == PlayerDiggingMessage.STATE_START_DIGGING) {
+		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {
 			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable);
 			if (Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
 				return;
@@ -121,10 +124,11 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 					VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
 				}
 			}
-		} else if (message.getState() == PlayerDiggingMessage.STATE_DONE_DIGGING) {
-			if (!vp.stopDigging(new Point(w, x, y, z))) {
+		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
+			if (!vp.stopDigging(new Point(w, x, y, z)) || !isInteractable) {
 				return;
 			}
+
 			long diggingTicks = vp.getDiggingTicks();
 			int damageDone = 0;
 			int totalDamage = 0;
@@ -141,33 +145,36 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 					}
 				}
 			}
-			if (isInteractable) {
-				if (heldItem == null) {
-					damageDone = ((int) diggingTicks * 1);
-				} else {
-					damageDone = ((int) diggingTicks * ((VanillaMaterial) heldItem.getMaterial()).getDamage());
-				}
-
-				// TODO: Take into account enchantments
-
-				totalDamage = ((int) blockMaterial.getHardness() - damageDone);
-				if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
-					if (!(blockMaterial instanceof Mineable)) {
-						player.kick("The block you tried to dig is not MINEABLE. No blocks for you.");
-						return;
-					}
-					if (totalDamage < -30) {// This can be removed after VANILLA-97 is fixed.
-						System.out.println("[DEBUG] Player spent much more time mining than expected: " + (-totalDamage) + " damage more. Block: " + blockMaterial.getClass().getName());
-					}
-					if (!vp.addAndCheckMiningSpeed(totalDamage)) {
-						player.kick("Stop speed-mining!");
-						return;
-					}
-					blockMaterial.onDestroy(block);
-					PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
-					VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
-				}
+			if (heldItem == null) {
+				damageDone = ((int) diggingTicks * 1);
+			} else {
+				damageDone = ((int) diggingTicks * ((VanillaMaterial) heldItem.getMaterial()).getDamage());
 			}
+			// TODO: Take into account enchantments
+
+			totalDamage = ((int) blockMaterial.getHardness() - damageDone);
+			if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
+				if (!(blockMaterial instanceof Mineable)) {
+					player.kick("The block you tried to dig is not MINEABLE. No blocks for you.");
+					return;
+				}
+				if (totalDamage < -30) {// This can be removed after VANILLA-97 is fixed.
+					System.out.println("[DEBUG] Player spent much more time mining than expected: " + (-totalDamage) + " damage more. Block: " + blockMaterial.getClass().getName());
+				}
+				if (!vp.addAndCheckMiningSpeed(totalDamage)) {
+					player.kick("Stop speed-mining!");
+					return;
+				}
+				blockMaterial.onDestroy(block);
+			}
+			if (block.getMaterial() != VanillaMaterials.AIR) {
+				player.getSession().send(new BlockChangeMessage(x, y, z, blockMaterial.getId(), blockMaterial.getData()));
+			} else {
+				PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
+				VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
+			}
+		} else if (state == PlayerDiggingMessage.STATE_CANCEL_DIGGING) {
+			vp.stopDigging(new Point(w, x, y, z));
 		}
 	}
 }

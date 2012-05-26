@@ -50,6 +50,7 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 
 public class TestCommands {
@@ -251,6 +252,7 @@ public class TestCommands {
 				continue;
 			}
 			count++;
+			((VanillaActionController) entity.getController()).setHealth(0, new HealthChangeReason(HealthChangeReason.Type.COMMAND));
 			entity.kill();
 			Spout.log(entity.getController().toString() + " was killed");
 		}

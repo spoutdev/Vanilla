@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.Source;
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
@@ -43,9 +44,11 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.inventory.Window;
 import org.spout.vanilla.inventory.player.PlayerInventory;
@@ -203,7 +206,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		boolean changed = false;
 		if (hunger <= 0 && health > 0) {
 			health = (short) Math.max(health - 1, 0);
-			setHealth(health, new HealthChangeReason(HealthChangeReason.Type.STARVE));
+			setHealth(health, new DamageCause(DamageCause.Type.STARVE));
 			changed = true;
 		} else if (hunger >= 18 && health < 20) {
 			health = (short) Math.min(health + 1, 20);
@@ -270,7 +273,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
+	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		ItemStack[] contents = this.getInventory().getContents();
 		drops.addAll(Arrays.asList(contents));

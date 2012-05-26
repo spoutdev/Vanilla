@@ -24,38 +24,59 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.hostile;
+package org.spout.vanilla.controller.source;
 
-import java.util.Collections;
-import java.util.Set;
+/**
+ * Represents a source of damage.
+ */
+public class DamageCause extends Reason {
+	private final Type type;
 
-import org.spout.api.Source;
-import org.spout.api.entity.type.ControllerType;
-import org.spout.api.entity.type.EmptyConstructorControllerType;
-import org.spout.api.inventory.ItemStack;
+	public DamageCause(Type type) {
+		this.type = type;
+	}
 
-import org.spout.vanilla.controller.VanillaActionController;
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Hostile;
-import org.spout.vanilla.controller.source.HealthChangeReason;
+	/**
+	 * Returns the type of damage.
+	 * @return Damage type
+	 */
+	public Type getType() {
+		return type;
+	}
 
-public class Silverfish extends Creature implements Hostile {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Silverfish.class, "Silverfish");
-
-	public Silverfish() {
-		super(VanillaControllerTypes.SILVERFISH);
+	public enum Type {
+		/**
+		 * Damaged by an arrow.
+		 */
+		ARROW,
+		/**
+		 * Damaged by another entity attacking.
+		 */
+		ATTACK,
+		/**
+		 * Damaged by fire.
+		 */
+		BURN,
+		/**
+		 * Damaged by touching cactus.
+		 */
+		CACTUS,
+		/**
+		 * Damaged by an explosion.
+		 */
+		EXPLOSION,
+		/**
+		 * Damaged due to starvation.
+		 */
+		STARVE,
+		/**
+		 * Damaged by an unknown source.
+		 */
+		UNKNOWN;
 	}
 
 	@Override
-	public void onAttached() {
-		setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
-		setMaxHealth(8);
-		super.onAttached();
-	}
-
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
-		return Collections.emptySet();
+	public boolean equals(Object obj) {
+		return obj.equals(type);
 	}
 }

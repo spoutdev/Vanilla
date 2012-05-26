@@ -29,13 +29,16 @@ package org.spout.vanilla.controller.living.creature.hostile;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.Source;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
+import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -54,14 +57,16 @@ public class Creeper extends Creature implements Hostile {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
+	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
 			drops.add(new ItemStack(VanillaMaterials.GUNPOWDER, count));
 		}
 
-		// TODO: Check if killed by skeleton for music disk
+		if (source.equals(DamageCause.Type.ARROW) && lastDamager != null && lastDamager instanceof Skeleton) {
+			drops.add(new ItemStack(VanillaMaterials.getMaterial((short) (VanillaMaterials.GOLD_MUSIC_DISC.getId() + getRandom().nextInt(11))), 1));
+		}
 		return drops;
 	}
 }

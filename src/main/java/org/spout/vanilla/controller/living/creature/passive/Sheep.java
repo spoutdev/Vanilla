@@ -29,13 +29,16 @@ package org.spout.vanilla.controller.living.creature.passive;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.spout.api.Source;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
+import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
@@ -98,10 +101,14 @@ public class Sheep extends Creature implements Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops() {
+	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		if (!isSheared()) {
-			drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial(((Number) data().get("SheepColor")).shortValue()), 1));
+			if (source.equals(DamageCause.Type.BURN)) {
+				drops.add(new ItemStack(Wool.GRAY, 1));
+			} else {
+				drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial(((Number) data().get("SheepColor")).shortValue()), 1));
+			}
 		}
 
 		return drops;

@@ -29,6 +29,7 @@ package org.spout.vanilla.world.generator.normal.decorator;
 import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
@@ -45,11 +46,9 @@ public class CactusDecorator implements Decorator {
 		if (genInChunk <= 20) {
 			return;
 		}
-		int px = random.nextInt(16);
-		int pz = random.nextInt(16);
-		int py = getHighestWorkableBlock(chunk, px, pz);
-		px += chunk.getBlockX();
-		pz += chunk.getBlockZ();
+		int px = chunk.getBlockX() + random.nextInt(16);
+		int pz = chunk.getBlockZ() + random.nextInt(16);
+		int py = getHighestWorkableBlock(chunk.getWorld(), px, pz);
 		if (py == -1) {
 			return;
 		}
@@ -64,13 +63,11 @@ public class CactusDecorator implements Decorator {
 		}
 	}
 
-	private int getHighestWorkableBlock(Chunk c, int px, int pz) {
-		int y = c.getWorld().getHeight();
-		int pozx = c.getBlockX() + px;
-		int pozz = c.getBlockZ() + pz;
-		while (c.getWorld().getBlockMaterial(pozx, y, pozz) != VanillaMaterials.SAND && c.getWorld().getBlockMaterial(pozx, y, pozz) != VanillaMaterials.SANDSTONE) {
+	private int getHighestWorkableBlock(World world, int px, int pz) {
+		int y = world.getHeight();
+		while (world.getBlockMaterial(px, y, pz) != VanillaMaterials.SAND && world.getBlockMaterial(px, y, pz) != VanillaMaterials.SANDSTONE) {
 			y--;
-			if (y == 0 || c.getWorld().getBlockMaterial(pozx, y, pozz) == VanillaMaterials.WATER) {
+			if (y == 0 || world.getBlockMaterial(px, y, pz) == VanillaMaterials.WATER) {
 				return -1;
 			}
 		}

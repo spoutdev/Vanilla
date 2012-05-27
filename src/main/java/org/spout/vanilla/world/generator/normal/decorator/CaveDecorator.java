@@ -34,6 +34,7 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -57,7 +58,7 @@ public class CaveDecorator implements Decorator {
 		for (int dx = x; dx < x + 16; dx++) {
 			for (int dz = z; dz < z + 16; dz++) {
 				for (int dy = y; dy < y + 16; dy++) {
-					if (Math.sqrt(Math.pow(dx - pt.getX(), 2) + Math.pow(dy - pt.getY(), 2) + Math.pow(dz - pt.getZ(), 2)) > 6) {
+					if (MathHelper.length(dx - pt.getX(), dy - pt.getY(), dz - pt.getZ()) > 6) {
 						continue;
 					}
 					if (noise.GetValue(dx / 5.0 + 0.005, dy / 5.0 + 0.005, dz / 5.0 + 0.005) > 0 && chunk.getBlockMaterial(dx, dy, dz) == VanillaMaterials.STONE) {

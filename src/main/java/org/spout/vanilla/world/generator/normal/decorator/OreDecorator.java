@@ -31,69 +31,30 @@ import java.util.Random;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.object.OreObject;
 
 public class OreDecorator implements Decorator {
+	public static OreObject[] objects;
+
+	static {
+		objects = new OreObject[7];
+		objects[0] = new OreObject(VanillaMaterials.GRAVEL, 10, 32, 128);
+		objects[1] = new OreObject(VanillaMaterials.COAL_ORE, 20, 16, 128);
+		objects[2] = new OreObject(VanillaMaterials.IRON_ORE, 20, 8, 64);
+		objects[3] = new OreObject(VanillaMaterials.GOLD_ORE, 2, 8, 32);
+		objects[4] = new OreObject(VanillaMaterials.REDSTONE_ORE, 8, 7, 16);
+		objects[5] = new OreObject(VanillaMaterials.DIAMOND_ORE, 1, 7, 16);
+		objects[6] = new OreObject(VanillaMaterials.LAPIS_LAZULI_ORE, 1, 6, 32);
+	}
+
 	@Override
 	public void populate(Chunk source, Random random) {
 		World world = source.getWorld();
-		int[] iterations = new int[]{10, 20, 20, 2, 8, 1, 1, 1};
-		int[] amount = new int[]{32, 16, 8, 8, 7, 7, 6};
-		BlockMaterial[] type = new BlockMaterial[]{VanillaMaterials.GRAVEL, VanillaMaterials.COAL_ORE, VanillaMaterials.IRON_ORE, VanillaMaterials.GOLD_ORE, VanillaMaterials.REDSTONE_ORE, VanillaMaterials.DIAMOND_ORE, VanillaMaterials.LAPIS_LAZULI_ORE};
-
-		int[] maxHeight = new int[]{128, 128, 128, 128, 128, 64, 32, 16, 16, 32};
-
-		for (int i = 0; i < type.length; i++) {
-			for (int j = 0; j < iterations[i]; j++) {
-				generateOre(world, random, source.getBlockX() + random.nextInt(16), random.nextInt(maxHeight[i]), source.getBlockZ() + random.nextInt(16), amount[i], type[i]);
-			}
-		}
-	}
-
-	private void generateOre(World world, Random random, int originX, int originY, int originZ, int amount, BlockMaterial type) {
-		double angle = random.nextDouble() * Math.PI;
-		double x1 = ((originX + 8) + Math.sin(angle) * amount / 8);
-		double x2 = ((originX + 8) - Math.sin(angle) * amount / 8);
-		double z1 = ((originZ + 8) + Math.cos(angle) * amount / 8);
-		double z2 = ((originZ + 8) - Math.cos(angle) * amount / 8);
-		double y1 = (originY + random.nextInt(3) + 2);
-		double y2 = (originY + random.nextInt(3) + 2);
-
-		for (int i = 0; i <= amount; i++) {
-			double seedX = x1 + (x2 - x1) * i / amount;
-			double seedY = y1 + (y2 - y1) * i / amount;
-			double seedZ = z1 + (z2 - z1) * i / amount;
-			double size = ((Math.sin(i * Math.PI / amount) + 1) * random.nextDouble() * amount / 16 + 1) / 2;
-
-			int startX = (int) (seedX - size);
-			int startY = (int) (seedY - size);
-			int startZ = (int) (seedZ - size);
-			int endX = (int) (seedX + size);
-			int endY = (int) (seedY + size);
-			int endZ = (int) (seedZ + size);
-
-			for (int x = startX; x <= endX; x++) {
-				double sizeX = (x + 0.5 - seedX) / size;
-				sizeX *= sizeX;
-
-				if (sizeX < 1) {
-					for (int y = startY; y <= endY; y++) {
-						double sizeY = (y + 0.5 - seedY) / size;
-						sizeY *= sizeY;
-
-						if (sizeX + sizeY < 1) {
-							for (int z = startZ; z <= endZ; z++) {
-								double sizeZ = (z + 0.5 - seedZ) / size;
-								sizeZ *= sizeZ;
-								if (sizeX + sizeY + sizeZ < 1 && world.getBlockMaterial(x, y, z) == VanillaMaterials.STONE) {
-									world.getBlock(x, y, z).setMaterial(type).update(true);
-								}
-							}
-						}
-					}
-				}
+		for (OreObject object : objects) {
+			for (int i = 0; i < object.getCount(); i++) {
+				object.placeObject(world, source.getBlockX() + random.nextInt(16), random.nextInt(object.getMaxHeight()), source.getBlockZ() + random.nextInt(16), random);
 			}
 		}
 	}

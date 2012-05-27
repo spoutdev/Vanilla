@@ -56,15 +56,14 @@ public class GrassDecorator implements Decorator {
 			z += random.nextInt(3) - 1;
 			y = source.getBlockY() + 15;
 			Block b = source.getWorld().getBlock(x, y, z);
-			while (b.getMaterial() == VanillaMaterials.AIR && y >= 0) {
+			while (b.getMaterial() == VanillaMaterials.AIR) {
 				b = b.translate(BlockFace.BOTTOM);
-				y = b.getY();
-			}
-			if (b.getY() == -1) {
-				return;
+				if (--y < 0) {
+					return;
+				}
 			}
 			if (b.getMaterial() == VanillaMaterials.GRASS) {
-				b = b.translate(BlockFace.TOP).setMaterial(VanillaMaterials.TALL_GRASS).update(true);
+				b = b.translate(BlockFace.TOP).setMaterial(VanillaMaterials.TALL_GRASS).update();
 			}
 		}
 	}

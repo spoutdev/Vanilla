@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.redstone;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
@@ -65,12 +66,48 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		//		}
 	}
 
+	private void doRedstoneUpdate(Block middle) {
+		Block block;
+		for (BlockFace face : BlockFaces.NESWBT) {
+			block = middle.translate(face);
+			if (block.getMaterial().equals(this)) {
+				VanillaMaterials.REDSTONE_WIRE.onUpdate(block);
+			} else {
+				block.update(false);
+			}
+		}
+	}
+	
 	@Override
 	public void doRedstoneUpdates(Block block) {
 		block = block.setSource(this);
-		this.update(block);
+		this.doRedstoneUpdate(block);
 		for (BlockFace face : BlockFaces.NESWB) {
-			this.update(block.translate(face));
+			this.doRedstoneUpdate(block.translate(face));
+		}
+	}
+
+	private void disableRedstone(Block middle, List<Block> wires) {
+		Block block;
+		for (BlockFace face : BlockFaces.NESWBT) {
+			block = middle.translate(face);
+			if (block.getMaterial().equals(this)) {
+				if (block.getData() > 0) {
+					block.setData(0);
+					wires.add(block);
+					this.disableRedstone(block, wires);
+				}
+			} else {
+				block.update(false);
+			}
+		}
+	}
+
+	private void disableAllRedstone(Block block, List<Block> wires) {
+		block = block.setSource(this);
+		this.disableRedstone(block, wires);
+		for (BlockFace face : BlockFaces.NESWB) {
+			this.disableRedstone(block.translate(face), wires);
 		}
 	}
 
@@ -85,7 +122,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 			short receiving = this.getReceivingPower(block);
 			short current = this.getRedstonePower(block);
 			if (current == receiving) {
-				//to some updates for solid blocks around this block
+				//do some updates for solid blocks around this block
 				Block neigh;
 				BlockMaterial mat;
 				for (BlockFace face : BlockFaces.NESW) {
@@ -101,13 +138,16 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 						}
 					}
 				}
-			} else {
+			} else if (receiving > current) {
+				//Power became more, perform simple updating
 				block.setMaterial(this, receiving);
-
-				//TODO: Make sure updating is not done by performing 15 ever-lessening power updates...
 				this.doRedstoneUpdates(block);
-				if (true) {
-					return;
+			} else {
+				//Power became less, disable all attached wires and recalculate
+				List<Block> wires = new ArrayList<Block>();
+				this.disableAllRedstone(block, wires);
+				for (Block wire : wires) {
+					this.onUpdate(wire);
 				}
 			}
 		}

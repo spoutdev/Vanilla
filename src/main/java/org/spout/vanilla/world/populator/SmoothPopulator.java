@@ -70,8 +70,8 @@ public class SmoothPopulator implements Populator {
 		}
 		// work at world level to prevent bad smoothing of vertical edges
 		final World world = chunk.getWorld();
-		final int worldX = chunk.getX() * 16;
-		final int worldZ = chunk.getZ() * 16;
+		final int worldX = chunk.getBlockX();
+		final int worldZ = chunk.getBlockZ();
 		// allocate the height map to smooth
 		final byte[] heightMap = new byte[SMOOTH_SIZE * SMOOTH_SIZE];
 		// fill the height map to smooth

@@ -80,6 +80,7 @@ public class BlockScheduler implements ParallelRunnable {
 	}
 
 	private final ConcurrentList<Update> updates;
+	@SuppressWarnings("unused")
 	private final Region region;
 
 	@Override

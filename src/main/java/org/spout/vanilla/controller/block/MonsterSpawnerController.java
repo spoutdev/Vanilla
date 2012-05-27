@@ -57,7 +57,6 @@ public class MonsterSpawnerController extends VanillaBlockController {
 
 	@Override
 	public void onAttached() {
-		Block block = getBlock();
 		resetCounter();
 		setNextSpawn(getSpawnType());
 		System.out.println("Monster Spawner of type " + nextSpawn.getName() + " spawned.");

@@ -35,6 +35,7 @@ import org.spout.vanilla.controller.VanillaController;
 
 public class GrowthMonitor extends Controller implements VanillaController {
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(GrowthMonitor.class, "Growth Monitor");
+	@SuppressWarnings("unused")
 	private final Region region;
 
 	public GrowthMonitor(Region region) {

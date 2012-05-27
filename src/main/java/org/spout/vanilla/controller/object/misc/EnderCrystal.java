@@ -28,7 +28,6 @@ package org.spout.vanilla.controller.object.misc;
 
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
-import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
@@ -51,7 +50,7 @@ public class EnderCrystal extends Substance {
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
-		Point point = getParent().getLastTransform().getPosition();
+		//		Point point = getParent().getLastTransform().getPosition();
 		//		if (getParent().isDead()) {
 		//			ExplosionModels.SPHERICAL.execute(point, 4.0f);
 		//

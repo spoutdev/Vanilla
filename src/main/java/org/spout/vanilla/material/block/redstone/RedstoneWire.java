@@ -53,6 +53,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		return true;
 	}
 
+	@SuppressWarnings("unused")
 	private void update(Block middle) {
 		middle.update();
 		//		Block block;

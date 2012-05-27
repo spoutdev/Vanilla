@@ -69,6 +69,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 			if (clickedEntity.getController() instanceof VanillaActionController) {
 				VanillaActionController damaged = (VanillaActionController) clickedEntity.getController();
 				int damage = 1;
+				// FIXME: holdingMat can't be null here anymore, since that would cause an NPE earlier.
 				if (holding != null && holdingMat != null && holdingMat instanceof VanillaMaterial) {
 					damage = ((VanillaMaterial) holdingMat).getDamage();
 					if (holdingMat instanceof Sword) {

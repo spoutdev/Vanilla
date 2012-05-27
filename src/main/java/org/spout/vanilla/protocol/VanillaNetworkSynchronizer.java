@@ -296,6 +296,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			owner.getSession().send(new RespawnMessage(dimensionBit, (byte) 0, (byte) (vc.isSurvival() ? 0 : 1), world.getHeight(), "DEFAULT"));
 		}
 
+		// FIXME: world can't be null here anymore, since that would cause an NPE earlier.
 		if (world != null) {
 			Point spawn = world.getSpawnPoint().getPosition();
 			SpawnPositionMessage SPMsg = new SpawnPositionMessage((int) spawn.getX(), (int) spawn.getY(), (int) spawn.getZ());

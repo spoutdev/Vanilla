@@ -46,7 +46,7 @@ public class Web extends Solid {
 	public ArrayList<ItemStack> getDrops(Block block) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial().equals(VanillaMaterials.SHEARS) || held.getMaterial() instanceof Sword) {
+		if (held != null && (held.getMaterial().equals(VanillaMaterials.SHEARS) || held.getMaterial() instanceof Sword)) {
 			drops.add(new ItemStack(this, 1));
 		}
 		return drops;

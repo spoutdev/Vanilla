@@ -123,7 +123,7 @@ public class MonsterSpawnerController extends VanillaBlockController {
 				default:
 					return VanillaControllerTypes.SHEEP;
 			}
-		} else if (random.nextInt(100) > 25 && (below.getMaterial() == VanillaMaterials.GRASS | below.getMaterial() == VanillaMaterials.LEAVES) && block.getY() > 62) {
+		} else if (random.nextInt(100) > 25 && (below.getMaterial() == VanillaMaterials.GRASS || below.getMaterial() == VanillaMaterials.LEAVES) && block.getY() > 62) {
 			return VanillaControllerTypes.OCELOT;
 		} else if (block.getLight() < 9) {
 			int i = random.nextInt(7);

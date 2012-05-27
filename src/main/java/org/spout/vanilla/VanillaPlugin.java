@@ -28,7 +28,6 @@ package org.spout.vanilla;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.logging.Level;
 
 import org.spout.api.Engine;
@@ -64,7 +63,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
-import org.spout.vanilla.protocol.codec.SpawnDroppedItemCodec;
 import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -157,7 +155,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 	private void setupWorlds() {
 		ArrayList<World> worlds = new ArrayList<World>();
-		ArrayList<Point> spawns  = new ArrayList<Point>();
+		ArrayList<Point> spawns = new ArrayList<Point>();
 
 		if (WorldConfiguration.NORMAL_LOAD.getBoolean()) {
 			NormalGenerator normGen = new NormalGenerator();

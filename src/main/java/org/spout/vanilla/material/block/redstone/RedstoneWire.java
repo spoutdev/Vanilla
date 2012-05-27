@@ -77,7 +77,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 			}
 		}
 	}
-	
+
 	@Override
 	public void doRedstoneUpdates(Block block) {
 		block = block.setSource(this);

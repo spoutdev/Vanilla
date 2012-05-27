@@ -39,6 +39,8 @@ public class WeatherChangeEvent extends WorldEvent implements Cancellable {
 
 	public WeatherChangeEvent(VanillaSky sky, Weather current, Weather weather) {
 		super(sky.getWorld());
+		this.current = current;
+		this.weather = weather;
 	}
 
 	/**

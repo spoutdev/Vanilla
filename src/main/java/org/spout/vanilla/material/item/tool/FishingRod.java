@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.item.tool;
 
-
 public class FishingRod extends Tool {
 	public FishingRod(String name, int id, short durability) {
 		super(name, id, durability);

@@ -98,7 +98,7 @@ public class Item extends Substance {
 		Block block = getParent().getRegion().getBlock(getParent().getPosition().subtract(0, 1, 0));
 		if (!block.getMaterial().isPlacementObstacle()) {
 			Vector3 next = block.getPosition();
-			getParent().translate(block.getPosition().multiply(dt));
+			getParent().translate(next.multiply(dt));
 		}
 
 		Player closestPlayer = getParent().getWorld().getNearestPlayer(getParent(), distance);

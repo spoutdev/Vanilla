@@ -40,7 +40,7 @@ import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends BiomeGenerator implements VanillaGenerator {
-	private static BiomeSelector selector;
+	private BiomeSelector selector;
 
 	@Override
 	public void registerBiomes() {

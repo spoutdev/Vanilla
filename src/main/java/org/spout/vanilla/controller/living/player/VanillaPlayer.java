@@ -78,7 +78,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected long unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt(), lastPing = 0, lastUserList = 0, foodTimer = 0;
 	protected short count = 0, ping, hunger = 20;
 	protected float foodSaturation = 5.0f, exhaustion = 0.0f;
-	protected boolean crouching, sprinting, onGround, poisoned;
+	protected boolean sprinting, onGround, poisoned;
 	protected final Vector3 moveSpeed = new Vector3(10, 0, 0), horizSpeed = new Vector3(0, 0, -10);
 	protected Inventory activeInventory;
 	protected final PlayerInventory playerInventory = new PlayerInventory();

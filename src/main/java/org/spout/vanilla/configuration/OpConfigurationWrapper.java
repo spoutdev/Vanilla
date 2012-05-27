@@ -30,8 +30,6 @@ import java.util.List;
 
 import org.spout.api.exception.ConfigurationException;
 
-import org.spout.vanilla.configuration.OpConfiguration;
-
 class OpConfigurationWrapper extends OpConfiguration {
 	private OpConfiguration wrapped = null;
 

@@ -184,6 +184,7 @@ public abstract class VanillaActionController extends ActionController implement
 		if (velocity == null) {
 			if (Spout.debugMode()) {
 				Spout.getLogger().log(Level.SEVERE, "Velocity of " + this.toString() + " set to null!");
+				Spout.getLogger().log(Level.SEVERE, "Report this to http://issues.spout.org");
 			}
 			velocity = Vector3.ZERO;
 		}

@@ -74,4 +74,10 @@ public final class EntityActionMessage extends Message {
 				.append(this.action, other.action)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

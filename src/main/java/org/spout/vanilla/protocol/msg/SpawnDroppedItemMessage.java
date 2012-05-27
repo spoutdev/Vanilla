@@ -132,4 +132,10 @@ public final class SpawnDroppedItemMessage extends Message {
 				.append(this.damage, other.damage)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

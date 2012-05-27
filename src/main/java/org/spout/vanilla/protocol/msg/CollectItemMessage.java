@@ -69,4 +69,10 @@ public final class CollectItemMessage extends Message {
 				.append(this.collector, other.collector)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

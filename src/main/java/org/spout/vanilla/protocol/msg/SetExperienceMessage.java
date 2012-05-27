@@ -77,4 +77,10 @@ public class SetExperienceMessage extends Message {
 				.append(this.totalExp, other.totalExp)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

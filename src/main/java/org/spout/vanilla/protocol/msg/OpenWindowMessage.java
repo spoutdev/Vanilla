@@ -84,4 +84,10 @@ public final class OpenWindowMessage extends Message {
 				.append(this.title, other.title)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

@@ -92,4 +92,10 @@ public final class EntityVelocityMessage extends Message {
 				.append(this.velocityZ, other.velocityZ)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

@@ -79,4 +79,10 @@ public class DamageCause extends Reason {
 	public boolean equals(Object obj) {
 		return obj.equals(type);
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

@@ -69,4 +69,10 @@ public final class AttachEntityMessage extends Message {
 				.append(this.vehicle, other.vehicle)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

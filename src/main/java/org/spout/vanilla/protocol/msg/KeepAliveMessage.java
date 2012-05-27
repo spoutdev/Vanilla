@@ -60,4 +60,10 @@ public final class KeepAliveMessage extends Message {
 		final KeepAliveMessage other = (KeepAliveMessage) obj;
 		return this.pingId == other.pingId;
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

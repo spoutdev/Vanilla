@@ -104,4 +104,10 @@ public final class SetWindowSlotMessage extends Message {
 				.append(this.nbtData, other.nbtData)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

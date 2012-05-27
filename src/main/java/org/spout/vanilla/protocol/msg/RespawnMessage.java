@@ -92,4 +92,10 @@ public final class RespawnMessage extends Message {
 				.append(this.worldType, other.worldType)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

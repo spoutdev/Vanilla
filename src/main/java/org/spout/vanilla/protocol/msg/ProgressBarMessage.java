@@ -76,4 +76,10 @@ public final class ProgressBarMessage extends Message {
 				.append(this.value, other.value)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

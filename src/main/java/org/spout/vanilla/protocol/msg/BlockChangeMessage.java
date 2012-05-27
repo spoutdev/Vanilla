@@ -97,4 +97,10 @@ public final class BlockChangeMessage extends Message {
 				.append(this.metadata, other.metadata)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

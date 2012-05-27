@@ -78,4 +78,10 @@ public class PlayerListMessage extends Message {
 				.append(this.ping, other.ping)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

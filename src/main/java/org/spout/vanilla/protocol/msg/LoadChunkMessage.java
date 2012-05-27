@@ -77,4 +77,10 @@ public final class LoadChunkMessage extends Message {
 				.append(this.loaded, other.loaded)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

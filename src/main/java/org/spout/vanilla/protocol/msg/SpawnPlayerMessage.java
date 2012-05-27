@@ -117,4 +117,10 @@ public final class SpawnPlayerMessage extends Message {
 				.append(this.name, other.name)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

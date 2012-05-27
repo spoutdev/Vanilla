@@ -29,6 +29,7 @@ package org.spout.vanilla.controller;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
 
 import org.spout.api.Source;
 import org.spout.api.Spout;
@@ -180,6 +181,12 @@ public abstract class VanillaActionController extends ActionController implement
 	}
 
 	public void setVelocity(Vector3 velocity) {
+		if (velocity == null) {
+			if (Spout.debugMode()) {
+				Spout.getLogger().log(Level.SEVERE, "Velocity of " + this.toString() + " set to null!");
+			}
+			velocity = Vector3.ZERO;
+		}
 		this.velocity = velocity;
 	}
 

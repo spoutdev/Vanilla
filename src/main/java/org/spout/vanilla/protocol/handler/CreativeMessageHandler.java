@@ -60,7 +60,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 
 		int slot = message.getSlot();
 		slot = VanillaMessageHandlerUtils.getSpoutInventorySlot(inventory, slot);
-		if (slot < 0 || slot >= entity.getInventorySize()) {
+		if (slot < 0 || slot >= inventory.getSize()) {
 			return;
 		}
 

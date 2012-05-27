@@ -127,7 +127,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 		getParent().setObserver(true);
 		getParent().setViewDistance(64);
-		owner.getEntity().setInventorySize(45);
 		// TODO: Persistent health
 	}
 
@@ -250,7 +249,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		return owner;
 	}
 
-	@Override
 	public PlayerInventory createInventory(int size) {
 		PlayerInventory inventory = new PlayerInventory();
 		for (int i = 37; i < inventory.getSize(); i++) {

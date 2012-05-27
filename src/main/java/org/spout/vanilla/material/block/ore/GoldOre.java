@@ -32,9 +32,9 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.Ore;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;

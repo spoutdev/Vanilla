@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material;
+package org.spout.vanilla.material.block;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -32,7 +32,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
 
-import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.runnable.BlockScheduler;

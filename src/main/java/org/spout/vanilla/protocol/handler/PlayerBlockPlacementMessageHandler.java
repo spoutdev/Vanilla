@@ -26,22 +26,26 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.collision.CollisionModel;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.InteractTool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
@@ -161,6 +165,31 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 				if (target.getY() >= world.getHeight() || target.getY() < 0) {
 					return;
+				}
+
+				//is the player not solid-colliding with the block?
+				if (toPlace instanceof BlockMaterial) {
+					BlockMaterial mat = (BlockMaterial) toPlace;
+					if (mat.isSolid()) {
+						//TODO: Implement collision models to make this work
+						//CollisionModel playerModel = player.getEntity().getCollision();
+						//Vector3 offset = playerModel.resolve(mat.getCollisionModel());
+						//Vector3 dist = player.getEntity().getPosition().subtract(target.getPosition());
+						//if (dist.getX() < offset.getX() || dist.getY() < offset.getY() || dist.getZ() < offset.getZ()) {
+						//	undoPlacement(player, clickedBlock, alterBlock);
+						//	return;
+						//}
+
+						//For now: simple distance checking
+						Point pos1 = player.getEntity().getPosition();
+						Point pos2 = ((VanillaPlayer) player.getEntity().getController()).getHeadPosition();
+						Point tpos = target.getPosition();
+
+						if (pos1.distance(tpos) < 0.6 || pos2.distance(tpos) < 0.6) {
+							undoPlacement(player, clickedBlock, alterBlock);
+							return;
+						}
+					}
 				}
 
 				//perform actual placement

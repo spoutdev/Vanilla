@@ -32,7 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.PressurePlate;
+import org.spout.vanilla.material.block.PressurePlate;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.VanillaPlayerUtil;

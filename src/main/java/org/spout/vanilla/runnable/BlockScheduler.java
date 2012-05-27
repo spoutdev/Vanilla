@@ -91,7 +91,6 @@ public class BlockScheduler implements ParallelRunnable {
 			while (iter.hasNext()) {
 				update = iter.next();
 				if (update.counter.decrementAndGet() <= 0) {
-					System.out.println("EXECUTE: " + update.block.getX() + "/" + update.block.getY() + "/" + update.block.getZ());
 					iter.remove();
 					//perform update
 					BlockMaterial mat = update.block.getSubMaterial();

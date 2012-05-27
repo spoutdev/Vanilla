@@ -126,19 +126,19 @@ public class RegionSpawner implements Runnable {
 		int y = chunk.getY() * Chunk.CHUNK_SIZE + randY;
 		int z = chunk.getZ() * Chunk.CHUNK_SIZE + randZ;
 		World world = chunk.getWorld();
-		if (world.getBlock(x, y + 1, z) != BlockMaterial.AIR) {
+		if (world.getBlock(x, y + 1, z).getMaterial() != BlockMaterial.AIR) {
 			return false;
 		}
-		if (world.getBlock(x + 1, y, z) != BlockMaterial.AIR) {
+		if (world.getBlock(x + 1, y, z).getMaterial() != BlockMaterial.AIR) {
 			return false;
 		}
-		if (world.getBlock(x - 1, y, z) != BlockMaterial.AIR) {
+		if (world.getBlock(x - 1, y, z).getMaterial() != BlockMaterial.AIR) {
 			return false;
 		}
-		if (world.getBlock(x, y, z + 1) != BlockMaterial.AIR) {
+		if (world.getBlock(x, y, z + 1).getMaterial() != BlockMaterial.AIR) {
 			return false;
 		}
-		if (world.getBlock(x, y, z - 1) != BlockMaterial.AIR) {
+		if (world.getBlock(x, y, z - 1).getMaterial() != BlockMaterial.AIR) {
 			return false;
 		}
 

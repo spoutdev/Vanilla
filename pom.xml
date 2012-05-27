@@ -174,7 +174,7 @@
 					<target>1.6</target>
 					<compilerArguments>
 						<Xlint:all/>
-						<Xlint:-path/>
+						<O>-Xlint:-path</O>
 					</compilerArguments>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>

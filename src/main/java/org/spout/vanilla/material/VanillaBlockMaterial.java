@@ -38,6 +38,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.moving.Item;
@@ -98,7 +99,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		if (!VanillaPlayerUtil.isCreative(block.getSource())) {
 			drops = getDrops(block);
 		}
-		BlockChangeEvent event = new BlockChangeEvent(block, block.getSource());
+		BlockChangeEvent event = new BlockChangeEvent(block, new BlockSnapshot(block, this, getData()), block.getSource());
 		if (event.isCancelled()) {
 			return;
 		}

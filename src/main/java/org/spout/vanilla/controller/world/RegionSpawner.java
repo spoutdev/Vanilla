@@ -42,7 +42,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 
 /**
- * Controller that spawns entities in regions.
+ * Runnable that spawns entities in regions.
  */
 public class RegionSpawner implements Runnable {
 	private static final int SPAWN_TRIES = 6;

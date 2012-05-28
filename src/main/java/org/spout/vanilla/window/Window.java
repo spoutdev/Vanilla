@@ -305,13 +305,11 @@ public class Window implements InventoryViewer {
 
 	@Override
 	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
-		System.out.println("SLOT " + slot + " = " + item);
 		this.getPlayer().getNetworkSynchronizer().onSlotSet(inventory, slot, item);
 	}
 
 	@Override
 	public void updateAll(InventoryBase inventory, ItemStack[] slots) {
-		System.out.println("REFRESHING " + slots.length + " SLOTS");
 		this.getPlayer().getNetworkSynchronizer().updateAll(inventory, slots);
 	}
 }

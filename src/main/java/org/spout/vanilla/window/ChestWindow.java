@@ -35,6 +35,6 @@ public class ChestWindow extends Window {
 
 	public ChestWindow(VanillaPlayer owner, InventoryBase chestInventory) {
 		super(0, "Chest", owner);
-		this.setInventory(chestInventory, owner.getInventory().getItems());
+		this.setInventory(owner.getInventory().getItems(), chestInventory);
 	}
 }

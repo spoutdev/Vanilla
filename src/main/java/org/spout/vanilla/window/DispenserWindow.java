@@ -34,6 +34,6 @@ public class DispenserWindow extends Window {
 
 	public DispenserWindow(VanillaPlayer owner, InventoryBase dispenserInventory) {
 		super(3, "Dispenser", owner);
-		this.setInventory(dispenserInventory, owner.getInventory().getItems());
+		this.setInventory(owner.getInventory().getItems(), dispenserInventory);
 	}
 }

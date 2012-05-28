@@ -34,7 +34,7 @@ public class FurnaceWindow extends Window {
 
 	public FurnaceWindow(VanillaPlayer owner, InventoryBase furnaceInventory) {
 		super(2, "Furnace", owner);
-		this.setInventory(furnaceInventory, owner.getInventory().getItems());
+		this.setInventory(owner.getInventory().getItems(), furnaceInventory);
 		this.setSlotConversionArray(SLOTS);
 	}
 

@@ -26,12 +26,7 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.MonsterSpawnerController;
-import org.spout.vanilla.material.block.Solid;
 
 public class MonsterSpawner extends ControlledMaterial {
 	public MonsterSpawner(String name, int id) {

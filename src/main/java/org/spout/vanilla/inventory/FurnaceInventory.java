@@ -40,7 +40,6 @@ import org.spout.vanilla.window.Window;
  */
 public class FurnaceInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
-
 	private final FurnaceController owner;
 
 	public FurnaceInventory(FurnaceController owner) {

@@ -63,7 +63,7 @@ public class Item extends Substance {
 	/**
 	 * Creates an item controller
 	 * @param itemstack this item controller represents
-	 * @param initial velocity that this item has
+	 * @param initial   velocity that this item has
 	 */
 	public Item(ItemStack itemstack, Vector3 initial) {
 		super(VanillaControllerTypes.DROPPED_ITEM);

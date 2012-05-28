@@ -35,7 +35,6 @@ import org.spout.api.inventory.special.InventoryBundle;
  */
 public class PlayerInventory extends InventoryBundle {
 	private static final long serialVersionUID = 1L;
-
 	private final Inventory items;
 	private final Inventory craftingGrid;
 	private final Inventory armor;

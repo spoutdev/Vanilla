@@ -29,9 +29,7 @@ package org.spout.vanilla.window;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
 public class CraftingWindow extends Window {
-
 	public CraftingWindow(VanillaPlayer owner) {
 		super(1, "Crafting", owner);
 	}
-
 }

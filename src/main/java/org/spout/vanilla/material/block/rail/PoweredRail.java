@@ -106,7 +106,7 @@ public class PoweredRail extends RailBase implements RedstoneTarget {
 
 	/**
 	 * Sets if this block is powered
-	 * @param block to set it of
+	 * @param block   to set it of
 	 * @param powered Whether to power the block or not
 	 */
 	public void setPowered(Block block, boolean powered) {

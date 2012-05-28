@@ -92,7 +92,7 @@ public class BedBlock extends VanillaBlockMaterial {
 	 * Sets the facing state of a single bed block<br>
 	 * Note that this does not affect the misc half
 	 * @param bedBlock to set it of
-	 * @param facing to set to
+	 * @param facing   to set to
 	 * @return the face
 	 */
 	public void setFacing(Block bedBlock, BlockFace facing) {
@@ -144,7 +144,7 @@ public class BedBlock extends VanillaBlockMaterial {
 	/**
 	 * Gets the top or face door block when either of the blocks is given
 	 * @param bedBlock the top or bottom bed block
-	 * @param head whether to get the top block, if false, gets the bottom block
+	 * @param head     whether to get the top block, if false, gets the bottom block
 	 * @return the requested bed half block
 	 */
 	private Block getCorrectHalf(Block bedBlock, boolean head) {

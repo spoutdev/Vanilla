@@ -98,7 +98,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 
 	/**
 	 * Extends or retracts a piston block, complete with the animation and block changes.
-	 * @param block of the piston
+	 * @param block    of the piston
 	 * @param extended True to extend, False to retract
 	 * @return True if the piston really got extended or retracted, False if not
 	 */

@@ -31,6 +31,7 @@ import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventoryBundle;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.OpenWindowMessage;
@@ -121,14 +122,14 @@ public class Window implements InventoryViewer {
 	 * Called after this inventory has been successfully opened
 	 */
 	public void onOpened() {
-		
+
 	}
 
 	/**
 	 * Called after this inventory has been successfully closed
 	 */
 	public void onClosed() {
-		
+
 	}
 
 	public boolean hasItemOnCursor() {
@@ -278,7 +279,7 @@ public class Window implements InventoryViewer {
 	/**
 	 * Called when the player right-clicks on a slot in this window
 	 * @param slotIndex
-	 * @param shift whether shift was pressed
+	 * @param shift     whether shift was pressed
 	 * @return True to notify that the operation was allowed
 	 */
 	public boolean onRightClick(int clickedSlot, boolean shift) {
@@ -292,7 +293,7 @@ public class Window implements InventoryViewer {
 	/**
 	 * Called when the player left-clicks on a slot in this window
 	 * @param slotIndex
-	 * @param shift whether shift was pressed
+	 * @param shift     whether shift was pressed
 	 * @return True to notify that the operation was allowed
 	 */
 	public boolean onLeftClick(int clickedSlot, boolean shift) {

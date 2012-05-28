@@ -34,5 +34,4 @@ public class EnchantWindow extends Window {
 	public EnchantWindow(VanillaPlayer owner) {
 		super(4, "Enchant", owner);
 	}
-
 }

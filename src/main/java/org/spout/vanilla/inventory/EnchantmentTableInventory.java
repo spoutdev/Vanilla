@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.window.Window;
 

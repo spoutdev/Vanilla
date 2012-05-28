@@ -45,7 +45,7 @@ public class DiamondOre extends Ore implements TimedCraftable, Mineable, Initial
 	}
 
 	@Override
-	public void initialize(){
+	public void initialize() {
 		this.setDropMaterial(VanillaMaterials.DIAMOND);
 	}
 

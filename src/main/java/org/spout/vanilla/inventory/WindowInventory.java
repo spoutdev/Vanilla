@@ -30,12 +30,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.Inventory;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.window.Window;
 
 public abstract class WindowInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
-
 	private HashSet<VanillaPlayer> viewers = new HashSet<VanillaPlayer>();
 
 	public WindowInventory(int size) {

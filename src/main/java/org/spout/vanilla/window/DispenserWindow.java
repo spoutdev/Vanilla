@@ -27,6 +27,7 @@
 package org.spout.vanilla.window;
 
 import org.spout.api.inventory.InventoryBase;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
 public class DispenserWindow extends Window {

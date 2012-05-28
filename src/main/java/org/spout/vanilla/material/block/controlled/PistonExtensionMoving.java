@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.MovingPistonController;
 import org.spout.vanilla.material.block.piston.PistonExtension;
 

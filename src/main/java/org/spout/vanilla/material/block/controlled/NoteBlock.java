@@ -37,7 +37,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.NoteBlockController;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;

@@ -59,7 +59,7 @@ public class Stairs extends VanillaBlockMaterial implements Mineable, Directiona
 	/**
 	 * Sets if this half slab is the top-half
 	 * @param block to set it for
-	 * @param top state
+	 * @param top   state
 	 */
 	public void setTop(Block block, boolean top) {
 		block.setData(LogicUtil.setBit(block.getData(), 0x4, top));

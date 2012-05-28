@@ -56,7 +56,7 @@ public class Slime extends Creature implements Hostile {
 
 	@Override
 	public void onAttached() {
-		byte size = ((Byte) data().get("slimesize", getRandom().nextInt(4)));
+		byte size = ((Byte) data().get("slime_size", getRandom().nextInt(4)));
 		int health = size > 0 ? size * 4 : 1;
 		setHealth(health, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 		setMaxHealth(health);
@@ -66,7 +66,7 @@ public class Slime extends Creature implements Hostile {
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put("slimesize", size);
+		data().put("slime_size", size);
 	}
 
 	@Override

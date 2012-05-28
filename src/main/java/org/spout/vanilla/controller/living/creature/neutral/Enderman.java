@@ -56,7 +56,7 @@ public class Enderman extends Creature implements Neutral {
 	public void onAttached() {
 		setHealth(40, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 		setMaxHealth(40);
-		heldItem = (ItemStack) data().get("helditem", heldItem);
+		heldItem = (ItemStack) data().get("held_item", heldItem);
 		super.onAttached();
 		getParent().setCollision(new CollisionModel(new BoundingBox(1, 3, 1, 2, 3, 1)));
 	}
@@ -64,7 +64,7 @@ public class Enderman extends Creature implements Neutral {
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put("helditem", heldItem);
+		data().put("held_item", heldItem);
 	}
 
 	@Override

@@ -81,7 +81,7 @@ public class DetectorRail extends RailBase implements RedstoneSource, ScheduleUp
 
 	/**
 	 * Sets if this block is supplying power
-	 * @param block to set it of
+	 * @param block    to set it of
 	 * @param powering Whether the block is supplying power
 	 */
 	public void setPowering(Block block, boolean powering) {

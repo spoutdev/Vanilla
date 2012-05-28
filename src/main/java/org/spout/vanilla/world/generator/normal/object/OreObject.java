@@ -31,6 +31,7 @@ import java.util.Random;
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class OreObject extends WorldGeneratorObject {
@@ -90,11 +91,11 @@ public class OreObject extends WorldGeneratorObject {
 
 	/**
 	 * Generates a cluster of this ore at the position using the random given
-	 * @param world to place in
+	 * @param world   to place in
 	 * @param originX of the cluster
 	 * @param originY of the cluster
 	 * @param originZ of the cluster
-	 * @param random to use
+	 * @param random  to use
 	 */
 	public void placeObject(World world, int originX, int originY, int originZ, Random random) {
 		double angle = random.nextDouble() * Math.PI;

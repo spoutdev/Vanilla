@@ -48,16 +48,16 @@ public class SimpleShapedToolRecipe {
 	 * | Null  Stick Null  |
 	 * | Null  Stick Null  |
 	 * ---------------------
-	 * @param instance Instance of our plugin
+	 * @param instance        Instance of our plugin
 	 * @param craftingEnabler The controller that would "manage" this recipe. Example would be CraftingController or VanillaPlayer (as part of their inventory would be a crafting matrix).
-	 * @param name Name of the recipe
-	 * @param major The main ingredient of the recipe
-	 * @param minor The minor ingredient of the recipe
-	 * @param majorC Character represents major ingredient
-	 * @param minorC Character represents minor ingredient
-	 * @param emptyC Character represents empty crafting matrix slot
-	 * @param result The resulting item stack
-	 * @param rows The rows that should be registered for the recipe. This can be any amount (variable).
+	 * @param name            Name of the recipe
+	 * @param major           The main ingredient of the recipe
+	 * @param minor           The minor ingredient of the recipe
+	 * @param majorC          Character represents major ingredient
+	 * @param minorC          Character represents minor ingredient
+	 * @param emptyC          Character represents empty crafting matrix slot
+	 * @param result          The resulting item stack
+	 * @param rows            The rows that should be registered for the recipe. This can be any amount (variable).
 	 */
 	public SimpleShapedToolRecipe(VanillaPlugin instance, Controller craftingEnabler, String name, Material major, Material minor, char majorC, char minorC, char emptyC,
 								  ItemStack result, String... rows) {

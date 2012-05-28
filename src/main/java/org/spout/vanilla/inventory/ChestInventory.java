@@ -35,9 +35,8 @@ public class ChestInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
 	private final ChestController owner;
 	public static final int LARGE_SIZE = 54, SMALL_SIZE = 27;
-
 	private boolean isLarge;
-	
+
 	public ChestInventory(ChestController owner, int size) {
 		super(size);
 		this.owner = owner;

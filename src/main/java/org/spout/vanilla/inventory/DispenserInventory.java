@@ -28,7 +28,6 @@ package org.spout.vanilla.inventory;
 
 import org.spout.vanilla.controller.block.DispenserController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.window.ChestWindow;
 import org.spout.vanilla.window.DispenserWindow;
 import org.spout.vanilla.window.Window;
 
@@ -37,7 +36,6 @@ import org.spout.vanilla.window.Window;
  */
 public class DispenserInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
-
 	private final DispenserController owner;
 
 	public DispenserInventory(DispenserController owner) {

@@ -38,6 +38,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
@@ -126,7 +127,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	/**
 	 * Grows a full-sized tree from the sapling type given
 	 * @param block to grow a tree at
-	 * @param type of tree
+	 * @param type  of tree
 	 */
 	public void growTree(Block block, Sapling type) {
 		SmallTreeObject object = new SmallTreeObject(new Random(), SmallTreeType.OAK);
@@ -136,7 +137,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	@Override
 	public Vector3[] maxRange() {
 		// TODO - placeholder - should probably be integrated into the Tree Object system
-		return new Vector3[] {new Vector3(4, 0, 4), new Vector3(4, 8, 4)};
+		return new Vector3[]{new Vector3(4, 0, 4), new Vector3(4, 8, 4)};
 	}
 
 	@Override

@@ -36,9 +36,16 @@ public class ChestInventory extends WindowInventory {
 	private final ChestController owner;
 	public static final int LARGE_SIZE = 54, SMALL_SIZE = 27;
 
+	private boolean isLarge;
+	
 	public ChestInventory(ChestController owner, int size) {
 		super(size);
 		this.owner = owner;
+		this.isLarge = size == LARGE_SIZE;
+	}
+
+	public boolean isLarge() {
+		return this.isLarge;
 	}
 
 	public ChestController getOwner() {

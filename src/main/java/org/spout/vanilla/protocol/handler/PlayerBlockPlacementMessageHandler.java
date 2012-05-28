@@ -33,7 +33,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
@@ -56,7 +56,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		//refresh the client just in case it assumed something
 		player.getSession().send(new BlockChangeMessage(clickedBlock));
 		player.getSession().send(new BlockChangeMessage(alterBlock));
-		Inventory inv = VanillaPlayerUtil.getInventory(player.getEntity());
+		InventoryBase inv = VanillaPlayerUtil.getInventory(player.getEntity());
 		if (inv != null) {
 			inv.setCurrentItem(inv.getCurrentItem());
 		}
@@ -66,7 +66,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 	public void handleServer(Session session, Player player, PlayerBlockPlacementMessage message) {
 		EventManager eventManager = session.getGame().getEventManager();
 		World world = player.getEntity().getWorld();
-		Inventory inventory = VanillaPlayerUtil.getInventory(player.getEntity());
+		InventoryBase inventory = VanillaPlayerUtil.getInventory(player.getEntity());
 		ItemStack holding = inventory.getCurrentItem();
 		Material holdingMat = holding == null ? null : holding.getSubMaterial();
 

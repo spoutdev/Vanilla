@@ -24,26 +24,52 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory.player;
+package org.spout.vanilla.inventory;
 
-import org.spout.api.inventory.InventoryViewer;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.Window;
-import org.spout.vanilla.inventory.WindowInventory;
-import org.spout.vanilla.material.item.Armor;
-import org.spout.vanilla.util.InventoryUtil;
+import org.spout.api.inventory.special.InventoryBundle;
 
 /**
  * Represents a players inventory
  */
-public class PlayerInventory extends WindowInventory {
+public class PlayerInventory extends InventoryBundle {
 	private static final long serialVersionUID = 1L;
-	private final PlayerInventoryBase base = new PlayerInventoryBase();
+
+	private final Inventory items;
+	private final Inventory craftingGrid;
+	private final Inventory armor;
 
 	public PlayerInventory() {
-		super(Window.PLAYER_INVENTORY, 9, null);
+		super(new Inventory(36), new Inventory(5), new Inventory(4));
+		this.items = (Inventory) this.getInventories()[0];
+		this.craftingGrid = (Inventory) this.getInventories()[1];
+		this.armor = (Inventory) this.getInventories()[2];
+		this.startWatching();
+	}
+
+	/**
+	 * Gets the item inventory of this player inventory
+	 * @return an Inventory with the items
+	 */
+	public Inventory getItems() {
+		return this.items;
+	}
+
+	/**
+	 * Gets the armor inventory of this player inventory
+	 * @return an Inventory with the armor items
+	 */
+	public Inventory getArmor() {
+		return this.armor;
+	}
+
+	/**
+	 * Gets the crafting grid inventory of this player inventory
+	 * @return an inventory with the crafting grid items
+	 */
+	public Inventory getCraftingGrid() {
+		return this.craftingGrid;
 	}
 
 	/**
@@ -51,7 +77,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return helmet item stack
 	 */
 	public ItemStack getHelmet() {
-		return getItem(8);
+		return this.armor.getItem(0);
 	}
 
 	/**
@@ -59,7 +85,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return chest plate item stack
 	 */
 	public ItemStack getChestPlate() {
-		return getItem(5);
+		return this.armor.getItem(1);
 	}
 
 	/**
@@ -67,7 +93,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return leggings item stack
 	 */
 	public ItemStack getLeggings() {
-		return getItem(1);
+		return this.armor.getItem(2);
 	}
 
 	/**
@@ -75,7 +101,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return boots item stack
 	 */
 	public ItemStack getBoots() {
-		return getItem(0);
+		return this.armor.getItem(3);
 	}
 
 	/**
@@ -83,7 +109,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return top left input item stack
 	 */
 	public ItemStack getTopLeftInput() {
-		return getItem(6);
+		return this.craftingGrid.getItem(0);
 	}
 
 	/**
@@ -91,7 +117,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return top right item stack
 	 */
 	public ItemStack getTopRightInput() {
-		return getItem(7);
+		return this.craftingGrid.getItem(1);
 	}
 
 	/**
@@ -99,7 +125,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return bottom left input item stack
 	 */
 	public ItemStack getBottomLeftInput() {
-		return getItem(2);
+		return this.craftingGrid.getItem(2);
 	}
 
 	/**
@@ -107,7 +133,7 @@ public class PlayerInventory extends WindowInventory {
 	 * @return bottom right input item stack
 	 */
 	public ItemStack getBottomRightInput() {
-		return getItem(3);
+		return this.craftingGrid.getItem(3);
 	}
 
 	/**
@@ -115,52 +141,6 @@ public class PlayerInventory extends WindowInventory {
 	 * @return output item stack
 	 */
 	public ItemStack getOutput() {
-		return getItem(4);
-	}
-
-	public PlayerInventoryBase getBase() {
-		return base;
-	}
-
-	@Override
-	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {
-		if (clickedSlot < 36 && clickedSlot > -1) {
-			return base.onClicked(controller, clickedSlot, slotStack);
-		}
-
-		clickedSlot -= 36;
-		ItemStack cursorStack = controller.getItemOnCursor();
-		boolean armorSlot = clickedSlot == 8 || clickedSlot == 5 || clickedSlot == 1 || clickedSlot == 0;
-		if (armorSlot && cursorStack != null && !(cursorStack.getMaterial() instanceof Armor)) {
-			return false;
-		}
-
-		if (clickedSlot == 4 && cursorStack != null) {
-			return false;
-		}
-		slotStack = InventoryUtil.nullIfEmpty(slotStack);
-		setItem(clickedSlot, slotStack);
-		return true;
-	}
-
-	@Override
-	public boolean addViewer(InventoryViewer viewer) {
-		base.addViewer(viewer, false);
-		return super.addViewer(viewer);
-	}
-
-	@Override
-	public int getNativeSlotIndex(int index) {
-		return base.getNativeSlotIndex(index);
-	}
-
-	@Override
-	public int getSlotIndex(int nativeIndex) {
-		return base.getSlotIndex(nativeIndex);
-	}
-
-	@Override
-	public void setTitle(String title) {
-		throw new IllegalArgumentException("A player's inventory cannot have the title changed.");
+		return this.craftingGrid.getItem(4);
 	}
 }

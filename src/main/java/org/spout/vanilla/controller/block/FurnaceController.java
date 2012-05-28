@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.controller.block;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaBlockController;
@@ -38,7 +36,6 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.Furnace;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
@@ -125,16 +122,9 @@ public class FurnaceController extends VanillaBlockController {
 			}
 
 			// Update viewers
-			for (InventoryViewer viewer : inventory.getViewers()) {
-				if (viewer instanceof VanillaNetworkSynchronizer) {
-					VanillaNetworkSynchronizer network = (VanillaNetworkSynchronizer) viewer;
-					Controller c = network.getEntity().getController();
-					if (c instanceof VanillaPlayer) {
-						VanillaPlayer controller = (VanillaPlayer) c;
-						int window = controller.getWindowId();
-						sendPacket(controller.getPlayer(), new ProgressBarMessage(window, Furnace.FIRE_ICON, (int) burnIncrement), new ProgressBarMessage(window, Furnace.PROGRESS_ARROW, (int) progressIncrement));
-					}
-				}
+			for (VanillaPlayer player : this.inventory.getViewingPlayers()) {
+				int window = player.getActiveWindow().getInstanceId();
+				sendPacket(player.getPlayer(), new ProgressBarMessage(window, Furnace.FIRE_ICON, (int) burnIncrement), new ProgressBarMessage(window, Furnace.PROGRESS_ARROW, (int) progressIncrement));
 			}
 		}
 	}

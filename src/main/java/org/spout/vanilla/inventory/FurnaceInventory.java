@@ -32,17 +32,19 @@ import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
+import org.spout.vanilla.window.FurnaceWindow;
+import org.spout.vanilla.window.Window;
 
 /**
  * Represents a furnace inventory belonging to a furnace controller.
  */
 public class FurnaceInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
-	private static final int[] SLOTS = {30, 31, 32, 33, 34, 35, 36, 37, 38, 21, 22, 23, 24, 25, 26, 27, 28, 29, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 0};
+
 	private final FurnaceController owner;
 
 	public FurnaceInventory(FurnaceController owner) {
-		super(Window.FURNACE, 3, "Furnace");
+		super(3);
 		this.owner = owner;
 	}
 
@@ -119,27 +121,7 @@ public class FurnaceInventory extends WindowInventory {
 	}
 
 	@Override
-	public int getNativeSlotIndex(int index) {
-		return SLOTS[index];
-	}
-
-	@Override
-	public int getSlotIndex(int nativeIndex) {
-		for (int i = 0; i < SLOTS.length; i++) {
-			if (SLOTS[i] == nativeIndex) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	@Override
-	public boolean onClicked(VanillaPlayer controller, int clickedSlot, ItemStack slotStack) {
-		ItemStack cursorStack = controller.getItemOnCursor();
-		if (clickedSlot == 37 && cursorStack != null) {
-			return false;
-		}
-
-		return super.onClicked(controller, clickedSlot, slotStack);
+	public Window createWindow(VanillaPlayer player) {
+		return new FurnaceWindow(player, this);
 	}
 }

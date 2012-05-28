@@ -26,92 +26,35 @@
  */
 package org.spout.vanilla.inventory;
 
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.spout.api.inventory.Inventory;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.util.InventoryUtil;
+import org.spout.vanilla.window.Window;
 
 public abstract class WindowInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
-	protected final Window window;
-	protected String title;
 
-	public WindowInventory(Window window, int size, String title) {
+	private HashSet<VanillaPlayer> viewers = new HashSet<VanillaPlayer>();
+
+	public WindowInventory(int size) {
 		super(size);
-		this.window = window;
-		this.title = title;
 	}
 
-	/**
-	 * Gets the window associated with the inventory
-	 * @return window of inventory
-	 */
-	public Window getWindow() {
-		return window;
+	public abstract Window createWindow(VanillaPlayer player);
+
+	public Set<VanillaPlayer> getViewingPlayers() {
+		return this.viewers;
 	}
 
-	/**
-	 * Gets the title displayed on the window of the inventory
-	 * @return inventory window title
-	 */
-	public String getTitle() {
-		return title;
-	}
-
-	/**
-	 * Sets the title displayed on the window of the inventory
-	 * @param title
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	/**
-	 * Opens the inventory and window
-	 * @param player to show the inventory
-	 */
 	public void open(VanillaPlayer player) {
-		addViewer(player.getPlayer().getNetworkSynchronizer());
-		player.setActiveInventory(this);
-		player.openWindow(getWindow(), title, getSize());
+		this.viewers.add(player);
+		player.setWindow(this.createWindow(player));
 	}
 
-	/**
-	 * Closes the inventory and window
-	 * @param player to close the inventory on
-	 */
-	public void onClosed(VanillaPlayer player) {
-		removeViewer(player.getPlayer().getNetworkSynchronizer());
+	public void close(VanillaPlayer player) {
+		this.viewers.remove(player);
+		player.closeWindow();
 	}
-
-	/**
-	 * Handles a click of the player's cursor on the window.
-	 * @param player
-	 * @param clickedSlot
-	 * @return true if click is permitted
-	 */
-	public boolean onClicked(VanillaPlayer player, int clickedSlot, ItemStack slotStack) {
-		if (clickedSlot < 36 && clickedSlot > -1) {
-			return player.getInventory().onClicked(player, clickedSlot, slotStack);
-		}
-		clickedSlot -= 36;
-		slotStack = InventoryUtil.nullIfEmpty(slotStack);
-		setItem(clickedSlot, slotStack);
-		return true;
-	}
-
-	/**
-	 * Gets the native protocol slot index
-	 * @param index of the slot
-	 * @return the native index
-	 */
-	public abstract int getNativeSlotIndex(int index);
-
-	/**
-	 * Gets the slot index from a native slot index
-	 * @param nativeIndex of the item
-	 * @return the Spout item index
-	 */
-	public abstract int getSlotIndex(int nativeIndex);
 }

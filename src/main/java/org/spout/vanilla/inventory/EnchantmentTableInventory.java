@@ -27,6 +27,8 @@
 package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.window.Window;
 
 /**
  * Represents a enchantment table inventory belonging to an enchantment table
@@ -34,25 +36,9 @@ import org.spout.api.inventory.ItemStack;
  */
 public class EnchantmentTableInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
-	private static final int[] SLOTS = {28, 29, 30, 31, 32, 33, 34, 35, 36, 19, 20, 21, 22, 23, 24, 25, 26, 27, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
 
 	public EnchantmentTableInventory() {
-		super(Window.ENCHANTMENT_TABLE, 1, "Enchantment table");
-	}
-
-	@Override
-	public int getNativeSlotIndex(int index) {
-		return SLOTS[index];
-	}
-
-	@Override
-	public int getSlotIndex(int nativeIndex) {
-		for (int i = 0; i < SLOTS.length; i++) {
-			if (SLOTS[i] == nativeIndex) {
-				return i;
-			}
-		}
-		return -1;
+		super(1);
 	}
 
 	/**
@@ -70,5 +56,11 @@ public class EnchantmentTableInventory extends WindowInventory {
 	 */
 	public ItemStack getItem() {
 		return getItem(0);
+	}
+
+	@Override
+	public Window createWindow(VanillaPlayer player) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

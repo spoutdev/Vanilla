@@ -28,7 +28,7 @@ package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.source.DataSource;
 
@@ -102,7 +102,7 @@ public class Dye extends VanillaItemMaterial {
 				return;
 			}
 
-			Inventory inv = VanillaPlayerUtil.getInventory(entity);
+			InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
 			if (inv != null) {
 				ItemStack holding = inv.getCurrentItem();
 				if (holding != null) {

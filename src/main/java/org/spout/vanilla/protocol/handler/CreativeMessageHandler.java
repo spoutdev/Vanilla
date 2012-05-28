@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.player.Player;
@@ -37,7 +36,6 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
-import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 
 public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 	@Override
@@ -53,44 +51,33 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 			return;
 		}
 
-		Inventory inventory = controller.getActiveInventory();
-		if (inventory == null) {
-			inventory = controller.getInventory();
-		}
-
-		int slot = message.getSlot();
-		slot = VanillaMessageHandlerUtils.getSpoutInventorySlot(inventory, slot);
-		if (slot < 0 || slot >= inventory.getSize()) {
-			return;
-		}
-
-		ItemStack newItem;
 		if (message.getId() == -1) {
-			//something to be done here?
-			newItem = null;
+			//Taking item from existing slot
+			controller.getActiveWindow().setItemOnCursor(null);
+			int slot = controller.getActiveWindow().getSpoutSlotIndex(message.getSlot());
+			if (slot != -1) {
+				controller.getActiveWindow().onLeftClick(slot, false);
+			}
 		} else {
 			Material material = VanillaMaterials.getMaterial(message.getId());
 			if (material != null && message.getDamage() != 0) {
 				material = material.getSubMaterial(message.getDamage());
 			}
 			if (material != null) {
-				newItem = new ItemStack(material, message.getAmount());
+				ItemStack item = new ItemStack(material, message.getAmount());
+				if (message.getSlot() == -1) {
+					controller.getActiveWindow().setItemOnCursor(item);
+					controller.getActiveWindow().onOutSideClick();
+				} else {
+					int slot = controller.getActiveWindow().getSpoutSlotIndex(message.getSlot());
+					if (slot != -1) {
+						controller.getActiveWindow().setItemOnCursor(null);
+						controller.getActiveWindow().getInventory().setItem(slot, item);
+					}
+				}
 			} else {
 				player.kick("Unknown item ID: " + message.getId() + " and durability " + message.getDamage() + "!");
-				return;
 			}
 		}
-
-		controller.getInventory().setItem(slot, newItem);
-		/*
-		 * if (currentItem != null) { player.setItemOnCursor(currentItem); } else {
-		 * player.setItemOnCursor(null);
-		}
-		 */
-	}
-
-	public boolean checkValidId(short id, short data) {
-		Material mat = VanillaMaterials.getMaterial(id);
-		return mat != null && (data == 0 || mat.getSubMaterial(data) != null);
 	}
 }

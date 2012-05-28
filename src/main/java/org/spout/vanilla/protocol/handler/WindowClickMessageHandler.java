@@ -27,17 +27,13 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
-import org.spout.vanilla.util.InventoryUtil;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
 	@Override
@@ -48,73 +44,23 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 			return;
 		}
 
-		// Get the inventory
 		VanillaPlayer controller = (VanillaPlayer) entity.getController();
-		Inventory inventory = controller.getActiveInventory();
-		if (inventory == null) {
-			inventory = controller.getInventory();
-		}
+
+		boolean result = false;
 
 		// Player clicked outside of window
 		if (message.getSlot() == 64537) {
-			controller.setItemOnCursor(null);
-			// TODO: Drop item
-			respond(session, message, true);
-			return;
-		}
-
-		if (!(inventory instanceof WindowInventory)) {
-			return;
-		}
-
-		WindowInventory window = (WindowInventory) inventory;
-		System.out.println("Native slot: " + message.getSlot());
-		int clickedSlot = window.getSlotIndex(message.getSlot());
-		ItemStack cursorStack = controller.getItemOnCursor(), slotStack;
-		if (clickedSlot < 36 && clickedSlot > -1) {
-			slotStack = controller.getInventory().getBase().getItem(clickedSlot);
+			result = controller.getActiveWindow().onOutSideClick();
 		} else {
-			slotStack = inventory.getItem(clickedSlot - 36);
-		}
-
-		if (message.isShift()) {
-			// TODO: Fix Shift clicking
-			InventoryUtil.quickMoveStack(inventory, clickedSlot);
-		}
-
-		if (message.isRightClick()) {
-			// Right click
-			if (slotStack != null) {
-				if (cursorStack == null) {
-					int amount = (slotStack.getAmount() + 1) / 2;
-					slotStack = slotStack.setAmount(slotStack.getAmount() - amount);
-					cursorStack = new ItemStack(slotStack.getMaterial(), amount);
+			int slot = controller.getActiveWindow().getSpoutSlotIndex(message.getSlot());
+			if (slot != -1) {
+				if (message.isRightClick()) {
+					result = controller.getActiveWindow().onRightClick(slot, message.isShift());
 				} else {
-					slotStack = slotStack.setAmount(slotStack.getAmount() + 1);
-					cursorStack = cursorStack.setAmount(cursorStack.getAmount() - 1);
+					result = controller.getActiveWindow().onLeftClick(slot, message.isShift());
 				}
-			} else if (slotStack == null && cursorStack != null) {
-				slotStack = new ItemStack(cursorStack.getMaterial(), 1);
-				cursorStack = cursorStack.setAmount(cursorStack.getAmount() - 1);
 			}
-		} else if (slotStack != null) { // Left click
-			if (cursorStack == null) {
-				cursorStack = slotStack;
-				slotStack = null;
-			} else {
-				InventoryUtil.mergeStack(cursorStack, slotStack);
-			}
-		} else if (slotStack == null && cursorStack != null) {
-			slotStack = cursorStack;
-			cursorStack = null;
 		}
-
-		controller.setItemOnCursor(cursorStack);
-		boolean response = window.onClicked(controller, clickedSlot, slotStack);
-		respond(player.getSession(), message, response);
-	}
-
-	private void respond(Session session, WindowClickMessage message, boolean success) {
-		session.send(new TransactionMessage(message.getWindowId(), message.getTransaction(), success));
+		session.send(new TransactionMessage(message.getWindowId(), message.getTransaction(), result));
 	}
 }

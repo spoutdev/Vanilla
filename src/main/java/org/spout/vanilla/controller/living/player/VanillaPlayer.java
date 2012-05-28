@@ -36,7 +36,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
@@ -50,24 +49,22 @@ import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.inventory.Window;
-import org.spout.vanilla.inventory.player.PlayerInventory;
+import org.spout.vanilla.inventory.PlayerInventory;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
-import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
-import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.util.VanillaPlayerUtil;
+import org.spout.vanilla.window.DefaultWindow;
+import org.spout.vanilla.window.Window;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers;
-import static org.spout.vanilla.util.InventoryUtil.nextWindowId;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to
@@ -80,17 +77,15 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected float foodSaturation = 5.0f, exhaustion = 0.0f;
 	protected boolean sprinting, onGround, poisoned;
 	protected final Vector3 moveSpeed = new Vector3(10, 0, 0), horizSpeed = new Vector3(0, 0, -10);
-	protected Inventory activeInventory;
 	protected final PlayerInventory playerInventory = new PlayerInventory();
-	protected ItemStack itemOnCursor;
+	protected Window activeWindow = new DefaultWindow(this);
 	protected String tabListName;
 	protected GameMode gameMode;
-	protected int distanceMoved, windowId, miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt(), miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt();
+	protected int distanceMoved, miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt(), miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt();
 	protected final Set<Player> invisibleFor = new HashSet<Player>();
 	protected Point compassTarget;
 	protected Vector3 lookingAt;
 	protected Point diggingPosition;
-	protected Window activeWindow;
 	protected long diggingStartTime;
 	protected boolean isDigging;
 	protected int[] miningDamage;
@@ -247,16 +242,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public Player getPlayer() {
 		return owner;
-	}
-
-	public PlayerInventory createInventory(int size) {
-		PlayerInventory inventory = new PlayerInventory();
-		for (int i = 37; i < inventory.getSize(); i++) {
-			inventory.setHiddenSlot(i, true);
-		}
-
-		inventory.setCurrentSlot(0);
-		return inventory;
 	}
 
 	@Override
@@ -501,44 +486,22 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.exhaustion = exhaustion;
 	}
 
-	public void openWindow(Window activeWindow, int slotCount) {
-		this.openWindow(activeWindow, activeWindow.getTitle(), slotCount);
-	}
-
-	public void openWindow(Window activeWindow, String title, int slotCount) {
+	public void setWindow(Window activeWindow) {
+		this.activeWindow.close();
 		this.activeWindow = activeWindow;
-		this.windowId = nextWindowId();
-		sendPacket(owner, new OpenWindowMessage(windowId, activeWindow.getId(), title, slotCount));
+		this.activeWindow.open();
 	}
 
 	public void closeWindow() {
-		this.activeWindow = null;
-		sendPacket(owner, new CloseWindowMessage(windowId));
-		this.windowId = 0;
+		this.setWindow(new DefaultWindow(this));
 	}
 
-	public int getWindowId() {
-		return windowId;
-	}
-
-	public Inventory getActiveInventory() {
-		return activeInventory;
-	}
-
-	public void setActiveInventory(Inventory newActive) {
-		activeInventory = newActive;
+	public Window getActiveWindow() {
+		return this.activeWindow;
 	}
 
 	public PlayerInventory getInventory() {
 		return playerInventory;
-	}
-
-	public ItemStack getItemOnCursor() {
-		return itemOnCursor;
-	}
-
-	public void setItemOnCursor(ItemStack newItem) {
-		itemOnCursor = newItem;
 	}
 
 	public void setLookingAtVector(Vector3 lookingAt) {

@@ -24,18 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util;
+package org.spout.vanilla.window;
 
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
+import org.spout.api.inventory.InventoryBase;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
-public class VanillaMessageHandlerUtils {
-	/**
-	 * Converts a network block face to a spout one!
-	 * @param messageFace The network face!
-	 * @return The spout one!
-	 */
-	public static BlockFace messageToBlockFace(int messageFace) {
-		return BlockFaces.BTEWNS.get(messageFace, BlockFace.THIS);
+public class FurnaceWindow extends Window {
+	private static final int[] SLOTS = {30, 31, 32, 33, 34, 35, 36, 37, 38, 21, 22, 23, 24, 25, 26, 27, 28, 29, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 0};
+
+	public FurnaceWindow(VanillaPlayer owner, InventoryBase furnaceInventory) {
+		super(2, "Furnace", owner);
+		this.setInventory(furnaceInventory, owner.getInventory().getItems());
+		this.setSlotConversionArray(SLOTS);
+	}
+
+	@Override
+	public boolean onLeftClick(int clickedSlot, boolean shift) {
+		return false;
+//		ItemStack cursorStack = controller.getItemOnCursor();
+//		if (clickedSlot == 37 && cursorStack != null) {
+//			return false;
+//		}
+//
+//		return super.onClicked(controller, clickedSlot, slotStack);
 	}
 }

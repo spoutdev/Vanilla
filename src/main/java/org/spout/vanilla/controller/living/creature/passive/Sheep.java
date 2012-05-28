@@ -57,15 +57,15 @@ public class Sheep extends Creature implements Passive {
 		setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
 		setMaxHealth(8);
 		super.onAttached();
-		isSheared = (Boolean) data().get("sheepsheared", false);
-		sheepColor = (Short) data().get("sheepcolor", (short) 0);
+		isSheared = (Boolean) data().get("sheep_sheared", false);
+		sheepColor = (Short) data().get("sheep_color", (short) 0);
 	}
 
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put("sheepsheared", isSheared);
-		data().put("sheepcolor", sheepColor);
+		data().put("sheep_sheared", isSheared);
+		data().put("sheep_color", sheepColor);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class Sheep extends Creature implements Passive {
 			if (source.equals(DamageCause.Type.BURN)) {
 				drops.add(new ItemStack(Wool.GRAY, 1));
 			} else {
-				drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial(((Number) data().get("SheepColor")).shortValue()), 1));
+				drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial(sheepColor), 1));
 			}
 		}
 

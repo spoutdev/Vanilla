@@ -61,9 +61,13 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private int miningLevel;
 	private MiningType miningType;
 	private Material dropMaterial;
-
+	
 	public VanillaBlockMaterial(String name, int id) {
-		super(name);
+		this((short)-1, name, id);
+	}
+
+	public VanillaBlockMaterial(short dataMask, String name, int id) {
+		super(dataMask, name);
 		this.minecraftId = id;
 		this.setCollision(CollisionStrategy.NOCOLLIDE);
 		this.setOccludes(false);

@@ -43,6 +43,7 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.block.solid.Log;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.normal.object.SmallTreeObject;
@@ -145,7 +146,8 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 		if (first) {
 			return b.getWorld().getAge() + 10000;
 		} else {
-			this.growTree(b);
+			b.setMaterial(Log.DEFAULT);
+			b.setData(b.getData() | Log.aliveMask);
 			return -1;
 		}
 	}

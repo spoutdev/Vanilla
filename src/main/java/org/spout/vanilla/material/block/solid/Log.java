@@ -27,10 +27,15 @@
 package org.spout.vanilla.material.block.solid;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.DynamicMaterial;
+import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
@@ -41,16 +46,23 @@ import org.spout.vanilla.material.item.misc.Coal;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.world.generator.normal.object.SmallTreeObject;
+import org.spout.vanilla.world.generator.normal.object.SmallTreeObject.SmallTreeType;
 
-public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable {
+public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable, DynamicMaterial {
 	public static final Log DEFAULT = new Log("Wood");
 	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT);
 	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT);
 	public static final Log JUNGLE = new Log("Jungle Wood", 3, DEFAULT);
+	private static final short dataMask = 0x0003;
+	public static final short aliveMask = 0x0100;
+	public static final short heightMask = 0x0600;
+	
+	private static final Vector3[] maxRange =  new Vector3[] {new Vector3(4, 0, 4), new Vector3(4, 8, 4)};
 	public final float BURN_TIME = 15.f;
 
 	private Log(String name) {
-		super(name, 17);
+		super(dataMask, name, 17);
 		this.setHardness(2.0F).setResistance(10.F).setOpacity((byte) 1);
 	}
 
@@ -109,5 +121,58 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable 
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(this, 1));
 		return drops;
+	}
+
+	@Override
+	public Vector3[] maxRange() {
+		return maxRange;
+	}
+
+	@Override
+	public long update(Block b, long updateTime, long lastUpdateTime, boolean first) {
+		int data = b.getData() & 0xFFFF;
+		if ((data & aliveMask) == 0) {
+			return -1;
+		} else {
+			if (first) {
+				return b.getWorld().getAge() + 10000;
+			} else {
+				Block trunk = b;
+				int blockData = b.getData();
+				int expectHeight = (blockData & heightMask) >> 9;
+				for (int i = 0; i < expectHeight + 1; i++) {
+					if (!(trunk.getMaterial() instanceof Log)) {
+						return -1;
+					}
+					trunk = trunk.translate(BlockFace.TOP);
+				}
+				if (expectHeight == 3) {
+					trunk = b;
+					for (int i = 0; i < expectHeight + 1; i++) {
+						trunk.setMaterial(BlockMaterial.AIR);
+						trunk = trunk.translate(BlockFace.TOP);
+					}
+					// TODO - make it match the type of log
+					SmallTreeObject object = new SmallTreeObject(new Random(), SmallTreeType.OAK);
+					object.placeObject(b.getWorld(), b.getX(), b.getY(), b.getZ());
+					return -1;
+				} else if (trunk.getMaterial() == BlockMaterial.AIR) {
+					trunk.setMaterial(b.getMaterial());
+					int newHeight = (expectHeight + 1) << 9;
+					newHeight &= heightMask;
+					int alive = 1 << 8;
+					alive &= aliveMask;
+					data = data & dataMask;
+					data |= alive;
+					data |= newHeight;
+					b.setData(data);
+					return updateTime + 10000;
+				} else {
+					b.setData(data & dataMask);
+					return -1;
+				}
+
+			}
+		}
 	}
 }

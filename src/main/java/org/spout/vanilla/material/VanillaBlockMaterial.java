@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,13 +35,18 @@ import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.MiningType;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -48,15 +54,21 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
 	public static short REDSTONE_POWER_MAX = 15;
 	public static short REDSTONE_POWER_MIN = 0;
-	private List<ItemStack> drops;
 	private final int minecraftId;
 	private float resistance;
 	private int meleeDamage;
+	private int miningLevel;
+	private MiningType miningType;
+	private Material dropMaterial;
 
 	public VanillaBlockMaterial(String name, int id) {
 		super(name);
 		this.minecraftId = id;
-		this.setCollision(CollisionStrategy.NOCOLLIDE).setOccludes(false);
+		this.setCollision(CollisionStrategy.NOCOLLIDE);
+		this.setOccludes(false);
+		this.setMiningLevel(0);
+		this.setMiningType(MiningType.PICKAXE);
+		this.setDropMaterial(this);
 	}
 
 	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent) {
@@ -82,6 +94,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	@Override
 	public void onDestroy(Block block) {
 		//Grab the drops based on material classes' rules.
+		List<ItemStack> drops = null;
 		if (!VanillaPlayerUtil.isCreative(block.getSource())) {
 			drops = getDrops(block);
 		}
@@ -91,7 +104,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		}
 		this.onDestroyBlock(block);
 		if (!VanillaPlayerUtil.isCreative(block.getSource())) {
-			this.onDestroySpawnDrops(block);
+			this.onDestroySpawnDrops(block, drops);
 		}
 	}
 
@@ -161,7 +174,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * Called when this block is destroyed to perform the drops spawning
 	 * @param block to spawn drops for
 	 */
-	public void onDestroySpawnDrops(Block block) {
+	public void onDestroySpawnDrops(Block block, List<ItemStack> drops) {
 		if (drops == null || drops.isEmpty() || drops.size() <= 0) {
 			return;
 		}
@@ -288,15 +301,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	/**
-	 * Set the drops this material will drop when destroyed.
-	 * @param drops The new drops to drop.
-	 * @return
-	 */
-	public void setDrops(List<ItemStack> drops) {
-		this.drops = drops;
-	}
-
-	/**
 	 * Gets the drops that should be dropped. Override this method to provide rules
 	 * for what should be dropped and when.
 	 * @param block
@@ -314,6 +318,56 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @return a list of drops
 	 */
 	public List<ItemStack> getDrops(Block block, ItemStack holding) {
-		return Collections.<ItemStack>emptyList();
+		if(!canDrop(block, holding)){
+			return Collections.<ItemStack>emptyList();
+		}
+		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+		if (holding != null && EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
+			drops.add(new ItemStack(this, 1));
+		} else {
+			drops.add(new ItemStack(dropMaterial, 1));
+		}
+		return drops;
+	}
+
+	public boolean canDrop(Block block, ItemStack holding) {
+		if (this.miningLevel == 0) {
+			return true;
+		}
+		Material heldMaterial = holding.getSubMaterial();
+		if (heldMaterial instanceof Tool) {
+			Tool heldTool = (Tool) heldMaterial;
+			if (this.miningType.isInstance(heldTool) && heldTool.getMiningLevel() >= this.miningLevel) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public VanillaBlockMaterial setMiningLevel(int miningLevel) {
+		this.miningLevel = miningLevel;
+		return this;
+	}
+
+	public int getMiningLevel() {
+		return miningLevel;
+	}
+
+	public VanillaBlockMaterial setMiningType(MiningType miningType) {
+		this.miningType = miningType;
+		return this;
+	}
+
+	public MiningType getMiningType() {
+		return miningType;
+	}
+
+	public VanillaBlockMaterial setDropMaterial(Material dropMaterial) {
+		this.dropMaterial = dropMaterial;
+		return this;
+	}
+
+	public Material getDropMaterial() {
+		return dropMaterial;
 	}
 }

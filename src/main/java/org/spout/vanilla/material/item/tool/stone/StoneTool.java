@@ -27,10 +27,12 @@
 package org.spout.vanilla.material.item.tool.stone;
 
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.MiningType;
 
 public abstract class StoneTool extends Tool {
 	protected StoneTool(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setEnchantability(5);
+		this.setMiningLevel(MiningType.MiningLevel.STONE);
 	}
 }

@@ -28,10 +28,12 @@ package org.spout.vanilla.material.item.tool.gold;
 
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.MiningType;
 
 public abstract class GoldTool extends Tool implements Enchantable {
 	protected GoldTool(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setEnchantability(22);
+		this.setMiningLevel(MiningType.MiningLevel.GOLD);
 	}
 }

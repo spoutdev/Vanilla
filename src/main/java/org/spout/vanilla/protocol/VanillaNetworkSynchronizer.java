@@ -42,7 +42,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Quaternion;
@@ -57,8 +57,6 @@ import org.spout.api.util.set.TIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.player.PlayerInventory;
-import org.spout.vanilla.inventory.player.PlayerInventoryBase;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
@@ -72,7 +70,6 @@ import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -277,8 +274,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			owner.getSession().send(idMsg, true);
 			//Normal messages may be sent
 			owner.getSession().setState(State.GAME);
-			for (int slot = 0; slot < 5; slot++) {
-				ItemStack slotItem = vc.getInventory().getBase().getItem(slot);
+			for (int slot = 0; slot < 4; slot++) {
+				ItemStack slotItem = vc.getInventory().getArmor().getItem(slot);
 				EntityEquipmentMessage EEMsg;
 				if (slotItem == null) {
 					EEMsg = new EntityEquipmentMessage(entityId, slot, -1, 0);
@@ -286,10 +283,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 					EEMsg = new EntityEquipmentMessage(entityId, slot, getMinecraftId(slotItem.getMaterial().getId()), slotItem.getData());
 				}
 				owner.getSession().send(EEMsg);
-			}
-			if (entity.getController() instanceof VanillaPlayer) {
-				VanillaPlayer controller = (VanillaPlayer) entity.getController();
-				controller.getInventory().addViewer(this);
 			}
 		} else {
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
@@ -409,73 +402,41 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	@Override
-	public void onSlotSet(Inventory inventory, int slot) {
+	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
 		Controller c = owner.getEntity().getController();
 		if (!(c instanceof VanillaPlayer)) {
 			return;
 		}
-
 		VanillaPlayer controller = (VanillaPlayer) c;
-		ItemStack item = inventory.getItem(slot);
+		slot = controller.getActiveWindow().getMCSlotIndex(slot);
+		if (slot == -1) {
+			return;
+		}
+
 		Message message;
-		final int networkSlot = VanillaMessageHandlerUtils.getNetworkInventorySlot(inventory, slot);
-		int id = 0;
-		if (!(inventory instanceof PlayerInventory)) {
-			id = controller.getWindowId();
-		}
-
+		int id = controller.getActiveWindow().getInstanceId();
 		if (item == null) {
-			message = new SetWindowSlotMessage(id, networkSlot);
+			message = new SetWindowSlotMessage(id, slot);
 		} else {
-			message = new SetWindowSlotMessage(id, networkSlot, getMinecraftId(item.getMaterial().getId()), item.getAmount(), item.getData(), item.getNBTData());
+			message = new SetWindowSlotMessage(id, slot, getMinecraftId(item.getMaterial().getId()), item.getAmount(), item.getData(), item.getNBTData());
 		}
-
 		queuedInventoryUpdates.put(slot, message);
 	}
 
 	@Override
-	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
+	public void updateAll(InventoryBase inventory, ItemStack[] slots) {
 		Controller c = owner.getEntity().getController();
 		if (!(c instanceof VanillaPlayer)) {
 			return;
 		}
-
 		VanillaPlayer controller = (VanillaPlayer) c;
-		Message message;
-		final int networkSlot = VanillaMessageHandlerUtils.getNetworkInventorySlot(inventory, slot);
-		int id = 0;
-		if (!(inventory instanceof PlayerInventory)) {
-			id = controller.getWindowId();
+		ItemStack[] newItems = new ItemStack[slots.length];
+		for (int i = 0; i < newItems.length; i++) {
+			newItems[controller.getActiveWindow().getMCSlotIndex(i)] = slots[i];
 		}
 
-		if (item == null) {
-			message = new SetWindowSlotMessage(id, networkSlot);
-		} else {
-			message = new SetWindowSlotMessage(id, networkSlot, getMinecraftId(item.getMaterial().getId()), item.getAmount(), item.getData(), item.getNBTData());
-		}
-
-		queuedInventoryUpdates.put(slot, message);
-	}
-
-	@Override
-	public void updateAll(Inventory inventory, ItemStack[] slots) {
-		Controller c = owner.getEntity().getController();
-		if (!(c instanceof VanillaPlayer)) {
-			return;
-		}
-
-		VanillaPlayer controller = (VanillaPlayer) c;
-		byte id = 0;
-		if (!(inventory instanceof PlayerInventory)) {
-			id = (byte) controller.getWindowId();
-		}
-
-		PlayerInventoryBase base = controller.getInventory().getBase();
-		ItemStack[] newSlots = new ItemStack[slots.length + base.getSize()];
-		for (int i = 0; i < slots.length; i++) {
-			newSlots[base.getNativeSlotIndex(i)] = slots[i];
-		}
-		session.send(new SetWindowSlotsMessage(id, newSlots));
+		int id = controller.getActiveWindow().getInstanceId();
+		session.send(new SetWindowSlotsMessage((byte) id, newItems));
 		queuedInventoryUpdates.clear();
 	}
 

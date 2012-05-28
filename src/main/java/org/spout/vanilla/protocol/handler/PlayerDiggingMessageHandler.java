@@ -32,7 +32,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.basic.BasicAir;
@@ -82,7 +82,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			isInteractable = false;
 		}
 
-		Inventory inv = ((VanillaPlayer) player.getEntity().getController()).getInventory();
+		InventoryBase inv = ((VanillaPlayer) player.getEntity().getController()).getInventory();
 		ItemStack heldItem = inv.getCurrentItem();
 		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
 

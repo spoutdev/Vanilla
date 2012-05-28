@@ -45,7 +45,7 @@ import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
 import org.spout.api.event.world.RegionUnloadEvent;
 import org.spout.api.geo.cuboid.Region;
-import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
@@ -101,7 +101,7 @@ public class VanillaListener implements Listener {
 
 	@EventHandler(order = Order.LATEST)
 	public void playerLeave(PlayerLeaveEvent event) {
-		Inventory inv = VanillaPlayerUtil.getInventory(event.getPlayer().getEntity());
+		InventoryBase inv = VanillaPlayerUtil.getInventory(event.getPlayer().getEntity());
 		if (inv != null) {
 			inv.removeViewer(event.getPlayer().getNetworkSynchronizer());
 		}

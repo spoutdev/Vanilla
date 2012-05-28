@@ -24,18 +24,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util;
+package org.spout.vanilla.window;
 
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
-public class VanillaMessageHandlerUtils {
-	/**
-	 * Converts a network block face to a spout one!
-	 * @param messageFace The network face!
-	 * @return The spout one!
-	 */
-	public static BlockFace messageToBlockFace(int messageFace) {
-		return BlockFaces.BTEWNS.get(messageFace, BlockFace.THIS);
+public class CraftingWindow extends Window {
+
+	public CraftingWindow(VanillaPlayer owner) {
+		super(1, "Crafting", owner);
 	}
+
 }

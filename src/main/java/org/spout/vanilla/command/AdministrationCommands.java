@@ -160,7 +160,11 @@ public class AdministrationCommands {
 			throw new CommandException(args.getString(index) + " is not a block!");
 		}
 
-		vplayer.getInventory().addItem(new ItemStack(material, data, args.getInteger(2, 1)), false);
+		int count = args.getInteger(2, 1);
+
+		vplayer.getInventory().getItems().addItem(new ItemStack(material, data, count), false);
+
+		source.sendMessage("You have been given " + count + " " + material.getSubMaterial(data).getDisplayName());
 	}
 
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)

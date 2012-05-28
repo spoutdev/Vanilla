@@ -31,7 +31,7 @@ import java.util.Random;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
@@ -81,7 +81,7 @@ public class PaintingItem extends VanillaItemMaterial {
 		}
 		Painting painting = new Painting(PaintingStyle.values()[random.nextInt(PaintingStyle.values().length)], BlockFaces.NESW.indexOf(clickedface, -1));//TODO fix the 0 here, and the position on the next line
 		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), painting);
-		Inventory inventory = VanillaPlayerUtil.getInventory(entity);
+		InventoryBase inventory = VanillaPlayerUtil.getInventory(entity);
 		if (inventory != null) {
 			inventory.addCurrentItemAmount(-1);
 		}

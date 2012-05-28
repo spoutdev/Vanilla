@@ -39,7 +39,7 @@ import org.spout.vanilla.material.block.attachable.PointAttachable;
 public class Torch extends AbstractAttachable implements PointAttachable {
 	public Torch(String name, int id) {
 		super(name, id);
-		this.setAttachable(BlockFaces.NSEWB).setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
+		this.setAttachable(BlockFaces.NSEWB).setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 0);
 	}
 
 	@Override

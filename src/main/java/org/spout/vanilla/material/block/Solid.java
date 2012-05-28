@@ -38,12 +38,12 @@ import org.spout.vanilla.util.MoveReaction;
 public class Solid extends VanillaBlockMaterial {
 	public Solid(String name, int id) {
 		super(name, id);
-		this.setCollision(CollisionStrategy.SOLID);
+		this.setCollision(CollisionStrategy.SOLID).setOccludes(true);
 	}
 
 	public Solid(String name, int id, int data, VanillaBlockMaterial parent) {
 		super(name, id, data, parent);
-		this.setCollision(CollisionStrategy.SOLID);
+		this.setCollision(CollisionStrategy.SOLID).setOccludes(true);
 	}
 
 	/**

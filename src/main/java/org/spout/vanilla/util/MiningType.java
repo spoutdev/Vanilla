@@ -65,11 +65,19 @@ public enum MiningType {
 		return typeClassMap.get(tool.getClass());
 	}
 
-	public boolean isInstance(Tool o) {
+	public boolean isInstance(Object o) {
 		return this.isInstance(o.getClass());
 	}
 
 	public boolean isInstance(Class<?> cls) {
-		return typeClassMap.get(cls) == this;
+		return (typeClassMap.get(cls) == this || typeClassMap.get(cls.getSuperclass()) == this);
+	}
+
+	public final class MiningLevel {
+		public static final int WOOD = 1;
+		public static final int GOLD = 1;
+		public static final int STONE = 2;
+		public static final int IRON = 3;
+		public static final int DIAMOND = 4;
 	}
 }

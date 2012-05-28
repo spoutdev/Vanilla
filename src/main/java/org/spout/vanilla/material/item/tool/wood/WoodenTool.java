@@ -27,10 +27,12 @@
 package org.spout.vanilla.material.item.tool.wood;
 
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.MiningType;
 
 public abstract class WoodenTool extends Tool {
 	protected WoodenTool(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setEnchantability(15);
+		this.setMiningLevel(MiningType.MiningLevel.WOOD);
 	}
 }

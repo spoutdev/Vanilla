@@ -68,6 +68,7 @@ public abstract class VanillaActionController extends ActionController implement
 	private int fireTicks = 0;
 	private int positionTicks = 0;
 	private int velocityTicks = 0;
+	protected int airTicks = 0;
 	// Velocity-related
 	private Vector3 velocity = Vector3.ZERO;
 	private Vector3 movementSpeed = Vector3.ZERO;
@@ -100,6 +101,7 @@ public abstract class VanillaActionController extends ActionController implement
 		maxSpeed = (Vector3) data().get("max_speed", maxSpeed);
 		health = (Integer) data().get("health", maxHealth);
 		maxHealth = (Integer) data().get("max_health", maxHealth);
+		airTicks = (Integer) data().get("air_ticks", airTicks);
 	}
 
 	@Override
@@ -113,13 +115,14 @@ public abstract class VanillaActionController extends ActionController implement
 		data().put("max_speed", maxSpeed);
 		data().put("health", health);
 		data().put("max_health", maxHealth);
+		data().put("air_ticks", airTicks);
 	}
 
 	@Override
 	public void onTick(float dt) {
 		positionTicks++;
 		velocityTicks++;
-		//Check controller health, send messages to the client based on current state.
+		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
 			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 			if (!(this instanceof PlayerController)) {
@@ -281,7 +284,7 @@ public abstract class VanillaActionController extends ActionController implement
 	// =========================
 
 	/**
-	 * Damages this controller and doesn't send messages to the client.
+	 * Damages this controller with the given {@link DamageCause}.
 	 * @param amount amount the controller will be damaged by.
 	 */
 	public void damage(int amount) {
@@ -289,30 +292,30 @@ public abstract class VanillaActionController extends ActionController implement
 	}
 
 	/**
-	 * Damages this controller and doesn't send messages to the client.
+	 * Damages this controller with the given {@link DamageCause}.
 	 * @param amount amount the controller will be damaged by.
 	 * @param cause cause of this controller being damaged
 	 */
 	public void damage(int amount, DamageCause cause) {
-		this.damage(amount, cause, null);
+		this.damage(amount, cause, true);
 	}
 
 	/**
-	 * Damages this controller and doesn't send messages to the client.
-	 * @param cause cause of this controller being damaged
-	 * @param damager controller that damaged this controller
+	 * Damages this controller with the given {@link DamageCause}.
 	 * @param amount amount the controller will be damaged by.
+	 * @param cause cause of this controller being damaged
+	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
-	public void damage(int amount, DamageCause cause, VanillaActionController damager) {
-		this.damage(amount, cause, damager, false);
+	public void damage(int amount, DamageCause cause, boolean sendHurtMessage) {
+		this.damage(amount, cause, null, sendHurtMessage);
 	}
 
 	/**
-	 * Damages this controller.
+	 * Damages this controller with the given {@link DamageCause} and damager.
 	 * @param amount amount the controller will be damaged by.
 	 * @param cause cause of this controller being damaged
 	 * @param damager controller that damaged this controller
-	 * @param sendHurtMessage whether or not to send a hurt message
+	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
 	public void damage(int amount, DamageCause cause, VanillaActionController damager, boolean sendHurtMessage) {
 		setHealth(getHealth() - amount, new HealthChangeReason(HealthChangeReason.Type.DAMAGE));

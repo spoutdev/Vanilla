@@ -34,6 +34,7 @@ import org.spout.api.Source;
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
@@ -50,6 +51,8 @@ import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.inventory.PlayerInventory;
+import org.spout.vanilla.enchantment.Enchantments;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
@@ -58,6 +61,7 @@ import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.window.DefaultWindow;
 import org.spout.vanilla.window.Window;
@@ -67,8 +71,7 @@ import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers;
 
 /**
- * Represents a player on a server with the VanillaPlugin; specific methods to
- * Vanilla.
+ * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
  */
 public class VanillaPlayer extends Human implements PlayerController {
 	protected final Player owner;
@@ -81,7 +84,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected Window activeWindow = new DefaultWindow(this);
 	protected String tabListName;
 	protected GameMode gameMode;
-	protected int distanceMoved, miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt(), miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt();
+	protected int distanceMoved, miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt(),
+			miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt();
 	protected final Set<Player> invisibleFor = new HashSet<Player>();
 	protected Point compassTarget;
 	protected Vector3 lookingAt;
@@ -108,7 +112,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public boolean isSavable() {
-		return false; //Players are a special case, handled elsewhere
+		return false; // Players are a special case, handled elsewhere
 	}
 
 	@Override
@@ -171,6 +175,31 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 
 		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
+		Block head = getParent().getWorld().getBlock(getHeadPosition());
+		if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+			airTicks++;
+			ItemStack helmet = getInventory().getHelmet();
+			int level = 0;
+			if (helmet != null && EnchantmentUtil.hasEnchantment(helmet, Enchantments.RESPIRATION)) {
+				level = EnchantmentUtil.getEnchantmentLevel(helmet, Enchantments.RESPIRATION);
+			}
+			if (head.getMaterial().equals(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+				// Drowning
+				int ticksBeforeDrowning = level == 0 ? 300 : level * 300; // Increase time before drowning by 15 seconds per enchantment level
+				if (airTicks >= ticksBeforeDrowning && airTicks % 20 == 0) {
+					damage(4, new DamageCause(DamageCause.Type.DROWN));
+				}
+			} else {
+				// Suffocation
+				int noDamageTicks /* TODO noDamageTicks should probably be made a global variable to account for other damage */= level == 0 ? 10 : 10 + 20 * level; // Increase time between damage by 1 second per enchantment level
+				if (airTicks % noDamageTicks == 0) {
+					damage(1, new DamageCause(DamageCause.Type.SUFFOCATE));
+				}
+			}
+		} else {
+			// Reset air ticks if necessary
+			airTicks = 0;
+		}
 
 		if (poisoned) {
 			exhaustion += 15.0 / 30 * dt;
@@ -179,12 +208,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 		// Track hunger
 		foodTimer++;
 		if (foodTimer >= 80) {
-			updateHealth();
+			updateHealthAndHunger();
 			foodTimer = 0;
 		}
 	}
 
-	private void updateHealth() {
+	private void updateHealthAndHunger() {
 		short health;
 		health = (short) getHealth();
 
@@ -203,6 +232,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			setHealth(health, new DamageCause(DamageCause.Type.STARVE));
 			changed = true;
 		} else if (hunger >= 18 && health < 20) {
+			// TODO: Is health regenerating too fast?
 			health = (short) Math.min(health + 1, 20);
 			setHealth(health, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
 			changed = true;
@@ -219,7 +249,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	private void creativeTick(float dt) {
-
 	}
 
 	@Override
@@ -233,7 +262,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public void onDeath() {
-		//Don't count disconnects/unknown exceptions as dead (Yes that's a difference!)
+		// Don't count disconnects/unknown exceptions as dead (Yes that's a difference!)
 		if (owner.getSession() != null && owner.getSession().getPlayer() != null) {
 			super.onDeath();
 		}
@@ -258,7 +287,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		ItemStack[] contents = this.getInventory().getContents();
+		ItemStack[] contents = this.getInventory().getItems().getContents();
 		drops.addAll(Arrays.asList(contents));
 		return drops;
 	}
@@ -557,7 +586,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public long getDiggingTime() {
 		if (isDigging) {
-			//Is this correct?
+			// Is this correct?
 			return System.currentTimeMillis() - diggingStartTime;
 		} else {
 			return previousDiggingTime;
@@ -603,7 +632,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	public void dropItem() {
-		ItemStack current = this.getInventory().getCurrentItem();
+		ItemStack current = this.getInventory().getItems().getCurrentItem();
 		if (current == null) {
 			return;
 		}
@@ -615,7 +644,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 		} else {
 			current = null;
 		}
-		this.getInventory().setCurrentItem(current);
+		this.getInventory().getItems().setCurrentItem(current);
 		getParent().getWorld().createAndSpawnEntity(getHeadPosition().add(0.0, -0.4, 0.0), control);
+	}
+
+	@Override
+	public void damage(int amount, DamageCause cause, VanillaActionController damager, boolean sendHurtMessage) {
+		super.damage(amount, cause, damager, sendHurtMessage);
+		sendPacket(owner, new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
 	}
 }

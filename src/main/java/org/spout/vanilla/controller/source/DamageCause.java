@@ -62,13 +62,21 @@ public class DamageCause extends Reason {
 		 */
 		CACTUS,
 		/**
+		 * Damaged by drowning.
+		 */
+		DROWN,
+		/**
 		 * Damaged by an explosion.
 		 */
 		EXPLOSION,
 		/**
-		 * Damaged due to starvation.
+		 * Damaged by starving.
 		 */
 		STARVE,
+		/**
+		 * Damaged by suffocation.
+		 */
+		SUFFOCATE,
 		/**
 		 * Damaged by an unknown source.
 		 */

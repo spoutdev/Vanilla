@@ -43,12 +43,12 @@ import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Jukebox extends Solid implements Fuel {
+public class Jukebox extends ControlledMaterial implements Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public Jukebox(String name, int id) {
-		super(name, id);
-		this.setHardness(2.0F).setResistance(10.0F).setController(VanillaControllerTypes.JUKEBOX);
+		super(VanillaControllerTypes.JUKEBOX, name, id);
+		this.setHardness(2.0F).setResistance(10.0F);
 	}
 
 	@Override
@@ -58,17 +58,8 @@ public class Jukebox extends Solid implements Fuel {
 
 	@Override
 	public void onDestroy(Block block) {
-		super.onDestroy(block);
 		getController(block).stopMusic();
-	}
-
-	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, isClickedBlock)) {
-			block.getWorld().createAndSpawnEntity(block.getPosition(), new JukeboxController());
-			return true;
-		}
-		return false;
+		super.onDestroy(block);
 	}
 
 	@Override

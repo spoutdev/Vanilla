@@ -164,7 +164,7 @@ public class VanillaControllerTypes {
 	// Block
 	public static final VanillaControllerType FURNACE = new VanillaControllerType(-5, FurnaceController.class, "Furnace");
 	public static final VanillaControllerType DISPENSER = new VanillaControllerType(-6, DispenserController.class, "Dispenser");
-	public static final VanillaControllerType NOTEBLOCK = new VanillaControllerType(-7, NoteBlockController.class, "Note Block");
+	public static final VanillaControllerType NOTE_BLOCK = new VanillaControllerType(-7, NoteBlockController.class, "Note Block");
 	public static final VanillaControllerType JUKEBOX = new VanillaControllerType(-8, JukeboxController.class, "Jukebox");
 	public static final VanillaControllerType SIGN = new VanillaControllerType(-9, SignController.class, "Sign");
 	public static final VanillaControllerType PISTON_MOVING = new VanillaControllerType(-10, MovingPistonController.class, "Moving Piston");

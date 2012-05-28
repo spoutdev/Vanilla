@@ -29,13 +29,25 @@ package org.spout.vanilla.material.block.controlled;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.MonsterSpawnerController;
+import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.material.block.Solid;
 
-public class MonsterSpawner extends ControlledMaterial {
-	public MonsterSpawner(String name, int id) {
-		super(VanillaControllerTypes.MONSTER_SPAWNER, name, id);
-		this.setHardness(5.0F).setResistance(8.3F).setOpacity((byte) 1);
+public abstract class ControlledMaterial extends Solid {
+	public ControlledMaterial(VanillaControllerType type, String name, int id) {
+		super(name, id);
+		setController(type);
+	}
+
+	@Override
+	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
+		super.onPlacement(block, data, against, isClickedBlock);
+		getController(block, true);
+		return true;
+	}
+
+	@Override
+	public void onDestroy(Block block) {
+		super.onDestroy(block);
+		getController(block).getParent().kill();
 	}
 }

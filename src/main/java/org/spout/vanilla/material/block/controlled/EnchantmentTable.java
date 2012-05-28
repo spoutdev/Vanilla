@@ -47,10 +47,10 @@ import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class EnchantmentTable extends Solid implements Directional, Mineable {
+public class EnchantmentTable extends ControlledMaterial implements Directional, Mineable {
 	public EnchantmentTable(String name, int id) {
-		super(name, id);
-		this.setHardness(5.0F).setResistance(2000.0F).setController(VanillaControllerTypes.ENCHANTMENT_TABLE);
+		super(VanillaControllerTypes.ENCHANTMENT_TABLE, name, id);
+		this.setHardness(5.0F).setResistance(2000.0F);
 	}
 
 	@Override
@@ -85,15 +85,6 @@ public class EnchantmentTable extends Solid implements Directional, Mineable {
 
 	@Override
 	public void setFacing(Block block, BlockFace facing) {
-	}
-
-	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, isClickedBlock)) {
-			block.getWorld().createAndSpawnEntity(block.getPosition(), new EnchantmentTableController());
-			return true;
-		}
-		return false;
 	}
 
 	@Override

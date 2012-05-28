@@ -47,15 +47,15 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Furnace extends Solid implements Mineable, Directional {
+public class Furnace extends ControlledMaterial implements Mineable, Directional {
 	public static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
 	public static final float SMELT_TIME = 10.f;
 	private final boolean burning;
 
 	public Furnace(String name, int id, boolean burning) {
-		super(name, id);
+		super(VanillaControllerTypes.FURNACE, name, id);
 		this.burning = burning;
-		this.setHardness(3.5F).setResistance(5.8F).setController(VanillaControllerTypes.FURNACE);
+		this.setHardness(3.5F).setResistance(5.8F);
 	}
 
 	@Override
@@ -90,7 +90,6 @@ public class Furnace extends Solid implements Mineable, Directional {
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
 			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-			block.getWorld().createAndSpawnEntity(block.getPosition(), new FurnaceController());
 			return true;
 		}
 

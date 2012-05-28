@@ -38,7 +38,7 @@ import org.spout.vanilla.material.block.piston.PistonExtension;
 public class PistonExtensionMoving extends PistonExtension {
 	public PistonExtensionMoving(String name, int id) {
 		super(name, id);
-		this.setResistance(0.0F).setController(VanillaControllerTypes.PISTON_MOVING);
+		this.setResistance(0.0F);
 	}
 
 	@Override

@@ -43,12 +43,12 @@ import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class NoteBlock extends Solid implements Fuel {
+public class NoteBlock extends ControlledMaterial implements Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public NoteBlock(String name, int id) {
-		super(name, id);
-		this.setHardness(0.8F).setResistance(1.3F).setController(VanillaControllerTypes.NOTEBLOCK);
+		super(VanillaControllerTypes.NOTE_BLOCK, name, id);
+		this.setHardness(0.8F).setResistance(1.3F);
 	}
 
 	@Override
@@ -92,15 +92,6 @@ public class NoteBlock extends Solid implements Fuel {
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
 		getController(block).setPowered(this.isReceivingPower(block));
-	}
-
-	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, isClickedBlock)) {
-			block.getWorld().createAndSpawnEntity(block.getPosition(), new NoteBlockController());
-			return true;
-		}
-		return false;
 	}
 
 	@Override

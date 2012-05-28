@@ -44,7 +44,7 @@ import org.spout.vanilla.material.block.controlled.Dispenser;
 import org.spout.vanilla.material.block.controlled.EnchantmentTable;
 import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.block.controlled.Jukebox;
-import org.spout.vanilla.material.block.controlled.LockedChest;
+import org.spout.vanilla.material.block.solid.LockedChest;
 import org.spout.vanilla.material.block.controlled.MonsterSpawner;
 import org.spout.vanilla.material.block.controlled.NoteBlock;
 import org.spout.vanilla.material.block.controlled.PistonExtensionMoving;

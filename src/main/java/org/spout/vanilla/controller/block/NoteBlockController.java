@@ -41,7 +41,7 @@ public class NoteBlockController extends VanillaBlockController {
 	private boolean powered = false;
 
 	public NoteBlockController() {
-		super(VanillaControllerTypes.NOTEBLOCK, VanillaMaterials.NOTEBLOCK);
+		super(VanillaControllerTypes.NOTE_BLOCK, VanillaMaterials.NOTEBLOCK);
 	}
 
 	public Instrument getInstrument() {

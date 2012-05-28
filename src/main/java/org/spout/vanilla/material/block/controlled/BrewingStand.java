@@ -37,9 +37,9 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class BrewingStand extends VanillaBlockMaterial {
+public class BrewingStand extends ControlledMaterial {
 	public BrewingStand(String name, int id) {
-		super(name, id);
+		super(VanillaControllerTypes.BREWING_STAND, name, id);
 		this.setResistance(2.5F).setHardness(10.F).setController(VanillaControllerTypes.BREWING_STAND);
 	}
 

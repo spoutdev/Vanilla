@@ -30,13 +30,15 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.material.block.controlled.ControlledMaterial;
 import org.spout.vanilla.util.MoveReaction;
 
-public class PistonExtension extends VanillaBlockMaterial implements Directional {
+public class PistonExtension extends ControlledMaterial implements Directional {
 	public PistonExtension(String name, int id) {
-		super(name, id);
+		super(VanillaControllerTypes.PISTON_MOVING, name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 0);
 	}
 

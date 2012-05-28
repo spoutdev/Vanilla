@@ -47,10 +47,10 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Dispenser extends Solid implements Mineable, Directional {
+public class Dispenser extends ControlledMaterial implements Mineable, Directional {
 	public Dispenser(String name, int id) {
-		super(name, id);
-		this.setHardness(3.5F).setResistance(5.8F).setController(VanillaControllerTypes.DISPENSER);
+		super(VanillaControllerTypes.DISPENSER, name, id);
+		this.setHardness(3.5F).setResistance(5.8F);
 	}
 
 	@Override
@@ -87,7 +87,6 @@ public class Dispenser extends Solid implements Mineable, Directional {
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
 			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-			block.getWorld().createAndSpawnEntity(block.getPosition(), new DispenserController());
 			return true;
 		}
 		return false;

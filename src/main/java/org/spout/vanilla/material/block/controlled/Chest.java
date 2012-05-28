@@ -53,12 +53,12 @@ import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Directional {
+public class Chest extends ControlledMaterial implements Fuel, Mineable, Directional {
 	public final float BURN_TIME = 15.f;
 
 	public Chest(String name, int id) {
-		super(name, id);
-		this.setHardness(2.5F).setResistance(4.2F).setOpacity((byte) 1).setController(VanillaControllerTypes.CHEST);
+		super(VanillaControllerTypes.CHEST, name, id);
+		this.setHardness(2.5F).setResistance(4.2F).setOpacity((byte) 1);
 	}
 
 	public boolean isDouble(Block block) {
@@ -110,8 +110,6 @@ public class Chest extends VanillaBlockMaterial implements Fuel, Mineable, Direc
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
 			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-			block.getWorld().createAndSpawnEntity(block.getPosition(), new ChestController(isDouble(block) ? ChestInventory.LARGE_SIZE : ChestInventory.SMALL_SIZE));
-			return true;
 		}
 		return false;
 	}

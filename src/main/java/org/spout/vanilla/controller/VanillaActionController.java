@@ -37,6 +37,7 @@ import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.PlayerController;
 import org.spout.api.entity.action.ActionController;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.geo.cuboid.Block;
@@ -121,7 +122,9 @@ public abstract class VanillaActionController extends ActionController implement
 		//Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
 			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
-			getParent().kill();
+			if (!(this instanceof PlayerController)) {
+				getParent().kill();
+			}
 			onDeath();
 		}
 

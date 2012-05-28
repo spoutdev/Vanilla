@@ -50,6 +50,7 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	private short durability;
 	private int enchantability;
 	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
+	private int miningLevel;
 
 	public Tool(String name, int id, short durability) {
 		super(name, id);
@@ -90,6 +91,15 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 
 	public Set<BlockMaterial> getStrengthModifiedBlocks() {
 		return strengthModifiers.keySet();
+	}
+
+	public int getMiningLevel() {
+		return miningLevel;
+	}
+
+	public Tool setMiningLevel(int miningLevel) {
+		this.miningLevel = miningLevel;
+		return this;
 	}
 
 	@Override

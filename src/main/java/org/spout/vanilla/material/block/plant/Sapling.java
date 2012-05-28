@@ -35,8 +35,9 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
-
+import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
@@ -46,7 +47,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.normal.object.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.SmallTreeObject.SmallTreeType;
 
-public class Sapling extends GroundAttachable implements Plant, Fuel {
+public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMaterial {
 	public static final Sapling DEFAULT = new Sapling("Sapling");
 	public static final Sapling SPRUCE = new Sapling("Spruce Sapling", 1, DEFAULT);
 	public static final Sapling BIRCH = new Sapling("Birch Sapling", 2, DEFAULT);
@@ -130,5 +131,21 @@ public class Sapling extends GroundAttachable implements Plant, Fuel {
 	public void growTree(Block block, Sapling type) {
 		SmallTreeObject object = new SmallTreeObject(new Random(), SmallTreeType.OAK);
 		object.placeObject(block.getWorld(), block.getX(), block.getY(), block.getZ());
+	}
+
+	@Override
+	public Vector3[] maxRange() {
+		// TODO - placeholder - should probably be integrated into the Tree Object system
+		return new Vector3[] {new Vector3(4, 0, 4), new Vector3(4, 8, 4)};
+	}
+
+	@Override
+	public long update(Block b, long updateTime, long lastUpdateTime, boolean first) {
+		if (first) {
+			return b.getWorld().getAge() + 10000;
+		} else {
+			this.growTree(b);
+			return -1;
+		}
 	}
 }

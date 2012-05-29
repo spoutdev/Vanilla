@@ -69,23 +69,17 @@ import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
-/**
- * Vanilla - The Minecraft implementation for Spout.
- */
 public class VanillaPlugin extends CommonPlugin {
 	public static final int MINECRAFT_PROTOCOL_ID = 29;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
 	private Engine game;
 	private VanillaConfiguration config;
-	private WorldConfiguration worldConfig;
-	private VanillaRecipes recipes;
 	private static VanillaPlugin instance;
 
 	@Override
 	public void onDisable() {
 		try {
 			config.save();
-			worldConfig.save();
 		} catch (ConfigurationException e) {
 			getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);
 		}
@@ -98,7 +92,6 @@ public class VanillaPlugin extends CommonPlugin {
 		//Config
 		try {
 			config.load();
-			worldConfig.load();
 		} catch (ConfigurationException e) {
 			getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
 		}
@@ -130,7 +123,6 @@ public class VanillaPlugin extends CommonPlugin {
 		instance = this;
 		game = getGame();
 		config = new VanillaConfiguration(getDataFolder());
-		worldConfig = new WorldConfiguration(getDataFolder());
 		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
 
 		if (game instanceof Server) {
@@ -149,7 +141,6 @@ public class VanillaPlugin extends CommonPlugin {
 		//TODO if (game instanceof Client) do stuff?
 
 		VanillaMaterials.initialize();
-		recipes = new VanillaRecipes(this);
 		getLogger().info("loaded");
 	}
 
@@ -157,28 +148,28 @@ public class VanillaPlugin extends CommonPlugin {
 		ArrayList<World> worlds = new ArrayList<World>();
 		ArrayList<Point> spawns = new ArrayList<Point>();
 
-		if (WorldConfiguration.NORMAL_LOAD.getBoolean()) {
+		if (VanillaConfiguration.WORLDS.NORMAL_LOAD.getBoolean()) {
 			NormalGenerator normGen = new NormalGenerator();
 			World normal = game.loadWorld(WorldConfiguration.NORMAL_NAME.getString(), normGen);
 			worlds.add(normal);
 			spawns.add(normGen.getSafeSpawn(normal));
 		}
 
-		if (WorldConfiguration.FLAT_LOAD.getBoolean()) {
+		if (VanillaConfiguration.WORLDS.FLAT_LOAD.getBoolean()) {
 			FlatGenerator flatGen = new FlatGenerator(64);
 			World flat = game.loadWorld(WorldConfiguration.FLAT_NAME.getString(), flatGen);
 			worlds.add(flat);
 			spawns.add(flatGen.getSafeSpawn(flat));
 		}
 
-		if (WorldConfiguration.NETHER_LOAD.getBoolean()) {
+		if (VanillaConfiguration.WORLDS.NETHER_LOAD.getBoolean()) {
 			NetherGenerator netherGen = new NetherGenerator();
 			World nether = game.loadWorld(WorldConfiguration.NETHER_NAME.getString(), netherGen);
 			worlds.add(nether);
 			spawns.add(netherGen.getSafeSpawn(nether));
 		}
 
-		if (WorldConfiguration.END_LOAD.getBoolean()) {
+		if (VanillaConfiguration.WORLDS.END_LOAD.getBoolean()) {
 			TheEndGenerator endGen = new TheEndGenerator();
 			World end = game.loadWorld(WorldConfiguration.END_NAME.getString(), endGen);
 			worlds.add(end);
@@ -207,30 +198,49 @@ public class VanillaPlugin extends CommonPlugin {
 				}
 			}
 			world.setSpawnPoint(new Transform(point, Quaternion.IDENTITY, Vector3.ONE));
-			world.createAndSpawnEntity(point, new PointObserver());
 
-			//TODO Remove this when Weather and Time are Region tasks.
+			//TODO Remove sky setting when Weather and Time are Region tasks.
 			if (world.getGenerator() instanceof NormalGenerator) {
 				NormalSky sky = new NormalSky();
 				sky.setWorld(world);
 				VanillaSky.setSky(world, sky);
+				if (VanillaConfiguration.WORLDS.NORMAL_LOADED_SPAWN.getBoolean()) {
+					world.createAndSpawnEntity(point, new PointObserver());
+				}
 				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
 			} else if (world.getGenerator() instanceof FlatGenerator) {
 				NormalSky sky = new NormalSky();
 				sky.setWorld(world);
 				VanillaSky.setSky(world, sky);
+				if (VanillaConfiguration.WORLDS.FLAT_LOADED_SPAWN.getBoolean()) {
+					world.createAndSpawnEntity(point, new PointObserver());
+				}
 				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
 			} else if (world.getGenerator() instanceof NetherGenerator) {
 				NetherSky sky = new NetherSky();
 				sky.setWorld(world);
 				VanillaSky.setSky(world, sky);
+				if (VanillaConfiguration.WORLDS.NETHER_LOADED_SPAWN.getBoolean()) {
+					world.createAndSpawnEntity(point, new PointObserver());
+				}
 				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
 			} else if (world.getGenerator() instanceof TheEndGenerator) {
 				TheEndSky sky = new TheEndSky();
 				sky.setWorld(world);
 				VanillaSky.setSky(world, sky);
+				if (VanillaConfiguration.WORLDS.END_LOADED_SPAWN.getBoolean()) {
+					world.createAndSpawnEntity(point, new PointObserver());
+				}
 				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
 			}
 		}
+	}
+
+	/**
+	 * Gets the running instance of VanillaPlugin
+	 * @return
+	 */
+	public static VanillaPlugin getInstance() {
+		return instance;
 	}
 }

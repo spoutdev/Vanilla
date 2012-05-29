@@ -33,6 +33,8 @@ import org.spout.api.util.config.ConfigurationHolder;
 import org.spout.api.util.config.ConfigurationHolderConfiguration;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 
+import org.spout.vanilla.VanillaPlugin;
+
 public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	// General
 	public static final ConfigurationHolder MOTD = new ConfigurationHolder("A Spout Server", "general", "motd");
@@ -56,22 +58,25 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder PLAYER_SPEEDMINING_PREVENTION_ENABLED = new ConfigurationHolder(true, "player", "speedmining-prevention-enabled");
 	public static final ConfigurationHolder PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE = new ConfigurationHolder(5, "player", "speedmining-prevention-allowance");
 	public static final ConfigurationHolder PLAYER_SPEEDMINING_PREVENTION_PERIOD = new ConfigurationHolder(50, "player", "speedmining-prevention-period");
-	public static final OpConfiguration OPS = new OpConfigurationWrapper();
 	// Controller-specific
 	public static final ConfigurationHolder ITEM_PICKUP_RANGE = new ConfigurationHolder(2, "controller", "item-pickup-range");
 	// Redstone-specific
 	public static final ConfigurationHolder REDSTONE_MIN_RANGE = new ConfigurationHolder(0, "redstone", "redstone-min-power-range");
 	public static final ConfigurationHolder REDSTONE_MAX_RANGE = new ConfigurationHolder(15, "redstone", "redstone-max-power-range");
 
+	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
+	public static final WorldConfiguration WORLDS = new WorldConfiguration(VanillaPlugin.getInstance().getDataFolder());
+
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));
-		((OpConfigurationWrapper) OPS).setWrapped(new OpConfiguration(dataFolder));
 	}
 
 	@Override
 	public void load() throws ConfigurationException {
 		OPS.load();
 		OPS.save();
+		WORLDS.load();
+		WORLDS.save();
 		super.load();
 		super.save();
 	}
@@ -79,6 +84,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	@Override
 	public void save() throws ConfigurationException {
 		OPS.save();
+		WORLDS.save();
 		super.save();
 	}
 }

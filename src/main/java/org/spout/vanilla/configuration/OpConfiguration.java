@@ -35,10 +35,6 @@ import org.spout.api.util.config.yaml.YamlConfiguration;
 public class OpConfiguration {
 	private final YamlConfiguration config;
 
-	protected OpConfiguration() {
-		this.config = null;
-	}
-
 	public OpConfiguration(File dataFolder) {
 		config = new YamlConfiguration(new File(dataFolder, "ops.yml"));
 	}

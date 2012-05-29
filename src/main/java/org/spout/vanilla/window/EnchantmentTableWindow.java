@@ -24,51 +24,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
-
-import java.util.ArrayList;
-
-import org.spout.api.entity.Controller;
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.block.BlockFace;
+package org.spout.vanilla.window;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.CraftingTableInventory;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.Instrument;
 
-public class CraftingTable extends Solid {
-	
-	public CraftingTable(String name, int id) {
-		super(name, id);
-		this.setHardness(4.2F);
-	}
-		
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
-	}
+public class EnchantmentTableWindow extends Window {
+	private static final int[] SLOTS = {28, 29, 30, 31, 32, 33, 34, 35, 36, 19, 20, 21, 22, 23, 24, 25, 26, 27, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
 
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(this, 1));
-		return drops;
-	}
-	
-	@Override
-	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
-		if (action == Action.RIGHT_CLICK) {
-			Controller controller = entity.getController();
-			if (!(controller instanceof VanillaPlayer)) {
-				return;
-			}
-
-			// Open the crafting table
-			(new CraftingTableInventory()).open((VanillaPlayer) controller);
-		}
+	public EnchantmentTableWindow(VanillaPlayer owner) {
+		super(4, "Enchant", owner);
 	}
 }

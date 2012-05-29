@@ -40,12 +40,12 @@ import org.spout.vanilla.util.InventoryUtil;
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class Window implements InventoryViewer {
-	private final int id;
-	private final int instanceId;
-	private String title;
-	private final VanillaPlayer owner;
-	private InventoryBundle inventory;
-	private ItemStack itemOnCursor;
+	protected final int id;
+	protected final int instanceId;
+	protected String title;
+	protected final VanillaPlayer owner;
+	protected InventoryBundle inventory;
+	protected ItemStack itemOnCursor;
 	private int[] slotConversionArray;
 
 	public Window(int id, String title, VanillaPlayer owner) {
@@ -122,14 +122,12 @@ public class Window implements InventoryViewer {
 	 * Called after this inventory has been successfully opened
 	 */
 	public void onOpened() {
-
 	}
 
 	/**
 	 * Called after this inventory has been successfully closed
 	 */
 	public void onClosed() {
-
 	}
 
 	public boolean hasItemOnCursor() {
@@ -148,7 +146,7 @@ public class Window implements InventoryViewer {
 		this.slotConversionArray = conversionArray;
 	}
 
-	public int getMCSlotIndex(int spoutSlotIndex) {
+	public int getNativeSlotIndex(int spoutSlotIndex) {
 		if (this.slotConversionArray == null || spoutSlotIndex < 0 || spoutSlotIndex >= slotConversionArray.length) {
 			return -1;
 		} else {
@@ -167,11 +165,18 @@ public class Window implements InventoryViewer {
 		return -1;
 	}
 
+	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {
+		if (rightClick) {
+			return onRightClick(clickedSlot, shift);
+		}
+		return onLeftClick(clickedSlot, shift);
+	}
+
 	/**
 	 * Called when the player clicks outside the window
 	 * @return True to notify that the operation was allowed
 	 */
-	public boolean onOutSideClick() {
+	public boolean onOutsideClick() {
 		if (this.hasItemOnCursor()) {
 			//TODO: Drop the item at the cursor
 			this.setItemOnCursor(null);
@@ -223,7 +228,7 @@ public class Window implements InventoryViewer {
 			this.inventory.setItem(clickedSlot, null);
 			return true;
 		}
-		return true; //both null - do something here?
+		return true;
 	}
 
 	/**
@@ -278,7 +283,7 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Called when the player right-clicks on a slot in this window
-	 * @param slotIndex
+	 * @param clickedSlot
 	 * @param shift whether shift was pressed
 	 * @return True to notify that the operation was allowed
 	 */
@@ -292,7 +297,7 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Called when the player left-clicks on a slot in this window
-	 * @param slotIndex
+	 * @param clickedSlot
 	 * @param shift whether shift was pressed
 	 * @return True to notify that the operation was allowed
 	 */

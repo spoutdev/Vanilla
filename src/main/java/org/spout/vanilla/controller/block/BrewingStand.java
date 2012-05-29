@@ -30,8 +30,8 @@ import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class BrewingStandController extends VanillaBlockController {
-	public BrewingStandController() {
+public class BrewingStand extends VanillaBlockController {
+	public BrewingStand() {
 		super(VanillaControllerTypes.BREWING_STAND, VanillaMaterials.BREWING_STAND_BLOCK);
 	}
 

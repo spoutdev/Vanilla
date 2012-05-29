@@ -45,15 +45,13 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.EnchantmentUtil;
 
 public class Skeleton extends Creature implements Hostile {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Skeleton.class, "Skeleton");
-
 	public Skeleton() {
 		super(VanillaControllerTypes.SKELETON);
 	}
 
 	@Override
 	public void onAttached() {
-		setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(20, HealthChangeReason.SPAWN);
 		setMaxHealth(20);
 		super.onAttached();
 	}

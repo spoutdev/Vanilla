@@ -26,24 +26,19 @@
  */
 package org.spout.vanilla.controller.block;
 
-import java.util.HashSet;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.player.Player;
-
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.inventory.ChestInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
-import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 
-public class SignController extends VanillaBlockController {
-	private String[] text = new String[4];
-	private HashSet<Player> dirty = new HashSet<Player>();
-	private int range = 20;
+public class Chest extends VanillaBlockController {
+	private final ChestInventory inventory;
+	private boolean opened = false;
 
-	public SignController() {
-		super(VanillaControllerTypes.SIGN, VanillaMaterials.SIGN.getPlacedMaterial());
+	public Chest(int size) {
+		super(VanillaControllerTypes.CHEST, VanillaMaterials.CHEST);
+		inventory = new ChestInventory(this, size);
 	}
 
 	@Override
@@ -52,48 +47,19 @@ public class SignController extends VanillaBlockController {
 
 	@Override
 	public void onTick(float dt) {
-		Block block = getBlock();
-		HashSet<Player> nearby = new HashSet<Player>();
-		nearby.addAll(block.getWorld().getNearbyPlayers(block.getPosition(), range));
-		if (nearby == null || nearby.isEmpty()) {
-			return;
-		}
-
-		if (dirty.isEmpty() || !dirty.containsAll(nearby)) {
-			nearby.removeAll(dirty);
-			dirty = nearby;
-			update();
-		}
 	}
 
-	public int getRange() {
-		return range;
+	public ChestInventory getInventory() {
+		return inventory;
 	}
 
-	public void setRange(int range) {
-		this.range = range;
+	public void setOpened(boolean opened) {
+		this.opened = opened;
+		byte data = opened ? (byte) 1 : 0;
+		VanillaNetworkSynchronizer.playBlockAction(getBlock(), (byte) 1, data);
 	}
 
-	public String[] getText() {
-		return text;
-	}
-
-	public void setText(String[] text) {
-		this.text = text;
-		update();
-	}
-
-	public String getLine(int line) {
-		return text[line + 1];
-	}
-
-	public void setLine(String text, int line) {
-		this.text[line + 1] = text;
-		update();
-	}
-
-	private void update() {
-		Block block = getBlock();
-		VanillaNetworkSynchronizer.sendPacket(dirty.toArray(new Player[dirty.size()]), new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), text));
+	public boolean isOpened() {
+		return opened;
 	}
 }

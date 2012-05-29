@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.world.sky;
+package org.spout.vanilla.controller.world;
 
 import java.util.HashMap;
 import java.util.Random;

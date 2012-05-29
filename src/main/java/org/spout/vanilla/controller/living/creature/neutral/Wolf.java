@@ -37,7 +37,6 @@ import org.spout.vanilla.controller.living.creature.Tameable;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Wolf extends Creature implements Tameable, Neutral {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Wolf.class, "Wolf");
 	private Controller master;
 
 	public Wolf() {
@@ -48,10 +47,10 @@ public class Wolf extends Creature implements Tameable, Neutral {
 	public void onAttached() {
 		// master = data().get("controlling_entity", master);
 		if (master != null) {
-			setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+			setHealth(20, HealthChangeReason.SPAWN);
 			setMaxHealth(20);
 		} else {
-			setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+			setHealth(8, HealthChangeReason.SPAWN);
 			setMaxHealth(8);
 		}
 

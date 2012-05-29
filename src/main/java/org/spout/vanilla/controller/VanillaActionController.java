@@ -78,7 +78,7 @@ public abstract class VanillaActionController extends ActionController implement
 	private int health = 1;
 	private int maxHealth = 1;
 	// Damage
-	private Source lastDamage = new DamageCause(DamageCause.Type.UNKNOWN);
+	private Source lastDamage = DamageCause.UNKNOWN;
 	private VanillaActionController lastDamager;
 
 	protected VanillaActionController(VanillaControllerType type) {
@@ -276,7 +276,7 @@ public abstract class VanillaActionController extends ActionController implement
 			}
 
 			if (fireTicks % 20 == 0) {
-				damage(1, new DamageCause(DamageCause.Type.BURN));
+				damage(1, DamageCause.BURN);
 				broadcastPacket(new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_HURT), new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_HURT));
 			}
 
@@ -293,7 +293,7 @@ public abstract class VanillaActionController extends ActionController implement
 	 * @param amount amount the controller will be damaged by.
 	 */
 	public void damage(int amount) {
-		this.damage(amount, new DamageCause(DamageCause.Type.UNKNOWN));
+		this.damage(amount, DamageCause.UNKNOWN);
 	}
 
 	/**
@@ -323,7 +323,7 @@ public abstract class VanillaActionController extends ActionController implement
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
 	public void damage(int amount, DamageCause cause, VanillaActionController damager, boolean sendHurtMessage) {
-		setHealth(getHealth() - amount, new HealthChangeReason(HealthChangeReason.Type.DAMAGE));
+		setHealth(getHealth() - amount, HealthChangeReason.DAMAGE);
 		lastDamager = damager;
 		if (sendHurtMessage) {
 			broadcastPacket(new AnimationMessage(this.getParent().getId(), AnimationMessage.ANIMATION_HURT), new EntityStatusMessage(this.getParent().getId(), EntityStatusMessage.ENTITY_HURT));

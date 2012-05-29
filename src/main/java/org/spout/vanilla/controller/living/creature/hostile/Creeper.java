@@ -43,15 +43,13 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Creeper extends Creature implements Hostile {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Creeper.class, "Creeper");
-
 	protected Creeper() {
 		super(VanillaControllerTypes.CREEPER);
 	}
 
 	@Override
 	public void onAttached() {
-		setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(20, HealthChangeReason.SPAWN);
 		setMaxHealth(20);
 		super.onAttached();
 	}
@@ -64,7 +62,7 @@ public class Creeper extends Creature implements Hostile {
 			drops.add(new ItemStack(VanillaMaterials.GUNPOWDER, count));
 		}
 
-		if (source.equals(DamageCause.Type.ARROW) && lastDamager != null && lastDamager instanceof Skeleton) {
+		if (source == DamageCause.ARROW && lastDamager != null && lastDamager instanceof Skeleton) {
 			drops.add(new ItemStack(VanillaMaterials.getMaterial((short) (VanillaMaterials.GOLD_MUSIC_DISC.getId() + getRandom().nextInt(11))), 1));
 		}
 		return drops;

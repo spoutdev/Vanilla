@@ -28,7 +28,7 @@ package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.controller.block.MovingPistonController;
+import org.spout.vanilla.controller.block.MovingPiston;
 import org.spout.vanilla.material.block.piston.PistonExtension;
 
 /**
@@ -41,7 +41,7 @@ public class PistonExtensionMoving extends PistonExtension {
 	}
 
 	@Override
-	public MovingPistonController getController(Block block) {
-		return (MovingPistonController) super.getController(block);
+	public MovingPiston getController(Block block) {
+		return (MovingPiston) super.getController(block);
 	}
 }

@@ -43,15 +43,13 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Chicken extends Creature implements Passive {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Chicken.class, "Chicken");
-
 	public Chicken() {
 		super(VanillaControllerTypes.CHICKEN);
 	}
 
 	@Override
 	public void onAttached() {
-		setHealth(4, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(4, HealthChangeReason.SPAWN);
 		setMaxHealth(4);
 		super.onAttached();
 	}
@@ -66,7 +64,7 @@ public class Chicken extends Creature implements Passive {
 
 		count = getRandom().nextInt(2);
 		if (count > 0) {
-			if (source.equals(DamageCause.Type.BURN)) {
+			if (source == DamageCause.BURN) {
 				drops.add(new ItemStack(VanillaMaterials.COOKED_CHICKEN, count));
 			} else {
 				drops.add(new ItemStack(VanillaMaterials.RAW_CHICKEN, count));

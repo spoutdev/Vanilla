@@ -28,7 +28,7 @@ package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.block.FurnaceController;
+import org.spout.vanilla.controller.block.Furnace;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
@@ -40,9 +40,9 @@ import org.spout.vanilla.window.Window;
  */
 public class FurnaceInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
-	private final FurnaceController owner;
+	private final Furnace owner;
 
-	public FurnaceInventory(FurnaceController owner) {
+	public FurnaceInventory(Furnace owner) {
 		super(3);
 		this.owner = owner;
 	}
@@ -51,7 +51,7 @@ public class FurnaceInventory extends WindowInventory {
 	 * Returns the furnace controller that this inventory belongs to.
 	 * @return owner the furnace controller
 	 */
-	public FurnaceController getOwner() {
+	public Furnace getOwner() {
 		return owner;
 	}
 

@@ -24,24 +24,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.block;
+package org.spout.vanilla.material.block.solid;
 
-import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.solid.Stone;
 
-public class SilverfishBlockController extends VanillaBlockController {
-	public SilverfishBlockController() {
-		super(VanillaControllerTypes.SILVERFISH, VanillaMaterials.SILVERFISH_STONE);
-	}
-
-	@Override
-	public void onAttached() {
-
-	}
-
-	@Override
-	public void onTick(float dt) {
-
+public class SilverfishStone extends Stone {
+	public SilverfishStone(String name, int id) {
+		super(name, id);
+		this.setHardness(0.8F).setResistance(1.2F); // TODO Confirm resistance
 	}
 }

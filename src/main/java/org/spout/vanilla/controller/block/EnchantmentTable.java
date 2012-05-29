@@ -24,9 +24,31 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.source;
+package org.spout.vanilla.controller.block;
 
-import org.spout.api.Source;
+import org.spout.vanilla.controller.VanillaBlockController;
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.inventory.EnchantmentTableInventory;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public abstract class Reason implements Source {
+public class EnchantmentTable extends VanillaBlockController {
+	private final EnchantmentTableInventory inventory;
+
+	public EnchantmentTable() {
+		super(VanillaControllerTypes.ENCHANTMENT_TABLE, VanillaMaterials.ENCHANTMENT_TABLE);
+		inventory = new EnchantmentTableInventory();
+	}
+
+	@Override
+	public void onTick(float dt) {
+	}
+
+	@Override
+	public void onAttached() {
+		System.out.println("Enchantment Table entity spawned and controller attached to: " + getParent().getPosition().toString());
+	}
+
+	public EnchantmentTableInventory getInventory() {
+		return inventory;
+	}
 }

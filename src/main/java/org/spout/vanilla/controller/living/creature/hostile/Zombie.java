@@ -44,8 +44,6 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Zombie extends Creature implements Hostile {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Zombie.class, "Zombie");
-
 	public Zombie() {
 		super(VanillaControllerTypes.ZOMBIE);
 	}
@@ -56,7 +54,7 @@ public class Zombie extends Creature implements Hostile {
 
 	@Override
 	public void onAttached() {
-		setHealth(16, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(16, HealthChangeReason.SPAWN);
 		setMaxHealth(20);
 		super.onAttached();
 	}

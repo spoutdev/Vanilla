@@ -26,29 +26,74 @@
  */
 package org.spout.vanilla.controller.block;
 
+import java.util.HashSet;
+
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.player.Player;
+
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.inventory.EnchantmentTableInventory;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 
-public class EnchantmentTableController extends VanillaBlockController {
-	private final EnchantmentTableInventory inventory;
+public class Sign extends VanillaBlockController {
+	private String[] text = new String[4];
+	private HashSet<Player> dirty = new HashSet<Player>();
+	private int range = 20;
 
-	public EnchantmentTableController() {
-		super(VanillaControllerTypes.ENCHANTMENT_TABLE, VanillaMaterials.ENCHANTMENT_TABLE);
-		inventory = new EnchantmentTableInventory();
-	}
-
-	@Override
-	public void onTick(float dt) {
+	public Sign() {
+		super(VanillaControllerTypes.SIGN, VanillaMaterials.SIGN.getPlacedMaterial());
 	}
 
 	@Override
 	public void onAttached() {
-		System.out.println("Enchantment Table entity spawned and controller attached to: " + getParent().getPosition().toString());
 	}
 
-	public EnchantmentTableInventory getInventory() {
-		return inventory;
+	@Override
+	public void onTick(float dt) {
+		Block block = getBlock();
+		HashSet<Player> nearby = new HashSet<Player>();
+		nearby.addAll(block.getWorld().getNearbyPlayers(block.getPosition(), range));
+		if (nearby == null || nearby.isEmpty()) {
+			return;
+		}
+
+		if (dirty.isEmpty() || !dirty.containsAll(nearby)) {
+			nearby.removeAll(dirty);
+			dirty = nearby;
+			update();
+		}
+	}
+
+	public int getRange() {
+		return range;
+	}
+
+	public void setRange(int range) {
+		this.range = range;
+	}
+
+	public String[] getText() {
+		return text;
+	}
+
+	public void setText(String[] text) {
+		this.text = text;
+		update();
+	}
+
+	public String getLine(int line) {
+		return text[line + 1];
+	}
+
+	public void setLine(String text, int line) {
+		this.text[line + 1] = text;
+		update();
+	}
+
+	private void update() {
+		Block block = getBlock();
+		VanillaNetworkSynchronizer.sendPacket(dirty.toArray(new Player[dirty.size()]), new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), text));
 	}
 }

@@ -26,18 +26,18 @@
  */
 package org.spout.vanilla.inventory;
 
-import org.spout.vanilla.controller.block.ChestController;
+import org.spout.vanilla.controller.block.Chest;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.window.ChestWindow;
 import org.spout.vanilla.window.Window;
 
 public class ChestInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
-	private final ChestController owner;
+	private final Chest owner;
 	public static final int LARGE_SIZE = 54, SMALL_SIZE = 27;
 	private boolean isLarge;
 
-	public ChestInventory(ChestController owner, int size) {
+	public ChestInventory(Chest owner, int size) {
 		super(size);
 		this.owner = owner;
 		this.isLarge = size == LARGE_SIZE;
@@ -47,7 +47,7 @@ public class ChestInventory extends WindowInventory {
 		return this.isLarge;
 	}
 
-	public ChestController getOwner() {
+	public Chest getOwner() {
 		return owner;
 	}
 

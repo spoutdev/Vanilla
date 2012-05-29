@@ -29,6 +29,7 @@ package org.spout.vanilla.controller.world.sky;
 import org.spout.api.Spout;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
 import org.spout.vanilla.world.Weather;

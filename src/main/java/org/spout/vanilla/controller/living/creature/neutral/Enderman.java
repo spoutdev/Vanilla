@@ -44,7 +44,6 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Enderman extends Creature implements Neutral {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Enderman.class, "Enderman");
 	private ItemStack heldItem;
 	private ItemStack lastHeldItem;
 
@@ -54,7 +53,7 @@ public class Enderman extends Creature implements Neutral {
 
 	@Override
 	public void onAttached() {
-		setHealth(40, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(40, HealthChangeReason.SPAWN);
 		setMaxHealth(40);
 		heldItem = (ItemStack) data().get("held_item", heldItem);
 		super.onAttached();

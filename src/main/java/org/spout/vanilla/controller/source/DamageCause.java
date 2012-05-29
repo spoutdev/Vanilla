@@ -26,65 +26,43 @@
  */
 package org.spout.vanilla.controller.source;
 
+import org.spout.api.Source;
+
 /**
  * Represents a source of damage.
  */
-public class DamageCause extends Reason {
-	private final Type type;
-
-	public DamageCause(Type type) {
-		this.type = type;
-	}
-
+public enum DamageCause implements Source {
+	ARROW,
 	/**
-	 * Returns the type of damage.
-	 * @return Damage type
+	 * Damaged by another entity attacking.
 	 */
-	public Type getType() {
-		return type;
-	}
-
-	public enum Type {
-		/**
-		 * Damaged by an arrow.
-		 */
-		ARROW,
-		/**
-		 * Damaged by another entity attacking.
-		 */
-		ATTACK,
-		/**
-		 * Damaged by fire.
-		 */
-		BURN,
-		/**
-		 * Damaged by touching cactus.
-		 */
-		CACTUS,
-		/**
-		 * Damaged by drowning.
-		 */
-		DROWN,
-		/**
-		 * Damaged by an explosion.
-		 */
-		EXPLOSION,
-		/**
-		 * Damaged by starving.
-		 */
-		STARVE,
-		/**
-		 * Damaged by suffocation.
-		 */
-		SUFFOCATE,
-		/**
-		 * Damaged by an unknown source.
-		 */
-		UNKNOWN;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return obj.equals(type);
-	}
+	ATTACK,
+	/**
+	 * Damaged by fire.
+	 */
+	BURN,
+	/**
+	 * Damaged by touching cactus.
+	 */
+	CACTUS,
+	/**
+	 * Damaged by an explosion.
+	 */
+	EXPLOSION,
+	/**
+	 * Damaged due to starvation.
+	 */
+	STARVE,
+	/**
+	 * Damaged due to drowning.
+	 */
+	DROWN,
+	/**
+	 * Damage caused by suffocation.
+	 */
+	SUFFOCATE,
+	/**
+	 * Damaged by an unknown source.
+	 */
+	UNKNOWN;
 }

@@ -42,15 +42,13 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class IronGolem extends Creature implements Utility {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(IronGolem.class, "Iron Golem");
-
 	public IronGolem() {
 		super(VanillaControllerTypes.IRON_GOLEM);
 	}
 
 	@Override
 	public void onAttached() {
-		setHealth(100, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(100, HealthChangeReason.SPAWN);
 		setMaxHealth(100);
 		super.onAttached();
 	}

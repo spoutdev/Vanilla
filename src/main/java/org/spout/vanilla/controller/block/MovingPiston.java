@@ -34,8 +34,8 @@ import org.spout.vanilla.material.VanillaMaterials;
  * This controller will manage the moving of the other entities on top of this piston.<br>
  * For the client we will most likely handle visual movement as well.
  */
-public class MovingPistonController extends VanillaBlockController {
-	protected MovingPistonController() {
+public class MovingPiston extends VanillaBlockController {
+	protected MovingPiston() {
 		super(VanillaControllerTypes.PISTON_MOVING, VanillaMaterials.PISTON_MOVING);
 	}
 

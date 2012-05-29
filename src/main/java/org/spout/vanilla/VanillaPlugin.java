@@ -57,7 +57,7 @@ import org.spout.vanilla.controller.world.PointObserver;
 import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
-import org.spout.vanilla.controller.world.sky.VanillaSky;
+import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;

@@ -42,15 +42,13 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.item.misc.Dye;
 
 public class Squid extends Creature implements Passive {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Squid.class, "Squid");
-
 	public Squid() {
 		super(VanillaControllerTypes.SQUID);
 	}
 
 	@Override
 	public void onAttached() {
-		setHealth(10, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(10, HealthChangeReason.SPAWN);
 		setMaxHealth(10);
 		super.onAttached();
 	}

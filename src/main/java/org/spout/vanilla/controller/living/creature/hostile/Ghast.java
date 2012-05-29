@@ -42,15 +42,13 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Ghast extends Creature implements Hostile {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Ghast.class, "Ghast");
-
 	public Ghast() {
 		super(VanillaControllerTypes.GHAST);
 	}
 
 	@Override
 	public void onAttached() {
-		setHealth(10, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(10, HealthChangeReason.SPAWN);
 		setMaxHealth(10);
 		super.onAttached();
 	}

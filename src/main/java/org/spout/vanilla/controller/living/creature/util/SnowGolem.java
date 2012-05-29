@@ -42,15 +42,13 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class SnowGolem extends Creature implements Passive {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(SnowGolem.class, "Snow Golem");
-
 	public SnowGolem() {
 		super(VanillaControllerTypes.SNOW_GOLEM);
 	}
 
 	@Override
 	public void onAttached() {
-		setHealth(6, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(6, HealthChangeReason.SPAWN);
 		setMaxHealth(6);
 		super.onAttached();
 	}

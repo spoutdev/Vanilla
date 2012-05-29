@@ -32,7 +32,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.block.SignController;
+import org.spout.vanilla.controller.block.Sign;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 
 public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
@@ -48,7 +48,7 @@ public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
 		}
 
 		BlockController controller = block.getController();
-		if (controller == null || !(controller instanceof SignController)) {
+		if (controller == null || !(controller instanceof Sign)) {
 			return;
 		}
 
@@ -57,7 +57,7 @@ public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
 			return;
 		}
 
-		SignController sign = (SignController) controller;
+		Sign sign = (Sign) controller;
 		sign.setText(text);
 	}
 }

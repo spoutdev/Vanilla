@@ -43,15 +43,13 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Pig extends Creature implements Passive {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Pig.class, "Pig");
-
 	public Pig() {
 		super(VanillaControllerTypes.PIG);
 	}
 
 	@Override
 	public void onAttached() {
-		setHealth(10, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(10, HealthChangeReason.SPAWN);
 		setMaxHealth(10);
 		super.onAttached();
 	}
@@ -61,7 +59,7 @@ public class Pig extends Creature implements Passive {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
-			if (source.equals(DamageCause.Type.BURN)) {
+			if (source == DamageCause.BURN) {
 				drops.add(new ItemStack(VanillaMaterials.COOKED_PORKCHOP, count));
 			} else {
 				drops.add(new ItemStack(VanillaMaterials.RAW_PORKCHOP, count));

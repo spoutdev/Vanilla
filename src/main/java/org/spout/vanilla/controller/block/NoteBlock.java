@@ -36,11 +36,11 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.util.Instrument;
 
-public class NoteBlockController extends VanillaBlockController {
+public class NoteBlock extends VanillaBlockController {
 	private int note = 0;
 	private boolean powered = false;
 
-	public NoteBlockController() {
+	public NoteBlock() {
 		super(VanillaControllerTypes.NOTE_BLOCK, VanillaMaterials.NOTEBLOCK);
 	}
 

@@ -40,8 +40,6 @@ import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class MagmaSlime extends Slime implements Hostile {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(MagmaSlime.class, "Magma Slime");
-
 	public MagmaSlime() {
 		super(VanillaControllerTypes.MAGMA_CUBE);
 	}

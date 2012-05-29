@@ -37,7 +37,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.FurnaceController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
@@ -58,8 +57,8 @@ public class Furnace extends ControlledMaterial implements Mineable, Directional
 	}
 
 	@Override
-	public FurnaceController getController(Block block) {
-		return (FurnaceController) super.getController(block);
+	public org.spout.vanilla.controller.block.Furnace getController(Block block) {
+		return (org.spout.vanilla.controller.block.Furnace) super.getController(block);
 	}
 
 	@Override

@@ -24,7 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.source;
+package org.spout.vanilla.controller.block;
 
-public class ControllerInitialization extends Reason {
+import org.spout.vanilla.controller.VanillaBlockController;
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.inventory.DispenserInventory;
+import org.spout.vanilla.material.VanillaMaterials;
+
+public class Dispenser extends VanillaBlockController {
+	private final DispenserInventory inventory;
+
+	public Dispenser() {
+		super(VanillaControllerTypes.DISPENSER, VanillaMaterials.DISPENSER);
+		inventory = new DispenserInventory(this);
+	}
+
+	@Override
+	public void onTick(float dt) {
+	}
+
+	@Override
+	public void onAttached() {
+	}
+
+	public DispenserInventory getInventory() {
+		return inventory;
+	}
 }

@@ -40,7 +40,6 @@ import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
 
 public abstract class Creature extends Living {
-	private boolean baby = false;
 	private long timeUntilAdult = 0;
 
 	protected Creature(VanillaControllerType type) {
@@ -53,10 +52,8 @@ public abstract class Creature extends Living {
 
 		// Keep track of growth
 		if (timeUntilAdult < 0) {
-			baby = true;
 			timeUntilAdult++;
 			if (timeUntilAdult >= 0) {
-				baby = false;
 				List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
 				parameters.add(EntityMetadataMessage.Parameters.META_BABYANIMALSTAGE.get());
 				broadcastPacket(new EntityMetadataMessage(getParent().getId(), parameters));
@@ -70,12 +67,12 @@ public abstract class Creature extends Living {
 			if (head.getMaterial().equals(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 				// Drowning
 				if (airTicks >= 300 && airTicks % 20 == 0) {
-					damage(4, new DamageCause(DamageCause.Type.DROWN));
+					damage(4, DamageCause.DROWN);
 				}
 			} else {
 				// Suffocation
 				if (airTicks % 10 == 0) {
-					damage(1, new DamageCause(DamageCause.Type.SUFFOCATE));
+					damage(1, DamageCause.SUFFOCATE);
 				}
 			}
 		} else {
@@ -84,20 +81,11 @@ public abstract class Creature extends Living {
 	}
 
 	/**
-	 * Sets if the entity is a baby.
-	 * @param baby
-	 */
-	public void setBaby(boolean baby) {
-		this.baby = baby;
-		this.timeUntilAdult = -23999;
-	}
-
-	/**
 	 * Whether or not the creature is a baby.
 	 * @return true if a baby
 	 */
 	public boolean isBaby() {
-		return baby;
+		return timeUntilAdult < 0;
 	}
 
 	/**

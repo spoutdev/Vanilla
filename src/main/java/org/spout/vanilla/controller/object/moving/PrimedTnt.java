@@ -34,7 +34,6 @@ import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 
 public class PrimedTnt extends Substance {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(PrimedTnt.class, "Primed TNT");
 	private float timeToExplode = 4.f;
 	private float radius = 4.f;
 

@@ -26,48 +26,31 @@
  */
 package org.spout.vanilla.controller.source;
 
+import org.spout.api.Source;
+
 /**
  * Represents the source of a health change.
  */
-public class HealthChangeReason extends Reason {
-	private final Type type;
-
-	public HealthChangeReason(Type type) {
-		this.type = type;
-	}
-
+public enum HealthChangeReason implements Source {
 	/**
-	 * Returns the type of reason.
-	 * @return
+	 * Health changed due to the execution of a command.
 	 */
-	public Type getType() {
-		return type;
-	}
-
+	COMMAND,
 	/**
-	 * Represents a reason why the health would be changed.
+	 * Health changed due to being damaged.
+	 * @see {@link DamageCause}
 	 */
-	public enum Type {
-		/**
-		 * Health changed due to the execution of a command.
-		 */
-		COMMAND,
-		/**
-		 * Health changed due to being damaged.
-		 * @see {@link DamageCause}
-		 */
-		DAMAGE,
-		/**
-		 * Health changed due to regeneration cycle.
-		 */
-		REGENERATION,
-		/**
-		 * Health changed due to the entity spawning.
-		 */
-		SPAWN,
-		/**
-		 * Health changed due to some unknown reason.
-		 */
-		UNKNOWN;
-	}
+	DAMAGE,
+	/**
+	 * Health changed due to regeneration cycle.
+	 */
+	REGENERATION,
+	/**
+	 * Health changed due to the entity spawning.
+	 */
+	SPAWN,
+	/**
+	 * Health changed due to some unknown reason.
+	 */
+	UNKNOWN;
 }

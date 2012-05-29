@@ -41,15 +41,13 @@ import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Giant extends Creature implements Hostile {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Giant.class, "Giant Zombie");
-
 	public Giant() {
 		super(VanillaControllerTypes.GIANT);
 	}
 
 	@Override
 	public void onAttached() {
-		setHealth(100, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(100, HealthChangeReason.SPAWN);
 		setMaxHealth(100);
 		super.onAttached();
 	}

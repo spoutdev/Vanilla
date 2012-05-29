@@ -48,7 +48,7 @@ import org.spout.vanilla.material.block.controlled.MonsterSpawner;
 import org.spout.vanilla.material.block.controlled.NoteBlock;
 import org.spout.vanilla.material.block.controlled.PistonExtensionMoving;
 import org.spout.vanilla.material.block.controlled.SignBase;
-import org.spout.vanilla.material.block.controlled.SilverfishStone;
+import org.spout.vanilla.material.block.solid.SilverfishStone;
 import org.spout.vanilla.material.block.door.IronDoorBlock;
 import org.spout.vanilla.material.block.door.WoodenDoorBlock;
 import org.spout.vanilla.material.block.liquid.Lava;

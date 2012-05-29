@@ -43,15 +43,13 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class PigZombie extends Zombie implements Neutral {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(PigZombie.class, "Pig Zombie");
-
 	public PigZombie() {
 		super(VanillaControllerTypes.PIG_ZOMBIE);
 	}
 
 	@Override
 	public void onAttached() {
-		setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(20, HealthChangeReason.SPAWN);
 		setMaxHealth(20);
 		super.onAttached();
 	}

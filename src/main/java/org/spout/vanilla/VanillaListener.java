@@ -57,7 +57,7 @@ import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.GameMode;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.source.ControllerInitialization;
+import org.spout.vanilla.controller.source.ControllerChangeReason;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -88,7 +88,7 @@ public class VanillaListener implements Listener {
 			vanillaPlayer = new VanillaPlayer(player, GameMode.SURVIVAL);
 		}
 
-		playerEntity.setController(vanillaPlayer, new ControllerInitialization());
+		playerEntity.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
 
 		// Set protocol and send packets
 		if (vanillaPlayer.isSurvival()) {
@@ -163,7 +163,7 @@ public class VanillaListener implements Listener {
 	@EventHandler
 	public void syncHealth(EntityHealthChangeEvent event) {
 		Source source = event.getSource();
-		if (source instanceof HealthChangeReason && ((HealthChangeReason) source).getType().equals(HealthChangeReason.Type.SPAWN)) {
+		if (source == HealthChangeReason.SPAWN) {
 			return;
 		}
 

@@ -31,17 +31,16 @@ import java.lang.reflect.Modifier;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-import org.spout.vanilla.controller.block.BrewingStandController;
-import org.spout.vanilla.controller.block.ChestController;
-import org.spout.vanilla.controller.block.DispenserController;
-import org.spout.vanilla.controller.block.EnchantmentTableController;
-import org.spout.vanilla.controller.block.FurnaceController;
-import org.spout.vanilla.controller.block.JukeboxController;
-import org.spout.vanilla.controller.block.MonsterSpawnerController;
-import org.spout.vanilla.controller.block.MovingPistonController;
-import org.spout.vanilla.controller.block.NoteBlockController;
-import org.spout.vanilla.controller.block.SignController;
-import org.spout.vanilla.controller.block.SilverfishBlockController;
+import org.spout.vanilla.controller.block.BrewingStand;
+import org.spout.vanilla.controller.block.Chest;
+import org.spout.vanilla.controller.block.Dispenser;
+import org.spout.vanilla.controller.block.EnchantmentTable;
+import org.spout.vanilla.controller.block.Furnace;
+import org.spout.vanilla.controller.block.Jukebox;
+import org.spout.vanilla.controller.block.MonsterSpawner;
+import org.spout.vanilla.controller.block.MovingPiston;
+import org.spout.vanilla.controller.block.NoteBlock;
+import org.spout.vanilla.controller.block.Sign;
 import org.spout.vanilla.controller.living.MobControllerType;
 import org.spout.vanilla.controller.living.creature.hostile.Blaze;
 import org.spout.vanilla.controller.living.creature.hostile.CaveSpider;
@@ -162,17 +161,16 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType THE_END_SKY = new VanillaControllerType(-4, TheEndSky.class, "The End Sky");
 	public static final VanillaControllerType LIGHTNING = new VanillaControllerType(-7, Lightning.class, "Lightning", new LightningEntityProtocol());
 	// Block
-	public static final VanillaControllerType FURNACE = new VanillaControllerType(-5, FurnaceController.class, "Furnace");
-	public static final VanillaControllerType DISPENSER = new VanillaControllerType(-6, DispenserController.class, "Dispenser");
-	public static final VanillaControllerType NOTE_BLOCK = new VanillaControllerType(-7, NoteBlockController.class, "Note Block");
-	public static final VanillaControllerType JUKEBOX = new VanillaControllerType(-8, JukeboxController.class, "Jukebox");
-	public static final VanillaControllerType SIGN = new VanillaControllerType(-9, SignController.class, "Sign");
-	public static final VanillaControllerType PISTON_MOVING = new VanillaControllerType(-10, MovingPistonController.class, "Moving Piston");
-	public static final VanillaControllerType CHEST = new VanillaControllerType(-11, ChestController.class, "Chest");
-	public static final VanillaControllerType ENCHANTMENT_TABLE = new VanillaControllerType(-12, EnchantmentTableController.class, "Enchantment Table");
-	public static final VanillaControllerType MONSTER_SPAWNER = new VanillaControllerType(-13, MonsterSpawnerController.class, "Monster Spawner");
-	public static final VanillaControllerType SILVERFISH_STONE = new VanillaControllerType(-14, SilverfishBlockController.class, "Silverfish Stone");
-	public static final VanillaControllerType BREWING_STAND = new VanillaControllerType(-15, BrewingStandController.class, "Brewing Stand");
+	public static final VanillaControllerType FURNACE = new VanillaControllerType(-5, Furnace.class, "Furnace");
+	public static final VanillaControllerType DISPENSER = new VanillaControllerType(-6, Dispenser.class, "Dispenser");
+	public static final VanillaControllerType NOTE_BLOCK = new VanillaControllerType(-7, NoteBlock.class, "Note Block");
+	public static final VanillaControllerType JUKEBOX = new VanillaControllerType(-8, Jukebox.class, "Jukebox");
+	public static final VanillaControllerType SIGN = new VanillaControllerType(-9, Sign.class, "Sign");
+	public static final VanillaControllerType PISTON_MOVING = new VanillaControllerType(-10, MovingPiston.class, "Moving Piston");
+	public static final VanillaControllerType CHEST = new VanillaControllerType(-11, Chest.class, "Chest");
+	public static final VanillaControllerType ENCHANTMENT_TABLE = new VanillaControllerType(-12, EnchantmentTable.class, "Enchantment Table");
+	public static final VanillaControllerType MONSTER_SPAWNER = new VanillaControllerType(-13, MonsterSpawner.class, "Monster Spawner");
+	public static final VanillaControllerType BREWING_STAND = new VanillaControllerType(-15, BrewingStand.class, "Brewing Stand");
 	public static final String KEY = "ControllerID";
 	private static final TIntObjectHashMap<VanillaControllerType> ID_LOOKUP = new TIntObjectHashMap<VanillaControllerType>();
 

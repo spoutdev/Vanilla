@@ -38,7 +38,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.SignController;
+import org.spout.vanilla.controller.block.Sign;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
@@ -54,7 +54,7 @@ public class SignBase extends AbstractAttachable implements Mineable {
 
 	@Override
 	public void handlePlacement(Block block, short data, BlockFace attachedFace) {
-		block.getWorld().createAndSpawnEntity(block.getPosition(), new SignController());
+		block.getWorld().createAndSpawnEntity(block.getPosition(), new Sign());
 		this.setAttachedFace(block, attachedFace);
 	}
 

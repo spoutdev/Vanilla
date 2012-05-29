@@ -53,7 +53,6 @@ public abstract class Living extends VanillaActionController {
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
-
 		headYawChanged = false;
 		headYaw = calculateHeadYaw();
 		if (lastHeadYaw != headYaw) {

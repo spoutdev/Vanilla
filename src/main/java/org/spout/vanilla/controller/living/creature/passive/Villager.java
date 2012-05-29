@@ -35,15 +35,13 @@ import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Villager extends Creature implements Passive {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Villager.class, "Villager");
-
 	public Villager() {
 		super(VanillaControllerTypes.VILLAGER);
 	}
 
 	@Override
 	public void onAttached() {
-		setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(20, HealthChangeReason.SPAWN);
 		setMaxHealth(20);
 		super.onAttached();
 	}

@@ -44,7 +44,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
 
 public class Sheep extends Creature implements Passive {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Sheep.class, "Sheep");
 	private boolean isSheared = false;
 	private short sheepColor = 0;
 
@@ -54,7 +53,7 @@ public class Sheep extends Creature implements Passive {
 
 	@Override
 	public void onAttached() {
-		setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(8, HealthChangeReason.SPAWN);
 		setMaxHealth(8);
 		super.onAttached();
 		isSheared = (Boolean) data().get("sheep_sheared", false);
@@ -104,7 +103,7 @@ public class Sheep extends Creature implements Passive {
 	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		if (!isSheared()) {
-			if (source.equals(DamageCause.Type.BURN)) {
+			if (source == DamageCause.BURN) {
 				drops.add(new ItemStack(Wool.GRAY, 1));
 			} else {
 				drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial(sheepColor), 1));

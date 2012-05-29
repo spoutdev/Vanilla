@@ -33,8 +33,6 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Passive;
 
 public class Mooshroom extends Cow implements Passive {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Mooshroom.class, "Mooshroom");
-
 	public Mooshroom() {
 		super(VanillaControllerTypes.MOOSHROOM);
 	}

@@ -35,17 +35,16 @@ import org.spout.vanilla.inventory.FurnaceInventory;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
-public class FurnaceController extends VanillaBlockController {
+public class Furnace extends VanillaBlockController {
 	private final FurnaceInventory inventory;
 	private float burnTime = 0, burnIncrement = 0, burnStartTime = 0;
 	private float progress = 0, progressIncrement = 0, craftTime = 0;
 
-	public FurnaceController() {
+	public Furnace() {
 		super(VanillaControllerTypes.FURNACE, VanillaMaterials.FURNACE);
 		inventory = new FurnaceInventory(this);
 	}
@@ -124,7 +123,7 @@ public class FurnaceController extends VanillaBlockController {
 			// Update viewers
 			for (VanillaPlayer player : this.inventory.getViewingPlayers()) {
 				int window = player.getActiveWindow().getInstanceId();
-				sendPacket(player.getPlayer(), new ProgressBarMessage(window, Furnace.FIRE_ICON, (int) burnIncrement), new ProgressBarMessage(window, Furnace.PROGRESS_ARROW, (int) progressIncrement));
+				sendPacket(player.getPlayer(), new ProgressBarMessage(window, org.spout.vanilla.material.block.controlled.Furnace.FIRE_ICON, (int) burnIncrement), new ProgressBarMessage(window, org.spout.vanilla.material.block.controlled.Furnace.PROGRESS_ARROW, (int) progressIncrement));
 			}
 		}
 	}

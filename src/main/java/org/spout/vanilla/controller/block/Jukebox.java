@@ -42,10 +42,10 @@ import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.Music;
 
-public class JukeboxController extends VanillaBlockController {
+public class Jukebox extends VanillaBlockController {
 	private final JukeboxInventory inventory;
 
-	public JukeboxController() {
+	public Jukebox() {
 		super(VanillaControllerTypes.JUKEBOX, VanillaMaterials.JUKEBOX);
 		inventory = new JukeboxInventory();
 	}

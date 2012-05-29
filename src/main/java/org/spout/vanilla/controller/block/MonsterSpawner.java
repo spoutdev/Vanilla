@@ -45,13 +45,13 @@ import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
-public class MonsterSpawnerController extends VanillaBlockController {
+public class MonsterSpawner extends VanillaBlockController {
 	private int range = 17, maxEntities = 6, spawnAmount = 4;
 	private final Random random = new Random();
 	private float counter;
 	private VanillaControllerType nextSpawn;
 
-	public MonsterSpawnerController() {
+	public MonsterSpawner() {
 		super(VanillaControllerTypes.MONSTER_SPAWNER, VanillaMaterials.MONSTER_SPAWNER);
 	}
 

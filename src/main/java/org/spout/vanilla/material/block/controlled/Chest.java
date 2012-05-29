@@ -39,7 +39,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.ChestController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
@@ -71,8 +70,8 @@ public class Chest extends ControlledMaterial implements Fuel, Mineable, Directi
 	}
 
 	@Override
-	public ChestController getController(Block block) {
-		return (ChestController) super.getController(block);
+	public org.spout.vanilla.controller.block.Chest getController(Block block) {
+		return (org.spout.vanilla.controller.block.Chest) super.getController(block);
 	}
 
 	@Override

@@ -36,7 +36,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.JukeboxController;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
@@ -51,8 +50,8 @@ public class Jukebox extends ControlledMaterial implements Fuel {
 	}
 
 	@Override
-	public JukeboxController getController(Block block) {
-		return (JukeboxController) super.getController(block);
+	public org.spout.vanilla.controller.block.Jukebox getController(Block block) {
+		return (org.spout.vanilla.controller.block.Jukebox) super.getController(block);
 	}
 
 	@Override
@@ -70,7 +69,7 @@ public class Jukebox extends ControlledMaterial implements Fuel {
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		if (type == Action.RIGHT_CLICK) {
-			JukeboxController controller = this.getController(block);
+			org.spout.vanilla.controller.block.Jukebox controller = this.getController(block);
 			controller.eject();
 			InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
 			if (inv != null && controller.canPlay(inv.getCurrentItem())) {

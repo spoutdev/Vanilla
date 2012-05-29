@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.inventory;
 
-import org.spout.vanilla.controller.block.DispenserController;
+import org.spout.vanilla.controller.block.Dispenser;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.window.DispenserWindow;
 import org.spout.vanilla.window.Window;
@@ -36,9 +36,9 @@ import org.spout.vanilla.window.Window;
  */
 public class DispenserInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
-	private final DispenserController owner;
+	private final Dispenser owner;
 
-	public DispenserInventory(DispenserController owner) {
+	public DispenserInventory(Dispenser owner) {
 		super(9);
 		this.owner = owner;
 	}
@@ -52,7 +52,7 @@ public class DispenserInventory extends WindowInventory {
 	 * Returns the dispenser controller that this inventory belongs to.
 	 * @return owner the dispenser controller
 	 */
-	public DispenserController getOwner() {
+	public Dispenser getOwner() {
 		return owner;
 	}
 }

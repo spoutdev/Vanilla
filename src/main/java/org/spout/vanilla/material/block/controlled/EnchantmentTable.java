@@ -36,7 +36,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.EnchantmentTableController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
@@ -53,8 +52,8 @@ public class EnchantmentTable extends ControlledMaterial implements Directional,
 	}
 
 	@Override
-	public EnchantmentTableController getController(Block block) {
-		return (EnchantmentTableController) super.getController(block);
+	public org.spout.vanilla.controller.block.EnchantmentTable getController(Block block) {
+		return (org.spout.vanilla.controller.block.EnchantmentTable) super.getController(block);
 	}
 
 	@Override

@@ -37,7 +37,6 @@ import org.spout.vanilla.controller.living.creature.Tameable;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Ocelot extends Creature implements Tameable, Passive {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Ocelot.class, "Ocelot");
 	private Controller master;
 
 	public Ocelot() {
@@ -49,10 +48,10 @@ public class Ocelot extends Creature implements Tameable, Passive {
 		// TODO Check these values...
 		// master = data().get("controlling_entity", master);
 		if (master != null) {
-			setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+			setHealth(20, HealthChangeReason.SPAWN);
 			setMaxHealth(20);
 		} else {
-			setHealth(8, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+			setHealth(8, HealthChangeReason.SPAWN);
 			setMaxHealth(8);
 		}
 

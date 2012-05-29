@@ -48,7 +48,6 @@ import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsT
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).
  */
 public class Item extends Substance {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(Item.class, "Item");
 	private final int distance = (int) VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble();
 	private final ItemStack is;
 	private int unpickable;

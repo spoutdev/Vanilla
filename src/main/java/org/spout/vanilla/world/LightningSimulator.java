@@ -37,7 +37,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.controller.object.misc.Lightning;
-import org.spout.vanilla.controller.world.sky.VanillaSky;
+import org.spout.vanilla.controller.world.VanillaSky;
 
 public class LightningSimulator {
 	private static final int MAX_LIGHTNING_BRANCHES = 5;

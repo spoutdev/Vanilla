@@ -123,7 +123,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
 		setMaxHealth(20);
-		setHealth(20, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(20, HealthChangeReason.SPAWN);
 		getParent().setObserver(true);
 		getParent().setViewDistance(64);
 	}
@@ -186,13 +186,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 				// Drowning
 				int ticksBeforeDrowning = level == 0 ? 300 : level * 300; // Increase time before drowning by 15 seconds per enchantment level
 				if (airTicks >= ticksBeforeDrowning && airTicks % 20 == 0) {
-					damage(4, new DamageCause(DamageCause.Type.DROWN));
+					damage(4, DamageCause.DROWN);
 				}
 			} else {
 				// Suffocation
 				int noDamageTicks /* TODO noDamageTicks should probably be made a global variable to account for other damage */= level == 0 ? 10 : 10 + 20 * level; // Increase time between damage by 1 second per enchantment level
 				if (airTicks % noDamageTicks == 0) {
-					damage(1, new DamageCause(DamageCause.Type.SUFFOCATE));
+					damage(1, DamageCause.SUFFOCATE);
 				}
 			}
 		} else {
@@ -228,12 +228,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 		boolean changed = false;
 		if (hunger <= 0 && health > 0) {
 			health = (short) Math.max(health - 1, 0);
-			setHealth(health, new DamageCause(DamageCause.Type.STARVE));
+			setHealth(health, DamageCause.STARVE);
 			changed = true;
 		} else if (hunger >= 18 && health < 20) {
 			// TODO: Is health regenerating too fast?
 			health = (short) Math.min(health + 1, 20);
-			setHealth(health, new HealthChangeReason(HealthChangeReason.Type.REGENERATION));
+			setHealth(health, HealthChangeReason.REGENERATION);
 			changed = true;
 		}
 

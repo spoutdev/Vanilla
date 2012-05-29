@@ -34,8 +34,6 @@ import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class EnderCrystal extends Substance {
-	public static final ControllerType TYPE = new EmptyConstructorControllerType(EnderCrystal.class, "Ender Crystal");
-
 	public EnderCrystal() {
 		super(VanillaControllerTypes.ENDER_CRYSTAL);
 	}
@@ -44,7 +42,7 @@ public class EnderCrystal extends Substance {
 	public void onAttached() {
 		//TODO Remove when collisions are fixed.
 		setMaxHealth(1);
-		setHealth(1, new HealthChangeReason(HealthChangeReason.Type.SPAWN));
+		setHealth(1, HealthChangeReason.SPAWN);
 	}
 
 	@Override

@@ -389,29 +389,29 @@ public final class VanillaMaterials {
 	public static final Hoe IRON_HOE = new Hoe("Iron Hoe", 292, (short) 251);
 	public static final Hoe DIAMOND_HOE = new Hoe("Diamond Hoe", 293, (short) 1562);
 	//== Headwear ==
-	public static final LeatherCap LEATHER_CAP = new LeatherCap("Leather Cap", 298, 1);
-	public static final ChainHelmet CHAIN_HELMET = new ChainHelmet("Chain Helmet", 302, 2);
-	public static final IronHelmet IRON_HELMET = new IronHelmet("Iron Helmet", 306, 2);
-	public static final GoldHelmet GOLD_HELMET = new GoldHelmet("Gold Helmet", 314, 2);
-	public static final DiamondHelmet DIAMOND_HELMET = new DiamondHelmet("Diamond Helmet", 310, 3);
+	public static final LeatherCap LEATHER_CAP = new LeatherCap("Leather Cap", 298, (short) 56);
+	public static final ChainHelmet CHAIN_HELMET = new ChainHelmet("Chain Helmet", 302, (short) 166);
+	public static final IronHelmet IRON_HELMET = new IronHelmet("Iron Helmet", 306, (short) 166);
+	public static final GoldHelmet GOLD_HELMET = new GoldHelmet("Gold Helmet", 314, (short) 78);
+	public static final DiamondHelmet DIAMOND_HELMET = new DiamondHelmet("Diamond Helmet", 310, (short) 364);
 	//== Chestwear ==
-	public static final LeatherTunic LEATHER_TUNIC = new LeatherTunic("Leather Tunic", 299, 3);
-	public static final ChainChestplate CHAIN_CHESTPLATE = new ChainChestplate("Chain Chestplate", 303, 5);
-	public static final IronChestplate IRON_CHESTPLATE = new IronChestplate("Iron Chestplate", 307, 6);
-	public static final DiamondChestplate DIAMOND_CHESTPLATE = new DiamondChestplate("Diamond Chestplate", 311, 8);
-	public static final GoldChestplate GOLD_CHESTPLATE = new GoldChestplate("Gold Chestplate", 315, 5);
+	public static final LeatherTunic LEATHER_TUNIC = new LeatherTunic("Leather Tunic", 299, (short) 81);
+	public static final ChainChestplate CHAIN_CHESTPLATE = new ChainChestplate("Chain Chestplate", 303, (short) 241);
+	public static final IronChestplate IRON_CHESTPLATE = new IronChestplate("Iron Chestplate", 307, (short) 241);
+	public static final DiamondChestplate DIAMOND_CHESTPLATE = new DiamondChestplate("Diamond Chestplate", 311, (short) 529);
+	public static final GoldChestplate GOLD_CHESTPLATE = new GoldChestplate("Gold Chestplate", 315, (short) 113);
 	//== Legwear ==
-	public static final LeatherPants LEATHER_PANTS = new LeatherPants("Leather Pants", 300, 2);
-	public static final ChainLeggings CHAIN_LEGGINGS = new ChainLeggings("Chain Leggings", 304, 4);
-	public static final IronLeggings IRON_LEGGINGS = new IronLeggings("Iron Leggings", 308, 5);
-	public static final DiamondLeggings DIAMOND_LEGGINGS = new DiamondLeggings("Diamond Leggings", 312, 6);
-	public static final GoldLeggings GOLD_LEGGINGS = new GoldLeggings("Gold Leggings", 316, 3);
+	public static final LeatherPants LEATHER_PANTS = new LeatherPants("Leather Pants", 300, (short) 76);
+	public static final ChainLeggings CHAIN_LEGGINGS = new ChainLeggings("Chain Leggings", 304, (short) 226);
+	public static final IronLeggings IRON_LEGGINGS = new IronLeggings("Iron Leggings", 308, (short) 226);
+	public static final DiamondLeggings DIAMOND_LEGGINGS = new DiamondLeggings("Diamond Leggings", 312, (short) 496);
+	public static final GoldLeggings GOLD_LEGGINGS = new GoldLeggings("Gold Leggings", 316, (short) 106);
 	//== Footwear ==
-	public static final LeatherBoots LEATHER_BOOTS = new LeatherBoots("Leather Boots", 301, 1);
-	public static final ChainBoots CHAIN_BOOTS = new ChainBoots("Chain Boots", 305, 1);
-	public static final IronBoots IRON_BOOTS = new IronBoots("Iron Boots", 309, 2);
-	public static final DiamondBoots DIAMOND_BOOTS = new DiamondBoots("Diamond Boots", 313, 3);
-	public static final GoldBoots GOLD_BOOTS = new GoldBoots("Gold Boots", 317, 1);
+	public static final LeatherBoots LEATHER_BOOTS = new LeatherBoots("Leather Boots", 301, (short) 66);
+	public static final ChainBoots CHAIN_BOOTS = new ChainBoots("Chain Boots", 305, (short) 196);
+	public static final IronBoots IRON_BOOTS = new IronBoots("Iron Boots", 309, (short) 196);
+	public static final DiamondBoots DIAMOND_BOOTS = new DiamondBoots("Diamond Boots", 313, (short) 430);
+	public static final GoldBoots GOLD_BOOTS = new GoldBoots("Gold Boots", 317, (short) 92);
 	//== Other tool, weapon and equipment ==
 	public static final FlintAndSteel FLINT_AND_STEEL = new FlintAndSteel("Flint and Steel", 259, (short) 64);
 	public static final Bow BOW = new Bow("Bow", 261, (short) 385);

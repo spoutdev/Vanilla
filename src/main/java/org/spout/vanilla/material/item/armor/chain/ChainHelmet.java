@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.chain;
 import org.spout.vanilla.material.item.armor.Helmet;
 
 public class ChainHelmet extends ChainArmor implements Helmet {
-	public ChainHelmet(String name, int id, int protection) {
-		super(name, id, protection);
+	public ChainHelmet(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(2);
 	}
 }

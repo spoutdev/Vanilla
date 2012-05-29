@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.iron;
 import org.spout.vanilla.material.item.armor.Leggings;
 
 public class IronLeggings extends IronArmor implements Leggings {
-	public IronLeggings(String name, int id, int protection) {
-		super(name, id, protection);
+	public IronLeggings(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(5);
 	}
 }

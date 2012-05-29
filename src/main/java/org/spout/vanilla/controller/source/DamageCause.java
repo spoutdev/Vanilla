@@ -32,23 +32,42 @@ import org.spout.api.Source;
  * Represents a source of damage.
  */
 public enum DamageCause implements Source {
-	ARROW,
+	/**
+	 * Damaged by getting hit by an {@link Arrow}.
+	 */
+	ARROW(3),
 	/**
 	 * Damaged by another entity attacking.
 	 */
-	ATTACK,
+	ATTACK(2),
 	/**
-	 * Damaged by fire.
+	 * Damaged by continuing to burn after touching a source of fire.
 	 */
-	BURN,
+	BURN(3),
 	/**
 	 * Damaged by touching cactus.
 	 */
-	CACTUS,
+	CACTUS(1),
+	/**
+	 * Damaged by use of a command such as /kill.
+	 */
+	COMMAND,
 	/**
 	 * Damaged by an explosion.
 	 */
-	EXPLOSION,
+	EXPLOSION(2),
+	/**
+	 * Damaged by falling.
+	 */
+	FALL,
+	/**
+	 * Damaged by getting hit by a {@link BlazeFireball} or {@link GhastFireball}.
+	 */
+	FIREBALL(2),
+	/**
+	 * Damaged by making contact with a source of fire.
+	 */
+	FIRE_CONTACT(3),
 	/**
 	 * Damaged due to starvation.
 	 */
@@ -64,5 +83,32 @@ public enum DamageCause implements Source {
 	/**
 	 * Damaged by an unknown source.
 	 */
-	UNKNOWN;
+	UNKNOWN,
+	/**
+	 * Damaged by falling into the Void.
+	 */
+	VOID;
+
+	private int durabilityPenalty = 0;
+
+	private DamageCause() {
+	}
+
+	private DamageCause(int durabilityPenalty) {
+		this.durabilityPenalty = durabilityPenalty;
+	}
+
+	public short getDurabilityPenalty() {
+		return (short) durabilityPenalty;
+	}
+
+	public boolean equals(DamageCause... causes) {
+		for (DamageCause cause : causes) {
+			if (equals(cause)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

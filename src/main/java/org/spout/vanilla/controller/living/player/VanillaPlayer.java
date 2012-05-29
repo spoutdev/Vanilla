@@ -55,6 +55,7 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.inventory.PlayerInventory;
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.armor.Armor;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
@@ -234,7 +235,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 			setHealth(health, DamageCause.STARVE);
 			changed = true;
 		} else if (hunger >= 18 && health < 20) {
-			// TODO: Is health regenerating too fast?
 			health = (short) Math.min(health + 1, 20);
 			setHealth(health, HealthChangeReason.REGENERATION);
 			changed = true;
@@ -246,7 +246,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			System.out.println("Hunger: " + hunger);
 			System.out.println("Health: " + health);
 			System.out.println("Exhaustion: " + exhaustion);
-			sendPacket(owner, new UpdateHealthMessage(health, hunger, foodSaturation));
+			// sendPacket(owner, new UpdateHealthMessage(health, hunger, foodSaturation));
 		}
 	}
 
@@ -652,7 +652,29 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public void damage(int amount, DamageCause cause, VanillaActionController damager, boolean sendHurtMessage) {
-		super.damage(amount, cause, damager, sendHurtMessage);
+		double amt = amount;
+		// Calculate damage reduction based on armor and enchantments
+		for (ItemStack item : getInventory().getArmor().getContents()) {
+			if (item != null && item.getMaterial() instanceof Armor) { // Ignore pumpkins
+				Armor armor = (Armor) item.getMaterial();
+				amt -= .04 * (armor.getBaseProtection() + armor.getProtection(item, cause)); // Each protection point reduces damage by 4%
+
+				// Remove durability from each piece of armor
+				short penalty = cause.getDurabilityPenalty();
+				if (item.getData() - penalty < 1) {
+					getInventory().setCurrentItem(null);
+				} else {
+					getInventory().addCurrentItemData(penalty);
+				}
+			}
+		}
+
+		super.damage((int) Math.ceil(amt), cause, damager, sendHurtMessage);
+	}
+
+	@Override
+	public void setHealth(int health, Source source) {
+		super.setHealth(health, source);
 		sendPacket(owner, new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
 	}
 }

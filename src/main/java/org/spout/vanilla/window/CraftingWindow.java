@@ -28,6 +28,7 @@ package org.spout.vanilla.window;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.CraftingGrid;
+import org.spout.vanilla.window.Window;
 
 public abstract class CraftingWindow extends Window {
 	protected final CraftingGrid craftingGrid;

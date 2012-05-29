@@ -28,7 +28,7 @@ package org.spout.vanilla.controller.block;
 
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.inventory.EnchantmentTableInventory;
+import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class EnchantmentTable extends VanillaBlockController {

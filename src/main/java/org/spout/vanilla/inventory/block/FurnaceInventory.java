@@ -24,15 +24,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory;
+package org.spout.vanilla.inventory.block;
 
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.block.Furnace;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.window.FurnaceWindow;
+import org.spout.vanilla.window.block.FurnaceWindow;
 import org.spout.vanilla.window.Window;
 
 /**

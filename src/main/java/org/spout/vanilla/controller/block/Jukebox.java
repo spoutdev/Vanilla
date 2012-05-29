@@ -35,7 +35,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.inventory.JukeboxInventory;
+import org.spout.vanilla.inventory.block.JukeboxInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.misc.MusicDisc;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;

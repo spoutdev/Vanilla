@@ -24,35 +24,25 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory;
+package org.spout.vanilla.inventory.block;
 
-import org.spout.vanilla.controller.block.Dispenser;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.window.DispenserWindow;
-import org.spout.vanilla.window.Window;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 
-/**
- * Represents a dispenser inventory belonging to a dispenser controller.
- */
-public class DispenserInventory extends WindowInventory {
+import org.spout.vanilla.inventory.VanillaInventory;
+
+public class JukeboxInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
-	private final Dispenser owner;
 
-	public DispenserInventory(Dispenser owner) {
-		super(9);
-		this.owner = owner;
+	public JukeboxInventory() {
+		super(1);
 	}
 
-	@Override
-	public Window createWindow(VanillaPlayer player) {
-		return new DispenserWindow(player, this);
+	public ItemStack getMusicSlot() {
+		return getItem(0);
 	}
 
-	/**
-	 * Returns the dispenser controller that this inventory belongs to.
-	 * @return owner the dispenser controller
-	 */
-	public Dispenser getOwner() {
-		return owner;
+	public void setMusicSlot(ItemStack item) {
+		setItem(0, item);
 	}
 }

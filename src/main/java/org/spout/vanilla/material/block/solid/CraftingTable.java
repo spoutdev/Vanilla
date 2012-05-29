@@ -36,7 +36,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.CraftingTableInventory;
+import org.spout.vanilla.inventory.block.CraftingTableInventory;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
 

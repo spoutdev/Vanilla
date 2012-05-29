@@ -24,42 +24,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.block;
+package org.spout.vanilla.window.block;
 
-import org.spout.vanilla.controller.VanillaBlockController;
-import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.window.Window;
 
-public class Chest extends VanillaBlockController {
-	private final ChestInventory inventory;
-	private boolean opened = false;
+public class ChestWindow extends Window {
+	public final static int[] SMALL_CHEST_SLOTS = {54, 55, 56, 57, 58, 59, 60, 61, 62, 45, 46, 47, 48, 49, 50, 51, 52, 53, 36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 7, 8};
+	public final static int[] LARGE_CHEST_SLOTS = {81, 82, 83, 84, 85, 86, 87, 88, 89, 72, 73, 74, 75, 76, 77, 78, 79, 80, 63, 64, 65, 66, 67, 68, 69, 70, 71, 54, 55, 56, 57, 58, 59, 60, 61, 62, 45, 46, 47, 48, 49, 50, 51, 52, 53, 36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 7, 8};
 
-	public Chest(int size) {
-		super(VanillaControllerTypes.CHEST, VanillaMaterials.CHEST);
-		inventory = new ChestInventory(this, size);
-	}
-
-	@Override
-	public void onAttached() {
-	}
-
-	@Override
-	public void onTick(float dt) {
-	}
-
-	public ChestInventory getInventory() {
-		return inventory;
-	}
-
-	public void setOpened(boolean opened) {
-		this.opened = opened;
-		byte data = opened ? (byte) 1 : 0;
-		VanillaNetworkSynchronizer.playBlockAction(getBlock(), (byte) 1, data);
-	}
-
-	public boolean isOpened() {
-		return opened;
+	public ChestWindow(VanillaPlayer owner, ChestInventory chestInventory) {
+		super(0, "Chest", owner);
+		this.setInventory(owner.getInventory().getItems(), chestInventory);
+		this.setSlotConversionArray(chestInventory.isDouble() ? LARGE_CHEST_SLOTS : SMALL_CHEST_SLOTS);
 	}
 }

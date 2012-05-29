@@ -24,14 +24,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window;
+package org.spout.vanilla.inventory.block;
 
+import org.spout.vanilla.controller.block.Dispenser;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.WindowInventory;
+import org.spout.vanilla.window.block.DispenserWindow;
+import org.spout.vanilla.window.Window;
 
-public class EnchantmentTableWindow extends Window {
-	private static final int[] SLOTS = {28, 29, 30, 31, 32, 33, 34, 35, 36, 19, 20, 21, 22, 23, 24, 25, 26, 27, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+/**
+ * Represents a dispenser inventory belonging to a dispenser controller.
+ */
+public class DispenserInventory extends WindowInventory {
+	private static final long serialVersionUID = 1L;
+	private final Dispenser owner;
 
-	public EnchantmentTableWindow(VanillaPlayer owner) {
-		super(4, "Enchant", owner);
+	public DispenserInventory(Dispenser owner) {
+		super(9);
+		this.owner = owner;
+	}
+
+	@Override
+	public Window createWindow(VanillaPlayer player) {
+		return new DispenserWindow(player, this);
+	}
+
+	/**
+	 * Returns the dispenser controller that this inventory belongs to.
+	 * @return owner the dispenser controller
+	 */
+	public Dispenser getOwner() {
+		return owner;
 	}
 }

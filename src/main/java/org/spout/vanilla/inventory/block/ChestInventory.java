@@ -24,44 +24,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory;
+package org.spout.vanilla.inventory.block;
 
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.controller.block.Chest;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.WindowInventory;
+import org.spout.vanilla.window.block.ChestWindow;
 import org.spout.vanilla.window.Window;
 
-/**
- * Represents a enchantment table inventory belonging to an enchantment table
- * controller.
- */
-public class EnchantmentTableInventory extends WindowInventory {
+public class ChestInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
+	private final Chest owner;
+	public static final int DOUBLE_CHEST_SIZE = 54, SINGLE_CHEST_SIZE = 27;
+	private boolean isDouble;
 
-	public EnchantmentTableInventory() {
-		super(1);
+	public ChestInventory(Chest owner, int size) {
+		super(size);
+		this.owner = owner;
+		this.isDouble = size == DOUBLE_CHEST_SIZE;
 	}
 
-	/**
-	 * Whether the inventory contains an item to enchant
-	 * @return true if an item is present
-	 */
-	public boolean hasItem() {
-		return this.getItem(0) != null;
+	public boolean isDouble() {
+		return this.isDouble;
 	}
 
-	/**
-	 * Returns the {@link ItemStack} in the enchantment slot (slot 36); can
-	 * return null.
-	 * @return ingredient item stack
-	 */
-	public ItemStack getItem() {
-		return getItem(0);
+	public Chest getOwner() {
+		return owner;
 	}
 
 	@Override
 	public Window createWindow(VanillaPlayer player) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ChestWindow(player, this);
 	}
 }

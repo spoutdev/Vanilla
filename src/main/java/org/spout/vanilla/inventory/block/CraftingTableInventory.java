@@ -24,10 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory;
+package org.spout.vanilla.inventory.block;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.window.CraftingTableWindow;
+import org.spout.vanilla.inventory.CraftingGrid;
+import org.spout.vanilla.inventory.WindowInventory;
+import org.spout.vanilla.window.block.CraftingTableWindow;
 import org.spout.vanilla.window.Window;
 
 public class CraftingTableInventory extends WindowInventory implements CraftingGrid {

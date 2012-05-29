@@ -24,23 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory;
+package org.spout.vanilla.window.block;
 
-import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 
-public class JukeboxInventory extends Inventory implements VanillaInventory {
-	private static final long serialVersionUID = 1L;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.window.Window;
 
-	public JukeboxInventory() {
-		super(1);
+public class FurnaceWindow extends Window {
+	private static final int[] SLOTS = {30, 31, 32, 33, 34, 35, 36, 37, 38, 21, 22, 23, 24, 25, 26, 27, 28, 29, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 0};
+
+	public FurnaceWindow(VanillaPlayer owner, InventoryBase furnaceInventory) {
+		super(2, "Furnace", owner);
+		this.setInventory(owner.getInventory().getItems(), furnaceInventory);
+		this.setSlotConversionArray(SLOTS);
 	}
 
-	public ItemStack getMusicSlot() {
-		return getItem(0);
-	}
-
-	public void setMusicSlot(ItemStack item) {
-		setItem(0, item);
+	@Override
+	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {
+		if (clickedSlot == 2 && itemOnCursor != null) {
+			return false;
+		}
+		return super.onClick(clickedSlot, rightClick, shift);
 	}
 }

@@ -121,11 +121,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public void onAttached() {
 		Transform spawn = getParent().getWorld().getSpawnPoint();
 		Quaternion rotation = spawn.getRotation();
-		BoundingBox box = new BoundingBox(1, 2, 1, 2, 2, 1); //TODO I guessed
 		getParent().setPosition(spawn.getPosition());
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
-		getParent().setCollision(new CollisionModel(box));
+		getParent().setCollision(null);
 		setMaxHealth(20);
 		setHealth(20, HealthChangeReason.SPAWN);
 		getParent().setObserver(true);

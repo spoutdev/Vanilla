@@ -67,7 +67,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 				ItemStack item = new ItemStack(material, message.getAmount());
 				if (message.getSlot() == -1) {
 					controller.getActiveWindow().setItemOnCursor(item);
-					controller.getActiveWindow().onOutSideClick();
+					controller.getActiveWindow().onOutsideClick();
 				} else {
 					int slot = controller.getActiveWindow().getSpoutSlotIndex(message.getSlot());
 					if (slot != -1) {

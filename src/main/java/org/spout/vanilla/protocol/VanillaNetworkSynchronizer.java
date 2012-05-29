@@ -408,7 +408,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 		VanillaPlayer controller = (VanillaPlayer) c;
-		slot = controller.getActiveWindow().getMCSlotIndex(slot);
+		slot = controller.getActiveWindow().getNativeSlotIndex(slot);
 		if (slot == -1) {
 			return;
 		}
@@ -432,7 +432,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		VanillaPlayer controller = (VanillaPlayer) c;
 		ItemStack[] newItems = new ItemStack[slots.length];
 		for (int i = 0; i < newItems.length; i++) {
-			newItems[controller.getActiveWindow().getMCSlotIndex(i)] = slots[i];
+			newItems[controller.getActiveWindow().getNativeSlotIndex(i)] = slots[i];
 		}
 
 		int id = controller.getActiveWindow().getInstanceId();

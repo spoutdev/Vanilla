@@ -27,6 +27,7 @@
 package org.spout.vanilla.window;
 
 import org.spout.api.inventory.InventoryBase;
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
@@ -40,13 +41,10 @@ public class FurnaceWindow extends Window {
 	}
 
 	@Override
-	public boolean onLeftClick(int clickedSlot, boolean shift) {
-		return false;
-		//		ItemStack cursorStack = controller.getItemOnCursor();
-		//		if (clickedSlot == 37 && cursorStack != null) {
-		//			return false;
-		//		}
-		//
-		//		return super.onClicked(controller, clickedSlot, slotStack);
+	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {
+		if (clickedSlot == 2 && itemOnCursor != null) {
+			return false;
+		}
+		return super.onClick(clickedSlot, rightClick, shift);
 	}
 }

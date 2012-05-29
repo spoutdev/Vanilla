@@ -48,7 +48,7 @@ public class EnchantmentUtil {
 
 	/**
 	 * Adds the given {@link Enchantment} to the given item
-	 * @param item        ItemStack to add the enchantment to
+	 * @param item ItemStack to add the enchantment to
 	 * @param enchantment Enchantment to add to the item
 	 * @return Whether the enchantment was able to be added to the item
 	 */
@@ -58,9 +58,9 @@ public class EnchantmentUtil {
 
 	/**
 	 * Adds the given {@link Enchantment} to the given item
-	 * @param item        ItemStack to add the enchantment to
+	 * @param item ItemStack to add the enchantment to
 	 * @param enchantment Enchantment to add to the item
-	 * @param force       Whether the enchantment should be forced on the item
+	 * @param force Whether the enchantment should be forced on the item
 	 * @return Whether the enchantment was able to be added to the item
 	 */
 	public static boolean addEnchantment(ItemStack item, Enchantment enchantment, boolean force) {
@@ -69,10 +69,10 @@ public class EnchantmentUtil {
 
 	/**
 	 * Adds the given {@link Enchantment} with the given level to the given item
-	 * @param item        ItemStack to add the enchantment to
+	 * @param item ItemStack to add the enchantment to
 	 * @param enchantment Enchantment to add to the item
-	 * @param level       Level of the enchantment
-	 * @param force       Whether the enchantment should be forced on the item
+	 * @param level Level of the enchantment
+	 * @param force Whether the enchantment should be forced on the item
 	 * @return Whether the enchantment was able to be added to the item
 	 */
 	@SuppressWarnings("unchecked")
@@ -108,7 +108,7 @@ public class EnchantmentUtil {
 
 	/**
 	 * Returns the level of the given {@link Enchantment}
-	 * @param item        Item containing the enchantment
+	 * @param item Item containing the enchantment
 	 * @param enchantment Enchantment to check
 	 * @return Level of the enchantment, or 0 if the item does not contain the enchantment
 	 */
@@ -144,7 +144,7 @@ public class EnchantmentUtil {
 
 	/**
 	 * Whether the given item contains the given {@link Enchantment}
-	 * @param item        Item to check
+	 * @param item Item to check
 	 * @param enchantment Enchantment to check
 	 * @return true if the item contains the enchantment
 	 */

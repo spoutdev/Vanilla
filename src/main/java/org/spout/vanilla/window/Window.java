@@ -279,7 +279,7 @@ public class Window implements InventoryViewer {
 	/**
 	 * Called when the player right-clicks on a slot in this window
 	 * @param slotIndex
-	 * @param shift     whether shift was pressed
+	 * @param shift whether shift was pressed
 	 * @return True to notify that the operation was allowed
 	 */
 	public boolean onRightClick(int clickedSlot, boolean shift) {
@@ -293,7 +293,7 @@ public class Window implements InventoryViewer {
 	/**
 	 * Called when the player left-clicks on a slot in this window
 	 * @param slotIndex
-	 * @param shift     whether shift was pressed
+	 * @param shift whether shift was pressed
 	 * @return True to notify that the operation was allowed
 	 */
 	public boolean onLeftClick(int clickedSlot, boolean shift) {

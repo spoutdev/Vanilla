@@ -451,7 +451,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	/**
 	 * This method takes in any amount of messages and sends them to any amount of
 	 * players.
-	 * @param players  specific players to send a message to.
+	 * @param players specific players to send a message to.
 	 * @param messages the message(s) to send
 	 */
 	public static void sendPacket(Player[] players, Message... messages) {
@@ -464,7 +464,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method takes in a message and sends it to a specific player
-	 * @param player   specific player to relieve message
+	 * @param player specific player to relieve message
 	 * @param messages specific message to send.
 	 */
 	public static void sendPacket(Player player, Message... messages) {
@@ -475,7 +475,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method sends an effect play message for a block to all nearby players in a 16-block radius
-	 * @param block  The block that the effect comes from.
+	 * @param block The block that the effect comes from.
 	 * @param effect The effect to play
 	 */
 	public static void playBlockEffect(Block block, Entity ignore, PlayEffectMessage.Messages effect) {
@@ -484,8 +484,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method sends an effect play message for a block to all nearby players
-	 * @param block  The block that the effect comes from.
-	 * @param range  The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param block The block that the effect comes from.
+	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param effect The effect to play
 	 */
 	public static void playBlockEffect(Block block, Entity ignore, int range, PlayEffectMessage.Messages effect) {
@@ -494,10 +494,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method sends an effect play message for a block to all nearby players
-	 * @param block  The block that the effect comes from.
-	 * @param range  The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param block The block that the effect comes from.
+	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param effect The effect to play
-	 * @param data   The data to use for the effect
+	 * @param data The data to use for the effect
 	 */
 	public static void playBlockEffect(Block block, Entity ignore, int range, PlayEffectMessage.Messages effect, int data) {
 		sendPacketsToNearbyPlayers(block.getPosition(), ignore, range, new PlayEffectMessage(effect.getId(), block, data));
@@ -520,7 +520,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	/**
 	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
 	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param messages The messages that should be sent to the discovered nearest player.
 	 */
 	public static void sendPacketsToNearbyPlayers(Point position, Entity ignore, int range, Message... messages) {
@@ -533,7 +533,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	/**
 	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
 	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param messages The messages that should be sent to the discovered nearest player.
 	 */
 	public static void sendPacketsToNearbyPlayers(Point position, int range, Message... messages) {
@@ -545,8 +545,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method sends any amount of packets to all nearby players of an entity (within a specified range).
-	 * @param entity   The entity that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param entity The entity that the packet relates to. It will be used as the central point to send packets in a range from.
+	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param messages The messages that should be sent to the discovered nearest player.
 	 */
 	public static void sendPacketsToNearbyPlayers(Entity entity, int range, Message... messages) {
@@ -561,8 +561,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	/**
 	 * This method sends any amount of packets and sends them to the nearest player from the entity specified.
-	 * @param entity   The entity that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range    The range (circular) from the entity in-which the nearest player should be searched for.
+	 * @param entity The entity that the packet relates to. It will be used as the central point to send packets in a range from.
+	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
 	 * @param messages The messages that should be sent to the discovered nearest player.
 	 */
 	public static void sendPacketsToNearestPlayer(Entity entity, int range, Message... messages) {

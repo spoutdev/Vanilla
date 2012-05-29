@@ -42,7 +42,7 @@ public interface Openable {
 	/**
 	 * Sets whether this material is open
 	 * @param block to apply to
-	 * @param open  whether the block should be open
+	 * @param open whether the block should be open
 	 */
 	public void setOpen(Block block, boolean open);
 

@@ -69,8 +69,8 @@ public class Vines extends VanillaBlockMaterial {
 
 	/**
 	 * Sets whether a certain face is attached or not
-	 * @param block    of this material
-	 * @param face     to attach to
+	 * @param block of this material
+	 * @param face to attach to
 	 * @param attached whether or not to attach
 	 */
 	public void setFaceAttached(Block block, BlockFace face, boolean attached) {

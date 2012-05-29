@@ -40,11 +40,11 @@ import org.spout.vanilla.VanillaPlugin;
 public class SingleShapelessInputOutputRecipe {
 	/**
 	 * Constructs a single input and output recipe.
-	 * @param instance        Instance of our plugin
+	 * @param instance Instance of our plugin
 	 * @param craftingEnabler The controller that would "manage" this recipe. Example would be CraftingController or VanillaPlayer (as part of their inventory would be a crafting matrix).
-	 * @param output          Type of material that would be recieved in return.
-	 * @param key             Character identifier for the input material.
-	 * @param outputAmount    Amount of the output material returned from this recipe.
+	 * @param output Type of material that would be recieved in return.
+	 * @param key Character identifier for the input material.
+	 * @param outputAmount Amount of the output material returned from this recipe.
 	 */
 	public SingleShapelessInputOutputRecipe(VanillaPlugin instance, Controller craftingEnabler, String name, Material output, int outputAmount, char key, Material input, int inputAmount) {
 		ShapelessRecipe shapeless = new ShapelessRecipe(instance, name, new ItemStack(output, outputAmount));

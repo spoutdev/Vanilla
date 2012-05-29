@@ -92,7 +92,7 @@ public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable
 
 	/**
 	 * Sets the intensity of the potion effect for an controller.
-	 * @param entity    The controller that will have a new defined intensity.
+	 * @param entity The controller that will have a new defined intensity.
 	 * @param intensity The intensity of the potion effect.
 	 */
 	public void setIntensityFor(Entity entity, double intensity) {

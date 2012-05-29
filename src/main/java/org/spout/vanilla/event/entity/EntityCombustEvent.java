@@ -34,27 +34,10 @@ import org.spout.api.event.entity.EntityEvent;
 public class EntityCombustEvent extends EntityEvent {
 	private static HandlerList handlers = new HandlerList();
 	private int duration;
-	private Source source;
 
-	public EntityCombustEvent(Entity e, Source source) {
+	public EntityCombustEvent(Entity e,  int duration) {
 		super(e);
-		this.source = source;
-	}
-
-	/**
-	 * Gets the source of this event.
-	 * @return An Source that is the source of the event.
-	 */
-	public Source getSource() {
-		return source;
-	}
-
-	/**
-	 * Sets the source of this event.
-	 * @param source The source of this event.
-	 */
-	public void setSource(Source source) {
-		this.source = source;
+		this.duration = duration;
 	}
 
 	/**

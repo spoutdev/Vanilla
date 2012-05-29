@@ -128,7 +128,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	/**
 	 * Grows a full-sized tree from the sapling type given
 	 * @param block to grow a tree at
-	 * @param type  of tree
+	 * @param type of tree
 	 */
 	public void growTree(Block block, Sapling type) {
 		SmallTreeObject object = new SmallTreeObject(new Random(), SmallTreeType.OAK);

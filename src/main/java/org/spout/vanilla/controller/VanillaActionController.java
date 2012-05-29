@@ -50,6 +50,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.event.entity.EntityCombustEvent;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 
@@ -216,7 +217,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Get the drops that Vanilla controllers disperse into the world when un-attached (such as entity death). Children controllers should override this method for their own personal drops.
-	 * @param source      Source of death
+	 * @param source Source of death
 	 * @param lastDamager Controller that killed this controller, can be null if death was caused by natural sources such as drowning or burning
 	 * @return the drops to disperse.
 	 */
@@ -253,6 +254,10 @@ public abstract class VanillaActionController extends ActionController implement
 	 * @param fireTicks the new amount of ticks the controller has been on fire for.
 	 */
 	public void setFireTicks(int fireTicks) {
+		if (fireTicks > 0) {
+			EntityCombustEvent event = Spout.getEventManager().callEvent(new EntityCombustEvent(getParent(), fireTicks));
+			fireTicks = event.getDuration();
+		}
 		this.fireTicks = fireTicks;
 	}
 
@@ -291,7 +296,7 @@ public abstract class VanillaActionController extends ActionController implement
 	/**
 	 * Damages this controller and doesn't send messages to the client.
 	 * @param amount amount the controller will be damaged by.
-	 * @param cause  cause of this controller being damaged
+	 * @param cause cause of this controller being damaged
 	 */
 	public void damage(int amount, DamageCause cause) {
 		this.damage(amount, cause, null);
@@ -299,9 +304,9 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Damages this controller and doesn't send messages to the client.
-	 * @param cause   cause of this controller being damaged
+	 * @param cause cause of this controller being damaged
 	 * @param damager controller that damaged this controller
-	 * @param amount  amount the controller will be damaged by.
+	 * @param amount amount the controller will be damaged by.
 	 */
 	public void damage(int amount, DamageCause cause, VanillaActionController damager) {
 		this.damage(amount, cause, damager, false);
@@ -309,9 +314,9 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Damages this controller.
-	 * @param amount          amount the controller will be damaged by.
-	 * @param cause           cause of this controller being damaged
-	 * @param damager         controller that damaged this controller
+	 * @param amount amount the controller will be damaged by.
+	 * @param cause cause of this controller being damaged
+	 * @param damager controller that damaged this controller
 	 * @param sendHurtMessage whether or not to send a hurt message
 	 */
 	public void damage(int amount, DamageCause cause, VanillaActionController damager, boolean sendHurtMessage) {
@@ -359,9 +364,9 @@ public abstract class VanillaActionController extends ActionController implement
 	/**
 	 * Rotates the controller
 	 * @param degrees the angle of which to do rotation.
-	 * @param x       x-axis to rotate the controller along
-	 * @param y       y-axis to rotate the controller along
-	 * @param z       z-axis to rotate the controller along
+	 * @param x x-axis to rotate the controller along
+	 * @param y y-axis to rotate the controller along
+	 * @param z z-axis to rotate the controller along
 	 */
 	public void rotate(float degrees, float x, float y, float z) {
 		getParent().rotate(degrees, x, y, z);

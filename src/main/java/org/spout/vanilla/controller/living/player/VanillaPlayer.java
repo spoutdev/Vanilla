@@ -32,6 +32,8 @@ import java.util.Set;
 
 import org.spout.api.Source;
 import org.spout.api.Spout;
+import org.spout.api.collision.BoundingBox;
+import org.spout.api.collision.CollisionModel;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.cuboid.Block;
@@ -119,9 +121,11 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public void onAttached() {
 		Transform spawn = getParent().getWorld().getSpawnPoint();
 		Quaternion rotation = spawn.getRotation();
+		BoundingBox box = new BoundingBox(1, 2, 1, 2, 2, 1); //TODO I guessed
 		getParent().setPosition(spawn.getPosition());
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
+		getParent().setCollision(new CollisionModel(box));
 		setMaxHealth(20);
 		setHealth(20, HealthChangeReason.SPAWN);
 		getParent().setObserver(true);

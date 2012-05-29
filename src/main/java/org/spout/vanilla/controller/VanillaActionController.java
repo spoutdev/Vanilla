@@ -137,7 +137,6 @@ public abstract class VanillaActionController extends ActionController implement
 
 	@Override
 	public void onCollide(Block block) {
-		System.out.println("Collisons work!");
 		setVelocity(Vector3.ZERO);
 	}
 

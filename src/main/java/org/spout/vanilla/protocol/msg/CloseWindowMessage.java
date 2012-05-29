@@ -60,4 +60,10 @@ public final class CloseWindowMessage extends Message {
 		final CloseWindowMessage other = (CloseWindowMessage) obj;
 		return this.id == other.id;
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

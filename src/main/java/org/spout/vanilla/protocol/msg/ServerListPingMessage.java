@@ -38,4 +38,10 @@ public class ServerListPingMessage extends Message {
 	public boolean equals(Object obj) {
 		return obj != null && getClass().equals(obj.getClass());
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

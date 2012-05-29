@@ -62,4 +62,10 @@ public final class HandshakeMessage extends Message {
 				.append(this.identifier, other.identifier)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

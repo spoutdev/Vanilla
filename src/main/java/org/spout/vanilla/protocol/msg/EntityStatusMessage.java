@@ -76,4 +76,10 @@ public final class EntityStatusMessage extends Message {
 				.append(this.status, other.status)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

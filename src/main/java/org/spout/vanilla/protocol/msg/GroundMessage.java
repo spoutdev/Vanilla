@@ -60,4 +60,10 @@ public final class GroundMessage extends Message {
 		final GroundMessage other = (GroundMessage) obj;
 		return this.onGround == other.onGround;
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

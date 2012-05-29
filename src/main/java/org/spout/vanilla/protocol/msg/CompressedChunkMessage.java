@@ -112,4 +112,10 @@ public final class CompressedChunkMessage extends Message {
 				.append(this.biomeData, other.biomeData)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

@@ -60,4 +60,10 @@ public final class TimeUpdateMessage extends Message {
 		final TimeUpdateMessage other = (TimeUpdateMessage) obj;
 		return this.time == other.time;
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

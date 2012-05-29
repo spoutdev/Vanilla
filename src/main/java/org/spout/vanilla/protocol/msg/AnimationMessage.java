@@ -78,4 +78,10 @@ public final class AnimationMessage extends Message {
 				.append(this.animation, other.animation)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

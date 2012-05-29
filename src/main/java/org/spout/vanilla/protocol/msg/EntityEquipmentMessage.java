@@ -88,4 +88,10 @@ public final class EntityEquipmentMessage extends Message {
 				.append(this.damage, other.damage)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

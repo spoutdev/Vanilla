@@ -104,4 +104,10 @@ public class TileEntityDataMessage extends Message {
 				.append(this.custom3, other.custom3)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

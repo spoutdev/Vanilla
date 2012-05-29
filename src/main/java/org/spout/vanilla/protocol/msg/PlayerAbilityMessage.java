@@ -83,4 +83,10 @@ public class PlayerAbilityMessage extends Message {
 				.append(this.canInstantDestroy, other.canInstantDestroy)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

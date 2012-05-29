@@ -95,4 +95,10 @@ public final class PlayerDiggingMessage extends Message {
 				.append(this.face, other.face)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

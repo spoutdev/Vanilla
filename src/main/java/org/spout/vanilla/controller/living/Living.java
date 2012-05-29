@@ -39,6 +39,7 @@ public abstract class Living extends VanillaActionController {
 	private int nextHeadYaw = 0;
 	private boolean headYawChanged;
 	private float headHeight = 1.0f;
+	// FIXME: This is masked by VanillaPlayer.crouching - see VanillaPlayer.java.
 	protected boolean crouching;
 
 	protected Living(VanillaControllerType type) {

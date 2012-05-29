@@ -85,6 +85,20 @@ public class DamageCause extends Reason {
 
 	@Override
 	public boolean equals(Object obj) {
+		// FIXME: This should be checked... "obj.type.equals(type)" was probably meant? (after casting of course)
+		/* This seems to be relied on elsewhere, which is really really really bad:
+		 * creature/hostile/Creeper.java:67
+		 * creature/passive/Chicken.java:69
+		 * creature/passive/Sheep.java:107
+		 * creature/passive/Pig.java:64
+		 * creature/passive/Cow.java:75
+		 */
 		return obj.equals(type);
+	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
 	}
 }

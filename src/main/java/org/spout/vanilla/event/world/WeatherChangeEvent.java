@@ -48,6 +48,7 @@ public class WeatherChangeEvent extends WorldEvent implements Cancellable {
 	 * @return the current weather.
 	 */
 	public Weather getCurrentWeather() {
+		// FIXME: "current" is never written
 		return current;
 	}
 

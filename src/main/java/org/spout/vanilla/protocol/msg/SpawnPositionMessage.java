@@ -76,4 +76,10 @@ public final class SpawnPositionMessage extends Message {
 				.append(this.z, other.z)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

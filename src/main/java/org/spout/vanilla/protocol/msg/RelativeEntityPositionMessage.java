@@ -88,4 +88,10 @@ public final class RelativeEntityPositionMessage extends Message {
 				.append(this.deltaZ, other.deltaZ)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

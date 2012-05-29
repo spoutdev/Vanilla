@@ -91,4 +91,10 @@ public class SpawnExperienceOrbMessage extends Message {
 				.append(this.count, other.count)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

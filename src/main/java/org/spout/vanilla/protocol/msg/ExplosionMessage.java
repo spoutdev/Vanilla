@@ -105,4 +105,10 @@ public final class ExplosionMessage extends Message {
 				.append(this.coordinates, other.coordinates)
 				.isEquals();
 	}
+
+	@Override
+	public int hashCode() {
+		// FIXME: Add a proper hashCode method!
+		throw new UnsupportedOperationException("hashCode is not supported.");
+	}
 }

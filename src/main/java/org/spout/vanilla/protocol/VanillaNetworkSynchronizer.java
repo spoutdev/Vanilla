@@ -91,8 +91,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();
 	private TIntPairHashSet biomesSentChunks = new TIntPairHashSet();
-	//TODO: track entities as they come into range and untrack entities as they move out of range
-	private TIntHashSet activeEntities = new TIntHashSet();
 	private final TIntObjectHashMap<Message> queuedInventoryUpdates = new TIntObjectHashMap<Message>();
 
 	@Override
@@ -341,7 +339,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (ep != null) {
 				Message[] spawn = ep.getSpawnMessage(e);
 				if (spawn != null) {
-					activeEntities.add(e.getId());
 					for (Message msg : spawn) {
 						session.send(msg);
 					}
@@ -356,9 +353,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (e == null) {
 			return;
 		}
-		if (!activeEntities.contains(e.getId())) {
-			return;
-		}
 
 		Controller c = e.getController();
 		if (c != null) {
@@ -369,7 +363,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 					for (Message msg : death) {
 						session.send(msg);
 					}
-					activeEntities.remove(e.getId());
 				}
 			}
 		}
@@ -382,10 +375,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 
-		// TODO - is this really worth checking?
-		if (!activeEntities.contains(e.getId())) {
-			return;
-		}
 		Controller c = e.getController();
 		if (c != null) {
 			EntityProtocol ep = c.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);

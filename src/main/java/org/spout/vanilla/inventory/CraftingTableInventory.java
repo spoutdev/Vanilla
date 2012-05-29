@@ -24,51 +24,22 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
-
-import java.util.ArrayList;
-
-import org.spout.api.entity.Controller;
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.block.BlockFace;
+package org.spout.vanilla.inventory;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.CraftingTableInventory;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.window.CraftingWindow;
+import org.spout.vanilla.window.Window;
 
-public class CraftingTable extends Solid {
+public class CraftingTableInventory extends WindowInventory{
+	private static final long serialVersionUID = 1L;
 	
-	public CraftingTable(String name, int id) {
-		super(name, id);
-		this.setHardness(4.2F);
-	}
-		
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(this, 1));
-		return drops;
+	public CraftingTableInventory() {
+		super(9);
 	}
 	
 	@Override
-	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
-		if (action == Action.RIGHT_CLICK) {
-			Controller controller = entity.getController();
-			if (!(controller instanceof VanillaPlayer)) {
-				return;
-			}
+	public Window createWindow(VanillaPlayer player) {
+		return new CraftingWindow(player, this);
 
-			// Open the crafting table
-			(new CraftingTableInventory()).open((VanillaPlayer) controller);
-		}
 	}
 }

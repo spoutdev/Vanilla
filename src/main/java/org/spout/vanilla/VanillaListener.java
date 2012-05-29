@@ -175,12 +175,4 @@ public class VanillaListener implements Listener {
 			sendPacket(sp.getPlayer(), new UpdateHealthMessage(health, sp.getHunger(), sp.getFoodSaturation()));
 		}
 	}
-
-	@EventHandler
-	public void onEntityMove(EntityMoveEvent event) {
-		Controller control = event.getEntity().getController();
-		Spout.log("Controller was moved: " + control.toString());
-		Spout.log("Controller former position: " + event.getFrom());
-		Spout.log("Controller new position: " + event.getTo());
-	}
 }

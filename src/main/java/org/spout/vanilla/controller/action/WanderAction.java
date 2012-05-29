@@ -36,10 +36,6 @@ import org.spout.vanilla.controller.VanillaActionController;
 
 public class WanderAction extends EntityAction<VanillaActionController> {
 	private static final double WANDER_FREQ = 1;
-	@SuppressWarnings("unused")
-	private Vector3 movement = Vector3.ZERO;
-	@SuppressWarnings("unused")
-	private Quaternion rotation = Quaternion.IDENTITY;
 
 	@Override
 	public boolean shouldRun(Entity entity, VanillaActionController controller) {
@@ -58,6 +54,6 @@ public class WanderAction extends EntityAction<VanillaActionController> {
 		entity.setRotation(rotationTo);
 		//Move forward
 		controller.setVelocity(MathHelper.getDirectionVector(entity.getRotation()).multiply(dt));
-		controller.move(); //still needed?
+		controller.move();
 	}
 }

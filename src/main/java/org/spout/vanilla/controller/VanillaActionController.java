@@ -121,8 +121,6 @@ public abstract class VanillaActionController extends ActionController implement
 
 	@Override
 	public void onTick(float dt) {
-		positionTicks++;
-		velocityTicks++;
 		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
 			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
@@ -131,6 +129,9 @@ public abstract class VanillaActionController extends ActionController implement
 			}
 			onDeath();
 		}
+
+		positionTicks++;
+		velocityTicks++;
 
 		super.onTick(dt);
 	}

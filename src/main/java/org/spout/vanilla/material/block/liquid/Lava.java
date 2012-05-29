@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.liquid;
 
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
@@ -35,7 +36,7 @@ import org.spout.vanilla.material.block.Liquid;
 public class Lava extends Liquid {
 	public Lava(String name, int id, boolean flowing) {
 		super(name, id, flowing);
-		this.setHardness(100.0F).setResistance(166.7F).setOpacity((byte) 1);
+		this.setHardness(100.0F).setResistance(166.7F).setOpacity((byte) 1).setCollision(CollisionStrategy.SOFT);
 	}
 
 	@Override

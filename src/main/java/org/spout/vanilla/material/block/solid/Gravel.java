@@ -32,8 +32,12 @@ import java.util.Random;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.block.MovingBlock;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
@@ -41,17 +45,12 @@ import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class Gravel extends Solid implements Mineable {
+public class Gravel extends Solid implements Mineable, DynamicMaterial {
 	private Random rand = new Random();
 
 	public Gravel(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(1.0F);
-	}
-
-	@Override
-	public boolean isMoving() {
-		return true;
 	}
 
 	@Override
@@ -82,5 +81,19 @@ public class Gravel extends Solid implements Mineable {
 			drops.add(new ItemStack(this, 1));
 		}
 		return drops;
+	}
+
+	@Override
+	public Vector3[] maxRange() {
+		return new Vector3[0];
+	}
+
+	@Override
+	public long update(Block b, long updateTime, long lastUpdateTime, boolean first) {
+		if (!b.translate(0, -1, 0).getMaterial().isSolid()) {
+			b.setMaterial(VanillaMaterials.AIR);
+			b.getWorld().createAndSpawnEntity(b.getPosition(), new MovingBlock(VanillaControllerTypes.MOVING_BLOCK, this));
+		}
+		return b.getWorld().getAge() + 1;
 	}
 }

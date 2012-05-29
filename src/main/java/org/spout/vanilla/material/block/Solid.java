@@ -51,13 +51,6 @@ public class Solid extends VanillaBlockMaterial {
 		this.setCollision(CollisionStrategy.SOLID).setOccludes(true);
 	}
 
-	/**
-	 * Gets whether this material can be move using a MovingBlock entity
-	 */
-	public boolean isMoving() {
-		return false;
-	}
-
 	@Override
 	public boolean isRedstoneConductor() {
 		return true;
@@ -80,18 +73,6 @@ public class Solid extends VanillaBlockMaterial {
 			}
 		} else {
 			return true;
-		}
-	}
-
-	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
-		if (this.isMoving()) {
-			if (!block.translate(BlockFace.BOTTOM).getMaterial().isPlacementObstacle()) {
-				//Just do nothing for now...
-				//block.getSubMaterial().onDestroy(block);
-				//world.createAndSpawnEntity(block.getPosition(), new MovingBlock(this)); TODO: We aren't ready for this lol.
-			}
 		}
 	}
 }

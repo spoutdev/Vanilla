@@ -76,7 +76,7 @@ public class VanillaListener implements Listener {
 	}
 
 	@EventHandler(order = Order.EARLIEST)
-	public void playerJoin(PlayerJoinEvent event) {
+	public void onPlayerJoin(PlayerJoinEvent event) {
 		// Set their mode
 		Player player = event.getPlayer();
 		Entity playerEntity = player.getEntity();
@@ -100,7 +100,7 @@ public class VanillaListener implements Listener {
 	}
 
 	@EventHandler(order = Order.LATEST)
-	public void playerLeave(PlayerLeaveEvent event) {
+	public void onPlayerLeave(PlayerLeaveEvent event) {
 		InventoryBase inv = VanillaPlayerUtil.getInventory(event.getPlayer().getEntity());
 		if (inv != null) {
 			inv.removeViewer(event.getPlayer().getNetworkSynchronizer());
@@ -108,12 +108,12 @@ public class VanillaListener implements Listener {
 	}
 
 	@EventHandler
-	public void regionUnload(RegionUnloadEvent event) {
+	public void onRegionUnload(RegionUnloadEvent event) {
 		BlockScheduler.remove(event.getRegion());
 	}
 
 	@EventHandler
-	public void regionLoad(RegionLoadEvent event) {
+	public void onRegionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
 		RegionSpawner spawner = new RegionSpawner(region);
 		region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
@@ -134,7 +134,7 @@ public class VanillaListener implements Listener {
 	}
 
 	@EventHandler(order = Order.MONITOR)
-	public void entitySpawn(EntitySpawnEvent event) {
+	public void onEntitySpawn(EntitySpawnEvent event) {
 		if (event.isCancelled()) {
 			return;
 		}
@@ -153,7 +153,7 @@ public class VanillaListener implements Listener {
 	}
 
 	@EventHandler(order = Order.EARLIEST)
-	public void checkPermission(PermissionNodeEvent event) {
+	public void onPermissionNode(PermissionNodeEvent event) {
 		PermissionsSubject subject = event.getSubject();
 		if (VanillaConfiguration.OPS.isOp(subject.getName())) {
 			event.setResult(Result.ALLOW);
@@ -161,7 +161,7 @@ public class VanillaListener implements Listener {
 	}
 
 	@EventHandler
-	public void syncHealth(EntityHealthChangeEvent event) {
+	public void onHealthChange(EntityHealthChangeEvent event) {
 		Source source = event.getSource();
 		if (source == HealthChangeReason.SPAWN) {
 			return;

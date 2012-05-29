@@ -39,7 +39,7 @@ import org.spout.api.util.map.concurrent.AtomicShortArray;
 
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.BrewingStand;
-import org.spout.vanilla.material.block.controlled.Chest;
+import org.spout.vanilla.material.block.controlled.ChestBlock;
 import org.spout.vanilla.material.block.controlled.Dispenser;
 import org.spout.vanilla.material.block.controlled.EnchantmentTable;
 import org.spout.vanilla.material.block.controlled.Furnace;
@@ -296,7 +296,7 @@ public final class VanillaMaterials {
 	public static final Torch TORCH = new Torch("Torch", 50);
 	public static final Fire FIRE = new Fire("Fire", 51);
 	public static final MonsterSpawner MONSTER_SPAWNER = new MonsterSpawner("Monster Spawner", 52);
-	public static final Chest CHEST = new Chest("Chest", 54);
+	public static final ChestBlock CHEST = new ChestBlock("Chest", 54);
 	public static final RedstoneWire REDSTONE_WIRE = new RedstoneWire("Redstone Wire", 55);
 	public static final CraftingTable CRAFTING_TABLE = new CraftingTable("Crafting Table", 58);
 	public static final WheatCrop WHEATCROP = new WheatCrop("Wheat Crop", 59);

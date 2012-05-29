@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.vanilla.material.block.controlled.Chest;
+import org.spout.vanilla.material.block.controlled.ChestBlock;
 
-public class LockedChest extends Chest {
+public class LockedChest extends ChestBlock {
 	public LockedChest(String name, int id) {
 		super(name, id);
 	}

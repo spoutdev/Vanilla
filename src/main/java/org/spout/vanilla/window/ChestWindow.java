@@ -36,6 +36,6 @@ public class ChestWindow extends Window {
 	public ChestWindow(VanillaPlayer owner, ChestInventory chestInventory) {
 		super(0, "Chest", owner);
 		this.setInventory(owner.getInventory().getItems(), chestInventory);
-		this.setSlotConversionArray(chestInventory.isLarge() ? LARGE_CHEST_SLOTS : SMALL_CHEST_SLOTS);
+		this.setSlotConversionArray(chestInventory.isDouble() ? LARGE_CHEST_SLOTS : SMALL_CHEST_SLOTS);
 	}
 }

@@ -68,7 +68,7 @@ import org.spout.vanilla.controller.living.creature.passive.Villager;
 import org.spout.vanilla.controller.living.creature.util.IronGolem;
 import org.spout.vanilla.controller.living.creature.util.SnowGolem;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.object.MovingBlock;
+import org.spout.vanilla.controller.block.MovingBlock;
 import org.spout.vanilla.controller.object.misc.EnderCrystal;
 import org.spout.vanilla.controller.object.misc.Lightning;
 import org.spout.vanilla.controller.object.misc.Painting;
@@ -171,6 +171,7 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType ENCHANTMENT_TABLE = new VanillaControllerType(-12, EnchantmentTable.class, "Enchantment Table");
 	public static final VanillaControllerType MONSTER_SPAWNER = new VanillaControllerType(-13, MonsterSpawner.class, "Monster Spawner");
 	public static final VanillaControllerType BREWING_STAND = new VanillaControllerType(-15, BrewingStand.class, "Brewing Stand");
+	public static final VanillaControllerType MOVING_BLOCK = new VanillaControllerType(-16, MovingBlock.class, "Moving Block");
 	public static final String KEY = "ControllerID";
 	private static final TIntObjectHashMap<VanillaControllerType> ID_LOOKUP = new TIntObjectHashMap<VanillaControllerType>();
 

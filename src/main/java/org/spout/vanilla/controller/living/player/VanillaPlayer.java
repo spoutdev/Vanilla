@@ -124,7 +124,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setPosition(spawn.getPosition());
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
-		getParent().setCollision(null);
+		getParent().setCollision(new CollisionModel(new BoundingBox(1, 2, 1, 2, 2, 1))); //TODO Absolutely guessed here.
 		setMaxHealth(20);
 		setHealth(20, HealthChangeReason.SPAWN);
 		getParent().setObserver(true);

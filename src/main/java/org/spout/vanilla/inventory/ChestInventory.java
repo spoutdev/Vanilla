@@ -34,17 +34,17 @@ import org.spout.vanilla.window.Window;
 public class ChestInventory extends WindowInventory {
 	private static final long serialVersionUID = 1L;
 	private final Chest owner;
-	public static final int LARGE_SIZE = 54, SMALL_SIZE = 27;
-	private boolean isLarge;
+	public static final int DOUBLE_CHEST_SIZE = 54, SINGLE_CHEST_SIZE = 27;
+	private boolean isDouble;
 
 	public ChestInventory(Chest owner, int size) {
 		super(size);
 		this.owner = owner;
-		this.isLarge = size == LARGE_SIZE;
+		this.isDouble = size == DOUBLE_CHEST_SIZE;
 	}
 
-	public boolean isLarge() {
-		return this.isLarge;
+	public boolean isDouble() {
+		return this.isDouble;
 	}
 
 	public Chest getOwner() {

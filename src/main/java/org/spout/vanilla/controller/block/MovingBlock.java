@@ -24,10 +24,8 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.action;
+package org.spout.vanilla.controller.block;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.action.EntityAction;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
@@ -35,22 +33,31 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.object.MovingBlock;
+import org.spout.vanilla.controller.VanillaBlockController;
+import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.object.moving.Item;
 
-public class MovingBlockAction extends EntityAction<MovingBlock> {
-	@Override
-	public boolean shouldRun(Entity entity, MovingBlock block) {
-		BlockMaterial mat = entity.getWorld().getBlock(entity.getPosition()).getMaterial();
-		return !mat.isSolid();
+/**
+ * Represents a block that can move, such as sand or gravel.
+ */
+public class MovingBlock extends VanillaBlockController {
+	private final BlockMaterial material;
+
+	public MovingBlock(VanillaControllerType type, BlockMaterial block) {
+		super(type, block);
+		material = block;
 	}
 
 	@Override
-	public void run(Entity entity, MovingBlock controller, float dt) {
-		Point pos = entity.getPosition();
+	public void onAttached() {
+	}
+
+	@Override
+	public void onTick(float dt) {
+		Point pos = getParent().getPosition();
 		Block block = pos.getWorld().getBlock(pos);
-		if (block.translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
-			BlockMaterial mat = controller.getBlock();
+		if (block.translate(0, -1, 0).getMaterial().isSolid()) {
+			BlockMaterial mat = material;
 			short data = mat.getData();
 			//can we place here?
 			if (block.getMaterial().isPlacementObstacle()) {
@@ -60,9 +67,9 @@ public class MovingBlockAction extends EntityAction<MovingBlock> {
 			} else {
 				block.setMaterial(mat, data);
 			}
-			entity.kill();
+			getParent().kill();
 		} else {
-			controller.setVelocity(controller.getVelocity().subtract(0, 0.50f, 0));
+			getParent().translate(getParent().getPosition().subtract(0, 0.50, 0).multiply(dt));
 		}
 	}
 }

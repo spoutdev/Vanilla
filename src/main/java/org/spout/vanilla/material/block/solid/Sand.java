@@ -47,11 +47,6 @@ public class Sand extends Solid implements TimedCraftable, Mineable {
 	}
 
 	@Override
-	public boolean isMoving() {
-		return true;
-	}
-
-	@Override
 	public ItemStack getResult() {
 		return new ItemStack(VanillaMaterials.GLASS, 1);
 	}

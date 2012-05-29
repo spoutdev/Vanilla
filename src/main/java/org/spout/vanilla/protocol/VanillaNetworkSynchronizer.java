@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.protocol;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import gnu.trove.iterator.TIntObjectIterator;
@@ -418,14 +421,15 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (!(c instanceof VanillaPlayer)) {
 			return;
 		}
+
 		VanillaPlayer controller = (VanillaPlayer) c;
-		ItemStack[] newItems = new ItemStack[slots.length];
-		for (int i = 0; i < newItems.length; i++) {
-			newItems[controller.getActiveWindow().getNativeSlotIndex(i)] = slots[i];
+		ItemStack[] newSlots = slots.clone();
+		for (int i = 0; i < slots.length; i++) {
+			newSlots[controller.getActiveWindow().getNativeSlotIndex(i)] = slots[i];
 		}
 
 		int id = controller.getActiveWindow().getInstanceId();
-		session.send(new SetWindowSlotsMessage((byte) id, newItems));
+		session.send(new SetWindowSlotsMessage((byte) id, newSlots));
 		queuedInventoryUpdates.clear();
 	}
 

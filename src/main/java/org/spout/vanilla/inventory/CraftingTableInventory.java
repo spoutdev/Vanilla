@@ -30,16 +30,20 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.window.CraftingTableWindow;
 import org.spout.vanilla.window.Window;
 
-public class CraftingTableInventory extends WindowInventory{
+public class CraftingTableInventory extends WindowInventory implements CraftingGrid {
 	private static final long serialVersionUID = 1L;
-	
+
 	public CraftingTableInventory() {
 		super(9);
 	}
-	
+
 	@Override
 	public Window createWindow(VanillaPlayer player) {
 		return new CraftingTableWindow(player, this);
+	}
 
+	@Override
+	public int getOutputSlot() {
+		return 6;
 	}
 }

@@ -68,7 +68,8 @@ public class CraftingTable extends Solid {
 			}
 
 			// Open the crafting table
-			(new CraftingTableInventory()).open((VanillaPlayer) controller);
+			CraftingTableInventory inventory = new CraftingTableInventory();
+			inventory.open((VanillaPlayer) controller);
 		}
 	}
 }

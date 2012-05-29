@@ -33,7 +33,7 @@ import org.spout.api.inventory.special.InventoryBundle;
 /**
  * Represents a players inventory
  */
-public class PlayerInventory extends InventoryBundle {
+public class PlayerInventory extends InventoryBundle implements CraftingGrid {
 	private static final long serialVersionUID = 1L;
 	private final Inventory items;
 	private final Inventory craftingGrid;
@@ -141,5 +141,10 @@ public class PlayerInventory extends InventoryBundle {
 	 */
 	public ItemStack getOutput() {
 		return this.craftingGrid.getItem(4);
+	}
+
+	@Override
+	public int getOutputSlot() {
+		return 4;
 	}
 }

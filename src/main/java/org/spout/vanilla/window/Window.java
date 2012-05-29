@@ -102,7 +102,7 @@ public class Window implements InventoryViewer {
 	 */
 	public void open() {
 		sendPacket(this.getPlayer(), new OpenWindowMessage(this.getInstanceId(), this.getId(), this.getTitle(), this.inventory.getSize()));
-		this.inventory.notifyViewers(this.inventory.getContents());
+		//this.inventory.notifyViewers(this.inventory.getContents());
 		this.onOpened();
 	}
 

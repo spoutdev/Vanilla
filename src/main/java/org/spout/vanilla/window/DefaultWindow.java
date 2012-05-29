@@ -31,11 +31,11 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 /**
  * The default player window always displayed
  */
-public class DefaultWindow extends Window {
+public class DefaultWindow extends CraftingWindow {
 	private static final int[] SLOTS = {36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 8, 7, 3, 4, 0, 6, 1, 2, 5};
 
 	public DefaultWindow(VanillaPlayer owner) {
-		super(-1, "Inventory", owner);
+		super(-1, "Inventory", owner, owner.getInventory());
 		this.setInventory(owner.getInventory());
 		this.setSlotConversionArray(SLOTS);
 	}

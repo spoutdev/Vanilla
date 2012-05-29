@@ -36,6 +36,10 @@ import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 public final class CloseWindowMessageHandler extends MessageHandler<CloseWindowMessage> {
 	@Override
 	public void handleServer(Session session, Player player, CloseWindowMessage message) {
+		if (session == null || player == null || message == null) {
+			return;
+		}
+
 		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
 		controller.closeWindow();
 

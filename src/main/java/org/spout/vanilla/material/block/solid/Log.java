@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block.solid;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
@@ -42,33 +41,44 @@ import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.Furnace;
+import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.item.misc.Coal;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.world.generator.normal.object.SmallTreeObject;
-import org.spout.vanilla.world.generator.normal.object.SmallTreeObject.SmallTreeType;
 
 public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable, DynamicMaterial {
-	public static final Log DEFAULT = new Log("Wood");
-	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT);
-	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT);
-	public static final Log JUNGLE = new Log("Jungle Wood", 3, DEFAULT);
+	public static final Log DEFAULT = new Log("Wood", Sapling.DEFAULT);
+	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT, Sapling.SPRUCE);
+	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT, Sapling.BIRCH);
+	public static final Log JUNGLE = new Log("Jungle Wood", 3, DEFAULT, Sapling.JUNGLE);
 	private static final short dataMask = 0x0003;
 	public static final short aliveMask = 0x0100;
 	public static final short heightMask = 0x0600;
 	
 	private static final Vector3[] maxRange =  new Vector3[] {new Vector3(4, 0, 4), new Vector3(4, 8, 4)};
 	public final float BURN_TIME = 15.f;
+	private final Sapling sapling;
 
-	private Log(String name) {
+	private Log(String name, Sapling sapling) {
 		super(dataMask, name, 17);
 		this.setHardness(2.0F).setResistance(10.F).setOpacity((byte) 1);
+		this.sapling = sapling;
 	}
 
-	private Log(String name, int data, Log parent) {
+	private Log(String name, int data, Log parent, Sapling sapling) {
 		super(name, 17, data, parent);
 		this.setHardness(2.0F).setResistance(10.F).setOpacity((byte) 1);
+		this.sapling = sapling;
+	}
+	
+	/**
+	 * Gets the sapling associated with this Log
+	 * 
+	 * @return the sapling
+	 */
+	public Sapling getSapling() {
+		return sapling;
 	}
 
 	@Override
@@ -138,34 +148,30 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable,
 				return b.getWorld().getAge() + 10000;
 			} else {
 				Block trunk = b;
-				int blockData = b.getData();
-				int expectHeight = (blockData & heightMask) >> 9;
+				int expectHeight = b.getBlockDataField(heightMask);
 				for (int i = 0; i < expectHeight + 1; i++) {
 					if (!(trunk.getMaterial() instanceof Log)) {
 						return -1;
 					}
 					trunk = trunk.translate(BlockFace.TOP);
 				}
+				Material trunkMaterial = trunk.getMaterial();
 				if (expectHeight == 3) {
 					trunk = b;
 					for (int i = 0; i < expectHeight + 1; i++) {
 						trunk.setMaterial(BlockMaterial.AIR);
 						trunk = trunk.translate(BlockFace.TOP);
 					}
-					// TODO - make it match the type of log
-					SmallTreeObject object = new SmallTreeObject(new Random(), SmallTreeType.OAK);
-					object.placeObject(b.getWorld(), b.getX(), b.getY(), b.getZ());
+					sapling.growTree(b, sapling);
 					return -1;
-				} else if (trunk.getMaterial() == BlockMaterial.AIR) {
+				} else if (trunkMaterial == BlockMaterial.AIR || (trunkMaterial instanceof Leaves)) {
 					trunk.setMaterial(b.getMaterial());
-					int newHeight = (expectHeight + 1) << 9;
-					newHeight &= heightMask;
-					int alive = 1 << 8;
-					alive &= aliveMask;
-					data = data & dataMask;
-					data |= alive;
-					data |= newHeight;
-					b.setData(data);
+					trunk = trunk.translate(BlockFace.TOP);
+					if (trunk.getMaterial() == BlockMaterial.AIR) {
+						trunk.setMaterial(Leaves.DEFAULT);
+						trunk.setData(data & dataMask);
+					}
+					b.setBlockDataField(heightMask, expectHeight + 1);
 					return updateTime + 10000;
 				} else {
 					b.setData(data & dataMask);

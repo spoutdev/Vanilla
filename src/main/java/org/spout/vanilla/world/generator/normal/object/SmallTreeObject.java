@@ -173,11 +173,27 @@ public class SmallTreeObject extends TreeObject {
 	public static enum SmallTreeType {
 
 		OAK((short) 0),
+		SPRUCE((short) 1),
 		BIRCH((short) 2),
 		JUNGLE((short) 3);
 		//
 		final private short metadata;
-
+		final private static SmallTreeType[] cache;
+		static {
+			cache = new SmallTreeType[SmallTreeType.values().length];
+			for (SmallTreeType t : SmallTreeType.values()) {
+				cache[t.getMetadata() & 0xFFFF] = t;
+			}
+		}
+		
+		public static SmallTreeType getType(int metadata) {
+			if (metadata < 0 || metadata > 3) {
+				return null;
+			} else {
+				return cache[metadata];
+			}
+		}
+		
 		private SmallTreeType(short metadata) {
 			this.metadata = metadata;
 		}

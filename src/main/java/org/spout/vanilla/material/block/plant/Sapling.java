@@ -55,9 +55,10 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	public static final Sapling BIRCH = new Sapling("Birch Sapling", 2, DEFAULT);
 	public static final Sapling JUNGLE = new Sapling("Jungle Sapling", 3, DEFAULT);
 	public final float BURN_TIME = 5.f;
+	private static final short dataMask = 0x3;
 
 	private Sapling(String name) {
-		super(name, 6);
+		super(dataMask, name, 6);
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 0);
 	}
 
@@ -131,8 +132,13 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	 * @param type of tree
 	 */
 	public void growTree(Block block, Sapling type) {
-		SmallTreeObject object = new SmallTreeObject(new Random(), SmallTreeType.OAK);
+		SmallTreeObject object = new SmallTreeObject(new Random(), SmallTreeType.getType(type.getData() & dataMask));
 		object.placeObject(block.getWorld(), block.getX(), block.getY(), block.getZ());
+	}
+	
+	@Override
+	public void setAttachedFace(Block block, BlockFace attachedFace) {
+		block.clearBlockDataBits((short)(~dataMask));
 	}
 
 	@Override
@@ -146,8 +152,10 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 		if (first) {
 			return b.getWorld().getAge() + 10000;
 		} else {
+			short oldData = b.getData();
 			b.setMaterial(Log.DEFAULT);
-			b.setData(b.getData() | Log.aliveMask);
+			b.setData(oldData & dataMask);
+			b.setBlockDataBits(Log.aliveMask);
 			return -1;
 		}
 	}

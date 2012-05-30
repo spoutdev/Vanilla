@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.window.block;
 
+import org.spout.api.util.StringUtil;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
 import org.spout.vanilla.window.CraftingWindow;
 
 public class CraftingTableWindow extends CraftingWindow {
-	private static final int SLOTS[] = {37, 38, 39, 40, 41, 42, 43, 44, 45, 28, 29, 30, 31, 32, 33, 34, 35, 36, 19, 20, 21, 22, 23, 24, 25, 26, 27, 10, 11, 12, 13, 14, 15, 16, 17, 18, 7, 8, 9, 4, 5, 6, 1, 2, 3, 0};
+	private static final int SLOTS[] = StringUtil.getIntArray("37-54, 28-36, 19-27, 10-18, 7-9, 4-6, 1-3, 0");
 	
 	public CraftingTableWindow(VanillaPlayer owner, CraftingTableInventory craftingInventory) {
 		super(1, "Crafting", owner, craftingInventory);

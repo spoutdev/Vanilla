@@ -27,12 +27,13 @@
 package org.spout.vanilla.window.block;
 
 import org.spout.api.inventory.InventoryBase;
+import org.spout.api.util.StringUtil;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.window.Window;
 
 public class DispenserWindow extends Window {
-	private static final int SLOTS[] = {36, 37, 38, 39, 40, 41, 42, 43, 44, 27, 28, 29, 30, 31, 32, 33, 34, 35, 18, 19, 20, 21, 22, 23, 24, 25, 26, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0, 1, 2, 3, 4, 5, 6, 7, 8};
+	private static final int SLOTS[] = StringUtil.getIntArray("36-44, 27-35, 18-26, 9-17, 0-8");
 
 	public DispenserWindow(VanillaPlayer owner, InventoryBase dispenserInventory) {
 		super(3, "Dispenser", owner);

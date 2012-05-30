@@ -27,13 +27,13 @@
 package org.spout.vanilla.window.block;
 
 import org.spout.api.inventory.InventoryBase;
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.StringUtil;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.window.Window;
 
 public class FurnaceWindow extends Window {
-	private static final int[] SLOTS = {30, 31, 32, 33, 34, 35, 36, 37, 38, 21, 22, 23, 24, 25, 26, 27, 28, 29, 12, 13, 14, 15, 16, 17, 18, 19, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 2, 0};
+	private static final int[] SLOTS = StringUtil.getIntArray("30-38, 21-29, 12-20, 3-11, 1, 2, 0");
 
 	public FurnaceWindow(VanillaPlayer owner, InventoryBase furnaceInventory) {
 		super(2, "Furnace", owner);

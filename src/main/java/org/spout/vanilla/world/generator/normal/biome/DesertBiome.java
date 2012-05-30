@@ -40,11 +40,11 @@ import org.spout.vanilla.world.generator.normal.decorator.DungeonDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 
 public class DesertBiome extends VanillaBiome {
-	private Perlin base = new Perlin();
 	private Turbulence noise = new Turbulence();
 
 	public DesertBiome(int biomeId) {
 		super(biomeId, new CactusDecorator(), new OreDecorator(), new CaveDecorator(), new DungeonDecorator());
+		Perlin base = new Perlin();
 		base.setNoiseQuality(NoiseQuality.BEST);
 		base.setOctaveCount(6);
 		base.setFrequency(0.3);
@@ -58,7 +58,7 @@ public class DesertBiome extends VanillaBiome {
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		int y = chunkY * 16;
+		int y = chunkY << 4;
 		noise.setSeed((int) blockData.getWorld().getSeed());
 
 		int height = (int) ((noise.GetValue(x / 32.0 + 0.005, 0.05, z / 32.0 + 0.005) + 1.0) * 2.0 + 60.0 + 3.0);

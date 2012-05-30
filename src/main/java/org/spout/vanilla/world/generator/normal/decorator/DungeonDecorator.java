@@ -29,26 +29,19 @@ package org.spout.vanilla.world.generator.normal.decorator;
 import java.util.Random;
 
 import org.spout.api.generator.WorldGeneratorObject;
-import org.spout.api.generator.biome.Decorator;
-import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.generator.biome.WorldGeneratorObjectDecorator;
 
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;
 
-public class DungeonDecorator implements Decorator {
+public class DungeonDecorator extends WorldGeneratorObjectDecorator {
 	private final static int PROBABILITY = 2000;
 
-	@Override
-	public void populate(Chunk chunk, Random random) {
-		if (random.nextInt(PROBABILITY) == 0) {
-			final World world = chunk.getWorld();
-			final int worldX = chunk.getBlockX() + random.nextInt(16);
-			final int worldY = chunk.getBlockY() + random.nextInt(16);
-			final int worldZ = chunk.getBlockZ() + random.nextInt(16);
-			WorldGeneratorObject dungeon = new DungeonObject(random);
-			if (dungeon.canPlaceObject(world, worldX, worldY, worldZ)) {
-				dungeon.placeObject(world, worldX, worldY, worldZ);
+	public DungeonDecorator() {
+		super(PROBABILITY, new WGOFactory() {
+			@Override
+			public WorldGeneratorObject createObject(Random random) {
+				return new DungeonObject(random);
 			}
-		}
+		});
 	}
 }

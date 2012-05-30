@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.iron;
 import org.spout.vanilla.material.item.armor.Boots;
 
 public class IronBoots extends IronArmor implements Boots {
-	public IronBoots(String name, int id, int protection) {
-		super(name, id, protection);
+	public IronBoots(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(2);
 	}
 }

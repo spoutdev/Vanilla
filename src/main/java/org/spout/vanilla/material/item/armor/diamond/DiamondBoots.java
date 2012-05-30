@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.diamond;
 import org.spout.vanilla.material.item.armor.Boots;
 
 public class DiamondBoots extends DiamondArmor implements Boots {
-	public DiamondBoots(String name, int id, int protection) {
-		super(name, id, protection);
+	public DiamondBoots(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(3);
 	}
 }

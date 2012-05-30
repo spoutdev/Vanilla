@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.leather;
 import org.spout.vanilla.material.item.armor.Helmet;
 
 public class LeatherCap extends LeatherArmor implements Helmet {
-	public LeatherCap(String name, int id, int protection) {
-		super(name, id, protection);
+	public LeatherCap(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(1);
 	}
 }

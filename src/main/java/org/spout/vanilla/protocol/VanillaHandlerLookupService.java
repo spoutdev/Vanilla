@@ -104,8 +104,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 	}
 
 	protected static <T extends Message> void bind(Class<T> clazz, Class<? extends MessageHandler<T>> handlerClass) throws InstantiationException, IllegalAccessException {
-		MessageHandler<T> handler = handlerClass.newInstance();
-		handlers.put(clazz, handler);
+		handlers.put(clazz, handlerClass.newInstance());
 	}
 
 	@Override

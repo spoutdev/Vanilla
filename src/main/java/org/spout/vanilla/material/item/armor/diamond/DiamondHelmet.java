@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.diamond;
 import org.spout.vanilla.material.item.armor.Helmet;
 
 public class DiamondHelmet extends DiamondArmor implements Helmet {
-	public DiamondHelmet(String name, int id, int protection) {
-		super(name, id, protection);
+	public DiamondHelmet(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(3);
 	}
 }

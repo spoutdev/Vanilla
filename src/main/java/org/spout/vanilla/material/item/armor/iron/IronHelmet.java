@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.iron;
 import org.spout.vanilla.material.item.armor.Helmet;
 
 public class IronHelmet extends IronArmor implements Helmet {
-	public IronHelmet(String name, int id, int protection) {
-		super(name, id, protection);
+	public IronHelmet(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(2);
 	}
 }

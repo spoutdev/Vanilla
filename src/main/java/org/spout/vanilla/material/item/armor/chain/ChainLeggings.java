@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.chain;
 import org.spout.vanilla.material.item.armor.Leggings;
 
 public class ChainLeggings extends ChainArmor implements Leggings {
-	public ChainLeggings(String name, int id, int protection) {
-		super(name, id, protection);
+	public ChainLeggings(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(4);
 	}
 }

@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.diamond;
 import org.spout.vanilla.material.item.armor.Leggings;
 
 public class DiamondLeggings extends DiamondArmor implements Leggings {
-	public DiamondLeggings(String name, int id, int protection) {
-		super(name, id, protection);
+	public DiamondLeggings(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(6);
 	}
 }

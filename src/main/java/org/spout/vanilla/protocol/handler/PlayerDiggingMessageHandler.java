@@ -150,7 +150,8 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			} else {
 				damageDone = ((int) diggingTicks * ((VanillaMaterial) heldItem.getMaterial()).getDamage());
 			}
-			// TODO: Take into account enchantments
+			// TODO: Take into account EFFICIENCY enchantment
+			// TODO: Digging is slower while under water, on ladders, etc. AQUA_AFFINITY enchantment speeds up underwater digging
 
 			totalDamage = ((int) blockMaterial.getHardness() - damageDone);
 			if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.

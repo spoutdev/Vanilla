@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.iron;
 import org.spout.vanilla.material.item.armor.Chestplate;
 
 public class IronChestplate extends IronArmor implements Chestplate {
-	public IronChestplate(String name, int id, int protection) {
-		super(name, id, protection);
+	public IronChestplate(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(6);
 	}
 }

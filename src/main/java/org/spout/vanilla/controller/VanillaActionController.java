@@ -121,6 +121,8 @@ public abstract class VanillaActionController extends ActionController implement
 
 	@Override
 	public void onTick(float dt) {
+		checkFireTicks();
+
 		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
 			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
@@ -264,7 +266,6 @@ public abstract class VanillaActionController extends ActionController implement
 		this.fireTicks = fireTicks;
 	}
 
-	@SuppressWarnings("unused")
 	private void checkFireTicks() {
 		if (fireTicks > 0) {
 			if (!isFlammable) {
@@ -276,8 +277,7 @@ public abstract class VanillaActionController extends ActionController implement
 			}
 
 			if (fireTicks % 20 == 0) {
-				damage(1, DamageCause.BURN);
-				broadcastPacket(new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_HURT), new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_HURT));
+				damage(1, DamageCause.FIRE_CONTACT);
 			}
 
 			--fireTicks;
@@ -290,39 +290,40 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Damages this controller with the given {@link DamageCause}.
-	 * @param amount amount the controller will be damaged by.
+	 * @param amount amount the controller will be damaged by, can be modified based on armor and enchantments
 	 */
 	public void damage(int amount) {
-		this.damage(amount, DamageCause.UNKNOWN);
+		damage(amount, DamageCause.UNKNOWN);
 	}
 
 	/**
 	 * Damages this controller with the given {@link DamageCause}.
-	 * @param amount amount the controller will be damaged by.
+	 * @param amount amount the controller will be damaged by, can be modified based on armor and enchantments
 	 * @param cause cause of this controller being damaged
 	 */
 	public void damage(int amount, DamageCause cause) {
-		this.damage(amount, cause, true);
+		damage(amount, cause, true);
 	}
 
 	/**
 	 * Damages this controller with the given {@link DamageCause}.
-	 * @param amount amount the controller will be damaged by.
+	 * @param amount amount the controller will be damaged by, can be modified based on armor and enchantments
 	 * @param cause cause of this controller being damaged
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
 	public void damage(int amount, DamageCause cause, boolean sendHurtMessage) {
-		this.damage(amount, cause, null, sendHurtMessage);
+		damage(amount, cause, null, sendHurtMessage);
 	}
 
 	/**
 	 * Damages this controller with the given {@link DamageCause} and damager.
-	 * @param amount amount the controller will be damaged by.
+	 * @param amount amount the controller will be damaged by, can be modified based on armor and enchantments
 	 * @param cause cause of this controller being damaged
 	 * @param damager controller that damaged this controller
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
 	public void damage(int amount, DamageCause cause, VanillaActionController damager, boolean sendHurtMessage) {
+		// TODO take potion effects into account
 		setHealth(getHealth() - amount, HealthChangeReason.DAMAGE);
 		lastDamager = damager;
 		if (sendHurtMessage) {

@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.leather;
 import org.spout.vanilla.material.item.armor.Leggings;
 
 public class LeatherPants extends LeatherArmor implements Leggings {
-	public LeatherPants(String name, int id, int protection) {
-		super(name, id, protection);
+	public LeatherPants(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(2);
 	}
 }

@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.material.item.armor.leather;
 
-import org.spout.vanilla.material.item.Armor;
+import org.spout.vanilla.material.item.armor.Armor;
 
 public abstract class LeatherArmor extends Armor {
-	protected LeatherArmor(String name, int id, int protection) {
-		super(name, id, protection);
+	protected LeatherArmor(String name, int id, short durability) {
+		super(name, id, durability);
 		this.setEnchantability(15);
 	}
 }

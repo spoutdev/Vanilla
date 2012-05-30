@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.material.item.armor.diamond;
 
-import org.spout.vanilla.material.item.Armor;
+import org.spout.vanilla.material.item.armor.Armor;
 
 public abstract class DiamondArmor extends Armor {
-	protected DiamondArmor(String name, int id, int protection) {
-		super(name, id, protection);
+	protected DiamondArmor(String name, int id, short durability) {
+		super(name, id, durability);
 		this.setEnchantability(10);
 	}
 }

@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.chain;
 import org.spout.vanilla.material.item.armor.Boots;
 
 public class ChainBoots extends ChainArmor implements Boots {
-	public ChainBoots(String name, int id, int protection) {
-		super(name, id, protection);
+	public ChainBoots(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(1);
 	}
 }

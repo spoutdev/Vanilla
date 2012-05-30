@@ -29,7 +29,8 @@ package org.spout.vanilla.material.item.armor.gold;
 import org.spout.vanilla.material.item.armor.Helmet;
 
 public class GoldHelmet extends GoldArmor implements Helmet {
-	public GoldHelmet(String name, int id, int protection) {
-		super(name, id, protection);
+	public GoldHelmet(String name, int id, short durability) {
+		super(name, id, durability);
+		this.setBaseProtection(2);
 	}
 }

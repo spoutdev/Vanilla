@@ -30,8 +30,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Source;
-import org.spout.api.entity.type.ControllerType;
-import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaActionController;
@@ -42,6 +40,7 @@ import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.Difficulty;
 
 public class Spider extends Creature implements Hostile {
 	protected Spider(VanillaControllerType type) {
@@ -56,6 +55,7 @@ public class Spider extends Creature implements Hostile {
 	public void onAttached() {
 		setHealth(16, HealthChangeReason.SPAWN);
 		setMaxHealth(16);
+		setMeleeDamage(Difficulty.EASY, 2).setMeleeDamage(Difficulty.NORMAL, 2).setMeleeDamage(Difficulty.HARD, 3);
 		super.onAttached();
 	}
 
@@ -69,10 +69,7 @@ public class Spider extends Creature implements Hostile {
 		}
 
 		if (lastDamager != null && lastDamager instanceof VanillaPlayer && getRandom().nextInt(100) < 33) {
-			count = getRandom().nextInt(2);
-			if (count > 0) {
-				drops.add(new ItemStack(VanillaMaterials.SPIDER_EYE, count));
-			}
+			drops.add(new ItemStack(VanillaMaterials.SPIDER_EYE, 1));
 		}
 
 		return drops;

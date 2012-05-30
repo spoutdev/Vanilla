@@ -24,22 +24,40 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.hostile;
+package org.spout.vanilla.util;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Hostile;
-import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.api.geo.World;
+import org.spout.vanilla.world.Difficulty;
 
-public class Giant extends Creature implements Hostile {
-	public Giant() {
-		super(VanillaControllerTypes.GIANT);
+public class WorldUtil {
+	private WorldUtil() {
 	}
 
-	@Override
-	public void onAttached() {
-		setHealth(100, HealthChangeReason.SPAWN);
-		setMaxHealth(100);
-		super.onAttached();
+	/**
+	 * Sets the {@link Difficulty} of the given world.
+	 * @param world World to set the difficulty of
+	 * @param difficulty Difficulty to set
+	 */
+	public static void setDifficulty(World world, Difficulty difficulty) {
+		world.getDataMap().put("difficulty", difficulty.getId());
+	}
+
+	/**
+	 * Returns the {@link Difficulty} of the given world.
+	 * @param world World to check
+	 * @return Difficulty of the given world
+	 */
+	public static Difficulty getDifficulty(World world) {
+		return Difficulty.getById((Integer) world.getDataMap().get("difficulty"));
+	}
+
+	/**
+	 * Whether the given world is the given {@link Difficulty}.
+	 * @param world World to check
+	 * @param difficulty Difficulty to check
+	 * @return true if the world is the given difficulty
+	 */
+	public static boolean isDifficulty(World world, Difficulty difficulty) {
+		return (Integer) world.getDataMap().get("difficulty") == difficulty.getId();
 	}
 }

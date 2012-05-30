@@ -52,11 +52,6 @@ public class Dispenser extends ControlledMaterial implements Mineable, Direction
 	}
 
 	@Override
-	public org.spout.vanilla.controller.block.Dispenser getController(Block block) {
-		return (org.spout.vanilla.controller.block.Dispenser) super.getController(block);
-	}
-
-	@Override
 	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
 	}
@@ -99,7 +94,7 @@ public class Dispenser extends ControlledMaterial implements Mineable, Direction
 			}
 
 			// Open the dispenser
-			this.getController(block).getInventory().open((VanillaPlayer) controller);
+			((org.spout.vanilla.controller.block.Dispenser) block.getController()).getInventory().open((VanillaPlayer) controller);
 		}
 	}
 

@@ -52,11 +52,6 @@ public class EnchantmentTable extends ControlledMaterial implements Directional,
 	}
 
 	@Override
-	public org.spout.vanilla.controller.block.EnchantmentTable getController(Block block) {
-		return (org.spout.vanilla.controller.block.EnchantmentTable) super.getController(block);
-	}
-
-	@Override
 	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
 	}
@@ -94,7 +89,7 @@ public class EnchantmentTable extends ControlledMaterial implements Directional,
 			}
 
 			// Open the enchantment table
-			this.getController(block).getInventory().open((VanillaPlayer) controller);
+			((org.spout.vanilla.controller.block.EnchantmentTable) block.getController()).getInventory().open((VanillaPlayer) controller);
 		}
 	}
 

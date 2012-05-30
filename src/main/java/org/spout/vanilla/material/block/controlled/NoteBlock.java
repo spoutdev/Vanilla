@@ -65,11 +65,6 @@ public class NoteBlock extends ControlledMaterial implements Fuel {
 	}
 
 	@Override
-	public org.spout.vanilla.controller.block.NoteBlock getController(Block block) {
-		return (org.spout.vanilla.controller.block.NoteBlock) super.getController(block);
-	}
-
-	@Override
 	public Instrument getInstrument() {
 		return Instrument.BASSGUITAR;
 	}
@@ -78,18 +73,18 @@ public class NoteBlock extends ControlledMaterial implements Fuel {
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		if (type == Action.RIGHT_CLICK) {
-			org.spout.vanilla.controller.block.NoteBlock controller = getController(block);
+			org.spout.vanilla.controller.block.NoteBlock controller = (org.spout.vanilla.controller.block.NoteBlock) block.getController();
 			controller.setNote(controller.getNote() + 1);
 			controller.play();
 		} else if (type == Action.LEFT_CLICK && VanillaPlayerUtil.isCreative(entity)) {
-			getController(block).play();
+			((org.spout.vanilla.controller.block.NoteBlock) block.getController()).play();
 		}
 	}
 
 	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
-		getController(block).setPowered(this.isReceivingPower(block));
+		((org.spout.vanilla.controller.block.NoteBlock) block.getController()).setPowered(isReceivingPower(block));
 	}
 
 	@Override

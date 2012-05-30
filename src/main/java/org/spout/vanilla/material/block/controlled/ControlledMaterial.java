@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
+import org.spout.api.entity.BlockController;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
@@ -33,21 +34,23 @@ import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.material.block.Solid;
 
 public abstract class ControlledMaterial extends Solid {
+	private final VanillaControllerType type;
+
 	public ControlledMaterial(VanillaControllerType type, String name, int id) {
 		super(name, id);
-		setController(type);
+		this.type = type;
 	}
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		super.onPlacement(block, data, against, isClickedBlock);
-		getController(block, true);
+		block.setController((BlockController) type.createController());
 		return true;
 	}
 
 	@Override
 	public void onDestroy(Block block) {
 		super.onDestroy(block);
-		getController(block).getParent().kill();
+		block.setController(null);
 	}
 }

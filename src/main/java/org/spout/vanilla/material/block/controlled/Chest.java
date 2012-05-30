@@ -39,7 +39,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.Chest;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
@@ -52,10 +51,10 @@ import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class ChestBlock extends ControlledMaterial implements Fuel, Mineable, Directional {
+public class Chest extends ControlledMaterial implements Fuel, Mineable, Directional {
 	public final float BURN_TIME = 15.f;
 
-	public ChestBlock(String name, int id) {
+	public Chest(String name, int id) {
 		super(VanillaControllerTypes.CHEST, name, id);
 		this.setHardness(2.5F).setResistance(4.2F).setOpacity((byte) 1);
 	}
@@ -68,11 +67,6 @@ public class ChestBlock extends ControlledMaterial implements Fuel, Mineable, Di
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public Chest getController(Block block) {
-		return (Chest) super.getController(block);
 	}
 
 	@Override
@@ -107,10 +101,9 @@ public class ChestBlock extends ControlledMaterial implements Fuel, Mineable, Di
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, isClickedBlock)) {
-			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
-		}
-		return false;
+		super.onPlacement(block, data, against, isClickedBlock);
+		this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
+		return true;
 	}
 
 	@Override
@@ -122,7 +115,7 @@ public class ChestBlock extends ControlledMaterial implements Fuel, Mineable, Di
 			}
 
 			// Open the chest
-			this.getController(block).getInventory().open((VanillaPlayer) controller);
+			((org.spout.vanilla.controller.block.Chest) block.getController()).getInventory().open((VanillaPlayer) controller);
 		}
 	}
 

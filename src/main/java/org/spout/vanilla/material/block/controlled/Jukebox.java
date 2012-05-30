@@ -50,13 +50,8 @@ public class Jukebox extends ControlledMaterial implements Fuel {
 	}
 
 	@Override
-	public org.spout.vanilla.controller.block.Jukebox getController(Block block) {
-		return (org.spout.vanilla.controller.block.Jukebox) super.getController(block);
-	}
-
-	@Override
 	public void onDestroy(Block block) {
-		getController(block).stopMusic();
+		((org.spout.vanilla.controller.block.Jukebox) block.getController()).stopMusic();
 		super.onDestroy(block);
 	}
 
@@ -69,7 +64,7 @@ public class Jukebox extends ControlledMaterial implements Fuel {
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		if (type == Action.RIGHT_CLICK) {
-			org.spout.vanilla.controller.block.Jukebox controller = this.getController(block);
+			org.spout.vanilla.controller.block.Jukebox controller = (org.spout.vanilla.controller.block.Jukebox) block.getController();
 			controller.eject();
 			InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
 			if (inv != null && controller.canPlay(inv.getCurrentItem())) {
@@ -80,7 +75,7 @@ public class Jukebox extends ControlledMaterial implements Fuel {
 				}
 			}
 		} else if (type == Action.RIGHT_CLICK) {
-			getController(block).stopMusic();
+			((org.spout.vanilla.controller.block.Jukebox) block.getController()).stopMusic();
 		}
 	}
 

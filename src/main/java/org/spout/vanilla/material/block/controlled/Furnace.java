@@ -57,11 +57,6 @@ public class Furnace extends ControlledMaterial implements Mineable, Directional
 	}
 
 	@Override
-	public org.spout.vanilla.controller.block.Furnace getController(Block block) {
-		return (org.spout.vanilla.controller.block.Furnace) super.getController(block);
-	}
-
-	@Override
 	public byte getLightLevel(short data) {
 		return burning ? (byte) 13 : (byte) 0;
 	}
@@ -103,7 +98,7 @@ public class Furnace extends ControlledMaterial implements Mineable, Directional
 			}
 
 			// Open the furnace
-			this.getController(block).getInventory().open((VanillaPlayer) controller);
+			((org.spout.vanilla.controller.block.Furnace) block.getController()).getInventory().open((VanillaPlayer) controller);
 		}
 	}
 

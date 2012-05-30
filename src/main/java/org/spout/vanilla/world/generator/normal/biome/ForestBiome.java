@@ -31,6 +31,7 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.world.generator.normal.decorator.GrassDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.PondDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
 public class ForestBiome extends VanillaNormalBiome {
@@ -45,7 +46,7 @@ public class ForestBiome extends VanillaNormalBiome {
 	}
 
 	public ForestBiome(int biomeId) {
-		super(biomeId, NOISE, new TreeDecorator(), new GrassDecorator());
+		super(biomeId, NOISE, new PondDecorator(), new TreeDecorator(), new GrassDecorator());
 	}
 
 	@Override

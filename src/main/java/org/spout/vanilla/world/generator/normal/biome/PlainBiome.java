@@ -30,6 +30,7 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.GrassDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.PondDecorator;
 
 public class PlainBiome extends VanillaNormalBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
@@ -42,12 +43,12 @@ public class PlainBiome extends VanillaNormalBiome {
 	}
 
 	public PlainBiome(int id) {
-		super(id, NOISE, new GrassDecorator(), new FlowerDecorator());
+		super(id, NOISE, new PondDecorator(), new GrassDecorator(), new FlowerDecorator());
 		bottomHeightMapMin = 66;
 		upperHeightMapScale = 4.6f;
 		bottomHeightMapScale = 4.6f;
 	}
-	
+
 	@Override
 	public String getName() {
 		return "Plains";

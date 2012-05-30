@@ -26,69 +26,30 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
-import net.royawesome.jlibnoise.NoiseQuality;
-import net.royawesome.jlibnoise.module.modifier.Turbulence;
-import net.royawesome.jlibnoise.module.source.Perlin;
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
-
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.VanillaBiome;
-import org.spout.vanilla.world.generator.normal.decorator.CaveDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.DungeonDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.GrassDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.PondDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
-public class PlainBiome extends VanillaBiome {
-	private Perlin base = new Perlin();
-	private Turbulence noise = new Turbulence();
+public class PlainBiome extends VanillaNormalBiome {
+	private final static ScalePoint NOISE = new ScalePoint();
+
+	static {
+		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.setxScale(0.09D);
+		NOISE.setyScale(0.08D);
+		NOISE.setzScale(0.09D);
+	}
 
 	public PlainBiome(int id) {
-		super(id, new CaveDecorator(), new GrassDecorator(), new FlowerDecorator(), new TreeDecorator(), new DungeonDecorator(), new PondDecorator());
-		base.setNoiseQuality(NoiseQuality.BEST);
-		base.setOctaveCount(6);
-		base.setFrequency(0.3);
-		base.setPersistence(0.12);
-		base.setLacunarity(0.5);
-		noise.SetSourceModule(0, base);
-		noise.setFrequency(0.3);
-		noise.setRoughness(2);
-		noise.setPower(0.5);
+		super(id, NOISE, new GrassDecorator(), new FlowerDecorator());
+		bottomHeightMapMin = 66;
+		upperHeightMapScale = 4.6f;
+		bottomHeightMapScale = 4.6f;
 	}
-
-	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		base.setSeed((int) blockData.getWorld().getSeed());
-		noise.setSeed((int) blockData.getWorld().getSeed());
-
-		final int y = chunkY * 16;
-		final int height = (int) ((noise.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 4.0 + 60.0);
-
-		for (int dy = y; dy < y + 16; dy++) {
-			blockData.set(x, dy, z, getBlockId(height, dy));
-		}
-	}
-
+	
 	@Override
 	public String getName() {
 		return "Plains";
-	}
-
-	protected short getBlockId(int top, int dy) {
-		short id;
-		if (dy > top) {
-			id = VanillaMaterials.AIR.getId();
-		} else if (dy == top && dy >= 63) {
-			id = VanillaMaterials.GRASS.getId();
-		} else if (dy + 4 >= top) {
-			id = VanillaMaterials.DIRT.getId();
-		} else if (dy != 0) {
-			id = VanillaMaterials.STONE.getId();
-		} else {
-			id = VanillaMaterials.BEDROCK.getId();
-		}
-		return id;
 	}
 }

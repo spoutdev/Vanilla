@@ -27,10 +27,10 @@
 package org.spout.vanilla.world.generator.normal.biome;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class TundraBiome extends PlainBiome {
+
 	public TundraBiome(int biomeId) {
 		super(biomeId);
 	}
@@ -40,28 +40,27 @@ public class TundraBiome extends PlainBiome {
 		return "Tundra";
 	}
 
-	protected void generateWateredStack(CuboidShortBuffer blockData, int x, int y, int z, int maxSeaLevel) {
-		boolean first = true;
-		for (int dy = y + 15; dy >= y; dy--) {
-			final int curBlock = blockData.get(x, dy, z);
-			if (dy < maxSeaLevel && (curBlock == VanillaMaterials.AIR.getId() || curBlock == VanillaMaterials.SNOW.getId())) {
-				if (first) {
-					blockData.set(x, dy, z, VanillaMaterials.ICE.getId());
-					first = false;
-				} else {
-					blockData.set(x, dy, z, VanillaMaterials.WATER.getId());
-				}
-			} else {
-				break;
+	@Override
+	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		super.replaceBlocks(blockData, x, chunkY, z);
+		final byte size = (byte) blockData.getSize().getY();
+		final int startY = chunkY * 16;
+		final int endY = startY + size;
+		if (blockData.get(x, startY, z) == VanillaMaterials.AIR.getId()) {
+			if (getSample(blockData.getWorld(), x, startY - 1, startY, z).get(x, startY - 1, z)
+					!= VanillaMaterials.AIR.getId()) {
+				blockData.set(x, startY, z, VanillaMaterials.SNOW.getId());
 			}
 		}
-	}
-
-	protected short getBlockId(int top, int dy) {
-		if (dy == top + 1) {
-			return VanillaMaterials.SNOW.getId();
-		} else {
-			return super.getBlockId(top, dy);
+		boolean hasSurface = false;
+		for (int y = startY; y < endY; y++) {
+			short id = blockData.get(x, y, z);
+			if (id == VanillaMaterials.GRASS.getId()) {
+				hasSurface = true;
+			} else if (id == VanillaMaterials.AIR.getId() && hasSurface) {
+				blockData.set(x, y, z, VanillaMaterials.SNOW.getId());
+				hasSurface = false;
+			}
 		}
 	}
 }

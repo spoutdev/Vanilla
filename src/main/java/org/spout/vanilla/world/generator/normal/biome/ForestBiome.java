@@ -34,12 +34,13 @@ import org.spout.vanilla.world.generator.normal.decorator.GrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
 public class ForestBiome extends VanillaNormalBiome {
+
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
 		NOISE.setxScale(0.1D);
-		NOISE.setyScale(0.17D);
+		NOISE.setyScale(0.1D);
 		NOISE.setzScale(0.1D);
 	}
 

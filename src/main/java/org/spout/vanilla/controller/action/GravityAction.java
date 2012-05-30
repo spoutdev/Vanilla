@@ -35,7 +35,7 @@ import org.spout.vanilla.controller.VanillaActionController;
 public class GravityAction extends EntityAction<VanillaActionController> {
 	@Override
 	public boolean shouldRun(Entity entity, VanillaActionController controller) {
-		BlockMaterial block = entity.getWorld().getBlock(entity.getPosition().subtract(0, 1, 0)).getMaterial();
+		BlockMaterial block = entity.getWorld().getBlock(entity.getPosition().add(controller.getVelocity())).getMaterial();
 		return !block.isSolid();
 	}
 

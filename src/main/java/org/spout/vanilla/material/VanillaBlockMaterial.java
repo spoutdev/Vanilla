@@ -28,7 +28,10 @@ package org.spout.vanilla.material;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.event.block.BlockChangeEvent;
@@ -60,10 +63,10 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private int meleeDamage;
 	private int miningLevel;
 	private MiningType miningType;
-	private Material dropMaterial;
-	
+	private Map<Material, int[]> dropMaterials = new HashMap<Material, int[]>();
+
 	public VanillaBlockMaterial(String name, int id) {
-		this((short)-1, name, id);
+		this((short) -1, name, id);
 	}
 
 	public VanillaBlockMaterial(short dataMask, String name, int id) {
@@ -92,15 +95,18 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @param block that got ignited
 	 */
 	public void onIgnite(Block block) {
-		//TODO Remove percentage of drops from getDrops
-		this.onDestroy(block);
+		this.onDestroy(block, 0.3);
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public final void onDestroy(Block block) {
+		onDestroy(block, 1.0);
+	}
+
+	public void onDestroy(Block block, double dropChance) {
 		//Grab the drops based on material classes' rules.
-		List<ItemStack> drops = null;
-		if (!VanillaPlayerUtil.isCreative(block.getSource())) {
+		List<ItemStack> drops = Collections.<ItemStack>emptyList();
+		if (Math.random() < dropChance && !VanillaPlayerUtil.isCreative(block.getSource())) {
 			drops = getDrops(block);
 		}
 		BlockChangeEvent event = new BlockChangeEvent(block, new BlockSnapshot(block, this, getData()), block.getSource());
@@ -108,7 +114,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 			return;
 		}
 		this.onDestroyBlock(block);
-		if (!VanillaPlayerUtil.isCreative(block.getSource())) {
+		if (!drops.isEmpty()) {
 			this.onDestroySpawnDrops(block, drops);
 		}
 	}
@@ -330,7 +336,10 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		if (holding != null && EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
 			drops.add(new ItemStack(this, 1));
 		} else {
-			drops.add(new ItemStack(dropMaterial, 1));
+			for (Material m : dropMaterials.keySet()) {
+				int[] amount = dropMaterials.get(m);
+				drops.add(new ItemStack(m, amount[(int) Math.random() * amount.length]));
+			}
 		}
 		return drops;
 	}
@@ -367,12 +376,51 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		return miningType;
 	}
 
-	public VanillaBlockMaterial setDropMaterial(Material dropMaterial) {
-		this.dropMaterial = dropMaterial;
+	public VanillaBlockMaterial removeDropMaterial(Material dropMaterial) {
+		dropMaterials.remove(dropMaterial);
 		return this;
 	}
 
-	public Material getDropMaterial() {
-		return dropMaterial;
+	public VanillaBlockMaterial addDropMaterial(Material dropMaterial) {
+		return addDropMaterial(dropMaterial, 1);
+	}
+
+	public VanillaBlockMaterial addDropMaterial(Material dropMaterial, int min, int max) {
+		if (min >= max) {
+			throw new IllegalArgumentException("min must be less than max");
+		}
+		int j = 0;
+		int[] amount = new int[(max - min) + 1];
+		for (int i = min; i <= max; i++) {
+			amount[j++] = i;
+		}
+		return addDropMaterial(dropMaterial, amount);
+	}
+
+	public VanillaBlockMaterial addDropMaterial(Material dropMaterial, int... amount) {
+		dropMaterials.put(dropMaterial, amount);
+		return this;
+	}
+
+	public VanillaBlockMaterial setDropMaterial(Material dropMaterial) {
+		return setDropMaterial(dropMaterial, 1);
+	}
+
+	public VanillaBlockMaterial setDropMaterial(Material dropMaterial, int min, int max) {
+		dropMaterials.clear();
+		return addDropMaterial(dropMaterial, min, max);
+	}
+
+	public VanillaBlockMaterial setDropMaterial(Material dropMaterial, int... amount) {
+		dropMaterials.clear();
+		return addDropMaterial(dropMaterial, amount);
+	}
+
+	public Set<Material> getDropMaterialsSet() {
+		return dropMaterials.keySet();
+	}
+
+	public Map<Material, int[]> getDropMaterialsMap() {
+		return dropMaterials;
 	}
 }

@@ -98,9 +98,9 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public void onDestroy(Block block, double dropChance) {
 		if (!block.getSubMaterial().equals(this.doubletype)) {
-			super.onDestroy(block);
+			super.onDestroy(block, dropChance);
 		}
 	}
 

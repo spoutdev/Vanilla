@@ -64,7 +64,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private int miningLevel;
 	private MiningType miningType;
 	private Map<Material, int[]> dropMaterials = new HashMap<Material, int[]>();
-	
+
 	public VanillaBlockMaterial(String name, int id) {
 		this((short) -1, name, id);
 	}
@@ -95,15 +95,18 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @param block that got ignited
 	 */
 	public void onIgnite(Block block) {
-		//TODO Remove percentage of drops from getDrops
-		this.onDestroy(block);
+		this.onDestroy(block, 0.3);
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public final void onDestroy(Block block) {
+		onDestroy(block, 1.0);
+	}
+
+	public void onDestroy(Block block, double dropChance) {
 		//Grab the drops based on material classes' rules.
-		List<ItemStack> drops = null;
-		if (!VanillaPlayerUtil.isCreative(block.getSource())) {
+		List<ItemStack> drops = Collections.<ItemStack>emptyList();
+		if (Math.random() < dropChance && !VanillaPlayerUtil.isCreative(block.getSource())) {
 			drops = getDrops(block);
 		}
 		BlockChangeEvent event = new BlockChangeEvent(block, new BlockSnapshot(block, this, getData()), block.getSource());
@@ -111,7 +114,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 			return;
 		}
 		this.onDestroyBlock(block);
-		if (!VanillaPlayerUtil.isCreative(block.getSource())) {
+		if (!drops.isEmpty()) {
 			this.onDestroySpawnDrops(block, drops);
 		}
 	}

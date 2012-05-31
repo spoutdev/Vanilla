@@ -55,7 +55,7 @@ public class Ice extends Solid implements Mineable {
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public void onDestroy(Block block, double dropChance) {
 		if (!(block.getWorld().getGenerator() instanceof NetherGenerator) || block.translate(BlockFace.BOTTOM).getMaterial() != VanillaMaterials.AIR) {
 			// TODO Setting the source to world correct?
 			// Only set material to water source block if the block was not destroyed by an item with Silk Touch

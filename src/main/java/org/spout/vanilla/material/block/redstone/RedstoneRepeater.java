@@ -62,9 +62,9 @@ public class RedstoneRepeater extends GroundAttachable implements RedstoneSource
 		return powered ? (byte) 9 : (byte) 0;
 	}
 
-	public void onDestroy(Block block) {
+	public void onDestroy(Block block, double dropChance) {
 		this.doRedstoneUpdates(block);
-		super.onDestroy(block);
+		super.onDestroy(block, dropChance);
 	}
 
 	public void setPowered(Block block, boolean powered) {

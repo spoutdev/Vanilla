@@ -50,9 +50,9 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public void onDestroy(Block block, double dropChance) {
 		this.doRedstoneUpdates(block);
-		super.onDestroy(block);
+		super.onDestroy(block, dropChance);
 	}
 
 	@Override

@@ -49,8 +49,8 @@ public abstract class ControlledMaterial extends Solid {
 	}
 
 	@Override
-	public void onDestroy(Block block) {
-		super.onDestroy(block);
+	public void onDestroy(Block block, double dropChance) {
+		super.onDestroy(block, dropChance);
 		block.setController(null);
 	}
 }

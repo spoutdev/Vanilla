@@ -50,9 +50,9 @@ public class Jukebox extends ControlledMaterial implements Fuel {
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public void onDestroy(Block block, double dropChance) {
 		((org.spout.vanilla.controller.block.Jukebox) block.getController()).stopMusic();
-		super.onDestroy(block);
+		super.onDestroy(block, dropChance);
 	}
 
 	@Override

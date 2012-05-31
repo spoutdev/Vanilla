@@ -27,17 +27,17 @@
 package org.spout.vanilla.window.block;
 
 import org.spout.api.inventory.InventoryBase;
-import org.spout.api.util.StringUtil;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.Window;
 
 public class DispenserWindow extends Window {
-	private static final int SLOTS[] = StringUtil.getIntArray("36-44, 27-35, 18-26, 9-17, 0-8");
+	private static final SlotIndexMap SLOTS = new SlotIndexMap("36-44, 27-35, 18-26, 9-17, 0-8");
 
 	public DispenserWindow(VanillaPlayer owner, InventoryBase dispenserInventory) {
 		super(3, "Dispenser", owner);
 		this.setInventory(owner.getInventory().getItems(), dispenserInventory);
-		this.setSlotConversionArray(SLOTS);
+		this.setSlotIndexMap(SLOTS);
 	}
 }

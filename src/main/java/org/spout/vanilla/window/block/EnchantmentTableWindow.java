@@ -26,15 +26,15 @@
  */
 package org.spout.vanilla.window.block;
 
-import org.spout.api.util.StringUtil;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.Window;
 
 public class EnchantmentTableWindow extends Window {
-	private static final int[] SLOTS = StringUtil.getIntArray("28-36, 19-27, 10-18, 1-9, 0");
+	private static final SlotIndexMap SLOTS = new SlotIndexMap("28-36, 19-27, 10-18, 1-9, 0");
 
 	public EnchantmentTableWindow(VanillaPlayer owner) {
 		super(4, "Enchant", owner);
-		this.setSlotConversionArray(SLOTS);
+		this.setSlotIndexMap(SLOTS);
 	}
 }

@@ -27,18 +27,18 @@
 package org.spout.vanilla.window.block;
 
 import org.spout.api.inventory.InventoryBase;
-import org.spout.api.util.StringUtil;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.Window;
 
 public class FurnaceWindow extends Window {
-	private static final int[] SLOTS = StringUtil.getIntArray("30-38, 21-29, 12-20, 3-11, 1, 2, 0");
+	private static final SlotIndexMap SLOTS = new SlotIndexMap("30-38, 21-29, 12-20, 3-11, 1, 2, 0");
 
 	public FurnaceWindow(VanillaPlayer owner, InventoryBase furnaceInventory) {
 		super(2, "Furnace", owner);
 		this.setInventory(owner.getInventory().getItems(), furnaceInventory);
-		this.setSlotConversionArray(SLOTS);
+		this.setSlotIndexMap(SLOTS);
 	}
 
 	@Override

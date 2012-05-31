@@ -26,19 +26,19 @@
  */
 package org.spout.vanilla.window;
 
-import org.spout.api.util.StringUtil;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.util.SlotIndexMap;
 
 /**
  * The default player window always displayed
  */
 public class DefaultWindow extends CraftingWindow {
-	private static final int[] SLOTS = StringUtil.getIntArray("36-44, 27-35, 18-26, 9-17, 8, 7, 3, 4, 0, 6, 1, 2, 5");
+	private static final SlotIndexMap SLOTS = new SlotIndexMap("36-44, 27-35, 18-26, 9-17, 8, 7, 3, 4, 0, 6, 1, 2, 5");
 
 	public DefaultWindow(VanillaPlayer owner) {
 		super(-1, "Inventory", owner, owner.getInventory());
 		this.setInventory(owner.getInventory());
-		this.setSlotConversionArray(SLOTS);
+		this.setSlotIndexMap(SLOTS);
 	}
 
 	@Override

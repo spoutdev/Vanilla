@@ -47,12 +47,14 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		VanillaPlayer controller = (VanillaPlayer) entity.getController();
 		Window window = controller.getActiveWindow();
 		boolean result = false;
-		int slot = window.getSpoutSlotIndex(message.getSlot());
 		if (message.getSlot() == 64537) {
 			// outside the window
 			result = window.onOutsideClick();
-		} else if (slot != -1) {
-			result = window.onClick(slot, message.isRightClick(), message.isShift());
+		} else {
+			int slot = window.getSlotIndexMap().getSpoutSlot(message.getSlot());
+			if (slot != -1) {
+				result = window.onClick(slot, message.isRightClick(), message.isShift());
+			}
 		}
 		session.send(new TransactionMessage(message.getWindowId(), message.getTransaction(), result));
 	}

@@ -36,17 +36,20 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 import org.spout.vanilla.util.InventoryUtil;
+import org.spout.vanilla.util.SlotIndexMap;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class Window implements InventoryViewer {
+	private static final SlotIndexMap DEFAULT_SLOTS = new SlotIndexMap();
+
 	protected final int id;
 	protected final int instanceId;
 	protected String title;
 	protected final VanillaPlayer owner;
 	protected InventoryBundle inventory;
 	protected ItemStack itemOnCursor;
-	private int[] slotConversionArray;
+	private SlotIndexMap slotIndexMap = DEFAULT_SLOTS;
 
 	public Window(int id, String title, VanillaPlayer owner) {
 		this.id = id;
@@ -142,27 +145,12 @@ public class Window implements InventoryViewer {
 		this.itemOnCursor = item;
 	}
 
-	public void setSlotConversionArray(int[] conversionArray) {
-		this.slotConversionArray = conversionArray;
+	public void setSlotIndexMap(SlotIndexMap map) {
+		this.slotIndexMap = map;
 	}
 
-	public int getNativeSlotIndex(int spoutSlotIndex) {
-		if (this.slotConversionArray == null || spoutSlotIndex < 0 || spoutSlotIndex >= slotConversionArray.length) {
-			return -1;
-		} else {
-			return this.slotConversionArray[spoutSlotIndex];
-		}
-	}
-
-	public int getSpoutSlotIndex(int mcSlotIndex) {
-		if (this.slotConversionArray != null) {
-			for (int i = 0; i < this.slotConversionArray.length; i++) {
-				if (this.slotConversionArray[i] == mcSlotIndex) {
-					return i;
-				}
-			}
-		}
-		return -1;
+	public SlotIndexMap getSlotIndexMap() {
+		return this.slotIndexMap;
 	}
 
 	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {

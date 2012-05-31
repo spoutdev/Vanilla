@@ -69,6 +69,7 @@ import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
+import org.spout.vanilla.window.Window;
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -406,17 +407,18 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 		VanillaPlayer controller = (VanillaPlayer) c;
-		slot = controller.getActiveWindow().getNativeSlotIndex(slot);
+		Window window = controller.getActiveWindow();
+
+		slot = window.getSlotIndexMap().getMinecraftSlot(slot);
 		if (slot == -1) {
 			return;
 		}
 
 		Message message;
-		int id = controller.getActiveWindow().getInstanceId();
 		if (item == null) {
-			message = new SetWindowSlotMessage(id, slot);
+			message = new SetWindowSlotMessage(window.getInstanceId(), slot);
 		} else {
-			message = new SetWindowSlotMessage(id, slot, getMinecraftId(item.getMaterial().getId()), item.getAmount(), item.getData(), item.getNBTData());
+			message = new SetWindowSlotMessage(window.getInstanceId(), slot, getMinecraftId(item.getMaterial().getId()), item.getAmount(), item.getData(), item.getNBTData());
 		}
 		queuedInventoryUpdates.put(slot, message);
 	}
@@ -429,13 +431,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 
 		VanillaPlayer controller = (VanillaPlayer) c;
-		ItemStack[] newSlots = slots.clone();
-		for (int i = 0; i < slots.length; i++) {
-			newSlots[controller.getActiveWindow().getNativeSlotIndex(i)] = slots[i];
-		}
+		Window window = controller.getActiveWindow();
 
 		int id = controller.getActiveWindow().getInstanceId();
-		session.send(new SetWindowSlotsMessage((byte) id, newSlots));
+		session.send(new SetWindowSlotsMessage((byte) id, window.getSlotIndexMap().getMinecraftItems(slots)));
 		queuedInventoryUpdates.clear();
 	}
 

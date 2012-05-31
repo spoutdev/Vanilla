@@ -26,20 +26,20 @@
  */
 package org.spout.vanilla.window.block;
 
-import org.spout.api.util.StringUtil;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
+import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.CraftingWindow;
 
 public class CraftingTableWindow extends CraftingWindow {
-	private static final int SLOTS[] = StringUtil.getIntArray("37-54, 28-36, 19-27, 10-18, 7-9, 4-6, 1-3, 0");
+	private static final SlotIndexMap SLOTS = new SlotIndexMap("37-54, 28-36, 19-27, 10-18, 7-9, 4-6, 1-3, 0");
 	
 	public CraftingTableWindow(VanillaPlayer owner, CraftingTableInventory craftingInventory) {
 		super(1, "Crafting", owner, craftingInventory);
 		this.setInventory(owner.getInventory().getItems(), craftingInventory);
-		this.setSlotConversionArray(SLOTS);
+		this.setSlotIndexMap(SLOTS);
 	}
-	
+
 	@Override
 	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {
 		super.onClick(clickedSlot, rightClick, shift);

@@ -26,24 +26,23 @@
  */
 package org.spout.vanilla.inventory.recipe;
 
-import org.spout.api.inventory.ShapelessRecipe;
+import org.spout.api.inventory.ShapedRecipe;
 import org.spout.api.material.Material;
 
 
-/**
- * Takes in a variable material input amount and gives a variable material output amount (Shapeless).
- */
-public class SingleShapelessInputOutputRecipe extends ShapelessRecipe {
-	Material material;
+public class SimpleShapedRecipe extends ShapedRecipe{
+	private Material material;
 
-	public SingleShapelessInputOutputRecipe(VanillaRecipeBuilder<?> builder) {
-	    super(builder);
-	    material = getIngredients().get(0);
+	public SimpleShapedRecipe(VanillaRecipeBuilder<?> builder) {
+		super(builder);
+		if (builder.majorMaterial == null) {
+			material = builder.ingredients.get(0);
+		} else {
+			material = builder.majorMaterial;
+		}
 	}
 	
 	public Material getMaterial() {
-	    return material;
+		return material;
 	}
-	
-	
 }

@@ -58,12 +58,13 @@ import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
 import org.spout.vanilla.controller.world.VanillaSky;
-import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 import org.spout.vanilla.runnable.BlockScheduler;
+import org.spout.vanilla.util.WorldUtil;
+import org.spout.vanilla.world.Difficulty;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
@@ -89,30 +90,30 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
-		//Config
+		// Config
 		try {
 			config.load();
 		} catch (ConfigurationException e) {
 			getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
 		}
-		//Commands
+		// Commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
 		game.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);
 		if (game.debugMode()) {
 			game.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
 		}
 
-		//Configuration
+		// Configuration
 		VanillaBlockMaterial.REDSTONE_POWER_MAX = (short) VanillaConfiguration.REDSTONE_MAX_RANGE.getInt();
 		VanillaBlockMaterial.REDSTONE_POWER_MIN = (short) VanillaConfiguration.REDSTONE_MIN_RANGE.getInt();
 
-		//Events
+		// Events
 		game.getEventManager().registerEvents(new VanillaListener(this), this);
 
-		//Block Scheduler
+		// Block Scheduler
 		game.getParallelTaskManager().scheduleSyncRepeatingTask(this, new BlockScheduler(), 0L, 1L, TaskPriority.HIGH);
 
-		//Worlds
+		// Worlds
 		setupWorlds();
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
@@ -138,7 +139,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
 		}
-		//TODO if (game instanceof Client) do stuff?
+		// TODO if (game instanceof Client) do stuff?
 
 		VanillaMaterials.initialize();
 		getLogger().info("loaded");
@@ -153,6 +154,7 @@ public class VanillaPlugin extends CommonPlugin {
 			World normal = game.loadWorld(WorldConfiguration.NORMAL_NAME.getString(), normGen);
 			worlds.add(normal);
 			spawns.add(normGen.getSafeSpawn(normal));
+			WorldUtil.setDifficulty(normal, Difficulty.getByName(WorldConfiguration.NORMAL_DIFFICULTY.getString()));
 		}
 
 		if (VanillaConfiguration.WORLDS.FLAT_LOAD.getBoolean()) {
@@ -160,6 +162,7 @@ public class VanillaPlugin extends CommonPlugin {
 			World flat = game.loadWorld(WorldConfiguration.FLAT_NAME.getString(), flatGen);
 			worlds.add(flat);
 			spawns.add(flatGen.getSafeSpawn(flat));
+			WorldUtil.setDifficulty(flat, Difficulty.getByName(WorldConfiguration.FLAT_DIFFICULTY.getString()));
 		}
 
 		if (VanillaConfiguration.WORLDS.NETHER_LOAD.getBoolean()) {
@@ -167,6 +170,7 @@ public class VanillaPlugin extends CommonPlugin {
 			World nether = game.loadWorld(WorldConfiguration.NETHER_NAME.getString(), netherGen);
 			worlds.add(nether);
 			spawns.add(netherGen.getSafeSpawn(nether));
+			WorldUtil.setDifficulty(nether, Difficulty.getByName(WorldConfiguration.NETHER_DIFFICULTY.getString()));
 		}
 
 		if (VanillaConfiguration.WORLDS.END_LOAD.getBoolean()) {
@@ -174,6 +178,7 @@ public class VanillaPlugin extends CommonPlugin {
 			World end = game.loadWorld(WorldConfiguration.END_NAME.getString(), endGen);
 			worlds.add(end);
 			spawns.add(endGen.getSafeSpawn(end));
+			WorldUtil.setDifficulty(end, Difficulty.getByName(WorldConfiguration.END_DIFFICULTY.getString()));
 		}
 
 		final int diameter = PointObserver.CHUNK_VIEW_DISTANCE + PointObserver.CHUNK_VIEW_DISTANCE + 1;
@@ -199,7 +204,7 @@ public class VanillaPlugin extends CommonPlugin {
 			}
 			world.setSpawnPoint(new Transform(point, Quaternion.IDENTITY, Vector3.ONE));
 
-			//TODO Remove sky setting when Weather and Time are Region tasks.
+			// TODO Remove sky setting when Weather and Time are Region tasks.
 			if (world.getGenerator() instanceof NormalGenerator) {
 				NormalSky sky = new NormalSky();
 				sky.setWorld(world);

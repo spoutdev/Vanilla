@@ -30,8 +30,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Source;
-import org.spout.api.entity.type.ControllerType;
-import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaActionController;
@@ -41,6 +39,7 @@ import org.spout.vanilla.controller.living.creature.hostile.Zombie;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.Difficulty;
 
 public class PigZombie extends Zombie implements Neutral {
 	public PigZombie() {
@@ -51,6 +50,7 @@ public class PigZombie extends Zombie implements Neutral {
 	public void onAttached() {
 		setHealth(20, HealthChangeReason.SPAWN);
 		setMaxHealth(20);
+		setMeleeDamage(Difficulty.EASY, 3).setMeleeDamage(Difficulty.NORMAL, 5).setMeleeDamage(Difficulty.HARD, 7);
 		super.onAttached();
 	}
 

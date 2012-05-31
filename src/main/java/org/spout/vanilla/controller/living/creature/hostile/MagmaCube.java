@@ -26,20 +26,44 @@
  */
 package org.spout.vanilla.controller.living.creature.hostile;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Hostile;
-import org.spout.vanilla.controller.source.HealthChangeReason;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Giant extends Creature implements Hostile {
-	public Giant() {
-		super(VanillaControllerTypes.GIANT);
+import org.spout.api.Source;
+import org.spout.api.inventory.ItemStack;
+
+import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.living.creature.Hostile;
+import org.spout.vanilla.material.VanillaMaterials;
+
+public class MagmaCube extends Slime implements Hostile {
+	public MagmaCube() {
+		super(VanillaControllerTypes.MAGMA_CUBE);
 	}
 
 	@Override
 	public void onAttached() {
-		setHealth(100, HealthChangeReason.SPAWN);
-		setMaxHealth(100);
 		super.onAttached();
+		if (getSize() == 0) {
+			setMeleeDamage(3);
+		} else if (getSize() == 1) {
+			setMeleeDamage(4);
+		} else if (getSize() == 2) {
+			setMeleeDamage(6);
+		}
+	}
+
+	@Override
+	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
+		Set<ItemStack> drops = new HashSet<ItemStack>();
+
+		if (getSize() == 0) {
+			return drops;
+		}
+		if (getRandom().nextInt(100) < 25) {
+			drops.add(new ItemStack(VanillaMaterials.MAGMA_CREAM, 1));
+		}
+		return drops;
 	}
 }

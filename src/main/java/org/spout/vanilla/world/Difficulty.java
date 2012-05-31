@@ -24,39 +24,58 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.hostile;
+package org.spout.vanilla.world;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.spout.api.Source;
-import org.spout.api.entity.type.ControllerType;
-import org.spout.api.entity.type.EmptyConstructorControllerType;
-import org.spout.api.inventory.ItemStack;
+/**
+ * Represents the difficulty of a world.
+ */
+public enum Difficulty {
+	PEACEFUL(0),
+	EASY(1),
+	NORMAL(2),
+	HARD(3);
 
-import org.spout.vanilla.controller.VanillaActionController;
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.creature.Hostile;
-import org.spout.vanilla.material.VanillaMaterials;
+	private static final Map<Integer, Difficulty> idMap = new HashMap<Integer, Difficulty>();
+	private static final Map<String, Difficulty> nameMap = new HashMap<String, Difficulty>();
+	private final int id;
 
-public class MagmaSlime extends Slime implements Hostile {
-	public MagmaSlime() {
-		super(VanillaControllerTypes.MAGMA_CUBE);
+	private Difficulty(int id) {
+		this.id = id;
 	}
 
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
+	/**
+	 * Returns the ID of this difficulty.
+	 * @return ID
+	 */
+	public int getId() {
+		return id;
+	}
 
-		if (getSize() == 0) {
-			return drops;
+	/**
+	 * Returns the Difficulty with the given ID.
+	 * @param id ID to check
+	 * @return Difficulty with the given ID, or null if no difficulty has the ID
+	 */
+	public static Difficulty getById(int id) {
+		return idMap.get(id);
+	}
+
+	/**
+	 * Returns the Difficulty with the given name (case-insensitive).
+	 * @param name Name to check
+	 * @return Difficulty with the given name, or null if no difficulty has the name
+	 */
+	public static Difficulty getByName(String name) {
+		return nameMap.get(name.toLowerCase());
+	}
+
+	static {
+		for (Difficulty mode : Difficulty.values()) {
+			idMap.put(mode.getId(), mode);
+			nameMap.put(mode.name().toLowerCase(), mode);
 		}
-		if (getRandom().nextInt(100) < 25) {
-			int count = getRandom().nextInt(2);
-			if (count > 0) {
-				drops.add(new ItemStack(VanillaMaterials.MAGMA_CREAM, count));
-			}
-		}
-		return drops;
 	}
 }

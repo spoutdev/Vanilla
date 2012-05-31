@@ -27,8 +27,6 @@
 package org.spout.vanilla.controller.living.creature.neutral;
 
 import org.spout.api.entity.Controller;
-import org.spout.api.entity.type.ControllerType;
-import org.spout.api.entity.type.EmptyConstructorControllerType;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
@@ -49,9 +47,11 @@ public class Wolf extends Creature implements Tameable, Neutral {
 		if (master != null) {
 			setHealth(20, HealthChangeReason.SPAWN);
 			setMaxHealth(20);
+			setMeleeDamage(4);
 		} else {
 			setHealth(8, HealthChangeReason.SPAWN);
 			setMaxHealth(8);
+			setMeleeDamage(2);
 		}
 
 		super.onAttached();

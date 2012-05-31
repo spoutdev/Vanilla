@@ -32,8 +32,6 @@ import java.util.Set;
 import org.spout.api.Source;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
-import org.spout.api.entity.type.ControllerType;
-import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaActionController;
@@ -42,6 +40,7 @@ import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.Difficulty;
 
 public class Enderman extends Creature implements Neutral {
 	private ItemStack heldItem;
@@ -56,6 +55,7 @@ public class Enderman extends Creature implements Neutral {
 		setHealth(40, HealthChangeReason.SPAWN);
 		setMaxHealth(40);
 		heldItem = (ItemStack) data().get("held_item", heldItem);
+		setMeleeDamage(Difficulty.EASY, 4).setMeleeDamage(Difficulty.NORMAL, 7).setMeleeDamage(Difficulty.HARD, 10);
 		super.onAttached();
 		getParent().setCollision(new CollisionModel(new BoundingBox(1, 3, 1, 2, 3, 1)));
 	}

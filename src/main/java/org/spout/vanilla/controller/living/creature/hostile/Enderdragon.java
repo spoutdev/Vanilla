@@ -26,15 +26,6 @@
  */
 package org.spout.vanilla.controller.living.creature.hostile;
 
-import java.util.Collections;
-import java.util.Set;
-
-import org.spout.api.Source;
-import org.spout.api.entity.type.ControllerType;
-import org.spout.api.entity.type.EmptyConstructorControllerType;
-import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Boss;
@@ -51,10 +42,5 @@ public class Enderdragon extends Creature implements Hostile, Boss {
 		setHealth(200, HealthChangeReason.SPAWN);
 		setMaxHealth(200);
 		super.onAttached();
-	}
-
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
-		return Collections.emptySet();
 	}
 }

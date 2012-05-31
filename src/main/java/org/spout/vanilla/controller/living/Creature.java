@@ -36,11 +36,13 @@ import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
+import org.spout.vanilla.world.Difficulty;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
 
 public abstract class Creature extends Living {
 	private long timeUntilAdult = 0;
+	private int[] meleeDamage = new int[Difficulty.values().length];
 
 	protected Creature(VanillaControllerType type) {
 		super(type);
@@ -102,5 +104,36 @@ public abstract class Creature extends Living {
 	 */
 	public void setTimeUntilAdult(long timeUntilAdult) {
 		this.timeUntilAdult -= timeUntilAdult;
+	}
+
+	/**
+	 * Returns the amount of melee damage that this creature deals on the given {@link Difficulty}.
+	 * @param difficulty Difficulty of the world that this creature is in
+	 * @return Amount of melee damage based on world difficulty
+	 */
+	public int getMeleeDamage(Difficulty difficulty) {
+		return meleeDamage[difficulty.getId()];
+	}
+
+	/**
+	 * Sets the amount of melee damage that this creature deals on all {@link Difficulty}s.
+	 * @param damage Amount of melee damage
+	 */
+	public Creature setMeleeDamage(int damage) {
+		for (Difficulty difficulty : Difficulty.values()) {
+			setMeleeDamage(difficulty, damage);
+		}
+
+		return this;
+	}
+
+	/**
+	 * Sets the amount of melee damage that this creature deals on the given {@link Difficulty}.
+	 * @param difficulty Difficulty to set the melee damage for
+	 * @param damage Amount of melee damage
+	 */
+	public Creature setMeleeDamage(Difficulty difficulty, int damage) {
+		meleeDamage[difficulty.getId()] = damage;
+		return this;
 	}
 }

@@ -30,12 +30,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.block.MovingBlock;
 import org.spout.vanilla.material.Mineable;
@@ -89,7 +89,12 @@ public class Gravel extends Solid implements Mineable, DynamicMaterial {
 	}
 
 	@Override
-	public long update(Block b, long updateTime, long lastUpdateTime, boolean first) {
+	public long onPlacement(Block b, Region r, long currentTime) {
+		return currentTime;
+	}
+
+	@Override
+	public long update(Block b, Region r, long updateTime, long lastUpdateTime, Object hint) {
 		if (!b.translate(0, -1, 0).getMaterial().isSolid()) {
 			b.setMaterial(VanillaMaterials.AIR);
 			b.getWorld().createAndSpawnEntity(b.getPosition(), new MovingBlock(VanillaControllerTypes.MOVING_BLOCK, this));

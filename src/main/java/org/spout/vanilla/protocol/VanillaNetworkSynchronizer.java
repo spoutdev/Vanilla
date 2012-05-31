@@ -430,11 +430,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 
-		VanillaPlayer controller = (VanillaPlayer) c;
-		Window window = controller.getActiveWindow();
+		Window window = ((VanillaPlayer) c).getActiveWindow();
 
-		int id = controller.getActiveWindow().getInstanceId();
-		session.send(new SetWindowSlotsMessage((byte) id, window.getSlotIndexMap().getMinecraftItems(slots)));
+		session.send(new SetWindowSlotsMessage((byte) window.getInstanceId(), window.getSlotIndexMap().getMinecraftItems(slots)));
 		queuedInventoryUpdates.clear();
 	}
 

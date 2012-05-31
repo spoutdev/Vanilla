@@ -35,9 +35,17 @@ public class ChestWindow extends Window {
 	public final static SlotIndexMap SMALL_CHEST_SLOTS = new SlotIndexMap("54-62, 45-53, 36-44, 27-35, 18-26, 9-17, 0-8");
 	public final static SlotIndexMap LARGE_CHEST_SLOTS = new SlotIndexMap("81-89, 72-80, 63-71, 54-62, 45-53, 36-44, 27-35, 18-26, 9-17, 0-8");
 
+	private final ChestInventory chest;
+
 	public ChestWindow(VanillaPlayer owner, ChestInventory chestInventory) {
 		super(0, "Chest", owner);
+		this.chest = chestInventory;
 		this.setInventory(owner.getInventory().getItems(), chestInventory);
-		this.setSlotIndexMap(chestInventory.isDouble() ? LARGE_CHEST_SLOTS : SMALL_CHEST_SLOTS);
+		this.setSlotIndexMap(chestInventory.getOwner().isDouble() ? LARGE_CHEST_SLOTS : SMALL_CHEST_SLOTS);
+	}
+
+	@Override
+	public int getInventorySize() {
+		return this.chest.getSize();
 	}
 }

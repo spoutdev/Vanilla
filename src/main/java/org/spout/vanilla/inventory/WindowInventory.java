@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.window.Window;
@@ -42,7 +43,15 @@ public abstract class WindowInventory extends Inventory implements VanillaInvent
 		super(size);
 	}
 
+	public WindowInventory(ItemStack[] contents) {
+		super(contents);
+	}
+
 	public abstract Window createWindow(VanillaPlayer player);
+
+	public boolean hasViewingPlayers() {
+		return !this.viewers.isEmpty();
+	}
 
 	public Set<VanillaPlayer> getViewingPlayers() {
 		return this.viewers;

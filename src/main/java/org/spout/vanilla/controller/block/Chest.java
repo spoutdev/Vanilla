@@ -26,27 +26,58 @@
  */
 package org.spout.vanilla.controller.block;
 
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 
 public class Chest extends VanillaBlockController {
-	private final ChestInventory inventory;
+	private ChestInventory inventory;
 	private boolean opened = false;
+	private boolean isDouble = false;
 
-	public Chest(int size) {
+	public Chest() {
+		this(false);
+	}
+
+	public Chest(boolean isDouble) {
 		super(VanillaControllerTypes.CHEST, VanillaMaterials.CHEST);
-		inventory = new ChestInventory(this, size);
+		this.isDouble = isDouble;
+		inventory = new ChestInventory(this);
 	}
 
 	@Override
 	public void onAttached() {
+		this.isDouble = this.data().containsKey("double") && ((Boolean) this.data().get("double"));
+		ItemStack[] contents;
+		if (this.data().containsKey("items")) {
+			contents = (ItemStack[]) this.data().get("items");
+		} else {
+			contents = new ItemStack[this.isDouble ? ChestInventory.DOUBLE_CHEST_SIZE : ChestInventory.SINGLE_CHEST_SIZE];
+		}
+		this.inventory = new ChestInventory(this, contents);
+	}
+
+	@Override
+	public void onSave() {
+		this.data().put("double", this.isDouble);
+		this.data().put("items", this.inventory.getContents());
 	}
 
 	@Override
 	public void onTick(float dt) {
+		if (this.inventory.hasViewingPlayers()) {
+			Point position = this.getBlock().getPosition();
+			for (VanillaPlayer player : this.inventory.getViewingPlayers().toArray(new VanillaPlayer[0])) {
+				if (player.getParent().getPosition().distance(position) > 64) {
+					this.inventory.close(player);
+				}
+			}
+		}
 	}
 
 	public ChestInventory getInventory() {
@@ -54,9 +85,15 @@ public class Chest extends VanillaBlockController {
 	}
 
 	public void setOpened(boolean opened) {
-		this.opened = opened;
-		byte data = opened ? (byte) 1 : 0;
-		VanillaNetworkSynchronizer.playBlockAction(getBlock(), (byte) 1, data);
+		if (this.opened != opened) {
+			this.opened = opened;
+			byte data = opened ? (byte) 1 : 0;
+			VanillaNetworkSynchronizer.playBlockAction(getBlock(), (byte) 1, data);
+		}
+	}
+
+	public boolean isDouble() {
+		return this.isDouble;
 	}
 
 	public boolean isOpened() {

@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.window;
 
+import org.spout.api.inventory.InventoryBase;
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.CraftingGrid;
 import org.spout.vanilla.window.Window;
@@ -49,20 +51,48 @@ public abstract class CraftingWindow extends Window {
 	}
 
 	@Override
-	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {
-		super.onClick(clickedSlot, rightClick, shift);
-		if (clickedSlot == craftingGrid.getOutputSlot()) {
-			if (itemOnCursor != null) {
-				return false;
-			} else {
-				setItemOnCursor(getInventory().getItem(clickedSlot));
-			}
-		}
-		updateOutput();
-		return true;
+	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
+		super.onSlotSet(inventory, slot, item);
+		this.updateOutput(false);
 	}
 
-	private void updateOutput() {
+	@Override
+	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {
+		if (clickedSlot == craftingGrid.getOutputSlot()) {
+			if (shift) {
+				//TODO: Handle shift-click massive crafting (is NOT set on cursor item!)
+			} else {
+				ItemStack output = this.getInventory().getItem(clickedSlot);
+				if (output != null) {
+					if (this.hasItemOnCursor()) {
+						if (this.getItemOnCursor().equalsIgnoreSize(output)) {
+							//add
+							ItemStack newItem = this.getItemOnCursor().clone();
+							newItem.setAmount(newItem.getAmount() + output.getAmount());
+							if (newItem.getAmount() <= newItem.getMaxStackSize()) {
+								this.setItemOnCursor(output);
+								this.updateOutput(true);
+								return true;
+							}
+						} else {
+							this.setItemOnCursor(output);
+							this.updateOutput(true);
+							return true;
+						}
+					}
+				}
+			}
+		} else if (super.onClick(clickedSlot, rightClick, shift)) {
+			this.updateOutput(false);
+			return true;
+		}
+		return false;
+	}
 
+	private void updateOutput(boolean craft) {
+		//TODO: Recipes
+		if (craft) {
+			//TODO: Subtract items and check if it still the same recipe
+		}
 	}
 }

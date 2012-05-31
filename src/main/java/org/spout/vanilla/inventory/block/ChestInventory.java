@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.inventory.block;
 
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventoryRange;
 import org.spout.vanilla.controller.block.Chest;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.WindowInventory;
@@ -33,21 +35,42 @@ import org.spout.vanilla.window.block.ChestWindow;
 import org.spout.vanilla.window.Window;
 
 public class ChestInventory extends WindowInventory {
+
 	private static final long serialVersionUID = 1L;
 	private final Chest owner;
 	public static final int DOUBLE_CHEST_SIZE = 54, SINGLE_CHEST_SIZE = 27;
-	private boolean isDouble;
+	private final InventoryRange[] halves;
 
-	public ChestInventory(Chest owner, int size) {
-		super(size);
+	public ChestInventory(Chest owner) {
+		this(owner, new ItemStack[owner.isDouble() ? DOUBLE_CHEST_SIZE : SINGLE_CHEST_SIZE]);
+	}
+
+	public ChestInventory(Chest owner, ItemStack[] contents) {
+		super(contents);
 		this.owner = owner;
-		this.isDouble = size == DOUBLE_CHEST_SIZE;
+		this.halves = new InventoryRange[owner.isDouble() ? 2 : 1];
+		this.halves[0] = new InventoryRange(this, 0, SINGLE_CHEST_SIZE);
+		if (owner.isDouble()) {
+			this.halves[1] = new InventoryRange(this, SINGLE_CHEST_SIZE, SINGLE_CHEST_SIZE);
+		}
 	}
 
-	public boolean isDouble() {
-		return this.isDouble;
+	@Override
+	public void open(VanillaPlayer player) {
+		super.open(player);
+		this.getOwner().setOpened(this.hasViewingPlayers());
 	}
 
+	@Override
+	public void close(VanillaPlayer player) {
+		super.close(player);
+		this.getOwner().setOpened(this.hasViewingPlayers());
+	}
+
+	public InventoryRange[] getHalves() {
+		return this.halves;
+	}
+	
 	public Chest getOwner() {
 		return owner;
 	}

@@ -27,7 +27,6 @@
 package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventoryBundle;
 
 /**
@@ -36,14 +35,14 @@ import org.spout.api.inventory.special.InventoryBundle;
 public class PlayerInventory extends InventoryBundle implements CraftingGrid {
 	private static final long serialVersionUID = 1L;
 	private final Inventory items;
-	private final Inventory craftingGrid;
-	private final Inventory armor;
+	private final PlayerCraftingGrid craftingGrid;
+	private final PlayerArmorInventory armor;
 
 	public PlayerInventory() {
-		super(new Inventory(36), new Inventory(5), new Inventory(4));
+		super(new Inventory(36), new PlayerCraftingGrid(), new PlayerArmorInventory());
 		this.items = (Inventory) this.getInventories()[0];
-		this.craftingGrid = (Inventory) this.getInventories()[1];
-		this.armor = (Inventory) this.getInventories()[2];
+		this.craftingGrid = (PlayerCraftingGrid) this.getInventories()[1];
+		this.armor = (PlayerArmorInventory) this.getInventories()[2];
 		this.startWatching();
 	}
 
@@ -59,7 +58,7 @@ public class PlayerInventory extends InventoryBundle implements CraftingGrid {
 	 * Gets the armor inventory of this player inventory
 	 * @return an Inventory with the armor items
 	 */
-	public Inventory getArmor() {
+	public PlayerArmorInventory getArmor() {
 		return this.armor;
 	}
 
@@ -67,84 +66,12 @@ public class PlayerInventory extends InventoryBundle implements CraftingGrid {
 	 * Gets the crafting grid inventory of this player inventory
 	 * @return an inventory with the crafting grid items
 	 */
-	public Inventory getCraftingGrid() {
+	public PlayerCraftingGrid getCraftingGrid() {
 		return this.craftingGrid;
-	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the helmet slot (slot 44) ; can return null.
-	 * @return helmet item stack
-	 */
-	public ItemStack getHelmet() {
-		return this.armor.getItem(0);
-	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the chest plate slot (slot 41) ; can return null.
-	 * @return chest plate item stack
-	 */
-	public ItemStack getChestPlate() {
-		return this.armor.getItem(1);
-	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the leggings slot (slot 37) ; can return null.
-	 * @return leggings item stack
-	 */
-	public ItemStack getLeggings() {
-		return this.armor.getItem(2);
-	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the boots slot (slot 36) ; can return null.
-	 * @return boots item stack
-	 */
-	public ItemStack getBoots() {
-		return this.armor.getItem(3);
-	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the top left input in the crafting grid slot (slot 42) ; can return null.
-	 * @return top left input item stack
-	 */
-	public ItemStack getTopLeftInput() {
-		return this.craftingGrid.getItem(0);
-	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the top right input in the crafting grid slot (slot 43) ; can return null.
-	 * @return top right item stack
-	 */
-	public ItemStack getTopRightInput() {
-		return this.craftingGrid.getItem(1);
-	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the bottom left input in the crafting grid slot (slot 38) ; can return null.
-	 * @return bottom left input item stack
-	 */
-	public ItemStack getBottomLeftInput() {
-		return this.craftingGrid.getItem(2);
-	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the bottom right input in the crafting grid slot (slot 39) ; can return null.
-	 * @return bottom right input item stack
-	 */
-	public ItemStack getBottomRightInput() {
-		return this.craftingGrid.getItem(3);
-	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the output slot (slot 40) ; can return null.
-	 * @return output item stack
-	 */
-	public ItemStack getOutput() {
-		return this.craftingGrid.getItem(4);
 	}
 
 	@Override
 	public int getOutputSlot() {
-		return 4;
+		return this.items.getSize() + this.craftingGrid.getOutputSlot();
 	}
 }

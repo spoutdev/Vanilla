@@ -181,7 +181,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		Block head = getParent().getWorld().getBlock(getHeadPosition());
 		if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 			airTicks++;
-			ItemStack helmet = getInventory().getHelmet();
+			ItemStack helmet = getInventory().getArmor().getHelmet();
 			int level = 0;
 			if (helmet != null && EnchantmentUtil.hasEnchantment(helmet, Enchantments.RESPIRATION)) {
 				level = EnchantmentUtil.getEnchantmentLevel(helmet, Enchantments.RESPIRATION);

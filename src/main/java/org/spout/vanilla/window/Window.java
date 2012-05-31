@@ -26,13 +26,16 @@
  */
 package org.spout.vanilla.window;
 
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventoryBundle;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 import org.spout.vanilla.util.InventoryUtil;
@@ -72,6 +75,10 @@ public class Window implements InventoryViewer {
 		return this.inventory;
 	}
 
+	public int getInventorySize() {
+		return this.inventory.getSize();
+	}
+
 	public int getId() {
 		return this.id;
 	}
@@ -104,7 +111,7 @@ public class Window implements InventoryViewer {
 	 * Opens this window
 	 */
 	public void open() {
-		sendPacket(this.getPlayer(), new OpenWindowMessage(this.getInstanceId(), this.getId(), this.getTitle(), this.inventory.getSize()));
+		sendPacket(this.getPlayer(), new OpenWindowMessage(this.getInstanceId(), this.getId(), this.getTitle(), getInventorySize()));
 		//this.inventory.notifyViewers(this.inventory.getContents());
 		this.onOpened();
 	}
@@ -131,6 +138,7 @@ public class Window implements InventoryViewer {
 	 * Called after this inventory has been successfully closed
 	 */
 	public void onClosed() {
+		this.dropItemOnCursor();
 	}
 
 	public boolean hasItemOnCursor() {
@@ -154,10 +162,25 @@ public class Window implements InventoryViewer {
 	}
 
 	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {
+		boolean result;
+		this.inventory.setNotifyViewers(false);
 		if (rightClick) {
-			return onRightClick(clickedSlot, shift);
+			result = onRightClick(clickedSlot, shift);
+		} else {
+			result = onLeftClick(clickedSlot, shift);
 		}
-		return onLeftClick(clickedSlot, shift);
+		this.inventory.setNotifyViewers(true);
+		return result;
+	}
+
+	public void dropItemOnCursor() {
+		if (this.hasItemOnCursor()) {
+			ItemStack item = this.getItemOnCursor();
+			Point position = this.getOwner().getParent().getPosition();
+			//TODO: Dropping randomness
+			position.getWorld().createAndSpawnEntity(position, new Item(item, Vector3.ZERO));
+			this.setItemOnCursor(null);
+		}
 	}
 
 	/**
@@ -165,10 +188,7 @@ public class Window implements InventoryViewer {
 	 * @return True to notify that the operation was allowed
 	 */
 	public boolean onOutsideClick() {
-		if (this.hasItemOnCursor()) {
-			//TODO: Drop the item at the cursor
-			this.setItemOnCursor(null);
-		}
+		this.dropItemOnCursor();
 		return true;
 	}
 

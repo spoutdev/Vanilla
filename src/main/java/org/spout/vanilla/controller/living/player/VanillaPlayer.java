@@ -344,6 +344,16 @@ public class VanillaPlayer extends Human implements PlayerController {
 			}
 		}
 	}
+	
+	@Override
+	public boolean needsPositionUpdate() {
+		return true;
+	}
+	
+	@Override
+	public boolean needsVelocityUpdate() {
+		return true;
+	}
 
 	/**
 	 * Sets whether the player is visible for everyone.

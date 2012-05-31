@@ -29,6 +29,7 @@ package org.spout.vanilla.material.block.solid;
 import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
@@ -137,48 +138,55 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable,
 	public Vector3[] maxRange() {
 		return maxRange;
 	}
-
+	
 	@Override
-	public long update(Block b, long updateTime, long lastUpdateTime, boolean first) {
+	public long onPlacement(Block b, Region r, long currentTime) {
 		int data = b.getData() & 0xFFFF;
 		if ((data & aliveMask) == 0) {
 			return -1;
 		} else {
-			if (first) {
-				return b.getWorld().getAge() + 10000;
-			} else {
-				Block trunk = b;
-				int expectHeight = b.getBlockDataField(heightMask);
-				for (int i = 0; i < expectHeight + 1; i++) {
-					if (!(trunk.getMaterial() instanceof Log)) {
-						return -1;
-					}
-					trunk = trunk.translate(BlockFace.TOP);
-				}
-				Material trunkMaterial = trunk.getMaterial();
-				if (expectHeight == 3) {
-					trunk = b;
-					for (int i = 0; i < expectHeight + 1; i++) {
-						trunk.setMaterial(BlockMaterial.AIR);
-						trunk = trunk.translate(BlockFace.TOP);
-					}
-					sapling.growTree(b, sapling);
-					return -1;
-				} else if (trunkMaterial == BlockMaterial.AIR || (trunkMaterial instanceof Leaves)) {
-					trunk.setMaterial(b.getMaterial());
-					trunk = trunk.translate(BlockFace.TOP);
-					if (trunk.getMaterial() == BlockMaterial.AIR) {
-						trunk.setMaterial(Leaves.DEFAULT);
-						trunk.setData(data & dataMask);
-					}
-					b.setBlockDataField(heightMask, expectHeight + 1);
-					return updateTime + 10000;
-				} else {
-					b.setData(data & dataMask);
-					return -1;
-				}
+			return currentTime + 10000;
+		}
+	}
 
+	@Override
+	public long update(Block b, Region r, long updateTime, long lastUpdateTime, Object hint) {
+		System.out.println("Thread: " + Thread.currentThread().getName());
+		int data = b.getData() & 0xFFFF;
+		if ((data & aliveMask) == 0) {
+			return -1;
+		} else {
+			Block trunk = b;
+			int expectHeight = b.getBlockDataField(heightMask);
+			for (int i = 0; i < expectHeight + 1; i++) {
+				if (!(trunk.getMaterial() instanceof Log)) {
+					return -1;
+				}
+				trunk = trunk.translate(BlockFace.TOP);
 			}
+			Material trunkMaterial = trunk.getMaterial();
+			if (expectHeight == 3) {
+				trunk = b;
+				for (int i = 0; i < expectHeight + 1; i++) {
+					trunk.setMaterial(BlockMaterial.AIR);
+					trunk = trunk.translate(BlockFace.TOP);
+				}
+				sapling.growTree(b, sapling);
+				return -1;
+			} else if (trunkMaterial == BlockMaterial.AIR || (trunkMaterial instanceof Leaves)) {
+				trunk.setMaterial(b.getMaterial());
+				trunk = trunk.translate(BlockFace.TOP);
+				if (trunk.getMaterial() == BlockMaterial.AIR) {
+					trunk.setMaterial(Leaves.DEFAULT);
+					trunk.setData(data & dataMask);
+				}
+				b.setBlockDataField(heightMask, expectHeight + 1);
+				return updateTime + 10000;
+			} else {
+				b.setData(data & dataMask);
+				return -1;
+			}
+
 		}
 	}
 }

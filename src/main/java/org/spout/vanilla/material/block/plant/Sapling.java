@@ -32,13 +32,13 @@ import java.util.Random;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
@@ -148,15 +148,16 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	}
 
 	@Override
-	public long update(Block b, long updateTime, long lastUpdateTime, boolean first) {
-		if (first) {
-			return b.getWorld().getAge() + 10000;
-		} else {
-			short oldData = b.getData();
-			b.setMaterial(Log.DEFAULT);
-			b.setData(oldData & dataMask);
-			b.setBlockDataBits(Log.aliveMask);
-			return -1;
-		}
+	public long onPlacement(Block b, Region r, long currentTime) {
+		return currentTime + 10000;
+	}
+	
+	@Override
+	public long update(Block b, Region r, long updateTime, long lastUpdateTime, Object hint) {
+		short oldData = b.getData();
+		b.setMaterial(Log.DEFAULT);
+		b.setData(oldData & dataMask);
+		b.setBlockDataBits(Log.aliveMask);
+		return -1;
 	}
 }

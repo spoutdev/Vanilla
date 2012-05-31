@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 import gnu.trove.iterator.TIntObjectIterator;
@@ -56,7 +53,6 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEventListener;
 import org.spout.api.util.map.TIntPairObjectHashMap;
-import org.spout.api.util.set.TIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -98,10 +94,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	protected void freeChunk(Point p) {
 		int x = (int) p.getX() >> Chunk.CHUNK_SIZE_BITS;
-		int y = (int) p.getY() >> Chunk.CHUNK_SIZE_BITS;// + SEALEVEL_CHUNK;
+		int y = (int) p.getY() >> Chunk.CHUNK_SIZE_BITS; // + SEALEVEL_CHUNK;
 		int z = (int) p.getZ() >> Chunk.CHUNK_SIZE_BITS;
 
-		if (y < 0 || y > p.getWorld().getHeight() >> Chunk.CHUNK_SIZE_BITS) {
+		if (y < 0 || y > 16 || y > p.getWorld().getHeight() >> Chunk.CHUNK_SIZE_BITS) {
 			return;
 		}
 

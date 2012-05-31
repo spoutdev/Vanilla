@@ -39,6 +39,7 @@ public abstract class ControlledMaterial extends Solid {
 	public ControlledMaterial(VanillaControllerType type, String name, int id) {
 		super(name, id);
 		this.type = type;
+		this.setController(type);
 	}
 
 	@Override

@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.inventory.block;
 
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.special.InventoryRange;
 import org.spout.vanilla.controller.block.Chest;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.WindowInventory;
@@ -38,45 +36,51 @@ public class ChestInventory extends WindowInventory {
 
 	private static final long serialVersionUID = 1L;
 	private final Chest owner;
-	public static final int DOUBLE_CHEST_SIZE = 54, SINGLE_CHEST_SIZE = 27;
-	private final InventoryRange[] halves;
 
 	public ChestInventory(Chest owner) {
-		this(owner, new ItemStack[owner.isDouble() ? DOUBLE_CHEST_SIZE : SINGLE_CHEST_SIZE]);
+		super(27);
+		this.owner = owner;
 	}
 
-	public ChestInventory(Chest owner, ItemStack[] contents) {
-		super(contents);
-		this.owner = owner;
-		this.halves = new InventoryRange[owner.isDouble() ? 2 : 1];
-		this.halves[0] = new InventoryRange(this, 0, SINGLE_CHEST_SIZE);
-		if (owner.isDouble()) {
-			this.halves[1] = new InventoryRange(this, SINGLE_CHEST_SIZE, SINGLE_CHEST_SIZE);
-		}
+	public void addViewer(VanillaPlayer player) {
+		super.addViewer(player);
+		this.getOwner().setOpened(this.hasViewingPlayers());
+	}
+
+	public void removeViewer(VanillaPlayer player) {
+		super.removeViewer(player);
+		this.getOwner().setOpened(this.hasViewingPlayers());
 	}
 
 	@Override
 	public void open(VanillaPlayer player) {
 		super.open(player);
-		this.getOwner().setOpened(this.hasViewingPlayers());
+		Chest other = this.owner.getOtherHalf();
+		if (other != null) {
+			other.getInventory().addViewer(player);
+		}
 	}
 
 	@Override
 	public void close(VanillaPlayer player) {
 		super.close(player);
-		this.getOwner().setOpened(this.hasViewingPlayers());
+		Chest other = this.owner.getOtherHalf();
+		if (other != null) {
+			other.getInventory().removeViewer(player);
+		}
 	}
 
-	public InventoryRange[] getHalves() {
-		return this.halves;
-	}
-	
 	public Chest getOwner() {
 		return owner;
 	}
 
 	@Override
 	public Window createWindow(VanillaPlayer player) {
-		return new ChestWindow(player, this);
+		Chest other = this.owner.getOtherHalf();
+		if (other == null) {
+			return new ChestWindow(player, this);
+		} else {
+			return new ChestWindow(player, this, other.getInventory());
+		}
 	}
 }

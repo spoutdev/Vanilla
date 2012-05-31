@@ -24,47 +24,37 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory;
+package org.spout.vanilla.util;
 
-import org.spout.api.inventory.Inventory;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector3;
+import org.spout.vanilla.controller.object.moving.Item;
 
-public class PlayerArmorInventory extends Inventory {
-	private static final long serialVersionUID = 1L;
+public class ItemUtil {
 
-	public PlayerArmorInventory() {
-		super(4);
+	/**
+	 * Drops an item at the position with the item stack specified with a natural random velocity
+	 * @param position to spawn the item
+	 * @param itemStack to set to the item
+	 * @return the Item controller
+	 */
+	public static Item dropItemNaturally(Point position, ItemStack itemStack) {
+		Vector3 velocity = new Vector3(Math.random() * 0.2 - 0.1, 0.2, Math.random() * 0.2 - 0.1);
+		return dropItem(position, itemStack, velocity);
 	}
 
 	/**
-	 * Returns the current {@link ItemStack} in the helmet slot (slot 44) ; can return null.
-	 * @return helmet item stack
+	 * Drops an item at the position with the item stack specified
+	 * @param position to spawn the item
+	 * @param itemStack to set to the item
+	 * @param velocity to drop at
+	 * @return the Item controller
 	 */
-	public ItemStack getHelmet() {
-		return this.getItem(0);
+	public static Item dropItem(Point position, ItemStack itemStack, Vector3 velocity) {
+		Item item = new Item(itemStack, velocity);
+		position.getWorld().createAndSpawnEntity(position, item);
+		return item;
 	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the chest plate slot (slot 41) ; can return null.
-	 * @return chest plate item stack
-	 */
-	public ItemStack getChestPlate() {
-		return this.getItem(1);
-	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the leggings slot (slot 37) ; can return null.
-	 * @return leggings item stack
-	 */
-	public ItemStack getLeggings() {
-		return this.getItem(2);
-	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the boots slot (slot 36) ; can return null.
-	 * @return boots item stack
-	 */
-	public ItemStack getBoots() {
-		return this.getItem(3);
-	}
+	
 }

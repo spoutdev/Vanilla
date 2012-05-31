@@ -33,6 +33,7 @@ import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -42,11 +43,11 @@ import org.spout.vanilla.controller.block.Chest;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -55,8 +56,7 @@ public class ChestBlock extends ControlledMaterial implements Fuel, Mineable, Di
 
 	public ChestBlock(String name, int id) {
 		super(VanillaControllerTypes.CHEST, name, id);
-		this.setHardness(2.5F).setResistance(4.2F).setOpacity((byte) 0);
-		this.setOccludes(false);
+		this.setHardness(2.5F).setResistance(4.2F).setOpacity((byte) 0).setOccludes(false);
 	}
 
 	@Override
@@ -69,57 +69,23 @@ public class ChestBlock extends ControlledMaterial implements Fuel, Mineable, Di
 		return Instrument.BASSGUITAR;
 	}
 
-	private Chest createController(Block block) {
-		Chest neighbor = null;
-		for (BlockFace face : BlockFaces.NESW) {
-			neighbor = getController(block, face);
-			if (neighbor != null) {
-				break;
+	@Override
+	public void onDestroyBlock(Block block) {
+		BlockController old = block.getController();
+		if (old != null && old instanceof Chest) {
+			//Drop items
+			ItemStack[] items = ((Chest) old).getInventory().getContents();
+			Point position = block.getPosition();
+			for (ItemStack item : items) {
+				ItemUtil.dropItemNaturally(position, item);
 			}
 		}
-		Chest created;
-		if (neighbor == null) {
-			created = new Chest(false);
-		} else {
-			created = new Chest(true);
-			created.getInventory().setContents(neighbor.getInventory().getContents());
-			neighbor.getBlock().setController(null);
-		}
-		block.setController(created);
-		return created;
-	}
-
-	private Chest getController(Block block, BlockFace face) {
-		block = block.translate(face);
-		if (block.getMaterial().equals(VanillaMaterials.CHEST)) {
-			BlockController controller = block.getController();
-			if (controller instanceof Chest) {
-				return (Chest) controller;
-			}
-		}
-		return null;
+		super.onDestroyBlock(block);
 	}
 
 	@Override
 	public Chest getController(Block block) {
-		if (block.getMaterial().equals(VanillaMaterials.CHEST)) {
-			BlockController controller = block.getController();
-			if (controller instanceof Chest) {
-				return (Chest) controller;
-			} else {
-				controller = getController(block, BlockFace.SOUTH);
-				if (controller != null) {
-					return (Chest) controller;
-				}
-				controller = getController(block, BlockFace.WEST);
-				if (controller != null) {
-					return (Chest) controller;
-				}
-			}
-			//create a controller
-			return createController(block);
-		}
-		return null;
+		return (Chest) super.getController(block);
 	}
 
 	@Override
@@ -142,28 +108,70 @@ public class ChestBlock extends ControlledMaterial implements Fuel, Mineable, Di
 		block.setData((short) (BlockFaces.EWNS.indexOf(facing, 0) + 2));
 	}
 
+	/**
+	 * Gets the other half of a double chest
+	 * @param block of the Double chest
+	 * @return the other half, or null if there is none
+	 */
+	public Block getOtherHalf(Block block) {
+		for (BlockFace face : BlockFaces.NESW) {
+			if (block.translate(face).getMaterial().equals(this)) {
+				return block.translate(face);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Gets whether a certain chest block is a double chest
+	 * @param block of the Chest
+	 * @return True if it is a double chest, False if it is a single chest
+	 */
+	public boolean isDouble(Block block) {
+		return getOtherHalf(block) != null;
+	}
+
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.canPlace(block, data, against, isClickedBlock)) {
 			//no surrounding double-chest blocks?
-			Chest chest;
+			int count = 0;
 			for (BlockFace face : BlockFaces.NESW) {
-				chest = this.getController(block.translate(face));
-				if (chest != null && chest.isDouble()) {
-					return false;
+				if (block.translate(face).getMaterial().equals(this)) {
+					count++;
+					if (count == 2 || this.isDouble(block.translate(face))) {
+						return false;
+					}
 				}
 			}
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, isClickedBlock)) {
-			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
+			BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource()).getOpposite();
+			//search for neighbor and align
+			Block neigh;
+			for (BlockFace face : BlockFaces.NESW) {
+				if ((neigh = block.translate(face)).getMaterial().equals(this)) {
+					if (face == facing || face == facing.getOpposite()) {
+						if (facing == BlockFace.NORTH || facing == BlockFace.SOUTH) {
+							facing = BlockFace.WEST;
+						} else {
+							facing = BlockFace.SOUTH;
+						}
+					}
+					this.setFacing(neigh, facing);
+					break;
+				}
+			}
+			this.setFacing(block, facing);
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override

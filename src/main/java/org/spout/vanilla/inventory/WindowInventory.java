@@ -57,13 +57,21 @@ public abstract class WindowInventory extends Inventory implements VanillaInvent
 		return this.viewers;
 	}
 
-	public void open(VanillaPlayer player) {
+	public void addViewer(VanillaPlayer player) {
 		this.viewers.add(player);
+	}
+
+	public void removeViewer(VanillaPlayer player) {
+		this.viewers.remove(player);
+	}
+
+	public void open(VanillaPlayer player) {
+		this.addViewer(player);
 		player.setWindow(this.createWindow(player));
 	}
 
 	public void close(VanillaPlayer player) {
-		this.viewers.remove(player);
+		this.removeViewer(player);
 		player.closeWindow();
 	}
 }

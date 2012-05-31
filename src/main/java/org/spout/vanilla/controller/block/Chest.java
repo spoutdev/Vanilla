@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.block;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.controller.VanillaBlockController;
@@ -36,35 +37,23 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 
 public class Chest extends VanillaBlockController {
-	private ChestInventory inventory;
+	private final ChestInventory inventory;
 	private boolean opened = false;
-	private boolean isDouble = false;
 
 	public Chest() {
-		this(false);
-	}
-
-	public Chest(boolean isDouble) {
 		super(VanillaControllerTypes.CHEST, VanillaMaterials.CHEST);
-		this.isDouble = isDouble;
 		inventory = new ChestInventory(this);
 	}
 
 	@Override
 	public void onAttached() {
-		this.isDouble = this.data().containsKey("double") && ((Boolean) this.data().get("double"));
-		ItemStack[] contents;
 		if (this.data().containsKey("items")) {
-			contents = (ItemStack[]) this.data().get("items");
-		} else {
-			contents = new ItemStack[this.isDouble ? ChestInventory.DOUBLE_CHEST_SIZE : ChestInventory.SINGLE_CHEST_SIZE];
+			this.inventory.setContents((ItemStack[]) this.data().get("items"));
 		}
-		this.inventory = new ChestInventory(this, contents);
 	}
 
 	@Override
 	public void onSave() {
-		this.data().put("double", this.isDouble);
 		this.data().put("items", this.inventory.getContents());
 	}
 
@@ -92,8 +81,17 @@ public class Chest extends VanillaBlockController {
 		}
 	}
 
+	public Chest getOtherHalf() {
+		Block other = VanillaMaterials.CHEST.getOtherHalf(this.getBlock());
+		if (other != null) {
+			return VanillaMaterials.CHEST.getController(other);
+		} else {
+			return null;
+		}
+	}
+
 	public boolean isDouble() {
-		return this.isDouble;
+		return VanillaMaterials.CHEST.isDouble(this.getBlock());
 	}
 
 	public boolean isOpened() {

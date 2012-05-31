@@ -24,47 +24,39 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory;
+package org.spout.vanilla.window;
 
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.WindowInventory;
 
-public class PlayerArmorInventory extends Inventory {
-	private static final long serialVersionUID = 1L;
+public class InventoryWindow extends Window {
 
-	public PlayerArmorInventory() {
-		super(4);
+	private final WindowInventory inventory;
+
+	public InventoryWindow(int id, String title, VanillaPlayer owner, WindowInventory inventory) {
+		super(id, title, owner);
+		this.inventory = inventory;
+		this.setInventory(owner.getInventory().getItems(), this.inventory);
 	}
 
-	/**
-	 * Returns the current {@link ItemStack} in the helmet slot (slot 44) ; can return null.
-	 * @return helmet item stack
-	 */
-	public ItemStack getHelmet() {
-		return this.getItem(0);
+	public WindowInventory getWindowInventory() {
+		return this.inventory;
 	}
 
-	/**
-	 * Returns the current {@link ItemStack} in the chest plate slot (slot 41) ; can return null.
-	 * @return chest plate item stack
-	 */
-	public ItemStack getChestPlate() {
-		return this.getItem(1);
+	@Override
+	public void onClosed() {
+		super.onClosed();
+		this.inventory.close(this.getOwner());
 	}
 
-	/**
-	 * Returns the current {@link ItemStack} in the leggings slot (slot 37) ; can return null.
-	 * @return leggings item stack
-	 */
-	public ItemStack getLeggings() {
-		return this.getItem(2);
+	@Override
+	public void onOpened() {
+		super.onOpened();
+		this.getInventory().notifyViewers();
 	}
 
-	/**
-	 * Returns the current {@link ItemStack} in the boots slot (slot 36) ; can return null.
-	 * @return boots item stack
-	 */
-	public ItemStack getBoots() {
-		return this.getItem(3);
+	@Override
+	public int getInventorySize() {
+		return super.getInventorySize() - this.getOwner().getInventory().getItems().getSize();
 	}
 }

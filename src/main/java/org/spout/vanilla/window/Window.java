@@ -26,19 +26,17 @@
  */
 package org.spout.vanilla.window;
 
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventoryBundle;
-import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 import org.spout.vanilla.util.InventoryUtil;
+import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.SlotIndexMap;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
@@ -52,7 +50,8 @@ public class Window implements InventoryViewer {
 	protected final VanillaPlayer owner;
 	protected InventoryBundle inventory;
 	protected ItemStack itemOnCursor;
-	private SlotIndexMap slotIndexMap = DEFAULT_SLOTS;
+	protected SlotIndexMap slotIndexMap = DEFAULT_SLOTS;
+	protected boolean isOpen = false;
 
 	public Window(int id, String title, VanillaPlayer owner) {
 		this.id = id;
@@ -108,18 +107,34 @@ public class Window implements InventoryViewer {
 	}
 
 	/**
+	 * Gets whether this window is opened to the player
+	 * @return True if open, False if not
+	 */
+	public boolean isOpen() {
+		return this.isOpen;
+	}
+
+	/**
 	 * Opens this window
 	 */
 	public void open() {
+		if (this.isOpen()) {
+			return;
+		}
 		sendPacket(this.getPlayer(), new OpenWindowMessage(this.getInstanceId(), this.getId(), this.getTitle(), getInventorySize()));
 		//this.inventory.notifyViewers(this.inventory.getContents());
 		this.onOpened();
+		this.isOpen = true;
 	}
 
 	/**
 	 * Closes this window
 	 */
 	public void close() {
+		if (!this.isOpen()) {
+			return;
+		}
+		this.isOpen = false;
 		if (this.hasCloseMessage()) {
 			sendPacket(this.getPlayer(), new CloseWindowMessage(this.getInstanceId()));
 		}
@@ -163,22 +178,17 @@ public class Window implements InventoryViewer {
 
 	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {
 		boolean result;
-		this.inventory.setNotifyViewers(false);
 		if (rightClick) {
 			result = onRightClick(clickedSlot, shift);
 		} else {
 			result = onLeftClick(clickedSlot, shift);
 		}
-		this.inventory.setNotifyViewers(true);
 		return result;
 	}
 
 	public void dropItemOnCursor() {
 		if (this.hasItemOnCursor()) {
-			ItemStack item = this.getItemOnCursor();
-			Point position = this.getOwner().getParent().getPosition();
-			//TODO: Dropping randomness
-			position.getWorld().createAndSpawnEntity(position, new Item(item, Vector3.ZERO));
+			ItemUtil.dropItemNaturally(this.getOwner().getParent().getPosition(), this.getItemOnCursor());
 			this.setItemOnCursor(null);
 		}
 	}

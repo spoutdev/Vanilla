@@ -45,18 +45,25 @@ import org.spout.vanilla.material.block.attachable.PointAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
+import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
+
 public class StoneButton extends AbstractAttachable implements Mineable, PointAttachable, RedstoneSource, DynamicMaterial {
 	public static final int TICK_DELAY = 20;
 	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
-	
+
 	public StoneButton(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESW).setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
+	}
+
+	public void onDelayedUpdate(Block block) {
+		this.setPressed(block, false);
+		playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_CLICK_2);
+		this.doRedstoneUpdates(block);
 	}
 
 	@Override
@@ -97,7 +104,7 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 				this.setPressed(block, true);
 				this.doRedstoneUpdates(block);
 				block.dynamicUpdate(TICK_DELAY);
-				VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_1);
+				playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_1);
 			}
 		}
 	}
@@ -150,7 +157,7 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	@Override
 	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
 		this.setPressed(block, false);
-		VanillaNetworkSynchronizer.playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_CLICK_2);
+		playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_CLICK_2);
 		this.doRedstoneUpdates(block);
 		return -1;
 	}

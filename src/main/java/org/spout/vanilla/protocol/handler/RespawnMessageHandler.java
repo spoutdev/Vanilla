@@ -35,7 +35,6 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
-import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
@@ -44,12 +43,12 @@ import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 	@Override
 	public void handleServer(Session session, Player player, RespawnMessage message) {
-		if (player == null || player.getEntity() == null) {
-			return;
-		}
-
 		PlayerRespawnEvent event = new PlayerRespawnEvent(player.getEntity(), player.getEntity().getLastTransform().getPosition().getWorld().getSpawnPoint().getPosition());
 		Spout.getEngine().getEventManager().callEvent(event);
+
+		if (event.isCancelled()) {
+			return;
+		}
 
 		//Set position for the server
 		Point point = event.getPoint();
@@ -70,9 +69,7 @@ public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 		} else {
 			return;
 		}
-		session.send(respawn);
 
-		SpawnPositionMessage SPMsg = new SpawnPositionMessage((int) point.getX(), (int) point.getY(), (int) point.getZ());
-		session.send(SPMsg);
+		session.send(respawn);
 	}
 }

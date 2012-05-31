@@ -42,10 +42,10 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Slime extends Creature implements Hostile {
-	public final static DefaultedKey<Byte> SIZE_KEY = new SlimeSize("slime_size");
 	private byte size;
 
 	public Slime(byte size) {
@@ -55,7 +55,7 @@ public class Slime extends Creature implements Hostile {
 
 	public Slime() {
 		super(VanillaControllerTypes.SLIME);
-		this.size = data().get(Slime.SIZE_KEY);
+		this.size = data().get(VanillaData.SLIME_SIZE);
 	}
 
 	public Slime(VanillaControllerType type, byte size) {
@@ -65,7 +65,7 @@ public class Slime extends Creature implements Hostile {
 
 	public Slime(VanillaControllerType type) {
 		super(type);
-		this.size = data().get(Slime.SIZE_KEY);
+		this.size = data().get(VanillaData.SLIME_SIZE);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class Slime extends Creature implements Hostile {
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put("slime_size", size);
+		data().put(VanillaData.SLIME_SIZE, size);
 	}
 
 	@Override
@@ -127,20 +127,5 @@ public class Slime extends Creature implements Hostile {
 		}
 
 		this.size = size;
-	}
-
-	private static class SlimeSize extends DefaultedKeyImpl<Byte> {
-		private Random random = new Random();
-
-		public SlimeSize(String keyString) {
-			super(keyString, null);
-		}
-
-		@Override
-		public Byte getDefaultValue() {
-			synchronized (random) {
-				return (byte) random.nextInt(4);
-			}
-		}
 	}
 }

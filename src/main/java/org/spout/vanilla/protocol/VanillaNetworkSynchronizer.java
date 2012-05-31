@@ -26,26 +26,23 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.util.Set;
-
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
-import org.spout.api.generator.WorldGenerator;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
@@ -56,14 +53,17 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.BlockActionMessage;
+import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.Dimension;
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
 import org.spout.vanilla.protocol.msg.LoginRequestMessage;
-import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
@@ -71,25 +71,46 @@ import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.world.generator.VanillaBiome;
-import org.spout.vanilla.world.generator.nether.NetherGenerator;
-import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
+	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
+	private static final byte[] AIR_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
+	private static final double STANCE = 1.6D;
 	@SuppressWarnings("unused")
-	private final static int POSITION_UPDATE_TICKS = 20;
-	private final static double STANCE = 1.6D;
-	private final static int TIMEOUT = 15000;
+	private static final int POSITION_UPDATE_TICKS = 20;
+	private static final int TIMEOUT = 15000;
+	private final TIntObjectHashMap<Message> queuedInventoryUpdates = new TIntObjectHashMap<Message>();
+	private boolean first = true;
+	private long lastKeepAlive = System.currentTimeMillis();
+	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();
+
+	static {
+		int i = 0;
+		for (int c = 0; c < Chunk.BLOCKS.VOLUME; c++) { // blocks
+			SOLID_CHUNK_DATA[i] = 1;
+			AIR_CHUNK_DATA[i++] = 0;
+		}
+		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // block data
+			SOLID_CHUNK_DATA[i] = 0x00;
+			AIR_CHUNK_DATA[i++] = 0x00;
+		}
+		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // block light
+			SOLID_CHUNK_DATA[i] = 0x00;
+			AIR_CHUNK_DATA[i++] = 0x00;
+		}
+		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // sky light
+			SOLID_CHUNK_DATA[i] = 0x00;
+			AIR_CHUNK_DATA[i++] = (byte) 0xFF;
+		}
+	}
 
 	public VanillaNetworkSynchronizer(Player player, Entity entity) {
 		super(player, player.getSession(), entity);
 		registerProtocolEvents(this);
 		initChunk(player.getEntity().getPosition());
 	}
-
-	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();
-	private final TIntObjectHashMap<Message> queuedInventoryUpdates = new TIntObjectHashMap<Message>();
 
 	@Override
 	protected void freeChunk(Point p) {
@@ -114,32 +135,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], 0, data, null);
 				session.send(CCMsg);
 			}*/
-		}
-	}
-
-	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
-	private static final byte[] AIR_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
-
-	static {
-		int i = 0;
-		for (int c = 0; c < Chunk.BLOCKS.VOLUME; c++) { // blocks
-			SOLID_CHUNK_DATA[i] = 1;
-			AIR_CHUNK_DATA[i++] = 0;
-		}
-
-		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // block data
-			SOLID_CHUNK_DATA[i] = 0x00;
-			AIR_CHUNK_DATA[i++] = 0x00;
-		}
-
-		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // block light
-			SOLID_CHUNK_DATA[i] = 0x00;
-			AIR_CHUNK_DATA[i++] = 0x00;
-		}
-
-		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // sky light
-			SOLID_CHUNK_DATA[i] = 0x00;
-			AIR_CHUNK_DATA[i++] = (byte) 0xFF;
 		}
 	}
 
@@ -275,26 +270,21 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		owner.getSession().send(PRMsg);
 	}
 
-	boolean first = true;
-
 	@Override
 	protected void worldChanged(World world) {
-		int dimensionBit;
-		WorldGenerator worldGen = world.getGenerator();
-		if (worldGen instanceof NetherGenerator) {
-			dimensionBit = -1;
-		} else if (worldGen instanceof TheEndGenerator) {
-			dimensionBit = 1;
-		} else {
-			dimensionBit = 0;
-		}
+		//Grab world characteristics.
+		GameMode gamemode = world.getDataMap().get(VanillaData.GAMEMODE);
+		Difficulty difficulty = world.getDataMap().get(VanillaData.DIFFICULTY);
+		Dimension dimension = world.getDataMap().get(VanillaData.DIMENSION);
+		WorldType worldType = world.getDataMap().get(VanillaData.WORLD_TYPE);
+
+		//TODO Handle infinite height
 		if (first) {
 			first = false;
 			int entityId = owner.getEntity().getId();
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
-			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, owner.getName(), vc.isSurvival() ? 0 : 1, dimensionBit, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
+			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, owner.getName(), gamemode.getId(), dimension.getId(), difficulty.getId(), 256, session.getGame().getMaxPlayers(), worldType.getType());
 			owner.getSession().send(idMsg, true);
-			//Normal messages may be sent
 			owner.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
 				ItemStack slotItem = vc.getInventory().getArmor().getItem(slot);
@@ -307,18 +297,15 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				owner.getSession().send(EEMsg);
 			}
 		} else {
-			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
-			owner.getSession().send(new RespawnMessage(dimensionBit, (byte) 0, (byte) (vc.isSurvival() ? 0 : 1), world.getHeight(), "DEFAULT"));
+			owner.getSession().send(new RespawnMessage(dimension.getId(),  difficulty.getId(), gamemode.getId(), 256, worldType.getType()));
 		}
 
 		if (world != null) {
-			Point spawn = world.getSpawnPoint().getPosition();
-			SpawnPositionMessage SPMsg = new SpawnPositionMessage((int) spawn.getX(), (int) spawn.getY(), (int) spawn.getZ());
+			Point pos = world.getSpawnPoint().getPosition();
+			SpawnPositionMessage SPMsg = new SpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
 			owner.getSession().send(SPMsg);
 		}
 	}
-
-	long lastKeepAlive = System.currentTimeMillis();
 
 	@Override
 	public void preSnapshot() {
@@ -363,9 +350,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (ep != null) {
 				Message[] spawn = ep.getSpawnMessage(e);
 				if (spawn != null) {
-					for (Message msg : spawn) {
-						session.send(msg);
-					}
+					session.sendAll(spawn);
 				}
 			}
 		}
@@ -384,9 +369,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (ep != null) {
 				Message[] death = ep.getDestroyMessage(e);
 				if (death != null) {
-					for (Message msg : death) {
-						session.send(msg);
-					}
+					session.sendAll(death);
 				}
 			}
 		}
@@ -405,9 +388,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (ep != null) {
 				Message[] sync = ep.getUpdateMessage(e);
 				if (sync != null) {
-					for (Message msg : sync) {
-						session.send(msg);
-					}
+					session.sendAll(sync);
 				}
 			}
 		}
@@ -448,142 +429,5 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		session.send(new SetWindowSlotsMessage((byte) window.getInstanceId(), window.getSlotIndexMap().getMinecraftItems(slots)));
 		queuedInventoryUpdates.clear();
-	}
-
-	/**
-	 * This method takes any amount of messages and sends them to every online player on the server.
-	 * @param messages
-	 */
-	public static void broadcastPacket(Message... messages) {
-		sendPacket(Spout.getEngine().getOnlinePlayers(), messages);
-	}
-
-	/**
-	 * This method takes in any amount of messages and sends them to any amount of
-	 * players.
-	 * @param players specific players to send a message to.
-	 * @param messages the message(s) to send
-	 */
-	public static void sendPacket(Player[] players, Message... messages) {
-		for (Player player : players) {
-			for (Message message : messages) {
-				sendPacket(player, message);
-			}
-		}
-	}
-
-	/**
-	 * This method takes in a message and sends it to a specific player
-	 * @param player specific player to relieve message
-	 * @param messages specific message to send.
-	 */
-	public static void sendPacket(Player player, Message... messages) {
-		for (Message message : messages) {
-			player.getSession().send(message);
-		}
-	}
-
-	/**
-	 * This method sends an effect play message for a block to all nearby players in a 16-block radius
-	 * @param block The block that the effect comes from.
-	 * @param effect The effect to play
-	 */
-	public static void playBlockEffect(Block block, Entity ignore, PlayEffectMessage.Messages effect) {
-		playBlockEffect(block, ignore, 16, effect, 0);
-	}
-
-	/**
-	 * This method sends an effect play message for a block to all nearby players
-	 * @param block The block that the effect comes from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param effect The effect to play
-	 */
-	public static void playBlockEffect(Block block, Entity ignore, int range, PlayEffectMessage.Messages effect) {
-		playBlockEffect(block, ignore, range, effect, 0);
-	}
-
-	/**
-	 * This method sends an effect play message for a block to all nearby players
-	 * @param block The block that the effect comes from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param effect The effect to play
-	 * @param data The data to use for the effect
-	 */
-	public static void playBlockEffect(Block block, Entity ignore, int range, PlayEffectMessage.Messages effect, int data) {
-		sendPacketsToNearbyPlayers(block.getPosition(), ignore, range, new PlayEffectMessage(effect.getId(), block, data));
-	}
-
-	/**
-	 * Sends a block action message to all nearby players in a 48-block radius
-	 */
-	public static void playBlockAction(Block block, byte arg1, byte arg2) {
-		sendPacketsToNearbyPlayers(block.getPosition(), 48, new BlockActionMessage(block, arg1, arg2));
-	}
-
-	/**
-	 * Sends a block action message to all nearby players
-	 */
-	public static void playBlockAction(Block block, int range, byte arg1, byte arg2) {
-		sendPacketsToNearbyPlayers(block.getPosition(), range, new BlockActionMessage(block, arg1, arg2));
-	}
-
-	/**
-	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
-	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param messages The messages that should be sent to the discovered nearest player.
-	 */
-	public static void sendPacketsToNearbyPlayers(Point position, Entity ignore, int range, Message... messages) {
-		Set<Player> players = position.getWorld().getNearbyPlayers(position, ignore, range);
-		for (Player plr : players) {
-			plr.getSession().sendAll(messages);
-		}
-	}
-
-	/**
-	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
-	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param messages The messages that should be sent to the discovered nearest player.
-	 */
-	public static void sendPacketsToNearbyPlayers(Point position, int range, Message... messages) {
-		Set<Player> players = position.getWorld().getNearbyPlayers(position, range);
-		for (Player plr : players) {
-			plr.getSession().sendAll(messages);
-		}
-	}
-
-	/**
-	 * This method sends any amount of packets to all nearby players of an entity (within a specified range).
-	 * @param entity The entity that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param messages The messages that should be sent to the discovered nearest player.
-	 */
-	public static void sendPacketsToNearbyPlayers(Entity entity, int range, Message... messages) {
-		if (entity == null || entity.getRegion() == null) {
-			return;
-		}
-		Set<Player> players = entity.getWorld().getNearbyPlayers(entity, range);
-		for (Player plr : players) {
-			plr.getSession().sendAll(messages);
-		}
-	}
-
-	/**
-	 * This method sends any amount of packets and sends them to the nearest player from the entity specified.
-	 * @param entity The entity that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param messages The messages that should be sent to the discovered nearest player.
-	 */
-	public static void sendPacketsToNearestPlayer(Entity entity, int range, Message... messages) {
-		if (entity == null || entity.getRegion() == null) {
-			return;
-		}
-
-		Player plr = entity.getWorld().getNearestPlayer(entity, range);
-		//Only send if we have a player nearby.
-		if (plr != null) {
-			plr.getSession().sendAll(messages);
-		}
 	}
 }

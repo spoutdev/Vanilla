@@ -36,16 +36,24 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.source.DamageCause;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public abstract class Creature extends Living {
-	private long timeUntilAdult = 0;
+	private long growthTicks = 0;
+	private int lineOfSight = 1;
 
 	protected Creature(VanillaControllerType type) {
 		super(type);
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		growthTicks = data().get(VanillaData.GROWTH_TICKS);
+		lineOfSight = data().get(VanillaData.LINE_OF_SIGHT);
 	}
 
 	@Override
@@ -53,12 +61,12 @@ public abstract class Creature extends Living {
 		super.onTick(dt);
 
 		// Keep track of growth
-		if (timeUntilAdult < 0) {
-			timeUntilAdult++;
-			if (timeUntilAdult >= 0) {
+		if (growthTicks < 0) {
+			growthTicks++;
+			if (growthTicks >= 0) {
 				List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
 				parameters.add(EntityMetadataMessage.Parameters.META_BABYANIMALSTAGE.get());
-				broadcastPacket(new EntityMetadataMessage(getParent().getId(), parameters));
+				VanillaNetworkUtil.broadcastPacket(new EntityMetadataMessage(getParent().getId(), parameters));
 			}
 		}
 
@@ -85,12 +93,19 @@ public abstract class Creature extends Living {
 		}
 	}
 
+	@Override
+	public void onSave() {
+		super.onSave();
+		data().put(VanillaData.GROWTH_TICKS, growthTicks);
+		data().put(VanillaData.LINE_OF_SIGHT, lineOfSight);
+	}
+
 	/**
 	 * Whether or not the creature is a baby.
 	 * @return true if a baby
 	 */
 	public boolean isBaby() {
-		return timeUntilAdult < 0;
+		return growthTicks < 0;
 	}
 
 	/**
@@ -98,7 +113,7 @@ public abstract class Creature extends Living {
 	 * @return time until adult
 	 */
 	public long getTimeUntilAdult() {
-		return Math.abs(timeUntilAdult);
+		return Math.abs(growthTicks);
 	}
 
 	/**
@@ -106,6 +121,22 @@ public abstract class Creature extends Living {
 	 * @param timeUntilAdult
 	 */
 	public void setTimeUntilAdult(long timeUntilAdult) {
-		this.timeUntilAdult -= timeUntilAdult;
+		this.growthTicks -= timeUntilAdult;
+	}
+
+	/**
+	 * Gets the line of sight this creature has.
+	 * @return
+	 */
+	public int getLineOfSight() {
+		return lineOfSight;
+	}
+
+	/**
+	 * Sets the line of sight this creature has
+	 * @param lineOfSight
+	 */
+	public void setLineOfSight(int lineOfSight) {
+		this.lineOfSight = lineOfSight;
 	}
 }

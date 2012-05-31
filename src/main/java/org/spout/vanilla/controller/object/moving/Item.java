@@ -37,18 +37,19 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.Substance;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers;
+import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacketsToNearbyPlayers;
 
 /**
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).
  */
 public class Item extends Substance {
-	private final int distance = (int) VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble();
+	private final int distance = VanillaConfiguration.ITEM_PICKUP_RANGE.getInt();
 	private ItemStack is;
-	private int unpickable;
+	private int uncollectableTicks;
 
 	/**
 	 * Creates an item controller. Intended for deserialization only.
@@ -65,7 +66,6 @@ public class Item extends Substance {
 	public Item(ItemStack itemstack, Vector3 initial) {
 		super(VanillaControllerTypes.DROPPED_ITEM);
 		this.is = itemstack;
-		unpickable = 10;
 		setVelocity(initial);
 	}
 
@@ -74,18 +74,24 @@ public class Item extends Substance {
 		super.onAttached();
 		getParent().getCollision().setStrategy(CollisionStrategy.SOFT);
 		//registerAction(new GravityAction());
-		if (data().containsKey("Itemstack")) {
-			ItemStack item = (ItemStack) data().get("Itemstack");
-			is = item.clone();
+		if (data().containsKey(VanillaData.HELD_ITEM)) {
+			is = data().get(VanillaData.HELD_ITEM).clone();
 		}
 
-		unpickable = (Integer) data().get("unpickable", unpickable);
+		uncollectableTicks = data().get(VanillaData.UNCOLLECTABLE_TICKS, uncollectableTicks);
+	}
+
+	@Override
+	public void onSave() {
+		super.onSave();
+		data().put(VanillaData.HELD_ITEM, is);
+		data().put(VanillaData.UNCOLLECTABLE_TICKS, uncollectableTicks);
 	}
 
 	@Override
 	public void onTick(float dt) {
-		if (unpickable > 0) {
-			unpickable--;
+		if (uncollectableTicks > 0) {
+			uncollectableTicks--;
 			super.onTick(dt);
 			return;
 		}
@@ -131,12 +137,5 @@ public class Item extends Substance {
 	 */
 	public short getData() {
 		return is.getData();
-	}
-
-	@Override
-	public void onSave() {
-		super.onSave();
-		data().put("Itemstack", is);
-		data().put("unpickable", unpickable);
 	}
 }

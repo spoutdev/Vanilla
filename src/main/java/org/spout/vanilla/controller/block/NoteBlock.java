@@ -35,6 +35,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class NoteBlock extends VanillaBlockController {
 	private int note = 0;
@@ -71,7 +72,7 @@ public class NoteBlock extends VanillaBlockController {
 	}
 
 	public void play() {
-		VanillaNetworkSynchronizer.playBlockAction(this.getBlock(), this.getInstrument().getId(), (byte) this.getNote());
+		VanillaNetworkUtil.playBlockAction(this.getBlock(), this.getInstrument().getId(), (byte) this.getNote());
 	}
 
 	@Override

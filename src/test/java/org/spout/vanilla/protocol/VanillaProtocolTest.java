@@ -34,7 +34,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.common.message.CustomDataMessage;
 
 import org.spout.vanilla.controller.effect.EntityEffect;
-import org.spout.vanilla.controller.living.player.GameMode;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.AttachEntityMessage;

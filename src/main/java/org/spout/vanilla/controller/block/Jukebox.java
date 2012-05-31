@@ -42,6 +42,8 @@ import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.Music;
 
+import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
+
 public class Jukebox extends VanillaBlockController {
 	private final JukeboxInventory inventory;
 
@@ -103,7 +105,7 @@ public class Jukebox extends VanillaBlockController {
 		Block block = this.getBlock();
 		block.setData(playing ? 1 : 0); //TODO hmmm? doesn't seem useful at all, since you don't know when the music stops playing...
 		Music music = playing ? this.getMusic() : Music.NONE;
-		VanillaNetworkSynchronizer.playBlockEffect(block, null, 48, PlayEffectMessage.Messages.MUSIC_DISC, music.getId());
+		playBlockEffect(block, null, 48, PlayEffectMessage.Messages.MUSIC_DISC, music.getId());
 	}
 
 	public JukeboxInventory getInventory() {
@@ -115,6 +117,6 @@ public class Jukebox extends VanillaBlockController {
 	}
 
 	public void stopMusic() {
-		VanillaNetworkSynchronizer.playBlockEffect(getBlock(), null, 48, PlayEffectMessage.Messages.MUSIC_DISC, Music.NONE.getId());
+		playBlockEffect(getBlock(), null, 48, PlayEffectMessage.Messages.MUSIC_DISC, Music.NONE.getId());
 	}
 }

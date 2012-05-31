@@ -52,6 +52,9 @@ import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
+import org.spout.vanilla.util.VanillaNetworkUtil;
+
+import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacketsToNearbyPlayers;
 
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
 	@Override
@@ -114,14 +117,14 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				if (fire) {
 					// put out fire
 					VanillaMaterials.FIRE.onDestroy(neigh);
-					VanillaNetworkSynchronizer.playBlockEffect(block, player.getEntity(), PlayEffectMessage.Messages.RANDOM_FIZZ);
+					VanillaNetworkUtil.playBlockEffect(block, player.getEntity(), PlayEffectMessage.Messages.RANDOM_FIZZ);
 				} else if (vp.isSurvival() && blockMaterial.getHardness() != 0.0f) {
 					vp.startDigging(new Point(w, x, y, z));
 				} else {
 					// insta-break
 					blockMaterial.onDestroy(block);
 					PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
-					VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
+					sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
@@ -172,7 +175,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				player.getSession().send(new BlockChangeMessage(x, y, z, blockMaterial.getId(), blockMaterial.getData()));
 			} else {
 				PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
-				VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
+				sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
 			}
 		} else if (state == PlayerDiggingMessage.STATE_CANCEL_DIGGING) {
 			vp.stopDigging(new Point(w, x, y, z));

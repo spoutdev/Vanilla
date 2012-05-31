@@ -43,9 +43,10 @@ import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstoneUtil;
+
+import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
 public class TrapDoor extends AbstractAttachable implements Fuel, Mineable, Openable, RedstoneTarget {
 	public final float BURN_TIME = 15.f;
@@ -62,7 +63,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Mineable, Open
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isOpen(block)) {
 				this.setOpen(block, powered);
-				VanillaNetworkSynchronizer.playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_FIZZ);
+				playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_FIZZ);
 			}
 		}
 	}
@@ -86,7 +87,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Mineable, Open
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		toggleOpen(block);
-		VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_DOOR);
+		playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_DOOR);
 	}
 
 	@Override

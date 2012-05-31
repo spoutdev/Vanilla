@@ -43,10 +43,11 @@ import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
+
+import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
 public class Lever extends AbstractAttachable implements Mineable, RedstoneSource {
 	public Lever(String name, int id) {
@@ -73,9 +74,9 @@ public class Lever extends AbstractAttachable implements Mineable, RedstoneSourc
 		}
 		this.toggle(block);
 		if (this.isDown(block)) {
-			VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_1);
+			playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_1);
 		} else {
-			VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_2);
+			playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_2);
 		}
 		this.doRedstoneUpdates(block);
 	}

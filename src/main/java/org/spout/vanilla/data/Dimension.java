@@ -24,34 +24,33 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.block;
+package org.spout.vanilla.data;
 
-import org.spout.vanilla.controller.VanillaBlockController;
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.inventory.block.BrewingStandInventory;
-import org.spout.vanilla.material.VanillaMaterials;
+import java.util.HashMap;
+import java.util.Map;
 
-public class BrewingStand extends VanillaBlockController {
-	private BrewingStandInventory inventory = new BrewingStandInventory();
-	private float brewTime = 0;
+public enum Dimension {
+	NORMAL(0),
+	NETHER(-1),
+	THEEND(1);
+	private final int id;
+	private static final Map<Integer, Dimension> idMap = new HashMap<Integer, Dimension>();
 
-	public BrewingStand() {
-		super(VanillaControllerTypes.BREWING_STAND, VanillaMaterials.BREWING_STAND_BLOCK);
+	static {
+		for (Dimension dim : Dimension.values()) {
+			idMap.put(dim.getId(), dim);
+		}
 	}
 
-	public BrewingStandInventory getInventory() {
-		return inventory;
+	private Dimension(int id) {
+		this.id = id;
 	}
 
-	public float getBrewTime() {
-		return this.brewTime;
+	public int getId() {
+		return id;
 	}
 
-	@Override
-	public void onAttached() {
-	}
-
-	@Override
-	public void onTick(float dt) {
+	public static Dimension getById(int id) {
+		return idMap.get(id);
 	}
 }

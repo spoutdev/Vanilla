@@ -36,6 +36,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class Sign extends VanillaBlockController {
 	private String[] text = new String[4];
@@ -94,6 +95,6 @@ public class Sign extends VanillaBlockController {
 
 	private void update() {
 		Block block = getBlock();
-		VanillaNetworkSynchronizer.sendPacket(dirty.toArray(new Player[dirty.size()]), new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), text));
+		VanillaNetworkUtil.sendPacket(dirty.toArray(new Player[dirty.size()]), new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), text));
 	}
 }

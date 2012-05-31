@@ -24,34 +24,33 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.block;
+package org.spout.vanilla.data;
 
-import org.spout.vanilla.controller.VanillaBlockController;
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.inventory.block.BrewingStandInventory;
-import org.spout.vanilla.material.VanillaMaterials;
+import java.util.HashMap;
+import java.util.Map;
 
-public class BrewingStand extends VanillaBlockController {
-	private BrewingStandInventory inventory = new BrewingStandInventory();
-	private float brewTime = 0;
+public enum GameMode {
+	SURVIVAL((byte) 0),
+	CREATIVE((byte) 1),
+	ADVENTURE((byte) 2); //1.3 only
+	private final byte id;
+	private static final Map<Byte, GameMode> idMap = new HashMap<Byte, GameMode>();
 
-	public BrewingStand() {
-		super(VanillaControllerTypes.BREWING_STAND, VanillaMaterials.BREWING_STAND_BLOCK);
+	static {
+		for (GameMode mode : GameMode.values()) {
+			idMap.put(mode.getId(), mode);
+		}
 	}
 
-	public BrewingStandInventory getInventory() {
-		return inventory;
+	private GameMode(byte id) {
+		this.id = id;
 	}
 
-	public float getBrewTime() {
-		return this.brewTime;
+	public byte getId() {
+		return id;
 	}
 
-	@Override
-	public void onAttached() {
-	}
-
-	@Override
-	public void onTick(float dt) {
+	public static GameMode getById(byte id) {
+		return idMap.get(id);
 	}
 }

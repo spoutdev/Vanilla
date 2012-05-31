@@ -43,6 +43,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.ExplosionMessage;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public abstract class ExplosionModel {
 	private List<ExplosionBlockSlot> blockList = new ArrayList<ExplosionBlockSlot>();
@@ -99,6 +100,6 @@ public abstract class ExplosionModel {
 		}
 
 		//explosion packet (TODO: Limit the amount sent per tick? Don't want to lag-out clients!)
-		VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(position, 64, new ExplosionMessage(position, size, new byte[0]));
+		VanillaNetworkUtil.sendPacketsToNearbyPlayers(position, 64, new ExplosionMessage(position, size, new byte[0]));
 	}
 }

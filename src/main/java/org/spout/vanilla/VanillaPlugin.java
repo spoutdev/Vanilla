@@ -30,7 +30,6 @@ import java.net.InetSocketAddress;
 import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.spout.api.Engine;
 import org.spout.api.Server;
@@ -59,6 +58,11 @@ import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
+import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.Dimension;
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
@@ -154,43 +158,64 @@ public class VanillaPlugin extends CommonPlugin {
 
 	private void setupWorlds() {
 		ArrayList<World> worlds = new ArrayList<World>();
-		ArrayList<Point> spawns = new ArrayList<Point>();
-
 		if (WorldConfiguration.NORMAL_LOAD.getBoolean()) {
 			NormalGenerator normGen = new NormalGenerator();
 			World normal = game.loadWorld(WorldConfiguration.NORMAL_NAME.getString(), normGen);
+			//Create characteristics if newly created world
+			if (normal.getAge() <= 0) {
+				normal.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.NORMAL_GAMEMODE.getString().toUpperCase()));
+				normal.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.NORMAL_DIFFICULTY.getString().toUpperCase()));
+				normal.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.NORMAL_SKY_TYPE.getString().toUpperCase()));
+				normal.setSpawnPoint(new Transform(new Point(normGen.getSafeSpawn(normal)), Quaternion.IDENTITY, Vector3.ONE));
+			}
 			worlds.add(normal);
-			spawns.add(normGen.getSafeSpawn(normal));
 		}
 
 		if (WorldConfiguration.FLAT_LOAD.getBoolean()) {
 			FlatGenerator flatGen = new FlatGenerator(64);
 			World flat = game.loadWorld(WorldConfiguration.FLAT_NAME.getString(), flatGen);
+			//Create characteristics if newly created world
+			if (flat.getAge() <= 0) {
+				flat.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.FLAT_GAMEMODE.getString().toUpperCase()));
+				flat.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.FLAT_DIFFICULTY.getString().toUpperCase()));
+				flat.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.FLAT_SKY_TYPE.getString().toUpperCase()));
+				flat.setSpawnPoint(new Transform(new Point(flatGen.getSafeSpawn(flat)), Quaternion.IDENTITY, Vector3.ONE));
+			}
 			worlds.add(flat);
-			spawns.add(flatGen.getSafeSpawn(flat));
 		}
 
 		if (WorldConfiguration.NETHER_LOAD.getBoolean()) {
 			NetherGenerator netherGen = new NetherGenerator();
 			World nether = game.loadWorld(WorldConfiguration.NETHER_NAME.getString(), netherGen);
+			//Create characteristics if newly created world
+			if (nether.getAge() <= 0) {
+				nether.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.NETHER_GAMEMODE.getString().toUpperCase()));
+				nether.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.NETHER_DIFFICULTY.getString().toUpperCase()));
+				nether.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.NETHER_SKY_TYPE.getString().toUpperCase()));
+				nether.setSpawnPoint(new Transform(new Point(netherGen.getSafeSpawn(nether)), Quaternion.IDENTITY, Vector3.ONE));
+			}
 			worlds.add(nether);
-			spawns.add(netherGen.getSafeSpawn(nether));
 		}
 
 		if (WorldConfiguration.END_LOAD.getBoolean()) {
 			TheEndGenerator endGen = new TheEndGenerator();
 			World end = game.loadWorld(WorldConfiguration.END_NAME.getString(), endGen);
+			//Create characteristics if newly created world
+			if (end.getAge() <= 0) {
+				end.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.END_GAMEMODE.getString().toUpperCase()));
+				end.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.END_DIFFICULTY.getString().toUpperCase()));
+				end.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.END_SKY_TYPE.getString().toUpperCase()));
+				end.setSpawnPoint(new Transform(new Point(endGen.getSafeSpawn(end)), Quaternion.IDENTITY, Vector3.ONE));
+			}
 			worlds.add(end);
-			spawns.add(endGen.getSafeSpawn(end));
 		}
 
 		final int diameter = PointObserver.CHUNK_VIEW_DISTANCE + PointObserver.CHUNK_VIEW_DISTANCE + 1;
 		final int total = diameter * diameter * diameter;
 		final int progressStep = total / 10;
-		for (int i = 0; i < worlds.size(); i++) {
+		for (World world : worlds) {
 			int progress = 0;
-			World world = worlds.get(i);
-			Point point = spawns.get(i);
+			Point point = world.getSpawnPoint().getPosition();
 			int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
 			int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
 			int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
@@ -205,7 +230,6 @@ public class VanillaPlugin extends CommonPlugin {
 					}
 				}
 			}
-			world.setSpawnPoint(new Transform(point, Quaternion.IDENTITY, Vector3.ONE));
 
 			//TODO Remove sky setting when Weather and Time are Region tasks.
 			if (world.getGenerator() instanceof NormalGenerator) {

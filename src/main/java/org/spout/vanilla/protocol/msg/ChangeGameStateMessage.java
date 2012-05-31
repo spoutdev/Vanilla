@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.controller.living.player.GameMode;
+import org.spout.vanilla.data.GameMode;
 
 public final class ChangeGameStateMessage extends Message {
 	public static final byte INVALID_BED = 0;

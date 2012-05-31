@@ -46,7 +46,10 @@ import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.RedstoneUtil;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
+
+import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
 public class FenceGate extends VanillaBlockMaterial implements Mineable, Openable, RedstoneTarget {
 	public FenceGate(String name, int id) {
@@ -66,7 +69,7 @@ public class FenceGate extends VanillaBlockMaterial implements Mineable, Openabl
 			return;
 		}
 		this.toggleOpen(block);
-		VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_DOOR);
+		playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_DOOR);
 	}
 
 	@Override
@@ -86,7 +89,7 @@ public class FenceGate extends VanillaBlockMaterial implements Mineable, Openabl
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isOpen(block)) {
 				this.setOpen(block, powered);
-				VanillaNetworkSynchronizer.playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_DOOR);
+				playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_DOOR);
 			}
 		}
 	}

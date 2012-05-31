@@ -24,32 +24,23 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.player;
+package org.spout.vanilla.data;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Random;
 
-public enum GameMode {
-	SURVIVAL((byte) 0),
-	CREATIVE((byte) 1);
-	private final byte id;
-	private static final Map<Byte, GameMode> idMap = new HashMap<Byte, GameMode>();
+import org.spout.api.map.DefaultedKeyImpl;
 
-	private GameMode(byte id) {
-		this.id = id;
+public class SlimeSize extends DefaultedKeyImpl<Byte> {
+	private Random random = new Random();
+
+	public SlimeSize(String keyString) {
+		super(keyString, null);
 	}
 
-	public byte getId() {
-		return id;
-	}
-
-	public static GameMode getById(byte id) {
-		return idMap.get(id);
-	}
-
-	static {
-		for (GameMode mode : GameMode.values()) {
-			idMap.put(mode.getId(), mode);
+	@Override
+	public Byte getDefaultValue() {
+		synchronized (random) {
+			return (byte) random.nextInt(4);
 		}
 	}
 }

@@ -41,6 +41,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class WoodenDoorBlock extends DoorBlock {
@@ -56,7 +57,7 @@ public class WoodenDoorBlock extends DoorBlock {
 			return;
 		}
 		this.toggleOpen(block);
-		VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_DOOR);
+		VanillaNetworkUtil.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_DOOR);
 	}
 
 	@Override

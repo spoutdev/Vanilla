@@ -44,10 +44,11 @@ import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
+
+import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockAction;
 
 public class Piston extends VanillaBlockMaterial implements Directional, Mineable, RedstoneTarget {
 	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);
@@ -164,7 +165,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 					}
 				}
 			}
-			VanillaNetworkSynchronizer.playBlockAction(block, (byte) 0, (byte) (block.getData() & 0x7));
+			playBlockAction(block, (byte) 0, (byte) (block.getData() & 0x7));
 			return true;
 		}
 		return false;
@@ -183,7 +184,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 		next.setMaterial(VanillaMaterials.AIR);
 		next.update();
 		block.update();
-		VanillaNetworkSynchronizer.playBlockAction(block, (byte) 1, (byte) (block.getData() & 0x7));
+		playBlockAction(block, (byte) 1, (byte) (block.getData() & 0x7));
 		return true;
 	}
 

@@ -41,9 +41,11 @@ import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
+
+import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 
 public class MonsterSpawner extends VanillaBlockController {
 	private int range = 17, maxEntities = 6, spawnAmount = 4;
@@ -183,7 +185,7 @@ public class MonsterSpawner extends VanillaBlockController {
 
 	public void setNextSpawn(VanillaControllerType nextSpawn) {
 		Block block = getBlock();
-		VanillaNetworkSynchronizer.broadcastPacket(new TileEntityDataMessage(block.getX(), block.getY(), block.getZ(), 1, nextSpawn.getID(), -1, -1));
+		VanillaNetworkUtil.broadcastPacket(new TileEntityDataMessage(block.getX(), block.getY(), block.getZ(), 1, nextSpawn.getID(), -1, -1));
 		this.nextSpawn = nextSpawn;
 	}
 }

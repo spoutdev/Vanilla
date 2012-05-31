@@ -37,7 +37,7 @@ import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacket;
 
 public class Furnace extends VanillaBlockController {
 	private final FurnaceInventory inventory;

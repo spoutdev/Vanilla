@@ -24,34 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.block;
+package org.spout.vanilla.data;
 
-import org.spout.vanilla.controller.VanillaBlockController;
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.inventory.block.BrewingStandInventory;
-import org.spout.vanilla.material.VanillaMaterials;
+import java.util.HashMap;
+import java.util.Map;
 
-public class BrewingStand extends VanillaBlockController {
-	private BrewingStandInventory inventory = new BrewingStandInventory();
-	private float brewTime = 0;
+public enum WorldType {
+	DEFAULT("DEFAULT"),
+	SUPERFLAT("SUPERFLAT");
+	private final String type;
+	private static final Map<String, WorldType> stringMap = new HashMap<String, WorldType>();
 
-	public BrewingStand() {
-		super(VanillaControllerTypes.BREWING_STAND, VanillaMaterials.BREWING_STAND_BLOCK);
+	static {
+		for (WorldType wtype : WorldType.values()) {
+			stringMap.put(wtype.type, wtype);
+		}
 	}
 
-	public BrewingStandInventory getInventory() {
-		return inventory;
+	private WorldType(String type) {
+		this.type = type;
 	}
 
-	public float getBrewTime() {
-		return this.brewTime;
+	public String getType() {
+		return type;
 	}
 
-	@Override
-	public void onAttached() {
-	}
-
-	@Override
-	public void onTick(float dt) {
+	public static WorldType getByString(String type) {
+		return stringMap.get(type);
 	}
 }

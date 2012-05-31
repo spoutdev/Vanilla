@@ -52,17 +52,17 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
-import org.spout.vanilla.controller.living.player.GameMode;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.ControllerChangeReason;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.controller.world.RegionSpawner;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class VanillaListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -77,18 +77,13 @@ public class VanillaListener implements Listener {
 		Player player = event.getPlayer();
 		Entity playerEntity = player.getEntity();
 		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
-		VanillaPlayer vanillaPlayer;
-		if (VanillaConfiguration.PLAYER_DEFAULT_GAMEMODE.getString().equalsIgnoreCase("creative")) {
-			vanillaPlayer = new VanillaPlayer(player, GameMode.CREATIVE);
-		} else {
-			vanillaPlayer = new VanillaPlayer(player, GameMode.SURVIVAL);
-		}
+		VanillaPlayer vanillaPlayer = new VanillaPlayer(player,  playerEntity.getWorld().getDataMap().get(VanillaData.GAMEMODE));
 
 		playerEntity.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
 
 		// Set protocol and send packets
 		if (vanillaPlayer.isSurvival()) {
-			sendPacket(vanillaPlayer.getPlayer(), new UpdateHealthMessage((short) vanillaPlayer.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
+			VanillaNetworkUtil.sendPacket(vanillaPlayer.getPlayer(), new UpdateHealthMessage((short) vanillaPlayer.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
 		}
 
 		// Make them visible to everyone by default
@@ -163,7 +158,7 @@ public class VanillaListener implements Listener {
 			VanillaPlayer sp = (VanillaPlayer) c;
 			short health = (short) sp.getHealth();
 			health += (short) event.getChange();
-			sendPacket(sp.getPlayer(), new UpdateHealthMessage(health, sp.getHunger(), sp.getFoodSaturation()));
+			VanillaNetworkUtil.sendPacket(sp.getPlayer(), new UpdateHealthMessage(health, sp.getHunger(), sp.getFoodSaturation()));
 		}
 	}
 }

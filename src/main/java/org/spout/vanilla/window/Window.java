@@ -38,8 +38,9 @@ import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.SlotIndexMap;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
+import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacket;
 
 public class Window implements InventoryViewer {
 	private static final SlotIndexMap DEFAULT_SLOTS = new SlotIndexMap();

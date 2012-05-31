@@ -50,11 +50,13 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityCombustEvent;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
+import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 
 /**
  * Controller that is the parent of all entity controllers.
@@ -90,33 +92,30 @@ public abstract class VanillaActionController extends ActionController implement
 	public void onAttached() {
 		getParent().setCollision(new CollisionModel(area));
 		getParent().getCollision().setStrategy(CollisionStrategy.SOLID);
-		data().put(VanillaControllerTypes.KEY, getType().getID());
+		data().put(VanillaData.CONTROLLER_TYPE, getType().getID());
 
 		// Load data
-		isFlammable = (Boolean) data().get("flammable", isFlammable);
-		fireTicks = (Integer) data().get("fire_ticks", fireTicks);
-		positionTicks = (Integer) data().get("position_ticks", positionTicks);
-		velocityTicks = (Integer) data().get("velocity_ticks", velocityTicks);
-		velocity = (Vector3) data().get("velocity", velocity);
-		movementSpeed = (Vector3) data().get("movement_speed", movementSpeed);
-		maxSpeed = (Vector3) data().get("max_speed", maxSpeed);
-		health = (Integer) data().get("health", maxHealth);
-		maxHealth = (Integer) data().get("max_health", maxHealth);
-		airTicks = (Integer) data().get("air_ticks", airTicks);
+		airTicks = data().get(VanillaData.AIR_TICKS);
+		fireTicks = data().get(VanillaData.FIRE_TICKS);
+		health = data().get(VanillaData.HEALTH);
+		isFlammable = data().get(VanillaData.FLAMMABLE);
+		maxHealth = data().get(VanillaData.MAX_HEALTH);
+		maxSpeed = data().get(VanillaData.MAX_SPEED);
+		movementSpeed = data().get(VanillaData.MOVEMENT_SPEED);
+		velocity = data().get(VanillaData.VELOCITY);
 	}
 
 	@Override
 	public void onSave() {
-		data().put("flammable", isFlammable);
-		data().put("fire_ticks", fireTicks);
-		data().put("position_ticks", positionTicks);
-		data().put("velocity_ticks", velocityTicks);
-		data().put("velocity", velocity);
-		data().put("movement_speed", movementSpeed);
-		data().put("max_speed", maxSpeed);
-		data().put("health", health);
-		data().put("max_health", maxHealth);
-		data().put("air_ticks", airTicks);
+		// Load data
+		data().put(VanillaData.AIR_TICKS, airTicks);
+		data().put(VanillaData.FIRE_TICKS, fireTicks);
+		data().put(VanillaData.HEALTH, health);
+		data().put(VanillaData.FLAMMABLE, isFlammable);
+		data().put(VanillaData.MAX_HEALTH, maxHealth);
+		data().put(VanillaData.MAX_SPEED, maxSpeed);
+		data().put(VanillaData.MOVEMENT_SPEED, movementSpeed);
+		data().put(VanillaData.VELOCITY, velocity);
 	}
 
 	@Override
@@ -125,7 +124,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
-			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
+			VanillaNetworkUtil.broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 			if (!(this instanceof PlayerController)) {
 				getParent().kill();
 			}

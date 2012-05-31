@@ -31,6 +31,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.controlled.ControlledMaterial;
 import org.spout.vanilla.util.MoveReaction;
@@ -42,13 +43,13 @@ public class PistonExtension extends ControlledMaterial implements Directional {
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public void onDestroy(Block block, double dropChance) {
 		block = block.translate(this.getFacing(block).getOpposite());
 		BlockMaterial mat = block.getSubMaterial();
 		if (mat instanceof Piston) {
-			mat.onDestroy(block);
+			((Piston) mat).onDestroy(block, dropChance);
 		} else {
-			super.onDestroy(block);
+			super.onDestroy(block, dropChance);
 		}
 	}
 

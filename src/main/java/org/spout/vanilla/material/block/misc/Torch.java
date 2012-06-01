@@ -33,10 +33,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
+import org.spout.vanilla.material.item.tool.Tool;
 
-public class Torch extends AbstractAttachable implements PointAttachable {
+public class Torch extends AbstractAttachable implements Mineable, PointAttachable {
 	public Torch(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NSEWB).setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 0);
@@ -67,5 +69,10 @@ public class Torch extends AbstractAttachable implements PointAttachable {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(this, 1));
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return 1;
 	}
 }

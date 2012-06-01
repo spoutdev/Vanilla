@@ -35,16 +35,18 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class RedstoneRepeater extends GroundAttachable implements RedstoneSource, RedstoneTarget, Directional, ScheduleUpdated {
+public class RedstoneRepeater extends GroundAttachable implements Directional, Mineable, RedstoneSource, RedstoneTarget, ScheduleUpdated {
 	private final boolean powered;
 
 	public RedstoneRepeater(String name, int id, boolean powered) {
@@ -110,7 +112,7 @@ public class RedstoneRepeater extends GroundAttachable implements RedstoneSource
 		}
 	}
 
-	public static final int[] TICK_DELAYS = {2, 4, 6, 8};
+	public static final int[] TICK_DELAYS = { 2, 4, 6, 8 };
 
 	public int getTickDelay(Block block) {
 		return TICK_DELAYS[this.getTickDelayIndex(block)];
@@ -170,5 +172,10 @@ public class RedstoneRepeater extends GroundAttachable implements RedstoneSource
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(this, 1));
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return 1;
 	}
 }

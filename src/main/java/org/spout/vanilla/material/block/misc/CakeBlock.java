@@ -26,11 +26,19 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 
-public class CakeBlock extends VanillaBlockMaterial {
+public class CakeBlock extends VanillaBlockMaterial implements Mineable {
 	public CakeBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

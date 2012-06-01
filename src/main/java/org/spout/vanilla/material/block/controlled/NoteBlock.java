@@ -36,12 +36,15 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class NoteBlock extends ControlledMaterial implements Fuel {
+public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
 	public final float BURN_TIME = 15.f;
 
 	public NoteBlock(String name, int id) {
@@ -101,5 +104,10 @@ public class NoteBlock extends ControlledMaterial implements Fuel {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(this, 1));
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

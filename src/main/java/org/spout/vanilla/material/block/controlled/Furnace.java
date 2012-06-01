@@ -45,7 +45,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Furnace extends ControlledMaterial implements Mineable, Directional {
+public class Furnace extends ControlledMaterial implements Directional, Mineable {
 	public static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
 	public static final float SMELT_TIME = 10.f;
 	private final boolean burning;

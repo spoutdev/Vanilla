@@ -36,6 +36,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.misc.Fence;
+import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.item.tool.Tool;
 
 public class WoodenFence extends Fence implements Fuel {
 	public final float BURN_TIME = 15.f;
@@ -65,5 +67,10 @@ public class WoodenFence extends Fence implements Fuel {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(this, 1));
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

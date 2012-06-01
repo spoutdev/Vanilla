@@ -32,13 +32,15 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.enchantment.Enchantments;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class GlassPane extends VanillaBlockMaterial {
+public class GlassPane extends VanillaBlockMaterial implements Mineable {
 	public GlassPane(String name, int id) {
 		super(name, id);
 		this.setHardness(0.3F).setResistance(0.3F).setOpacity((byte) 1).setOccludes(false);
@@ -57,5 +59,10 @@ public class GlassPane extends VanillaBlockMaterial {
 			drops.add(new ItemStack(this, 1));
 		}
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

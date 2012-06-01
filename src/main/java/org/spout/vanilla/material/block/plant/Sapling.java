@@ -46,6 +46,8 @@ import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.solid.Log;
 import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.normal.object.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.SmallTreeObject.SmallTreeType;
@@ -160,5 +162,10 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 		b.setData(oldData & dataMask);
 		b.setBlockDataBits(Log.aliveMask);
 		return -1;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

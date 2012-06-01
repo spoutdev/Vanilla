@@ -33,6 +33,8 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 
 public class DeadBush extends GroundAttachable implements Plant {
 	public DeadBush(String name, int id) {
@@ -66,5 +68,10 @@ public class DeadBush extends GroundAttachable implements Plant {
 			return material.equals(VanillaMaterials.SAND);
 		}
 		return false;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

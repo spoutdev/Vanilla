@@ -40,6 +40,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class WheatCrop extends GroundAttachable implements Plant {
@@ -106,6 +108,11 @@ public class WheatCrop extends GroundAttachable implements Plant {
 
 	public boolean isFullyGrown(Block block) {
 		return block.getData() == 0x7;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 
 	// TODO: Grow

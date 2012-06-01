@@ -26,9 +26,10 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.util.Instrument;
 
-public class Ore extends Solid {
+public abstract class Ore extends Solid implements Mineable {
 	public Ore(String name, int id) {
 		super(name, id);
 		this.setHardness(3.0F).setResistance(5.0F);

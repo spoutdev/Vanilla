@@ -37,7 +37,7 @@ import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Stairs extends VanillaBlockMaterial implements Mineable, Directional {
+public abstract class Stairs extends VanillaBlockMaterial implements Mineable, Directional {
 	public Stairs(String name, int id) {
 		super(name, id);
 	}

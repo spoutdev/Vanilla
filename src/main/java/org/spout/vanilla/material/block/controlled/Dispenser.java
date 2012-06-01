@@ -45,7 +45,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Dispenser extends ControlledMaterial implements Mineable, Directional {
+public class Dispenser extends ControlledMaterial implements Directional, Mineable {
 	public Dispenser(String name, int id) {
 		super(VanillaControllerTypes.DISPENSER, name, id);
 		this.setHardness(3.5F).setResistance(5.8F);

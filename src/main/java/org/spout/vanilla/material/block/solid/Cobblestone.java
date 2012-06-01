@@ -40,7 +40,7 @@ import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Cobblestone extends Solid implements TimedCraftable, Mineable {
+public class Cobblestone extends Solid implements Mineable, TimedCraftable {
 	public Cobblestone(String name, int id) {
 		super(name, id);
 		this.setHardness(2.0F).setResistance(10.0F);

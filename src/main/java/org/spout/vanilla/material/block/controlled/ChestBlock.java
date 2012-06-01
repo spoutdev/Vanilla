@@ -56,7 +56,7 @@ public class ChestBlock extends ControlledMaterial implements Directional, Fuel,
 
 	public ChestBlock(String name, int id) {
 		super(VanillaControllerTypes.CHEST, name, id);
-		this.setHardness(2.5F).setResistance(4.2F).setOpacity((byte) 0).setOccludes(false);
+		this.setHardness(2.5F).setResistance(4.2F).setTransparent();
 	}
 
 	@Override

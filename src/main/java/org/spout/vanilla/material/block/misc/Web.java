@@ -32,16 +32,21 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Web extends Solid implements Mineable {
+public class Web extends VanillaBlockMaterial implements Mineable {
 	public Web(String name, int id) {
 		super(name, id);
-		this.setHardness(4.0F).setResistance(20.0F).setOpacity((byte) 1);
+		this.setHardness(4.0F).setResistance(20.0F);
+	}
+
+	@Override
+	public boolean isTransparent() {
+		return false;
 	}
 
 	@Override

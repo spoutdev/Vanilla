@@ -527,9 +527,11 @@ public final class VanillaMaterials {
 					if (temp instanceof VanillaMaterial) {
 						VanillaMaterial material = (VanillaMaterial) temp;
 						if (material != null) {
-							if (!((Material) material).isSubMaterial()) {
-								reverseTable.put((short) material.getMinecraftId(), (Material) material);
+							Material mat = (Material) material;
+							if (mat.isSubMaterial()) {
+								mat = mat.getParentMaterial();
 							}
+							reverseTable.put((short) material.getMinecraftId(), mat);
 						}
 					}
 				}

@@ -33,6 +33,8 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Stairs;
+import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
 public class WoodenStairs extends Stairs implements Fuel {
@@ -41,6 +43,11 @@ public class WoodenStairs extends Stairs implements Fuel {
 	public WoodenStairs(String name, int id) {
 		super(name, id);
 		this.setHardness(2.0F).setResistance(10.0F);
+	}
+	
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 
 	@Override

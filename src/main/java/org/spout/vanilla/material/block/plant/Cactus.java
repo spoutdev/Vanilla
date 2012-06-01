@@ -39,11 +39,14 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 
-public class Cactus extends GroundAttachable implements TimedCraftable {
+public class Cactus extends GroundAttachable implements Plant, TimedCraftable {
 	private Set<BlockMaterial> allowedNeighbours = new HashSet<BlockMaterial>();
 
 	public Cactus(String name, int id) {
@@ -116,5 +119,25 @@ public class Cactus extends GroundAttachable implements TimedCraftable {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(this, 1));
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
+	}
+
+	@Override
+	public boolean hasGrowthStages() {
+		return true;
+	}
+
+	@Override
+	public int getNumGrowthStages() {
+		return 3;
+	}
+
+	@Override
+	public int getMinimumLightToGrow() {
+		return 0;
 	}
 }

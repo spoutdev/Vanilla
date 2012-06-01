@@ -36,6 +36,7 @@ import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.EnchantmentUtil;
 
 public class MelonBlock extends Ore {
@@ -55,5 +56,10 @@ public class MelonBlock extends Ore {
 			}
 		}
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

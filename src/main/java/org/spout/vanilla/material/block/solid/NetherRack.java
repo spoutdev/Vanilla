@@ -45,7 +45,7 @@ public class NetherRack extends Solid implements Mineable {
 
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
-		return 0;
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 
 	@Override

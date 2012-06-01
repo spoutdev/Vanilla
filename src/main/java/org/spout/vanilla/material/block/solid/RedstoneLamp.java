@@ -31,10 +31,13 @@ import java.util.ArrayList;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 
-public class RedstoneLamp extends Solid {
+public class RedstoneLamp extends Solid implements Mineable {
 	private final boolean on;
 
 	public RedstoneLamp(String name, int id, boolean on) {
@@ -62,5 +65,10 @@ public class RedstoneLamp extends Solid {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(VanillaMaterials.REDSTONE_LAMP_ON, 1));
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

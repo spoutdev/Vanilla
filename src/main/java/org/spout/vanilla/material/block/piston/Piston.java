@@ -37,16 +37,19 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Piston extends VanillaBlockMaterial implements Directional, RedstoneTarget {
+public class Piston extends VanillaBlockMaterial implements Directional, Mineable, RedstoneTarget {
 	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);
 	private final boolean sticky;
 
@@ -272,5 +275,10 @@ public class Piston extends VanillaBlockMaterial implements Directional, Redston
 			drops.add(new ItemStack(VanillaMaterials.PISTON_BASE, block.getData(), 1));
 		}
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

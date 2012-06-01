@@ -37,7 +37,6 @@ import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.map.concurrent.AtomicShortArray;
 
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.BrewingStand;
 import org.spout.vanilla.material.block.controlled.ChestBlock;
 import org.spout.vanilla.material.block.controlled.Dispenser;
@@ -110,6 +109,7 @@ import org.spout.vanilla.material.block.redstone.RedstoneWire;
 import org.spout.vanilla.material.block.solid.Bedrock;
 import org.spout.vanilla.material.block.solid.BookShelf;
 import org.spout.vanilla.material.block.solid.Brick;
+import org.spout.vanilla.material.block.solid.CauldronBlock;
 import org.spout.vanilla.material.block.solid.ClayBlock;
 import org.spout.vanilla.material.block.solid.Cobblestone;
 import org.spout.vanilla.material.block.solid.CraftingTable;
@@ -351,7 +351,7 @@ public final class VanillaMaterials {
 	public static final NetherWartBlock NETHER_WART_BLOCK = new NetherWartBlock("Nether Wart", 115);
 	public static final EnchantmentTable ENCHANTMENT_TABLE = new EnchantmentTable("Enchantment Table", 116);
 	public static final BrewingStand BREWING_STAND_BLOCK = new BrewingStand("Brewing Stand", 117);
-	public static final Solid CAULDRON_BLOCK = (Solid) new Solid("Cauldron", 118).setHardness(2.0F).setResistance(3.3F);
+	public static final CauldronBlock CAULDRON_BLOCK = new CauldronBlock("Cauldron", 118);
 	public static final DragonEgg DRAGON_EGG = new DragonEgg("Dragon Egg", 122);
 	public static final RedstoneLamp REDSTONE_LAMP_OFF = new RedstoneLamp("Redstone Lamp", 123, false);
 	public static final RedstoneLamp REDSTONE_LAMP_ON = new RedstoneLamp("Redstone Lamp (On)", 124, true);

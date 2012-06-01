@@ -43,6 +43,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.misc.Torch;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.MoveReaction;
 
 public class SignBase extends AbstractAttachable implements Mineable {
@@ -100,7 +101,7 @@ public class SignBase extends AbstractAttachable implements Mineable {
 
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
-		return 0;
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 
 	@Override

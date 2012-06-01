@@ -32,11 +32,13 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class BrewingStand extends ControlledMaterial {
+public class BrewingStand extends ControlledMaterial implements Mineable {
 	public BrewingStand(String name, int id) {
 		super(VanillaControllerTypes.BREWING_STAND, name, id);
 		this.setResistance(2.5F).setHardness(10.F);
@@ -55,5 +57,10 @@ public class BrewingStand extends ControlledMaterial {
 			drops.add(new ItemStack(VanillaMaterials.BREWING_STAND, 1));
 		}
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

@@ -30,7 +30,7 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
-public class Portal extends VanillaBlockMaterial {
+public abstract class Portal extends VanillaBlockMaterial {
 	private BlockMaterial frameMaterial;
 
 	public Portal(String name, int id) {

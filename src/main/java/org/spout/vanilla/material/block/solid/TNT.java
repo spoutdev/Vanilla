@@ -35,12 +35,15 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class TNT extends Solid implements RedstoneTarget {
+public class TNT extends Solid implements Mineable, RedstoneTarget {
 	public TNT(String name, int id) {
 		super(name, id);
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
@@ -88,5 +91,10 @@ public class TNT extends Solid implements RedstoneTarget {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(this, 1));
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

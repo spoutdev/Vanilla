@@ -33,10 +33,13 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 
-public class LilyPad extends GroundAttachable {
+public class LilyPad extends GroundAttachable implements Mineable {
 	public LilyPad(String name, int id) {
 		super(name, id);
 		this.setHardness(0.0F).setResistance(0.3F).setOpacity((byte) 0);
@@ -52,5 +55,10 @@ public class LilyPad extends GroundAttachable {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(this, 1));
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

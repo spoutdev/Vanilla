@@ -24,47 +24,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.ore;
+package org.spout.vanilla.material.block.solid;
 
-import java.util.ArrayList;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Ore;
-import org.spout.vanilla.material.block.controlled.Furnace;
+import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 
-public class IronOre extends Ore implements TimedCraftable {
-	public IronOre(String name, int id) {
+public class CauldronBlock extends Solid implements Mineable {
+	public CauldronBlock(String name, int id) {
 		super(name, id);
-		this.setHardness(3.0F).setResistance(5.0F);
-	}
-
-	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.IRON_INGOT, 1);
-	}
-
-	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+		this.setHardness(2.0F).setResistance(3.3F);
 	}
 
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (holding != null && holding.getMaterial().equals(VanillaMaterials.STONE_PICKAXE, VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
-			drops.add(new ItemStack(this, 1));
-		}
-		return drops;
 	}
 }

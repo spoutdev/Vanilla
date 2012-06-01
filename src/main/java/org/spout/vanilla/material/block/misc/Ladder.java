@@ -33,9 +33,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 
-public class Ladder extends AbstractAttachable {
+public class Ladder extends AbstractAttachable implements Mineable {
 	public Ladder(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.WESN).setHardness(0.4F).setResistance(0.7F).setOpacity((byte) 1);
@@ -56,5 +59,10 @@ public class Ladder extends AbstractAttachable {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(this, 1));
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

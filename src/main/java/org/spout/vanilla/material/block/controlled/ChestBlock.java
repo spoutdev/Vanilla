@@ -51,7 +51,7 @@ import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class ChestBlock extends ControlledMaterial implements Fuel, Mineable, Directional {
+public class ChestBlock extends ControlledMaterial implements Directional, Fuel, Mineable {
 	public final float BURN_TIME = 15.f;
 
 	public ChestBlock(String name, int id) {

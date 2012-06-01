@@ -31,10 +31,13 @@ import java.util.ArrayList;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.tool.Spade;
+import org.spout.vanilla.material.item.tool.Tool;
 
-public class FarmLand extends VanillaBlockMaterial {
+public class FarmLand extends VanillaBlockMaterial implements Mineable {
 	public FarmLand(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(1.0F).setOpacity((byte) 15);
@@ -45,5 +48,10 @@ public class FarmLand extends VanillaBlockMaterial {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(VanillaMaterials.DIRT, 1));
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Spade ? (short) 1 : (short) 2;
 	}
 }

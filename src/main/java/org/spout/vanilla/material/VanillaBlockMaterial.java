@@ -73,7 +73,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		super(dataMask, name);
 		this.minecraftId = id;
 		this.setCollision(CollisionStrategy.NOCOLLIDE);
-		this.setOccludes(false);
+		this.setTransparent();
 		this.setMiningLevel(0);
 		this.setMiningType(MiningType.PICKAXE);
 		this.setDropMaterial(this);
@@ -82,7 +82,11 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent) {
 		super(name, data, parent);
 		this.minecraftId = id;
-		this.setCollision(CollisionStrategy.NOCOLLIDE).setOccludes(false);
+		this.setCollision(CollisionStrategy.NOCOLLIDE);
+		this.setTransparent();
+		this.setMiningLevel(0);
+		this.setMiningType(MiningType.PICKAXE);
+		this.setDropMaterial(this);
 	}
 
 	@Override

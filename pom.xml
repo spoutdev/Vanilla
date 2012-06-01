@@ -202,7 +202,7 @@
 					<doctitle><![CDATA[${project.name} ${releaseVersion} b${buildNumber} - ${maven.build.timestamp}]]></doctitle>
 					<windowtitle>Javadoc | ${project.name} ${releaseVersion} b${buildNumber}</windowtitle>
 					<author>false</author>
-					<version>false></version>
+					<version>false</version>
 					<detectLinks>true</detectLinks>
 					<linksource>true</linksource>
 					<links>
@@ -218,6 +218,20 @@
 				<configuration>
 					<redirectTestOutputToFile>true</redirectTestOutputToFile>
 				</configuration>
+			</plugin>
+			<!-- Source plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 		<pluginManagement>

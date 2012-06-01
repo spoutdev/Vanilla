@@ -37,13 +37,13 @@
 	<!-- Continuous integration -->
 	<ciManagement>
 		<system>jenkins</system>
-		<url>http://build.spout.org</url>
+		<url>http://build.spout.org/job/Vanilla</url>
 	</ciManagement>
 
 	<!-- Issue management -->
 	<issueManagement>
-		<system>JIRA</system>
-		<url>http://issues.spout.org</url>
+		<system>jira</system>
+		<url>http://issues.spout.org/browse/VANILLA</url>
 	</issueManagement>
 
 	<!-- Repository locations -->
@@ -78,7 +78,7 @@
 
 	<!-- Build settings -->
 	<build>
-		<defaultGoal>clean package install javadoc:javadoc</defaultGoal>
+		<defaultGoal>clean install</defaultGoal>
 		<!-- Resources -->
 		<resources>
 			<resource>
@@ -138,7 +138,7 @@
 						<url>${project.url}</url>
 						<license>SpoutDev License Version 1</license>
 						<licenseUrl>http://www.spout.org/SpoutDevLicenseV1.txt</licenseUrl>
-						<copyright>Copyright (c) ${project.inceptionYear}-2012, SpoutDev</copyright>
+						<copyright>Copyright (c) ${project.inceptionYear}-2012, VanillaDev</copyright>
 					</properties>
 					<includes>
 						<include>src/main/java/**</include>
@@ -172,12 +172,29 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
-					<compilerArguments>
-						<Xlint:all/>
-						<O>-Xlint:-path</O>
-					</compilerArguments>
+					<compilerArgument>-Xlint:all -Xlint:-path</compilerArgument>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+			<!-- Javadoc plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
+					<header><![CDATA[<a href="https://github.com/SpoutDev/Vanilla" target="_blank"><img src="http://cdn.spout.org/img/logo/vanilla_javadoc.png"></a>]]></header>
+					<bottom><![CDATA[Copyright (c) {inceptionYear}-{currentYear}, <a href="${project.organization.url}" target="_blank">${project.organization.name}</a>. ${project.name} is licensed under <a href="http://www.spout.org/SpoutDevLicenseV1.txt" target="_blank">SpoutDev License Version 1</a>]]></bottom>
+					<doctitle><![CDATA[${project.name} ${releaseVersion} b${buildNumber} - ${maven.build.timestamp}]]></doctitle>
+					<windowtitle>Javadoc | ${project.name} ${releaseVersion} b${buildNumber}</windowtitle>
+					<author>false</author>
+					<version>false></version>
+					<detectLinks>true</detectLinks>
+					<linksource>true</linksource>
+					<links>
+						<link>http://jd.spout.org/vanilla/latest</link>
+					</links>
 				</configuration>
 			</plugin>
 			<!-- Testing plugin -->
@@ -210,7 +227,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<execute />
+										<ignore></ignore>
 									</action>
 								</pluginExecution>
 							</pluginExecutions>

@@ -75,11 +75,6 @@ public class Wool extends Solid implements Mineable {
 	}
 
 	@Override
-	public short getData() {
-		return color.getData();
-	}
-
-	@Override
 	public Wool getParentMaterial() {
 		return (Wool) super.getParentMaterial();
 	}

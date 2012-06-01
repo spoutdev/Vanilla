@@ -122,11 +122,6 @@ public class Dye extends VanillaItemMaterial {
 	}
 
 	@Override
-	public short getData() {
-		return this.color.getData();
-	}
-
-	@Override
 	public Dye getParentMaterial() {
 		return (Dye) super.getParentMaterial();
 	}

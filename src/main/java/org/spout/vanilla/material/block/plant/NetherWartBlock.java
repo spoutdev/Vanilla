@@ -65,11 +65,6 @@ public class NetherWartBlock extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public short getData() {
-		return stage.getData();
-	}
-
-	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		return material.equals(VanillaMaterials.SOUL_SAND) && super.canAttachTo(material, face);
 	}

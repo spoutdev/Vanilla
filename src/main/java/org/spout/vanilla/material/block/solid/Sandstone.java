@@ -61,11 +61,6 @@ public class Sandstone extends Solid implements Mineable {
 	}
 
 	@Override
-	public short getData() {
-		return type.getData();
-	}
-
-	@Override
 	public Sandstone getParentMaterial() {
 		return (Sandstone) super.getParentMaterial();
 	}

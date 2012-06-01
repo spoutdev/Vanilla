@@ -69,11 +69,6 @@ public class Plank extends Solid implements Fuel, Mineable {
 	}
 
 	@Override
-	public short getData() {
-		return type.getData();
-	}
-
-	@Override
 	public Plank getParentMaterial() {
 		return (Plank) super.getParentMaterial();
 	}

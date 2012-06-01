@@ -34,6 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.DoorBlock;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class IronDoorBlock extends DoorBlock {
@@ -50,5 +51,10 @@ public class IronDoorBlock extends DoorBlock {
 			drops.add(new ItemStack(VanillaMaterials.IRON_DOOR, 1));
 		}
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

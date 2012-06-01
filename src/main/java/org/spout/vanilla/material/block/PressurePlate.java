@@ -32,12 +32,13 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.LogicUtil;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.RedstonePowerMode;
 
-public class PressurePlate extends GroundAttachable implements RedstoneSource, ScheduleUpdated {
+public abstract class PressurePlate extends GroundAttachable implements Mineable, RedstoneSource, ScheduleUpdated {
 	public PressurePlate(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);

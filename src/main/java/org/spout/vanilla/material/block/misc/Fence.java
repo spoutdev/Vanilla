@@ -29,11 +29,12 @@ package org.spout.vanilla.material.block.misc;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.controlled.SignBase;
 import org.spout.vanilla.util.Instrument;
 
-public class Fence extends VanillaBlockMaterial {
+public abstract class Fence extends VanillaBlockMaterial implements Mineable {
 	public Fence(String name, int id) {
 		super(name, id);
 	}

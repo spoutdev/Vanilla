@@ -37,10 +37,13 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class CraftingTable extends Solid {
+public class CraftingTable extends Solid implements Mineable {
 	public CraftingTable(String name, int id) {
 		super(name, id);
 		this.setHardness(4.2F);
@@ -70,5 +73,10 @@ public class CraftingTable extends Solid {
 			CraftingTableInventory inventory = new CraftingTableInventory();
 			inventory.open((VanillaPlayer) controller);
 		}
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

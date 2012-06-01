@@ -38,6 +38,8 @@ import org.spout.api.material.source.DataSource;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 
 public class NetherWartBlock extends GroundAttachable implements Plant {
 	private GrowthStage stage = GrowthStage.SEEDLING;
@@ -97,5 +99,10 @@ public class NetherWartBlock extends GroundAttachable implements Plant {
 		public short getData() {
 			return data;
 		}
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

@@ -39,9 +39,12 @@ import org.spout.api.util.BlockIterator;
 import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Vines extends VanillaBlockMaterial {
+public class Vines extends VanillaBlockMaterial implements Plant {
 	public Vines(String name, int id) {
 		super(name, id);
 		this.setHardness(0.2F).setResistance(0.3F).setOpacity((byte) 0);
@@ -232,5 +235,25 @@ public class Vines extends VanillaBlockMaterial {
 			drops.add(new ItemStack(this, 1));
 		}
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
+	}
+
+	@Override
+	public boolean hasGrowthStages() {
+		return false;
+	}
+
+	@Override
+	public int getNumGrowthStages() {
+		return 0;
+	}
+
+	@Override
+	public int getMinimumLightToGrow() {
+		return 0; // TODO: Verify this
 	}
 }

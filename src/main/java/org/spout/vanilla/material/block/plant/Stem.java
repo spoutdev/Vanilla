@@ -38,9 +38,11 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Stem extends GroundAttachable implements Plant {
+public abstract class Stem extends GroundAttachable implements Plant {
 	public Stem(String name, int id) {
 		super(name, id);
 		this.setResistance(0.0F).setHardness(0.0F).setOpacity((byte) 0);
@@ -91,5 +93,10 @@ public class Stem extends GroundAttachable implements Plant {
 
 	public boolean isFullyGrown(Block block) {
 		return block.getData() == 0x7;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

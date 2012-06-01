@@ -36,17 +36,20 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class StoneButton extends AbstractAttachable implements PointAttachable, ScheduleUpdated, RedstoneSource {
+public class StoneButton extends AbstractAttachable implements Mineable, PointAttachable, ScheduleUpdated, RedstoneSource {
 	public StoneButton(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESW).setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
@@ -130,5 +133,10 @@ public class StoneButton extends AbstractAttachable implements PointAttachable, 
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(this, 1));
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

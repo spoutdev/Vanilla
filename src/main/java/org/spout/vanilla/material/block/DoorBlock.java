@@ -32,6 +32,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
@@ -40,7 +41,7 @@ import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class DoorBlock extends GroundAttachable implements Openable, RedstoneTarget {
+public abstract class DoorBlock extends GroundAttachable implements Mineable, Openable, RedstoneTarget {
 	public DoorBlock(String name, int id) {
 		super(name, id);
 	}

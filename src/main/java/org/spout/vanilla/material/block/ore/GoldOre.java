@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
@@ -39,7 +38,7 @@ import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 
-public class GoldOre extends Ore implements TimedCraftable, Mineable {
+public class GoldOre extends Ore implements TimedCraftable {
 	public GoldOre(String name, int id) {
 		super(name, id);
 		this.setHardness(3.0F).setResistance(5.0F);

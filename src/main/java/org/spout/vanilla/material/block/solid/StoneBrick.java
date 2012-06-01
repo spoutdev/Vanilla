@@ -31,11 +31,13 @@ import java.util.ArrayList;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class StoneBrick extends Solid {
+public class StoneBrick extends Solid implements Mineable {
 	public static final StoneBrick STONE = new StoneBrick("Stone Brick");
 	public static final StoneBrick MOSSY_STONE = new StoneBrick("Mossy Stone Brick", 1, STONE);
 	public static final StoneBrick CRACKED_STONE = new StoneBrick("Cracked Stone Brick", 2, STONE);
@@ -58,5 +60,10 @@ public class StoneBrick extends Solid {
 			drops.add(new ItemStack(this, 1));
 		}
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

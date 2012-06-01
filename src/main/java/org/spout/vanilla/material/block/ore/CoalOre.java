@@ -32,7 +32,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.enchantment.Enchantments;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
@@ -41,7 +40,7 @@ import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 
-public class CoalOre extends Ore implements TimedCraftable, Mineable {
+public class CoalOre extends Ore implements TimedCraftable {
 	public CoalOre(String name, int id) {
 		super(name, id);
 		this.setHardness(3.0F).setResistance(5.0F);

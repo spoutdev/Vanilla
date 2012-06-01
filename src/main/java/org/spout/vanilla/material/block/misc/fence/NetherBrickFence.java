@@ -34,6 +34,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.block.misc.Fence;
 import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class NetherBrickFence extends Fence {
@@ -55,5 +56,10 @@ public class NetherBrickFence extends Fence {
 			drops.add(new ItemStack(this, 1));
 		}
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

@@ -36,13 +36,15 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget {
+public class RedstoneWire extends GroundAttachable implements Mineable, RedstoneSource, RedstoneTarget {
 	public RedstoneWire(String name, int id) {
 		super(name, id);
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 0);
@@ -297,5 +299,10 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 			default:
 				return false;
 		}
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return 1;
 	}
 }

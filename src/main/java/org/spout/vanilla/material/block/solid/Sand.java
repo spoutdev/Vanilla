@@ -40,7 +40,7 @@ import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class Sand extends Solid implements TimedCraftable, Mineable {
+public class Sand extends Solid implements Mineable, TimedCraftable {
 	public Sand(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F);

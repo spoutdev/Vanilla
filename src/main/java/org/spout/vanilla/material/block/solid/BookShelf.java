@@ -33,14 +33,16 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class BookShelf extends Solid implements Fuel {
+public class BookShelf extends Solid implements Mineable, Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public BookShelf(String name, int id) {
@@ -73,5 +75,10 @@ public class BookShelf extends Solid implements Fuel {
 			drops.add(new ItemStack(VanillaMaterials.BOOK, 3));
 		}
 		return drops;
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

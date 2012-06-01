@@ -45,6 +45,8 @@ public class NormalGenerator extends BiomeGenerator implements VanillaGenerator 
 	@Override
 	public void registerBiomes() {
 		selector = new VanillaBiomeSelector(2.0, 2.0, 0.35, 0.05, false);
+		// if you want to check out a particular biome, use this!
+		//selector = new PerBlockBiomeSelector(VanillaBiomes.DESERT);
 		setSelector(selector);
 		//addPopulator(new SmoothPopulator());
 		register(VanillaBiomes.OCEAN);

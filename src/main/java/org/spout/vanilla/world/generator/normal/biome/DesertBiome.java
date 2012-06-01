@@ -26,47 +26,30 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
-import net.royawesome.jlibnoise.NoiseQuality;
-import net.royawesome.jlibnoise.module.modifier.Turbulence;
-import net.royawesome.jlibnoise.module.source.Perlin;
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
+import org.spout.api.math.MathHelper;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.normal.decorator.CactusDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.CaveDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.DungeonDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 
-public class DesertBiome extends VanillaBiome {
-	private Turbulence noise = new Turbulence();
+public class DesertBiome extends VanillaNormalBiome {
+	
+	private final static ScalePoint NOISE = new ScalePoint();
 
-	public DesertBiome(int biomeId) {
-		super(biomeId, new CactusDecorator(), new OreDecorator(), new CaveDecorator(), new DungeonDecorator());
-		Perlin base = new Perlin();
-		base.setNoiseQuality(NoiseQuality.BEST);
-		base.setOctaveCount(6);
-		base.setFrequency(0.3);
-		base.setPersistence(0.12);
-		base.setLacunarity(0.5);
-		noise.SetSourceModule(0, base);
-		noise.setFrequency(0.3);
-		noise.setRoughness(2);
-		noise.setPower(0.5);
+	static {
+		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.setxScale(0.075D);
+		NOISE.setyScale(0.08D);
+		NOISE.setzScale(0.075D);
 	}
 
-	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		int y = chunkY << 4;
-		noise.setSeed((int) blockData.getWorld().getSeed());
-
-		int height = (int) ((noise.GetValue(x / 32.0 + 0.005, 0.05, z / 32.0 + 0.005) + 1.0) * 2.0 + 60.0 + 3.0);
-
-		for (int dy = y; dy < y + 16; dy++) {
-			short id = getBlockId(height, dy);
-			blockData.set(x, dy, z, id);
-		}
+	public DesertBiome(int biomeId) {
+		super(biomeId, NOISE, new CactusDecorator());
+		this.minDensityTerrainHeight = 67;
+		this.maxDensityTerrainHeight = 69;
+		this.upperHeightMapScale = 2.3f;
+		this.bottomHeightMapScale = 3f;
 	}
 
 	@Override
@@ -74,19 +57,67 @@ public class DesertBiome extends VanillaBiome {
 		return "Desert";
 	}
 
-	private short getBlockId(int top, int dy) {
-		short id;
-		if (dy > top) {
-			id = VanillaMaterials.AIR.getId();
-		} else if (dy + 4 >= top) {
-			id = VanillaMaterials.SAND.getId();
-		} else if (dy + 5 == top) {
-			id = VanillaMaterials.SANDSTONE.getId();
-		} else if (dy != 0) {
-			id = VanillaMaterials.STONE.getId();
-		} else {
-			id = VanillaMaterials.BEDROCK.getId();
+	@Override
+	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		
+		final byte size = (byte) blockData.getSize().getY();
+
+		if (size < 16) {
+			return; // ignore samples
 		}
-		return id;
+
+		final int endY = chunkY * 16;
+		final int startY = endY + size - 1;
+
+		final byte sandDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 4 + 4, 3, 4);
+		final byte sandstoneDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -6, z) * 4 + 3, 0, 3);
+		
+		final byte maxGroudCoverDepth = (byte) (sandDepth + sandstoneDepth);
+		final byte sampleSize = (byte) (maxGroudCoverDepth + 1);
+
+		boolean hasSurface = false;
+		byte groundCoverDepth = 0;
+		// check the column above by sampling, determining any missing blocks
+		// to add to the current column
+		if (blockData.get(x, startY, z) != VanillaMaterials.AIR.getId()) {
+			final int nextChunkStart = (chunkY + 1) * 16;
+			final int nextChunkEnd = nextChunkStart + sampleSize;
+			final CuboidShortBuffer sample = getSample(blockData.getWorld(), x, nextChunkStart, nextChunkEnd, z);
+			for (int y = nextChunkStart; y < nextChunkEnd; y++) {
+				if (sample.get(x, y, z) != VanillaMaterials.AIR.getId()) {
+					groundCoverDepth++;
+				} else {
+					hasSurface = true;
+					break;
+				}
+			}
+		}
+		// place ground cover
+		for (int y = startY; y >= endY; y--) {
+			final short id = blockData.get(x, y, z);
+			if (id == VanillaMaterials.AIR.getId()) {
+				hasSurface = true;
+				groundCoverDepth = 0;
+			} else {
+				if (hasSurface) {
+					if (groundCoverDepth < sandDepth) {
+						blockData.set(x, y, z, VanillaMaterials.SAND.getId());
+						groundCoverDepth++;
+					} else if (groundCoverDepth < maxGroudCoverDepth) {
+						blockData.set(x, y, z, VanillaMaterials.SANDSTONE.getId());
+						groundCoverDepth++;
+					} else {
+						hasSurface = false;
+					}
+				}
+			}
+		}
+		// place bedrock
+		if (chunkY == 0) {
+			final byte bedrockDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 2 + 4, 1D, 5D);
+			for (int y = 0; y <= bedrockDepth; y++) {
+				blockData.set(x, y, z, VanillaMaterials.BEDROCK.getId());
+			}
+		}
 	}
 }

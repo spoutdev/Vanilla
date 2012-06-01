@@ -53,7 +53,7 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 	private static final Perlin ROUGHNESS = new Perlin();
 	private static final Perlin DETAIL = new Perlin();
 	// a scaled version of the elevation for block replacing
-	private final static ScalePoint BLOCK_REPLACER = new ScalePoint();
+	protected static final ScalePoint BLOCK_REPLACER = new ScalePoint();
 	// a modified version of the master, provided by the extending biome
 	private final Module modifiedMaster;
 	// a turbulent version of the modified master, used for density gen

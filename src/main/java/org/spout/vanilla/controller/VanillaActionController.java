@@ -182,7 +182,7 @@ public abstract class VanillaActionController extends ActionController implement
 	}
 
 	public boolean needsPositionUpdate() {
-		return positionTicks % 60 == 0;
+		return positionTicks % 30 == 0; //TODO Fix this in VanillaEntityProtocol
 	}
 
 	public Vector3 getVelocity() {

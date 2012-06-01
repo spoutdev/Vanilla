@@ -650,14 +650,14 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 		ItemStack drop = new ItemStack(current.getMaterial(), 1);
 		drop.setNBTData(current.getNBTData());
-		Item control = new Item(drop, getHeadPosition().add(getLookingAt()));
+		Item control = new Item(drop, getHeadPosition().subtract(getLookingAt()));
 		if (current.getAmount() > 1) {
 			current.setAmount(current.getAmount() - 1);
 		} else {
 			current = null;
 		}
 		this.getInventory().getItems().setCurrentItem(current);
-		getParent().getWorld().createAndSpawnEntity(getHeadPosition().add(0.0, -0.4, 0.0), control);
+		getParent().getWorld().createAndSpawnEntity(getHeadPosition().add(0.0, 0.4, 0.0), control);
 	}
 
 	@Override

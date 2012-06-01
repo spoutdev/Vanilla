@@ -98,7 +98,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int y = (int) p.getY() >> Chunk.CHUNK_SIZE_BITS; // + SEALEVEL_CHUNK;
 		int z = (int) p.getZ() >> Chunk.CHUNK_SIZE_BITS;
 
-		if (y < 0 || y > 16 || y > p.getWorld().getHeight() >> Chunk.CHUNK_SIZE_BITS) {
+		if (y < 0 || y >= p.getWorld().getHeight() >> Chunk.CHUNK_SIZE_BITS) {
 			return;
 		}
 
@@ -150,7 +150,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int y = (int) p.getY() >> Chunk.CHUNK_SIZE_BITS;// + SEALEVEL_CHUNK;
 		int z = (int) p.getZ() >> Chunk.CHUNK_SIZE_BITS;
 
-		if (y < 0 || y > p.getWorld().getHeight() >> Chunk.CHUNK_SIZE_BITS) {
+		if (y < 0 || y >= p.getWorld().getHeight() >> Chunk.CHUNK_SIZE_BITS) {
 			return;
 		}
 

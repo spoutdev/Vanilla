@@ -2,6 +2,7 @@
  * This file is part of Vanilla.
  *
  * Copyright (c) 2011-2012, VanillaDev <http://www.spout.org/>
+ *
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify

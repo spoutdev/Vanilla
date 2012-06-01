@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.entity.type.EmptyConstructorControllerType;
@@ -37,6 +38,7 @@ import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.action.GravityAction;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -74,6 +76,8 @@ public class Item extends Substance {
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		getParent().getCollision().setStrategy(CollisionStrategy.SOFT);
+		registerAction(new GravityAction());
 		if (data().containsKey("Itemstack")) {
 			ItemStack item = (ItemStack) data().get("Itemstack");
 			is.setMaterial(item.getMaterial(), item.getData());
@@ -94,11 +98,6 @@ public class Item extends Substance {
 		}
 
 		super.onTick(dt);
-		Block block = getParent().getRegion().getBlock(getParent().getPosition().subtract(0, 1, 0));
-		if (!block.getMaterial().isPlacementObstacle()) {
-			Vector3 next = block.getPosition();
-			getParent().translate(next.multiply(dt));
-		}
 
 		Player closestPlayer = getParent().getWorld().getNearestPlayer(getParent(), distance);
 		if (closestPlayer == null) {

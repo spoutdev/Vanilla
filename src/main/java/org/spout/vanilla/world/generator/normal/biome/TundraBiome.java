@@ -26,13 +26,30 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
+
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.decorator.PondDecorator;
 
-public class TundraBiome extends PlainBiome {
-	public TundraBiome(int biomeId) {
-		super(biomeId);
+public class TundraBiome extends VanillaNormalBiome {
+
+	private final static ScalePoint NOISE = new ScalePoint();
+
+	static {
+		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.setxScale(0.09D);
+		NOISE.setyScale(0.08D);
+		NOISE.setzScale(0.09D);
+	}
+
+	public TundraBiome(int id) {
+		super(id, NOISE, new PondDecorator());
+		this.maxDensityTerrainHeight = 69;
+		this.upperHeightMapScale = 2.3f;
+		this.bottomHeightMapScale = 3.33f;
+		this.densityTerrainHeightScale = 5f;
 	}
 
 	@Override
@@ -61,6 +78,10 @@ public class TundraBiome extends PlainBiome {
 				blockData.set(x, y, z, VanillaMaterials.SNOW.getId());
 				hasSurface = false;
 			}
+		}
+		if (chunkY * 16 <= SEA_LEVEL && (chunkY + 1) * 16 > SEA_LEVEL
+				&& blockData.get(x, SEA_LEVEL, z) == VanillaMaterials.STATIONARY_WATER.getId()) {
+			blockData.set(x, SEA_LEVEL, z, VanillaMaterials.ICE.getId());
 		}
 	}
 }

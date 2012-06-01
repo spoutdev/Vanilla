@@ -45,7 +45,7 @@ import org.spout.vanilla.world.generator.VanillaBiome;
 
 public abstract class VanillaNormalBiome extends VanillaBiome {
 
-	private static final byte SEA_LEVEL = 64;
+	protected static final byte SEA_LEVEL = 64;
 	// the master noise to be used by biomes extending this class
 	protected static final Add MASTER = new Add();
 	// the parts for the master noise

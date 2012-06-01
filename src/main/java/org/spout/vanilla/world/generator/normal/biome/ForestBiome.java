@@ -39,9 +39,9 @@ public class ForestBiome extends VanillaNormalBiome {
 
 	static {
 		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
-		NOISE.setxScale(0.1D);
-		NOISE.setyScale(0.1D);
-		NOISE.setzScale(0.1D);
+		NOISE.setxScale(0.07D);
+		NOISE.setyScale(0.08D);
+		NOISE.setzScale(0.07D);
 	}
 
 	public ForestBiome(int biomeId) {

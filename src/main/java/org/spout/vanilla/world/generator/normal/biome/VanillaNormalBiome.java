@@ -44,6 +44,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
 public abstract class VanillaNormalBiome extends VanillaBiome {
+
+	private static final byte SEA_LEVEL = 64;
 	// the master noise to be used by biomes extending this class
 	protected static final Add MASTER = new Add();
 	// the parts for the master noise
@@ -62,15 +64,16 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 	// params to be modified by the extending biome
 	// these are defaults to gen forest terrain (appropriate for many biomes)
 	// limits of height maps
-	protected byte bottomHeightMapMin = 65;
-	protected byte bottomHeightMapMax = 66;
-	protected byte upperHeightMapMin = 66;
-	protected byte upperHeightMapMax = 66;
+	protected byte minDensityTerrainHeight = 64;
+	protected byte maxDensityTerrainHeight = 70;
+	protected byte minDensityTerrainThickness = 1;
+	protected byte maxDensityTerrainThickness = 3;
 	// scale of height maps
-	protected float upperHeightMapScale = 5.3f;
-	protected float bottomHeightMapScale = 5.3f;
-	// blending of the density and height map noise
-	protected float blend = 12f;
+	protected float upperHeightMapScale = 2f;
+	protected float bottomHeightMapScale = 4f;
+	// scale of the density layer
+	protected float densityTerrainThicknessScale = 3f;
+	protected float densityTerrainHeightScale = 4f;
 
 	static {
 		ELEVATION.setFrequency(0.4D);
@@ -110,15 +113,15 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 		this.modifiedMaster = modifiedMaster;
 
 		mainMaster.SetSourceModule(0, modifiedMaster);
-		mainMaster.setFrequency(0.0167D);
-		mainMaster.setPower(1.67D);
+		mainMaster.setFrequency(0.05D);
+		mainMaster.setPower(0.3125D);
 
 		bottomHeightMapMaster.SetSourceModule(0, mainMaster);
 		bottomHeightMapMaster.setUpperBound(0D);
-		bottomHeightMapMaster.setLowerBound(-bottomHeightMapMin);
+		bottomHeightMapMaster.setLowerBound(-minDensityTerrainHeight);
 
 		upperHeightMapMaster.SetSourceModule(0, mainMaster);
-		upperHeightMapMaster.setUpperBound(upperHeightMapMax);
+		upperHeightMapMaster.setUpperBound(maxDensityTerrainThickness);
 		upperHeightMapMaster.setLowerBound(0D);
 	}
 
@@ -147,22 +150,20 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 		ELEVATION.setSeed(seed);
 		mainMaster.setSeed(seed);
 
-		final int minDensityTerrainHeight = getMinDensityTerrainHeight(x, z);
-		final int maxDensityTerrainHeight = getMaxDensityTerrainHeight(x, z);
+		final int densityTerrainHeightMin = getDensityTerrainHeight(x, z);
+		final int densityTerrainHeightMax = densityTerrainHeightMin + getDensityTerrainThickness(x, z);
 
 		for (int y = startY; y < endY; y++) {
-			if (y <= minDensityTerrainHeight) {
-				final int bottomHeightMapHeight = (int) Math.ceil(bottomHeightMapMaster.GetValue(x, minDensityTerrainHeight, z)
-						* bottomHeightMapScale + minDensityTerrainHeight + 1);
+			if (y <= densityTerrainHeightMin) {
+				final int bottomHeightMapHeight = getBottomHeightMapValue(x, z, densityTerrainHeightMin);
 				for (; y <= bottomHeightMapHeight && y < endY; y++) {
 					blockData.set(x, y, z, VanillaMaterials.STONE.getId());
 				}
 				if (y >= endY) { // if not, we fill the rest with density terrain
 					break;
 				}
-			} else if (y > maxDensityTerrainHeight) {
-				final int value = (int) Math.ceil(upperHeightMapMaster.GetValue(x, maxDensityTerrainHeight, z)
-						* upperHeightMapScale + maxDensityTerrainHeight);
+			} else if (y > densityTerrainHeightMax) {
+				final int value = getUpperHeightMapValue(x, z, densityTerrainHeightMax);
 				for (; y < value && y < endY; y++) {
 					blockData.set(x, y, z, VanillaMaterials.STONE.getId());
 				}
@@ -176,14 +177,26 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 		}
 	}
 
-	private int getMinDensityTerrainHeight(int x, int z) {
-		return (int) MathHelper.clamp(modifiedMaster.GetValue(x, bottomHeightMapMin, z) * blend
-				+ bottomHeightMapMin + (bottomHeightMapMax - bottomHeightMapMin) / 2, bottomHeightMapMin, bottomHeightMapMax);
+	private int getDensityTerrainHeight(int x, int z) {
+		return (int) MathHelper.clamp(modifiedMaster.GetValue(x, minDensityTerrainHeight, z) * densityTerrainHeightScale
+				+ minDensityTerrainHeight + (maxDensityTerrainHeight - minDensityTerrainHeight) / 2,
+				minDensityTerrainHeight, maxDensityTerrainHeight);
 	}
 
-	private int getMaxDensityTerrainHeight(int x, int z) {
-		return (int) MathHelper.clamp(modifiedMaster.GetValue(x, upperHeightMapMax, z) * blend
-				+ upperHeightMapMin + (upperHeightMapMax - upperHeightMapMin) / 2, upperHeightMapMin, upperHeightMapMax);
+	private int getDensityTerrainThickness(int x, int z) {
+		return (int) MathHelper.clamp(modifiedMaster.GetValue(x, minDensityTerrainHeight, z) * densityTerrainThicknessScale
+				+ minDensityTerrainThickness + (maxDensityTerrainThickness - minDensityTerrainThickness) / 2,
+				minDensityTerrainThickness, maxDensityTerrainThickness);
+	}
+
+	private int getBottomHeightMapValue(int x, int z, int densityTerrainHeightMin) {
+		return (int) Math.ceil(bottomHeightMapMaster.GetValue(x, densityTerrainHeightMin, z)
+				* bottomHeightMapScale + densityTerrainHeightMin + 1);
+	}
+
+	private int getUpperHeightMapValue(int x, int z, int densityTerrainHeightMax) {
+		return (int) Math.ceil(upperHeightMapMaster.GetValue(x, densityTerrainHeightMax, z)
+				* upperHeightMapScale + densityTerrainHeightMax);
 	}
 
 	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
@@ -223,10 +236,14 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 			if (id == VanillaMaterials.AIR.getId()) {
 				hasSurface = true;
 				groundCoverDepth = 0;
+				if (y <= SEA_LEVEL) {
+					blockData.set(x, y, z, VanillaMaterials.STATIONARY_WATER.getId());
+				}
 			} else {
 				if (hasSurface) {
 					if (groundCoverDepth == 0) {
-						blockData.set(x, y, z, VanillaMaterials.GRASS.getId());
+						short topCover = y > SEA_LEVEL - 1 ? VanillaMaterials.GRASS.getId() : VanillaMaterials.DIRT.getId();
+						blockData.set(x, y, z, topCover);
 						groundCoverDepth++;
 					} else if (groundCoverDepth < maxGroudCoverDepth) {
 						blockData.set(x, y, z, VanillaMaterials.DIRT.getId());

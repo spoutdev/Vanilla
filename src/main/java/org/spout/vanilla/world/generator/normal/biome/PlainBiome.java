@@ -44,9 +44,10 @@ public class PlainBiome extends VanillaNormalBiome {
 
 	public PlainBiome(int id) {
 		super(id, NOISE, new PondDecorator(), new GrassDecorator(), new FlowerDecorator());
-		bottomHeightMapMin = 66;
-		upperHeightMapScale = 4.6f;
-		bottomHeightMapScale = 4.6f;
+		this.minDensityTerrainHeight = 67;
+		this.maxDensityTerrainHeight = 69;
+		this.upperHeightMapScale = 2.3f;
+		this.bottomHeightMapScale = 3f;
 	}
 
 	@Override

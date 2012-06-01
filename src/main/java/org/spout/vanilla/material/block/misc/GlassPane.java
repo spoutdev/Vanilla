@@ -43,7 +43,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class GlassPane extends VanillaBlockMaterial implements Mineable {
 	public GlassPane(String name, int id) {
 		super(name, id);
-		this.setHardness(0.3F).setResistance(0.3F).setOpacity((byte) 1).setOccludes(false);
+		this.setHardness(0.3F).setResistance(0.3F).setTransparent();
 	}
 
 	@Override

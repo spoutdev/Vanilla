@@ -42,12 +42,12 @@ public class Solid extends VanillaBlockMaterial {
 
 	public Solid(short dataMask, String name, int id) {
 		super(dataMask, name, id);
-		this.setCollision(CollisionStrategy.SOLID).setOccludes(true);
+		this.setCollision(CollisionStrategy.SOLID).setOpaque();
 	}
 
 	public Solid(String name, int id, int data, VanillaBlockMaterial parent) {
 		super(name, id, data, parent);
-		this.setCollision(CollisionStrategy.SOLID).setOccludes(true);
+		this.setCollision(CollisionStrategy.SOLID).setOpaque();
 	}
 
 	@Override

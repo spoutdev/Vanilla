@@ -33,7 +33,6 @@ import org.spout.api.util.StringUtil;
  * Maps Spout and Minecraft item slot indices to make them easily obtainable
  */
 public class SlotIndexMap {
-
 	private final int[] toMC;
 	private final int[] toSpout;
 

@@ -39,7 +39,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	protected AbstractAttachable(short dataMask, String name, int id) {
 		super(dataMask, name, id);
 	}
-	
+
 	protected AbstractAttachable(String name, int id) {
 		super(name, id);
 	}

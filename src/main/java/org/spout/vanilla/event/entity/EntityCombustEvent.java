@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.event.entity;
 
-import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
@@ -35,7 +34,7 @@ public class EntityCombustEvent extends EntityEvent {
 	private static HandlerList handlers = new HandlerList();
 	private int duration;
 
-	public EntityCombustEvent(Entity e,  int duration) {
+	public EntityCombustEvent(Entity e, int duration) {
 		super(e);
 		this.duration = duration;
 	}

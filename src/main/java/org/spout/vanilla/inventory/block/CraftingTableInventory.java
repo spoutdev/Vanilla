@@ -29,8 +29,8 @@ package org.spout.vanilla.inventory.block;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.CraftingGrid;
 import org.spout.vanilla.inventory.WindowInventory;
-import org.spout.vanilla.window.block.CraftingTableWindow;
 import org.spout.vanilla.window.Window;
+import org.spout.vanilla.window.block.CraftingTableWindow;
 
 public class CraftingTableInventory extends WindowInventory implements CraftingGrid {
 	private static final long serialVersionUID = 1L;

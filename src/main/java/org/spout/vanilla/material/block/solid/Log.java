@@ -36,6 +36,7 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
@@ -56,8 +57,7 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable,
 	private static final short dataMask = 0x0003;
 	public static final short aliveMask = 0x0100;
 	public static final short heightMask = 0x0600;
-	
-	private static final Vector3[] maxRange =  new Vector3[] {new Vector3(4, 0, 4), new Vector3(4, 8, 4)};
+	private static final Vector3[] maxRange = new Vector3[]{new Vector3(4, 0, 4), new Vector3(4, 8, 4)};
 	public final float BURN_TIME = 15.f;
 	private final Sapling sapling;
 
@@ -72,10 +72,9 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable,
 		this.setHardness(2.0F).setResistance(10.F).setOpacity((byte) 1);
 		this.sapling = sapling;
 	}
-	
+
 	/**
 	 * Gets the sapling associated with this Log
-	 * 
 	 * @return the sapling
 	 */
 	public Sapling getSapling() {
@@ -138,7 +137,7 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable,
 	public Vector3[] maxRange() {
 		return maxRange;
 	}
-	
+
 	@Override
 	public long onPlacement(Block b, Region r, long currentTime) {
 		int data = b.getData() & 0xFFFF;
@@ -186,7 +185,6 @@ public class Log extends Solid implements Plant, Fuel, TimedCraftable, Mineable,
 				b.setData(data & dataMask);
 				return -1;
 			}
-
 		}
 	}
 }

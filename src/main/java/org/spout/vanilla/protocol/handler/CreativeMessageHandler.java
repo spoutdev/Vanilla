@@ -53,7 +53,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 		}
 
 		Window active = controller.getActiveWindow();
-		
+
 		if (message.getId() == -1) {
 			//Taking item from existing slot
 			active.setItemOnCursor(null);

@@ -33,7 +33,7 @@ import org.spout.vanilla.window.CraftingWindow;
 
 public class CraftingTableWindow extends CraftingWindow {
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("37-54, 28-36, 19-27, 10-18, 7-9, 4-6, 1-3, 0");
-	
+
 	public CraftingTableWindow(VanillaPlayer owner, CraftingTableInventory craftingInventory) {
 		super(1, "Crafting", owner, craftingInventory);
 		this.setInventory(owner.getInventory().getItems(), craftingInventory);

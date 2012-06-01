@@ -35,7 +35,6 @@ import org.spout.vanilla.world.generator.normal.decorator.PondDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
 public class ForestBiome extends VanillaNormalBiome {
-
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {

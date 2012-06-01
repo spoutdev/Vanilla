@@ -31,7 +31,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.controlled.ControlledMaterial;
 import org.spout.vanilla.util.MoveReaction;

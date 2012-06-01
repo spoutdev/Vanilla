@@ -39,6 +39,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
@@ -135,10 +136,10 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 		SmallTreeObject object = new SmallTreeObject(new Random(), SmallTreeType.getType(type.getData() & dataMask));
 		object.placeObject(block.getWorld(), block.getX(), block.getY(), block.getZ());
 	}
-	
+
 	@Override
 	public void setAttachedFace(Block block, BlockFace attachedFace) {
-		block.clearBlockDataBits((short)(~dataMask));
+		block.clearBlockDataBits((short) (~dataMask));
 	}
 
 	@Override
@@ -151,7 +152,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	public long onPlacement(Block b, Region r, long currentTime) {
 		return currentTime + 10000;
 	}
-	
+
 	@Override
 	public long update(Block b, Region r, long updateTime, long lastUpdateTime, Object hint) {
 		short oldData = b.getData();

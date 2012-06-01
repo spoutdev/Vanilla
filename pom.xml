@@ -17,6 +17,12 @@
 		<buildNumber>0</buildNumber>
 	</properties>
 
+	<!-- Organization -->
+	<organization>
+		<name>VanillaDev</name>
+		<url>http://www.spout.org</url>
+	</organization>
+
 	<!-- License -->
 	<licenses>
 		<license>
@@ -135,10 +141,10 @@
 					</mapping>
 					<properties>
 						<name>${project.name}</name>
-						<url>${project.url}</url>
+						<url>${project.organization.url}</url>
 						<license>SpoutDev License Version 1</license>
 						<licenseUrl>http://www.spout.org/SpoutDevLicenseV1.txt</licenseUrl>
-						<copyright>Copyright (c) ${project.inceptionYear}-2012, VanillaDev</copyright>
+						<copyright>Copyright (c) ${project.inceptionYear}-2012, ${project.organization.name}</copyright>
 					</properties>
 					<includes>
 						<include>src/main/java/**</include>
@@ -172,7 +178,14 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
-					<compilerArgument>-Xlint:all -Xlint:-path</compilerArgument>
+					<compilerArguments>
+						<!--<Xlint:all/>
+						<Xlint:-path/>-->
+						<!--<Xlint:all></Xlint:all>
+						<Xlint:-path></Xlint:-path>-->
+						<Xlint:all/>
+						<O>-Xlint:-path</O>
+					</compilerArguments>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
 				</configuration>

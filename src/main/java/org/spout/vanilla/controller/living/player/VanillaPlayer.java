@@ -52,8 +52,8 @@ import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.inventory.PlayerInventory;
 import org.spout.vanilla.enchantment.Enchantments;
+import org.spout.vanilla.inventory.PlayerInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.armor.Armor;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
@@ -194,7 +194,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 				}
 			} else {
 				// Suffocation
-				int noDamageTicks /* TODO noDamageTicks should probably be made a global variable to account for other damage */= level == 0 ? 10 : 10 + 20 * level; // Increase time between damage by 1 second per enchantment level
+				int noDamageTicks /* TODO noDamageTicks should probably be made a global variable to account for other damage */ = level == 0 ? 10 : 10 + 20 * level; // Increase time between damage by 1 second per enchantment level
 				if (airTicks % noDamageTicks == 0) {
 					damage(1, DamageCause.SUFFOCATE);
 				}
@@ -344,12 +344,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean needsPositionUpdate() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean needsVelocityUpdate() {
 		return true;

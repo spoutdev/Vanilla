@@ -43,7 +43,6 @@ import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class Window implements InventoryViewer {
 	private static final SlotIndexMap DEFAULT_SLOTS = new SlotIndexMap();
-
 	protected final int id;
 	protected final int instanceId;
 	protected String title;

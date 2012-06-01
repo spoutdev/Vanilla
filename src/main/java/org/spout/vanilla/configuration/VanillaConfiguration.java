@@ -63,7 +63,6 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	// Redstone-specific
 	public static final ConfigurationHolder REDSTONE_MIN_RANGE = new ConfigurationHolder(0, "redstone", "redstone-min-power-range");
 	public static final ConfigurationHolder REDSTONE_MAX_RANGE = new ConfigurationHolder(15, "redstone", "redstone-max-power-range");
-
 	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	public static final WorldConfiguration WORLDS = new WorldConfiguration(VanillaPlugin.getInstance().getDataFolder());
 

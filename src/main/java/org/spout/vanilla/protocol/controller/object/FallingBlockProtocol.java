@@ -39,7 +39,6 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.block.MovingBlock;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.controller.BasicVehicleEntityProtocol;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;

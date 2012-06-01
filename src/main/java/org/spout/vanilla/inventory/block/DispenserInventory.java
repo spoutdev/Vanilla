@@ -29,8 +29,8 @@ package org.spout.vanilla.inventory.block;
 import org.spout.vanilla.controller.block.Dispenser;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.WindowInventory;
-import org.spout.vanilla.window.block.DispenserWindow;
 import org.spout.vanilla.window.Window;
+import org.spout.vanilla.window.block.DispenserWindow;
 
 /**
  * Represents a dispenser inventory belonging to a dispenser controller.

@@ -29,7 +29,6 @@ package org.spout.vanilla;
 import java.util.HashSet;
 
 import org.spout.api.Source;
-import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
@@ -37,7 +36,6 @@ import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
 import org.spout.api.event.Result;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
-import org.spout.api.event.entity.EntityMoveEvent;
 import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.player.PlayerLeaveEvent;

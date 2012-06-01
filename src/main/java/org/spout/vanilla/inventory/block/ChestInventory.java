@@ -29,11 +29,10 @@ package org.spout.vanilla.inventory.block;
 import org.spout.vanilla.controller.block.Chest;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.WindowInventory;
-import org.spout.vanilla.window.block.ChestWindow;
 import org.spout.vanilla.window.Window;
+import org.spout.vanilla.window.block.ChestWindow;
 
 public class ChestInventory extends WindowInventory {
-
 	private static final long serialVersionUID = 1L;
 	private final Chest owner;
 

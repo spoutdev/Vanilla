@@ -118,8 +118,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 	}
 
-	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.CHUNK_VOLUME * 5 /2];
-	private static final byte[] AIR_CHUNK_DATA = new byte[Chunk.CHUNK_VOLUME * 5 /2];
+	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
+	private static final byte[] AIR_CHUNK_DATA = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
 
 	static {
 		int i = 0;

@@ -41,12 +41,11 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
 
 public class CraftingTable extends Solid {
-	
 	public CraftingTable(String name, int id) {
 		super(name, id);
 		this.setHardness(4.2F);
 	}
-		
+
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.BASSGUITAR;
@@ -58,7 +57,7 @@ public class CraftingTable extends Solid {
 		drops.add(new ItemStack(this, 1));
 		return drops;
 	}
-	
+
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
 		if (action == Action.RIGHT_CLICK) {

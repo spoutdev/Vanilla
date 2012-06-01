@@ -1,11 +1,7 @@
 /*
  * This file is part of Vanilla.
  *
-<<<<<<< HEAD
  * Copyright (c) 2011-2012, VanillaDev <http://www.spout.org/>
-=======
- * Copyright (c) 2011-2012, SpoutDev <http://www.spout.org/>
->>>>>>> Update for item dropping. It is still very buggy to drop items with q but
  * Vanilla is licensed under the SpoutDev License Version 1.
  *
  * Vanilla is free software: you can redistribute it and/or modify

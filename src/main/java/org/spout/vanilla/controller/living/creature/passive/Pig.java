@@ -30,8 +30,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Source;
-import org.spout.api.entity.type.ControllerType;
-import org.spout.api.entity.type.EmptyConstructorControllerType;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaActionController;

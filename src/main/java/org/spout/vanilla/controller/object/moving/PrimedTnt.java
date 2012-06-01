@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
-import org.spout.api.entity.type.ControllerType;
-import org.spout.api.entity.type.EmptyConstructorControllerType;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.util.explosion.ExplosionModels;

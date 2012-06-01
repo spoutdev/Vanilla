@@ -29,10 +29,10 @@ package org.spout.vanilla.util;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.controller.object.moving.Item;
 
 public class ItemUtil {
-
 	/**
 	 * Drops an item at the position with the item stack specified with a natural random velocity
 	 * @param position to spawn the item
@@ -56,5 +56,4 @@ public class ItemUtil {
 		position.getWorld().createAndSpawnEntity(position, item);
 		return item;
 	}
-	
 }

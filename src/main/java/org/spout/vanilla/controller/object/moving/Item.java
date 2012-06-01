@@ -28,9 +28,6 @@ package org.spout.vanilla.controller.object.moving;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.type.ControllerType;
-import org.spout.api.entity.type.EmptyConstructorControllerType;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;

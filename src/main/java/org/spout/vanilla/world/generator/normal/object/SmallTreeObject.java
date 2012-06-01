@@ -179,13 +179,14 @@ public class SmallTreeObject extends TreeObject {
 		//
 		final private short metadata;
 		final private static SmallTreeType[] cache;
+
 		static {
 			cache = new SmallTreeType[SmallTreeType.values().length];
 			for (SmallTreeType t : SmallTreeType.values()) {
 				cache[t.getMetadata() & 0xFFFF] = t;
 			}
 		}
-		
+
 		public static SmallTreeType getType(int metadata) {
 			if (metadata < 0 || metadata > 3) {
 				return null;
@@ -193,7 +194,7 @@ public class SmallTreeObject extends TreeObject {
 				return cache[metadata];
 			}
 		}
-		
+
 		private SmallTreeType(short metadata) {
 			this.metadata = metadata;
 		}

@@ -88,7 +88,6 @@ public enum DamageCause implements Source {
 	 * Damaged by falling into the Void.
 	 */
 	VOID;
-
 	private int durabilityPenalty = 0;
 
 	private DamageCause() {

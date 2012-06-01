@@ -32,12 +32,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class GroundAttachable extends AbstractAttachable {
-	
 	public GroundAttachable(short dataMask, String name, int id) {
 		super(dataMask, name, id);
 		this.setAttachable(BlockFace.BOTTOM);
 	}
-	
+
 	public GroundAttachable(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFace.BOTTOM);

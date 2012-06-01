@@ -29,6 +29,7 @@ package org.spout.vanilla.item;
 import org.junit.Test;
 
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -38,7 +39,6 @@ import org.spout.vanilla.util.EnchantmentUtil;
 import static org.junit.Assert.assertTrue;
 
 public class DamageTest {
-
 	@Test
 	public void testDamageModifier() {
 		ItemStack test = new ItemStack(VanillaMaterials.DIAMOND_CHESTPLATE, 1);

@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.material.block.solid.Stone;
-
 public class SilverfishStone extends Stone {
 	public SilverfishStone(String name, int id) {
 		super(name, id);

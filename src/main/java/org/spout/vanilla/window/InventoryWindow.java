@@ -30,7 +30,6 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.WindowInventory;
 
 public class InventoryWindow extends Window {
-
 	private final WindowInventory inventory;
 
 	public InventoryWindow(int id, String title, VanillaPlayer owner, WindowInventory inventory) {

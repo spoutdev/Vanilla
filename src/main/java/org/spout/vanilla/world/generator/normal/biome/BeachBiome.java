@@ -40,7 +40,6 @@ public class BeachBiome extends VanillaBiome {
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
 		int y = chunkY * 16, height = 64;
 
-
 		for (int dy = y; dy < y + 16; dy++) {
 			blockData.set(x, dy, z, getBlockId(height, dy));
 		}

@@ -33,8 +33,8 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.window.block.FurnaceWindow;
 import org.spout.vanilla.window.Window;
+import org.spout.vanilla.window.block.FurnaceWindow;
 
 /**
  * Represents a furnace inventory belonging to a furnace controller.

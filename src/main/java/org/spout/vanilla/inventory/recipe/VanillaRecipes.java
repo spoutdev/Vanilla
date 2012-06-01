@@ -26,23 +26,26 @@
  */
 package org.spout.vanilla.inventory.recipe;
 
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.Spout;
+import org.spout.api.inventory.Recipe;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.misc.Dye;
+import static org.spout.vanilla.inventory.recipe.VanillaRecipeBuilder.create;
 
 public class VanillaRecipes {
-	public final SingleShapelessInputOutputRecipe WOODEN_PLANK;
-	public final SingleShapelessInputOutputRecipe BONE_MEAL;
-	public final SimpleShapedToolRecipe WOODEN_PICKAXE;
+	public static final SingleShapelessInputOutputRecipe WOODEN_PLANK;
+	public static final SingleShapelessInputOutputRecipe BONE_MEAL;
+	public static final SimpleShapedToolRecipe WOODEN_PICKAXE;
+	
+	static {
+		WOODEN_PLANK = add(create().setResult(VanillaMaterials.PLANK, 4).addIngredient(VanillaMaterials.LOG).buildSingleShapelessInputOutputRecipe());
+		BONE_MEAL = add(create().setResult(Dye.BONE_MEAL, 3).addIngredient(VanillaMaterials.BONE).buildSingleShapelessInputOutputRecipe());
+		WOODEN_PICKAXE = add(create().setResult(VanillaMaterials.WOODEN_PICKAXE, 1).setMajorMaterial('P', VanillaMaterials.PLANK).setMinorMaterial('S', VanillaMaterials.STICK).addRow("PPP").addRow("ESE").addRow("ESE").buildSimpleShapedToolRecipe());
+	}
 
-	public VanillaRecipes(final VanillaPlugin instance) {
-		/**
-		 * Examples...I need feedback!
-		 */
-		WOODEN_PLANK = new SingleShapelessInputOutputRecipe(instance, null, "Wooden Plank", VanillaMaterials.LOG, 1, 'L', VanillaMaterials.PLANK, 4);
-		BONE_MEAL = new SingleShapelessInputOutputRecipe(instance, null, "Bone Meal", VanillaMaterials.BONE, 1, 'B', Dye.BONE_MEAL, 3);
-		WOODEN_PICKAXE = new SimpleShapedToolRecipe(instance, null, "Wooden Pickaxe", VanillaMaterials.PLANK, VanillaMaterials.STICK, 'P', 'S', 'E', new ItemStack(VanillaMaterials.WOODEN_PICKAXE, 1), "PPP", "ESE", "ESE");
+	private static <T extends Recipe> T add(T recipe) {
+		Spout.getEngine().getRecipeManager().addRecipe(recipe);
+		return recipe;
 	}
 }

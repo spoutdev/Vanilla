@@ -112,6 +112,7 @@
 				</includes>
 			</resource>
 		</resources>
+		
 		<!-- Plugins -->
 		<plugins>
 			<!-- License header formatting plugin -->

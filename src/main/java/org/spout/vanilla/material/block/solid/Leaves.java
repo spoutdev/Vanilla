@@ -46,9 +46,9 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Leaves extends Solid implements Mineable {
 	public static final Leaves DEFAULT = new Leaves("Leaves");
-	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 0, DEFAULT);
-	public static final Leaves BIRCH = new Leaves("Birch Leaves", 0, DEFAULT);
-	public static final Leaves JUNGLE = new Leaves("Jungle Leaves", 0, DEFAULT);
+	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 1, DEFAULT);
+	public static final Leaves BIRCH = new Leaves("Birch Leaves", 2, DEFAULT);
+	public static final Leaves JUNGLE = new Leaves("Jungle Leaves", 3, DEFAULT);
 	private Random rand = new Random();
 
 	private Leaves(String name) {

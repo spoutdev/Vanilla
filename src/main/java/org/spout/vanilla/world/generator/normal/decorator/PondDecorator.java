@@ -40,14 +40,9 @@ import org.spout.vanilla.world.generator.normal.object.PondObject.PondType;
 
 public class PondDecorator implements Decorator {
 	// generation odd, 'ODD' chunk per chunk
-	private static final byte ODD = 14;
-	// stores the different types of ponds
-	private final static List<PondType> PONDS = new ArrayList<PondType>();
-
-	static {
-		PONDS.add(PondType.LAVA);
-		PONDS.add(PondType.WATER);
-	}
+	private static final byte ODD = 24;
+	// odd that a lava pond will be picked
+	private static final byte LAVA_POND_ODD = 11;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -70,7 +65,11 @@ public class PondDecorator implements Decorator {
 	}
 
 	private PondType getPondType(Random random) {
-		return PONDS.get(random.nextInt(PONDS.size()));
+		if (random.nextInt(LAVA_POND_ODD) == 0) {
+			return PondType.LAVA;
+		} else {
+			return PondType.WATER;
+		}
 	}
 
 	private int getHighestWorkableBlock(World w, int x, int z) {

@@ -150,7 +150,6 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Mineable, Plant
 
 	@Override
 	public long update(Block b, Region r, long updateTime, long lastUpdateTime, Object hint) {
-		System.out.println("Thread: " + Thread.currentThread().getName());
 		int data = b.getData() & 0xFFFF;
 		if ((data & aliveMask) == 0) {
 			return -1;

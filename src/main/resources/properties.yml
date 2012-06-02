@@ -1,12 +1,13 @@
-name: Vanilla
+name: ${project.name}
 version: ${releaseVersion} b${buildNumber}
-description: Vanilla is a plugin for the Spout platform that provides vanilla Minecraft functionality.
-author: SpoutDev
-website: http://www.spout.org
+description: ${project.description}
+author: ${project.organization.name}
+website: ${project.organization.url}
 
-main: org.spout.vanilla.VanillaPlugin
+main: ${mainClass}
 load: startup
 platform: BOTH
 
 data:
+
     protocol: ${protocolVersion}

@@ -12,6 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<mainClass>org.spout.vanilla.VanillaPlugin</mainClass>
 		<spoutVersion>dev-SNAPSHOT</spoutVersion>
 		<protocolVersion>29</protocolVersion>
 		<buildNumber>0</buildNumber>
@@ -152,7 +153,7 @@
 					</includes>
 				</configuration>
 			</plugin>
-			<!-- Version plugin -->
+			<!-- Version strip plugin -->
 			<plugin>
 				<groupId>com.sourcesense.maven</groupId>
 				<artifactId>maven-nosnapshot-plugin</artifactId>
@@ -170,7 +171,7 @@
 					<propertyName>releaseVersion</propertyName>
 				</configuration>
 			</plugin>
-			<!-- Compile plugin -->
+			<!-- Compiler plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -179,10 +180,6 @@
 					<source>1.6</source>
 					<target>1.6</target>
 					<compilerArguments>
-						<!--<Xlint:all/>
-						<Xlint:-path/>-->
-						<!--<Xlint:all></Xlint:all>
-						<Xlint:-path></Xlint:-path>-->
 						<Xlint:all/>
 						<O>-Xlint:-path</O>
 					</compilerArguments>
@@ -202,7 +199,7 @@
 					<doctitle><![CDATA[${project.name} ${releaseVersion} b${buildNumber} - ${maven.build.timestamp}]]></doctitle>
 					<windowtitle>Javadoc | ${project.name} ${releaseVersion} b${buildNumber}</windowtitle>
 					<author>false</author>
-					<version>false></version>
+					<version>false</version>
 					<detectLinks>true</detectLinks>
 					<linksource>true</linksource>
 					<links>
@@ -240,7 +237,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<ignore/>
 									</action>
 								</pluginExecution>
 							</pluginExecutions>

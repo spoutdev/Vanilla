@@ -165,7 +165,7 @@ public class AdministrationCommands {
 
 		vplayer.getInventory().getItems().addItem(new ItemStack(material, data, count), false);
 
-		source.sendMessage("You have been given " + count + " " + material.getSubMaterial(data).getDisplayName());
+		source.sendMessage("Gave " + vplayer.getPlayer().getName() + " " + count + " " + material.getSubMaterial(data).getDisplayName());
 	}
 
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)

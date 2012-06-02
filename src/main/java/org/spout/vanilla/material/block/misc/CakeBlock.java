@@ -26,19 +26,83 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 
-public class CakeBlock extends VanillaBlockMaterial implements Mineable {
-	public CakeBlock(String name, int id) {
-		super(name, id);
-		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
-	}
+import java.util.ArrayList;
 
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
-	}
+public class CakeBlock extends Solid implements Mineable {
+
+    public static final CakeBlock FULL = new CakeBlock("Cake Block");
+    public static final CakeBlock FIVEPIECES = new CakeBlock("Cake Block", (short) 0x1, FULL);
+    public static final CakeBlock FOURPIECES = new CakeBlock("Cake Block", (short) 0x2, FULL);
+    public static final CakeBlock THREEPIECES = new CakeBlock("Cake Block", (short) 0x3, FULL);
+    public static final CakeBlock TWOPIECES = new CakeBlock("Cake Block", (short) 0x4, FULL);
+    public static final CakeBlock ONEPIECE = new CakeBlock("Cake Block", (short) 0x5, FULL);
+
+
+    public CakeBlock(String name) {
+        super(name, 92);
+    }
+
+    public CakeBlock(String name, short data, CakeBlock parent) {
+        super(name, 92, data, parent);
+        this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
+    }
+
+    @Override
+    public short getDurabilityPenalty(Tool tool) {
+        return tool instanceof Sword ? (short) 2 : (short) 1;
+    }
+
+    @Override
+    public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedface) {
+        if(type != PlayerInteractEvent.Action.RIGHT_CLICK)
+            return;
+        CakeBlock material = (CakeBlock) block.getMaterial();
+        CakeBlock newMaterial = null;
+        switch (material.getData()) {
+            case 0:  //TODO perhaps create CakeBlockState and use that enum here?
+                newMaterial = CakeBlock.FIVEPIECES;
+                break;
+            case 0x1:
+                newMaterial = CakeBlock.FOURPIECES;
+                break;
+            case 0x2:
+                newMaterial = CakeBlock.THREEPIECES;
+                break;
+            case 0x3:
+                newMaterial = CakeBlock.TWOPIECES;
+                break;
+            case 0x4:
+                newMaterial = CakeBlock.ONEPIECE;
+                break;
+        }
+        if (newMaterial == null) {
+            block.setMaterial(VanillaMaterials.AIR);
+            return;
+        }
+        block.setMaterial(newMaterial);
+        Controller cp = entity.getController();
+        if (!(cp instanceof VanillaPlayer)) {
+            return;
+        }
+        VanillaPlayer pc = (VanillaPlayer) cp;
+        pc.setHunger((short) (pc.getHunger()+2));
+    }
+
+    @Override
+    public ArrayList<ItemStack> getDrops(Block block) {
+        return new ArrayList<ItemStack>();
+    }
 }

@@ -48,7 +48,7 @@ import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsT
  */
 public class Item extends Substance {
 	private final int distance = (int) VanillaConfiguration.ITEM_PICKUP_RANGE.getDouble();
-	private final ItemStack is;
+	private ItemStack is;
 	private int unpickable;
 
 	/**
@@ -77,10 +77,7 @@ public class Item extends Substance {
 		registerAction(new GravityAction());
 		if (data().containsKey("Itemstack")) {
 			ItemStack item = (ItemStack) data().get("Itemstack");
-			is.setMaterial(item.getMaterial(), item.getData());
-			is.setAmount(item.getAmount());
-			is.setNBTData(item.getNBTData());
-			is.getAuxData().putAll(item.getAuxData());
+			is = item.clone();
 		}
 
 		unpickable = (Integer) data().get("unpickable", unpickable);

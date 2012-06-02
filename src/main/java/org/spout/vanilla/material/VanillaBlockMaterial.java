@@ -60,7 +60,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public static short REDSTONE_POWER_MIN = 0;
 	private final int minecraftId;
 	private float resistance;
-	private int meleeDamage;
+	private int meleeDamage = 1;
 	private int miningLevel;
 	private MiningType miningType;
 	private Map<Material, int[]> dropMaterials = new HashMap<Material, int[]>();

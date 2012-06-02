@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -38,7 +39,7 @@ public abstract class Liquid extends VanillaBlockMaterial {
 	public Liquid(String name, int id, boolean flowing) {
 		super(name, id);
 		this.flowing = flowing;
-		this.setHardness(100.0F).setResistance(166.7F).setOpacity((byte) 1);
+		this.setHardness(100.0F).setResistance(166.7F).setOpacity(1).setCollision(CollisionStrategy.SOFT);
 	}
 
 	@Override

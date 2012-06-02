@@ -36,7 +36,6 @@ import org.spout.vanilla.material.block.Liquid;
 public class Water extends Liquid {
 	public Water(String name, int id, boolean flowing) {
 		super(name, id, flowing);
-		this.setHardness(100.0F).setResistance(166.7F).setOpacity((byte) 1).setCollision(CollisionStrategy.SOFT);
 	}
 
 	@Override

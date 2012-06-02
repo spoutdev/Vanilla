@@ -43,6 +43,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
 
@@ -415,7 +416,21 @@ public class AdministrationCommands {
 			player.getNetworkSynchronizer().sendChunk(player.getEntity().getChunk());
 			source.sendMessage("Chunk resent");
 		} else if (args.getString(0, "").contains("relight")) {
-			player.getEntity().getChunk().initLighting();
+			Chunk middle = player.getEntity().getChunk();
+			Chunk top = middle;
+			Chunk tmp;
+			while (true) {
+				tmp = top.getRelative(BlockFace.TOP, false);
+				if (tmp != null && tmp.isLoaded()) {
+					top = tmp;
+				} else {
+					break;
+				}
+			}
+			while (top != null && top.isLoaded()) {
+				top.initLighting();
+				top = top.getRelative(BlockFace.BOTTOM, false);
+			}
 			source.sendMessage("Chunk lighting is being initialized");
 		}
 	}

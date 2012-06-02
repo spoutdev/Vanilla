@@ -41,7 +41,6 @@ import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -71,12 +70,11 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 				int damage = 1;
 				if (holding != null && holdingMat != null && holdingMat instanceof VanillaMaterial) {
 					damage = ((VanillaMaterial) holdingMat).getDamage();
-					if (holdingMat instanceof Sword) {
+					if (holdingMat instanceof Tool) {
 						// This is a bit of a hack due to the way Tool hierarchy is now (Only Swords can have a damage modifier, but Sword must be an interface and therefore is not able to contain getDamageModifier without code duplication)
 						damage += ((Tool) holdingMat).getDamageModifier(damaged, holding);
+						vPlayer.getInventory().addCurrentItemData(1);
 					}
-
-					vPlayer.getInventory().addCurrentItemData(1);
 				}
 				if (damage != 0) {
 					if (!damaged.getParent().isDead()) {

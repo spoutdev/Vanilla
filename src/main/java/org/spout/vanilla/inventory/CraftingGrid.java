@@ -26,6 +26,36 @@
  */
 package org.spout.vanilla.inventory;
 
+import org.spout.api.inventory.Inventory;
+
 public interface CraftingGrid {
+	/**
+	 * Gets the slot index of the output slot in the grid.
+	 * @return output slot
+	 */
 	public int getOutputSlot();
+
+	/**
+	 * Gets the row size of the grid.
+	 * @return row size
+	 */
+	public int getRowSize();
+
+	/**
+	 * Gets the column size of the grid.
+	 * @return column size
+	 */
+	public int getColumnSize();
+
+	/**
+	 * Gets an array with the slot indexes of the rows bottom to top.
+	 * @return row array
+	 */
+	public int[] getGridArray();
+
+	/**
+	 * Gets the inventory associated with the grid.
+	 * @return inventory.
+	 */
+	public Inventory getGridInventory();
 }

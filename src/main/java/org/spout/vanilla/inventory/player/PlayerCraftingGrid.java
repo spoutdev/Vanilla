@@ -24,29 +24,22 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory.block;
+package org.spout.vanilla.inventory.player;
 
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.StringUtil;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.CraftingGrid;
-import org.spout.vanilla.inventory.WindowInventory;
-import org.spout.vanilla.window.Window;
-import org.spout.vanilla.window.block.CraftingTableWindow;
+import org.spout.vanilla.inventory.VanillaInventory;
 
-public class CraftingTableInventory extends WindowInventory implements CraftingGrid {
-	private final int[] GRID_ARRAY = StringUtil.getIntArray("0-5, 7-9");
-	private final int OUTPUT_SLOT = 6, ROW_SIZE = 3, COLUMN_SIZE = 3;
+public class PlayerCraftingGrid extends Inventory implements CraftingGrid, VanillaInventory {
+	private final int[] GRID_ARRAY = StringUtil.getIntArray("0-1, 3-4");
+	private final int OUTPUT_SLOT = 4, ROW_SIZE = 2, COLUMN_SIZE = 2;
 	private static final long serialVersionUID = 1L;
 
-	public CraftingTableInventory() {
-		super(10);
-	}
-
-	@Override
-	public Window createWindow(VanillaPlayer player) {
-		return new CraftingTableWindow(player, this);
+	public PlayerCraftingGrid() {
+		super(5);
 	}
 
 	@Override
@@ -72,5 +65,45 @@ public class CraftingTableInventory extends WindowInventory implements CraftingG
 	@Override
 	public Inventory getGridInventory() {
 		return this;
+	}
+
+	/**
+	 * Returns the current {@link ItemStack} in the top left input in the crafting grid slot (slot 42) ; can return null.
+	 * @return top left input item stack
+	 */
+	public ItemStack getTopLeftInput() {
+		return this.getItem(0);
+	}
+
+	/**
+	 * Returns the current {@link ItemStack} in the top right input in the crafting grid slot (slot 43) ; can return null.
+	 * @return top right item stack
+	 */
+	public ItemStack getTopRightInput() {
+		return this.getItem(1);
+	}
+
+	/**
+	 * Returns the current {@link ItemStack} in the bottom left input in the crafting grid slot (slot 38) ; can return null.
+	 * @return bottom left input item stack
+	 */
+	public ItemStack getBottomLeftInput() {
+		return this.getItem(2);
+	}
+
+	/**
+	 * Returns the current {@link ItemStack} in the bottom right input in the crafting grid slot (slot 39) ; can return null.
+	 * @return bottom right input item stack
+	 */
+	public ItemStack getBottomRightInput() {
+		return this.getItem(3);
+	}
+
+	/**
+	 * Returns the current {@link ItemStack} in the output slot (slot 40) ; can return null.
+	 * @return output item stack
+	 */
+	public ItemStack getOutput() {
+		return this.getItem(4);
 	}
 }

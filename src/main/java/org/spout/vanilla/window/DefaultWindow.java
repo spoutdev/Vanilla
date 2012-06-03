@@ -36,7 +36,7 @@ public class DefaultWindow extends CraftingWindow {
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("36-44, 27-35, 18-26, 9-17, 8, 7, 3, 4, 0, 6, 1, 2, 5");
 
 	public DefaultWindow(VanillaPlayer owner) {
-		super(-1, "Inventory", owner, owner.getInventory());
+		super(-1, "Inventory", owner, owner.getInventory().getCraftingGrid());
 		this.setInventory(owner.getInventory());
 		this.setSlotIndexMap(SLOTS);
 	}

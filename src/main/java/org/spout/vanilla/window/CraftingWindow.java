@@ -26,8 +26,19 @@
  */
 package org.spout.vanilla.window;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
+import org.spout.api.Spout;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Recipe;
+import org.spout.api.inventory.ShapedRecipe;
+import org.spout.api.inventory.ShapelessRecipe;
+import org.spout.api.material.Material;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.CraftingGrid;
@@ -53,46 +64,65 @@ public abstract class CraftingWindow extends Window {
 	@Override
 	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
 		super.onSlotSet(inventory, slot, item);
-		this.updateOutput(false);
+		this.updateOutput();
 	}
 
 	@Override
 	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {
-		if (clickedSlot == craftingGrid.getOutputSlot()) {
-			if (shift) {
-				//TODO: Handle shift-click massive crafting (is NOT set on cursor item!)
-			} else {
-				ItemStack output = this.getInventory().getItem(clickedSlot);
-				if (output != null) {
-					if (this.hasItemOnCursor()) {
-						if (this.getItemOnCursor().equalsIgnoreSize(output)) {
-							//add
-							ItemStack newItem = this.getItemOnCursor().clone();
-							newItem.setAmount(newItem.getAmount() + output.getAmount());
-							if (newItem.getAmount() <= newItem.getMaxStackSize()) {
-								this.setItemOnCursor(output);
-								this.updateOutput(true);
-								return true;
-							}
-						} else {
-							this.setItemOnCursor(output);
-							this.updateOutput(true);
-							return true;
+		if (itemOnCursor != null && clickedSlot == craftingGrid.getOutputSlot() && !shift) {
+			return false;
+		}
+		return super.onClick(clickedSlot, rightClick, shift);
+	}
+
+	private void updateOutput() {
+		Set<Recipe> recipes = Spout.getEngine().getRecipeManager().getAllRecipes();
+		for (Recipe recipe : recipes) {
+			boolean craft = false;
+			Inventory grid = craftingGrid.getGridInventory();
+			int[] gridArray = craftingGrid.getGridArray();
+			if (recipe instanceof ShapelessRecipe) {
+				List<Material> materials = new ArrayList<Material>(gridArray.length);
+				for (int slot : gridArray) {
+					Material mat = grid.getItem(slot).getMaterial();
+					if (mat != null) {
+						materials.add(mat);
+					}
+				}
+				if (recipe.getIngredients().containsAll(materials)) {
+					craft = true;
+				}
+			} else if (recipe instanceof ShapedRecipe) {
+				ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
+				List<List<Character>> rows = shapedRecipe.getRows();
+				if (rows.size() > craftingGrid.getColumnSize()) {
+					continue;
+				}
+
+				int index = -1;
+				for (List<Character> row : rows) {
+					if (row.size() > craftingGrid.getRowSize()) {
+						break;
+					}
+
+					HashMap<Character, Material> ingredientsMap = shapedRecipe.getIngredientsMap();
+					for (Character character : row) {
+						index++;
+						Material req = ingredientsMap.get(character), actual = grid.getItem(gridArray[index]).getMaterial();
+						if (!req.equals(actual)) {
+							craft = false;
+							break;
 						}
+						craft = true;
 					}
 				}
 			}
-		} else if (super.onClick(clickedSlot, rightClick, shift)) {
-			this.updateOutput(false);
-			return true;
-		}
-		return false;
-	}
 
-	private void updateOutput(boolean craft) {
-		//TODO: Recipes
-		if (craft) {
-			//TODO: Subtract items and check if it still the same recipe
+			int outputSlot = craftingGrid.getOutputSlot();
+			if (grid.getItem(outputSlot) == null && craft) {
+				grid.setItem(outputSlot, recipe.getResult());
+				break;
+			}
 		}
 	}
 }

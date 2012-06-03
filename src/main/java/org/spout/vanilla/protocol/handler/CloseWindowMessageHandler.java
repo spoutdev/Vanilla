@@ -51,7 +51,7 @@ public final class CloseWindowMessageHandler extends MessageHandler<CloseWindowM
 		if (player.getItemOnCursor() != null) {
 			// player.getWorld().dropItem(player.getEyeLocation(), player.getItemInHand());
 			if (player.getGameMode() != GameMode.CREATIVE) {
-				player.getInventory().addItem(player.getItemOnCursor());
+				player.getGridInventory().addItem(player.getItemOnCursor());
 			}
 			player.setItemOnCursor(null);
 		}

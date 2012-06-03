@@ -24,53 +24,51 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory.block;
+package org.spout.vanilla.inventory.player;
 
 import org.spout.api.inventory.Inventory;
-import org.spout.api.util.StringUtil;
+import org.spout.api.inventory.special.InventoryBundle;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.CraftingGrid;
-import org.spout.vanilla.inventory.WindowInventory;
-import org.spout.vanilla.window.Window;
-import org.spout.vanilla.window.block.CraftingTableWindow;
+import org.spout.vanilla.inventory.VanillaInventory;
 
-public class CraftingTableInventory extends WindowInventory implements CraftingGrid {
-	private final int[] GRID_ARRAY = StringUtil.getIntArray("0-5, 7-9");
-	private final int OUTPUT_SLOT = 6, ROW_SIZE = 3, COLUMN_SIZE = 3;
+/**
+ * Represents a players inventory
+ */
+public class PlayerInventory extends InventoryBundle implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
+	private final Inventory items;
+	private final PlayerCraftingGrid craftingGrid;
+	private final PlayerArmorInventory armor;
 
-	public CraftingTableInventory() {
-		super(10);
+	public PlayerInventory() {
+		super(new Inventory(36), new PlayerCraftingGrid(), new PlayerArmorInventory());
+		this.items = (Inventory) this.getInventories()[0];
+		this.craftingGrid = (PlayerCraftingGrid) this.getInventories()[1];
+		this.armor = (PlayerArmorInventory) this.getInventories()[2];
+		this.startWatching();
 	}
 
-	@Override
-	public Window createWindow(VanillaPlayer player) {
-		return new CraftingTableWindow(player, this);
+	/**
+	 * Gets the item inventory of this player inventory
+	 * @return an Inventory with the items
+	 */
+	public Inventory getItems() {
+		return this.items;
 	}
 
-	@Override
-	public int getOutputSlot() {
-		return OUTPUT_SLOT;
+	/**
+	 * Gets the armor inventory of this player inventory
+	 * @return an Inventory with the armor items
+	 */
+	public PlayerArmorInventory getArmor() {
+		return this.armor;
 	}
 
-	@Override
-	public int getRowSize() {
-		return ROW_SIZE;
-	}
-
-	@Override
-	public int getColumnSize() {
-		return COLUMN_SIZE;
-	}
-
-	@Override
-	public int[] getGridArray() {
-		return GRID_ARRAY;
-	}
-
-	@Override
-	public Inventory getGridInventory() {
-		return this;
+	/**
+	 * Gets the crafting grid inventory of this player inventory
+	 * @return an inventory with the crafting grid items
+	 */
+	public PlayerCraftingGrid getCraftingGrid() {
+		return this.craftingGrid;
 	}
 }

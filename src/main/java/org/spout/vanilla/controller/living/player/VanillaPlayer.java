@@ -53,7 +53,7 @@ import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.enchantment.Enchantments;
-import org.spout.vanilla.inventory.PlayerInventory;
+import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.armor.Armor;
 import org.spout.vanilla.protocol.msg.AnimationMessage;

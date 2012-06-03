@@ -64,7 +64,12 @@ public abstract class CraftingWindow extends Window {
 	@Override
 	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
 		super.onSlotSet(inventory, slot, item);
-		this.updateOutput();
+		for (int i : craftingGrid.getGridArray()) {
+			if (i == slot) {
+				updateOutput();
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -84,9 +89,9 @@ public abstract class CraftingWindow extends Window {
 			if (recipe instanceof ShapelessRecipe) {
 				List<Material> materials = new ArrayList<Material>(gridArray.length);
 				for (int slot : gridArray) {
-					Material mat = grid.getItem(slot).getMaterial();
-					if (mat != null) {
-						materials.add(mat);
+					ItemStack item = grid.getItem(slot);
+					if (item != null) {
+						materials.add(item.getMaterial());
 					}
 				}
 				if (materials.containsAll(recipe.getIngredients())) {

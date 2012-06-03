@@ -106,12 +106,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				activeChunks.remove(x, z);
 				LoadChunkMessage unLoadChunk = new LoadChunkMessage(x, z, false);
 				owner.getSession().send(unLoadChunk);
-			} else {
+			}/* else {
 				byte[][] data = new byte[16][];
 				data[y] = AIR_CHUNK_DATA;
 				CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], 0, data, null);
 				session.send(CCMsg);
-			}
+			}*/
 		}
 	}
 

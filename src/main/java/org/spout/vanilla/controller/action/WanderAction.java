@@ -35,11 +35,11 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.VanillaActionController;
 
 public class WanderAction extends EntityAction<VanillaActionController> {
-	private static final double WANDER_FREQ = 1;
+	private static final int WANDER_FREQ = 25;
 
 	@Override
 	public boolean shouldRun(Entity entity, VanillaActionController controller) {
-		return controller.getRandom().nextDouble() * 3.0 >= WANDER_FREQ;
+		return controller.getRandom().nextInt(100) < WANDER_FREQ;
 	}
 
 	@Override

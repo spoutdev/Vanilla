@@ -36,6 +36,7 @@ import org.spout.vanilla.controller.action.GravityAction;
 import org.spout.vanilla.controller.action.WanderAction;
 
 public abstract class Living extends VanillaActionController {
+	private Point headPos = null;
 	private int headYaw = 0;
 	private int lastHeadYaw = 0;
 	private int nextHeadYaw = 0;
@@ -56,6 +57,7 @@ public abstract class Living extends VanillaActionController {
 
 	@Override
 	public void onTick(float dt) {
+		headPos = null;
 		super.onTick(dt);
 		headYawChanged = false;
 		headYaw = calculateHeadYaw();
@@ -103,7 +105,10 @@ public abstract class Living extends VanillaActionController {
 	 * @return the head position
 	 */
 	public Point getHeadPosition() {
-		return this.getParent().getPosition().add(0.0f, this.getHeadHeight(), 0.0f);
+		if (headPos == null) {
+			headPos = this.getParent().getPosition().add(0.0f, this.getHeadHeight(), 0.0f);
+		}
+		return headPos;
 	}
 
 	public Transform getHeadTransform() {

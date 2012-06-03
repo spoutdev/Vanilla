@@ -39,7 +39,7 @@ import org.spout.vanilla.controller.VanillaController;
  * Controller that observes chunks around a point. It will always keep these chunks in memory.
  */
 public class PointObserver extends Controller implements VanillaController {
-	public static final int CHUNK_VIEW_DISTANCE = 6;
+	public static final int CHUNK_VIEW_DISTANCE = 4;
 	public static final ControllerType TYPE = new EmptyConstructorControllerType(PointObserver.class, "Point Observer");
 	private Point currPoint;
 

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.VanillaControllerType;
@@ -61,22 +62,25 @@ public abstract class Creature extends Living {
 		}
 
 		// Handle drowning and suffocation damage
-		Block head = getParent().getWorld().getBlock(getHeadPosition());
-		if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
-			airTicks++;
-			if (head.getMaterial().equals(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
-				// Drowning
-				if (airTicks >= 300 && airTicks % 20 == 0) {
-					damage(4, DamageCause.DROWN);
+		Point headPos = getHeadPosition();
+		if (getParent().isObserver() || headPos.getWorld().getChunkFromBlock(headPos, false) != null) {
+			Block head = getParent().getWorld().getBlock(headPos);
+			if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+				airTicks++;
+				if (head.getMaterial().equals(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+					// Drowning
+					if (airTicks >= 300 && airTicks % 20 == 0) {
+						damage(4, DamageCause.DROWN);
+					}
+				} else {
+					// Suffocation
+					if (airTicks % 10 == 0) {
+						damage(1, DamageCause.SUFFOCATE);
+					}
 				}
 			} else {
-				// Suffocation
-				if (airTicks % 10 == 0) {
-					damage(1, DamageCause.SUFFOCATE);
-				}
+				airTicks = 0;
 			}
-		} else {
-			airTicks = 0;
 		}
 	}
 

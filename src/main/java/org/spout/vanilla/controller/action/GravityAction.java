@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.action;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.action.EntityAction;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.controller.VanillaActionController;
@@ -35,7 +36,12 @@ import org.spout.vanilla.controller.VanillaActionController;
 public class GravityAction extends EntityAction<VanillaActionController> {
 	@Override
 	public boolean shouldRun(Entity entity, VanillaActionController controller) {
-		BlockMaterial block = entity.getWorld().getBlock(entity.getPosition().add(controller.getVelocity())).getMaterial();
+		Point future = entity.getPosition().add(controller.getVelocity());
+		//Non observers entities should not be loading chunks
+		if (!entity.isObserver() && future.getWorld().getChunkFromBlock(future, false) == null) {
+			return false;
+		}
+		BlockMaterial block = entity.getWorld().getBlock(future).getMaterial();
 		return !block.isSolid();
 	}
 

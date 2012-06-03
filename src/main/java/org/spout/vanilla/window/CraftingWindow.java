@@ -96,7 +96,7 @@ public abstract class CraftingWindow extends Window {
 				ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
 				List<List<Character>> rows = shapedRecipe.getRows();
 				if (rows.size() > craftingGrid.getColumnSize()) {
-					continue;
+					break;
 				}
 
 				int index = -1;

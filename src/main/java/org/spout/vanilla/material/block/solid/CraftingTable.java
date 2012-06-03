@@ -79,4 +79,9 @@ public class CraftingTable extends Solid implements Mineable {
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
+
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
+	}
 }

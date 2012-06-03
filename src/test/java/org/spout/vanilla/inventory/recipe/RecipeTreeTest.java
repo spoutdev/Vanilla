@@ -26,23 +26,34 @@
  */
 package org.spout.vanilla.inventory.recipe;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Test;
+import static org.junit.Assert.assertSame;
+
+import org.spout.api.inventory.RecipeBuilder;
 import org.spout.api.inventory.ShapedRecipe;
+import org.spout.api.inventory.RecipeTree;
 import org.spout.api.material.Material;
 
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class SimpleShapedRecipe extends ShapedRecipe{
-	private Material material;
-
-	public SimpleShapedRecipe(VanillaRecipeBuilder<?> builder) {
-		super(builder);
-		if (builder.majorMaterial == null) {
-			material = builder.ingredients.get(0);
-		} else {
-			material = builder.majorMaterial;
-		}
-	}
-	
-	public Material getMaterial() {
-		return material;
+public class RecipeTreeTest {
+    
+	@Test
+	public void treeTest() {
+		RecipeBuilder<RecipeBuilder<?>> builder = new RecipeBuilder<RecipeBuilder<?>>();
+		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
+		builder.addRow("AAA").addRow("BBB").addRow("AAA");
+		ShapedRecipe recipe = builder.buildShapedRecipe();
+		List<List<Material>> testIngredients = new ArrayList<List<Material>>();
+		testIngredients.add(new ArrayList<Material>(Arrays.asList(VanillaMaterials.ARROW, VanillaMaterials.ARROW, VanillaMaterials.ARROW)));
+		testIngredients.add(new ArrayList<Material>(Arrays.asList(VanillaMaterials.BEDROCK, VanillaMaterials.BEDROCK, VanillaMaterials.BEDROCK)));
+		testIngredients.add(new ArrayList<Material>(Arrays.asList(VanillaMaterials.ARROW, VanillaMaterials.ARROW, VanillaMaterials.ARROW)));
+		RecipeTree tree = new RecipeTree();
+		tree.addRecipe(recipe);
+		assertSame(recipe, tree.matchShapedRecipe(testIngredients));
 	}
 }

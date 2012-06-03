@@ -84,7 +84,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private final static int TIMEOUT = 15000;
 
 	public VanillaNetworkSynchronizer(Player player, Entity entity) {
-		super(player, entity);
+		super(player, player.getSession(), entity);
 		registerProtocolEvents(this);
 		initChunk(player.getEntity().getPosition());
 	}

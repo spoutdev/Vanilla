@@ -66,10 +66,10 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		int size = 0;
 		for (int i = 0; i < MAX_SECTIONS; ++i) {
 			if ((primaryBitMap & 1 << i) != 0) { // This chunk exists! Let's initialize the data for it.
-				int sectionSize = Chunk.BLOCKS.HALF_VOLUME * 5;
+				int sectionSize = Chunk.CHUNK_VOLUME * 5 / 2;
 				if ((addBitMap & 1 << i) != 0) {
 					hasAdditionalData[i] = true;
-					sectionSize += Chunk.BLOCKS.HALF_VOLUME;
+					sectionSize += Chunk.CHUNK_VOLUME / 2;
 				}
 
 				data[i] = new byte[sectionSize];
@@ -78,7 +78,7 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		}
 
 		if (contiguous) {
-			size += Chunk.BLOCKS.AREA;
+			size += Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE;
 		}
 
 		byte[] uncompressedData = new byte[size];
@@ -112,7 +112,7 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 				size += sectionData.length;
 			}
 		}*/
-		byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
+		byte[] biomeData = new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
 
 		if (contiguous) {
 			System.arraycopy(uncompressedData, size, biomeData, 0, biomeData.length);

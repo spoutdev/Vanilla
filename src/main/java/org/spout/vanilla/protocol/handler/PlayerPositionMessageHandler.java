@@ -88,7 +88,7 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 
 		Point p = new Point(entity.getWorld(), (float) x, (float) y, (float) z);
 		//Force the chunk to load if needed - if a player moves into an unloaded chunk they will die
-		entity.getWorld().getChunkFromBlock(p);
+		entity.getWorld().getChunkFromBlock(p, true);
 		entity.setPosition(p);
 	}
 

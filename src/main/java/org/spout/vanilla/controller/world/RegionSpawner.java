@@ -35,7 +35,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.type.ControllerType;
-import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.Region;
@@ -58,10 +57,10 @@ public class RegionSpawner implements Runnable {
 	@Override
 	public void run() {
 		for (int chunks = 0; chunks < 10; chunks++) {
-			int randX = this.rand.nextInt(Region.BLOCKS.SIZE);
-			int randY = this.rand.nextInt(Region.BLOCKS.SIZE);
-			int randZ = this.rand.nextInt(Region.BLOCKS.SIZE);
-			Chunk chunk = region.getChunk(randX, randY, randZ, LoadOption.NO_LOAD);
+			int randX = this.rand.nextInt(Region.REGION_SIZE);
+			int randY = this.rand.nextInt(Region.REGION_SIZE);
+			int randZ = this.rand.nextInt(Region.REGION_SIZE);
+			Chunk chunk = region.getChunk(randX, randY, randZ, false);
 			if (chunk != null) {
 				spawn(chunk);
 			}
@@ -95,9 +94,9 @@ public class RegionSpawner implements Runnable {
 			SpawnInformation info = entry.getValue();
 			Set<Entity> existing = region.getAll(entry.getKey().getControllerClass());
 			if (existing.size() < info.amount) {
-				int randX = this.rand.nextInt(Chunk.BLOCKS.SIZE);
-				int randY = this.rand.nextInt(Chunk.BLOCKS.SIZE);
-				int randZ = this.rand.nextInt(Chunk.BLOCKS.SIZE);
+				int randX = this.rand.nextInt(Chunk.CHUNK_SIZE);
+				int randY = this.rand.nextInt(Chunk.CHUNK_SIZE);
+				int randZ = this.rand.nextInt(Chunk.CHUNK_SIZE);
 
 				BlockMaterial material = chunk.getBlockMaterial(randX, randY, randZ);
 				if (info.canSpawnOn.contains(material) && canSpawnAt(chunk, randX, randY + 1, randZ)) {
@@ -108,9 +107,9 @@ public class RegionSpawner implements Runnable {
 						if (canSpawnAt(chunk, x, y, z)) {
 							try {
 								Controller controller = entry.getKey().createController();
-								x += chunk.getX() * Chunk.BLOCKS.SIZE + 0.5F;
-								y += chunk.getY() * Chunk.BLOCKS.SIZE + 1F;
-								z += chunk.getZ() * Chunk.BLOCKS.SIZE + 0.5F;
+								x += chunk.getX() * Chunk.CHUNK_SIZE + 0.5F;
+								y += chunk.getY() * Chunk.CHUNK_SIZE + 1F;
+								z += chunk.getZ() * Chunk.CHUNK_SIZE + 0.5F;
 								region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), x, y, z), controller);
 							} catch (Exception e) {
 								throw new RuntimeException("Unable to spawn " + entry.getKey().getName(), e);
@@ -123,9 +122,9 @@ public class RegionSpawner implements Runnable {
 	}
 
 	private boolean canSpawnAt(Chunk chunk, int randX, int randY, int randZ) {
-		int x = chunk.getBlockX() + randX;
-		int y = chunk.getBlockY() + randY;
-		int z = chunk.getBlockZ() + randZ;
+		int x = chunk.getX() * Chunk.CHUNK_SIZE + randX;
+		int y = chunk.getY() * Chunk.CHUNK_SIZE + randY;
+		int z = chunk.getZ() * Chunk.CHUNK_SIZE + randZ;
 		World world = chunk.getWorld();
 		if (world.getBlock(x, y + 1, z).getMaterial() != BlockMaterial.AIR) {
 			return false;

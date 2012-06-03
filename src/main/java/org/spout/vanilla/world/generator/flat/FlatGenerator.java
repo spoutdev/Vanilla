@@ -50,8 +50,8 @@ public class FlatGenerator implements WorldGenerator, VanillaGenerator {
 		int x = chunkX << 4, z = chunkZ << 4;
 		for (int dx = x; dx < x + 16; ++dx) {
 			for (int dz = z; dz < z + 16; ++dz) {
-				final int startY = chunkY << Chunk.BLOCKS.BITS;
-				final int endY = Math.min(Chunk.BLOCKS.SIZE + startY, height);
+				final int startY = chunkY * Chunk.CHUNK_SIZE;
+				final int endY = Math.min(Chunk.CHUNK_SIZE + startY, height);
 				for (int y = startY; y < endY; y++) {
 					if (y <= 0) {
 						blockData.set(dx, y, dz, VanillaMaterials.BEDROCK.getId());

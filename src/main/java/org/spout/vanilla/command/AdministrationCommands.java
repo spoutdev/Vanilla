@@ -38,7 +38,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeGenerator;
-import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
@@ -421,7 +420,7 @@ public class AdministrationCommands {
 			Chunk top = middle;
 			Chunk tmp;
 			while (true) {
-				tmp = top.getRelative(BlockFace.TOP, LoadOption.NO_LOAD);
+				tmp = top.getRelative(BlockFace.TOP, false);
 				if (tmp != null && tmp.isLoaded()) {
 					top = tmp;
 				} else {
@@ -430,7 +429,7 @@ public class AdministrationCommands {
 			}
 			while (top != null && top.isLoaded()) {
 				top.initLighting();
-				top = top.getRelative(BlockFace.BOTTOM, LoadOption.NO_LOAD);
+				top = top.getRelative(BlockFace.BOTTOM, false);
 			}
 			source.sendMessage("Chunk lighting is being initialized");
 		}

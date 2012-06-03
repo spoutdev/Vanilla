@@ -81,4 +81,15 @@ public class FlatGenerator implements WorldGenerator, VanillaGenerator {
 		//TODO Implement suitable flat world generator safe spawn point.
 		return new Point(world, 0, 80, 0);
 	}
+
+	@Override
+	public int[][] getSurfaceHeight(World world, int chunkX, int chunkZ) {
+		 int[][] heights = new int[Chunk.CHUNK_SIZE][Chunk.CHUNK_SIZE];
+		 for (int x = 0; x < Chunk.CHUNK_SIZE; x++) {
+			 for (int z = 0; z < Chunk.CHUNK_SIZE; z++) {
+				 heights[x][z] = height;
+			 }
+		 }
+		 return heights;
+	}
 }

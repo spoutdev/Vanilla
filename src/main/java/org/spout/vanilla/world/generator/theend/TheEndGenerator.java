@@ -31,6 +31,7 @@ import java.util.Random;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -39,6 +40,9 @@ import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 
 public class TheEndGenerator extends BiomeGenerator implements VanillaGenerator {
+	
+	private final static int SEA_LEVEL = 63;
+	
 	@Override
 	public void registerBiomes() {
 		setSelector(new PerBlockBiomeSelector(VanillaBiomes.ENDSTONE));
@@ -73,5 +77,17 @@ public class TheEndGenerator extends BiomeGenerator implements VanillaGenerator 
 			}
 		}
 		return y + 2;
+	}
+	
+	@Override
+	public int[][] getSurfaceHeight(World world, int chunkX, int chunkY) {
+		int height = world.getHeight() - 1;
+		int[][] heights = new int[Chunk.CHUNK_SIZE][Chunk.CHUNK_SIZE];
+		for (int x = 0; x < Chunk.CHUNK_SIZE; x++) {
+			for (int z = 0; z < Chunk.CHUNK_SIZE; z++) {
+				heights[x][z] = SEA_LEVEL;
+			}
+		}
+		return heights;
 	}
 }

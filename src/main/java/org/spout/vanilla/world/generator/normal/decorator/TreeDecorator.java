@@ -35,27 +35,30 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiomes;
+import org.spout.vanilla.world.generator.normal.object.HugeTreeObject;
+import org.spout.vanilla.world.generator.normal.object.ShrubObject;
 import org.spout.vanilla.world.generator.normal.object.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.SmallTreeObject.SmallTreeType;
+import org.spout.vanilla.world.generator.normal.object.TreeObject;
 
 public class TreeDecorator implements Decorator {
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
 			return;
 		}
 		final Biome biome = chunk.getBiomeType(7, 7, 7);
-		final SmallTreeObject tree = getTree(random, biome);
-		if (tree == null) {
-			return;
-		}
 		final World world = chunk.getWorld();
+		final int blockX = chunk.getBlockX();
+		final int blockZ = chunk.getBlockZ();
 		final byte amount = getNumberOfTrees(biome);
 		for (byte i = 0; i < amount; i++) {
-			final int worldX = chunk.getBlockX() + random.nextInt(16);
-			final int worldZ = chunk.getBlockZ() + random.nextInt(16);
+			final int worldX = blockX + random.nextInt(16);
+			final int worldZ = blockZ + random.nextInt(16);
 			final int worldY = getHighestWorkableBlock(world, worldX, worldZ);
-			if (!tree.canPlaceObject(world, worldX, worldY, worldZ)) {
+			final TreeObject tree = getTree(random, biome);
+			if (tree == null || !tree.canPlaceObject(world, worldX, worldY, worldZ)) {
 				continue;
 			} else {
 				tree.placeObject(world, worldX, worldY, worldZ);
@@ -93,18 +96,26 @@ public class TreeDecorator implements Decorator {
 		}
 	}
 
-	private SmallTreeObject getTree(Random random, Biome biome) {
+	private TreeObject getTree(Random random, Biome biome) {
 		if (biome == VanillaBiomes.FOREST) {
 			return new SmallTreeObject(random, SmallTreeType.OAK);
 		} else if (biome == VanillaBiomes.SWAMP) {
 			final SmallTreeObject tree = new SmallTreeObject(random, SmallTreeType.OAK);
-			tree.addLogVines(true);
+			tree.addLeavesVines(true);
+			tree.setLeavesRadiusIncreaseXZ((byte) 1);
 			return tree;
 		} else if (biome == VanillaBiomes.JUNGLE) {
-			final SmallTreeObject tree = new SmallTreeObject(random, SmallTreeType.JUNGLE);
-			tree.setBaseHeight((byte) 4);
-			tree.setRandomHeight((byte) 10);
-			return tree;
+			if (random.nextInt(27) == 0) {
+				return new HugeTreeObject(random);
+			} else if (random.nextInt(3) == 0) {
+				final SmallTreeObject tree = new SmallTreeObject(random, SmallTreeType.JUNGLE);
+				tree.setBaseHeight((byte) 4);
+				tree.setRandomHeight((byte) 10);
+				tree.addLogVines(true);
+				return tree;
+			} else {
+				return new ShrubObject(random);
+			}
 		} else {
 			return null;
 		}

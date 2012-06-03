@@ -39,7 +39,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.Chest;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
@@ -51,10 +50,10 @@ import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class ChestBlock extends ControlledMaterial implements Directional, Fuel, Mineable {
+public class Chest extends ControlledMaterial implements Directional, Fuel, Mineable {
 	public final float BURN_TIME = 15.f;
 
-	public ChestBlock(String name, int id) {
+	public Chest(String name, int id) {
 		super(VanillaControllerTypes.CHEST, name, id);
 		this.setHardness(2.5F).setResistance(4.2F).setTransparent();
 	}
@@ -72,9 +71,9 @@ public class ChestBlock extends ControlledMaterial implements Directional, Fuel,
 	@Override
 	public void onDestroyBlock(Block block) {
 		BlockController old = block.getController();
-		if (old != null && old instanceof Chest) {
+		if (old != null && old instanceof org.spout.vanilla.controller.block.Chest) {
 			//Drop items
-			ItemStack[] items = ((Chest) old).getInventory().getContents();
+			ItemStack[] items = ((org.spout.vanilla.controller.block.Chest) old).getInventory().getContents();
 			Point position = block.getPosition();
 			for (ItemStack item : items) {
 				ItemUtil.dropItemNaturally(position, item);
@@ -84,8 +83,8 @@ public class ChestBlock extends ControlledMaterial implements Directional, Fuel,
 	}
 
 	@Override
-	public Chest getController(Block block) {
-		return (Chest) super.getController(block);
+	public org.spout.vanilla.controller.block.Chest getController(Block block) {
+		return (org.spout.vanilla.controller.block.Chest) super.getController(block);
 	}
 
 	@Override

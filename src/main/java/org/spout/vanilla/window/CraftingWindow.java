@@ -61,16 +61,7 @@ public abstract class CraftingWindow extends Window {
 	@Override
 	public void onClosed() {
 		super.onClosed();
-		System.out.println("Closed");
-		for (int i : craftingGrid.getGridArray()) {
-			Inventory grid = craftingGrid.getGridInventory();
-			ItemStack stack = grid.getItem(i);
-			if (stack != null) {
-				System.out.println("Dropping");
-				Entity playerEntity = owner.getPlayer().getEntity();
-				playerEntity.getWorld().createAndSpawnEntity(playerEntity.getPosition(), new Item(stack, Vector3.FORWARD));
-			}
-		}
+		// TODO: Drop items
 	}
 
 	@Override

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.entity.BlockController;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
@@ -45,7 +44,7 @@ public abstract class ControlledMaterial extends Solid {
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		super.onPlacement(block, data, against, isClickedBlock);
-		block.setController((BlockController) type.createController());
+		block.getWorld().createAndSpawnEntity(block.getPosition(), type.createController());
 		return true;
 	}
 

@@ -39,6 +39,9 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 
+/*
+ * TODO: Rewrite this so it actually notifies other players
+ */
 public final class EntityActionMessageHandler extends MessageHandler<EntityActionMessage> {
 	@Override
 	public void handleServer(Session session, Player player, EntityActionMessage message) {

@@ -23,31 +23,33 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.block;
+package org.spout.vanilla.protocol.event;
 
-import org.spout.vanilla.controller.VanillaBlockController;
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-public class EnchantmentTable extends VanillaBlockController {
-	private final EnchantmentTableInventory inventory;
+/**
+ * @author zml2008
+ */
+public class BlockActionProtocolEvent implements ProtocolEvent {
+	private final Block block;
+	private final byte paramOne, paramTwo;
 
-	public EnchantmentTable() {
-		super(VanillaControllerTypes.ENCHANTMENT_TABLE, VanillaMaterials.ENCHANTMENT_TABLE);
-		inventory = new EnchantmentTableInventory();
+	public BlockActionProtocolEvent(Block block, byte paramOne, byte paramTwo) {
+		this.block = block;
+		this.paramOne = paramOne;
+		this.paramTwo = paramTwo;
 	}
 
-	@Override
-	public void onTick(float dt) {
+	public Block getBlock() {
+		return block;
 	}
 
-	@Override
-	public void onAttached() {
-		System.out.println("Enchantment Table entity spawned and controller attached to: " + getParent().getPosition().toString());
+	public byte getParamOne() {
+		return paramOne;
 	}
 
-	public EnchantmentTableInventory getInventory() {
-		return inventory;
+	public byte getParamTwo() {
+		return paramTwo;
 	}
 }

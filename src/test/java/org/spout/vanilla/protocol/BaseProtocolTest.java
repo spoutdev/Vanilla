@@ -27,6 +27,8 @@
 package org.spout.vanilla.protocol;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
@@ -39,9 +41,7 @@ import org.spout.api.protocol.CodecLookupService;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @Ignore
 public class BaseProtocolTest {
@@ -64,6 +64,18 @@ public class BaseProtocolTest {
 			}
 			MessageCodec<?> idCodec = codecLookup.find(opcode);
 			assertNotNull("No codec for opcode " + opcode + " in codec lookup!", idCodec);
+		}
+	}
+
+	@Test
+	public void testMessagesImmutable() {
+		for (Message message : testMessages) {
+			for (Field field : message.getClass().getDeclaredFields()) {
+				field.setAccessible(true);
+				if (!Modifier.isFinal(field.getModifiers())) {
+					fail("Field " + field.getName() + " in " + message + " is not final!");
+				}
+			}
 		}
 	}
 

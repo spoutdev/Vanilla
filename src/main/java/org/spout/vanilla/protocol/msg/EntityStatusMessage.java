@@ -29,9 +29,10 @@ package org.spout.vanilla.protocol.msg;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class EntityStatusMessage extends Message {
+public final class EntityStatusMessage extends Message implements ProtocolEvent {
 	public static final byte ENTITY_HURT = 2;
 	public static final byte ENTITY_DEAD = 3;
 	public static final byte WOLF_TAMING = 6;

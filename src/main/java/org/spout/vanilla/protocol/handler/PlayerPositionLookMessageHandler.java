@@ -33,10 +33,12 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 
 public final class PlayerPositionLookMessageHandler extends MessageHandler<PlayerPositionLookMessage> {
+	private static final PlayerPositionMessageHandler POSITION_HANDLER = new PlayerPositionMessageHandler();
+	private static final PlayerLookMessageHandler LOOK_HANDLER = new PlayerLookMessageHandler();
 	@Override
 	public void handleServer(Session session, Player player, PlayerPositionLookMessage message) {
-		new PlayerPositionMessageHandler().handleServer(session, player, message.getPlayerPositionMessage());
-		new PlayerLookMessageHandler().handleServer(session, player, message.getPlayerLookMessage());
+		POSITION_HANDLER.handleServer(session, player, message.getPlayerPositionMessage());
+		LOOK_HANDLER.handleServer(session, player, message.getPlayerLookMessage());
 	}
 
 	@Override

@@ -76,18 +76,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 		return this;
 	}
 
-	public void broadcastMessage(Message message) {
-		for (Player player : world.getPlayers()) {
-			if (!player.isOnline()) {
-				continue;
-			}
-			if (!player.getEntity().getWorld().getName().equals(world.getName())) {
-				continue;
-			}
-			player.getSession().send(message);
-		}
-	}
-
 	@Override
 	public void onAttached() {
 		getParent().setCollision(null);

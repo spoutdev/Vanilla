@@ -1,10 +1,9 @@
 /*
- * This file is part of Vanilla.
+ * This file is part of vanilla (http://www.spout.org/).
  *
- * Copyright (c) 2011-2012, VanillaDev <http://www.spout.org/>
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * vanilla is licensed under the SpoutDev License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
+ * vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -13,7 +12,7 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful,
+ * vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
@@ -32,6 +31,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 
+import org.spout.api.protocol.ProtocolUtil;
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.moving.Item;
@@ -39,6 +39,7 @@ import org.spout.vanilla.inventory.block.JukeboxInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.misc.MusicDisc;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.event.BlockEffectProtocolEvent;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.Music;
 
@@ -103,7 +104,7 @@ public class Jukebox extends VanillaBlockController {
 		Block block = this.getBlock();
 		block.setData(playing ? 1 : 0); //TODO hmmm? doesn't seem useful at all, since you don't know when the music stops playing...
 		Music music = playing ? this.getMusic() : Music.NONE;
-		VanillaNetworkSynchronizer.playBlockEffect(block, null, 48, PlayEffectMessage.Messages.MUSIC_DISC, music.getId());
+		ProtocolUtil.executeWithNearbyPlayers(block.getPosition(), 48, new ProtocolUtil.CallProtocolEvent(new BlockEffectProtocolEvent(block, PlayEffectMessage.Messages.MUSIC_DISC, music.getId())));
 	}
 
 	public JukeboxInventory getInventory() {
@@ -115,6 +116,6 @@ public class Jukebox extends VanillaBlockController {
 	}
 
 	public void stopMusic() {
-		VanillaNetworkSynchronizer.playBlockEffect(getBlock(), null, 48, PlayEffectMessage.Messages.MUSIC_DISC, Music.NONE.getId());
+		ProtocolUtil.executeWithNearbyPlayers(getBlock().getPosition(), 48, new ProtocolUtil.CallProtocolEvent(new BlockEffectProtocolEvent(getBlock(), PlayEffectMessage.Messages.MUSIC_DISC, Music.NONE.getId())));
 	}
 }

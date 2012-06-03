@@ -52,11 +52,11 @@ import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerBlockPlacementMessageHandler extends MessageHandler<PlayerBlockPlacementMessage> {
-	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock) {
+	private void undoPlacement(Session sess, Block clickedBlock, Block alterBlock) {
 		//refresh the client just in case it assumed something
-		player.getSession().send(new BlockChangeMessage(clickedBlock));
-		player.getSession().send(new BlockChangeMessage(alterBlock));
-		InventoryBase inv = VanillaPlayerUtil.getInventory(player.getEntity());
+		sess.send(new BlockChangeMessage(clickedBlock));
+		sess.send(new BlockChangeMessage(alterBlock));
+		InventoryBase inv = VanillaPlayerUtil.getInventory(sess.getPlayer().getEntity());
 		if (inv != null) {
 			inv.setCurrentItem(inv.getCurrentItem());
 		}
@@ -105,7 +105,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			//Perform interaction event
 			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), inventory.getCurrentItem(), Action.RIGHT_CLICK, false));
 
-			//Get the target block and validate 
+			//Get the target block and validate
 			BlockMaterial clickedMaterial = clickedBlock.getSubMaterial();
 
 			//alternative block to place at may the clicked block deny placement
@@ -114,7 +114,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 			//check if the interaction was cancelled by the event
 			if (interactEvent.isCancelled()) {
-				undoPlacement(player, clickedBlock, alterBlock);
+				undoPlacement(session, clickedBlock, alterBlock);
 				return;
 			}
 			short durability = 0;
@@ -138,7 +138,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			}
 
 			if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
-				undoPlacement(player, clickedBlock, alterBlock);
+				undoPlacement(session, clickedBlock, alterBlock);
 				return;
 			}
 
@@ -157,7 +157,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 					target = alterBlock;
 					targetFace = alterFace;
 				} else {
-					undoPlacement(player, clickedBlock, alterBlock);
+					undoPlacement(session, clickedBlock, alterBlock);
 					return;
 				}
 
@@ -184,7 +184,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 						Point tpos = target.getPosition();
 
 						if (pos1.distance(tpos) < 0.6 || pos2.distance(tpos) < 0.6) {
-							undoPlacement(player, clickedBlock, alterBlock);
+							undoPlacement(session, clickedBlock, alterBlock);
 							return;
 						}
 					}
@@ -201,7 +201,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 						}
 					}
 				} else {
-					undoPlacement(player, clickedBlock, alterBlock);
+					undoPlacement(session, clickedBlock, alterBlock);
 				}
 			}
 		}

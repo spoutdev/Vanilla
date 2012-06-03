@@ -29,6 +29,8 @@ package org.spout.vanilla.protocol.msg;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.math.MathHelper;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
@@ -39,6 +41,10 @@ public final class PlayEffectMessage extends Message {
 
 	public PlayEffectMessage(int id, Block block, int data) {
 		this(id, block.getX(), block.getY(), block.getZ(), data);
+	}
+
+	public PlayEffectMessage(int id, Vector3 vec, int data) {
+		this(id, MathHelper.floor(vec.getX()), MathHelper.floor(vec.getY()), MathHelper.floor(vec.getZ()), data);
 	}
 
 	public PlayEffectMessage(int id, int x, int y, int z, int data) {

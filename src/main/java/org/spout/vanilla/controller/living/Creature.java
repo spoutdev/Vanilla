@@ -37,8 +37,6 @@ import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
-
 public abstract class Creature extends Living {
 	private long timeUntilAdult = 0;
 

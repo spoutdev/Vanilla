@@ -37,6 +37,7 @@ import org.spout.api.collision.CollisionModel;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.entity.PlayerControllerBase;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
@@ -45,6 +46,7 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
+import org.spout.api.protocol.ProtocolUtil;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -56,6 +58,7 @@ import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.inventory.PlayerInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.armor.Armor;
+import org.spout.vanilla.protocol.event.UpdateHealthProtocolEvent;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
@@ -65,18 +68,19 @@ import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.util.EnchantmentUtil;
+import org.spout.vanilla.protocol.event.AnimationProtocolEvent;
+import org.spout.vanilla.protocol.event.GameModeChangeProtocolEvent;
+import org.spout.vanilla.protocol.event.SpawnPositionProtocolEvent;
+import org.spout.vanilla.protocol.msg.KeepAliveMessage;
+import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.window.DefaultWindow;
 import org.spout.vanilla.window.Window;
-
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers;
-
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
  */
 public class VanillaPlayer extends Human implements PlayerController {
+	protected final PlayerControllerBase base;
 	protected final Player owner;
 	protected long unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt(), lastPing = 0, lastUserList = 0, foodTimer = 0;
 	protected short count = 0, ping, hunger = 20;
@@ -107,6 +111,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.setHeadHeight(1.62f);
 		this.gameMode = gameMode;
 		miningDamage = new int[miningDamagePeriod];
+		base = new PlayerControllerBase(p, this);
 	}
 
 	public VanillaPlayer(Player p) {
@@ -135,8 +140,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
+		base.onTick(dt);
 		Player player = getPlayer();
-		if (player == null || player.getSession() == null) {
+		if (player == null || !player.isOnline()) {
 			return;
 		}
 
@@ -156,101 +162,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			lastUserList = 0;
 		}
 
-		if (isSurvival()) {
-			survivalTick(dt);
-		} else {
-			creativeTick(dt);
-		}
-	}
-
-	private void survivalTick(float dt) {
-		if (isDigging && (getDiggingTicks() % 20) == 0) {
-			sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_SWING_ARM));
-		}
-
-		if ((distanceMoved += getPreviousPosition().distanceSquared(getParent().getPosition())) >= 1) {
-			exhaustion += 0.01;
-			distanceMoved = 0;
-		}
-
-		if (sprinting) {
-			exhaustion += 0.1;
-		}
-
-		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
-		Block head = getParent().getWorld().getBlock(getHeadPosition());
-		if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
-			airTicks++;
-			ItemStack helmet = getInventory().getArmor().getHelmet();
-			int level = 0;
-			if (helmet != null && EnchantmentUtil.hasEnchantment(helmet, Enchantments.RESPIRATION)) {
-				level = EnchantmentUtil.getEnchantmentLevel(helmet, Enchantments.RESPIRATION);
-			}
-			if (head.getMaterial().equals(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
-				// Drowning
-				int ticksBeforeDrowning = level == 0 ? 300 : level * 300; // Increase time before drowning by 15 seconds per enchantment level
-				if (airTicks >= ticksBeforeDrowning && airTicks % 20 == 0) {
-					damage(4, DamageCause.DROWN);
-				}
-			} else {
-				// Suffocation
-				int noDamageTicks /* TODO noDamageTicks should probably be made a global variable to account for other damage */ = level == 0 ? 10 : 10 + 20 * level; // Increase time between damage by 1 second per enchantment level
-				if (airTicks % noDamageTicks == 0) {
-					damage(1, DamageCause.SUFFOCATE);
-				}
-			}
-		} else {
-			// Reset air ticks if necessary
-			airTicks = 0;
-		}
-
-		if (poisoned) {
-			exhaustion += 15.0 / 30 * dt;
-		}
-
-		// Track hunger
-		foodTimer++;
-		if (foodTimer >= 80) {
-			updateHealthAndHunger();
-			foodTimer = 0;
-		}
-	}
-
-	private void updateHealthAndHunger() {
-		short health;
-		health = (short) getHealth();
-
-		if (exhaustion > 4.0) {
-			exhaustion -= 4.0;
-			if (foodSaturation > 0) {
-				foodSaturation = Math.max(foodSaturation - 0.1f, 0);
-			} else {
-				hunger = (short) Math.max(hunger - 1, 0);
-			}
-		}
-
-		boolean changed = false;
-		if (hunger <= 0 && health > 0) {
-			health = (short) Math.max(health - 1, 0);
-			setHealth(health, DamageCause.STARVE);
-			changed = true;
-		} else if (hunger >= 18 && health < 20) {
-			health = (short) Math.min(health + 1, 20);
-			setHealth(health, HealthChangeReason.REGENERATION);
-			changed = true;
-		}
-
-		if (changed) {
-			System.out.println("Performing health/hunger update...");
-			System.out.println("Food saturation: " + foodSaturation);
-			System.out.println("Hunger: " + hunger);
-			System.out.println("Health: " + health);
-			System.out.println("Exhaustion: " + exhaustion);
-			// sendPacket(owner, new UpdateHealthMessage(health, hunger, foodSaturation));
-		}
-	}
-
-	private void creativeTick(float dt) {
+		gameMode.onTick(this, dt);
 	}
 
 	@Override
@@ -265,9 +177,20 @@ public class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public void onDeath() {
 		// Don't count disconnects/unknown exceptions as dead (Yes that's a difference!)
-		if (owner.getSession() != null && owner.getSession().getPlayer() != null) {
+		if (owner.isOnline()) {
 			super.onDeath();
 		}
+		base.onDeath();
+	}
+
+	@Override
+	public void preSnapshot() {
+		base.preSnapshot();
+	}
+
+	@Override
+	public void finalizeTick() {
+		base.finalizeTick();
 	}
 
 	@Override
@@ -300,7 +223,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void setCompassTarget(Point compassTarget) {
 		this.compassTarget = compassTarget;
-		sendPacket(owner, new SpawnPositionMessage(compassTarget.getBlockX(), compassTarget.getBlockY(), compassTarget.getBlockZ()));
+		owner.getNetworkSynchronizer().callProtocolEvent(new SpawnPositionProtocolEvent(compassTarget));
 	}
 
 	/**
@@ -335,11 +258,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 					if (currentItem != null) {
 						itemId = currentItem.getMaterial().getId();
 					}
-
-					sendPacket(player, new SpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId));
+					player.getNetworkSynchronizer().spawnEntity(parent);
 				} else {
 					invisibleFor.add(player);
-					sendPacket(player, new DestroyEntityMessage(parent.getId()));
+					player.getNetworkSynchronizer().destroyEntity(parent);
 				}
 			}
 		}
@@ -452,7 +374,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void setGameMode(GameMode gameMode) {
 		this.gameMode = gameMode;
-		sendPacket(owner, new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, gameMode));
+		owner.getNetworkSynchronizer().callProtocolEvent(new GameModeChangeProtocolEvent(gameMode));
 	}
 
 	/**
@@ -495,6 +417,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.hunger = hunger;
 	}
 
+	public void incrementHunger(short amt) {
+		this.hunger += amt;
+	}
+
 	/**
 	 * Returns the food saturation level of the player attached to the controller. The food bar "jitters" when the bar reaches 0.
 	 * @return food saturation level
@@ -511,6 +437,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.foodSaturation = foodSaturation;
 	}
 
+	public void incrementFoodSaturation(float amount) {
+		this.foodSaturation += amount;
+	}
+
 	/**
 	 * Returns the exhaustion of the controller; affects hunger loss.
 	 * @return
@@ -525,6 +455,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void setExhaustion(float exhaustion) {
 		this.exhaustion = exhaustion;
+	}
+
+	public void incrementExhaustion(float exhaustion) {
+		this.exhaustion += exhaustion;
 	}
 
 	public void setWindow(Window activeWindow) {
@@ -585,7 +519,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 		previousDiggingTime = getDiggingTime();
 		isDigging = false;
-		sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_NONE));
+		ProtocolUtil.executeWithNearbyPlayers(getParent(), getParent().getViewDistance(), new ProtocolUtil.CallProtocolEvent(new AnimationProtocolEvent(getParent().getId(), AnimationProtocolEvent.Animation.NONE)));
 		if (!position.equals(diggingPosition)) {
 			return false;
 		}
@@ -685,6 +619,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public void setHealth(int health, Source source) {
 		super.setHealth(health, source);
-		sendPacket(owner, new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
+		owner.getNetworkSynchronizer().callProtocolEvent(new UpdateHealthProtocolEvent((short) getHealth(), hunger, foodSaturation));
 	}
 }

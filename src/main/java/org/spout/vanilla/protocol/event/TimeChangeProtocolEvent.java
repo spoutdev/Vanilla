@@ -24,34 +24,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.bootstrap;
+package org.spout.vanilla.protocol.event;
 
-import org.spout.api.player.Player;
-import org.spout.api.protocol.Message;
-import org.spout.api.protocol.Protocol;
-import org.spout.api.protocol.Session;
-import org.spout.api.protocol.bootstrap.BootstrapProtocol;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.protocol.VanillaProtocol;
+/**
+ * @author zml2008
+ */
+public class TimeChangeProtocolEvent implements ProtocolEvent {
+	private final long time;
 
-public class VanillaBootstrapProtocol extends BootstrapProtocol {
-	private static final Protocol vanilla = new VanillaProtocol();
-
-	public VanillaBootstrapProtocol() {
-		super("VanillaBootstrap", new VanillaBootstrapCodecLookupService(), new VanillaBootstrapHandlerLookupService());
+	public TimeChangeProtocolEvent(long time) {
+		this.time = time;
 	}
 
-	@Override
-	public String detectProtocolDefinition(Message message) {
-		return "VanillaProtocol";
-	}
-
-	@Override
-	public Protocol getDefaultProtocol() {
-		return vanilla;
-	}
-
-	public void initializePlayer(Player player, Session session) {
-		vanilla.initializePlayer(player, session);
+	public long getTime() {
+		return time;
 	}
 }

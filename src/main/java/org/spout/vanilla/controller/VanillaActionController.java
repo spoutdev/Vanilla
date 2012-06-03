@@ -47,14 +47,14 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
+import org.spout.api.protocol.ProtocolUtil;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.event.entity.EntityCombustEvent;
-import org.spout.vanilla.protocol.msg.AnimationMessage;
+import org.spout.vanilla.protocol.event.AnimationProtocolEvent;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.broadcastPacket;
 
 /**
  * Controller that is the parent of all entity controllers.
@@ -125,7 +125,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
-			broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
+			ProtocolUtil.executeWithAllPlayers(new ProtocolUtil.CallProtocolEvent(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD)));
 			if (!(this instanceof PlayerController)) {
 				getParent().kill();
 			}
@@ -327,7 +327,7 @@ public abstract class VanillaActionController extends ActionController implement
 		setHealth(getHealth() - amount, HealthChangeReason.DAMAGE);
 		lastDamager = damager;
 		if (sendHurtMessage) {
-			broadcastPacket(new AnimationMessage(this.getParent().getId(), AnimationMessage.ANIMATION_HURT), new EntityStatusMessage(this.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
+			ProtocolUtil.executeWithAllPlayers(new ProtocolUtil.CallProtocolEvent(new AnimationProtocolEvent(this.getParent().getId(), AnimationProtocolEvent.Animation.HURT)));
 		}
 	}
 
@@ -430,5 +430,17 @@ public abstract class VanillaActionController extends ActionController implement
 
 	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
+	}
+
+	public int getAirTicks() {
+		return airTicks;
+	}
+
+	public void setAirTicks(int val) {
+		this.airTicks = val;
+	}
+
+	public void incrementAirTicks(int amt) {
+		this.airTicks += amt;
 	}
 }

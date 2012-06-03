@@ -26,19 +26,16 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.util.Set;
-
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.event.EventHandler;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
@@ -50,26 +47,43 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
+import org.spout.api.protocol.Session;
 import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEventListener;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.event.world.WeatherChangeEvent;
+import org.spout.vanilla.protocol.event.AnimationProtocolEvent;
+import org.spout.vanilla.protocol.event.BlockActionProtocolEvent;
+import org.spout.vanilla.protocol.event.BlockEffectProtocolEvent;
+import org.spout.vanilla.protocol.event.GameModeChangeProtocolEvent;
+import org.spout.vanilla.protocol.event.SpawnPositionProtocolEvent;
+import org.spout.vanilla.protocol.event.TimeChangeProtocolEvent;
+import org.spout.vanilla.protocol.event.UpdateHealthProtocolEvent;
+import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
+import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
+import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
 import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
+import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
+import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
+import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
 import org.spout.vanilla.window.Window;
+import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import org.spout.vanilla.world.Weather;
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -83,8 +97,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private final static double STANCE = 1.6D;
 	private final static int TIMEOUT = 15000;
 
-	public VanillaNetworkSynchronizer(Player player, Entity entity) {
-		super(player, player.getSession(), entity);
+	public VanillaNetworkSynchronizer(Player player, Session session, Entity entity) {
+		super(player, session, entity);
 		registerProtocolEvents(this);
 		initChunk(player.getEntity().getPosition());
 	}
@@ -108,7 +122,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (column.isEmpty()) {
 				activeChunks.remove(x, z);
 				LoadChunkMessage unLoadChunk = new LoadChunkMessage(x, z, false);
-				owner.getSession().send(unLoadChunk);
+				session.send(unLoadChunk);
 			} else {
 				byte[][] data = new byte[16][];
 				data[y] = AIR_CHUNK_DATA;
@@ -187,7 +201,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			column = new TIntHashSet();
 			activeChunks.put(x, z, column);
 			LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
-			owner.getSession().send(loadChunk);
+			session.send(loadChunk);
 
 			Chunk chunk = p.getWorld().getChunkFromBlock(p);
 			byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
@@ -201,7 +215,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 
 			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, new boolean[16], 0, packetChunkData, biomeData);
-			owner.getSession().send(CCMsg);
+			session.send(CCMsg);
 		}
 		column.add(y);
 	}
@@ -250,14 +264,14 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		byte[][] packetChunkData = new byte[16][];
 		packetChunkData[y] = fullChunkData;
 		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], 0, packetChunkData, null);
-		owner.getSession().send(CCMsg);
+		session.send(CCMsg);
 	}
 
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
 		//TODO: Implement Spout Protocol
 		PlayerPositionLookMessage PRMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true);
-		owner.getSession().send(PRMsg);
+		session.send(PRMsg);
 	}
 
 	boolean first = true;
@@ -278,9 +292,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			int entityId = owner.getEntity().getId();
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
 			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, owner.getName(), vc.isSurvival() ? 0 : 1, dimensionBit, 0, world.getHeight(), session.getGame().getMaxPlayers(), "DEFAULT");
-			owner.getSession().send(idMsg, true);
+			session.send(idMsg, true);
 			//Normal messages may be sent
-			owner.getSession().setState(State.GAME);
+			session.setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
 				ItemStack slotItem = vc.getInventory().getArmor().getItem(slot);
 				EntityEquipmentMessage EEMsg;
@@ -289,17 +303,17 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				} else {
 					EEMsg = new EntityEquipmentMessage(entityId, slot, getMinecraftId(slotItem.getMaterial().getId()), slotItem.getData());
 				}
-				owner.getSession().send(EEMsg);
+				session.send(EEMsg);
 			}
 		} else {
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
-			owner.getSession().send(new RespawnMessage(dimensionBit, (byte) 0, (byte) (vc.isSurvival() ? 0 : 1), world.getHeight(), "DEFAULT"));
+			session.send(new RespawnMessage(dimensionBit, (byte) 0, (byte) (vc.isSurvival() ? 0 : 1), world.getHeight(), "DEFAULT"));
 		}
 
 		if (world != null) {
 			Point spawn = world.getSpawnPoint().getPosition();
 			SpawnPositionMessage SPMsg = new SpawnPositionMessage((int) spawn.getX(), (int) spawn.getY(), (int) spawn.getZ());
-			owner.getSession().send(SPMsg);
+			session.send(SPMsg);
 		}
 	}
 
@@ -311,7 +325,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (currentTime > lastKeepAlive + TIMEOUT) {
 			KeepAliveMessage PingMsg = new KeepAliveMessage((int) currentTime);
 			lastKeepAlive = currentTime;
-			owner.getSession().send(PingMsg, true);
+			session.send(PingMsg, true);
 		}
 
 		for (TIntObjectIterator<Message> i = queuedInventoryUpdates.iterator(); i.hasNext(); ) {
@@ -435,140 +449,59 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		queuedInventoryUpdates.clear();
 	}
 
-	/**
-	 * This method takes any amount of messages and sends them to every online player on the server.
-	 * @param messages
-	 */
-	public static void broadcastPacket(Message... messages) {
-		sendPacket(Spout.getEngine().getOnlinePlayers(), messages);
+	@EventHandler
+	public Message onBlockEffect(BlockEffectProtocolEvent event) {
+		return new PlayEffectMessage(event.getEffect().getId(), event.getPosition(), event.getData());
 	}
 
-	/**
-	 * This method takes in any amount of messages and sends them to any amount of
-	 * players.
-	 * @param players specific players to send a message to.
-	 * @param messages the message(s) to send
-	 */
-	public static void sendPacket(Player[] players, Message... messages) {
-		for (Player player : players) {
-			for (Message message : messages) {
-				sendPacket(player, message);
-			}
-		}
+	@EventHandler
+	public Message onUpdateHealth(UpdateHealthProtocolEvent event) {
+		return new UpdateHealthMessage(event.getHealth(), event.getFood(), event.getFoodSaturation());
 	}
 
-	/**
-	 * This method takes in a message and sends it to a specific player
-	 * @param player specific player to relieve message
-	 * @param messages specific message to send.
-	 */
-	public static void sendPacket(Player player, Message... messages) {
-		for (Message message : messages) {
-			player.getSession().send(message);
-		}
+	@EventHandler
+	public Message onBlockAction(BlockActionProtocolEvent event) {
+		return new BlockActionMessage(event.getBlock(), event.getParamOne(), event.getParamTwo());
 	}
 
-	/**
-	 * This method sends an effect play message for a block to all nearby players in a 16-block radius
-	 * @param block The block that the effect comes from.
-	 * @param effect The effect to play
-	 */
-	public static void playBlockEffect(Block block, Entity ignore, PlayEffectMessage.Messages effect) {
-		playBlockEffect(block, ignore, 16, effect, 0);
+	@EventHandler
+	public Message onAnimation(AnimationProtocolEvent event) {
+		return new AnimationMessage(event.getEntityId(), event.getAnimation().getId());
 	}
 
-	/**
-	 * This method sends an effect play message for a block to all nearby players
-	 * @param block The block that the effect comes from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param effect The effect to play
-	 */
-	public static void playBlockEffect(Block block, Entity ignore, int range, PlayEffectMessage.Messages effect) {
-		playBlockEffect(block, ignore, range, effect, 0);
+	@EventHandler
+	public Message onSpawnPosition(SpawnPositionProtocolEvent event) {
+		return new SpawnPositionMessage(event.getPosition().getBlockX(), event.getPosition().getBlockY(), event.getPosition().getBlockZ());
 	}
 
-	/**
-	 * This method sends an effect play message for a block to all nearby players
-	 * @param block The block that the effect comes from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param effect The effect to play
-	 * @param data The data to use for the effect
-	 */
-	public static void playBlockEffect(Block block, Entity ignore, int range, PlayEffectMessage.Messages effect, int data) {
-		sendPacketsToNearbyPlayers(block.getPosition(), ignore, range, new PlayEffectMessage(effect.getId(), block, data));
+	@EventHandler
+	public Message onGameModeChange(GameModeChangeProtocolEvent event) {
+		return new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, event.getMode());
 	}
 
-	/**
-	 * Sends a block action message to all nearby players in a 48-block radius
-	 */
-	public static void playBlockAction(Block block, byte arg1, byte arg2) {
-		sendPacketsToNearbyPlayers(block.getPosition(), 48, new BlockActionMessage(block, arg1, arg2));
+	@EventHandler
+	public Message onWeatherChange(WeatherChangeEvent event) {
+		byte reason = event.getNewWeather() == Weather.CLEAR ? ChangeGameStateMessage.END_RAINING : ChangeGameStateMessage.BEGIN_RAINING;
+		return new ChangeGameStateMessage(reason);
 	}
 
-	/**
-	 * Sends a block action message to all nearby players
-	 */
-	public static void playBlockAction(Block block, int range, byte arg1, byte arg2) {
-		sendPacketsToNearbyPlayers(block.getPosition(), range, new BlockActionMessage(block, arg1, arg2));
+	@EventHandler
+	public Message onTimeChange(TimeChangeProtocolEvent event) {
+		return new TimeUpdateMessage(event.getTime());
 	}
 
-	/**
-	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
-	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param messages The messages that should be sent to the discovered nearest player.
-	 */
-	public static void sendPacketsToNearbyPlayers(Point position, Entity ignore, int range, Message... messages) {
-		Set<Player> players = position.getWorld().getNearbyPlayers(position, ignore, range);
-		for (Player plr : players) {
-			plr.getSession().sendAll(messages);
-		}
+	@EventHandler
+	public Message onEntityStatus(EntityStatusMessage msg) {
+		return msg;
 	}
 
-	/**
-	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
-	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param messages The messages that should be sent to the discovered nearest player.
-	 */
-	public static void sendPacketsToNearbyPlayers(Point position, int range, Message... messages) {
-		Set<Player> players = position.getWorld().getNearbyPlayers(position, range);
-		for (Player plr : players) {
-			plr.getSession().sendAll(messages);
-		}
+	@EventHandler
+	public Message onProgressBar(ProgressBarMessage msg) {
+		return msg;
 	}
 
-	/**
-	 * This method sends any amount of packets to all nearby players of an entity (within a specified range).
-	 * @param entity The entity that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param messages The messages that should be sent to the discovered nearest player.
-	 */
-	public static void sendPacketsToNearbyPlayers(Entity entity, int range, Message... messages) {
-		if (entity == null || entity.getRegion() == null) {
-			return;
-		}
-		Set<Player> players = entity.getWorld().getNearbyPlayers(entity, range);
-		for (Player plr : players) {
-			plr.getSession().sendAll(messages);
-		}
-	}
-
-	/**
-	 * This method sends any amount of packets and sends them to the nearest player from the entity specified.
-	 * @param entity The entity that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param messages The messages that should be sent to the discovered nearest player.
-	 */
-	public static void sendPacketsToNearestPlayer(Entity entity, int range, Message... messages) {
-		if (entity == null || entity.getRegion() == null) {
-			return;
-		}
-
-		Player plr = entity.getWorld().getNearestPlayer(entity, range);
-		//Only send if we have a player nearby.
-		if (plr != null) {
-			plr.getSession().sendAll(messages);
-		}
+	@EventHandler
+	public Message onTileEntityData(TileEntityDataMessage msg) {
+		return msg;
 	}
 }

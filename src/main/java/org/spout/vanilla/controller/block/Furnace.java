@@ -1,10 +1,9 @@
 /*
- * This file is part of Vanilla.
+ * This file is part of vanilla (http://www.spout.org/).
  *
- * Copyright (c) 2011-2012, VanillaDev <http://www.spout.org/>
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * vanilla is licensed under the SpoutDev License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
+ * vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -13,7 +12,7 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful,
+ * vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
@@ -37,7 +36,6 @@ import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 
-import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
 
 public class Furnace extends VanillaBlockController {
 	private final FurnaceInventory inventory;
@@ -123,7 +121,8 @@ public class Furnace extends VanillaBlockController {
 			// Update viewers
 			for (VanillaPlayer player : this.inventory.getViewingPlayers()) {
 				int window = player.getActiveWindow().getInstanceId();
-				sendPacket(player.getPlayer(), new ProgressBarMessage(window, org.spout.vanilla.material.block.controlled.Furnace.FIRE_ICON, (int) burnIncrement), new ProgressBarMessage(window, org.spout.vanilla.material.block.controlled.Furnace.PROGRESS_ARROW, (int) progressIncrement));
+				player.getPlayer().getNetworkSynchronizer().callProtocolEvent(new ProgressBarMessage(window, org.spout.vanilla.material.block.controlled.Furnace.FIRE_ICON, (int) burnIncrement));
+				player.getPlayer().getNetworkSynchronizer().callProtocolEvent(new ProgressBarMessage(window, org.spout.vanilla.material.block.controlled.Furnace.PROGRESS_ARROW, (int) progressIncrement));
 			}
 		}
 	}

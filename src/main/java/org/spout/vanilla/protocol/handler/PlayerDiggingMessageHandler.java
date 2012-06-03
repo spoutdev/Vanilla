@@ -39,8 +39,10 @@ import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.ProtocolUtil;
 import org.spout.api.protocol.Session;
 
+import org.spout.api.util.ParamCallback;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterial;
@@ -48,6 +50,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
+import org.spout.vanilla.protocol.event.BlockEffectProtocolEvent;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
@@ -114,14 +117,15 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				if (fire) {
 					// put out fire
 					VanillaMaterials.FIRE.onDestroy(neigh);
-					VanillaNetworkSynchronizer.playBlockEffect(block, player.getEntity(), PlayEffectMessage.Messages.RANDOM_FIZZ);
+					final BlockEffectProtocolEvent protoEvent = new BlockEffectProtocolEvent(block, Messages.RANDOM_FIZZ);
+					ProtocolUtil.executeWithNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), new ProtocolUtil.CallProtocolEvent(protoEvent));
 				} else if (vp.isSurvival() && blockMaterial.getHardness() != 0.0f) {
 					vp.startDigging(new Point(w, x, y, z));
 				} else {
 					// insta-break
 					blockMaterial.onDestroy(block);
-					PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
-					VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
+					final BlockEffectProtocolEvent protoEvent = new BlockEffectProtocolEvent(block, Messages.PARTICLE_BREAKBLOCK, blockMaterial.getId());
+					ProtocolUtil.executeWithNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), new ProtocolUtil.CallProtocolEvent(protoEvent));
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
@@ -169,10 +173,10 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				blockMaterial.onDestroy(block);
 			}
 			if (block.getMaterial() != VanillaMaterials.AIR) {
-				player.getSession().send(new BlockChangeMessage(x, y, z, blockMaterial.getId(), blockMaterial.getData()));
+				session.send(new BlockChangeMessage(x, y, z, blockMaterial.getId(), blockMaterial.getData()));
 			} else {
-				PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
-				VanillaNetworkSynchronizer.sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
+				final BlockEffectProtocolEvent playEffectEvent = new BlockEffectProtocolEvent(block, Messages.PARTICLE_BREAKBLOCK, blockMaterial.getId());
+				ProtocolUtil.executeWithNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), new ProtocolUtil.CallProtocolEvent(playEffectEvent));
 			}
 		} else if (state == PlayerDiggingMessage.STATE_CANCEL_DIGGING) {
 			vp.stopDigging(new Point(w, x, y, z));

@@ -29,9 +29,10 @@ package org.spout.vanilla.protocol.msg;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class ProgressBarMessage extends Message {
+public final class ProgressBarMessage extends Message implements ProtocolEvent {
 	private final int id, progressBar, value;
 
 	public ProgressBarMessage(int id, int progressBar, int value) {

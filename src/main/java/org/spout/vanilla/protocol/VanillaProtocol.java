@@ -26,10 +26,36 @@
  */
 package org.spout.vanilla.protocol;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.player.Player;
 import org.spout.api.protocol.Protocol;
+import org.spout.api.protocol.Session;
+import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.controller.living.player.GameMode;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.source.ControllerChangeReason;
+import org.spout.vanilla.protocol.event.UpdateHealthProtocolEvent;
 
 public class VanillaProtocol extends Protocol {
 	public VanillaProtocol() {
 		super("Vanilla", new VanillaCodecLookupService(), new VanillaHandlerLookupService(), new VanillaPlayerProtocol());
+	}
+
+	public void initializePlayer(Player player, Session session) {
+		Entity playerEntity = player.getEntity();
+		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, session, playerEntity));
+		VanillaPlayer vanillaPlayer;
+		if (VanillaConfiguration.PLAYER_DEFAULT_GAMEMODE.getString().equalsIgnoreCase("creative")) {
+			vanillaPlayer = new VanillaPlayer(player, GameMode.CREATIVE);
+		} else {
+			vanillaPlayer = new VanillaPlayer(player, GameMode.SURVIVAL);
+		}
+
+		playerEntity.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
+
+		// Set protocol and send packets
+		if (vanillaPlayer.isSurvival()) {
+			player.getNetworkSynchronizer().callProtocolEvent(new UpdateHealthProtocolEvent((short) vanillaPlayer.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
+		}
 	}
 }

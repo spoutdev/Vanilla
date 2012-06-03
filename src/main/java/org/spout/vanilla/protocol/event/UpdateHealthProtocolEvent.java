@@ -24,34 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.bootstrap;
+package org.spout.vanilla.protocol.event;
 
-import org.spout.api.player.Player;
-import org.spout.api.protocol.Message;
-import org.spout.api.protocol.Protocol;
-import org.spout.api.protocol.Session;
-import org.spout.api.protocol.bootstrap.BootstrapProtocol;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.protocol.VanillaProtocol;
+/**
+ * @author zml2008
+ */
+public class UpdateHealthProtocolEvent implements ProtocolEvent {
+	private final short health, food;
+	private final float foodSaturation;
 
-public class VanillaBootstrapProtocol extends BootstrapProtocol {
-	private static final Protocol vanilla = new VanillaProtocol();
-
-	public VanillaBootstrapProtocol() {
-		super("VanillaBootstrap", new VanillaBootstrapCodecLookupService(), new VanillaBootstrapHandlerLookupService());
+	public UpdateHealthProtocolEvent(short health, short food, float foodSaturation) {
+		this.health = health;
+		this.food = food;
+		this.foodSaturation = foodSaturation;
 	}
 
-	@Override
-	public String detectProtocolDefinition(Message message) {
-		return "VanillaProtocol";
+	public short getHealth() {
+		return health;
 	}
 
-	@Override
-	public Protocol getDefaultProtocol() {
-		return vanilla;
+	public short getFood() {
+		return food;
 	}
 
-	public void initializePlayer(Player player, Session session) {
-		vanilla.initializePlayer(player, session);
+	public float getFoodSaturation() {
+		return foodSaturation;
 	}
 }

@@ -24,34 +24,49 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.bootstrap;
+package org.spout.vanilla.protocol.event;
 
-import org.spout.api.player.Player;
-import org.spout.api.protocol.Message;
-import org.spout.api.protocol.Protocol;
-import org.spout.api.protocol.Session;
-import org.spout.api.protocol.bootstrap.BootstrapProtocol;
+import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.vanilla.protocol.msg.AnimationMessage;
 
-import org.spout.vanilla.protocol.VanillaProtocol;
+/**
+ * @author zml2008
+ */
+public class AnimationProtocolEvent implements ProtocolEvent {
+	public static enum Animation {
+		NONE(AnimationMessage.ANIMATION_NONE),
+		SWING_ARM(AnimationMessage.ANIMATION_SWING_ARM),
+		HURT(AnimationMessage.ANIMATION_HURT),
+		LEAVE_BED(AnimationMessage.ANIMATION_LEAVE_BED),
+		EAT_FOOD(AnimationMessage.ANIMATION_EAT_FOOD),
+		UNKNOWN(AnimationMessage.ANIMATION_UNKNOWN),
+		CROUCH(AnimationMessage.ANIMATION_CROUCH),
+		UNCROUCH(AnimationMessage.ANIMATION_UNCROUCH),
+		;
+		private final int id;
 
-public class VanillaBootstrapProtocol extends BootstrapProtocol {
-	private static final Protocol vanilla = new VanillaProtocol();
+		private Animation(int id) {
+			this.id = id;
+		}
 
-	public VanillaBootstrapProtocol() {
-		super("VanillaBootstrap", new VanillaBootstrapCodecLookupService(), new VanillaBootstrapHandlerLookupService());
+		public byte getId() {
+			return (byte) id;
+		}
 	}
 
-	@Override
-	public String detectProtocolDefinition(Message message) {
-		return "VanillaProtocol";
+	private final int entityId;
+	private final Animation animation;
+
+	public AnimationProtocolEvent(int entityId, Animation animation) {
+		this.entityId = entityId;
+		this.animation = animation;
 	}
 
-	@Override
-	public Protocol getDefaultProtocol() {
-		return vanilla;
+	public int getEntityId() {
+		return entityId;
 	}
 
-	public void initializePlayer(Player player, Session session) {
-		vanilla.initializePlayer(player, session);
+	public Animation getAnimation() {
+		return animation;
 	}
 }

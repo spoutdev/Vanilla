@@ -34,7 +34,7 @@ import org.spout.api.util.SpoutToStringStyle;
 
 public final class BlockActionMessage extends Message {
 	private final int x, y, z;
-	byte firstByte, secondByte;
+	private final byte firstByte, secondByte;
 
 	public BlockActionMessage(Block block, byte firstByte, byte secondByte) {
 		this(block.getX(), block.getY(), block.getZ(), firstByte, secondByte);

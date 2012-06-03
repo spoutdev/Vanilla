@@ -28,10 +28,10 @@ package org.spout.vanilla.controller.world.sky;
 
 import org.spout.api.Spout;
 
+import org.spout.api.protocol.ProtocolUtil;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.world.VanillaSky;
-import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
-import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
+import org.spout.vanilla.protocol.event.TimeChangeProtocolEvent;
 import org.spout.vanilla.world.Weather;
 
 public class NormalSky extends VanillaSky {
@@ -41,7 +41,7 @@ public class NormalSky extends VanillaSky {
 
 	@Override
 	public void updateTime(long time) {
-		broadcastMessage(new TimeUpdateMessage(time));
+		ProtocolUtil.executeWithPlayers(getWorld().getPlayers(), new ProtocolUtil.CallProtocolEvent(new TimeChangeProtocolEvent(time)));
 	}
 
 	@Override
@@ -50,8 +50,6 @@ public class NormalSky extends VanillaSky {
 		if (event.isCancelled()) {
 			return;
 		}
-
-		byte reason = (newWeather.equals(Weather.RAIN) || newWeather.equals(Weather.THUNDERSTORM)) ? ChangeGameStateMessage.BEGIN_RAINING : ChangeGameStateMessage.END_RAINING;
-		broadcastMessage(new ChangeGameStateMessage(reason));
+		ProtocolUtil.executeWithPlayers(getWorld().getPlayers(), new ProtocolUtil.CallProtocolEvent(event));
 	}
 }

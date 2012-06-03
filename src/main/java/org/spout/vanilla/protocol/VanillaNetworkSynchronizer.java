@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.util.Set;
-
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
+
+import java.util.Set;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
@@ -53,7 +54,6 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEventListener;
 import org.spout.api.util.map.TIntPairObjectHashMap;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
@@ -71,12 +71,8 @@ import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.world.generator.VanillaBiome;
-import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.theend.TheEndGenerator;
-
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	@SuppressWarnings("unused")
@@ -157,32 +153,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		TIntHashSet column = activeChunks.get(x, z);
 		if (column == null) {
-			int[][] heights = new int[Chunk.CHUNK_SIZE][Chunk.CHUNK_SIZE];
+			int[][] heights = getColumnHeights(p);
 
-			World w = p.getWorld();
-
-			for (int xx = 0; xx < Chunk.CHUNK_SIZE; xx++) {
-				for (int zz = 0; zz < Chunk.CHUNK_SIZE; zz++) {
-					heights[xx][zz] = w.getSurfaceHeight(p.getBlockX() + xx, p.getBlockZ() + zz, true);
-				}
-			}
-
-			byte[][] packetChunkData = new byte[16][Chunk.CHUNK_VOLUME * 5 / 2];
-
-			for (int xx = 0; xx < Chunk.CHUNK_SIZE; xx++) {
-				for (int zz = 0; zz < Chunk.CHUNK_SIZE; zz++) {
-					for (int yy = 0; yy < Chunk.CHUNK_SIZE * 16; yy++) {
-						int cube = yy >> Chunk.CHUNK_SIZE_BITS;
-						int yOffset = yy & 0xF;
-						int dataOffset = xx | (yOffset << 8) | (zz << 4);
-						if (heights[xx][zz] < yy && yy > 0) {
-							byte mask = (dataOffset & 0x1) == 0 ? (byte) 0x0F : (byte) 0xF0;
-							packetChunkData[cube][(Chunk.CHUNK_VOLUME << 1) + (dataOffset >> 1)] |= mask;
-						} else {
-							packetChunkData[cube][dataOffset] = 1;
-						}
-					}
-				}
+			byte[][] packetChunkData = new byte[16][];
+			
+			for (int cube = 0; cube < 16; cube++) {
+				packetChunkData[cube] = getChunkHeightMap(heights, cube);
 			}
 
 			column = new TIntHashSet();
@@ -206,6 +182,49 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			owner.getSession().send(CCMsg);
 		}
 		column.add(y);
+	}
+	
+	private static int[][] getColumnHeights(Point p) {
+		int[][] heights = new int[Chunk.CHUNK_SIZE][Chunk.CHUNK_SIZE];
+
+		World w = p.getWorld();
+
+		for (int xx = 0; xx < Chunk.CHUNK_SIZE; xx++) {
+			for (int zz = 0; zz < Chunk.CHUNK_SIZE; zz++) {
+				heights[xx][zz] = w.getSurfaceHeight(p.getBlockX() + xx, p.getBlockZ() + zz, true);
+			}
+		}
+		return heights;
+	}
+	
+	private static byte[] getChunkHeightMap(int[][] heights, int chunkY) {
+		byte[] packetChunkData = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
+		int baseY = chunkY << Chunk.CHUNK_SIZE_BITS;
+		int blockYStep = 1 << (Chunk.CHUNK_SIZE_BITS << 1);
+		int lightYStep = blockYStep >> 1;
+		int skylightBase = Chunk.CHUNK_VOLUME << 1;
+		
+		for (int xx = 0; xx < Chunk.CHUNK_SIZE; xx++) {
+			for (int zz = 0; zz < Chunk.CHUNK_SIZE; zz++) {
+				int dataOffset = xx | (zz << 4);
+				int threshold = heights[xx][zz] - baseY;
+				if (chunkY == 0 && threshold < 0) {
+					threshold = 0;
+				}
+				int yy;
+				for (yy = 0; yy < Chunk.CHUNK_SIZE && yy <= threshold ; yy++) {
+					packetChunkData[dataOffset] = 1;
+					dataOffset += blockYStep;
+				}
+				byte mask = (xx & 0x1) == 0 ? (byte) 0x0F : (byte) 0xF0;
+				dataOffset = skylightBase + ((xx | (zz << 4) + (yy << (Chunk.CHUNK_SIZE_BITS << 1))) >> 1);
+				for (; yy < Chunk.CHUNK_SIZE; yy++) {
+					packetChunkData[dataOffset] |= mask;
+					dataOffset += lightYStep;
+				}
+			}
+		}
+		return packetChunkData;
 	}
 
 	@Override

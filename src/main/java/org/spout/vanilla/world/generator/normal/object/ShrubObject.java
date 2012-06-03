@@ -28,23 +28,17 @@ package org.spout.vanilla.world.generator.normal.object;
 
 import java.util.Random;
 
-import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class ShrubObject extends WorldGeneratorObject {
-	// rng
-	private final Random random;
+public class ShrubObject extends TreeObject {
 	// size control
 	private byte radius = 2;
-	// metadata
-	private short leaves = 3;
-	private short wood = 0;
 
 	public ShrubObject(Random random) {
-		this.random = random;
+		super(random, (byte) 1, (byte) 1, (short) 3, (short) 0);
 	}
 
 	@Override
@@ -56,7 +50,9 @@ public class ShrubObject extends WorldGeneratorObject {
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
 		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, w);
-		w.setBlockMaterial(x, y, z, VanillaMaterials.LOG, wood, w);
+		for (byte yy = 0; yy < totalHeight; yy++) {
+			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.LOG, logMetadata, w);
+		}
 		for (byte yy = radius; yy > -1; yy--) {
 			for (byte xx = (byte) -yy; xx < yy + 1; xx++) {
 				for (byte zz = (byte) -yy; zz < yy + 1; zz++) {
@@ -65,19 +61,11 @@ public class ShrubObject extends WorldGeneratorObject {
 					}
 					final BlockMaterial material = w.getBlockMaterial(x + xx, y - yy + radius, z + zz);
 					if (!material.isOpaque() && material != VanillaMaterials.LOG) {
-						w.setBlockMaterial(x + xx, y - yy + radius, z + zz, VanillaMaterials.LEAVES, leaves, w);
+						w.setBlockMaterial(x + xx, y - yy + radius, z + zz, VanillaMaterials.LEAVES, leavesMetadata, w);
 					}
 				}
 			}
 		}
-	}
-
-	public void setLeavesMetadata(short leaves) {
-		this.leaves = leaves;
-	}
-
-	public void setWoodMetadata(short wood) {
-		this.wood = wood;
 	}
 
 	public void setRadius(byte radius) {

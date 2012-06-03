@@ -67,7 +67,7 @@ public class PointObserver extends Controller implements VanillaController {
 	public void onAttached() {
 		getParent().setCollision(null);
 		getParent().setObserver(true);
-		getParent().setViewDistance(CHUNK_VIEW_DISTANCE * Chunk.CHUNK_SIZE);
+		getParent().setViewDistance(CHUNK_VIEW_DISTANCE << Chunk.BLOCKS.BITS);
 		currPoint = getParent().getPosition();
 	}
 }

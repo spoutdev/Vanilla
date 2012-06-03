@@ -91,11 +91,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	protected void freeChunk(Point p) {
-		int x = (int) p.getX() >> Chunk.CHUNK_SIZE_BITS;
-		int y = (int) p.getY() >> Chunk.CHUNK_SIZE_BITS; // + SEALEVEL_CHUNK;
-		int z = (int) p.getZ() >> Chunk.CHUNK_SIZE_BITS;
+		int x = (int) p.getX() >> Chunk.BLOCKS.BITS;
+		int y = (int) p.getY() >> Chunk.BLOCKS.BITS; // + SEALEVEL_CHUNK;
+		int z = (int) p.getZ() >> Chunk.BLOCKS.BITS;
 
-		if (y < 0 || y >= p.getWorld().getHeight() >> Chunk.CHUNK_SIZE_BITS) {
+		if (y < 0 || y >= p.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
 			return;
 		}
 
@@ -115,27 +115,27 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 	}
 
-	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
-	private static final byte[] AIR_CHUNK_DATA = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
+	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
+	private static final byte[] AIR_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 
 	static {
 		int i = 0;
-		for (int c = 0; c < Chunk.CHUNK_VOLUME; c++) { // blocks
+		for (int c = 0; c < Chunk.BLOCKS.VOLUME; c++) { // blocks
 			SOLID_CHUNK_DATA[i] = 1;
 			AIR_CHUNK_DATA[i++] = 0;
 		}
 
-		for (int c = 0; c < Chunk.CHUNK_VOLUME / 2; c++) { // block data
+		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // block data
 			SOLID_CHUNK_DATA[i] = 0x00;
 			AIR_CHUNK_DATA[i++] = 0x00;
 		}
 
-		for (int c = 0; c < Chunk.CHUNK_VOLUME / 2; c++) { // block light
+		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // block light
 			SOLID_CHUNK_DATA[i] = 0x00;
 			AIR_CHUNK_DATA[i++] = 0x00;
 		}
 
-		for (int c = 0; c < Chunk.CHUNK_VOLUME / 2; c++) { // sky light
+		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // sky light
 			SOLID_CHUNK_DATA[i] = 0x00;
 			AIR_CHUNK_DATA[i++] = (byte) 0xFF;
 		}
@@ -143,11 +143,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	protected void initChunk(Point p) {
-		int x = (int) p.getX() >> Chunk.CHUNK_SIZE_BITS;
-		int y = (int) p.getY() >> Chunk.CHUNK_SIZE_BITS;// + SEALEVEL_CHUNK;
-		int z = (int) p.getZ() >> Chunk.CHUNK_SIZE_BITS;
+		int x = (int) p.getX() >> Chunk.BLOCKS.BITS;
+		int y = (int) p.getY() >> Chunk.BLOCKS.BITS;// + SEALEVEL_CHUNK;
+		int z = (int) p.getZ() >> Chunk.BLOCKS.BITS;
 
-		if (y < 0 || y >= p.getWorld().getHeight() >> Chunk.CHUNK_SIZE_BITS) {
+		if (y < 0 || y >= p.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
 			return;
 		}
 
@@ -159,6 +159,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			
 			for (int cube = 0; cube < 16; cube++) {
 				packetChunkData[cube] = getChunkHeightMap(heights, cube);
+
 			}
 
 			column = new TIntHashSet();
@@ -167,13 +168,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			owner.getSession().send(loadChunk);
 
 			Chunk chunk = p.getWorld().getChunkFromBlock(p);
-			byte[] biomeData = new byte[Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE];
-			final int chunkMask = (Chunk.CHUNK_SIZE - 1);
-			for (int dx = x; dx < x + Chunk.CHUNK_SIZE; ++dx) {
-				for (int dz = z; dz < z + Chunk.CHUNK_SIZE; ++dz) {
-					Biome biome = chunk.getBiomeType(dx & chunkMask, 0, dz & chunkMask);
+			byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
+			for (int dx = x; dx < x + Chunk.BLOCKS.SIZE; ++dx) {
+				for (int dz = z; dz < z + Chunk.BLOCKS.SIZE; ++dz) {
+					Biome biome = chunk.getBiomeType(dx & Chunk.BLOCKS.MASK, 0, dz & Chunk.BLOCKS.MASK);
 					if (biome instanceof VanillaBiome) {
-						biomeData[(dz & chunkMask) << 4 | (dx & chunkMask)] = (byte) ((VanillaBiome) biome).getBiomeId();
+						biomeData[(dz & Chunk.BLOCKS.MASK) << 4 | (dx & Chunk.BLOCKS.MASK)] = (byte) ((VanillaBiome) biome).getBiomeId();
 					}
 				}
 			}
@@ -185,12 +185,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 	
 	private static int[][] getColumnHeights(Point p) {
-		int[][] heights = new int[Chunk.CHUNK_SIZE][Chunk.CHUNK_SIZE];
+		int[][] heights = new int[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
 
 		World w = p.getWorld();
 
-		for (int xx = 0; xx < Chunk.CHUNK_SIZE; xx++) {
-			for (int zz = 0; zz < Chunk.CHUNK_SIZE; zz++) {
+		for (int xx = 0; xx < Chunk.BLOCKS.SIZE; xx++) {
+			for (int zz = 0; zz < Chunk.BLOCKS.SIZE; zz++) {
 				heights[xx][zz] = w.getSurfaceHeight(p.getBlockX() + xx, p.getBlockZ() + zz, true);
 			}
 		}
@@ -198,27 +198,27 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 	
 	private static byte[] getChunkHeightMap(int[][] heights, int chunkY) {
-		byte[] packetChunkData = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
-		int baseY = chunkY << Chunk.CHUNK_SIZE_BITS;
-		int blockYStep = 1 << (Chunk.CHUNK_SIZE_BITS << 1);
+		byte[] packetChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
+		int baseY = chunkY << Chunk.BLOCKS.BITS;
+		int blockYStep = 1 << (Chunk.BLOCKS.BITS << 1);
 		int lightYStep = blockYStep >> 1;
-		int skylightBase = Chunk.CHUNK_VOLUME << 1;
-		
-		for (int xx = 0; xx < Chunk.CHUNK_SIZE; xx++) {
-			for (int zz = 0; zz < Chunk.CHUNK_SIZE; zz++) {
+		int skylightBase = Chunk.BLOCKS.VOLUME << 1;
+
+		for (int xx = 0; xx < Chunk.BLOCKS.SIZE; xx++) {
+			for (int zz = 0; zz < Chunk.BLOCKS.SIZE; zz++) {
 				int dataOffset = xx | (zz << 4);
 				int threshold = heights[xx][zz] - baseY;
 				if (chunkY == 0 && threshold < 0) {
 					threshold = 0;
 				}
 				int yy;
-				for (yy = 0; yy < Chunk.CHUNK_SIZE && yy <= threshold ; yy++) {
+				for (yy = 0; yy < Chunk.BLOCKS.SIZE && yy <= threshold ; yy++) {
 					packetChunkData[dataOffset] = 1;
 					dataOffset += blockYStep;
 				}
 				byte mask = (xx & 0x1) == 0 ? (byte) 0x0F : (byte) 0xF0;
-				dataOffset = skylightBase + ((xx | (zz << 4) + (yy << (Chunk.CHUNK_SIZE_BITS << 1))) >> 1);
-				for (; yy < Chunk.CHUNK_SIZE; yy++) {
+				dataOffset = skylightBase + ((xx | (zz << 4) + (yy << (Chunk.BLOCKS.SIZE << 1))) >> 1);
+				for (; yy < Chunk.BLOCKS.SIZE; yy++) {
 					packetChunkData[dataOffset] |= mask;
 					dataOffset += lightYStep;
 				}
@@ -233,7 +233,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int y = c.getY();// + SEALEVEL_CHUNK;
 		int z = c.getZ();
 
-		if (y < 0 || y >= c.getWorld().getHeight() >> Chunk.CHUNK_SIZE_BITS) {
+		if (y < 0 || y >= c.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
 			return;
 		}
 
@@ -242,7 +242,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		short[] rawBlockData = snapshot.getBlockData();
 		byte[] rawBlockLight = snapshot.getBlockLight();
 		byte[] rawSkyLight = snapshot.getSkyLight();
-		byte[] fullChunkData = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
+		byte[] fullChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 
 		int arrIndex = 0;
 		for (int i = 0; i < rawBlockIdArray.length; i++) {

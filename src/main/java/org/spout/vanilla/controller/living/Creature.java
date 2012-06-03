@@ -29,6 +29,7 @@ package org.spout.vanilla.controller.living;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.util.Parameter;
@@ -63,7 +64,7 @@ public abstract class Creature extends Living {
 
 		// Handle drowning and suffocation damage
 		Point headPos = getHeadPosition();
-		if (getParent().isObserver() || headPos.getWorld().getChunkFromBlock(headPos, false) != null) {
+		if (getParent().isObserver() || headPos.getWorld().getChunkFromBlock(headPos, LoadOption.NO_LOAD) != null) {
 			Block head = getParent().getWorld().getBlock(headPos);
 			if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 				airTicks++;

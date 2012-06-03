@@ -68,6 +68,11 @@ public class DeadBush extends GroundAttachable implements Plant {
 	}
 
 	@Override
+	public boolean isPlacementObstacle() {
+		return false;
+	}
+
+	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		if (super.canAttachTo(material, face)) {
 			return material.equals(VanillaMaterials.SAND);

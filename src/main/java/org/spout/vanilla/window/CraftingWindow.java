@@ -89,7 +89,7 @@ public abstract class CraftingWindow extends Window {
 						materials.add(mat);
 					}
 				}
-				if (recipe.getIngredients().containsAll(materials)) {
+				if (materials.containsAll(recipe.getIngredients())) {
 					craft = true;
 				}
 			} else if (recipe instanceof ShapedRecipe) {

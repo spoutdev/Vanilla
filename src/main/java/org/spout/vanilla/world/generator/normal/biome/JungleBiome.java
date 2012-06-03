@@ -26,47 +26,33 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.VanillaBiome;
+public class JungleBiome extends VanillaNormalBiome {
+	
+	private final static ScalePoint NOISE = new ScalePoint();
 
-public class JungleBiome extends VanillaBiome {
-	public JungleBiome(int biomeId) {
-		super(biomeId);
+	static {
+		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.setxScale(0.07D);
+		NOISE.setyScale(0.08D);
+		NOISE.setzScale(0.07D);
 	}
 
-	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		int y = chunkY * 16, height = 66;
-
-		for (int dy = y; dy < y + 16; dy++) {
-			blockData.set(x, dy, z, getBlockId(height, dy));
-		}
-
-		if (x % 16 == 0 && height << 4 == chunkY) {
-			blockData.set(x, height, z, VanillaMaterials.NETHERRACK.getId()); // until biome is implemented
-		}
+	public JungleBiome(int biomeId) {
+		super(biomeId, NOISE/*, new PondDecorator(), new TreeDecorator()*/);
+		/*this.minDensityTerrainHeight = 67;
+		this.maxDensityTerrainHeight = 75;
+		this.minDensityTerrainThickness = 3;
+		this.maxDensityTerrainThickness = 7;
+		this.bottomHeightMapScale = 1f;
+		this.upperHeightMapScale = 1f;
+		this.densityTerrainThicknessScale = 6f;
+		this.densityTerrainHeightScale = 7f;*/
 	}
 
 	@Override
 	public String getName() {
 		return "Jungle";
-	}
-
-	protected short getBlockId(int top, int dy) {
-		short id;
-		if (dy > top) {
-			id = VanillaMaterials.AIR.getId();
-		} else if (dy == top) {
-			id = VanillaMaterials.GRASS.getId();
-		} else if (dy + 4 >= top) {
-			id = VanillaMaterials.DIRT.getId();
-		} else if (dy != 0) {
-			id = VanillaMaterials.STONE.getId();
-		} else {
-			id = VanillaMaterials.BEDROCK.getId();
-		}
-		return id;
 	}
 }

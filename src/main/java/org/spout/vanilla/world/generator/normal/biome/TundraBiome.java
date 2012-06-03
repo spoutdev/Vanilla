@@ -31,7 +31,6 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.decorator.PondDecorator;
 
 public class TundraBiome extends VanillaNormalBiome {
 
@@ -45,11 +44,11 @@ public class TundraBiome extends VanillaNormalBiome {
 	}
 
 	public TundraBiome(int id) {
-		super(id, NOISE, new PondDecorator());
+		super(id, NOISE/*, new PondDecorator()*/);
+		this.minDensityTerrainHeight = 67;
 		this.maxDensityTerrainHeight = 69;
-		this.upperHeightMapScale = 2.3f;
-		this.bottomHeightMapScale = 3.33f;
-		this.densityTerrainHeightScale = 5f;
+		this.upperHeightMapScale = 3.3f;
+		this.bottomHeightMapScale = 3.7f;
 	}
 
 	@Override

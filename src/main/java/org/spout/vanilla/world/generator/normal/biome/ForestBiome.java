@@ -30,22 +30,18 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import org.spout.vanilla.world.generator.normal.decorator.GrassDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.PondDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
-
 public class ForestBiome extends VanillaNormalBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
-		NOISE.setxScale(0.07D);
-		NOISE.setyScale(0.08D);
-		NOISE.setzScale(0.07D);
+		NOISE.setxScale(0.09D);
+		NOISE.setyScale(0.045D);
+		NOISE.setzScale(0.09D);
 	}
 
 	public ForestBiome(int biomeId) {
-		super(biomeId, NOISE, new PondDecorator(), new TreeDecorator(), new GrassDecorator());
+		super(biomeId, NOISE/*, new PondDecorator(), new TreeDecorator(), new GrassDecorator()*/);
 	}
 
 	@Override

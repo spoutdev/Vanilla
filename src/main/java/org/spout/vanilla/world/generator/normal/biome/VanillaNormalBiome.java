@@ -31,6 +31,7 @@ import net.royawesome.jlibnoise.module.Module;
 import net.royawesome.jlibnoise.module.combiner.Add;
 import net.royawesome.jlibnoise.module.combiner.Multiply;
 import net.royawesome.jlibnoise.module.modifier.Clamp;
+import net.royawesome.jlibnoise.module.modifier.Exponent;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
@@ -64,31 +65,31 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 	// params to be modified by the extending biome
 	// these are defaults to gen forest terrain (appropriate for many biomes)
 	// limits of height maps
-	protected byte minDensityTerrainHeight = 64;
-	protected byte maxDensityTerrainHeight = 70;
-	protected byte minDensityTerrainThickness = 1;
+	protected byte minDensityTerrainHeight = 71;
+	protected byte maxDensityTerrainHeight = 74;
+	protected byte minDensityTerrainThickness = 0;
 	protected byte maxDensityTerrainThickness = 3;
 	// scale of height maps
-	protected float upperHeightMapScale = 2f;
-	protected float bottomHeightMapScale = 4f;
+	protected float upperHeightMapScale = 4f;
+	protected float bottomHeightMapScale = 5f;
 	// scale of the density layer
-	protected float densityTerrainThicknessScale = 3f;
+	protected float densityTerrainThicknessScale = 6f;
 	protected float densityTerrainHeightScale = 4f;
 
 	static {
-		ELEVATION.setFrequency(0.4D);
+		ELEVATION.setFrequency(0.2D);
 		ELEVATION.setLacunarity(1D);
 		ELEVATION.setNoiseQuality(NoiseQuality.STANDARD);
 		ELEVATION.setPersistence(0.7D);
 		ELEVATION.setOctaveCount(1);
 
-		ROUGHNESS.setFrequency(0.5D);
+		ROUGHNESS.setFrequency(0.53D);
 		ROUGHNESS.setLacunarity(1D);
 		ROUGHNESS.setNoiseQuality(NoiseQuality.STANDARD);
 		ROUGHNESS.setPersistence(0.9D);
 		ROUGHNESS.setOctaveCount(1);
 
-		DETAIL.setFrequency(0.9D);
+		DETAIL.setFrequency(0.7D);
 		DETAIL.setLacunarity(1D);
 		DETAIL.setNoiseQuality(NoiseQuality.STANDARD);
 		DETAIL.setPersistence(0.7D);
@@ -112,9 +113,13 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 
 		this.modifiedMaster = modifiedMaster;
 
-		mainMaster.SetSourceModule(0, modifiedMaster);
-		mainMaster.setFrequency(0.05D);
-		mainMaster.setPower(0.3125D);
+		final Exponent contrast = new Exponent();
+		contrast.SetSourceModule(0, modifiedMaster);
+		contrast.setExponent(1.5D);
+		
+		mainMaster.SetSourceModule(0, contrast);
+		mainMaster.setFrequency(0.025D);
+		mainMaster.setPower(5.5D);
 
 		bottomHeightMapMaster.SetSourceModule(0, mainMaster);
 		bottomHeightMapMaster.setUpperBound(0D);
@@ -153,9 +158,11 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 		final int densityTerrainHeightMin = getDensityTerrainHeight(x, z);
 		final int densityTerrainHeightMax = densityTerrainHeightMin + getDensityTerrainThickness(x, z);
 
+		final int bottomHeightMapHeight = getBottomHeightMapValue(x, z, densityTerrainHeightMin);
+		final int upperHeightMapHeight = getUpperHeightMapValue(x, z, densityTerrainHeightMax);
+		
 		for (int y = startY; y < endY; y++) {
 			if (y <= densityTerrainHeightMin) {
-				final int bottomHeightMapHeight = getBottomHeightMapValue(x, z, densityTerrainHeightMin);
 				for (; y <= bottomHeightMapHeight && y < endY; y++) {
 					blockData.set(x, y, z, VanillaMaterials.STONE.getId());
 				}
@@ -163,8 +170,7 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 					break;
 				}
 			} else if (y > densityTerrainHeightMax) {
-				final int value = getUpperHeightMapValue(x, z, densityTerrainHeightMax);
-				for (; y < value && y < endY; y++) {
+				for (; y < upperHeightMapHeight && y < endY; y++) {
 					blockData.set(x, y, z, VanillaMaterials.STONE.getId());
 				}
 				break; // we're done for the entire world column!

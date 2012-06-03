@@ -28,26 +28,23 @@ package org.spout.vanilla.world.generator.normal.biome;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.GrassDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.PondDecorator;
-
 public class PlainBiome extends VanillaNormalBiome {
+
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
-		NOISE.setxScale(0.09D);
-		NOISE.setyScale(0.08D);
-		NOISE.setzScale(0.09D);
+		NOISE.setxScale(0.077D);
+		NOISE.setyScale(0.04D);
+		NOISE.setzScale(0.077D);
 	}
 
 	public PlainBiome(int id) {
-		super(id, NOISE, new PondDecorator(), new GrassDecorator(), new FlowerDecorator());
+		super(id, NOISE/*, new PondDecorator(), new GrassDecorator(), new FlowerDecorator()*/);
 		this.minDensityTerrainHeight = 67;
 		this.maxDensityTerrainHeight = 69;
-		this.upperHeightMapScale = 2.3f;
-		this.bottomHeightMapScale = 3f;
+		this.upperHeightMapScale = 3f;
+		this.bottomHeightMapScale = 3.3f;
 	}
 
 	@Override

@@ -30,8 +30,8 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 import org.spout.api.math.MathHelper;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.decorator.CactusDecorator;
 
 public class DesertBiome extends VanillaNormalBiome {
 	
@@ -45,10 +45,10 @@ public class DesertBiome extends VanillaNormalBiome {
 	}
 
 	public DesertBiome(int biomeId) {
-		super(biomeId, NOISE, new CactusDecorator());
+		super(biomeId, NOISE/*, new CactusDecorator()*/);
 		this.minDensityTerrainHeight = 67;
-		this.maxDensityTerrainHeight = 69;
-		this.upperHeightMapScale = 2.3f;
+		this.maxDensityTerrainHeight = 68;
+		this.upperHeightMapScale = 2.5f;
 		this.bottomHeightMapScale = 3f;
 	}
 

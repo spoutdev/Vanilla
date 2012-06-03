@@ -74,6 +74,7 @@ import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
@@ -266,12 +267,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	protected void worldChanged(World world) {
 		int dimensionBit;
 		WorldGenerator worldGen = world.getGenerator();
-		if (worldGen instanceof NormalGenerator || worldGen instanceof FlatGenerator) {
-			dimensionBit = 0;
-		} else if (worldGen instanceof NetherGenerator) {
+		if (worldGen instanceof NetherGenerator) {
 			dimensionBit = -1;
-		} else {
+		} else if (worldGen instanceof TheEndGenerator) {
 			dimensionBit = 1;
+		} else {
+			dimensionBit = 0;
 		}
 		if (first) {
 			first = false;

@@ -43,7 +43,7 @@ import org.spout.vanilla.world.selector.VanillaBiomeSelector;
 public class NormalGenerator extends BiomeGenerator implements VanillaGenerator {
 	private BiomeSelector selector;
 	
-	private final static int SEA_LEVEL = 63;
+	public final static int SEA_LEVEL = 63;
 
 	@Override
 	public void registerBiomes() {

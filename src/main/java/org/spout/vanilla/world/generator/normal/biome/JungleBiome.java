@@ -34,21 +34,14 @@ public class JungleBiome extends VanillaNormalBiome {
 
 	static {
 		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
-		NOISE.setxScale(0.07D);
-		NOISE.setyScale(0.08D);
-		NOISE.setzScale(0.07D);
+		NOISE.setxScale(0.087D);
+		NOISE.setyScale(0.045D);
+		NOISE.setzScale(0.087D);
 	}
 
 	public JungleBiome(int biomeId) {
 		super(biomeId, NOISE/*, new PondDecorator(), new TreeDecorator()*/);
-		/*this.minDensityTerrainHeight = 67;
 		this.maxDensityTerrainHeight = 75;
-		this.minDensityTerrainThickness = 3;
-		this.maxDensityTerrainThickness = 7;
-		this.bottomHeightMapScale = 1f;
-		this.upperHeightMapScale = 1f;
-		this.densityTerrainThicknessScale = 6f;
-		this.densityTerrainHeightScale = 7f;*/
 	}
 
 	@Override

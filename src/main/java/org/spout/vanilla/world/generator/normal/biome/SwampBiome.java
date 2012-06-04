@@ -26,47 +26,33 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.VanillaBiome;
+public class SwampBiome extends VanillaNormalBiome {
+	
+	private final static ScalePoint NOISE = new ScalePoint();
 
-public class SwampBiome extends VanillaBiome {
-	public SwampBiome(int biomeId) {
-		super(biomeId);
+	static {
+		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.setxScale(0.067D);
+		NOISE.setyScale(0.06D);
+		NOISE.setzScale(0.067D);
 	}
-
-	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		int y = chunkY * 16, height = 64;
-
-		for (int dy = y; dy < y + 16; dy++) {
-			blockData.set(x, dy, z, getBlockId(height, dy));
-		}
-
-		if (x % 16 == 0 && height << 4 == chunkY) {
-			blockData.set(x, height, z, VanillaMaterials.NETHERRACK.getId()); // until biome is implemented
-		}
+	
+	public SwampBiome(int biomeId) {
+		super(biomeId, NOISE);
+		this.minDensityTerrainHeight = 60;
+		this.maxDensityTerrainHeight = 65;
+		this.minDensityTerrainThickness = 1;
+		this.maxDensityTerrainThickness = 2;
+		this.upperHeightMapScale = 2f;
+		this.bottomHeightMapScale = 3f;
+		this.densityTerrainHeightScale = 2f;
+		this.densityTerrainThicknessScale = 3f;
 	}
 
 	@Override
 	public String getName() {
 		return "Swampland";
-	}
-
-	protected short getBlockId(int top, int dy) {
-		short id;
-		if (dy > top) {
-			id = VanillaMaterials.AIR.getId();
-		} else if (dy == top) {
-			id = VanillaMaterials.DIRT.getId();
-		} else if (dy + 4 >= top) {
-			id = VanillaMaterials.DIRT.getId();
-		} else if (dy != 0) {
-			id = VanillaMaterials.STONE.getId();
-		} else {
-			id = VanillaMaterials.BEDROCK.getId();
-		}
-		return id;
 	}
 }

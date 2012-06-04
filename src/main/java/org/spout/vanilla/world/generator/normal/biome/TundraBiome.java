@@ -31,6 +31,7 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 public class TundraBiome extends VanillaNormalBiome {
 
@@ -78,9 +79,9 @@ public class TundraBiome extends VanillaNormalBiome {
 				hasSurface = false;
 			}
 		}
-		if (chunkY * 16 <= SEA_LEVEL && (chunkY + 1) * 16 > SEA_LEVEL
-				&& blockData.get(x, SEA_LEVEL, z) == VanillaMaterials.STATIONARY_WATER.getId()) {
-			blockData.set(x, SEA_LEVEL, z, VanillaMaterials.ICE.getId());
+		if (chunkY * 16 <= NormalGenerator.SEA_LEVEL && (chunkY + 1) * 16 > NormalGenerator.SEA_LEVEL
+				&& blockData.get(x, NormalGenerator.SEA_LEVEL, z) == VanillaMaterials.STATIONARY_WATER.getId()) {
+			blockData.set(x, NormalGenerator.SEA_LEVEL, z, VanillaMaterials.ICE.getId());
 		}
 	}
 }

@@ -43,10 +43,9 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 public abstract class VanillaNormalBiome extends VanillaBiome {
-
-	protected static final byte SEA_LEVEL = 64;
 	// the master noise to be used by biomes extending this class
 	protected static final Add MASTER = new Add();
 	// the parts for the master noise
@@ -118,8 +117,8 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 		contrast.setExponent(1.5D);
 		
 		mainMaster.SetSourceModule(0, contrast);
-		mainMaster.setFrequency(0.025D);
-		mainMaster.setPower(5.5D);
+		mainMaster.setFrequency(0.005D);
+		mainMaster.setPower(6D);
 
 		bottomHeightMapMaster.SetSourceModule(0, mainMaster);
 		bottomHeightMapMaster.setUpperBound(0D);
@@ -216,7 +215,7 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 		final int endY = chunkY * 16;
 		final int startY = endY + size - 1;
 
-		final byte maxGroudCoverDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, 0, z) * 2 + 4, 1D, 5D);
+		final byte maxGroudCoverDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, 0, z) * 2 + 4, 2D, 5D);
 		final byte sampleSize = (byte) (maxGroudCoverDepth + 1);
 
 		boolean hasSurface = false;
@@ -242,13 +241,13 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 			if (id == VanillaMaterials.AIR.getId()) {
 				hasSurface = true;
 				groundCoverDepth = 0;
-				if (y <= SEA_LEVEL) {
+				if (y <= NormalGenerator.SEA_LEVEL) {
 					blockData.set(x, y, z, VanillaMaterials.STATIONARY_WATER.getId());
 				}
 			} else {
 				if (hasSurface) {
 					if (groundCoverDepth == 0) {
-						short topCover = y > SEA_LEVEL - 1 ? VanillaMaterials.GRASS.getId() : VanillaMaterials.DIRT.getId();
+						short topCover = y >= NormalGenerator.SEA_LEVEL ? VanillaMaterials.GRASS.getId() : VanillaMaterials.DIRT.getId();
 						blockData.set(x, y, z, topCover);
 						groundCoverDepth++;
 					} else if (groundCoverDepth < maxGroudCoverDepth) {

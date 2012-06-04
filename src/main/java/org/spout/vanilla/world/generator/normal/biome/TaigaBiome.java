@@ -26,47 +26,30 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.VanillaBiome;
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-public class TaigaBiome extends VanillaBiome {
-	public TaigaBiome(int biomeId) {
-		super(biomeId);
+public class TaigaBiome extends VanillaNormalBiome {
+	
+	private final static ScalePoint NOISE = new ScalePoint();
+
+	static {
+		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.setxScale(0.09D);
+		NOISE.setyScale(0.08D);
+		NOISE.setzScale(0.09D);
 	}
-
-	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		int y = chunkY * 16, height = 67;
-
-		for (int dy = y; dy < y + 16; dy++) {
-			blockData.set(x, dy, z, getBlockId(height, dy));
-		}
-
-		if (x % 16 == 0 && height << 4 == chunkY) {
-			blockData.set(x, height, z, VanillaMaterials.NETHERRACK.getId()); // until biome is implemented
-		}
+	
+	public TaigaBiome(int biomeId) {
+		super(biomeId, NOISE);
+		this.minDensityTerrainHeight = 67;
+		this.maxDensityTerrainHeight = 71;
+		this.upperHeightMapScale = 3.3f;
+		this.bottomHeightMapScale = 3.7f;
 	}
 
 	@Override
 	public String getName() {
 		return "Taiga";
-	}
-
-	protected short getBlockId(int top, int dy) {
-		short id;
-		if (dy > top) {
-			id = VanillaMaterials.AIR.getId();
-		} else if (dy == top) {
-			id = VanillaMaterials.GRASS.getId();
-		} else if (dy + 4 >= top) {
-			id = VanillaMaterials.DIRT.getId();
-		} else if (dy != 0) {
-			id = VanillaMaterials.STONE.getId();
-		} else {
-			id = VanillaMaterials.BEDROCK.getId();
-		}
-		return id;
 	}
 }

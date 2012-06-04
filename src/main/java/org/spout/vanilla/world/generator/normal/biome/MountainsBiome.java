@@ -26,59 +26,33 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
-import net.royawesome.jlibnoise.NoiseQuality;
-import net.royawesome.jlibnoise.module.source.RidgedMulti;
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
+public class MountainsBiome extends VanillaNormalBiome {
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.VanillaBiome;
-import org.spout.vanilla.world.generator.normal.decorator.CaveDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
+	private final static ScalePoint NOISE = new ScalePoint();
 
-public class MountainsBiome extends VanillaBiome {
-	private RidgedMulti noise = new RidgedMulti();
-
-	public MountainsBiome(int biomeId) {
-		super(biomeId, new FlowerDecorator(), new TreeDecorator(), new CaveDecorator(), new OreDecorator());
-		noise.setNoiseQuality(NoiseQuality.BEST);
-		noise.setOctaveCount(10);
-		noise.setFrequency(0.4);
-		noise.setLacunarity(0.10);
+	static {
+		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.setxScale(0.080D);
+		NOISE.setyScale(0.040D);
+		NOISE.setzScale(0.080D);
 	}
-
-	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		noise.setSeed((int) blockData.getWorld().getSeed());
-
-		final int y = chunkY * 16;
-		final int height = (int) ((noise.GetValue(x / 16.0 + 0.005, 0.05, z / 16.0 + 0.005) + 1.0) * 10.0 + 60.0);
-
-		for (int dy = y; dy < y + 16; dy++) {
-			blockData.set(x, dy, z, getBlockId(height, dy));
-		}
+	
+	public MountainsBiome(int biomeId) {
+		super(biomeId, NOISE/*, new FlowerDecorator(), new TreeDecorator()*/);
+		minDensityTerrainHeight = 64;
+		maxDensityTerrainHeight = 86;
+		minDensityTerrainThickness = 6;
+		maxDensityTerrainThickness = 16;
+		upperHeightMapScale = 5.3f;
+		bottomHeightMapScale = 5f;
+		densityTerrainThicknessScale = 30f;
+		densityTerrainHeightScale = 10f;
 	}
 
 	@Override
 	public String getName() {
 		return "Mountains";
-	}
-
-	protected short getBlockId(int top, int dy) {
-		short id;
-		if (dy > top) {
-			id = VanillaMaterials.AIR.getId();
-		} else if (dy == top && dy >= 63) {
-			id = VanillaMaterials.GRASS.getId();
-		} else if (dy + 4 >= top) {
-			id = VanillaMaterials.DIRT.getId();
-		} else if (dy != 0) {
-			id = VanillaMaterials.STONE.getId();
-		} else {
-			id = VanillaMaterials.BEDROCK.getId();
-		}
-		return id;
 	}
 }

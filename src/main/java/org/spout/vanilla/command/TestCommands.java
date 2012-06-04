@@ -40,6 +40,9 @@ import org.spout.api.entity.BlockController;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.PlayerController;
+import org.spout.api.entity.spawn.DiscSpawnArrangement;
+import org.spout.api.entity.spawn.SpawnArrangement;
+import org.spout.api.entity.spawn.SpiralSpawnArrangement;
 import org.spout.api.entity.type.ControllerRegistry;
 import org.spout.api.entity.type.ControllerType;
 import org.spout.api.exception.CommandException;
@@ -77,7 +80,7 @@ public class TestCommands {
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
 	}
 
-	@Command(aliases = {"spawn"}, usage = "<controller> <number> <spiral or disk>", desc = "Spawn up to 50 controllers!", min = 1, max = 3)
+	@Command(aliases = {"spawn"}, usage = "<spiral or disk> <number> <controller> ... <number> <controller>", desc = "Spawn up to 50 controllers!", min = 1, max = 10)
 	public void spawn(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to spawn a controller");
@@ -86,27 +89,34 @@ public class TestCommands {
 		Player player = (Player) source;
 		Point point = player.getEntity().getPosition();
 
-		String lookupType = args.getString(0).replaceAll("[_\\- ]", "");
-		ControllerType type = null;
-		for (ControllerType testType : ControllerRegistry.getAll()) {
-			if (testType.getName().replaceAll("[_\\- ]", "").equalsIgnoreCase(lookupType)) {
-				type = testType;
-				break;
-			}
-		}
-
-		if (type == null || !type.canCreateController()) {
-			throw new CommandException("Invalid entity type '" + args.getString(0) + "'!");
-		}
-
-		int number = 1;
 		boolean disk = false;
 		
-		for (int i = 1; i < args.length(); i++) {
+		ArrayList<ControllerType> types = new ArrayList<ControllerType>();
+		ArrayList<Integer> numbers = new ArrayList<Integer>();
+		
+		for (int i = 0; i < args.length(); i++) {
 			try {
-				number = Integer.parseInt(args.getString(i));
+				int number = Integer.parseInt(args.getString(i));
+				while (numbers.size() <= types.size()) {
+					numbers.add(1);
+				}
+				numbers.set(numbers.size() - 1, number);
 			} catch (NumberFormatException e) {
-				if (args.getString(i).equals("disk") || args.getString(i).equals("disc")) {
+				boolean match = false;
+				String lookupType = args.getString(i).replaceAll("[_\\- ]", "");
+				for (ControllerType testType : ControllerRegistry.getAll()) {
+					if (testType.getName().replaceAll("[_\\- ]", "").equalsIgnoreCase(lookupType) && testType.canCreateController()) {
+						while (numbers.size() <= types.size()) {
+							numbers.add(1);
+						}
+						types.add(testType);
+						match = true;;
+						break;
+					}
+				}
+				if (match) {
+					continue;
+				} else if (args.getString(i).equals("disk") || args.getString(i).equals("disc")) {
 					disk = true;
 				} else if (args.getString(i).equals("spiral")) {
 					disk = false;
@@ -116,109 +126,61 @@ public class TestCommands {
 			}
 		}
 		
-		
-		if (number > 50) {
-			source.sendMessage(ChatColor.RED + "Reducing number of " + type.getName() + "s spawed to 50");
-			number = 50;
-		} else if (number < 1) {
-			source.sendMessage(ChatColor.RED + "Increasing number of " + type.getName() + "s spawed to 1");
-			number = 1;
+		if (types.size() == 0) {
+			throw new CommandException("Unable to find any types to spawn");
 		}
+		
+		int toSpawn = 0;
+		
+		for (int i = 0; i < types.size(); i++) {
+			if (toSpawn + numbers.get(i) > 50) {
+				int newValue = 50 - toSpawn;
+				source.sendMessage(ChatColor.RED + "Reducing number of " + types.get(i).getName() + "s spawed to " + newValue);
+				numbers.set(i, newValue);
+			}
+			if (numbers.get(i) < 0) {
+				source.sendMessage(ChatColor.RED + "Increasing number of " + types.get(i).getName() + "s spawed to " + 0);
+				numbers.set(i, 0);
+			}
+			toSpawn += numbers.get(i);
+		}
+		
+		ControllerType[] typeArray = types.toArray(new ControllerType[0]);
 
-		if (disk) {
-			diskSpawn(point, type, number, 1.5F);
+		if (types.size() == 1) {
+			typeArray = new ControllerType[] { types.get(0) };
 		} else {
-			spiralSpawn(point, type, number, 1.5F);
-		}
-		
-		if (number == 1) {
-			source.sendMessage(ChatColor.YELLOW + "One " + type.getName() + " spawned!");
-		} else {
-			source.sendMessage(ChatColor.YELLOW.toString() + number + " " + type.getName() + "s spawned!");
-		}
-	}
-	
-	private void spiralSpawn(Point point, ControllerType type, int number, float scale) {
-		
-		float angle = 0;
-		float distance = 1;
-		
-		point.getWorld().createAndSpawnEntity(point, type.createController());
-		
-		for (int i = 1; i < number; i++) {
-			distance = (float)Math.sqrt((float)i);
-			
-			Vector3 offset = Point.FORWARD.transform(MathHelper.rotateY(angle));
-			offset = offset.multiply(distance).multiply(scale);
-			
-			point.getWorld().createAndSpawnEntity(point.add(offset), type.createController());
-			
-			angle += 360.0 / (Math.PI * distance);
-		}
-
-	}
-	
-	private void diskSpawn(Point point, ControllerType type, int number, float scale) {
-		
-		ArrayList<Integer> shells = new ArrayList<Integer>();
-		
-		int remaining = number;
-		int shell = 0;
-		while (remaining > 0) {
-			int toAdd;
-			if (shell == 0) {
-				if (number == 2 || number == 3 || number == 4) {
-					toAdd = 0;
+			typeArray = new ControllerType[toSpawn];
+			int k = 0;
+			for (int i = 0; i < types.size(); i++) {
+				if (numbers.get(i) == 1) {
+					source.sendMessage(ChatColor.YELLOW + "Spawning a " + types.get(i).getName());
 				} else {
-					toAdd = 1;
+					source.sendMessage(ChatColor.YELLOW + "Spawning " + numbers.get(i) + " " + types.get(i).getName() + "s");
 				}
-			} else {
-				toAdd = shell * 3;
-			}
-			if (toAdd > remaining) {
-				toAdd = remaining;
-			}
-			shells.add(toAdd);
-			remaining -= toAdd;
-			shell++;
-		}
-		
-		if (shells.size() > 1) {
-			int lastIndex = shells.size() - 1;
-			int last = shells.get(lastIndex);
-			int secondLast = shells.get(lastIndex - 1);
-			if (last < secondLast) {
-				if (last >= secondLast - 2 && last > 2) {
-					shells.set(lastIndex, secondLast);
-					shells.set(lastIndex - 1, last);
-				} else
-					shells.set(lastIndex, 0);
-				int i = lastIndex - 1;
-				while (last > 0) {
-					shells.set(i, shells.get(i) + 1);
-					last--;
-					i = (i == 1) ? (lastIndex - 1) : (i - 1);
+				for (int j = 0; j < numbers.get(i); j++) {
+					typeArray[k++] = types.get(i);
 				}
 			}
 		}
 
-		for (int i = 0; i < shells.size(); i++) {
-			circleSpawn(point, type, shells.get(i), i * scale, (i & 1) == 0);
+		SpawnArrangement arrangement;
+		if (types.size() == 1) {
+			if (disk) {
+				arrangement = new DiscSpawnArrangement(point, typeArray[0], numbers.get(0), 1.5F);
+			} else {
+				arrangement = new SpiralSpawnArrangement(point, typeArray[0], numbers.get(0), 1.5F);
+			}
+		} else {
+			if (disk) {
+				arrangement = new DiscSpawnArrangement(point, typeArray, 1.5F);
+			} else {
+				arrangement = new SpiralSpawnArrangement(point, typeArray, 1.5F);
+			}
 		}
-	}
-	
-	private void circleSpawn(Point point, ControllerType type, int number, double radius, boolean halfRotate) {
-		Vector3 offset = Point.FORWARD.multiply(radius);
-		int angle = number == 0 ? 0 : (360 / number);
-		Matrix rotate = MathHelper.rotateY(angle);
-		if (halfRotate) {
-			offset = offset.transform(MathHelper.rotateY(angle / 2));
-		}
-		for (int i = 0; i < number; i++) {
-			Point target = point.add(offset);
-			target.getWorld().createAndSpawnEntity(target, type.createController());
-			offset = offset.transform(rotate);
-		}
+		
+		point.getWorld().createAndSpawnEntity(arrangement);
+		
 	}
 
 	@Command(aliases = {"control"}, usage = "<controller>", desc = "Control a controller!", min = 1, max = 6)

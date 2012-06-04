@@ -26,9 +26,19 @@
  */
 package org.spout.vanilla.material.item.misc;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.PlayerController;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class SpawnEgg extends VanillaItemMaterial {
 	private static final SpawnEgg PARENT = new SpawnEgg("Spawn Egg"); //There is no entity with the ID 0 so this egg is invalid
@@ -60,5 +70,24 @@ public class SpawnEgg extends VanillaItemMaterial {
 
 	private SpawnEgg(String name, int data, Material parent) {
 		super(name, 383, data, parent);
+	}
+
+	@Override
+	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
+		if (type != Action.RIGHT_CLICK) {
+			return;
+		}
+		VanillaControllerType controllerType = VanillaControllerTypes.getByID(this.getData());
+		if (controllerType == null || !controllerType.canCreateController()) {
+			return;
+		}
+
+		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), controllerType.createController());
+		if (!((PlayerController) entity.getController()).hasInfiniteResources()) {
+			InventoryBase inventory = VanillaPlayerUtil.getInventory(entity);
+			if (inventory != null) {
+				inventory.addCurrentItemAmount(-1);
+			}
+		}
 	}
 }

@@ -328,7 +328,7 @@ public final class VanillaMaterials {
 	public static final Glowstone GLOWSTONE_BLOCK = new Glowstone("Glowstone Block", 89);
 	public static final Pumpkin JACK_O_LANTERN = new Pumpkin("Jack 'o' Lantern", 91, true);
 	public static final Endstone END_STONE = new Endstone("End Stone", 121);
-	public static final CakeBlock CAKE_BLOCK = CakeBlock.FULL;
+	public static final CakeBlock CAKE_BLOCK = new CakeBlock("Cake Block", 92);
 	public static final RedstoneRepeater REDSTONE_REPEATER_OFF = new RedstoneRepeater("Redstone Repeater", 93, false);
 	public static final RedstoneRepeater REDSTONE_REPEATER_ON = new RedstoneRepeater("Redstone Repeater (On)", 94, true);
 	public static final LockedChest LOCKED_CHEST = new LockedChest("Locked Chest", 95);

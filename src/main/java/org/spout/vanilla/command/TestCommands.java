@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,9 +46,10 @@ import org.spout.api.exception.CommandException;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.MathHelper;
+import org.spout.api.math.Matrix;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -74,7 +77,7 @@ public class TestCommands {
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
 	}
 
-	@Command(aliases = {"spawn"}, usage = "<controller>", desc = "Spawn a controller!", min = 1, max = 1)
+	@Command(aliases = {"spawn"}, usage = "<controller> <number>", desc = "Spawn up to 50 controllers!", min = 1, max = 2)
 	public void spawn(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to spawn a controller");
@@ -96,8 +99,90 @@ public class TestCommands {
 			throw new CommandException("Invalid entity type '" + args.getString(0) + "'!");
 		}
 
-		point.getWorld().createAndSpawnEntity(point, type.createController());
-		source.sendMessage(ChatColor.YELLOW + "One " + type.getName() + " spawned!");
+		int number = 1;
+		try {
+			if (args.length() > 1) {
+				number = Integer.parseInt(args.getString(1));
+			}
+		} catch (NumberFormatException e) {
+		}
+		
+		if (number > 50) {
+			number = 50;
+		} else if (number < 1) {
+			number = 1;
+		}
+
+		diskSpawn(point, type, number);
+		
+		if (number == 1) {
+			source.sendMessage(ChatColor.YELLOW + "One " + type.getName() + " spawned!");
+		} else {
+			source.sendMessage(ChatColor.YELLOW.toString() + number + " " + type.getName() + "s spawned!");
+		}
+	}
+	
+	private void diskSpawn(Point point, ControllerType type, int number) {
+		
+		ArrayList<Integer> shells = new ArrayList<Integer>();
+		
+		int remaining = number;
+		int shell = 0;
+		while (remaining > 0) {
+			int toAdd;
+			if (shell == 0) {
+				if (number == 2 || number == 3 || number == 4) {
+					toAdd = 0;
+				} else {
+					toAdd = 1;
+				}
+			} else {
+				toAdd = shell * 3;
+			}
+			if (toAdd > remaining) {
+				toAdd = remaining;
+			}
+			shells.add(toAdd);
+			remaining -= toAdd;
+			shell++;
+		}
+		
+		if (shells.size() > 1) {
+			int lastIndex = shells.size() - 1;
+			int last = shells.get(lastIndex);
+			int secondLast = shells.get(lastIndex - 1);
+			if (last < secondLast) {
+				if (last >= secondLast - 2 && last > 2) {
+					shells.set(lastIndex, secondLast);
+					shells.set(lastIndex - 1, last);
+				} else
+					shells.set(lastIndex, 0);
+				int i = lastIndex - 1;
+				while (last > 0) {
+					shells.set(i, shells.get(i) + 1);
+					last--;
+					i = (i == 1) ? (lastIndex - 1) : (i - 1);
+				}
+			}
+		}
+
+		for (int i = 0; i < shells.size(); i++) {
+			circleSpawn(point, type, shells.get(i), i * 1.5, (i & 1) == 0);
+		}
+	}
+	
+	private void circleSpawn(Point point, ControllerType type, int number, double radius, boolean halfRotate) {
+		Vector3 offset = Point.FORWARD.multiply(radius);
+		int angle = number == 0 ? 0 : (360 / number);
+		Matrix rotate = MathHelper.rotateY(angle);
+		if (halfRotate) {
+			offset = offset.transform(MathHelper.rotateY(angle / 2));
+		}
+		for (int i = 0; i < number; i++) {
+			Point target = point.add(offset);
+			target.getWorld().createAndSpawnEntity(target, type.createController());
+			offset = offset.transform(rotate);
+		}
 	}
 
 	@Command(aliases = {"control"}, usage = "<controller>", desc = "Control a controller!", min = 1, max = 6)

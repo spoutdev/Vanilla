@@ -244,17 +244,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		byte[] rawSkyLight = snapshot.getSkyLight();
 		byte[] fullChunkData = new byte[Chunk.CHUNK_VOLUME * 5 / 2];
 
-		boolean hasData = false;
 		int arrIndex = 0;
 		for (int i = 0; i < rawBlockIdArray.length; i++) {
 			short convert = getMinecraftId(rawBlockIdArray[i]);
 			fullChunkData[arrIndex++] = (byte) (convert & 0xFF);
-			if ((rawBlockIdArray[i] & 0xFF) != 0) {
-				hasData = true;
-			}
-		}
-		if (!hasData) {
-			return;
 		}
 
 		for (int i = 0; i < rawBlockData.length; i += 2) {

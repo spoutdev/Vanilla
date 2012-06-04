@@ -26,26 +26,54 @@
  */
 package org.spout.vanilla.inventory.recipe;
 
+import java.io.File;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
+
 import org.spout.api.Spout;
 import org.spout.api.inventory.Recipe;
+import org.spout.api.inventory.RecipeBuilder;
+import org.spout.api.inventory.ShapelessRecipe;
+import org.spout.api.inventory.ShapedRecipe;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.misc.Dye;
-import static org.spout.vanilla.inventory.recipe.VanillaRecipeBuilder.create;
 
 public class VanillaRecipes {
-	public static final SingleShapelessInputOutputRecipe WOODEN_PLANK;
-	public static final SingleShapelessInputOutputRecipe BONE_MEAL;
-	public static final SimpleShapedToolRecipe WOODEN_PICKAXE;
+	public static final ShapelessRecipe WOODEN_PLANK;
+	public static final ShapelessRecipe BONE_MEAL;
+	public static final ShapedRecipe WOODEN_PICKAXE;
+	private static Map<String, Recipe> yamlRecipes = new ConcurrentHashMap<String, Recipe>();
+	private static final File RECIPES_FILE = new File(VanillaPlugin.getInstance().getDataFolder(), "recipes.yml");
+
+
+	public VanillaRecipes() {
+	}
 	
 	static {
-		WOODEN_PLANK = add(create().setResult(VanillaMaterials.PLANK, 4).addIngredient(VanillaMaterials.LOG).buildSingleShapelessInputOutputRecipe());
-		BONE_MEAL = add(create().setResult(Dye.BONE_MEAL, 3).addIngredient(VanillaMaterials.BONE).buildSingleShapelessInputOutputRecipe());
-		WOODEN_PICKAXE = add(create().setResult(VanillaMaterials.WOODEN_PICKAXE, 1).setMajorMaterial('P', VanillaMaterials.PLANK).setMinorMaterial('S', VanillaMaterials.STICK).addRow("PPP").addRow("ESE").addRow("ESE").buildSimpleShapedToolRecipe());
+		WOODEN_PLANK = add(create().setResult(VanillaMaterials.PLANK, 4).addIngredient(VanillaMaterials.LOG).buildShapelessRecipe());
+		BONE_MEAL = add(create().setResult(Dye.BONE_MEAL, 3).addIngredient(VanillaMaterials.BONE).buildShapelessRecipe());
+		WOODEN_PICKAXE = add(create().setResult(VanillaMaterials.WOODEN_PICKAXE, 1).addIngredient('P', VanillaMaterials.PLANK).addIngredient('S', VanillaMaterials.STICK).addRow("PPP").addRow("ESE").addRow("ESE").buildShapedRecipe());
+		RecipeYamlParser.parseFileToRecipes(VanillaPlugin.getInstance(), RECIPES_FILE);
 	}
 
 	private static <T extends Recipe> T add(T recipe) {
 		Spout.getEngine().getRecipeManager().addRecipe(recipe);
 		return recipe;
+	}
+	
+	public static <T extends Recipe> T addYamlRecipe(T recipe, String name) {
+		yamlRecipes.put(name, recipe);
+		add(recipe);
+		return recipe;
+	}
+	
+	public static Recipe get(String name) {
+		return yamlRecipes.get(name);
+	}
+	
+	private static RecipeBuilder<?> create() {
+		return new RecipeBuilder<RecipeBuilder<?>>();
 	}
 }

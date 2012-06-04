@@ -1,0 +1,25 @@
+recipes:
+  Bed:
+    type: Shaped
+    result: BED,1
+    ingredients:
+      A: WOOL
+      B: PLANK
+    rows: ['AAA', 'BBB']
+  
+  OrangeDye:
+    type: Shapeless
+    result: ORANGE_DYE,1
+    ingredients: [ROSE_RED, DANDELION_YELLOW]
+    
+  Plank:
+    type: Shapeless
+    result: PLANK,1
+    ingredients: [LOG]
+    
+  Crafting Table:
+    type: Shaped
+    result: CRAFTING_TABLE,1
+    ingredients:
+      A: PLANK
+    rows: ['AA', 'AA']

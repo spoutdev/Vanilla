@@ -87,7 +87,7 @@ public class FlatGenerator implements WorldGenerator, VanillaGenerator {
 		 int[][] heights = new int[Chunk.CHUNK_SIZE][Chunk.CHUNK_SIZE];
 		 for (int x = 0; x < Chunk.CHUNK_SIZE; x++) {
 			 for (int z = 0; z < Chunk.CHUNK_SIZE; z++) {
-				 heights[x][z] = height;
+				 heights[x][z] = height - 1;
 			 }
 		 }
 		 return heights;

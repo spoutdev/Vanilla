@@ -51,7 +51,7 @@ public class Slime extends Creature implements Hostile {
 
 	public Slime() {
 		super(VanillaControllerTypes.SLIME);
-		this.size = ((Byte) data().get("slime_size", getRandom().nextInt(4)));
+		this.size = data().get("slime_size", (byte)getRandom().nextInt(4));
 	}
 
 	public Slime(VanillaControllerType type, byte size) {
@@ -61,7 +61,7 @@ public class Slime extends Creature implements Hostile {
 
 	public Slime(VanillaControllerType type) {
 		super(type);
-		this.size = ((Byte) data().get("slime_size", getRandom().nextInt(4)));
+		this.size = data().get("slime_size", (byte)getRandom().nextInt(4));
 	}
 
 	@Override

@@ -26,7 +26,8 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import org.spout.api.entity.Controller;
+import java.util.ArrayList;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
@@ -39,70 +40,86 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 
-import java.util.ArrayList;
-
 public class CakeBlock extends Solid implements Mineable {
+	public CakeBlock(String name, int id) {
+		super(name, id);
+		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
+	}
 
-    public static final CakeBlock FULL = new CakeBlock("Cake Block");
-    public static final CakeBlock FIVEPIECES = new CakeBlock("Cake Block", (short) 0x1, FULL);
-    public static final CakeBlock FOURPIECES = new CakeBlock("Cake Block", (short) 0x2, FULL);
-    public static final CakeBlock THREEPIECES = new CakeBlock("Cake Block", (short) 0x3, FULL);
-    public static final CakeBlock TWOPIECES = new CakeBlock("Cake Block", (short) 0x4, FULL);
-    public static final CakeBlock ONEPIECE = new CakeBlock("Cake Block", (short) 0x5, FULL);
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Sword ? (short) 2 : (short) 1;
+	}
 
+	@Override
+	public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedface) {
+		if (type == PlayerInteractEvent.Action.RIGHT_CLICK) {
+			if (block.getData() == CakeSize.ONE_PIECE.getData()) {
+				// Cake has been fully eaten
+				block.setMaterial(VanillaMaterials.AIR);
+			} else {
+				setSize(block, CakeSize.getByData((short) (getSize(block).getData() + 1)));
+			}
 
-    public CakeBlock(String name) {
-        super(name, 92);
-    }
+			if (entity.getController() instanceof VanillaPlayer) {
+				VanillaPlayer player = (VanillaPlayer) entity.getController();
+				player.setHunger((short) (player.getHunger() + 2));
+			}
+		}
+	}
 
-    public CakeBlock(String name, short data, CakeBlock parent) {
-        super(name, 92, data, parent);
-        this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
-    }
+	@Override
+	public ArrayList<ItemStack> getDrops(Block block) {
+		return new ArrayList<ItemStack>();
+	}
 
-    @Override
-    public short getDurabilityPenalty(Tool tool) {
-        return tool instanceof Sword ? (short) 2 : (short) 1;
-    }
+	/**
+	 * Returns the {@link CakeSize} of this cake material.
+	 * @param block Block with this cake material
+	 * @return Size of this material
+	 */
+	public CakeSize getSize(Block block) {
+		return CakeSize.getByData(block.getData());
+	}
 
-    @Override
-    public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedface) {
-        if(type != PlayerInteractEvent.Action.RIGHT_CLICK)
-            return;
-        CakeBlock material = (CakeBlock) block.getMaterial();
-        CakeBlock newMaterial = null;
-        switch (material.getData()) {
-            case 0:  //TODO perhaps create CakeBlockState and use that enum here?
-                newMaterial = CakeBlock.FIVEPIECES;
-                break;
-            case 0x1:
-                newMaterial = CakeBlock.FOURPIECES;
-                break;
-            case 0x2:
-                newMaterial = CakeBlock.THREEPIECES;
-                break;
-            case 0x3:
-                newMaterial = CakeBlock.TWOPIECES;
-                break;
-            case 0x4:
-                newMaterial = CakeBlock.ONEPIECE;
-                break;
-        }
-        if (newMaterial == null) {
-            block.setMaterial(VanillaMaterials.AIR);
-            return;
-        }
-        block.setMaterial(newMaterial);
-        Controller cp = entity.getController();
-        if (!(cp instanceof VanillaPlayer)) {
-            return;
-        }
-        VanillaPlayer pc = (VanillaPlayer) cp;
-        pc.setHunger((short) (pc.getHunger()+2));
-    }
+	/**
+	 * Sets the {@link CakeSize} of this cake material.
+	 * @param block Block with this cake material
+	 * @param size Size to set
+	 */
+	public void setSize(Block block, CakeSize size) {
+		block.setData(size.getData());
+	}
 
-    @Override
-    public ArrayList<ItemStack> getDrops(Block block) {
-        return new ArrayList<ItemStack>();
-    }
+	/**
+	 * Represents the size of a cake material.
+	 */
+	public enum CakeSize {
+		FULL(0x0),
+		FIVE_PIECES(0x1),
+		FOUR_PIECES(0x2),
+		THREE_PIECES(0x3),
+		TWO_PIECES(0x4),
+		ONE_PIECE(0x5);
+
+		private short data;
+
+		private CakeSize(int data) {
+			this.data = (short) data;
+		}
+
+		public short getData() {
+			return data;
+		}
+
+		public static CakeSize getByData(short data) {
+			for (CakeSize size : CakeSize.values()) {
+				if (size.data == data) {
+					return size;
+				}
+			}
+
+			return null;
+		}
+	}
 }

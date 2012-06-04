@@ -30,8 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
 import org.junit.Test;
 
 import org.spout.api.inventory.RecipeBuilder;

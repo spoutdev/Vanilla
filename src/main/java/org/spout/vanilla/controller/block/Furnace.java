@@ -56,23 +56,21 @@ public class Furnace extends VanillaBlockController {
 	@Override
 	public void onTick(float dt) {
 		ItemStack input = inventory.getIngredient(), output = inventory.getOutput();
-		if (burnTime <= 0) {
+		if (burnTime <= 0 && inventory.hasIngredient() && inventory.hasFuel()) {
 			// Start burning
-			if (inventory.hasIngredient() && inventory.hasFuel()) {
-				ItemStack fuelStack = inventory.getFuel();
-				Fuel fuel = (Fuel) fuelStack.getMaterial();
-				burnTime = fuel.getFuelTime();
-				burnStartTime = burnTime;
-				burnIncrement = 250;
+			ItemStack fuelStack = inventory.getFuel();
+			Fuel fuel = (Fuel) fuelStack.getMaterial();
+			burnTime = fuel.getFuelTime();
+			burnStartTime = burnTime;
+			burnIncrement = 250;
 
-				TimedCraftable ingredient = (TimedCraftable) input.getMaterial();
-				progress = 0;
-				progressIncrement = 0;
-				craftTime = ingredient.getCraftTime();
+			TimedCraftable ingredient = (TimedCraftable) input.getMaterial();
+			progress = 0;
+			progressIncrement = 0;
+			craftTime = ingredient.getCraftTime();
 
-				int amount = fuelStack.getAmount();
-				inventory.setFuel(fuelStack.setAmount(amount - 1));
-			}
+			int amount = fuelStack.getAmount();
+			inventory.setFuel(fuelStack.setAmount(amount - 1));
 		}
 
 		if (burnTime > 0) {

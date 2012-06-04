@@ -43,7 +43,7 @@ public class FurnaceWindow extends Window {
 
 	@Override
 	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {
-		if (clickedSlot == 2 && itemOnCursor != null) {
+		if (clickedSlot == 37 && itemOnCursor != null) {
 			return false;
 		}
 		return super.onClick(clickedSlot, rightClick, shift);

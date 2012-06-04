@@ -27,22 +27,25 @@
 package org.spout.vanilla.window.block;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.util.SlotIndexMap;
+import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.window.InventoryWindow;
+import org.spout.vanilla.util.SlotIndexMap;
 
-public class ChestWindow extends InventoryWindow {
-	public static final SlotIndexMap SMALL_CHEST_SLOTS = new SlotIndexMap("54-62, 45-53, 36-44, 27-35, 18-26, 9-17, 0-8");
-	public static final SlotIndexMap LARGE_CHEST_SLOTS = new SlotIndexMap("81-89, 72-80, 63-71, 54-62, 45-53, 36-44, 27-35, 18-26, 9-17, 0-8");
+public class BrewingStandWindow extends InventoryWindow {
+	public static final SlotIndexMap SLOT_INDEX_MAP = new SlotIndexMap("31-39, 22-30, 13-21, 4-12, 0-3");
 
-	public ChestWindow(VanillaPlayer owner, ChestInventory chest1, ChestInventory chest2) {
-		super(0, "Double Chest", owner, chest1);
-		this.setInventory(owner.getInventory().getItems(), chest1, chest2);
-		this.setSlotIndexMap(LARGE_CHEST_SLOTS);
+	public BrewingStandWindow(VanillaPlayer owner, WindowInventory inventory) {
+		super(5, "Brewing Stand", owner, inventory);
+		setInventory(owner.getInventory().getItems(), inventory);
+		setSlotIndexMap(SLOT_INDEX_MAP);
 	}
 
-	public ChestWindow(VanillaPlayer owner, ChestInventory chest) {
-		super(0, "Chest", owner, chest);
-		this.setSlotIndexMap(SMALL_CHEST_SLOTS);
+	@Override
+	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {
+		System.out.println("Spout slot: " + clickedSlot);
+		if ((clickedSlot >= 36 && clickedSlot <= 38) && itemOnCursor != null) {
+			return false;
+		}
+		return super.onClick(clickedSlot, rightClick, shift);
 	}
 }

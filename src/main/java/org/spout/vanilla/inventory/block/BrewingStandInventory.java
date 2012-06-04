@@ -24,25 +24,38 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window.block;
+package org.spout.vanilla.inventory.block;
+
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.util.SlotIndexMap;
-import org.spout.vanilla.window.InventoryWindow;
+import org.spout.vanilla.inventory.WindowInventory;
+import org.spout.vanilla.window.Window;
+import org.spout.vanilla.window.block.BrewingStandWindow;
 
-public class ChestWindow extends InventoryWindow {
-	public static final SlotIndexMap SMALL_CHEST_SLOTS = new SlotIndexMap("54-62, 45-53, 36-44, 27-35, 18-26, 9-17, 0-8");
-	public static final SlotIndexMap LARGE_CHEST_SLOTS = new SlotIndexMap("81-89, 72-80, 63-71, 54-62, 45-53, 36-44, 27-35, 18-26, 9-17, 0-8");
-
-	public ChestWindow(VanillaPlayer owner, ChestInventory chest1, ChestInventory chest2) {
-		super(0, "Double Chest", owner, chest1);
-		this.setInventory(owner.getInventory().getItems(), chest1, chest2);
-		this.setSlotIndexMap(LARGE_CHEST_SLOTS);
+public class BrewingStandInventory extends WindowInventory {
+	public BrewingStandInventory() {
+		super(4);
 	}
 
-	public ChestWindow(VanillaPlayer owner, ChestInventory chest) {
-		super(0, "Chest", owner, chest);
-		this.setSlotIndexMap(SMALL_CHEST_SLOTS);
+	@Override
+	public Window createWindow(VanillaPlayer player) {
+		return new BrewingStandWindow(player, this);
+	}
+
+	public ItemStack getFirstOutput() {
+		return getItem(0);
+	}
+
+	public ItemStack getSecondOutput() {
+		return getItem(1);
+	}
+
+	public ItemStack getThirdOutput() {
+		return getItem(2);
+	}
+
+	public ItemStack getInput() {
+		return getItem(3);
 	}
 }

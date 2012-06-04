@@ -28,11 +28,19 @@ package org.spout.vanilla.controller.block;
 
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class BrewingStand extends VanillaBlockController {
+	private BrewingStandInventory inventory = new BrewingStandInventory();
+	private float brewTime = 0;
+
 	public BrewingStand() {
 		super(VanillaControllerTypes.BREWING_STAND, VanillaMaterials.BREWING_STAND_BLOCK);
+	}
+
+	public BrewingStandInventory getInventory() {
+		return inventory;
 	}
 
 	@Override
@@ -41,7 +49,6 @@ public class BrewingStand extends VanillaBlockController {
 	}
 
 	@Override
-	public void onTick(float v) {
-
+	public void onTick(float dt) {
 	}
 }

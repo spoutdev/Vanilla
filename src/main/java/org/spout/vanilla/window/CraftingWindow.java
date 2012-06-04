@@ -32,7 +32,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.spout.api.Spout;
-import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
@@ -40,10 +39,8 @@ import org.spout.api.inventory.Recipe;
 import org.spout.api.inventory.ShapedRecipe;
 import org.spout.api.inventory.ShapelessRecipe;
 import org.spout.api.material.Material;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.inventory.CraftingGrid;
 
 public abstract class CraftingWindow extends Window {
@@ -61,19 +58,11 @@ public abstract class CraftingWindow extends Window {
 	@Override
 	public void onClosed() {
 		super.onClosed();
-		// TODO: Drop items
 	}
 
 	@Override
 	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
 		super.onSlotSet(inventory, slot, item);
-		for (int i : craftingGrid.getGridArray()) {
-			if (i == slot) {
-				System.out.println("Updating output");
-				updateOutput();
-				break;
-			}
-		}
 	}
 
 	@Override

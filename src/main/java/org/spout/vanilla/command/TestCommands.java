@@ -77,7 +77,7 @@ public class TestCommands {
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
 	}
 
-	@Command(aliases = {"spawn"}, usage = "<controller> <number>", desc = "Spawn up to 50 controllers!", min = 1, max = 2)
+	@Command(aliases = {"spawn"}, usage = "<controller> <number> <spiral or disk>", desc = "Spawn up to 50 controllers!", min = 1, max = 3)
 	public void spawn(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to spawn a controller");
@@ -100,20 +100,36 @@ public class TestCommands {
 		}
 
 		int number = 1;
-		try {
-			if (args.length() > 1) {
-				number = Integer.parseInt(args.getString(1));
+		boolean disk = false;
+		
+		for (int i = 1; i < args.length(); i++) {
+			try {
+				number = Integer.parseInt(args.getString(i));
+			} catch (NumberFormatException e) {
+				if (args.getString(i).equals("disk") || args.getString(i).equals("disc")) {
+					disk = true;
+				} else if (args.getString(i).equals("spiral")) {
+					disk = false;
+				} else {
+					throw new CommandException("Unable to parse command argument " + args.getString(i));
+				}
 			}
-		} catch (NumberFormatException e) {
 		}
 		
+		
 		if (number > 50) {
+			source.sendMessage(ChatColor.RED + "Reducing number of " + type.getName() + "s spawed to 50");
 			number = 50;
 		} else if (number < 1) {
+			source.sendMessage(ChatColor.RED + "Increasing number of " + type.getName() + "s spawed to 1");
 			number = 1;
 		}
 
-		diskSpawn(point, type, number);
+		if (disk) {
+			diskSpawn(point, type, number, 1.5F);
+		} else {
+			spiralSpawn(point, type, number, 1.5F);
+		}
 		
 		if (number == 1) {
 			source.sendMessage(ChatColor.YELLOW + "One " + type.getName() + " spawned!");
@@ -122,7 +138,27 @@ public class TestCommands {
 		}
 	}
 	
-	private void diskSpawn(Point point, ControllerType type, int number) {
+	private void spiralSpawn(Point point, ControllerType type, int number, float scale) {
+		
+		float angle = 0;
+		float distance = 1;
+		
+		point.getWorld().createAndSpawnEntity(point, type.createController());
+		
+		for (int i = 1; i < number; i++) {
+			distance = (float)Math.sqrt((float)i);
+			
+			Vector3 offset = Point.FORWARD.transform(MathHelper.rotateY(angle));
+			offset = offset.multiply(distance).multiply(scale);
+			
+			point.getWorld().createAndSpawnEntity(point.add(offset), type.createController());
+			
+			angle += 360.0 / (Math.PI * distance);
+		}
+
+	}
+	
+	private void diskSpawn(Point point, ControllerType type, int number, float scale) {
 		
 		ArrayList<Integer> shells = new ArrayList<Integer>();
 		
@@ -167,7 +203,7 @@ public class TestCommands {
 		}
 
 		for (int i = 0; i < shells.size(); i++) {
-			circleSpawn(point, type, shells.get(i), i * 1.5, (i & 1) == 0);
+			circleSpawn(point, type, shells.get(i), i * scale, (i & 1) == 0);
 		}
 	}
 	

@@ -44,7 +44,7 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Slime extends Creature implements Hostile {
-	public static DefaultedKey<Byte> SIZE_KEY = new SlimeSize("slime_size");
+	public final static DefaultedKey<Byte> SIZE_KEY = new SlimeSize("slime_size");
 	
 	private byte size;
 

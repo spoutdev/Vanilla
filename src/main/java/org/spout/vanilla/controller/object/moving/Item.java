@@ -74,7 +74,7 @@ public class Item extends Substance {
 	public void onAttached() {
 		super.onAttached();
 		getParent().getCollision().setStrategy(CollisionStrategy.SOFT);
-		registerAction(new GravityAction());
+		//registerAction(new GravityAction());
 		if (data().containsKey("Itemstack")) {
 			ItemStack item = (ItemStack) data().get("Itemstack");
 			is = item.clone();

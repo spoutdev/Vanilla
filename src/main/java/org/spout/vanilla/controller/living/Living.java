@@ -51,8 +51,8 @@ public abstract class Living extends VanillaActionController {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		registerAction(new GravityAction());
-		registerAction(new WanderAction());
+		//registerAction(new GravityAction());
+		//registerAction(new WanderAction());
 	}
 
 	@Override

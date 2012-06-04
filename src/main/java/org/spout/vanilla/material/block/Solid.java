@@ -37,7 +37,7 @@ import org.spout.vanilla.util.MoveReaction;
 
 public class Solid extends VanillaBlockMaterial {
 	public Solid(String name, int id) {
-		this((short) -1, name, id);
+		this((short) 0, name, id);
 	}
 
 	public Solid(short dataMask, String name, int id) {

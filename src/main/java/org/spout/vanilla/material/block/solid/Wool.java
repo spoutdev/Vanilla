@@ -59,7 +59,7 @@ public class Wool extends Solid implements Mineable {
 	private final WoolColor color;
 
 	private Wool(String name) {
-		super(name, 35);
+		super((short) 0x000F, name, 35);
 		this.color = WoolColor.WHITE;
 		this.setHardness(0.8F).setResistance(1.3F);
 	}

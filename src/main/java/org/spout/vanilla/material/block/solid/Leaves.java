@@ -52,7 +52,7 @@ public class Leaves extends Solid implements Mineable {
 	private Random rand = new Random();
 
 	private Leaves(String name) {
-		super(name, 18);
+		super((short) 0x0003, name, 18);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 	}
 

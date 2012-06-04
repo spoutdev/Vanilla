@@ -66,7 +66,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private Map<Material, int[]> dropMaterials = new HashMap<Material, int[]>();
 
 	public VanillaBlockMaterial(String name, int id) {
-		this((short) -1, name, id);
+		this((short) 0, name, id);
 	}
 
 	public VanillaBlockMaterial(short dataMask, String name, int id) {

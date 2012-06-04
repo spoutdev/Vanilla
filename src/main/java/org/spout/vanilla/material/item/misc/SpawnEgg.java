@@ -65,7 +65,7 @@ public class SpawnEgg extends VanillaItemMaterial {
 	public static final SpawnEgg OCELOT = new SpawnEgg("Spawn Ocelot", 98, PARENT);
 
 	private SpawnEgg(String name) {
-		super(name, 383);
+		super((short) 0x007F, name, 383);
 	}
 
 	private SpawnEgg(String name, int data, Material parent) {

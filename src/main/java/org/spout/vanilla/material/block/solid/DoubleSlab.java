@@ -58,7 +58,7 @@ public class DoubleSlab extends Solid implements Mineable {
 	}
 
 	private DoubleSlab(String name, Slab slab) {
-		super(name, 43);
+		super((short) 0x0007, name, 43);
 		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F);
 	}
 

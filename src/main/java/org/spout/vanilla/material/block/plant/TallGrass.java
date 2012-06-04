@@ -44,7 +44,7 @@ public class TallGrass extends DeadBush {
 	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS);
 
 	private TallGrass(String name) {
-		super(name, 31);
+		super((short) 0x0003, name, 31);
 		this.setResistance(0.0F).setHardness(0.0F).setOpacity((byte) 0);
 	}
 

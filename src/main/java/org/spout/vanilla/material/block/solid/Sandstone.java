@@ -45,7 +45,7 @@ public class Sandstone extends Solid implements Mineable {
 	private final SandstoneType type;
 
 	private Sandstone(String name) {
-		super(name, 24);
+		super((short) 0x0003, name, 24);
 		this.type = SandstoneType.SANDSTONE;
 		this.setHardness(0.8F).setResistance(1.3F);
 	}

@@ -120,7 +120,7 @@ public class Potion extends VanillaItemMaterial {
 	public static final Potion SPLASH_HARMING_II = new Potion("Splash Potion of Harming", 16428, EMPTY);
 
 	private Potion(String name) {
-		super(name, 373);
+		super((short) 0x7FFF, name, 373);
 	}
 
 	private Potion(String name, int data, Potion parent) {

@@ -86,7 +86,7 @@ public class Dye extends VanillaItemMaterial {
 	}
 
 	private Dye(String name) {
-		super(name, 351);
+		super((short) 0x0F, name, 351);
 		this.color = DyeColor.BLACK;
 	}
 

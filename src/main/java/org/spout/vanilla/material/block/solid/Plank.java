@@ -48,7 +48,7 @@ public class Plank extends Solid implements Fuel, Mineable {
 	public final float BURN_TIME = 15.f;
 
 	public Plank(String name) {
-		super(name, 05);
+		super((short) 0x0003, name, 05);
 		this.type = WoodType.OAK;
 		this.setHardness(0.8F).setResistance(1.3F);
 	}

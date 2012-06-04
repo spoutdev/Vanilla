@@ -43,7 +43,7 @@ public class StoneBrick extends Solid implements Mineable {
 	public static final StoneBrick CRACKED_STONE = new StoneBrick("Cracked Stone Brick", 2, STONE);
 
 	private StoneBrick(String name) {
-		super(name, 98);
+		super((short) 0x0003, name, 98);
 		this.setHardness(1.5F).setResistance(10.0F);
 	}
 

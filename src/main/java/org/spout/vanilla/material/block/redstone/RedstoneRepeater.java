@@ -31,23 +31,25 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class RedstoneRepeater extends GroundAttachable implements Directional, Mineable, RedstoneSource, RedstoneTarget, ScheduleUpdated {
+public class RedstoneRepeater extends GroundAttachable implements Directional, Mineable, RedstoneSource, RedstoneTarget, DynamicMaterial {
 	private final boolean powered;
+	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
 
 	public RedstoneRepeater(String name, int id, boolean powered) {
 		super(name, id);
@@ -96,19 +98,11 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	}
 
 	@Override
-	public void onDelayedUpdate(Block block) {
-		boolean powered = this.isReceivingPower(block);
-		if (powered != this.isPowered()) {
-			this.setPowered(block, powered);
-			this.doRedstoneUpdates(block);
-		}
-	}
-
-	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
-		if (this.isPowered() != this.isReceivingPower(block)) {
-			BlockScheduler.schedule(block, this.getTickDelay(block));
+		boolean receiving = this.isReceivingPower(block);
+		if (this.isPowered() != receiving) {
+			block.dynamicUpdate(this.getTickDelay(block), receiving);
 		}
 	}
 
@@ -177,5 +171,29 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return 1;
+	}
+
+	@Override
+	public Vector3[] maxRange() {
+		return maxRange;
+	}
+
+	@Override
+	public long onPlacement(Block b, Region r, long currentTime) {
+		return this.getTickDelay(b);
+	}
+
+	@Override
+	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
+		boolean receiving = this.isReceivingPower(block);
+		if (hint != null && hint instanceof Boolean && (Boolean) hint) {
+			this.setPowered(block, true);
+			if (!receiving) {
+				return this.getTickDelay(block);
+			}
+		} else if (receiving != this.isPowered()) {
+			this.setPowered(block, receiving);
+		}
+		return -1;
 	}
 }

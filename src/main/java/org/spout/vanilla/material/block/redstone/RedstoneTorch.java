@@ -29,18 +29,20 @@ package org.spout.vanilla.material.block.redstone;
 import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.misc.Torch;
-import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget, ScheduleUpdated {
+public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget, DynamicMaterial {
 	public static final int TICK_DELAY = 2;
+	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
 	private boolean powered;
 
 	public RedstoneTorch(String name, int id, boolean powered) {
@@ -80,16 +82,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 		super.onUpdate(block);
 		boolean receiving = this.isReceivingPower(block);
 		if (this.isPowered() == receiving) {
-			BlockScheduler.schedule(block, TICK_DELAY);
-		}
-	}
-
-	@Override
-	public void onDelayedUpdate(Block block) {
-		boolean receiving = this.isReceivingPower(block);
-		if (this.isPowered() == receiving) {
-			this.setPowered(block, !receiving);
-			this.doRedstoneUpdates(block);
+			block.dynamicUpdate(TICK_DELAY);
 		}
 	}
 
@@ -128,5 +121,25 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(VanillaMaterials.REDSTONE_TORCH_ON, 1));
 		return drops;
+	}
+
+	@Override
+	public Vector3[] maxRange() {
+		return maxRange;
+	}
+
+	@Override
+	public long onPlacement(Block b, Region r, long currentTime) {
+		return TICK_DELAY;
+	}
+
+	@Override
+	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
+		boolean receiving = this.isReceivingPower(block);
+		if (this.isPowered() == receiving) {
+			this.setPowered(block, !receiving);
+			this.doRedstoneUpdates(block);
+		}
+		return -1;
 	}
 }

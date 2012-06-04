@@ -182,9 +182,9 @@ public class VanillaPlugin extends CommonPlugin {
 			int progress = 0;
 			World world = worlds.get(i);
 			Point point = spawns.get(i);
-			int cx = (point.getBlockX() / Chunk.CHUNK_SIZE) - 1;
-			int cy = (point.getBlockY() / Chunk.CHUNK_SIZE) - 1;
-			int cz = (point.getBlockZ() / Chunk.CHUNK_SIZE) - 1;
+			int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
+			int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
+			int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
 			for (int dx = -PointObserver.CHUNK_VIEW_DISTANCE; dx <= PointObserver.CHUNK_VIEW_DISTANCE; dx++) {
 				for (int dy = -PointObserver.CHUNK_VIEW_DISTANCE; dy <= PointObserver.CHUNK_VIEW_DISTANCE; dy++) {
 					for (int dz = -PointObserver.CHUNK_VIEW_DISTANCE; dz <= PointObserver.CHUNK_VIEW_DISTANCE; dz++) {
@@ -192,7 +192,7 @@ public class VanillaPlugin extends CommonPlugin {
 						if (progress % progressStep == 0) {
 							Spout.getLogger().info("Loading [" + world.getName() + "], " + (progress / progressStep) * 10 + "% Complete");
 						}
-						world.getChunk(cx + dx, cy + dy, cz + dz, true);
+						world.getChunk(cx + dx, cy + dy, cz + dz);
 					}
 				}
 			}

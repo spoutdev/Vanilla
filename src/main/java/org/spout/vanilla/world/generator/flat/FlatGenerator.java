@@ -50,8 +50,8 @@ public class FlatGenerator implements WorldGenerator, VanillaGenerator {
 		int x = chunkX << 4, z = chunkZ << 4;
 		for (int dx = x; dx < x + 16; ++dx) {
 			for (int dz = z; dz < z + 16; ++dz) {
-				final int startY = chunkY * Chunk.CHUNK_SIZE;
-				final int endY = Math.min(Chunk.CHUNK_SIZE + startY, height);
+				final int startY = chunkY << Chunk.BLOCKS.BITS;
+				final int endY = Math.min(Chunk.BLOCKS.SIZE + startY, height);
 				for (int y = startY; y < endY; y++) {
 					if (y <= 0) {
 						blockData.set(dx, y, dz, VanillaMaterials.BEDROCK.getId());
@@ -84,9 +84,9 @@ public class FlatGenerator implements WorldGenerator, VanillaGenerator {
 
 	@Override
 	public int[][] getSurfaceHeight(World world, int chunkX, int chunkZ) {
-		 int[][] heights = new int[Chunk.CHUNK_SIZE][Chunk.CHUNK_SIZE];
-		 for (int x = 0; x < Chunk.CHUNK_SIZE; x++) {
-			 for (int z = 0; z < Chunk.CHUNK_SIZE; z++) {
+		 int[][] heights = new int[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
+		 for (int x = 0; x < Chunk.BLOCKS.SIZE; x++) {
+			 for (int z = 0; z < Chunk.BLOCKS.SIZE; z++) {
 				 heights[x][z] = height - 1;
 			 }
 		 }

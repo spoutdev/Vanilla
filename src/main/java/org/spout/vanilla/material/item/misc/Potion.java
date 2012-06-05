@@ -127,7 +127,6 @@ public class Potion extends VanillaItemMaterial {
 	public static final Potion SPLASH_FIRE_EXTENDED = new Potion("Splash Potion of Fire Resistance (Extended)", EFFECT_FIRE_RESISTANCE, TIER0, DURATION_EXTENDED, ACTION_SPLASH, WATER_BOTTLE);
 	public static final Potion FIRE = new Potion("Potion of Fire Resistance", EFFECT_FIRE_RESISTANCE, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_FIRE = new Potion("Splash Potion of Fire Resistance", EFFECT_FIRE_RESISTANCE, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
-	public static final Potion FIRE_II = new Potion("Potion of Fire Resistance II", EFFECT_FIRE_RESISTANCE, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion FIRE_REVERTED = new Potion("Potion of Fire Resistance", EFFECT_FIRE_RESISTANCE, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_FIRE_REVERTED = new Potion("Splash Potion of Fire Resistance", EFFECT_FIRE_RESISTANCE, TIER2, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
 
@@ -147,7 +146,7 @@ public class Potion extends VanillaItemMaterial {
 
 	public static final Potion WEAKNESS = new Potion("Potion of Weakness", EFFECT_WEAKNESS, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_WEAKNESS = new Potion("Splash Potion of Weakness", EFFECT_WEAKNESS, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
-	public static final Potion WEAKNESS_EXTENDED = new Potion("Potion of Weakness (Extended)", EFFECT_WEAKNESS, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
+	public static final Potion WEAKNESS_EXTENDED = new Potion("Potion of Weakness (Extended)", EFFECT_WEAKNESS, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_WEAKNESS_EXTENDED = new Potion("Splash Potion of Weakness (Extended)", EFFECT_WEAKNESS, TIER0, DURATION_EXTENDED, ACTION_SPLASH, WATER_BOTTLE);
 	public static final Potion WEAKNESS_REVERTED = new Potion("Potion of Weakness", EFFECT_WEAKNESS, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_WEAKNESS_REVERTED = new Potion("Splash Potion of Weakness", EFFECT_WEAKNESS, TIER2, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
@@ -161,14 +160,14 @@ public class Potion extends VanillaItemMaterial {
 
 	public static final Potion SLOWNESS = new Potion("Potion of Slowness", EFFECT_SLOWNESS, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_SLOWNESS = new Potion("Splash Potion of Slowness", EFFECT_SLOWNESS, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
-	public static final Potion SLOWNESS_EXTENDED = new Potion("Potion of Slowness (Extended)", EFFECT_SWIFTNESS, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
+	public static final Potion SLOWNESS_EXTENDED = new Potion("Potion of Slowness (Extended)", EFFECT_SWIFTNESS, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_SLOWNESS_EXTENDED = new Potion("Splash Potion of Slowness (Extended)", EFFECT_SLOWNESS, TIER0, DURATION_EXTENDED, ACTION_SPLASH, WATER_BOTTLE);
 	public static final Potion SLOWNESS_REVERTED = new Potion("Potion of Slowness", EFFECT_SLOWNESS, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_SLOWNESS_REVERTED = new Potion("Splash Potion of Slowness", EFFECT_SLOWNESS, TIER2, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
 
 	public static final Potion HARMING = new Potion("Potion of Harming", EFFECT_HARMING, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_HARMING = new Potion("Splash Potion of Harming", EFFECT_HARMING, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
-	public static final Potion HARMING_REVERTED = new Potion("Potion of Harming", EFFECT_HARMING, TIER0, DURATION_EXTENDED, ACTION_SPLASH, WATER_BOTTLE);
+	public static final Potion HARMING_REVERTED = new Potion("Potion of Harming", EFFECT_HARMING, TIER0, DURATION_EXTENDED, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_HARMING_REVERTED = new Potion("Splash Potion of Harming", EFFECT_HARMING, TIER0, DURATION_EXTENDED, ACTION_SPLASH, WATER_BOTTLE);
 	public static final Potion HARMING_II = new Potion("Potion of Harming II", EFFECT_HARMING, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_HARMING_II = new Potion("Splash Potion of Harming", EFFECT_HARMING, TIER2, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);

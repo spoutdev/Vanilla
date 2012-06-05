@@ -27,14 +27,14 @@
 package org.spout.vanilla.inventory.recipe;
 
 import java.io.File;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.spout.api.Spout;
 import org.spout.api.inventory.Recipe;
 import org.spout.api.inventory.RecipeBuilder;
-import org.spout.api.inventory.ShapelessRecipe;
 import org.spout.api.inventory.ShapedRecipe;
+import org.spout.api.inventory.ShapelessRecipe;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -47,10 +47,9 @@ public class VanillaRecipes {
 	private static Map<String, Recipe> yamlRecipes = new ConcurrentHashMap<String, Recipe>();
 	private static final File RECIPES_FILE = new File(VanillaPlugin.getInstance().getDataFolder(), "recipes.yml");
 
-
 	public VanillaRecipes() {
 	}
-	
+
 	static {
 		WOODEN_PLANK = add(create().setResult(VanillaMaterials.PLANK, 4).addIngredient(VanillaMaterials.LOG).buildShapelessRecipe());
 		BONE_MEAL = add(create().setResult(Dye.BONE_MEAL, 3).addIngredient(VanillaMaterials.BONE).buildShapelessRecipe());
@@ -62,17 +61,17 @@ public class VanillaRecipes {
 		Spout.getEngine().getRecipeManager().addRecipe(recipe);
 		return recipe;
 	}
-	
+
 	public static <T extends Recipe> T addYamlRecipe(T recipe, String name) {
 		yamlRecipes.put(name, recipe);
 		add(recipe);
 		return recipe;
 	}
-	
+
 	public static Recipe get(String name) {
 		return yamlRecipes.get(name);
 	}
-	
+
 	private static RecipeBuilder<?> create() {
 		return new RecipeBuilder<RecipeBuilder<?>>();
 	}

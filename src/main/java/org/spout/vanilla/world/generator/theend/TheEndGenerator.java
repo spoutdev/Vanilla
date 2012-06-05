@@ -40,9 +40,8 @@ import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 
 public class TheEndGenerator extends BiomeGenerator implements VanillaGenerator {
-	
 	private final static int SEA_LEVEL = 63;
-	
+
 	@Override
 	public void registerBiomes() {
 		setSelector(new PerBlockBiomeSelector(VanillaBiomes.ENDSTONE));
@@ -78,7 +77,7 @@ public class TheEndGenerator extends BiomeGenerator implements VanillaGenerator 
 		}
 		return y + 2;
 	}
-	
+
 	@Override
 	public int[][] getSurfaceHeight(World world, int chunkX, int chunkY) {
 		int height = world.getHeight() - 1;

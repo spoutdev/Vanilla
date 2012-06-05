@@ -44,7 +44,7 @@ public class WoodenStairs extends Stairs implements Fuel {
 		super(name, id);
 		this.setHardness(2.0F).setResistance(10.0F);
 	}
-	
+
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Axe ? (short) 1 : (short) 2;

@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.world.generator.normal.decorator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;

@@ -34,7 +34,7 @@ public class SilverfishStone extends Stone {
 		super(name, id);
 		this.setHardness(0.8F).setResistance(1.2F); // TODO Confirm resistance
 	}
-	
+
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Sword ? (short) 2 : (short) 1;

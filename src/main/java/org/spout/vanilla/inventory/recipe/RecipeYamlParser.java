@@ -28,14 +28,11 @@ package org.spout.vanilla.inventory.recipe;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.inventory.Recipe;
 import org.spout.api.inventory.RecipeBuilder;
@@ -47,7 +44,7 @@ import org.spout.api.plugin.Plugin;
 import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 
-public class RecipeYamlParser {	
+public class RecipeYamlParser {
 	public static Set<Recipe> parseFileToRecipes(Plugin plugin, File file) {
 		Set<Recipe> recipes = new HashSet<Recipe>();
 		YamlConfiguration config = new YamlConfiguration(file);
@@ -68,17 +65,17 @@ public class RecipeYamlParser {
 				for (String inKey : recipe.getNode("ingredients").getKeys(false)) {
 					builder.addIngredient(inKey.charAt(0), MaterialRegistry.get(recipe.getString("ingredients." + inKey)));
 				}
-				for(Object rowObject : recipe.getNode("rows").getList(new ArrayList<String>())) {
+				for (Object rowObject : recipe.getNode("rows").getList(new ArrayList<String>())) {
 					String row = (String) rowObject;
 					List<Character> rowChars = new ArrayList<Character>();
 					for (char c : row.toCharArray()) {
-					    rowChars.add(c);
+						rowChars.add(c);
 					}
 					builder.addRow(rowChars);
 				}
 				recipes.add(VanillaRecipes.addYamlRecipe(builder.buildShapedRecipe(), key));
 			} else if (recipe.getNode("type").getString().equalsIgnoreCase("Shapeless")) {
-				for(Object rowObject : recipe.getNode("ingredients").getList(new ArrayList<String>())) {
+				for (Object rowObject : recipe.getNode("ingredients").getList(new ArrayList<String>())) {
 					String ingredient = (String) rowObject;
 					builder.addIngredient(MaterialRegistry.get(ingredient));
 				}
@@ -87,11 +84,11 @@ public class RecipeYamlParser {
 		}
 		return recipes;
 	}
-	
+
 	public static void parseRecipesToFile(Set<Recipe> recipes, File file) {
 		YamlConfiguration config = new YamlConfiguration(file);
 		ConfigurationNode recipesNode = config.getChild("recipes");
-		for(Recipe recipe : recipes) {
+		for (Recipe recipe : recipes) {
 			ConfigurationNode recipeNode = recipesNode.getChild(recipe.getResult().getMaterial().getName());
 			String resultString = recipe.getResult().getMaterial().getName() + "," + recipe.getResult().getAmount();
 			recipeNode.getChild("result").setValue(resultString);

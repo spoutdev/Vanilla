@@ -27,7 +27,6 @@
 package org.spout.vanilla.command;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,10 +48,9 @@ import org.spout.api.exception.CommandException;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.MathHelper;
-import org.spout.api.math.Matrix;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -90,10 +88,10 @@ public class TestCommands {
 		Point point = player.getEntity().getPosition();
 
 		boolean disk = false;
-		
+
 		ArrayList<ControllerType> types = new ArrayList<ControllerType>();
 		ArrayList<Integer> numbers = new ArrayList<Integer>();
-		
+
 		for (int i = 0; i < args.length(); i++) {
 			try {
 				int number = Integer.parseInt(args.getString(i));
@@ -110,7 +108,8 @@ public class TestCommands {
 							numbers.add(1);
 						}
 						types.add(testType);
-						match = true;;
+						match = true;
+						;
 						break;
 					}
 				}
@@ -125,13 +124,13 @@ public class TestCommands {
 				}
 			}
 		}
-		
+
 		if (types.size() == 0) {
 			throw new CommandException("Unable to find any types to spawn");
 		}
-		
+
 		int toSpawn = 0;
-		
+
 		for (int i = 0; i < types.size(); i++) {
 			if (toSpawn + numbers.get(i) > 50) {
 				int newValue = 50 - toSpawn;
@@ -144,11 +143,11 @@ public class TestCommands {
 			}
 			toSpawn += numbers.get(i);
 		}
-		
+
 		ControllerType[] typeArray = types.toArray(new ControllerType[0]);
 
 		if (types.size() == 1) {
-			typeArray = new ControllerType[] { types.get(0) };
+			typeArray = new ControllerType[]{types.get(0)};
 		} else {
 			typeArray = new ControllerType[toSpawn];
 			int k = 0;
@@ -178,9 +177,8 @@ public class TestCommands {
 				arrangement = new SpiralSpawnArrangement(point, typeArray, 1.5F);
 			}
 		}
-		
+
 		point.getWorld().createAndSpawnEntity(arrangement);
-		
 	}
 
 	@Command(aliases = {"control"}, usage = "<controller>", desc = "Control a controller!", min = 1, max = 6)

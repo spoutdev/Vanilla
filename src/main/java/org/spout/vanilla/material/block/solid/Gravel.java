@@ -46,7 +46,7 @@ import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class Gravel extends Solid implements DynamicMaterial, Mineable{
+public class Gravel extends Solid implements DynamicMaterial, Mineable {
 	private Random rand = new Random();
 
 	public Gravel(String name, int id) {

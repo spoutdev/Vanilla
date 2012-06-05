@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator.normal.biome;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 public class SwampBiome extends VanillaNormalBiome {
-	
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
@@ -38,7 +37,7 @@ public class SwampBiome extends VanillaNormalBiome {
 		NOISE.setyScale(0.06D);
 		NOISE.setzScale(0.067D);
 	}
-	
+
 	public SwampBiome(int biomeId) {
 		super(biomeId, NOISE);
 		this.minDensityTerrainHeight = 60;

@@ -115,7 +115,7 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 		final Exponent contrast = new Exponent();
 		contrast.SetSourceModule(0, modifiedMaster);
 		contrast.setExponent(1.5D);
-		
+
 		mainMaster.SetSourceModule(0, contrast);
 		mainMaster.setFrequency(0.005D);
 		mainMaster.setPower(6D);
@@ -159,7 +159,7 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 
 		final int bottomHeightMapHeight = getBottomHeightMapValue(x, z, densityTerrainHeightMin);
 		final int upperHeightMapHeight = getUpperHeightMapValue(x, z, densityTerrainHeightMax);
-		
+
 		for (int y = startY; y < endY; y++) {
 			if (y <= densityTerrainHeightMin) {
 				for (; y <= bottomHeightMapHeight && y < endY; y++) {

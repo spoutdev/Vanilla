@@ -32,8 +32,6 @@ import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
-import org.spout.vanilla.controller.action.GravityAction;
-import org.spout.vanilla.controller.action.WanderAction;
 
 public abstract class Living extends VanillaActionController {
 	private Point headPos = null;

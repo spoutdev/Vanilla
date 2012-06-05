@@ -33,8 +33,9 @@ import java.util.Set;
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.map.DefaultedKey;
+import org.spout.api.map.DefaultedKeyImpl;
+
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -45,7 +46,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 
 public class Slime extends Creature implements Hostile {
 	public final static DefaultedKey<Byte> SIZE_KEY = new SlimeSize("slime_size");
-	
 	private byte size;
 
 	public Slime(byte size) {
@@ -128,11 +128,10 @@ public class Slime extends Creature implements Hostile {
 
 		this.size = size;
 	}
-	
+
 	private static class SlimeSize extends DefaultedKeyImpl<Byte> {
-		
 		private Random random = new Random();
-		
+
 		public SlimeSize(String keyString) {
 			super(keyString, null);
 		}
@@ -140,9 +139,8 @@ public class Slime extends Creature implements Hostile {
 		@Override
 		public Byte getDefaultValue() {
 			synchronized (random) {
-				return (byte)random.nextInt(4);
+				return (byte) random.nextInt(4);
 			}
 		}
-		
 	}
 }

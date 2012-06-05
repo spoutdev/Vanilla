@@ -48,8 +48,8 @@ public class TundraBiome extends VanillaNormalBiome {
 		super(id, NOISE/*, new PondDecorator()*/);
 		this.minDensityTerrainHeight = VanillaConfiguration.BIOMES.TUNDRA_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
 		this.maxDensityTerrainHeight = VanillaConfiguration.BIOMES.TUNDRA_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.upperHeightMapScale = VanillaConfiguration.BIOMES.TUNDRA_UPPER_HEIGHT_MAP_SCALE.getInt();
-		this.bottomHeightMapScale = VanillaConfiguration.BIOMES.TUNDRA_BOTTOM_HEIGHT_MAP_SCALE.getInt();
+		this.upperHeightMapScale = VanillaConfiguration.BIOMES.TUNDRA_UPPER_HEIGHT_MAP_SCALE.getFloat();
+		this.bottomHeightMapScale = VanillaConfiguration.BIOMES.TUNDRA_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
 	}
 
 	@Override

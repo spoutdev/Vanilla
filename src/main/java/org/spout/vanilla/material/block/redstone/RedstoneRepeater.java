@@ -106,7 +106,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 		}
 	}
 
-	public static final int[] TICK_DELAYS = { 2, 4, 6, 8 };
+	public static final int[] TICK_DELAYS = {2, 4, 6, 8};
 
 	public int getTickDelay(Block block) {
 		return TICK_DELAYS[this.getTickDelayIndex(block)];

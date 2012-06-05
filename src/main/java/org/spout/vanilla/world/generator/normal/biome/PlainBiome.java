@@ -44,8 +44,8 @@ public class PlainBiome extends VanillaNormalBiome {
 		super(id, NOISE/*, new PondDecorator(), new GrassDecorator(), new FlowerDecorator()*/);
 		this.minDensityTerrainHeight = VanillaConfiguration.BIOMES.PLAINS_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
 		this.maxDensityTerrainHeight = VanillaConfiguration.BIOMES.PLAINS_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.upperHeightMapScale = VanillaConfiguration.BIOMES.PLAINS_UPPER_HEIGHT_MAP_SCALE.getInt();
-		this.bottomHeightMapScale = VanillaConfiguration.BIOMES.PLAINS_BOTTOM_HEIGHT_MAP_SCALE.getInt();
+		this.upperHeightMapScale = VanillaConfiguration.BIOMES.PLAINS_UPPER_HEIGHT_MAP_SCALE.getFloat();
+		this.bottomHeightMapScale = VanillaConfiguration.BIOMES.PLAINS_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
 	}
 
 	@Override

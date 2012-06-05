@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.liquid;
 
-import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 

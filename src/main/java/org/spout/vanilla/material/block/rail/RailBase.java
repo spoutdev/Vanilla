@@ -150,7 +150,7 @@ public abstract class RailBase extends GroundAttachable implements Mineable {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Sword ? (short) 2 : (short) 1;

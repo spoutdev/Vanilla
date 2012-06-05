@@ -26,12 +26,11 @@
  */
 package org.spout.vanilla.protocol;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+import java.util.Set;
+
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
-
-import java.util.Set;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
@@ -54,6 +53,7 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEventListener;
 import org.spout.api.util.map.TIntPairObjectHashMap;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
@@ -73,6 +73,8 @@ import org.spout.vanilla.window.Window;
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.theend.TheEndGenerator;
+
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	@SuppressWarnings("unused")
@@ -156,10 +158,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			int[][] heights = getColumnHeights(p);
 
 			byte[][] packetChunkData = new byte[16][];
-			
+
 			for (int cube = 0; cube < 16; cube++) {
 				packetChunkData[cube] = getChunkHeightMap(heights, cube);
-
 			}
 
 			column = new TIntHashSet();
@@ -183,7 +184,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 		column.add(y);
 	}
-	
+
 	private static int[][] getColumnHeights(Point p) {
 		int[][] heights = new int[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
 
@@ -196,7 +197,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 		return heights;
 	}
-	
+
 	private static byte[] getChunkHeightMap(int[][] heights, int chunkY) {
 		byte[] packetChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 		int baseY = chunkY << Chunk.BLOCKS.BITS;
@@ -212,7 +213,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 					threshold = 0;
 				}
 				int yy;
-				for (yy = 0; yy < Chunk.BLOCKS.SIZE && yy <= threshold ; yy++) {
+				for (yy = 0; yy < Chunk.BLOCKS.SIZE && yy <= threshold; yy++) {
 					packetChunkData[dataOffset] = 1;
 					dataOffset += blockYStep;
 				}

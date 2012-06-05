@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator.normal.biome;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 public class JungleBiome extends VanillaNormalBiome {
-	
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {

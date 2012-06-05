@@ -42,7 +42,6 @@ import org.spout.vanilla.world.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends BiomeGenerator implements VanillaGenerator {
 	private BiomeSelector selector;
-	
 	public final static int SEA_LEVEL = 63;
 
 	@Override
@@ -97,7 +96,7 @@ public class NormalGenerator extends BiomeGenerator implements VanillaGenerator 
 		}
 		return y + 2;
 	}
-	
+
 	@Override
 	public int[][] getSurfaceHeight(World world, int chunkX, int chunkY) {
 		int height = world.getHeight() - 1;

@@ -87,5 +87,4 @@ public class NetherGenerator extends BiomeGenerator implements VanillaGenerator 
 		}
 		return heights;
 	}
-
 }

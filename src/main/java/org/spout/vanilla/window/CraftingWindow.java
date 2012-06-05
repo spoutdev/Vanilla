@@ -102,7 +102,7 @@ public abstract class CraftingWindow extends Window {
 			ItemStack item = grid.getItem(slot);
 			Material mat = null;
 			if (item != null) {
-			    mat = item.getMaterial();
+				mat = item.getMaterial();
 			}
 			current.add(mat);
 			if (mat != null) {

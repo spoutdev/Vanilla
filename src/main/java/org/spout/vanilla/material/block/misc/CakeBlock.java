@@ -33,6 +33,7 @@ import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -101,7 +102,6 @@ public class CakeBlock extends Solid implements Mineable {
 		THREE_PIECES(0x3),
 		TWO_PIECES(0x4),
 		ONE_PIECE(0x5);
-
 		private short data;
 
 		private CakeSize(int data) {

@@ -39,36 +39,36 @@ public class BiomeConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder PLAINS_Z_SCALE = new ConfigurationHolder(0.077, "biomes", "plains", "z-scale");
 	public static final ConfigurationHolder PLAINS_MIN_DENSITY_TERRAIN_HEIGHT = new ConfigurationHolder(67, "biomes", "plains", "min-density-terrain-height");
 	public static final ConfigurationHolder PLAINS_MAX_DENSITY_TERRAIN_HEIGHT = new ConfigurationHolder(69, "biomes", "plains", "max-density-terrain-height");
-	public static final ConfigurationHolder PLAINS_UPPER_HEIGHT_MAP_SCALE = new ConfigurationHolder(3, "biomes", "plains", "upper-height-map-scale");
-	public static final ConfigurationHolder PLAINS_BOTTOM_HEIGHT_MAP_SCALE = new ConfigurationHolder(3.3, "biomes", "plains", "bottom-height-map-scale");
+	public static final ConfigurationHolder PLAINS_UPPER_HEIGHT_MAP_SCALE = new ConfigurationHolder(3f, "biomes", "plains", "upper-height-map-scale");
+	public static final ConfigurationHolder PLAINS_BOTTOM_HEIGHT_MAP_SCALE = new ConfigurationHolder(3.3f, "biomes", "plains", "bottom-height-map-scale");
 	//Tundra Biome
 	public static final ConfigurationHolder TUNDRA_X_SCALE = new ConfigurationHolder(0.09, "biomes", "tundra", "x-scale");
 	public static final ConfigurationHolder TUNDRA_Y_SCALE = new ConfigurationHolder(0.08, "biomes", "tundra", "y-scale");
 	public static final ConfigurationHolder TUNDRA_Z_SCALE = new ConfigurationHolder(0.09, "biomes", "tundra", "z-scale");
 	public static final ConfigurationHolder TUNDRA_MIN_DENSITY_TERRAIN_HEIGHT = new ConfigurationHolder(67, "biomes", "tundra", "min-density-terrain-height");
 	public static final ConfigurationHolder TUNDRA_MAX_DENSITY_TERRAIN_HEIGHT = new ConfigurationHolder(69, "biomes", "tundra", "max-density-terrain-height");
-	public static final ConfigurationHolder TUNDRA_UPPER_HEIGHT_MAP_SCALE = new ConfigurationHolder(3.3, "biomes", "tundra", "upper-height-map-scale");
-	public static final ConfigurationHolder TUNDRA_BOTTOM_HEIGHT_MAP_SCALE = new ConfigurationHolder(3.7, "biomes", "tundra", "bottom-height-map-scale");
+	public static final ConfigurationHolder TUNDRA_UPPER_HEIGHT_MAP_SCALE = new ConfigurationHolder(3.3f, "biomes", "tundra", "upper-height-map-scale");
+	public static final ConfigurationHolder TUNDRA_BOTTOM_HEIGHT_MAP_SCALE = new ConfigurationHolder(3.7f, "biomes", "tundra", "bottom-height-map-scale");
 	//Taiga Biome
 	public static final ConfigurationHolder TAIGA_X_SCALE = new ConfigurationHolder(0.09, "biomes", "taiga", "x-scale");
 	public static final ConfigurationHolder TAIGA_Y_SCALE = new ConfigurationHolder(0.08, "biomes", "taiga", "y-scale");
 	public static final ConfigurationHolder TAIGA_Z_SCALE = new ConfigurationHolder(0.09, "biomes", "taiga", "z-scale");
 	public static final ConfigurationHolder TAIGA_MIN_DENSITY_TERRAIN_HEIGHT = new ConfigurationHolder(67, "biomes", "taiga", "min-density-terrain-height");
 	public static final ConfigurationHolder TAIGA_MAX_DENSITY_TERRAIN_HEIGHT = new ConfigurationHolder(71, "biomes", "taiga", "max-density-terrain-height");
-	public static final ConfigurationHolder TAIGA_UPPER_HEIGHT_MAP_SCALE = new ConfigurationHolder(3.3, "biomes", "taiga", "upper-height-map-scale");
-	public static final ConfigurationHolder TAIGA_BOTTOM_HEIGHT_MAP_SCALE = new ConfigurationHolder(3.7, "biomes", "taiga", "bottom-height-map-scale");
+	public static final ConfigurationHolder TAIGA_UPPER_HEIGHT_MAP_SCALE = new ConfigurationHolder(3.3f, "biomes", "taiga", "upper-height-map-scale");
+	public static final ConfigurationHolder TAIGA_BOTTOM_HEIGHT_MAP_SCALE = new ConfigurationHolder(3.7f, "biomes", "taiga", "bottom-height-map-scale");
 	//Small Mountains Biome
 	public static final ConfigurationHolder SMALL_MOUNTAINS_X_SCALE = new ConfigurationHolder(0.085, "biomes", "smallmountains", "x-scale");
 	public static final ConfigurationHolder SMALL_MOUNTAINS_Y_SCALE = new ConfigurationHolder(0.035, "biomes", "smallmountains", "y-scale");
 	public static final ConfigurationHolder SMALL_MOUNTAINS_Z_SCALE = new ConfigurationHolder(0.085, "biomes", "smallmountains", "z-scale");
-	public static final ConfigurationHolder SMALL_MOUNTAINS_DENSITY_TERRAIN_HEIGHT_SCALE = new ConfigurationHolder(5.5, "biomes", "smallmountains", "density-terrain-height-scale");
+	public static final ConfigurationHolder SMALL_MOUNTAINS_DENSITY_TERRAIN_HEIGHT_SCALE = new ConfigurationHolder(5.5f, "biomes", "smallmountains", "density-terrain-height-scale");
 	public static final ConfigurationHolder SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_HEIGHT = new ConfigurationHolder(64, "biomes", "smallmountains", "min-density-terrain-height");
 	public static final ConfigurationHolder SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_HEIGHT = new ConfigurationHolder(74, "biomes", "smallmountains", "max-density-terrain-height");
-	public static final ConfigurationHolder SMALL_MOUNTAINS_DENSITY_TERRAIN_THICKNESS_SCALE = new ConfigurationHolder(5.5, "biomes", "smallmountains", "density-terrain-thickness-scale");
+	public static final ConfigurationHolder SMALL_MOUNTAINS_DENSITY_TERRAIN_THICKNESS_SCALE = new ConfigurationHolder(5.5f, "biomes", "smallmountains", "density-terrain-thickness-scale");
 	public static final ConfigurationHolder SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_THICKNESS = new ConfigurationHolder(2, "biomes", "smallmountains", "min-density-terrain-thickness");
 	public static final ConfigurationHolder SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_THICKNESS = new ConfigurationHolder(6, "biomes", "smallmountains", "max-density-terrain-thickness");
-	public static final ConfigurationHolder SMALL_MOUNTAINS_UPPER_HEIGHT_MAP_SCALE = new ConfigurationHolder(5, "biomes", "smallmountains", "upper-height-map-scale");
-	public static final ConfigurationHolder SMALL_MOUNTAINS_BOTTOM_HEIGHT_MAP_SCALE = new ConfigurationHolder(6, "biomes", "smallmountains", "bottom-height-map-scale");
+	public static final ConfigurationHolder SMALL_MOUNTAINS_UPPER_HEIGHT_MAP_SCALE = new ConfigurationHolder(5f, "biomes", "smallmountains", "upper-height-map-scale");
+	public static final ConfigurationHolder SMALL_MOUNTAINS_BOTTOM_HEIGHT_MAP_SCALE = new ConfigurationHolder(6f, "biomes", "smallmountains", "bottom-height-map-scale");
 
 	public BiomeConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "biomes.yml")));

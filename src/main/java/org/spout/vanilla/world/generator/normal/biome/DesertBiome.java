@@ -34,7 +34,6 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class DesertBiome extends VanillaNormalBiome {
-	
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
@@ -59,7 +58,7 @@ public class DesertBiome extends VanillaNormalBiome {
 
 	@Override
 	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		
+
 		final byte size = (byte) blockData.getSize().getY();
 
 		if (size < 16) {
@@ -71,7 +70,7 @@ public class DesertBiome extends VanillaNormalBiome {
 
 		final byte sandDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 4 + 4, 3, 4);
 		final byte sandstoneDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -6, z) * 4 + 3, 0, 3);
-		
+
 		final byte maxGroudCoverDepth = (byte) (sandDepth + sandstoneDepth);
 		final byte sampleSize = (byte) (maxGroudCoverDepth + 1);
 

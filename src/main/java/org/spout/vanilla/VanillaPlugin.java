@@ -27,8 +27,10 @@
 package org.spout.vanilla;
 
 import java.net.InetSocketAddress;
+import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.spout.api.Engine;
 import org.spout.api.Server;
@@ -43,11 +45,11 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
+import org.spout.api.gui.security.SecurityHandler;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
-
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -108,6 +110,18 @@ public class VanillaPlugin extends CommonPlugin {
 
 		//Worlds
 		setupWorlds();
+		
+		SecurityHandler.getInstance().getKeyPair(1024, "RSA");
+		
+		KeyPair keys = SecurityHandler.getInstance().getKeyPair(1024, "RSA");
+		
+		multilineLog("Key pair generated");
+		multilineLog("<<<<<<<<<<  Public   >>>>>>>>>>");
+		multilineLog(keys.getPublic().toString());
+		
+		multilineLog("");
+		multilineLog("<<<<<<<<<<  Private  >>>>>>>>>>");
+		multilineLog(keys.getPrivate().toString());
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
 	}
@@ -236,5 +250,17 @@ public class VanillaPlugin extends CommonPlugin {
 	 */
 	public static VanillaPlugin getInstance() {
 		return instance;
+	}
+	
+	
+	private void multilineLog(String multiline) {
+		String[] split = multiline.split("\n");
+		for (String line : split) {
+			while (line.length() > 40) {
+				getLogger().info(line.substring(0, 40));
+				line = line.substring(40);
+			}
+			getLogger().info(line);
+		}
 	}
 }

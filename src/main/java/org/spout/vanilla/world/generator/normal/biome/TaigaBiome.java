@@ -44,8 +44,8 @@ public class TaigaBiome extends VanillaNormalBiome {
 	
 	public TaigaBiome(int biomeId) {
 		super(biomeId, NOISE);
-		this.minDensityTerrainHeight = (Byte) VanillaConfiguration.BIOMES.TAIGA_MIN_DENSITY_TERRAIN_HEIGHT.getValue();
-		this.maxDensityTerrainHeight = (Byte) VanillaConfiguration.BIOMES.TAIGA_MAX_DENSITY_TERRAIN_HEIGHT.getValue();
+		this.minDensityTerrainHeight = ((Integer) VanillaConfiguration.BIOMES.TAIGA_MIN_DENSITY_TERRAIN_HEIGHT.getInt()).byteValue();
+		this.maxDensityTerrainHeight = ((Integer) VanillaConfiguration.BIOMES.TAIGA_MAX_DENSITY_TERRAIN_HEIGHT.getInt()).byteValue();
 		this.upperHeightMapScale = VanillaConfiguration.BIOMES.TAIGA_UPPER_HEIGHT_MAP_SCALE.getInt();
 		this.bottomHeightMapScale = VanillaConfiguration.BIOMES.TAIGA_BOTTOM_HEIGHT_MAP_SCALE.getInt();
 	}

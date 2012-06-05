@@ -222,7 +222,7 @@ public abstract class DoorBlock extends GroundAttachable implements Mineable, Op
 	public boolean onPlacement(Block block, short data, BlockFace face, boolean isClicked) {
 		BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource()).getOpposite();
 		Block above = block.translate(BlockFace.TOP);
-		if (!above.getSubMaterial().isPlacementObstacle()) {
+		if (!above.getMaterial().isPlacementObstacle()) {
 			Block left = block.translate(rotate(facing, -1));
 			Block right = block.translate(rotate(facing, 1));
 			boolean hingeLeft = isDoorBlock(right) || (!isDoorBlock(left) && !isHingeBlock(right) && isHingeBlock(left));

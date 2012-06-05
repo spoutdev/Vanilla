@@ -29,17 +29,21 @@ package org.spout.vanilla.material.block.rail;
 import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 
-import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
-import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.RailsState;
 import org.spout.vanilla.util.RedstonePowerMode;
 
-public class DetectorRail extends RailBase implements RedstoneSource, ScheduleUpdated {
+public class DetectorRail extends RailBase implements RedstoneSource, DynamicMaterial {
+	public static final int TICK_DELAY = 20;
+	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
+	
 	public DetectorRail(String name, int id) {
 		super(name, id);
 		this.setHardness(0.7F).setResistance(1.2F).setOpacity((byte) 0);
@@ -55,19 +59,10 @@ public class DetectorRail extends RailBase implements RedstoneSource, ScheduleUp
 		block.setSource(this).update().translate(BlockFace.BOTTOM).update();
 	}
 
-	@Override
-	public void onDelayedUpdate(Block block) {
-		if (this.isPowering(block)) {
-			//TODO: Check if a minecart is on top of this block right now...
-			this.setPowering(block, false);
-			this.doRedstoneUpdates(block);
-		}
-	}
-
 	public void activate(Block block) {
 		this.setPowering(block, true);
 		this.doRedstoneUpdates(block);
-		BlockScheduler.schedule(block, 20);
+		block.dynamicUpdate(TICK_DELAY);
 	}
 
 	/**
@@ -128,5 +123,27 @@ public class DetectorRail extends RailBase implements RedstoneSource, ScheduleUp
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		drops.add(new ItemStack(this, 1));
 		return drops;
+	}
+
+	@Override
+	public Vector3[] maxRange() {
+		return maxRange;
+	}
+
+	@Override
+	public long onPlacement(Block b, Region r, long currentTime) {
+		return -1;
+	}
+
+	@Override
+	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
+		if (this.isPowering(block)) {
+			//TODO: Check if a minecart is on top of this block right now...
+			this.setPowering(block, false);
+			this.doRedstoneUpdates(block);
+			return -1;
+		} else {
+			return TICK_DELAY;
+		}
 	}
 }

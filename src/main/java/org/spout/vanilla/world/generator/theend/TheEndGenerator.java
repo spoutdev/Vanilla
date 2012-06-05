@@ -80,7 +80,6 @@ public class TheEndGenerator extends BiomeGenerator implements VanillaGenerator 
 
 	@Override
 	public int[][] getSurfaceHeight(World world, int chunkX, int chunkY) {
-		int height = world.getHeight() - 1;
 		int[][] heights = new int[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
 		for (int x = 0; x < Chunk.BLOCKS.SIZE; x++) {
 			for (int z = 0; z < Chunk.BLOCKS.SIZE; z++) {

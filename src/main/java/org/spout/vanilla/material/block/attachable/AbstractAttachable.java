@@ -138,7 +138,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
-		return this.isAttachable(face.getOpposite()) && this.canAttachTo(block.getSubMaterial(), face);
+		return this.isAttachable(face.getOpposite()) && this.canAttachTo(block.getMaterial(), face);
 	}
 
 	@Override

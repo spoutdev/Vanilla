@@ -115,7 +115,7 @@ public class BedBlock extends VanillaBlockMaterial implements Mineable {
 	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (against == BlockFace.BOTTOM && super.canPlace(block, data, against, isClickedBlock)) {
 			Block below = block.translate(BlockFace.BOTTOM);
-			BlockMaterial material = below.getSubMaterial();
+			BlockMaterial material = below.getMaterial();
 			if (material instanceof VanillaBlockMaterial) {
 				return ((VanillaBlockMaterial) material).canSupport(this, BlockFace.TOP);
 			}

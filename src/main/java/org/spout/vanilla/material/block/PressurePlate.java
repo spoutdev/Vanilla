@@ -29,16 +29,21 @@ package org.spout.vanilla.material.block;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
-import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.RedstonePowerMode;
 
-public abstract class PressurePlate extends GroundAttachable implements Mineable, RedstoneSource, ScheduleUpdated {
+public abstract class PressurePlate extends GroundAttachable implements Mineable, RedstoneSource, DynamicMaterial {
+	public static final int TICK_DELAY = 20;
+	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
+	
 	public PressurePlate(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
@@ -75,18 +80,10 @@ public abstract class PressurePlate extends GroundAttachable implements Mineable
 		}
 	}
 
-	@Override
-	public void onDelayedUpdate(Block block) {
-		if (this.isPressed(block)) {
-			//TODO: Check if an entity is on top and don't undo it then
-			this.setPressed(block, false);
-		}
-	}
-
 	public void press(Block block) {
 		if (!this.isPressed(block)) {
 			this.setPressed(block, true);
-			BlockScheduler.schedule(block, 20);
+			block.dynamicUpdate(TICK_DELAY);
 		}
 	}
 
@@ -119,5 +116,26 @@ public abstract class PressurePlate extends GroundAttachable implements Mineable
 	@Override
 	public void doRedstoneUpdates(Block block) {
 		block.setSource(this).update().translate(BlockFace.BOTTOM).update();
+	}
+
+	@Override
+	public Vector3[] maxRange() {
+		return maxRange;
+	}
+
+	@Override
+	public long onPlacement(Block b, Region r, long currentTime) {
+		return -1;
+	}
+
+	@Override
+	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
+		if (this.isPressed(block)) {
+			//TODO: Check if an entity is on top and don't undo it then
+			this.setPressed(block, false);
+			return -1;
+		} else {
+			return TICK_DELAY;
+		}
 	}
 }

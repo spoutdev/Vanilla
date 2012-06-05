@@ -130,7 +130,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		return !block.getSubMaterial().isPlacementObstacle();
+		return !block.getMaterial().isPlacementObstacle();
 	}
 
 	@Override
@@ -230,7 +230,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 			BlockMaterial mat;
 			for (BlockFace face : BlockFaces.NESWBT) {
 				neigh = block.translate(face);
-				mat = neigh.getSubMaterial();
+				mat = neigh.getMaterial();
 				if (mat instanceof RedstoneSource) {
 					power = (short) Math.max(power, ((RedstoneSource) mat).getRedstonePowerTo(neigh, face.getOpposite(), powerMode));
 				}
@@ -262,7 +262,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 			BlockMaterial mat;
 			for (BlockFace face : BlockFaces.NESWBT) {
 				neigh = block.translate(face);
-				mat = neigh.getSubMaterial();
+				mat = neigh.getMaterial();
 				if (mat instanceof RedstoneSource) {
 					if (((RedstoneSource) mat).hasRedstonePowerTo(neigh, face.getOpposite(), powerMode)) {
 						return true;

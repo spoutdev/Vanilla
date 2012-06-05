@@ -123,7 +123,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	 * @param block to place a tree at
 	 */
 	public void growTree(Block block) {
-		BlockMaterial mat = block.getSubMaterial();
+		BlockMaterial mat = block.getMaterial();
 		if (mat instanceof Sapling) {
 			this.growTree(block, (Sapling) mat);
 		}

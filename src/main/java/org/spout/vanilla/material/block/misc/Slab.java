@@ -99,14 +99,14 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 
 	@Override
 	public void onDestroy(Block block, double dropChance) {
-		if (!block.getSubMaterial().equals(this.doubletype)) {
+		if (!block.getMaterial().equals(this.doubletype)) {
 			super.onDestroy(block, dropChance);
 		}
 	}
 
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (block.getSubMaterial().equals(this)) {
+		if (block.getMaterial().equals(this)) {
 			if (isClickedBlock) {
 				if (this.isTop(block)) {
 					return against == BlockFace.BOTTOM;
@@ -123,7 +123,7 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (block.getSubMaterial().equals(this)) {
+		if (block.getMaterial().equals(this)) {
 			block.setMaterial(this.doubletype).update();
 		} else {
 			block.setMaterial(this);

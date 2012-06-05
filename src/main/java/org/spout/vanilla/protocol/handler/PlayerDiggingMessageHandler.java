@@ -68,7 +68,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 		World w = player.getEntity().getWorld();
 		Block block = w.getBlock(x, y, z, player.getEntity());
-		BlockMaterial blockMaterial = block.getSubMaterial();
+		BlockMaterial blockMaterial = block.getMaterial();
 		BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(face);
 
 		if (x == 0 && y == 0 && z == 0 && face == 0 && state == 4) {

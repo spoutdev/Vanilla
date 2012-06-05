@@ -106,7 +106,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), inventory.getCurrentItem(), Action.RIGHT_CLICK, false));
 
 			//Get the target block and validate 
-			BlockMaterial clickedMaterial = clickedBlock.getSubMaterial();
+			BlockMaterial clickedMaterial = clickedBlock.getMaterial();
 
 			//alternative block to place at may the clicked block deny placement
 			Block alterBlock = clickedBlock.translate(clickedFace);

@@ -28,28 +28,28 @@ package org.spout.vanilla.world.generator.normal.biome;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.configuration.BiomeConfiguration;
 
 public class SmallMountainsBiome extends VanillaNormalBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
-		NOISE.setxScale(VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_X_SCALE.getDouble());
-		NOISE.setyScale(VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_Y_SCALE.getDouble());
-		NOISE.setzScale(VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_Z_SCALE.getDouble());
+		NOISE.setxScale(BiomeConfiguration.SMALL_MOUNTAINS_X_SCALE.getDouble());
+		NOISE.setyScale(BiomeConfiguration.SMALL_MOUNTAINS_Y_SCALE.getDouble());
+		NOISE.setzScale(BiomeConfiguration.SMALL_MOUNTAINS_Z_SCALE.getDouble());
 	}
 
 	public SmallMountainsBiome(int biomeId) {
 		super(biomeId, NOISE);
-		minDensityTerrainHeight = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		maxDensityTerrainHeight = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
-		minDensityTerrainThickness = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
-		maxDensityTerrainThickness = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
-		upperHeightMapScale = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		bottomHeightMapScale = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
-		densityTerrainThicknessScale = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
-		densityTerrainHeightScale = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
+		minDensityTerrainHeight = BiomeConfiguration.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
+		maxDensityTerrainHeight = BiomeConfiguration.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+		minDensityTerrainThickness = BiomeConfiguration.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
+		maxDensityTerrainThickness = BiomeConfiguration.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+		upperHeightMapScale = BiomeConfiguration.SMALL_MOUNTAINS_UPPER_HEIGHT_MAP_SCALE.getFloat();
+		bottomHeightMapScale = BiomeConfiguration.SMALL_MOUNTAINS_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+		densityTerrainThicknessScale = BiomeConfiguration.SMALL_MOUNTAINS_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
+		densityTerrainHeightScale = BiomeConfiguration.SMALL_MOUNTAINS_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}
 
 	@Override

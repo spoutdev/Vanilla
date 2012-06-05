@@ -47,7 +47,7 @@ public class PistonExtension extends ControlledMaterial implements Directional, 
 	@Override
 	public void onDestroy(Block block, double dropChance) {
 		block = block.translate(this.getFacing(block).getOpposite());
-		BlockMaterial mat = block.getSubMaterial();
+		BlockMaterial mat = block.getMaterial();
 		if (mat instanceof Piston) {
 			((Piston) mat).onDestroy(block, dropChance);
 		} else {

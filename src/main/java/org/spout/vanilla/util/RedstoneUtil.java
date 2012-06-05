@@ -42,7 +42,7 @@ public class RedstoneUtil {
 	 * @return True if it is a redstone conductor
 	 */
 	public static boolean isConductor(Block block) {
-		return isConductor(block.getSubMaterial());
+		return isConductor(block.getMaterial());
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class RedstoneUtil {
 	}
 
 	public static boolean isPowered(Block block, BlockFace to, RedstonePowerMode powerMode) {
-		BlockMaterial mat = block.getSubMaterial();
+		BlockMaterial mat = block.getMaterial();
 		if (mat instanceof VanillaBlockMaterial) {
 			if (((VanillaBlockMaterial) mat).hasRedstonePower(block, powerMode)) {
 				return true;

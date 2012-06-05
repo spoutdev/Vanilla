@@ -28,24 +28,24 @@ package org.spout.vanilla.world.generator.normal.biome;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.configuration.BiomeConfiguration;
 
 public class TaigaBiome extends VanillaNormalBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
-		NOISE.setxScale(VanillaConfiguration.BIOMES.TAIGA_X_SCALE.getDouble());
-		NOISE.setyScale(VanillaConfiguration.BIOMES.TAIGA_Y_SCALE.getDouble());
-		NOISE.setzScale(VanillaConfiguration.BIOMES.TAIGA_Z_SCALE.getDouble());
+		NOISE.setxScale(BiomeConfiguration.TAIGA_X_SCALE.getDouble());
+		NOISE.setyScale(BiomeConfiguration.TAIGA_Y_SCALE.getDouble());
+		NOISE.setzScale(BiomeConfiguration.TAIGA_Z_SCALE.getDouble());
 	}
 
 	public TaigaBiome(int biomeId) {
 		super(biomeId, NOISE);
-		this.minDensityTerrainHeight = VanillaConfiguration.BIOMES.TAIGA_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.maxDensityTerrainHeight = VanillaConfiguration.BIOMES.TAIGA_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.upperHeightMapScale = VanillaConfiguration.BIOMES.TAIGA_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		this.bottomHeightMapScale = VanillaConfiguration.BIOMES.TAIGA_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+		this.minDensityTerrainHeight = BiomeConfiguration.TAIGA_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.maxDensityTerrainHeight = BiomeConfiguration.TAIGA_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.upperHeightMapScale = BiomeConfiguration.TAIGA_UPPER_HEIGHT_MAP_SCALE.getFloat();
+		this.bottomHeightMapScale = BiomeConfiguration.TAIGA_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
 	}
 
 	@Override

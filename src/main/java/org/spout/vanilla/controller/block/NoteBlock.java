@@ -45,7 +45,7 @@ public class NoteBlock extends VanillaBlockController {
 	}
 
 	public Instrument getInstrument() {
-		BlockMaterial below = this.getBlock().translate(BlockFace.BOTTOM).getSubMaterial();
+		BlockMaterial below = this.getBlock().translate(BlockFace.BOTTOM).getMaterial();
 		return below instanceof VanillaBlockMaterial ? ((VanillaBlockMaterial) below).getInstrument() : Instrument.PIANO;
 	}
 

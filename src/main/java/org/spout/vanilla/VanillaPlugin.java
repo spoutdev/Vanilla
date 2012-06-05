@@ -47,7 +47,6 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
-import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
@@ -62,7 +61,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
-import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
@@ -108,9 +106,6 @@ public class VanillaPlugin extends CommonPlugin {
 		//Events
 		game.getEventManager().registerEvents(new VanillaListener(this), this);
 
-		//Block Scheduler
-		game.getParallelTaskManager().scheduleSyncRepeatingTask(this, new BlockScheduler(), 0L, 1L, TaskPriority.HIGH);
-
 		//Worlds
 		setupWorlds();
 
@@ -147,28 +142,28 @@ public class VanillaPlugin extends CommonPlugin {
 		ArrayList<World> worlds = new ArrayList<World>();
 		ArrayList<Point> spawns = new ArrayList<Point>();
 
-		if (VanillaConfiguration.WORLDS.NORMAL_LOAD.getBoolean()) {
+		if (WorldConfiguration.NORMAL_LOAD.getBoolean()) {
 			NormalGenerator normGen = new NormalGenerator();
 			World normal = game.loadWorld(WorldConfiguration.NORMAL_NAME.getString(), normGen);
 			worlds.add(normal);
 			spawns.add(normGen.getSafeSpawn(normal));
 		}
 
-		if (VanillaConfiguration.WORLDS.FLAT_LOAD.getBoolean()) {
+		if (WorldConfiguration.FLAT_LOAD.getBoolean()) {
 			FlatGenerator flatGen = new FlatGenerator(64);
 			World flat = game.loadWorld(WorldConfiguration.FLAT_NAME.getString(), flatGen);
 			worlds.add(flat);
 			spawns.add(flatGen.getSafeSpawn(flat));
 		}
 
-		if (VanillaConfiguration.WORLDS.NETHER_LOAD.getBoolean()) {
+		if (WorldConfiguration.NETHER_LOAD.getBoolean()) {
 			NetherGenerator netherGen = new NetherGenerator();
 			World nether = game.loadWorld(WorldConfiguration.NETHER_NAME.getString(), netherGen);
 			worlds.add(nether);
 			spawns.add(netherGen.getSafeSpawn(nether));
 		}
 
-		if (VanillaConfiguration.WORLDS.END_LOAD.getBoolean()) {
+		if (WorldConfiguration.END_LOAD.getBoolean()) {
 			TheEndGenerator endGen = new TheEndGenerator();
 			World end = game.loadWorld(WorldConfiguration.END_NAME.getString(), endGen);
 			worlds.add(end);
@@ -203,7 +198,7 @@ public class VanillaPlugin extends CommonPlugin {
 				NormalSky sky = new NormalSky();
 				sky.setWorld(world);
 				VanillaSky.setSky(world, sky);
-				if (VanillaConfiguration.WORLDS.NORMAL_LOADED_SPAWN.getBoolean()) {
+				if (WorldConfiguration.NORMAL_LOADED_SPAWN.getBoolean()) {
 					world.createAndSpawnEntity(point, new PointObserver());
 				}
 				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
@@ -211,7 +206,7 @@ public class VanillaPlugin extends CommonPlugin {
 				NormalSky sky = new NormalSky();
 				sky.setWorld(world);
 				VanillaSky.setSky(world, sky);
-				if (VanillaConfiguration.WORLDS.FLAT_LOADED_SPAWN.getBoolean()) {
+				if (WorldConfiguration.FLAT_LOADED_SPAWN.getBoolean()) {
 					world.createAndSpawnEntity(point, new PointObserver());
 				}
 				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
@@ -219,7 +214,7 @@ public class VanillaPlugin extends CommonPlugin {
 				NetherSky sky = new NetherSky();
 				sky.setWorld(world);
 				VanillaSky.setSky(world, sky);
-				if (VanillaConfiguration.WORLDS.NETHER_LOADED_SPAWN.getBoolean()) {
+				if (WorldConfiguration.NETHER_LOADED_SPAWN.getBoolean()) {
 					world.createAndSpawnEntity(point, new PointObserver());
 				}
 				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
@@ -227,7 +222,7 @@ public class VanillaPlugin extends CommonPlugin {
 				TheEndSky sky = new TheEndSky();
 				sky.setWorld(world);
 				VanillaSky.setSky(world, sky);
-				if (VanillaConfiguration.WORLDS.END_LOADED_SPAWN.getBoolean()) {
+				if (WorldConfiguration.END_LOADED_SPAWN.getBoolean()) {
 					world.createAndSpawnEntity(point, new PointObserver());
 				}
 				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);

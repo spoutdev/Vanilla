@@ -34,6 +34,8 @@ import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.block.BrewingStandWindow;
 
 public class BrewingStandInventory extends WindowInventory {
+	private static final long serialVersionUID = 1L;
+
 	public BrewingStandInventory() {
 		super(4);
 	}

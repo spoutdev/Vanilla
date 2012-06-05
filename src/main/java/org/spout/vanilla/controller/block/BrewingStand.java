@@ -43,6 +43,10 @@ public class BrewingStand extends VanillaBlockController {
 		return inventory;
 	}
 
+	public float getBrewTime() {
+		return this.brewTime;
+	}
+
 	@Override
 	public void onAttached() {
 

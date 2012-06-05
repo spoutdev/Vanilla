@@ -130,7 +130,7 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 				BlockMaterial mat;
 				for (BlockFace face : BlockFaces.NESW) {
 					neigh = block.translate(face);
-					mat = neigh.getSubMaterial();
+					mat = neigh.getMaterial();
 					if (mat instanceof RedstoneSource || mat instanceof RedstoneTarget) {
 						continue;
 					}
@@ -170,7 +170,7 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 			if (power == REDSTONE_POWER_MIN) {
 				return power;
 			} else {
-				BlockMaterial mat = block.translate(direction).getSubMaterial();
+				BlockMaterial mat = block.translate(direction).getMaterial();
 				if (mat instanceof RedstoneSource || mat instanceof RedstoneTarget || !isDistractedFrom(block, direction)) {
 					return power;
 				} else {
@@ -215,7 +215,7 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 		boolean topIsConductor = false;
 		for (BlockFace face : BlockFaces.BTEWNS) {
 			rel = block.translate(face);
-			mat = rel.getSubMaterial();
+			mat = rel.getMaterial();
 			if (mat.equals(this)) {
 				//handle neighbouring redstone wires
 				maxPower = (short) Math.max(maxPower, this.getRedstonePower(rel) - 1);
@@ -262,7 +262,7 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 	 */
 	public boolean isConnectedToSource(Block block, BlockFace face) {
 		Block target = block.translate(face);
-		BlockMaterial mat = target.getSubMaterial();
+		BlockMaterial mat = target.getMaterial();
 		if (mat instanceof RedstoneSource || mat instanceof RedstoneTarget) {
 			return true;
 		} else {

@@ -31,13 +31,15 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.block.ScheduleUpdated;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
@@ -45,21 +47,16 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
-import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class StoneButton extends AbstractAttachable implements Mineable, PointAttachable, ScheduleUpdated, RedstoneSource {
+public class StoneButton extends AbstractAttachable implements Mineable, PointAttachable, RedstoneSource, DynamicMaterial {
+	public static final int TICK_DELAY = 20;
+	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
+	
 	public StoneButton(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESW).setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
-	}
-
-	@Override
-	public void onDelayedUpdate(Block block) {
-		this.setPressed(block, false);
-		VanillaNetworkSynchronizer.playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_CLICK_2);
-		this.doRedstoneUpdates(block);
 	}
 
 	@Override
@@ -99,7 +96,7 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 			if (!this.isPressed(block)) {
 				this.setPressed(block, true);
 				this.doRedstoneUpdates(block);
-				BlockScheduler.schedule(block, 20);
+				block.dynamicUpdate(TICK_DELAY);
 				VanillaNetworkSynchronizer.playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_1);
 			}
 		}
@@ -138,5 +135,23 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Sword ? (short) 2 : (short) 1;
+	}
+
+	@Override
+	public Vector3[] maxRange() {
+		return maxRange;
+	}
+
+	@Override
+	public long onPlacement(Block b, Region r, long currentTime) {
+		return -1;
+	}
+
+	@Override
+	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
+		this.setPressed(block, false);
+		VanillaNetworkSynchronizer.playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_CLICK_2);
+		this.doRedstoneUpdates(block);
+		return -1;
 	}
 }

@@ -131,7 +131,7 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 	}
 
 	public boolean canAttachTo(Block block, BlockFace face) {
-		return this.canAttachTo(block.getSubMaterial(), face);
+		return this.canAttachTo(block.getMaterial(), face);
 	}
 
 	public BlockFace getTracedFace(Block block) {

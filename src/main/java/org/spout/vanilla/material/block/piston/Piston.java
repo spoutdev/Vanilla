@@ -188,7 +188,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 	}
 
 	private MoveReaction getReaction(Block block) {
-		BlockMaterial mat = block.getSubMaterial();
+		BlockMaterial mat = block.getMaterial();
 		if (mat.equals(VanillaMaterials.AIR)) {
 			return MoveReaction.BREAK;
 		}

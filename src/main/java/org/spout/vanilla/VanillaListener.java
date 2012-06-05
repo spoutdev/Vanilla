@@ -41,7 +41,6 @@ import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.player.PlayerLeaveEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
-import org.spout.api.event.world.RegionUnloadEvent;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.material.BlockMaterial;
@@ -61,7 +60,6 @@ import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
-import org.spout.vanilla.runnable.BlockScheduler;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 import static org.spout.vanilla.protocol.VanillaNetworkSynchronizer.sendPacket;
@@ -103,11 +101,6 @@ public class VanillaListener implements Listener {
 		if (inv != null) {
 			inv.removeViewer(event.getPlayer().getNetworkSynchronizer());
 		}
-	}
-
-	@EventHandler
-	public void onRegionUnload(RegionUnloadEvent event) {
-		BlockScheduler.remove(event.getRegion());
 	}
 
 	@EventHandler

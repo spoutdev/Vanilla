@@ -146,7 +146,7 @@ public class Potion extends VanillaItemMaterial {
 
 	public static final Potion WEAKNESS = new Potion("Potion of Weakness", EFFECT_WEAKNESS, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_WEAKNESS = new Potion("Splash Potion of Weakness", EFFECT_WEAKNESS, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
-	public static final Potion WEAKNESS_EXTENDED = new Potion("Potion of Weakness (Extended)", EFFECT_WEAKNESS, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
+	public static final Potion WEAKNESS_EXTENDED = new Potion("Potion of Weakness (Extended)", EFFECT_WEAKNESS, TIER0, DURATION_EXTENDED, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_WEAKNESS_EXTENDED = new Potion("Splash Potion of Weakness (Extended)", EFFECT_WEAKNESS, TIER0, DURATION_EXTENDED, ACTION_SPLASH, WATER_BOTTLE);
 	public static final Potion WEAKNESS_REVERTED = new Potion("Potion of Weakness", EFFECT_WEAKNESS, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_WEAKNESS_REVERTED = new Potion("Splash Potion of Weakness", EFFECT_WEAKNESS, TIER2, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
@@ -160,7 +160,7 @@ public class Potion extends VanillaItemMaterial {
 
 	public static final Potion SLOWNESS = new Potion("Potion of Slowness", EFFECT_SLOWNESS, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_SLOWNESS = new Potion("Splash Potion of Slowness", EFFECT_SLOWNESS, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
-	public static final Potion SLOWNESS_EXTENDED = new Potion("Potion of Slowness (Extended)", EFFECT_SWIFTNESS, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
+	public static final Potion SLOWNESS_EXTENDED = new Potion("Potion of Slowness (Extended)", EFFECT_SLOWNESS, TIER0, DURATION_EXTENDED, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_SLOWNESS_EXTENDED = new Potion("Splash Potion of Slowness (Extended)", EFFECT_SLOWNESS, TIER0, DURATION_EXTENDED, ACTION_SPLASH, WATER_BOTTLE);
 	public static final Potion SLOWNESS_REVERTED = new Potion("Potion of Slowness", EFFECT_SLOWNESS, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_SLOWNESS_REVERTED = new Potion("Splash Potion of Slowness", EFFECT_SLOWNESS, TIER2, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);

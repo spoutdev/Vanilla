@@ -30,26 +30,26 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 public class TundraBiome extends VanillaNormalBiome {
-
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
-		NOISE.setxScale(0.09D);
-		NOISE.setyScale(0.08D);
-		NOISE.setzScale(0.09D);
+		NOISE.setxScale(VanillaConfiguration.BIOMES.TUNDRA_X_SCALE.getDouble());
+		NOISE.setyScale(VanillaConfiguration.BIOMES.TUNDRA_Y_SCALE.getDouble());
+		NOISE.setzScale(VanillaConfiguration.BIOMES.TUNDRA_Z_SCALE.getDouble());
 	}
 
 	public TundraBiome(int id) {
 		super(id, NOISE/*, new PondDecorator()*/);
-		this.minDensityTerrainHeight = 67;
-		this.maxDensityTerrainHeight = 69;
-		this.upperHeightMapScale = 3.3f;
-		this.bottomHeightMapScale = 3.7f;
+		this.minDensityTerrainHeight = (Byte) VanillaConfiguration.BIOMES.TUNDRA_MIN_DENSITY_TERRAIN_HEIGHT.getValue();
+		this.maxDensityTerrainHeight = (Byte) VanillaConfiguration.BIOMES.TUNDRA_MAX_DENSITY_TERRAIN_HEIGHT.getValue();
+		this.upperHeightMapScale = VanillaConfiguration.BIOMES.TUNDRA_UPPER_HEIGHT_MAP_SCALE.getInt();
+		this.bottomHeightMapScale = VanillaConfiguration.BIOMES.TUNDRA_BOTTOM_HEIGHT_MAP_SCALE.getInt();
 	}
 
 	@Override

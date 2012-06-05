@@ -65,6 +65,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder REDSTONE_MAX_RANGE = new ConfigurationHolder(15, "redstone", "redstone-max-power-range");
 	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	public static final WorldConfiguration WORLDS = new WorldConfiguration(VanillaPlugin.getInstance().getDataFolder());
+   	public static final BiomeConfiguration BIOMES = new BiomeConfiguration(VanillaPlugin.getInstance().getDataFolder());
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));
@@ -72,6 +73,8 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 
 	@Override
 	public void load() throws ConfigurationException {
+		BIOMES.load();
+		BIOMES.save();
 		OPS.load();
 		OPS.save();
 		WORLDS.load();
@@ -82,6 +85,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 
 	@Override
 	public void save() throws ConfigurationException {
+		BIOMES.save();
 		OPS.save();
 		WORLDS.save();
 		super.save();

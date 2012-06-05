@@ -28,27 +28,28 @@ package org.spout.vanilla.world.generator.normal.biome;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-public class SmallMountainsBiome extends VanillaNormalBiome {
+import org.spout.vanilla.configuration.VanillaConfiguration;
 
+public class SmallMountainsBiome extends VanillaNormalBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
-		NOISE.setxScale(0.085D);
-		NOISE.setyScale(0.035D);
-		NOISE.setzScale(0.085D);
+		NOISE.setxScale(VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_X_SCALE.getDouble());
+		NOISE.setyScale(VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_Y_SCALE.getDouble());
+		NOISE.setzScale(VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_Z_SCALE.getDouble());
 	}
 
 	public SmallMountainsBiome(int biomeId) {
 		super(biomeId, NOISE);
-		minDensityTerrainHeight = 64;
-		maxDensityTerrainHeight = 74;
-		minDensityTerrainThickness = 2;
-		maxDensityTerrainThickness = 6;
-		upperHeightMapScale = 5f;
-		bottomHeightMapScale = 6f;
-		densityTerrainThicknessScale = 5.5f;
-		densityTerrainHeightScale = 5.5f;
+		minDensityTerrainHeight = (Byte) VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_HEIGHT.getValue();
+		maxDensityTerrainHeight = (Byte) VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_HEIGHT.getValue();
+		minDensityTerrainThickness = (Byte) VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_THICKNESS.getValue();
+		maxDensityTerrainThickness = (Byte) VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_THICKNESS.getValue();
+		upperHeightMapScale = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_UPPER_HEIGHT_MAP_SCALE.getInt();
+		bottomHeightMapScale = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_BOTTOM_HEIGHT_MAP_SCALE.getInt();
+		densityTerrainThicknessScale = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_DENSITY_TERRAIN_THICKNESS_SCALE.getInt();
+		densityTerrainHeightScale = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_DENSITY_TERRAIN_HEIGHT_SCALE.getInt();
 	}
 
 	@Override

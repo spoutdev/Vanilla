@@ -28,23 +28,24 @@ package org.spout.vanilla.world.generator.normal.biome;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-public class PlainBiome extends VanillaNormalBiome {
+import org.spout.vanilla.configuration.VanillaConfiguration;
 
+public class PlainBiome extends VanillaNormalBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
-		NOISE.setxScale(0.077D);
-		NOISE.setyScale(0.04D);
-		NOISE.setzScale(0.077D);
+		NOISE.setxScale(VanillaConfiguration.BIOMES.PLAINS_X_SCALE.getDouble());
+		NOISE.setyScale(VanillaConfiguration.BIOMES.PLAINS_Y_SCALE.getDouble());
+		NOISE.setzScale(VanillaConfiguration.BIOMES.PLAINS_Z_SCALE.getDouble());
 	}
 
 	public PlainBiome(int id) {
 		super(id, NOISE/*, new PondDecorator(), new GrassDecorator(), new FlowerDecorator()*/);
-		this.minDensityTerrainHeight = 67;
-		this.maxDensityTerrainHeight = 69;
-		this.upperHeightMapScale = 3f;
-		this.bottomHeightMapScale = 3.3f;
+		this.minDensityTerrainHeight = (Byte) VanillaConfiguration.BIOMES.PLAINS_MIN_DENSITY_TERRAIN_HEIGHT.getValue();
+		this.maxDensityTerrainHeight = (Byte) VanillaConfiguration.BIOMES.PLAINS_MAX_DENSITY_TERRAIN_HEIGHT.getValue();
+		this.upperHeightMapScale = VanillaConfiguration.BIOMES.PLAINS_UPPER_HEIGHT_MAP_SCALE.getInt();
+		this.bottomHeightMapScale = VanillaConfiguration.BIOMES.PLAINS_BOTTOM_HEIGHT_MAP_SCALE.getInt();
 	}
 
 	@Override

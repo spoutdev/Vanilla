@@ -42,10 +42,10 @@ public class SmallMountainsBiome extends VanillaNormalBiome {
 
 	public SmallMountainsBiome(int biomeId) {
 		super(biomeId, NOISE);
-		minDensityTerrainHeight = (Byte) VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_HEIGHT.getValue();
-		maxDensityTerrainHeight = (Byte) VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_HEIGHT.getValue();
-		minDensityTerrainThickness = (Byte) VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_THICKNESS.getValue();
-		maxDensityTerrainThickness = (Byte) VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_THICKNESS.getValue();
+		minDensityTerrainHeight = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
+		maxDensityTerrainHeight = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+		minDensityTerrainThickness = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
+		maxDensityTerrainThickness = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
 		upperHeightMapScale = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_UPPER_HEIGHT_MAP_SCALE.getInt();
 		bottomHeightMapScale = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_BOTTOM_HEIGHT_MAP_SCALE.getInt();
 		densityTerrainThicknessScale = VanillaConfiguration.BIOMES.SMALL_MOUNTAINS_DENSITY_TERRAIN_THICKNESS_SCALE.getInt();

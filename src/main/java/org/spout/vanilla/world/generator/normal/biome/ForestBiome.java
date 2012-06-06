@@ -30,11 +30,11 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-public class ForestBiome extends VanillaNormalBiome {
+public class ForestBiome extends NormalBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
-		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.SetSourceModule(0, NormalBiome.MASTER);
 		NOISE.setxScale(0.09D);
 		NOISE.setyScale(0.045D);
 		NOISE.setzScale(0.09D);

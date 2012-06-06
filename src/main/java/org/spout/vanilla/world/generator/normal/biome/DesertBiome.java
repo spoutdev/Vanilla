@@ -33,11 +33,11 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class DesertBiome extends VanillaNormalBiome {
+public class DesertBiome extends NormalBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
-		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.SetSourceModule(0, NormalBiome.MASTER);
 		NOISE.setxScale(0.075D);
 		NOISE.setyScale(0.08D);
 		NOISE.setzScale(0.075D);

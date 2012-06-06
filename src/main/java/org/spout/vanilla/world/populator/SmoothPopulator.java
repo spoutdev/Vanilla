@@ -38,23 +38,26 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.world.generator.VanillaBiomes;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 /**
- * Populator ran at stage 2 of world generation which serves to smooth
- * the borders between biomes.
+ * Populator ran at stage 2 of world generation which serves to smooth the
+ * borders between biomes.
  */
 public class SmoothPopulator implements Populator {
 	// area to smooth per populate call
-	private final static byte SMOOTH_SIZE = 16;
+	private final static byte SMOOTH_SIZE = 20;
+	private final static byte OFFSET;
 	// the floor of half the value of the side of the square
 	// to sample when smoothing. (byte) Math.floor((double) SIDE_LENGTH / 2D);
-	private final static byte SAMPLE_SIZE = 1;
-	private final static byte SMOOTHING_AMOUNT_DAMPENER = 4;
+	private final static byte SAMPLE_SIZE = 2;
+	private final static byte SMOOTHING_AMOUNT_DAMPENER = 6;
 	// ignored blocks
 	private static final Set<BlockMaterial> IGNORED = new HashSet<BlockMaterial>();
 
 	static {
+		OFFSET = (SMOOTH_SIZE - 16) / 2;
 		IGNORED.add(VanillaMaterials.AIR);
 		IGNORED.add(VanillaMaterials.WATER);
 		IGNORED.add(VanillaMaterials.STATIONARY_WATER);
@@ -65,13 +68,12 @@ public class SmoothPopulator implements Populator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
-			// only one populate call per 16x16 'world column'
-			return;
+			return;// only one populate call per 16x16 'world column'
 		}
 		// work at world level to prevent bad smoothing of vertical edges
 		final World world = chunk.getWorld();
-		final int worldX = chunk.getBlockX();
-		final int worldZ = chunk.getBlockZ();
+		final int worldX = chunk.getBlockX() - OFFSET;
+		final int worldZ = chunk.getBlockZ() - OFFSET;
 		// allocate the height map to smooth
 		final byte[] heightMap = new byte[SMOOTH_SIZE * SMOOTH_SIZE];
 		// fill the height map to smooth
@@ -93,13 +95,12 @@ public class SmoothPopulator implements Populator {
 			}
 		}
 		if (!hasBiomeVariations) {
-			// no biome variations, smoothing is aborted
-			return;
+			return;// no biome variations, smoothing is aborted
 		}
 		// get the amount of smoothing
 		byte amount = getAmountOfSmoothing(heightMap);
 		if (amount == 0) {
-			return;
+			amount = 1;// min 1 smooth pass
 		}
 		// get the smoothed map, and pass it through smoothing as many times
 		// as specified by the amount
@@ -160,78 +161,62 @@ public class SmoothPopulator implements Populator {
 			return;
 		}
 		if (shift >> 31 != 0) { // shift down
-			BlockMaterial lastMaterial = null;
 			byte lowestBedrock = getLowestNonBedrockBlock(world, x, z);
 			if (lowestBedrock == -1) {
 				return;
 			}
 			for (byte y = (byte) (lowestBedrock - shift); y < 127; y++) {
 				final Block block = world.getBlock(x, y, z);
-				final BlockMaterial currentMaterial = block.getMaterial();
-				if (IGNORED.contains(currentMaterial)) {
+				final BlockMaterial material = block.getMaterial();
+				final Block destination = block.translate(0, shift, 0);
+				if (IGNORED.contains(material) || destination.getMaterial() == VanillaMaterials.BEDROCK) {
 					return;
 				}
-				lastMaterial = block.getMaterial();
-				block.translate(0, shift, 0).setMaterial(lastMaterial);
-				block.setMaterial(VanillaMaterials.AIR);
-				fixAdjacentLiquids(world, x, y, z);
+				destination.setMaterial(material);
+				block.setMaterial(y <= NormalGenerator.SEA_LEVEL
+						? VanillaMaterials.STATIONARY_WATER : VanillaMaterials.AIR);
 			}
 		} else { // shift up
-			BlockMaterial lastMaterial = null;
-			for (byte y = 127; y >= 0; y--) {
-				final Block block = world.getBlock(x, y, z);
-				final BlockMaterial currentMaterial = block.getMaterial();
+			final byte lowestNonBedrockY = getLowestNonBedrockBlock(world, x, z);
+			if (lowestNonBedrockY == -1) {
+				return;
+			}
+			for (byte y = 127; y >= lowestNonBedrockY + shift; y--) {
+				Block block = world.getBlock(x, y, z);
+				BlockMaterial currentMaterial = block.getMaterial();
 				if (IGNORED.contains(currentMaterial)) {
 					continue;
 				}
-				if (currentMaterial == VanillaMaterials.BEDROCK && lastMaterial != null) {
-					for (byte yy = 1; yy < shift + 1; yy++) {
-						block.translate(0, yy, 0).setMaterial(lastMaterial);
-					}
-				}
-				lastMaterial = block.getMaterial();
-				block.translate(0, shift, 0).setMaterial(lastMaterial);
-				block.setMaterial(VanillaMaterials.AIR);
+				block.translate(0, shift, 0).setMaterial(currentMaterial);
+			}
+			final BlockMaterial lastMaterial = world.getBlockMaterial(x, lowestNonBedrockY + shift, z);
+			for (byte y = (byte) (lowestNonBedrockY + shift - 1); y <= lowestNonBedrockY; y--) {
+				world.setBlockMaterial(x, y, z, lastMaterial, (short) 0, world);
+			}
+			final byte highestNonFluidBlockY = getHighestNonFluidBlock(world, x, z);
+			if (highestNonFluidBlockY != -1) {
+				fixSurface(world, x, highestNonFluidBlockY, z);
 			}
 		}
 	}
 
-	// fix the liquid level by replacing air blocks
-	// with the most present adjacent liquid
-	private void fixAdjacentLiquids(World world, int x, int y, int z) {
-		final BlockMaterial[] adjacent = {
-				world.getBlockMaterial(x - 1, y, z),
-				world.getBlockMaterial(x + 1, y, z),
-				world.getBlockMaterial(x, y, z - 1),
-				world.getBlockMaterial(x, y, z + 1)
-		};
-		boolean hasAdjacentLiquid = false;
-		for (BlockMaterial material : adjacent) {
-			if (material instanceof Liquid) {
-				hasAdjacentLiquid = true;
-				break;
+	// restore the surface cover, since some biomes have dirt (oceans) at the top,
+	// instead of grass
+	private void fixSurface(World world, int x, int y, int z) {
+		BlockMaterial material = world.getBlockMaterial(x, y, z);
+		if (material == VanillaMaterials.DIRT
+				&& world.getBlockMaterial(x, y + 1, z) == VanillaMaterials.AIR) {
+			Biome biome = world.getBiomeType(x, y, z);
+			if (biome == VanillaBiomes.MUSHROOM) {
+				world.setBlockMaterial(x, y, z, VanillaMaterials.MYCELIUM, (short) 0, world);
+			} else {
+				world.setBlockMaterial(x, y, z, VanillaMaterials.GRASS, (short) 0, world);
 			}
+		} else if ((material == VanillaMaterials.GRASS
+				|| material == VanillaMaterials.MYCELIUM)
+				&& world.getBlockMaterial(x, y + 1, z) == VanillaMaterials.WATER) {
+			world.setBlockMaterial(x, y, z, VanillaMaterials.DIRT, (short) 0, world);
 		}
-		if (!hasAdjacentLiquid) {
-			return;
-		}
-		BlockMaterial mostOf = null;
-		byte mostOfCount = 0;
-		for (BlockMaterial current : adjacent) {
-			if (!(current instanceof Liquid)) {
-				continue;
-			}
-			byte currentCount = 0;
-			for (byte i = 0; i < 4; i++) {
-				if (current == adjacent[i]) {
-					currentCount++;
-				}
-			}
-			if (currentCount > mostOfCount) {
-				mostOf = current;
-			}
-		}
-		world.setBlockMaterial(x, y, z, mostOf, (short) 0, world);
 	}
 
 	// simple smoothing based on the 'box filtering' algorithm

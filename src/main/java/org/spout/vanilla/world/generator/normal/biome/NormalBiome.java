@@ -45,7 +45,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
-public abstract class VanillaNormalBiome extends VanillaBiome {
+public abstract class NormalBiome extends VanillaBiome {
 	// the master noise to be used by biomes extending this class
 	protected static final Add MASTER = new Add();
 	// the parts for the master noise
@@ -107,7 +107,7 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 		BLOCK_REPLACER.setzScale(4D);
 	}
 
-	protected VanillaNormalBiome(int biomeId, Module modifiedMaster, Decorator... decorators) {
+	protected NormalBiome(int biomeId, Module modifiedMaster, Decorator... decorators) {
 		super(biomeId, decorators);
 
 		this.modifiedMaster = modifiedMaster;
@@ -247,7 +247,8 @@ public abstract class VanillaNormalBiome extends VanillaBiome {
 			} else {
 				if (hasSurface) {
 					if (groundCoverDepth == 0) {
-						short topCover = y >= NormalGenerator.SEA_LEVEL ? VanillaMaterials.GRASS.getId() : VanillaMaterials.DIRT.getId();
+						short topCover = y >= NormalGenerator.SEA_LEVEL
+								? VanillaMaterials.GRASS.getId() : VanillaMaterials.DIRT.getId();
 						blockData.set(x, y, z, topCover);
 						groundCoverDepth++;
 					} else if (groundCoverDepth < maxGroudCoverDepth) {

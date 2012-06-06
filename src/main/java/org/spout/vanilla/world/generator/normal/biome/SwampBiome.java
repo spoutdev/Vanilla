@@ -28,11 +28,11 @@ package org.spout.vanilla.world.generator.normal.biome;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-public class SwampBiome extends VanillaNormalBiome {
+public class SwampBiome extends NormalBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
-		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.SetSourceModule(0, NormalBiome.MASTER);
 		NOISE.setxScale(0.067D);
 		NOISE.setyScale(0.06D);
 		NOISE.setzScale(0.067D);

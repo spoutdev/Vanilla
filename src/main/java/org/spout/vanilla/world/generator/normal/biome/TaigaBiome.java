@@ -30,11 +30,11 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 import org.spout.vanilla.configuration.BiomeConfiguration;
 
-public class TaigaBiome extends VanillaNormalBiome {
+public class TaigaBiome extends NormalBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
-		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.SetSourceModule(0, NormalBiome.MASTER);
 		NOISE.setxScale(BiomeConfiguration.TAIGA_X_SCALE.getDouble());
 		NOISE.setyScale(BiomeConfiguration.TAIGA_Y_SCALE.getDouble());
 		NOISE.setzScale(BiomeConfiguration.TAIGA_Z_SCALE.getDouble());

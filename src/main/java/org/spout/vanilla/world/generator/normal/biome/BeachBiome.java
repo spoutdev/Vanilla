@@ -26,47 +26,101 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
+import org.spout.api.math.MathHelper;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
-public class BeachBiome extends VanillaBiome {
-	public BeachBiome(int biomeId) {
-		super(biomeId);
+public class BeachBiome extends NormalBiome {
+
+	private final static ScalePoint NOISE = new ScalePoint();
+
+	static {
+		NOISE.SetSourceModule(0, NormalBiome.MASTER);
+		NOISE.setxScale(0.072D);
+		NOISE.setyScale(0.08D);
+		NOISE.setzScale(0.072D);
 	}
 
-	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		int y = chunkY * 16, height = 64;
-
-		for (int dy = y; dy < y + 16; dy++) {
-			blockData.set(x, dy, z, getBlockId(height, dy));
-		}
-
-		if (x % 16 == 0 && height << 4 == chunkY) {
-			blockData.set(x, height, z, VanillaMaterials.NETHERRACK.getId()); // until biome is implemented
-		}
+	public BeachBiome(int biomeId) {
+		super(biomeId, NOISE);
+		this.minDensityTerrainHeight = 62;
+		this.maxDensityTerrainHeight = 63;
+		this.upperHeightMapScale = 2.4f;
+		this.bottomHeightMapScale = 3f;
+		this.maxDensityTerrainThickness = 1;
 	}
 
 	@Override
 	public String getName() {
 		return "Beach";
 	}
+	
+	@Override
+	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		
+		final byte size = (byte) blockData.getSize().getY();
 
-	protected short getBlockId(int top, int dy) {
-		short id;
-		if (dy > top) {
-			id = VanillaMaterials.AIR.getId();
-		} else if (dy == top) {
-			id = VanillaMaterials.SAND.getId();
-		} else if (dy + 4 >= top) {
-			id = VanillaMaterials.DIRT.getId();
-		} else if (dy != 0) {
-			id = VanillaMaterials.STONE.getId();
-		} else {
-			id = VanillaMaterials.BEDROCK.getId();
+		if (size < 16) {
+			return; // ignore samples
 		}
-		return id;
+
+		final int endY = chunkY * 16;
+		final int startY = endY + size - 1;
+
+		final byte sandDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 4 + 4, 3, 4);
+		final byte sandstoneDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -6, z) * 4 + 3, 0, 3);
+		
+		final byte maxGroudCoverDepth = (byte) (sandDepth + sandstoneDepth);
+		final byte sampleSize = (byte) (maxGroudCoverDepth + 1);
+
+		boolean hasSurface = false;
+		byte groundCoverDepth = 0;
+		// check the column above by sampling, determining any missing blocks
+		// to add to the current column
+		if (blockData.get(x, startY, z) != VanillaMaterials.AIR.getId()) {
+			final int nextChunkStart = (chunkY + 1) * 16;
+			final int nextChunkEnd = nextChunkStart + sampleSize;
+			final CuboidShortBuffer sample = getSample(blockData.getWorld(), x, nextChunkStart, nextChunkEnd, z);
+			for (int y = nextChunkStart; y < nextChunkEnd; y++) {
+				if (sample.get(x, y, z) != VanillaMaterials.AIR.getId()) {
+					groundCoverDepth++;
+				} else {
+					hasSurface = true;
+					break;
+				}
+			}
+		}
+		// place ground cover
+		for (int y = startY; y >= endY; y--) {
+			final short id = blockData.get(x, y, z);
+			if (id == VanillaMaterials.AIR.getId()) {
+				hasSurface = true;
+				groundCoverDepth = 0;
+				if (y <= NormalGenerator.SEA_LEVEL) {
+					blockData.set(x, y, z, VanillaMaterials.STATIONARY_WATER.getId());
+				}
+			} else {
+				if (hasSurface) {
+					if (groundCoverDepth < sandDepth) {
+						blockData.set(x, y, z, VanillaMaterials.SAND.getId());
+						groundCoverDepth++;
+					} else if (groundCoverDepth < maxGroudCoverDepth) {
+						blockData.set(x, y, z, VanillaMaterials.SANDSTONE.getId());
+						groundCoverDepth++;
+					} else {
+						hasSurface = false;
+					}
+				}
+			}
+		}
+		// place bedrock
+		if (chunkY == 0) {
+			final byte bedrockDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 2 + 4, 1D, 5D);
+			for (int y = 0; y <= bedrockDepth; y++) {
+				blockData.set(x, y, z, VanillaMaterials.BEDROCK.getId());
+			}
+		}
 	}
 }

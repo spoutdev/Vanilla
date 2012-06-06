@@ -34,11 +34,11 @@ import org.spout.vanilla.configuration.BiomeConfiguration;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
-public class TundraBiome extends VanillaNormalBiome {
+public class TundraBiome extends NormalBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
-		NOISE.SetSourceModule(0, VanillaNormalBiome.MASTER);
+		NOISE.SetSourceModule(0, NormalBiome.MASTER);
 		NOISE.setxScale(BiomeConfiguration.TUNDRA_X_SCALE.getDouble());
 		NOISE.setyScale(BiomeConfiguration.TUNDRA_Y_SCALE.getDouble());
 		NOISE.setzScale(BiomeConfiguration.TUNDRA_Z_SCALE.getDouble());

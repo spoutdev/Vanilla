@@ -24,22 +24,33 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.world.sky;
+package org.spout.vanilla.data;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.world.VanillaSky;
-import org.spout.vanilla.data.Weather;
+import gnu.trove.map.hash.TLongObjectHashMap;
 
-public class NetherSky extends VanillaSky {
-	public NetherSky() {
-		super(VanillaControllerTypes.NETHER_SKY, false);
+public enum Time {
+	SUNRISE(0),
+	MIDDAY(12000),
+	SUNSET(2),
+	MIDNIGHT(18000);
+	private static final TLongObjectHashMap<Time> times = new TLongObjectHashMap<Time>();
+	private final long length;
+
+	static {
+		for (Time t : Time.values()) {
+			times.put(t.getLength(), t);
+		}
 	}
 
-	@Override
-	public void updateTime(long time) {
+	private Time(long length) {
+		this.length = length;
 	}
 
-	@Override
-	public void updateWeather(Weather oldWeather, Weather newWeather) {
+	public long getLength() {
+		return length;
+	}
+
+	public static Time getByLength(long length) {
+		return times.get(length);
 	}
 }

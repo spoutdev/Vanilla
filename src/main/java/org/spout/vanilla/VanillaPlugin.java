@@ -74,9 +74,9 @@ import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 public class VanillaPlugin extends CommonPlugin {
 	public static final int MINECRAFT_PROTOCOL_ID = 29;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
+	private static VanillaPlugin instance;
 	private Engine game;
 	private VanillaConfiguration config;
-	private static VanillaPlugin instance;
 
 	@Override
 	public void onDisable() {

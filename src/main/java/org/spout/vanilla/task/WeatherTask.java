@@ -24,22 +24,60 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.world.sky;
+package org.spout.vanilla.task;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.world.VanillaSky;
+import org.spout.api.geo.World;
+
 import org.spout.vanilla.data.Weather;
 
-public class NetherSky extends VanillaSky {
-	public NetherSky() {
-		super(VanillaControllerTypes.NETHER_SKY, false);
+/**
+ * Running task to keep weather updates synchronized.
+ */
+public class WeatherTask implements Runnable {
+	private final World world;
+	private Weather weather;
+	private long maxTime;
+	private long rate;
+	private int update;
+
+	public WeatherTask(World world, Weather weather, long maxTime, long rate) {
+		this.world = world;
+		this.weather = weather;
+		this.maxTime = maxTime;
+		this.rate = rate;
+		update = -1;
 	}
 
 	@Override
-	public void updateTime(long time) {
+	public void run() {
+		if (update == -1) {
+			update = weather.getId();
+		} else {
+
+		}
 	}
 
-	@Override
-	public void updateWeather(Weather oldWeather, Weather newWeather) {
+	public void setWeather(Weather weather) {
+		this.weather = weather;
+	}
+
+	public Weather getWeather() {
+		return weather;
+	}
+
+	public long getMaxTime() {
+		return maxTime;
+	}
+
+	public void setMaxTime(long maxTime) {
+		this.maxTime = maxTime;
+	}
+
+	public long getRate() {
+		return rate;
+	}
+
+	public void setRate(long rate) {
+		this.rate = rate;
 	}
 }

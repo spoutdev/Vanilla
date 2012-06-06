@@ -28,7 +28,7 @@ package org.spout.vanilla.controller.world.sky;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.world.VanillaSky;
-import org.spout.vanilla.world.Weather;
+import org.spout.vanilla.data.Weather;
 
 public class TheEndSky extends VanillaSky {
 	public TheEndSky() {

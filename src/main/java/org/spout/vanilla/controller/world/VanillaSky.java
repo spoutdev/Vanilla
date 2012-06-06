@@ -37,7 +37,7 @@ import org.spout.api.protocol.Message;
 import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.world.LightningSimulator;
-import org.spout.vanilla.world.Weather;
+import org.spout.vanilla.data.Weather;
 
 /**
  * Represents a sky in Vanilla

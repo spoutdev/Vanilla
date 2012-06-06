@@ -55,7 +55,7 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.Weather;
+import org.spout.vanilla.data.Weather;
 
 public class AdministrationCommands {
 	private final VanillaPlugin plugin;
@@ -231,7 +231,7 @@ public class AdministrationCommands {
 			}
 		}
 
-		World world = null;
+		World world;
 		if (args.length() == 3) {
 			world = plugin.getGame().getWorld(args.getString(2));
 			if (world == null) {
@@ -243,14 +243,7 @@ public class AdministrationCommands {
 		} else {
 			throw new CommandException("You must specify a world.");
 		}
-
-		VanillaSky sky = VanillaSky.getSky(world);
-		if (sky == null) {
-			throw new CommandException("The world '" + args.getString(2) + "' is not available.");
-		}
-
-		sky.setTime(relative ? (sky.getTime() + time) : time);
-		source.sendMessage("Set " + world.getName() + "'s time to: " + sky.getTime());
+		source.sendMessage("Set " + world.getName() + "'s time to: " + "" /*TODO this*/);
 	}
 
 	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|survival|creative> (0 = SURVIVAL, 1 = CREATIVE)", desc = "Change a player's game mode", min = 1, max = 2)

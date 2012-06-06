@@ -29,7 +29,7 @@ package org.spout.vanilla;
 import java.util.HashSet;
 
 import org.spout.api.Source;
-import org.spout.api.entity.component.controller.Controller;
+import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;

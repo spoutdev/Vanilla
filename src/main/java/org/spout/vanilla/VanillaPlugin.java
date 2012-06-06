@@ -114,13 +114,13 @@ public class VanillaPlugin extends CommonPlugin {
 		
 		KeyPair keys = SecurityHandler.getInstance().getKeyPair(1024, "RSA");
 		
-		multilineLog("Key pair generated");
-		multilineLog("<<<<<<<<<<  Public   >>>>>>>>>>");
-		multilineLog(keys.getPublic().toString());
+		Spout.multilineLog("Key pair generated");
+		Spout.multilineLog("<<<<<<<<<<  Public   >>>>>>>>>>");
+		Spout.multilineLog(keys.getPublic().toString());
 		
-		multilineLog("");
-		multilineLog("<<<<<<<<<<  Private  >>>>>>>>>>");
-		multilineLog(keys.getPrivate().toString());
+		Spout.multilineLog("");
+		Spout.multilineLog("<<<<<<<<<<  Private  >>>>>>>>>>");
+		Spout.multilineLog(keys.getPrivate().toString());
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
 	}
@@ -247,17 +247,5 @@ public class VanillaPlugin extends CommonPlugin {
 	 */
 	public static VanillaPlugin getInstance() {
 		return instance;
-	}
-	
-	
-	private void multilineLog(String multiline) {
-		String[] split = multiline.split("\n");
-		for (String line : split) {
-			while (line.length() > 40) {
-				getLogger().info(line.substring(0, 40));
-				line = line.substring(40);
-			}
-			getLogger().info(line);
-		}
 	}
 }

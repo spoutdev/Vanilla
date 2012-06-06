@@ -32,9 +32,9 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.component.controller.Controller;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.component.controller.ControllerType;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -45,13 +45,13 @@ import org.spout.api.material.BlockMaterial;
 /**
  * Runnable that spawns entities in regions.
  */
-public class RegionSpawner implements Runnable {
+public class SpawnTask implements Runnable {
 	private static final int SPAWN_TRIES = 6;
 	private final Region region;
 	private final Random rand = new Random();
 	private final Map<ControllerType, SpawnInformation> spawnableTypes = new ConcurrentHashMap<ControllerType, SpawnInformation>();
 
-	public RegionSpawner(Region region) {
+	public SpawnTask(Region region) {
 		this.region = region;
 	}
 

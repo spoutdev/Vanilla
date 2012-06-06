@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.protocol.controller.living;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.component.controller.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.EntityProtocol;

@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.controller.object.vehicle.minecart;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.component.controller.Controller;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;

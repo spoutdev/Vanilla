@@ -53,7 +53,6 @@ import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.data.Weather;
 

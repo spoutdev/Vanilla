@@ -38,7 +38,8 @@ import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
-import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.component.controller.ControllerType;
+import org.spout.api.entity.component.controller.basic.PointObserver;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -53,11 +54,6 @@ import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfiguration;
-import org.spout.vanilla.controller.world.PointObserver;
-import org.spout.vanilla.controller.world.VanillaSky;
-import org.spout.vanilla.controller.world.sky.NetherSky;
-import org.spout.vanilla.controller.world.sky.NormalSky;
-import org.spout.vanilla.controller.world.sky.TheEndSky;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
@@ -230,39 +226,17 @@ public class VanillaPlugin extends CommonPlugin {
 				}
 			}
 
-			//TODO Remove sky setting when Weather and Time are Region tasks.
-			if (world.getGenerator() instanceof NormalGenerator) {
-				NormalSky sky = new NormalSky();
-				sky.setWorld(world);
-				VanillaSky.setSky(world, sky);
-				if (WorldConfiguration.NORMAL_LOADED_SPAWN.getBoolean()) {
-					world.createAndSpawnEntity(point, new PointObserver());
-				}
-				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
-			} else if (world.getGenerator() instanceof FlatGenerator) {
-				NormalSky sky = new NormalSky();
-				sky.setWorld(world);
-				VanillaSky.setSky(world, sky);
-				if (WorldConfiguration.FLAT_LOADED_SPAWN.getBoolean()) {
-					world.createAndSpawnEntity(point, new PointObserver());
-				}
-				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
-			} else if (world.getGenerator() instanceof NetherGenerator) {
-				NetherSky sky = new NetherSky();
-				sky.setWorld(world);
-				VanillaSky.setSky(world, sky);
-				if (WorldConfiguration.NETHER_LOADED_SPAWN.getBoolean()) {
-					world.createAndSpawnEntity(point, new PointObserver());
-				}
-				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
-			} else if (world.getGenerator() instanceof TheEndGenerator) {
-				TheEndSky sky = new TheEndSky();
-				sky.setWorld(world);
-				VanillaSky.setSky(world, sky);
-				if (WorldConfiguration.END_LOADED_SPAWN.getBoolean()) {
-					world.createAndSpawnEntity(point, new PointObserver());
-				}
-				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
+			if (world.getGenerator() instanceof NormalGenerator && WorldConfiguration.NORMAL_LOADED_SPAWN.getBoolean()) {
+				world.createAndSpawnEntity(point, new PointObserver());
+			}
+			if (world.getGenerator() instanceof FlatGenerator && WorldConfiguration.FLAT_LOADED_SPAWN.getBoolean()) {
+				world.createAndSpawnEntity(point, new PointObserver());
+			}
+			if (world.getGenerator() instanceof NetherGenerator && WorldConfiguration.NETHER_LOADED_SPAWN.getBoolean()) {
+				world.createAndSpawnEntity(point, new PointObserver());
+			}
+			if (world.getGenerator() instanceof TheEndGenerator && WorldConfiguration.END_LOADED_SPAWN.getBoolean()) {
+				world.createAndSpawnEntity(point, new PointObserver());
 			}
 		}
 	}

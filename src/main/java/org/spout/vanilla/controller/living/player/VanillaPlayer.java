@@ -35,7 +35,7 @@ import org.spout.api.Spout;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.PlayerController;
+import org.spout.api.entity.component.controller.PlayerController;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;

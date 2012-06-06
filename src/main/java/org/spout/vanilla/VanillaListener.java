@@ -29,7 +29,7 @@ package org.spout.vanilla;
 import java.util.HashSet;
 
 import org.spout.api.Source;
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.component.controller.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -55,7 +55,7 @@ import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.ControllerChangeReason;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.task.RegionSpawner;
+import org.spout.vanilla.task.SpawnTask;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
@@ -100,7 +100,7 @@ public class VanillaListener implements Listener {
 	@EventHandler
 	public void onRegionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
-		RegionSpawner spawner = new RegionSpawner(region);
+		SpawnTask spawner = new SpawnTask(region);
 		region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
 
 		HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();

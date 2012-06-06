@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.controller;
 
-import org.spout.api.entity.BlockController;
+import org.spout.api.entity.component.controller.BlockController;
 import org.spout.api.material.BlockMaterial;
 
 public abstract class VanillaBlockController extends BlockController implements VanillaController {

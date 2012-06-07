@@ -26,11 +26,6 @@
  */
 package org.spout.vanilla.controller;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-import java.util.logging.Level;
-
 import org.spout.api.Source;
 import org.spout.api.Spout;
 import org.spout.api.collision.BoundingBox;
@@ -46,7 +41,6 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
@@ -55,6 +49,11 @@ import org.spout.vanilla.event.entity.EntityCombustEvent;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+import java.util.logging.Level;
 
 import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 
@@ -79,7 +78,7 @@ public abstract class VanillaActionController extends ActionController implement
 	// Controller characteristics
 	private int health = 1;
 	private int maxHealth = 1;
-    private int deathTicks = -1;
+	private int deathTicks = -1;
 	// Damage
 	private Source lastDamage = DamageCause.UNKNOWN;
 	private VanillaActionController lastDamager;
@@ -121,20 +120,20 @@ public abstract class VanillaActionController extends ActionController implement
 
 	@Override
 	public void onTick(float dt) {
-        if(deathTicks > 0) {
-            deathTicks --;
-            if(deathTicks == 0) {
-                getParent().kill();
-            }
-            return;
-        }
+		if (deathTicks > 0) {
+			deathTicks--;
+			if (deathTicks == 0) {
+				getParent().kill();
+			}
+			return;
+		}
 		checkFireTicks();
 
 		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
 			VanillaNetworkUtil.broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 			if (!(this instanceof PlayerController)) {
-				deathTicks= 30;
+				deathTicks = 30;
 			}
 			onDeath();
 		}
@@ -209,6 +208,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Gets the speed of the controller during the prior movement. This will always be lower than the maximum speed.
+	 *
 	 * @return
 	 */
 	public Vector3 getMovementSpeed() {
@@ -217,6 +217,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Gets the maximum speed this controller is allowed to move at once.
+	 *
 	 * @return
 	 */
 	public Vector3 getMaxSpeed() {
@@ -229,7 +230,8 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Get the drops that Vanilla controllers disperse into the world when un-attached (such as entity death). Children controllers should override this method for their own personal drops.
-	 * @param source Source of death
+	 *
+	 * @param source      Source of death
 	 * @param lastDamager Controller that killed this controller, can be null if death was caused by natural sources such as drowning or burning
 	 * @return the drops to disperse.
 	 */
@@ -239,6 +241,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Checks to see if the controller is combustible.
+	 *
 	 * @return true is combustible, false if not
 	 */
 	public boolean isFlammable() {
@@ -247,6 +250,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Sets if the controller is combustible or not.
+	 *
 	 * @param isFlammable flag representing combustible status.
 	 */
 	public void setFlammable(boolean isFlammable) {
@@ -255,6 +259,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Gets the amount of ticks the controller has been on fire.
+	 *
 	 * @return amount of ticks
 	 */
 	public int getFireTicks() {
@@ -263,6 +268,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Sets the amount of ticks the controller has been on fire.
+	 *
 	 * @param fireTicks the new amount of ticks the controller has been on fire for.
 	 */
 	public void setFireTicks(int fireTicks) {
@@ -297,6 +303,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Damages this controller with the given {@link DamageCause}.
+	 *
 	 * @param amount amount the controller will be damaged by, can be modified based on armor and enchantments
 	 */
 	public void damage(int amount) {
@@ -305,8 +312,9 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Damages this controller with the given {@link DamageCause}.
+	 *
 	 * @param amount amount the controller will be damaged by, can be modified based on armor and enchantments
-	 * @param cause cause of this controller being damaged
+	 * @param cause  cause of this controller being damaged
 	 */
 	public void damage(int amount, DamageCause cause) {
 		damage(amount, cause, true);
@@ -314,8 +322,9 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Damages this controller with the given {@link DamageCause}.
-	 * @param amount amount the controller will be damaged by, can be modified based on armor and enchantments
-	 * @param cause cause of this controller being damaged
+	 *
+	 * @param amount          amount the controller will be damaged by, can be modified based on armor and enchantments
+	 * @param cause           cause of this controller being damaged
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
 	public void damage(int amount, DamageCause cause, boolean sendHurtMessage) {
@@ -324,9 +333,10 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Damages this controller with the given {@link DamageCause} and damager.
-	 * @param amount amount the controller will be damaged by, can be modified based on armor and enchantments
-	 * @param cause cause of this controller being damaged
-	 * @param damager controller that damaged this controller
+	 *
+	 * @param amount          amount the controller will be damaged by, can be modified based on armor and enchantments
+	 * @param cause           cause of this controller being damaged
+	 * @param damager         controller that damaged this controller
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
 	public void damage(int amount, DamageCause cause, VanillaActionController damager, boolean sendHurtMessage) {
@@ -340,6 +350,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Moves this controller.
+	 *
 	 * @param vect the vector that is applied as the movement.
 	 */
 	public void move(Vector3 vect) {
@@ -356,6 +367,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Moves this controller
+	 *
 	 * @param x x-axis to move the controller along
 	 * @param y y-axis to move the controller along
 	 * @param z z-axis to move the controller along
@@ -366,6 +378,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Rotates the controller
+	 *
 	 * @param rot the quaternion that is applied as the rotation.
 	 */
 	public void rotate(Quaternion rot) {
@@ -374,10 +387,11 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Rotates the controller
+	 *
 	 * @param degrees the angle of which to do rotation.
-	 * @param x x-axis to rotate the controller along
-	 * @param y y-axis to rotate the controller along
-	 * @param z z-axis to rotate the controller along
+	 * @param x       x-axis to rotate the controller along
+	 * @param y       y-axis to rotate the controller along
+	 * @param z       z-axis to rotate the controller along
 	 */
 	public void rotate(float degrees, float x, float y, float z) {
 		getParent().rotate(degrees, x, y, z);
@@ -393,6 +407,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * Rolls this controller along an angle.
+	 *
 	 * @param angle the angle in-which to roll
 	 */
 	public void roll(float angle) {
@@ -409,6 +424,7 @@ public abstract class VanillaActionController extends ActionController implement
 
 	/**
 	 * If a child controller needs a random number for anything, they should call this method. This eliminates needless random objects created all the time.
+	 *
 	 * @return random object.
 	 */
 	public Random getRandom() {

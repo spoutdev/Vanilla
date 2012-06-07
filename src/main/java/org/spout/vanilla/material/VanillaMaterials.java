@@ -526,26 +526,24 @@ public final class VanillaMaterials {
 					Object temp = field.get(null);
 					if (temp instanceof VanillaMaterial) {
 						VanillaMaterial material = (VanillaMaterial) temp;
-						if (material != null) {
-							Material mat = (Material) material;
-							if (mat.isSubMaterial()) {
-								mat = mat.getParentMaterial();
-							}
-							reverseTable.put((short) material.getMinecraftId(), mat);
-							short minMask;
-							short dataMask;
-							if (material instanceof VanillaBlockMaterial) {
-								minMask = MaterialRegistry.getMinimumDatamask((VanillaBlockMaterial) material);
-								dataMask = ((VanillaBlockMaterial) material).getDataMask();
-							} else if (material instanceof VanillaItemMaterial) {
-								minMask = MaterialRegistry.getMinimumDatamask((VanillaItemMaterial) material);
-								dataMask = ((VanillaItemMaterial) material).getDataMask();
-							} else {
-								throw new IllegalStateException("All materials should be either Blocks or Items");
-							}
-							if (minMask != dataMask) {
-								throw new IllegalStateException("Submaterial data mask is not set to minimum valid value (exp = " + minMask + ", actual = " + dataMask + " for material " + material);
-							}
+						Material mat = (Material) material;
+						if (mat.isSubMaterial()) {
+							mat = mat.getParentMaterial();
+						}
+						reverseTable.put((short) material.getMinecraftId(), mat);
+						short minMask;
+						short dataMask;
+						if (material instanceof VanillaBlockMaterial) {
+							minMask = MaterialRegistry.getMinimumDatamask((VanillaBlockMaterial) material);
+							dataMask = ((VanillaBlockMaterial) material).getDataMask();
+						} else if (material instanceof VanillaItemMaterial) {
+							minMask = MaterialRegistry.getMinimumDatamask((VanillaItemMaterial) material);
+							dataMask = ((VanillaItemMaterial) material).getDataMask();
+						} else {
+							throw new IllegalStateException("All materials should be either Blocks or Items");
+						}
+						if (minMask != dataMask) {
+							throw new IllegalStateException("Submaterial data mask is not set to minimum valid value (exp = " + minMask + ", actual = " + dataMask + " for material " + material);
 						}
 					}
 				}
@@ -565,11 +563,11 @@ public final class VanillaMaterials {
 	 * @return minecraft id
 	 */
 	public static short getMinecraftId(Material material) {
-		if (material instanceof VanillaMaterial) {
-			return (short) ((VanillaMaterial) material).getMinecraftId();
-		} else {
+		if (!(material instanceof VanillaMaterial)) {
 			return BlockMaterial.AIR.getId();
 		}
+
+		return (short) ((VanillaMaterial) material).getMinecraftId();
 	}
 
 	/**

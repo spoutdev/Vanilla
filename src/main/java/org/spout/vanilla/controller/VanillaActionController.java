@@ -79,6 +79,7 @@ public abstract class VanillaActionController extends ActionController implement
 	// Controller characteristics
 	private int health = 1;
 	private int maxHealth = 1;
+    private int deathTicks = -1;
 	// Damage
 	private Source lastDamage = DamageCause.UNKNOWN;
 	private VanillaActionController lastDamager;
@@ -120,13 +121,20 @@ public abstract class VanillaActionController extends ActionController implement
 
 	@Override
 	public void onTick(float dt) {
+        if(deathTicks > 0) {
+            deathTicks --;
+            if(deathTicks == 0) {
+                getParent().kill();
+            }
+            return;
+        }
 		checkFireTicks();
 
 		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
 			VanillaNetworkUtil.broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 			if (!(this instanceof PlayerController)) {
-				getParent().kill();
+				deathTicks= 30;
 			}
 			onDeath();
 		}

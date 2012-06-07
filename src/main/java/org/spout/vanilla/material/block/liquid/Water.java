@@ -26,13 +26,13 @@
  */
 package org.spout.vanilla.material.block.liquid;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
 public class Water extends Liquid {
+	
+	public static int level = 0;
+
 	public Water(String name, int id, boolean flowing) {
 		super(name, id, flowing);
 	}
@@ -48,32 +48,12 @@ public class Water extends Liquid {
 	}
 
 	@Override
-	public void onFlow(Block block, BlockFace to) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public int getMaxLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 7;
 	}
 
 	@Override
-	public int getLevel(Block block) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getReceivingLevel(Block block) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setLevel(Block block, int level) {
-		// TODO Auto-generated method stub
-
+	public boolean hasFlowSource() {
+		return true;
 	}
 }

@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block.liquid;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
@@ -53,32 +52,22 @@ public class Lava extends Liquid {
 	}
 
 	@Override
-	public void onFlow(Block block, BlockFace to) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public int getMaxLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 3;
 	}
 
 	@Override
 	public int getLevel(Block block) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getReceivingLevel(Block block) {
-		// TODO Auto-generated method stub
-		return 0;
+		return super.getLevel(block) >> 1;
 	}
 
 	@Override
 	public void setLevel(Block block, int level) {
-		// TODO Auto-generated method stub
+		super.setLevel(block, level << 1);
+	}
 
+	@Override
+	public boolean hasFlowSource() {
+		return false;
 	}
 }

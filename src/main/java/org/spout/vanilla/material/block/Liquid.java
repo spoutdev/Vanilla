@@ -30,8 +30,11 @@ import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public abstract class Liquid extends VanillaBlockMaterial {
 	private final boolean flowing;
@@ -50,11 +53,30 @@ public abstract class Liquid extends VanillaBlockMaterial {
 	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
-		int level = this.getReceivingLevel(block);
-		this.setLevel(block, level);
-		if (level > 0) {
-
+		int level;
+		if (this.isSource(block)) {
+			level = this.getMaxLevel();
+			// Still flowing down?
+			if (this.isFlowingDown(block) && !this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
+				this.setFlowingDown(block, false);
+				this.setLevel(block, level - 1);
+				block.update();
+			} else {
+				this.onFlow(block);
+				return;
+			}
 		}
+		// Update level of liquid
+		level = this.getReceivingLevel(block);
+		int prevlevel = this.getLevel(block);
+		if (level != prevlevel) {
+			this.setLevel(block, level);
+			if (level < prevlevel) {
+				block.update();
+				return;
+			}
+		}
+		this.onFlow(block);
 	}
 
 	public abstract Liquid getSourceMaterial();
@@ -65,7 +87,52 @@ public abstract class Liquid extends VanillaBlockMaterial {
 		return material.equals(this.getFlowingMaterial(), this.getSourceMaterial());
 	}
 
-	public abstract void onFlow(Block block, BlockFace to);
+	private void onFlow(Block block) {
+		// Flow below, and if not possible, spread outwards
+		if (!this.onFlow(block, BlockFace.BOTTOM)) {
+			for (BlockFace face : BlockFaces.NESW) {
+				this.onFlow(block, face);
+			}
+		}
+	}
+
+	/**
+	 * Let's this liquid flow from th block to the direction given
+	 * @param block to flow from
+	 * @param to flow to
+	 * @return True if flowing was successful
+	 */
+	public boolean onFlow(Block block, BlockFace to) {
+		int level;
+		if (to == BlockFace.BOTTOM) {
+			level = this.getMaxLevel();
+		} else {
+			level = this.getLevel(block) - 1;
+			if (level < 0) {
+				return false;
+			}
+		}
+		block = block.translate(to);
+		BlockMaterial material = block.getMaterial();
+		if (material.isPlacementObstacle()) {
+			return false;
+		}
+		if (this.isMaterial(material) && this.isSource(block)) {
+			return true;
+		}
+		// Actual flow logic here
+		if (level > this.getLevel(block)) {
+			block.setMaterial(this);
+			this.setLevel(block, level);
+			if (to == BlockFace.BOTTOM) {
+				this.setFlowingDown(block, true);
+			}
+			block.update();
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	/**
 	 * Gets the maximum possible water level
@@ -76,24 +143,103 @@ public abstract class Liquid extends VanillaBlockMaterial {
 	/**
 	 * Gets the level of a liquid
 	 * @param block of the liquid
-	 * @return the level
+	 * @return the level, or negative if it has no water
 	 */
-	public abstract int getLevel(Block block);
+	public int getLevel(Block block) {
+		if (this.isMaterial(block.getMaterial())) {
+			return 7 - (block.getData() & 0x7);
+		} else {
+			return -2;
+		}
+	}
 
 	/**
-	 * Gets the level a liquid receives from nearby blocks
+	 * Gets the level a liquid receives from nearby blocks<br>
+	 * The level equals the expected level of the block specified
+	 * 
 	 * @param block of the liquid
-	 * @return the level
+	 * @return the level, or negative if it has no liquids nearby to use
 	 */
-	public abstract int getReceivingLevel(Block block);
+	public int getReceivingLevel(Block block) {
+		if (this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
+			return this.getMaxLevel();
+		} else {
+			int max = -2;
+			int neighlevel;
+			int flowCount = 0;
+			Block neigh;
+			for (BlockFace face : BlockFaces.NESW) {
+				neigh = block.translate(face);
+				neighlevel = this.getLevel(neigh);
+				if (this.hasFlowSource() && neighlevel == this.getMaxLevel() && !this.isFlowingDown(neigh)) {
+					flowCount++;
+					if (flowCount == 2) {
+						return neighlevel; // Create source
+					}
+				}
+				max = Math.max(max, neighlevel - 1);
+			}
+			return max;
+		}
+	}
 
 	/**
 	 * Sets the level of a liquid<br>
-	 * A level of 0 or below converts the liquid into air
+	 * A level lower than 0 converts the liquid into air
 	 * @param block of the liquid
 	 * @param level to set to
 	 */
-	public abstract void setLevel(Block block, int level);
+	public void setLevel(Block block, int level) {
+		if (level < 0) {
+			block.setMaterial(VanillaMaterials.AIR);
+		} else {
+			if (level > 7) {
+				level = 7;
+			}
+			int data = block.getData();
+			if (LogicUtil.getBit(data, 0x8)) {
+				data = (7 - level) | 0x8;
+			} else {
+				data = 7 - level;
+			}
+			block.setData(data);
+		}
+	}
+
+	/**
+	 * Gets if this liquid can create sources by flowing
+	 * @return True if it can make sources when flowing, False if not
+	 */
+	public abstract boolean hasFlowSource();
+	
+	/**
+	 * Sets whether this liquid is flowing down
+	 * 
+	 * @param block of the liquid
+	 * @param flowing down state of the liquid
+	 */
+	public void setFlowingDown(Block block, boolean flowing) {
+		block.setData(LogicUtil.setBit(block.getData(), 0x8, flowing));
+	}
+
+	/**
+	 * Gets whether this liquid is flowing down
+	 * 
+	 * @param block of the liquid
+	 * @return True if is flowing down, False if not
+	 */
+	public boolean isFlowingDown(Block block) {
+		return LogicUtil.getBit(block.getData(), 0x8);
+	}
+
+	/**
+	 * Gets whether this liquid is a source
+	 * @param block of the liquid
+	 * @return True if it is a source, False if not
+	 */
+	public boolean isSource(Block block) {
+		return (block.getData() & 0x7) == 0x0;
+	}
 
 	public boolean isFlowing() {
 		return flowing;

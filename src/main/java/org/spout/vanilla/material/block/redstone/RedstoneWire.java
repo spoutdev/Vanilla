@@ -165,19 +165,19 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
 		if (powerMode == RedstonePowerMode.ALLEXCEPTWIRE) {
 			return REDSTONE_POWER_MIN;
-		} else {
-			short power = this.getRedstonePower(block);
-			if (power == REDSTONE_POWER_MIN) {
-				return power;
-			} else {
-				BlockMaterial mat = block.translate(direction).getMaterial();
-				if (mat instanceof RedstoneSource || mat instanceof RedstoneTarget || !isDistractedFrom(block, direction)) {
-					return power;
-				} else {
-					return REDSTONE_POWER_MIN;
-				}
-			}
 		}
+
+		short power = this.getRedstonePower(block);
+		if (power == REDSTONE_POWER_MIN) {
+			return power;
+		}
+
+		BlockMaterial mat = block.translate(direction).getMaterial();
+		if (mat instanceof RedstoneSource || mat instanceof RedstoneTarget || !isDistractedFrom(block, direction)) {
+			return power;
+		}
+
+		return REDSTONE_POWER_MIN;
 	}
 
 	@Override
@@ -265,21 +265,20 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 		BlockMaterial mat = target.getMaterial();
 		if (mat instanceof RedstoneSource || mat instanceof RedstoneTarget) {
 			return true;
-		} else {
-			//check below
-			if (!RedstoneUtil.isConductor(mat)) {
-				if (target.translate(BlockFace.BOTTOM).getMaterial().equals(this)) {
-					return true;
-				}
-			}
-			//check above
-			if (target.translate(BlockFace.TOP).getMaterial().equals(this)) {
-				if (!RedstoneUtil.isConductor(block.translate(BlockFace.TOP))) {
-					return true;
-				}
-			}
-			return false;
 		}
+		//check below
+		if (!RedstoneUtil.isConductor(mat)) {
+			if (target.translate(BlockFace.BOTTOM).getMaterial().equals(this)) {
+				return true;
+			}
+		}
+		//check above
+		if (target.translate(BlockFace.TOP).getMaterial().equals(this)) {
+			if (!RedstoneUtil.isConductor(block.translate(BlockFace.TOP))) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

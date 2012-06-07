@@ -84,11 +84,7 @@ public abstract class DoorBlock extends GroundAttachable implements Mineable, Op
 
 	@Override
 	public boolean canSupport(BlockMaterial material, BlockFace face) {
-		if (face == BlockFace.TOP) {
-			return material.equals(this);
-		} else {
-			return false;
-		}
+		return face == BlockFace.TOP && material.equals(this);
 	}
 
 	/**

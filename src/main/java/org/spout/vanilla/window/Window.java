@@ -217,34 +217,37 @@ public class Window implements InventoryViewer {
 	 */
 	public boolean onLeftClick(int clickedSlot) {
 		ItemStack clickedItem = this.inventory.getItem(clickedSlot);
-		if (this.hasItemOnCursor()) {
-			if (clickedItem == null) {
+		if (clickedItem == null) {
+			if (this.hasItemOnCursor()) {
 				// cursor > clicked item
 				this.inventory.setItem(clickedSlot, this.getItemOnCursor());
 				this.setItemOnCursor(null);
 				return true;
-			} else {
-				// clicked item + cursor
-				ItemStack cursorItem = this.getItemOnCursor();
-				if (cursorItem.equalsIgnoreSize(clickedItem)) {
-					// stack
-					clickedItem.stack(cursorItem);
-					this.inventory.setItem(clickedSlot, clickedItem);
-					this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
-					return true;
-				} else {
-					// swap
-					this.setItemOnCursor(clickedItem);
-					this.inventory.setItem(clickedSlot, cursorItem);
-					return true;
-				}
 			}
-		} else if (clickedItem != null) {
+
+			return true;
+		}
+
+		if (!this.hasItemOnCursor()) {
 			// clicked item > cursor
 			this.setItemOnCursor(clickedItem);
 			this.inventory.setItem(clickedSlot, null);
 			return true;
 		}
+
+		// clicked item + cursor
+		ItemStack cursorItem = this.getItemOnCursor();
+		if (cursorItem.equalsIgnoreSize(clickedItem)) {
+			// stack
+			clickedItem.stack(cursorItem);
+			this.inventory.setItem(clickedSlot, clickedItem);
+			this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
+			return true;
+		}
+
+		// swap
+		this.setItemOnCursor(clickedItem);
+		this.inventory.setItem(clickedSlot, cursorItem);
 		return true;
 	}
 
@@ -255,8 +258,8 @@ public class Window implements InventoryViewer {
 	 */
 	public boolean onRightClick(int clickedSlot) {
 		ItemStack clickedItem = this.inventory.getItem(clickedSlot);
-		if (this.hasItemOnCursor()) {
-			if (clickedItem == null) {
+		if (clickedItem == null) {
+			if (this.hasItemOnCursor()) {
 				// cursor > clicked item
 				ItemStack cursorItem = this.getItemOnCursor();
 				clickedItem = cursorItem.clone();
@@ -265,36 +268,38 @@ public class Window implements InventoryViewer {
 				this.inventory.setItem(clickedSlot, clickedItem);
 				this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
 				return true;
-			} else {
-				// clicked item + cursor
-				ItemStack cursorItem = this.getItemOnCursor();
-				if (cursorItem.equalsIgnoreSize(clickedItem)) {
-					// transfer one item
-					if (clickedItem.getAmount() < clickedItem.getMaxStackSize()) {
-						clickedItem.setAmount(clickedItem.getAmount() + 1);
-						cursorItem.setAmount(cursorItem.getAmount() - 1);
-						this.inventory.setItem(clickedSlot, clickedItem);
-						this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
-						return true;
-					} else {
-						return false;
-					}
-				} else {
-					// swap
-					this.setItemOnCursor(clickedItem);
-					this.inventory.setItem(clickedSlot, cursorItem);
-					return true;
-				}
 			}
-		} else if (clickedItem != null) {
-			// 1/2 clicked item > cursor
-			ItemStack newItem = clickedItem.clone();
-			newItem.setAmount(newItem.getAmount() / 2);
-			clickedItem.setAmount(clickedItem.getAmount() - newItem.getAmount());
-			this.inventory.setItem(clickedSlot, newItem.getAmount() <= 0 ? null : newItem);
-			this.setItemOnCursor(clickedItem.getAmount() <= 0 ? null : clickedItem);
+
 			return true;
 		}
+		if (this.hasItemOnCursor()) {
+			// clicked item + cursor
+			ItemStack cursorItem = this.getItemOnCursor();
+			if (!cursorItem.equalsIgnoreSize(clickedItem)) {
+				// swap
+				this.setItemOnCursor(clickedItem);
+				this.inventory.setItem(clickedSlot, cursorItem);
+				return true;
+			}
+
+			if (clickedItem.getAmount() >= clickedItem.getMaxStackSize()) {
+				return false;
+			}
+
+			// transfer one item
+			clickedItem.setAmount(clickedItem.getAmount() + 1);
+			cursorItem.setAmount(cursorItem.getAmount() - 1);
+			this.inventory.setItem(clickedSlot, clickedItem);
+			this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
+			return true;
+		}
+
+		// 1/2 clicked item > cursor
+		ItemStack newItem = clickedItem.clone();
+		newItem.setAmount(newItem.getAmount() / 2);
+		clickedItem.setAmount(clickedItem.getAmount() - newItem.getAmount());
+		this.inventory.setItem(clickedSlot, newItem.getAmount() <= 0 ? null : newItem);
+		this.setItemOnCursor(clickedItem.getAmount() <= 0 ? null : clickedItem);
 		return true;
 	}
 
@@ -307,9 +312,9 @@ public class Window implements InventoryViewer {
 	public boolean onRightClick(int clickedSlot, boolean shift) {
 		if (shift) {
 			return this.onShiftClick(clickedSlot);
-		} else {
-			return this.onRightClick(clickedSlot);
 		}
+
+		return this.onRightClick(clickedSlot);
 	}
 
 	/**
@@ -321,9 +326,9 @@ public class Window implements InventoryViewer {
 	public boolean onLeftClick(int clickedSlot, boolean shift) {
 		if (shift) {
 			return this.onShiftClick(clickedSlot);
-		} else {
-			return this.onLeftClick(clickedSlot);
 		}
+
+		return this.onLeftClick(clickedSlot);
 	}
 
 	@Override

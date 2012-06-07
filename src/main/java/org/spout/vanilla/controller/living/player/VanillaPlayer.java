@@ -672,12 +672,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @return time spent digging
 	 */
 	public long getDiggingTime() {
-		if (isDigging) {
-			// Is this correct?
-			return System.currentTimeMillis() - diggingStartTime;
-		} else {
+		if (!isDigging) {
 			return previousDiggingTime;
 		}
+
+		// Is this correct?
+		return System.currentTimeMillis() - diggingStartTime;
 	}
 
 	/**

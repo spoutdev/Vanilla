@@ -41,12 +41,12 @@ public class BasicObjectEntityProtocol extends BasicEntityProtocol {
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
-		if (c != null) {
-			int id = entity.getId();
-			Vector3 pos = entity.getPosition().multiply(32).floor();
-			return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), pos)};
-		} else {
+		if (c == null) {
 			return null;
 		}
+
+		int id = entity.getId();
+		Vector3 pos = entity.getPosition().multiply(32).floor();
+		return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), pos)};
 	}
 }

@@ -137,13 +137,13 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 
 	@Override
 	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
-		if (this.isPowering(block)) {
-			//TODO: Check if a minecart is on top of this block right now...
-			this.setPowering(block, false);
-			this.doRedstoneUpdates(block);
-			return -1;
-		} else {
+		if (!this.isPowering(block)) {
 			return TICK_DELAY;
 		}
+
+		//TODO: Check if a minecart is on top of this block right now...
+		this.setPowering(block, false);
+		this.doRedstoneUpdates(block);
+		return -1;
 	}
 }

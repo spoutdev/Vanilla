@@ -106,18 +106,18 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (block.getMaterial().equals(this)) {
-			if (isClickedBlock) {
-				if (this.isTop(block)) {
-					return against == BlockFace.BOTTOM;
-				} else {
-					return against == BlockFace.TOP;
-				}
-			} else {
-				return true;
-			}
-		} else {
+		if (!block.getMaterial().equals(this)) {
 			return super.canPlace(block, data, against, isClickedBlock);
+		}
+
+		if (!isClickedBlock) {
+			return true;
+		}
+
+		if (this.isTop(block)) {
+			return against == BlockFace.BOTTOM;
+		} else {
+			return against == BlockFace.TOP;
 		}
 	}
 

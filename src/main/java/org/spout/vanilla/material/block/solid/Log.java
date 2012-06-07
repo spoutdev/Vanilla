@@ -143,9 +143,9 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 		int data = b.getData() & 0xFFFF;
 		if ((data & aliveMask) == 0) {
 			return -1;
-		} else {
-			return currentTime + 10000;
 		}
+
+		return currentTime + 10000;
 	}
 
 	@Override
@@ -153,37 +153,39 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 		int data = b.getData() & 0xFFFF;
 		if ((data & aliveMask) == 0) {
 			return -1;
-		} else {
-			Block trunk = b;
-			int expectHeight = b.getBlockDataField(heightMask);
-			for (int i = 0; i < expectHeight + 1; i++) {
-				if (!(trunk.getMaterial() instanceof Log)) {
-					return -1;
-				}
-				trunk = trunk.translate(BlockFace.TOP);
-			}
-			Material trunkMaterial = trunk.getMaterial();
-			if (expectHeight == 3) {
-				trunk = b;
-				for (int i = 0; i < expectHeight + 1; i++) {
-					trunk.setMaterial(BlockMaterial.AIR);
-					trunk = trunk.translate(BlockFace.TOP);
-				}
-				sapling.growTree(b, sapling);
-				return -1;
-			} else if (trunkMaterial == BlockMaterial.AIR || (trunkMaterial instanceof Leaves)) {
-				trunk.setMaterial(b.getMaterial());
-				trunk = trunk.translate(BlockFace.TOP);
-				if (trunk.getMaterial() == BlockMaterial.AIR) {
-					trunk.setMaterial(Leaves.DEFAULT);
-					trunk.setData(data & dataMask);
-				}
-				b.setBlockDataField(heightMask, expectHeight + 1);
-				return updateTime + 10000;
-			} else {
-				b.setData(data & dataMask);
-				return -1;
-			}
 		}
+
+		Block trunk = b;
+		int expectHeight = b.getBlockDataField(heightMask);
+		for (int i = 0; i < expectHeight + 1; i++) {
+			if (!(trunk.getMaterial() instanceof Log)) {
+				return -1;
+			}
+			trunk = trunk.translate(BlockFace.TOP);
+		}
+		Material trunkMaterial = trunk.getMaterial();
+		if (expectHeight == 3) {
+			trunk = b;
+			for (int i = 0; i < expectHeight + 1; i++) {
+				trunk.setMaterial(BlockMaterial.AIR);
+				trunk = trunk.translate(BlockFace.TOP);
+			}
+			sapling.growTree(b, sapling);
+			return -1;
+		}
+
+		if (trunkMaterial == BlockMaterial.AIR || trunkMaterial instanceof Leaves) {
+			trunk.setMaterial(b.getMaterial());
+			trunk = trunk.translate(BlockFace.TOP);
+			if (trunk.getMaterial() == BlockMaterial.AIR) {
+				trunk.setMaterial(Leaves.DEFAULT);
+				trunk.setData(data & dataMask);
+			}
+			b.setBlockDataField(heightMask, expectHeight + 1);
+			return updateTime + 10000;
+		}
+
+		b.setData(data & dataMask);
+		return -1;
 	}
 }

@@ -98,9 +98,9 @@ public enum RailsState {
 	public static RailsState get(int data) {
 		if (data >= values().length || data < 0) {
 			return null;
-		} else {
-			return values()[data];
 		}
+
+		return values()[data];
 	}
 
 	/**

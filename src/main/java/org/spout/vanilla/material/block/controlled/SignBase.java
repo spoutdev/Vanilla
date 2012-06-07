@@ -46,7 +46,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.MoveReaction;
 
-public class SignBase extends AbstractAttachable implements Mineable {
+public abstract class SignBase extends AbstractAttachable implements Mineable {
 	public SignBase(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setOpacity((byte) 1);
@@ -86,18 +86,13 @@ public class SignBase extends AbstractAttachable implements Mineable {
 	public BlockFace getAttachedFace(Block block) {
 		if (block.getMaterial().equals(VanillaMaterials.SIGN_POST)) {
 			return BlockFace.BOTTOM;
-		} else {
-			return BlockFaces.NSWE.get(block.getData() - 2);
 		}
+
+		return BlockFaces.NSWE.get(block.getData() - 2);
 	}
 
 	@Override
-	public boolean canSupport(BlockMaterial material, BlockFace face) {
-		if (face == BlockFace.TOP && this.equals(VanillaMaterials.SIGN_POST)) {
-			return material instanceof SignBase || material instanceof Torch;
-		}
-		return false;
-	}
+	public abstract boolean canSupport(BlockMaterial material, BlockFace face);
 
 	@Override
 	public short getDurabilityPenalty(Tool tool) {

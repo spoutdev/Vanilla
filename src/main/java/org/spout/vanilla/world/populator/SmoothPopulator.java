@@ -52,7 +52,7 @@ public class SmoothPopulator implements Populator {
 	// the floor of half the value of the side of the square
 	// to sample when smoothing. (byte) Math.floor((double) SIDE_LENGTH / 2D);
 	private final static byte SAMPLE_SIZE = 2;
-	private final static byte SMOOTHING_AMOUNT_DAMPENER = 6;
+	private final static float SMOOTHING_POWER = 0.7f;
 	// ignored blocks
 	private static final Set<BlockMaterial> IGNORED = new HashSet<BlockMaterial>();
 
@@ -97,18 +97,7 @@ public class SmoothPopulator implements Populator {
 		if (!hasBiomeVariations) {
 			return;// no biome variations, smoothing is aborted
 		}
-		// get the amount of smoothing
-		byte amount = getAmountOfSmoothing(heightMap);
-		if (amount == 0) {
-			amount = 1;// min 1 smooth pass
-		}
-		// get the smoothed map, and pass it through smoothing as many times
-		// as specified by the amount
 		byte[] smoothedHeightMap = smooth(heightMap, SMOOTH_SIZE, SMOOTH_SIZE);
-		amount--;
-		for (; amount > 0; amount--) {
-			smoothedHeightMap = smooth(smoothedHeightMap, SMOOTH_SIZE, SMOOTH_SIZE);
-		}
 		// apply the changes
 		for (byte x = 0; x < SMOOTH_SIZE; x++) {
 			for (byte z = 0; z < SMOOTH_SIZE; z++) {
@@ -140,17 +129,6 @@ public class SmoothPopulator implements Populator {
 			}
 		}
 		return y;
-	}
-
-	// get the ammount of smoothing to be applied based on max delta
-	private byte getAmountOfSmoothing(byte[] heightMap) {
-		byte max = Byte.MIN_VALUE;
-		byte min = Byte.MAX_VALUE;
-		for (int i = 0; i < heightMap.length; i++) {
-			max = heightMap[i] > max ? heightMap[i] : max;
-			min = heightMap[i] < min ? heightMap[i] : min;
-		}
-		return (byte) ((max - min) / SMOOTHING_AMOUNT_DAMPENER);
 	}
 
 	// shift a column on y, replacing the blocks missing
@@ -236,7 +214,9 @@ public class SmoothPopulator implements Populator {
 						valueCounter++;
 					}
 				}
-				smoothHeightMap[x + y * width] = (byte) (totalValue / valueCounter);
+				final byte oldValue = heightMap[x + y * width];
+				final byte difference = (byte) ((totalValue / valueCounter - oldValue) * SMOOTHING_POWER);
+				smoothHeightMap[x + y * width] = (byte) (oldValue + difference);
 			}
 		}
 		return smoothHeightMap;

@@ -38,7 +38,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
-import org.spout.vanilla.world.populator.SmoothPopulator;
 import org.spout.vanilla.world.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends BiomeGenerator implements VanillaGenerator {

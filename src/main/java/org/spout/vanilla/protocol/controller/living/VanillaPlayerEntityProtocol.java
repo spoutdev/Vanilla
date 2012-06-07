@@ -36,7 +36,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
-public class VanillaPlayerEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
+public class VanillaPlayerEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();

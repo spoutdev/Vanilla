@@ -30,7 +30,7 @@ import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MiningType;
 
-public abstract class DiamondTool extends Tool implements Enchantable {
+public abstract class DiamondTool extends Tool {
 	protected DiamondTool(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setEnchantability(10);

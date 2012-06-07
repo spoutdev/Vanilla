@@ -35,7 +35,7 @@ import org.spout.api.player.Player;
 
 import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
 
-public class PlayerDeathEvent extends VanillaEntityDeathEvent implements Cancellable {
+public class PlayerDeathEvent extends VanillaEntityDeathEvent {
 	private static HandlerList handlers = new HandlerList();
 
 	public PlayerDeathEvent(Entity e) {

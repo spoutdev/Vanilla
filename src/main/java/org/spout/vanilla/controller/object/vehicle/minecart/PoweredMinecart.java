@@ -33,7 +33,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.vehicle.Minecart;
 import org.spout.vanilla.controller.object.vehicle.Vehicle;
 
-public class PoweredMinecart extends Minecart implements Vehicle {
+public class PoweredMinecart extends Minecart {
 	private int fuelTicks = 0;
 	private Vector2 pushVelocity = Vector2.ZERO;
 

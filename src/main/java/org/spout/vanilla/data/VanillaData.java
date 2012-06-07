@@ -42,6 +42,7 @@ public class VanillaData {
 	public static final DefaultedKey<Difficulty> DIFFICULTY = new DefaultedKeyImpl<Difficulty>("difficulty", Difficulty.EASY);
 	public static final DefaultedKey<WorldType> WORLD_TYPE = new DefaultedKeyImpl<WorldType>("type", WorldType.DEFAULT);
 	public static final DefaultedKey<Time> TIME = new DefaultedKeyImpl<Time>("time", Time.SUNRISE);
+	public static final DefaultedKey<Weather> WEATHER = new DefaultedKeyImpl<Weather>("weather", Weather.CLEAR);
 	//Player-specific
 	public static final DefaultedKey<GameMode> GAMEMODE = new DefaultedKeyImpl<GameMode>("game_mode", GameMode.SURVIVAL);
 	//Controller-specific

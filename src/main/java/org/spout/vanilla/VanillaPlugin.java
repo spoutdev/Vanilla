@@ -49,7 +49,9 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
+import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.security.SecurityHandler;
+
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -62,6 +64,8 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
+import org.spout.vanilla.task.TimeTask;
+import org.spout.vanilla.task.WeatherTask;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
@@ -113,14 +117,16 @@ public class VanillaPlugin extends CommonPlugin {
 		SecurityHandler.getInstance().getKeyPair(1024, "RSA");
 		
 		KeyPair keys = SecurityHandler.getInstance().getKeyPair(1024, "RSA");
+
+		if (Spout.debugMode()) {
+			Spout.multilineLog("Key pair generated");
+			Spout.multilineLog("<<<<<<<<<<  Public   >>>>>>>>>>");
+			Spout.multilineLog(keys.getPublic().toString());
 		
-		Spout.multilineLog("Key pair generated");
-		Spout.multilineLog("<<<<<<<<<<  Public   >>>>>>>>>>");
-		Spout.multilineLog(keys.getPublic().toString());
-		
-		Spout.multilineLog("");
-		Spout.multilineLog("<<<<<<<<<<  Private  >>>>>>>>>>");
-		Spout.multilineLog(keys.getPrivate().toString());
+			Spout.multilineLog("");
+			Spout.multilineLog("<<<<<<<<<<  Private  >>>>>>>>>>");
+			Spout.multilineLog(keys.getPrivate().toString());
+		}
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
 	}
@@ -151,18 +157,31 @@ public class VanillaPlugin extends CommonPlugin {
 		getLogger().info("loaded");
 	}
 
+	/**
+	 * Gets the running instance of VanillaPlugin
+	 * @return
+	 */
+	public static VanillaPlugin getInstance() {
+		return instance;
+	}
+
 	private void setupWorlds() {
 		ArrayList<World> worlds = new ArrayList<World>();
+
 		if (WorldConfiguration.NORMAL_LOAD.getBoolean()) {
 			NormalGenerator normGen = new NormalGenerator();
 			World normal = game.loadWorld(WorldConfiguration.NORMAL_NAME.getString(), normGen);
 			normal.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.NORMAL_GAMEMODE.getString().toUpperCase()));
 			normal.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.NORMAL_DIFFICULTY.getString().toUpperCase()));
 			normal.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.NORMAL_SKY_TYPE.getString().toUpperCase()));
-			//Grab safe spawn if newly created world.
 			if (normal.getAge() <= 0) {
 				normal.setSpawnPoint(new Transform(new Point(normGen.getSafeSpawn(normal)), Quaternion.IDENTITY, Vector3.ONE));
 			}
+			if (WorldConfiguration.NORMAL_LOADED_SPAWN.getBoolean()) {
+				normal.createAndSpawnEntity(normal.getSpawnPoint().getPosition(), new PointObserver());
+			}
+			Spout.getEngine().getScheduler().scheduleSyncRepeatingTask(this, new TimeTask(normal, normal.getDataMap().get(VanillaData.TIME), WorldConfiguration.NORMAL_TIME_MODIFIER.getInt()), 0, 0, TaskPriority.NORMAL);
+			Spout.getEngine().getScheduler().scheduleSyncRepeatingTask(this, new WeatherTask(normal, normal.getDataMap().get(VanillaData.WEATHER), 5, 5), 0, 0, TaskPriority.NORMAL);
 			worlds.add(normal);
 		}
 
@@ -176,6 +195,11 @@ public class VanillaPlugin extends CommonPlugin {
 			if (flat.getAge() <= 0) {
 				flat.setSpawnPoint(new Transform(new Point(flatGen.getSafeSpawn(flat)), Quaternion.IDENTITY, Vector3.ONE));
 			}
+			if (WorldConfiguration.FLAT_LOADED_SPAWN.getBoolean()) {
+				flat.createAndSpawnEntity(flat.getSpawnPoint().getPosition(), new PointObserver());
+			}
+			Spout.getEngine().getScheduler().scheduleSyncRepeatingTask(this, new TimeTask(flat, flat.getDataMap().get(VanillaData.TIME), WorldConfiguration.FLAT_TIME_MODIFIER.getInt()), 0, 0, TaskPriority.NORMAL);
+			Spout.getEngine().getScheduler().scheduleSyncRepeatingTask(this, new WeatherTask(flat, flat.getDataMap().get(VanillaData.WEATHER), 5, 5), 0, 0, TaskPriority.NORMAL);
 			worlds.add(flat);
 		}
 
@@ -188,6 +212,9 @@ public class VanillaPlugin extends CommonPlugin {
 			//Grab safe spawn if newly created world.
 			if (nether.getAge() <= 0) {
 				nether.setSpawnPoint(new Transform(new Point(netherGen.getSafeSpawn(nether)), Quaternion.IDENTITY, Vector3.ONE));
+			}
+			if (WorldConfiguration.NETHER_LOADED_SPAWN.getBoolean()) {
+				nether.createAndSpawnEntity(nether.getSpawnPoint().getPosition(), new PointObserver());
 			}
 			worlds.add(nether);
 		}
@@ -225,27 +252,6 @@ public class VanillaPlugin extends CommonPlugin {
 					}
 				}
 			}
-
-			if (world.getGenerator() instanceof NormalGenerator && WorldConfiguration.NORMAL_LOADED_SPAWN.getBoolean()) {
-				world.createAndSpawnEntity(point, new PointObserver());
-			}
-			if (world.getGenerator() instanceof FlatGenerator && WorldConfiguration.FLAT_LOADED_SPAWN.getBoolean()) {
-				world.createAndSpawnEntity(point, new PointObserver());
-			}
-			if (world.getGenerator() instanceof NetherGenerator && WorldConfiguration.NETHER_LOADED_SPAWN.getBoolean()) {
-				world.createAndSpawnEntity(point, new PointObserver());
-			}
-			if (world.getGenerator() instanceof TheEndGenerator && WorldConfiguration.END_LOADED_SPAWN.getBoolean()) {
-				world.createAndSpawnEntity(point, new PointObserver());
-			}
 		}
-	}
-
-	/**
-	 * Gets the running instance of VanillaPlugin
-	 * @return
-	 */
-	public static VanillaPlugin getInstance() {
-		return instance;
 	}
 }

@@ -26,14 +26,20 @@
  */
 package org.spout.vanilla.material.block.liquid;
 
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.util.LogicUtil;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
 public class Water extends Liquid {
-	public static int level = 0;
 
 	public Water(String name, int id, boolean flowing) {
 		super(name, id, flowing);
+	}
+
+	@Override
+	public int getTickDelay() {
+		return 20;
 	}
 
 	@Override
@@ -54,5 +60,32 @@ public class Water extends Liquid {
 	@Override
 	public boolean hasFlowSource() {
 		return true;
+	}
+
+	@Override
+	public int getLevel(Block block) {
+		if (this.isMaterial(block.getMaterial())) {
+			return 7 - (block.getData() & 0x7);
+		} else {
+			return -1;
+		}
+	}
+
+	@Override
+	public void setLevel(Block block, int level) {
+		if (level < 0) {
+			block.setMaterial(VanillaMaterials.AIR);
+		} else { 
+			if (level > 7) {
+				level = 7;
+			}
+			int data = block.getData();
+			if (LogicUtil.getBit(data, 0x8)) {
+				data = (7 - level) | 0x8;
+			} else {
+				data = 7 - level;
+			}
+			block.setData(data);
+		}
 	}
 }

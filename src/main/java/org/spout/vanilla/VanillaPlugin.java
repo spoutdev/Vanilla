@@ -191,7 +191,6 @@ public class VanillaPlugin extends CommonPlugin {
 			flat.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.FLAT_GAMEMODE.getString().toUpperCase()));
 			flat.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.FLAT_DIFFICULTY.getString().toUpperCase()));
 			flat.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.FLAT_SKY_TYPE.getString().toUpperCase()));
-			//Grab safe spawn if newly created world.
 			if (flat.getAge() <= 0) {
 				flat.setSpawnPoint(new Transform(new Point(flatGen.getSafeSpawn(flat)), Quaternion.IDENTITY, Vector3.ONE));
 			}
@@ -209,7 +208,6 @@ public class VanillaPlugin extends CommonPlugin {
 			nether.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.NETHER_GAMEMODE.getString().toUpperCase()));
 			nether.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.NETHER_DIFFICULTY.getString().toUpperCase()));
 			nether.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.NETHER_SKY_TYPE.getString().toUpperCase()));
-			//Grab safe spawn if newly created world.
 			if (nether.getAge() <= 0) {
 				nether.setSpawnPoint(new Transform(new Point(netherGen.getSafeSpawn(nether)), Quaternion.IDENTITY, Vector3.ONE));
 			}
@@ -225,9 +223,11 @@ public class VanillaPlugin extends CommonPlugin {
 			end.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.END_GAMEMODE.getString().toUpperCase()));
 			end.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.END_DIFFICULTY.getString().toUpperCase()));
 			end.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.END_SKY_TYPE.getString().toUpperCase()));
-			//Grab safe spawn if newly created world.
 			if (end.getAge() <= 0) {
 				end.setSpawnPoint(new Transform(new Point(endGen.getSafeSpawn(end)), Quaternion.IDENTITY, Vector3.ONE));
+			}
+			if (WorldConfiguration.END_LOADED_SPAWN.getBoolean()) {
+				end.createAndSpawnEntity(end.getSpawnPoint().getPosition(), new PointObserver());
 			}
 			worlds.add(end);
 		}

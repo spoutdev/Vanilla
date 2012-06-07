@@ -56,7 +56,6 @@ public class WorldConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder NETHER_GAMEMODE = new ConfigurationHolder("creative", "worlds", "nether", "game-mode");
 	public static final ConfigurationHolder NETHER_DIFFICULTY = new ConfigurationHolder("normal", "worlds", "nether", "difficulty");
 	public static final ConfigurationHolder NETHER_SKY_TYPE = new ConfigurationHolder("nether", "worlds", "nether", "sky-type");
-	public static final ConfigurationHolder NETHER_TIME_MODIFIER = new ConfigurationHolder(1, "worlds", "nether", "time-modifier");
 	//END
 	public static final ConfigurationHolder END_LOAD = new ConfigurationHolder(true, "worlds", "theend", "load");
 	public static final ConfigurationHolder END_NAME = new ConfigurationHolder("world_the_end", "worlds", "theend", "name");
@@ -64,7 +63,6 @@ public class WorldConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder END_GAMEMODE = new ConfigurationHolder("creative", "worlds", "theend", "game-mode");
 	public static final ConfigurationHolder END_DIFFICULTY = new ConfigurationHolder("normal", "worlds", "theend", "difficulty");
 	public static final ConfigurationHolder END_SKY_TYPE = new ConfigurationHolder("theend", "worlds", "theend", "sky-type");
-	public static final ConfigurationHolder END_TIME_MODIFIER = new ConfigurationHolder(1, "worlds", "theend", "time-modifier");
 
 	public WorldConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "worlds.yml")));

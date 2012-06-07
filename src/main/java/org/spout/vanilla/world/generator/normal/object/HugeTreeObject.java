@@ -84,9 +84,9 @@ public class HugeTreeObject extends TreeObject {
 			final float zz = (float) Math.sin(randAngleInRads);
 			generateLeaves(w, (int) (x + (xx * 4f + 0.5f)), y + yy, (int) (z + (zz * 4f + 0.5f)), (byte) 0);
 			for (byte branchLengthCount = 0; branchLengthCount < branchLength; branchLengthCount++) {
-				w.setBlockMaterial(((int) (xx * (float) branchLengthCount + 1.5f) + x),
+				w.setBlockMaterial(((int) (xx * branchLengthCount + 1.5f) + x),
 						y + yy - 3 + branchLengthCount / 2,
-						((int) (zz * (float) branchLengthCount + 1.5f) + z),
+						((int) (zz * branchLengthCount + 1.5f) + z),
 						VanillaMaterials.LOG, logMetadata, w);
 			}
 		}

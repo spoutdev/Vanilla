@@ -33,12 +33,12 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
-import org.spout.vanilla.world.generator.flat.FlatGenerator;
-import org.spout.vanilla.world.generator.nether.NetherGenerator;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.world.generator.theend.TheEndGenerator;
+import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 	@Override
@@ -54,22 +54,20 @@ public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 		Point point = event.getPoint();
 		player.getEntity().setPosition(point);
 		player.getNetworkSynchronizer().setPositionDirty();
+		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
+		controller.setHealth(controller.getMaxHealth(), HealthChangeReason.SPAWN);
 
 		//Send respawn packet back to the client.
 		//TODO We need worlds associated with vanilla storing characteristics
-		RespawnMessage respawn;
-		if (point.getWorld().getGenerator() instanceof NormalGenerator) {
-			respawn = new RespawnMessage(0, (byte) 1, (((VanillaPlayer) player.getEntity().getController()).getGameMode().getId()), 256, "DEFAULT");
-		} else if (point.getWorld().getGenerator() instanceof FlatGenerator) {
-			respawn = new RespawnMessage(0, (byte) 1, (((VanillaPlayer) player.getEntity().getController()).getGameMode().getId()), 256, "SUPERFLAT");
-		} else if (point.getWorld().getGenerator() instanceof NetherGenerator) {
-			respawn = new RespawnMessage(-1, (byte) 1, (((VanillaPlayer) player.getEntity().getController()).getGameMode().getId()), 256, "DEFAULT");
-		} else if (point.getWorld().getGenerator() instanceof TheEndGenerator) {
-			respawn = new RespawnMessage(1, (byte) 1, (((VanillaPlayer) player.getEntity().getController()).getGameMode().getId()), 256, "DEFAULT");
-		} else {
-			return;
-		}
-
+		int dimension = point.getWorld().getDataMap().get(VanillaData.DIMENSION).getId();
+		byte difficulty = point.getWorld().getDataMap().get(VanillaData.DIFFICULTY).getId();
+		byte gamemode = ((VanillaPlayer) player.getEntity().getController()).getGameMode().getId();
+		String worldType = point.getWorld().getDataMap().get(VanillaData.WORLD_TYPE).getType();
+		RespawnMessage respawn = new RespawnMessage(dimension, difficulty, gamemode, 256, worldType);
 		session.send(respawn);
+		
+		//send spawn to everyone else
+		SpawnPlayerMessage spawn = new SpawnPlayerMessage(player.getEntity().getId(), player.getDisplayName(), point, (int) player.getEntity().getYaw(), (int) player.getEntity().getPitch(), 0);
+		VanillaNetworkUtil.broadcastPacket(new Player[]{player}, spawn);
 	}
 }

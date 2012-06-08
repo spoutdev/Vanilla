@@ -24,43 +24,22 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.enchantment.sword;
 
-import java.util.ArrayList;
+import org.spout.vanilla.material.enchantment.SwordEnchantment;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.material.enchantment.Enchantments;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Spade;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.EnchantmentUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
-
-public class ClayBlock extends Solid implements Mineable {
-	public ClayBlock(String name, int id) {
+public class FireAspect extends SwordEnchantment {
+	public FireAspect(String name, int id) {
 		super(name, id);
-		this.setHardness(0.6F).setResistance(1.0F);
 	}
 
 	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
+	public int getMaximumLevel() {
+		return 2;
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-			drops.add(new ItemStack(this, 1));
-		} else {
-			drops.add(new ItemStack(VanillaMaterials.CLAY, 4));
-		}
-		return drops;
+	public int getWeight() {
+		return 2;
 	}
 }

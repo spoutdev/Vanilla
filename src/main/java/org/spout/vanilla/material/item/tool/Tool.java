@@ -39,7 +39,7 @@ import org.spout.vanilla.controller.living.creature.hostile.Silverfish;
 import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
 import org.spout.vanilla.controller.living.creature.hostile.Spider;
 import org.spout.vanilla.controller.living.creature.hostile.Zombie;
-import org.spout.vanilla.enchantment.Enchantments;
+import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;

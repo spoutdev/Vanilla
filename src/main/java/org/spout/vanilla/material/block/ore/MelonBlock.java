@@ -32,7 +32,7 @@ import java.util.Random;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.enchantment.Enchantments;
+import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.item.tool.Tool;

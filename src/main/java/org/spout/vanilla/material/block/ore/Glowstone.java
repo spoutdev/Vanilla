@@ -34,7 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.enchantment.Enchantments;
+import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.SignBase;

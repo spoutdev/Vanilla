@@ -24,43 +24,33 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.enchantment.armor;
 
-import java.util.ArrayList;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.material.enchantment.ArmorEnchantment;
+import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.material.enchantment.Enchantments;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Spade;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.EnchantmentUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
+import org.spout.vanilla.material.VanillaMaterial;
+import org.spout.vanilla.material.item.armor.Boots;
+import org.spout.vanilla.material.item.armor.Helmet;
 
-public class ClayBlock extends Solid implements Mineable {
-	public ClayBlock(String name, int id) {
+public class Protection extends ArmorEnchantment {
+	public Protection(String name, int id) {
 		super(name, id);
-		this.setHardness(0.6F).setResistance(1.0F);
 	}
 
 	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-			drops.add(new ItemStack(this, 1));
+	public boolean compatibleWith(Enchantment enchantment, VanillaMaterial material) {
+		if (material instanceof Helmet) {
+			return enchantment.equals(Enchantments.AQUA_AFFINITY, Enchantments.RESPIRATION);
+		} else if (material instanceof Boots) {
+			return enchantment.equals(Enchantments.FEATHER_FALLING);
 		} else {
-			drops.add(new ItemStack(VanillaMaterials.CLAY, 4));
+			return !enchantment.equals(Enchantments.FIRE_PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.PROJECTILE_PROTECTION);
 		}
-		return drops;
+	}
+
+	@Override
+	public int getWeight() {
+		return 10;
 	}
 }

@@ -52,7 +52,6 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
-import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.ControllerChangeReason;
 import org.spout.vanilla.controller.source.HealthChangeReason;
@@ -77,7 +76,7 @@ public class VanillaListener implements Listener {
 		Player player = event.getPlayer();
 		Entity playerEntity = player.getEntity();
 		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
-		VanillaPlayer vanillaPlayer = new VanillaPlayer(player,  playerEntity.getWorld().getDataMap().get(VanillaData.GAMEMODE));
+		VanillaPlayer vanillaPlayer = new VanillaPlayer(player, playerEntity.getWorld().getDataMap().get(VanillaData.GAMEMODE));
 
 		playerEntity.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
 

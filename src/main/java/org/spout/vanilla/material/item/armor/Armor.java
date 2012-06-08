@@ -29,7 +29,7 @@ package org.spout.vanilla.material.item.armor;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.source.DamageCause;
-import org.spout.vanilla.enchantment.Enchantments;
+import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.EnchantmentUtil;

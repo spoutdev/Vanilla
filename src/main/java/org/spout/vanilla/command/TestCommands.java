@@ -345,4 +345,16 @@ public class TestCommands {
 			source.sendMessage("No valid entities found to kill");
 		}
 	}
+
+	@Command(aliases = "rollcredits", desc = "Rolls the end credits for the game.", min = 0, max = 0)
+	public void rollCredits(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to view the credits.");
+		}
+
+		Controller controller = ((Player) source).getEntity().getController();
+		if (controller instanceof VanillaPlayer) {
+			((VanillaPlayer) controller).rollCredits();
+		}
+	}
 }

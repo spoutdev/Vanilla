@@ -41,11 +41,21 @@ public class ChestInventory extends WindowInventory {
 		this.owner = owner;
 	}
 
+	/**
+	 * Gets the {@link Chest} associated with the inventory.
+	 * @return chest
+	 */
+	public Chest getOwner() {
+		return owner;
+	}
+
+	@Override
 	public void addViewer(VanillaPlayer player) {
 		super.addViewer(player);
 		this.getOwner().setOpened(this.hasViewingPlayers());
 	}
 
+	@Override
 	public void removeViewer(VanillaPlayer player) {
 		super.removeViewer(player);
 		this.getOwner().setOpened(this.hasViewingPlayers());
@@ -67,10 +77,6 @@ public class ChestInventory extends WindowInventory {
 		if (other != null) {
 			other.getInventory().removeViewer(player);
 		}
-	}
-
-	public Chest getOwner() {
-		return owner;
 	}
 
 	@Override

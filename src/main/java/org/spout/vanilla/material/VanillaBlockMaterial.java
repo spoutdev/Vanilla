@@ -45,8 +45,8 @@ import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.enchantment.Enchantments;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.Instrument;

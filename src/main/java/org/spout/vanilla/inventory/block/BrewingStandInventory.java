@@ -45,18 +45,22 @@ public class BrewingStandInventory extends WindowInventory {
 		return new BrewingStandWindow(player, this);
 	}
 
-	public ItemStack getFirstOutput() {
-		return getItem(0);
+	/**
+	 * Gets the output slot at the given index. There are three output slots; the index given must be between 0 and 3.
+	 * @param index of the output slot
+	 * @return {@link ItemStack} in the output
+	 */
+	public ItemStack getOutput(int index) {
+		if (index < 0 || index > 3) {
+			throw new IllegalArgumentException("The output index of the brewing stand must be between 0 and 3.");
+		}
+		return getItem(index);
 	}
 
-	public ItemStack getSecondOutput() {
-		return getItem(1);
-	}
-
-	public ItemStack getThirdOutput() {
-		return getItem(2);
-	}
-
+	/**
+	 * Gets the input of the brewing stand
+	 * @return {@link ItemStack} in input of brewing stand.
+	 */
 	public ItemStack getInput() {
 		return getItem(3);
 	}

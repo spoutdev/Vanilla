@@ -29,7 +29,6 @@ package org.spout.vanilla.data;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
 /**

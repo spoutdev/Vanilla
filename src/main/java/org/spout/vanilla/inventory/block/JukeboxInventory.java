@@ -38,10 +38,18 @@ public class JukeboxInventory extends Inventory implements VanillaInventory {
 		super(1);
 	}
 
+	/**
+	 * Gets the {@link ItemStack} in the Jukebox's music slot
+	 * @return item in slot
+	 */
 	public ItemStack getMusicSlot() {
 		return getItem(0);
 	}
 
+	/**
+	 * Sets the {@link ItemStack} in the Jukebox's music slot
+	 * @param item in slot
+	 */
 	public void setMusicSlot(ItemStack item) {
 		setItem(0, item);
 	}

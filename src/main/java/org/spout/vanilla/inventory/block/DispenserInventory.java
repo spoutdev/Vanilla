@@ -44,16 +44,16 @@ public class DispenserInventory extends WindowInventory {
 		this.owner = owner;
 	}
 
-	@Override
-	public Window createWindow(VanillaPlayer player) {
-		return new DispenserWindow(player, this);
-	}
-
 	/**
 	 * Returns the dispenser controller that this inventory belongs to.
 	 * @return owner the dispenser controller
 	 */
 	public Dispenser getOwner() {
 		return owner;
+	}
+
+	@Override
+	public Window createWindow(VanillaPlayer player) {
+		return new DispenserWindow(player, this);
 	}
 }

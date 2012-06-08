@@ -29,15 +29,16 @@ package org.spout.vanilla.window.block;
 import org.spout.api.inventory.InventoryBase;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.util.SlotIndexMap;
+import org.spout.vanilla.window.InventoryWindow;
 import org.spout.vanilla.window.Window;
 
-public class FurnaceWindow extends Window {
+public class FurnaceWindow extends InventoryWindow {
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("30-38, 21-29, 12-20, 3-11, 1, 2, 0");
 
-	public FurnaceWindow(VanillaPlayer owner, InventoryBase furnaceInventory) {
-		super(2, "Furnace", owner);
-		this.setInventory(owner.getInventory().getItems(), furnaceInventory);
+	public FurnaceWindow(VanillaPlayer owner, WindowInventory furnaceInventory) {
+		super(2, "Furnace", owner, furnaceInventory);
 		this.setSlotIndexMap(SLOTS);
 	}
 

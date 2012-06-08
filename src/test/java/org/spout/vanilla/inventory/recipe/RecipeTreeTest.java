@@ -31,17 +31,17 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
-import static org.junit.Assert.assertSame;
 
 import org.spout.api.inventory.RecipeBuilder;
-import org.spout.api.inventory.ShapedRecipe;
 import org.spout.api.inventory.RecipeTree;
+import org.spout.api.inventory.ShapedRecipe;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
+import static org.junit.Assert.assertSame;
+
 public class RecipeTreeTest {
-    
 	@Test
 	public void treeTest() {
 		RecipeBuilder<RecipeBuilder<?>> builder = new RecipeBuilder<RecipeBuilder<?>>();

@@ -30,7 +30,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
 public class Water extends Liquid {
-	
 	public static int level = 0;
 
 	public Water(String name, int id, boolean flowing) {

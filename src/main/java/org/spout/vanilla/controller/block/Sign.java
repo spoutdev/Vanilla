@@ -34,7 +34,6 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 

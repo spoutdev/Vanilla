@@ -49,6 +49,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.security.SecurityHandler;
+
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -113,18 +114,6 @@ public class VanillaPlugin extends CommonPlugin {
 
 		//Worlds
 		setupWorlds();
-		
-		SecurityHandler.getInstance().getKeyPair(1024, "RSA");
-		
-		KeyPair keys = SecurityHandler.getInstance().getKeyPair(1024, "RSA");
-		
-		multilineLog("Key pair generated");
-		multilineLog("<<<<<<<<<<  Public   >>>>>>>>>>");
-		multilineLog(keys.getPublic().toString());
-		
-		multilineLog("");
-		multilineLog("<<<<<<<<<<  Private  >>>>>>>>>>");
-		multilineLog(keys.getPrivate().toString());
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
 	}
@@ -274,8 +263,7 @@ public class VanillaPlugin extends CommonPlugin {
 	public static VanillaPlugin getInstance() {
 		return instance;
 	}
-	
-	
+
 	private void multilineLog(String multiline) {
 		String[] split = multiline.split("\n");
 		for (String line : split) {

@@ -30,6 +30,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.WindowInventory;
+import org.spout.vanilla.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.window.Window;
 
 /**
@@ -62,7 +63,6 @@ public class EnchantmentTableInventory extends WindowInventory {
 
 	@Override
 	public Window createWindow(VanillaPlayer player) {
-		// TODO Auto-generated method stub
-		return null;
+		return new EnchantmentTableWindow(player, this);
 	}
 }

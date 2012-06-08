@@ -305,7 +305,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				owner.getSession().send(EEMsg);
 			}
 		} else {
-			owner.getSession().send(new RespawnMessage(dimension.getId(),  difficulty.getId(), gamemode.getId(), 256, worldType.getType()));
+			owner.getSession().send(new RespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.getType()));
 		}
 
 		if (world != null) {

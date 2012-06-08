@@ -156,7 +156,6 @@ public abstract class Liquid extends VanillaBlockMaterial {
 	/**
 	 * Gets the level a liquid receives from nearby blocks<br>
 	 * The level equals the expected level of the block specified
-	 * 
 	 * @param block of the liquid
 	 * @return the level, or negative if it has no liquids nearby to use
 	 */
@@ -211,10 +210,9 @@ public abstract class Liquid extends VanillaBlockMaterial {
 	 * @return True if it can make sources when flowing, False if not
 	 */
 	public abstract boolean hasFlowSource();
-	
+
 	/**
 	 * Sets whether this liquid is flowing down
-	 * 
 	 * @param block of the liquid
 	 * @param flowing down state of the liquid
 	 */
@@ -224,7 +222,6 @@ public abstract class Liquid extends VanillaBlockMaterial {
 
 	/**
 	 * Gets whether this liquid is flowing down
-	 * 
 	 * @param block of the liquid
 	 * @return True if is flowing down, False if not
 	 */

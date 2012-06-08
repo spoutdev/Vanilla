@@ -80,7 +80,7 @@ public class EncryptionKeyResponseMessage extends Message implements ProcessorSe
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final EncryptionKeyRequestMessage other = (EncryptionKeyRequestMessage) obj;
+		final EncryptionKeyResponseMessage other = (EncryptionKeyResponseMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.encoded, other.encoded)
 				.isEquals();

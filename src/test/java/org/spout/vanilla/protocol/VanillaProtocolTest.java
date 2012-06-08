@@ -103,6 +103,8 @@ import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.UseBedMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
+import org.spout.vanilla.protocol.msg.EncryptionKeyRequestMessage;
+import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
 
@@ -172,6 +174,8 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new ItemDataMessage((short) 1, (short) 2, new byte[]{2, 3, 8, 127, 123}),
 			new TileEntityDataMessage(23, 45, 903, 1, 98, 0, 0),
 			new StatisticMessage(1, (byte) 5),
+			new EncryptionKeyResponseMessage(new byte[] {(byte)7, (byte)4, (byte)1, (byte)122}, true),
+			new EncryptionKeyRequestMessage("This is a server", new byte[] {(byte)1, (byte)2, (byte)3, (byte)10}, true),
 			new PlayerListMessage("Player", true, (short) 23),
 			new CustomDataMessage("EMERGENCY", new byte[]{0, 1, 1, 8, 9, 9, 8, 8, 8, 1, 9, 9, 9, 1, 1, 9, 7, 2, 5, 3}),
 			new ServerListPingMessage(),

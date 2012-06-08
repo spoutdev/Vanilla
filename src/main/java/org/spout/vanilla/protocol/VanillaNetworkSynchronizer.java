@@ -263,7 +263,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], 0, packetChunkData, null);
 		owner.getSession().send(CCMsg);
 	}
-
+	
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
 		//TODO: Implement Spout Protocol

@@ -98,6 +98,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected int[] miningDamage;
 	protected int miningDamagePosition = 0;
 	protected long previousDiggingTime = 0;
+	protected boolean playerDead = false;
 
 	/**
 	 * Constructs a new VanillaPlayer to use as a {@link PlayerController} for the given player.
@@ -144,6 +145,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
+		if(playerDead) return;
+		
 		Player player = getPlayer();
 		if (player == null || player.getSession() == null) {
 			return;
@@ -286,6 +289,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public void setHealth(int health, Source source) {
 		super.setHealth(health, source);
+		playerDead = health <= 0;
 		sendPacket(owner, new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
 	}
 
@@ -303,6 +307,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		// Don't count disconnects/unknown exceptions as dead (Yes that's a difference!)
 		if (owner.getSession() != null && owner.getSession().getPlayer() != null) {
 			super.onDeath();
+			playerDead = true;
 		}
 	}
 
@@ -721,7 +726,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.getInventory().getItems().setCurrentItem(current);
 		getParent().getWorld().createAndSpawnEntity(getHeadPosition().add(0.0, 0.4, 0.0), control);
 	}
-
+	
 	/**
 	 * Rolls the credits located on the client.
 	 */

@@ -37,16 +37,15 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
+import org.spout.api.protocol.Session;
 import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEventListener;
 import org.spout.api.util.map.TIntPairObjectHashMap;
@@ -61,9 +60,11 @@ import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
+import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
 import org.spout.vanilla.protocol.msg.LoginRequestMessage;
+import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
@@ -262,12 +263,19 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], 0, packetChunkData, null);
 		owner.getSession().send(CCMsg);
 	}
-
+	
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
 		//TODO: Implement Spout Protocol
-		PlayerPositionLookMessage PRMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true);
-		owner.getSession().send(PRMsg);
+		Session session = owner.getSession();
+		if (p.distanceSquared(entity.getPosition()) >= 16) {
+			EntityTeleportMessage ETMMsg = new EntityTeleportMessage(entity.getId(), (int) p.getX(), (int) p.getY(), (int) p.getZ(), (int) rot.getYaw(), (int) rot.getPitch());
+			PlayerLookMessage PLMsg = new PlayerLookMessage(rot.getYaw(), rot.getPitch(), true);
+			session.sendAll(ETMMsg, PLMsg);
+		} else {
+			PlayerPositionLookMessage PPLMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), STANCE, rot.getYaw(), rot.getPitch(), true);
+			session.send(PPLMsg);
+		}
 	}
 
 	@Override

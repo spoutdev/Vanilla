@@ -121,20 +121,23 @@ public abstract class VanillaActionController extends ActionController implement
 	@Override
 	public void onTick(float dt) {
 		if (deathTicks > 0) {
-			deathTicks--;
-			if (deathTicks == 0) {
-				getParent().kill();
+			if(getHealth() > 0) {
+				deathTicks = 0;
+			} else {
+				deathTicks--;
+				if (deathTicks == 0) {
+					if (this instanceof PlayerController) deathTicks = 30;
+					else getParent().kill();
+				}
+				return;
 			}
-			return;
 		}
 		checkFireTicks();
 
 		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
 			VanillaNetworkUtil.broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
-			if (!(this instanceof PlayerController)) {
-				deathTicks = 30;
-			}
+			deathTicks = 30;
 			onDeath();
 		}
 

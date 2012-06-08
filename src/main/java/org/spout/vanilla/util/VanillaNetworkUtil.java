@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.util;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import org.spout.api.Spout;
@@ -59,6 +60,25 @@ public class VanillaNetworkUtil {
 				sendPacket(player, message);
 			}
 		}
+	}
+
+	/**
+	 * This method takes any amount of messages and sends them to all players except the collection of
+	 * ignored players specified.
+	 * @param ignore Players to ignore when sending messages
+	 * @param messages Messages to send
+	 */
+	public static void broadcastPacket(Player[] ignore, Message... messages) {
+		ArrayList<Player> toSend = new ArrayList<Player>();
+		for (Player player : Spout.getEngine().getOnlinePlayers()) {
+			for (Player ignored : ignore) {
+				if (player.equals(ignored)) {
+					continue;
+				}
+				toSend.add(player);
+			}
+		}
+		sendPacket(toSend.toArray(new Player[toSend.size()]), messages);
 	}
 
 	/**

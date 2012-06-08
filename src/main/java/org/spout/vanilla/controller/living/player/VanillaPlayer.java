@@ -99,6 +99,11 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected int miningDamagePosition = 0;
 	protected long previousDiggingTime = 0;
 
+	/**
+	 * Constructs a new VanillaPlayer to use as a {@link PlayerController} for the given player.
+	 * @param the {@link Player} parent of the controller.
+	 * @param the {@link GameMode} of the player.
+	 */
 	public VanillaPlayer(Player p, GameMode gameMode) {
 		super(VanillaControllerTypes.PLAYER);
 		owner = p;
@@ -109,6 +114,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 		miningDamage = new int[miningDamagePeriod];
 	}
 
+	/**
+	 * Constructs a new VanillaPlayer to use as a {@link PlayerController} for the given player.
+	 * @param the {@link Player} parent of the controller.
+	 */
 	public VanillaPlayer(Player p) {
 		this(p, GameMode.SURVIVAL);
 	}
@@ -240,17 +249,44 @@ public class VanillaPlayer extends Human implements PlayerController {
 			changed = true;
 		}
 
-		if (changed) {
+		if (changed && Spout.debugMode()) {
 			System.out.println("Performing health/hunger update...");
 			System.out.println("Food saturation: " + foodSaturation);
 			System.out.println("Hunger: " + hunger);
 			System.out.println("Health: " + health);
 			System.out.println("Exhaustion: " + exhaustion);
-			// sendPacket(owner, new UpdateHealthMessage(health, hunger, foodSaturation));
 		}
 	}
 
 	private void creativeTick(float dt) {
+	}
+
+	@Override
+	public void damage(int amount, DamageCause cause, VanillaActionController damager, boolean sendHurtMessage) {
+		double amt = amount;
+		// Calculate damage reduction based on armor and enchantments
+		for (ItemStack item : getInventory().getArmor().getContents()) {
+			if (item != null && item.getMaterial() instanceof Armor) { // Ignore pumpkins
+				Armor armor = (Armor) item.getMaterial();
+				amt -= .04 * (armor.getBaseProtection() + armor.getProtection(item, cause)); // Each protection point reduces damage by 4%
+
+				// Remove durability from each piece of armor
+				short penalty = cause.getDurabilityPenalty();
+				if (item.getData() - penalty < 1) {
+					getInventory().setCurrentItem(null);
+				} else {
+					getInventory().addCurrentItemData(penalty);
+				}
+			}
+		}
+
+		super.damage((int) Math.ceil(amt), cause, damager, sendHurtMessage);
+	}
+
+	@Override
+	public void setHealth(int health, Source source) {
+		super.setHealth(health, source);
+		sendPacket(owner, new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
 	}
 
 	@Override
@@ -292,6 +328,16 @@ public class VanillaPlayer extends Human implements PlayerController {
 		ItemStack[] contents = this.getInventory().getItems().getContents();
 		drops.addAll(Arrays.asList(contents));
 		return drops;
+	}
+
+	@Override
+	public boolean needsPositionUpdate() {
+		return true;
+	}
+
+	@Override
+	public boolean needsVelocityUpdate() {
+		return true;
 	}
 
 	/**
@@ -345,16 +391,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 	}
 
-	@Override
-	public boolean needsPositionUpdate() {
-		return true;
-	}
-
-	@Override
-	public boolean needsVelocityUpdate() {
-		return true;
-	}
-
 	/**
 	 * Sets whether the player is visible for everyone.
 	 * @param visible
@@ -389,7 +425,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	/**
-	 * Sets whether or not the player is on the ground.
+	 * Sets whether or not the player is perceived by the client as being on the ground.
 	 * @param onGround
 	 */
 	public void setOnGround(boolean onGround) {
@@ -527,28 +563,51 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.exhaustion = exhaustion;
 	}
 
+	/**
+	 * Sets and opens the new active {@link Window} for the player.
+	 * @param activeWindow the window to open and set as the active window.
+	 */
 	public void setWindow(Window activeWindow) {
 		this.activeWindow.close();
 		this.activeWindow = activeWindow;
 		this.activeWindow.open();
 	}
 
+	/**
+	 * Closes the active {@link Window}.
+	 */
 	public void closeWindow() {
 		this.setWindow(new DefaultWindow(this));
 	}
 
+	/**
+	 * Gets the {@link Window} currently opened. If no window is opened a {@link DefaultWindow} will be returned.
+	 * @return the currently active window.
+	 */
 	public Window getActiveWindow() {
 		return this.activeWindow;
 	}
 
+	/**
+	 * Gets the player's {@link PlayerInventory}.
+	 * @return the player's inventory
+	 */
 	public PlayerInventory getInventory() {
 		return playerInventory;
 	}
 
+	/**
+	 * Sets the position where the player should look.
+	 * @param a {@link Vector3} to look at
+	 */
 	public void setLookingAtVector(Vector3 lookingAt) {
 		this.lookingAt = lookingAt;
 	}
 
+	/**
+	 * Gets the {@link Vector3} the player is currently looking at.
+	 * @return position the player is looking at
+	 */
 	public Vector3 getLookingAt() {
 		return lookingAt;
 	}
@@ -643,6 +702,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 		return true;
 	}
 
+	/**
+	 * Drops the player's current item.
+	 */
 	public void dropItem() {
 		ItemStack current = this.getInventory().getItems().getCurrentItem();
 		if (current == null) {
@@ -660,31 +722,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().getWorld().createAndSpawnEntity(getHeadPosition().add(0.0, 0.4, 0.0), control);
 	}
 
-	@Override
-	public void damage(int amount, DamageCause cause, VanillaActionController damager, boolean sendHurtMessage) {
-		double amt = amount;
-		// Calculate damage reduction based on armor and enchantments
-		for (ItemStack item : getInventory().getArmor().getContents()) {
-			if (item != null && item.getMaterial() instanceof Armor) { // Ignore pumpkins
-				Armor armor = (Armor) item.getMaterial();
-				amt -= .04 * (armor.getBaseProtection() + armor.getProtection(item, cause)); // Each protection point reduces damage by 4%
-
-				// Remove durability from each piece of armor
-				short penalty = cause.getDurabilityPenalty();
-				if (item.getData() - penalty < 1) {
-					getInventory().setCurrentItem(null);
-				} else {
-					getInventory().addCurrentItemData(penalty);
-				}
-			}
-		}
-
-		super.damage((int) Math.ceil(amt), cause, damager, sendHurtMessage);
-	}
-
-	@Override
-	public void setHealth(int health, Source source) {
-		super.setHealth(health, source);
-		sendPacket(owner, new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
+	/**
+	 * Rolls the credits located on the client.
+	 */
+	public void rollCredits() {
+		owner.getSession().send(new ChangeGameStateMessage(ChangeGameStateMessage.ENTER_CREDITS));
 	}
 }

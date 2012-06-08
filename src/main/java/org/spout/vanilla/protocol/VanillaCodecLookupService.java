@@ -42,6 +42,8 @@ import org.spout.vanilla.protocol.codec.CreateEntityCodec;
 import org.spout.vanilla.protocol.codec.CreativeCodec;
 import org.spout.vanilla.protocol.codec.DestroyEntityCodec;
 import org.spout.vanilla.protocol.codec.EnchantItemCodec;
+import org.spout.vanilla.protocol.codec.EncryptionKeyRequestCodec;
+import org.spout.vanilla.protocol.codec.EncryptionKeyResponseCodec;
 import org.spout.vanilla.protocol.codec.EntityActionCodec;
 import org.spout.vanilla.protocol.codec.EntityEffectCodec;
 import org.spout.vanilla.protocol.codec.EntityEquipmentCodec;
@@ -232,6 +234,10 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			bind(PlayerAbilityCodec.class);
 			/* 0xFA */
 			bind(CustomDataCodec.class);
+			/* 0xFC */
+			bind(EncryptionKeyResponseCodec.class);
+			/* 0xFD */
+			bind(EncryptionKeyRequestCodec.class);
 			/* 0xFE */
 			bind(ServerListPingCodec.class);
 			/* 0xFF */

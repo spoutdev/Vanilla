@@ -38,6 +38,8 @@ import org.spout.vanilla.VanillaPlugin;
 public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	// General
 	public static final ConfigurationHolder MOTD = new ConfigurationHolder("A Spout Server", "general", "motd");
+	public static final ConfigurationHolder ONLINE_MODE = new ConfigurationHolder(false, "general", "online-mode");
+	public static final ConfigurationHolder ENCRYPT_MODE = new ConfigurationHolder(false, "general", "encrypt-mode");
 	public static final ConfigurationHolder ENABLE_END_CREDITS = new ConfigurationHolder(true, "general", "enable-ending-credits");
 	// Physics
 	public static final ConfigurationHolder GRAVEL_PHYSICS = new ConfigurationHolder(true, "physics", "gravel");
@@ -65,6 +67,9 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	public static final WorldConfiguration WORLDS = new WorldConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	public static final BiomeConfiguration BIOMES = new BiomeConfiguration(VanillaPlugin.getInstance().getDataFolder());
+	// Encryption
+	public static final ConfigurationHolder ENCRYPT_KEY_ALGORITHM = new ConfigurationHolder("RSA", "encrypt", "key-algorithm");
+	public static final ConfigurationHolder ENCRYPT_KEY_SIZE = new ConfigurationHolder(1024, "encrypt", "key-size");
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));

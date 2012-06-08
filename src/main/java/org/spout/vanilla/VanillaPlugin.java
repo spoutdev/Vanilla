@@ -115,18 +115,6 @@ public class VanillaPlugin extends CommonPlugin {
 		//Worlds
 		setupWorlds();
 
-		SecurityHandler.getInstance().getKeyPair(1024, "RSA");
-
-		KeyPair keys = SecurityHandler.getInstance().getKeyPair(1024, "RSA");
-
-		multilineLog("Key pair generated");
-		multilineLog("<<<<<<<<<<  Public   >>>>>>>>>>");
-		multilineLog(keys.getPublic().toString());
-
-		multilineLog("");
-		multilineLog("<<<<<<<<<<  Private  >>>>>>>>>>");
-		multilineLog(keys.getPrivate().toString());
-
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
 	}
 

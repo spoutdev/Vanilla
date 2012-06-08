@@ -31,10 +31,10 @@ import java.util.ArrayList;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;

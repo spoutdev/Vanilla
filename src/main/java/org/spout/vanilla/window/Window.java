@@ -38,7 +38,6 @@ import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.SlotIndexMap;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 
 import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacket;
 

@@ -42,11 +42,9 @@ import org.spout.vanilla.material.block.Openable;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.RedstoneUtil;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;

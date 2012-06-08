@@ -45,8 +45,6 @@ import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
-import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
-
 public class MonsterSpawner extends VanillaBlockController {
 	private int range = 17, maxEntities = 6, spawnAmount = 4;
 	private final Random random = new Random();

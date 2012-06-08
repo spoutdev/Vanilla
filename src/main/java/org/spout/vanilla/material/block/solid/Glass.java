@@ -33,10 +33,10 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
+import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.EnchantmentUtil;

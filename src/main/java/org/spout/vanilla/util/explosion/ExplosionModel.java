@@ -41,7 +41,6 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.ExplosionMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 

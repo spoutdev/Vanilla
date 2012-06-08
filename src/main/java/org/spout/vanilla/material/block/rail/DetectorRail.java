@@ -43,7 +43,7 @@ import org.spout.vanilla.util.RedstonePowerMode;
 public class DetectorRail extends RailBase implements RedstoneSource, DynamicMaterial {
 	public static final int TICK_DELAY = 20;
 	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
-	
+
 	public DetectorRail(String name, int id) {
 		super(name, id);
 		this.setHardness(0.7F).setResistance(1.2F).setOpacity((byte) 0);

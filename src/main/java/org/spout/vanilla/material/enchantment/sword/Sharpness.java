@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.material.enchantment.sword;
 
+import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.enchantment.SwordEnchantment;
-import org.spout.vanilla.material.VanillaMaterial;
 
 public class Sharpness extends SwordEnchantment {
 	public Sharpness(String name, int id) {

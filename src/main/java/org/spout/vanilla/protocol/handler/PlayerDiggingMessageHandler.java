@@ -46,7 +46,6 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;

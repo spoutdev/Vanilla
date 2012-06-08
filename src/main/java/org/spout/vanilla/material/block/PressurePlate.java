@@ -43,7 +43,7 @@ import org.spout.vanilla.util.RedstonePowerMode;
 public abstract class PressurePlate extends GroundAttachable implements Mineable, RedstoneSource, DynamicMaterial {
 	public static final int TICK_DELAY = 20;
 	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
-	
+
 	public PressurePlate(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);

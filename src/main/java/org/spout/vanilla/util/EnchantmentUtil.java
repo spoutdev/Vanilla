@@ -38,9 +38,9 @@ import org.spout.nbt.CompoundTag;
 import org.spout.nbt.ShortTag;
 import org.spout.nbt.Tag;
 
+import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.material.enchantment.Enchantments;
-import org.spout.vanilla.material.VanillaMaterial;
 
 public class EnchantmentUtil {
 	private EnchantmentUtil() {

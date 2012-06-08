@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.security.acl.Owner;
-
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
@@ -39,13 +37,10 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
@@ -71,7 +66,6 @@ import org.spout.vanilla.protocol.msg.LoadChunkMessage;
 import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
-import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
@@ -311,7 +305,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				owner.getSession().send(EEMsg);
 			}
 		} else {
-			owner.getSession().send(new RespawnMessage(dimension.getId(),  difficulty.getId(), gamemode.getId(), 256, worldType.getType()));
+			owner.getSession().send(new RespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.getType()));
 		}
 
 		if (world != null) {

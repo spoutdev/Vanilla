@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.material.enchantment.tool;
 
+import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.enchantment.ToolEnchantment;
-import org.spout.vanilla.material.VanillaMaterial;
 
 public class SilkTouch extends ToolEnchantment {
 	public SilkTouch(String name, int id) {

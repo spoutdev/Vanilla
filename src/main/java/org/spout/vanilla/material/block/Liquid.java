@@ -47,7 +47,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	public Liquid(String name, int id, boolean flowing) {
 		super(name, id);
 		this.flowing = flowing;
-		this.setHardness(100.0F).setResistance(166.7F).setOpacity(1).setCollision(CollisionStrategy.SOFT);
+		this.setLiquidObstacle(false).setHardness(100.0F).setResistance(166.7F).setOpacity(1).setCollision(CollisionStrategy.SOFT);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 			}
 		}
 	}
-
+	
 	/**
 	 * Let's this liquid flow from the block to the direction given
 	 * @param block to flow from

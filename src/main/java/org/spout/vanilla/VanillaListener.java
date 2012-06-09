@@ -81,7 +81,7 @@ public class VanillaListener implements Listener {
 		playerEntity.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
 
 		// Set protocol and send packets
-		if (vanillaPlayer.isSurvival()) {
+		if (vanillaPlayer.getGameMode().hasHealth()) {
 			VanillaNetworkUtil.sendPacket(vanillaPlayer.getPlayer(), new UpdateHealthMessage((short) vanillaPlayer.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
 		}
 
@@ -153,7 +153,7 @@ public class VanillaListener implements Listener {
 		}
 
 		Controller c = event.getEntity().getController();
-		if (c instanceof VanillaPlayer && ((VanillaPlayer) c).isSurvival()) {
+		if (c instanceof VanillaPlayer && ((VanillaPlayer) c).getGameMode().hasHealth()) {
 			VanillaPlayer sp = (VanillaPlayer) c;
 			short health = (short) sp.getHealth();
 			health += (short) event.getChange();

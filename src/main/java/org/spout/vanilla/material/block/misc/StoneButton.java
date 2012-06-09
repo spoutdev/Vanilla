@@ -99,13 +99,12 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
-		if (type != Action.LEFT_CLICK || !VanillaPlayerUtil.isCreative(entity)) {
-			if (!this.isPressed(block)) {
-				this.setPressed(block, true);
-				this.doRedstoneUpdates(block);
-				block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
-				playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_1);
-			}
+		if (type == Action.LEFT_CLICK && VanillaPlayerUtil.getGameMode(entity) != null && VanillaPlayerUtil.getGameMode(entity).hasInstantBreak()) return;
+		if (!this.isPressed(block)) {
+			this.setPressed(block, true);
+			this.doRedstoneUpdates(block);
+			block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
+			playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_1);
 		}
 	}
 

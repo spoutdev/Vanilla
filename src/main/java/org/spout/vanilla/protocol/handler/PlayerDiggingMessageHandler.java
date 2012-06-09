@@ -117,7 +117,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 					// put out fire
 					VanillaMaterials.FIRE.onDestroy(neigh);
 					VanillaNetworkUtil.playBlockEffect(block, player.getEntity(), PlayEffectMessage.Messages.RANDOM_FIZZ);
-				} else if (vp.isSurvival() && blockMaterial.getHardness() != 0.0f) {
+				} else if (!vp.getGameMode().hasInstantBreak() && blockMaterial.getHardness() != 0.0f) {
 					vp.startDigging(new Point(w, x, y, z));
 				} else {
 					// insta-break

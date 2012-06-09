@@ -291,7 +291,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			first = false;
 			int entityId = owner.getEntity().getId();
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
-			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, owner.getName(), gamemode.getId(), dimension.getId(), difficulty.getId(), 256, session.getGame().getMaxPlayers(), worldType.getType());
+			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, owner.getName(), gamemode.getVanillaGameMode().getId(), dimension.getId(), difficulty.getId(), 256, session.getGame().getMaxPlayers(), worldType.getType());
 			owner.getSession().send(idMsg, true);
 			owner.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
@@ -305,7 +305,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				owner.getSession().send(EEMsg);
 			}
 		} else {
-			owner.getSession().send(new RespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.getType()));
+			owner.getSession().send(new RespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getVanillaGameMode().getId(), 256, worldType.getType()));
 		}
 
 		Point pos = world.getSpawnPoint().getPosition();

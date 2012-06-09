@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.spout.api.Source;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.geo.cuboid.Block;
@@ -44,6 +45,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.material.enchantment.Enchantments;
@@ -111,7 +113,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public void onDestroy(Block block, double dropChance) {
 		//Grab the drops based on material classes' rules.
 		List<ItemStack> drops = Collections.<ItemStack>emptyList();
-		if (Math.random() < dropChance && !VanillaPlayerUtil.isCreative(block.getSource())) {
+		if (Math.random() < dropChance && hasItemDrops(block.getSource())) {
 			drops = getDrops(block);
 		}
 		BlockChangeEvent event = new BlockChangeEvent(block, new BlockSnapshot(block, this, getData()), block.getSource());
@@ -122,6 +124,11 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		if (!drops.isEmpty()) {
 			this.onDestroySpawnDrops(block, drops);
 		}
+	}
+
+	private boolean hasItemDrops(Source source) {
+		if(!(source instanceof VanillaPlayer)) return false;
+		return ((VanillaPlayer) source).getGameMode().hasItemDrops();
 	}
 
 	@Override

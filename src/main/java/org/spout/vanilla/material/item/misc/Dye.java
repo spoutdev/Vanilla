@@ -108,8 +108,8 @@ public class Dye extends VanillaItemMaterial {
 				if (holding != null) {
 					//get color from holding item
 					((Sheep) other.getController()).setColor(WoolColor.getById((short) (0xF - holding.getData())));
-
-					if (VanillaPlayerUtil.isSurvival(entity)) {
+					
+					if (VanillaPlayerUtil.getGameMode(entity) == null || !VanillaPlayerUtil.getGameMode(entity).hasInfiniteItems()) {
 						inv.addCurrentItemAmount(-1);
 					}
 				}

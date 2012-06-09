@@ -69,7 +69,7 @@ public class Lever extends AbstractAttachable implements Mineable, RedstoneSourc
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action action, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, action, clickedFace);
-		if (action == Action.LEFT_CLICK && VanillaPlayerUtil.isCreative(block.getSource())) {
+		if (action == Action.LEFT_CLICK && VanillaPlayerUtil.getGameMode(block.getSource()) != null && VanillaPlayerUtil.getGameMode(block.getSource()).hasInstantBreak()) {
 			return;
 		}
 		this.toggle(block);

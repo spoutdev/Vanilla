@@ -33,34 +33,17 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.GameMode;
 
 public class VanillaPlayerUtil {
+	
 	/**
-	 * Checks if the source is an entity with a vanilla player controller in survival mode
-	 * @param entity to check
-	 * @return True if vanilla survival player entity
+	 * Gets the GameMode of the given Source object, or null if the Source isn't
+	 * a player.
 	 */
-	public static boolean isSurvival(Source source) {
-		if (!(source instanceof Entity)) {
-			return false;
-		}
-
-		Entity entity = (Entity) source;
-		return entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival();
-	}
-
-	/**
-	 * Checks if the source is an entity with a vanilla player controller in creative mode
-	 * @param entity to check
-	 * @return True if vanilla creative player entity
-	 */
-	public static boolean isCreative(Source source) {
-		if (!(source instanceof Entity)) {
-			return false;
-		}
-
-		Entity entity = (Entity) source;
-		return entity.getController() instanceof VanillaPlayer && !((VanillaPlayer) entity.getController()).isSurvival();
+	public static GameMode getGameMode(Source source) {
+		if(source instanceof VanillaPlayer) return ((VanillaPlayer) source).getGameMode();
+		return null;
 	}
 
 	/**

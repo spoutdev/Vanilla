@@ -34,6 +34,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.GameMode.VanillaGameMode;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
 import org.spout.vanilla.window.Window;
@@ -47,7 +48,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 		}
 
 		VanillaPlayer controller = (VanillaPlayer) entity.getController();
-		if (controller.isSurvival()) {
+		if (controller.getGameMode().getVanillaGameMode() != VanillaGameMode.CREATIVE) {
 			player.kick("Now now, don't try that here. Won't work.");
 			return;
 		}

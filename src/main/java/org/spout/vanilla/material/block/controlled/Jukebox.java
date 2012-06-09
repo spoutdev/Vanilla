@@ -1,5 +1,5 @@
 /*
- * This file is part of Vanilla.
+  * This file is part of Vanilla.
  *
  * Copyright (c) 2011-2012, VanillaDev <http://www.spout.org/>
  * Vanilla is licensed under the SpoutDev License Version 1.
@@ -36,6 +36,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.tool.Axe;
@@ -73,7 +74,7 @@ public class Jukebox extends ControlledMaterial implements Fuel, Mineable {
 			if (inv != null && controller.canPlay(inv.getCurrentItem())) {
 				controller.getInventory().setCurrentItem(inv.getCurrentItem().clone().setAmount(1));
 				controller.update();
-				if (VanillaPlayerUtil.isSurvival(entity)) {
+				if (entity instanceof VanillaPlayer && !((VanillaPlayer) entity).getGameMode().hasInfiniteItems()) {
 					inv.addCurrentItemAmount(-1);
 				}
 			}

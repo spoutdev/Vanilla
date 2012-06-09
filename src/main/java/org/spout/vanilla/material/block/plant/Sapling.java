@@ -104,7 +104,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 		InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
 		ItemStack current = inv.getCurrentItem();
 		if (current != null && current.getSubMaterial().equals(Dye.BONE_MEAL)) {
-			if (VanillaPlayerUtil.isSurvival(entity)) {
+			if (VanillaPlayerUtil.getGameMode(entity) == null || !VanillaPlayerUtil.getGameMode(entity).hasInfiniteItems()) {
 				inv.addCurrentItemAmount(-1);
 			}
 			this.growTree(block);

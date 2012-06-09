@@ -178,15 +178,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 				removeEffect(effect);
 			}
 		}
-
-		if (isSurvival()) {
-			survivalTick(dt);
-		} else {
-			creativeTick(dt);
-		}
-	}
-
-	private void survivalTick(float dt) {
+		
 		if (isDigging && (getDiggingTicks() % 20) == 0) {
 			VanillaNetworkUtil.sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_SWING_ARM));
 		}
@@ -202,7 +194,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
 		Block head = getParent().getWorld().getBlock(getHeadPosition());
-		if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+		if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER) && getGameMode().hasHealth()) {
 			airTicks++;
 			ItemStack helmet = getInventory().getArmor().getHelmet();
 			int level = 0;
@@ -253,11 +245,11 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 
 		boolean changed = false;
-		if (hunger <= 0 && health > 0) {
+		if (hunger <= 0 && health > 0 && getGameMode().hasHunger()) {
 			health = (short) Math.max(health - 1, 0);
 			setHealth(health, DamageCause.STARVE);
 			changed = true;
-		} else if (hunger >= 18 && health < 20) {
+		} else if (hunger >= 18 && health < 20 && getGameMode().hasHunger()) {
 			health = (short) Math.min(health + 1, 20);
 			setHealth(health, HealthChangeReason.REGENERATION);
 			changed = true;
@@ -270,9 +262,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 			System.out.println("Health: " + health);
 			System.out.println("Exhaustion: " + exhaustion);
 		}
-	}
-
-	private void creativeTick(float dt) {
 	}
 
 	@Override
@@ -299,6 +288,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public void setHealth(int health, Source source) {
+		if(!getGameMode().hasHealth()) return;
 		super.setHealth(health, source);
 		playerDead = health <= 0;
 		sendPacket(owner, new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
@@ -508,14 +498,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	/**
-	 * Whether or not the controller is in survival mode.
-	 * @return true if in survival mode
-	 */
-	public boolean isSurvival() {
-		return gameMode.equals(GameMode.SURVIVAL);
-	}
-
-	/**
 	 * Whether or not the controller is poisoned.
 	 * @return true if poisoned.
 	 */
@@ -544,6 +526,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @param hunger
 	 */
 	public void setHunger(short hunger) {
+		if(!getGameMode().hasHunger()) return;
 		this.hunger = hunger;
 	}
 

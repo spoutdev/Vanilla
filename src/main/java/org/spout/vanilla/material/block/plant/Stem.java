@@ -75,7 +75,7 @@ public abstract class Stem extends GroundAttachable implements Plant {
 		ItemStack current = inv.getCurrentItem();
 		if (current != null && current.getSubMaterial().equals(Dye.BONE_MEAL)) {
 			if (this.getGrowthStage(block) != 0x7) {
-				if (VanillaPlayerUtil.isSurvival(entity)) {
+				if (VanillaPlayerUtil.getGameMode(entity) == null || !VanillaPlayerUtil.getGameMode(entity).hasInfiniteItems()) {
 					inv.addCurrentItemAmount(-1);
 				}
 				this.setGrowthStage(block, 0x7);

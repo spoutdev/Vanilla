@@ -103,7 +103,7 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 			if (!this.isPressed(block)) {
 				this.setPressed(block, true);
 				this.doRedstoneUpdates(block);
-				block.dynamicUpdate(TICK_DELAY);
+				block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
 				playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_1);
 			}
 		}

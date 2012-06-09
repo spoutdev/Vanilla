@@ -41,7 +41,7 @@ import org.spout.vanilla.util.MoveReaction;
 public class PistonExtension extends ControlledMaterial implements Directional, Mineable {
 	public PistonExtension(String name, int id) {
 		super(VanillaControllerTypes.PISTON_MOVING, name, id);
-		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 0);
+		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
 	}
 
 	@Override

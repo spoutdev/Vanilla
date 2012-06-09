@@ -72,7 +72,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		if (useDelay) {
 			//TODO: Dynamic updates are not continuous
 			// It will flow upon placement, but requires physics to continue
-			block.dynamicUpdate(this.getTickDelay());
+			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay());
 		} else {
 			this.doPhysics(block);
 		}

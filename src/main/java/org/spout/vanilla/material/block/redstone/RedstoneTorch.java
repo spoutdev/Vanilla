@@ -48,7 +48,6 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	public RedstoneTorch(String name, int id, boolean powered) {
 		super(name, id);
 		this.powered = powered;
-		this.setHardness(0.0F).setResistance(0.0F).setOpacity(0);
 	}
 
 	@Override
@@ -82,7 +81,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 		super.onUpdate(block);
 		boolean receiving = this.isReceivingPower(block);
 		if (this.isPowered() == receiving) {
-			block.dynamicUpdate(TICK_DELAY);
+			block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
 		}
 	}
 

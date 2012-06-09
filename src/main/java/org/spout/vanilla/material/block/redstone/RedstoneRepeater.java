@@ -102,7 +102,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 		super.onUpdate(block);
 		boolean receiving = this.isReceivingPower(block);
 		if (this.isPowered() != receiving) {
-			block.dynamicUpdate(this.getTickDelay(block), receiving);
+			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay(block), receiving);
 		}
 	}
 
@@ -189,7 +189,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 		if (hint != null && hint instanceof Boolean && (Boolean) hint) {
 			this.setPowered(block, true);
 			if (!receiving) {
-				return this.getTickDelay(block);
+				return updateTime + this.getTickDelay(block);
 			}
 		} else if (receiving != this.isPowered()) {
 			this.setPowered(block, receiving);

@@ -41,7 +41,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 public class Torch extends AbstractAttachable implements Mineable, PointAttachable {
 	public Torch(String name, int id) {
 		super(name, id);
-		this.setAttachable(BlockFaces.NSEWB).setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 0);
+		this.setAttachable(BlockFaces.NSEWB).setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 
 	@Override

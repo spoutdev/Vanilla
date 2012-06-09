@@ -57,7 +57,7 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 
 	public StoneButton(String name, int id) {
 		super(name, id);
-		this.setAttachable(BlockFaces.NESW).setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
+		this.setAttachable(BlockFaces.NESW).setLiquidObstacle(false).setHardness(0.5F).setResistance(0.8F).setTransparent();
 	}
 
 	public void onDelayedUpdate(Block block) {

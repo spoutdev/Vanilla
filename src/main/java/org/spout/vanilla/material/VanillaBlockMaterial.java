@@ -63,6 +63,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private int meleeDamage = 1;
 	private int miningLevel;
 	private MiningType miningType;
+	private boolean liquidObstacle = true;
 	private Map<Material, int[]> dropMaterials = new HashMap<Material, int[]>();
 
 	public VanillaBlockMaterial(String name, int id) {
@@ -346,6 +347,23 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 			}
 		}
 		return drops;
+	}
+
+	/**
+	 * Gets if this material is a liquid obstacle
+	 * @return True if it can stop liquids, False if this material gets destroyed
+	 */
+	public boolean isLiquidObstacle() {
+		return this.liquidObstacle;
+	}
+
+	/**
+	 * Sets if this material is a liquid obstacle
+	 * @param state True to make it an obstacle, False to let liquids destroy this block
+	 */
+	public VanillaBlockMaterial setLiquidObstacle(boolean state) {
+		this.liquidObstacle = state;
+		return this;
 	}
 
 	public boolean canDrop(Block block, ItemStack holding) {

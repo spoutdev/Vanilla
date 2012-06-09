@@ -52,7 +52,7 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 public class Lever extends AbstractAttachable implements Mineable, RedstoneSource {
 	public Lever(String name, int id) {
 		super(name, id);
-		this.setAttachable(BlockFaces.NESWB).setHardness(0.5F).setResistance(1.7F).setOpacity((byte) 1);
+		this.setAttachable(BlockFaces.NESWB).setLiquidObstacle(false).setHardness(0.5F).setResistance(1.7F).setTransparent();
 	}
 
 	@Override

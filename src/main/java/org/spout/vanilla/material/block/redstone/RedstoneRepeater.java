@@ -49,12 +49,12 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class RedstoneRepeater extends GroundAttachable implements Directional, Mineable, RedstoneSource, RedstoneTarget, DynamicMaterial {
 	private final boolean powered;
-	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
+	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(0, 0, 0)};
 
 	public RedstoneRepeater(String name, int id, boolean powered) {
 		super(name, id);
 		this.powered = powered;
-		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 0);
+		this.setHardness(0.0F).setResistance(0.0F).setOpacity(0).setOcclusion(BlockFaces.NONE).getOcclusion().set(BlockFace.BOTTOM, true); 
 	}
 
 	public boolean isPowered() {

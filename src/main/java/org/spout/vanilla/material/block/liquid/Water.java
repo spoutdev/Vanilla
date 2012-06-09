@@ -43,28 +43,18 @@ public class Water extends Liquid {
 	}
 
 	@Override
-	public Liquid getSourceMaterial() {
-		return VanillaMaterials.STATIONARY_WATER;
-	}
-
-	@Override
-	public Liquid getFlowingMaterial() {
-		return VanillaMaterials.WATER;
-	}
-
-	@Override
 	public int getMaxLevel() {
 		return 7;
 	}
 
 	@Override
 	public boolean hasFlowSource() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public int getLevel(Block block) {
-		if (this.isMaterial(block.getMaterial())) {
+		if (block.getMaterial().equals(this)) {
 			return 7 - (block.getData() & 0x7);
 		} else {
 			return -1;

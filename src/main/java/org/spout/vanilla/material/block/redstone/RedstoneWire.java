@@ -47,7 +47,7 @@ import org.spout.vanilla.util.RedstoneUtil;
 public class RedstoneWire extends GroundAttachable implements Mineable, RedstoneSource, RedstoneTarget {
 	public RedstoneWire(String name, int id) {
 		super(name, id);
-		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 0);
+		this.setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 
 	@Override

@@ -95,13 +95,13 @@ public class RedstoneUtil {
 
 	public static boolean isPowered(Block block, BlockFace to, RedstonePowerMode powerMode) {
 		BlockMaterial mat = block.getMaterial();
-		if (mat instanceof VanillaBlockMaterial) {
-			if (((VanillaBlockMaterial) mat).hasRedstonePower(block, powerMode)) {
-				return true;
-			} else if (to != BlockFace.THIS && mat instanceof RedstoneSource) {
-				return ((RedstoneSource) mat).hasRedstonePowerTo(block, to, powerMode);
-			}
+		// Use direction for sources
+		if (mat instanceof RedstoneSource && to != BlockFace.THIS) {
+			return ((RedstoneSource) mat).hasRedstonePowerTo(block, to, powerMode);
+		} else if (mat instanceof VanillaBlockMaterial) {
+			return ((VanillaBlockMaterial) mat).hasRedstonePower(block, powerMode);
+		} else {
+			return false;
 		}
-		return false;
 	}
 }

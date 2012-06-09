@@ -42,13 +42,13 @@ import org.spout.vanilla.util.RedstoneUtil;
 
 public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget, DynamicMaterial {
 	public static final int TICK_DELAY = 2;
-	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
+	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(0, 0, 0)};
 	private boolean powered;
 
 	public RedstoneTorch(String name, int id, boolean powered) {
 		super(name, id);
 		this.powered = powered;
-		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 0);
+		this.setHardness(0.0F).setResistance(0.0F).setOpacity(0);
 	}
 
 	@Override

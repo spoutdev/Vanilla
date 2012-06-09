@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.Source;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
@@ -38,7 +39,7 @@ import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
-public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial {
+public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial, Source {
 
 	private final boolean flowing;
 	private static final Vector3[] maxRange = new Vector3[]{new Vector3(1, 1, 1), new Vector3(1, 1, 1)};
@@ -57,30 +58,9 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
-		int level;
-		if (this.isSource(block)) {
-			level = this.getMaxLevel();
-			// Still flowing down?
-			if (this.isFlowingDown(block) && !this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
-				this.setFlowingDown(block, false);
-				this.setLevel(block, level - 1);
-				block.update();
-			} else {
-				this.onFlow(block, true);
-				return;
-			}
-		}
-		// Update level of liquid
-		level = this.getReceivingLevel(block);
-		int oldlevel = this.getLevel(block);
-		if (level != oldlevel) {
-			this.setLevel(block, level);
-			if (level < oldlevel) {
-				block.update();
-				return;
-			}
-		}
-		this.onFlow(block, true);
+		//block.dynamicUpdate(this.getTickDelay());
+		//TODO: Use delay here (Dynamic updater is broken!)
+		this.doPhysics(block);
 	}
 
 	@Override
@@ -92,23 +72,11 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		return true;
 	}
 
-	public abstract Liquid getSourceMaterial();
-
-	public abstract Liquid getFlowingMaterial();
-
-	public boolean isMaterial(BlockMaterial material) {
-		return material.equals(this.getFlowingMaterial(), this.getSourceMaterial());
-	}
-
-	private void onFlow(Block block, boolean useTickDelay) {
-		if (useTickDelay) {
-			block.dynamicUpdate(this.getTickDelay() + block.getWorld().getAge());
-		} else {
-			// Flow below, and if not possible, spread outwards
-			if (!this.onFlow(block, BlockFace.BOTTOM)) {
-				for (BlockFace face : BlockFaces.NESW) {
-					this.onFlow(block, face);
-				}
+	private void onFlow(Block block) {
+		// Flow below, and if not possible, spread outwards
+		if (!this.onFlow(block, BlockFace.BOTTOM)) {
+			for (BlockFace face : BlockFaces.NESW) {
+				this.onFlow(block, face);
 			}
 		}
 	}
@@ -129,12 +97,19 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 				return false;
 			}
 		}
-		block = block.translate(to);
+		block = block.translate(to).setSource(this);
 		BlockMaterial material = block.getMaterial();
-		if (material.isPlacementObstacle()) {
+		if (material instanceof VanillaBlockMaterial) {
+			if (((VanillaBlockMaterial) material).isLiquidObstacle()) {
+				return false;
+			} else {
+				// Break block
+				material.onDestroy(block);
+			}
+		} else if (material.isPlacementObstacle()) {
 			return false;
 		}
-		if (this.isMaterial(material) && this.isSource(block)) {
+		if (material.equals(this) && this.isSource(block)) {
 			return true;
 		}
 		// Actual flow logic here
@@ -144,7 +119,8 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 			if (to == BlockFace.BOTTOM) {
 				this.setFlowingDown(block, true);
 			}
-			block.update();
+			// Update blocks around
+			block.update(false);
 			return true;
 		} else {
 			return false;
@@ -164,7 +140,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	 * @return the level, or negative if it has no liquids nearby to use
 	 */
 	public int getReceivingLevel(Block block) {
-		if (this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
+		if (block.translate(BlockFace.TOP).getMaterial().equals(this)) {
 			return this.getMaxLevel();
 		} else {
 			int max = -2;
@@ -172,7 +148,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 			Block neigh;
 			for (BlockFace face : BlockFaces.NESW) {
 				neigh = block.translate(face);
-				if (this.isMaterial(neigh.getMaterial())) {
+				if (neigh.getMaterial().equals(this)) {
 					max = Math.max(max, this.getLevel(neigh) - 1);
 					if (this.hasFlowSource() && this.isSource(neigh) && !this.isFlowingDown(neigh)) {
 						counter++;
@@ -256,12 +232,49 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	@Override
 	public long onPlacement(Block b, Region r, long currentTime) {
-		return currentTime + this.getTickDelay();
+		return -1;
 	}
 
+	private void doPhysics(Block block) {
+		int level;
+		if (this.isSource(block)) {
+			level = this.getMaxLevel();
+			// Still flowing down?
+			if (this.isFlowingDown(block) && !block.translate(BlockFace.TOP).getMaterial().equals(this)) {
+				this.setFlowingDown(block, false);
+				this.setLevel(block, level - 1);
+				// Update blocks around
+				block = block.setSource(this);
+				for (BlockFace face : BlockFaces.NESWBT) {
+					block.translate(face).update(false);
+				}
+			} else {
+				this.onFlow(block);
+				return;
+			}
+		}
+		// Update level of liquid
+		level = this.getReceivingLevel(block);
+		int oldlevel = this.getLevel(block);
+		if (level != oldlevel) {
+			this.setLevel(block, level);
+			if (level < oldlevel) {
+				// Update blocks around
+				block = block.setSource(this);
+				for (BlockFace face : BlockFaces.NESWBT) {
+					block.translate(face).update(false);
+				}
+				return;
+			}
+		}
+		this.onFlow(block);
+		return;
+	}
+	
 	@Override
 	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
-		this.onFlow(block, false);
+		// Caused freeze. Why?!
+		//this.doPhysics(block);
 		return -1;
 	}
 }

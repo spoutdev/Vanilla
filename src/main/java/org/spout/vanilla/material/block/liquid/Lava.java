@@ -43,16 +43,6 @@ public class Lava extends Liquid {
 	}
 
 	@Override
-	public Liquid getSourceMaterial() {
-		return VanillaMaterials.STATIONARY_LAVA;
-	}
-
-	@Override
-	public Liquid getFlowingMaterial() {
-		return VanillaMaterials.LAVA;
-	}
-
-	@Override
 	public byte getLightLevel(short data) {
 		return 15;
 	}
@@ -64,7 +54,7 @@ public class Lava extends Liquid {
 
 	@Override
 	public int getLevel(Block block) {
-		if (this.isMaterial(block.getMaterial())) {
+		if (block.getMaterial().equals(this)) {
 			return (6 - (block.getData() & 0x6)) >> 1;
 		} else {
 			return -1;

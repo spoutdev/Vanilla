@@ -41,7 +41,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class Web extends VanillaBlockMaterial implements Mineable {
 	public Web(String name, int id) {
 		super(name, id);
-		this.setHardness(4.0F).setResistance(20.0F);
+		this.setLiquidObstacle(false).setHardness(4.0F).setResistance(20.0F);
 	}
 
 	@Override

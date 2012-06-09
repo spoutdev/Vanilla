@@ -175,7 +175,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		for (Effect effect : effects) {
 			effect.pulse();
 			if (effect.getDuration() <= 0) {
-				effects.remove(effect);
+				removeEffect(effect);
 			}
 		}
 

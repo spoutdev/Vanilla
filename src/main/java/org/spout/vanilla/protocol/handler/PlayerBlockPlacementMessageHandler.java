@@ -47,6 +47,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.InteractTool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
+import org.spout.vanilla.protocol.msg.EntityStatusMessage;
 import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -70,7 +71,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		ItemStack holding = inventory.getCurrentItem();
 		Material holdingMat = holding == null ? null : holding.getSubMaterial();
 
-		/**
+		/*
 		 * The notch client's packet sending is weird. Here's how it works: If
 		 * the client is clicking a block not in range, sends a packet with
 		 * x=-1,y=255,z=-1 If the client is clicking a block in range with an
@@ -80,6 +81,8 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		 * usually happens. Sometimes it doesn't happen like that. Therefore, a
 		 * hacky workaround.
 		 */
+
+		System.out.println(message.toString());
 
 		if (message.getDirection() == 255) {
 			// Right clicked air with an item.

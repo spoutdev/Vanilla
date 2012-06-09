@@ -55,6 +55,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.data.Effect;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 
 public class TestCommands {
@@ -355,6 +356,18 @@ public class TestCommands {
 		Controller controller = ((Player) source).getEntity().getController();
 		if (controller instanceof VanillaPlayer) {
 			((VanillaPlayer) controller).rollCredits();
+		}
+	}
+
+	@Command(aliases = "fx", desc = "Add an effect", min = 3, max = 3)
+	public void addEffect(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("Only a player may add effects");
+		}
+
+		Controller controller = ((Player) source).getEntity().getController();
+		if (controller instanceof VanillaPlayer) {
+			((VanillaPlayer) controller).addEffect(new Effect(Effect.Type.valueOf(args.getString(0).toUpperCase()), (byte) args.getInteger(1), (short) args.getInteger(2)));
 		}
 	}
 }

@@ -30,18 +30,35 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
+import org.spout.vanilla.configuration.BiomeConfiguration;
+
 public class ForestBiome extends NormalBiome {
+
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(0.09D);
-		NOISE.setyScale(0.045D);
-		NOISE.setzScale(0.09D);
+		NOISE.setxScale(BiomeConfiguration.FOREST_X_SCALE.getDouble());
+		NOISE.setyScale(BiomeConfiguration.FOREST_Y_SCALE.getDouble());
+		NOISE.setzScale(BiomeConfiguration.FOREST_Z_SCALE.getDouble());
 	}
 
 	public ForestBiome(int biomeId) {
-		super(biomeId, NOISE/*, new PondDecorator(), new TreeDecorator(), new GrassDecorator()*/);
+		super(biomeId, NOISE/*
+				 * , new PondDecorator(), new TreeDecorator(), new GrassDecorator()
+				 */);
+
+		this.minDensityTerrainHeight = BiomeConfiguration.FOREST_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.maxDensityTerrainHeight = BiomeConfiguration.FOREST_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+
+		this.minDensityTerrainThickness = BiomeConfiguration.FOREST_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.maxDensityTerrainThickness = BiomeConfiguration.FOREST_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+
+		this.upperHeightMapScale = BiomeConfiguration.FOREST_UPPER_HEIGHT_MAP_SCALE.getFloat();
+		this.bottomHeightMapScale = BiomeConfiguration.FOREST_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+
+		this.densityTerrainThicknessScale = BiomeConfiguration.FOREST_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
+		this.densityTerrainHeightScale = BiomeConfiguration.FOREST_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}
 
 	@Override

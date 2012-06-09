@@ -31,6 +31,7 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import org.spout.vanilla.configuration.BiomeConfiguration;
 
 public class PlainBiome extends NormalBiome {
+
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
@@ -41,11 +42,21 @@ public class PlainBiome extends NormalBiome {
 	}
 
 	public PlainBiome(int id) {
-		super(id, NOISE/*, new PondDecorator(), new GrassDecorator(), new FlowerDecorator()*/);
+		super(id, NOISE/*
+				 * , new PondDecorator(), new GrassDecorator(), new FlowerDecorator()
+				 */);
+
 		this.minDensityTerrainHeight = BiomeConfiguration.PLAINS_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
 		this.maxDensityTerrainHeight = BiomeConfiguration.PLAINS_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+
+		this.minDensityTerrainThickness = BiomeConfiguration.PLAINS_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.maxDensityTerrainThickness = BiomeConfiguration.PLAINS_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+
 		this.upperHeightMapScale = BiomeConfiguration.PLAINS_UPPER_HEIGHT_MAP_SCALE.getFloat();
 		this.bottomHeightMapScale = BiomeConfiguration.PLAINS_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+
+		this.densityTerrainThicknessScale = BiomeConfiguration.PLAINS_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
+		this.densityTerrainHeightScale = BiomeConfiguration.PLAINS_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}
 
 	@Override

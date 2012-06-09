@@ -35,6 +35,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 public class TundraBiome extends NormalBiome {
+
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
@@ -45,11 +46,21 @@ public class TundraBiome extends NormalBiome {
 	}
 
 	public TundraBiome(int id) {
-		super(id, NOISE/*, new PondDecorator()*/);
+		super(id, NOISE/*
+				 * , new PondDecorator()
+				 */);
+
 		this.minDensityTerrainHeight = BiomeConfiguration.TUNDRA_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
 		this.maxDensityTerrainHeight = BiomeConfiguration.TUNDRA_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+
+		this.minDensityTerrainThickness = BiomeConfiguration.TUNDRA_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.maxDensityTerrainThickness = BiomeConfiguration.TUNDRA_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+
 		this.upperHeightMapScale = BiomeConfiguration.TUNDRA_UPPER_HEIGHT_MAP_SCALE.getFloat();
 		this.bottomHeightMapScale = BiomeConfiguration.TUNDRA_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+
+		this.densityTerrainThicknessScale = BiomeConfiguration.TUNDRA_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
+		this.densityTerrainHeightScale = BiomeConfiguration.TUNDRA_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}
 
 	@Override

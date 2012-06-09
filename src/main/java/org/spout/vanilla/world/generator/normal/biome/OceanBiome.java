@@ -28,26 +28,33 @@ package org.spout.vanilla.world.generator.normal.biome;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
+import org.spout.vanilla.configuration.BiomeConfiguration;
+
 public class OceanBiome extends NormalBiome {
+
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(0.077D);
-		NOISE.setyScale(0.030D);
-		NOISE.setzScale(0.077D);
+		NOISE.setxScale(BiomeConfiguration.OCEAN_X_SCALE.getDouble());
+		NOISE.setyScale(BiomeConfiguration.OCEAN_Y_SCALE.getDouble());
+		NOISE.setzScale(BiomeConfiguration.OCEAN_Z_SCALE.getDouble());
 	}
 
 	public OceanBiome(int biomeId) {
 		super(biomeId, NOISE);
-		minDensityTerrainHeight = 44;
-		maxDensityTerrainHeight = 53;
-		minDensityTerrainThickness = 2;
-		maxDensityTerrainThickness = 5;
-		upperHeightMapScale = 6.7f;
-		bottomHeightMapScale = 7.5f;
-		densityTerrainThicknessScale = 5f;
-		densityTerrainHeightScale = 5f;
+
+		this.minDensityTerrainHeight = BiomeConfiguration.OCEAN_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.maxDensityTerrainHeight = BiomeConfiguration.OCEAN_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+
+		this.minDensityTerrainThickness = BiomeConfiguration.OCEAN_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.maxDensityTerrainThickness = BiomeConfiguration.OCEAN_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+
+		this.upperHeightMapScale = BiomeConfiguration.OCEAN_UPPER_HEIGHT_MAP_SCALE.getFloat();
+		this.bottomHeightMapScale = BiomeConfiguration.OCEAN_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+
+		this.densityTerrainThicknessScale = BiomeConfiguration.OCEAN_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
+		this.densityTerrainHeightScale = BiomeConfiguration.OCEAN_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}
 
 	@Override

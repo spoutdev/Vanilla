@@ -31,6 +31,7 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import org.spout.vanilla.configuration.BiomeConfiguration;
 
 public class SmallMountainsBiome extends NormalBiome {
+
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
@@ -42,12 +43,16 @@ public class SmallMountainsBiome extends NormalBiome {
 
 	public SmallMountainsBiome(int biomeId) {
 		super(biomeId, NOISE);
+
 		minDensityTerrainHeight = BiomeConfiguration.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
 		maxDensityTerrainHeight = BiomeConfiguration.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+
 		minDensityTerrainThickness = BiomeConfiguration.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
 		maxDensityTerrainThickness = BiomeConfiguration.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+
 		upperHeightMapScale = BiomeConfiguration.SMALL_MOUNTAINS_UPPER_HEIGHT_MAP_SCALE.getFloat();
 		bottomHeightMapScale = BiomeConfiguration.SMALL_MOUNTAINS_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+
 		densityTerrainThicknessScale = BiomeConfiguration.SMALL_MOUNTAINS_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
 		densityTerrainHeightScale = BiomeConfiguration.SMALL_MOUNTAINS_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}

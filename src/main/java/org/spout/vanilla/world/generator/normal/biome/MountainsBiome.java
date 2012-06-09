@@ -27,27 +27,35 @@
 package org.spout.vanilla.world.generator.normal.biome;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
+import org.spout.vanilla.configuration.BiomeConfiguration;
 
 public class MountainsBiome extends NormalBiome {
+
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(0.080D);
-		NOISE.setyScale(0.040D);
-		NOISE.setzScale(0.080D);
+		NOISE.setxScale(BiomeConfiguration.MOUNTAINS_X_SCALE.getDouble());
+		NOISE.setyScale(BiomeConfiguration.MOUNTAINS_Y_SCALE.getDouble());
+		NOISE.setzScale(BiomeConfiguration.MOUNTAINS_Z_SCALE.getDouble());
 	}
 
 	public MountainsBiome(int biomeId) {
-		super(biomeId, NOISE/*, new FlowerDecorator(), new TreeDecorator()*/);
-		minDensityTerrainHeight = 64;
-		maxDensityTerrainHeight = 86;
-		minDensityTerrainThickness = 6;
-		maxDensityTerrainThickness = 16;
-		upperHeightMapScale = 5.3f;
-		bottomHeightMapScale = 5f;
-		densityTerrainThicknessScale = 30f;
-		densityTerrainHeightScale = 10f;
+		super(biomeId, NOISE/*
+				 * , new FlowerDecorator(), new TreeDecorator()
+				 */);
+
+		this.minDensityTerrainHeight = BiomeConfiguration.MOUNTAINS_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.maxDensityTerrainHeight = BiomeConfiguration.MOUNTAINS_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+
+		this.minDensityTerrainThickness = BiomeConfiguration.MOUNTAINS_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.maxDensityTerrainThickness = BiomeConfiguration.MOUNTAINS_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+
+		this.upperHeightMapScale = BiomeConfiguration.MOUNTAINS_UPPER_HEIGHT_MAP_SCALE.getFloat();
+		this.bottomHeightMapScale = BiomeConfiguration.MOUNTAINS_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+
+		this.densityTerrainThicknessScale = BiomeConfiguration.MOUNTAINS_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
+		this.densityTerrainHeightScale = BiomeConfiguration.MOUNTAINS_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}
 
 	@Override

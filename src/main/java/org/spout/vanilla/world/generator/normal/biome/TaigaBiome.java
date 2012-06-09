@@ -31,6 +31,7 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import org.spout.vanilla.configuration.BiomeConfiguration;
 
 public class TaigaBiome extends NormalBiome {
+
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
@@ -42,10 +43,18 @@ public class TaigaBiome extends NormalBiome {
 
 	public TaigaBiome(int biomeId) {
 		super(biomeId, NOISE);
+
 		this.minDensityTerrainHeight = BiomeConfiguration.TAIGA_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
 		this.maxDensityTerrainHeight = BiomeConfiguration.TAIGA_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+
+		this.minDensityTerrainThickness = BiomeConfiguration.TAIGA_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.maxDensityTerrainThickness = BiomeConfiguration.TAIGA_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+
 		this.upperHeightMapScale = BiomeConfiguration.TAIGA_UPPER_HEIGHT_MAP_SCALE.getFloat();
 		this.bottomHeightMapScale = BiomeConfiguration.TAIGA_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+
+		this.densityTerrainThicknessScale = BiomeConfiguration.TAIGA_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
+		this.densityTerrainHeightScale = BiomeConfiguration.TAIGA_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}
 
 	@Override

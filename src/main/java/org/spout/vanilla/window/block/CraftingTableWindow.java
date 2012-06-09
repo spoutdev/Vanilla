@@ -36,6 +36,7 @@ public class CraftingTableWindow extends CraftingWindow {
 
 	public CraftingTableWindow(VanillaPlayer owner, CraftingTableInventory craftingInventory) {
 		super(1, "Crafting", owner, craftingInventory);
+		this.setInventory(owner.getInventory().getItems(), craftingInventory);
 		this.setSlotIndexMap(SLOTS);
 	}
 }

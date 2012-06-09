@@ -26,10 +26,14 @@
  */
 package org.spout.vanilla.material.block;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.spout.api.Source;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -43,6 +47,8 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	private final boolean flowing;
 	private static final Vector3[] maxRange = new Vector3[]{new Vector3(1, 1, 1), new Vector3(1, 1, 1)};
+	
+	private static boolean useDelay = false; //TODO: This is here to prevent a lot of problems...
 
 	public Liquid(String name, int id, boolean flowing) {
 		super(name, id);
@@ -56,11 +62,20 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 
 	@Override
+	public List<ItemStack> getDrops(Block block, ItemStack holding) {
+		return Collections.emptyList();
+	}
+
+	@Override
 	public void onUpdate(Block block) {
 		super.onUpdate(block);
-		//block.dynamicUpdate(this.getTickDelay());
-		//TODO: Use delay here (Dynamic updater is broken!)
-		this.doPhysics(block);
+		if (useDelay) {
+			//TODO: Dynamic updates are not continuous
+			// It will flow upon placement, but requires physics to continue
+			block.dynamicUpdate(this.getTickDelay());
+		} else {
+			this.doPhysics(block);
+		}
 	}
 
 	@Override
@@ -80,7 +95,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 			}
 		}
 	}
-	
+
 	/**
 	 * Let's this liquid flow from the block to the direction given
 	 * @param block to flow from
@@ -99,32 +114,50 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		}
 		block = block.translate(to).setSource(this);
 		BlockMaterial material = block.getMaterial();
-		if (material instanceof VanillaBlockMaterial) {
-			if (((VanillaBlockMaterial) material).isLiquidObstacle()) {
-				return false;
+		if (material.equals(this)) {
+			if (this.isSource(block)) {
+				return true;
 			} else {
-				// Break block
-				material.onDestroy(block);
+				// Compare levels
+				if (level > this.getLevel(block)) {
+					this.setLevel(block, level);
+					if (to == BlockFace.BOTTOM) {
+						this.setFlowingDown(block, true);
+					}
+					// Update blocks around
+					block.update(false);
+					return true;
+				}
 			}
-		} else if (material.isPlacementObstacle()) {
-			return false;
-		}
-		if (material.equals(this) && this.isSource(block)) {
-			return true;
-		}
-		// Actual flow logic here
-		if (level > this.getLevel(block)) {
-			block.setMaterial(this);
-			this.setLevel(block, level);
-			if (to == BlockFace.BOTTOM) {
-				this.setFlowingDown(block, true);
-			}
-			// Update blocks around
-			block.update(false);
-			return true;
 		} else {
-			return false;
+			if (material instanceof VanillaBlockMaterial) {
+				if (((VanillaBlockMaterial) material).isLiquidObstacle()) {
+					return false;
+				}
+			} else if (material.isPlacementObstacle()) {
+				return false;
+			}
+			// Create a new liquid
+			this.onSpread(block, level, to.getOpposite());
+			return true;
 		}
+		return false;
+	}
+
+	/**
+	 * Called when this liquid created a new liquid because it spread
+	 * @param block of the Liquid that got created
+	 * @param from where it spread
+	 * @return True to notify spreading was allowed, False to deny
+	 */
+	public void onSpread(Block block, int newLevel, BlockFace from) {
+		block.getMaterial().onDestroy(block);
+		block.setMaterial(this);
+		this.setLevel(block, newLevel);
+		if (from == BlockFace.TOP) {
+			this.setFlowingDown(block, true);
+		}
+		block.update(false);
 	}
 
 	/**
@@ -273,8 +306,10 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	
 	@Override
 	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
-		// Caused freeze. Why?!
-		//this.doPhysics(block);
+		if (useDelay) {
+			// TODO: Does not always update, or does not always fire this update function
+			this.doPhysics(block);
+		}
 		return -1;
 	}
 }

@@ -27,6 +27,8 @@
 package org.spout.vanilla.material.block.liquid;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -35,6 +37,40 @@ import org.spout.vanilla.material.block.Liquid;
 public class Lava extends Liquid {
 	public Lava(String name, int id, boolean flowing) {
 		super(name, id, flowing);
+	}
+
+	@Override
+	public void onUpdate(Block block) {
+		if (!this.isFlowingDown(block)) {
+			int level = this.getLevel(block);
+			if (level > 0) {
+				for (BlockFace face : BlockFaces.NESWT) {
+					if (block.translate(face).getMaterial() instanceof Water) {
+						if (level == this.getMaxLevel()) {
+							block.setMaterial(VanillaMaterials.OBSIDIAN);
+						} else {
+							block.setMaterial(VanillaMaterials.COBBLESTONE);
+						}
+						block.update();
+						return;
+					}
+				}
+			}
+		}
+		super.onUpdate(block);
+	}
+
+	@Override
+	public void onSpread(Block block, int newLevel, BlockFace from) {
+		// Check if this block was actually water
+		if (block.getMaterial() instanceof Water) {
+			if (from == BlockFace.TOP) {
+				block.setMaterial(VanillaMaterials.STONE);
+				block.update();
+				return;
+			}
+		}
+		super.onSpread(block, newLevel, from);
 	}
 
 	@Override

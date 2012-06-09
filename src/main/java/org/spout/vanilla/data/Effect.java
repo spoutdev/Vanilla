@@ -24,36 +24,47 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.effect;
+package org.spout.vanilla.data;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents an entity effect that is applied to an entity.
  */
-public class ActiveEntityEffect {
-	private final EntityEffect effect;
-	private byte amplitude;
+public class Effect {
+	private final Type type;
+	private byte strength;
 	private short duration;
 
-	public ActiveEntityEffect(EntityEffect effect, byte amplitude, short duration) {
-		this.effect = effect;
-		this.amplitude = amplitude;
+	public Effect(Type type, byte strength, short duration) {
+		this.type = type;
+		this.strength = strength;
 		this.duration = duration;
 	}
 
 	/**
-	 * Gets the effect applied.
-	 * @return effect
+	 * Gets the effect type applied.
+	 * @return type the type of effect
 	 */
-	public EntityEffect getEffect() {
-		return effect;
+	public Type getType() {
+		return type;
 	}
 
 	/**
-	 * Gets the amplitude of the effect.
-	 * @return amplitude of effect.
+	 * Gets the strength of the effect.
+	 * @return strength of effect.
 	 */
-	public byte getAmplitude() {
-		return amplitude;
+	public byte getStrength() {
+		return strength;
+	}
+
+	/**
+	 * Sets the strength of the effect.
+	 * @param strength of effect
+	 */
+	public void setStrength(byte strength) {
+		this.strength = strength;
 	}
 
 	/**
@@ -74,13 +85,63 @@ public class ActiveEntityEffect {
 
 	/**
 	 * Decrements the effects duration by one.
-	 * @return
 	 */
-	public boolean pulse() {
-		if (duration < 1) {
-			return false;
+	public void pulse() {
+		duration--;
+	}
+
+	/**
+	 * Represents a type of entity effect.
+	 */
+	public enum Type {
+		MOVE_SPEED(1),
+		MOVE_SLOW(2),
+		DIG_SPEED(3),
+		DIG_SLOW(4),
+		DAMAGE_BOOST(5),
+		HEAL(6),
+		HARM(7),
+		JUMP(8),
+		CONFUSION(9),
+		REGENERATION(10),
+		RESISTANCE(11),
+		FIRE_RESISTANCE(12),
+		WATER_BREATHING(13),
+		INVISIBILITY(14),
+		BLINDNESS(15),
+		NIGHT_VISION(16),
+		HUNGER(17),
+		WEAKNESS(18),
+		POISON(19);
+
+		private final byte id;
+		private static final Map<Integer, Type> lookup = new HashMap<Integer, Type>();
+
+		static {
+			for (Type effect : Type.values()) {
+				lookup.put((int) effect.getId(), effect);
+			}
 		}
-		--duration;
-		return true;
+
+		private Type(int id) {
+			this.id = (byte) id;
+		}
+
+		/**
+		 * Gets the type of effect by it's mapped numerical value.
+		 * @param id
+		 * @return effect of id.
+		 */
+		public static Type get(int id) {
+			return lookup.get(id);
+		}
+
+		/**
+		 * Gets a entity effects numerical identification number.
+		 * @return id
+		 */
+		public byte getId() {
+			return id;
+		}
 	}
 }

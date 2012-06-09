@@ -115,8 +115,8 @@ public class BiomeConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder BEACH_MIN_DENSITY_TERRAIN_HEIGHT = new ConfigurationHolder(62, "biomes", "beach", "min-density-terrain-height");
 	public static final ConfigurationHolder BEACH_MAX_DENSITY_TERRAIN_HEIGHT = new ConfigurationHolder(63, "biomes", "beach", "max-density-terrain-height");
 	
-	public static final ConfigurationHolder BEACH_MIN_DENSITY_TERRAIN_THICKNESS = new ConfigurationHolder(0, "biomes", "beach", "min-density-terrain-thickness");
-	public static final ConfigurationHolder BEACH_MAX_DENSITY_TERRAIN_THICKNESS = new ConfigurationHolder(3, "biomes", "beach", "max-density-terrain-thickness");
+	public static final ConfigurationHolder BEACH_MIN_DENSITY_TERRAIN_THICKNESS = new ConfigurationHolder(1, "biomes", "beach", "min-density-terrain-thickness");
+	public static final ConfigurationHolder BEACH_MAX_DENSITY_TERRAIN_THICKNESS = new ConfigurationHolder(2, "biomes", "beach", "max-density-terrain-thickness");
 	
 	public static final ConfigurationHolder BEACH_UPPER_HEIGHT_MAP_SCALE = new ConfigurationHolder(2.4f, "biomes", "beach", "upper-height-map-scale");
 	public static final ConfigurationHolder BEACH_BOTTOM_HEIGHT_MAP_SCALE = new ConfigurationHolder(3f, "biomes", "beach", "bottom-height-map-scale");

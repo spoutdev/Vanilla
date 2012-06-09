@@ -52,7 +52,7 @@ public class SmoothPopulator implements Populator {
 	// the floor of half the value of the side of the square
 	// to sample when smoothing. (byte) Math.floor((double) SIDE_LENGTH / 2D);
 	private final static byte SAMPLE_SIZE = 2;
-	private final static float SMOOTHING_POWER = 0.7f;
+	private final static float SMOOTHING_POWER = 0.8f;
 	// ignored blocks
 	private static final Set<BlockMaterial> IGNORED = new HashSet<BlockMaterial>();
 
@@ -163,7 +163,7 @@ public class SmoothPopulator implements Populator {
 				Block block = world.getBlock(x, y, z);
 				BlockMaterial currentMaterial = block.getMaterial();
 				if (IGNORED.contains(currentMaterial)) {
-					continue;
+					return;
 				}
 				block.translate(0, shift, 0).setMaterial(currentMaterial);
 			}

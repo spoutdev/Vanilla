@@ -26,13 +26,16 @@
  */
 package org.spout.vanilla.protocol.bootstrap.handler;
 
+import org.spout.api.Spout;
 import org.spout.api.event.Event;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.protocol.VanillaProtocol;
+import org.spout.vanilla.protocol.bootstrap.handler.auth.LoginAuthThread;
 import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 
 public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginRequestMessage> {
@@ -40,10 +43,29 @@ public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginReq
 	public void handle(Session session, Player player, LoginRequestMessage message) {
 		if (message.getId() > VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
 			session.disconnect("Outdated server!", false);
-		}
-		if (message.getId() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
+		} else if (message.getId() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
 			session.disconnect("Outdated client!", false);
+		} else {
+			String handshakeUsername = session.getDataMap().get(VanillaProtocol.HANDSHAKE_USERNAME);
+			handshakeUsername = handshakeUsername.split(";")[0];
+
+			if (handshakeUsername.length() == 0 || !handshakeUsername.equals(message.getName())) {
+				session.disconnect("Handshake/Login username mismatch");
+				return;
+			}
+
+			if (VanillaConfiguration.ONLINE_MODE.getBoolean() || VanillaConfiguration.ENCRYPT_MODE.getBoolean()) {
+				final Session finalSession = session;
+				final Player finalPlayer = player;
+				final LoginRequestMessage finalMessage = message;
+				Spout.getEngine().getScheduler().scheduleAsyncTask(VanillaPlugin.getInstance(), new LoginAuthThread(finalSession, finalPlayer, finalMessage));
+			} else {
+				playerConnect(session, player, message);
+			}
 		}
+	}
+	
+	public static void playerConnect(Session session, Player player, LoginRequestMessage message) {
 		Event event = new PlayerConnectEvent(session, message.getName());
 		session.getGame().getEventManager().callEvent(event);
 	}

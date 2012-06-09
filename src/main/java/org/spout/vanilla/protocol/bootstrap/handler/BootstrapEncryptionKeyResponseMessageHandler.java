@@ -28,8 +28,6 @@ package org.spout.vanilla.protocol.bootstrap.handler;
 
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
-import org.spout.api.map.DefaultedKey;
-import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -38,8 +36,6 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
 
 public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler<EncryptionKeyResponseMessage> {
-	
-	public DefaultedKey<String> SESSION_ID = new DefaultedKeyImpl<String>("sessionid", "0000000000000000");
 	
 	@Override
 	public void handle(Session session, Player player, EncryptionKeyResponseMessage message) {

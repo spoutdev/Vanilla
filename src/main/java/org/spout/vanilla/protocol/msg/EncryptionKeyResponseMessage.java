@@ -41,6 +41,9 @@ public class EncryptionKeyResponseMessage extends Message implements ProcessorSe
 	private ProcessorHandler handler;
 
 	public EncryptionKeyResponseMessage(byte[] encoded, boolean locking) {
+		if (encoded == null) {
+			throw new IllegalArgumentException("Encoded parameter may not be null");
+		}
 		this.encoded = encoded;
 		this.locking = locking;
 	}

@@ -26,17 +26,17 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import java.security.Key;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.bouncycastle.crypto.CipherParameters;
+import org.spout.api.security.SecurityHandler;
 import org.spout.api.util.SpoutToStringStyle;
 
 public final class EncryptionKeyRequestMessage extends EncryptionKeyResponseMessage {
 
 	private final String sessionId;
 	
-	public EncryptionKeyRequestMessage(String sessionId, Key publicKey, boolean locking) {
-		this(sessionId, publicKey.getEncoded(), locking);
+	public EncryptionKeyRequestMessage(String sessionId, CipherParameters publicKey, boolean locking) {
+		this(sessionId, SecurityHandler.getInstance().encodeKey(publicKey), locking);
 	}
 		
 	public EncryptionKeyRequestMessage(String sessionId, byte[] encoded, boolean locking) {

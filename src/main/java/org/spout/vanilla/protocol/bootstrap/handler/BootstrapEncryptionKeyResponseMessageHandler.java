@@ -26,14 +26,8 @@
  */
 package org.spout.vanilla.protocol.bootstrap.handler;
 
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.util.Arrays;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-
+import org.bouncycastle.crypto.AsymmetricBlockCipher;
+import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.player.Player;
@@ -57,24 +51,13 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 		} else {
 			int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
 			String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
-			KeyPair pair = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
-			Cipher cipher = SecurityHandler.getInstance().getCipher(pair.getPrivate().getAlgorithm());
-			try {
-				cipher.init(Cipher.DECRYPT_MODE, pair.getPrivate());
-			} catch (InvalidKeyException e) {
-				session.disconnect("Encryption error: Invalid encryption key");
-				return;
-			}
-			/*byte[] decrypted;
-			try {
-				decrypted = cipher.doFinal(message.getEncodedArray());
-			} catch (IllegalBlockSizeException e) {
-				session.disconnect("Encryption error: Invalid block size");
-				return;
-			} catch (BadPaddingException e) {
-				session.disconnect("Encryption error: Bad padding");
-				return;
-			}*/
+			String keyPadding = VanillaConfiguration.ENCRYPT_KEY_PADDING.getString();
+			AsymmetricBlockCipher cipher = SecurityHandler.getInstance().getCipher(keyAlgorithm, keyPadding);
+			
+			AsymmetricCipherKeyPair pair = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
+			cipher.init(SecurityHandler.DECRYPT_MODE, pair.getPrivate());
+			byte[] decrypted = SecurityHandler.getInstance().processAll(cipher, message.getEncodedArray());
+			
 			session.disconnect("Encryption not supported yet");
 		}
 	}

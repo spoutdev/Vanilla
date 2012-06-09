@@ -48,7 +48,7 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 			int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
 			String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
 			String keyPadding = VanillaConfiguration.ENCRYPT_KEY_PADDING.getString();
-			AsymmetricBlockCipher cipher = SecurityHandler.getInstance().getCipher(keyAlgorithm, keyPadding);
+			AsymmetricBlockCipher cipher = SecurityHandler.getInstance().getAsymmetricCipher(keyAlgorithm, keyPadding);
 			
 			AsymmetricCipherKeyPair pair = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
 			cipher.init(SecurityHandler.DECRYPT_MODE, pair.getPrivate());

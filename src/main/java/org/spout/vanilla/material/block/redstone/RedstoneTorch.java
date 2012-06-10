@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.redstone;
 
 import java.util.ArrayList;
 
+import org.spout.api.geo.InsertionPolicy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
@@ -81,7 +82,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 		super.onUpdate(block);
 		boolean receiving = this.isReceivingPower(block);
 		if (this.isPowered() == receiving) {
-			block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
+			block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY, InsertionPolicy.WEAK_REPLACE_LATER);
 		}
 	}
 

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.InsertionPolicy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
@@ -37,7 +38,6 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
@@ -73,7 +73,6 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 
 	public void setPowered(Block block, boolean powered) {
 		block.setMaterial(powered ? VanillaMaterials.REDSTONE_REPEATER_ON : VanillaMaterials.REDSTONE_REPEATER_OFF, block.getData());
-		block.update();
 	}
 
 	@Override
@@ -103,7 +102,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 		super.onUpdate(block);
 		boolean receiving = this.isReceivingPower(block);
 		if (this.isPowered() != receiving) {
-			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay(block), receiving);
+			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay(block), InsertionPolicy.WEAK_REPLACE_LATER, receiving);
 		}
 	}
 

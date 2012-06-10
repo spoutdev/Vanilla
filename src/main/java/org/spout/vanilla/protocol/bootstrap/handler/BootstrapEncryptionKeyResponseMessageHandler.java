@@ -28,9 +28,14 @@ package org.spout.vanilla.protocol.bootstrap.handler;
 
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
+import org.bouncycastle.crypto.BufferedBlockCipher;
+import org.bouncycastle.crypto.CipherParameters;
+import org.bouncycastle.crypto.params.KeyParameter;
+import org.bouncycastle.crypto.params.ParametersWithIV;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.api.security.EncryptionChannelProcessor;
 import org.spout.api.security.SecurityHandler;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
@@ -43,16 +48,39 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
 			session.disconnect("Handshake not sent", false);
 		} else if (state != Session.State.EXCHANGE_ENCRYPTION) {
-			session.disconnect("Encryption response not sent", false);
+			session.disconnect("Encryption was not requested", false);
 		} else {
-			int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
-			String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
-			String keyPadding = VanillaConfiguration.ENCRYPT_KEY_PADDING.getString();
-			AsymmetricBlockCipher cipher = SecurityHandler.getInstance().getAsymmetricCipher(keyAlgorithm, keyPadding);
-			
-			AsymmetricCipherKeyPair pair = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
-			cipher.init(SecurityHandler.DECRYPT_MODE, pair.getPrivate());
-			byte[] decrypted = SecurityHandler.getInstance().processAll(cipher, message.getEncodedArray());
+			if (false) {
+				int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
+				String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
+				String keyPadding = VanillaConfiguration.ENCRYPT_KEY_PADDING.getString();
+				AsymmetricBlockCipher cipher = SecurityHandler.getInstance().getAsymmetricCipher(keyAlgorithm, keyPadding);
+
+				AsymmetricCipherKeyPair pair = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
+				cipher.init(SecurityHandler.DECRYPT_MODE, pair.getPrivate());
+				byte[] initialVector = SecurityHandler.getInstance().processAll(cipher, message.getEncodedArray());
+
+				String streamCipher = VanillaConfiguration.ENCRYPT_STREAM_ALGORITHM.getString();
+				String streamWrapper = VanillaConfiguration.ENCRYPT_STREAM_WRAPPER.getString();
+
+				BufferedBlockCipher fromClientCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
+				BufferedBlockCipher toClientCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
+
+				CipherParameters symmetricKey = new ParametersWithIV(new KeyParameter(initialVector), initialVector);
+
+				fromClientCipher.init(SecurityHandler.DECRYPT_MODE, symmetricKey);
+				toClientCipher.init(SecurityHandler.ENCRYPT_MODE, symmetricKey);
+
+				EncryptionChannelProcessor fromClientProcessor = new EncryptionChannelProcessor(fromClientCipher, 32);
+				EncryptionChannelProcessor toClientProcessor = new EncryptionChannelProcessor(toClientCipher, 32);
+
+				EncryptionKeyResponseMessage response = new EncryptionKeyResponseMessage(new byte[0], false);
+				response.setProcessor(toClientProcessor);
+
+				message.getProcessorHandler().setProcessor(fromClientProcessor);
+
+				session.send(response, true);
+			}
 			
 			session.disconnect("Encryption not supported yet");
 		}

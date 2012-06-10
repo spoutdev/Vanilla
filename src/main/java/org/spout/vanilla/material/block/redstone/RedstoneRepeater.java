@@ -73,6 +73,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 
 	public void setPowered(Block block, boolean powered) {
 		block.setMaterial(powered ? VanillaMaterials.REDSTONE_REPEATER_ON : VanillaMaterials.REDSTONE_REPEATER_OFF, block.getData());
+		block.update();
 	}
 
 	@Override
@@ -106,7 +107,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 		}
 	}
 
-	public static final int[] TICK_DELAYS = {2, 4, 6, 8};
+	public static final int[] TICK_DELAYS = {100, 200, 300, 400};
 
 	public int getTickDelay(Block block) {
 		return TICK_DELAYS[this.getTickDelayIndex(block)];
@@ -180,7 +181,8 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 
 	@Override
 	public long onPlacement(Block b, Region r, long currentTime) {
-		return this.getTickDelay(b);
+		long nextUpdate = this.getTickDelay(b) + currentTime;
+		return nextUpdate;
 	}
 
 	@Override

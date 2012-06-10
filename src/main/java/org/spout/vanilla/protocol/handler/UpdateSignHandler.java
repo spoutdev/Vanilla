@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.protocol.handler;
 
-import org.spout.api.entity.BlockController;
+import org.spout.api.entity.component.controller.BlockController;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;

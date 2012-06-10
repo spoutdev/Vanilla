@@ -30,7 +30,7 @@ import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.hash.TIntHashSet;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;

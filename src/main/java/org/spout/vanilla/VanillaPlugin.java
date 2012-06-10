@@ -27,7 +27,6 @@
 package org.spout.vanilla;
 
 import java.net.InetSocketAddress;
-import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
@@ -38,7 +37,7 @@ import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
-import org.spout.api.entity.type.ControllerType;
+import org.spout.api.entity.component.controller.type.ControllerType;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -48,7 +47,6 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
-import org.spout.api.security.SecurityHandler;
 
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
@@ -262,16 +260,5 @@ public class VanillaPlugin extends CommonPlugin {
 	 */
 	public static VanillaPlugin getInstance() {
 		return instance;
-	}
-
-	private void multilineLog(String multiline) {
-		String[] split = multiline.split("\n");
-		for (String line : split) {
-			while (line.length() > 40) {
-				getLogger().info(line.substring(0, 40));
-				line = line.substring(40);
-			}
-			getLogger().info(line);
-		}
 	}
 }

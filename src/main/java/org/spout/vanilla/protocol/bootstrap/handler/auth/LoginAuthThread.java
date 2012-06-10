@@ -37,12 +37,9 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import org.spout.api.Spout;
-import org.spout.api.player.Player;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.bootstrap.handler.BootstrapLoginRequestMessageHandler;
-import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 
 public class LoginAuthThread implements Runnable {
 
@@ -52,13 +49,13 @@ public class LoginAuthThread implements Runnable {
 	private final static String authString = "YES";
 
 	private final Session session;
-	private final Player player;
-	private final LoginRequestMessage message;
+	private final String name;
+	private final Runnable runnable;
 
-	public LoginAuthThread(Session session, Player player, LoginRequestMessage message) {
+	public LoginAuthThread(Session session, String name, Runnable runnable) {
 		this.session = session;
-		this.player = player;
-		this.message = message;
+		this.name = name;
+		this.runnable = runnable;
 	}
 
 	public void run() {
@@ -66,7 +63,7 @@ public class LoginAuthThread implements Runnable {
 		String encodedUser;
 		String encodedId;
 		try {
-			encodedUser = URLEncoder.encode(message.getName(), "UTF-8");
+			encodedUser = URLEncoder.encode(name, "UTF-8");
 			encodedId = URLEncoder.encode(sessionId, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			failed("Unable to uncode username or sessionid");
@@ -112,12 +109,7 @@ public class LoginAuthThread implements Runnable {
 			in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
 			String reply = in.readLine();
 			if (reply.equals(authString)) {
-				Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), new Runnable() {
-					@Override
-					public void run() {
-						BootstrapLoginRequestMessageHandler.playerConnect(session, player, message);
-					}
-				});
+				Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable);
 			} else {
 				failed("Auth server refused authentication");
 			}

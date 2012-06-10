@@ -40,7 +40,7 @@ import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 
 public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginRequestMessage> {
 	@Override
-	public void handle(Session session, Player player, LoginRequestMessage message) {
+	public void handle(final Session session, final Player player, final LoginRequestMessage message) {
 		if (message.getId() > VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
 			session.disconnect("Outdated server!", false);
 		} else if (message.getId() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
@@ -54,19 +54,23 @@ public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginReq
 				return;
 			}
 
-			if (VanillaConfiguration.ONLINE_MODE.getBoolean() || VanillaConfiguration.ENCRYPT_MODE.getBoolean()) {
-				final Session finalSession = session;
-				final Player finalPlayer = player;
-				final LoginRequestMessage finalMessage = message;
-				Spout.getEngine().getScheduler().scheduleAsyncTask(VanillaPlugin.getInstance(), new LoginAuthThread(finalSession, finalPlayer, finalMessage));
+			if (VanillaConfiguration.ONLINE_MODE.getBoolean() && !VanillaConfiguration.ENCRYPT_MODE.getBoolean()) {
+				final String finalName = message.getName();
+				Runnable runnable = new Runnable() {
+					@Override
+					public void run() {
+						BootstrapLoginRequestMessageHandler.playerConnect(session, finalName);
+					}
+				};
+				Spout.getEngine().getScheduler().scheduleAsyncTask(VanillaPlugin.getInstance(), new LoginAuthThread(session, finalName, runnable));
 			} else {
-				playerConnect(session, player, message);
+				playerConnect(session, message.getName());
 			}
 		}
 	}
 	
-	public static void playerConnect(Session session, Player player, LoginRequestMessage message) {
-		Event event = new PlayerConnectEvent(session, message.getName());
+	public static void playerConnect(Session session, String name) {
+		Event event = new PlayerConnectEvent(session, name);
 		session.getGame().getEventManager().callEvent(event);
 	}
 }

@@ -115,7 +115,7 @@ public class LoginAuthThread implements Runnable {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			failed("Unable to read reply frmo auth server");
+			failed("Unable to read reply from auth server");
 		} finally {
 			if (in != null) {
 				try {

@@ -64,7 +64,7 @@ public class Shears extends Tool {
 
 			other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1), other.getPosition().normalize()));
 
-			if (VanillaPlayerUtil.isSurvival(entity)) {
+			if (VanillaPlayerUtil.getGameMode(entity) == null || !VanillaPlayerUtil.getGameMode(entity).hasInfiniteItems()) {
 				InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
 				inv.addCurrentItemData(1);
 			}

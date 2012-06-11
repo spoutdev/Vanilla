@@ -42,7 +42,6 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
 	public final float BURN_TIME = 15.f;
@@ -79,8 +78,6 @@ public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
 			org.spout.vanilla.controller.block.NoteBlock controller = (org.spout.vanilla.controller.block.NoteBlock) block.getController();
 			controller.setNote(controller.getNote() + 1);
 			controller.play();
-		} else if (type == Action.LEFT_CLICK && VanillaPlayerUtil.isCreative(entity)) {
-			((org.spout.vanilla.controller.block.NoteBlock) block.getController()).play();
 		}
 	}
 

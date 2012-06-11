@@ -69,9 +69,7 @@ public class EmptyContainer extends BlockItem {
 			Block block;
 			while (iter.hasNext()) {
 				block = iter.next();
-				if (block.getMaterial().equals(VanillaMaterials.AIR)) {
-					continue;
-				}
+				if (block.getMaterial().equals(VanillaMaterials.AIR)) continue;
 
 				FullContainer cont = this.getFullItem(block.getMaterial(), block.getData());
 				if (cont == null) {
@@ -79,7 +77,7 @@ public class EmptyContainer extends BlockItem {
 				}
 
 				block.setMaterial(VanillaMaterials.AIR);
-				if (!VanillaPlayerUtil.isSurvival(entity)) {
+				if (VanillaPlayerUtil.getGameMode(entity) != null && VanillaPlayerUtil.getGameMode(entity).hasInfiniteItems()) {
 					return;
 				}
 

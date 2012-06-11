@@ -130,7 +130,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			}
 			clickedMaterial.onInteractBy(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
 
-			if (holdingMat instanceof InteractTool && VanillaPlayerUtil.isSurvival(clickedBlock.getSource())) { //TODO Total hack and is BADDDDDD
+			if (holdingMat instanceof InteractTool && VanillaPlayerUtil.getGameMode(clickedBlock.getSource()) != null && !VanillaPlayerUtil.getGameMode(clickedBlock.getSource()).hasToolDurability()) { //TODO Total hack and is BADDDDDD
 				short newDurability = ((short) (durability - ((InteractTool) holdingMat).getMaxDurability()));
 
 				inventory.addCurrentItemData(newDurability);

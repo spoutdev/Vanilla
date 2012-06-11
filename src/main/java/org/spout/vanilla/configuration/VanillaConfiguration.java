@@ -64,15 +64,17 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	// Redstone-specific
 	public static final ConfigurationHolder REDSTONE_MIN_RANGE = new ConfigurationHolder(0, "redstone", "redstone-min-power-range");
 	public static final ConfigurationHolder REDSTONE_MAX_RANGE = new ConfigurationHolder(15, "redstone", "redstone-max-power-range");
-	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
-	public static final WorldConfiguration WORLDS = new WorldConfiguration(VanillaPlugin.getInstance().getDataFolder());
-	public static final BiomeConfiguration BIOMES = new BiomeConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	// Encryption
 	public static final ConfigurationHolder ENCRYPT_KEY_ALGORITHM = new ConfigurationHolder("RSA", "encrypt", "key-algorithm");
 	public static final ConfigurationHolder ENCRYPT_KEY_SIZE = new ConfigurationHolder(1024, "encrypt", "key-size");
 	public static final ConfigurationHolder ENCRYPT_KEY_PADDING = new ConfigurationHolder("PKCS1", "encrypt", "key-padding");
 	public static final ConfigurationHolder ENCRYPT_STREAM_ALGORITHM = new ConfigurationHolder("AES", "encrypt", "stream-algorithm");
 	public static final ConfigurationHolder ENCRYPT_STREAM_WRAPPER = new ConfigurationHolder("CFB8", "encrypt", "stream-wrapper");
+	//External
+	public static final BiomeConfiguration BIOMES = new BiomeConfiguration(VanillaPlugin.getInstance().getDataFolder());
+	public static final GameModeConfiguration GAMEMODES = new GameModeConfiguration(VanillaPlugin.getInstance().getDataFolder());
+	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
+	public static final WorldConfiguration WORLDS = new WorldConfiguration(VanillaPlugin.getInstance().getDataFolder());
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));
@@ -82,6 +84,8 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public void load() throws ConfigurationException {
 		BIOMES.load();
 		BIOMES.save();
+		GAMEMODES.load();
+		GAMEMODES.save();
 		OPS.load();
 		OPS.save();
 		WORLDS.load();

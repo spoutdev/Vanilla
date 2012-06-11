@@ -24,46 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.player;
+package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.component.controller.PlayerController;
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.HandlerList;
-import org.spout.api.exception.InvalidControllerException;
-import org.spout.api.player.Player;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.misc.Torch;
 
-import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
+public class SignPost extends SignBase {
+	public SignPost(String name, int id) {
+		super(name, id);
+	}
 
-public class PlayerDeathEvent extends VanillaEntityDeathEvent {
-	private static HandlerList handlers = new HandlerList();
-
-	public PlayerDeathEvent(Entity e) {
-		super(e);
-		if (!(e.getController() instanceof PlayerController)) {
-			throw new InvalidControllerException();
+	@Override
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		// can only attach to the top of a block
+		if (face != BlockFace.TOP) {
+			return false;
 		}
-	}
 
-	/**
-	 * Gets the player associated in this event.
-	 * @return The player.
-	 */
-	public Player getPlayer() {
-		return (Player) getEntity();
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
+		// can only attach to signs and torches
+		return material instanceof SignBase || material instanceof Torch;
 	}
 }

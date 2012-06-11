@@ -34,7 +34,7 @@ import org.spout.vanilla.controller.object.misc.Lightning;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnLightningStrikeMessage;
 
-public class LightningEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
+public class LightningEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
 		if (entity.getController() == null) {

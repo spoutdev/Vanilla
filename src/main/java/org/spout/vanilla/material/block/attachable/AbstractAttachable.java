@@ -129,11 +129,11 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		if (material instanceof VanillaBlockMaterial) {
-			return ((VanillaBlockMaterial) material).canSupport(this, face);
-		} else {
+		if (!(material instanceof VanillaBlockMaterial)) {
 			return false;
 		}
+
+		return ((VanillaBlockMaterial) material).canSupport(this, face);
 	}
 
 	@Override
@@ -143,11 +143,11 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (super.canPlace(block, data, against, isClickedBlock)) {
-			return this.isValidPosition(block, against, this.canSeekAttachedAlternative());
-		} else {
+		if (!super.canPlace(block, data, against, isClickedBlock)) {
 			return false;
 		}
+
+		return this.isValidPosition(block, against, this.canSeekAttachedAlternative());
 	}
 
 	@Override

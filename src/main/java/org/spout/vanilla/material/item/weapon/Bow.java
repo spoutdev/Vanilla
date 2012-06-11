@@ -29,7 +29,7 @@ package org.spout.vanilla.material.item.weapon;
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.RangedWeapon;
 
-public class Bow extends RangedWeapon implements Enchantable {
+public class Bow extends RangedWeapon {
 	public Bow(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setRangedDamage(9).setEnchantability(1);

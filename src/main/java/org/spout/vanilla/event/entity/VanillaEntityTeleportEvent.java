@@ -32,7 +32,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityTeleportEvent;
 import org.spout.api.geo.discrete.Point;
 
-public class VanillaEntityTeleportEvent extends EntityTeleportEvent implements Cancellable {
+public class VanillaEntityTeleportEvent extends EntityTeleportEvent {
 	private static HandlerList handlers = new HandlerList();
 	private TeleportReason reason;
 

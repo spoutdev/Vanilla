@@ -88,11 +88,11 @@ public class Enchantments {
 	public static <T extends Enchantment> T register(T enchantment) {
 		if (idLookup.containsKey(enchantment.getId())) {
 			throw new IllegalArgumentException("Enchantment ID '" + enchantment.getId() + "' has already been registered!");
-		} else {
-			idLookup.put(enchantment.getId(), enchantment);
-			nameLookup.put(enchantment.getName().toLowerCase(), enchantment);
-			return enchantment;
 		}
+
+		idLookup.put(enchantment.getId(), enchantment);
+		nameLookup.put(enchantment.getName().toLowerCase(), enchantment);
+		return enchantment;
 	}
 
 	/**

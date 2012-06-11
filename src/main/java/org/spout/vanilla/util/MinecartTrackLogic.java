@@ -61,11 +61,11 @@ public class MinecartTrackLogic implements Source {
 
 	public static MinecartTrackLogic create(Block block) {
 		BlockMaterial mat = block.getMaterial();
-		if (mat instanceof RailBase) {
-			return new MinecartTrackLogic(block, (RailBase) mat);
-		} else {
+		if (!(mat instanceof RailBase)) {
 			return null;
 		}
+
+		return new MinecartTrackLogic(block, (RailBase) mat);
 	}
 
 	public static MinecartTrackLogic create(World world, int x, int y, int z) {
@@ -114,13 +114,13 @@ public class MinecartTrackLogic implements Source {
 
 	public boolean setState(RailsState state) {
 		System.out.println("SETTING TO " + state);
-		if (state != this.getState()) {
-			this.rails.setState(this.block, state);
-			this.changed = true;
-			return true;
-		} else {
+		if (state == this.getState()) {
 			return false;
 		}
+
+		this.rails.setState(this.block, state);
+		this.changed = true;
+		return true;
 	}
 
 	public RailsState getState() {

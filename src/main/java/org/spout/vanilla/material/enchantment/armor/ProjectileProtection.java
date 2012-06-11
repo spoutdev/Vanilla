@@ -41,8 +41,8 @@ public class ProjectileProtection extends ArmorEnchantment {
 	public boolean compatibleWith(Enchantment enchantment, VanillaMaterial material) {
 		if (material instanceof Boots) {
 			return enchantment.equals(Enchantments.FEATHER_FALLING);
-		} else {
-			return !enchantment.equals(Enchantments.PROTECTION, Enchantments.FIRE_PROTECTION, Enchantments.BLAST_PROTECTION);
 		}
+
+		return !enchantment.equals(Enchantments.PROTECTION, Enchantments.FIRE_PROTECTION, Enchantments.BLAST_PROTECTION);
 	}
 }

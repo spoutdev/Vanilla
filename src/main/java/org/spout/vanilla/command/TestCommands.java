@@ -226,9 +226,9 @@ public class TestCommands {
 		 */
 		if (found == null) {
 			throw new CommandException("Could not find any controllers within a 5 block radius to control!");
-		} else {
-			source.sendMessage(found.getController().toString() + "was found at " + found.getPosition().toString() + ". Assuming control!");
 		}
+
+		source.sendMessage(found.getController().toString() + "was found at " + found.getPosition().toString() + ". Assuming control!");
 
 		Controller control = found.getController();
 

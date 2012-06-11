@@ -64,32 +64,32 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
-		if (c != null) {
-			int id = entity.getId();
-			Vector3 pos = entity.getPosition().multiply(32).floor();
-			int r = (int) (entity.getYaw() * 32);
-			int p = (int) (entity.getPitch() * 32);
-			int headyaw = 0;
-			if (c instanceof Living) {
-				headyaw = ((Living) c).getHeadYaw();
-			}
-			List<Parameter<?>> parameters = this.getSpawnParameters(c);
-			return new Message[]{new SpawnMobMessage(id, this.getSpawnID(), pos, r, p, headyaw, parameters)};
-		} else {
+		if (c == null) {
 			return null;
 		}
+
+		int id = entity.getId();
+		Vector3 pos = entity.getPosition().multiply(32).floor();
+		int r = (int) (entity.getYaw() * 32);
+		int p = (int) (entity.getPitch() * 32);
+		int headyaw = 0;
+		if (c instanceof Living) {
+			headyaw = ((Living) c).getHeadYaw();
+		}
+		List<Parameter<?>> parameters = this.getSpawnParameters(c);
+		return new Message[]{new SpawnMobMessage(id, this.getSpawnID(), pos, r, p, headyaw, parameters)};
 	}
 
 	@Override
 	public Message[] getUpdateMessage(Entity entity) {
 		List<Parameter<?>> params = this.getSpawnParameters(entity.getController());
-		if (params != null && params.size() > 0) {
-			Message[] toSend = super.getUpdateMessage(entity);
-			List<Message> msgs = new ArrayList<Message>(Arrays.asList(toSend != null ? toSend : new Message[0]));
-			msgs.add(new EntityMetadataMessage(entity.getId(), params));
-			return msgs.toArray(new Message[msgs.size()]);
-		} else {
+		if (params == null || params.size() <= 0) {
 			return super.getUpdateMessage(entity);
 		}
+
+		Message[] toSend = super.getUpdateMessage(entity);
+		List<Message> msgs = new ArrayList<Message>(Arrays.asList(toSend != null ? toSend : new Message[0]));
+		msgs.add(new EntityMetadataMessage(entity.getId(), params));
+		return msgs.toArray(new Message[msgs.size()]);
 	}
 }

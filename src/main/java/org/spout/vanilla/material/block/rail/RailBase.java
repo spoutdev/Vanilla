@@ -143,12 +143,12 @@ public abstract class RailBase extends GroundAttachable implements Mineable {
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, isClickedBlock)) {
-			this.doTrackLogic(block);
-			return true;
-		} else {
+		if (!super.onPlacement(block, data, against, isClickedBlock)) {
 			return false;
 		}
+
+		this.doTrackLogic(block);
+		return true;
 	}
 
 	@Override

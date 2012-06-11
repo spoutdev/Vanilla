@@ -308,11 +308,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			owner.getSession().send(new RespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.getType()));
 		}
 
-		if (world != null) {
-			Point pos = world.getSpawnPoint().getPosition();
-			SpawnPositionMessage SPMsg = new SpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
-			owner.getSession().send(SPMsg);
-		}
+		Point pos = world.getSpawnPoint().getPosition();
+		SpawnPositionMessage SPMsg = new SpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
+		owner.getSession().send(SPMsg);
 	}
 
 	@Override

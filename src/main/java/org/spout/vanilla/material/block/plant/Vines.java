@@ -99,13 +99,15 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 		if (block.getData() != 0) {
 			BlockMaterial abovemat = above.getMaterial();
 			for (BlockFace face : BlockFaces.NESW) {
-				if (this.isAttachedTo(block, face)) {
-					if (!this.canAttachTo(block.translate(face), face.getOpposite())) {
-						//is there a vine block above to which it can support itself?
-						if (!abovemat.equals(VanillaMaterials.VINES) || !this.isAttachedTo(above, face)) {
-							this.setFaceAttached(block, face, false);
-							changed = true;
-						}
+				if (!this.isAttachedTo(block, face)) {
+					continue;
+				}
+
+				if (!this.canAttachTo(block.translate(face), face.getOpposite())) {
+					//is there a vine block above to which it can support itself?
+					if (!abovemat.equals(VanillaMaterials.VINES) || !this.isAttachedTo(above, face)) {
+						this.setFaceAttached(block, face, false);
+						changed = true;
 					}
 				}
 			}
@@ -123,11 +125,11 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 	}
 
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		if (material instanceof VanillaBlockMaterial) {
-			return ((VanillaBlockMaterial) material).canSupport(this, face);
-		} else {
+		if (!(material instanceof VanillaBlockMaterial)) {
 			return false;
 		}
+
+		return ((VanillaBlockMaterial) material).canSupport(this, face);
 	}
 
 	public boolean canAttachTo(Block block, BlockFace face) {
@@ -173,12 +175,16 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 		} else if (face == BlockFace.BOTTOM) {
 			return false; //TODO: possibly place on top of vines?
 		} else if (face == BlockFace.TOP) {
-			//place below block
-			if (isClicked || !this.canAttachTo(block.translate(BlockFace.TOP), BlockFace.BOTTOM)) {
+			if (isClicked) {
 				return false;
-			} else {
-				return true;
 			}
+
+			// check below block
+			if (!this.canAttachTo(block.translate(BlockFace.TOP), BlockFace.BOTTOM)) {
+				return false;
+			}
+
+			return true;
 		} else if (this.canAttachTo(block.translate(face), face.getOpposite()) && !this.isAttachedTo(block, face)) {
 			return true;
 		} else {
@@ -195,30 +201,50 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 					return false;
 				}
 			}
-			if (this.canAttachTo(block.translate(face), face.getOpposite()) && !this.isAttachedTo(block, face)) {
-				this.setFaceAttached(block, face, true);
-				block.update();
-				return true;
-			} else {
+
+			if (!this.canAttachTo(block.translate(face), face.getOpposite())) {
 				return false;
 			}
-		} else if (face == BlockFace.BOTTOM) {
+
+			if (this.isAttachedTo(block, face)) {
+				return false;
+			}
+
+			this.setFaceAttached(block, face, true);
+			block.update();
+			return true;
+		}
+
+		switch (face) {
+		case BOTTOM:
 			return false; //TODO: possibly place on top of vines?
-		} else if (face == BlockFace.TOP) {
-			//place below block
-			if (isClicked || !this.canAttachTo(block.translate(BlockFace.TOP), BlockFace.BOTTOM)) {
+
+		case TOP:
+			if (isClicked) {
 				return false;
-			} else {
-				block.setMaterial(VanillaMaterials.VINES).update();
-				return true;
 			}
-		} else if (this.canAttachTo(block.translate(face), face.getOpposite()) && !this.isAttachedTo(block, face)) {
+
+			// check below block
+			if (!this.canAttachTo(block.translate(BlockFace.TOP), BlockFace.BOTTOM)) {
+				return false;
+			}
+
+			block.setMaterial(VanillaMaterials.VINES).update();
+			return true;
+
+		default:
+			if (!this.canAttachTo(block.translate(face), face.getOpposite())) {
+				return false;
+			}
+
+			if (this.isAttachedTo(block, face)) {
+				return false;
+			}
+
 			block.setMaterial(VanillaMaterials.VINES);
 			this.setFaceAttached(block, face, true);
 			block.update();
 			return true;
-		} else {
-			return false;
 		}
 	}
 

@@ -38,7 +38,7 @@ import org.spout.api.exception.InvalidControllerException;
 
 import org.spout.vanilla.controller.object.projectile.Potion;
 
-public class PotionSplashEvent extends ProjectileHitEvent implements Cancellable {
+public class PotionSplashEvent extends ProjectileHitEvent {
 	private static HandlerList handlers = new HandlerList();
 	//ControllerType = Affected by potion, Double = Intensity of potion effect.
 	private final Map<Entity, Double> entitiesAffected;

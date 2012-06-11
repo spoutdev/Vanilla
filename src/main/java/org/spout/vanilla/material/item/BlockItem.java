@@ -68,10 +68,11 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 	public BlockItem setPlacedBlock(MaterialSource blockmaterial) {
 		if (blockmaterial == null || blockmaterial.getMaterial() == null) {
 			throw new NullPointerException("Block block can not be null");
-		} else {
-			this.onPlaceMaterial = (BlockMaterial) blockmaterial.getSubMaterial();
-			this.onPlaceData = blockmaterial.getData();
 		}
+
+		this.onPlaceMaterial = (BlockMaterial) blockmaterial.getSubMaterial();
+		this.onPlaceData = blockmaterial.getData();
+
 		return this;
 	}
 

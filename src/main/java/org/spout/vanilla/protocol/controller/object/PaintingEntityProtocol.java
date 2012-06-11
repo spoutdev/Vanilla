@@ -34,7 +34,7 @@ import org.spout.vanilla.controller.object.misc.Painting;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnPaintingMessage;
 
-public class PaintingEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
+public class PaintingEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
 		if (entity.getController() == null) {

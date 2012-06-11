@@ -47,16 +47,16 @@ public class ExplosionLayer {
 		this.model = previous.model;
 		this.index = previous.index + 1;
 		final int scaleminone = scale - 1;
-		final double fact = (double) scaleminone / 2.0;
+		final double fact = scaleminone / 2.0;
 		int x, y, z;
 		double dx, dy, dz;
 		for (x = 0; x < scale; ++x) {
 			for (y = 0; y < scale; ++y) {
 				for (z = 0; z < scale; ++z) {
 					if (x == 0 || x == scaleminone || y == 0 || y == scaleminone || z == 0 || z == scaleminone) {
-						dx = (double) x / fact - 1.0;
-						dy = (double) y / fact - 1.0;
-						dz = (double) z / fact - 1.0;
+						dx = x / fact - 1.0;
+						dy = y / fact - 1.0;
+						dz = z / fact - 1.0;
 						double d = 0.3 / MathHelper.length(dx, dy, dz);
 						dx *= d;
 						dy *= d;
@@ -90,9 +90,9 @@ public class ExplosionLayer {
 	 * @return an already stored or new slot
 	 */
 	public ExplosionSlot createSlot(final double dx, final double dy, final double dz) {
-		int x = MathHelper.floor(dx * (double) this.index + 0.5);
-		int y = MathHelper.floor(dy * (double) this.index + 0.5);
-		int z = MathHelper.floor(dz * (double) this.index + 0.5);
+		int x = MathHelper.floor(dx * this.index + 0.5);
+		int y = MathHelper.floor(dy * this.index + 0.5);
+		int z = MathHelper.floor(dz * this.index + 0.5);
 		Vector3 pos = new Vector3(x, y, z);
 		ExplosionSlot slot = this.tmpSlotMap.get(pos);
 		if (slot == null) {

@@ -35,7 +35,7 @@ import org.spout.vanilla.controller.object.moving.XPOrb;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnExperienceOrbMessage;
 
-public class XPOrbEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
+public class XPOrbEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();

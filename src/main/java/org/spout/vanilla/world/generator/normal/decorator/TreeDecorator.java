@@ -53,16 +53,20 @@ public class TreeDecorator implements Decorator {
 		final int blockZ = chunk.getBlockZ();
 		final byte amount = getNumberOfTrees(biome);
 		for (byte i = 0; i < amount; i++) {
+			final TreeObject tree = getTree(random, biome);
+			if (tree == null) {
+				continue;
+			}
+
 			final int worldX = blockX + random.nextInt(16);
 			final int worldZ = blockZ + random.nextInt(16);
 			final int worldY = getHighestWorkableBlock(world, worldX, worldZ);
-			final TreeObject tree = getTree(random, biome);
-			if (tree == null || !tree.canPlaceObject(world, worldX, worldY, worldZ)) {
+			if (!tree.canPlaceObject(world, worldX, worldY, worldZ)) {
 				continue;
-			} else {
-				tree.placeObject(world, worldX, worldY, worldZ);
-				tree.randomizeHeight();
 			}
+
+			tree.placeObject(world, worldX, worldY, worldZ);
+			tree.randomizeHeight();
 		}
 	}
 

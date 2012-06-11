@@ -48,17 +48,17 @@ public class CreativeCodec extends MessageCodec<CreativeMessage> {
 		short slot = buffer.readShort();
 		short id = buffer.readShort();
 
-		if (id != -1) {
-			short amount = buffer.readByte();
-			short damage = buffer.readShort();
-			CompoundMap nbtData = null;
-			if (ChannelBufferUtils.hasNbtData(id)) {
-				nbtData = ChannelBufferUtils.readCompound(buffer);
-			}
-			return new CreativeMessage(slot, id, amount, damage, nbtData);
-		} else {
+		if (id == -1) {
 			return new CreativeMessage(slot, id, (short) 0, (short) 0, null);
 		}
+
+		short amount = buffer.readByte();
+		short damage = buffer.readShort();
+		CompoundMap nbtData = null;
+		if (ChannelBufferUtils.hasNbtData(id)) {
+			nbtData = ChannelBufferUtils.readCompound(buffer);
+		}
+		return new CreativeMessage(slot, id, amount, damage, nbtData);
 	}
 
 	@Override

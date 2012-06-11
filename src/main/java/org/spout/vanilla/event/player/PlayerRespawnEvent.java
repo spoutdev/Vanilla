@@ -35,7 +35,7 @@ import org.spout.api.exception.InvalidControllerException;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 
-public class PlayerRespawnEvent extends EntitySpawnEvent implements Cancellable {
+public class PlayerRespawnEvent extends EntitySpawnEvent {
 	private static HandlerList handlers = new HandlerList();
 	private Point point;
 

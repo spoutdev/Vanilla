@@ -50,15 +50,15 @@ public final class SetWindowSlotCodec extends MessageCodec<SetWindowSlotMessage>
 		int item = buffer.readUnsignedShort();
 		if (item == 0xFFFF) {
 			return new SetWindowSlotMessage(id, slot);
-		} else {
-			int count = buffer.readUnsignedByte();
-			int damage = buffer.readUnsignedShort();
-			CompoundMap nbtData = null;
-			if (ChannelBufferUtils.hasNbtData(item)) {
-				nbtData = ChannelBufferUtils.readCompound(buffer);
-			}
-			return new SetWindowSlotMessage(id, slot, item, count, damage, nbtData);
 		}
+
+		int count = buffer.readUnsignedByte();
+		int damage = buffer.readUnsignedShort();
+		CompoundMap nbtData = null;
+		if (ChannelBufferUtils.hasNbtData(item)) {
+			nbtData = ChannelBufferUtils.readCompound(buffer);
+		}
+		return new SetWindowSlotMessage(id, slot, item, count, damage, nbtData);
 	}
 
 	@Override

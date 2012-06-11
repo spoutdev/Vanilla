@@ -41,12 +41,12 @@ public class VanillaPlayerUtil {
 	 * @return True if vanilla survival player entity
 	 */
 	public static boolean isSurvival(Source source) {
-		if (source instanceof Entity) {
-			Entity entity = (Entity) source;
-			return entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival();
-		} else {
+		if (!(source instanceof Entity)) {
 			return false;
 		}
+
+		Entity entity = (Entity) source;
+		return entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival();
 	}
 
 	/**
@@ -55,12 +55,12 @@ public class VanillaPlayerUtil {
 	 * @return True if vanilla creative player entity
 	 */
 	public static boolean isCreative(Source source) {
-		if (source instanceof Entity) {
-			Entity entity = (Entity) source;
-			return entity.getController() instanceof VanillaPlayer && !((VanillaPlayer) entity.getController()).isSurvival();
-		} else {
+		if (!(source instanceof Entity)) {
 			return false;
 		}
+
+		Entity entity = (Entity) source;
+		return entity.getController() instanceof VanillaPlayer && !((VanillaPlayer) entity.getController()).isSurvival();
 	}
 
 	/**

@@ -147,9 +147,9 @@ public class SmallTreeObject extends TreeObject {
 			Block block = world.getBlock(x, y - yy, z);
 			if (block.getMaterial() != VanillaMaterials.AIR) {
 				return;
-			} else {
-				block.setMaterial(VanillaMaterials.VINES, facing);
 			}
+
+			block.setMaterial(VanillaMaterials.VINES, facing);
 		}
 	}
 
@@ -190,9 +190,9 @@ public class SmallTreeObject extends TreeObject {
 		public static SmallTreeType getType(int metadata) {
 			if (metadata < 0 || metadata > 3) {
 				return null;
-			} else {
-				return cache[metadata];
 			}
+
+			return cache[metadata];
 		}
 
 		private SmallTreeType(short metadata) {

@@ -84,11 +84,11 @@ public class Chest extends VanillaBlockController {
 
 	public Chest getOtherHalf() {
 		Block other = VanillaMaterials.CHEST.getOtherHalf(this.getBlock());
-		if (other != null) {
-			return VanillaMaterials.CHEST.getController(other);
-		} else {
+		if (other == null) {
 			return null;
 		}
+
+		return VanillaMaterials.CHEST.getController(other);
 	}
 
 	public boolean isDouble() {

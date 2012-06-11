@@ -91,7 +91,7 @@ public class SpireObject extends WorldGeneratorObject {
 		}
 		w.setBlockMaterial(x, y + totalHeight, z, crystalBase, (short) 0, w);
 		if (spawnEnderCrystal) {
-			w.createAndSpawnEntity(new Point(w, (float) x + 0.5f, y + totalHeight - 1, (float) z + 0.5f), new EnderCrystal());
+			w.createAndSpawnEntity(new Point(w, x + 0.5f, y + totalHeight - 1, z + 0.5f), new EnderCrystal());
 		}
 	}
 

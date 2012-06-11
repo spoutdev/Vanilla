@@ -331,7 +331,7 @@ public final class ChannelBufferUtils {
 	}
 
 	public static float deProtocolifyPosition(int pos) {
-		return ((float) pos) / 32F;
+		return pos / 32F;
 	}
 
 	public static int protocolifyRotation(float rot) {

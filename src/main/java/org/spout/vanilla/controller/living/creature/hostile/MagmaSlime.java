@@ -37,7 +37,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class MagmaSlime extends Slime implements Hostile {
+public class MagmaSlime extends Slime {
 	public MagmaSlime() {
 		super(VanillaControllerTypes.MAGMA_CUBE);
 	}

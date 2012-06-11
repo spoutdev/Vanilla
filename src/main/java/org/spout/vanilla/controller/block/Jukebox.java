@@ -61,11 +61,11 @@ public class Jukebox extends VanillaBlockController {
 	 */
 	public Music getMusic() {
 		ItemStack current = inventory.getMusicSlot();
-		if (canPlay(current)) {
-			return ((MusicDisc) current.getSubMaterial()).getMusic();
-		} else {
+		if (!canPlay(current)) {
 			return Music.NONE;
 		}
+
+		return ((MusicDisc) current.getSubMaterial()).getMusic();
 	}
 
 	public boolean canPlay(ItemStack item) {

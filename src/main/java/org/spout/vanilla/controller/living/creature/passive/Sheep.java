@@ -54,8 +54,8 @@ public class Sheep extends Creature implements Passive {
 		setHealth(8, HealthChangeReason.SPAWN);
 		setMaxHealth(8);
 		super.onAttached();
-		isSheared = (Boolean) data().get("sheep_sheared", false);
-		sheepColor = (Short) data().get("sheep_color", (short) 0);
+		isSheared = data().get("sheep_sheared", false);
+		sheepColor = data().get("sheep_color", (short) 0);
 	}
 
 	@Override

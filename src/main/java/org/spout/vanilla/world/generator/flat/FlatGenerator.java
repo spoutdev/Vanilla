@@ -38,7 +38,7 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 
-public class FlatGenerator implements WorldGenerator, VanillaGenerator {
+public class FlatGenerator implements VanillaGenerator {
 	private final int height;
 
 	public FlatGenerator(int height) {

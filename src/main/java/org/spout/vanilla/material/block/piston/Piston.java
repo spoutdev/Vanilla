@@ -109,18 +109,18 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 	public boolean setExtended(Block block, boolean extended) {
 		if (extended == this.isExtended(block)) {
 			return true;
-		} else {
-			boolean succ;
-			if (extended) {
-				succ = this.extend(block);
-			} else {
-				succ = this.retract(block);
-			}
-			if (succ) {
-				block.setData(LogicUtil.setBit(block.getData(), 0x8, extended));
-			}
-			return succ;
 		}
+
+		boolean succ;
+		if (extended) {
+			succ = this.extend(block);
+		} else {
+			succ = this.retract(block);
+		}
+		if (succ) {
+			block.setData(LogicUtil.setBit(block.getData(), 0x8, extended));
+		}
+		return succ;
 	}
 
 	public boolean extend(Block block) {
@@ -193,11 +193,11 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 		if (mat.equals(VanillaMaterials.AIR)) {
 			return MoveReaction.BREAK;
 		}
-		if (mat instanceof VanillaBlockMaterial) {
-			return ((VanillaBlockMaterial) mat).getMoveReaction(block);
-		} else {
+		if (!(mat instanceof VanillaBlockMaterial)) {
 			return MoveReaction.DENY;
 		}
+
+		return ((VanillaBlockMaterial) mat).getMoveReaction(block);
 	}
 
 	/**

@@ -41,8 +41,8 @@ public class FireProtection extends ArmorEnchantment {
 	public boolean compatibleWith(Enchantment enchantment, VanillaMaterial material) {
 		if (material instanceof Boots) {
 			return enchantment.equals(Enchantments.FEATHER_FALLING);
-		} else {
-			return !enchantment.equals(Enchantments.PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.PROJECTILE_PROTECTION);
 		}
+
+		return !enchantment.equals(Enchantments.PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.PROJECTILE_PROTECTION);
 	}
 }

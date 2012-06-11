@@ -68,7 +68,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 			if (clickedEntity.getController() instanceof VanillaActionController) {
 				VanillaActionController damaged = (VanillaActionController) clickedEntity.getController();
 				int damage = 1;
-				if (holding != null && holdingMat != null && holdingMat instanceof VanillaMaterial) {
+				if (holding != null && holdingMat instanceof VanillaMaterial) {
 					damage = ((VanillaMaterial) holdingMat).getDamage();
 					if (holdingMat instanceof Tool) {
 						// This is a bit of a hack due to the way Tool hierarchy is now (Only Swords can have a damage modifier, but Sword must be an interface and therefore is not able to contain getDamageModifier without code duplication)

@@ -30,7 +30,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
-public class CaveSpider extends Spider implements Hostile {
+public class CaveSpider extends Spider {
 	public CaveSpider() {
 		super(VanillaControllerTypes.CAVE_SPIDER);
 	}

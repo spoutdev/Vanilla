@@ -57,9 +57,9 @@ public class CactusDecorator implements Decorator {
 			Block block = chunk.getBlock(px, i, pz);
 			if (!VanillaMaterials.CACTUS.canPlace(block, (short) 0, BlockFace.TOP, false)) {
 				break;
-			} else {
-				VanillaMaterials.CACTUS.onPlacement(block, (short) 0, BlockFace.TOP, false);
 			}
+
+			VanillaMaterials.CACTUS.onPlacement(block, (short) 0, BlockFace.TOP, false);
 		}
 	}
 

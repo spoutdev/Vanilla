@@ -42,21 +42,21 @@ public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
-		if (c != null && c instanceof Projectile) {
-			Projectile pro = (Projectile) c;
-
-			int id = entity.getId();
-			Vector3 pos = entity.getPosition().multiply(32).floor();
-
-			Entity shooter = pro.getShooter();
-			int shooterid = shooter == null ? 0 : shooter.getId();
-			Vector3 vel = pro.getVelocity();
-
-			Vector3 dir = vel.multiply(8000).floor();
-
-			return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), pos, shooterid, dir)};
-		} else {
+		if (c == null || !(c instanceof Projectile)) {
 			return null;
 		}
+
+		Projectile pro = (Projectile) c;
+
+		int id = entity.getId();
+		Vector3 pos = entity.getPosition().multiply(32).floor();
+
+		Entity shooter = pro.getShooter();
+		int shooterid = shooter == null ? 0 : shooter.getId();
+		Vector3 vel = pro.getVelocity();
+
+		Vector3 dir = vel.multiply(8000).floor();
+
+		return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), pos, shooterid, dir)};
 	}
 }

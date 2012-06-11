@@ -71,19 +71,25 @@ public class EmptyContainer extends BlockItem {
 				block = iter.next();
 				if (block.getMaterial().equals(VanillaMaterials.AIR)) {
 					continue;
-				} else {
-					FullContainer cont = this.getFullItem(block.getMaterial(), block.getData());
-					if (cont != null) {
-						block.setMaterial(VanillaMaterials.AIR);
-						if (VanillaPlayerUtil.isSurvival(entity)) {
-							InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
-							if (inv != null) {
-								inv.setCurrentItem(new ItemStack(cont, 1));
-							}
-						}
-					}
+				}
+
+				FullContainer cont = this.getFullItem(block.getMaterial(), block.getData());
+				if (cont == null) {
 					return;
 				}
+
+				block.setMaterial(VanillaMaterials.AIR);
+				if (!VanillaPlayerUtil.isSurvival(entity)) {
+					return;
+				}
+
+				InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
+				if (inv == null) {
+					return;
+				}
+
+				inv.setCurrentItem(new ItemStack(cont, 1));
+				return;
 			}
 		}
 	}

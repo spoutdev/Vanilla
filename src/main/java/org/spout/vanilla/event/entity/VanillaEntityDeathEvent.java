@@ -31,7 +31,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityDeathEvent;
 
-public class VanillaEntityDeathEvent extends EntityDeathEvent implements Cancellable {
+public class VanillaEntityDeathEvent extends EntityDeathEvent {
 	private static HandlerList handlers = new HandlerList();
 	private int dropExp;
 

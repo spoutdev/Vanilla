@@ -47,6 +47,8 @@ import org.spout.vanilla.material.block.controlled.MonsterSpawner;
 import org.spout.vanilla.material.block.controlled.NoteBlock;
 import org.spout.vanilla.material.block.controlled.PistonExtensionMoving;
 import org.spout.vanilla.material.block.controlled.SignBase;
+import org.spout.vanilla.material.block.controlled.SignPost;
+import org.spout.vanilla.material.block.controlled.WallSign;
 import org.spout.vanilla.material.block.door.IronDoorBlock;
 import org.spout.vanilla.material.block.door.WoodenDoorBlock;
 import org.spout.vanilla.material.block.liquid.Lava;
@@ -303,9 +305,9 @@ public final class VanillaMaterials {
 	public static final FarmLand FARMLAND = new FarmLand("Farmland", 60);
 	public static final Furnace FURNACE = new Furnace("Furnace", 61, false);
 	public static final Furnace FURNACE_BURNING = new Furnace("Burning Furnace", 62, true);
-	public static final SignBase SIGN_POST = new SignBase("Sign Post", 63);
+	public static final SignPost SIGN_POST = new SignPost("Sign Post", 63);
 	public static final Ladder LADDER = new Ladder("Ladder", 65);
-	public static final SignBase WALL_SIGN = new SignBase("Wall Sign", 68);
+	public static final SignBase WALL_SIGN = new WallSign("Wall Sign", 68);
 	public static final Lever LEVER = new Lever("Lever", 69);
 	public static final StonePressurePlate STONE_PRESSURE_PLATE = new StonePressurePlate("Stone Pressure Plate", 70);
 	public static final IronDoorBlock IRON_DOOR_BLOCK = new IronDoorBlock("Iron Door", 71);
@@ -526,26 +528,24 @@ public final class VanillaMaterials {
 					Object temp = field.get(null);
 					if (temp instanceof VanillaMaterial) {
 						VanillaMaterial material = (VanillaMaterial) temp;
-						if (material != null) {
-							Material mat = (Material) material;
-							if (mat.isSubMaterial()) {
-								mat = mat.getParentMaterial();
-							}
-							reverseTable.put((short) material.getMinecraftId(), mat);
-							short minMask;
-							short dataMask;
-							if (material instanceof VanillaBlockMaterial) {
-								minMask = MaterialRegistry.getMinimumDatamask((VanillaBlockMaterial) material);
-								dataMask = ((VanillaBlockMaterial) material).getDataMask();
-							} else if (material instanceof VanillaItemMaterial) {
-								minMask = MaterialRegistry.getMinimumDatamask((VanillaItemMaterial) material);
-								dataMask = ((VanillaItemMaterial) material).getDataMask();
-							} else {
-								throw new IllegalStateException("All materials should be either Blocks or Items");
-							}
-							if (minMask != dataMask) {
-								throw new IllegalStateException("Submaterial data mask is not set to minimum valid value (exp = " + minMask + ", actual = " + dataMask + " for material " + material);
-							}
+						Material mat = (Material) material;
+						if (mat.isSubMaterial()) {
+							mat = mat.getParentMaterial();
+						}
+						reverseTable.put((short) material.getMinecraftId(), mat);
+						short minMask;
+						short dataMask;
+						if (material instanceof VanillaBlockMaterial) {
+							minMask = MaterialRegistry.getMinimumDatamask((VanillaBlockMaterial) material);
+							dataMask = ((VanillaBlockMaterial) material).getDataMask();
+						} else if (material instanceof VanillaItemMaterial) {
+							minMask = MaterialRegistry.getMinimumDatamask((VanillaItemMaterial) material);
+							dataMask = ((VanillaItemMaterial) material).getDataMask();
+						} else {
+							throw new IllegalStateException("All materials should be either Blocks or Items");
+						}
+						if (minMask != dataMask) {
+							throw new IllegalStateException("Submaterial data mask is not set to minimum valid value (exp = " + minMask + ", actual = " + dataMask + " for material " + material);
 						}
 					}
 				}
@@ -565,11 +565,11 @@ public final class VanillaMaterials {
 	 * @return minecraft id
 	 */
 	public static short getMinecraftId(Material material) {
-		if (material instanceof VanillaMaterial) {
-			return (short) ((VanillaMaterial) material).getMinecraftId();
-		} else {
+		if (!(material instanceof VanillaMaterial)) {
 			return BlockMaterial.AIR.getId();
 		}
+
+		return (short) ((VanillaMaterial) material).getMinecraftId();
 	}
 
 	/**

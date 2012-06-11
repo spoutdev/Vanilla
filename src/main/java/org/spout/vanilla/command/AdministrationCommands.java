@@ -393,7 +393,7 @@ public class AdministrationCommands {
 
 	@Command(aliases = "debug", usage = "[type] (/resend /resendall)", desc = "Debug commands", max = 2)
 	@CommandPermissions("vanilla.command.debug")
-	public void debug(CommandContext args, CommandSource source) throws CommandException {
+	public void debug(CommandContext args, CommandSource source) {
 		Player player = null;
 		if (source instanceof Player) {
 			player = (Player) source;
@@ -454,7 +454,7 @@ public class AdministrationCommands {
 
 	@Command(aliases = {"version", "vr"}, usage = "", desc = "Print out the version information for Vanilla", min = 0, max = 0)
 	@CommandPermissions("vanilla.command.version")
-	public void getVersion(CommandContext args, CommandSource source) throws CommandException {
+	public void getVersion(CommandContext args, CommandSource source) {
 		source.sendMessage("This server is running " + plugin.getDescription().getName() + " " + plugin.getDescription().getVersion() + " (Implementing Minecraft protocol v" + plugin.getDescription().getData("protocol").get() + "), powered by Spout " + Spout.getEngine().getVersion() + " (Implementing SpoutAPI " + Spout.getAPIVersion() + ")");
 	}
 

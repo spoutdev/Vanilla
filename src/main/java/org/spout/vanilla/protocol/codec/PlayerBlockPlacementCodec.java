@@ -49,18 +49,19 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 		int y = buffer.readUnsignedByte();
 		int z = buffer.readInt();
 		int direction = buffer.readUnsignedByte();
+
 		int id = buffer.readUnsignedShort();
 		if (id == 0xFFFF) {
 			return new PlayerBlockPlacementMessage(x, y, z, direction);
-		} else {
-			int count = buffer.readUnsignedByte();
-			int damage = buffer.readShort();
-			CompoundMap nbtData = null;
-			if (ChannelBufferUtils.hasNbtData(id)) {
-				nbtData = ChannelBufferUtils.readCompound(buffer);
-			}
-			return new PlayerBlockPlacementMessage(x, y, z, direction, id, count, damage, nbtData);
 		}
+
+		int count = buffer.readUnsignedByte();
+		int damage = buffer.readShort();
+		CompoundMap nbtData = null;
+		if (ChannelBufferUtils.hasNbtData(id)) {
+			nbtData = ChannelBufferUtils.readCompound(buffer);
+		}
+		return new PlayerBlockPlacementMessage(x, y, z, direction, id, count, damage, nbtData);
 	}
 
 	@Override

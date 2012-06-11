@@ -56,11 +56,7 @@ public class Gravel extends Solid implements DynamicMaterial, Mineable {
 
 	@Override
 	public boolean canSupport(BlockMaterial material, BlockFace face) {
-		if (material.equals(VanillaMaterials.FIRE)) {
-			return face == BlockFace.TOP;
-		} else {
-			return false;
-		}
+		return face == BlockFace.TOP && material.equals(VanillaMaterials.FIRE);
 	}
 
 	@Override

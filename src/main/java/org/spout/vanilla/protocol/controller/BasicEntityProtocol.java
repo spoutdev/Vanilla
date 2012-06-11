@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.controller;
 
 import org.spout.api.protocol.EntityProtocol;
 
-public abstract class BasicEntityProtocol extends VanillaEntityProtocol implements EntityProtocol {
+public abstract class BasicEntityProtocol extends VanillaEntityProtocol {
 	private final int spawnID;
 
 	public BasicEntityProtocol(int spawnID) {

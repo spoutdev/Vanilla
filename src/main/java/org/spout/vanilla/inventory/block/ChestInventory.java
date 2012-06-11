@@ -84,8 +84,8 @@ public class ChestInventory extends WindowInventory {
 		Chest other = this.owner.getOtherHalf();
 		if (other == null) {
 			return new ChestWindow(player, this);
-		} else {
-			return new ChestWindow(player, this, other.getInventory());
 		}
+
+		return new ChestWindow(player, this, other.getInventory());
 	}
 }

@@ -225,21 +225,21 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @return the redstone power level
 	 */
 	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
-		if (this.isRedstoneConductor()) {
-			short power = 0;
-			Block neigh;
-			BlockMaterial mat;
-			for (BlockFace face : BlockFaces.NESWBT) {
-				neigh = block.translate(face);
-				mat = neigh.getMaterial();
-				if (mat instanceof RedstoneSource) {
-					power = (short) Math.max(power, ((RedstoneSource) mat).getRedstonePowerTo(neigh, face.getOpposite(), powerMode));
-				}
-			}
-			return power;
-		} else {
+		if (!this.isRedstoneConductor()) {
 			return REDSTONE_POWER_MIN;
 		}
+
+		short power = 0;
+		Block neigh;
+		BlockMaterial mat;
+		for (BlockFace face : BlockFaces.NESWBT) {
+			neigh = block.translate(face);
+			mat = neigh.getMaterial();
+			if (mat instanceof RedstoneSource) {
+				power = (short) Math.max(power, ((RedstoneSource) mat).getRedstonePowerTo(neigh, face.getOpposite(), powerMode));
+			}
+		}
+		return power;
 	}
 
 	/**

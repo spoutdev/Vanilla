@@ -89,10 +89,10 @@ public class PoweredRail extends RailBase implements RedstoneTarget {
 	public boolean isReceivingPower(Block block) {
 		if (RedstoneUtil.isReceivingPower(block)) {
 			return true;
-		} else {
-			BlockFace[] facing = this.getState(block).getDirections();
-			return isReceivingPower(block, facing[0]) || isReceivingPower(block, facing[1]);
 		}
+
+		BlockFace[] facing = this.getState(block).getDirections();
+		return isReceivingPower(block, facing[0]) || isReceivingPower(block, facing[1]);
 	}
 
 	/**

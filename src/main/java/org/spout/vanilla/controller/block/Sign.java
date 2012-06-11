@@ -55,7 +55,7 @@ public class Sign extends VanillaBlockController {
 		Block block = getBlock();
 		HashSet<Player> nearby = new HashSet<Player>();
 		nearby.addAll(block.getWorld().getNearbyPlayers(block.getPosition(), range));
-		if (nearby == null || nearby.isEmpty()) {
+		if (nearby.isEmpty()) {
 			return;
 		}
 

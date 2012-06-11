@@ -55,20 +55,6 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 		return true;
 	}
 
-	@SuppressWarnings("unused")
-	private void update(Block middle) {
-		middle.update();
-		//		Block block;
-		//		for (BlockFace face : BlockFaces.NESWBT) {
-		//			block = middle.translate(face);
-		//			if (block.getMaterial().equals(this)) {
-		//				VanillaMaterials.REDSTONE_WIRE.onUpdate(block);
-		//			} else {
-		//				block.update(false);
-		//			}
-		//		}
-	}
-
 	private void doRedstoneUpdate(Block middle) {
 		Block block;
 		for (BlockFace face : BlockFaces.NESWBT) {
@@ -126,7 +112,7 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 			short current = this.getRedstonePower(block);
 			if (current == receiving) {
 				//do some updates for solid blocks around this block
-				Block neigh;
+				Block neigh, subneigh;
 				BlockMaterial mat;
 				for (BlockFace face : BlockFaces.NESW) {
 					neigh = block.translate(face);
@@ -137,7 +123,10 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 					neigh.update(false);
 					for (BlockFace face2 : BlockFaces.NESWBT) {
 						if (face != face2.getOpposite()) {
-							neigh.translate(face2).update(false);
+							subneigh = neigh.translate(face2);
+							if (!(subneigh.getMaterial() instanceof RedstoneWire)) {
+								subneigh.update(false);
+							}
 						}
 					}
 				}

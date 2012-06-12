@@ -139,27 +139,27 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 	}
 
 	@Override
-	public long onPlacement(Block b, Region r, long currentTime) {
+	public void onPlacement(Block b, Region r, long currentTime) {
 		int data = b.getData() & 0xFFFF;
 		if ((data & aliveMask) == 0) {
-			return -1;
+			return;
 		}
 
-		return currentTime + 10000;
+		b.dynamicUpdate(currentTime + 10000);
 	}
 
 	@Override
-	public long update(Block b, Region r, long updateTime, long lastUpdateTime, Object hint) {
+	public void onDynamicUpdate(Block b, Region r, long updateTime, long lastUpdateTime, int updateData, Object hint) {
 		int data = b.getData() & 0xFFFF;
 		if ((data & aliveMask) == 0) {
-			return -1;
+			return;
 		}
 
 		Block trunk = b;
 		int expectHeight = b.getBlockDataField(heightMask);
 		for (int i = 0; i < expectHeight + 1; i++) {
 			if (!(trunk.getMaterial() instanceof Log)) {
-				return -1;
+				return;
 			}
 			trunk = trunk.translate(BlockFace.TOP);
 		}
@@ -171,7 +171,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 				trunk = trunk.translate(BlockFace.TOP);
 			}
 			sapling.growTree(b, sapling);
-			return -1;
+			return;
 		}
 
 		if (trunkMaterial == BlockMaterial.AIR || trunkMaterial instanceof Leaves) {
@@ -182,10 +182,9 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 				trunk.setData(data & dataMask);
 			}
 			b.setBlockDataField(heightMask, expectHeight + 1);
-			return updateTime + 10000;
+			b.dynamicUpdate(updateTime + 10000);
+		} else {		
+			b.setData(data & dataMask);
 		}
-
-		b.setData(data & dataMask);
-		return -1;
 	}
 }

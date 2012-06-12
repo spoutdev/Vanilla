@@ -150,15 +150,13 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	}
 
 	@Override
-	public long onPlacement(Block b, Region r, long currentTime) {
-		return -1;
+	public void onPlacement(Block b, Region r, long currentTime) {
 	}
 
 	@Override
-	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
+	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
 		this.setPressed(block, false);
 		playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_CLICK_2);
 		this.doRedstoneUpdates(block);
-		return -1;
 	}
 }

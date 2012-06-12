@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.InsertionPolicy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
@@ -102,7 +101,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 		super.onUpdate(block);
 		boolean receiving = this.isReceivingPower(block);
 		if (this.isPowered() != receiving) {
-			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay(block), InsertionPolicy.WEAK_REPLACE_LATER, receiving);
+			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay(block), receiving ? 1 : 0, null);
 		}
 	}
 
@@ -179,22 +178,20 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	}
 
 	@Override
-	public long onPlacement(Block b, Region r, long currentTime) {
-		long nextUpdate = this.getTickDelay(b) + currentTime;
-		return nextUpdate;
+	public void onPlacement(Block b, Region r, long currentTime) {
+		b.dynamicUpdate(this.getTickDelay(b) + currentTime);
 	}
 
 	@Override
-	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
+	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
 		boolean receiving = this.isReceivingPower(block);
-		if (hint != null && hint instanceof Boolean && (Boolean) hint) {
+		if ((data & 1) != 0) {
 			this.setPowered(block, true);
 			if (!receiving) {
-				return updateTime + this.getTickDelay(block);
+				block.dynamicUpdate(updateTime + this.getTickDelay(block));
 			}
 		} else if (receiving != this.isPowered()) {
 			this.setPowered(block, receiving);
 		}
-		return -1;
 	}
 }

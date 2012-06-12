@@ -151,17 +151,16 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	}
 
 	@Override
-	public long onPlacement(Block b, Region r, long currentTime) {
-		return currentTime + 10000;
+	public void onPlacement(Block b, Region r, long currentTime) {
+		b.dynamicUpdate(currentTime + 10000);
 	}
 
 	@Override
-	public long update(Block b, Region r, long updateTime, long lastUpdateTime, Object hint) {
+	public void onDynamicUpdate(Block b, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
 		short oldData = b.getData();
 		b.setMaterial(Log.DEFAULT);
 		b.setData(oldData & dataMask);
 		b.setBlockDataBits(Log.aliveMask);
-		return -1;
 	}
 
 	@Override

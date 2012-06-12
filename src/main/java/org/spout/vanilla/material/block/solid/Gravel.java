@@ -46,7 +46,7 @@ import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class Gravel extends Solid implements DynamicMaterial, Mineable {
+public class Gravel extends Solid implements Mineable {
 	private Random rand = new Random();
 
 	public Gravel(String name, int id) {
@@ -78,24 +78,5 @@ public class Gravel extends Solid implements DynamicMaterial, Mineable {
 			drops.add(new ItemStack(this, 1));
 		}
 		return drops;
-	}
-
-	@Override
-	public Vector3[] maxRange() {
-		return new Vector3[0];
-	}
-
-	@Override
-	public long onPlacement(Block b, Region r, long currentTime) {
-		return currentTime;
-	}
-
-	@Override
-	public long update(Block b, Region r, long updateTime, long lastUpdateTime, Object hint) {
-		if (!b.translate(0, -1, 0).getMaterial().isSolid()) {
-			b.setMaterial(VanillaMaterials.AIR);
-			b.getWorld().createAndSpawnEntity(b.getPosition(), new MovingBlock(VanillaControllerTypes.MOVING_BLOCK, this));
-		}
-		return b.getWorld().getAge() + 1;
 	}
 }

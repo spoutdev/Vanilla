@@ -264,8 +264,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 
 	@Override
-	public long onPlacement(Block b, Region r, long currentTime) {
-		return -1;
+	public void onPlacement(Block b, Region r, long currentTime) {
 	}
 
 	private void doPhysics(Block block) {
@@ -305,11 +304,10 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 	
 	@Override
-	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
+	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
 		if (useDelay) {
 			// TODO: Does not always update, or does not always fire this update function
 			this.doPhysics(block);
 		}
-		return -1;
 	}
 }

@@ -124,18 +124,17 @@ public abstract class PressurePlate extends GroundAttachable implements Mineable
 	}
 
 	@Override
-	public long onPlacement(Block b, Region r, long currentTime) {
-		return -1;
+	public void onPlacement(Block b, Region r, long currentTime) {
 	}
 
 	@Override
-	public long update(Block block, Region r, long updateTime, long lastUpdateTime, Object hint) {
+	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
 		if (!this.isPressed(block)) {
-			return TICK_DELAY;
+			block.dynamicUpdate(updateTime + TICK_DELAY);
+			return;
 		}
 
 		//TODO: Check if an entity is on top and don't undo it then
 		this.setPressed(block, false);
-		return -1;
 	}
 }

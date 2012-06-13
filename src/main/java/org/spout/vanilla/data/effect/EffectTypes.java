@@ -24,38 +24,8 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.action;
+package org.spout.vanilla.data.effect;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.component.controller.action.EntityAction;
-import org.spout.api.geo.LoadOption;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.material.BlockMaterial;
-
-import org.spout.vanilla.controller.VanillaActionController;
-
-public class GravityAction extends EntityAction<VanillaActionController> {
-	public GravityAction(VanillaActionController actor) {
-		super(actor);
-	}
-
-	@Override
-	public boolean shouldRun(float dt) {
-		VanillaActionController controller = getActor();
-		Entity entity = controller.getParent();
-		Point future = entity.getPosition().add(controller.getVelocity());
-		//Non observers entities should not be loading chunks
-		if (!entity.isObserver() && future.getWorld().getChunkFromBlock(future, LoadOption.NO_LOAD) == null) {
-			return false;
-		}
-		BlockMaterial block = entity.getWorld().getBlock(future).getMaterial();
-		return !block.isSolid();
-	}
-
-	@Override
-	public void run() {
-		VanillaActionController controller = getActor();
-		controller.setVelocity(controller.getVelocity().subtract(0, 0.04f, 0));
-		controller.move();
-	}
+public class EffectTypes {
+	public static final EffectType SPEED = new EffectType(1);
 }

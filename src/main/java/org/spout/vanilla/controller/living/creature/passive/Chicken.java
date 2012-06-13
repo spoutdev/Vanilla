@@ -27,20 +27,30 @@
 package org.spout.vanilla.controller.living.creature.passive;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
+import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Chicken extends Creature implements Passive {
+	private int nextEgg = getNextEggTime();
+	public static final int MINIMUM_EGG_BREEDING_TIME = 6000;
+	public static final int MAXIMUM_EGG_BREEDING_TIME = 12000;
+	public static final int NEVER = -1;
+	private Random random = new Random();
+
 	public Chicken() {
 		super(VanillaControllerTypes.CHICKEN);
 	}
@@ -53,7 +63,8 @@ public class Chicken extends Creature implements Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
+	public Set<ItemStack> getDrops(Source source,
+			VanillaActionController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
@@ -70,5 +81,45 @@ public class Chicken extends Creature implements Passive {
 		}
 
 		return drops;
+	}
+	
+	/**
+	 * Sets the time until the next egg spawns. Pass Chicken.NEVER to disable
+	 * egg spawning.
+	 * 
+	 * @param time
+	 */
+	public void setNextEggTime(int time) {
+		nextEgg = time;
+	}
+
+	/**
+	 * @return the time until the next egg spawns.
+	 */
+	public int getNextEggTime() {
+		return nextEgg;
+	}
+
+	@Override
+	public void onTick(float dt) {
+		if (nextEgg == 0) {
+			Item item = new Item(new ItemStack(VanillaMaterials.EGG, 1),
+					Vector3.ZERO);
+			getParent()
+					.getLastTransform()
+					.getPosition()
+					.getWorld()
+					.createAndSpawnEntity(
+							getParent().getLastTransform().getPosition(), item);
+			nextEgg = getRandomNextEggTime();
+		} else if (nextEgg != NEVER) {
+			nextEgg--;
+		}
+	}
+
+	private int getRandomNextEggTime() {
+		return random.nextInt(MAXIMUM_EGG_BREEDING_TIME
+				- MINIMUM_EGG_BREEDING_TIME)
+				+ MINIMUM_EGG_BREEDING_TIME;
 	}
 }

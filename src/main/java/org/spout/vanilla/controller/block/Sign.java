@@ -84,11 +84,11 @@ public class Sign extends VanillaBlockController {
 	}
 
 	public String getLine(int line) {
-		return text[line + 1];
+		return text[line];
 	}
 
 	public void setLine(String text, int line) {
-		this.text[line + 1] = text;
+		this.text[line] = text;
 		update();
 	}
 

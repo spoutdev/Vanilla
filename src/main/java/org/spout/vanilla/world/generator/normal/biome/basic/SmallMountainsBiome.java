@@ -24,50 +24,42 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome;
+package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.configuration.BiomeConfiguration;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-public class ForestBiome extends NormalBiome {
+public class SmallMountainsBiome extends NormalBiome {
 
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(BiomeConfiguration.FOREST_X_SCALE.getDouble());
-		NOISE.setyScale(BiomeConfiguration.FOREST_Y_SCALE.getDouble());
-		NOISE.setzScale(BiomeConfiguration.FOREST_Z_SCALE.getDouble());
+		NOISE.setxScale(BiomeConfiguration.SMALL_MOUNTAINS_X_SCALE.getDouble());
+		NOISE.setyScale(BiomeConfiguration.SMALL_MOUNTAINS_Y_SCALE.getDouble());
+		NOISE.setzScale(BiomeConfiguration.SMALL_MOUNTAINS_Z_SCALE.getDouble());
 	}
 
-	public ForestBiome(int biomeId) {
-		super(biomeId, NOISE/*
-				 * , new PondDecorator(), new TreeDecorator(), new GrassDecorator()
-				 */);
+	public SmallMountainsBiome(int biomeId) {
+		super(biomeId, NOISE);
 
-		this.minDensityTerrainHeight = BiomeConfiguration.FOREST_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.maxDensityTerrainHeight = BiomeConfiguration.FOREST_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+		minDensityTerrainHeight = BiomeConfiguration.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
+		maxDensityTerrainHeight = BiomeConfiguration.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
 
-		this.minDensityTerrainThickness = BiomeConfiguration.FOREST_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
-		this.maxDensityTerrainThickness = BiomeConfiguration.FOREST_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+		minDensityTerrainThickness = BiomeConfiguration.SMALL_MOUNTAINS_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
+		maxDensityTerrainThickness = BiomeConfiguration.SMALL_MOUNTAINS_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
 
-		this.upperHeightMapScale = BiomeConfiguration.FOREST_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		this.bottomHeightMapScale = BiomeConfiguration.FOREST_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+		upperHeightMapScale = BiomeConfiguration.SMALL_MOUNTAINS_UPPER_HEIGHT_MAP_SCALE.getFloat();
+		bottomHeightMapScale = BiomeConfiguration.SMALL_MOUNTAINS_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
 
-		this.densityTerrainThicknessScale = BiomeConfiguration.FOREST_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
-		this.densityTerrainHeightScale = BiomeConfiguration.FOREST_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
-	}
-
-	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		super.generateColumn(blockData, x, chunkY, z);
+		densityTerrainThicknessScale = BiomeConfiguration.SMALL_MOUNTAINS_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
+		densityTerrainHeightScale = BiomeConfiguration.SMALL_MOUNTAINS_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}
 
 	@Override
 	public String getName() {
-		return "Forest";
+		return "Small Mountains";
 	}
 }

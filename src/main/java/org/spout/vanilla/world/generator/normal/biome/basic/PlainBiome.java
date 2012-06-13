@@ -24,41 +24,44 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome;
+package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 import org.spout.vanilla.configuration.BiomeConfiguration;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-public class TaigaBiome extends NormalBiome {
+public class PlainBiome extends NormalBiome {
 
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(BiomeConfiguration.TAIGA_X_SCALE.getDouble());
-		NOISE.setyScale(BiomeConfiguration.TAIGA_Y_SCALE.getDouble());
-		NOISE.setzScale(BiomeConfiguration.TAIGA_Z_SCALE.getDouble());
+		NOISE.setxScale(BiomeConfiguration.PLAINS_X_SCALE.getDouble());
+		NOISE.setyScale(BiomeConfiguration.PLAINS_Y_SCALE.getDouble());
+		NOISE.setzScale(BiomeConfiguration.PLAINS_Z_SCALE.getDouble());
 	}
 
-	public TaigaBiome(int biomeId) {
-		super(biomeId, NOISE);
+	public PlainBiome(int id) {
+		super(id, NOISE/*
+				 * , new PondDecorator(), new GrassDecorator(), new FlowerDecorator()
+				 */);
 
-		this.minDensityTerrainHeight = BiomeConfiguration.TAIGA_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.maxDensityTerrainHeight = BiomeConfiguration.TAIGA_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.minDensityTerrainHeight = BiomeConfiguration.PLAINS_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.maxDensityTerrainHeight = BiomeConfiguration.PLAINS_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
 
-		this.minDensityTerrainThickness = BiomeConfiguration.TAIGA_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
-		this.maxDensityTerrainThickness = BiomeConfiguration.TAIGA_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.minDensityTerrainThickness = BiomeConfiguration.PLAINS_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.maxDensityTerrainThickness = BiomeConfiguration.PLAINS_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
 
-		this.upperHeightMapScale = BiomeConfiguration.TAIGA_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		this.bottomHeightMapScale = BiomeConfiguration.TAIGA_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+		this.upperHeightMapScale = BiomeConfiguration.PLAINS_UPPER_HEIGHT_MAP_SCALE.getFloat();
+		this.bottomHeightMapScale = BiomeConfiguration.PLAINS_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
 
-		this.densityTerrainThicknessScale = BiomeConfiguration.TAIGA_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
-		this.densityTerrainHeightScale = BiomeConfiguration.TAIGA_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
+		this.densityTerrainThicknessScale = BiomeConfiguration.PLAINS_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
+		this.densityTerrainHeightScale = BiomeConfiguration.PLAINS_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}
 
 	@Override
 	public String getName() {
-		return "Taiga";
+		return "Plains";
 	}
 }

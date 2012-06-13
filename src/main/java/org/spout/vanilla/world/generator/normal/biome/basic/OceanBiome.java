@@ -24,42 +24,42 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome;
+package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
-import org.spout.vanilla.configuration.BiomeConfiguration;
 
-public class MountainsBiome extends NormalBiome {
+import org.spout.vanilla.configuration.BiomeConfiguration;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
+
+public class OceanBiome extends NormalBiome {
 
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(BiomeConfiguration.MOUNTAINS_X_SCALE.getDouble());
-		NOISE.setyScale(BiomeConfiguration.MOUNTAINS_Y_SCALE.getDouble());
-		NOISE.setzScale(BiomeConfiguration.MOUNTAINS_Z_SCALE.getDouble());
+		NOISE.setxScale(BiomeConfiguration.OCEAN_X_SCALE.getDouble());
+		NOISE.setyScale(BiomeConfiguration.OCEAN_Y_SCALE.getDouble());
+		NOISE.setzScale(BiomeConfiguration.OCEAN_Z_SCALE.getDouble());
 	}
 
-	public MountainsBiome(int biomeId) {
-		super(biomeId, NOISE/*
-				 * , new FlowerDecorator(), new TreeDecorator()
-				 */);
+	public OceanBiome(int biomeId) {
+		super(biomeId, NOISE);
 
-		this.minDensityTerrainHeight = BiomeConfiguration.MOUNTAINS_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.maxDensityTerrainHeight = BiomeConfiguration.MOUNTAINS_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.minDensityTerrainHeight = BiomeConfiguration.OCEAN_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.maxDensityTerrainHeight = BiomeConfiguration.OCEAN_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
 
-		this.minDensityTerrainThickness = BiomeConfiguration.MOUNTAINS_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
-		this.maxDensityTerrainThickness = BiomeConfiguration.MOUNTAINS_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.minDensityTerrainThickness = BiomeConfiguration.OCEAN_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.maxDensityTerrainThickness = BiomeConfiguration.OCEAN_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
 
-		this.upperHeightMapScale = BiomeConfiguration.MOUNTAINS_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		this.bottomHeightMapScale = BiomeConfiguration.MOUNTAINS_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+		this.upperHeightMapScale = BiomeConfiguration.OCEAN_UPPER_HEIGHT_MAP_SCALE.getFloat();
+		this.bottomHeightMapScale = BiomeConfiguration.OCEAN_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
 
-		this.densityTerrainThicknessScale = BiomeConfiguration.MOUNTAINS_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
-		this.densityTerrainHeightScale = BiomeConfiguration.MOUNTAINS_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
+		this.densityTerrainThicknessScale = BiomeConfiguration.OCEAN_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
+		this.densityTerrainHeightScale = BiomeConfiguration.OCEAN_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}
 
 	@Override
 	public String getName() {
-		return "Mountains";
+		return "Ocean";
 	}
 }

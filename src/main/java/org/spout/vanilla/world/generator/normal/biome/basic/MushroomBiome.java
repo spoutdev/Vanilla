@@ -24,43 +24,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome;
+package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.vanilla.configuration.BiomeConfiguration;
+import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-public class PlainBiome extends NormalBiome {
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
+public class MushroomBiome extends NormalBiome {
+	
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(BiomeConfiguration.PLAINS_X_SCALE.getDouble());
-		NOISE.setyScale(BiomeConfiguration.PLAINS_Y_SCALE.getDouble());
-		NOISE.setzScale(BiomeConfiguration.PLAINS_Z_SCALE.getDouble());
+		NOISE.setxScale(0.080D);
+		NOISE.setyScale(0.045D);
+		NOISE.setzScale(0.080D);
 	}
 
-	public PlainBiome(int id) {
-		super(id, NOISE/*
-				 * , new PondDecorator(), new GrassDecorator(), new FlowerDecorator()
-				 */);
+	public MushroomBiome(int biomeId) {
+		super(biomeId, NOISE);
+	}
 
-		this.minDensityTerrainHeight = BiomeConfiguration.PLAINS_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.maxDensityTerrainHeight = BiomeConfiguration.PLAINS_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
-
-		this.minDensityTerrainThickness = BiomeConfiguration.PLAINS_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
-		this.maxDensityTerrainThickness = BiomeConfiguration.PLAINS_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
-
-		this.upperHeightMapScale = BiomeConfiguration.PLAINS_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		this.bottomHeightMapScale = BiomeConfiguration.PLAINS_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
-
-		this.densityTerrainThicknessScale = BiomeConfiguration.PLAINS_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
-		this.densityTerrainHeightScale = BiomeConfiguration.PLAINS_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
+	@Override
+	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+		super.replaceBlocks(blockData, x, chunkY, z);
+		final byte size = (byte) blockData.getSize().getY();
+		final int startY = chunkY * 16;
+		final int endY = startY + size;
+		for (int y = startY; y < endY; y++) {
+			if (blockData.get(x, y, z) == VanillaMaterials.GRASS.getId()) {
+				blockData.set(x, y, z, VanillaMaterials.MYCELIUM.getId());
+			}
+		}
 	}
 
 	@Override
 	public String getName() {
-		return "Plains";
+		return "Mushroom Island";
 	}
 }

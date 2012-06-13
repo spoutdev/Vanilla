@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome;
+package org.spout.vanilla.world.generator.normal.biome.shore;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
@@ -33,39 +33,39 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.configuration.BiomeConfiguration;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-public class DesertBiome extends NormalBiome {
+public class BeachBiome extends NormalBiome {
 
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(BiomeConfiguration.DESERT_X_SCALE.getDouble());
-		NOISE.setyScale(BiomeConfiguration.DESERT_Y_SCALE.getDouble());
-		NOISE.setzScale(BiomeConfiguration.DESERT_Z_SCALE.getDouble());
+		NOISE.setxScale(BiomeConfiguration.BEACH_X_SCALE.getDouble());
+		NOISE.setyScale(BiomeConfiguration.BEACH_Y_SCALE.getDouble());
+		NOISE.setzScale(BiomeConfiguration.BEACH_Z_SCALE.getDouble());
 	}
 
-	public DesertBiome(int biomeId) {
-		super(biomeId, NOISE/*
-				 * , new CactusDecorator()
-				 */);
+	public BeachBiome(int biomeId) {
+		super(biomeId, NOISE);
 
-		this.minDensityTerrainHeight = BiomeConfiguration.DESERT_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.maxDensityTerrainHeight = BiomeConfiguration.DESERT_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.minDensityTerrainHeight = BiomeConfiguration.BEACH_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.maxDensityTerrainHeight = BiomeConfiguration.BEACH_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
 
 		this.minDensityTerrainThickness = BiomeConfiguration.BEACH_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
-		this.maxDensityTerrainThickness = BiomeConfiguration.DESERT_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.maxDensityTerrainThickness = BiomeConfiguration.BEACH_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
 
-		this.upperHeightMapScale = BiomeConfiguration.DESERT_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		this.bottomHeightMapScale = BiomeConfiguration.DESERT_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+		this.upperHeightMapScale = BiomeConfiguration.BEACH_UPPER_HEIGHT_MAP_SCALE.getFloat();
+		this.bottomHeightMapScale = BiomeConfiguration.BEACH_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
 
-		this.densityTerrainThicknessScale = BiomeConfiguration.DESERT_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
-		this.densityTerrainHeightScale = BiomeConfiguration.DESERT_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
+		this.densityTerrainThicknessScale = BiomeConfiguration.BEACH_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
+		this.densityTerrainHeightScale = BiomeConfiguration.BEACH_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}
 
 	@Override
 	public String getName() {
-		return "Desert";
+		return "Beach";
 	}
 
 	@Override
@@ -109,6 +109,9 @@ public class DesertBiome extends NormalBiome {
 			if (id == VanillaMaterials.AIR.getId()) {
 				hasSurface = true;
 				groundCoverDepth = 0;
+				if (y <= NormalGenerator.SEA_LEVEL) {
+					blockData.set(x, y, z, VanillaMaterials.STATIONARY_WATER.getId());
+				}
 			} else {
 				if (hasSurface) {
 					if (groundCoverDepth < sandDepth) {

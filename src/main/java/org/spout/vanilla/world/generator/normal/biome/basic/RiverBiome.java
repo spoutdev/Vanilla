@@ -24,41 +24,41 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome;
+package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.vanilla.configuration.BiomeConfiguration;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-public class OceanBiome extends NormalBiome {
+public class RiverBiome extends NormalBiome {
 
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
 		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(BiomeConfiguration.OCEAN_X_SCALE.getDouble());
-		NOISE.setyScale(BiomeConfiguration.OCEAN_Y_SCALE.getDouble());
-		NOISE.setzScale(BiomeConfiguration.OCEAN_Z_SCALE.getDouble());
+		NOISE.setxScale(0.080);
+		NOISE.setyScale(0.080);
+		NOISE.setzScale(0.080);
 	}
 
-	public OceanBiome(int biomeId) {
+	public RiverBiome(int biomeId) {
 		super(biomeId, NOISE);
+		
+		this.minDensityTerrainHeight = 55;
+		this.maxDensityTerrainHeight = 56;
 
-		this.minDensityTerrainHeight = BiomeConfiguration.OCEAN_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.maxDensityTerrainHeight = BiomeConfiguration.OCEAN_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.minDensityTerrainThickness = 0;
+		this.maxDensityTerrainThickness = 1;
 
-		this.minDensityTerrainThickness = BiomeConfiguration.OCEAN_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
-		this.maxDensityTerrainThickness = BiomeConfiguration.OCEAN_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.upperHeightMapScale = 2f;
+		this.bottomHeightMapScale = 2f;
 
-		this.upperHeightMapScale = BiomeConfiguration.OCEAN_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		this.bottomHeightMapScale = BiomeConfiguration.OCEAN_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
-
-		this.densityTerrainThicknessScale = BiomeConfiguration.OCEAN_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
-		this.densityTerrainHeightScale = BiomeConfiguration.OCEAN_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
+		this.densityTerrainThicknessScale = 2f;
+		this.densityTerrainHeightScale = 2f;
 	}
 
 	@Override
 	public String getName() {
-		return "Ocean";
+		return "River";
 	}
 }

@@ -47,18 +47,33 @@ public class NormalGenerator extends BiomeGenerator implements VanillaGenerator 
 
 	@Override
 	public void registerBiomes() {
-		selector = new VanillaBiomeSelector(2.0, 2.0, 0.35, 0.05, true);
+		//selector = new VanillaBiomeSelector(2.0, 2.0, 0.35, 0.05, true);
 		// if you want to check out a particular biome, use this!
-		//selector = new PerBlockBiomeSelector(VanillaBiomes.DESERT);
+		//selector = new PerBlockBiomeSelector(VanillaBiomes.MUSHROOM);
+		selector = new VanillaBiomeSelector(5f);
 		setSelector(selector);
 		addPopulator(new SmoothPopulator());
 		register(VanillaBiomes.OCEAN);
+		register(VanillaBiomes.FROZEN_OCEAN);
 		register(VanillaBiomes.PLAIN);
 		register(VanillaBiomes.DESERT);
+		register(VanillaBiomes.DESERT_HILLS);
+		register(VanillaBiomes.SMALL_MOUNTAINS);
 		register(VanillaBiomes.MOUNTAINS);
 		register(VanillaBiomes.BEACH);
+		register(VanillaBiomes.SWAMP);
 		register(VanillaBiomes.FOREST);
-		register(VanillaBiomes.SMALL_MOUNTAINS);
+		register(VanillaBiomes.FOREST_HILLS);
+		register(VanillaBiomes.FROZEN_RIVER);
+		register(VanillaBiomes.RIVER);
+		register(VanillaBiomes.JUNGLE);
+		register(VanillaBiomes.JUNGLE_HILLS);
+		register(VanillaBiomes.MUSHROOM);
+		register(VanillaBiomes.MUSHROOM_SHORE);
+		register(VanillaBiomes.TUNDRA);
+		register(VanillaBiomes.TUNDRA_HILLS);
+		register(VanillaBiomes.TAIGA);
+		register(VanillaBiomes.TAIGA_HILLS);
 	}
 
 	@Override

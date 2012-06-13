@@ -24,42 +24,34 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.action;
+package org.spout.vanilla.data.effect;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.math.MathHelper;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
-import org.spout.api.tickable.LogicRunnable;
+import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.protocol.msg.EntityEffectMessage;
+import org.spout.vanilla.protocol.msg.EntityRemoveEffectMessage;
 
-public class WanderAction extends LogicRunnable<VanillaActionController> {
-	private static final int WANDER_FREQ = 25;
+public class EffectType {
+	private final int id;
 
-	public WanderAction(VanillaActionController parent) {
-		super(parent);
+	public EffectType(int id) {
+		this.id = id;
 	}
 
-	@Override
-	public boolean shouldRun(float dt) {
-		return getParent().getRandom().nextInt(100) < WANDER_FREQ;
+	/**
+	 * Gets the id of the effect.
+	 * @return id of effect
+	 */
+	public int getId() {
+		return id;
 	}
 
-	@Override
-	public void run() {
-		VanillaActionController controller = getParent();
-		Entity entity = controller.getParent();
-		//Get the direction the entity is facing
-		Vector3 entityForward = MathHelper.getDirectionVector(entity.getRotation());
-		//Get somewhere we want to go.  Make sure it is length 1
-		Vector3 randomTarget = new Vector3(Math.random(), 0, Math.random()).normalize();
-		//Get the rotation to that target
-		Quaternion rotationTo = entityForward.rotationTo(randomTarget);
-		//Look at it
-		entity.setRotation(rotationTo);
-		//Move forward
-		controller.setVelocity(MathHelper.getDirectionVector(entity.getRotation()).multiply(0.5));
-		controller.move();
+	public Message getApplianceMessage(Entity entity, int strength, int duration) {
+		return new EntityEffectMessage(entity.getId(), (byte) id, (byte) strength, (byte) duration);
+	}
+
+	public Message getRemovalMessage(Entity entity) {
+		return new EntityRemoveEffectMessage(entity.getId(), (byte) id);
 	}
 }

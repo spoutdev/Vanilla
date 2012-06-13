@@ -56,7 +56,9 @@ import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.Effect;
+import org.spout.vanilla.data.effect.Effect;
+import org.spout.vanilla.data.effect.EffectTypes;
+import org.spout.vanilla.protocol.msg.EntityEffectMessage;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.VanillaObjects;
 import org.spout.vanilla.world.generator.normal.object.RandomObject;
@@ -335,16 +337,14 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "fx", desc = "Add an effect", min = 3, max = 3)
-	public void addEffect(CommandContext args, CommandSource source) throws CommandException {
+	@Command(aliases = "speed", desc = "Applies speed", min = 2, max = 2)
+	public void speed(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
-			throw new CommandException("Only a player may add effects");
+			throw new CommandException("You must be a player to apply speed");
 		}
 
 		Controller controller = ((Player) source).getEntity().getController();
-		if (controller instanceof VanillaPlayer) {
-			((VanillaPlayer) controller).addEffect(new Effect(Effect.Type.valueOf(args.getString(0).toUpperCase()), (byte) args.getInteger(1), (short) args.getInteger(2)));
-		}
+		controller.registerProcess(new Effect((VanillaPlayer) controller, EffectTypes.SPEED, args.getInteger(0), args.getInteger(1)));
 	}
 
 	@Command(aliases = "npc", desc = "Spawns an npc at your location", min = 1, max = 1)

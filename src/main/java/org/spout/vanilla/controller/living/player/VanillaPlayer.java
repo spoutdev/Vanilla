@@ -52,7 +52,6 @@ import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.Effect;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.inventory.player.PlayerInventory;
@@ -61,8 +60,6 @@ import org.spout.vanilla.material.item.armor.Armor;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
-import org.spout.vanilla.protocol.msg.EntityEffectMessage;
-import org.spout.vanilla.protocol.msg.EntityRemoveEffectMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
@@ -94,7 +91,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected final Set<Player> invisibleFor = new HashSet<Player>();
 	protected Point compassTarget;
 	protected boolean playerDead = false;
-	protected final Set<Effect> effects = new HashSet<Effect>();
 
 	/**
 	 * Constructs a new VanillaPlayer to use as a {@link PlayerController} for the given player.
@@ -153,13 +149,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (lastUserList++ > 20) {
 			VanillaNetworkUtil.broadcastPacket(new PlayerListMessage(tabListName, true, ping));
 			lastUserList = 0;
-		}
-
-		for (Effect effect : effects) {
-			effect.pulse();
-			if (effect.getDuration() <= 0) {
-				removeEffect(effect);
-			}
 		}
 
 		if (isSurvival()) {
@@ -578,33 +567,5 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void rollCredits() {
 		owner.getSession().send(new ChangeGameStateMessage(ChangeGameStateMessage.ENTER_CREDITS));
-	}
-
-	/**
-	 * Gets all currently active {@link Effect}s on the player.
-	 * @return effect set
-	 */
-	public Set<Effect> getEffects() {
-		return effects;
-	}
-
-	/**
-	 * Adds an {@link Effect} to the currently active effects.
-	 * @param effect to add
-	 * @return true if already active
-	 */
-	public boolean addEffect(Effect effect) {
-		owner.getSession().send(new EntityEffectMessage(owner.getEntity().getId(), effect.getType().getId(), effect.getStrength(), effect.getDuration()));
-		return effects.add(effect);
-	}
-
-	/**
-	 * Removes an {@link Effect} from the currently active effects.
-	 * @param effect to remove
-	 * @return true if effect is not active already
-	 */
-	public boolean removeEffect(Effect effect) {
-		owner.getSession().send(new EntityRemoveEffectMessage(owner.getEntity().getId(), effect.getType().getId()));
-		return effects.remove(effect);
 	}
 }

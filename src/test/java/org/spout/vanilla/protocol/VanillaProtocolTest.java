@@ -33,7 +33,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.common.message.CustomDataMessage;
 
-import org.spout.vanilla.data.Effect;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
@@ -149,8 +148,8 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntityStatusMessage(1, (byte) 2),
 			new AttachEntityMessage(1, 2),
 			new EntityMetadataMessage(1, TEST_PARAMS),
-			new EntityEffectMessage(1, Effect.Type.BLINDNESS.getId(), (byte) 1, (short) 34),
-			new EntityRemoveEffectMessage(1, Effect.Type.BLINDNESS.getId()),
+			new EntityEffectMessage(1, (byte) 1, (byte) 1, (short) 34),
+			new EntityRemoveEffectMessage(1, (byte) 1),
 			new SetExperienceMessage(1.2F, (short) 2, (short) 3),
 			new LoadChunkMessage(0, -2, true),
 			new CompressedChunkMessage(1, 2, true, new boolean[16], 1, new byte[][]{new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null, null, null, null, null, new byte[Chunk.BLOCKS.HALF_VOLUME * 5], null, null, null, null, null}, new byte[16 * 16]),

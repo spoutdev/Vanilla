@@ -24,42 +24,59 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.action;
+package org.spout.vanilla.data.effect;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.math.MathHelper;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
-import org.spout.api.tickable.LogicRunnable;
+import org.spout.api.tickable.TimedLogicRunnable;
 
-import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
-public class WanderAction extends LogicRunnable<VanillaActionController> {
-	private static final int WANDER_FREQ = 25;
+/**
+ * Represents an entity effect that is applied to an entity.
+ */
+public class Effect extends TimedLogicRunnable<VanillaPlayer> {
+	private int strength;
+	private final EffectType type;
 
-	public WanderAction(VanillaActionController parent) {
-		super(parent);
+	public Effect(VanillaPlayer effected, EffectType type, float duration, int strength) {
+		super(effected, duration);
+		this.type = type;
+		this.strength = strength;
 	}
 
 	@Override
-	public boolean shouldRun(float dt) {
-		return getParent().getRandom().nextInt(100) < WANDER_FREQ;
+	public void onRegistration() {
+		VanillaPlayer controller = getParent();
+		int duration = Math.round(getDelay()) * 20;
+		controller.getPlayer().getSession().send(type.getApplianceMessage(controller.getParent(), strength, duration));
 	}
 
 	@Override
 	public void run() {
-		VanillaActionController controller = getParent();
-		Entity entity = controller.getParent();
-		//Get the direction the entity is facing
-		Vector3 entityForward = MathHelper.getDirectionVector(entity.getRotation());
-		//Get somewhere we want to go.  Make sure it is length 1
-		Vector3 randomTarget = new Vector3(Math.random(), 0, Math.random()).normalize();
-		//Get the rotation to that target
-		Quaternion rotationTo = entityForward.rotationTo(randomTarget);
-		//Look at it
-		entity.setRotation(rotationTo);
-		//Move forward
-		controller.setVelocity(MathHelper.getDirectionVector(entity.getRotation()).multiply(0.5));
-		controller.move();
+		VanillaPlayer controller = getParent();
+		controller.getPlayer().getSession().send(type.getRemovalMessage(controller.getParent()));
+	}
+
+	/**
+	 * Gets the type of effect
+	 * @return type of effect
+	 */
+	public EffectType getType() {
+		return type;
+	}
+
+	/**
+	 * Gets the strength of the effect.
+	 * @return strength of effect.
+	 */
+	public int getStrength() {
+		return strength;
+	}
+
+	/**
+	 * Sets the strength of the effect.
+	 * @param strength of effect
+	 */
+	public void setStrength(int strength) {
+		this.strength = strength;
 	}
 }

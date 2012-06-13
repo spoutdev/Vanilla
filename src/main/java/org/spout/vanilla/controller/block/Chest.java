@@ -43,7 +43,7 @@ import org.spout.vanilla.window.block.ChestWindow;
 public class Chest extends VanillaWindowBlockController implements TransactionWindowOwner {
 	private final ChestInventory inventory;
 	private boolean opened = false;
-
+	
 	public Chest() {
 		super(VanillaControllerTypes.CHEST, VanillaMaterials.CHEST);
 		inventory = new ChestInventory(this);

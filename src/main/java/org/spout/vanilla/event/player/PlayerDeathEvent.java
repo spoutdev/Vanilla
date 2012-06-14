@@ -28,7 +28,6 @@ package org.spout.vanilla.event.player;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.controller.PlayerController;
-import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.exception.InvalidControllerException;
 import org.spout.api.player.Player;

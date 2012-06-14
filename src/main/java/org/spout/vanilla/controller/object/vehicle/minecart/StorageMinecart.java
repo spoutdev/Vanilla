@@ -28,7 +28,6 @@ package org.spout.vanilla.controller.object.vehicle.minecart;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.vehicle.Minecart;
-import org.spout.vanilla.controller.object.vehicle.Vehicle;
 
 public class StorageMinecart extends Minecart {
 	public StorageMinecart() {

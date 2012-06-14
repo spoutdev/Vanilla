@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.item.weapon;
 
-import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.RangedWeapon;
 
 public class Bow extends RangedWeapon {

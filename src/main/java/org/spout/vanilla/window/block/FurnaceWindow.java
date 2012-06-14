@@ -26,13 +26,10 @@
  */
 package org.spout.vanilla.window.block;
 
-import org.spout.api.inventory.InventoryBase;
-
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.InventoryWindow;
-import org.spout.vanilla.window.Window;
 
 public class FurnaceWindow extends InventoryWindow {
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("30-38, 21-29, 12-20, 3-11, 1, 2, 0");

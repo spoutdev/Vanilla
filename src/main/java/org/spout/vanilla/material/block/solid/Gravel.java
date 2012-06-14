@@ -30,15 +30,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.block.MovingBlock;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;

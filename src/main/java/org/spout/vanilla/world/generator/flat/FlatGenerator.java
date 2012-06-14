@@ -27,7 +27,6 @@
 package org.spout.vanilla.world.generator.flat;
 
 import org.spout.api.generator.Populator;
-import org.spout.api.generator.WorldGenerator;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.EmptyBiomeManager;
 import org.spout.api.geo.World;

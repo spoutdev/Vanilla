@@ -94,12 +94,12 @@ import org.spout.vanilla.protocol.controller.living.CreeperEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.EnderdragonEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.EndermanEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.GhastEntityProtocol;
+import org.spout.vanilla.protocol.controller.living.HumanEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.MagmaCubeEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.PigEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.SheepEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.SlimeEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.SpiderEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.VanillaPlayerEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.WolfEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.FallingBlockProtocol;
 import org.spout.vanilla.protocol.controller.object.LightningEntityProtocol;
@@ -154,7 +154,7 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType IRON_GOLEM = new MobControllerType(99, IronGolem.class, "Iron Golem");
 	public static final VanillaControllerType ENDER_CRYSTAL = new VanillaControllerType(200, EnderCrystal.class, "Ender Crystal", new BasicObjectEntityProtocol(51));
 	public static final VanillaControllerType PAINTINGS = new VanillaControllerType(-1, Painting.class, "Painting", new PaintingEntityProtocol());
-	public static final VanillaControllerType PLAYER = new VanillaControllerType(-1, VanillaPlayer.class, "Player", new VanillaPlayerEntityProtocol());
+	public static final VanillaControllerType HUMAN = new VanillaControllerType(-1, VanillaPlayer.class, "Human", new HumanEntityProtocol());
 	// World
 	public static final VanillaControllerType NORMAL_SKY = new VanillaControllerType(-2, NormalSky.class, "Normal Sky");
 	public static final VanillaControllerType NETHER_SKY = new VanillaControllerType(-3, NetherSky.class, "Nether Sky");

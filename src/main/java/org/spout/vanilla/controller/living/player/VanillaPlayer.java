@@ -84,23 +84,14 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected long unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt(), lastPing = 0, lastUserList = 0, foodTimer = 0;
 	protected short count = 0, ping, hunger = 20;
 	protected float foodSaturation = 5.0f, exhaustion = 0.0f;
-	protected boolean sprinting, onGround, poisoned;
-	protected final Vector3 moveSpeed = new Vector3(10, 0, 0), horizSpeed = new Vector3(0, 0, -10);
+	protected boolean poisoned;
 	protected final PlayerInventory playerInventory = new PlayerInventory();
 	protected Window activeWindow = new DefaultWindow(this);
 	protected String tabListName;
 	protected GameMode gameMode;
-	protected int distanceMoved, miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt(),
-			miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt();
+	protected int distanceMoved;
 	protected final Set<Player> invisibleFor = new HashSet<Player>();
 	protected Point compassTarget;
-	protected Vector3 lookingAt;
-	protected Point diggingPosition;
-	protected long diggingStartTime;
-	protected boolean isDigging;
-	protected int[] miningDamage;
-	protected int miningDamagePosition = 0;
-	protected long previousDiggingTime = 0;
 	protected boolean playerDead = false;
 	protected final Set<Effect> effects = new HashSet<Effect>();
 
@@ -110,13 +101,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @param the {@link GameMode} of the player.
 	 */
 	public VanillaPlayer(Player p, GameMode gameMode) {
-		super(VanillaControllerTypes.PLAYER);
+		super(p.getName());
+		setRenderedItemInHand(playerInventory.getCurrentItem());
 		owner = p;
 		tabListName = owner.getName();
 		compassTarget = owner.getEntity().getWorld().getSpawnPoint().getPosition();
-		this.setHeadHeight(1.62f);
 		this.gameMode = gameMode;
-		miningDamage = new int[miningDamagePeriod];
 	}
 
 	/**
@@ -125,25 +115,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public VanillaPlayer(Player p) {
 		this(p, GameMode.SURVIVAL);
-	}
-
-	@Override
-	public boolean isSavable() {
-		return false; // Players are a special case, handled elsewhere
-	}
-
-	@Override
-	public void onAttached() {
-		Transform spawn = getParent().getWorld().getSpawnPoint();
-		Quaternion rotation = spawn.getRotation();
-		getParent().setPosition(spawn.getPosition());
-		getParent().setRotation(rotation);
-		getParent().setScale(spawn.getScale());
-		getParent().setCollision(new CollisionModel(new BoundingBox(1, 2, 1, 2, 2, 1))); //TODO Absolutely guessed here.
-		setMaxHealth(20);
-		setHealth(20, HealthChangeReason.SPAWN);
-		getParent().setObserver(true);
-		getParent().setViewDistance(64);
 	}
 
 	@Override
@@ -187,10 +158,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	private void survivalTick(float dt) {
-		if (isDigging && (getDiggingTicks() % 20) == 0) {
-			VanillaNetworkUtil.sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_SWING_ARM));
-		}
-
 		if ((distanceMoved += getPreviousPosition().distanceSquared(getParent().getPosition())) >= 1) {
 			exhaustion += 0.01;
 			distanceMoved = 0;
@@ -305,15 +272,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	@Override
-	public float getHeadHeight() {
-		float height = super.getHeadHeight();
-		if (this.crouching) {
-			height -= 0.08f;
-		}
-		return height;
-	}
-
-	@Override
 	public void onDeath() {
 		// Don't count disconnects/unknown exceptions as dead (Yes that's a difference!)
 		if (owner.getSession() != null && owner.getSession().getPlayer() != null) {
@@ -344,16 +302,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		ItemStack[] contents = this.getInventory().getItems().getContents();
 		drops.addAll(Arrays.asList(contents));
 		return drops;
-	}
-
-	@Override
-	public boolean needsPositionUpdate() {
-		return true;
-	}
-
-	@Override
-	public boolean needsVelocityUpdate() {
-		return true;
 	}
 
 	/**
@@ -422,38 +370,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public boolean isVisibleFor(Player player) {
 		return !invisibleFor.contains(player);
-	}
-
-	/**
-	 * Sets whether or not th player is
-	 * @param sprinting
-	 */
-	public void setSprinting(boolean sprinting) {
-		this.sprinting = sprinting;
-	}
-
-	/**
-	 * Whether or not the player is sprinting.
-	 * @return true if sprinting
-	 */
-	public boolean isSprinting() {
-		return sprinting;
-	}
-
-	/**
-	 * Sets whether or not the player is perceived by the client as being on the ground.
-	 * @param onGround
-	 */
-	public void setOnGround(boolean onGround) {
-		this.onGround = onGround;
-	}
-
-	/**
-	 * Whether or not the player is on the ground.
-	 * @return true if on ground.
-	 */
-	public boolean isOnGround() {
-		return onGround;
 	}
 
 	/**
@@ -610,112 +526,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public PlayerInventory getInventory() {
 		return playerInventory;
-	}
-
-	/**
-	 * Sets the position where the player should look.
-	 * @param a {@link Vector3} to look at
-	 */
-	public void setLookingAtVector(Vector3 lookingAt) {
-		this.lookingAt = lookingAt;
-	}
-
-	/**
-	 * Gets the {@link Vector3} the player is currently looking at.
-	 * @return position the player is looking at
-	 */
-	public Vector3 getLookingAt() {
-		return lookingAt;
-	}
-
-	/**
-	 * Returns the digging state of the controller
-	 * @return true if player is digging
-	 */
-	public boolean isDigging() {
-		return isDigging;
-	}
-
-	/**
-	 * Sets isDigging true and records start time, unless already digging
-	 * @return true if successful
-	 */
-	public boolean startDigging(Point position) {
-		if (owner.getEntity().getPosition().getDistance(position) > 6) { // TODO: Actually get block reach from somewhere instead of just using 6
-			return false;
-		}
-		isDigging = true;
-		diggingPosition = position;
-		diggingStartTime = System.currentTimeMillis();
-		return true;
-	}
-
-	/**
-	 * Sets isDigging false and records total time, unless the dig was invalid/never started.
-	 * @return true if successful
-	 */
-	public boolean stopDigging(Point position) {
-		if (!isDigging) {
-			return false;
-		}
-		previousDiggingTime = getDiggingTime();
-		isDigging = false;
-		VanillaNetworkUtil.sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_NONE));
-		if (!position.equals(diggingPosition)) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Gets time spent digging
-	 * @return time spent digging
-	 */
-	public long getDiggingTime() {
-		if (!isDigging) {
-			return previousDiggingTime;
-		}
-
-		// Is this correct?
-		return System.currentTimeMillis() - diggingStartTime;
-	}
-
-	/**
-	 * Gets last time spent digging in real(client) ticks
-	 * @return ticks spent digging
-	 */
-	public long getDiggingTicks() {
-		return getDiggingTime() / 50;
-	}
-
-	/**
-	 * Adds and checks mining speed for cheating.
-	 * @param damageRemaining Remaining damage on block
-	 * @return false if player is cheating
-	 */
-	public boolean addAndCheckMiningSpeed(int damageRemaining) {
-		if (!VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ENABLED.getBoolean()) {
-			return true;
-		}
-
-		miningDamage[miningDamagePosition++] = damageRemaining;
-
-		if (miningDamagePosition >= miningDamagePeriod) {
-			miningDamagePosition = 0;
-		}
-
-		return checkMiningSpeed();
-	}
-
-	/**
-	 * Checks mining speed for cheating.
-	 * @return false if player is cheating
-	 */
-	public boolean checkMiningSpeed() {
-		if (MathHelper.mean(miningDamage) > miningDamageAllowance) { // TODO: Make this configurable?
-			return false;
-		}
-		return true;
 	}
 
 	/**

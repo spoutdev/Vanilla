@@ -32,11 +32,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
+import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
-public class VanillaPlayerEntityProtocol extends VanillaEntityProtocol {
+public class HumanEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
@@ -50,11 +51,11 @@ public class VanillaPlayerEntityProtocol extends VanillaEntityProtocol {
 		int r = (int) (-entity.getYaw() * 32); //cardinal directions differ
 		int p = (int) (entity.getPitch() * 32);
 
-		if (c instanceof VanillaPlayer) {
-			VanillaPlayer mcp = (VanillaPlayer) c;
-			String name = mcp.getPlayer().getName();
+		if (c instanceof Human) {
+			Human mcp = (Human) c;
+			String name = mcp.getClientName();
 			int item = 0;
-			ItemStack hand = mcp.getInventory().getCurrentItem();
+			ItemStack hand = mcp.getRenderedItemInHand();
 			if (hand != null) {
 				item = hand.getMaterial().getId();
 			}

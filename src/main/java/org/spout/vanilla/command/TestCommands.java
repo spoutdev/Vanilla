@@ -53,6 +53,7 @@ import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.Effect;
@@ -369,5 +370,16 @@ public class TestCommands {
 		if (controller instanceof VanillaPlayer) {
 			((VanillaPlayer) controller).addEffect(new Effect(Effect.Type.valueOf(args.getString(0).toUpperCase()), (byte) args.getInteger(1), (short) args.getInteger(2)));
 		}
+	}
+
+	@Command(aliases = "npc", desc = "Spawns an npc at your location", min = 1, max = 1)
+	public void npc(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("Only a player may spawn an npc");
+		}
+
+		Player player = (Player) source;
+		Entity entity = player.getEntity();
+		entity.getWorld().createAndSpawnEntity(entity.getPosition(), new Human(args.getString(0)));
 	}
 }

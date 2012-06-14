@@ -67,7 +67,7 @@ public class NetherGenerator extends BiomeGenerator implements VanillaGenerator 
 
 	private int getHighestSolidBlock(World world, int x, int z) {
 		int y = world.getHeight() - 1;
-		while (world.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
+		while (world.getBlockMaterial(x, y, z).equals(VanillaMaterials.AIR)) {
 			y--;
 			if (y == 0 || world.getBlockMaterial(x, y, z) instanceof Liquid) {
 				return -1;

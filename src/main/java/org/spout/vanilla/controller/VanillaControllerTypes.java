@@ -68,7 +68,7 @@ import org.spout.vanilla.controller.living.creature.passive.Squid;
 import org.spout.vanilla.controller.living.creature.passive.Villager;
 import org.spout.vanilla.controller.living.creature.util.IronGolem;
 import org.spout.vanilla.controller.living.creature.util.SnowGolem;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.object.misc.EnderCrystal;
 import org.spout.vanilla.controller.object.misc.Lightning;
 import org.spout.vanilla.controller.object.misc.Painting;
@@ -154,7 +154,7 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType IRON_GOLEM = new MobControllerType(99, IronGolem.class, "Iron Golem");
 	public static final VanillaControllerType ENDER_CRYSTAL = new VanillaControllerType(200, EnderCrystal.class, "Ender Crystal", new BasicObjectEntityProtocol(51));
 	public static final VanillaControllerType PAINTINGS = new VanillaControllerType(-1, Painting.class, "Painting", new PaintingEntityProtocol());
-	public static final VanillaControllerType HUMAN = new VanillaControllerType(-1, VanillaPlayer.class, "Human", new HumanEntityProtocol());
+	public static final VanillaControllerType HUMAN = new VanillaControllerType(-1, Human.class, "Human", new HumanEntityProtocol());
 	// World
 	public static final VanillaControllerType NORMAL_SKY = new VanillaControllerType(-2, NormalSky.class, "Normal Sky");
 	public static final VanillaControllerType NETHER_SKY = new VanillaControllerType(-3, NetherSky.class, "Nether Sky");

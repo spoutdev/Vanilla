@@ -131,7 +131,6 @@ public class LoginAuthThread implements Runnable {
 		}
 		if (Spout.getEngine().debugMode()) {
 			long currentTime = System.currentTimeMillis();
-			Spout.getLogger().info("Login took " + (currentTime - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + "ms");
 			Spout.getLogger().info("Authing took " + (System.currentTimeMillis() - start) + "ms");
 		}
 

@@ -59,7 +59,7 @@ public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginReq
 				Runnable runnable = new Runnable() {
 					@Override
 					public void run() {
-						BootstrapLoginRequestMessageHandler.playerConnect(session, finalName);
+						playerConnect(session, finalName);
 					}
 				};
 				Spout.getEngine().getScheduler().scheduleAsyncTask(VanillaPlugin.getInstance(), new LoginAuthThread(session, finalName, runnable));
@@ -72,5 +72,8 @@ public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginReq
 	public static void playerConnect(Session session, String name) {
 		Event event = new PlayerConnectEvent(session, name);
 		session.getGame().getEventManager().callEvent(event);
+		if (Spout.getEngine().debugMode()) {
+			Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + "ms");
+		}
 	}
 }

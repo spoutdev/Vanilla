@@ -24,22 +24,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.world.sky;
+package org.spout.vanilla.data;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.world.VanillaSky;
-import org.spout.vanilla.data.Weather;
+import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
 
-public class NetherSky extends VanillaSky {
-	public NetherSky() {
-		super(VanillaControllerTypes.NETHER_SKY, false);
+/**
+ * Enum of the vanilla weather states.
+ */
+public enum Weather {
+	CLEAR(0),
+	RAIN(1),
+	THUNDERSTORM(2);
+	final int id;
+	private final static TIntObjectMap<Weather> weathers = new TIntObjectHashMap<Weather>();
+
+	private Weather(int id) {
+		this.id = id;
 	}
 
-	@Override
-	public void updateTime(long time) {
+	public int getId() {
+		return id;
 	}
 
-	@Override
-	public void updateWeather(Weather oldWeather, Weather newWeather) {
+	public static Weather getById(int id) {
+		return weathers.get(id);
+	}
+
+	static {
+		for (Weather w : Weather.values()) {
+			weathers.put(w.getId(), w);
+		}
 	}
 }

@@ -51,13 +51,12 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 
 		if (c instanceof Human) {
 			Human mcp = (Human) c;
-			String name = mcp.getTitle();
 			int item = 0;
 			ItemStack hand = mcp.getRenderedItemInHand();
 			if (hand != null) {
 				item = hand.getMaterial().getId();
 			}
-			return new Message[]{new SpawnPlayerMessage(id, name, x, y, z, r, p, item)};
+			return new Message[]{new SpawnPlayerMessage(id, mcp.getTitle(), x, y, z, r, p, item)};
 		}
 
 		return null;

@@ -57,6 +57,7 @@ import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.Effect;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 
 public class TestCommands {
@@ -134,11 +135,6 @@ public class TestCommands {
 		int toSpawn = 0;
 
 		for (int i = 0; i < types.size(); i++) {
-			if (toSpawn + numbers.get(i) > 50) {
-				int newValue = 50 - toSpawn;
-				source.sendMessage(ChatColor.RED + "Reducing number of " + types.get(i).getName() + "s spawed to " + newValue);
-				numbers.set(i, newValue);
-			}
 			if (numbers.get(i) < 0) {
 				source.sendMessage(ChatColor.RED + "Increasing number of " + types.get(i).getName() + "s spawed to " + 0);
 				numbers.set(i, 0);
@@ -181,65 +177,6 @@ public class TestCommands {
 		}
 
 		point.getWorld().createAndSpawnEntity(arrangement);
-	}
-
-	@Command(aliases = {"control"}, usage = "<controller>", desc = "Control a controller!", min = 1, max = 6)
-	public void control(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("You must be a player to search for and control a controller");
-		}
-
-		String lookupType = args.getString(0).replaceAll("[_\\- ]", "");
-		ControllerType type = null;
-		for (ControllerType testType : ControllerRegistry.getAll()) {
-			if (testType.getName().replaceAll("[_\\- ]", "").equalsIgnoreCase(lookupType)) {
-				type = testType;
-				break;
-			}
-		}
-
-		if (type == null || !type.canCreateController()) {
-			throw new CommandException("Invalid entity type '" + args.getString(0) + "'!");
-		}
-
-		/**
-		 * Find a valid controller to control
-		 */
-		Point point = ((Player) source).getEntity().getPosition();
-		Set<Entity> entities = point.getWorld().getAll(type.getControllerClass());
-		Vector3 pos = null;
-		Entity found = null;
-		double oldDistance = Double.MAX_VALUE;
-		for (Entity e : entities) {
-			//Grab the entities' position
-			pos = e.getPosition();
-			//Find the distance between the player and this entity
-			double distance = pos.distanceSquared(point);
-			//If the distance is lower than the prior distance of another entity and this entity is within 5 blocks...
-			if (distance < oldDistance && pos.compareTo(point) <= 5) {
-				oldDistance = distance;
-				found = e;
-			}
-		}
-
-		/**
-		 * Now check to see if we even have a controller to control.
-		 */
-		if (found == null) {
-			throw new CommandException("Could not find any controllers within a 5 block radius to control!");
-		}
-
-		source.sendMessage(found.getController().toString() + "was found at " + found.getPosition().toString() + ". Assuming control!");
-
-		Controller control = found.getController();
-
-		/**
-		 * The fun part...lets control the controller!
-		 */
-		if (args.getString(1).equalsIgnoreCase("move")) {
-			Vector3 movement = new Vector3(args.getInteger(2), args.getInteger(3), args.getInteger(4));
-			control.getParent().translate(movement.divide(args.getDouble(5)));
-		}
 	}
 
 	@Command(aliases = {"tppos"}, usage = "<name> <world> <x> <y> <z>", desc = "Teleport to coordinates!", min = 5, max = 5)

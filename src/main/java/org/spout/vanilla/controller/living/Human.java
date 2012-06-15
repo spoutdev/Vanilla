@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.living;
 
+import org.spout.api.Spout;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.geo.discrete.Point;
@@ -38,6 +39,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
@@ -54,6 +56,13 @@ public class Human extends Living {
 	protected String title;
 	protected ItemStack renderedItemInHand;
 
+	public Human() {
+		super(VanillaControllerTypes.HUMAN);
+		title = data().get(VanillaData.TITLE);
+		setHeadHeight(1.62f);
+		miningDamage = new int[miningDamagePeriod];
+	}
+
 	public Human(String clientName) {
 		super(VanillaControllerTypes.HUMAN);
 		this.title = title;
@@ -61,6 +70,7 @@ public class Human extends Living {
 		miningDamage = new int[miningDamagePeriod];
 	}
 
+	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
 		if (isDigging && (getDiggingTicks() % 20) == 0) {
@@ -70,11 +80,7 @@ public class Human extends Living {
 
 	@Override
 	public void onAttached() {
-		Transform spawn = getParent().getWorld().getSpawnPoint();
-		Quaternion rotation = spawn.getRotation();
-		getParent().setPosition(spawn.getPosition());
-		getParent().setRotation(rotation);
-		getParent().setScale(spawn.getScale());
+		super.onAttached();
 		getParent().setCollision(new CollisionModel(new BoundingBox(1, 2, 1, 2, 2, 1))); //TODO Absolutely guessed here.
 		setMaxHealth(20);
 		setHealth(20, HealthChangeReason.SPAWN);
@@ -83,8 +89,14 @@ public class Human extends Living {
 	}
 
 	@Override
+	public void onSave() {
+		super.onSave();
+		data().put(VanillaData.TITLE, title);
+	}
+
+	@Override
 	public boolean isSavable() {
-		return false;
+		return true;
 	}
 
 	@Override

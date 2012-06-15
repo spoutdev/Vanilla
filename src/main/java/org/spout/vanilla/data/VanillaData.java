@@ -60,4 +60,6 @@ public class VanillaData {
 	public static final DefaultedKey<Integer> UNCOLLECTABLE_TICKS = new DefaultedKeyImpl<Integer>("uncollectable_ticks", 5);
 	//Slime-specific
 	public static final DefaultedKey<Byte> SLIME_SIZE = new SlimeSize("slime_size");
+	//Human-specific
+	public static final DefaultedKey<String> TITLE = new DefaultedKeyImpl<String>("title", "Steve");
 }

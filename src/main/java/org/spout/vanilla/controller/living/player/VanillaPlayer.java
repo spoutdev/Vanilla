@@ -107,6 +107,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		tabListName = owner.getName();
 		compassTarget = owner.getEntity().getWorld().getSpawnPoint().getPosition();
 		this.gameMode = gameMode;
+		this.title = p.getName();
 	}
 
 	/**
@@ -115,6 +116,16 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public VanillaPlayer(Player p) {
 		this(p, GameMode.SURVIVAL);
+	}
+
+	@Override
+	public void onAttached() {
+		Transform spawn = getParent().getWorld().getSpawnPoint();
+		Quaternion rotation = spawn.getRotation();
+		getParent().setPosition(spawn.getPosition());
+		getParent().setRotation(rotation);
+		getParent().setScale(spawn.getScale());
+		super.onAttached();
 	}
 
 	@Override
@@ -155,6 +166,11 @@ public class VanillaPlayer extends Human implements PlayerController {
 		} else {
 			creativeTick(dt);
 		}
+	}
+
+	@Override
+	public boolean isSavable() {
+		return false;
 	}
 
 	private void survivalTick(float dt) {

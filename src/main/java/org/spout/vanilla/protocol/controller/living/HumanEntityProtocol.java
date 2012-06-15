@@ -29,11 +29,9 @@ package org.spout.vanilla.protocol.controller.living;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.living.Human;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 
@@ -53,7 +51,7 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 
 		if (c instanceof Human) {
 			Human mcp = (Human) c;
-			String name = mcp.getClientName();
+			String name = mcp.getTitle();
 			int item = 0;
 			ItemStack hand = mcp.getRenderedItemInHand();
 			if (hand != null) {

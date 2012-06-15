@@ -51,12 +51,12 @@ public class Human extends Living {
 	protected final Vector3 moveSpeed = new Vector3(10, 0, 0), horizSpeed = new Vector3(0, 0, -10);
 	protected int miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt(), miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt();
 	protected int[] miningDamage;
-	protected String clientName;
+	protected String title;
 	protected ItemStack renderedItemInHand;
 
 	public Human(String clientName) {
 		super(VanillaControllerTypes.HUMAN);
-		this.clientName = clientName;
+		this.title = title;
 		setHeadHeight(1.62f);
 		miningDamage = new int[miningDamagePeriod];
 	}
@@ -124,18 +124,18 @@ public class Human extends Living {
 
 	/**
 	 * Gets the name displayed above the human's head.
-	 * @return client name
+	 * @return title name
 	 */
-	public String getClientName() {
-		return clientName;
+	public String getTitle() {
+		return title;
 	}
 
 	/**
 	 * Sets the name displayed above the human's head.
-	 * @param clientName
+	 * @param title
 	 */
-	public void setClientName(String clientName) {
-		this.clientName = clientName;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	/**

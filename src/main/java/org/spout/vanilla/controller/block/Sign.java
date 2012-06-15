@@ -48,6 +48,7 @@ public class Sign extends VanillaBlockController {
 
 	@Override
 	public void onAttached() {
+		
 	}
 
 	@Override

@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.world.selector;
 
-import java.util.Random;
-
 import net.royawesome.jlibnoise.module.modifier.Exponent;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Cylinders;

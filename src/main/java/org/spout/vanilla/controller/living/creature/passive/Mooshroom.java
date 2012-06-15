@@ -27,7 +27,6 @@
 package org.spout.vanilla.controller.living.creature.passive;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.creature.Passive;
 
 public class Mooshroom extends Cow {
 	public Mooshroom() {

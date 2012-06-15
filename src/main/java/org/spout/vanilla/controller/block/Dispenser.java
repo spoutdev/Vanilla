@@ -41,10 +41,12 @@ public class Dispenser extends VanillaBlockController {
 
 	@Override
 	public void onTick(float dt) {
+		
 	}
 
 	@Override
 	public void onAttached() {
+		
 	}
 
 	public DispenserInventory getInventory() {

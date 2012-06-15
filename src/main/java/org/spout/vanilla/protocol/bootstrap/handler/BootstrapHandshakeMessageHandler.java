@@ -39,7 +39,6 @@ import org.spout.vanilla.protocol.msg.EncryptionKeyRequestMessage;
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
 
 public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMessage> {
-	
 	@Override
 	public void handle(Session session, Player player, HandshakeMessage message) {
 		Session.State state = session.getState();

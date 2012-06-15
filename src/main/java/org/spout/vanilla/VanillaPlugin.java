@@ -30,6 +30,7 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
+import org.spout.api.Client;
 import org.spout.api.Engine;
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -135,8 +136,9 @@ public class VanillaPlugin extends CommonPlugin {
 			}
 
 			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
+		} else if (game instanceof Client) {
+			//TODO: Do stuff to do with client
 		}
-		//TODO if (game instanceof Client) do stuff?
 
 		VanillaMaterials.initialize();
 		getLogger().info("loaded");
@@ -217,7 +219,7 @@ public class VanillaPlugin extends CommonPlugin {
 				}
 			}
 
-			//TODO Remove sky setting when Weather and Time are Region tasks.
+			//TODO: Remove sky setting when Weather and Time are Region tasks.
 			if (world.getGenerator() instanceof NormalGenerator) {
 				NormalSky sky = new NormalSky();
 				sky.setWorld(world);
@@ -256,7 +258,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 	/**
 	 * Gets the running instance of VanillaPlugin
-	 * @return
+	 * @return The current VanillaPlugin instance
 	 */
 	public static VanillaPlugin getInstance() {
 		return instance;

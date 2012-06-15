@@ -27,7 +27,6 @@
 package org.spout.vanilla.window.block;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.InventoryWindow;

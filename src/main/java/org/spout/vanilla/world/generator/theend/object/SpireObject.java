@@ -28,20 +28,15 @@ package org.spout.vanilla.world.generator.theend.object;
 
 import java.util.Random;
 
-import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.controller.object.misc.EnderCrystal;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.object.largeplant.LargePlantObject;
 
-public class SpireObject extends WorldGeneratorObject {
-	private final Random random;
-	// These control the height of the spires
-	private byte baseHeight = 6;
-	private byte randHeight = 32;
-	private byte totalHeight;
+public class SpireObject extends LargePlantObject {
 	// These control the radius of the spires
 	private byte baseRadius = 2;
 	private byte randRadius = 4;
@@ -52,9 +47,12 @@ public class SpireObject extends WorldGeneratorObject {
 	// extras
 	private boolean spawnEnderCrystal = true;
 
+	public SpireObject() {
+		this(null);
+	}
+
 	public SpireObject(Random random) {
-		this.random = random;
-		findNewRandomHeight();
+		super(random, (byte) 6, (byte) 32);
 		findNewRandomRadius();
 	}
 
@@ -103,16 +101,8 @@ public class SpireObject extends WorldGeneratorObject {
 		return (short) (totalRadius * totalRadius + 1);
 	}
 
-	public final void findNewRandomHeight() {
-		totalHeight = (byte) (baseHeight + random.nextInt(randHeight));
-	}
-
 	public final void findNewRandomRadius() {
 		totalRadius = (byte) (baseRadius + random.nextInt(randRadius));
-	}
-
-	public void setBaseHeight(byte baseHeight) {
-		this.baseHeight = baseHeight;
 	}
 
 	public void setBaseRadius(byte baseRadius) {
@@ -126,21 +116,12 @@ public class SpireObject extends WorldGeneratorObject {
 	public void setMainMaterial(BlockMaterial main) {
 		this.main = main;
 	}
-
-	public void setRandHeight(byte randHeight) {
-		this.randHeight = randHeight;
-	}
-
 	public void setRandRadius(byte randRadius) {
 		this.randRadius = randRadius;
 	}
 
 	public void spawnEnderCrystal(boolean spawnEnderCrystal) {
 		this.spawnEnderCrystal = spawnEnderCrystal;
-	}
-
-	public void setTotalHeight(byte totalHeight) {
-		this.totalHeight = totalHeight;
 	}
 
 	public void setTotalRadius(byte totalRadius) {

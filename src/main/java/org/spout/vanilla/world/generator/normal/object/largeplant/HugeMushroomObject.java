@@ -24,8 +24,9 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object;
+package org.spout.vanilla.world.generator.normal.object.largeplant;
 
+import org.spout.vanilla.world.generator.normal.object.largeplant.LargePlantObject;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -36,18 +37,13 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class HugeMushroomObject extends WorldGeneratorObject {
-	// rng
-	private final Random random;
+public class HugeMushroomObject extends LargePlantObject {
 	// shape of the mushroom
 	private HugeMushroomShape shape;
 	// materials to use
 	private BlockMaterial capMaterial;
 	private BlockMaterial stemMaterial;
 	// size control
-	private byte baseHeight = 3;
-	private byte randHeight = 4;
-	private byte totalHeight;
 	private byte capRadius;
 	private byte capThickness;
 	// use texture data only for huge mushroom blocks
@@ -58,8 +54,12 @@ public class HugeMushroomObject extends WorldGeneratorObject {
 	// for canPlaceObject check
 	private final Set<BlockMaterial> overridable = new HashSet<BlockMaterial>();
 
+	public HugeMushroomObject(HugeMushroomType type) {
+		this(null, type);
+	}
+	
 	public HugeMushroomObject(Random random, HugeMushroomType type) {
-		this.random = random;
+		super(random, (byte) 3, (byte) 4);
 		shape = type.shape;
 		capMaterial = type.material;
 		stemMaterial = type.material;
@@ -68,7 +68,6 @@ public class HugeMushroomObject extends WorldGeneratorObject {
 		overridable.add(VanillaMaterials.AIR);
 		overridable.add(VanillaMaterials.LEAVES);
 		checkIfUseTextureMetadata();
-		findNewRandomHeight();
 	}
 
 	@Override
@@ -278,24 +277,6 @@ public class HugeMushroomObject extends WorldGeneratorObject {
 		} else {
 			useTextureMetadata = false;
 		}
-	}
-
-	public final void findNewRandomHeight() {
-		totalHeight = (byte) (baseHeight + random.nextInt(randHeight));
-	}
-
-	public void setBaseHeight(byte baseHeight) {
-		this.baseHeight = baseHeight;
-		findNewRandomHeight();
-	}
-
-	public void setRandHeight(byte randHeight) {
-		this.randHeight = randHeight;
-		findNewRandomHeight();
-	}
-
-	public void setTotalHeight(byte height) {
-		this.totalHeight = height;
 	}
 
 	public void setCapRadius(byte capRadius) {

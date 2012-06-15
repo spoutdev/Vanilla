@@ -24,53 +24,42 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.decorator;
+package org.spout.vanilla.world.generator.normal.object.largeplant;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
 
-public class ShrubDecorator implements Decorator {
-	// How many shrub decorations per chunk
-	// this number is valid for jungles only
-	private static final byte AMOUNT = 20;
-
-	@Override
-	public void populate(Chunk chunk, Random random) {
-		if (chunk.getY() != 4) {
-			return;
-		}
-		final World world = chunk.getWorld();
-		final ShrubObject shrub = new ShrubObject(random);
-		for (byte i = 0; i < AMOUNT; i++) {
-			final int x = random.nextInt(16) + chunk.getBlockX();
-			final int z = random.nextInt(16) + chunk.getBlockZ();
-			final int y = getHighestWorkableBlock(world, x, z);
-			if (y == -1) {
-				continue;
-			}
-			if (shrub.canPlaceObject(world, x, y, z)) {
-				shrub.placeObject(world, x, y, z);
-			}
-		}
+public class CactusStackObject extends LargePlantObject {
+	public CactusStackObject() {
+		this(null);
 	}
 
-	private int getHighestWorkableBlock(World world, int x, int z) {
-		byte y = 127;
-		BlockMaterial material;
-		while ((material = world.getBlockMaterial(x, y, z)) == VanillaMaterials.AIR || material == VanillaMaterials.LEAVES) {
-			y--;
-			if (y == 0 || world.getBlockMaterial(x, y, z) == VanillaMaterials.WATER) {
-				return -1;
+	public CactusStackObject(Random random) {
+		super(random, (byte) 1, (byte) 3);
+	}
+
+	@Override
+	public boolean canPlaceObject(World w, int x, int y, int z) {
+		final BlockMaterial bellow = w.getBlockMaterial(x, y - 1, z);
+		return (bellow == VanillaMaterials.SAND || bellow == VanillaMaterials.CACTUS)
+				&& w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR
+				&& w.getBlockMaterial(x - 1, y, z) == VanillaMaterials.AIR
+				&& w.getBlockMaterial(x + 1, y, z) == VanillaMaterials.AIR
+				&& w.getBlockMaterial(x, y, z - 1) == VanillaMaterials.AIR
+				&& w.getBlockMaterial(x, y, z + 1) == VanillaMaterials.AIR;
+	}
+
+	@Override
+	public void placeObject(World w, int x, int y, int z) {
+		for (byte yy = 0; yy < totalHeight; yy++) {
+			if (!canPlaceObject(w, x, y + yy, z)) {
+				return;
 			}
+			w.getBlock(x, y + yy, z).setMaterial(VanillaMaterials.CACTUS);
 		}
-		y++;
-		return y;
 	}
 }

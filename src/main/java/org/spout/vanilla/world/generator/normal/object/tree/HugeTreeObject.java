@@ -24,8 +24,9 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object;
+package org.spout.vanilla.world.generator.normal.object.tree;
 
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import java.util.Random;
 
 import org.spout.api.geo.World;
@@ -40,6 +41,10 @@ public class HugeTreeObject extends TreeObject {
 	// extras
 	private boolean addVines = true;
 
+	public HugeTreeObject() {
+		this(null);
+	}
+
 	public HugeTreeObject(Random random) {
 		super(random, (byte) 10, (byte) 30, (short) 3);
 		overridable.add(VanillaMaterials.AIR);
@@ -47,6 +52,7 @@ public class HugeTreeObject extends TreeObject {
 		overridable.add(VanillaMaterials.LOG);
 		overridable.add(VanillaMaterials.DIRT);
 		overridable.add(VanillaMaterials.GRASS);
+		overridable.add(VanillaMaterials.SAPLING);
 	}
 
 	@Override

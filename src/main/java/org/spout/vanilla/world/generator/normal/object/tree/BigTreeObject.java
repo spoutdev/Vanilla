@@ -24,8 +24,9 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object;
+package org.spout.vanilla.world.generator.normal.object.tree;
 
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -41,12 +42,18 @@ public class BigTreeObject extends TreeObject {
 	private float trunkHeightMultiplier = 0.618f;
 	private byte trunkHeight;
 	private float leafAmount = 1;
-	private byte leafDistanceLimit = 4;
+	private byte leafDistanceLimit = 5;
 	private float widthScale = 1;
 	private float branchSlope = 0.381f;
 
-	public BigTreeObject(Random random) {
-		super(random, (byte) 5, (byte) 12, (short) 0);
+	public BigTreeObject(TreeType type) {
+		this(null, type);
+	}
+
+	public BigTreeObject(Random random, TreeType type) {
+		super(random, (byte) 5, (byte) 12, type.getMetadata());
+		overridable.add(VanillaMaterials.AIR);
+		overridable.add(VanillaMaterials.LEAVES);
 	}
 
 	@Override
@@ -146,8 +153,7 @@ public class BigTreeObject extends TreeObject {
 				final float disk = (float) Math.sqrt(Math.pow(Math.abs(x - xx) + 0.5, 2)
 						+ Math.pow(Math.abs(z - zz) + 0.5, 2));
 				if (disk <= size) {
-					BlockMaterial material = world.getBlockMaterial(xx, y, zz);
-					if (material == VanillaMaterials.AIR || material == VanillaMaterials.LEAVES) {
+					if (overridable.contains(world.getBlockMaterial(xx, y, zz))) {
 						world.setBlockMaterial(xx, y, zz, VanillaMaterials.LEAVES, leavesMetadata, world);
 					}
 				}
@@ -183,8 +189,7 @@ public class BigTreeObject extends TreeObject {
 		byte count = 0;
 		final BlockIterator iter = new BlockIterator(from, to);
 		while (iter.hasNext()) {
-			final BlockMaterial material = iter.next().getMaterial();
-			if (material != VanillaMaterials.AIR && material != VanillaMaterials.LEAVES) {
+			if (!overridable.contains(iter.next().getMaterial())) {
 				return count;
 			}
 			count++;

@@ -38,8 +38,8 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiomes;
-import org.spout.vanilla.world.generator.normal.object.HugeMushroomObject;
-import org.spout.vanilla.world.generator.normal.object.HugeMushroomObject.HugeMushroomType;
+import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
+import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
 
 public class MushroomDecorator implements Decorator {
 	/*

@@ -28,15 +28,12 @@ package org.spout.vanilla.world.generator.normal.object;
 
 import java.util.Random;
 
-import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class DungeonObject extends WorldGeneratorObject {
-	// rng
-	private final Random random;
+public class DungeonObject extends RandomObject {
 	// dimensions
 	private byte height = 6;
 	private byte maxSize = 9;
@@ -48,8 +45,12 @@ public class DungeonObject extends WorldGeneratorObject {
 	private boolean addSpawner = true;
 	private boolean addChests = true;
 
+	public DungeonObject() {
+		this(null);
+	}
+	
 	public DungeonObject(Random random) {
-		this.random = random;
+		super(random);
 	}
 
 	@Override

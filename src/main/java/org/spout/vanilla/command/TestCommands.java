@@ -45,10 +45,10 @@ import org.spout.api.entity.spawn.SpiralSpawnArrangement;
 import org.spout.api.entity.component.controller.type.ControllerRegistry;
 import org.spout.api.entity.component.controller.type.ControllerType;
 import org.spout.api.exception.CommandException;
+import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -57,8 +57,9 @@ import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.Effect;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.explosion.ExplosionModels;
+import org.spout.vanilla.world.generator.VanillaObjects;
+import org.spout.vanilla.world.generator.normal.object.largeplant.LargePlantObject;
 
 public class TestCommands {
 	private final Set<String> invisible = new HashSet<String>();
@@ -200,6 +201,43 @@ public class TestCommands {
 			player.getNetworkSynchronizer().setPositionDirty();
 		} else {
 			throw new CommandException("Please enter a valid world");
+		}
+	}
+	
+	@Command(aliases = {"obj"}, usage = "<name> opt<force>", desc = "Spawn a WorldGeneratorObject at your location", min = 1, max = 2)
+	public void spawnObject(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("Source must be player");
+		}
+		final Player player = (Player) source;
+		final WorldGeneratorObject object = VanillaObjects.byName(args.getString(0));
+		if (object == null) {
+			player.sendMessage("Invalid object name");
+			return;
+		}
+		final Point loc = player.getEntity().getPosition();
+		final World world = loc.getWorld();
+		final int x = loc.getBlockX();
+		final int y = loc.getBlockY();
+		final int z = loc.getBlockZ();
+		final String forceRaw = args.getString(1, "false");
+		boolean force;
+		if (forceRaw.equalsIgnoreCase("false")) {
+			force = false;
+		} else if (forceRaw.equalsIgnoreCase("true")) {
+			force = true;
+		} else {
+			force = false;
+		}
+		if (!object.canPlaceObject(world, x, y, z)) {
+			player.sendMessage("Couldn't place the object");
+			if (!force) {
+				return;
+			}
+		}
+		object.placeObject(world, x, y, z);
+		if (object instanceof LargePlantObject) {
+			((LargePlantObject) object).randomizeHeight();
 		}
 	}
 

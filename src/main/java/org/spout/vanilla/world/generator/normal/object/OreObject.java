@@ -28,19 +28,23 @@ package org.spout.vanilla.world.generator.normal.object;
 
 import java.util.Random;
 
-import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class OreObject extends WorldGeneratorObject {
+public class OreObject extends RandomObject {
 	private int count;
 	private int maxHeight;
 	private int clusterSize;
 	private BlockMaterial material;
 
 	public OreObject(BlockMaterial material, int count, int clusterSize, int maxHeight) {
+		this(null, material, count, clusterSize, maxHeight);
+	}
+	
+	public OreObject(Random random, BlockMaterial material, int count, int clusterSize, int maxHeight) {
+		super(random);
 		this.count = count;
 		this.material = material;
 		this.maxHeight = maxHeight;
@@ -79,14 +83,25 @@ public class OreObject extends WorldGeneratorObject {
 		return this.material;
 	}
 
-	@Override
-	public boolean canPlaceObject(World w, int x, int y, int z) {
-		return true;
+	public void setClusterSize(int clusterSize) {
+		this.clusterSize = clusterSize;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public void setMaterial(BlockMaterial material) {
+		this.material = material;
+	}
+
+	public void setMaxHeight(int maxHeight) {
+		this.maxHeight = maxHeight;
 	}
 
 	@Override
-	public void placeObject(World w, int originX, int originY, int originZ) {
-		this.placeObject(w, originX, originY, originZ, new Random()); //TODO: Find out random of world?!
+	public boolean canPlaceObject(World w, int x, int y, int z) {
+		return true;
 	}
 
 	/**
@@ -95,29 +110,29 @@ public class OreObject extends WorldGeneratorObject {
 	 * @param originX of the cluster
 	 * @param originY of the cluster
 	 * @param originZ of the cluster
-	 * @param random to use
 	 */
-	public void placeObject(World world, int originX, int originY, int originZ, Random random) {
-		double angle = random.nextDouble() * Math.PI;
-		double x1 = ((originX + 8) + Math.sin(angle) * this.clusterSize / 8);
-		double x2 = ((originX + 8) - Math.sin(angle) * this.clusterSize / 8);
-		double z1 = ((originZ + 8) + Math.cos(angle) * this.clusterSize / 8);
-		double z2 = ((originZ + 8) - Math.cos(angle) * this.clusterSize / 8);
-		double y1 = (originY + random.nextInt(3) + 2);
-		double y2 = (originY + random.nextInt(3) + 2);
+	@Override
+	public void placeObject(World world, int originX, int originY, int originZ) {
+		final double angle = random.nextDouble() * Math.PI;
+		final double x1 = ((originX + 8) + Math.sin(angle) * this.clusterSize / 8);
+		final double x2 = ((originX + 8) - Math.sin(angle) * this.clusterSize / 8);
+		final double z1 = ((originZ + 8) + Math.cos(angle) * this.clusterSize / 8);
+		final double z2 = ((originZ + 8) - Math.cos(angle) * this.clusterSize / 8);
+		final double y1 = (originY + random.nextInt(3) + 2);
+		final double y2 = (originY + random.nextInt(3) + 2);
 
 		for (int i = 0; i <= this.clusterSize; i++) {
-			double seedX = x1 + (x2 - x1) * i / this.clusterSize;
-			double seedY = y1 + (y2 - y1) * i / this.clusterSize;
-			double seedZ = z1 + (z2 - z1) * i / this.clusterSize;
-			double size = ((Math.sin(i * Math.PI / this.clusterSize) + 1) * random.nextDouble() * this.clusterSize / 16 + 1) / 2;
+			final double seedX = x1 + (x2 - x1) * i / this.clusterSize;
+			final double seedY = y1 + (y2 - y1) * i / this.clusterSize;
+			final double seedZ = z1 + (z2 - z1) * i / this.clusterSize;
+			final double size = ((Math.sin(i * Math.PI / this.clusterSize) + 1) * random.nextDouble() * this.clusterSize / 16 + 1) / 2;
 
-			int startX = (int) (seedX - size);
-			int startY = (int) (seedY - size);
-			int startZ = (int) (seedZ - size);
-			int endX = (int) (seedX + size);
-			int endY = (int) (seedY + size);
-			int endZ = (int) (seedZ + size);
+			final int startX = (int) (seedX - size);
+			final int startY = (int) (seedY - size);
+			final int startZ = (int) (seedZ - size);
+			final int endX = (int) (seedX + size);
+			final int endY = (int) (seedY + size);
+			final int endZ = (int) (seedZ + size);
 
 			for (int x = startX; x <= endX; x++) {
 				double sizeX = (x + 0.5 - seedX) / size;
@@ -133,7 +148,7 @@ public class OreObject extends WorldGeneratorObject {
 								double sizeZ = (z + 0.5 - seedZ) / size;
 								sizeZ *= sizeZ;
 								if (sizeX + sizeY + sizeZ < 1 && world.getBlockMaterial(x, y, z) == VanillaMaterials.STONE) {
-									world.getBlock(x, y, z).setMaterial(this.material).update();
+									world.setBlockMaterial(x, y, z, material, (short) 0, world);
 								}
 							}
 						}

@@ -49,8 +49,8 @@ import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
-import org.spout.vanilla.world.generator.normal.object.SmallTreeObject;
-import org.spout.vanilla.world.generator.normal.object.SmallTreeObject.SmallTreeType;
+import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
 
 public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMaterial {
 	public static final Sapling DEFAULT = new Sapling("Sapling");
@@ -135,7 +135,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	 * @param type of tree
 	 */
 	public void growTree(Block block, Sapling type) {
-		SmallTreeObject object = new SmallTreeObject(new Random(), SmallTreeType.getType(type.getData() & dataMask));
+		SmallTreeObject object = new SmallTreeObject(new Random(), TreeType.getType(type.getData() & dataMask));
 		object.placeObject(block.getWorld(), block.getX(), block.getY(), block.getZ());
 	}
 

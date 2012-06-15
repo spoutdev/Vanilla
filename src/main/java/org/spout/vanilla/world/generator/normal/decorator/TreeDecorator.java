@@ -35,11 +35,11 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiomes;
-import org.spout.vanilla.world.generator.normal.object.HugeTreeObject;
-import org.spout.vanilla.world.generator.normal.object.ShrubObject;
-import org.spout.vanilla.world.generator.normal.object.SmallTreeObject;
-import org.spout.vanilla.world.generator.normal.object.SmallTreeObject.SmallTreeType;
-import org.spout.vanilla.world.generator.normal.object.TreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.HugeTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
+import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class TreeDecorator implements Decorator {
 	@Override
@@ -101,9 +101,9 @@ public class TreeDecorator implements Decorator {
 
 	private TreeObject getTree(Random random, Biome biome) {
 		if (biome == VanillaBiomes.FOREST) {
-			return new SmallTreeObject(random, SmallTreeType.OAK);
+			return new SmallTreeObject(random, TreeType.OAK);
 		} else if (biome == VanillaBiomes.SWAMP) {
-			final SmallTreeObject tree = new SmallTreeObject(random, SmallTreeType.OAK);
+			final SmallTreeObject tree = new SmallTreeObject(random, TreeType.OAK);
 			tree.addLeavesVines(true);
 			tree.setLeavesRadiusIncreaseXZ((byte) 1);
 			return tree;
@@ -111,7 +111,7 @@ public class TreeDecorator implements Decorator {
 			if (random.nextInt(27) == 0) {
 				return new HugeTreeObject(random);
 			} else if (random.nextInt(3) == 0) {
-				final SmallTreeObject tree = new SmallTreeObject(random, SmallTreeType.JUNGLE);
+				final SmallTreeObject tree = new SmallTreeObject(random, TreeType.JUNGLE);
 				tree.setBaseHeight((byte) 4);
 				tree.setRandomHeight((byte) 10);
 				tree.addLogVines(true);

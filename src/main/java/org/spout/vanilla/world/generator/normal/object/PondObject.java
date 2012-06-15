@@ -28,7 +28,6 @@ package org.spout.vanilla.world.generator.normal.object;
 
 import java.util.Random;
 
-import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -38,9 +37,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 
-public class PondObject extends WorldGeneratorObject {
-	// rng
-	private final Random random;
+public class PondObject extends RandomObject {
 	// pond instance for generating the height maps
 	private final PondHole pond;
 	// height maps for generation
@@ -53,8 +50,12 @@ public class PondObject extends WorldGeneratorObject {
 	private boolean stonyTop;
 	private boolean biomeAdaptedSurface;
 
+	public PondObject(PondType type) {
+		this(null, type);
+	}
+	
 	public PondObject(Random random, PondType type) {
-		this.random = random;
+		super(random);
 		pond = new PondHole();
 		liquid = type.liquid;
 		stoneWalls = type.stoneWalls;

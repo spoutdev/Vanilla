@@ -39,22 +39,32 @@ public class OreDecorator implements Decorator {
 	public static OreObject[] objects;
 
 	static {
-		objects = new OreObject[7];
-		objects[0] = new OreObject(VanillaMaterials.GRAVEL, 10, 32, 128);
-		objects[1] = new OreObject(VanillaMaterials.COAL_ORE, 20, 16, 128);
-		objects[2] = new OreObject(VanillaMaterials.IRON_ORE, 20, 8, 64);
-		objects[3] = new OreObject(VanillaMaterials.GOLD_ORE, 2, 8, 32);
-		objects[4] = new OreObject(VanillaMaterials.REDSTONE_ORE, 8, 7, 16);
-		objects[5] = new OreObject(VanillaMaterials.DIAMOND_ORE, 1, 7, 16);
-		objects[6] = new OreObject(VanillaMaterials.LAPIS_LAZULI_ORE, 1, 6, 32);
+		objects = new OreObject[8];
+		objects[0] = new OreObject(VanillaMaterials.DIRT, 20, 32, 128);
+		objects[1] = new OreObject(VanillaMaterials.GRAVEL, 10, 32, 128);
+		objects[2] = new OreObject(VanillaMaterials.COAL_ORE, 20, 16, 128);
+		objects[3] = new OreObject(VanillaMaterials.IRON_ORE, 20, 8, 64);
+		objects[4] = new OreObject(VanillaMaterials.GOLD_ORE, 2, 8, 32);
+		objects[5] = new OreObject(VanillaMaterials.REDSTONE_ORE, 8, 7, 16);
+		objects[6] = new OreObject(VanillaMaterials.DIAMOND_ORE, 1, 7, 16);
+		objects[7] = new OreObject(VanillaMaterials.LAPIS_LAZULI_ORE, 1, 6, 32);
 	}
 
 	@Override
-	public void populate(Chunk source, Random random) {
-		World world = source.getWorld();
+	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() != 4) {
+			return;
+		}
+		final World world = chunk.getWorld();
+		final int worldX = chunk.getBlockX();
+		final int worldZ = chunk.getBlockZ();
 		for (OreObject object : objects) {
+			object.setRandom(random);
 			for (int i = 0; i < object.getCount(); i++) {
-				object.placeObject(world, source.getBlockX() + random.nextInt(16), random.nextInt(object.getMaxHeight()), source.getBlockZ() + random.nextInt(16), random);
+				final int x = worldX + random.nextInt(16);
+				final int y = random.nextInt(object.getMaxHeight());
+				final int z = worldZ + random.nextInt(16);
+				object.placeObject(world, x, y, z);
 			}
 		}
 	}

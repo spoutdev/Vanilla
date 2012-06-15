@@ -24,8 +24,9 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object;
+package org.spout.vanilla.world.generator.normal.object.tree;
 
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import java.util.Random;
 
 import org.spout.api.geo.World;
@@ -37,8 +38,14 @@ public class ShrubObject extends TreeObject {
 	// size control
 	private byte radius = 2;
 
+	public ShrubObject() {
+		this(null);
+	}
+	
 	public ShrubObject(Random random) {
 		super(random, (byte) 1, (byte) 1, (short) 3, (short) 0);
+		overridable.add(VanillaMaterials.AIR);
+		overridable.add(VanillaMaterials.LEAVES);
 	}
 
 	@Override
@@ -59,8 +66,7 @@ public class ShrubObject extends TreeObject {
 					if (Math.abs(xx) == yy && Math.abs(zz) == yy && random.nextBoolean()) {
 						continue;
 					}
-					final BlockMaterial material = w.getBlockMaterial(x + xx, y - yy + radius, z + zz);
-					if (!material.isOpaque() && material != VanillaMaterials.LOG) {
+					if (overridable.contains(w.getBlockMaterial(x + xx, y - yy + radius, z + zz))) {
 						w.setBlockMaterial(x + xx, y - yy + radius, z + zz, VanillaMaterials.LEAVES, leavesMetadata, w);
 					}
 				}

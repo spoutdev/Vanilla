@@ -102,4 +102,12 @@ public class PineTreeObject extends TreeObject {
 		leavesSizeY = (byte) (random.nextInt(2) + 1);
 		leavesAbsoluteMaxRadius = (byte) (2 + random.nextInt(2));
 	}
+
+	public void setLeavesAbsoluteMaxRadius(byte leavesAbsoluteMaxRadius) {
+		this.leavesAbsoluteMaxRadius = leavesAbsoluteMaxRadius;
+	}
+
+	public void setLeavesSizeY(byte leavesSizeY) {
+		this.leavesSizeY = leavesSizeY;
+	}
 }

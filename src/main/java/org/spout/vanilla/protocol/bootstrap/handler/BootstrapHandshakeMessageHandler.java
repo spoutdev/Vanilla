@@ -44,6 +44,7 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 	public void handle(Session session, Player player, HandshakeMessage message) {
 		Session.State state = session.getState();
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
+			session.getDataMap().put(VanillaProtocol.LOGIN_TIME, System.currentTimeMillis());
 			session.getDataMap().put(VanillaProtocol.HANDSHAKE_USERNAME, message.getIdentifier());
 			if (VanillaConfiguration.ENCRYPT_MODE.getBoolean()) {
 				session.setState(Session.State.EXCHANGE_ENCRYPTION);

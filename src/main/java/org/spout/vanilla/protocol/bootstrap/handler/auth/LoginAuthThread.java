@@ -59,6 +59,7 @@ public class LoginAuthThread implements Runnable {
 	}
 
 	public void run() {
+		long start = System.currentTimeMillis();
 		String sessionId = session.getDataMap().get(VanillaProtocol.SESSION_ID);
 		String encodedUser;
 		String encodedId;
@@ -127,6 +128,11 @@ public class LoginAuthThread implements Runnable {
 			} else {
 				httpConnection.disconnect();
 			}
+		}
+		if (Spout.getEngine().debugMode()) {
+			long currentTime = System.currentTimeMillis();
+			Spout.getLogger().info("Login took " + (currentTime - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + "ms");
+			Spout.getLogger().info("Authing took " + (System.currentTimeMillis() - start) + "ms");
 		}
 
 	}

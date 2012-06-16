@@ -63,4 +63,9 @@ public abstract class LargePlantObject extends RandomObject {
 	public final void randomizeHeight() {
 		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));
 	}
+	
+	@Override
+	public void randomize() {
+		randomizeHeight();
+	}
 }

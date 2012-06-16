@@ -29,15 +29,21 @@ package org.spout.vanilla.world.generator.normal.object;
 import java.util.Random;
 
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class DungeonObject extends RandomObject {
-	// dimensions
-	private byte height = 6;
-	private byte maxSize = 9;
-	private byte minSize = 7;
+	// base dimensions
+	private byte height = 3;
+	private byte baseRadius = 2;
+	private byte randRadius = 2;
+	// randomly generated dimension
+	private byte radiusX;
+	private byte radiusZ;
 	// blocks
 	private BlockMaterial firstWallMaterial = VanillaMaterials.COBBLESTONE;
 	private BlockMaterial secondWallMaterial = VanillaMaterials.MOSS_STONE;
@@ -48,41 +54,82 @@ public class DungeonObject extends RandomObject {
 	public DungeonObject() {
 		this(null);
 	}
-	
+
 	public DungeonObject(Random random) {
 		super(random);
+		randomizeRadius();
 	}
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		return w.getBlockMaterial(x, y, z) != VanillaMaterials.AIR;
+		byte unsuportedEdgeBlockCount = 0;
+		for (byte yy = -1; yy < height + 2; yy++) {
+			for (byte xx = (byte) (-radiusX - 1); xx < radiusX + 2; xx++) {
+				for (byte zz = (byte) (-radiusZ - 1); zz < radiusZ + 2; zz++) {
+					BlockMaterial material = w.getBlockMaterial(x + xx, y + yy, z + zz);
+					if ((yy == -1 || yy == height + 1) && material == VanillaMaterials.AIR) {
+						return false;
+					}
+					if ((xx == -radiusX - 1 || xx == radiusX + 1
+							|| zz == -radiusZ - 1 || zz == radiusZ + 1)
+							&& yy == 0 && w.getBlockMaterial(x + xx, y + yy, z + zz) == VanillaMaterials.AIR
+							&& w.getBlockMaterial(x + xx, y + yy + 1, z + zz) == VanillaMaterials.AIR) {
+						unsuportedEdgeBlockCount++;
+					}
+				}
+			}
+		}
+		return unsuportedEdgeBlockCount > 0 && unsuportedEdgeBlockCount < 6;
 	}
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		final byte width = random.nextBoolean() ? maxSize : minSize;
-		final byte depth = random.nextBoolean() ? maxSize : minSize;
-		for (byte xx = 0; xx < width; xx++) {
-			for (byte yy = 0; yy < height; yy++) {
-				for (byte zz = 0; zz < depth; zz++) {
-					BlockMaterial material = VanillaMaterials.AIR;
-					if (xx == 0 || xx == width - 1 || zz == 0 || zz == depth - 1) {
-						material = VanillaMaterials.COBBLESTONE;
+		for (int yy = height; yy > -2; yy--) {
+			for (byte xx = (byte) (-radiusX - 1); xx < radiusX + 2; xx++) {
+				for (byte zz = (byte) (-radiusZ - 1); zz < radiusZ + 2; zz++) {
+					if (xx == -radiusX - 1 || yy == -1 || zz == -radiusZ - 1
+							|| xx == radiusX + 1 || yy == height + 1 || zz == radiusZ + 1) {
+						if (yy > -1 && w.getBlockMaterial(x + xx, y + yy - 1, z + zz) == VanillaMaterials.AIR) {
+							w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.AIR, (short) 0, w);
+							continue;
+						}
+						if (w.getBlockMaterial(x + xx, y + yy, z + zz) == VanillaMaterials.AIR) {
+							continue;
+						}
+						if (yy == -1 && random.nextInt(4) != 0) {
+							w.setBlockMaterial(x + xx, y + yy, z + zz, secondWallMaterial, (short) 0, w);
+						} else {
+							w.setBlockMaterial(x + xx, y + yy, z + zz, firstWallMaterial, (short) 0, w);
+						}
+					} else {
+						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.AIR, (short) 0, w);
 					}
-					if (yy == 0 || yy == height - 1) {
-						material = random.nextBoolean() ? firstWallMaterial : secondWallMaterial;
-					}
-					w.setBlockMaterial(x + xx, y + yy, z + zz, material, (short) 0, w);
 				}
 			}
 		}
-		if (addSpawner) {
-			w.setBlockMaterial(x + width / 2, y + 1, z + depth / 2, VanillaMaterials.MONSTER_SPAWNER, (short) 0, w);
-		}
 		if (addChests) {
-			w.setBlockMaterial(x + 1, y + 1, z + depth / 2, VanillaMaterials.CHEST, (short) 0, w);
-			w.setBlockMaterial(x + width / 2, y + 1, z + 1, VanillaMaterials.CHEST, (short) 0, w);
-			//TODO Fill Chests with stuff
+			for (byte attempts = 0; attempts < 6; attempts++) {
+				final int xx = random.nextInt(radiusX * 2 + 1) - radiusX + x;
+				final int zz = random.nextInt(radiusZ * 2 + 1) - radiusZ + z;
+				int adjacentSolidBlockCount = 0;
+				final Block middle = w.getBlock(xx, y, zz);
+				if (middle.getMaterial() != VanillaMaterials.AIR) {
+					continue;
+				}
+				for (final BlockFace face : BlockFaces.NESW) {
+					if (middle.translate(face).getMaterial().isSolid()) {
+						adjacentSolidBlockCount++;
+					}
+				}
+				if (adjacentSolidBlockCount != 1) {
+					continue;
+				}
+				w.setBlockMaterial(xx, y, zz, VanillaMaterials.CHEST, (short) 0, w);
+				//TODO: add loot
+			}
+		}
+		if (addSpawner) {
+			w.setBlockMaterial(x, y, z, VanillaMaterials.MONSTER_SPAWNER, (short) 0, w);
 		}
 	}
 
@@ -90,12 +137,25 @@ public class DungeonObject extends RandomObject {
 		this.height = height;
 	}
 
-	public void setMaxSize(byte maxSize) {
-		this.maxSize = maxSize;
+	public final void randomizeRadius() {
+		radiusX = (byte) (random.nextInt(randRadius) + baseRadius);
+		radiusZ = (byte) (random.nextInt(randRadius) + baseRadius);
 	}
 
-	public void setMinSize(byte minSize) {
-		this.minSize = minSize;
+	public void setBaseRadius(byte baseRadius) {
+		this.baseRadius = baseRadius;
+	}
+
+	public void setRandRadius(byte randRadius) {
+		this.randRadius = randRadius;
+	}
+
+	public void setRadiusX(byte radiusX) {
+		this.radiusX = radiusX;
+	}
+
+	public void setRadiusZ(byte radiusZ) {
+		this.radiusZ = radiusZ;
 	}
 
 	public void setFirstWallMaterial(BlockMaterial firstWallMaterial) {
@@ -112,5 +172,10 @@ public class DungeonObject extends RandomObject {
 
 	public void addSpawner(boolean addSpawner) {
 		this.addSpawner = addSpawner;
+	}
+
+	@Override
+	public void randomize() {
+		randomizeRadius();
 	}
 }

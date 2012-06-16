@@ -157,4 +157,8 @@ public class OreObject extends RandomObject {
 			}
 		}
 	}
+
+	@Override
+	public void randomize() {
+	}
 }

@@ -53,7 +53,7 @@ public class SpireObject extends LargePlantObject {
 
 	public SpireObject(Random random) {
 		super(random, (byte) 6, (byte) 32);
-		findNewRandomRadius();
+		randomizeRadius();
 	}
 
 	@Override
@@ -93,6 +93,12 @@ public class SpireObject extends LargePlantObject {
 		}
 	}
 
+	@Override
+	public void randomize() {
+		super.randomize();
+		randomizeRadius();
+	}
+
 	private byte getDiameter() {
 		return (byte) (totalRadius * 2);
 	}
@@ -101,7 +107,7 @@ public class SpireObject extends LargePlantObject {
 		return (short) (totalRadius * totalRadius + 1);
 	}
 
-	public final void findNewRandomRadius() {
+	public final void randomizeRadius() {
 		totalRadius = (byte) (baseRadius + random.nextInt(randRadius));
 	}
 

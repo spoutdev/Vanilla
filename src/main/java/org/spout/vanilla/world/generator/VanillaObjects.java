@@ -26,8 +26,11 @@
  */
 package org.spout.vanilla.world.generator;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -91,32 +94,16 @@ public class VanillaObjects {
 		SMALL_SWAMP_TREE.addLeavesVines(true);
 		SMALL_SWAMP_TREE.setLeavesRadiusIncreaseXZ((byte) 1);
 		// for the '/obj' test command
-		BY_NAME.put("big_oak_tree", BIG_OAK_TREE);
-		BY_NAME.put("cactus_stack", CACTUS_STACK);
-		BY_NAME.put("dungeon", DUNGEON);
-		BY_NAME.put("huge_red_mushroom", HUGE_RED_MUSHROOM);
-		BY_NAME.put("huge_brown_mushroom", HUGE_BROWN_MUSHROOM);
-		BY_NAME.put("huge_jungle_tree", HUGE_JUNGLE_TREE);
-		BY_NAME.put("dirt_ore", DIRT_ORE);
-		BY_NAME.put("gravel_ore", GRAVEL_ORE);
-		BY_NAME.put("coal_ore", COAL_ORE);
-		BY_NAME.put("iron_ore", IRON_ORE);
-		BY_NAME.put("gold_ore", GOLD_ORE);
-		BY_NAME.put("redstone_ore", REDSTONE_ORE);
-		BY_NAME.put("diamond_ore", DIAMOND_ORE);
-		BY_NAME.put("lapis_lazuli_ore", LAPIS_LAZULI_ORE);
-		BY_NAME.put("lava_pond", LAVA_POND);
-		BY_NAME.put("water_pond", WATER_POND);
-		BY_NAME.put("shrub", SHRUB);
-		BY_NAME.put("small_oak_tree", SMALL_OAK_TREE);
-		BY_NAME.put("small_birch_tree", SMALL_BIRCH_TREE);
-		BY_NAME.put("small_jungle_tree", SMALL_JUNGLE_TREE);
-		BY_NAME.put("small_swamp_tree", SMALL_SWAMP_TREE);
-		BY_NAME.put("pine_tree", PINE_TREE);
-		BY_NAME.put("spruce_tree", SPRUCE_TREE);
-		BY_NAME.put("sugar_cane_stack", SUGAR_CANE_STACK);
-		BY_NAME.put("well", WELL);
-		BY_NAME.put("spire", SPIRE);
+		for (Field objectField : VanillaObjects.class.getDeclaredFields()) {
+            objectField.setAccessible(true);
+			try {
+				Object o = objectField.get(null);
+				if (o instanceof WorldGeneratorObject) {
+					BY_NAME.put(objectField.getName().toLowerCase(), (WorldGeneratorObject) o);
+				}
+			} catch (Exception ex) {
+			}
+        }
 	}
 	
 	public static WorldGeneratorObject byName(String name) {

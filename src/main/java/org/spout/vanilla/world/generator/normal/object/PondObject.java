@@ -53,7 +53,7 @@ public class PondObject extends RandomObject {
 	public PondObject(PondType type) {
 		this(null, type);
 	}
-	
+
 	public PondObject(Random random, PondType type) {
 		super(random);
 		pond = new PondHole();
@@ -179,10 +179,31 @@ public class PondObject extends RandomObject {
 			return false;
 		}
 	}
+	
+	public void setLiquid(BlockMaterial liquid) {
+		this.liquid = liquid;
+	}
+
+	public void biomeAdaptedSurface(boolean biomeAdaptedSurface) {
+		this.biomeAdaptedSurface = biomeAdaptedSurface;
+	}
+
+	public void stoneWalls(boolean stoneWalls) {
+		this.stoneWalls = stoneWalls;
+	}
+
+	public void stonyTop(boolean stonyTop) {
+		this.stonyTop = stonyTop;
+	}
+
+	@Override
+	public void randomize() {
+		generateHeightMaps();
+	}
 
 	/*
-		  * Represents a hole in the shape of a pond
-		  */
+	 * Represents a hole in the shape of a pond
+	 */
 	private class PondHole {
 		private final SphericalNoise[] noise;
 
@@ -203,8 +224,8 @@ public class PondObject extends RandomObject {
 		}
 
 		/*
-				   * Noise used to generate the pond hole
-				   */
+		 * Noise used to generate the pond hole
+		 */
 		private class SphericalNoise {
 			private final float radius;
 			private final int xOffset;
@@ -240,24 +261,7 @@ public class PondObject extends RandomObject {
 		}
 	}
 
-	public void setLiquid(BlockMaterial liquid) {
-		this.liquid = liquid;
-	}
-
-	public void biomeAdaptedSurface(boolean biomeAdaptedSurface) {
-		this.biomeAdaptedSurface = biomeAdaptedSurface;
-	}
-
-	public void stoneWalls(boolean stoneWalls) {
-		this.stoneWalls = stoneWalls;
-	}
-
-	public void stonyTop(boolean stonyTop) {
-		this.stonyTop = stonyTop;
-	}
-
 	public static enum PondType {
-
 		WATER(VanillaMaterials.STATIONARY_WATER, false, false, true),
 		LAVA(VanillaMaterials.STATIONARY_LAVA, true, true, true);
 		//

@@ -59,7 +59,7 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.Effect;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.VanillaObjects;
-import org.spout.vanilla.world.generator.normal.object.largeplant.LargePlantObject;
+import org.spout.vanilla.world.generator.normal.object.RandomObject;
 
 public class TestCommands {
 	private final Set<String> invisible = new HashSet<String>();
@@ -236,8 +236,8 @@ public class TestCommands {
 			}
 		}
 		object.placeObject(world, x, y, z);
-		if (object instanceof LargePlantObject) {
-			((LargePlantObject) object).randomizeHeight();
+		if (object instanceof RandomObject) {
+			((RandomObject) object).randomize();
 		}
 	}
 

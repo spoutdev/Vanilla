@@ -43,6 +43,8 @@ public abstract class RandomObject extends WorldGeneratorObject {
 			this.random = random;
 		}
 	}
+	
+	public abstract void randomize();
 
 	public void setRandom(Random random) {
 		this.random = random;

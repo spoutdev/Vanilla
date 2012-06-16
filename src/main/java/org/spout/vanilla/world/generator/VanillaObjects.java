@@ -102,6 +102,8 @@ public class VanillaObjects {
 					BY_NAME.put(objectField.getName().toLowerCase(), (WorldGeneratorObject) o);
 				}
 			} catch (Exception ex) {
+				System.out.println("Could not properly reflect VanillaObjects! Unexpected behaviour may occur, please report to http://issues.spout.org!");
+				ex.printStackTrace();
 			}
         }
 	}

@@ -98,8 +98,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Constructs a new VanillaPlayer to use as a {@link PlayerController} for the given player.
-	 * @param the {@link Player} parent of the controller.
-	 * @param the {@link GameMode} of the player.
+	 * @param p {@link Player} parent of the controller.
+	 * @param gameMode {@link GameMode} of the player.
 	 */
 	public VanillaPlayer(Player p, GameMode gameMode) {
 		super(p.getName());
@@ -113,7 +113,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Constructs a new VanillaPlayer to use as a {@link PlayerController} for the given player.
-	 * @param the {@link Player} parent of the controller.
+	 * @param p {@link Player} parent of the controller.
 	 */
 	public VanillaPlayer(Player p) {
 		this(p, GameMode.SURVIVAL);

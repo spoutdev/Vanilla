@@ -109,7 +109,7 @@ public class LoginAuthThread implements Runnable {
 		try {
 			in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
 			String reply = in.readLine();
-			if (reply.equals(authString)) {
+			if (reply != null && reply.equals(authString)) {
 				Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable);
 			} else {
 				failed("Auth server refused authentication");

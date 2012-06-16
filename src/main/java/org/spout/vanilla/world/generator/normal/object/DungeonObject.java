@@ -50,6 +50,7 @@ public class DungeonObject extends RandomObject {
 	// extras
 	private boolean addSpawner = true;
 	private boolean addChests = true;
+	private byte maxNumberOfChests = 2;
 
 	public DungeonObject() {
 		this(null);
@@ -108,16 +109,17 @@ public class DungeonObject extends RandomObject {
 			}
 		}
 		if (addChests) {
+			byte chestCount = 0;
 			for (byte attempts = 0; attempts < 6; attempts++) {
 				final int xx = random.nextInt(radiusX * 2 + 1) - radiusX + x;
 				final int zz = random.nextInt(radiusZ * 2 + 1) - radiusZ + z;
-				int adjacentSolidBlockCount = 0;
 				final Block middle = w.getBlock(xx, y, zz);
 				if (middle.getMaterial() != VanillaMaterials.AIR) {
 					continue;
 				}
+				byte adjacentSolidBlockCount = 0;
 				for (final BlockFace face : BlockFaces.NESW) {
-					if (middle.translate(face).getMaterial().isSolid()) {
+					if (middle.translate(face).getMaterial() != VanillaMaterials.AIR) {
 						adjacentSolidBlockCount++;
 					}
 				}
@@ -125,6 +127,10 @@ public class DungeonObject extends RandomObject {
 					continue;
 				}
 				w.setBlockMaterial(xx, y, zz, VanillaMaterials.CHEST, (short) 0, w);
+				chestCount++;
+				if (chestCount == maxNumberOfChests) {
+					break;
+				}
 				//TODO: add loot
 			}
 		}
@@ -168,6 +174,10 @@ public class DungeonObject extends RandomObject {
 
 	public void addChests(boolean addChests) {
 		this.addChests = addChests;
+	}
+
+	public void setMaxNumberOfChests(byte maxNumberOfChests) {
+		this.maxNumberOfChests = maxNumberOfChests;
 	}
 
 	public void addSpawner(boolean addSpawner) {

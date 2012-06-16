@@ -162,10 +162,10 @@ public class BigTreeObject extends TreeObject {
 	}
 
 	private float getRoughLayerSize(byte layer) {
-		if (layer < totalHeight / 3) {
+		if (layer < totalHeight / 3f) {
 			return -1f;
-		} else if (layer == totalHeight / 2) {
-			return ( (float) totalHeight) / 4;
+		} else if (layer == totalHeight / 2f) {
+			return totalHeight / 4f;
 		} else if (layer >= totalHeight || layer <= 0) {
 			return 0;
 		} else {

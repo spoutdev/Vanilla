@@ -26,20 +26,18 @@
  */
 package org.spout.vanilla.inventory.block;
 
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.block.Furnace;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.WindowInventory;
+import org.spout.vanilla.inventory.VanillaInventory;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.window.Window;
-import org.spout.vanilla.window.block.FurnaceWindow;
 
 /**
  * Represents a furnace inventory belonging to a furnace controller.
  */
-public class FurnaceInventory extends WindowInventory {
+public class FurnaceInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
 	private final Furnace owner;
 
@@ -118,10 +116,5 @@ public class FurnaceInventory extends WindowInventory {
 	 */
 	public boolean hasIngredient() {
 		return getIngredient() != null && getIngredient().getMaterial() instanceof TimedCraftable;
-	}
-
-	@Override
-	public Window createWindow(VanillaPlayer player) {
-		return new FurnaceWindow(player, this);
 	}
 }

@@ -94,7 +94,7 @@ public class Dispenser extends ControlledMaterial implements Directional, Mineab
 			}
 
 			// Open the dispenser
-			((org.spout.vanilla.controller.block.Dispenser) block.getController()).getInventory().open((VanillaPlayer) controller);
+			((org.spout.vanilla.controller.block.Dispenser) block.getController()).open((VanillaPlayer) controller);
 		}
 	}
 

@@ -98,7 +98,7 @@ public class Furnace extends ControlledMaterial implements Directional, Mineable
 			}
 
 			// Open the furnace
-			((org.spout.vanilla.controller.block.Furnace) block.getController()).getInventory().open((VanillaPlayer) controller);
+			((org.spout.vanilla.controller.block.Furnace) block.getController()).open((VanillaPlayer) controller);
 		}
 	}
 

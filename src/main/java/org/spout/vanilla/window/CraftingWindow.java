@@ -37,6 +37,7 @@ import org.spout.api.inventory.Recipe;
 import org.spout.api.inventory.RecipeManager;
 import org.spout.api.material.Material;
 
+import org.spout.vanilla.controller.WindowOwner;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.CraftingGrid;
 
@@ -45,6 +46,11 @@ public abstract class CraftingWindow extends Window {
 
 	public CraftingWindow(int id, String title, VanillaPlayer owner, CraftingGrid craftingGrid) {
 		super(id, title, owner);
+		this.craftingGrid = craftingGrid;
+	}
+
+	public CraftingWindow(int id, String title, VanillaPlayer owner, CraftingGrid craftingGrid, WindowOwner windowOwner) {
+		super(id, title, owner, windowOwner);
 		this.craftingGrid = craftingGrid;
 	}
 

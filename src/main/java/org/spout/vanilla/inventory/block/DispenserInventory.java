@@ -26,16 +26,14 @@
  */
 package org.spout.vanilla.inventory.block;
 
+import org.spout.api.inventory.Inventory;
 import org.spout.vanilla.controller.block.Dispenser;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.WindowInventory;
-import org.spout.vanilla.window.Window;
-import org.spout.vanilla.window.block.DispenserWindow;
+import org.spout.vanilla.inventory.VanillaInventory;
 
 /**
  * Represents a dispenser inventory belonging to a dispenser controller.
  */
-public class DispenserInventory extends WindowInventory {
+public class DispenserInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
 	private final Dispenser owner;
 
@@ -50,10 +48,5 @@ public class DispenserInventory extends WindowInventory {
 	 */
 	public Dispenser getOwner() {
 		return owner;
-	}
-
-	@Override
-	public Window createWindow(VanillaPlayer player) {
-		return new DispenserWindow(player, this);
 	}
 }

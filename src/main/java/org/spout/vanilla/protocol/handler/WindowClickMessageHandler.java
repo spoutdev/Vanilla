@@ -43,7 +43,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		if (!(entity.getController() instanceof VanillaPlayer)) {
 			return;
 		}
-
+		
 		VanillaPlayer controller = (VanillaPlayer) entity.getController();
 		Window window = controller.getActiveWindow();
 		boolean result = false;

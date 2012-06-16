@@ -182,7 +182,7 @@ public class Chest extends ControlledMaterial implements Directional, Fuel, Mine
 			}
 
 			// Open the chest
-			this.getController(block).getInventory().open((VanillaPlayer) controller);
+			this.getController(block).open((VanillaPlayer) controller);
 		}
 	}
 

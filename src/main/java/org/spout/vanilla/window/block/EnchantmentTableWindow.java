@@ -26,16 +26,17 @@
  */
 package org.spout.vanilla.window.block;
 
+import org.spout.vanilla.controller.block.EnchantmentTable;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.util.SlotIndexMap;
-import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
-import org.spout.vanilla.window.InventoryWindow;
+import org.spout.vanilla.window.Window;
 
-public class EnchantmentTableWindow extends InventoryWindow {
+public class EnchantmentTableWindow extends Window {
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("28-36, 19-27, 10-18, 1-9, 0");
 
-	public EnchantmentTableWindow(VanillaPlayer owner, EnchantmentTableInventory inventory) {
-		super(4, "Enchant", owner, inventory);
+	public EnchantmentTableWindow(VanillaPlayer owner, EnchantmentTable table) {
+		super(4, "Enchant", owner, table);
+		this.setInventory(owner.getInventory().getItems(), table.getInventory());
 		this.setSlotIndexMap(SLOTS);
 	}
 }

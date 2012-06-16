@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.window.block;
 
+import org.spout.vanilla.controller.block.CraftingTable;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
 import org.spout.vanilla.util.SlotIndexMap;
@@ -34,9 +35,13 @@ import org.spout.vanilla.window.CraftingWindow;
 public class CraftingTableWindow extends CraftingWindow {
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("37-45, 28-36, 19-27, 10-18, 7-9, 4-6, 1-3, 0");
 
-	public CraftingTableWindow(VanillaPlayer owner, CraftingTableInventory craftingInventory) {
-		super(1, "Crafting", owner, craftingInventory);
-		this.setInventory(owner.getInventory().getItems(), craftingInventory);
+	public CraftingTableWindow(VanillaPlayer owner, CraftingTable craftingTable) {
+		this(owner, craftingTable, new CraftingTableInventory());
+	}
+
+	private CraftingTableWindow(VanillaPlayer owner, CraftingTable craftingTable, CraftingTableInventory inventory) {
+		super(1, "Crafting", owner, inventory, craftingTable);
+		this.setInventory(owner.getInventory().getItems(), inventory);
 		this.setSlotIndexMap(SLOTS);
 	}
 }

@@ -26,12 +26,14 @@
  */
 package org.spout.vanilla.controller.block;
 
-import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.window.Window;
+import org.spout.vanilla.window.block.EnchantmentTableWindow;
 
-public class EnchantmentTable extends VanillaBlockController {
+public class EnchantmentTable extends VanillaWindowBlockController {
 	private final EnchantmentTableInventory inventory;
 
 	public EnchantmentTable() {
@@ -50,5 +52,10 @@ public class EnchantmentTable extends VanillaBlockController {
 
 	public EnchantmentTableInventory getInventory() {
 		return inventory;
+	}
+
+	@Override
+	public Window createWindow(VanillaPlayer player) {
+		return new EnchantmentTableWindow(player, this);
 	}
 }

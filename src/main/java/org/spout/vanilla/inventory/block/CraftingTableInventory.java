@@ -29,24 +29,16 @@ package org.spout.vanilla.inventory.block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.util.StringUtil;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.CraftingGrid;
-import org.spout.vanilla.inventory.WindowInventory;
-import org.spout.vanilla.window.Window;
-import org.spout.vanilla.window.block.CraftingTableWindow;
+import org.spout.vanilla.inventory.VanillaInventory;
 
-public class CraftingTableInventory extends WindowInventory implements CraftingGrid {
+public class CraftingTableInventory extends Inventory implements VanillaInventory, CraftingGrid {
 	private final int[] GRID_ARRAY = StringUtil.getIntArray("0-5, 7-9");
 	private static final int OUTPUT_SLOT = 6, ROW_SIZE = 3, COLUMN_SIZE = 3;
 	private static final long serialVersionUID = 1L;
 
 	public CraftingTableInventory() {
 		super(10);
-	}
-
-	@Override
-	public Window createWindow(VanillaPlayer player) {
-		return new CraftingTableWindow(player, this);
 	}
 
 	@Override

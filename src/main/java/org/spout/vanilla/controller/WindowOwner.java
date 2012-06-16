@@ -24,54 +24,43 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory;
+package org.spout.vanilla.controller;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
+import java.util.Collection;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.window.Window;
 
-public abstract class WindowInventory extends Inventory implements VanillaInventory {
-	private static final long serialVersionUID = 1L;
-	private HashSet<VanillaPlayer> viewers = new HashSet<VanillaPlayer>();
+/**
+ * Defines a controller that can open and close windows for players
+ */
+public interface WindowOwner {
 
-	public WindowInventory(int size) {
-		super(size);
-	}
+	/**
+	 * Opens the window for the player specified
+	 * @param player to open it for
+	 */
+	public boolean open(VanillaPlayer player);
 
-	public WindowInventory(ItemStack[] contents) {
-		super(contents);
-	}
+	/**
+	 * Closes an opened window for the player specified
+	 * @param player to close it for
+	 */
+	public boolean close(VanillaPlayer player);
 
-	public abstract Window createWindow(VanillaPlayer player);
+	/**
+	 * Closes all the windows players have for this controller
+	 */
+	public void closeAll();
 
-	public boolean hasViewingPlayers() {
-		return !this.viewers.isEmpty();
-	}
+	/**
+	 * Gets a collection of viewers currently using this controller
+	 * @return a collection of players viewing this controller
+	 */
+	public Collection<VanillaPlayer> getViewers();
 
-	public Set<VanillaPlayer> getViewingPlayers() {
-		return this.viewers;
-	}
-
-	public void addViewer(VanillaPlayer player) {
-		this.viewers.add(player);
-	}
-
-	public void removeViewer(VanillaPlayer player) {
-		this.viewers.remove(player);
-	}
-
-	public void open(VanillaPlayer player) {
-		this.addViewer(player);
-		player.setWindow(this.createWindow(player));
-	}
-
-	public void close(VanillaPlayer player) {
-		this.removeViewer(player);
-		player.closeWindow();
-	}
+	/**
+	 * Checks if this controller has viewers
+	 * @return True if it has viewers, False if not
+	 */
+	public boolean hasViewers();
 }

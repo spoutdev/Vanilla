@@ -26,13 +26,11 @@
  */
 package org.spout.vanilla.inventory.block;
 
+import org.spout.api.inventory.Inventory;
 import org.spout.vanilla.controller.block.Chest;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.WindowInventory;
-import org.spout.vanilla.window.Window;
-import org.spout.vanilla.window.block.ChestWindow;
+import org.spout.vanilla.inventory.VanillaInventory;
 
-public class ChestInventory extends WindowInventory {
+public class ChestInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
 	private final Chest owner;
 
@@ -47,45 +45,5 @@ public class ChestInventory extends WindowInventory {
 	 */
 	public Chest getOwner() {
 		return owner;
-	}
-
-	@Override
-	public void addViewer(VanillaPlayer player) {
-		super.addViewer(player);
-		this.getOwner().setOpened(this.hasViewingPlayers());
-	}
-
-	@Override
-	public void removeViewer(VanillaPlayer player) {
-		super.removeViewer(player);
-		this.getOwner().setOpened(this.hasViewingPlayers());
-	}
-
-	@Override
-	public void open(VanillaPlayer player) {
-		super.open(player);
-		Chest other = this.owner.getOtherHalf();
-		if (other != null) {
-			other.getInventory().addViewer(player);
-		}
-	}
-
-	@Override
-	public void close(VanillaPlayer player) {
-		super.close(player);
-		Chest other = this.owner.getOtherHalf();
-		if (other != null) {
-			other.getInventory().removeViewer(player);
-		}
-	}
-
-	@Override
-	public Window createWindow(VanillaPlayer player) {
-		Chest other = this.owner.getOtherHalf();
-		if (other == null) {
-			return new ChestWindow(player, this);
-		}
-
-		return new ChestWindow(player, this, other.getInventory());
 	}
 }

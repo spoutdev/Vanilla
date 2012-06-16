@@ -39,6 +39,7 @@ import org.spout.api.util.map.concurrent.AtomicShortArray;
 
 import org.spout.vanilla.material.block.controlled.BrewingStand;
 import org.spout.vanilla.material.block.controlled.Chest;
+import org.spout.vanilla.material.block.controlled.CraftingTable;
 import org.spout.vanilla.material.block.controlled.Dispenser;
 import org.spout.vanilla.material.block.controlled.EnchantmentTable;
 import org.spout.vanilla.material.block.controlled.Furnace;
@@ -114,7 +115,6 @@ import org.spout.vanilla.material.block.solid.Brick;
 import org.spout.vanilla.material.block.solid.CauldronBlock;
 import org.spout.vanilla.material.block.solid.ClayBlock;
 import org.spout.vanilla.material.block.solid.Cobblestone;
-import org.spout.vanilla.material.block.solid.CraftingTable;
 import org.spout.vanilla.material.block.solid.Dirt;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
 import org.spout.vanilla.material.block.solid.Endstone;

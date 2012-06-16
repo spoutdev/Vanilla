@@ -89,7 +89,7 @@ public class EnchantmentTable extends ControlledMaterial implements Directional,
 			}
 
 			// Open the enchantment table
-			((org.spout.vanilla.controller.block.EnchantmentTable) block.getController()).getInventory().open((VanillaPlayer) controller);
+			((org.spout.vanilla.controller.block.EnchantmentTable) block.getController()).open((VanillaPlayer) controller);
 		}
 	}
 

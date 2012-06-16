@@ -26,19 +26,17 @@
  */
 package org.spout.vanilla.window.block;
 
-import org.spout.api.inventory.InventoryBase;
-
+import org.spout.vanilla.controller.block.Furnace;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.WindowInventory;
 import org.spout.vanilla.util.SlotIndexMap;
-import org.spout.vanilla.window.InventoryWindow;
 import org.spout.vanilla.window.Window;
 
-public class FurnaceWindow extends InventoryWindow {
+public class FurnaceWindow extends Window {
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("30-38, 21-29, 12-20, 3-11, 1, 2, 0");
 
-	public FurnaceWindow(VanillaPlayer owner, WindowInventory furnaceInventory) {
-		super(2, "Furnace", owner, furnaceInventory);
+	public FurnaceWindow(VanillaPlayer owner, Furnace furnace) {
+		super(2, "Furnace", owner, furnace);
+		this.setInventory(owner.getInventory().getItems(), furnace.getInventory());
 		this.setSlotIndexMap(SLOTS);
 	}
 

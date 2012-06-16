@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.block.controlled;
 
 import java.util.ArrayList;
 
@@ -35,17 +35,16 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.block.CraftingTableInventory;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class CraftingTable extends Solid implements Mineable {
+public class CraftingTable extends ControlledMaterial implements Mineable {
 	public CraftingTable(String name, int id) {
-		super(name, id);
+		super(VanillaControllerTypes.CRAFTING_TABLE, name, id);
 		this.setHardness(4.2F);
 	}
 
@@ -62,6 +61,11 @@ public class CraftingTable extends Solid implements Mineable {
 	}
 
 	@Override
+	public org.spout.vanilla.controller.block.CraftingTable getController(Block block) {
+		return (org.spout.vanilla.controller.block.CraftingTable) super.getController(block);
+	}
+
+	@Override
 	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
 		if (action == Action.RIGHT_CLICK) {
 			Controller controller = entity.getController();
@@ -70,8 +74,7 @@ public class CraftingTable extends Solid implements Mineable {
 			}
 
 			// Open the crafting table
-			CraftingTableInventory inventory = new CraftingTableInventory();
-			inventory.open((VanillaPlayer) controller);
+			getController(block).open((VanillaPlayer) controller);
 		}
 	}
 

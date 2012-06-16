@@ -26,18 +26,16 @@
  */
 package org.spout.vanilla.inventory.block;
 
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.WindowInventory;
-import org.spout.vanilla.window.block.EnchantmentTableWindow;
-import org.spout.vanilla.window.Window;
+import org.spout.vanilla.inventory.VanillaInventory;
 
 /**
  * Represents a enchantment table inventory belonging to an enchantment table
  * controller.
  */
-public class EnchantmentTableInventory extends WindowInventory {
+public class EnchantmentTableInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
 
 	public EnchantmentTableInventory() {
@@ -59,10 +57,5 @@ public class EnchantmentTableInventory extends WindowInventory {
 	 */
 	public ItemStack getItem() {
 		return getItem(0);
-	}
-
-	@Override
-	public Window createWindow(VanillaPlayer player) {
-		return new EnchantmentTableWindow(player, this);
 	}
 }

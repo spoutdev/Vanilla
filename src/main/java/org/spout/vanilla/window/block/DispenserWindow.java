@@ -26,16 +26,17 @@
  */
 package org.spout.vanilla.window.block;
 
+import org.spout.vanilla.controller.block.Dispenser;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.util.SlotIndexMap;
-import org.spout.vanilla.window.InventoryWindow;
+import org.spout.vanilla.window.Window;
 
-public class DispenserWindow extends InventoryWindow {
+public class DispenserWindow extends Window {
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("36-44, 27-35, 18-26, 9-17, 0-8");
 
-	public DispenserWindow(VanillaPlayer owner, DispenserInventory dispenserInventory) {
-		super(3, "Dispenser", owner, dispenserInventory);
+	public DispenserWindow(VanillaPlayer owner, Dispenser dispenser) {
+		super(3, "Dispenser", owner, dispenser);
+		this.setInventory(owner.getInventory().getItems(), dispenser.getInventory());
 		this.setSlotIndexMap(SLOTS);
 	}
 }

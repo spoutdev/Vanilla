@@ -30,14 +30,15 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaNetworkUtil;
+import org.spout.vanilla.window.Window;
+import org.spout.vanilla.window.block.ChestWindow;
 
-public class Chest extends VanillaBlockController {
+public class Chest extends VanillaWindowBlockController {
 	private final ChestInventory inventory;
 	private boolean opened = false;
 
@@ -60,11 +61,11 @@ public class Chest extends VanillaBlockController {
 
 	@Override
 	public void onTick(float dt) {
-		if (this.inventory.hasViewingPlayers()) {
+		if (this.hasViewers()) {
 			Point position = this.getBlock().getPosition();
-			for (VanillaPlayer player : this.inventory.getViewingPlayers().toArray(new VanillaPlayer[0])) {
-				if (player.getParent().getPosition().distance(position) > 64) {
-					this.inventory.close(player);
+			for (VanillaPlayer player : this.getViewerArray()) {
+				if (player.getParent().getPosition().distanceSquared(position) > 64) {
+					this.close(player);
 				}
 			}
 		}
@@ -97,5 +98,16 @@ public class Chest extends VanillaBlockController {
 
 	public boolean isOpened() {
 		return opened;
+	}
+
+	@Override
+	public Window createWindow(VanillaPlayer player) {
+		Chest other = this.getOtherHalf();
+		if (other != null) {
+			//TODO: Sort out which one is first
+			return new ChestWindow(player, this, other);
+		} else {
+			return new ChestWindow(player, this);
+		}
 	}
 }

@@ -32,6 +32,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventoryBundle;
 import org.spout.api.player.Player;
 
+import org.spout.vanilla.controller.WindowOwner;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.OpenWindowMessage;
@@ -51,12 +52,18 @@ public class Window implements InventoryViewer {
 	protected ItemStack itemOnCursor;
 	protected SlotIndexMap slotIndexMap = DEFAULT_SLOTS;
 	protected boolean isOpen = false;
+	protected WindowOwner windowOwner;
 
 	public Window(int id, String title, VanillaPlayer owner) {
+		this(id, title, owner, null);
+	}
+
+	public Window(int id, String title, VanillaPlayer owner, WindowOwner windowOwner) {
 		this.id = id;
 		this.title = title;
 		this.owner = owner;
 		this.instanceId = InventoryUtil.nextWindowId();
+		this.windowOwner = windowOwner;
 	}
 
 	public void setInventory(InventoryBase... inventories) {
@@ -121,9 +128,12 @@ public class Window implements InventoryViewer {
 			return;
 		}
 		sendPacket(this.getPlayer(), new OpenWindowMessage(this.getInstanceId(), this.getId(), this.getTitle(), getInventorySize()));
-		//this.inventory.notifyViewers(this.inventory.getContents());
-		this.onOpened();
 		this.isOpen = true;
+		//this.inventory.notifyViewers(this.inventory.getContents());
+		if (this.windowOwner != null) {
+			this.windowOwner.open(this.getOwner());
+		}
+		this.onOpened();
 	}
 
 	/**
@@ -139,6 +149,9 @@ public class Window implements InventoryViewer {
 		}
 		this.inventory.removeViewer(this);
 		this.inventory.stopWatching();
+		if (this.windowOwner != null) {
+			this.windowOwner.close(this.getOwner());
+		}
 		this.onClosed();
 	}
 

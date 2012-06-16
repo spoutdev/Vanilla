@@ -28,25 +28,13 @@ package org.spout.vanilla.controller.block;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.window.Window;
-import org.spout.vanilla.window.block.BrewingStandWindow;
+import org.spout.vanilla.window.block.CraftingTableWindow;
 
-public class BrewingStand extends VanillaWindowBlockController {
-	private BrewingStandInventory inventory = new BrewingStandInventory();
-	private float brewTime = 0;
-
-	public BrewingStand() {
-		super(VanillaControllerTypes.BREWING_STAND, VanillaMaterials.BREWING_STAND_BLOCK);
-	}
-
-	public BrewingStandInventory getInventory() {
-		return inventory;
-	}
-
-	public float getBrewTime() {
-		return this.brewTime;
+public class CraftingTable extends VanillaWindowBlockController {
+	public CraftingTable() {
+		super(VanillaControllerTypes.CRAFTING_TABLE, VanillaMaterials.CRAFTING_TABLE);
 	}
 
 	@Override
@@ -59,6 +47,6 @@ public class BrewingStand extends VanillaWindowBlockController {
 
 	@Override
 	public Window createWindow(VanillaPlayer player) {
-		return new BrewingStandWindow(player, this);
+		return new CraftingTableWindow(player, this);
 	}
 }

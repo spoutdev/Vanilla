@@ -514,9 +514,11 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @param activeWindow the window to open and set as the active window.
 	 */
 	public void setWindow(Window activeWindow) {
-		this.activeWindow.close();
+		Thread.dumpStack();
+		Window old = this.activeWindow;
 		this.activeWindow = activeWindow;
-		this.activeWindow.open();
+		old.close();
+		activeWindow.open();
 	}
 
 	/**

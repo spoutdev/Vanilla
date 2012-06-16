@@ -26,12 +26,14 @@
  */
 package org.spout.vanilla.controller.block;
 
-import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.window.Window;
+import org.spout.vanilla.window.block.DispenserWindow;
 
-public class Dispenser extends VanillaBlockController {
+public class Dispenser extends VanillaWindowBlockController {
 	private final DispenserInventory inventory;
 
 	public Dispenser() {
@@ -49,5 +51,10 @@ public class Dispenser extends VanillaBlockController {
 
 	public DispenserInventory getInventory() {
 		return inventory;
+	}
+
+	@Override
+	public Window createWindow(VanillaPlayer player) {
+		return new DispenserWindow(player, this);
 	}
 }

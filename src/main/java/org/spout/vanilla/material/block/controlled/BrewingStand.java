@@ -80,7 +80,7 @@ public class BrewingStand extends ControlledMaterial implements Mineable {
 			if (!(controller instanceof VanillaPlayer)) {
 				return;
 			}
-			this.getController(block).getInventory().open((VanillaPlayer) controller);
+			this.getController(block).open((VanillaPlayer) controller);
 		}
 	}
 }

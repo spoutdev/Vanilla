@@ -88,7 +88,7 @@ public class SlotIndexMap {
 	public ItemStack[] getMinecraftItems(ItemStack[] spoutItems) {
 		ItemStack[] rval = spoutItems.clone();
 		for (int i = 0; i < rval.length; i++) {
-			rval[i] = spoutItems[getMinecraftSlot(i)];
+			rval[getMinecraftSlot(i)] = spoutItems[i];
 		}
 		return rval;
 	}
@@ -101,7 +101,7 @@ public class SlotIndexMap {
 	public ItemStack[] getSpoutItems(ItemStack[] minecraftItems) {
 		ItemStack[] rval = minecraftItems.clone();
 		for (int i = 0; i < rval.length; i++) {
-			rval[i] = minecraftItems[getSpoutSlot(i)];
+			rval[getSpoutSlot(i)] = minecraftItems[i];
 		}
 		return rval;
 	}

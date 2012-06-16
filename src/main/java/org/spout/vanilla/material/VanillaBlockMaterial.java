@@ -197,6 +197,9 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 		//TODO stack items together for more performance
 		for (ItemStack item : drops) {
+			if (item == null) {
+				continue;
+			}
 			block.getPosition().getWorld().createAndSpawnEntity(block.getPosition(), new Item(item, new Vector3(0, 5, 0)));
 		}
 	}

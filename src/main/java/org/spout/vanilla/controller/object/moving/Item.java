@@ -66,7 +66,7 @@ public class Item extends Substance {
 	public Item(ItemStack itemstack, Vector3 initial) {
 		super(VanillaControllerTypes.DROPPED_ITEM);
 		this.is = itemstack;
-		this.uncollectableTicks = 60;
+		this.uncollectableTicks = 30;
 		setVelocity(initial);
 	}
 

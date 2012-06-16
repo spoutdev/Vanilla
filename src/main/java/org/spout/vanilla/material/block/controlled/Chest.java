@@ -76,6 +76,9 @@ public class Chest extends ControlledMaterial implements Directional, Fuel, Mine
 			ItemStack[] items = ((org.spout.vanilla.controller.block.Chest) old).getInventory().getContents();
 			Point position = block.getPosition();
 			for (ItemStack item : items) {
+				if (item == null) {
+					continue;
+				}
 				ItemUtil.dropItemNaturally(position, item);
 			}
 		}

@@ -29,6 +29,7 @@ package org.spout.vanilla.controller.block;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -104,8 +105,12 @@ public class Chest extends VanillaWindowBlockController {
 	public Window createWindow(VanillaPlayer player) {
 		Chest other = this.getOtherHalf();
 		if (other != null) {
-			//TODO: Sort out which one is first
-			return new ChestWindow(player, this, other);
+			Vector3 offset = other.getParent().getPosition().subtract(this.getParent().getPosition());
+			if (offset.getX() > 0 || offset.getZ() > 0) {
+				return new ChestWindow(player, other, this);
+			} else {
+				return new ChestWindow(player, this, other);
+			}
 		} else {
 			return new ChestWindow(player, this);
 		}

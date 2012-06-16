@@ -29,8 +29,14 @@ package org.spout.vanilla.world.generator.normal.object.tree;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 
 import org.spout.api.material.BlockMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.plant.Sapling;
+import org.spout.vanilla.world.generator.VanillaObjects;
 import org.spout.vanilla.world.generator.normal.object.largeplant.LargePlantObject;
 
 public abstract class TreeObject extends LargePlantObject {
@@ -65,14 +71,63 @@ public abstract class TreeObject extends LargePlantObject {
 	public Set<BlockMaterial> getOverridableMaterials() {
 		return overridable;
 	}
-	
+
 	public void setTreeType(TreeType type) {
 		leavesMetadata = type.metadata;
 		logMetadata = type.metadata;
 	}
-	
-	public static enum TreeType {
 
+	public static void growTree(Sapling sapling, Block pos, Random random) {
+		final TreeObject tree;
+		final World world = pos.getWorld();
+		final int y = pos.getY();
+		if (sapling == Sapling.JUNGLE) {
+			final int x = pos.getX();
+			final int z = pos.getZ();
+			byte saplingCount = 0;
+			Block firstSapling = null;
+			for (byte xx = -1; xx < 2; xx++) {
+				for (byte zz = -1; zz < 2; zz++) {
+					if (world.getBlockMaterial(x + xx, y, z + zz) == Sapling.JUNGLE) {
+						saplingCount++;
+						if (saplingCount == 1) {
+							firstSapling = world.getBlock(x + xx, y, z + zz);
+						}
+					}
+				}
+			}
+			if (saplingCount > 3 && firstSapling.translate(1, 0, 1).getMaterial() == Sapling.JUNGLE
+					&& firstSapling.translate(0, 0, 1).getMaterial() == Sapling.JUNGLE
+					&& firstSapling.translate(1, 0, 0).getMaterial() == Sapling.JUNGLE) {
+				pos = firstSapling;
+				tree = VanillaObjects.HUGE_JUNGLE_TREE;
+			} else {
+				tree = VanillaObjects.SMALL_JUNGLE_TREE;
+			}
+		} else if (sapling == Sapling.BIRCH) {
+			tree = VanillaObjects.SMALL_BIRCH_TREE;
+		} else if (sapling == Sapling.SPRUCE) {
+			if (random.nextBoolean()) {
+				tree = VanillaObjects.PINE_TREE;
+			} else {
+				tree = VanillaObjects.SPRUCE_TREE;
+			}
+		} else {
+			if (random.nextInt(10) == 0) {
+				tree = VanillaObjects.BIG_OAK_TREE;
+			} else {
+				tree = VanillaObjects.SMALL_OAK_TREE;
+			}
+		}
+		tree.randomize();
+		final int x = pos.getX();
+		final int z = pos.getZ();
+		if (tree.canPlaceObject(world, x, y, z)) {
+			tree.placeObject(world, x, y, z);
+		}
+	}
+
+	public static enum TreeType {
 		OAK((short) 0),
 		SPRUCE_PINE((short) 1),
 		BIRCH((short) 2),

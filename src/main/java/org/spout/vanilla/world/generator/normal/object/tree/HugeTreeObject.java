@@ -26,13 +26,13 @@
  */
 package org.spout.vanilla.world.generator.normal.object.tree;
 
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.plant.Sapling;
 
 public class HugeTreeObject extends TreeObject {
 	// size control
@@ -49,10 +49,7 @@ public class HugeTreeObject extends TreeObject {
 		super(random, (byte) 10, (byte) 30, (short) 3);
 		overridable.add(VanillaMaterials.AIR);
 		overridable.add(VanillaMaterials.LEAVES);
-		overridable.add(VanillaMaterials.LOG);
-		overridable.add(VanillaMaterials.DIRT);
-		overridable.add(VanillaMaterials.GRASS);
-		overridable.add(VanillaMaterials.SAPLING);
+		overridable.add(Sapling.JUNGLE);
 	}
 
 	@Override

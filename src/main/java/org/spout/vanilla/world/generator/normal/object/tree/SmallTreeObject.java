@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.generator.normal.object.tree;
 
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import java.util.Random;
 
 import org.spout.api.geo.World;
@@ -34,6 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.plant.Sapling;
 
 public class SmallTreeObject extends TreeObject {
 	//size control
@@ -51,9 +51,9 @@ public class SmallTreeObject extends TreeObject {
 		super(random, (byte) 4, (byte) 3, treeType.getMetadata());
 		overridable.add(VanillaMaterials.AIR);
 		overridable.add(VanillaMaterials.LEAVES);
-		overridable.add(VanillaMaterials.LOG);
-		overridable.add(VanillaMaterials.DIRT);
-		overridable.add(VanillaMaterials.GRASS);
+		overridable.add(Sapling.DEFAULT);
+		overridable.add(Sapling.BIRCH);
+		overridable.add(Sapling.JUNGLE);
 	}
 
 	@Override

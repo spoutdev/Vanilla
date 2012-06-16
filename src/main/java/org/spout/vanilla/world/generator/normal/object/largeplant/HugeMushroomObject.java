@@ -26,12 +26,10 @@
  */
 package org.spout.vanilla.world.generator.normal.object.largeplant;
 
-import org.spout.vanilla.world.generator.normal.object.largeplant.LargePlantObject;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
@@ -67,6 +65,8 @@ public class HugeMushroomObject extends LargePlantObject {
 		capThickness = type.capThickness;
 		overridable.add(VanillaMaterials.AIR);
 		overridable.add(VanillaMaterials.LEAVES);
+		overridable.add(VanillaMaterials.RED_MUSHROOM);
+		overridable.add(VanillaMaterials.BROWN_MUSHROOM);
 		checkIfUseTextureMetadata();
 	}
 

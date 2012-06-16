@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.generator.normal.object.tree;
 
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import java.util.Random;
 
 import org.spout.api.geo.World;

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.generator.normal.object.tree;
 
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,6 +36,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.plant.Sapling;
 
 public class BigTreeObject extends TreeObject {
 	private float trunkHeightMultiplier = 0.618f;
@@ -54,6 +54,7 @@ public class BigTreeObject extends TreeObject {
 		super(random, (byte) 5, (byte) 12, type.getMetadata());
 		overridable.add(VanillaMaterials.AIR);
 		overridable.add(VanillaMaterials.LEAVES);
+		overridable.add(Sapling.DEFAULT);
 	}
 
 	@Override

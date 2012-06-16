@@ -26,13 +26,13 @@
  */
 package org.spout.vanilla.world.generator.normal.object.tree;
 
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.plant.Sapling;
 
 public class SpruceTreeObject extends TreeObject {
 	private byte leavesBottomY = -1;
@@ -46,6 +46,7 @@ public class SpruceTreeObject extends TreeObject {
 		super(random, (byte) 7, (byte) 5, (short) 1);
 		overridable.add(VanillaMaterials.AIR);
 		overridable.add(VanillaMaterials.LEAVES);
+		overridable.add(Sapling.SPRUCE);
 	}
 
 	@Override

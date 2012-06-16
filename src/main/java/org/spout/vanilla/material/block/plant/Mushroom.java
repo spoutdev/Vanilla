@@ -28,19 +28,59 @@ package org.spout.vanilla.material.block.plant;
 
 import java.util.ArrayList;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
+import org.spout.vanilla.util.VanillaPlayerUtil;
+import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
+import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
+import org.spout.vanilla.world.generator.normal.object.largeplant.LargePlantObject;
 
 public class Mushroom extends GroundAttachable implements Plant {
 	public Mushroom(String name, int id) {
 		super(name, id);
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 0);
+	}
+	
+	@Override
+	public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, type, clickedFace);
+		if (type != PlayerInteractEvent.Action.RIGHT_CLICK) {
+			return;
+		}
+		InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
+		ItemStack current = inv.getCurrentItem();
+		if (current != null && current.getSubMaterial().equals(Dye.BONE_MEAL)) {
+			if (VanillaPlayerUtil.isSurvival(entity)) {
+				inv.addCurrentItemAmount(-1);
+			}
+			final BlockMaterial mushroomType = block.getMaterial();
+			final LargePlantObject mushroom;
+			if (mushroomType == VanillaMaterials.RED_MUSHROOM) {
+				mushroom = new HugeMushroomObject(HugeMushroomType.RED);
+			} else {
+				mushroom = new HugeMushroomObject(HugeMushroomType.BROWN);
+			}
+			final World world = block.getWorld();
+			final int x = block.getX();
+			final int y = block.getY();
+			final int z = block.getZ();
+			if (mushroom.canPlaceObject(world, x, y, z)) {
+				mushroom.placeObject(world, x, y, z);
+			}
+		}
 	}
 
 	@Override

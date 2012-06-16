@@ -49,8 +49,7 @@ import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
-import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMaterial {
 	public static final Sapling DEFAULT = new Sapling("Sapling");
@@ -101,6 +100,9 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
+		if (type != Action.RIGHT_CLICK) {
+			return;
+		}
 		InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
 		ItemStack current = inv.getCurrentItem();
 		if (current != null && current.getSubMaterial().equals(Dye.BONE_MEAL)) {
@@ -135,8 +137,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	 * @param type of tree
 	 */
 	public void growTree(Block block, Sapling type) {
-		SmallTreeObject object = new SmallTreeObject(new Random(), TreeType.getType(type.getData() & dataMask));
-		object.placeObject(block.getWorld(), block.getX(), block.getY(), block.getZ());
+		TreeObject.growTree(type, block, new Random());
 	}
 
 	@Override

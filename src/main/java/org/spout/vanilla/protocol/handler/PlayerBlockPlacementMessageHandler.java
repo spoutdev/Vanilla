@@ -64,7 +64,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 	@Override
 	public void handleServer(Session session, Player player, PlayerBlockPlacementMessage message) {
-		EventManager eventManager = session.getGame().getEventManager();
+		EventManager eventManager = session.getEngine().getEventManager();
 		World world = player.getEntity().getWorld();
 		InventoryBase inventory = VanillaPlayerUtil.getInventory(player.getEntity());
 		ItemStack holding = inventory.getCurrentItem();

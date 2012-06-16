@@ -233,7 +233,7 @@ public class AdministrationCommands {
 
 		World world = null;
 		if (args.length() == 3) {
-			world = plugin.getGame().getWorld(args.getString(2));
+			world = plugin.getEngine().getWorld(args.getString(2));
 			if (world == null) {
 				throw new CommandException("'" + args.getString(2) + "' is not a valid world.");
 			}
@@ -342,7 +342,7 @@ public class AdministrationCommands {
 			Player player = (Player) source;
 			world = player.getEntity().getWorld();
 		} else if (args.length() == 2) {
-			world = plugin.getGame().getWorld(args.getString(1));
+			world = plugin.getEngine().getWorld(args.getString(1));
 		} else {
 			throw new CommandException("You need to specify a world.");
 		}

@@ -73,7 +73,7 @@ import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 public class VanillaPlugin extends CommonPlugin {
 	public static final int MINECRAFT_PROTOCOL_ID = 29;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
-	private Engine game;
+	private Engine engine;
 	private VanillaConfiguration config;
 	private static VanillaPlugin instance;
 
@@ -98,9 +98,9 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 		//Commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		game.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);
-		if (game.debugMode()) {
-			game.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
+		engine.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);
+		if (engine.debugMode()) {
+			engine.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
 		}
 
 		//Configuration
@@ -108,7 +108,7 @@ public class VanillaPlugin extends CommonPlugin {
 		VanillaBlockMaterial.REDSTONE_POWER_MIN = (short) VanillaConfiguration.REDSTONE_MIN_RANGE.getInt();
 
 		//Events
-		game.getEventManager().registerEvents(new VanillaListener(this), this);
+		engine.getEventManager().registerEvents(new VanillaListener(this), this);
 
 		//Worlds
 		setupWorlds();
@@ -119,13 +119,13 @@ public class VanillaPlugin extends CommonPlugin {
 	@Override
 	public void onLoad() {
 		instance = this;
-		game = getGame();
+		engine = getEngine();
 		config = new VanillaConfiguration(getDataFolder());
 		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
 
-		if (game instanceof Server) {
+		if (engine instanceof Server) {
 			int port = 25565;
-			String[] split = game.getAddress().split(":");
+			String[] split = engine.getAddress().split(":");
 			if (split.length > 1) {
 				try {
 					port = Integer.parseInt(split[1]);
@@ -134,9 +134,9 @@ public class VanillaPlugin extends CommonPlugin {
 				}
 			}
 
-			((Server) game).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
+			((Server) engine).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
 		}
-		//TODO if (game instanceof Client) do stuff?
+		//TODO if (engine instanceof Client) do stuff? | No, check engine.getPlatform()
 
 		VanillaMaterials.initialize();
 		getLogger().info("loaded");
@@ -146,7 +146,7 @@ public class VanillaPlugin extends CommonPlugin {
 		ArrayList<World> worlds = new ArrayList<World>();
 		if (WorldConfiguration.NORMAL_LOAD.getBoolean()) {
 			NormalGenerator normGen = new NormalGenerator();
-			World normal = game.loadWorld(WorldConfiguration.NORMAL_NAME.getString(), normGen);
+			World normal = engine.loadWorld(WorldConfiguration.NORMAL_NAME.getString(), normGen);
 			normal.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.NORMAL_GAMEMODE.getString().toUpperCase()));
 			normal.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.NORMAL_DIFFICULTY.getString().toUpperCase()));
 			normal.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.NORMAL_SKY_TYPE.getString().toUpperCase()));
@@ -159,7 +159,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 		if (WorldConfiguration.FLAT_LOAD.getBoolean()) {
 			FlatGenerator flatGen = new FlatGenerator(64);
-			World flat = game.loadWorld(WorldConfiguration.FLAT_NAME.getString(), flatGen);
+			World flat = engine.loadWorld(WorldConfiguration.FLAT_NAME.getString(), flatGen);
 			flat.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.FLAT_GAMEMODE.getString().toUpperCase()));
 			flat.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.FLAT_DIFFICULTY.getString().toUpperCase()));
 			flat.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.FLAT_SKY_TYPE.getString().toUpperCase()));
@@ -172,7 +172,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 		if (WorldConfiguration.NETHER_LOAD.getBoolean()) {
 			NetherGenerator netherGen = new NetherGenerator();
-			World nether = game.loadWorld(WorldConfiguration.NETHER_NAME.getString(), netherGen);
+			World nether = engine.loadWorld(WorldConfiguration.NETHER_NAME.getString(), netherGen);
 			nether.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.NETHER_GAMEMODE.getString().toUpperCase()));
 			nether.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.NETHER_DIFFICULTY.getString().toUpperCase()));
 			nether.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.NETHER_SKY_TYPE.getString().toUpperCase()));
@@ -185,7 +185,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 		if (WorldConfiguration.END_LOAD.getBoolean()) {
 			TheEndGenerator endGen = new TheEndGenerator();
-			World end = game.loadWorld(WorldConfiguration.END_NAME.getString(), endGen);
+			World end = engine.loadWorld(WorldConfiguration.END_NAME.getString(), endGen);
 			end.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.END_GAMEMODE.getString().toUpperCase()));
 			end.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.END_DIFFICULTY.getString().toUpperCase()));
 			end.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.END_SKY_TYPE.getString().toUpperCase()));

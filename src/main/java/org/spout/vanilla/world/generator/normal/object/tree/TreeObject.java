@@ -29,12 +29,11 @@ package org.spout.vanilla.world.generator.normal.object.tree;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 
 import org.spout.api.material.BlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.world.generator.VanillaObjects;
 import org.spout.vanilla.world.generator.normal.object.largeplant.LargePlantObject;
@@ -119,6 +118,7 @@ public abstract class TreeObject extends LargePlantObject {
 				tree = VanillaObjects.SMALL_OAK_TREE;
 			}
 		}
+		tree.setRandom(random);
 		tree.randomize();
 		final int x = pos.getX();
 		final int z = pos.getZ();

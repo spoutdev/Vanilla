@@ -29,8 +29,6 @@ package org.spout.vanilla.world.generator;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -86,7 +84,7 @@ public class VanillaObjects {
 	public static final SpireObject SPIRE = new SpireObject();
 	// for the '/obj' test command
 	private static final Map<String, WorldGeneratorObject> BY_NAME = new HashMap<String, WorldGeneratorObject>();
-	
+
 	static {
 		SMALL_JUNGLE_TREE.setBaseHeight((byte) 4);
 		SMALL_JUNGLE_TREE.setRandomHeight((byte) 10);
@@ -95,7 +93,7 @@ public class VanillaObjects {
 		SMALL_SWAMP_TREE.setLeavesRadiusIncreaseXZ((byte) 1);
 		// for the '/obj' test command
 		for (Field objectField : VanillaObjects.class.getDeclaredFields()) {
-            objectField.setAccessible(true);
+			objectField.setAccessible(true);
 			try {
 				Object o = objectField.get(null);
 				if (o instanceof WorldGeneratorObject) {
@@ -105,9 +103,9 @@ public class VanillaObjects {
 				System.out.println("Could not properly reflect VanillaObjects! Unexpected behaviour may occur, please report to http://issues.spout.org!");
 				ex.printStackTrace();
 			}
-        }
+		}
 	}
-	
+
 	public static WorldGeneratorObject byName(String name) {
 		return BY_NAME.get(name.toLowerCase());
 	}

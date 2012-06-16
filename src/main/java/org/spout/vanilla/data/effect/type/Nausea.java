@@ -24,47 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.effect;
+package org.spout.vanilla.data.effect.type;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.protocol.Message;
+import org.spout.vanilla.data.effect.VanillaEffectType;
 
-public abstract class EffectType {
-	protected final int id;
-
-	public EffectType(int id) {
-		this.id = id;
+public class Nausea extends VanillaEffectType {
+	public Nausea() {
+		super(9);
 	}
-
-	/**
-	 * Gets the id of the effect.
-	 * @return id of effect
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * Called every tick the effect is active on a player.
-	 * @param dt
-	 * @param strength of the effect instance
-	 */
-	public void tick(float dt, int strength) {
-	}
-
-	/**
-	 * Gets the message sent to the client when the effect activates.
-	 * @param entity
-	 * @param strength
-	 * @param duration
-	 * @return message to send
-	 */
-	public abstract Message getApplianceMessage(Entity entity, int strength, int duration);
-
-	/**
-	 * Gets the message sent to the client when the effect is removed.
-	 * @param entity
-	 * @return message to send
-	 */
-	public abstract Message getRemovalMessage(Entity entity);
 }

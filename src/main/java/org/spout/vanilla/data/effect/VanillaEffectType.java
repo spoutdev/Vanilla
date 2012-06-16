@@ -29,42 +29,21 @@ package org.spout.vanilla.data.effect;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 
-public abstract class EffectType {
-	protected final int id;
+import org.spout.vanilla.protocol.msg.EntityEffectMessage;
+import org.spout.vanilla.protocol.msg.EntityRemoveEffectMessage;
 
-	public EffectType(int id) {
-		this.id = id;
+public abstract class VanillaEffectType extends EffectType {
+	public VanillaEffectType(int id) {
+		super(id);
 	}
 
-	/**
-	 * Gets the id of the effect.
-	 * @return id of effect
-	 */
-	public int getId() {
-		return id;
+	@Override
+	public Message getApplianceMessage(Entity entity, int strength, int duration) {
+		return new EntityEffectMessage(entity.getId(), (byte) id, (byte) strength, (byte) duration);
 	}
 
-	/**
-	 * Called every tick the effect is active on a player.
-	 * @param dt
-	 * @param strength of the effect instance
-	 */
-	public void tick(float dt, int strength) {
+	@Override
+	public Message getRemovalMessage(Entity entity) {
+		return new EntityRemoveEffectMessage(entity.getId(), (byte) id);
 	}
-
-	/**
-	 * Gets the message sent to the client when the effect activates.
-	 * @param entity
-	 * @param strength
-	 * @param duration
-	 * @return message to send
-	 */
-	public abstract Message getApplianceMessage(Entity entity, int strength, int duration);
-
-	/**
-	 * Gets the message sent to the client when the effect is removed.
-	 * @param entity
-	 * @return message to send
-	 */
-	public abstract Message getRemovalMessage(Entity entity);
 }

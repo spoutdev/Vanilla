@@ -26,6 +26,44 @@
  */
 package org.spout.vanilla.data.effect;
 
+import org.spout.vanilla.data.effect.type.Blindness;
+import org.spout.vanilla.data.effect.type.FireResistance;
+import org.spout.vanilla.data.effect.type.Haste;
+import org.spout.vanilla.data.effect.type.Hunger;
+import org.spout.vanilla.data.effect.type.InstantDamage;
+import org.spout.vanilla.data.effect.type.InstantHeal;
+import org.spout.vanilla.data.effect.type.Invisibility;
+import org.spout.vanilla.data.effect.type.JumpBoost;
+import org.spout.vanilla.data.effect.type.MiningFatigue;
+import org.spout.vanilla.data.effect.type.Nausea;
+import org.spout.vanilla.data.effect.type.NightVision;
+import org.spout.vanilla.data.effect.type.Poison;
+import org.spout.vanilla.data.effect.type.Regeneration;
+import org.spout.vanilla.data.effect.type.Resistance;
+import org.spout.vanilla.data.effect.type.Slowness;
+import org.spout.vanilla.data.effect.type.Speed;
+import org.spout.vanilla.data.effect.type.Strength;
+import org.spout.vanilla.data.effect.type.WaterBreathing;
+import org.spout.vanilla.data.effect.type.Weakness;
+
 public class EffectTypes {
-	public static final EffectType SPEED = new EffectType(1);
+	public static final Speed SPEED = new Speed();
+	public static final Slowness SLOWNESS = new Slowness();
+	public static final Haste HASTE = new Haste();
+	public static final MiningFatigue MINING_FATIGUE = new MiningFatigue();
+	public static final Strength STRENGTH = new Strength();
+	public static final InstantHeal INSTANT_HEAL = new InstantHeal();
+	public static final InstantDamage INSTANT_DAMAGE = new InstantDamage();
+	public static final JumpBoost JUMP_BOOST = new JumpBoost();
+	public static final Nausea NAUSEA = new Nausea();
+	public static final Regeneration REGENERATION = new Regeneration();
+	public static final Resistance RESISTANCE = new Resistance();
+	public static final FireResistance FIRE_RESISTANCE = new FireResistance();
+	public static final WaterBreathing WATER_BREATHING = new WaterBreathing();
+	public static final Invisibility INVISIBILITY = new Invisibility();
+	public static final Blindness BLINDNESS = new Blindness();
+	public static final NightVision NIGHT_VISION = new NightVision();
+	public static final Hunger HUNGER = new Hunger();
+	public static final Weakness WEAKNESS = new Weakness();
+	public static final Poison POISON = new Poison();
 }

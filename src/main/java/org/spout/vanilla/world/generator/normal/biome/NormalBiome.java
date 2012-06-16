@@ -188,7 +188,7 @@ public abstract class NormalBiome extends VanillaBiome {
 				minDensityTerrainHeight, maxDensityTerrainHeight);
 	}
 
-	private int getDensityTerrainThickness(int x, int z) {
+	private int getDensityTerrainThickness(int x, int z) { //TODO this does not seem right...you work with doubles, and then just cast them to an int? Pretty big loss of precision...
 		return (int) MathHelper.clamp(modifiedMaster.GetValue(x, minDensityTerrainHeight, z) * densityTerrainThicknessScale
 				+ minDensityTerrainThickness + (maxDensityTerrainThickness - minDensityTerrainThickness) / 2,
 				minDensityTerrainThickness, maxDensityTerrainThickness);

@@ -35,7 +35,7 @@ import org.spout.vanilla.inventory.VanillaInventory;
 
 public class PlayerCraftingGrid extends Inventory implements CraftingGrid, VanillaInventory {
 	private final int[] GRID_ARRAY = StringUtil.getIntArray("0-1, 3-4");
-	private final int OUTPUT_SLOT = 4, ROW_SIZE = 2, COLUMN_SIZE = 2;
+	private static final int OUTPUT_SLOT = 4, ROW_SIZE = 2, COLUMN_SIZE = 2;
 	private static final long serialVersionUID = 1L;
 
 	public PlayerCraftingGrid() {

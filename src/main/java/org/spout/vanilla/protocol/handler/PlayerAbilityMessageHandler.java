@@ -43,9 +43,6 @@ public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbil
 		if (!(player.getEntity().getController() instanceof VanillaActionController)) {
 			return;
 		}
-		@SuppressWarnings("unused")
-		VanillaPlayer ve = (VanillaPlayer) player.getEntity().getController();
-
-		//TODO Implement this.
+		((VanillaPlayer) player.getEntity().getController()).setFlying(message.isFlying());
 	}
 }

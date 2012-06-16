@@ -85,6 +85,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected short count = 0, ping, hunger = 20;
 	protected float foodSaturation = 5.0f, exhaustion = 0.0f;
 	protected boolean poisoned;
+	protected boolean flying;
 	protected final PlayerInventory playerInventory = new PlayerInventory();
 	protected Window activeWindow = new DefaultWindow(this);
 	protected String tabListName;
@@ -509,6 +510,14 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void setExhaustion(float exhaustion) {
 		this.exhaustion = exhaustion;
+	}
+
+	public boolean isFlying() {
+		return flying;
+	}
+
+	public void setFlying(boolean newFlying) {
+		this.flying = newFlying;
 	}
 
 	/**

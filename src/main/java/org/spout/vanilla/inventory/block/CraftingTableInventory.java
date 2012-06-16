@@ -37,7 +37,7 @@ import org.spout.vanilla.window.block.CraftingTableWindow;
 
 public class CraftingTableInventory extends WindowInventory implements CraftingGrid {
 	private final int[] GRID_ARRAY = StringUtil.getIntArray("0-5, 7-9");
-	private final int OUTPUT_SLOT = 6, ROW_SIZE = 3, COLUMN_SIZE = 3;
+	private static final int OUTPUT_SLOT = 6, ROW_SIZE = 3, COLUMN_SIZE = 3;
 	private static final long serialVersionUID = 1L;
 
 	public CraftingTableInventory() {

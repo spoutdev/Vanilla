@@ -165,7 +165,7 @@ public class BigTreeObject extends TreeObject {
 		if (layer < totalHeight / 3) {
 			return -1f;
 		} else if (layer == totalHeight / 2) {
-			return totalHeight / 4;
+			return ( (float) totalHeight) / 4;
 		} else if (layer >= totalHeight || layer <= 0) {
 			return 0;
 		} else {

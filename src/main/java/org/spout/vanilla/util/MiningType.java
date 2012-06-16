@@ -73,7 +73,7 @@ public enum MiningType {
 		return (typeClassMap.get(cls) == this || typeClassMap.get(cls.getSuperclass()) == this);
 	}
 
-	public final class MiningLevel {
+	public static final class MiningLevel {
 		public static final int WOOD = 1;
 		public static final int GOLD = 1;
 		public static final int STONE = 2;

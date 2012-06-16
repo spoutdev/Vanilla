@@ -53,7 +53,7 @@ public class Human extends Living {
 	protected final Vector3 moveSpeed = new Vector3(10, 0, 0), horizSpeed = new Vector3(0, 0, -10);
 	protected int miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt(), miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt();
 	protected int[] miningDamage;
-	protected String title;
+	protected String title; //TODO title isn't really a good name...
 	protected ItemStack renderedItemInHand;
 
 	public Human() {
@@ -63,7 +63,7 @@ public class Human extends Living {
 		miningDamage = new int[miningDamagePeriod];
 	}
 
-	public Human(String clientName) {
+	public Human(String title) {
 		super(VanillaControllerTypes.HUMAN);
 		this.title = title;
 		setHeadHeight(1.62f);

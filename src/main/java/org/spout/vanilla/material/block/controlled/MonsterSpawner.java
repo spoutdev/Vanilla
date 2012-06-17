@@ -31,6 +31,6 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 public class MonsterSpawner extends ControlledMaterial {
 	public MonsterSpawner(String name, int id) {
 		super(VanillaControllerTypes.MONSTER_SPAWNER, name, id);
-		this.setHardness(5.0F).setResistance(8.3F).setOpacity((byte) 1);
+		this.setHardness(5.0F).setResistance(8.3F).setTransparent();
 	}
 }

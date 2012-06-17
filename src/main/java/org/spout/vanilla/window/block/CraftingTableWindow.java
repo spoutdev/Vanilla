@@ -44,4 +44,9 @@ public class CraftingTableWindow extends CraftingWindow {
 		this.setInventory(owner.getInventory().getItems(), inventory);
 		this.setSlotIndexMap(SLOTS);
 	}
+
+	@Override
+	public int getInventorySize() {
+		return this.getInventory().getSize() - this.getOwner().getInventory().getItems().getSize();
+	}
 }

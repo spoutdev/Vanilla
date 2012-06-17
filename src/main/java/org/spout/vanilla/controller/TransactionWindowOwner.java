@@ -24,23 +24,15 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.handler;
+package org.spout.vanilla.controller;
 
-import org.spout.api.player.Player;
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.inventory.InventoryBase;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.CloseWindowMessage;
+public interface TransactionWindowOwner extends WindowOwner {
 
-public final class CloseWindowMessageHandler extends MessageHandler<CloseWindowMessage> {
-	@Override
-	public void handleServer(Session session, Player player, CloseWindowMessage message) {
-		if (session == null || player == null || message == null) {
-			return;
-		}
-
-		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
-		controller.closeWindow();
-	}
+	/**
+	 * Gets the inventory of this controller
+	 * @return The Inventory of this controller
+	 */
+	public InventoryBase getInventory();
 }

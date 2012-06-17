@@ -29,14 +29,13 @@ package org.spout.vanilla.window.block;
 import org.spout.vanilla.controller.block.Furnace;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.util.SlotIndexMap;
-import org.spout.vanilla.window.Window;
+import org.spout.vanilla.window.TransactionWindow;
 
-public class FurnaceWindow extends Window {
+public class FurnaceWindow extends TransactionWindow {
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("30-38, 21-29, 12-20, 3-11, 1, 2, 0");
 
 	public FurnaceWindow(VanillaPlayer owner, Furnace furnace) {
 		super(2, "Furnace", owner, furnace);
-		this.setInventory(owner.getInventory().getItems(), furnace.getInventory());
 		this.setSlotIndexMap(SLOTS);
 	}
 

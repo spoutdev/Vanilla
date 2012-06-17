@@ -46,7 +46,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class BrewingStand extends ControlledMaterial implements Mineable {
 	public BrewingStand(String name, int id) {
 		super(VanillaControllerTypes.BREWING_STAND, name, id);
-		this.setResistance(2.5F).setHardness(10.F);
+		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).getOcclusion().set(BlockFace.BOTTOM);
 	}
 
 	@Override

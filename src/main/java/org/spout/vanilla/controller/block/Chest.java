@@ -31,6 +31,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.controller.TransactionWindowOwner;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.ChestInventory;
@@ -39,7 +40,7 @@ import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.block.ChestWindow;
 
-public class Chest extends VanillaWindowBlockController {
+public class Chest extends VanillaWindowBlockController implements TransactionWindowOwner {
 	private final ChestInventory inventory;
 	private boolean opened = false;
 
@@ -72,6 +73,7 @@ public class Chest extends VanillaWindowBlockController {
 		}
 	}
 
+	@Override
 	public ChestInventory getInventory() {
 		return inventory;
 	}

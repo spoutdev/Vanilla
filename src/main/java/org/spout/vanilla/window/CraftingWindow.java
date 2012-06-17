@@ -44,23 +44,13 @@ import org.spout.vanilla.inventory.CraftingGrid;
 public abstract class CraftingWindow extends Window {
 	protected final CraftingGrid craftingGrid;
 
-	public CraftingWindow(int id, String title, VanillaPlayer owner, CraftingGrid craftingGrid) {
-		super(id, title, owner);
-		this.craftingGrid = craftingGrid;
-	}
-
-	public CraftingWindow(int id, String title, VanillaPlayer owner, CraftingGrid craftingGrid, WindowOwner windowOwner) {
-		super(id, title, owner, windowOwner);
+	public CraftingWindow(int id, String title, VanillaPlayer owner, CraftingGrid craftingGrid, WindowOwner... windowOwners) {
+		super(id, title, owner, windowOwners);
 		this.craftingGrid = craftingGrid;
 	}
 
 	public CraftingGrid getCraftingGrid() {
 		return craftingGrid;
-	}
-
-	@Override
-	public void onClosed() {
-		super.onClosed();
 	}
 
 	@Override

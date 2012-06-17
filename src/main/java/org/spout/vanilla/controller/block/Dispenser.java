@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.block;
 
+import org.spout.vanilla.controller.TransactionWindowOwner;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.DispenserInventory;
@@ -33,7 +34,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.block.DispenserWindow;
 
-public class Dispenser extends VanillaWindowBlockController {
+public class Dispenser extends VanillaWindowBlockController implements TransactionWindowOwner {
 	private final DispenserInventory inventory;
 
 	public Dispenser() {
@@ -49,6 +50,7 @@ public class Dispenser extends VanillaWindowBlockController {
 	public void onAttached() {
 	}
 
+	@Override
 	public DispenserInventory getInventory() {
 		return inventory;
 	}

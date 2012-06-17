@@ -48,7 +48,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class EnchantmentTable extends ControlledMaterial implements Directional, Mineable {
 	public EnchantmentTable(String name, int id) {
 		super(VanillaControllerTypes.ENCHANTMENT_TABLE, name, id);
-		this.setHardness(5.0F).setResistance(2000.0F);
+		this.setHardness(5.0F).setResistance(2000.0F).setOpacity(0).getOcclusion().set(BlockFace.BOTTOM);
 	}
 
 	@Override

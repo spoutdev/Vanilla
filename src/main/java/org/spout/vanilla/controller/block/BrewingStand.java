@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.block;
 
+import org.spout.vanilla.controller.TransactionWindowOwner;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
@@ -33,7 +34,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.block.BrewingStandWindow;
 
-public class BrewingStand extends VanillaWindowBlockController {
+public class BrewingStand extends VanillaWindowBlockController implements TransactionWindowOwner {
 	private BrewingStandInventory inventory = new BrewingStandInventory();
 	private float brewTime = 0;
 
@@ -41,6 +42,7 @@ public class BrewingStand extends VanillaWindowBlockController {
 		super(VanillaControllerTypes.BREWING_STAND, VanillaMaterials.BREWING_STAND_BLOCK);
 	}
 
+	@Override
 	public BrewingStandInventory getInventory() {
 		return inventory;
 	}

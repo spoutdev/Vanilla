@@ -68,8 +68,6 @@ public class Window implements InventoryViewer {
 			this.inventory.removeViewer(this);
 		}
 		this.inventory = new InventoryBundle(inventories);
-		this.inventory.startWatching();
-		this.inventory.addViewer(this);
 	}
 
 	public InventoryBundle getInventory() {
@@ -118,26 +116,30 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Opens this window
+	 * @return True if opening was possible, False if not
 	 */
-	public void open() {
+	public boolean open() {
 		if (this.isOpen()) {
-			return;
+			return false;
 		}
 		sendPacket(this.getPlayer(), new OpenWindowMessage(this.getInstanceId(), this.getId(), this.getTitle(), getInventorySize()));
 		this.isOpen = true;
+		this.inventory.addViewer(this);
+		this.inventory.startWatching();
 		this.inventory.notifyViewers();
 		for (WindowOwner owner : this.windowOwners) {
 			owner.addViewer(this.getOwner(), this);
 		}
-		this.onOpened();
+		return true;
 	}
 
 	/**
 	 * Closes this window
+	 * @return True if closing was possible, False if not
 	 */
-	public void close() {
+	public boolean close() {
 		if (!this.isOpen()) {
-			return;
+			return false;
 		}
 		this.isOpen = false;
 		if (this.hasCloseMessage()) {
@@ -148,20 +150,8 @@ public class Window implements InventoryViewer {
 		for (WindowOwner owner : this.windowOwners) {
 			owner.removeViewer(this.getOwner());
 		}
-		this.onClosed();
-	}
-
-	/**
-	 * Called after this inventory has been successfully opened
-	 */
-	public void onOpened() {
-	}
-
-	/**
-	 * Called after this inventory has been successfully closed
-	 */
-	public void onClosed() {
 		this.dropItemOnCursor();
+		return true;
 	}
 
 	public boolean hasItemOnCursor() {

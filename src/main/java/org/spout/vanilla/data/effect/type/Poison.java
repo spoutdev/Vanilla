@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.VanillaEffectType;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaEffect;
 
-public class Poison extends VanillaEffectType {
-	public Poison() {
-		super(19);
+public class Poison extends VanillaEffect {
+	public Poison(VanillaPlayer effected, float duration, int strength) {
+		super(effected, 19, duration, strength);
 	}
 }

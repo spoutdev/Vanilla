@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.VanillaEffectType;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaEffect;
 
-public class JumpBoost extends VanillaEffectType {
-	public JumpBoost() {
-		super(8);
+public class JumpBoost extends VanillaEffect {
+	public JumpBoost(VanillaPlayer effected, float duration, int strength) {
+		super(effected, 8, duration, strength);
 	}
 }

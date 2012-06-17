@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.VanillaEffectType;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaEffect;
 
-public class Blindness extends VanillaEffectType {
-	public Blindness() {
-		super(15);
+public class Blindness extends VanillaEffect {
+	public Blindness(VanillaPlayer effected, float duration, int strength) {
+		super(effected, 15, duration, strength);
 	}
 }

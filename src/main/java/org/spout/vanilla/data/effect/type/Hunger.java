@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.VanillaEffectType;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaEffect;
 
-public class Hunger extends VanillaEffectType {
-	public Hunger() {
-		super(17);
+public class Hunger extends VanillaEffect {
+	public Hunger(VanillaPlayer effected, float duration, int strength) {
+		super(effected, 17, duration, strength);
 	}
 }

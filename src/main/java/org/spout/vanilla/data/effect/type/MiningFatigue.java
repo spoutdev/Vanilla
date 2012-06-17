@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.VanillaEffectType;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaEffect;
 
-public class MiningFatigue extends VanillaEffectType {
-	public MiningFatigue() {
-		super(4);
+public class MiningFatigue extends VanillaEffect {
+	public MiningFatigue(VanillaPlayer effected, float duration, int strength) {
+		super(effected, 4, duration, strength);
 	}
 }

@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.VanillaEffectType;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaEffect;
 
-public class Speed extends VanillaEffectType {
-	public Speed() {
-		super(1);
+public class Speed extends VanillaEffect {
+	public Speed(VanillaPlayer effected, float duration, int strength) {
+		super(effected, 1, duration, strength);
 	}
 }

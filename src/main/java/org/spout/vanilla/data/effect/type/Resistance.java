@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.VanillaEffectType;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaEffect;
 
-public class Resistance extends VanillaEffectType {
-	public Resistance() {
-		super(11);
+public class Resistance extends VanillaEffect {
+	public Resistance(VanillaPlayer effected, float duration, int strength) {
+		super(effected, 11, duration, strength);
 	}
 }

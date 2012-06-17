@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.VanillaEffectType;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaEffect;
 
-public class Invisibility extends VanillaEffectType {
-	public Invisibility() {
-		super(14);
+public class Invisibility extends VanillaEffect {
+	public Invisibility(VanillaPlayer effected, float duration, int strength) {
+		super(effected, 14, duration, strength);
 	}
 }

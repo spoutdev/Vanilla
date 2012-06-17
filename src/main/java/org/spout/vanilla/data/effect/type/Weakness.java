@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.VanillaEffectType;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaEffect;
 
-public class Weakness extends VanillaEffectType {
-	public Weakness() {
-		super(18);
+public class Weakness extends VanillaEffect {
+	public Weakness(VanillaPlayer effected, float duration, int strength) {
+		super(effected, 18, duration, strength);
 	}
 }

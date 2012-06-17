@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.VanillaEffectType;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaEffect;
 
-public class InstantDamage extends VanillaEffectType {
-	public InstantDamage() {
-		super(7);
+public class InstantDamage extends VanillaEffect {
+	public InstantDamage(VanillaPlayer effected, float duration, int strength) {
+		super(effected, 7, duration, strength);
 	}
 }

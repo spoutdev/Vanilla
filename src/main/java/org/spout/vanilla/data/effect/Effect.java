@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.data.effect;
 
+import org.spout.api.protocol.Message;
 import org.spout.api.tickable.TimedLogicRunnable;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -33,35 +34,45 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 /**
  * Represents an entity effect that is applied to an entity.
  */
-public class Effect extends TimedLogicRunnable<VanillaPlayer> {
-	private int strength;
-	private final EffectType type;
+public abstract class Effect extends TimedLogicRunnable<VanillaPlayer> {
+	protected int strength, id;
 
-	public Effect(VanillaPlayer effected, EffectType type, float duration, int strength) {
+	public Effect(VanillaPlayer effected, int id, float duration, int strength) {
 		super(effected, duration);
-		this.type = type;
+		this.id = id;
 		this.strength = strength;
 	}
 
-	@Override
-	public void onRegistration() {
-		VanillaPlayer controller = getParent();
-		int duration = Math.round(getDelay()) * 20;
-		controller.getPlayer().getSession().send(type.getApplianceMessage(controller.getParent(), strength, duration));
-	}
-
-	@Override
-	public void run() {
-		VanillaPlayer controller = getParent();
-		controller.getPlayer().getSession().send(type.getRemovalMessage(controller.getParent()));
-	}
+	/**
+	 * Whether or not to send a message to the client when the effect starts.
+	 * @return true if has appliance message
+	 */
+	public abstract boolean hasApplianceMessage();
 
 	/**
-	 * Gets the type of effect
-	 * @return type of effect
+	 * Whether or not the send a message to the client when the effects ends.
+	 * @return true if has removal message
 	 */
-	public EffectType getType() {
-		return type;
+	public abstract boolean hasRemovalMessage();
+
+	/**
+	 * Gets the message sent to the client when the effect activates.
+	 * @return message to send
+	 */
+	public abstract Message getApplianceMessage();
+
+	/**
+	 * Gets the message sent to the client when the effect is removed.
+	 * @return message to send
+	 */
+	public abstract Message getRemovalMessage();
+
+	/**
+	 * Gets the id of the effect.
+	 * @return id of effect
+	 */
+	public int getId() {
+		return id;
 	}
 
 	/**
@@ -78,5 +89,20 @@ public class Effect extends TimedLogicRunnable<VanillaPlayer> {
 	 */
 	public void setStrength(int strength) {
 		this.strength = strength;
+	}
+
+	@Override
+	public void onRegistration() {
+		getParent().getPlayer().getSession().send(getApplianceMessage());
+	}
+
+	@Override
+	public boolean shouldRun(float dt) {
+		return super.shouldRun(dt);
+	}
+
+	@Override
+	public void run() {
+		getParent().getPlayer().getSession().send(getRemovalMessage());
 	}
 }

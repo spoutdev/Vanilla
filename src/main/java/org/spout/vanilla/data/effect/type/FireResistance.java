@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.VanillaEffectType;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaEffect;
 
-public class FireResistance extends VanillaEffectType {
-	public FireResistance() {
-		super(12);
+public class FireResistance extends VanillaEffect {
+	public FireResistance(VanillaPlayer effected, float duration, int strength) {
+		super(effected, 12, duration, strength);
 	}
 }

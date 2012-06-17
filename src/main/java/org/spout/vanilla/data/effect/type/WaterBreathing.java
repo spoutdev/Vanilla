@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.VanillaEffectType;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaEffect;
 
-public class WaterBreathing extends VanillaEffectType {
-	public WaterBreathing() {
-		super(13);
+public class WaterBreathing extends VanillaEffect {
+	public WaterBreathing(VanillaPlayer effected, float duration, int strength) {
+		super(effected, 13, duration, strength);
 	}
 }

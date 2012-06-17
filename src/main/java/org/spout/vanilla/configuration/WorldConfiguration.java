@@ -55,12 +55,12 @@ public class WorldConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder NETHER_DIFFICULTY = new ConfigurationHolder("normal", "worlds", "nether", "difficulty");
 	public static final ConfigurationHolder NETHER_SKY_TYPE = new ConfigurationHolder("nether", "worlds", "nether", "sky-type");
 	//END
-	public static final ConfigurationHolder END_LOAD = new ConfigurationHolder(true, "worlds", "theend", "load");
-	public static final ConfigurationHolder END_NAME = new ConfigurationHolder("world_the_end", "worlds", "theend", "name");
-	public static final ConfigurationHolder END_LOADED_SPAWN = new ConfigurationHolder(true, "worlds", "theend", "keep-spawn-loaded");
-	public static final ConfigurationHolder END_GAMEMODE = new ConfigurationHolder("creative", "worlds", "theend", "game-mode");
-	public static final ConfigurationHolder END_DIFFICULTY = new ConfigurationHolder("normal", "worlds", "theend", "difficulty");
-	public static final ConfigurationHolder END_SKY_TYPE = new ConfigurationHolder("theend", "worlds", "theend", "sky-type");
+	public static final ConfigurationHolder END_LOAD = new ConfigurationHolder(true, "worlds", "the_end", "load");
+	public static final ConfigurationHolder END_NAME = new ConfigurationHolder("world_the_end", "worlds", "the_end", "name");
+	public static final ConfigurationHolder END_LOADED_SPAWN = new ConfigurationHolder(true, "worlds", "the_end", "keep-spawn-loaded");
+	public static final ConfigurationHolder END_GAMEMODE = new ConfigurationHolder("creative", "worlds", "the_end", "game-mode");
+	public static final ConfigurationHolder END_DIFFICULTY = new ConfigurationHolder("normal", "worlds", "the_end", "difficulty");
+	public static final ConfigurationHolder END_SKY_TYPE = new ConfigurationHolder("the_end", "worlds", "the_end", "sky-type");
 
 	public WorldConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "worlds.yml")));

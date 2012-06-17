@@ -32,7 +32,7 @@ import java.util.Map;
 public enum Dimension {
 	NORMAL(0),
 	NETHER(-1),
-	THEEND(1);
+	THE_END(1);
 	private final int id;
 	private static final Map<Integer, Dimension> idMap = new HashMap<Integer, Dimension>();
 

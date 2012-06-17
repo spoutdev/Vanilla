@@ -31,11 +31,13 @@ import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.controller.living.creature.hostile.Slime;
+
 /**
  * Various data keys used in Vanilla. This class is intended to help developers use the set keys Vanilla creates with the powerful
  * datatable concept without knowing the actual keys.
  */
-public class VanillaData {
+public class Data {
 	//World-specific
 	public static final DefaultedKey<Dimension> DIMENSION = new DefaultedKeyImpl<Dimension>("dimension", Dimension.NORMAL);
 	public static final DefaultedKey<Difficulty> DIFFICULTY = new DefaultedKeyImpl<Difficulty>("difficulty", Difficulty.EASY);

@@ -52,10 +52,10 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.Data;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
@@ -281,17 +281,17 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	protected void worldChanged(World world) {
 		//Grab world characteristics.
-		GameMode gamemode = world.getDataMap().get(VanillaData.GAMEMODE);
-		Difficulty difficulty = world.getDataMap().get(VanillaData.DIFFICULTY);
-		Dimension dimension = world.getDataMap().get(VanillaData.DIMENSION);
-		WorldType worldType = world.getDataMap().get(VanillaData.WORLD_TYPE);
+		GameMode gamemode = world.getDataMap().get(Data.GAMEMODE);
+		Difficulty difficulty = world.getDataMap().get(Data.DIFFICULTY);
+		Dimension dimension = world.getDataMap().get(Data.DIMENSION);
+		WorldType worldType = world.getDataMap().get(Data.WORLD_TYPE);
 
 		//TODO Handle infinite height
 		if (first) {
 			first = false;
 			int entityId = owner.getEntity().getId();
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
-			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, owner.getName(), gamemode.getId(), dimension.getId(), difficulty.getId(), 256, session.getEngine().getMaxPlayers(), worldType.getType());
+			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, owner.getName(), gamemode.getId(), dimension.getId(), difficulty.getId(), 256, session.getEngine().getMaxPlayers(), worldType.toString());
 			owner.getSession().send(idMsg, true);
 			owner.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
@@ -305,7 +305,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				owner.getSession().send(EEMsg);
 			}
 		} else {
-			owner.getSession().send(new RespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.getType()));
+			owner.getSession().send(new RespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 		}
 
 		Point pos = world.getSpawnPoint().getPosition();

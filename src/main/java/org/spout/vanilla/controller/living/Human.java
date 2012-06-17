@@ -26,20 +26,17 @@
  */
 package org.spout.vanilla.controller.living;
 
-import org.spout.api.Spout;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
-import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.Data;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
@@ -58,7 +55,7 @@ public class Human extends Living {
 
 	public Human() {
 		super(VanillaControllerTypes.HUMAN);
-		title = data().get(VanillaData.TITLE);
+		title = data().get(Data.TITLE);
 		setHeadHeight(1.62f);
 		miningDamage = new int[miningDamagePeriod];
 	}
@@ -91,7 +88,7 @@ public class Human extends Living {
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put(VanillaData.TITLE, title);
+		data().put(Data.TITLE, title);
 	}
 
 	@Override

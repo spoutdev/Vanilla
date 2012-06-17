@@ -36,7 +36,7 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.source.DamageCause;
-import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.Data;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
@@ -52,8 +52,8 @@ public abstract class Creature extends Living {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		growthTicks = data().get(VanillaData.GROWTH_TICKS);
-		lineOfSight = data().get(VanillaData.LINE_OF_SIGHT);
+		growthTicks = data().get(Data.GROWTH_TICKS);
+		lineOfSight = data().get(Data.LINE_OF_SIGHT);
 	}
 
 	@Override
@@ -96,8 +96,8 @@ public abstract class Creature extends Living {
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put(VanillaData.GROWTH_TICKS, growthTicks);
-		data().put(VanillaData.LINE_OF_SIGHT, lineOfSight);
+		data().put(Data.GROWTH_TICKS, growthTicks);
+		data().put(Data.LINE_OF_SIGHT, lineOfSight);
 	}
 
 	/**

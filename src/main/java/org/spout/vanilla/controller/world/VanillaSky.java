@@ -116,7 +116,7 @@ public abstract class VanillaSky extends Controller implements VanillaController
 			if (forceWeatherUpdate || ticksUntilWeatherChange <= 0) {
 				updateWeather(weather, forecast);
 				weather = forecast;
-				forecast = Weather.getById(random.nextInt(3));
+				forecast = Weather.get(random.nextInt(3));
 				ticksUntilWeatherChange = random.nextFloat() * 5 * 60;
 				forceWeatherUpdate = false;
 			}

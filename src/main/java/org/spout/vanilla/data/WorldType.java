@@ -26,30 +26,7 @@
  */
 package org.spout.vanilla.data;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public enum WorldType {
-	DEFAULT("DEFAULT"),
-	SUPERFLAT("SUPERFLAT");
-	private final String type;
-	private static final Map<String, WorldType> stringMap = new HashMap<String, WorldType>();
-
-	static {
-		for (WorldType wtype : WorldType.values()) {
-			stringMap.put(wtype.type, wtype);
-		}
-	}
-
-	private WorldType(String type) {
-		this.type = type;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public static WorldType getByString(String type) {
-		return stringMap.get(type);
-	}
+	DEFAULT,
+	SUPER_FLAT
 }

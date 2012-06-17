@@ -45,7 +45,7 @@ public final class ChangeGameStateCodec extends MessageCodec<ChangeGameStateMess
 	public ChangeGameStateMessage decode(ChannelBuffer buffer) throws IOException {
 		byte reason = buffer.readByte();
 		byte gameMode = buffer.readByte();
-		return new ChangeGameStateMessage(reason, GameMode.getById(gameMode));
+		return new ChangeGameStateMessage(reason, GameMode.get(gameMode));
 	}
 
 	@Override

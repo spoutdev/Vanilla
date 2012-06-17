@@ -50,7 +50,7 @@ public enum GameMode {
 		return id;
 	}
 
-	public static GameMode getById(byte id) {
+	public static GameMode get(byte id) {
 		return idMap.get(id);
 	}
 }

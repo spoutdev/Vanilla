@@ -50,7 +50,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.Data;
 import org.spout.vanilla.event.entity.EntityCombustEvent;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.EntityStatusMessage;
@@ -93,30 +93,30 @@ public abstract class VanillaActionController extends Controller implements Vani
 	public void onAttached() {
 		getParent().setCollision(new CollisionModel(area));
 		getParent().getCollision().setStrategy(CollisionStrategy.SOLID);
-		data().put(VanillaData.CONTROLLER_TYPE, getType().getID());
+		data().put(Data.CONTROLLER_TYPE, getType().getID());
 
 		// Load data
-		airTicks = data().get(VanillaData.AIR_TICKS);
-		fireTicks = data().get(VanillaData.FIRE_TICKS);
-		health = data().get(VanillaData.HEALTH);
-		isFlammable = data().get(VanillaData.FLAMMABLE);
-		maxHealth = data().get(VanillaData.MAX_HEALTH);
-		maxSpeed = data().get(VanillaData.MAX_SPEED);
-		movementSpeed = data().get(VanillaData.MOVEMENT_SPEED);
-		velocity = data().get(VanillaData.VELOCITY);
+		airTicks = data().get(Data.AIR_TICKS);
+		fireTicks = data().get(Data.FIRE_TICKS);
+		health = data().get(Data.HEALTH);
+		isFlammable = data().get(Data.FLAMMABLE);
+		maxHealth = data().get(Data.MAX_HEALTH);
+		maxSpeed = data().get(Data.MAX_SPEED);
+		movementSpeed = data().get(Data.MOVEMENT_SPEED);
+		velocity = data().get(Data.VELOCITY);
 	}
 
 	@Override
 	public void onSave() {
 		// Load data
-		data().put(VanillaData.AIR_TICKS, airTicks);
-		data().put(VanillaData.FIRE_TICKS, fireTicks);
-		data().put(VanillaData.HEALTH, health);
-		data().put(VanillaData.FLAMMABLE, isFlammable);
-		data().put(VanillaData.MAX_HEALTH, maxHealth);
-		data().put(VanillaData.MAX_SPEED, maxSpeed);
-		data().put(VanillaData.MOVEMENT_SPEED, movementSpeed);
-		data().put(VanillaData.VELOCITY, velocity);
+		data().put(Data.AIR_TICKS, airTicks);
+		data().put(Data.FIRE_TICKS, fireTicks);
+		data().put(Data.HEALTH, health);
+		data().put(Data.FLAMMABLE, isFlammable);
+		data().put(Data.MAX_HEALTH, maxHealth);
+		data().put(Data.MAX_SPEED, maxSpeed);
+		data().put(Data.MOVEMENT_SPEED, movementSpeed);
+		data().put(Data.VELOCITY, velocity);
 	}
 
 	@Override

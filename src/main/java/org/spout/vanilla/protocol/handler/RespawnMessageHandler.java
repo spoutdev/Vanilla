@@ -34,7 +34,7 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.Data;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
@@ -59,10 +59,10 @@ public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 
 		//Send respawn packet back to the client.
 		//TODO We need worlds associated with vanilla storing characteristics
-		int dimension = point.getWorld().getDataMap().get(VanillaData.DIMENSION).getId();
-		byte difficulty = point.getWorld().getDataMap().get(VanillaData.DIFFICULTY).getId();
+		int dimension = point.getWorld().getDataMap().get(Data.DIMENSION).getId();
+		byte difficulty = point.getWorld().getDataMap().get(Data.DIFFICULTY).getId();
 		byte gamemode = ((VanillaPlayer) player.getEntity().getController()).getGameMode().getId();
-		String worldType = point.getWorld().getDataMap().get(VanillaData.WORLD_TYPE).getType();
+		String worldType = point.getWorld().getDataMap().get(Data.WORLD_TYPE).toString();
 		RespawnMessage respawn = new RespawnMessage(dimension, difficulty, gamemode, 256, worldType);
 		session.send(respawn);
 		

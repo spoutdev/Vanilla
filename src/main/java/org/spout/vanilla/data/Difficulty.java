@@ -52,7 +52,7 @@ public enum Difficulty {
 		return id;
 	}
 
-	public static Difficulty getById(byte id) {
+	public static Difficulty get(byte id) {
 		return idMap.get(id);
 	}
 }

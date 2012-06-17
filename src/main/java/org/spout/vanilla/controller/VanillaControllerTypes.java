@@ -111,7 +111,7 @@ import org.spout.vanilla.protocol.controller.object.vehicle.BoatEntityProtocol;
 import org.spout.vanilla.protocol.controller.object.vehicle.TransportMinecartEntityProtocol;
 
 /**
- * Enum that serves as a lookup for all controllers in Vanilla.
+ * A lookup for all controllers in Vanilla.
  */
 public class VanillaControllerTypes {
 	// Entity

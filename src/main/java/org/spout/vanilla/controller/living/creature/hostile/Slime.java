@@ -27,11 +27,13 @@
 package org.spout.vanilla.controller.living.creature.hostile;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.map.DefaultedKeyImpl;
 
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
@@ -39,7 +41,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.Data;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Slime extends Creature implements Hostile {
@@ -52,7 +54,7 @@ public class Slime extends Creature implements Hostile {
 
 	public Slime() {
 		super(VanillaControllerTypes.SLIME);
-		this.size = data().get(VanillaData.SLIME_SIZE);
+		this.size = data().get(Data.SLIME_SIZE);
 	}
 
 	public Slime(VanillaControllerType type, byte size) {
@@ -62,7 +64,7 @@ public class Slime extends Creature implements Hostile {
 
 	public Slime(VanillaControllerType type) {
 		super(type);
-		this.size = data().get(VanillaData.SLIME_SIZE);
+		this.size = data().get(Data.SLIME_SIZE);
 	}
 
 	@Override
@@ -76,7 +78,7 @@ public class Slime extends Creature implements Hostile {
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put(VanillaData.SLIME_SIZE, size);
+		data().put(Data.SLIME_SIZE, size);
 	}
 
 	@Override

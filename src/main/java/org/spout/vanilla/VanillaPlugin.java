@@ -57,10 +57,10 @@ import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
+import org.spout.vanilla.data.Data;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
@@ -147,9 +147,9 @@ public class VanillaPlugin extends CommonPlugin {
 		if (WorldConfiguration.NORMAL_LOAD.getBoolean()) {
 			NormalGenerator normGen = new NormalGenerator();
 			World normal = engine.loadWorld(WorldConfiguration.NORMAL_NAME.getString(), normGen);
-			normal.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.NORMAL_GAMEMODE.getString().toUpperCase()));
-			normal.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.NORMAL_DIFFICULTY.getString().toUpperCase()));
-			normal.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.NORMAL_SKY_TYPE.getString().toUpperCase()));
+			normal.getDataMap().put(Data.GAMEMODE, GameMode.valueOf(WorldConfiguration.NORMAL_GAMEMODE.getString().toUpperCase()));
+			normal.getDataMap().put(Data.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.NORMAL_DIFFICULTY.getString().toUpperCase()));
+			normal.getDataMap().put(Data.DIMENSION, Dimension.valueOf(WorldConfiguration.NORMAL_SKY_TYPE.getString().toUpperCase()));
 			//Grab safe spawn if newly created world.
 			if (normal.getAge() <= 0) {
 				normal.setSpawnPoint(new Transform(new Point(normGen.getSafeSpawn(normal)), Quaternion.IDENTITY, Vector3.ONE));
@@ -160,9 +160,9 @@ public class VanillaPlugin extends CommonPlugin {
 		if (WorldConfiguration.FLAT_LOAD.getBoolean()) {
 			FlatGenerator flatGen = new FlatGenerator(64);
 			World flat = engine.loadWorld(WorldConfiguration.FLAT_NAME.getString(), flatGen);
-			flat.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.FLAT_GAMEMODE.getString().toUpperCase()));
-			flat.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.FLAT_DIFFICULTY.getString().toUpperCase()));
-			flat.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.FLAT_SKY_TYPE.getString().toUpperCase()));
+			flat.getDataMap().put(Data.GAMEMODE, GameMode.valueOf(WorldConfiguration.FLAT_GAMEMODE.getString().toUpperCase()));
+			flat.getDataMap().put(Data.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.FLAT_DIFFICULTY.getString().toUpperCase()));
+			flat.getDataMap().put(Data.DIMENSION, Dimension.valueOf(WorldConfiguration.FLAT_SKY_TYPE.getString().toUpperCase()));
 			//Grab safe spawn if newly created world.
 			if (flat.getAge() <= 0) {
 				flat.setSpawnPoint(new Transform(new Point(flatGen.getSafeSpawn(flat)), Quaternion.IDENTITY, Vector3.ONE));
@@ -173,9 +173,9 @@ public class VanillaPlugin extends CommonPlugin {
 		if (WorldConfiguration.NETHER_LOAD.getBoolean()) {
 			NetherGenerator netherGen = new NetherGenerator();
 			World nether = engine.loadWorld(WorldConfiguration.NETHER_NAME.getString(), netherGen);
-			nether.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.NETHER_GAMEMODE.getString().toUpperCase()));
-			nether.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.NETHER_DIFFICULTY.getString().toUpperCase()));
-			nether.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.NETHER_SKY_TYPE.getString().toUpperCase()));
+			nether.getDataMap().put(Data.GAMEMODE, GameMode.valueOf(WorldConfiguration.NETHER_GAMEMODE.getString().toUpperCase()));
+			nether.getDataMap().put(Data.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.NETHER_DIFFICULTY.getString().toUpperCase()));
+			nether.getDataMap().put(Data.DIMENSION, Dimension.valueOf(WorldConfiguration.NETHER_SKY_TYPE.getString().toUpperCase()));
 			//Grab safe spawn if newly created world.
 			if (nether.getAge() <= 0) {
 				nether.setSpawnPoint(new Transform(new Point(netherGen.getSafeSpawn(nether)), Quaternion.IDENTITY, Vector3.ONE));
@@ -186,9 +186,9 @@ public class VanillaPlugin extends CommonPlugin {
 		if (WorldConfiguration.END_LOAD.getBoolean()) {
 			TheEndGenerator endGen = new TheEndGenerator();
 			World end = engine.loadWorld(WorldConfiguration.END_NAME.getString(), endGen);
-			end.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(WorldConfiguration.END_GAMEMODE.getString().toUpperCase()));
-			end.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.END_DIFFICULTY.getString().toUpperCase()));
-			end.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(WorldConfiguration.END_SKY_TYPE.getString().toUpperCase()));
+			end.getDataMap().put(Data.GAMEMODE, GameMode.valueOf(WorldConfiguration.END_GAMEMODE.getString().toUpperCase()));
+			end.getDataMap().put(Data.DIFFICULTY, Difficulty.valueOf(WorldConfiguration.END_DIFFICULTY.getString().toUpperCase()));
+			end.getDataMap().put(Data.DIMENSION, Dimension.valueOf(WorldConfiguration.END_SKY_TYPE.getString().toUpperCase()));
 			//Grab safe spawn if newly created world.
 			if (end.getAge() <= 0) {
 				end.setSpawnPoint(new Transform(new Point(endGen.getSafeSpawn(end)), Quaternion.IDENTITY, Vector3.ONE));

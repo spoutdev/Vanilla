@@ -37,6 +37,7 @@ import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.controller.basic.PointObserver;
 import org.spout.api.entity.component.controller.type.ControllerType;
 import org.spout.api.exception.ConfigurationException;
@@ -48,7 +49,6 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
-
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -196,7 +196,8 @@ public class VanillaPlugin extends CommonPlugin {
 			worlds.add(end);
 		}
 
-		final int diameter = PointObserver.CHUNK_VIEW_DISTANCE + PointObserver.CHUNK_VIEW_DISTANCE + 1;
+		final int radius = VanillaConfiguration.SPAWN_RADIUS.getInt();
+		final int diameter = (radius << 1) + 1;
 		final int total = diameter * diameter * diameter;
 		final int progressStep = total / 10;
 		for (World world : worlds) {
@@ -205,9 +206,9 @@ public class VanillaPlugin extends CommonPlugin {
 			int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
 			int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
 			int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
-			for (int dx = -PointObserver.CHUNK_VIEW_DISTANCE; dx <= PointObserver.CHUNK_VIEW_DISTANCE; dx++) {
-				for (int dy = -PointObserver.CHUNK_VIEW_DISTANCE; dy <= PointObserver.CHUNK_VIEW_DISTANCE; dy++) {
-					for (int dz = -PointObserver.CHUNK_VIEW_DISTANCE; dz <= PointObserver.CHUNK_VIEW_DISTANCE; dz++) {
+			for (int dx = -radius; dx <= radius; dx++) {
+				for (int dy = -radius; dy <= radius; dy++) {
+					for (int dz = -radius; dz <= radius; dz++) {
 						progress++;
 						if (progress % progressStep == 0) {
 							Spout.getLogger().info("Loading [" + world.getName() + "], " + (progress / progressStep) * 10 + "% Complete");
@@ -223,7 +224,7 @@ public class VanillaPlugin extends CommonPlugin {
 				sky.setWorld(world);
 				VanillaSky.setSky(world, sky);
 				if (WorldConfiguration.NORMAL_LOADED_SPAWN.getBoolean()) {
-					world.createAndSpawnEntity(point, new PointObserver());
+					world.createAndSpawnEntity(point, new PointObserver(radius));
 				}
 				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
 			} else if (world.getGenerator() instanceof FlatGenerator) {
@@ -231,7 +232,7 @@ public class VanillaPlugin extends CommonPlugin {
 				sky.setWorld(world);
 				VanillaSky.setSky(world, sky);
 				if (WorldConfiguration.FLAT_LOADED_SPAWN.getBoolean()) {
-					world.createAndSpawnEntity(point, new PointObserver());
+					world.createAndSpawnEntity(point, new PointObserver(radius));
 				}
 				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
 			} else if (world.getGenerator() instanceof NetherGenerator) {
@@ -239,7 +240,7 @@ public class VanillaPlugin extends CommonPlugin {
 				sky.setWorld(world);
 				VanillaSky.setSky(world, sky);
 				if (WorldConfiguration.NETHER_LOADED_SPAWN.getBoolean()) {
-					world.createAndSpawnEntity(point, new PointObserver());
+					world.createAndSpawnEntity(point, new PointObserver(radius));
 				}
 				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
 			} else if (world.getGenerator() instanceof TheEndGenerator) {
@@ -247,7 +248,7 @@ public class VanillaPlugin extends CommonPlugin {
 				sky.setWorld(world);
 				VanillaSky.setSky(world, sky);
 				if (WorldConfiguration.END_LOADED_SPAWN.getBoolean()) {
-					world.createAndSpawnEntity(point, new PointObserver());
+					world.createAndSpawnEntity(point, new PointObserver(radius));
 				}
 				world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
 			}

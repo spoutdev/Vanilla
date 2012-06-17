@@ -227,8 +227,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, new boolean[16], 0, packetChunkData, biomeData);
 			owner.getSession().send(CCMsg);
-			column.add(y);
 		}
+		column.add(y);
 		
 		ChunkSnapshot snapshot = c.getSnapshot(false);
 		short[] rawBlockIdArray = snapshot.getBlockIds();

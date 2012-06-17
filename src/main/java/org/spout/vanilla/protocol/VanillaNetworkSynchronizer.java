@@ -76,6 +76,7 @@ import org.spout.vanilla.world.generator.VanillaBiome;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
+	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
 	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 	private static final byte[] AIR_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 	private static final double STANCE = 1.6D;
@@ -90,7 +91,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	static {
 		int i = 0;
 		for (int c = 0; c < Chunk.BLOCKS.VOLUME; c++) { // blocks
-			SOLID_CHUNK_DATA[i] = 1;
+			SOLID_CHUNK_DATA[i] = SOLID_BLOCK_ID;
 			AIR_CHUNK_DATA[i++] = 0;
 		}
 		for (int c = 0; c < Chunk.BLOCKS.HALF_VOLUME; c++) { // block data
@@ -197,27 +198,27 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private static byte[] getChunkHeightMap(int[][] heights, int chunkY) {
 		byte[] packetChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 		int baseY = chunkY << Chunk.BLOCKS.BITS;
-		int blockYStep = 1 << (Chunk.BLOCKS.BITS << 1);
-		int lightYStep = blockYStep >> 1;
-		int skylightBase = Chunk.BLOCKS.VOLUME << 1;
 
 		for (int xx = 0; xx < Chunk.BLOCKS.SIZE; xx++) {
 			for (int zz = 0; zz < Chunk.BLOCKS.SIZE; zz++) {
-				int dataOffset = xx | (zz << 4);
+				int dataOffset = xx | (zz << Chunk.BLOCKS.BITS);
 				int threshold = heights[xx][zz] - baseY;
 				if (chunkY == 0 && threshold < 0) {
 					threshold = 0;
 				}
 				int yy;
+				// Set blocks below height to the solid block
 				for (yy = 0; yy < Chunk.BLOCKS.SIZE && yy <= threshold; yy++) {
-					packetChunkData[dataOffset] = 1;
-					dataOffset += blockYStep;
+					packetChunkData[dataOffset] = SOLID_BLOCK_ID;
+					dataOffset += Chunk.BLOCKS.AREA;
 				}
+				// Set sky light of blocks above height to 15
+				// Use half of start offset and add the block id and data length (2 volumes)
 				byte mask = (xx & 0x1) == 0 ? (byte) 0x0F : (byte) 0xF0;
-				dataOffset = skylightBase + ((xx | (zz << 4) + (yy << (Chunk.BLOCKS.BITS << 1))) >> 1);
+				dataOffset = Chunk.BLOCKS.DOUBLE_VOLUME + (dataOffset >> 1);
 				for (; yy < Chunk.BLOCKS.SIZE; yy++) {
 					packetChunkData[dataOffset] |= mask;
-					dataOffset += lightYStep;
+					dataOffset += Chunk.BLOCKS.HALF_AREA;
 				}
 			}
 		}
@@ -263,7 +264,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], 0, packetChunkData, null);
 		owner.getSession().send(CCMsg);
 	}
-	
+
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
 		//TODO: Implement Spout Protocol

@@ -214,7 +214,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 					dataOffset += blockYStep;
 				}
 				byte mask = (xx & 0x1) == 0 ? (byte) 0x0F : (byte) 0xF0;
-				dataOffset = skylightBase + ((xx | (zz << 4) + (yy << (Chunk.BLOCKS.SIZE << 1))) >> 1);
+				dataOffset = skylightBase + ((xx | (zz << 4) + (yy << (Chunk.BLOCKS.BITS << 1))) >> 1);
 				for (; yy < Chunk.BLOCKS.SIZE; yy++) {
 					packetChunkData[dataOffset] |= mask;
 					dataOffset += lightYStep;

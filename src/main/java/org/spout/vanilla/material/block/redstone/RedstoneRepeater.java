@@ -36,6 +36,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -66,7 +67,6 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	}
 
 	public void onDestroy(Block block, double dropChance) {
-		this.doRedstoneUpdates(block);
 		super.onDestroy(block, dropChance);
 	}
 
@@ -78,7 +78,6 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		block.setMaterial(this);
 		this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()));
-		this.doRedstoneUpdates(block);
 		return true;
 	}
 
@@ -92,7 +91,6 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 				index = 0;
 			}
 			this.setTickDelayIndex(block, index);
-			block.update();
 		}
 	}
 
@@ -150,11 +148,6 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	}
 
 	@Override
-	public void doRedstoneUpdates(Block block) {
-		block.setSource(this).update().translate(this.getFacing(block)).update();
-	}
-
-	@Override
 	public boolean isReceivingPower(Block block) {
 		BlockFace face = this.getFacing(block).getOpposite();
 		return RedstoneUtil.isPowered(block.translate(face), face.getOpposite());
@@ -173,11 +166,6 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	}
 
 	@Override
-	public Vector3[] maxRange() {
-		return maxRange;
-	}
-
-	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		b.dynamicUpdate(this.getTickDelay(b) + currentTime);
 	}
@@ -193,5 +181,10 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 		} else if (receiving != this.isPowered()) {
 			this.setPowered(block, receiving);
 		}
+	}
+
+	@Override
+	public EffectRange getDynamicRange() {
+		return EffectRange.THIS;
 	}
 }

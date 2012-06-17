@@ -32,17 +32,17 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
+import org.spout.api.material.range.CubicEffectRange;
+import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.LogicUtil;
-
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.util.RedstonePowerMode;
 
 public abstract class PressurePlate extends GroundAttachable implements Mineable, RedstoneSource, DynamicMaterial {
-	public static final int TICK_DELAY = 20;
-	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
+	public static final int TICK_DELAY = 20 * 50;
+	private static final EffectRange physicsRange = new CubicEffectRange(1);
 
 	public PressurePlate(String name, int id) {
 		super(name, id);
@@ -76,14 +76,14 @@ public abstract class PressurePlate extends GroundAttachable implements Mineable
 	public void setPressed(Block block, boolean pressed, boolean doPhysics) {
 		block.setData(LogicUtil.setBit(block.getData(), 0x1, pressed));
 		if (doPhysics) {
-			block.setSource(this).update().translate(BlockFace.BOTTOM).update();
+			block.queueUpdate(EffectRange.THIS_AND_BELOW);
 		}
 	}
 
 	public void press(Block block) {
 		if (!this.isPressed(block)) {
 			this.setPressed(block, true);
-			block.dynamicUpdate(TICK_DELAY);
+			block.resetDynamic();
 		}
 	}
 
@@ -114,17 +114,18 @@ public abstract class PressurePlate extends GroundAttachable implements Mineable
 	}
 
 	@Override
-	public void doRedstoneUpdates(Block block) {
-		block.setSource(this).update().translate(BlockFace.BOTTOM).update();
+	public EffectRange getPhysicsRange(short data) {
+		return physicsRange;
 	}
-
+	
 	@Override
-	public Vector3[] maxRange() {
-		return maxRange;
+	public EffectRange getDynamicRange() {
+		return EffectRange.THIS;
 	}
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
+		b.dynamicUpdate(currentTime + TICK_DELAY);
 	}
 
 	@Override

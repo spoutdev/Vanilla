@@ -36,6 +36,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 
@@ -53,7 +54,6 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
 public class StoneButton extends AbstractAttachable implements Mineable, PointAttachable, RedstoneSource, DynamicMaterial {
 	public static final int TICK_DELAY = 20;
-	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
 
 	public StoneButton(String name, int id) {
 		super(name, id);
@@ -63,12 +63,6 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	public void onDelayedUpdate(Block block) {
 		this.setPressed(block, false);
 		playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_CLICK_2);
-		this.doRedstoneUpdates(block);
-	}
-
-	@Override
-	public void doRedstoneUpdates(Block block) {
-		block.setSource(this).update().translate(this.getAttachedFace(block)).update();
 	}
 
 	@Override
@@ -102,7 +96,6 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 		if (type != Action.LEFT_CLICK || !VanillaPlayerUtil.isCreative(entity)) {
 			if (!this.isPressed(block)) {
 				this.setPressed(block, true);
-				this.doRedstoneUpdates(block);
 				block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
 				playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_1);
 			}
@@ -145,11 +138,6 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	}
 
 	@Override
-	public Vector3[] maxRange() {
-		return maxRange;
-	}
-
-	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 	}
 
@@ -157,6 +145,10 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
 		this.setPressed(block, false);
 		playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_CLICK_2);
-		this.doRedstoneUpdates(block);
+	}
+
+	@Override
+	public EffectRange getDynamicRange() {
+		return EffectRange.THIS;
 	}
 }

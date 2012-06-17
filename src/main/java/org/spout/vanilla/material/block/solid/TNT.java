@@ -61,7 +61,7 @@ public class TNT extends Solid implements Mineable, RedstoneTarget {
 
 	@Override
 	public void onIgnite(Block block) {
-		block.setMaterial(VanillaMaterials.AIR).update();
+		block.setMaterial(VanillaMaterials.AIR);
 		// spawn a primed TNT
 		Point point = block.getPosition();
 		point.getWorld().createAndSpawnEntity(point, new PrimedTnt());

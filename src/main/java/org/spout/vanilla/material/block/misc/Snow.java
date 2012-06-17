@@ -75,7 +75,7 @@ public class Snow extends GroundAttachable implements Mineable {
 	public void onUpdate(Block block) {
 		BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial();
 		if (below.getMaterial() == VanillaMaterials.AIR) {
-			block.setMaterial(VanillaMaterials.AIR).update(true);
+			block.setMaterial(VanillaMaterials.AIR);
 		}
 	}
 }

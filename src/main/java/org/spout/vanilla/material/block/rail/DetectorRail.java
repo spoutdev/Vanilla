@@ -33,9 +33,9 @@ import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
-
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.util.RailsState;
 import org.spout.vanilla.util.RedstonePowerMode;
@@ -54,15 +54,9 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 		return false;
 	}
 
-	@Override
-	public void doRedstoneUpdates(Block block) {
-		block.setSource(this).update().translate(BlockFace.BOTTOM).update();
-	}
-
 	public void activate(Block block) {
 		this.setPowering(block, true);
-		this.doRedstoneUpdates(block);
-		block.dynamicUpdate(TICK_DELAY);
+		block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
 	}
 
 	/**
@@ -126,8 +120,8 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 	}
 
 	@Override
-	public Vector3[] maxRange() {
-		return maxRange;
+	public EffectRange getDynamicRange() {
+		return EffectRange.THIS_AND_NEIGHBORS;
 	}
 
 	@Override
@@ -143,6 +137,5 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 
 		//TODO: Check if a minecart is on top of this block right now...
 		this.setPowering(block, false);
-		this.doRedstoneUpdates(block);
 	}
 }

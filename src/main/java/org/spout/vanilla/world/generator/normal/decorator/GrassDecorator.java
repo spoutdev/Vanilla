@@ -63,7 +63,7 @@ public class GrassDecorator implements Decorator {
 				}
 			}
 			if (b.getMaterial() == VanillaMaterials.GRASS) {
-				b = b.translate(BlockFace.TOP).setMaterial(VanillaMaterials.TALL_GRASS).update();
+				b = b.translate(BlockFace.TOP).setMaterial(VanillaMaterials.TALL_GRASS);
 			}
 		}
 	}

@@ -124,11 +124,10 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
 		if (block.getMaterial().equals(this)) {
-			block.setMaterial(this.doubletype).update();
+			block.setMaterial(this.doubletype);
 		} else {
 			block.setMaterial(this);
 			this.setTop(block, against == BlockFace.TOP);
-			block.update();
 		}
 		return true;
 	}

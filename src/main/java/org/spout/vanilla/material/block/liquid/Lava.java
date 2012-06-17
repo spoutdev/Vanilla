@@ -30,7 +30,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
@@ -51,8 +50,6 @@ public class Lava extends Liquid {
 						} else {
 							block.setMaterial(VanillaMaterials.COBBLESTONE);
 						}
-						block.update();
-						return;
 					}
 				}
 			}
@@ -66,7 +63,6 @@ public class Lava extends Liquid {
 		if (block.getMaterial() instanceof Water) {
 			if (from == BlockFace.TOP) {
 				block.setMaterial(VanillaMaterials.STONE);
-				block.update();
 				return;
 			}
 		}

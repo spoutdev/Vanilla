@@ -94,7 +94,6 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 	@Override
 	public void onUpdate(Block block) {
 		//check all directions if it still supports it
-		boolean changed = false;
 		Block above = block.translate(BlockFace.TOP);
 		if (block.getData() != 0) {
 			BlockMaterial abovemat = above.getMaterial();
@@ -107,7 +106,6 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 					//is there a vine block above to which it can support itself?
 					if (!abovemat.equals(VanillaMaterials.VINES) || !this.isAttachedTo(above, face)) {
 						this.setFaceAttached(block, face, false);
-						changed = true;
 					}
 				}
 			}
@@ -116,11 +114,7 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 			//check if there is a block above it can attach to, else destroy
 			if (!this.canAttachTo(above, BlockFace.BOTTOM)) {
 				this.onDestroy(block);
-				return;
 			}
-		}
-		if (changed) {
-			block.update();
 		}
 	}
 
@@ -211,7 +205,6 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 			}
 
 			this.setFaceAttached(block, face, true);
-			block.update();
 			return true;
 		}
 
@@ -229,7 +222,7 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 				return false;
 			}
 
-			block.setMaterial(VanillaMaterials.VINES).update();
+			block.setMaterial(VanillaMaterials.VINES);
 			return true;
 
 		default:
@@ -243,7 +236,6 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 
 			block.setMaterial(VanillaMaterials.VINES);
 			this.setFaceAttached(block, face, true);
-			block.update();
 			return true;
 		}
 	}

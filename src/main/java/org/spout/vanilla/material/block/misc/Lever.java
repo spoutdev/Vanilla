@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
+
 import java.util.ArrayList;
 
 import org.spout.api.Source;
@@ -37,7 +39,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
-
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
@@ -47,8 +48,6 @@ import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
-
 public class Lever extends AbstractAttachable implements Mineable, RedstoneSource {
 	public Lever(String name, int id) {
 		super(name, id);
@@ -57,7 +56,6 @@ public class Lever extends AbstractAttachable implements Mineable, RedstoneSourc
 
 	@Override
 	public void onDestroy(Block block, double dropChance) {
-		this.doRedstoneUpdates(block);
 		super.onDestroy(block, dropChance);
 	}
 
@@ -78,7 +76,6 @@ public class Lever extends AbstractAttachable implements Mineable, RedstoneSourc
 		} else {
 			playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_2);
 		}
-		this.doRedstoneUpdates(block);
 	}
 
 	public boolean isDown(Block block) {
@@ -112,6 +109,7 @@ public class Lever extends AbstractAttachable implements Mineable, RedstoneSourc
 		} else {
 			data = (short) (BlockFaces.NSEW.indexOf(attachedFace, 0) + 1);
 		}
+		System.out.println("Block attached: " + block.getPosition().toBlockString());
 		block.setData(data);
 	}
 
@@ -138,11 +136,6 @@ public class Lever extends AbstractAttachable implements Mineable, RedstoneSourc
 	@Override
 	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
 		return this.isDown(block) && this.getAttachedFace(block) == direction;
-	}
-
-	@Override
-	public void doRedstoneUpdates(Block block) {
-		block.setSource(this).update().translate(this.getAttachedFace(block)).update();
 	}
 
 	@Override

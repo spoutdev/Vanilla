@@ -50,10 +50,4 @@ public interface RedstoneSource extends Source {
 	 * @return True if this redstone source block provides power
 	 */
 	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode);
-
-	/**
-	 * Performs redstone updates on all receiving blocks
-	 * @param block of this material
-	 */
-	public void doRedstoneUpdates(Block block);
 }

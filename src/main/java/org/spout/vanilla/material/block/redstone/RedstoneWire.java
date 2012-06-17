@@ -34,7 +34,10 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-
+import org.spout.api.material.range.CubicEffectRange;
+import org.spout.api.material.range.EffectRange;
+import org.spout.api.material.range.ListEffectRange;
+import org.spout.api.material.range.PlusEffectRange;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -45,6 +48,13 @@ import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class RedstoneWire extends GroundAttachable implements Mineable, RedstoneSource, RedstoneTarget {
+	
+	private static final EffectRange physicsRange = new ListEffectRange(
+			new PlusEffectRange(2, false),
+			new CubicEffectRange(1));
+	
+	private static final EffectRange maximumPhysicsRange = new PlusEffectRange(15, true);
+	
 	public RedstoneWire(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
@@ -53,27 +63,6 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 	@Override
 	public boolean hasPhysics() {
 		return true;
-	}
-
-	private void doRedstoneUpdate(Block middle) {
-		Block block;
-		for (BlockFace face : BlockFaces.NESWBT) {
-			block = middle.translate(face);
-			if (block.getMaterial().equals(this)) {
-				VanillaMaterials.REDSTONE_WIRE.onUpdate(block);
-			} else {
-				block.update(false);
-			}
-		}
-	}
-
-	@Override
-	public void doRedstoneUpdates(Block block) {
-		block = block.setSource(this);
-		this.doRedstoneUpdate(block);
-		for (BlockFace face : BlockFaces.NESWB) {
-			this.doRedstoneUpdate(block.translate(face));
-		}
 	}
 
 	private void disableRedstone(Block middle, List<Block> wires) {
@@ -86,8 +75,6 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 					wires.add(block);
 					this.disableRedstone(block, wires);
 				}
-			} else {
-				block.update(false);
 			}
 		}
 	}
@@ -111,36 +98,14 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 			short receiving = this.getReceivingPower(block);
 			short current = this.getRedstonePower(block);
 			if (current == receiving) {
-				//do some updates for solid blocks around this block
-				Block neigh, subneigh;
-				BlockMaterial mat;
-				for (BlockFace face : BlockFaces.NESW) {
-					neigh = block.translate(face);
-					mat = neigh.getMaterial();
-					if (mat instanceof RedstoneSource || mat instanceof RedstoneTarget) {
-						continue;
-					}
-					neigh.update(false);
-					for (BlockFace face2 : BlockFaces.NESWBT) {
-						if (face != face2.getOpposite()) {
-							subneigh = neigh.translate(face2);
-							if (!(subneigh.getMaterial() instanceof RedstoneWire)) {
-								subneigh.update(false);
-							}
-						}
-					}
-				}
+				
 			} else if (receiving > current) {
 				//Power became more, perform simple updating
 				block.setMaterial(this, receiving);
-				this.doRedstoneUpdates(block);
 			} else {
 				//Power became less, disable all attached wires and recalculate
 				List<Block> wires = new ArrayList<Block>();
 				this.disableAllRedstone(block, wires);
-				for (Block wire : wires) {
-					this.onUpdate(wire);
-				}
 			}
 		}
 	}
@@ -292,5 +257,15 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return 1;
+	}
+	
+	@Override
+	public EffectRange getPhysicsRange(short data) {
+		return physicsRange;
+	}
+	
+	@Override
+	public EffectRange getMaximumPhysicsRange(short data) {
+		return maximumPhysicsRange;
 	}
 }

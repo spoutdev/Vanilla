@@ -55,19 +55,6 @@ public class PoweredRail extends RailBase implements RedstoneTarget {
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isPowered(block)) {
 				this.setPowered(block, powered);
-				block.update();
-			} else {
-				Block neigh;
-				for (BlockFace face : this.getState(block).getDirections()) {
-					neigh = block.translate(face);
-					if (neigh.getMaterial().equals(this)) {
-						if (this.isConnected(neigh, face)) {
-							if (this.isReceivingPower(neigh) != this.isPowered(neigh)) {
-								neigh.update();
-							}
-						}
-					}
-				}
 			}
 		}
 	}

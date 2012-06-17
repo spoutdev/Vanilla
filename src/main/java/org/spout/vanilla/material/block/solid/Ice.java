@@ -62,7 +62,7 @@ public class Ice extends Solid implements Mineable {
 			ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
 
 			if (held == null || !(held.getMaterial() instanceof Tool) || !EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-				block.setMaterial(VanillaMaterials.STATIONARY_WATER).update(true);
+				block.setMaterial(VanillaMaterials.STATIONARY_WATER);
 			}
 		}
 	}

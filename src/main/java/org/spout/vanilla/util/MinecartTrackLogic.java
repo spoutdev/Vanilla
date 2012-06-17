@@ -36,7 +36,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-
 import org.spout.vanilla.material.block.rail.Rail;
 import org.spout.vanilla.material.block.rail.RailBase;
 
@@ -277,16 +276,6 @@ public class MinecartTrackLogic implements Source {
 			this.connect(from, to);
 			from.connect();
 			to.connect();
-		}
-		this.refreshData();
-	}
-
-	private void refreshData() {
-		if (this.changed) {
-			this.block.update();
-		}
-		for (MinecartTrackLogic logic : this.neighbours) {
-			logic.refreshData();
 		}
 	}
 }

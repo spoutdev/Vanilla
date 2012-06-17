@@ -35,10 +35,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
-
+import org.spout.api.material.range.CuboidEffectRange;
+import org.spout.api.material.range.EffectRange;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Solid;
@@ -57,7 +56,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 	private static final short dataMask = 0x0003;
 	public static final short aliveMask = 0x0100;
 	public static final short heightMask = 0x0600;
-	private static final Vector3[] maxRange = new Vector3[]{new Vector3(4, 0, 4), new Vector3(4, 8, 4)};
+	private static final EffectRange dynamicRange = new CuboidEffectRange(-4, 0, -4, 4, 8, 4);
 	public final float BURN_TIME = 15.f;
 	private final Sapling sapling;
 
@@ -134,11 +133,6 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 	}
 
 	@Override
-	public Vector3[] maxRange() {
-		return maxRange;
-	}
-
-	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		int data = b.getData() & 0xFFFF;
 		if ((data & aliveMask) == 0) {
@@ -186,5 +180,10 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 		} else {		
 			b.setData(data & dataMask);
 		}
+	}
+
+	@Override
+	public EffectRange getDynamicRange() {
+		return dynamicRange;
 	}
 }

@@ -72,8 +72,8 @@ public abstract class DoorBlock extends GroundAttachable implements Mineable, Op
 	public void onDestroyBlock(Block block) {
 		Block top = getCorrectHalf(block, true);
 		Block bottom = getCorrectHalf(block, false);
-		top.setMaterial(VanillaMaterials.AIR).update();
-		bottom.setMaterial(VanillaMaterials.AIR).update();
+		top.setMaterial(VanillaMaterials.AIR);
+		bottom.setMaterial(VanillaMaterials.AIR);
 	}
 
 	@Override
@@ -223,8 +223,6 @@ public abstract class DoorBlock extends GroundAttachable implements Mineable, Op
 			Block right = block.translate(rotate(facing, 1));
 			boolean hingeLeft = isDoorBlock(right) || (!isDoorBlock(left) && !isHingeBlock(right) && isHingeBlock(left));
 			create(block, above, facing, hingeLeft, false);
-			block.update();
-			above.update();
 			return true;
 		}
 		return false;

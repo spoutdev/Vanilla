@@ -51,8 +51,8 @@ public class BedBlock extends VanillaBlockMaterial implements Mineable {
 	public void onDestroyBlock(Block block) {
 		Block head = getCorrectHalf(block, true);
 		Block foot = getCorrectHalf(block, false);
-		head.setMaterial(VanillaMaterials.AIR).update();
-		foot.setMaterial(VanillaMaterials.AIR).update();
+		head.setMaterial(VanillaMaterials.AIR);
+		foot.setMaterial(VanillaMaterials.AIR);
 	}
 
 	/**
@@ -130,8 +130,6 @@ public class BedBlock extends VanillaBlockMaterial implements Mineable {
 			Block head = block.translate(facing);
 			if (this.canPlace(head, data, face, false)) {
 				create(block, head, facing);
-				block.update();
-				head.update();
 			}
 		}
 		return false;

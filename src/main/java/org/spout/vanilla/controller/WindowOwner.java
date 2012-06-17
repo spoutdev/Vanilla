@@ -29,6 +29,7 @@ package org.spout.vanilla.controller;
 import java.util.Collection;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.window.Window;
 
 /**
  * Defines a controller that can open and close windows for players
@@ -51,6 +52,22 @@ public interface WindowOwner {
 	 * Closes all the windows players have for this controller
 	 */
 	public void closeAll();
+
+	/**
+	 * Removes a viewer from this controller<br>
+	 * Does not create close a Window, use close instead
+	 * @param player that viewed
+	 * @return window that the player viewed, ur null if not contained
+	 */
+	public Window removeViewer(VanillaPlayer player);
+
+	/**
+	 * Adds a new viewer to this controller<br>
+	 * Does not create a new Window, use open instead
+	 * @param player that views
+	 * @param window that the player views
+	 */
+	public void addViewer(VanillaPlayer player, Window window);
 
 	/**
 	 * Gets a collection of viewers currently using this controller

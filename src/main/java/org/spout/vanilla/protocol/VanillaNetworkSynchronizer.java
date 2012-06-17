@@ -410,6 +410,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		VanillaPlayer controller = (VanillaPlayer) c;
 		Window window = controller.getActiveWindow();
 
+		if (window.getInventory() != inventory) {
+			return;
+		}
+
 		slot = window.getSlotIndexMap().getMinecraftSlot(slot);
 		if (slot == -1) {
 			return;
@@ -432,6 +436,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 
 		Window window = ((VanillaPlayer) c).getActiveWindow();
+
+		if (window.getInventory() != inventory) {
+			return;
+		}
 
 		session.send(new SetWindowSlotsMessage((byte) window.getInstanceId(), window.getSlotIndexMap().getMinecraftItems(slots)));
 		queuedInventoryUpdates.clear();

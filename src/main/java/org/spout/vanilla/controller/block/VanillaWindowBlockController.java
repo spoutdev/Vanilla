@@ -49,7 +49,7 @@ public abstract class VanillaWindowBlockController extends VanillaBlockControlle
 	public boolean open(VanillaPlayer player) {
 		if (!this.viewers.containsKey(player)) {
 			Window w = this.createWindow(player);
-			this.viewers.put(player, w);
+			this.addViewer(player, w);
 			player.setWindow(w);
 			return true;
 		} else {
@@ -59,7 +59,7 @@ public abstract class VanillaWindowBlockController extends VanillaBlockControlle
 
 	@Override
 	public boolean close(VanillaPlayer player) {
-		Window w = this.viewers.remove(player);
+		Window w = this.removeViewer(player);
 		if (w != null) {
 			if (player.getActiveWindow() == w) {
 				player.closeWindow();
@@ -75,6 +75,16 @@ public abstract class VanillaWindowBlockController extends VanillaBlockControlle
 		for (VanillaPlayer player : this.getViewerArray()) {
 			this.close(player);
 		}
+	}
+
+	@Override
+	public Window removeViewer(VanillaPlayer player) {
+		return this.viewers.remove(player);
+	}
+
+	@Override
+	public void addViewer(VanillaPlayer player, Window window) {
+		this.viewers.put(player, window);
 	}
 
 	@Override

@@ -87,8 +87,14 @@ public class SlotIndexMap {
 	 */
 	public ItemStack[] getMinecraftItems(ItemStack[] spoutItems) {
 		ItemStack[] rval = spoutItems.clone();
+		int index;
 		for (int i = 0; i < rval.length; i++) {
-			rval[getMinecraftSlot(i)] = spoutItems[i];
+			index = getMinecraftSlot(i);
+			if (index == -1) {
+				System.out.println("Failed to find index for spout item index: " + i);
+				continue;
+			}
+			rval[index] = spoutItems[i];
 		}
 		return rval;
 	}

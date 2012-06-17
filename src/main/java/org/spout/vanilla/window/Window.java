@@ -52,18 +52,14 @@ public class Window implements InventoryViewer {
 	protected ItemStack itemOnCursor;
 	protected SlotIndexMap slotIndexMap = DEFAULT_SLOTS;
 	protected boolean isOpen = false;
-	protected WindowOwner windowOwner;
+	protected WindowOwner[] windowOwners;
 
-	public Window(int id, String title, VanillaPlayer owner) {
-		this(id, title, owner, null);
-	}
-
-	public Window(int id, String title, VanillaPlayer owner, WindowOwner windowOwner) {
+	public Window(int id, String title, VanillaPlayer owner, WindowOwner... windowOwners) {
 		this.id = id;
 		this.title = title;
 		this.owner = owner;
 		this.instanceId = InventoryUtil.nextWindowId();
-		this.windowOwner = windowOwner;
+		this.windowOwners = windowOwners;
 	}
 
 	public void setInventory(InventoryBase... inventories) {
@@ -130,8 +126,8 @@ public class Window implements InventoryViewer {
 		sendPacket(this.getPlayer(), new OpenWindowMessage(this.getInstanceId(), this.getId(), this.getTitle(), getInventorySize()));
 		this.isOpen = true;
 		this.inventory.notifyViewers();
-		if (this.windowOwner != null) {
-			this.windowOwner.open(this.getOwner());
+		for (WindowOwner owner : this.windowOwners) {
+			owner.addViewer(this.getOwner(), this);
 		}
 		this.onOpened();
 	}
@@ -149,8 +145,8 @@ public class Window implements InventoryViewer {
 		}
 		this.inventory.removeViewer(this);
 		this.inventory.stopWatching();
-		if (this.windowOwner != null) {
-			this.windowOwner.close(this.getOwner());
+		for (WindowOwner owner : this.windowOwners) {
+			owner.removeViewer(this.getOwner());
 		}
 		this.onClosed();
 	}

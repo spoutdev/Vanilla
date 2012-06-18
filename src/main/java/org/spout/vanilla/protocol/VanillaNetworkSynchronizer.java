@@ -40,6 +40,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFullState;
 import org.spout.api.math.Quaternion;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
@@ -57,6 +58,7 @@ import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.WorldType;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
@@ -145,6 +147,19 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	protected void initChunk(Point p) {
 	}
+	
+	private static BlockMaterial[][] getColumnTopmostMaterials(Point p) {
+		BlockMaterial[][] materials = new BlockMaterial[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
+
+		World w = p.getWorld();
+
+		for (int xx = 0; xx < Chunk.BLOCKS.SIZE; xx++) {
+			for (int zz = 0; zz < Chunk.BLOCKS.SIZE; zz++) {
+				materials[xx][zz] = w.getTopmostBlock(p.getBlockX() + xx, p.getBlockZ() + zz, true);
+			}
+		}
+		return materials;
+	}
 
 	private static int[][] getColumnHeights(Point p) {
 		int[][] heights = new int[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
@@ -159,7 +174,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		return heights;
 	}
 
-	private static byte[] getChunkHeightMap(int[][] heights, int chunkY) {
+	private static byte[] getChunkHeightMap(int[][] heights, BlockMaterial[][] materials, int chunkY) {
 		byte[] packetChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 		int baseY = chunkY << Chunk.BLOCKS.BITS;
 
@@ -173,7 +188,16 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				int yy;
 				// Set blocks below height to the solid block
 				for (yy = 0; yy < Chunk.BLOCKS.SIZE && yy <= threshold; yy++) {
-					packetChunkData[dataOffset] = SOLID_BLOCK_ID;
+					if (yy == threshold) {
+						BlockMaterial bm = materials[xx][zz];
+						if (bm == null) {
+							bm = VanillaMaterials.STONE;
+						}
+						int converted = getMinecraftId(bm.getId());
+						packetChunkData[dataOffset] = (byte) converted;
+					} else {
+						packetChunkData[dataOffset] = SOLID_BLOCK_ID;
+					}
 					dataOffset += Chunk.BLOCKS.AREA;
 				}
 				// Set sky light of blocks above height to 15
@@ -204,11 +228,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (column == null) {
 			Point p = c.getBase();
 			int[][] heights = getColumnHeights(p);
+			BlockMaterial[][] materials = getColumnTopmostMaterials(p);
 
 			byte[][] packetChunkData = new byte[16][];
 
 			for (int cube = 0; cube < 16; cube++) {
-				packetChunkData[cube] = getChunkHeightMap(heights, cube);
+				packetChunkData[cube] = getChunkHeightMap(heights, materials, cube);
 			}
 
 			column = new TIntHashSet();

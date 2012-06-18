@@ -115,6 +115,7 @@ public class AdministrationCommands {
 			throw new CommandException("Point not found!");
 		}
 
+		point.getWorld().getChunkFromBlock(point);
 		player.getEntity().setPosition(point);
 		player.getNetworkSynchronizer().setPositionDirty();
 	}

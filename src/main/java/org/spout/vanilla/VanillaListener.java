@@ -75,7 +75,7 @@ public class VanillaListener implements Listener {
 		// Set their mode
 		Player player = event.getPlayer();
 		Entity playerEntity = player.getEntity();
-		player.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
+		player.getSession().setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
 		VanillaPlayer vanillaPlayer = new VanillaPlayer(player, playerEntity.getWorld().getDataMap().get(Data.GAMEMODE));
 
 		playerEntity.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);

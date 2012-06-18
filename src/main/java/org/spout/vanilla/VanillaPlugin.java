@@ -37,7 +37,6 @@ import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.controller.basic.PointObserver;
 import org.spout.api.entity.component.controller.type.ControllerType;
 import org.spout.api.exception.ConfigurationException;
@@ -45,10 +44,12 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
+import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.protocol.Protocol;
+import org.spout.api.util.OutwardIterator;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -198,26 +199,24 @@ public class VanillaPlugin extends CommonPlugin {
 
 		final int radius = VanillaConfiguration.SPAWN_RADIUS.getInt();
 		final int diameter = (radius << 1) + 1;
-		final int total = diameter * diameter * diameter;
+		final int total = (diameter * diameter * diameter) / 6;
 		final int progressStep = total / 10;
+		final OutwardIterator oi = new OutwardIterator();
 		for (World world : worlds) {
 			int progress = 0;
 			Point point = world.getSpawnPoint().getPosition();
 			int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
 			int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
 			int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
-			for (int dx = -radius; dx <= radius; dx++) {
-				for (int dy = -radius; dy <= radius; dy++) {
-					for (int dz = -radius; dz <= radius; dz++) {
-						progress++;
-						if (progress % progressStep == 0) {
-							Spout.getLogger().info("Loading [" + world.getName() + "], " + (progress / progressStep) * 10 + "% Complete");
-						}
-						world.getChunk(cx + dx, cy + dy, cz + dz);
-					}
+			oi.reset(cx, cy, cz, radius);
+			while (oi.hasNext()) {
+				IntVector3 v = oi.next();
+				progress++;
+				if (progress % progressStep == 0) {
+					Spout.getLogger().info("Loading [" + world.getName() + "], " + (progress / progressStep) * 10 + "% Complete");
 				}
+				world.getChunk(v.getX(), v.getY(), v.getZ());
 			}
-
 			//TODO Remove sky setting when Weather and Time are Region tasks.
 			if (world.getGenerator() instanceof NormalGenerator) {
 				NormalSky sky = new NormalSky();

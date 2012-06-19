@@ -64,7 +64,6 @@ public class Window implements InventoryViewer {
 
 	public void setInventory(InventoryBase... inventories) {
 		if (this.inventory != null) {
-			this.inventory.stopWatching();
 			this.inventory.removeViewer(this);
 		}
 		this.inventory = new InventoryBundle(inventories);
@@ -125,7 +124,6 @@ public class Window implements InventoryViewer {
 		sendPacket(this.getPlayer(), new OpenWindowMessage(this.getInstanceId(), this.getId(), this.getTitle(), getInventorySize()));
 		this.isOpen = true;
 		this.inventory.addViewer(this);
-		this.inventory.startWatching();
 		this.inventory.notifyViewers();
 		for (WindowOwner owner : this.windowOwners) {
 			owner.addViewer(this.getOwner(), this);
@@ -146,7 +144,6 @@ public class Window implements InventoryViewer {
 			sendPacket(this.getPlayer(), new CloseWindowMessage(this.getInstanceId()));
 		}
 		this.inventory.removeViewer(this);
-		this.inventory.stopWatching();
 		for (WindowOwner owner : this.windowOwners) {
 			owner.removeViewer(this.getOwner());
 		}

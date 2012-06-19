@@ -41,11 +41,9 @@ public class PlayerInventory extends InventoryBundle implements VanillaInventory
 	private final PlayerArmorInventory armor;
 
 	public PlayerInventory() {
-		super(new Inventory(36), new PlayerCraftingGrid(), new PlayerArmorInventory());
-		this.items = (Inventory) this.getInventories()[0];
-		this.craftingGrid = (PlayerCraftingGrid) this.getInventories()[1];
-		this.armor = (PlayerArmorInventory) this.getInventories()[2];
-		this.startWatching();
+		this.items = this.addInventory(new Inventory(36));
+		this.craftingGrid = this.addInventory(new PlayerCraftingGrid());
+		this.armor = this.addInventory(new PlayerArmorInventory());
 	}
 
 	/**

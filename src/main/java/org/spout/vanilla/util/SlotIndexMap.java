@@ -46,7 +46,13 @@ public class SlotIndexMap {
 
 	public SlotIndexMap(int[] toMC) {
 		this.toMC = toMC;
-		this.toSpout = new int[toMC.length];
+		int max = 0;
+		for (int value : toMC) {
+			if (value > max) {
+				max = value;
+			}
+		}
+		this.toSpout = new int[max + 1];
 		for (int i = 0; i < this.toMC.length; i++) {
 			this.toSpout[this.toMC[i]] = i;
 		}

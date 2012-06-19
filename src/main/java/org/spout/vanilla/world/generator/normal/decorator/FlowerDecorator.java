@@ -54,13 +54,16 @@ public class FlowerDecorator implements Decorator {
 		int howMany = random.nextInt(15);
 		Flower flower = getRandomFlower(random);
 		for (int i = 0; i < howMany; i++) {
-			int dx = random.nextInt(16);
-			int dz = random.nextInt(16);
+			int dx = random.nextInt(Chunk.BLOCKS.SIZE);
+			int dz = random.nextInt(Chunk.BLOCKS.SIZE);
 			int dy = getHighestWorkableBlock(chunk, dx, dz);
 			if (dy == -1) {
 				continue;
 			}
-			Block block = chunk.getBlock(dx, dy, dz);
+			Block block = chunk.getBlock(dx, dy, dz).translate(BlockFace.TOP);
+			if (flower.canPlace(block, (short) 0, BlockFace.TOP, false)) {
+				flower.onPlacement(block, (short) 0, BlockFace.TOP, false);
+			}
 			if (flower.canAttachTo(block, BlockFace.TOP)) {
 				block.translate(BlockFace.TOP).setMaterial(flower);
 			}

@@ -54,8 +54,8 @@ public class WellDecorator implements Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		final int x = random.nextInt(16) + chunk.getBlockX();
-		final int z = random.nextInt(16) + chunk.getBlockZ();
+		final int x = chunk.getBlockX(random);
+		final int z = chunk.getBlockZ(random);
 		final int y = getHighestWorkableBlock(world, x, z);
 		if (y == -1) {
 			return;

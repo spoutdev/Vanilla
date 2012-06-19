@@ -58,7 +58,7 @@ public class CaveDecorator implements Decorator {
 		for (int dx = x; dx < x + 16; dx++) {
 			for (int dz = z; dz < z + 16; dz++) {
 				for (int dy = y; dy < y + 16; dy++) {
-					if (MathHelper.length(dx - pt.getX(), dy - pt.getY(), dz - pt.getZ()) > 6) {
+					if (MathHelper.lengthSquared(dx - pt.getX(), dy - pt.getY(), dz - pt.getZ()) > 36) {
 						continue;
 					}
 					if (noise.GetValue(dx / 5.0 + 0.005, dy / 5.0 + 0.005, dz / 5.0 + 0.005) > 0 && chunk.getBlockMaterial(dx, dy, dz) == VanillaMaterials.STONE) {

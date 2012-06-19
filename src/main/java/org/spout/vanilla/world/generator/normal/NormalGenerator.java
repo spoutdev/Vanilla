@@ -92,8 +92,8 @@ public class NormalGenerator extends BiomeGenerator implements VanillaGenerator 
 		}
 
 		for (byte attempts = 0; attempts < 10; attempts++) {
-			final int x = random.nextBoolean() ? -random.nextInt(16) : random.nextInt(16);
-			final int z = random.nextBoolean() ? -random.nextInt(16) : random.nextInt(16);
+			final int x = random.nextInt(31) - 15;
+			final int z = random.nextInt(31) - 15;
 			final int y = getHighestSolidBlock(world, x + shift, z);
 			if (y != -1) {
 				return new Point(world, x + shift, y + 0.5f, z);

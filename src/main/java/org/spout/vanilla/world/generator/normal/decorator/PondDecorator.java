@@ -52,8 +52,8 @@ public class PondDecorator implements Decorator {
 		}
 		final World world = chunk.getWorld();
 		for (byte i = 0; i < 1; i++) {
-			final int worldX = chunk.getBlockX() + random.nextInt(16);
-			final int worldZ = chunk.getBlockZ() + random.nextInt(16);
+			final int worldX = chunk.getBlockX(random);
+			final int worldZ = chunk.getBlockZ(random);
 			final int worldY = getHighestWorkableBlock(world, worldX, worldZ) - random.nextInt(4) - 1;
 			final PondObject pond = new PondObject(random, getPondType(random));
 			if (pond.canPlaceObject(world, worldX, worldY, worldZ)) {

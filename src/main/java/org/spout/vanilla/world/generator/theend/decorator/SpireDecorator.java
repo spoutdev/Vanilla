@@ -48,8 +48,8 @@ public class SpireDecorator implements Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		int x = chunk.getX() * 16 + random.nextInt(16);
-		int z = chunk.getZ() * 16 + random.nextInt(16);
+		int x = chunk.getBlockX(random);
+		int z = chunk.getBlockZ(random);
 		int y = getHighestWorkableBlock(world, x, z);
 		if (y == -1) {
 			return;

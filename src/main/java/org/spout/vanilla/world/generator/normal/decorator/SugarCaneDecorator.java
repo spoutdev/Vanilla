@@ -32,6 +32,7 @@ import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -57,23 +58,21 @@ public class SugarCaneDecorator implements Decorator {
 		if (chunk.getY() < 4) {
 			return;
 		}
-		int x = random.nextInt(16) + 8;
-		int z = random.nextInt(16) + 8;
+		int x = chunk.getBlockX(random) + 8;
+		int z = chunk.getBlockZ(random) + 8;
 		int y = getHighestWorkableBlock(chunk, x, z);
 		if (y == -1) {
 			return;
 		}
 		final World world = chunk.getWorld();
-		x += chunk.getBlockX();
 		y += chunk.getBlockY();
-		z += chunk.getBlockZ();
 		for (int i = 0; i < TRIES; i++) {
-			generateSugarCaneStack(world, random, x + (random.nextBoolean() ? random.nextInt(RAND_X) : -random.nextInt(RAND_X)), y, z + (random.nextBoolean() ? random.nextInt(RAND_Z) : -random.nextInt(RAND_Z)));
+			generateSugarCaneStack(world, random, x + random.nextInt(RAND_X * 2 - 1) - (RAND_X - 1), y, z + random.nextInt(RAND_Z * 2 - 1) - (RAND_Z - 1));
 		}
 	}
 
 	private void generateSugarCaneStack(World world, Random random, int x, int y, int z) {
-		if (!canPlaceSugarCane(world, x, y, z)) {
+		if (!VanillaMaterials.SUGAR_CANE_BLOCK.canPlace(world.getBlock(x, y, z), (short) 0, BlockFace.TOP, false)) {
 			return;
 		}
 		final int height = y + BASE_HEIGHT + random.nextInt(RAND_HEIGHT);
@@ -83,11 +82,6 @@ public class SugarCaneDecorator implements Decorator {
 			}
 			world.getBlock(x, y, z).setMaterial(VanillaMaterials.SUGAR_CANE_BLOCK);
 		}
-	}
-
-	private boolean canPlaceSugarCane(World world, int x, int y, int z) {
-		BlockMaterial bellow = world.getBlockMaterial(x, y - 1, z);
-		return (bellow == VanillaMaterials.DIRT || bellow == VanillaMaterials.GRASS || bellow == VanillaMaterials.SAND || bellow == VanillaMaterials.SUGAR_CANE_BLOCK) && world.getBlockMaterial(x, y, z) == VanillaMaterials.AIR && (world.getBlockMaterial(x - 1, y - 1, z) == VanillaMaterials.STATIONARY_WATER || world.getBlockMaterial(x + 1, y - 1, z) == VanillaMaterials.STATIONARY_WATER || world.getBlockMaterial(x, y - 1, z - 1) == VanillaMaterials.STATIONARY_WATER || world.getBlockMaterial(x, y - 1, z + 1) == VanillaMaterials.STATIONARY_WATER);
 	}
 
 	private int getHighestWorkableBlock(Chunk c, int x, int z) {

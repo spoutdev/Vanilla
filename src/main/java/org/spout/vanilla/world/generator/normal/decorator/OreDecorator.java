@@ -56,14 +56,12 @@ public class OreDecorator implements Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		final int worldX = chunk.getBlockX();
-		final int worldZ = chunk.getBlockZ();
 		for (OreObject object : objects) {
 			object.setRandom(random);
 			for (int i = 0; i < object.getCount(); i++) {
-				final int x = worldX + random.nextInt(16);
+				final int x = chunk.getBlockX(random);
 				final int y = random.nextInt(object.getMaxHeight());
-				final int z = worldZ + random.nextInt(16);
+				final int z = chunk.getBlockZ(random);
 				object.placeObject(world, x, y, z);
 			}
 		}

@@ -66,8 +66,8 @@ public class MushroomDecorator implements Decorator {
 		// first up, normal mushrooms
 		final byte mushroomAmount = getNumberOfMushrooms(random, biome);
 		for (byte i = 0; i < mushroomAmount; i++) {
-			final int worldX = chunk.getBlockX() + random.nextInt(16);
-			final int worldZ = chunk.getBlockZ() + random.nextInt(16);
+			final int worldX = chunk.getBlockX(random);
+			final int worldZ = chunk.getBlockZ(random);
 			final int worldY = getHighestWorkableBlock(world, worldX, worldZ);
 			final BlockMaterial material = world.getBlockMaterial(worldX, worldY - 1, worldZ);
 			if (material == VanillaMaterials.GRASS || material == VanillaMaterials.DIRT || material == VanillaMaterials.MYCELIUM) {
@@ -77,8 +77,8 @@ public class MushroomDecorator implements Decorator {
 		// now we handle the huge ones
 		final byte hugeMushroomAmount = getNumberOfHugeMushrooms(random, biome);
 		for (byte i = 0; i < hugeMushroomAmount; i++) {
-			final int worldX = chunk.getBlockX() + random.nextInt(16);
-			final int worldZ = chunk.getBlockZ() + random.nextInt(16);
+			final int worldX = chunk.getBlockX(random);
+			final int worldZ = chunk.getBlockZ(random);
 			final int worldY = getHighestWorkableBlock(world, worldX, worldZ);
 			final HugeMushroomObject hugeMushroom = new HugeMushroomObject(random, getHugeMushroom(random));
 			if (hugeMushroom.canPlaceObject(world, worldX, worldY, worldZ)) {

@@ -46,8 +46,8 @@ public class CactusDecorator implements Decorator {
 		if (genInChunk <= 20) {
 			return;
 		}
-		int px = chunk.getBlockX() + random.nextInt(16);
-		int pz = chunk.getBlockZ() + random.nextInt(16);
+		int px = chunk.getBlockX(random);
+		int pz = chunk.getBlockZ(random);
 		int py = getHighestWorkableBlock(chunk.getWorld(), px, pz);
 		if (py == -1) {
 			return;

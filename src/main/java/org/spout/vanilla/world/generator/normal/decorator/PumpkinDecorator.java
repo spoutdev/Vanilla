@@ -50,9 +50,7 @@ public class PumpkinDecorator implements Decorator {
 		if (chunk.getY() < 4) {
 			return;
 		}
-		int x = random.nextInt(16) + 8;
-		int z = random.nextInt(16) + 8;
-		generatePumpkinPatch(chunk.getWorld(), random, chunk.getBlockX() + x, chunk.getBlockZ() + z);
+		generatePumpkinPatch(chunk.getWorld(), random, chunk.getBlockX(random) + 8, chunk.getBlockZ(random) + 8);
 	}
 
 	private void generatePumpkinPatch(World world, Random random, int x, int z) {

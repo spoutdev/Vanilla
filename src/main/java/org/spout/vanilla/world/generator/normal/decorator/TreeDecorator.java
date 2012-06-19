@@ -49,8 +49,6 @@ public class TreeDecorator implements Decorator {
 		}
 		final Biome biome = chunk.getBiomeType(7, 7, 7);
 		final World world = chunk.getWorld();
-		final int blockX = chunk.getBlockX();
-		final int blockZ = chunk.getBlockZ();
 		final byte amount = getNumberOfTrees(biome);
 		for (byte i = 0; i < amount; i++) {
 			final TreeObject tree = getTree(random, biome);
@@ -58,8 +56,8 @@ public class TreeDecorator implements Decorator {
 				continue;
 			}
 
-			final int worldX = blockX + random.nextInt(16);
-			final int worldZ = blockZ + random.nextInt(16);
+			final int worldX = chunk.getBlockX(random);
+			final int worldZ = chunk.getBlockZ(random);
 			final int worldY = getHighestWorkableBlock(world, worldX, worldZ);
 			if (!tree.canPlaceObject(world, worldX, worldY, worldZ)) {
 				continue;

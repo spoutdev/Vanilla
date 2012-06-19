@@ -39,6 +39,7 @@ import java.net.URLEncoder;
 import org.spout.api.Spout;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
 
 public class LoginAuthThread implements Runnable {
@@ -59,6 +60,12 @@ public class LoginAuthThread implements Runnable {
 	}
 
 	public void run() {
+		
+		if (!VanillaConfiguration.SERVER_ONLINE_MODE.getBoolean()) {
+			acceptLogin();
+			return;
+		}
+		
 		long start = System.currentTimeMillis();
 		String sessionId = session.getDataMap().get(VanillaProtocol.SESSION_ID);
 		String encodedUser;
@@ -110,7 +117,7 @@ public class LoginAuthThread implements Runnable {
 			in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
 			String reply = in.readLine();
 			if (reply != null && reply.equals(authString)) {
-				Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable);
+				acceptLogin();
 			} else {
 				failed("Auth server refused authentication");
 			}
@@ -138,6 +145,10 @@ public class LoginAuthThread implements Runnable {
 
 	private void failed(String message) {
 		session.disconnect(message);
+	}
+	
+	private void acceptLogin() {
+		Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable);
 	}
 
 }

@@ -41,13 +41,17 @@ import org.spout.vanilla.world.generator.normal.biome.IcyBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 
-public class SmoothPopulator2 implements Populator {
+public class SmoothPopulator2 extends Populator {
 	private static final byte CHUNK_SIZE = 16;
 	private static final byte SMOOTH_SIZE = 4;
 	private static final byte TOTAL_SIZE;
 
 	static {
 		TOTAL_SIZE = CHUNK_SIZE + SMOOTH_SIZE * 2;
+	}
+	
+	public SmoothPopulator2() {
+		super(true);
 	}
 
 	@Override

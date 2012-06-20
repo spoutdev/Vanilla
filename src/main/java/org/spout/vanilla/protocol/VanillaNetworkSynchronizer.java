@@ -90,6 +90,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private final TIntObjectHashMap<Message> queuedInventoryUpdates = new TIntObjectHashMap<Message>();
 	private boolean first = true;
 	private long lastKeepAlive = System.currentTimeMillis();
+	private TIntPairObjectHashMap<TIntHashSet> initializedChunks = new TIntPairObjectHashMap<TIntHashSet>();
 	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();
 
 	static {
@@ -129,11 +130,16 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 
-		TIntHashSet column = activeChunks.get(x, z);
+		TIntHashSet column = initializedChunks.get(x, z);
+		TIntHashSet activeColumn = activeChunks.get(x, z);
 		if (column != null) {
 			column.remove(y);
+			if (activeColumn != null) {
+				activeColumn.remove(y);
+			}
 			if (column.isEmpty()) {
 				activeChunks.remove(x, z);
+				initializedChunks.remove(x, z);
 				LoadChunkMessage unLoadChunk = new LoadChunkMessage(x, z, false);
 				owner.getSession().send(unLoadChunk);
 			}/* else {
@@ -156,35 +162,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 
-		TIntHashSet column = activeChunks.get(x, z);
+		TIntHashSet column = initializedChunks.get(x, z);
 		if (column == null) {
-			int[][] heights = getColumnHeights(p);
-			BlockMaterial[][] materials = getColumnTopmostMaterials(p);
-
-			byte[][] packetChunkData = new byte[16][];
-
-			for (int cube = 0; cube < 16; cube++) {
-				packetChunkData[cube] = getChunkHeightMap(heights, materials, cube);
-			}
-
 			column = new TIntHashSet();
-			activeChunks.put(x, z, column);
-			LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
-			owner.getSession().send(loadChunk);
-
-			Chunk chunk = p.getWorld().getChunkFromBlock(p);
-			byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
-			for (int dx = x; dx < x + Chunk.BLOCKS.SIZE; ++dx) {
-				for (int dz = z; dz < z + Chunk.BLOCKS.SIZE; ++dz) {
-					Biome biome = chunk.getBiomeType(dx & Chunk.BLOCKS.MASK, 0, dz & Chunk.BLOCKS.MASK);
-					if (biome instanceof VanillaBiome) {
-						biomeData[(dz & Chunk.BLOCKS.MASK) << 4 | (dx & Chunk.BLOCKS.MASK)] = (byte) ((VanillaBiome) biome).getBiomeId();
-					}
-				}
-			}
-
-			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, new boolean[16], 0, packetChunkData, biomeData);
-			owner.getSession().send(CCMsg);
+			initializedChunks.put(x, z, column);
+			LoadChunkMessage LCMsg = new LoadChunkMessage(x, z, true);
+			owner.getSession().send(LCMsg);
 		}
 		column.add(y);
 		
@@ -265,6 +248,39 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (y < 0 || y >= c.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
 			return;
 		}
+		
+		TIntHashSet column = activeChunks.get(x, z);
+		if (column == null) {
+			Point p = c.getBase();
+			int[][] heights = getColumnHeights(p);
+			BlockMaterial[][] materials = getColumnTopmostMaterials(p);
+
+			byte[][] packetChunkData = new byte[16][];
+
+			for (int cube = 0; cube < 16; cube++) {
+				packetChunkData[cube] = getChunkHeightMap(heights, materials, cube);
+			}
+
+			column = new TIntHashSet();
+			activeChunks.put(x, z, column);
+			LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
+			owner.getSession().send(loadChunk);
+
+			Chunk chunk = p.getWorld().getChunkFromBlock(p);
+			byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
+			for (int dx = x; dx < x + Chunk.BLOCKS.SIZE; ++dx) {
+				for (int dz = z; dz < z + Chunk.BLOCKS.SIZE; ++dz) {
+					Biome biome = chunk.getBiomeType(dx & Chunk.BLOCKS.MASK, 0, dz & Chunk.BLOCKS.MASK);
+					if (biome instanceof VanillaBiome) {
+						biomeData[(dz & Chunk.BLOCKS.MASK) << 4 | (dx & Chunk.BLOCKS.MASK)] = (byte) ((VanillaBiome) biome).getBiomeId();
+					}
+				}
+			}
+
+			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, new boolean[16], 0, packetChunkData, biomeData);
+			owner.getSession().send(CCMsg);
+		}
+		column.add(y);
 		
 		ChunkSnapshot snapshot = c.getSnapshot(false);
 		short[] rawBlockIdArray = snapshot.getBlockIds();

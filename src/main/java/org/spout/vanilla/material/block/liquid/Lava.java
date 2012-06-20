@@ -102,7 +102,7 @@ public class Lava extends Liquid {
 			if (level > 3) {
 				level = 3;
 			}
-			block.setBlockDataField(0x7, (3 - level) << 1);
+			block.setDataField(0x7, (3 - level) << 1);
 		}
 	}
 

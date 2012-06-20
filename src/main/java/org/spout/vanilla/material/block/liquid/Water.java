@@ -68,7 +68,7 @@ public class Water extends Liquid {
 			if (level > 7) {
 				level = 7;
 			}
-			block.setBlockDataField(0x7, 7 - level);
+			block.setDataField(0x7, 7 - level);
 		}
 	}
 

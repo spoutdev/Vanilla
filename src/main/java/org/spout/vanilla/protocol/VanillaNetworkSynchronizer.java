@@ -114,7 +114,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	public VanillaNetworkSynchronizer(Player player, Entity entity) {
-		super(player, player.getSession(), entity);
+		super(player, player.getSession(), entity, 3);
 		registerProtocolEvents(this);
 		Point p = player.getEntity().getPosition();
 		p.getWorld().getChunkFromBlock(p);

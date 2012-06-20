@@ -142,7 +142,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 
 	@Override
 	public void setAttachedFace(Block block, BlockFace attachedFace) {
-		block.clearBlockDataBits((short) (~dataMask));
+		block.clearDataBits((short) (~dataMask));
 	}
 
 	@Override
@@ -160,7 +160,7 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 		short oldData = b.getData();
 		b.setMaterial(Log.DEFAULT);
 		b.setData(oldData & dataMask);
-		b.setBlockDataBits(Log.aliveMask);
+		b.setDataBits(Log.aliveMask);
 	}
 
 	@Override

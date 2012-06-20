@@ -31,7 +31,6 @@ import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.protocol.Protocol;
 
 public class VanillaProtocol extends Protocol {
-
 	public final static DefaultedKey<String> SESSION_ID = new DefaultedKeyImpl<String>("sessionid", "0000000000000000");
 	public final static DefaultedKey<String> HANDSHAKE_USERNAME = new DefaultedKeyImpl<String>("handshake_username", "");
 	public final static DefaultedKey<Long> LOGIN_TIME = new DefaultedKeyImpl<Long>("handshake_time", -1L);

@@ -36,7 +36,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public class DesertBiome extends NormalBiome {
-
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {

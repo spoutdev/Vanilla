@@ -37,7 +37,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 public class VanillaPlayerUtil {
 	/**
 	 * Checks if the source is an entity with a vanilla player controller in survival mode
-	 * @param entity to check
+	 * @param source to check
 	 * @return True if vanilla survival player entity
 	 */
 	public static boolean isSurvival(Source source) {
@@ -51,7 +51,7 @@ public class VanillaPlayerUtil {
 
 	/**
 	 * Checks if the source is an entity with a vanilla player controller in creative mode
-	 * @param entity to check
+	 * @param source to check
 	 * @return True if vanilla creative player entity
 	 */
 	public static boolean isCreative(Source source) {
@@ -66,7 +66,7 @@ public class VanillaPlayerUtil {
 	/**
 	 * Tries to find the facing direction by inspecting the source<br>
 	 * If no facing can be found, NORTH is returned
-	 * @param block to get it of
+	 * @param source to get it of
 	 * @return the face
 	 */
 	public static BlockFace getFacing(Source source) {

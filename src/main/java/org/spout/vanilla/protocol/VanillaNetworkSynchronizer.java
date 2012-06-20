@@ -153,7 +153,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	protected void initChunk(Point p) {
-		
+
 		int x = (int) p.getChunkX();
 		int y = (int) p.getChunkY();// + SEALEVEL_CHUNK;
 		int z = (int) p.getChunkZ();
@@ -172,7 +172,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		column.add(y);
 		
 	}
-	
+
 	private static BlockMaterial[][] getColumnTopmostMaterials(Point p) {
 		BlockMaterial[][] materials = new BlockMaterial[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
 
@@ -455,6 +455,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (!(c instanceof VanillaPlayer)) {
 			return;
 		}
+
 		VanillaPlayer controller = (VanillaPlayer) c;
 		Window window = controller.getActiveWindow();
 

@@ -27,13 +27,11 @@
 package org.spout.vanilla.controller.living.creature.hostile;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.map.DefaultedKeyImpl;
 
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;

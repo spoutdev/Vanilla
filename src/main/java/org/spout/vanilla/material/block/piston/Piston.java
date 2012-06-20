@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.piston;
 
-import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockAction;
-
 import java.util.ArrayList;
 
 import org.spout.api.entity.Entity;
@@ -40,6 +38,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.PlusEffectRange;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
+
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -51,11 +50,12 @@ import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
+import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockAction;
+
 public class Piston extends VanillaBlockMaterial implements Directional, Mineable, RedstoneTarget {
 	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);
 	public static final int maxLength = 13;
 	public static final EffectRange physicsRange = new PlusEffectRange(maxLength, true);
-	
 	private final boolean sticky;
 
 	public Piston(String name, int id, boolean sticky) {
@@ -221,9 +221,9 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 		}
 		return -1; //too long
 	}
-	
+
 	public EffectRange getUpdateRange() {
-		return physicsRange; 
+		return physicsRange;
 	}
 
 	/**

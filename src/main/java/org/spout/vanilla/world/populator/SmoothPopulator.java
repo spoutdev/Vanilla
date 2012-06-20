@@ -228,7 +228,6 @@ public class SmoothPopulator implements Populator {
 			if (highestBlockY != -1) {
 				fixIceAndSnow(world, x, highestBlockY, z);
 			}
-
 		} else { // shift up
 			// get the end y
 			final byte endY = getLowestNonBedrockBlock(world, x, z);

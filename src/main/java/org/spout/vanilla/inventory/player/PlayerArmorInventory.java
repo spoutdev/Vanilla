@@ -31,6 +31,9 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.inventory.VanillaInventory;
 
+/**
+* Represents the four armor slots on a {@link PlayerInventory}.
+*/
 public class PlayerArmorInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
 

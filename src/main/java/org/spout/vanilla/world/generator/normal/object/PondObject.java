@@ -179,7 +179,7 @@ public class PondObject extends RandomObject {
 			return false;
 		}
 	}
-	
+
 	public void setLiquid(BlockMaterial liquid) {
 		this.liquid = liquid;
 	}

@@ -37,6 +37,7 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
+
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.block.Plant;
@@ -177,7 +178,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 			}
 			b.setBlockDataField(heightMask, expectHeight + 1);
 			b.dynamicUpdate(updateTime + 10000);
-		} else {		
+		} else {
 			b.setData(data & dataMask);
 		}
 	}

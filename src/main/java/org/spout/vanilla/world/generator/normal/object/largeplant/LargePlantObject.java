@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.normal.object.largeplant;
 
 import java.util.Random;
+
 import org.spout.vanilla.world.generator.normal.object.RandomObject;
 
 public abstract class LargePlantObject extends RandomObject {
@@ -63,7 +64,7 @@ public abstract class LargePlantObject extends RandomObject {
 	public final void randomizeHeight() {
 		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));
 	}
-	
+
 	@Override
 	public void randomize() {
 		randomizeHeight();

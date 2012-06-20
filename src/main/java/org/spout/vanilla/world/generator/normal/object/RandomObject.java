@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.normal.object;
 
 import java.util.Random;
+
 import org.spout.api.generator.WorldGeneratorObject;
 
 public abstract class RandomObject extends WorldGeneratorObject {
@@ -43,7 +44,7 @@ public abstract class RandomObject extends WorldGeneratorObject {
 			this.random = random;
 		}
 	}
-	
+
 	public abstract void randomize();
 
 	public void setRandom(Random random) {

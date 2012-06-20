@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator.normal.biome.hills;
 import org.spout.vanilla.world.generator.normal.biome.basic.TaigaBiome;
 
 public class TaigaHillsBiome extends TaigaBiome {
-
 	public TaigaHillsBiome(int biomeId) {
 		super(biomeId);
 		this.minDensityTerrainHeight = 67;

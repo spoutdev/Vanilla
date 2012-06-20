@@ -29,17 +29,18 @@ package org.spout.vanilla.protocol.bootstrap.handler;
 import java.security.SecureRandom;
 
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
+
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.security.SecurityHandler;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.EncryptionKeyRequestMessage;
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
 
 public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMessage> {
-	
 	@Override
 	public void handle(Session session, Player player, HandshakeMessage message) {
 		Session.State state = session.getState();
@@ -69,18 +70,18 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 			session.disconnect("Handshake already exchanged.", false);
 		}
 	}
-	
+
 	private final static SecureRandom random = new SecureRandom();
-	
+
 	static {
 		synchronized (random) {
 			random.nextBytes(new byte[1]);
 		}
 	}
-	
+
 	private final String getSessionId() {
 		long sessionId;
-		synchronized(random) {
+		synchronized (random) {
 			sessionId = random.nextLong();
 		}
 		StringBuilder sb = new StringBuilder();

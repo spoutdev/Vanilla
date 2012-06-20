@@ -26,5 +26,8 @@
  */
 package org.spout.vanilla.inventory;
 
+/**
+* Represents an inventory belonging to the Vanilla plugin.
+*/
 public interface VanillaInventory {
 }

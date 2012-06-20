@@ -55,7 +55,7 @@ public class HugeMushroomObject extends LargePlantObject {
 	public HugeMushroomObject(HugeMushroomType type) {
 		this(null, type);
 	}
-	
+
 	public HugeMushroomObject(Random random, HugeMushroomType type) {
 		super(random, (byte) 3, (byte) 4);
 		shape = type.shape;

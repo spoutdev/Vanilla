@@ -31,7 +31,6 @@ import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public class RiverBiome extends NormalBiome {
-
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
@@ -43,7 +42,7 @@ public class RiverBiome extends NormalBiome {
 
 	public RiverBiome(int biomeId) {
 		super(biomeId, NOISE);
-		
+
 		this.minDensityTerrainHeight = 55;
 		this.maxDensityTerrainHeight = 56;
 

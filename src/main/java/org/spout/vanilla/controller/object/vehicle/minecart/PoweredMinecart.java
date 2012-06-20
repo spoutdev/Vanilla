@@ -31,7 +31,6 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.vehicle.Minecart;
-import org.spout.vanilla.controller.object.vehicle.Vehicle;
 
 public class PoweredMinecart extends Minecart {
 	private int fuelTicks = 0;

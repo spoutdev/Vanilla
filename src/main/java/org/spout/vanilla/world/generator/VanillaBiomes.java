@@ -27,27 +27,27 @@
 package org.spout.vanilla.world.generator;
 
 import org.spout.vanilla.world.generator.nether.biome.NetherrackBiome;
-import org.spout.vanilla.world.generator.normal.biome.shore.BeachBiome;
 import org.spout.vanilla.world.generator.normal.biome.basic.DesertBiome;
-import org.spout.vanilla.world.generator.normal.biome.hills.DesertHillsBiome;
 import org.spout.vanilla.world.generator.normal.biome.basic.ForestBiome;
-import org.spout.vanilla.world.generator.normal.biome.hills.ForestHillsBiome;
-import org.spout.vanilla.world.generator.normal.biome.special.FrozenOceanBiome;
-import org.spout.vanilla.world.generator.normal.biome.special.FrozenRiverBiome;
-import org.spout.vanilla.world.generator.normal.biome.hills.TaigaHillsBiome;
 import org.spout.vanilla.world.generator.normal.biome.basic.JungleBiome;
-import org.spout.vanilla.world.generator.normal.biome.hills.JungleHillsBiome;
 import org.spout.vanilla.world.generator.normal.biome.basic.MountainsBiome;
 import org.spout.vanilla.world.generator.normal.biome.basic.MushroomBiome;
-import org.spout.vanilla.world.generator.normal.biome.special.MushroomShoreBiome;
 import org.spout.vanilla.world.generator.normal.biome.basic.OceanBiome;
 import org.spout.vanilla.world.generator.normal.biome.basic.PlainBiome;
 import org.spout.vanilla.world.generator.normal.biome.basic.RiverBiome;
 import org.spout.vanilla.world.generator.normal.biome.basic.SmallMountainsBiome;
-import org.spout.vanilla.world.generator.normal.biome.shore.SwampBiome;
 import org.spout.vanilla.world.generator.normal.biome.basic.TaigaBiome;
 import org.spout.vanilla.world.generator.normal.biome.basic.TundraBiome;
+import org.spout.vanilla.world.generator.normal.biome.hills.DesertHillsBiome;
+import org.spout.vanilla.world.generator.normal.biome.hills.ForestHillsBiome;
+import org.spout.vanilla.world.generator.normal.biome.hills.JungleHillsBiome;
+import org.spout.vanilla.world.generator.normal.biome.hills.TaigaHillsBiome;
 import org.spout.vanilla.world.generator.normal.biome.hills.TundraHillsBiome;
+import org.spout.vanilla.world.generator.normal.biome.shore.BeachBiome;
+import org.spout.vanilla.world.generator.normal.biome.shore.SwampBiome;
+import org.spout.vanilla.world.generator.normal.biome.special.FrozenOceanBiome;
+import org.spout.vanilla.world.generator.normal.biome.special.FrozenRiverBiome;
+import org.spout.vanilla.world.generator.normal.biome.special.MushroomShoreBiome;
 import org.spout.vanilla.world.generator.theend.biome.EndStoneBiome;
 
 public class VanillaBiomes {

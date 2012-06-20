@@ -32,8 +32,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.component.controller.type.ControllerType;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;

@@ -42,7 +42,6 @@ import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Chicken extends Creature implements Passive {
 	private int nextEgg = getNextEggTime();
@@ -63,8 +62,7 @@ public class Chicken extends Creature implements Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source,
-			VanillaActionController lastDamager) {
+	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
@@ -82,7 +80,7 @@ public class Chicken extends Creature implements Passive {
 
 		return drops;
 	}
-	
+
 	/**
 	 * Sets the time until the next egg spawns. Pass Chicken.NEVER to disable
 	 * egg spawning.

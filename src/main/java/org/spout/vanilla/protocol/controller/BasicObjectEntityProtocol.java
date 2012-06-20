@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.protocol.controller;
 
-import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.component.Controller;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 

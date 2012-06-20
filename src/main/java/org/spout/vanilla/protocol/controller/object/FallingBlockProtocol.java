@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.controller.object;
 
 import java.util.Arrays;
 
-import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.component.Controller;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;

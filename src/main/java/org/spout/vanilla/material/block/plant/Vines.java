@@ -209,34 +209,34 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 		}
 
 		switch (face) {
-		case BOTTOM:
-			return false; //TODO: possibly place on top of vines?
+			case BOTTOM:
+				return false; //TODO: possibly place on top of vines?
 
-		case TOP:
-			if (isClicked) {
-				return false;
-			}
+			case TOP:
+				if (isClicked) {
+					return false;
+				}
 
-			// check below block
-			if (!this.canAttachTo(block.translate(BlockFace.TOP), BlockFace.BOTTOM)) {
-				return false;
-			}
+				// check below block
+				if (!this.canAttachTo(block.translate(BlockFace.TOP), BlockFace.BOTTOM)) {
+					return false;
+				}
 
-			block.setMaterial(VanillaMaterials.VINES);
-			return true;
+				block.setMaterial(VanillaMaterials.VINES);
+				return true;
 
-		default:
-			if (!this.canAttachTo(block.translate(face), face.getOpposite())) {
-				return false;
-			}
+			default:
+				if (!this.canAttachTo(block.translate(face), face.getOpposite())) {
+					return false;
+				}
 
-			if (this.isAttachedTo(block, face)) {
-				return false;
-			}
+				if (this.isAttachedTo(block, face)) {
+					return false;
+				}
 
-			block.setMaterial(VanillaMaterials.VINES);
-			this.setFaceAttached(block, face, true);
-			return true;
+				block.setMaterial(VanillaMaterials.VINES);
+				this.setFaceAttached(block, face, true);
+				return true;
 		}
 	}
 

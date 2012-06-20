@@ -42,7 +42,7 @@ public class OreObject extends RandomObject {
 	public OreObject(BlockMaterial material, int count, int clusterSize, int maxHeight) {
 		this(null, material, count, clusterSize, maxHeight);
 	}
-	
+
 	public OreObject(Random random, BlockMaterial material, int count, int clusterSize, int maxHeight) {
 		super(random);
 		this.count = count;

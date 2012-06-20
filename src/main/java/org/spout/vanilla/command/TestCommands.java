@@ -35,15 +35,15 @@ import org.spout.api.Spout;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
-import org.spout.api.entity.component.controller.BlockController;
-import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.component.Controller;
+import org.spout.api.entity.component.controller.BlockController;
 import org.spout.api.entity.component.controller.PlayerController;
+import org.spout.api.entity.component.controller.type.ControllerRegistry;
+import org.spout.api.entity.component.controller.type.ControllerType;
 import org.spout.api.entity.spawn.DiscSpawnArrangement;
 import org.spout.api.entity.spawn.SpawnArrangement;
 import org.spout.api.entity.spawn.SpiralSpawnArrangement;
-import org.spout.api.entity.component.controller.type.ControllerRegistry;
-import org.spout.api.entity.component.controller.type.ControllerType;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
@@ -56,7 +56,6 @@ import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.type.Speed;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.VanillaObjects;
@@ -204,7 +203,7 @@ public class TestCommands {
 			throw new CommandException("Please enter a valid world");
 		}
 	}
-	
+
 	@Command(aliases = {"obj"}, usage = "<name> opt<force>", desc = "Spawn a WorldGeneratorObject at your location", min = 1, max = 2)
 	public void spawnObject(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {

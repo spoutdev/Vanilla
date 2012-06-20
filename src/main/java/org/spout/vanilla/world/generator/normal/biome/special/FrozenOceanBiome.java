@@ -33,7 +33,6 @@ import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.normal.biome.basic.OceanBiome;
 
 public class FrozenOceanBiome extends OceanBiome {
-
 	public FrozenOceanBiome(int biomeId) {
 		super(biomeId);
 	}

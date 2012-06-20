@@ -31,27 +31,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.spout.api.generator.WorldGeneratorObject;
+
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
-import org.spout.vanilla.world.generator.normal.object.largeplant.CactusStackObject;
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;
-import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
-import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
-import org.spout.vanilla.world.generator.normal.object.tree.HugeTreeObject;
 import org.spout.vanilla.world.generator.normal.object.OreObject;
-import org.spout.vanilla.world.generator.normal.object.tree.PineTreeObject;
 import org.spout.vanilla.world.generator.normal.object.PondObject;
 import org.spout.vanilla.world.generator.normal.object.PondObject.PondType;
+import org.spout.vanilla.world.generator.normal.object.WellObject;
+import org.spout.vanilla.world.generator.normal.object.largeplant.CactusStackObject;
+import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
+import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
+import org.spout.vanilla.world.generator.normal.object.largeplant.SugarCaneStackObject;
+import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.HugeTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.PineTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SpruceTreeObject;
-import org.spout.vanilla.world.generator.normal.object.largeplant.SugarCaneStackObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
-import org.spout.vanilla.world.generator.normal.object.WellObject;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
 /**
- *
  * IMPORTANT: These objects maybe be modified by plugins. There is no guarantee
  * these will be MC like. For unaltered objects, please create a new instance.
  */

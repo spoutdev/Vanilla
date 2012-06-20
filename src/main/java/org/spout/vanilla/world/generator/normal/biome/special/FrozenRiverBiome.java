@@ -32,9 +32,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.normal.biome.basic.RiverBiome;
 
-
 public class FrozenRiverBiome extends RiverBiome {
-
 	public FrozenRiverBiome(int biomeId) {
 		super(biomeId);
 	}

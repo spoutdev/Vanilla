@@ -32,7 +32,6 @@ import org.spout.vanilla.configuration.BiomeConfiguration;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public class PlainBiome extends NormalBiome {
-
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {

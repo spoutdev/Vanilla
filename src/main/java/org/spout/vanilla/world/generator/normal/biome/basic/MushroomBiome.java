@@ -34,7 +34,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public class MushroomBiome extends NormalBiome {
-	
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {

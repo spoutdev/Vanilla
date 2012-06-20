@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.item.tool.iron;
 
-import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MiningType;
 

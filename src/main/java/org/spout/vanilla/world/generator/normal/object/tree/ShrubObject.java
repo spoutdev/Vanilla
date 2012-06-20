@@ -40,7 +40,7 @@ public class ShrubObject extends TreeObject {
 	public ShrubObject() {
 		this(null);
 	}
-	
+
 	public ShrubObject(Random random) {
 		super(random, (byte) 1, (byte) 1, (short) 3, (short) 0);
 		overridable.add(VanillaMaterials.AIR);

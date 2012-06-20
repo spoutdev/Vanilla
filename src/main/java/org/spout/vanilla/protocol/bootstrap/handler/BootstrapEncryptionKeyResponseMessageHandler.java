@@ -48,7 +48,6 @@ import org.spout.vanilla.protocol.bootstrap.handler.auth.LoginAuthThread;
 import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
 
 public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler<EncryptionKeyResponseMessage> {
-
 	@Override
 	public void handle(final Session session, final Player player, final EncryptionKeyResponseMessage message) {
 		Session.State state = session.getState();
@@ -70,12 +69,12 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 			AsymmetricCipherKeyPair keys = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
 			byte[] publicKeyEncoded = SecurityHandler.getInstance().encodeKey(keys.getPublic());
 
-			String sha1Hash = sha1Hash(new Object[] {sessionId, initialVector, publicKeyEncoded});
+			String sha1Hash = sha1Hash(new Object[]{sessionId, initialVector, publicKeyEncoded});
 			session.getDataMap().put(VanillaProtocol.SESSION_ID, sha1Hash);
 
 			String handshakeUsername = session.getDataMap().get(VanillaProtocol.HANDSHAKE_USERNAME);
 			final String finalName = handshakeUsername.split(";")[0];
-			
+
 			Runnable runnable = new Runnable() {
 				public void run() {
 					if (false) {
@@ -101,44 +100,40 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 
 						session.send(response, true);
 					}
-					
+
 					session.disconnect("Encryption not supported yet");
 				}
 			};
-			
+
 			Spout.getEngine().getScheduler().scheduleAsyncTask(VanillaPlugin.getInstance(), new LoginAuthThread(session, finalName, runnable));
 		}
 	}
 
 	private static String sha1Hash(Object[] input) {
-
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-1");
 			md.reset();
 
 			for (Object o : input) {
 				if (o instanceof String) {
-					md.update(((String)o).getBytes("ISO_8859_1"));
+					md.update(((String) o).getBytes("ISO_8859_1"));
 				} else if (o instanceof byte[]) {
-					md.update((byte[])o);
+					md.update((byte[]) o);
 				} else {
 					return null;
 				}
 			}
 
 			BigInteger bigInt = new BigInteger(md.digest());
-			
+
 			if (bigInt.compareTo(BigInteger.ZERO) < 0) {
 				bigInt = bigInt.negate();
 				return "-" + bigInt.toString(16);
 			} else {
 				return bigInt.toString(16);
 			}
-
 		} catch (Exception ioe) {
 			return null;
 		}
-
 	}
-
 }

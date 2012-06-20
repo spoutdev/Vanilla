@@ -28,10 +28,12 @@ package org.spout.vanilla.protocol.codec;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.protocol.MessageCodec;
+
 import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
 
-public class EncryptionKeyResponseCodec extends MessageCodec<EncryptionKeyResponseMessage>{
+public class EncryptionKeyResponseCodec extends MessageCodec<EncryptionKeyResponseMessage> {
 	
 	public EncryptionKeyResponseCodec() {
 		super(EncryptionKeyResponseMessage.class, 0xFC);
@@ -53,5 +55,4 @@ public class EncryptionKeyResponseCodec extends MessageCodec<EncryptionKeyRespon
 		buffer.writeBytes(encoded);
 		return buffer;
 	}
-
 }

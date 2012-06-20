@@ -38,6 +38,7 @@ import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 import org.spout.api.material.range.PlusEffectRange;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -48,13 +49,11 @@ import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class RedstoneWire extends GroundAttachable implements Mineable, RedstoneSource, RedstoneTarget {
-	
 	private static final EffectRange physicsRange = new ListEffectRange(
 			new PlusEffectRange(2, false),
 			new CubicEffectRange(1));
-	
 	private static final EffectRange maximumPhysicsRange = new PlusEffectRange(15, true);
-	
+
 	public RedstoneWire(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
@@ -98,7 +97,7 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 			short receiving = this.getReceivingPower(block);
 			short current = this.getRedstonePower(block);
 			if (current == receiving) {
-				
+
 			} else if (receiving > current) {
 				//Power became more, perform simple updating
 				block.setMaterial(this, receiving);
@@ -258,12 +257,12 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 	public short getDurabilityPenalty(Tool tool) {
 		return 1;
 	}
-	
+
 	@Override
 	public EffectRange getPhysicsRange(short data) {
 		return physicsRange;
 	}
-	
+
 	@Override
 	public EffectRange getMaximumPhysicsRange(short data) {
 		return maximumPhysicsRange;

@@ -31,6 +31,9 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.inventory.VanillaInventory;
 
+/**
+* Represents the inventory of a {@link org.spout.vanilla.material.block.controlled.Jukebox}.
+*/
 public class JukeboxInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +42,7 @@ public class JukeboxInventory extends Inventory implements VanillaInventory {
 	}
 
 	/**
-	 * Gets the {@link ItemStack} in the Jukebox's music slot
+	 * Gets the {@link org.spout.api.inventory.ItemStack} in the Jukebox's music slot
 	 * @return item in slot
 	 */
 	public ItemStack getMusicSlot() {
@@ -47,7 +50,7 @@ public class JukeboxInventory extends Inventory implements VanillaInventory {
 	}
 
 	/**
-	 * Sets the {@link ItemStack} in the Jukebox's music slot
+	 * Sets the {@link org.spout.api.inventory.ItemStack} in the Jukebox's music slot
 	 * @param item in slot
 	 */
 	public void setMusicSlot(ItemStack item) {

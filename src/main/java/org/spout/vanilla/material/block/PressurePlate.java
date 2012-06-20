@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.LogicUtil;
+
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
@@ -117,7 +118,7 @@ public abstract class PressurePlate extends GroundAttachable implements Mineable
 	public EffectRange getPhysicsRange(short data) {
 		return physicsRange;
 	}
-	
+
 	@Override
 	public EffectRange getDynamicRange() {
 		return EffectRange.THIS;

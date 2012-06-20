@@ -40,12 +40,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.LogicUtil;
+
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial, Source {
-
 	private final boolean flowing;
-	
 	private static boolean useDelay = false; //TODO: This is here to prevent a lot of problems...
 
 	public Liquid(String name, int id, boolean flowing) {
@@ -276,10 +275,10 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 				return true;
 			}
 		}
-		
+
 		return this.onFlow(block);
 	}
-	
+
 	@Override
 	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
 		if (useDelay) {
@@ -287,7 +286,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 			this.doPhysics(block);
 		}
 	}
-	
+
 	@Override
 	public EffectRange getDynamicRange() {
 		return EffectRange.THIS_AND_NEIGHBORS;

@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator.normal.biome.hills;
 import org.spout.vanilla.world.generator.normal.biome.basic.TundraBiome;
 
 public class TundraHillsBiome extends TundraBiome {
-
 	public TundraHillsBiome(int biomeId) {
 		super(biomeId);
 		this.minDensityTerrainHeight = 67;

@@ -65,7 +65,7 @@ public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 		String worldType = point.getWorld().getDataMap().get(Data.WORLD_TYPE).toString();
 		RespawnMessage respawn = new RespawnMessage(dimension, difficulty, gamemode, 256, worldType);
 		session.send(respawn);
-		
+
 		//send spawn to everyone else
 		SpawnPlayerMessage spawn = new SpawnPlayerMessage(player.getEntity().getId(), player.getDisplayName(), point, (int) player.getEntity().getYaw(), (int) player.getEntity().getPitch(), 0);
 		VanillaNetworkUtil.broadcastPacket(new Player[]{player}, spawn);

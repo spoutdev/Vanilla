@@ -30,9 +30,9 @@ import org.spout.api.Spout;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.world.VanillaSky;
+import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
-import org.spout.vanilla.data.Weather;
 
 public class NormalSky extends VanillaSky {
 	public NormalSky() {

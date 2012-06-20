@@ -47,12 +47,12 @@ public class EncryptionKeyResponseMessage extends Message implements ProcessorSe
 		this.encoded = encoded;
 		this.locking = locking;
 	}
-	
+
 	@Override
 	public ChannelProcessor getProcessor() {
 		return processor;
 	}
-	
+
 	public void setProcessor(ChannelProcessor processor) {
 		this.processor = processor;
 	}
@@ -61,15 +61,15 @@ public class EncryptionKeyResponseMessage extends Message implements ProcessorSe
 	public void setProcessorHandler(ProcessorHandler handler) {
 		this.handler = handler;
 	}
-	
+
 	public ProcessorHandler getProcessorHandler() {
 		return handler;
 	}
-	
+
 	public byte[] getEncodedArray() {
 		return encoded;
 	}
-	
+
 	@Override
 	public boolean isChannelLocking() {
 		return locking;
@@ -88,12 +88,11 @@ public class EncryptionKeyResponseMessage extends Message implements ProcessorSe
 				.append(this.encoded, other.encoded)
 				.isEquals();
 	}
-	
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-		.append("encoded", encoded)
-		.toString();
+				.append("encoded", encoded)
+				.toString();
 	}
-	
 }

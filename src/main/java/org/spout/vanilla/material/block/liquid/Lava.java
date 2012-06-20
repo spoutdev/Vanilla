@@ -30,10 +30,12 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.LogicUtil;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
 public class Lava extends Liquid {
+
 	public Lava(String name, int id, boolean flowing) {
 		super(name, id, flowing);
 	}
@@ -97,7 +99,7 @@ public class Lava extends Liquid {
 	public void setLevel(Block block, int level) {
 		if (level < 0) {
 			block.setMaterial(VanillaMaterials.AIR);
-		} else { 
+		} else {
 			if (level > 3) {
 				level = 3;
 			}

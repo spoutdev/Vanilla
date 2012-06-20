@@ -36,7 +36,6 @@ import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public class TundraBiome extends NormalBiome {
-
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {

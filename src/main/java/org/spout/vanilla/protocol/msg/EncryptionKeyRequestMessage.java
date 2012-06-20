@@ -32,13 +32,12 @@ import org.spout.api.security.SecurityHandler;
 import org.spout.api.util.SpoutToStringStyle;
 
 public final class EncryptionKeyRequestMessage extends EncryptionKeyResponseMessage {
-
 	private final String sessionId;
-	
+
 	public EncryptionKeyRequestMessage(String sessionId, CipherParameters publicKey, boolean locking) {
 		this(sessionId, SecurityHandler.getInstance().encodeKey(publicKey), locking);
 	}
-		
+
 	public EncryptionKeyRequestMessage(String sessionId, byte[] encoded, boolean locking) {
 		super(encoded, locking);
 		this.sessionId = sessionId;
@@ -47,7 +46,7 @@ public final class EncryptionKeyRequestMessage extends EncryptionKeyResponseMess
 	public String getSessionId() {
 		return sessionId;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
@@ -62,7 +61,7 @@ public final class EncryptionKeyRequestMessage extends EncryptionKeyResponseMess
 				.append(this.sessionId, other.sessionId)
 				.isEquals();
 	}
-	
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
@@ -70,5 +69,4 @@ public final class EncryptionKeyRequestMessage extends EncryptionKeyResponseMess
 		.append("sessionId", sessionId)
 		.toString();
 	}
-	
 }

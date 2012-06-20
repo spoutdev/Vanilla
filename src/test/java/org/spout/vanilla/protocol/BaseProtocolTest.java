@@ -32,7 +32,6 @@ import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
 
 import org.jboss.netty.buffer.ChannelBuffer;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.spout.api.protocol.CodecLookupService;

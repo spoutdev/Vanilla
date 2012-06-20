@@ -46,7 +46,7 @@ public class SmallTreeObject extends TreeObject {
 	public SmallTreeObject(TreeType treeType) {
 		this(null, treeType);
 	}
-	
+
 	public SmallTreeObject(Random random, TreeType treeType) {
 		super(random, (byte) 4, (byte) 3, treeType.getMetadata());
 		overridable.add(VanillaMaterials.AIR);

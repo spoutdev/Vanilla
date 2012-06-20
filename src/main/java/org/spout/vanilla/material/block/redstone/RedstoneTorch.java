@@ -36,6 +36,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 import org.spout.api.math.IntVector3;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.misc.Torch;
 import org.spout.vanilla.util.RedstonePowerMode;
@@ -135,10 +136,9 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	public EffectRange getDynamicRange() {
 		return EffectRange.THIS;
 	}
-	
+
 	@Override
 	public EffectRange getPhysicsRange(short data) {
 		return physicsRange;
 	}
-
 }

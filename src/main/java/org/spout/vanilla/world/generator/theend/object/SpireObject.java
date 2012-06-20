@@ -122,6 +122,7 @@ public class SpireObject extends LargePlantObject {
 	public void setMainMaterial(BlockMaterial main) {
 		this.main = main;
 	}
+
 	public void setRandRadius(byte randRadius) {
 		this.randRadius = randRadius;
 	}

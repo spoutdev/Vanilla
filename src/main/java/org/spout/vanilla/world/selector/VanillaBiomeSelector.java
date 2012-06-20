@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.world.selector;
 
-import java.util.Random;
-
 import net.royawesome.jlibnoise.module.modifier.Exponent;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Cylinders;
@@ -37,10 +35,29 @@ import net.royawesome.jlibnoise.module.source.Voronoi;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeSelector;
 
-import static org.spout.vanilla.world.generator.VanillaBiomes.*;
+import static org.spout.vanilla.world.generator.VanillaBiomes.BEACH;
+import static org.spout.vanilla.world.generator.VanillaBiomes.DESERT;
+import static org.spout.vanilla.world.generator.VanillaBiomes.DESERT_HILLS;
+import static org.spout.vanilla.world.generator.VanillaBiomes.FOREST;
+import static org.spout.vanilla.world.generator.VanillaBiomes.FOREST_HILLS;
+import static org.spout.vanilla.world.generator.VanillaBiomes.FROZEN_OCEAN;
+import static org.spout.vanilla.world.generator.VanillaBiomes.FROZEN_RIVER;
+import static org.spout.vanilla.world.generator.VanillaBiomes.JUNGLE;
+import static org.spout.vanilla.world.generator.VanillaBiomes.JUNGLE_HILLS;
+import static org.spout.vanilla.world.generator.VanillaBiomes.MOUNTAINS;
+import static org.spout.vanilla.world.generator.VanillaBiomes.MUSHROOM;
+import static org.spout.vanilla.world.generator.VanillaBiomes.MUSHROOM_SHORE;
+import static org.spout.vanilla.world.generator.VanillaBiomes.OCEAN;
+import static org.spout.vanilla.world.generator.VanillaBiomes.PLAIN;
+import static org.spout.vanilla.world.generator.VanillaBiomes.RIVER;
+import static org.spout.vanilla.world.generator.VanillaBiomes.SMALL_MOUNTAINS;
+import static org.spout.vanilla.world.generator.VanillaBiomes.SWAMP;
+import static org.spout.vanilla.world.generator.VanillaBiomes.TAIGA;
+import static org.spout.vanilla.world.generator.VanillaBiomes.TAIGA_HILLS;
+import static org.spout.vanilla.world.generator.VanillaBiomes.TUNDRA;
+import static org.spout.vanilla.world.generator.VanillaBiomes.TUNDRA_HILLS;
 
 public class VanillaBiomeSelector extends BiomeSelector {
-
 	private final Voronoi primaryBase = new Voronoi();
 	private final Turbulence primary = new Turbulence();
 	//

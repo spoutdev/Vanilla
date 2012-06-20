@@ -41,7 +41,7 @@ public class PineTreeObject extends TreeObject {
 	public PineTreeObject() {
 		this(null);
 	}
-	
+
 	public PineTreeObject(Random random) {
 		super(random, (byte) 6, (byte) 4, (short) 1);
 		overridable.add(VanillaMaterials.AIR);

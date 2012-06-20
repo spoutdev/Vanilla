@@ -38,8 +38,8 @@ import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.object.tree.HugeTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
 
 public class TreeDecorator implements Decorator {
 	@Override

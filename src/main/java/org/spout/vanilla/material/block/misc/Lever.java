@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
-
 import java.util.ArrayList;
 
 import org.spout.api.Source;
@@ -39,6 +37,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
+
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
@@ -47,6 +46,8 @@ import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
+
+import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
 public class Lever extends AbstractAttachable implements Mineable, RedstoneSource {
 	public Lever(String name, int id) {

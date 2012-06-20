@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator.normal.biome.special;
 import org.spout.vanilla.world.generator.normal.biome.basic.MushroomBiome;
 
 public class MushroomShoreBiome extends MushroomBiome {
-
 	public MushroomShoreBiome(int biomeId) {
 		super(biomeId);
 		this.minDensityTerrainHeight = 64;

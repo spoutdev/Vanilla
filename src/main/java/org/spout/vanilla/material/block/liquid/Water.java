@@ -28,11 +28,11 @@ package org.spout.vanilla.material.block.liquid;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.util.LogicUtil;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
 public class Water extends Liquid {
-
 	public Water(String name, int id, boolean flowing) {
 		super(name, id, flowing);
 	}
@@ -65,7 +65,7 @@ public class Water extends Liquid {
 	public void setLevel(Block block, int level) {
 		if (level < 0) {
 			block.setMaterial(VanillaMaterials.AIR);
-		} else { 
+		} else {
 			if (level > 7) {
 				level = 7;
 			}

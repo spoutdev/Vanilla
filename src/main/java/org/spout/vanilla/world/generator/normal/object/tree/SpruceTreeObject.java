@@ -41,7 +41,7 @@ public class SpruceTreeObject extends TreeObject {
 	public SpruceTreeObject() {
 		this(null);
 	}
-	
+
 	public SpruceTreeObject(Random random) {
 		super(random, (byte) 7, (byte) 5, (short) 1);
 		overridable.add(VanillaMaterials.AIR);

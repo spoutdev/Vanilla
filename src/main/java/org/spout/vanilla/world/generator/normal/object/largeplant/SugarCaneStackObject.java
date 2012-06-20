@@ -27,8 +27,10 @@
 package org.spout.vanilla.world.generator.normal.object.largeplant;
 
 import java.util.Random;
+
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class SugarCaneStackObject extends LargePlantObject {

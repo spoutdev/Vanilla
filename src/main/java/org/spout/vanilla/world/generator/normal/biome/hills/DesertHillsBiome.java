@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator.normal.biome.hills;
 import org.spout.vanilla.world.generator.normal.biome.basic.DesertBiome;
 
 public class DesertHillsBiome extends DesertBiome {
-
 	public DesertHillsBiome(int biomeId) {
 		super(biomeId);
 		this.minDensityTerrainHeight = 67;

@@ -38,16 +38,15 @@ import java.net.URLEncoder;
 
 import org.spout.api.Spout;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.VanillaProtocol;
 
 public class LoginAuthThread implements Runnable {
-
 	private final static String URLBase = "http://session.minecraft.net/game/checkserver.jsp?";
 	private final static String userPrefix = "user=";
 	private final static String idPrefix = "&serverId=";
 	private final static String authString = "YES";
-
 	private final Session session;
 	private final String name;
 	private final Runnable runnable;
@@ -92,7 +91,7 @@ public class LoginAuthThread implements Runnable {
 			return;
 		}
 
-		HttpURLConnection httpConnection = (HttpURLConnection)connection;
+		HttpURLConnection httpConnection = (HttpURLConnection) connection;
 
 		httpConnection.setConnectTimeout(30000);
 		httpConnection.setReadTimeout(30000);
@@ -133,11 +132,9 @@ public class LoginAuthThread implements Runnable {
 			long currentTime = System.currentTimeMillis();
 			Spout.getLogger().info("Authing took " + (System.currentTimeMillis() - start) + "ms");
 		}
-
 	}
 
 	private void failed(String message) {
 		session.disconnect(message);
 	}
-
 }

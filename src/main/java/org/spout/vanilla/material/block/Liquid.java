@@ -104,12 +104,16 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		}
 		block = block.translate(to).setSource(this);
 		BlockMaterial material = block.getMaterial();
-		if (material.equals(this)) {
+		if (this.isMaterial(material)) {
 			if (this.isSource(block)) {
 				return true;
 			} else {
 				// Compare levels
 				if (level > this.getLevel(block)) {
+					if (this.flowing) {
+						// Make sure the material is adjusted
+						block.setMaterial(this.getFlowingMaterial(), block.getData());
+					}
 					this.setLevel(block, level);
 					if (to == BlockFace.BOTTOM) {
 						this.setFlowingDown(block, true);
@@ -141,7 +145,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	 */
 	public void onSpread(Block block, int newLevel, BlockFace from) {
 		block.getMaterial().onDestroy(block);
-		block.setMaterial(this);
+		block.setMaterial(this.getFlowingMaterial());
 		this.setLevel(block, newLevel);
 		if (from == BlockFace.TOP) {
 			this.setFlowingDown(block, true);
@@ -155,13 +159,34 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	public abstract int getMaxLevel();
 
 	/**
+	 * Gets the liquid type to use for flowing liquids
+	 * @return the flowing material
+	 */
+	public abstract Liquid getFlowingMaterial();
+
+	/**
+	 * Gets the liquid type to use for stationary liquids
+	 * @return the stationary material
+	 */
+	public abstract Liquid getStationaryMaterial();
+
+	/**
+	 * Checks if the material given is either the flowing or stationary type of this Liquid
+	 * @param material to check
+	 * @return True if it is this liquid, False if not
+	 */
+	public boolean isMaterial(BlockMaterial material) {
+		return material.equals(this.getFlowingMaterial(), this.getStationaryMaterial());
+	}
+
+	/**
 	 * Gets the level a liquid receives from nearby blocks<br>
 	 * The level equals the expected level of the block specified
 	 * @param block of the liquid
 	 * @return the level, or negative if it has no liquids nearby to use
 	 */
 	public int getReceivingLevel(Block block) {
-		if (block.translate(BlockFace.TOP).getMaterial().equals(this)) {
+		if (this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
 			return this.getMaxLevel();
 		} else {
 			int max = -2;
@@ -169,7 +194,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 			Block neigh;
 			for (BlockFace face : BlockFaces.NESW) {
 				neigh = block.translate(face);
-				if (neigh.getMaterial().equals(this)) {
+				if (this.isMaterial(neigh.getMaterial())) {
 					max = Math.max(max, this.getLevel(neigh) - 1);
 					if (this.hasFlowSource() && this.isSource(neigh) && !this.isFlowingDown(neigh)) {
 						counter++;
@@ -255,7 +280,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		if (this.isSource(block)) {
 			level = this.getMaxLevel();
 			// Still flowing down?
-			if (this.isFlowingDown(block) && !block.translate(BlockFace.TOP).getMaterial().equals(this)) {
+			if (this.isFlowingDown(block) && !this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
 				this.setFlowingDown(block, false);
 				this.setLevel(block, level - 1);
 				// Update blocks around

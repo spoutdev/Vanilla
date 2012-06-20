@@ -34,7 +34,7 @@ import org.spout.api.geo.cuboid.Chunk;
 /**
  * Decorator that decorates a biome with a village.
  */
-public class VillageDecorator implements Decorator {
+public class VillageDecorator extends Decorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
 	}

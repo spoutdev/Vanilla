@@ -36,7 +36,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
 
-public class ShrubDecorator implements Decorator {
+public class ShrubDecorator extends Decorator {
 	// How many shrub decorations per chunk
 	// this number is valid for jungles only
 	private static final byte AMOUNT = 20;

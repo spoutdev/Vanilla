@@ -35,7 +35,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.OreObject;
 
-public class OreDecorator implements Decorator {
+public class OreDecorator extends Decorator {
 	public static OreObject[] objects;
 
 	static {

@@ -36,7 +36,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class CactusDecorator implements Decorator {
+public class CactusDecorator extends Decorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() < 4) {

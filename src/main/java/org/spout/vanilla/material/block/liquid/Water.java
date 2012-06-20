@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block.liquid;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
@@ -69,13 +68,17 @@ public class Water extends Liquid {
 			if (level > 7) {
 				level = 7;
 			}
-			int data = block.getData();
-			if (LogicUtil.getBit(data, 0x8)) {
-				data = (7 - level) | 0x8;
-			} else {
-				data = 7 - level;
-			}
-			block.setData(data);
+			block.setBlockDataField(0x7, 7 - level);
 		}
+	}
+
+	@Override
+	public Liquid getFlowingMaterial() {
+		return VanillaMaterials.WATER;
+	}
+
+	@Override
+	public Liquid getStationaryMaterial() {
+		return VanillaMaterials.STATIONARY_WATER;
 	}
 }

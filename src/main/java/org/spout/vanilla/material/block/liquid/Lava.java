@@ -29,7 +29,6 @@ package org.spout.vanilla.material.block.liquid;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
@@ -103,18 +102,22 @@ public class Lava extends Liquid {
 			if (level > 3) {
 				level = 3;
 			}
-			int data = block.getData();
-			if (LogicUtil.getBit(data, 0x8)) {
-				data = ((3 - level) << 1) | 0x8;
-			} else {
-				data = (3 - level) << 1;
-			}
-			block.setData(data);
+			block.setBlockDataField(0x7, (3 - level) << 1);
 		}
 	}
 
 	@Override
 	public boolean hasFlowSource() {
 		return true;
+	}
+
+	@Override
+	public Liquid getFlowingMaterial() {
+		return VanillaMaterials.LAVA;
+	}
+
+	@Override
+	public Liquid getStationaryMaterial() {
+		return VanillaMaterials.STATIONARY_LAVA;
 	}
 }

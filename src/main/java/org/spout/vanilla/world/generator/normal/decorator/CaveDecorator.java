@@ -38,7 +38,7 @@ import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class CaveDecorator implements Decorator {
+public class CaveDecorator extends Decorator {
 	private Perlin noise = new Perlin();
 
 	public CaveDecorator() {

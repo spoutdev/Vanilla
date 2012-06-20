@@ -37,7 +37,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 /**
  * Decorator that decorates a biome with pumpkins.
  */
-public class PumpkinDecorator implements Decorator {
+public class PumpkinDecorator extends Decorator {
 	// Control how many pumpkins per patch
 	private static final byte BASE_AMOUNT = 1;
 	private static final byte RAND_AMOUNT = 8;

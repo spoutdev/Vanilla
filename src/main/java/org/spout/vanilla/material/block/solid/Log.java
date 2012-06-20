@@ -151,7 +151,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 		}
 
 		Block trunk = b;
-		int expectHeight = b.getBlockDataField(heightMask);
+		int expectHeight = b.getDataField(heightMask);
 		for (int i = 0; i < expectHeight + 1; i++) {
 			if (!(trunk.getMaterial() instanceof Log)) {
 				return;
@@ -176,7 +176,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 				trunk.setMaterial(Leaves.DEFAULT);
 				trunk.setData(data & dataMask);
 			}
-			b.setBlockDataField(heightMask, expectHeight + 1);
+			b.setDataField(heightMask, expectHeight + 1);
 			b.dynamicUpdate(updateTime + 10000);
 		} else {
 			b.setData(data & dataMask);

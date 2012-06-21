@@ -30,9 +30,11 @@ import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.inventory.player.PlayerInventory;
 
 public class VanillaPlayerUtil {
 	/**
@@ -81,7 +83,7 @@ public class VanillaPlayerUtil {
 	 * @param source
 	 * @return inventory
 	 */
-	public static InventoryBase getInventory(Source source) {
+	public static PlayerInventory getInventory(Source source) {
 		if (source instanceof Entity) {
 			Entity e = (Entity) source;
 			if (e.getController() instanceof VanillaPlayer) {
@@ -89,6 +91,16 @@ public class VanillaPlayerUtil {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Tries to find the player selected inventory slot of the source
+	 * @param source
+	 * @return inventory slot that is selected
+	 */
+	public static InventorySlot getCurrentSlot(Source source) {
+		PlayerInventory inv = getInventory(source);
+		return inv == null ? null : inv.getQuickbar().getCurrentSlotInventory();
 	}
 
 	/**

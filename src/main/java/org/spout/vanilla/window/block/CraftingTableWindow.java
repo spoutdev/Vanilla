@@ -41,12 +41,12 @@ public class CraftingTableWindow extends CraftingWindow {
 
 	private CraftingTableWindow(VanillaPlayer owner, CraftingTable craftingTable, CraftingTableInventory inventory) {
 		super(1, "Crafting", owner, inventory, craftingTable);
-		this.setInventory(owner.getInventory().getItems(), inventory);
+		this.setInventory(owner.getInventory().getMain(), inventory);
 		this.setSlotIndexMap(SLOTS);
 	}
 
 	@Override
 	public int getInventorySize() {
-		return this.getInventory().getSize() - this.getOwner().getInventory().getItems().getSize();
+		return this.getInventory().getSize() - this.getOwner().getInventory().getMain().getSize();
 	}
 }

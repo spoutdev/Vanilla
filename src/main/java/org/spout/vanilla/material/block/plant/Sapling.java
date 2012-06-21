@@ -33,13 +33,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
@@ -103,11 +102,11 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 		if (type != Action.RIGHT_CLICK) {
 			return;
 		}
-		InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
+		InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
 		ItemStack current = inv.getCurrentItem();
 		if (current != null && current.getSubMaterial().equals(Dye.BONE_MEAL)) {
 			if (VanillaPlayerUtil.isSurvival(entity)) {
-				inv.addCurrentItemAmount(-1);
+				inv.addItemAmount(0, -1);
 			}
 			this.growTree(block);
 		}

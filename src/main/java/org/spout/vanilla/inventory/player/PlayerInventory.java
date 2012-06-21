@@ -36,22 +36,32 @@ import org.spout.vanilla.inventory.VanillaInventory;
  */
 public class PlayerInventory extends InventoryBundle implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
-	private final Inventory items;
+	private final Inventory main;
 	private final PlayerCraftingGrid craftingGrid;
 	private final PlayerArmorInventory armor;
+	private final PlayerQuickbar quickbar;
 
 	public PlayerInventory() {
-		this.items = this.addInventory(new Inventory(36));
+		this.main = this.addInventory(new Inventory(36));
 		this.craftingGrid = this.addInventory(new PlayerCraftingGrid());
 		this.armor = this.addInventory(new PlayerArmorInventory());
+		this.quickbar = new PlayerQuickbar(this.main);
+	}
+
+	/**
+	 * Gets the quickbar slots of this player inventory
+	 * @return the quickbar slots
+	 */
+	public PlayerQuickbar getQuickbar() {
+		return this.quickbar;
 	}
 
 	/**
 	 * Gets the item inventory of this player inventory
 	 * @return an Inventory with the items
 	 */
-	public Inventory getItems() {
-		return this.items;
+	public Inventory getMain() {
+		return this.main;
 	}
 
 	/**

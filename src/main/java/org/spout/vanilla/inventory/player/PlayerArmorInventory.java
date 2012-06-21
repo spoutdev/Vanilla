@@ -28,6 +28,7 @@ package org.spout.vanilla.inventory.player;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
 
 import org.spout.vanilla.inventory.VanillaInventory;
 
@@ -36,40 +37,48 @@ import org.spout.vanilla.inventory.VanillaInventory;
 */
 public class PlayerArmorInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
+	private final InventorySlot helmet;
+	private final InventorySlot chestPlate;
+	private final InventorySlot leggings;
+	private final InventorySlot boots;
 
 	public PlayerArmorInventory() {
 		super(4);
+		this.helmet = new InventorySlot(this, 0);
+		this.chestPlate = new InventorySlot(this, 1);
+		this.leggings = new InventorySlot(this, 2);
+		this.boots = new InventorySlot(this, 3);
 	}
 
 	/**
 	 * Returns the current {@link ItemStack} in the helmet slot (slot 44) ; can return null.
 	 * @return helmet item stack
 	 */
-	public ItemStack getHelmet() {
-		return this.getItem(0);
+	public InventorySlot getHelmet() {
+		return this.helmet;
 	}
 
 	/**
 	 * Returns the current {@link ItemStack} in the chest plate slot (slot 41) ; can return null.
 	 * @return chest plate item stack
 	 */
-	public ItemStack getChestPlate() {
-		return this.getItem(1);
+	public InventorySlot getChestPlate() {
+		return this.chestPlate;
 	}
 
 	/**
 	 * Returns the current {@link ItemStack} in the leggings slot (slot 37) ; can return null.
 	 * @return leggings item stack
 	 */
-	public ItemStack getLeggings() {
-		return this.getItem(2);
+	public InventorySlot getLeggings() {
+		return this.leggings;
 	}
 
 	/**
 	 * Returns the current {@link ItemStack} in the boots slot (slot 36) ; can return null.
 	 * @return boots item stack
 	 */
-	public ItemStack getBoots() {
-		return this.getItem(3);
+	public InventorySlot getBoots() {
+		return this.boots;
 	}
 }

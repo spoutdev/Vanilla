@@ -33,6 +33,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -69,12 +70,12 @@ public class Jukebox extends ControlledMaterial implements Fuel, Mineable {
 		if (type == Action.RIGHT_CLICK) {
 			org.spout.vanilla.controller.block.Jukebox controller = (org.spout.vanilla.controller.block.Jukebox) block.getController();
 			controller.eject();
-			InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
-			if (inv != null && controller.canPlay(inv.getCurrentItem())) {
-				controller.getInventory().setCurrentItem(inv.getCurrentItem().clone().setAmount(1));
+			InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
+			if (inv != null && controller.canPlay(inv.getItem())) {
+				controller.getInventory().setCurrentItem(inv.getItem().clone().setAmount(1));
 				controller.update();
 				if (VanillaPlayerUtil.isSurvival(entity)) {
-					inv.addCurrentItemAmount(-1);
+					inv.addItemAmount(0, -1);
 				}
 			}
 		} else if (type == Action.RIGHT_CLICK) {

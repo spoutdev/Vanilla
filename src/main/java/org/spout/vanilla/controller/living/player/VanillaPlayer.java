@@ -171,7 +171,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		Block head = getParent().getWorld().getBlock(getHeadPosition());
 		if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 			airTicks++;
-			ItemStack helmet = getInventory().getArmor().getHelmet();
+			ItemStack helmet = getInventory().getArmor().getHelmet().getItem();
 			int level = 0;
 			if (helmet != null && EnchantmentUtil.hasEnchantment(helmet, Enchantments.RESPIRATION)) {
 				level = EnchantmentUtil.getEnchantmentLevel(helmet, Enchantments.RESPIRATION);
@@ -299,7 +299,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
-		ItemStack[] contents = this.getInventory().getItems().getContents();
+		ItemStack[] contents = this.getInventory().getMain().getContents();
 		drops.addAll(Arrays.asList(contents));
 		return drops;
 	}
@@ -541,7 +541,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * Drops the player's current item.
 	 */
 	public void dropItem() {
-		ItemStack current = this.getInventory().getItems().getCurrentItem();
+		ItemStack current = this.getInventory().getQuickbar().getCurrentItem();
 		if (current == null) {
 			return;
 		}
@@ -553,7 +553,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		} else {
 			current = null;
 		}
-		this.getInventory().getItems().setCurrentItem(current);
+		this.getInventory().getQuickbar().setCurrentItem(current);
 		getParent().getWorld().createAndSpawnEntity(getHeadPosition().add(0.0, 0.4, 0.0), control);
 	}
 	

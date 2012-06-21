@@ -30,6 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.InventoryBase;
+import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -51,9 +52,9 @@ public class FlintAndSteel extends InteractTool {
 				clickedface = clickedface.getOpposite();
 				if (VanillaMaterials.FIRE.canPlace(target, (short) 0, clickedface, false)) {
 					if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, clickedface, false)) {
-						InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
+						InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
 						if (inv != null) {
-							inv.addCurrentItemData(1);
+							inv.addItemData(0, 1);
 						}
 					}
 				}

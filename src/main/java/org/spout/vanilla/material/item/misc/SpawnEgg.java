@@ -83,9 +83,9 @@ public class SpawnEgg extends VanillaItemMaterial {
 
 		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), controllerType.createController());
 		if (!((PlayerController) entity.getController()).hasInfiniteResources()) {
-			InventoryBase inventory = VanillaPlayerUtil.getInventory(entity);
-			if (inventory != null) {
-				inventory.addCurrentItemAmount(-1);
+			InventoryBase inv = VanillaPlayerUtil.getCurrentSlot(entity);
+			if (inv != null) {
+				inv.addItemAmount(0, -1);
 			}
 		}
 	}

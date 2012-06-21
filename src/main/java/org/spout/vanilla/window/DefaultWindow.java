@@ -37,7 +37,7 @@ public class DefaultWindow extends CraftingWindow {
 
 	public DefaultWindow(VanillaPlayer owner) {
 		super(-1, "Inventory", owner, owner.getInventory().getCraftingGrid());
-		this.setInventory(owner.getInventory().getItems(), owner.getInventory().getCraftingGrid(), owner.getInventory().getArmor());
+		this.setInventory(owner.getInventory().getMain(), owner.getInventory().getCraftingGrid(), owner.getInventory().getArmor());
 		this.setSlotIndexMap(SLOTS);
 	}
 

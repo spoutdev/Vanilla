@@ -32,8 +32,8 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
@@ -52,6 +52,7 @@ import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 import org.spout.vanilla.util.VanillaNetworkUtil;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacketsToNearbyPlayers;
 
@@ -84,8 +85,8 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			isInteractable = false;
 		}
 
-		InventoryBase inv = ((VanillaPlayer) player.getEntity().getController()).getInventory();
-		ItemStack heldItem = inv.getCurrentItem();
+		InventorySlot currentSlot = VanillaPlayerUtil.getCurrentSlot(player.getEntity());
+		ItemStack heldItem = currentSlot.getItem();
 		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
 
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {
@@ -140,9 +141,9 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 					short penalty = ((Tool) heldItem.getMaterial()).getDurabilityPenalty((Mineable) blockMaterial.getMaterial(), heldItem);
 					if (penalty != 0) {
 						if (heldItem.getData() - penalty < 1) {
-							inv.setCurrentItem(null);
+							currentSlot.setItem(null);
 						} else {
-							inv.addCurrentItemData(penalty);
+							currentSlot.addItemData(0, penalty);
 						}
 					}
 				}

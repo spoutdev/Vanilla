@@ -84,7 +84,6 @@ public class Chicken extends Creature implements Passive {
 	/**
 	 * Sets the time until the next egg spawns. Pass Chicken.NEVER to disable
 	 * egg spawning.
-	 * 
 	 * @param time
 	 */
 	public void setNextEggTime(int time) {

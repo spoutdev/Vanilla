@@ -122,13 +122,16 @@ public abstract class VanillaActionController extends Controller implements Vani
 	@Override
 	public void onTick(float dt) {
 		if (deathTicks > 0) {
-			if(getHealth() > 0) {
+			if (getHealth() > 0) {
 				deathTicks = 0;
 			} else {
 				deathTicks--;
 				if (deathTicks == 0) {
-					if (this instanceof PlayerController) deathTicks = 30;
-					else getParent().kill();
+					if (this instanceof PlayerController) {
+						deathTicks = 30;
+					} else {
+						getParent().kill();
+					}
 				}
 				return;
 			}

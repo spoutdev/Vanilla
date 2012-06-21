@@ -31,8 +31,8 @@ import java.util.HashMap;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.GenericMaterialSource;
@@ -83,12 +83,10 @@ public class EmptyContainer extends BlockItem {
 					return;
 				}
 
-				InventoryBase inv = VanillaPlayerUtil.getInventory(entity);
-				if (inv == null) {
-					return;
+				InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
+				if (inv != null) {
+					inv.setItem(new ItemStack(cont, 1));
 				}
-
-				inv.setCurrentItem(new ItemStack(cont, 1));
 				return;
 			}
 		}

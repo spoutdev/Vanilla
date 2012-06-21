@@ -29,8 +29,8 @@ package org.spout.vanilla.material.item;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
@@ -58,9 +58,9 @@ public class FullContainer extends BlockItem {
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteract(entity, block, type, clickedFace);
 
-		InventoryBase inventory = VanillaPlayerUtil.getInventory(block.getSource());
-		if (inventory != null && inventory.getCurrentItem() == null) {
-			inventory.setCurrentItem(new ItemStack(getContainer(), 1));
+		InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(block.getSource());
+		if (inv != null && inv.getItem() == null) {
+			inv.setItem(new ItemStack(getContainer(), 1));
 		}
 	}
 }

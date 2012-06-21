@@ -165,7 +165,7 @@ public class AdministrationCommands {
 
 		int count = args.getInteger(2, 1);
 
-		vplayer.getInventory().getItems().addItem(new ItemStack(material, data, count), false);
+		vplayer.getInventory().getMain().addItem(new ItemStack(material, data, count), false);
 
 		source.sendMessage("Gave " + vplayer.getPlayer().getName() + " " + count + " " + material.getSubMaterial(data).getDisplayName());
 	}

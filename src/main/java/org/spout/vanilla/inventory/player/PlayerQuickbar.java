@@ -24,29 +24,39 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window;
+package org.spout.vanilla.inventory.player;
 
 import org.spout.api.inventory.InventoryBase;
-import org.spout.vanilla.controller.TransactionWindowOwner;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.api.inventory.special.InventoryRange;
+import org.spout.api.inventory.special.InventorySlot;
 
-/**
- * This window contains the player inventory items with additional slots above
- */
-public class TransactionWindow extends Window {
+public class PlayerQuickbar extends InventoryRange {
+	private static final long serialVersionUID = 1L;
+	public static final int QUICKBAR_SIZE = 9;
+	private final InventorySlot[] slots;
 
-	public TransactionWindow(int id, String title, VanillaPlayer owner, TransactionWindowOwner... windowOwners) {
-		super(id, title, owner, windowOwners);
-		InventoryBase[] all = new InventoryBase[windowOwners.length + 1];
-		all[0] = owner.getInventory().getMain();
-		for (int i = 0; i < windowOwners.length; i++) {
-			all[i + 1] = windowOwners[i].getInventory();
+	public PlayerQuickbar(InventoryBase main) {
+		super(main, 0, QUICKBAR_SIZE);
+		this.slots = new InventorySlot[QUICKBAR_SIZE];
+		for (int i = 0; i < this.slots.length; i++) {
+			this.slots[i] = new InventorySlot(this, i);
 		}
-		this.setInventory(all);
 	}
 
-	@Override
-	public int getInventorySize() {
-		return this.getInventory().getSize() - this.getOwner().getInventory().getMain().getSize();
+	/**
+	 * Gets the inventory slot at a certain index
+	 * @param slot to obtain
+	 * @return the Inventory Slot
+	 */
+	public InventorySlot getSlotInventory(int slot) {
+		return this.slots[slot];
+	}
+
+	/**
+	 * Gets the currently selected Inventory slot
+	 * @return the selected Inventory Slot
+	 */
+	public InventorySlot getCurrentSlotInventory() {
+		return this.slots[this.getCurrentSlot()];
 	}
 }

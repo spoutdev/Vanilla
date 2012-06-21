@@ -45,6 +45,6 @@ public final class HeldItemChangeMessageHandler extends MessageHandler<HeldItemC
 			return;
 		}
 
-		((VanillaPlayer) player.getEntity().getController()).getInventory().setCurrentSlot(newSlot);
+		((VanillaPlayer) player.getEntity().getController()).getInventory().getQuickbar().setCurrentSlot(newSlot);
 	}
 }

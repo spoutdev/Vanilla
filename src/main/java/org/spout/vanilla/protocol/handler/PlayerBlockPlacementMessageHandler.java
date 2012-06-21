@@ -35,6 +35,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
@@ -66,8 +67,8 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 	public void handleServer(Session session, Player player, PlayerBlockPlacementMessage message) {
 		EventManager eventManager = session.getEngine().getEventManager();
 		World world = player.getEntity().getWorld();
-		InventoryBase inventory = VanillaPlayerUtil.getInventory(player.getEntity());
-		ItemStack holding = inventory.getCurrentItem();
+		InventorySlot currentSlot = VanillaPlayerUtil.getCurrentSlot(player.getEntity());
+		ItemStack holding = currentSlot.getItem();
 		Material holdingMat = holding == null ? null : holding.getSubMaterial();
 
 		/*
@@ -105,7 +106,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			}
 
 			//Perform interaction event
-			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), inventory.getCurrentItem(), Action.RIGHT_CLICK, false));
+			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.getItem(), Action.RIGHT_CLICK, false));
 
 			//Get the target block and validate 
 			BlockMaterial clickedMaterial = clickedBlock.getMaterial();
@@ -133,9 +134,9 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			if (holdingMat instanceof InteractTool && VanillaPlayerUtil.isSurvival(clickedBlock.getSource())) { //TODO Total hack and is BADDDDDD
 				short newDurability = ((short) (durability - ((InteractTool) holdingMat).getMaxDurability()));
 
-				inventory.addCurrentItemData(newDurability);
+				currentSlot.addItemData(0, newDurability);
 				if (((InteractTool) holdingMat).getMaxDurability() < 1 && durability != ((InteractTool) holdingMat).getMaxDurability()) { //TODO Total hack!!!
-					inventory.setCurrentItem(null); //Break a tool if their onInteract takes away durability. TODO Probably not the best place to do this...
+					currentSlot.setItem(null); //Break a tool if their onInteract takes away durability. TODO Probably not the best place to do this...
 				}
 			}
 
@@ -196,11 +197,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				if (toPlace.onPlacement(target, placedData, targetFace, target == clickedBlock)) {
 					//Remove block from inventory if not in creative mode.
 					if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
-						if (inventory.getCurrentItem().getAmount() > 1) {
-							inventory.addCurrentItemAmount(-1);
-						} else {
-							inventory.setCurrentItem(null);
-						}
+						currentSlot.addItemAmount(0, -1);
 					}
 				} else {
 					undoPlacement(player, clickedBlock, alterBlock);

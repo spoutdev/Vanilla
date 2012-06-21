@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.protocol.ChannelProcessor;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.ProcessorHandler;
@@ -34,7 +35,6 @@ import org.spout.api.protocol.ProcessorSetupMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
 public class EncryptionKeyResponseMessage extends Message implements ProcessorSetupMessage {
-
 	protected final byte[] encoded;
 	private final boolean locking;
 	private ChannelProcessor processor;

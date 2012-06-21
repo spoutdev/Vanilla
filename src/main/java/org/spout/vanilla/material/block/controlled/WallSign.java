@@ -30,7 +30,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 public class WallSign extends SignBase {
-
 	public WallSign(String name, int id) {
 		super(name, id);
 		// TODO Auto-generated constructor stub

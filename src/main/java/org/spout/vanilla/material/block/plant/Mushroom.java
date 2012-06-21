@@ -53,7 +53,7 @@ public class Mushroom extends GroundAttachable implements Plant {
 		super(name, id);
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 0);
 	}
-	
+
 	@Override
 	public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);

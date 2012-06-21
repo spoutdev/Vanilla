@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bouncycastle.crypto.CipherParameters;
+
 import org.spout.api.security.SecurityHandler;
 import org.spout.api.util.SpoutToStringStyle;
 
@@ -65,8 +66,8 @@ public final class EncryptionKeyRequestMessage extends EncryptionKeyResponseMess
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-		.append("encoded", encoded)
-		.append("sessionId", sessionId)
-		.toString();
+				.append("encoded", encoded)
+				.append("sessionId", sessionId)
+				.toString();
 	}
 }

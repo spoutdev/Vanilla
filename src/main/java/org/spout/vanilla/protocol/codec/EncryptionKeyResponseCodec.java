@@ -34,7 +34,6 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
 
 public class EncryptionKeyResponseCodec extends MessageCodec<EncryptionKeyResponseMessage> {
-	
 	public EncryptionKeyResponseCodec() {
 		super(EncryptionKeyResponseMessage.class, 0xFC);
 	}

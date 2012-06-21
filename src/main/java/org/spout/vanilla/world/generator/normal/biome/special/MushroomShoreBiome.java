@@ -34,7 +34,7 @@ public class MushroomShoreBiome extends MushroomBiome {
 		this.minDensityTerrainHeight = 64;
 		this.maxDensityTerrainHeight = 66;
 	}
-	
+
 	@Override
 	public String getName() {
 		return "Mushroom Island Shore";

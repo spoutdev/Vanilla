@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.material.block.misc.Torch;
 
 public class SignPost extends SignBase {

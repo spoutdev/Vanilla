@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory.player;
 
 import org.spout.api.inventory.InventoryBase;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventoryRange;
 import org.spout.api.inventory.special.InventorySlot;
 
@@ -34,6 +35,7 @@ public class PlayerQuickbar extends InventoryRange {
 	private static final long serialVersionUID = 1L;
 	public static final int QUICKBAR_SIZE = 9;
 	private final InventorySlot[] slots;
+	private int currentSlot = 0;
 
 	public PlayerQuickbar(InventoryBase main) {
 		super(main, 0, QUICKBAR_SIZE);
@@ -50,6 +52,39 @@ public class PlayerQuickbar extends InventoryRange {
 	 */
 	public InventorySlot getSlotInventory(int slot) {
 		return this.slots[slot];
+	}
+	
+	/**
+	 * Sets the quickbar slot index the player currently has selected
+	 * @param slotIndex to set to
+	 */
+	public void setCurrentSlot(int slotIndex) {
+		this.checkSlotRange(slotIndex);
+		this.currentSlot = slotIndex;
+	}
+	
+	/**
+	 * Gets the quickbar slot index the player currently has selected
+	 * @return slot index
+	 */
+	public int getCurrentSlot() {
+		return this.currentSlot;
+	}
+
+	/**
+	 * Sets the quickbar item the player currently has selected to the item
+	 * @param item to set to
+	 */
+	public void setCurrentItem(ItemStack item) {
+		this.setItem(this.getCurrentSlot(), item);
+	}
+
+	/**
+	 * Gets the quickbar item the player currently has selected
+	 * @return slot item
+	 */
+	public ItemStack getCurrentItem() {
+		return this.getItem(this.getCurrentSlot());
 	}
 
 	/**

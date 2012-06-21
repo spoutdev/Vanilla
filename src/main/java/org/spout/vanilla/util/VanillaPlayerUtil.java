@@ -28,7 +28,6 @@ package org.spout.vanilla.util;
 
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.block.BlockFace;
@@ -109,7 +108,7 @@ public class VanillaPlayerUtil {
 	 * @return the held item, or null if not found
 	 */
 	public static ItemStack getCurrentItem(Source source) {
-		InventoryBase inv = getInventory(source);
-		return inv == null ? null : inv.getCurrentItem();
+		InventorySlot inv = getCurrentSlot(source);
+		return inv == null ? null : inv.getItem();
 	}
 }

@@ -93,7 +93,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public VanillaPlayer(Player p, GameMode gameMode) {
 		super(p.getName());
-		setRenderedItemInHand(playerInventory.getCurrentItem());
+		setRenderedItemInHand(playerInventory.getQuickbar().getCurrentItem());
 		owner = p;
 		tabListName = owner.getName();
 		compassTarget = owner.getEntity().getWorld().getSpawnPoint().getPosition();
@@ -253,11 +253,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 				// Remove durability from each piece of armor
 				short penalty = cause.getDurabilityPenalty();
-				if (item.getData() - penalty < 1) {
-					getInventory().setCurrentItem(null);
-				} else {
-					getInventory().addCurrentItemData(penalty);
-				}
+				getInventory().getQuickbar().getCurrentSlotInventory().addItemData(0, penalty);
 			}
 		}
 

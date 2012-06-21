@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.block.BlockFace;
@@ -72,7 +71,7 @@ public class Jukebox extends ControlledMaterial implements Fuel, Mineable {
 			controller.eject();
 			InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
 			if (inv != null && controller.canPlay(inv.getItem())) {
-				controller.getInventory().setCurrentItem(inv.getItem().clone().setAmount(1));
+				controller.getInventory().addItem(inv.getItem().clone().setAmount(1));
 				controller.update();
 				if (VanillaPlayerUtil.isSurvival(entity)) {
 					inv.addItemAmount(0, -1);

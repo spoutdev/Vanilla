@@ -47,7 +47,7 @@ import org.spout.vanilla.world.generator.normal.NormalGenerator;
  * Populator ran at stage 2 of world generation which serves to smooth the
  * borders between biomes.
  */
-public class SmoothPopulator implements Populator {
+public class SmoothPopulator extends Populator {
 	// area to smooth per populate call
 	private final static byte SMOOTH_SIZE = 20;
 	private final static byte OFFSET;
@@ -70,6 +70,10 @@ public class SmoothPopulator implements Populator {
 		FLUIDS.add(VanillaMaterials.ICE);
 		IGNORED.add(VanillaMaterials.ICE);
 		IGNORED.add(VanillaMaterials.SNOW);
+	}
+
+	public SmoothPopulator() {
+		super(true);
 	}
 
 	@Override

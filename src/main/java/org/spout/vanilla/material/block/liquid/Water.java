@@ -48,12 +48,12 @@ public class Water extends Liquid {
 
 	@Override
 	public boolean hasFlowSource() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public int getLevel(Block block) {
-		if (block.getMaterial().equals(this)) {
+		if (this.isMaterial(block.getMaterial())) {
 			return 7 - (block.getData() & 0x7);
 		} else {
 			return -1;

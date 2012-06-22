@@ -87,7 +87,7 @@ public class Lava extends Liquid {
 
 	@Override
 	public int getLevel(Block block) {
-		if (block.getMaterial().equals(this)) {
+		if (this.isMaterial(block.getMaterial())) {
 			return (6 - (block.getData() & 0x6)) >> 1;
 		} else {
 			return -1;
@@ -108,7 +108,7 @@ public class Lava extends Liquid {
 
 	@Override
 	public boolean hasFlowSource() {
-		return true;
+		return false;
 	}
 
 	@Override

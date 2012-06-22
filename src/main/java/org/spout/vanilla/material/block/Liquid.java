@@ -76,14 +76,17 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 
 	private boolean onFlow(Block block) {
-		boolean flowed = false;
 		// Flow below, and if not possible, spread outwards
-		if (!this.onFlow(block, BlockFace.BOTTOM)) {
+		if (this.onFlow(block, BlockFace.BOTTOM)) {
+			return true;
+		} else {
+			boolean flowed = false;
+			//TODO: Find nearest hole and only flow into those directions
 			for (BlockFace face : BlockFaces.NESW) {
 				flowed |= this.onFlow(block, face);
 			}
+			return flowed;
 		}
-		return flowed;
 	}
 
 	/**
@@ -110,7 +113,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 			} else {
 				// Compare levels
 				if (level > this.getLevel(block)) {
-					if (this.flowing) {
+					if (material != this.getFlowingMaterial()) {
 						// Make sure the material is adjusted
 						block.setMaterial(this.getFlowingMaterial(), block.getData());
 					}
@@ -153,7 +156,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 
 	/**
-	 * Gets the maximum possible water level
+	 * Gets the maximum possible liquid level
 	 * @return the max level
 	 */
 	public abstract int getMaxLevel();
@@ -250,7 +253,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	 * @return True if is flowing down, False if not
 	 */
 	public boolean isFlowingDown(Block block) {
-		return LogicUtil.getBit(block.getData(), 0x8);
+		return block.isDataBitSet(0x8);
 	}
 
 	/**
@@ -285,22 +288,20 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 				this.setLevel(block, level - 1);
 				// Update blocks around
 				return true;
-			} else {
-				return this.onFlow(block);
+			}
+		} else {
+			// Update level of liquid
+			level = this.getReceivingLevel(block);
+			int oldlevel = this.getLevel(block);
+			if (level != oldlevel) {
+				this.setLevel(block, level);
+				if (level < oldlevel) {
+					// Update blocks around
+					block = block.setSource(this);
+					return true;
+				}
 			}
 		}
-		// Update level of liquid
-		level = this.getReceivingLevel(block);
-		int oldlevel = this.getLevel(block);
-		if (level != oldlevel) {
-			this.setLevel(block, level);
-			if (level < oldlevel) {
-				// Update blocks around
-				block = block.setSource(this);
-				return true;
-			}
-		}
-
 		return this.onFlow(block);
 	}
 

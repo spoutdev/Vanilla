@@ -183,35 +183,6 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 
 	/**
-	 * Gets the level a liquid receives from nearby blocks<br>
-	 * The level equals the expected level of the block specified
-	 * @param block of the liquid
-	 * @return the level, or negative if it has no liquids nearby to use
-	 */
-	public int getReceivingLevel(Block block) {
-		if (this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
-			return this.getMaxLevel();
-		} else {
-			int max = -2;
-			int counter = 0;
-			Block neigh;
-			for (BlockFace face : BlockFaces.NESW) {
-				neigh = block.translate(face);
-				if (this.isMaterial(neigh.getMaterial())) {
-					max = Math.max(max, this.getLevel(neigh) - 1);
-					if (this.hasFlowSource() && this.isSource(neigh) && !this.isFlowingDown(neigh)) {
-						counter++;
-						if (counter >= 2) {
-							return this.getMaxLevel();
-						}
-					}
-				}
-			}
-			return max;
-		}
-	}
-
-	/**
 	 * Gets the level of a liquid
 	 * @param block of the liquid
 	 * @return the level, or negative if it has no liquid
@@ -279,29 +250,49 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 
 	private boolean doPhysics(Block block) {
-		int level;
-		if (this.isSource(block)) {
-			level = this.getMaxLevel();
-			// Still flowing down?
-			if (this.isFlowingDown(block) && !this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
-				this.setFlowingDown(block, false);
-				this.setLevel(block, level - 1);
-				// Update blocks around
-				return true;
+		// Update flowing down state
+		if (this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
+			// Set non-source water blocks to flow down
+			if (!this.isSource(block)) {
+				this.setFlowingDown(block, true);
+				this.setLevel(block, this.getMaxLevel());
 			}
 		} else {
-			// Update level of liquid
-			level = this.getReceivingLevel(block);
+			// Undo state
+			if (this.isFlowingDown(block)) {
+				this.setFlowingDown(block, false);
+				this.setLevel(block, 0);
+			}
+		}
+		// Update liquid level for non-source blocks
+		if (!this.isSource(block)) {
+			int counter = 0;
 			int oldlevel = this.getLevel(block);
-			if (level != oldlevel) {
-				this.setLevel(block, level);
-				if (level < oldlevel) {
-					// Update blocks around
-					block = block.setSource(this);
+			int newlevel = -2;
+			Block neigh;
+			for (BlockFace face : BlockFaces.NESW) {
+				neigh = block.translate(face);
+				if (this.isMaterial(neigh.getMaterial())) {
+					newlevel = Math.max(newlevel, this.getLevel(neigh) - 1);
+					if (this.hasFlowSource() && this.isSource(neigh) && !this.isFlowingDown(neigh)) {
+						counter++;
+						if (counter >= 2) {
+							newlevel = this.getMaxLevel();
+							break;
+						}
+					}
+				}
+			}
+			// Compare old and new levels
+			if (newlevel != oldlevel) {
+				this.setLevel(block, newlevel);
+				if (newlevel < oldlevel) {
+					// Don't flow when level is reduced
 					return true;
 				}
 			}
 		}
+		// Flow outwards
 		return this.onFlow(block);
 	}
 

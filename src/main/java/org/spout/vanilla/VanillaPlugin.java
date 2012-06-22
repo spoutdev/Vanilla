@@ -128,7 +128,7 @@ public class VanillaPlugin extends CommonPlugin {
 		config = new VanillaConfiguration(getDataFolder());
 		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
 
-		if (engine.getPlatform() == Platform.SERVER) {
+		if (engine.getPlatform() == Platform.SERVER || engine.getPlatform() == Platform.PROXY) {
 			int port = 25565;
 			String[] split = engine.getAddress().split(":");
 			if (split.length > 1) {

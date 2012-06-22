@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RailsState;
@@ -88,7 +87,7 @@ public class PoweredRail extends RailBase implements RedstoneTarget {
 	 * @return True if powered, False if not
 	 */
 	public boolean isPowered(Block block) {
-		return LogicUtil.getBit(block.getData(), 0x8);
+		return block.isDataBitSet(0x8);
 	}
 
 	/**
@@ -97,7 +96,7 @@ public class PoweredRail extends RailBase implements RedstoneTarget {
 	 * @param powered Whether to power the block or not
 	 */
 	public void setPowered(Block block, boolean powered) {
-		block.setData(LogicUtil.setBit(block.getData(), 0x8, powered));
+		block.setDataBits(0x8, powered);
 	}
 
 	@Override

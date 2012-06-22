@@ -105,8 +105,8 @@ public class BedBlock extends VanillaBlockMaterial implements Mineable {
 	}
 
 	public void create(Block footBlock, Block headBlock, BlockFace facing) {
-		footBlock.setMaterial(this, (short) 0x0);
-		headBlock.setMaterial(this, (short) 0x8);
+		footBlock.setMaterial(this, 0x0);
+		headBlock.setMaterial(this, 0x8);
 		setFacing(footBlock, facing);
 		setFacing(headBlock, facing);
 	}
@@ -161,7 +161,7 @@ public class BedBlock extends VanillaBlockMaterial implements Mineable {
 		}
 		if (!bedBlock.getMaterial().equals(this)) {
 			//create default bed block to 'fix' things up
-			bedBlock.setMaterial(this, head ? (short) 0x8 : (short) 0x0);
+			bedBlock.setMaterial(this, head ? 0x8 : 0x0);
 			//find out what facing makes most sense
 			for (BlockFace face : BlockFaces.NESW) {
 				if (bedBlock.translate(face).getMaterial().equals(this)) {

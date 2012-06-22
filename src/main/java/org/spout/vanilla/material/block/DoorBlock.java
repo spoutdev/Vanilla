@@ -30,7 +30,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -94,7 +93,7 @@ public abstract class DoorBlock extends GroundAttachable implements Mineable, Op
 	 * @return the requested door half block
 	 */
 	private Block getCorrectHalf(Block doorBlock, boolean top) {
-		if (LogicUtil.getBit(doorBlock.getData(), 0x8)) {
+		if (doorBlock.isDataBitSet(0x8)) {
 			if (!top) {
 				doorBlock = doorBlock.translate(BlockFace.BOTTOM);
 			}
@@ -105,7 +104,7 @@ public abstract class DoorBlock extends GroundAttachable implements Mineable, Op
 		}
 		if (!doorBlock.getMaterial().equals(this)) {
 			//create default door block to 'fix' things up
-			doorBlock.setMaterial(this, top ? (short) 0x8 : (short) 0x0);
+			doorBlock.setMaterial(this, top ? 0x8 : 0x0);
 		}
 		return doorBlock;
 	}
@@ -128,17 +127,13 @@ public abstract class DoorBlock extends GroundAttachable implements Mineable, Op
 
 	@Override
 	public boolean isOpen(Block doorHalf) {
-		return LogicUtil.getBit(getCorrectHalf(doorHalf, false).getData(), 0x4);
+		return getCorrectHalf(doorHalf, false).isDataBitSet(0x4);
 	}
 
 	@Override
 	public void setOpen(Block doorHalf, boolean opened) {
 		doorHalf = getCorrectHalf(doorHalf, false);
-		short data = doorHalf.getData();
-		short newdata = LogicUtil.setBit(data, 0x4, opened);
-		if (data != newdata) {
-			doorHalf.setData(newdata);
-		}
+		doorHalf.setDataBits(0x4, opened);
 	}
 
 	@Override
@@ -154,7 +149,7 @@ public abstract class DoorBlock extends GroundAttachable implements Mineable, Op
 
 	public void create(Block bottomHalf, Block topHalf, BlockFace facing, boolean hingeLeft, boolean opened) {
 		topHalf.setMaterial(this, hingeLeft ? (short) 9 : (short) 8);
-		short bottomData = opened ? (short) 0x4 : (short) 0x0;
+		int bottomData = opened ? 0x4 : 0x0;
 		bottomData += BlockFaces.NESW.indexOf(facing, 0);
 		bottomHalf.setMaterial(this, bottomData);
 	}

@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -80,7 +79,7 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	 * @return True if it is the block half
 	 */
 	public boolean isTop(Block block) {
-		return LogicUtil.getBit(block.getData(), 0x8);
+		return block.isDataBitSet(0x8);
 	}
 
 	/**
@@ -89,12 +88,12 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	 * @param top state
 	 */
 	public void setTop(Block block, boolean top) {
-		block.setData(LogicUtil.setBit(block.getData(), 0x8, top));
+		block.setDataBits(0x8, top);
 	}
 
 	@Override
 	public Slab getSubMaterial(short data) {
-		return (Slab) super.getSubMaterial(LogicUtil.setBit(data, 0x8, false));
+		return (Slab) super.getSubMaterial(data);
 	}
 
 	@Override

@@ -27,7 +27,10 @@
 package org.spout.vanilla.material.block.portal;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Portal;
 import org.spout.vanilla.util.MoveReaction;
 
@@ -45,5 +48,66 @@ public class NetherPortal extends Portal {
 	@Override
 	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
+	}
+	
+	/**
+	 * Tries to create a portal model at the location given
+	 * @param bottomBlock of the portal (is Obsidian)
+	 * @return True if it was successful, False if not
+	 */
+	public boolean createPortal(Block bottomBlock) {
+		Block above = bottomBlock.translate(BlockFace.TOP);
+		// Find out what direction to create the portal to
+		BlockFace direction = null;
+		for (BlockFace face : BlockFaces.NESW) {
+			if (above.translate(face).isMaterial(VanillaMaterials.OBSIDIAN)) {
+				if (direction != null) {
+					// Two corners? Abort
+					return false;
+				} else {
+					direction = face.getOpposite();
+				}
+			}
+		}
+		if (direction == null) {
+			// Failed to find
+			return false;
+		}
+		// Validate the floor
+		if (!bottomBlock.isMaterial(VanillaMaterials.OBSIDIAN)) {
+			return false;
+		}
+		if (!bottomBlock.translate(direction).isMaterial(VanillaMaterials.OBSIDIAN)) {
+			return false;
+		}
+		// Validate the 3-height columns
+		Block corner1 = above.translate(direction.getOpposite());
+		Block corner2 = corner1.translate(direction, 3);
+		for (int i = 0; i < 3; i++) {
+			if (!corner1.isMaterial(VanillaMaterials.OBSIDIAN) || !corner2.isMaterial(VanillaMaterials.OBSIDIAN)) {
+				return false;
+			}
+			corner1 = corner1.translate(BlockFace.TOP);
+			corner2 = corner2.translate(BlockFace.TOP);
+		}
+		// Validate the roof
+		corner1 = bottomBlock.translate(BlockFace.TOP, 4);
+		corner2 = corner1.translate(direction);
+		if (!corner1.isMaterial(VanillaMaterials.OBSIDIAN)) {
+			return false;
+		}
+		if (!corner2.isMaterial(VanillaMaterials.OBSIDIAN)) {
+			return false;
+		}
+		// Validated, time to create the portal
+		corner1 = above;
+		corner2 = above.translate(direction);
+		for (int i = 0; i < 3; i++) {
+			corner1.setMaterial(this);
+			corner2.setMaterial(this);
+			corner1 = corner1.translate(BlockFace.TOP);
+			corner2 = corner2.translate(BlockFace.TOP);
+		}
+		return true;
 	}
 }

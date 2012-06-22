@@ -36,7 +36,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
@@ -80,11 +79,11 @@ public class Lever extends AbstractAttachable implements Mineable, RedstoneSourc
 	}
 
 	public boolean isDown(Block block) {
-		return LogicUtil.getBit(block.getData(), 0x8);
+		return block.isDataBitSet(0x8);
 	}
 
 	public void setDown(Block block, boolean toggled) {
-		block.setData(LogicUtil.setBit(block.getData(), 0x8, toggled));
+		block.setDataBits(0x8, toggled);
 	}
 
 	public void toggle(Block block) {

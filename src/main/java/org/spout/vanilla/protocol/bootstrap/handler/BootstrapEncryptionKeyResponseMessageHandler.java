@@ -79,7 +79,8 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 
 			Runnable runnable = new Runnable() {
 				public void run() {
-					if (false) {
+					final boolean useAuth = false;
+					if (useAuth) {
 						// this whole section needs to be moved into a Runnable and executed if authing works
 						String streamCipher = VanillaConfiguration.ENCRYPT_STREAM_ALGORITHM.getString();
 						String streamWrapper = VanillaConfiguration.ENCRYPT_STREAM_WRAPPER.getString();

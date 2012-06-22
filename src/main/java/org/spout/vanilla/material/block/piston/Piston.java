@@ -37,7 +37,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.PlusEffectRange;
 import org.spout.api.math.Vector3;
-import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -122,7 +121,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 			succ = this.retract(block);
 		}
 		if (succ) {
-			block.setData(LogicUtil.setBit(block.getData(), 0x8, extended));
+			block.setDataBits(0x8, extended);
 		}
 		return succ;
 	}
@@ -232,7 +231,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 	 * @return True if extended, False if not
 	 */
 	public boolean isExtended(Block block) {
-		return LogicUtil.getBit(block.getData(), 0x8);
+		return block.isDataBitSet(0x8);
 	}
 
 	@Override

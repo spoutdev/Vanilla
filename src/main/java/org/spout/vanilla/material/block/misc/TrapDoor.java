@@ -34,7 +34,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
@@ -97,12 +96,12 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Mineable, Open
 
 	@Override
 	public void setOpen(Block block, boolean open) {
-		block.setData(LogicUtil.setBit(block.getData(), 0x4, open));
+		block.setDataBits(0x4, open);
 	}
 
 	@Override
 	public boolean isOpen(Block block) {
-		return LogicUtil.getBit(block.getData(), 0x4);
+		return block.isDataBitSet(0x4);
 	}
 
 	@Override

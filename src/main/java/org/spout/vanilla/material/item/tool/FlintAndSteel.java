@@ -29,8 +29,8 @@ package org.spout.vanilla.material.item.tool;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.special.InventorySlot;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -45,10 +45,21 @@ public class FlintAndSteel extends InteractTool {
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
 		super.onInteract(entity, block, type, clickedface);
 		if (type == Action.RIGHT_CLICK) {
-			Block target = block.translate(clickedface);
-			if (target.getMaterial().equals(VanillaMaterials.TNT)) {
-				VanillaMaterials.TNT.onIgnite(target);
-			} else if (target.getMaterial().equals(VanillaMaterials.AIR)) {
+			BlockMaterial clickedmat = block.getMaterial();
+			if (clickedmat.equals(VanillaMaterials.TNT)) {
+				// Detonate TNT
+				VanillaMaterials.TNT.onIgnite(block);
+				return;
+			} else {
+				// Default fire creation
+				Block target = block.translate(clickedface);
+
+				// Handle the creation of portals
+				if (VanillaMaterials.PORTAL.createPortal(target.translate(BlockFace.BOTTOM))) {
+					return;
+				}
+
+				// Default fire placement
 				clickedface = clickedface.getOpposite();
 				if (VanillaMaterials.FIRE.canPlace(target, (short) 0, clickedface, false)) {
 					if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, clickedface, false)) {

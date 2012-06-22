@@ -37,7 +37,6 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
@@ -112,11 +111,11 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	}
 
 	public boolean isPressed(Block block) {
-		return LogicUtil.getBit(block.getData(), 0x8);
+		return block.isDataBitSet(0x8);
 	}
 
 	public void setPressed(Block block, boolean pressed) {
-		block.setData(LogicUtil.setBit(block.getData(), 0x8, pressed));
+		block.setDataBits(0x8, pressed);
 	}
 
 	@Override

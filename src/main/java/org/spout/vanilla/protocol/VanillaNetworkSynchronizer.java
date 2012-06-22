@@ -40,7 +40,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFullState;
 import org.spout.api.math.Quaternion;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;

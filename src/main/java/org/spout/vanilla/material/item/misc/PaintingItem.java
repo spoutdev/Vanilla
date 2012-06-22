@@ -31,7 +31,6 @@ import java.util.Random;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;

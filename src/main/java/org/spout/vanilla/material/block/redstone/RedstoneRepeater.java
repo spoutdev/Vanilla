@@ -37,7 +37,6 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -50,7 +49,6 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class RedstoneRepeater extends GroundAttachable implements Directional, Mineable, RedstoneSource, RedstoneTarget, DynamicMaterial {
 	private final boolean powered;
-	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(0, 0, 0)};
 
 	public RedstoneRepeater(String name, int id, boolean powered) {
 		super(name, id);

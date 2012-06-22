@@ -34,7 +34,6 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
@@ -56,7 +55,7 @@ public abstract class PressurePlate extends GroundAttachable implements Mineable
 	 * @return True if pressed down, False if not
 	 */
 	public boolean isPressed(Block block) {
-		return LogicUtil.getBit(block.getData(), 0x1);
+		return block.isDataBitSet(0x1);
 	}
 
 	/**
@@ -75,7 +74,7 @@ public abstract class PressurePlate extends GroundAttachable implements Mineable
 	 * @param doPhysics whether to perform redstone physics
 	 */
 	public void setPressed(Block block, boolean pressed, boolean doPhysics) {
-		block.setData(LogicUtil.setBit(block.getData(), 0x1, pressed));
+		block.setDataBits(0x1, pressed);
 		if (doPhysics) {
 			block.queueUpdate(EffectRange.THIS_AND_BELOW);
 		}

@@ -34,7 +34,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -109,11 +108,7 @@ public class FenceGate extends VanillaBlockMaterial implements Mineable, Openabl
 
 	@Override
 	public void setOpen(Block block, boolean open) {
-		short data = block.getData();
-		short newdata = LogicUtil.setBit(data, 0x4, open);
-		if (data != newdata) {
-			block.setData(newdata);
-		}
+		block.setDataBits(0x4, open);
 	}
 
 	@Override
@@ -125,7 +120,7 @@ public class FenceGate extends VanillaBlockMaterial implements Mineable, Openabl
 
 	@Override
 	public boolean isOpen(Block block) {
-		return LogicUtil.getBit(block.getData(), 0x4);
+		return block.isDataBitSet(0x4);
 	}
 
 	@Override

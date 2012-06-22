@@ -34,8 +34,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.math.Vector3;
-import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.util.RailsState;
@@ -43,7 +41,6 @@ import org.spout.vanilla.util.RedstonePowerMode;
 
 public class DetectorRail extends RailBase implements RedstoneSource, DynamicMaterial {
 	public static final int TICK_DELAY = 20;
-	private static final Vector3[] maxRange = new Vector3[]{new Vector3(0, 0, 0), new Vector3(1, 1, 1)};
 
 	public DetectorRail(String name, int id) {
 		super(name, id);
@@ -66,7 +63,7 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 	 * @return True if powered, False if not
 	 */
 	public boolean isPowering(Block block) {
-		return LogicUtil.getBit(block.getData(), 0x8);
+		return block.isDataBitSet(0x8);
 	}
 
 	/**
@@ -75,7 +72,7 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 	 * @param powering Whether the block is supplying power
 	 */
 	public void setPowering(Block block, boolean powering) {
-		block.setData(LogicUtil.setBit(block.getData(), 0x8, powering));
+		block.setDataBits(0x8, powering);
 	}
 
 	@Override

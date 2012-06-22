@@ -48,6 +48,7 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
+import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.util.OutwardIterator;
 
@@ -112,8 +113,10 @@ public class VanillaPlugin extends CommonPlugin {
 		//Events
 		engine.getEventManager().registerEvents(new VanillaListener(this), this);
 
-		//Worlds
-		setupWorlds();
+		if (engine.getPlatform() == Platform.SERVER) {
+			//Worlds
+			setupWorlds();
+		}
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
 	}
@@ -125,7 +128,7 @@ public class VanillaPlugin extends CommonPlugin {
 		config = new VanillaConfiguration(getDataFolder());
 		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
 
-		if (engine instanceof Server) {
+		if (engine.getPlatform() == Platform.SERVER) {
 			int port = 25565;
 			String[] split = engine.getAddress().split(":");
 			if (split.length > 1) {
@@ -137,8 +140,9 @@ public class VanillaPlugin extends CommonPlugin {
 			}
 
 			((Server) engine).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
+		} else if (engine.getPlatform() == Platform.CLIENT) {
+			//TODO if (engine instanceof Client) do stuff? | No, check engine.getPlatform()
 		}
-		//TODO if (engine instanceof Client) do stuff? | No, check engine.getPlatform()
 
 		VanillaMaterials.initialize();
 		getLogger().info("loaded");

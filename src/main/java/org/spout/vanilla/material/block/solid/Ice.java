@@ -32,6 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -46,7 +47,7 @@ import org.spout.vanilla.world.generator.nether.NetherGenerator;
 public class Ice extends Solid implements Mineable {
 	public Ice(String name, int id) {
 		super(name, id);
-		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 2);
+		this.setHardness(0.5F).setResistance(0.8F).setOcclusion(BlockFaces.NONE).setOpacity((byte) 2);
 	}
 
 	@Override
@@ -55,16 +56,22 @@ public class Ice extends Solid implements Mineable {
 	}
 
 	@Override
-	public void onDestroy(Block block, double dropChance) {
+	public void onDestroyBlock(Block block) {
 		if (!(block.getWorld().getGenerator() instanceof NetherGenerator) || block.translate(BlockFace.BOTTOM).getMaterial() != VanillaMaterials.AIR) {
 			// TODO Setting the source to world correct?
-			// Only set material to water source block if the block was not destroyed by an item with Silk Touch
-			ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
+			if (VanillaPlayerUtil.isCreative(block.getSource())) {
+				 // Do not turn into water when in creative
+			} else {
+				// Only set material to water source block if the block was not destroyed by an item with Silk Touch
+				ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
 
-			if (held == null || !(held.getMaterial() instanceof Tool) || !EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-				block.setMaterial(VanillaMaterials.STATIONARY_WATER);
+				if (held == null || !(held.getMaterial() instanceof Tool) || !EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+					block.setMaterial(VanillaMaterials.STATIONARY_WATER);
+					return;
+				}
 			}
 		}
+		block.setMaterial(VanillaMaterials.AIR);
 	}
 
 	@Override

@@ -32,10 +32,12 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.nbt.CompoundMap;
 
+import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
@@ -81,8 +83,11 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 				buffer.writeShort(VanillaMaterials.getMinecraftId(item.getMaterial()));
 				buffer.writeByte(item.getAmount());
 				buffer.writeShort(item.getData());
-				if (ChannelBufferUtils.hasNbtData(item.getData())) {
-					ChannelBufferUtils.writeCompound(buffer, item.getNBTData());
+				Material material = item.getMaterial();
+				if (material instanceof VanillaMaterial) {
+					if (((VanillaMaterial) material).hasNBTData()) {
+						ChannelBufferUtils.writeCompound(buffer, item.getNBTData());
+					}
 				}
 			}
 		}

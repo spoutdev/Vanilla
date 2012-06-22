@@ -32,7 +32,7 @@ public interface VanillaMaterial extends MaterialSource {
 	/**
 	 * Gets whether or not this material stores additional NBT tag data
 	 */
-	public boolean getNBTData();
+	public boolean hasNBTData();
 
 	/**
 	 * Gets the amount of damage this material can deal as an item

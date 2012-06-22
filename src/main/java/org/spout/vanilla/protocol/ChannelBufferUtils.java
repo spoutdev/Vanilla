@@ -323,7 +323,7 @@ public final class ChannelBufferUtils {
 		if (!(mat instanceof VanillaMaterial)) {
 			return false;
 		}
-		return ((VanillaMaterial) mat).getNBTData();
+		return ((VanillaMaterial) mat).hasNBTData();
 	}
 
 	public static int protocolifyPosition(float pos) {

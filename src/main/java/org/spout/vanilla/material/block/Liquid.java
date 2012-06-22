@@ -214,7 +214,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	 * @param flowing down state of the liquid
 	 */
 	public void setFlowingDown(Block block, boolean flowing) {
-		block.setDataBits((short) 0x8, flowing);
+		block.setDataBits(0x8, flowing);
 	}
 
 	/**
@@ -232,7 +232,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	 * @return True if it is a source, False if not
 	 */
 	public boolean isSource(Block block) {
-		return (block.getData() & 0x7) == 0x0;
+		return block.getDataField(0x7) == 0x0;
 	}
 
 	public boolean isFlowing() {

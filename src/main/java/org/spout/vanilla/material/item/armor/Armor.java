@@ -84,7 +84,7 @@ public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 	}
 
 	@Override
-	public boolean getNBTData() {
+	public boolean hasNBTData() {
 		return true;
 	}
 

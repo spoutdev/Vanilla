@@ -113,7 +113,7 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	}
 
 	@Override
-	public boolean getNBTData() {
+	public boolean hasNBTData() {
 		return true;
 	}
 

@@ -54,7 +54,7 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 		return minecraftId;
 	}
 
-	public boolean getNBTData() {
+	public boolean hasNBTData() {
 		return false;
 	}
 

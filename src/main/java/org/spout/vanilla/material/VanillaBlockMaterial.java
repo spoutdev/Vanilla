@@ -154,7 +154,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	@Override
-	public boolean getNBTData() {
+	public boolean hasNBTData() {
 		return false;
 	}
 

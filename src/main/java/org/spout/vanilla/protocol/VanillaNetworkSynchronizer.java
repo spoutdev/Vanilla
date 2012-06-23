@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.protocol;
 
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
-import gnu.trove.set.hash.TIntHashSet;
+import gnu.trove.set.TIntSet;
 
-import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.component.Controller;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -48,8 +49,9 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEventListener;
-import org.spout.api.util.map.TIntPairObjectHashMap;
-
+import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
+import org.spout.api.util.set.concurrent.TSyncIntHashSet;
+import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.data.Data;
@@ -76,8 +78,6 @@ import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
-
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
 	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
@@ -89,8 +89,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private final TIntObjectHashMap<Message> queuedInventoryUpdates = new TIntObjectHashMap<Message>();
 	private boolean first = true;
 	private long lastKeepAlive = System.currentTimeMillis();
-	private TIntPairObjectHashMap<TIntHashSet> initializedChunks = new TIntPairObjectHashMap<TIntHashSet>();
-	private TIntPairObjectHashMap<TIntHashSet> activeChunks = new TIntPairObjectHashMap<TIntHashSet>();
+	private TSyncIntPairObjectHashMap<TSyncIntHashSet> initializedChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
+	private TSyncIntPairHashSet activeChunks = new TSyncIntPairHashSet();
 
 	static {
 		int i = 0;
@@ -118,6 +118,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Point p = player.getEntity().getPosition();
 		p.getWorld().getChunkFromBlock(p);
 	}
+	
+	private Object initChunkLock = new Object();
 
 	@Override
 	protected void freeChunk(Point p) {
@@ -129,18 +131,15 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 
-		TIntHashSet column = initializedChunks.get(x, z);
-		TIntHashSet activeColumn = activeChunks.get(x, z);
+		TIntSet column = initializedChunks.get(x, z);
 		if (column != null) {
 			column.remove(y);
-			if (activeColumn != null) {
-				activeColumn.remove(y);
-			}
 			if (column.isEmpty()) {
-				activeChunks.remove(x, z);
-				initializedChunks.remove(x, z);
-				LoadChunkMessage unLoadChunk = new LoadChunkMessage(x, z, false);
-				owner.getSession().send(unLoadChunk);
+				if (initializedChunks.remove(x, z) != null) {
+					activeChunks.remove(x, z);
+					LoadChunkMessage unLoadChunk = new LoadChunkMessage(x, z, false);
+					owner.getSession().send(unLoadChunk);
+				}
 			}/* else {
 				byte[][] data = new byte[16][];
 				data[y] = AIR_CHUNK_DATA;
@@ -149,7 +148,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}*/
 		}
 	}
-
+	
 	@Override
 	protected void initChunk(Point p) {
 
@@ -161,17 +160,22 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 
-		TIntHashSet column = initializedChunks.get(x, z);
+		TSyncIntHashSet column = initializedChunks.get(x, z);
 		if (column == null) {
-			column = new TIntHashSet();
-			initializedChunks.put(x, z, column);
-			LoadChunkMessage LCMsg = new LoadChunkMessage(x, z, true);
-			owner.getSession().send(LCMsg);
+			column = new TSyncIntHashSet();
+			synchronized (initChunkLock) {
+				TSyncIntHashSet oldColumn = initializedChunks.putIfAbsent(x, z, column);
+				if (oldColumn == null) {
+					LoadChunkMessage LCMsg = new LoadChunkMessage(x, z, true);
+					owner.getSession().send(LCMsg);
+				} else {
+					column = oldColumn;
+				}
+			}
 		}
 		column.add(y);
-		
 	}
-
+	
 	private static BlockMaterial[][] getColumnTopmostMaterials(Point p) {
 		BlockMaterial[][] materials = new BlockMaterial[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
 
@@ -248,8 +252,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 		
-		TIntHashSet column = activeChunks.get(x, z);
-		if (column == null) {
+		initChunk(c.getBase());
+		
+		if (activeChunks.add(x, z)) {
 			Point p = c.getBase();
 			int[][] heights = getColumnHeights(p);
 			BlockMaterial[][] materials = getColumnTopmostMaterials(p);
@@ -260,8 +265,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				packetChunkData[cube] = getChunkHeightMap(heights, materials, cube);
 			}
 
-			column = new TIntHashSet();
-			activeChunks.put(x, z, column);
+			
 			LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
 			owner.getSession().send(loadChunk);
 
@@ -279,7 +283,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, new boolean[16], 0, packetChunkData, biomeData);
 			owner.getSession().send(CCMsg);
 		}
-		column.add(y);
 		
 		ChunkSnapshot snapshot = c.getSnapshot(false);
 		short[] rawBlockIdArray = snapshot.getBlockIds();

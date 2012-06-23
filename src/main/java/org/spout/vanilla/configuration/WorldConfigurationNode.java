@@ -36,7 +36,6 @@ import org.spout.api.util.config.MapConfiguration;
 
 public final class WorldConfigurationNode extends ConfigurationHolderConfiguration {
 	public final ConfigurationHolder LOAD = new ConfigurationHolder(true, "load");
-	public final ConfigurationHolder NAME = new ConfigurationHolder("world", "name");
 	public final ConfigurationHolder GENERATOR = new ConfigurationHolder("normal", "generator");
 	public final ConfigurationHolder LOADED_SPAWN = new ConfigurationHolder(true, "keep-spawn-loaded");
 	public final ConfigurationHolder GAMEMODE = new ConfigurationHolder("creative", "game-mode");
@@ -44,19 +43,17 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 	public final ConfigurationHolder SKY_TYPE = new ConfigurationHolder("normal", "sky-type");
 	public final ConfigurationHolder SPAWN_ANIMALS = new ConfigurationHolder(true, "spawn-animals");
 	public final ConfigurationHolder SPAWN_MONSTERS = new ConfigurationHolder(true, "spawn-monster");
-	private final String nodeName;
+	private final String name;
 	private final WorldConfiguration parent;
 
-	public WorldConfigurationNode(WorldConfiguration parent, String worldname, String nodeName) {
-		// Set the default configuration to prevent possible errors occurring
-		super(new MapConfiguration(parent.getNode("worlds", nodeName).getValues()));
+	public WorldConfigurationNode(WorldConfiguration parent, String worldname) {
+		super(new MapConfiguration(parent.getNode("worlds", worldname).getValues()));
 		this.parent = parent;
-		this.nodeName = nodeName;
-		this.NAME.setDefaultValue(worldname);
+		this.name = worldname;
 	}
 
-	public String getNodeName() {
-		return this.nodeName;
+	public String getWorldName() {
+		return this.name;
 	}
 
 	public WorldConfiguration getParent() {
@@ -71,14 +68,14 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 
 	@Override
 	public void load() throws ConfigurationException {
-		this.setConfiguration(new MapConfiguration(this.getParent().getNode("worlds", this.getNodeName()).getValues()));
+		this.setConfiguration(new MapConfiguration(this.getParent().getNode("worlds", this.getWorldName()).getValues()));
 		super.load();
 	}
 
 	@Override
 	public void save() throws ConfigurationException {
 		super.save();
-		ConfigurationNode node = this.getParent().getNode("worlds", this.getNodeName());
+		ConfigurationNode node = this.getParent().getNode("worlds", this.getWorldName());
 		for (Map.Entry<String, Object> entry : this.getValues().entrySet()) {
 			node.getNode(entry.getKey()).setValue(entry.getValue());
 		}

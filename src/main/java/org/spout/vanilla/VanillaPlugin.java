@@ -166,9 +166,9 @@ public class VanillaPlugin extends CommonPlugin {
 				} else if (generatorName.equalsIgnoreCase("theend") || generatorName.equalsIgnoreCase("the_end")) {
 					generator = new TheEndGenerator();
 				} else {
-					throw new IllegalArgumentException("Invalid generator name for world '" + worldNode.NAME.getString() + "': " + generatorName);
+					throw new IllegalArgumentException("Invalid generator name for world '" + worldNode.getWorldName() + "': " + generatorName);
 				}
-				World world = engine.loadWorld(worldNode.NAME.getString(), generator);
+				World world = engine.loadWorld(worldNode.getWorldName(), generator);
 
 				// Apply general settings
 				world.getDataMap().put(Data.GAMEMODE, GameMode.valueOf(worldNode.GAMEMODE.getString().toUpperCase()));
@@ -198,11 +198,12 @@ public class VanillaPlugin extends CommonPlugin {
 			int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
 			int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
 			oi.reset(cx, cy, cz, radius);
+			final String initChunkType = world.getAge() <= 0 ? "Generating" : "Loading";
 			while (oi.hasNext()) {
 				IntVector3 v = oi.next();
 				progress++;
 				if (progress % progressStep == 0) {
-					Spout.getLogger().info("Loading [" + world.getName() + "], " + (progress / progressStep) * 10 + "% Complete");
+					Spout.getLogger().info(initChunkType + " [" + world.getName() + "], " + (progress / progressStep) * 10 + "% Complete");
 				}
 				world.getChunk(v.getX(), v.getY(), v.getZ());
 			}

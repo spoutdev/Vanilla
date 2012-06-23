@@ -49,6 +49,7 @@ import org.spout.api.player.Player;
 import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.configuration.WorldConfigurationNode;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
@@ -100,22 +101,27 @@ public class VanillaListener implements Listener {
 	@EventHandler
 	public void onRegionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
+			
 		RegionSpawner spawner = new RegionSpawner(region);
 		region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
 
-		HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
-		grass.add(VanillaMaterials.GRASS);
-		spawner.addSpawnableType(VanillaControllerTypes.SHEEP, grass, 5);
+		WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(event.getWorld());
+		if (worldConfig.SPAWN_ANIMALS.getBoolean()) {
+			HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
+			grass.add(VanillaMaterials.GRASS);
+			spawner.addSpawnableType(VanillaControllerTypes.SHEEP, grass, 5);
 
-		spawner.addSpawnableType(VanillaControllerTypes.PIG, grass, 5);
+			spawner.addSpawnableType(VanillaControllerTypes.PIG, grass, 5);
 
-		spawner.addSpawnableType(VanillaControllerTypes.COW, grass, 5);
+			spawner.addSpawnableType(VanillaControllerTypes.COW, grass, 5);
 
-		spawner.addSpawnableType(VanillaControllerTypes.CHICKEN, grass, 5);
-
-		HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
-		endStone.add(VanillaMaterials.END_STONE);
-		spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
+			spawner.addSpawnableType(VanillaControllerTypes.CHICKEN, grass, 5);
+		}	
+		if (worldConfig.SPAWN_MONSTERS.getBoolean()) {
+			HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
+			endStone.add(VanillaMaterials.END_STONE);
+			spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
+		}
 	}
 
 	@EventHandler(order = Order.MONITOR)

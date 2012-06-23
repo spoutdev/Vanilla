@@ -27,42 +27,69 @@
 package org.spout.vanilla.configuration;
 
 import java.io.File;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.spout.api.util.config.ConfigurationHolder;
-import org.spout.api.util.config.ConfigurationHolderConfiguration;
+import org.spout.api.exception.ConfigurationException;
+import org.spout.api.geo.World;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 
-public class WorldConfiguration extends ConfigurationHolderConfiguration {
-	//Normal
-	public static final ConfigurationHolder NORMAL_LOAD = new ConfigurationHolder(true, "worlds", "normal", "load");
-	public static final ConfigurationHolder NORMAL_NAME = new ConfigurationHolder("world", "worlds", "normal", "name");
-	public static final ConfigurationHolder NORMAL_LOADED_SPAWN = new ConfigurationHolder(true, "worlds", "normal", "keep-spawn-loaded");
-	public static final ConfigurationHolder NORMAL_GAMEMODE = new ConfigurationHolder("creative", "worlds", "normal", "game-mode");
-	public static final ConfigurationHolder NORMAL_DIFFICULTY = new ConfigurationHolder("normal", "worlds", "normal", "difficulty");
-	public static final ConfigurationHolder NORMAL_SKY_TYPE = new ConfigurationHolder("normal", "worlds", "normal", "sky-type");
-	//Flat
-	public static final ConfigurationHolder FLAT_LOAD = new ConfigurationHolder(true, "worlds", "flat", "load");
-	public static final ConfigurationHolder FLAT_NAME = new ConfigurationHolder("world_flat", "worlds", "flat", "name");
-	public static final ConfigurationHolder FLAT_LOADED_SPAWN = new ConfigurationHolder(true, "worlds", "flat", "keep-spawn-loaded");
-	public static final ConfigurationHolder FLAT_GAMEMODE = new ConfigurationHolder("creative", "worlds", "flat", "game-mode");
-	public static final ConfigurationHolder FLAT_DIFFICULTY = new ConfigurationHolder("normal", "worlds", "flat", "difficulty");
-	public static final ConfigurationHolder FLAT_SKY_TYPE = new ConfigurationHolder("normal", "worlds", "flat", "sky-type");
-	//Nether
-	public static final ConfigurationHolder NETHER_LOAD = new ConfigurationHolder(true, "worlds", "nether", "load");
-	public static final ConfigurationHolder NETHER_NAME = new ConfigurationHolder("world_nether", "worlds", "nether", "name");
-	public static final ConfigurationHolder NETHER_LOADED_SPAWN = new ConfigurationHolder(true, "worlds", "nether", "keep-spawn-loaded");
-	public static final ConfigurationHolder NETHER_GAMEMODE = new ConfigurationHolder("creative", "worlds", "nether", "game-mode");
-	public static final ConfigurationHolder NETHER_DIFFICULTY = new ConfigurationHolder("normal", "worlds", "nether", "difficulty");
-	public static final ConfigurationHolder NETHER_SKY_TYPE = new ConfigurationHolder("nether", "worlds", "nether", "sky-type");
-	//END
-	public static final ConfigurationHolder END_LOAD = new ConfigurationHolder(true, "worlds", "the_end", "load");
-	public static final ConfigurationHolder END_NAME = new ConfigurationHolder("world_the_end", "worlds", "the_end", "name");
-	public static final ConfigurationHolder END_LOADED_SPAWN = new ConfigurationHolder(true, "worlds", "the_end", "keep-spawn-loaded");
-	public static final ConfigurationHolder END_GAMEMODE = new ConfigurationHolder("creative", "worlds", "the_end", "game-mode");
-	public static final ConfigurationHolder END_DIFFICULTY = new ConfigurationHolder("normal", "worlds", "the_end", "difficulty");
-	public static final ConfigurationHolder END_SKY_TYPE = new ConfigurationHolder("the_end", "worlds", "the_end", "sky-type");
+public class WorldConfiguration extends YamlConfiguration {
+	private final Map<String, WorldConfigurationNode> worldNodes = new HashMap<String, WorldConfigurationNode>();
+	public static WorldConfigurationNode NORMAL;
+	public static WorldConfigurationNode FLAT;
+	public static WorldConfigurationNode NETHER;
+	public static WorldConfigurationNode END;
 
 	public WorldConfiguration(File dataFolder) {
-		super(new YamlConfiguration(new File(dataFolder, "worlds.yml")));
+		super(new File(dataFolder, "worlds.yml"));
+		//TODO: Allow the creation of sub-sections for configuration holders
+		NORMAL = getOrCreate("normal").setDefaults("normal", "normal");
+		FLAT = getOrCreate("flat").setDefaults("normal", "flat");
+		NETHER = getOrCreate("nether").setDefaults("nether", "nether");
+		END = getOrCreate("the_end").setDefaults("the_end", "the_end");
+	}
+
+	public Collection<WorldConfigurationNode> getAll() {
+		return worldNodes.values();
+	}
+
+	public WorldConfigurationNode getOrCreate(World world) {
+		return getOrCreate(world.getName());
+	}
+
+	public WorldConfigurationNode getOrCreate(String worldname) {
+		return getOrCreate(worldname, null);
+	}
+
+	public WorldConfigurationNode getOrCreate(String worldname, String nodeName) {
+		synchronized (worldNodes) {
+			WorldConfigurationNode node = worldNodes.get(worldname);
+			if (node == null) {
+				if (nodeName == null) {
+					nodeName = "world_" + worldname;
+				}
+				node = new WorldConfigurationNode(this, worldname, nodeName);
+				worldNodes.put(worldname, node);
+			}
+			return node;
+		}
+	}
+
+	@Override
+	public void load() throws ConfigurationException {
+		super.load();
+		for (WorldConfigurationNode node : getAll()) {
+			node.load();
+		}
+	}
+
+	@Override
+	public void save() throws ConfigurationException {
+		for (WorldConfigurationNode node : getAll()) {
+			node.save();
+		}
+		super.save();
 	}
 }

@@ -45,7 +45,7 @@ public class WorldConfiguration extends YamlConfiguration {
 	public WorldConfiguration(File dataFolder) {
 		super(new File(dataFolder, "worlds.yml"));
 		//TODO: Allow the creation of sub-sections for configuration holders
-		NORMAL = getOrCreate("world_normal").setDefaults("normal", "normal");
+		NORMAL = getOrCreate("world").setDefaults("normal", "normal");
 		FLAT = getOrCreate("world_flat").setDefaults("normal", "flat");
 		NETHER = getOrCreate("world_nether").setDefaults("nether", "nether");
 		END = getOrCreate("world_the_end").setDefaults("the_end", "the_end");

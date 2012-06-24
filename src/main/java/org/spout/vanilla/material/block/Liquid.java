@@ -45,6 +45,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial, Source {
 	private final boolean flowing;
 	private static boolean useDelay = false; //TODO: This is here to prevent a lot of problems...
+	public static final int MAX_HOLE_DISTANCE = 5;
 
 	public Liquid(String name, int id, boolean flowing) {
 		super(name, id);
@@ -79,10 +80,30 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		if (this.onFlow(block, BlockFace.BOTTOM)) {
 			return true;
 		} else {
-			boolean flowed = false;
-			//TODO: Find nearest hole and only flow into those directions
+			// Find out all the hole distance
+			int distance = Integer.MAX_VALUE;
+			int i = 0;
+			int[] distances = new int[4];
 			for (BlockFace face : BlockFaces.NESW) {
-				flowed |= this.onFlow(block, face);
+				distances[i] = this.getHoleDistance(block.translate(face));
+				if (distances[i] != -1 && distances[i]  < distance) {
+					distance = distances[i];
+				}
+				i++;
+			}
+			boolean flowed = false;
+			if (distance == Integer.MAX_VALUE) {
+				// No hole found, flow in all directions
+				for (BlockFace face : BlockFaces.NESW) {
+					flowed |= this.onFlow(block, face);
+				}
+			} else {
+				// Flow to all matching directions
+				for (i = 0; i < distances.length; i++) {
+					if (distances[i] != -1 && distances[i] <= distance) {
+						flowed |= this.onFlow(block, BlockFaces.NESW.get(i));
+					}
+				}
 			}
 			return flowed;
 		}
@@ -124,16 +145,20 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 					return true;
 				}
 			}
-		} else {
-			if (material instanceof VanillaBlockMaterial) {
-				if (((VanillaBlockMaterial) material).isLiquidObstacle()) {
-					return false;
-				}
-			} else if (material.isPlacementObstacle()) {
-				return false;
-			}
+		} else if (!isLiquidObstacle(material)) {
 			// Create a new liquid
 			this.onSpread(block, level, to.getOpposite());
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isLiquidObstacle(BlockMaterial material) {
+		if (material instanceof VanillaBlockMaterial) {
+			if (((VanillaBlockMaterial) material).isLiquidObstacle()) {
+				return true;
+			}
+		} else if (material.isPlacementObstacle()) {
 			return true;
 		}
 		return false;
@@ -246,6 +271,49 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
+	}
+
+	/**
+	 * Gets the distance to the nearest hole<br>
+	 * Returns -1 if no hole was found
+	 * @param from which block to start looking
+	 * @return the hole distance
+	 */
+	public int getHoleDistance(Block from) {
+		return getHoleDistance(from, 0, MAX_HOLE_DISTANCE);
+	}
+
+	/**
+	 * Gets the distance to the nearest hole<br>
+	 * Returns -1 if no hole was found
+	 * @param from which block to start looking
+	 * @param currentDistance to compare with maxDistance
+	 * @param maxDistance after which to stop searching
+	 * @return the hole distance
+	 */
+	public int getHoleDistance(Block from, int currentDistance, int maxDistance) {
+		//TODO: Try to implement this system in a model-like structure, like explosion models
+		if (currentDistance >= maxDistance || isLiquidObstacle(from.getMaterial())) {
+			// Break
+			return -1;
+		} else if (!isLiquidObstacle(from.translate(BlockFace.BOTTOM).getMaterial())) {
+			// Found a hole
+			return 0;
+		}
+		currentDistance++;
+		int distance = Integer.MAX_VALUE;
+		int selfDistance;
+		for (BlockFace face : BlockFaces.NESW) {
+			selfDistance = getHoleDistance(from.translate(face), currentDistance, maxDistance);
+			if (selfDistance != -1 && selfDistance < distance) {
+				distance = selfDistance;
+			}
+		}
+		if (distance == Integer.MAX_VALUE) {
+			return -1;
+		} else {
+			return distance + 1;
+		}
 	}
 
 	private boolean doPhysics(Block block) {

@@ -40,6 +40,8 @@ import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 
 public class VanillaNetworkUtil {
+	public static int BLOCK_EFFECT_RANGE = 16;
+
 	/**
 	 * This method takes any amount of messages and sends them to every online player on the server.
 	 * @param messages
@@ -98,7 +100,17 @@ public class VanillaNetworkUtil {
 	 * @param effect The effect to play
 	 */
 	public static void playBlockEffect(Block block, Entity ignore, PlayEffectMessage.Messages effect) {
-		playBlockEffect(block, ignore, 16, effect, 0);
+		playBlockEffect(block, ignore, BLOCK_EFFECT_RANGE, effect, 0);
+	}
+
+	/**
+	 * This method sends an effect play message for a block to all nearby players in a 16-block radius
+	 * @param block The block that the effect comes from.
+	 * @param effect The effect to play
+	 * @param data The data to use for the effect
+	 */
+	public static void playBlockEffect(Block block, Entity ignore, PlayEffectMessage.Messages effect, int data) {
+		sendPacketsToNearbyPlayers(block.getPosition(), ignore, BLOCK_EFFECT_RANGE, new PlayEffectMessage(effect.getId(), block, data));
 	}
 
 	/**

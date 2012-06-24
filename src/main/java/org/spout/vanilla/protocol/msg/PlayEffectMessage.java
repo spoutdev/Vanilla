@@ -98,6 +98,8 @@ public final class PlayEffectMessage extends Message {
 				.isEquals();
 	}
 
+	public static int SMOKE_MIDDLE = 4;
+
 	public static enum Messages {
 		RANDOM_CLICK_1(1000), RANDOM_CLICK_2(1001), RANDOM_BOW(1002), RANDOM_DOOR(1003), RANDOM_FIZZ(1004), MUSIC_DISC(1005),
 		GHAST_CHARGE(1007), GHAST_FIREBALL(1008), ZOMBIE_DAMAGE_WOOD(1010), ZOMBIE_DAMAGE_METAL(1011), ZOMBIE_BREAK(1012),

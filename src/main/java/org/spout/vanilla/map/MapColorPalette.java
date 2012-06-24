@@ -26,14 +26,57 @@
  */
 package org.spout.vanilla.map;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
+
 import org.spout.api.math.MathHelper;
+import org.spout.api.resource.ResourceNotFoundException;
 
 public class MapColorPalette {
-	private static final byte[] colorPalette;
+	private static final byte[] colorPalette = new byte[128 * 256 * 256];
+	private static final String PALETTERESOURCE = "mapColorPalette.dat"; //TODO: Get correct path
+	private static boolean initialized = false;
 
-	static {
-		// Generate Color Palette
-		colorPalette = new byte[128 * 256 * 256];
+	public static void initialize() {
+		if (initialized) {
+			return;
+		}
+		boolean canLoad = false; // Resources are failing in Spout...
+		if (!canLoad) {
+			return;
+		}
+		try {
+			InputStream stream = MapColorPalette.class.getResourceAsStream(PALETTERESOURCE);
+			if (stream == null) {
+				throw new ResourceNotFoundException("Failed to find Map Color Palette resource '" + PALETTERESOURCE + "'!");
+			} else {
+				stream = new GZIPInputStream(MapColorPalette.class.getResourceAsStream(PALETTERESOURCE));
+				try {
+					if (stream.read(colorPalette) != colorPalette.length) {
+						throw new ResourceNotFoundException("Failed to read Map Color Palette resource '" + PALETTERESOURCE + "': invalid size!");
+					}
+				} finally {
+					stream.close();
+				}
+			}
+		} catch (Exception ex) {
+			throw new ResourceNotFoundException("Failed to read Map Color Palette resource '" + PALETTERESOURCE + "': " + ex.getMessage());
+		} finally {
+			initialized = true;
+		}
+	}
+
+	/**
+	 * Generates a new Palette file (only used to generate the included file)
+	 * @param outputFile to write the palette to
+	 */
+	public static void generatePaletteFile(File outputFile) {
+		// Generate new Color Palette
+		byte[] colorPalette = new byte[128 * 256 * 256];
 		int r, g, b;
 		float rf, gf, bf;
 		double diff, nearestDiff;
@@ -68,6 +111,18 @@ public class MapColorPalette {
 					}
 				}
 			}
+		}
+
+		// Write to file
+		try {
+			GZIPOutputStream stream = new GZIPOutputStream(new FileOutputStream(outputFile));
+			try {
+				stream.write(colorPalette);
+			} finally {
+				stream.close();
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 	}
 

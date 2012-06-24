@@ -64,6 +64,7 @@ import org.spout.vanilla.data.Data;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.map.MapColorPalette;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
@@ -146,6 +147,7 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 
 		VanillaMaterials.initialize();
+		MapColorPalette.initialize();
 		getLogger().info("loaded");
 	}
 

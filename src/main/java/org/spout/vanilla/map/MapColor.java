@@ -47,18 +47,6 @@ public class MapColor {
 	}
 
 	/**
-	 * Gets the map color nearest to the RGB color specified<br>
-	 * Note: This is a slow function
-	 * @param r component of the color (0F - 1F)
-	 * @param g component of the color (0F - 1F)
-	 * @param b component of the color (0F - 1F)
-	 * @return the MapColor nearest to the color
-	 */
-	public static MapColor getByRGB(float r, float g, float b) {
-		return MapColorPalette.getColor(r, g, b);
-	}
-
-	/**
 	 * Gets a map color by color ID
 	 * @param id of the color
 	 * @return Map Color

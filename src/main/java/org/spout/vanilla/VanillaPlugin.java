@@ -64,11 +64,12 @@ import org.spout.vanilla.data.Data;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.map.MapColorPalette;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
+import org.spout.vanilla.resources.MapPalette;
+import org.spout.vanilla.resources.loader.MapPaletteLoader;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -129,6 +130,7 @@ public class VanillaPlugin extends CommonPlugin {
 		engine = getEngine();
 		config = new VanillaConfiguration(getDataFolder());
 		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
+		Spout.getFilesystem().registerLoader("mappalette", new MapPaletteLoader());
 
 		if (engine.getPlatform() == Platform.SERVER || engine.getPlatform() == Platform.PROXY) {
 			int port = 25565;
@@ -147,7 +149,7 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 
 		VanillaMaterials.initialize();
-		MapColorPalette.initialize();
+		MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/resources/map/mapColorPalette.dat");
 		getLogger().info("loaded");
 	}
 

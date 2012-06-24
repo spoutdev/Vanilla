@@ -68,7 +68,7 @@ public class Map {
 	public boolean isChanged() {
 		return this.changed;
 	}
-	
+
 	/**
 	 * Sets the map color at the coordinates to the map color specified
 	 * @param x coordinate

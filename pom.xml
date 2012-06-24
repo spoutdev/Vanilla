@@ -50,7 +50,7 @@
 	<!-- Issue management -->
 	<issueManagement>
 		<system>jira</system>
-		<url>http://issues.spout.org/browse/VANILLA</url>
+		<url>http://issues.spout.org/browse/Vanilla</url>
 	</issueManagement>
 
 	<!-- Repository locations -->

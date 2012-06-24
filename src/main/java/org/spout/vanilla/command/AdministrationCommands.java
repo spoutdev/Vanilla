@@ -458,7 +458,6 @@ public class AdministrationCommands {
 	public void getVersion(CommandContext args, CommandSource source) {
 		source.sendMessage("Vanilla " + plugin.getDescription().getVersion() + " (Implementing Minecraft protocol v" + plugin.getDescription().getData("protocol").get() + ")");
 		source.sendMessage("Powered by Spout " + Spout.getEngine().getVersion() + " (Implementing SpoutAPI " + Spout.getAPIVersion() + ")");
-		source.sendMessage("Copyright (c) 2011-2012, VanillaDev <http://www.spout.org/>");
 	}
 
 	@Command(aliases = {"biome"}, usage = "", desc = "Print out the name of the biome at the current location", min = 0, max = 0)

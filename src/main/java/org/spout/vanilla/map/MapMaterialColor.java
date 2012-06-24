@@ -46,9 +46,9 @@ public enum MapMaterialColor {
 	protected final MapColor[] levels;
 
 	private MapMaterialColor(int r, int g, int b) {
-		this.r = (float) r / 256F;
-		this.g = (float) g / 256F;
-		this.b = (float) b / 256F;
+		this.r = (float) r / 255F;
+		this.g = (float) g / 255F;
+		this.b = (float) b / 255F;
 		this.levels = new MapColor[4];
 	}
 
@@ -112,7 +112,7 @@ public enum MapMaterialColor {
 	 * Gets the ID of this material map color
 	 * @return the id
 	 */
-	public int getId() {
-		return this.ordinal();
+	public byte getId() {
+		return (byte) this.ordinal();
 	}
 }

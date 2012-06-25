@@ -28,20 +28,19 @@ package org.spout.vanilla.world.generator.normal;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.world.generator.VanillaBiomeGenerator;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.populator.SmoothPopulator;
 import org.spout.vanilla.world.selector.VanillaBiomeSelector;
 
-public class NormalGenerator extends BiomeGenerator implements VanillaGenerator {
+public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGenerator {
 	private BiomeSelector selector;
 	public final static int SEA_LEVEL = 63;
 

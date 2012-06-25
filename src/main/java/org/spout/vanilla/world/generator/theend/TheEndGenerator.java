@@ -28,18 +28,17 @@ package org.spout.vanilla.world.generator.theend;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.world.generator.VanillaBiomeGenerator;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 
-public class TheEndGenerator extends BiomeGenerator implements VanillaGenerator {
+public class TheEndGenerator extends VanillaBiomeGenerator implements VanillaGenerator {
 	private final static int SEA_LEVEL = 63;
 
 	@Override

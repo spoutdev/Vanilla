@@ -47,7 +47,6 @@ If you do not already have repo.spout.org in your repository list, you will need
 
     <repository>
         <id>spout-repo</id>
-        <name>Spout project maven repo</name>
         <url>https://repo.spout.org</url>
     </repository>
 

@@ -32,51 +32,57 @@ import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.player.Player;
 
-public class PlayerBedEvent extends PlayerEvent implements Cancellable {
+/**
+ * Event called when a player interacts with a bed.
+ */
+public class PlayerBedInteractionEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private Block bed;
-	private boolean entered;
 
-	public PlayerBedEvent(Player p, Block bed) {
-		super(p);
-		this.bed = bed;
-		entered = false;
+	private final Player player;
+	private final Block bedBlock;
+	private PlayerBedInteractionType type;
+
+	public PlayerBedInteractionEvent(Player player, Block bedBlock, PlayerBedInteractionType type) {
+		super(player);
+		this.player = player;
+		this.bedBlock = bedBlock;
+		this.type = type;
 	}
 
 	/**
-	 * Returns the bed block involved in this event.
-	 * @return the bed block involved in this event
+	 * Gets the player interacting with the bed.
+	 *
+	 * @return The Player interacting with the bed.
 	 */
-	public Block getBed() {
-		return bed;
-	}
-
-	public void setBed(Block bed) {
-		this.bed = bed;
+	public Player getPlayer() {
+		return player;
 	}
 
 	/**
-	 * Gets if the player entered the bed.
-	 * @return True if the bed was entered.
+	 * Gets the bed block being interacted with.
+	 *
+	 * @return The bed Block being interacted with.
 	 */
-	public boolean isEntered() {
-		return entered;
+	public Block getBedBlock() {
+		return bedBlock;
 	}
 
 	/**
-	 * Gets if the player left the bed.
-	 * @return False if the bed was left.
+	 * Gets the type of interaction of this event.
+	 *
+	 * @return The PlayerBedInteractionType of this event.
 	 */
-	public boolean isLeft() {
-		return !entered;
+	public PlayerBedInteractionType getType() {
+		return type;
 	}
 
 	/**
-	 * Sets if a player has entered the bed.
-	 * @param entered The new status of if the player has entered a bed (true or false).
+	 * Sets the type of interaction this event should be.
+	 *
+	 * @param type The PlayerBedInteractionType this event should be.
 	 */
-	public void setEntered(boolean entered) {
-		this.entered = entered;
+	public void setType(PlayerBedInteractionType type) {
+		this.type = type;
 	}
 
 	@Override
@@ -91,5 +97,23 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 
 	public static HandlerList getHandlerList() {
 		return handlers;
+	}
+
+	/**
+	 * An enum to specify the types of player/bed interactions.
+	 */
+	public enum PlayerBedInteractionType {
+		/**
+		 * When a player is entering a bed.
+		 */
+		ENTERING,
+		/**
+		 * When a player is exiting a bed.
+		 */
+		EXITING,
+		/**
+		 * A custom interaction type (for use with plugins).
+		 */
+		CUSTOM
 	}
 }

@@ -31,6 +31,11 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.player.Player;
 
+import org.spout.vanilla.controller.source.LevelChangeReason;
+
+/**
+ * Event called when a player's level changes.
+ */
 public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private int previousLevel, newLevel;
@@ -95,23 +100,5 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 
 	public static HandlerList getHandlerList() {
 		return handlers;
-	}
-
-	/**
-	 * An enum to specify the reason behind the level change
-	 */
-	public enum LevelChangeReason {
-		/**
-		 * Change in food level
-		 */
-		FOOD,
-		/**
-		 * Change in experience level
-		 */
-		EXP,
-		/**
-		 * A custom reason (normally a plugin)
-		 */
-		CUSTOM
 	}
 }

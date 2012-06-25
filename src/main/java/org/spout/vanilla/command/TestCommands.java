@@ -55,8 +55,11 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.source.ExperienceChangeReason;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.effect.type.Speed;
+import org.spout.vanilla.protocol.msg.ChatMessage;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.VanillaObjects;
 import org.spout.vanilla.world.generator.normal.object.RandomObject;
@@ -354,5 +357,36 @@ public class TestCommands {
 		Player player = (Player) source;
 		Entity entity = player.getEntity();
 		entity.getWorld().createAndSpawnEntity(entity.getPosition(), new Human(args.getString(0)));
+	}
+
+	@Command(aliases = "exp", desc = "Grants experience", min = 1, max = 1)
+	public void exp(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("Only a player may be granted experience");
+		}
+
+		Controller controller = ((Player) source).getEntity().getController();
+		if (controller instanceof VanillaPlayer) {
+			((VanillaPlayer) controller).setExperience(((VanillaPlayer) controller).getExperience() + args.getInteger(0), ExperienceChangeReason.UNKNOWN);
+			source.sendMessage("You have received experience.");
+		}
+	}
+
+	@Command(aliases = "poison", desc = "Poisons/unpoisons the player", min = 1, max = 1)
+	public void poison(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("Only a player may be poisoned/unpoisoned.");
+		}
+
+		Controller controller = ((Player) source).getEntity().getController();
+		if (controller instanceof VanillaPlayer) {
+			if (args.getInteger(0) == 1) {
+				((VanillaPlayer) controller).setPoisoned(true);
+				source.sendMessage("You have been poisoned!");
+			} else {
+				((VanillaPlayer) controller).setPoisoned(false);
+				source.sendMessage("Poison effect has been removed.");
+			}
+		}
 	}
 }

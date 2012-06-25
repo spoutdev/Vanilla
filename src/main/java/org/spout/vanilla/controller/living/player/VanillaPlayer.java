@@ -34,6 +34,7 @@ import org.spout.api.Source;
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.controller.PlayerController;
+import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
@@ -46,8 +47,15 @@ import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
+import org.spout.vanilla.controller.source.ExperienceChangeReason;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.controller.source.LevelChangeReason;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.event.player.PlayerDropItemEvent;
+import org.spout.vanilla.event.player.PlayerExperienceChangeEvent;
+import org.spout.vanilla.event.player.PlayerGameModeChangeEvent;
+import org.spout.vanilla.event.player.PlayerLevelChangeEvent;
+import org.spout.vanilla.event.player.PlayerPoisonStatusChangeEvent;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -56,6 +64,7 @@ import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
+import org.spout.vanilla.protocol.msg.SetExperienceMessage;
 import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
@@ -74,6 +83,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected final Player owner;
 	protected long unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt(), lastPing = 0, lastUserList = 0, foodTimer = 0;
 	protected short count = 0, ping, hunger = 20;
+	protected int experience = 0, score = 0, level = 0;
 	protected float foodSaturation = 5.0f, exhaustion = 0.0f;
 	protected boolean poisoned;
 	protected boolean flying;
@@ -250,14 +260,21 @@ public class VanillaPlayer extends Human implements PlayerController {
 			if (item != null && item.getMaterial() instanceof Armor) { // Ignore pumpkins
 				Armor armor = (Armor) item.getMaterial();
 				amt -= .04 * (armor.getBaseProtection() + armor.getProtection(item, cause)); // Each protection point reduces damage by 4%
-
+			}
+		}
+		EntityHealthChangeEvent event = Spout.getEventManager().callEvent(new EntityHealthChangeEvent(getPlayer().getEntity(), cause, (int) -Math.ceil(amt)));
+		if (event.isCancelled()) {
+			return;
+		}
+		for (ItemStack item : getInventory().getArmor().getContents()) {
+			if (item != null && item.getMaterial() instanceof Armor) {
 				// Remove durability from each piece of armor
 				short penalty = cause.getDurabilityPenalty();
 				getInventory().getQuickbar().getCurrentSlotInventory().addItemData(0, penalty);
 			}
 		}
 
-		super.damage((int) Math.ceil(amt), cause, damager, sendHurtMessage);
+		super.damage(-event.getChange(), (DamageCause) event.getSource(), damager, sendHurtMessage);
 	}
 
 	@Override
@@ -273,6 +290,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (owner.getSession() != null && owner.getSession().getPlayer() != null) {
 			super.onDeath();
 			playerDead = true;
+			level = 0;
+			experience = 0;
 		}
 	}
 
@@ -415,8 +434,14 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @param gameMode
 	 */
 	public void setGameMode(GameMode gameMode) {
-		this.gameMode = gameMode;
-		sendPacket(owner, new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, gameMode));
+		PlayerGameModeChangeEvent event = Spout.getEventManager().callEvent(new PlayerGameModeChangeEvent(getPlayer(), this.gameMode, gameMode));
+		if (event.isCancelled()) {
+			return;
+		}
+		if (this.gameMode != event.getNewMode()) {
+			this.gameMode = event.getNewMode();
+			sendPacket(owner, new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, this.gameMode));
+		}
 	}
 
 	/**
@@ -440,7 +465,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @param poisoned
 	 */
 	public void setPoisoned(boolean poisoned) {
-		this.poisoned = poisoned;
+		if (poisoned != this.poisoned) {
+			PlayerPoisonStatusChangeEvent event = Spout.getEventManager().callEvent(new PlayerPoisonStatusChangeEvent(getPlayer(), poisoned));
+			if (event.isCancelled()) {
+				return;
+			}
+			this.poisoned = event.getPoisoned();
+		}
 	}
 
 	/**
@@ -534,6 +565,88 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	/**
+	 * Gets the player's current level.
+	 */
+	public int getLevel() {
+		return level;
+	}
+
+	/**
+	 * Gets the player's current experience.
+	 */
+	public int getExperience() {
+		return experience;
+	}
+
+	/**
+	 * Gets the player's total score.
+	 */
+	public int getScore() {
+		return score;
+	}
+
+	/**
+	 * Sets the player's level.
+	 */
+	public void setLevel(int level, LevelChangeReason reason) {
+		if (this.level != level) {
+			PlayerLevelChangeEvent event = Spout.getEventManager().callEvent(new PlayerLevelChangeEvent(getPlayer(), this.level, level, reason));
+			if (event.isCancelled()) {
+				return;
+			}
+			this.level = event.getNewLevel();
+			System.out.println("Level: " + this.level + "; Experience: " + this.experience + "; Score: " + this.score + "; Progress: " + getLevelProgress());
+			sendPacket(owner, new SetExperienceMessage(getLevelProgress(), (short) this.level, (short) this.experience));
+		}
+	}
+
+	/**
+	 * Sets the player's experience. If it is enough to grow a level, do so.
+	 */
+	public void setExperience(int experience, ExperienceChangeReason reason) {
+		int amount = experience - this.experience, required = getExperienceRequiredToLevel(), temp_level = this.level;
+		if (amount != 0) {
+			PlayerExperienceChangeEvent event = Spout.getEventManager().callEvent(new PlayerExperienceChangeEvent(getPlayer(), this.experience, amount, reason));
+			if (event.isCancelled()) {
+				return;
+			}
+			this.experience += event.getChange();
+			setScore(this.score + event.getChange());
+			if (!(this.experience >= required)) {
+				sendPacket(owner, new SetExperienceMessage(getLevelProgress(), (short) this.level, (short) this.experience));
+			}
+			while (this.experience >= required) {
+				this.experience -= required;
+				temp_level++;
+				required = getExperienceRequiredToLevel();
+			}
+			setLevel(temp_level, LevelChangeReason.EXP);
+		}
+	}
+
+	/**
+	 * Sets the player's total score.
+	 */
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	/**
+	 * Gets the ratio of current experience to the experience required to reach the next level (or 1 if it is more).
+	 */
+	public float getLevelProgress() {
+		float value = (float) this.experience / getExperienceRequiredToLevel();
+		return (value >= 1.0f) ? 1.0f : value;
+	}
+
+	/**
+	 * Gets the experience required to reach the next level.
+	 */
+	public int getExperienceRequiredToLevel() {
+		return (int) (3.5 * this.level + 6.75); //see the Minecraft Wiki
+	}
+
+	/**
 	 * Drops the player's current item.
 	 */
 	public void dropItem() {
@@ -544,6 +657,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 		ItemStack drop = new ItemStack(current.getMaterial(), 1);
 		drop.setNBTData(current.getNBTData());
 		Item control = new Item(drop, getHeadPosition().subtract(getLookingAt()));
+		PlayerDropItemEvent event = Spout.getEventManager().callEvent(new PlayerDropItemEvent(getPlayer(), current, control));
+		if (event.isCancelled()) {
+			return;
+		}
+		current = event.getItemInHand();
+		control = event.getItemToBeSpawned();
 		if (current.getAmount() > 1) {
 			current.setAmount(current.getAmount() - 1);
 		} else {

@@ -31,6 +31,8 @@ import org.spout.api.protocol.Protocol;
 import org.spout.api.protocol.bootstrap.BootstrapProtocol;
 
 import org.spout.vanilla.protocol.VanillaProtocol;
+import org.spout.vanilla.protocol.msg.ChatMessage;
+import org.spout.vanilla.protocol.msg.KickMessage;
 
 public class VanillaBootstrapProtocol extends BootstrapProtocol {
 	private static final Protocol vanilla = new VanillaProtocol();
@@ -47,5 +49,15 @@ public class VanillaBootstrapProtocol extends BootstrapProtocol {
 	@Override
 	public Protocol getDefaultProtocol() {
 		return vanilla;
+	}
+	
+	@Override
+	public Message getChatMessage(String message) {
+		return new ChatMessage(message);
+	}
+
+	@Override
+	public Message getKickMessage(String message) {
+		return new KickMessage(message);
 	}
 }

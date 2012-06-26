@@ -28,7 +28,10 @@ package org.spout.vanilla.protocol;
 
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
+import org.spout.api.protocol.Message;
 import org.spout.api.protocol.Protocol;
+import org.spout.vanilla.protocol.msg.ChatMessage;
+import org.spout.vanilla.protocol.msg.KickMessage;
 
 public class VanillaProtocol extends Protocol {
 	public final static DefaultedKey<String> SESSION_ID = new DefaultedKeyImpl<String>("sessionid", "0000000000000000");
@@ -37,5 +40,15 @@ public class VanillaProtocol extends Protocol {
 
 	public VanillaProtocol() {
 		super("Vanilla", new VanillaCodecLookupService(), new VanillaHandlerLookupService());
+	}
+	
+	@Override
+	public Message getChatMessage(String message) {
+		return new ChatMessage(message);
+	}
+
+	@Override
+	public Message getKickMessage(String message) {
+		return new KickMessage(message);
 	}
 }

@@ -28,12 +28,20 @@ package org.spout.vanilla.material.block.misc;
 
 import java.util.ArrayList;
 
+import org.spout.api.Spout;
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.component.Controller;
+import org.spout.api.event.player.PlayerInteractEvent;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.event.player.PlayerBedInteractionEvent;
+import org.spout.vanilla.event.player.PlayerBedInteractionEvent.PlayerBedInteractionType;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -180,5 +188,21 @@ public class BedBlock extends VanillaBlockMaterial implements Mineable {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Sword ? (short) 2 : (short) 1;
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
+		if (action == PlayerInteractEvent.Action.RIGHT_CLICK) {
+			Controller controller = entity.getController();
+			if (!(controller instanceof VanillaPlayer)) {
+				return;
+			}
+			PlayerBedInteractionEvent event = Spout.getEventManager().callEvent(new PlayerBedInteractionEvent(((VanillaPlayer) controller).getPlayer(), block, PlayerBedInteractionType.ENTERING));
+			if (event.isCancelled()) {
+				return;
+			}
+			setOccupied(event.getBedBlock(), event.getType().equals(PlayerBedInteractionType.ENTERING) ? true : false);
+			//TODO: Send the packet to actually have the player enter the bed.
+		}
 	}
 }

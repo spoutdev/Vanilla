@@ -29,54 +29,48 @@ package org.spout.vanilla.event.player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.player.Player;
 
-public class PlayerBedEvent extends PlayerEvent implements Cancellable {
+/**
+ * Event called when a player is poisoned.
+ */
+public class PlayerPoisonStatusChangeEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private Block bed;
-	private boolean entered;
 
-	public PlayerBedEvent(Player p, Block bed) {
-		super(p);
-		this.bed = bed;
-		entered = false;
+	private final Player player;
+	private boolean poisoned;
+
+	public PlayerPoisonStatusChangeEvent(Player player, boolean poisoned) {
+		super(player);
+		this.player = player;
+		this.poisoned = poisoned;
 	}
 
 	/**
-	 * Returns the bed block involved in this event.
-	 * @return the bed block involved in this event
+	 * Gets the player being poisoned.
+	 *
+	 * @return The Player being poisoned.
 	 */
-	public Block getBed() {
-		return bed;
-	}
-
-	public void setBed(Block bed) {
-		this.bed = bed;
+	public Player getPlayer() {
+		return player;
 	}
 
 	/**
-	 * Gets if the player entered the bed.
-	 * @return True if the bed was entered.
+	 * Gets whether the player is being poisoned or not.
+	 *
+	 * @return TRUE if the player is being poisoned, FALSE if the player is having poison removed.
 	 */
-	public boolean isEntered() {
-		return entered;
+	public boolean getPoisoned() {
+		return this.poisoned;
 	}
 
 	/**
-	 * Gets if the player left the bed.
-	 * @return False if the bed was left.
+	 * Sets whether the player should be poisoned or not.
+	 *
+	 * @param poisoned TRUE if the player should be poisoned, FALSE if the player should have it removed.
 	 */
-	public boolean isLeft() {
-		return !entered;
-	}
-
-	/**
-	 * Sets if a player has entered the bed.
-	 * @param entered The new status of if the player has entered a bed (true or false).
-	 */
-	public void setEntered(boolean entered) {
-		this.entered = entered;
+	public void setPoisoned(boolean poisoned) {
+		this.poisoned = poisoned;
 	}
 
 	@Override

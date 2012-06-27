@@ -24,67 +24,57 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.player;
+package org.spout.vanilla.event.entity;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.player.Player;
-import org.spout.vanilla.controller.source.LevelChangeReason;
+import org.spout.api.event.entity.EntityEvent;
+
+import org.spout.vanilla.controller.object.vehicle.Vehicle;
 
 /**
- * Event called when a player's level changes.
+ * Event called when Entities interact with Vehicles. Not yet implemented.
  */
-public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
+public class EntityVehicleInteractionEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private int previousLevel, newLevel;
-	private LevelChangeReason reason;
 
-	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {
-		super(p);
-		this.reason = reason;
-		this.previousLevel = previousLevel;
-		this.newLevel = newLevel;
+	private final Entity entity;
+	private final Vehicle vehicle;
+	private final EntityVehicleInteractionType type;
+
+	public EntityVehicleInteractionEvent(Entity entity, Vehicle vehicle, EntityVehicleInteractionType interactionType) {
+		super(entity);
+		this.entity = entity;
+		this.vehicle = vehicle;
+		this.type = interactionType;
 	}
 
 	/**
-	 * Gets the reason for the change of level.
-	 * @return A LevelChangeReason that is the reason for the change in level.
+	 * Gets the entity involved in this interaction.
+	 *
+	 * @return The entity involved in this interaction.
 	 */
-	public LevelChangeReason getReason() {
-		return reason;
+	public Entity getEntity() {
+		return entity;
 	}
 
 	/**
-	 * Sets the reason for the change of level.
-	 * @param reason A LevelChangeReason that sets the reason for the change of level.
+	 * Gets the vehicle involved in this interaction.
+	 *
+	 * @return The vehicle involved in this interaction.
 	 */
-	public void setReason(LevelChangeReason reason) {
-		this.reason = reason;
+	public Vehicle getVehicle() {
+		return vehicle;
 	}
 
 	/**
-	 * Gets the previous level before the level change occurred.
-	 * @return an int that is the number of the last level.
+	 * Gets the type of interaction between entity and vehicle.
+	 *
+	 * @return The EntityVehicleInteractionType between entity and vehicle.
 	 */
-	public int getPreviousLevel() {
-		return previousLevel;
-	}
-
-	/**
-	 * Gets the new level after the level change occurred.
-	 * @return an int that is the number of the new level.
-	 */
-	public int getNewLevel() {
-		return newLevel;
-	}
-
-	/**
-	 * Sets the level of the player regardless of what level was set in the event.
-	 * @param customLevel an int that is the custom number of the level to set.
-	 */
-	public void setLevel(int customLevel) {
-		newLevel = customLevel;
+	public EntityVehicleInteractionType getInteractionType() {
+		return type;
 	}
 
 	@Override
@@ -99,5 +89,27 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 
 	public static HandlerList getHandlerList() {
 		return handlers;
+	}
+
+	/**
+	 * An enum to specify the types of entity/vehicle interactions.
+	 */
+	public enum EntityVehicleInteractionType {
+		/**
+		 * When an entity is entering a vehicle.
+		 */
+		ENTERING,
+		/**
+		 * When an entity is exiting a vehicle.
+		 */
+		EXITING,
+		/**
+		 * When an entity collides with a vehicle (or vice versa).
+		 */
+		COLLISION,
+		/**
+		 * A custom interaction type (for use with plugins).
+		 */
+		CUSTOM
 	}
 }

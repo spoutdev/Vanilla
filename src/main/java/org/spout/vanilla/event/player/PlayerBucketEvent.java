@@ -34,6 +34,9 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
 
+/**
+ * Event called when a player uses a bucket. Not yet implemented.
+ */
 public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private ItemStack bucket;

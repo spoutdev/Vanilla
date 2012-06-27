@@ -26,65 +26,83 @@
  */
 package org.spout.vanilla.event.player;
 
+import org.spout.api.Source;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.player.Player;
-import org.spout.vanilla.controller.source.LevelChangeReason;
 
 /**
- * Event called when a player's level changes.
+ * Event called when a player gains/loses experience.
  */
-public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
+public class PlayerExperienceChangeEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private int previousLevel, newLevel;
-	private LevelChangeReason reason;
 
-	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {
-		super(p);
-		this.reason = reason;
-		this.previousLevel = previousLevel;
-		this.newLevel = newLevel;
+	private final Player player;
+	private final int current;
+	private int change;
+	private Source source;
+
+	public PlayerExperienceChangeEvent(Player player, int current, int change, Source source) {
+		super(player);
+		this.player = player;
+		this.current = current;
+		this.change = change;
+		this.source = source;
 	}
 
 	/**
-	 * Gets the reason for the change of level.
-	 * @return A LevelChangeReason that is the reason for the change in level.
+	 * Gets the player whose experience is changing.
+	 *
+	 * @return The Player whose experience is changing.
 	 */
-	public LevelChangeReason getReason() {
-		return reason;
+	public Player getPlayer() {
+		return player;
 	}
 
 	/**
-	 * Sets the reason for the change of level.
-	 * @param reason A LevelChangeReason that sets the reason for the change of level.
+	 * Gets the player's current amount of experience.
+	 *
+	 * @return The player's current amount of experience.
 	 */
-	public void setReason(LevelChangeReason reason) {
-		this.reason = reason;
+	public int getCurrent() {
+		return current;
 	}
 
 	/**
-	 * Gets the previous level before the level change occurred.
-	 * @return an int that is the number of the last level.
+	 * Gets the amount of the experience change.
+	 *
+	 * @return The amount of the experience change.
 	 */
-	public int getPreviousLevel() {
-		return previousLevel;
+	public int getChange() {
+		return change;
 	}
 
 	/**
-	 * Gets the new level after the level change occurred.
-	 * @return an int that is the number of the new level.
+	 * Sets the amount of the experience change.
+	 *
+	 * @param change The amount of the experience change.
 	 */
-	public int getNewLevel() {
-		return newLevel;
+	public void setChange(int change) {
+		this.change = change;
 	}
 
 	/**
-	 * Sets the level of the player regardless of what level was set in the event.
-	 * @param customLevel an int that is the custom number of the level to set.
+	 * Gets the source of the experience change.
+	 *
+	 * @return The Source of the experience change.
 	 */
-	public void setLevel(int customLevel) {
-		newLevel = customLevel;
+	public Source getSource() {
+		return source;
+	}
+
+	/**
+	 * Sets the source of the experience change.
+	 *
+	 * @param source The Source of the experience change.
+	 */
+	public void setChange(Source source) {
+		this.source = source;
 	}
 
 	@Override

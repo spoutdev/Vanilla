@@ -29,62 +29,60 @@ package org.spout.vanilla.event.player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.player.Player;
-import org.spout.vanilla.controller.source.LevelChangeReason;
 
 /**
- * Event called when a player's level changes.
+ * Event called when a player interacts with a bed.
  */
-public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
+public class PlayerBedInteractionEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private int previousLevel, newLevel;
-	private LevelChangeReason reason;
 
-	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {
-		super(p);
-		this.reason = reason;
-		this.previousLevel = previousLevel;
-		this.newLevel = newLevel;
+	private final Player player;
+	private final Block bedBlock;
+	private PlayerBedInteractionType type;
+
+	public PlayerBedInteractionEvent(Player player, Block bedBlock, PlayerBedInteractionType type) {
+		super(player);
+		this.player = player;
+		this.bedBlock = bedBlock;
+		this.type = type;
 	}
 
 	/**
-	 * Gets the reason for the change of level.
-	 * @return A LevelChangeReason that is the reason for the change in level.
+	 * Gets the player interacting with the bed.
+	 *
+	 * @return The Player interacting with the bed.
 	 */
-	public LevelChangeReason getReason() {
-		return reason;
+	public Player getPlayer() {
+		return player;
 	}
 
 	/**
-	 * Sets the reason for the change of level.
-	 * @param reason A LevelChangeReason that sets the reason for the change of level.
+	 * Gets the bed block being interacted with.
+	 *
+	 * @return The bed Block being interacted with.
 	 */
-	public void setReason(LevelChangeReason reason) {
-		this.reason = reason;
+	public Block getBedBlock() {
+		return bedBlock;
 	}
 
 	/**
-	 * Gets the previous level before the level change occurred.
-	 * @return an int that is the number of the last level.
+	 * Gets the type of interaction of this event.
+	 *
+	 * @return The PlayerBedInteractionType of this event.
 	 */
-	public int getPreviousLevel() {
-		return previousLevel;
+	public PlayerBedInteractionType getType() {
+		return type;
 	}
 
 	/**
-	 * Gets the new level after the level change occurred.
-	 * @return an int that is the number of the new level.
+	 * Sets the type of interaction this event should be.
+	 *
+	 * @param type The PlayerBedInteractionType this event should be.
 	 */
-	public int getNewLevel() {
-		return newLevel;
-	}
-
-	/**
-	 * Sets the level of the player regardless of what level was set in the event.
-	 * @param customLevel an int that is the custom number of the level to set.
-	 */
-	public void setLevel(int customLevel) {
-		newLevel = customLevel;
+	public void setType(PlayerBedInteractionType type) {
+		this.type = type;
 	}
 
 	@Override
@@ -99,5 +97,23 @@ public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
 
 	public static HandlerList getHandlerList() {
 		return handlers;
+	}
+
+	/**
+	 * An enum to specify the types of player/bed interactions.
+	 */
+	public enum PlayerBedInteractionType {
+		/**
+		 * When a player is entering a bed.
+		 */
+		ENTERING,
+		/**
+		 * When a player is exiting a bed.
+		 */
+		EXITING,
+		/**
+		 * A custom interaction type (for use with plugins).
+		 */
+		CUSTOM
 	}
 }

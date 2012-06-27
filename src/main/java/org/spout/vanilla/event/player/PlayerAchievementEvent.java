@@ -30,61 +30,30 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.player.Player;
-import org.spout.vanilla.controller.source.LevelChangeReason;
 
 /**
- * Event called when a player's level changes.
+ * Event called when a player is awarded an achievement. Not yet implemented.
  */
-public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
+public class PlayerAchievementEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private int previousLevel, newLevel;
-	private LevelChangeReason reason;
 
-	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {
-		super(p);
-		this.reason = reason;
-		this.previousLevel = previousLevel;
-		this.newLevel = newLevel;
+	private final Player player;
+	//private Achievement achievement;
+
+	public PlayerAchievementEvent(Player player //, Achievement achievement
+												) {
+		super(player);
+		this.player = player;
+		//this.achievement = achievement;
 	}
 
 	/**
-	 * Gets the reason for the change of level.
-	 * @return A LevelChangeReason that is the reason for the change in level.
+	 * Gets the player receiving the achievement.
+	 *
+	 * @return The Player receiving the achievement.
 	 */
-	public LevelChangeReason getReason() {
-		return reason;
-	}
-
-	/**
-	 * Sets the reason for the change of level.
-	 * @param reason A LevelChangeReason that sets the reason for the change of level.
-	 */
-	public void setReason(LevelChangeReason reason) {
-		this.reason = reason;
-	}
-
-	/**
-	 * Gets the previous level before the level change occurred.
-	 * @return an int that is the number of the last level.
-	 */
-	public int getPreviousLevel() {
-		return previousLevel;
-	}
-
-	/**
-	 * Gets the new level after the level change occurred.
-	 * @return an int that is the number of the new level.
-	 */
-	public int getNewLevel() {
-		return newLevel;
-	}
-
-	/**
-	 * Sets the level of the player regardless of what level was set in the event.
-	 * @param customLevel an int that is the custom number of the level to set.
-	 */
-	public void setLevel(int customLevel) {
-		newLevel = customLevel;
+	public Player getPlayer() {
+		return player;
 	}
 
 	@Override

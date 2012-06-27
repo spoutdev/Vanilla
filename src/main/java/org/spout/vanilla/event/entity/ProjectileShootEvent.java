@@ -24,67 +24,55 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.player;
+package org.spout.vanilla.event.entity;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.player.Player;
-import org.spout.vanilla.controller.source.LevelChangeReason;
+import org.spout.api.event.entity.EntityEvent;
+
+import org.spout.vanilla.controller.object.Projectile;
 
 /**
- * Event called when a player's level changes.
+ * Event called when an Entity shoots a Projectile. Not yet implemented.
  */
-public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
+public class ProjectileShootEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private int previousLevel, newLevel;
-	private LevelChangeReason reason;
 
-	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {
-		super(p);
-		this.reason = reason;
-		this.previousLevel = previousLevel;
-		this.newLevel = newLevel;
+	private final Entity shooter;
+	private Projectile projectile;
+
+	public ProjectileShootEvent(Entity shooter, Projectile projectile) {
+		super(shooter);
+		this.shooter = shooter;
+		this.projectile = projectile;
 	}
 
 	/**
-	 * Gets the reason for the change of level.
-	 * @return A LevelChangeReason that is the reason for the change in level.
+	 * Gets the entity that is shooting the projectile.
+	 *
+	 * @return The Entity that is shooting the projectile.
 	 */
-	public LevelChangeReason getReason() {
-		return reason;
+	public Entity getShooter() {
+		return shooter;
 	}
 
 	/**
-	 * Sets the reason for the change of level.
-	 * @param reason A LevelChangeReason that sets the reason for the change of level.
+	 * Gets the projectile to be shot.
+	 *
+	 * @return The Projectile to be shot.
 	 */
-	public void setReason(LevelChangeReason reason) {
-		this.reason = reason;
+	public Projectile getProjectile() {
+		return projectile;
 	}
 
 	/**
-	 * Gets the previous level before the level change occurred.
-	 * @return an int that is the number of the last level.
+	 * Sets the projectile to be shot.
+	 *
+	 * @param projectile The Projectile to be shot.
 	 */
-	public int getPreviousLevel() {
-		return previousLevel;
-	}
-
-	/**
-	 * Gets the new level after the level change occurred.
-	 * @return an int that is the number of the new level.
-	 */
-	public int getNewLevel() {
-		return newLevel;
-	}
-
-	/**
-	 * Sets the level of the player regardless of what level was set in the event.
-	 * @param customLevel an int that is the custom number of the level to set.
-	 */
-	public void setLevel(int customLevel) {
-		newLevel = customLevel;
+	public void setProjectile(Projectile projectile) {
+		this.projectile = projectile;
 	}
 
 	@Override

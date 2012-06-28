@@ -49,13 +49,6 @@ recipes:
       S: SAND
     rows: ['SS', 'SS']
 
-  SandstoneDoubleSlab:
-    type: Shaped
-    result: SLAB_SANDSTONE_DOUBLE,1
-    ingredients:
-      S: SANDSTONESLAB
-    rows: ['S', 'S']
-
   SandstoneHieroglyph:
     type: Shaped
     result: SANDSTONEHIEROGLYPH,4

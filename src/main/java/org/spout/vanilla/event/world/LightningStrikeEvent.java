@@ -24,67 +24,67 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.player;
+package org.spout.vanilla.event.world;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.player.Player;
-import org.spout.vanilla.controller.source.LevelChangeReason;
+import org.spout.api.event.world.WorldEvent;
+import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
+
+import org.spout.vanilla.controller.object.misc.Lightning;
 
 /**
- * Event called when a player's level changes.
+ * Event called when lightning strikes. Not yet implemented.
  */
-public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
+public class LightningStrikeEvent extends WorldEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private int previousLevel, newLevel;
-	private LevelChangeReason reason;
 
-	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {
-		super(p);
-		this.reason = reason;
-		this.previousLevel = previousLevel;
-		this.newLevel = newLevel;
+	private final World world;
+	private final Lightning bolt;
+	private Point location;
+
+	public LightningStrikeEvent(World world, Lightning bolt, Point location) {
+		super(world);
+		this.world = world;
+		this.bolt = bolt;
+		this.location = location;
 	}
 
 	/**
-	 * Gets the reason for the change of level.
-	 * @return A LevelChangeReason that is the reason for the change in level.
+	 * Gets the world this lightning strike is occurring in.
+	 *
+	 * @return The World this lightning strike is occurring in.
 	 */
-	public LevelChangeReason getReason() {
-		return reason;
+	public World getWorld() {
+		return world;
 	}
 
 	/**
-	 * Sets the reason for the change of level.
-	 * @param reason A LevelChangeReason that sets the reason for the change of level.
+	 * Gets the lightning bolt involved.
+	 *
+	 * @return The Lightning involved.
 	 */
-	public void setReason(LevelChangeReason reason) {
-		this.reason = reason;
+	public Lightning getLightningBolt() {
+		return bolt;
 	}
 
 	/**
-	 * Gets the previous level before the level change occurred.
-	 * @return an int that is the number of the last level.
+	 * Gets the location the lightning strike is occurring at.
+	 *
+	 * @return The Point the lightning strike is occurring at.
 	 */
-	public int getPreviousLevel() {
-		return previousLevel;
+	public Point getLocation() {
+		return location;
 	}
 
 	/**
-	 * Gets the new level after the level change occurred.
-	 * @return an int that is the number of the new level.
+	 * Sets the location the lightning strike should occur at.
+	 *
+	 * @param location The Point the lightning strike should occur at.
 	 */
-	public int getNewLevel() {
-		return newLevel;
-	}
-
-	/**
-	 * Sets the level of the player regardless of what level was set in the event.
-	 * @param customLevel an int that is the custom number of the level to set.
-	 */
-	public void setLevel(int customLevel) {
-		newLevel = customLevel;
+	public void setLocation(Point location) {
+		this.location = location;
 	}
 
 	@Override

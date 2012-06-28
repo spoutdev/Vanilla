@@ -29,62 +29,63 @@ package org.spout.vanilla.event.player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.player.Player;
-import org.spout.vanilla.controller.source.LevelChangeReason;
+
+import org.spout.vanilla.controller.living.creature.passive.Villager;
 
 /**
- * Event called when a player's level changes.
+ * The Event called when a player trades with a villager. Not yet implemented.
  */
-public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
+public class PlayerVillagerTradeEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private int previousLevel, newLevel;
-	private LevelChangeReason reason;
 
-	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {
-		super(p);
-		this.reason = reason;
-		this.previousLevel = previousLevel;
-		this.newLevel = newLevel;
+	private final Player player;
+	private final Villager villager;
+	private final ItemStack offer, result;
+
+	public PlayerVillagerTradeEvent(Player player, Villager villager, ItemStack offer, ItemStack result) {
+		super(player);
+		this.player = player;
+		this.villager = villager;
+		this.offer = offer;
+		this.result = result;
 	}
 
 	/**
-	 * Gets the reason for the change of level.
-	 * @return A LevelChangeReason that is the reason for the change in level.
+	 * Gets the player doing the trading.
+	 *
+	 * @return The Player doing the trading.
 	 */
-	public LevelChangeReason getReason() {
-		return reason;
+	public Player getPlayer() {
+		return player;
 	}
 
 	/**
-	 * Sets the reason for the change of level.
-	 * @param reason A LevelChangeReason that sets the reason for the change of level.
+	 * Gets the villager doing the trading.
+	 *
+	 * @return The Villager doing the trading.
 	 */
-	public void setReason(LevelChangeReason reason) {
-		this.reason = reason;
+	public Villager getVillager() {
+		return villager;
 	}
 
 	/**
-	 * Gets the previous level before the level change occurred.
-	 * @return an int that is the number of the last level.
+	 * Gets the item offered in the trade.
+	 *
+	 * @return The ItemStack representing the offer in the trade.
 	 */
-	public int getPreviousLevel() {
-		return previousLevel;
+	public ItemStack getOffer() {
+		return offer;
 	}
 
 	/**
-	 * Gets the new level after the level change occurred.
-	 * @return an int that is the number of the new level.
+	 * Gets the item result of the trade.
+	 *
+	 * @return The ItemStack representing the result of the trade.
 	 */
-	public int getNewLevel() {
-		return newLevel;
-	}
-
-	/**
-	 * Sets the level of the player regardless of what level was set in the event.
-	 * @param customLevel an int that is the custom number of the level to set.
-	 */
-	public void setLevel(int customLevel) {
-		newLevel = customLevel;
+	public ItemStack getResult() {
+		return result;
 	}
 
 	@Override

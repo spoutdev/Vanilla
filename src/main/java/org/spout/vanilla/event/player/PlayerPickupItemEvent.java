@@ -29,62 +29,62 @@ package org.spout.vanilla.event.player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.player.Player;
-import org.spout.vanilla.controller.source.LevelChangeReason;
+
+import org.spout.vanilla.controller.object.moving.Item;
 
 /**
- * Event called when a player's level changes.
+ * Event called when a player picks up an item entity. Not yet implemented.
  */
-public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
+public class PlayerPickupItemEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private int previousLevel, newLevel;
-	private LevelChangeReason reason;
 
-	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {
-		super(p);
-		this.reason = reason;
-		this.previousLevel = previousLevel;
-		this.newLevel = newLevel;
+	private final Player player;
+	private final Item item;
+	private ItemStack itemStack;
+
+	public PlayerPickupItemEvent(Player player, Item item, ItemStack itemStack) {
+		super(player);
+		this.player = player;
+		this.item = item;
+		this.itemStack = itemStack;
 	}
 
 	/**
-	 * Gets the reason for the change of level.
-	 * @return A LevelChangeReason that is the reason for the change in level.
+	 * Gets the player picking up the item.
+	 *
+	 * @return The Player picking up the item.
 	 */
-	public LevelChangeReason getReason() {
-		return reason;
+	public Player getPlayer() {
+		return player;
 	}
 
 	/**
-	 * Sets the reason for the change of level.
-	 * @param reason A LevelChangeReason that sets the reason for the change of level.
+	 * Gets the item being picked up.
+	 *
+	 * @return The Item object controller being picked up.
 	 */
-	public void setReason(LevelChangeReason reason) {
-		this.reason = reason;
+	public Item getItem() {
+		return item;
 	}
 
 	/**
-	 * Gets the previous level before the level change occurred.
-	 * @return an int that is the number of the last level.
+	 * Gets the item stack the item is turning into.
+	 *
+	 * @return The ItemStack of the item being picked up.
 	 */
-	public int getPreviousLevel() {
-		return previousLevel;
+	public ItemStack getItemStack() {
+		return itemStack;
 	}
 
 	/**
-	 * Gets the new level after the level change occurred.
-	 * @return an int that is the number of the new level.
+	 * Sets the item stack the item is turning into.
+	 *
+	 * @param itemStack The ItemStack the player should pick up.
 	 */
-	public int getNewLevel() {
-		return newLevel;
-	}
-
-	/**
-	 * Sets the level of the player regardless of what level was set in the event.
-	 * @param customLevel an int that is the custom number of the level to set.
-	 */
-	public void setLevel(int customLevel) {
-		newLevel = customLevel;
+	public void setItemStack(ItemStack itemStack) {
+		this.itemStack = itemStack;
 	}
 
 	@Override

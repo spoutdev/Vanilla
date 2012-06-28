@@ -30,61 +30,60 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.player.Player;
-import org.spout.vanilla.controller.source.LevelChangeReason;
+
+import org.spout.vanilla.data.GameMode;
 
 /**
- * Event called when a player's level changes.
+ * Event called when a player changes game modes.
  */
-public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
+public class PlayerGameModeChangeEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private int previousLevel, newLevel;
-	private LevelChangeReason reason;
 
-	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {
-		super(p);
-		this.reason = reason;
-		this.previousLevel = previousLevel;
-		this.newLevel = newLevel;
+	private final Player player;
+	private final GameMode oldMode;
+	private GameMode newMode;
+
+	public PlayerGameModeChangeEvent(Player player, GameMode oldMode, GameMode newMode) {
+		super(player);
+		this.player = player;
+		this.oldMode = oldMode;
+		this.newMode = newMode;
 	}
 
 	/**
-	 * Gets the reason for the change of level.
-	 * @return A LevelChangeReason that is the reason for the change in level.
+	 * Gets the player whose game mode is changing.
+	 *
+	 * @return The Player whose game mode is changing.
 	 */
-	public LevelChangeReason getReason() {
-		return reason;
+	public Player getPlayer() {
+		return player;
 	}
 
 	/**
-	 * Sets the reason for the change of level.
-	 * @param reason A LevelChangeReason that sets the reason for the change of level.
+	 * Gets the current game mode the player is in.
+	 *
+	 * @return The GameMode the player is currently in.
 	 */
-	public void setReason(LevelChangeReason reason) {
-		this.reason = reason;
+	public GameMode getOldMode() {
+		return oldMode;
 	}
 
 	/**
-	 * Gets the previous level before the level change occurred.
-	 * @return an int that is the number of the last level.
+	 * Gets the game mode the player is changing to.
+	 *
+	 * @return The GameMode the player is changing to.
 	 */
-	public int getPreviousLevel() {
-		return previousLevel;
+	public GameMode getNewMode() {
+		return newMode;
 	}
 
 	/**
-	 * Gets the new level after the level change occurred.
-	 * @return an int that is the number of the new level.
+	 * Sets the game mode the player should change to.
+	 *
+	 * @param newMode The GameMode the player should change to.
 	 */
-	public int getNewLevel() {
-		return newLevel;
-	}
-
-	/**
-	 * Sets the level of the player regardless of what level was set in the event.
-	 * @param customLevel an int that is the custom number of the level to set.
-	 */
-	public void setLevel(int customLevel) {
-		newLevel = customLevel;
+	public void setNewMode(GameMode newMode) {
+		this.newMode = newMode;
 	}
 
 	@Override

@@ -37,7 +37,7 @@ public final class LoginRequestMessage extends Message {
 	private final String name, worldType;
 	
 	public LoginRequestMessage(String name) {
-		this(VanillaPlugin.MINECRAFT_PROTOCOL_ID, name, 0, 0, 0, 0, 0, "");
+		this(VanillaPlugin.MINECRAFT_PROTOCOL_ID, name, 0, 0, 0, 256, 0, "");
 	}
 
 	public LoginRequestMessage(int id, String name, int mode, int dimension, int difficulty, int worldHeight, int maxPlayers, String worldType) {

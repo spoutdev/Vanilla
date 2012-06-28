@@ -45,8 +45,9 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 	public void handleClient(Session session, Player player, HandshakeMessage message) {
 		if (message.getIdentifier().equals("-")) {
 			session.send(true, new LoginRequestMessage("playerName"));
+		} else {
+			session.disconnect("Online mode not supported for backend servers");
 		}
-		System.out.println("Handshake received from server: " + message);
 	}
 	
 	@Override

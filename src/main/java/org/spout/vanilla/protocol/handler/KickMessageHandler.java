@@ -34,7 +34,7 @@ import org.spout.vanilla.protocol.msg.KickMessage;
 
 public final class KickMessageHandler extends MessageHandler<KickMessage> {
 	@Override
-	public void handleServer(Session session, Player player, KickMessage message) {
+	public void handle(boolean upstream, Session session, Player player, KickMessage message) {
 		session.disconnect(message.getReason(), false);
 	}
 }

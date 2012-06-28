@@ -93,7 +93,7 @@ public abstract class Effect extends TimedLogicRunnable<VanillaPlayer> {
 
 	@Override
 	public void onRegistration() {
-		getParent().getPlayer().getSession().send(getApplianceMessage());
+		getParent().getPlayer().getSession().send(false, getApplianceMessage());
 	}
 
 	@Override
@@ -103,6 +103,6 @@ public abstract class Effect extends TimedLogicRunnable<VanillaPlayer> {
 
 	@Override
 	public void run() {
-		getParent().getPlayer().getSession().send(getRemovalMessage());
+		getParent().getPlayer().getSession().send(false, getRemovalMessage());
 	}
 }

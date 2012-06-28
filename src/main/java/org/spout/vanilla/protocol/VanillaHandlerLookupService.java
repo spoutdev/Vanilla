@@ -26,10 +26,19 @@
  */
 package org.spout.vanilla.protocol;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.spout.api.protocol.HandlerLookupService;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.common.handler.CustomDataMessageHandler;
+import org.spout.api.protocol.common.message.CustomDataMessage;
 
+import org.spout.vanilla.protocol.bootstrap.handler.BootstrapEncryptionKeyResponseMessageHandler;
+import org.spout.vanilla.protocol.bootstrap.handler.BootstrapHandshakeMessageHandler;
+import org.spout.vanilla.protocol.bootstrap.handler.BootstrapLoginRequestMessageHandler;
+import org.spout.vanilla.protocol.bootstrap.handler.BootstrapPingMessageHandler;
 import org.spout.vanilla.protocol.handler.AnimationMessageHandler;
 import org.spout.vanilla.protocol.handler.ChatMessageHandler;
 import org.spout.vanilla.protocol.handler.CloseWindowMessageHandler;
@@ -54,13 +63,16 @@ import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
+import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
 import org.spout.vanilla.protocol.msg.GroundMessage;
+import org.spout.vanilla.protocol.msg.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
+import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
@@ -68,16 +80,22 @@ import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
+import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
 
 public class VanillaHandlerLookupService extends HandlerLookupService {
+	
+	protected static final Map<Class<? extends Message>, MessageHandler<?>> handlers = new HashMap<Class<? extends Message>, MessageHandler<?>>();
+	
 	public VanillaHandlerLookupService() {
 		super();
 	}
 
 	static {
 		try {
+			bind(HandshakeMessage.class, BootstrapHandshakeMessageHandler.class);
+			bind(LoginRequestMessage.class, BootstrapLoginRequestMessageHandler.class);
 			bind(ChatMessage.class, ChatMessageHandler.class);
 			bind(GroundMessage.class, GroundMessageHandler.class);
 			bind(PlayerPositionMessage.class, PlayerPositionMessageHandler.class);
@@ -98,6 +116,9 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(EntityInteractionMessage.class, EntityInteractionMessageHandler.class);
 			bind(EntityHeadYawMessage.class, EntityHeadYawMessageHandler.class);
 			bind(PlayerAbilityMessage.class, PlayerAbilityMessageHandler.class);
+			bind(ServerListPingMessage.class, BootstrapPingMessageHandler.class);
+			bind(CustomDataMessage.class, CustomDataMessageHandler.class);
+			bind(EncryptionKeyResponseMessage.class, BootstrapEncryptionKeyResponseMessageHandler.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

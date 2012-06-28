@@ -29,20 +29,28 @@ package org.spout.vanilla.protocol.bootstrap.handler;
 import java.security.SecureRandom;
 
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
-
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.security.SecurityHandler;
-
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.EncryptionKeyRequestMessage;
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
+import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 
 public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMessage> {
+	
 	@Override
-	public void handle(Session session, Player player, HandshakeMessage message) {
+	public void handleClient(Session session, Player player, HandshakeMessage message) {
+		if (message.getIdentifier().equals("-")) {
+			session.send(true, new LoginRequestMessage("playerName"));
+		}
+		System.out.println("Handshake received from server: " + message);
+	}
+	
+	@Override
+	public void handleServer(Session session, Player player, HandshakeMessage message) {
 		Session.State state = session.getState();
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
 			session.getDataMap().put(VanillaProtocol.LOGIN_TIME, System.currentTimeMillis());
@@ -54,17 +62,17 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 				int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
 				String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
 				AsymmetricCipherKeyPair keys = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
-				session.send(new EncryptionKeyRequestMessage(sessionId, keys.getPublic(), false), true);
+				session.send(false, true, new EncryptionKeyRequestMessage(sessionId, keys.getPublic(), false));
 			} else if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
 				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
 				String sessionId = getSessionId();
 				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
-				session.send(new HandshakeMessage(sessionId), true);
+				session.send(false, true, new HandshakeMessage(sessionId));
 			} else {
 				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
 				String sessionId = "-";
 				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
-				session.send(new HandshakeMessage(sessionId), true);
+				session.send(false, true, new HandshakeMessage(sessionId));
 			}
 		} else {
 			session.disconnect("Handshake already exchanged.", false);

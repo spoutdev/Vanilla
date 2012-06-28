@@ -557,6 +557,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * Rolls the credits located on the client.
 	 */
 	public void rollCredits() {
-		owner.getSession().send(new ChangeGameStateMessage(ChangeGameStateMessage.ENTER_CREDITS));
+		owner.getSession().send(false, new ChangeGameStateMessage(ChangeGameStateMessage.ENTER_CREDITS));
 	}
 }

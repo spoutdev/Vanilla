@@ -30,10 +30,15 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.VanillaPlugin;
 
 public final class LoginRequestMessage extends Message {
 	private final int id, dimension, mode, difficulty, worldHeight, maxPlayers;
 	private final String name, worldType;
+	
+	public LoginRequestMessage(String name) {
+		this(VanillaPlugin.MINECRAFT_PROTOCOL_ID, name, 0, 0, 0, 0, 0, "");
+	}
 
 	public LoginRequestMessage(int id, String name, int mode, int dimension, int difficulty, int worldHeight, int maxPlayers, String worldType) {
 		this.id = id;

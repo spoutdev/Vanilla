@@ -42,11 +42,11 @@ public final class AnimationMessageHandler extends MessageHandler<AnimationMessa
 
 		switch (message.getAnimation()) {
 			case AnimationMessage.ANIMATION_CROUCH:
-				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_CROUCH));
+				session.send(false, new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_CROUCH));
 				//TODO Set this in VanillaActionController as apparently any entity can crouch?
 				break;
 			case AnimationMessage.ANIMATION_UNCROUCH:
-				session.send(new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_UNCROUCH));
+				session.send(false, new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_UNCROUCH));
 				//TODO Set this in VanillaActionController as apparently any entity can crouch?
 				break;
 			default:

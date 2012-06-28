@@ -84,7 +84,7 @@ public abstract class VanillaSky extends Controller implements VanillaController
 			if (!player.getEntity().getWorld().getName().equals(world.getName())) {
 				continue;
 			}
-			player.getSession().send(message);
+			player.getSession().send(false, message);
 		}
 	}
 

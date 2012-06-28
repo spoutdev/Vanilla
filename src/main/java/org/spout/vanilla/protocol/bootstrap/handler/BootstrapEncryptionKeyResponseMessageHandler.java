@@ -51,7 +51,7 @@ import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
 
 public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler<EncryptionKeyResponseMessage> {
 	@Override
-	public void handle(final Session session, final Player player, final EncryptionKeyResponseMessage message) {
+	public void handleServer(final Session session, final Player player, final EncryptionKeyResponseMessage message) {
 		Session.State state = session.getState();
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
 			session.disconnect("Handshake not sent", false);
@@ -101,7 +101,7 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 
 						message.getProcessorHandler().setProcessor(fromClientProcessor);
 
-						session.send(response, true);
+						session.send(false, true, response);
 					}
 
 					session.disconnect("Encryption not supported yet");

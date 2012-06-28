@@ -172,7 +172,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				blockMaterial.onDestroy(block);
 			}
 			if (block.getMaterial() != VanillaMaterials.AIR) {
-				player.getSession().send(new BlockChangeMessage(x, y, z, blockMaterial.getId(), blockMaterial.getData()));
+				player.getSession().send(false, new BlockChangeMessage(x, y, z, blockMaterial.getId(), blockMaterial.getData()));
 			} else {
 				PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
 				sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);

@@ -90,7 +90,7 @@ public class VanillaNetworkUtil {
 	 */
 	public static void sendPacket(Player player, Message... messages) {
 		for (Message message : messages) {
-			player.getSession().send(message);
+			player.getSession().send(false, message);
 		}
 	}
 
@@ -157,7 +157,7 @@ public class VanillaNetworkUtil {
 	public static void sendPacketsToNearbyPlayers(Point position, Entity ignore, int range, Message... messages) {
 		Set<Player> players = position.getWorld().getNearbyPlayers(position, ignore, range);
 		for (Player plr : players) {
-			plr.getSession().sendAll(messages);
+			plr.getSession().sendAll(false, messages);
 		}
 	}
 
@@ -170,7 +170,7 @@ public class VanillaNetworkUtil {
 	public static void sendPacketsToNearbyPlayers(Point position, int range, Message... messages) {
 		Set<Player> players = position.getWorld().getNearbyPlayers(position, range);
 		for (Player plr : players) {
-			plr.getSession().sendAll(messages);
+			plr.getSession().sendAll(false, messages);
 		}
 	}
 
@@ -186,7 +186,7 @@ public class VanillaNetworkUtil {
 		}
 		Set<Player> players = entity.getWorld().getNearbyPlayers(entity, range);
 		for (Player plr : players) {
-			plr.getSession().sendAll(messages);
+			plr.getSession().sendAll(false, messages);
 		}
 	}
 
@@ -204,7 +204,7 @@ public class VanillaNetworkUtil {
 		Player plr = entity.getWorld().getNearestPlayer(entity, range);
 		//Only send if we have a player nearby.
 		if (plr != null) {
-			plr.getSession().sendAll(messages);
+			plr.getSession().sendAll(false, messages);
 		}
 	}
 }

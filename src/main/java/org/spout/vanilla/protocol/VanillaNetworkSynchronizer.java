@@ -138,7 +138,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				if (initializedChunks.remove(x, z) != null) {
 					activeChunks.remove(x, z);
 					LoadChunkMessage unLoadChunk = new LoadChunkMessage(x, z, false);
-					owner.getSession().send(unLoadChunk);
+					owner.getSession().send(false, unLoadChunk);
 				}
 			}/* else {
 				byte[][] data = new byte[16][];
@@ -167,7 +167,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				TSyncIntHashSet oldColumn = initializedChunks.putIfAbsent(x, z, column);
 				if (oldColumn == null) {
 					LoadChunkMessage LCMsg = new LoadChunkMessage(x, z, true);
-					owner.getSession().send(LCMsg);
+					owner.getSession().send(false, LCMsg);
 				} else {
 					column = oldColumn;
 				}
@@ -267,7 +267,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 			
 			LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
-			owner.getSession().send(loadChunk);
+			owner.getSession().send(false, loadChunk);
 
 			Chunk chunk = p.getWorld().getChunkFromBlock(p);
 			byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
@@ -281,7 +281,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 
 			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, new boolean[16], 0, packetChunkData, biomeData);
-			owner.getSession().send(CCMsg);
+			owner.getSession().send(false, CCMsg);
 		}
 		
 		ChunkSnapshot snapshot = c.getSnapshot(false);
@@ -311,7 +311,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		byte[][] packetChunkData = new byte[16][];
 		packetChunkData[y] = fullChunkData;
 		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], 0, packetChunkData, null);
-		owner.getSession().send(CCMsg);
+		owner.getSession().send(false, CCMsg);
 	}
 
 	@Override
@@ -321,10 +321,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (p.distanceSquared(entity.getPosition()) >= 16) {
 			EntityTeleportMessage ETMMsg = new EntityTeleportMessage(entity.getId(), (int) p.getX(), (int) p.getY(), (int) p.getZ(), (int) rot.getYaw(), (int) rot.getPitch());
 			PlayerLookMessage PLMsg = new PlayerLookMessage(rot.getYaw(), rot.getPitch(), true);
-			session.sendAll(ETMMsg, PLMsg);
+			session.sendAll(false, ETMMsg, PLMsg);
 		} else {
 			PlayerPositionLookMessage PPLMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), STANCE, rot.getYaw(), rot.getPitch(), true);
-			session.send(PPLMsg);
+			session.send(false, PPLMsg);
 		}
 	}
 
@@ -342,7 +342,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			int entityId = owner.getEntity().getId();
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
 			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, owner.getName(), gamemode.getId(), dimension.getId(), difficulty.getId(), 256, session.getEngine().getMaxPlayers(), worldType.toString());
-			owner.getSession().send(idMsg, true);
+			owner.getSession().send(false, true, idMsg);
 			owner.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
 				ItemStack slotItem = vc.getInventory().getArmor().getItem(slot);
@@ -352,15 +352,15 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				} else {
 					EEMsg = new EntityEquipmentMessage(entityId, slot, getMinecraftId(slotItem.getMaterial().getId()), slotItem.getData());
 				}
-				owner.getSession().send(EEMsg);
+				owner.getSession().send(false, EEMsg);
 			}
 		} else {
-			owner.getSession().send(new RespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
+			owner.getSession().send(false, new RespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 		}
 
 		Point pos = world.getSpawnPoint().getPosition();
 		SpawnPositionMessage SPMsg = new SpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
-		owner.getSession().send(SPMsg);
+		owner.getSession().send(false, SPMsg);
 	}
 
 	@Override
@@ -369,12 +369,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (currentTime > lastKeepAlive + TIMEOUT) {
 			KeepAliveMessage PingMsg = new KeepAliveMessage((int) currentTime);
 			lastKeepAlive = currentTime;
-			owner.getSession().send(PingMsg, true);
+			owner.getSession().send(false, true, PingMsg);
 		}
 
 		for (TIntObjectIterator<Message> i = queuedInventoryUpdates.iterator(); i.hasNext(); ) {
 			i.advance();
-			session.send(i.value());
+			session.send(false, i.value());
 		}
 		super.preSnapshot();
 	}
@@ -390,7 +390,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		z += chunk.getBlockZ();
 		if (y >= 0 && y < chunk.getWorld().getHeight()) {
 			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id & 0xFF, data & 0xF);
-			session.send(BCM);
+			session.send(false, BCM);
 		}
 	}
 
@@ -406,7 +406,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (ep != null) {
 				Message[] spawn = ep.getSpawnMessage(e);
 				if (spawn != null) {
-					session.sendAll(spawn);
+					session.sendAll(false, spawn);
 				}
 			}
 		}
@@ -425,7 +425,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (ep != null) {
 				Message[] death = ep.getDestroyMessage(e);
 				if (death != null) {
-					session.sendAll(death);
+					session.sendAll(false, death);
 				}
 			}
 		}
@@ -444,7 +444,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (ep != null) {
 				Message[] sync = ep.getUpdateMessage(e);
 				if (sync != null) {
-					session.sendAll(sync);
+					session.sendAll(false, sync);
 				}
 			}
 		}
@@ -492,7 +492,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 
-		session.send(new SetWindowSlotsMessage((byte) window.getInstanceId(), window.getSlotIndexMap().getMinecraftItems(slots)));
+		session.send(false, new SetWindowSlotsMessage((byte) window.getInstanceId(), window.getSlotIndexMap().getMinecraftItems(slots)));
 		queuedInventoryUpdates.clear();
 	}
 

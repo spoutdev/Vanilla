@@ -54,8 +54,8 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public final class PlayerBlockPlacementMessageHandler extends MessageHandler<PlayerBlockPlacementMessage> {
 	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock) {
 		//refresh the client just in case it assumed something
-		player.getSession().send(new BlockChangeMessage(clickedBlock));
-		player.getSession().send(new BlockChangeMessage(alterBlock));
+		player.getSession().send(false, new BlockChangeMessage(clickedBlock));
+		player.getSession().send(false, new BlockChangeMessage(alterBlock));
 		InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(player.getEntity());
 		if (inv != null) {
 			inv.setItem(inv.getItem());

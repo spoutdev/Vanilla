@@ -71,9 +71,12 @@ public abstract class BaseProtocolTest {
 			@SuppressWarnings("rawtypes")
 			MessageCodec codec = codecLookup.find(message.getClass());
 			@SuppressWarnings("unchecked")
-			ChannelBuffer encoded = codec.encode(message);
-			Message decoded = codec.decode(encoded);
-			assertEquals("Failed for: " + message.getClass().getName(), message, decoded);
+			ChannelBuffer encoded = codec.encodeToServer(message);
+			Message decoded = codec.decodeFromClient(encoded);
+			assertEquals("Failed (C -> S) for: " + message.getClass().getName(), message, decoded);
+			encoded = codec.encodeToClient(message);
+			decoded = codec.decodeFromServer(encoded);
+			assertEquals("Failed (S -> C) for: " + message.getClass().getName(), message, decoded);
 		}
 	}
 

@@ -36,6 +36,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomes;
+import org.spout.vanilla.world.generator.object.RandomObject;
 
 public class PondObject extends RandomObject {
 	// pond instance for generating the height maps

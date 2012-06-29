@@ -34,6 +34,7 @@ import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.object.LargePlantObject;
 
 public class HugeMushroomObject extends LargePlantObject {
 	// shape of the mushroom

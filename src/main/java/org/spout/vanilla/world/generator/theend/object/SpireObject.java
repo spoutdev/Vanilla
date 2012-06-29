@@ -34,7 +34,7 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.controller.object.misc.EnderCrystal;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.object.largeplant.LargePlantObject;
+import org.spout.vanilla.world.generator.object.LargePlantObject;
 
 public class SpireObject extends LargePlantObject {
 	// These control the radius of the spires

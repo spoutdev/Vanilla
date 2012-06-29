@@ -53,7 +53,7 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 		short count = buffer.readShort();
 		ItemStack[] items = new ItemStack[count];
 		for (int slot = 0; slot < count; slot++) {
-			short item = buffer.readShort();
+			int item = buffer.readUnsignedShort();
 			if (item == 0xFFFF) {
 				items[slot] = null;
 			} else {
@@ -63,7 +63,7 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 				if (ChannelBufferUtils.hasNbtData(item)) {
 					nbtData = ChannelBufferUtils.readCompound(buffer);
 				}
-				items[slot] = new ItemStack(VanillaMaterials.getMaterial(item), data, itemCount).setNBTData(nbtData);
+				items[slot] = new ItemStack(VanillaMaterials.getMaterial((short) item, (short) data), data, itemCount).setNBTData(nbtData);
 			}
 		}
 		return new SetWindowSlotsMessage(id, items);

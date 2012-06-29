@@ -40,7 +40,16 @@ public class VanillaConnectionInfo implements ConnectionInfo {
 
 	@Override
 	public String toString() {
-		return "VanillaConnectionInfo{ " + playerName + " entityId: " + entityId + "}";
+		return "VanillaConnectionInfo{ \"" + playerName + "\" entityId: " + entityId + "}";
+	}
+
+	@Override
+	public String getIdentifier() {
+		return playerName;
+	}
+	
+	public int getEntityId() {
+		return entityId;
 	}
 	
 }

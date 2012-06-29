@@ -38,9 +38,9 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 	public LoginRequestCodec() {
 		super(LoginRequestMessage.class, 0x01);
 	}
-
+	
 	@Override
-	public LoginRequestMessage decode(ChannelBuffer buffer) {
+	public LoginRequestMessage decodeFromServer(ChannelBuffer buffer) {
 		int version = buffer.readInt();
 		String name = ChannelBufferUtils.readString(buffer);
 		String worldType = ChannelBufferUtils.readString(buffer);
@@ -49,7 +49,20 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 		int difficulty = buffer.readByte();
 		int worldHeight = ChannelBufferUtils.getExpandedHeight(buffer.readUnsignedByte());
 		int maxPlayers = buffer.readUnsignedByte();
-		return new LoginRequestMessage(version, name, mode, dimension, difficulty, worldHeight, maxPlayers, worldType);
+		return new LoginRequestMessage(true, version, name, mode, dimension, difficulty, worldHeight, maxPlayers, worldType);
+	}
+	
+	@Override
+	public LoginRequestMessage decodeFromClient(ChannelBuffer buffer) {
+		int version = buffer.readInt();
+		String name = ChannelBufferUtils.readString(buffer);
+		String worldType = ChannelBufferUtils.readString(buffer);
+		int mode = buffer.readInt();
+		int dimension = buffer.readInt();
+		int difficulty = buffer.readByte();
+		int worldHeight = ChannelBufferUtils.getExpandedHeight(buffer.readUnsignedByte());
+		int maxPlayers = buffer.readUnsignedByte();
+		return new LoginRequestMessage(false, version, name, mode, dimension, difficulty, worldHeight, maxPlayers, worldType);
 	}
 
 	@Override

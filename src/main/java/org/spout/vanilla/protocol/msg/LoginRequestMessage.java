@@ -27,20 +27,28 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.proxy.ConnectionInfo;
+import org.spout.api.protocol.proxy.ConnectionInfoMessage;
+import org.spout.api.protocol.proxy.ProxyStartMessage;
 import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
-public final class LoginRequestMessage extends Message {
+public final class LoginRequestMessage extends Message implements ConnectionInfoMessage, ProxyStartMessage {
 	private final int id, dimension, mode, difficulty, worldHeight, maxPlayers;
 	private final String name, worldType;
+	private final boolean containsInfo;
 	
 	public LoginRequestMessage(String name) {
-		this(VanillaPlugin.MINECRAFT_PROTOCOL_ID, name, 0, 0, 0, 256, 0, "");
+		this(false, VanillaPlugin.MINECRAFT_PROTOCOL_ID, name, 0, 0, 0, 256, 0, "");
+	}
+	
+	public LoginRequestMessage(int id, String name, int mode, int dimension, int difficulty, int worldHeight, int maxPlayers, String worldType) {
+		this(true, id, name, mode, dimension, difficulty, worldHeight, maxPlayers, worldType);
 	}
 
-	public LoginRequestMessage(int id, String name, int mode, int dimension, int difficulty, int worldHeight, int maxPlayers, String worldType) {
+	public LoginRequestMessage(boolean fromServer, int id, String name, int mode, int dimension, int difficulty, int worldHeight, int maxPlayers, String worldType) {
 		this.id = id;
 		this.name = name;
 		this.mode = mode;
@@ -49,6 +57,18 @@ public final class LoginRequestMessage extends Message {
 		this.worldHeight = worldHeight;
 		this.maxPlayers = maxPlayers;
 		this.worldType = worldType;
+		this.containsInfo = fromServer;
+	}
+	
+	@Override
+	public ConnectionInfo getConnectionInfo(boolean upstream, ConnectionInfo info) {
+		if (!containsInfo) {
+			return info;
+		} else if (info != null && !(info instanceof VanillaConnectionInfo)) {
+			return info;
+		} else {
+			return new VanillaConnectionInfo(name, id);
+		}
 	}
 
 	public int getId() {
@@ -94,6 +114,7 @@ public final class LoginRequestMessage extends Message {
 				.append("maxPlayers", maxPlayers)
 				.append("name", name)
 				.append("worldType", worldType)
+				.append("containsInfo", containsInfo)
 				.toString();
 	}
 
@@ -117,4 +138,5 @@ public final class LoginRequestMessage extends Message {
 				.append(this.worldType, other.worldType)
 				.isEquals();
 	}
+
 }

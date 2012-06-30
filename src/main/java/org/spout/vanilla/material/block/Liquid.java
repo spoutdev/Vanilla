@@ -64,8 +64,8 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 
 	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
 		if (useDelay) {
 			//TODO: Dynamic updates are not continuous
 			// It will flow upon placement, but requires physics to continue

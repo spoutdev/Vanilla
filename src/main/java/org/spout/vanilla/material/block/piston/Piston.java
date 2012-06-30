@@ -85,8 +85,8 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 	}
 
 	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
 		boolean powered = this.isReceivingPower(block);
 		if (powered != this.isExtended(block)) {
 			this.setExtended(block, powered);

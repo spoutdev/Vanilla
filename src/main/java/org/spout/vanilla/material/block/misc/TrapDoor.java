@@ -26,15 +26,17 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
+
 import java.util.ArrayList;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Openable;
@@ -45,8 +47,6 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstoneUtil;
 
-import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
-
 public class TrapDoor extends AbstractAttachable implements Fuel, Mineable, Openable, RedstoneTarget {
 	public final float BURN_TIME = 15.f;
 
@@ -56,8 +56,8 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Mineable, Open
 	}
 
 	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
 		if (block.getMaterial().equals(this)) {
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isOpen(block)) {

@@ -92,7 +92,7 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 	}
 
 	@Override
-	public void onUpdate(Block block) {
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		//check all directions if it still supports it
 		Block above = block.translate(BlockFace.TOP);
 		if (block.getData() != 0) {

@@ -50,8 +50,8 @@ public class Fire extends VanillaBlockMaterial {
 	}
 
 	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
 		if (!this.canPlace(block, block.getData(), BlockFace.BOTTOM, false)) {
 			this.onDestroy(block);
 		}

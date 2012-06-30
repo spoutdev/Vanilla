@@ -51,9 +51,9 @@ public abstract class DoorBlock extends GroundAttachable implements Mineable, Op
 	}
 
 	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
-		if (block.getMaterial().equals(this)) {
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		if (!(oldMaterial instanceof DoorBlock) && block.getMaterial().equals(this)) {
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isOpen(block)) {
 				this.setOpen(block, powered);

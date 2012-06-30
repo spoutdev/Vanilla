@@ -32,8 +32,8 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
@@ -85,8 +85,8 @@ public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
 	}
 
 	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
 		((org.spout.vanilla.controller.block.NoteBlock) block.getController()).setPowered(isReceivingPower(block));
 	}
 

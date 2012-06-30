@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-
+import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RailsState;
 import org.spout.vanilla.util.RedstoneUtil;
@@ -42,8 +42,8 @@ public class Rail extends RailBase implements RedstoneTarget {
 	}
 
 	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
 		if (block.getMaterial().equals(this)) {
 			this.doTrackLogic(block);
 		}

@@ -64,9 +64,9 @@ public class Cactus extends GroundAttachable implements Plant, TimedCraftable {
 	}
 
 	@Override
-	public void onUpdate(Block block) {
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		if (VanillaConfiguration.CACTUS_PHYSICS.getBoolean()) {
-			super.onUpdate(block);
+			super.onUpdate(oldMaterial, block);
 		}
 	}
 

@@ -68,8 +68,8 @@ public class TNT extends Solid implements Mineable, RedstoneTarget {
 	}
 
 	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
 		if (this.isReceivingPower(block)) {
 			this.onIgnite(block);
 		}

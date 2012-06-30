@@ -106,8 +106,8 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	}
 
 	@Override
-	public void onUpdate(Block block) {
-		super.onUpdate(block);
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
 		if (!this.isValidPosition(block, this.getAttachedFace(block), false)) {
 			this.onDestroy(block);
 		}

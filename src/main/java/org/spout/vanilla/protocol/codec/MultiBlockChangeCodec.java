@@ -42,81 +42,56 @@ public final class MultiBlockChangeCodec extends MessageCodec<MultiBlockChangeMe
 
 	@Override
 	public MultiBlockChangeMessage decode(ChannelBuffer buffer) throws IOException {
-		/*int chunkX = buffer.readInt();
-		int chunkZ = buffer.readInt();
-		int changes = buffer.readUnsignedShort();
-		short[] coordinates = new short[changes * 3];
-		short[] types = new short[changes];
-		byte[] metadata = new byte[changes];
-
-
-		byte[] rawChanges = new byte[changes * 4];
-		buffer.readBytes(rawChanges);
-		int coordsIndex = 0, rawChangesIndex = 0;
-		for (int i = 0; i < changes; ++i) {
-			metadata[i] = (byte)(rawChanges[rawChangesIndex] & 0xf);
-			types[i] = (short)(rawChanges[rawChangesIndex + 1] >> 1 |  rawChanges[rawChangesIndex] & 0xf0);
-			coordinates[++coordsIndex] = rawChanges[rawChangesIndex++]; // y
-			coordinates[coordsIndex + 1] = (short)(rawChanges[rawChangesIndex] & 0xf); // z
-			coordinates[coordsIndex - 1] = (short)(rawChanges[rawChangesIndex] << 2 );// x
-		}
-
-		return new MultiBlockChangeMessage(chunkX, chunkZ, coordinates, types, metadata);*/
-
 		int chunkX = buffer.readInt();
 		int chunkZ = buffer.readInt();
 		int changes = buffer.readUnsignedShort();
+		int dataLength = buffer.readInt();
+		if (dataLength != changes << 2) {
+			throw new IllegalStateException("data length and record count mismatch");
+		}
 
 		short[] coordinates = new short[changes * 3];
 		short[] types = new short[changes];
 		byte[] metadata = new byte[changes];
 
-		for (int i = 0; i < coordinates.length; i++) {
-			coordinates[i] = buffer.readShort();
+		int coordinateIndex = 0;
+		
+		for (int i = 0; i < changes; i++) {
+			int record = buffer.readInt();
+			coordinates[coordinateIndex++] = (short)((record >> 28) & 0x0F);
+			coordinates[coordinateIndex++] = (short)((record >> 16) & 0xFF);
+			coordinates[coordinateIndex++] = (short)((record >> 24) & 0xFF);
+			types[i] = (short)((record >> 4) & 0xFFF);
+			metadata[i] = (byte)((record >> 0) & 0xF);
 		}
-		for (int i = 0; i < types.length; i++) {
-			types[i] = buffer.readByte();
-		}
-		buffer.readBytes(metadata);
-
+		
 		return new MultiBlockChangeMessage(chunkX, chunkZ, coordinates, types, metadata);
 	}
 
 	@Override
 	public ChannelBuffer encode(MultiBlockChangeMessage message) throws IOException {
-		/*ChannelBuffer buffer = ChannelBuffers.dynamicBuffer(10 + message.getChanges() * 4);
-		buffer.writeInt(message.getChunkX());
-		buffer.writeInt(message.getChunkZ());
-		buffer.writeShort(message.getChanges());
-		byte[] data = new byte[message.getChanges() * 4];
-		for (int i = 0, coordsIndex = 0; i < message.getChanges(); ++i) {
-			data[i] = (byte)(message.getTypes()[i] & 0x0F << 2 | message.getMetadata()[i]);
-			data[i + 1] = (byte)(message.getTypes()[i] & 0x0ff << 1);
-			data[i + 2] = (byte)message.getCoordinates()[coordsIndex + 1];
-			data[i + 3] = (byte)(message.getCoordinates()[coordsIndex + 2] & 0xF << 4 | (message.getCoordinates()[coordsIndex] & 0x0F));
-			coordsIndex += 3;
-		}
-
-		buffer.writeInt(data.length);
-		buffer.writeBytes(data);
-
-		return buffer;*/
-
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer(10 + message.getChanges() * 4);
 		buffer.writeInt(message.getChunkX());
 		buffer.writeInt(message.getChunkZ());
 		buffer.writeShort(message.getChanges());
+		buffer.writeInt(message.getChanges() << 2);
 
+		int changes = message.getChanges();
+		byte[] metadata = message.getMetadata();
+		short[] types = message.getTypes();
 		short[] coordinates = message.getCoordinates();
-		for (short coordinate : coordinates) {
-			buffer.writeShort(coordinate);
+		
+		int coordinateIndex = 0;
+		
+		for (int i = 0; i < changes; i++) {
+			int record = metadata[i] & 0xF;
+			record |= (types[i] & 0xFFF) << 4;
+			record |= (coordinates[coordinateIndex++] & 0xF) << 28;
+			record |= (coordinates[coordinateIndex++] & 0xFF) << 16;
+			record |= (coordinates[coordinateIndex++] & 0xF) << 24;
+			buffer.writeInt(record);
 		}
-
-		for (short type : message.getTypes()) {
-			buffer.writeByte(type);
-		}
-
-		buffer.writeBytes(message.getMetadata());
+		
 		return buffer;
 	}
 }

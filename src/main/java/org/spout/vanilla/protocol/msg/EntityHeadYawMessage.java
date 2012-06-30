@@ -29,14 +29,28 @@ package org.spout.vanilla.protocol.msg;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.proxy.ConnectionInfo;
+import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
-public class EntityHeadYawMessage extends Message {
-	private final int id, headYaw;
+public class EntityHeadYawMessage extends Message implements TransformableMessage {
+	private int id;
+	private final int headYaw;
 
 	public EntityHeadYawMessage(int id, int headYaw) {
 		this.id = id;
 		this.headYaw = headYaw;
+	}
+	
+	@Override
+	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
+		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
+			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
+		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
+			id = ((VanillaConnectionInfo) info).getEntityId();
+		} 
+		return this;
 	}
 
 	public int getHeadYaw() {

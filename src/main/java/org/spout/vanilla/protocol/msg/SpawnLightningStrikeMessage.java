@@ -29,10 +29,14 @@ package org.spout.vanilla.protocol.msg;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.proxy.ConnectionInfo;
+import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
-public final class SpawnLightningStrikeMessage extends Message {
-	private final int id, mode, x, y, z;
+public final class SpawnLightningStrikeMessage extends Message implements TransformableMessage {
+	private int id;
+	private final int mode, x, y, z;
 
 	public SpawnLightningStrikeMessage(int id, int x, int y, int z) {
 		this(id, 1, x, y, z);
@@ -44,6 +48,16 @@ public final class SpawnLightningStrikeMessage extends Message {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+	
+	@Override
+	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
+		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
+			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
+		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
+			id = ((VanillaConnectionInfo) info).getEntityId();
+		} 
+		return this;
 	}
 
 	public int getId() {

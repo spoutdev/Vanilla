@@ -29,19 +29,33 @@ package org.spout.vanilla.protocol.msg;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.proxy.ConnectionInfo;
+import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
-public final class EntityActionMessage extends Message {
+public final class EntityActionMessage extends Message implements TransformableMessage {
 	public static final int ACTION_CROUCH = 1;
 	public static final int ACTION_UNCROUCH = 2;
 	public static final int ACTION_LEAVE_BED = 3;
 	public static final int ACTION_START_SPRINTING = 4;
 	public static final int ACTION_STOP_SPRINTING = 5;
-	private final int id, action;
+	private int id;
+	private final int action;
 
 	public EntityActionMessage(int id, int action) {
 		this.id = id;
 		this.action = action;
+	}
+	
+	@Override
+	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
+		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
+			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
+		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
+			id = ((VanillaConnectionInfo) info).getEntityId();
+		} 
+		return this;
 	}
 
 	public int getId() {

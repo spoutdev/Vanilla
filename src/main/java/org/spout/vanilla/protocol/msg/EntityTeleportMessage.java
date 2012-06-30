@@ -30,10 +30,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.proxy.ConnectionInfo;
+import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
-public final class EntityTeleportMessage extends Message {
-	private final int id, x, y, z, rotation, pitch;
+public final class EntityTeleportMessage extends Message implements TransformableMessage {
+	private int id;
+	private final int x, y, z, rotation, pitch;
 
 	public EntityTeleportMessage(int id, Vector3 position, int rotation, int pitch) {
 		this(id, (int) position.getX(), (int) position.getY(), (int) position.getZ(), rotation, pitch);
@@ -46,6 +50,16 @@ public final class EntityTeleportMessage extends Message {
 		this.z = z;
 		this.rotation = rotation;
 		this.pitch = pitch;
+	}
+	
+	@Override
+	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
+		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
+			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
+		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
+			id = ((VanillaConnectionInfo) info).getEntityId();
+		} 
+		return this;
 	}
 
 	public int getId() {

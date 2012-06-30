@@ -29,10 +29,14 @@ package org.spout.vanilla.protocol.msg;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.proxy.ConnectionInfo;
+import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
-public class SpawnExperienceOrbMessage extends Message {
-	private final int id, x, y, z;
+public class SpawnExperienceOrbMessage extends Message implements TransformableMessage {
+	private int id;
+	private final int x, y, z;
 	private final short count;
 
 	public SpawnExperienceOrbMessage(int id, int x, int y, int z, short count) {
@@ -41,6 +45,16 @@ public class SpawnExperienceOrbMessage extends Message {
 		this.y = y;
 		this.z = z;
 		this.count = count;
+	}
+	
+	@Override
+	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
+		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
+			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
+		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
+			id = ((VanillaConnectionInfo) info).getEntityId();
+		} 
+		return this;
 	}
 
 	public int getId() {

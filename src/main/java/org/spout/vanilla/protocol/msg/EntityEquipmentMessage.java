@@ -27,23 +27,35 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.proxy.ConnectionInfo;
+import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
-public final class EntityEquipmentMessage extends Message {
+public final class EntityEquipmentMessage extends Message implements TransformableMessage {
 	public static final int HELD_ITEM = 0;
 	public static final int BOOTS_SLOT = 1;
 	public static final int LEGGINGS_SLOT = 2;
 	public static final int CHESTPLATE_SLOT = 3;
 	public static final int HELMET_SLOT = 4;
-	private final int id, slot, item, damage;
+	private int id, slot, item, damage;
 
 	public EntityEquipmentMessage(int id, int slot, int item, int damage) {
 		this.id = id;
 		this.slot = slot;
 		this.item = item;
 		this.damage = damage;
+	}
+	
+	@Override
+	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
+		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
+			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
+		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
+			id = ((VanillaConnectionInfo) info).getEntityId();
+		} 
+		return this;
 	}
 
 	public int getId() {
@@ -88,4 +100,5 @@ public final class EntityEquipmentMessage extends Message {
 				.append(this.damage, other.damage)
 				.isEquals();
 	}
+
 }

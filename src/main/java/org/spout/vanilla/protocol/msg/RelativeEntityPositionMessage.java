@@ -30,10 +30,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.proxy.ConnectionInfo;
+import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
-public final class RelativeEntityPositionMessage extends Message {
-	private final int id, deltaX, deltaY, deltaZ;
+public final class RelativeEntityPositionMessage extends Message implements TransformableMessage {
+	private int id;
+	private final int deltaX, deltaY, deltaZ;
 
 	public RelativeEntityPositionMessage(int id, Vector3 deltaPosition) {
 		this(id, (int) deltaPosition.getX(), (int) deltaPosition.getY(), (int) deltaPosition.getZ());
@@ -44,6 +48,16 @@ public final class RelativeEntityPositionMessage extends Message {
 		this.deltaX = deltaX;
 		this.deltaY = deltaY;
 		this.deltaZ = deltaZ;
+	}
+	
+	@Override
+	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
+		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
+			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
+		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
+			id = ((VanillaConnectionInfo) info).getEntityId();
+		} 
+		return this;
 	}
 
 	public int getId() {

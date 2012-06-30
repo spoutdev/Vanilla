@@ -30,10 +30,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.proxy.ConnectionInfo;
+import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
-public final class SpawnVehicleMessage extends Message {
-	private final int id, type, x, y, z, fireballId, fireballX, fireballY, fireballZ;
+public final class SpawnVehicleMessage extends Message implements TransformableMessage {
+	private int id;
+	private final int type, x, y, z, fireballId, fireballX, fireballY, fireballZ;
 
 	public SpawnVehicleMessage(int id, int type, Vector3 pos) {
 		this(id, type, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
@@ -57,6 +61,16 @@ public final class SpawnVehicleMessage extends Message {
 		fireballX = fbX;
 		fireballY = fbY;
 		fireballZ = fbZ;
+	}
+	
+	@Override
+	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
+		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
+			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
+		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
+			id = ((VanillaConnectionInfo) info).getEntityId();
+		} 
+		return this;
 	}
 
 	public int getId() {

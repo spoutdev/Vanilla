@@ -29,21 +29,34 @@ package org.spout.vanilla.protocol.msg;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.proxy.ConnectionInfo;
+import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
-public final class EntityStatusMessage extends Message {
+public final class EntityStatusMessage extends Message implements TransformableMessage {
 	public static final byte ENTITY_HURT = 2;
 	public static final byte ENTITY_DEAD = 3;
 	public static final byte WOLF_TAMING = 6;
 	public static final byte WOLF_TAMED = 7;
 	public static final byte WOLF_SHAKING = 8;
 	public static final byte EATING_ACCEPTED = 9;
-	private final int id;
+	private int id;
 	private final byte status;
 
 	public EntityStatusMessage(int id, byte status) {
 		this.id = id;
 		this.status = status;
+	}
+	
+	@Override
+	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
+		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
+			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
+		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
+			id = ((VanillaConnectionInfo) info).getEntityId();
+		} 
+		return this;
 	}
 
 	public int getId() {

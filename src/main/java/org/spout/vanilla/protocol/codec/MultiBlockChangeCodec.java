@@ -60,7 +60,7 @@ public final class MultiBlockChangeCodec extends MessageCodec<MultiBlockChangeMe
 			int record = buffer.readInt();
 			coordinates[coordinateIndex++] = (short)((record >> 28) & 0x0F);
 			coordinates[coordinateIndex++] = (short)((record >> 16) & 0xFF);
-			coordinates[coordinateIndex++] = (short)((record >> 24) & 0xFF);
+			coordinates[coordinateIndex++] = (short)((record >> 24) & 0x0F);
 			types[i] = (short)((record >> 4) & 0xFFF);
 			metadata[i] = (byte)((record >> 0) & 0xF);
 		}

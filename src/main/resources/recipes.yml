@@ -2,319 +2,15 @@ recipes:
 
   Plank:
     type: Shapeless
-    result: PLANK,1
+    result: PLANK,4
     ingredients: [LOG]
-   
-  Block_GOLD:
-    type: Shaped
-    result: GOLDBLOCK,1
+    
+  Stick:
+    type: Shapeless
+    result: STICK,4
     ingredients: 
-      G: INGOT_GOLD
-    rows: ['GGG', 'GGG', 'GGG']
-
-  Block_IRON:
-    type: Shaped
-    result: IRONBLOCK,1
-    ingredients: 
-      I: INGOT_IRON
-    rows: ['III', 'III', 'III']
-
-  Block_Lapis:
-    type: Shaped
-    result: LAPISBLOCK,1
-    ingredients: 
-      L: LAPIS
-    rows: ['LLL', 'LLL', 'LLL']
-
-  Block_Diamond:
-    type: Shaped
-    result: DIAMONDBLOCK,1
-    ingredients: 
-      D: INGOT_DIAMOND
-    rows: ['DDD', 'DDD', 'DDD']
-
-  Dispenser:
-    type: Shaped
-    result: DISPENSER,1
-    ingredients:
-      C: COBBLESTONE
-      B: BOW
-      R: REDSTONE
-    rows: ['CCC', 'CBC', 'CRC']  
-
-  Sandstone:
-    type: Shaped
-    result: SANDSTONE,1
-    ingredients:
-      S: SAND
-    rows: ['SS', 'SS']
-
-  SandstoneHieroglyph:
-    type: Shaped
-    result: SANDSTONEHIEROGLYPH,4
-    ingredients:
-      S: SANDSTONE
-    rows: ['SS', 'SS']
-
-
-  Note_Block:
-    type: Shaped
-    result: Note_Block,1
-    ingredients:
       P: PLANK
-      R: REDSTONE
-    rows: ['PPP', 'PRP', 'PPP']
-
-  Bed:
-    type: Shaped
-    result: BED,1
-    ingredients:
-      A: WOOL
-      B: PLANK
-    rows: ['AAA', 'BBB'] 
-
-  Rail:
-    type: Shaped
-    result: RAIL,16
-    ingredients:
-      I: INGOT_IRON
-      S: STICK
-    rows: ['I I', 'ISI', 'I I']   
-
-  Rail_Powered:
-    type: Shaped
-    result: POWEREDRAIL,6
-    ingredients:
-      G: INGOT_GOLD
-      S: STICK
-      R: REDSTONE
-    rows: ['G G', 'GSG', 'GRG']
- 
-  Rail_DETECTOR:
-    type: Shaped
-    result: DETECTORRAIL,6
-    ingredients:
-      I: INGOT_IRON
-      S: PLATE_STONE
-      R: REDSTONE
-    rows: ['I I', 'ISI', 'IRI']
-
-  Piston:
-     type: Shaped
-     result: PISTON,1
-     ingredients:
-       W: WOOD
-       C: COBBLESTONE
-       I: INGOT_IRON
-       R: REDSTONE
-     rows: ['WWW', 'CIC', 'CRC']
-
-  Piston_Sticky:
-    type: Shaped
-    result: PISTON_STICKY,1
-    ingredients:
-      S: SLIMEBALL
-      P: PISTON
-    rows: ['S', 'P'] 
-  
-  Wool:
-    type: Shaped
-    result: WOOL,1
-    ingredients:
-      S: STRING
-    rows: ['SS', 'SS']
-
-  LightGreyWool:
-    type: Shapeless
-    result: WOOL_GREY_LIGHT,1
-    ingredients:
-      W: WOOL
-      D: DYE_GREY_LIGHT
-    rows: ['W', 'D']
-
-  GreyWool:
-    type: Shapeless
-    result: WOOL_GREY,1
-    ingredients:
-      W: WOOL
-      D: DYE_GREY
-    rows: ['W', 'D']
-
-  BlackWool:
-    type: Shapeless
-    result: WOOL_BLACK,1
-    ingredients:
-      W: WOOL
-      D: DYE_BLACK
-    rows: ['W', 'D']
-
-  RedWool:
-    type: Shapeless
-    result: WOOL_RED,1
-    ingredients:
-      W: WOOL
-      D: DYE_RED
-    rows: ['W', 'D']
-
-  OrangeWool:
-    type: Shapeless
-    result: WOOL_ORANGE,1
-    ingredients:
-      W: WOOL
-      D: DYE_ORANGE
-    rows: ['W', 'D']
-
-  YellowWool:
-    type: Shapeless
-    result: WOOL_YELLOW,1
-    ingredients:
-      W: WOOL
-      D: DYE_YELLOW
-    rows: ['W', 'D']
-
-  LimeWool:
-    type: Shapeless
-    result: WOOL_LIME,1
-    ingredients:
-      W: WOOL
-      D: DYE_LIME
-    rows: ['W', 'D']
-
-  GreenWool:
-    type: Shapeless
-    result: WOOL_GREEN,1
-    ingredients:
-      W: WOOL
-      D: DYE_GREEN
-    rows: ['W', 'D']
-
-  LightBlueWool:
-    type: Shapeless
-    result: WOOL_BLUE_LIGHT,1
-    ingredients:
-      W: WOOL
-      D: DYE_BLUE_LIGHT
-    rows: ['W', 'D']
-
-    CyanWool:
-    type: Shapeless
-    result: WOOL_CYAN,1
-    ingredients:
-      W: WOOL
-      D: DYE_CYAN
-    rows: ['W', 'D']
-
-  BlueWool:
-    type: Shapeless
-    result: WOOL_BLUE,1
-    ingredients:
-      W: WOOL
-      D: DYE_BLUE
-    rows: ['W', 'D']
-
-  PurpleWool:
-    type: Shapeless
-    result: WOOL_PURPLE,1
-    ingredients:
-      W: WOOL
-      D: DYE_PURPLE
-    rows: ['W', 'D']
-
-  MagentaWool:
-    type: Shapeless
-    result: WOOL_MAGENTA,1
-    ingredients:
-      W: WOOL
-      D: DYE_MAGENTA
-    rows: ['W', 'D']
-
-  PinkWool:
-    type: Shapeless
-    result: WOOL_PINK,1
-    ingredients:
-      W: WOOL
-      D: DYE_PINK
-    rows: ['W', 'D']
-
-  BrownWool:
-    type: Shapeless
-    result: WOOL_BROWN,1
-    ingredients:
-      W: WOOL
-      D: DYE_BROWN
-    rows: ['W', 'D']
-
-  StoneSlab:
-    type: Shaped
-    result: SLAB_STONE,6
-    ingredients:
-      S: STONE
-    rows: ['SSS']
-
-  SandstoneSlab:
-    type: Shaped
-    result: SLAB_SANDSTONE,6
-    ingredients:
-      S: SANDSTONE
-    rows: ['SSS']
-
-  WoodenSlab:
-    type: Shaped
-    result: SLAB_WOOD,6
-    ingredients:
-      W: WOOD
-    rows: ['WWW']
-
-  CobblestoneSlab:
-    type: Shaped
-    result: SLAB_COBBLESTONE,6
-    ingredients:
-      C: COBBLESTONE
-    rows: ['CCC']
-
-  BrickSlab:
-    type: Shaped
-    result: SLAB_BRICK,6
-    ingredients:
-      B: BLOCK_BRICK
-    rows: ['BBB']
-
-  StoneBrickSlab:
-    type: Shaped
-    result: SLAB_STONEBRICK,6
-    ingredients:
-      S: STONEBRICK
-    rows: ['SSS']
-
-  SandstoneDoubleSlab:
-    type: Shaped
-    result: SLAB_SANDSTONE_DOUBLE,1
-    ingredients:
-      S: SANDSTONESLAB
-    rows: ['S', 'S']
-
-  BRICKS:
-    type: Shaped
-    result: BLOCK_BRICK,1
-    ingredients:
-      B: BRICK
-    rows: ['BBB']
-
-  TNT:
-    type: Shaped
-    result: TNT,1
-    ingredients:
-      G: GUNPOWDER
-      S: SAND
-    rows: ['GSG', 'SGS', GSG']
-
-  Bookshelf:
-    type: Shaped
-    result: BOOKSHELF,1
-    ingredients:
-      P: PLANKS
-      B: BOOK
-    rows: ['PPP', 'BBB', 'PPP']
+    rows: ['P', 'P']
 
   Torch:
     type: Shaped
@@ -323,145 +19,83 @@ recipes:
       C: COAL
       S: STICK
     rows: ['C', 'S']
-
-  Jackalantern:
-    type: Shaped
-    result: JACKALANTERN,1
-    ingredients:
-      P: PUMPKIN
-      T: TORCH
-    rows: ['P', 'T']
-
-  WoodenStairs:
-    type: Shaped
-    result: STAIRS_WOOD,4
-    ingredients:
-      P: PLANKS
-    rows: ['  P', ' PP', 'PPP']
-
-  CobblestoneStairs:
-    type: Shaped
-    result: STAIRS_COBBLESTONE,4
-    ingredients:
-      C: COBBLESTONE
-    rows: ['  C', ' CC', 'CCC']
-
-  StoneStairs:
-    type: Shaped
-    result: STAIRS_STONE,4
-    ingredients:
-      S: STONE
-    rows: ['  S', ' SS', 'SSS']
-
-  BricksStairs:
-    type: Shaped
-    result: STAIRS_BRICK,4
-    ingredients:
-      B: BRICK
-    rows: ['  B', ' BB', 'BBB']
-
-  StoneBrickStairs:
-    type: Shaped
-    result: STAIRS_STONEBRICK,4
-    ingredients:
-      S: STONEBRICK
-    rows: ['  S', ' SS', 'SSS']
-
-  NetherStairs:
-    type: Shaped
-    result: STAIRS_NETHER,4
-    ingredients:
-      N: NETHER
-    rows: ['  N', ' NN', 'NNN']
-
-  SandstoneStairs:
-    type: Shaped
-    result: STAIRS_SANDSTONE,4
-    ingredients:
-      S: SANDSTONE
-    rows: ['  S', ' SS', 'SSS']
-
-  Chest:
-    type: Shaped
-    result: CHEST,1
-    ingredients:
-      P: PLANK
-    rows: ['PPP', 'P P', 'PPP']
-
+    
   Crafting Table:
     type: Shaped
     result: CRAFTING_TABLE,1
     ingredients:
       A: PLANK
     rows: ['AA', 'AA']
-
+    
   Furnace:
     type: Shaped
     result: FURNACE,1
     ingredients:
       C: COBBLESTONE
     rows: ['CCC', 'CCC', 'CCC']
-
-  WoodenDoor:
+    
+  Chest:
     type: Shaped
-    result: DOOR_WOOD,1
+    result: CHEST,1
     ingredients:
-      W: WOOD
-    rows: ['WW', 'WW', 'WW']
-
-  IronDoor:
+      P: PLANK
+    rows: ['PPP', 'P P', 'PPP']
+    
+  Block_GOLD:
     type: Shaped
-    result: DOOR_IRON,1
-    ingredients:
-      I: INGOT_IRON
-    rows: ['II', 'II', 'II']
+    result: GOLD_BLOCK,1
+    ingredients: 
+      G: GOLD_INGOT
+    rows: ['GGG', 'GGG', 'GGG']
 
-  Ladder:
+  Block_IRON:
     type: Shaped
-    result: LADDER,3
-    ingredients:
-      S: STICK
-    rows: ['S S', 'SSS', 'S S']
+    result: IRON_BLOCK,1
+    ingredients: 
+      I: IRON_INGOT
+    rows: ['III', 'III', 'III']
 
-  Lever:
+  Block_Lapis:
     type: Shaped
-    result: LEVER,1
-    ingredients:
-      S: STICK
-      C: COBBLESTONE
-    rows: ['S', 'C']
+    result: LAPIS_LAZULI_BLOCK,1
+    ingredients: 
+      L: LAPIS_LAZULI
+    rows: ['LLL', 'LLL', 'LLL']
 
-  WoodPressurePlate:
+  Block_Diamond:
     type: Shaped
-    result: PLATE_WOOD,1
-    ingredients:
-      W: WOOD
-    rows: ['WW']
+    result: DIAMOND_BLOCK,1
+    ingredients: 
+      D: INGOT_DIAMOND
+    rows: ['DDD', 'DDD', 'DDD']
 
-  StonePressurePlate:
+    
+    
+  GlowStone:
     type: Shaped
-    result: PLATE_STONE,1
+    result: GLOWSTONE_BLOCK,1
     ingredients:
-      S: STONE
-    rows: ['SS']
-
-  RedstoneTorch:
+      G: GLOWSTONE_DUST
+    rows: ['GG', 'GG']
+    
+  Wool:
     type: Shaped
-    result: REDSTONETORCH,1
+    result: WOOL,1
     ingredients:
-      R: REDSTONE
-      S: STICK
-    rows: ['R', 'S']
-  
-  RedstoneRepeater:
+      S: STRING
+    rows: ['SS', 'SS'] 
+    
+  TNT:
     type: Shaped
-    result: REDSTONEREPEATER,1
+    result: TNT,1
     ingredients:
-      T: REDSTONETORCH
-      R: RESTONE
-      S: STONE
-    rows: ['TRT', 'SSS']
-
-
-
-
+      G: GUNPOWDER
+      S: SAND
+    rows: ['GSG', 'SGS', GSG']
+    
+  WoodenSlab:
+    type: Shaped
+    result: SLAB_WOOD,6
+    ingredients:
+      P: PLANKS
+    rows: ['PPP']

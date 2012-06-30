@@ -24,49 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object.largeplant;
+package org.spout.vanilla.world.generator.object;
 
 import java.util.Random;
 
-import org.spout.vanilla.world.generator.normal.object.RandomObject;
+import org.spout.api.generator.WorldGeneratorObject;
 
-public abstract class LargePlantObject extends RandomObject {
-	// size control
-	protected byte baseHeight;
-	protected byte randomHeight;
-	protected byte totalHeight;
+public abstract class RandomObject extends WorldGeneratorObject {
+	protected Random random;
 
-	protected LargePlantObject(byte baseHeight, byte randomHeight) {
-		this(null, baseHeight, randomHeight);
+	protected RandomObject() {
+		this.random = new Random();
 	}
 
-	protected LargePlantObject(Random random, byte baseHeight, byte randomHeight) {
-		super(random);
-		this.baseHeight = baseHeight;
-		this.randomHeight = randomHeight;
-		randomizeHeight();
+	protected RandomObject(Random random) {
+		if (random == null) {
+			this.random = new Random();
+		} else {
+			this.random = random;
+		}
 	}
 
-	public void setBaseHeight(byte baseHeight) {
-		this.baseHeight = baseHeight;
-		randomizeHeight();
-	}
+	public abstract void randomize();
 
-	public void setRandomHeight(byte randHeight) {
-		this.randomHeight = randHeight;
-		randomizeHeight();
-	}
-
-	public void setTotalHeight(byte height) {
-		this.totalHeight = height;
-	}
-
-	public final void randomizeHeight() {
-		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));
-	}
-
-	@Override
-	public void randomize() {
-		randomizeHeight();
+	public void setRandom(Random random) {
+		this.random = random;
 	}
 }

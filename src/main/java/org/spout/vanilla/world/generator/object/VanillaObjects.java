@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator;
+package org.spout.vanilla.world.generator.object;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -33,6 +33,7 @@ import java.util.Map;
 import org.spout.api.generator.WorldGeneratorObject;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.nether.object.NetherPortalObject;
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;
 import org.spout.vanilla.world.generator.normal.object.OreObject;
 import org.spout.vanilla.world.generator.normal.object.PondObject;
@@ -75,13 +76,14 @@ public class VanillaObjects {
 	public static final ShrubObject SHRUB = new ShrubObject();
 	public static final SmallTreeObject SMALL_OAK_TREE = new SmallTreeObject(TreeType.OAK);
 	public static final SmallTreeObject SMALL_BIRCH_TREE = new SmallTreeObject(TreeType.BIRCH);
-	public static final SmallTreeObject SMALL_JUNGLE_TREE = new SmallTreeObject(TreeType.JUNGLE);// alter it
-	public static final SmallTreeObject SMALL_SWAMP_TREE = new SmallTreeObject(TreeType.OAK); // alter it
+	public static final SmallTreeObject SMALL_JUNGLE_TREE = new SmallTreeObject(TreeType.JUNGLE);
+	public static final SmallTreeObject SMALL_SWAMP_TREE = new SmallTreeObject(TreeType.OAK);
 	public static final PineTreeObject PINE_TREE = new PineTreeObject();
 	public static final SpruceTreeObject SPRUCE_TREE = new SpruceTreeObject();
 	public static final SugarCaneStackObject SUGAR_CANE_STACK = new SugarCaneStackObject();
 	public static final WellObject WELL = new WellObject();
 	public static final SpireObject SPIRE = new SpireObject();
+	public static final NetherPortalObject NETHER_PORTAL = new NetherPortalObject();
 	// for the '/obj' test command
 	private static final Map<String, WorldGeneratorObject> BY_NAME = new HashMap<String, WorldGeneratorObject>();
 

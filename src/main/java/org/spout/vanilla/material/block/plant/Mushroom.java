@@ -46,7 +46,7 @@ import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
-import org.spout.vanilla.world.generator.normal.object.largeplant.LargePlantObject;
+import org.spout.vanilla.world.generator.object.LargePlantObject;
 
 public class Mushroom extends GroundAttachable implements Plant {
 	public Mushroom(String name, int id) {

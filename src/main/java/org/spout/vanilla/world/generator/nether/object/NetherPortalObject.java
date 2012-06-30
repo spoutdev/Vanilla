@@ -29,6 +29,7 @@ package org.spout.vanilla.world.generator.nether.object;
 import java.util.Random;
 
 import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector2;
 
@@ -112,7 +113,15 @@ public class NetherPortalObject extends RotatableObject {
 		this.floating = floating;
 	}
 
-	public static void placePortal(World world, int x, int z, Random random) {
+	/**
+	 * Attempts to place a portal near the given coordinates.
+	 * @param world the world to place in
+	 * @param x the x coordinate
+	 * @param z the z coordinate
+	 * @param random the random used to find an angle
+	 * @return a point for placing entities inside output portals, or null if no portal could be placed
+	 */
+	public static Point placePortal(World world, int x, int z, Random random) {
 		final NetherPortalObject portal = new NetherPortalObject(random);
 		for (byte xx = -16; xx <= 16; xx++) {
 			for (byte zz = -16; zz <= 16; zz++) {
@@ -120,7 +129,7 @@ public class NetherPortalObject extends RotatableObject {
 					final byte y = getHighestSolidY(world, x + xx, yy, z + zz);
 					if (y != -1 && portal.canPlaceObject(world, x + xx, y, z + zz)) {
 						portal.placeObject(world, x + xx, y, z + zz);
-						return;
+						return new Point(world, x + xx, y, z + zz);
 					}
 				}
 			}
@@ -131,11 +140,12 @@ public class NetherPortalObject extends RotatableObject {
 				for (byte yy = 70; yy < 118; yy++) {
 					if (portal.canPlaceObject(world, x + xx, yy, z + zz)) {
 						portal.placeObject(world, x + xx, yy, z + zz);
-						return;
+						return new Point(world, x + xx, yy, z + zz);
 					}
 				}
 			}
 		}
+		return null;
 	}
 
 	private static byte getHighestSolidY(World world, int x, byte startY, int z) {

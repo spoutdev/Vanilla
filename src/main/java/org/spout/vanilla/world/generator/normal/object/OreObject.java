@@ -35,16 +35,16 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
 public class OreObject extends RandomObject {
-	private int count;
-	private int maxHeight;
-	private int clusterSize;
+	private byte count;
+	private short maxHeight;
+	private byte clusterSize;
 	private BlockMaterial material;
 
-	public OreObject(BlockMaterial material, int count, int clusterSize, int maxHeight) {
+	public OreObject(BlockMaterial material, byte count, byte clusterSize, short maxHeight) {
 		this(null, material, count, clusterSize, maxHeight);
 	}
 
-	public OreObject(Random random, BlockMaterial material, int count, int clusterSize, int maxHeight) {
+	public OreObject(Random random, BlockMaterial material, byte count, byte clusterSize, short maxHeight) {
 		super(random);
 		this.count = count;
 		this.material = material;
@@ -52,43 +52,55 @@ public class OreObject extends RandomObject {
 		this.clusterSize = clusterSize;
 	}
 
+	public OreObject(Random random, OreType type) {
+		this(random, type.material, type.count, type.clusterSize, type.maxHeight);
+	}
+
+	public OreObject(OreType type) {
+		this(null, type);
+	}
+
 	/**
 	 * Gets the maximum height this ore should be placed
+	 *
 	 * @return maximum height
 	 */
-	public int getMaxHeight() {
+	public short getMaxHeight() {
 		return this.maxHeight;
 	}
 
 	/**
 	 * Gets the amount of this ore placed per chunk
+	 *
 	 * @return placement count
 	 */
-	public int getCount() {
+	public byte getCount() {
 		return this.count;
 	}
 
 	/**
 	 * Gets the size of a cluster of this ore
+	 *
 	 * @return cluster size
 	 */
-	public int getClusterSize() {
+	public byte getClusterSize() {
 		return this.clusterSize;
 	}
 
 	/**
 	 * Gets the ore material used
+	 *
 	 * @return ore material
 	 */
 	public BlockMaterial getMaterial() {
 		return this.material;
 	}
 
-	public void setClusterSize(int clusterSize) {
+	public void setClusterSize(byte clusterSize) {
 		this.clusterSize = clusterSize;
 	}
 
-	public void setCount(int count) {
+	public void setCount(byte count) {
 		this.count = count;
 	}
 
@@ -96,7 +108,7 @@ public class OreObject extends RandomObject {
 		this.material = material;
 	}
 
-	public void setMaxHeight(int maxHeight) {
+	public void setMaxHeight(short maxHeight) {
 		this.maxHeight = maxHeight;
 	}
 
@@ -107,6 +119,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Generates a cluster of this ore at the position using the random given
+	 *
 	 * @param world to place in
 	 * @param originX of the cluster
 	 * @param originY of the cluster
@@ -161,5 +174,43 @@ public class OreObject extends RandomObject {
 
 	@Override
 	public void randomize() {
+	}
+
+	public static enum OreType {
+		DIRT(VanillaMaterials.DIRT, (byte) 20, (byte) 32, (short) 128),
+		GRAVEL(VanillaMaterials.GRAVEL, (byte) 10, (byte) 32, (short) 128),
+		COAL(VanillaMaterials.COAL_ORE, (byte) 20, (byte) 16, (short) 128),
+		IRON(VanillaMaterials.IRON_ORE, (byte) 20, (byte) 8, (short) 64),
+		REDSTONE(VanillaMaterials.REDSTONE_ORE, (byte) 8, (byte) 7, (short) 16),
+		LAPIS_LAZULI(VanillaMaterials.LAPIS_LAZULI_ORE, (byte) 1, (byte) 6, (short) 32),
+		GOLD(VanillaMaterials.GOLD_ORE, (byte) 2, (byte) 8, (short) 32),
+		DIAMOND(VanillaMaterials.DIAMOND_ORE, (byte) 1, (byte) 7, (short) 16);
+		private final BlockMaterial material;
+		private final byte count;
+		private final byte clusterSize;
+		private final short maxHeight;
+
+		private OreType(BlockMaterial material, byte count, byte clusterSize, short maxHeight) {
+			this.material = material;
+			this.count = count;
+			this.clusterSize = clusterSize;
+			this.maxHeight = maxHeight;
+		}
+
+		public int getClusterSize() {
+			return clusterSize;
+		}
+
+		public int getCount() {
+			return count;
+		}
+
+		public BlockMaterial getMaterial() {
+			return material;
+		}
+
+		public int getMaxHeight() {
+			return maxHeight;
+		}
 	}
 }

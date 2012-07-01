@@ -57,19 +57,7 @@ public class NetherPortalObject extends RotatableObject {
 	}
 
 	public final void findRandomAngle() {
-		switch (random.nextInt(4)) {
-			case 0:
-				rotation = new Quaternion(0, 0, 1, 0);
-				return;
-			case 1:
-				rotation = new Quaternion(90, 0, 1, 0);
-				return;
-			case 2:
-				rotation = new Quaternion(180, 0, 1, 0);
-				return;
-			case 3:
-				rotation = new Quaternion(270, 0, 1, 0);
-		}
+		rotation = new Quaternion(90 * random.nextInt(4), 0, 1, 0);
 	}
 
 	@Override
@@ -116,11 +104,13 @@ public class NetherPortalObject extends RotatableObject {
 
 	/**
 	 * Attempts to place a portal near the given coordinates.
+	 *
 	 * @param world the world to place in
 	 * @param x the x coordinate
 	 * @param z the z coordinate
 	 * @param random the random used to find an angle
-	 * @return a point for placing entities inside output portals, or null if no portal could be placed
+	 * @return a point for placing entities inside output portals, or null if no portal could be
+	 * placed
 	 */
 	public static Point placePortal(World world, int x, int z, Random random) {
 		final NetherPortalObject portal = new NetherPortalObject(random);

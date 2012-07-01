@@ -27,121 +27,48 @@
 package org.spout.vanilla.world.generator.object;
 
 import java.util.Random;
-
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.Vector2;
+import org.spout.api.math.MathHelper;
+import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 
 public abstract class RotatableObject extends RandomObject {
-	protected Angle angle = Angle.ZERO;
-	protected Vector2 center = new Vector2(0, 0);
+	protected Quaternion rotation = Quaternion.IDENTITY;
+	protected Vector3 center = new Vector3(0, 0, 0);
 
-	protected RotatableObject(Random random, Angle angle, Vector2 center) {
-		super(random);
-		this.angle = angle;
-		this.center = center;
-	}
-
-	protected RotatableObject(Angle angle, Vector2 center) {
-		this(null, angle, center);
-	}
-
-	protected RotatableObject(Random random, Vector2 center) {
-		super(random);
-		this.center = center;
-	}
-
-	protected RotatableObject(Vector2 center) {
-		this.center = center;
-	}
-
-	protected RotatableObject(Random random, Angle angle) {
-		super(random);
-		this.angle = angle;
-	}
-
-	protected RotatableObject(Angle angle) {
-		this.angle = angle;
-	}
-
-	protected RotatableObject(Random random) {
+	public RotatableObject(Random random) {
 		super(random);
 	}
 
-	protected RotatableObject() {
+	public RotatableObject() {
 	}
 
 	protected Block getBlock(World world, int x, int y, int z) {
-		final int cx = center.getFloorX();
-		final int cz = center.getFloorY();
-		switch (angle) {
-			case ZERO:
-				return world.getBlock(x, y, z);
-			case NINETY:
-				return world.getBlock(cx - z + cz, y, cz + x - cx);
-			case ONE_HUNDRED_AND_EIGHTY:
-				return world.getBlock(cx - x + cx, y, cz - z + cz);
-			case TWO_HUNDRED_AND_SEVENTY:
-				return world.getBlock(cx + z - cz, y, cz - x + cx);
-			default:
-				return world.getBlock(x, y, z);
-		}
-	}
-
-	protected void setBlockMaterial(World world, int x, int y, int z, BlockMaterial material, short data, Source source) {
-		final int cx = center.getFloorX();
-		final int cz = center.getFloorY();
-		switch (angle) {
-			case ZERO:
-				world.setBlockMaterial(x, y, z, material, data, source);
-				return;
-			case NINETY:
-				world.setBlockMaterial(cx - z + cz, y, cz + x - cx, material, data, source);
-				return;
-			case ONE_HUNDRED_AND_EIGHTY:
-				world.setBlockMaterial(cx - x + cx, y, cz - z + cz, material, data, source);
-				return;
-			case TWO_HUNDRED_AND_SEVENTY:
-				world.setBlockMaterial(cx + z - cz, y, cz - x + cx, material, data, source);
-		}
+		return world.getBlock(applyRotation(x, y, z));
 	}
 
 	protected BlockMaterial getBlockMaterial(World world, int x, int y, int z) {
-		final int cx = center.getFloorX();
-		final int cz = center.getFloorY();
-		switch (angle) {
-			case ZERO:
-				return world.getBlockMaterial(x, y, z);
-			case NINETY:
-				return world.getBlockMaterial(cx - z + cz, y, cz + x - cx);
-			case ONE_HUNDRED_AND_EIGHTY:
-				return world.getBlockMaterial(cx - x + cx, y, cz - z + cz);
-			case TWO_HUNDRED_AND_SEVENTY:
-				return world.getBlockMaterial(cx + z - cz, y, cz - x + cx);
-			default:
-				return world.getBlockMaterial(x, y, z);
-		}
+		final Vector3 rotated = applyRotation(x, y, z);
+		return world.getBlockMaterial(rotated.getFloorX(), rotated.getFloorY(), rotated.getFloorZ());
 	}
 
-	public Angle getAngle() {
-		return angle;
+	protected void setBlockMaterial(World world, int x, int y, int z, BlockMaterial material, short data, Source source) {
+		final Vector3 rotated = applyRotation(x, y, z);
+		world.setBlockMaterial(rotated.getFloorX(), rotated.getFloorY(), rotated.getFloorZ(), material, data, source);
+	}
+	
+	private Vector3 applyRotation(int x, int y, int z) {
+		return MathHelper.round(MathHelper.transform(new Vector3(x, y, z).subtract(center), rotation).add(center));
 	}
 
-	public void setAngle(Angle angle) {
-		this.angle = angle;
+	public void setCenter(Vector3 center) {
+		this.center = center;
 	}
 
-	public Vector2 getAxis() {
-		return center;
-	}
-
-	public void setAxis(Vector2 axis) {
-		this.center = axis;
-	}
-
-	public static enum Angle {
-		ZERO, NINETY, ONE_HUNDRED_AND_EIGHTY, TWO_HUNDRED_AND_SEVENTY;
+	public void setRotation(Quaternion rotation) {
+		this.rotation = rotation;
 	}
 }

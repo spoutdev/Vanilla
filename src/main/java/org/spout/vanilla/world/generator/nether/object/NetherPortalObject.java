@@ -31,7 +31,8 @@ import java.util.Random;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.Vector2;
+import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
@@ -58,22 +59,22 @@ public class NetherPortalObject extends RotatableObject {
 	public final void findRandomAngle() {
 		switch (random.nextInt(4)) {
 			case 0:
-				angle = Angle.ZERO;
+				rotation = new Quaternion(0, 0, 1, 0);
 				return;
 			case 1:
-				angle = Angle.NINETY;
+				rotation = new Quaternion(90, 0, 1, 0);
 				return;
 			case 2:
-				angle = Angle.ONE_HUNDRED_AND_EIGHTY;
+				rotation = new Quaternion(180, 0, 1, 0);
 				return;
 			case 3:
-				angle = Angle.TWO_HUNDRED_AND_SEVENTY;
+				rotation = new Quaternion(270, 0, 1, 0);
 		}
 	}
 
 	@Override
 	public boolean canPlaceObject(World world, int x, int y, int z) {
-		center = new Vector2(x, z);
+		center = new Vector3(x, y, z);
 		for (byte yy = -1; yy < 4; yy++) {
 			for (byte xx = -2; xx < 2; xx++) {
 				for (byte zz = -1; zz < 2; zz++) {
@@ -90,7 +91,7 @@ public class NetherPortalObject extends RotatableObject {
 
 	@Override
 	public void placeObject(World world, int x, int y, int z) {
-		center = new Vector2(x, z);
+		center = new Vector3(x, y, z);
 		for (byte xx = -2; xx < 2; xx++) {
 			for (byte yy = -1; yy < 4; yy++) {
 				if (xx == -2 || xx == 1 || yy == -1 || yy == 3) {

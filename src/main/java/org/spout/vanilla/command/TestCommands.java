@@ -204,15 +204,15 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = {"obj"}, usage = "<name> opt<force>", desc = "Spawn a WorldGeneratorObject at your location", min = 1, max = 2)
+	@Command(aliases = {"object", "obj"}, usage = "<name>", flags = "f", desc = "Spawn a WorldGeneratorObject at your location. Use -f to ignore canPlace check", min = 1, max = 2)
 	public void spawnObject(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
-			throw new CommandException("Source must be player");
+			throw new CommandException("The source must be a player.");
 		}
 		final Player player = (Player) source;
 		final WorldGeneratorObject object = VanillaObjects.byName(args.getString(0));
 		if (object == null) {
-			player.sendMessage("Invalid object name");
+			player.sendMessage("Invalid object name.");
 			return;
 		}
 		final Point loc = player.getEntity().getPosition();
@@ -220,20 +220,13 @@ public class TestCommands {
 		final int x = loc.getBlockX();
 		final int y = loc.getBlockY();
 		final int z = loc.getBlockZ();
-		final String forceRaw = args.getString(1, "false");
-		boolean force;
-		if (forceRaw.equalsIgnoreCase("false")) {
-			force = false;
-		} else if (forceRaw.equalsIgnoreCase("true")) {
-			force = true;
-		} else {
-			force = false;
-		}
+		final boolean force = args.hasFlag('f');
 		if (!object.canPlaceObject(world, x, y, z)) {
-			player.sendMessage("Couldn't place the object");
+			player.sendMessage("Couldn't place the object.");
 			if (!force) {
 				return;
 			}
+			player.sendMessage("Forcing placement.");
 		}
 		object.placeObject(world, x, y, z);
 		if (object instanceof RandomObject) {

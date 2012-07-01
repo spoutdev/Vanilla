@@ -49,12 +49,13 @@ import org.spout.vanilla.world.generator.normal.object.tree.PineTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SpruceTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.SwampTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
 /**
- * IMPORTANT: These objects maybe be modified by plugins. There is no guarantee
- * these will be MC like. For unaltered objects, please create a new instance.
+ * IMPORTANT: These objects maybe be modified by plugins. There is no guarantee these will be MC
+ * like. For unaltered objects, please create a new instance.
  */
 public class VanillaObjects {
 	public static final BigTreeObject BIG_OAK_TREE = new BigTreeObject(TreeType.OAK);
@@ -77,7 +78,7 @@ public class VanillaObjects {
 	public static final SmallTreeObject SMALL_OAK_TREE = new SmallTreeObject(TreeType.OAK);
 	public static final SmallTreeObject SMALL_BIRCH_TREE = new SmallTreeObject(TreeType.BIRCH);
 	public static final SmallTreeObject SMALL_JUNGLE_TREE = new SmallTreeObject(TreeType.JUNGLE);
-	public static final SmallTreeObject SMALL_SWAMP_TREE = new SmallTreeObject(TreeType.OAK);
+	public static final SwampTreeObject SWAMP_TREE = new SwampTreeObject(TreeType.OAK);
 	public static final PineTreeObject PINE_TREE = new PineTreeObject();
 	public static final SpruceTreeObject SPRUCE_TREE = new SpruceTreeObject();
 	public static final SugarCaneStackObject SUGAR_CANE_STACK = new SugarCaneStackObject();
@@ -91,8 +92,6 @@ public class VanillaObjects {
 		SMALL_JUNGLE_TREE.setBaseHeight((byte) 4);
 		SMALL_JUNGLE_TREE.setRandomHeight((byte) 10);
 		SMALL_JUNGLE_TREE.addLogVines(true);
-		SMALL_SWAMP_TREE.addLeavesVines(true);
-		SMALL_SWAMP_TREE.setLeavesRadiusIncreaseXZ((byte) 1);
 		// for the '/obj' test command
 		for (Field objectField : VanillaObjects.class.getDeclaredFields()) {
 			objectField.setAccessible(true);

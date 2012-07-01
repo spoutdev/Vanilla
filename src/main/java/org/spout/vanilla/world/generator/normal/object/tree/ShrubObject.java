@@ -32,6 +32,8 @@ import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.material.block.Solid;
 
 public class ShrubObject extends TreeObject {
 	// size control
@@ -65,7 +67,8 @@ public class ShrubObject extends TreeObject {
 					if (Math.abs(xx) == yy && Math.abs(zz) == yy && random.nextBoolean()) {
 						continue;
 					}
-					if (overridable.contains(w.getBlockMaterial(x + xx, y - yy + radius, z + zz))) {
+					final BlockMaterial material = w.getBlockMaterial(x + xx, y - yy + radius, z + zz);
+					if (!(material instanceof Solid || material instanceof Liquid)) {
 						w.setBlockMaterial(x + xx, y - yy + radius, z + zz, VanillaMaterials.LEAVES, leavesMetadata, w);
 					}
 				}

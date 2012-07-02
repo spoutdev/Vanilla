@@ -34,8 +34,10 @@ import java.io.OutputStream;
 import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.io.IOUtils;
+
 import org.spout.api.math.MathHelper;
 import org.spout.api.resource.Resource;
+
 import org.spout.vanilla.map.MapColor;
 import org.spout.vanilla.map.MapMaterialColor;
 

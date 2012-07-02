@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.RedirectMessage;
 import org.spout.api.util.SpoutToStringStyle;
@@ -64,38 +65,40 @@ public final class KickMessage extends Message implements RedirectMessage {
 				.append(this.reason, other.reason)
 				.isEquals();
 	}
-	
+
 	private static String redirectDetected(String reason) {
 		String hostname = null;
 		int portnum = -1;
 
-		if( reason.indexOf("[Serverport]") != 0 && reason.indexOf("[Redirect]") != 0) {
+		if (reason.indexOf("[Serverport]") != 0 && reason.indexOf("[Redirect]") != 0) {
 			return null;
 		}
 
-		String[] split = reason.split( ":" );
-		if( split.length == 3 ) {
+		String[] split = reason.split(":");
+		if (split.length == 3) {
 			hostname = split[1].trim();
-			try { 
-				portnum = Integer.parseInt( split[2].trim() );
-			} catch (Exception e) { 
+			try {
+				portnum = Integer.parseInt(split[2].trim());
+			} catch (Exception e) {
 				portnum = -1;
-			};
-		} else  if( split.length == 2 ) {
+			}
+			;
+		} else if (split.length == 2) {
 			hostname = split[1].trim();
 			try {
 				portnum = 25565;
 			} catch (Exception e) {
-				portnum = -1; 
-			};
+				portnum = -1;
+			}
+			;
 		}
 
 		int commaPos = reason.indexOf(",");
-		if(commaPos>=0) {
+		if (commaPos >= 0) {
 			return reason.substring(reason.indexOf(":") + 1).trim();
 		}
 
-		if( portnum != -1 ) {
+		if (portnum != -1) {
 			return hostname + ":" + portnum;
 		} else {
 			return null;

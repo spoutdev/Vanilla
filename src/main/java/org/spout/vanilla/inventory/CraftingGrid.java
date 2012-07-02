@@ -29,8 +29,8 @@ package org.spout.vanilla.inventory;
 import org.spout.api.inventory.Inventory;
 
 /**
-* Represents a crafting grid.
-*/
+ * Represents a crafting grid.
+ */
 public interface CraftingGrid {
 	/**
 	 * Gets the slot index of the output slot in the grid.

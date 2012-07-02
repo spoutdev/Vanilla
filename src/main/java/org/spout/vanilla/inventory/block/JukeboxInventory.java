@@ -32,8 +32,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.inventory.VanillaInventory;
 
 /**
-* Represents the inventory of a {@link org.spout.vanilla.material.block.controlled.Jukebox}.
-*/
+ * Represents the inventory of a {@link org.spout.vanilla.material.block.controlled.Jukebox}.
+ */
 public class JukeboxInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
 

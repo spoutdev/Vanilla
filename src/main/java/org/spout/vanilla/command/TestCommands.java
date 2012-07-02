@@ -58,8 +58,8 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.effect.type.Speed;
 import org.spout.vanilla.util.explosion.ExplosionModels;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 import org.spout.vanilla.world.generator.object.RandomObject;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class TestCommands {
 	private final Set<String> invisible = new HashSet<String>();

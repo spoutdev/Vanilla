@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
-
 import java.util.ArrayList;
 
 import org.spout.api.entity.Entity;
@@ -37,6 +35,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Openable;
@@ -47,6 +46,8 @@ import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
+
+import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
 public class FenceGate extends VanillaBlockMaterial implements Mineable, Openable, RedstoneTarget {
 	public FenceGate(String name, int id) {

@@ -31,10 +31,10 @@ import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.EmptyBiomeManager;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public abstract class VanillaBiomeGenerator extends BiomeGenerator {
-
 	@Override
 	public BiomeManager generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
 		if (chunkY >= 0) {
@@ -52,5 +52,4 @@ public abstract class VanillaBiomeGenerator extends BiomeGenerator {
 		}
 		return new EmptyBiomeManager(chunkX, chunkY, chunkZ);
 	}
-	
 }

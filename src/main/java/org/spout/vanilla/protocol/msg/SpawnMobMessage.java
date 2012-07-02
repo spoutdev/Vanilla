@@ -36,6 +36,7 @@ import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.Parameter;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 public final class SpawnMobMessage extends Message implements TransformableMessage {
@@ -58,14 +59,14 @@ public final class SpawnMobMessage extends Message implements TransformableMessa
 		this.headYaw = headYaw;
 		this.parameters = parameters;
 	}
-	
+
 	@Override
 	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
 		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
 			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
 		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
 			id = ((VanillaConnectionInfo) info).getEntityId();
-		} 
+		}
 		return this;
 	}
 

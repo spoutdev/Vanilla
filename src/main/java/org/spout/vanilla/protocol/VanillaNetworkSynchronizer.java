@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.protocol;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.TIntSet;
@@ -52,6 +51,7 @@ import org.spout.api.protocol.event.ProtocolEventListener;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.data.Data;
@@ -61,12 +61,10 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
-import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
-import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
 import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
@@ -77,6 +75,8 @@ import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.world.generator.VanillaBiome;
+
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
@@ -118,7 +118,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Point p = player.getEntity().getPosition();
 		p.getWorld().getChunkFromBlock(p);
 	}
-	
+
 	private Object initChunkLock = new Object();
 
 	@Override
@@ -148,7 +148,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}*/
 		}
 	}
-	
+
 	@Override
 	protected void initChunk(Point p) {
 
@@ -175,7 +175,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 		column.add(y);
 	}
-	
+
 	private static BlockMaterial[][] getColumnTopmostMaterials(Point p) {
 		BlockMaterial[][] materials = new BlockMaterial[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
 
@@ -251,9 +251,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (y < 0 || y >= c.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
 			return;
 		}
-		
+
 		initChunk(c.getBase());
-		
+
 		if (activeChunks.add(x, z)) {
 			Point p = c.getBase();
 			int[][] heights = getColumnHeights(p);
@@ -265,7 +265,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				packetChunkData[cube] = getChunkHeightMap(heights, materials, cube);
 			}
 
-			
 			LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
 			owner.getSession().send(false, loadChunk);
 
@@ -283,7 +282,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, new boolean[16], 0, packetChunkData, biomeData);
 			owner.getSession().send(false, CCMsg);
 		}
-		
+
 		ChunkSnapshot snapshot = c.getSnapshot(false);
 		short[] rawBlockIdArray = snapshot.getBlockIds();
 		short[] rawBlockData = snapshot.getBlockData();
@@ -495,5 +494,4 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		session.send(false, new SetWindowSlotsMessage((byte) window.getInstanceId(), window.getSlotIndexMap().getMinecraftItems(slots)));
 		queuedInventoryUpdates.clear();
 	}
-
 }

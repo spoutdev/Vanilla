@@ -29,7 +29,6 @@ package org.spout.vanilla.controller;
 import org.spout.api.inventory.InventoryBase;
 
 public interface TransactionWindowOwner extends WindowOwner {
-
 	/**
 	 * Gets the inventory of this controller
 	 * @return The Inventory of this controller

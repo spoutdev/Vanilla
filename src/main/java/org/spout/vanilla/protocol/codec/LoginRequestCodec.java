@@ -38,7 +38,7 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 	public LoginRequestCodec() {
 		super(LoginRequestMessage.class, 0x01);
 	}
-	
+
 	@Override
 	public LoginRequestMessage decodeFromServer(ChannelBuffer buffer) {
 		int version = buffer.readInt();
@@ -51,7 +51,7 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 		int maxPlayers = buffer.readUnsignedByte();
 		return new LoginRequestMessage(true, version, name, mode, dimension, difficulty, worldHeight, maxPlayers, worldType);
 	}
-	
+
 	@Override
 	public LoginRequestMessage decodeFromClient(ChannelBuffer buffer) {
 		int version = buffer.readInt();

@@ -28,9 +28,9 @@ package org.spout.vanilla.material.block.controlled;
 
 import java.util.ArrayList;
 
-import org.spout.api.entity.component.controller.BlockController;
-import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.component.Controller;
+import org.spout.api.entity.component.controller.BlockController;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;

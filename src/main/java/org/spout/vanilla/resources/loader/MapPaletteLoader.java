@@ -31,10 +31,10 @@ import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
 import org.spout.api.resource.BasicResourceLoader;
+
 import org.spout.vanilla.resources.MapPalette;
 
 public class MapPaletteLoader extends BasicResourceLoader<MapPalette> {
-
 	@Override
 	public MapPalette getResource(InputStream stream) {
 		try {

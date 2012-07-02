@@ -32,6 +32,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 public final class CollectItemMessage extends Message implements TransformableMessage {
@@ -48,15 +49,15 @@ public final class CollectItemMessage extends Message implements TransformableMe
 			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
 		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
 			id = ((VanillaConnectionInfo) info).getEntityId();
-		} 
+		}
 		if (collector == ((VanillaConnectionInfo) info).getEntityId()) {
 			collector = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
 		} else if (collector == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
 			collector = ((VanillaConnectionInfo) info).getEntityId();
-		} 
+		}
 		return this;
 	}
-	
+
 	public int getId() {
 		return id;
 	}

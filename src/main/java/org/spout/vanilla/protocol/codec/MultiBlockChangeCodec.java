@@ -55,16 +55,16 @@ public final class MultiBlockChangeCodec extends MessageCodec<MultiBlockChangeMe
 		byte[] metadata = new byte[changes];
 
 		int coordinateIndex = 0;
-		
+
 		for (int i = 0; i < changes; i++) {
 			int record = buffer.readInt();
-			coordinates[coordinateIndex++] = (short)((record >> 28) & 0x0F);
-			coordinates[coordinateIndex++] = (short)((record >> 16) & 0xFF);
-			coordinates[coordinateIndex++] = (short)((record >> 24) & 0x0F);
-			types[i] = (short)((record >> 4) & 0xFFF);
-			metadata[i] = (byte)((record >> 0) & 0xF);
+			coordinates[coordinateIndex++] = (short) ((record >> 28) & 0x0F);
+			coordinates[coordinateIndex++] = (short) ((record >> 16) & 0xFF);
+			coordinates[coordinateIndex++] = (short) ((record >> 24) & 0x0F);
+			types[i] = (short) ((record >> 4) & 0xFFF);
+			metadata[i] = (byte) ((record >> 0) & 0xF);
 		}
-		
+
 		return new MultiBlockChangeMessage(chunkX, chunkZ, coordinates, types, metadata);
 	}
 
@@ -80,9 +80,9 @@ public final class MultiBlockChangeCodec extends MessageCodec<MultiBlockChangeMe
 		byte[] metadata = message.getMetadata();
 		short[] types = message.getTypes();
 		short[] coordinates = message.getCoordinates();
-		
+
 		int coordinateIndex = 0;
-		
+
 		for (int i = 0; i < changes; i++) {
 			int record = metadata[i] & 0xF;
 			record |= (types[i] & 0xFFF) << 4;
@@ -91,7 +91,7 @@ public final class MultiBlockChangeCodec extends MessageCodec<MultiBlockChangeMe
 			record |= (coordinates[coordinateIndex++] & 0xF) << 24;
 			buffer.writeInt(record);
 		}
-		
+
 		return buffer;
 	}
 }

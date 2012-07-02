@@ -45,9 +45,8 @@ import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 
 public class VanillaBootstrapHandlerLookupService extends HandlerLookupService {
-	
 	protected static final Map<Class<? extends Message>, MessageHandler<?>> handlers = new HashMap<Class<? extends Message>, MessageHandler<?>>();
-	
+
 	public VanillaBootstrapHandlerLookupService() {
 		try {
 			bind(HandshakeMessage.class, BootstrapHandshakeMessageHandler.class);
@@ -59,9 +58,8 @@ public class VanillaBootstrapHandlerLookupService extends HandlerLookupService {
 			throw new ExceptionInInitializerError(e);
 		}
 	}
-	
+
 	protected static <T extends Message> void bind(Class<T> clazz, Class<? extends MessageHandler<T>> handlerClass) throws InstantiationException, IllegalAccessException {
 		handlers.put(clazz, handlerClass.newInstance());
 	}
-	
 }

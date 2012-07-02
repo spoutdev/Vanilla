@@ -35,7 +35,6 @@ import org.spout.vanilla.window.Window;
  * Defines a controller that can open and close windows for players
  */
 public interface WindowOwner {
-
 	/**
 	 * Opens the window for the player specified
 	 * @param player to open it for

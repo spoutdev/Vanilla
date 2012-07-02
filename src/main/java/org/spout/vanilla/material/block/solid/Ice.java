@@ -60,7 +60,7 @@ public class Ice extends Solid implements Mineable {
 		if (!(block.getWorld().getGenerator() instanceof NetherGenerator) || block.translate(BlockFace.BOTTOM).getMaterial() != VanillaMaterials.AIR) {
 			// TODO Setting the source to world correct?
 			if (VanillaPlayerUtil.isCreative(block.getSource())) {
-				 // Do not turn into water when in creative
+				// Do not turn into water when in creative
 			} else {
 				// Only set material to water source block if the block was not destroyed by an item with Silk Touch
 				ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());

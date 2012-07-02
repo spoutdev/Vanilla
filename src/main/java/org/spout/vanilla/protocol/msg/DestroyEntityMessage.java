@@ -32,6 +32,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 public final class DestroyEntityMessage extends Message implements TransformableMessage {
@@ -47,10 +48,10 @@ public final class DestroyEntityMessage extends Message implements Transformable
 			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
 		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
 			id = ((VanillaConnectionInfo) info).getEntityId();
-		} 
+		}
 		return this;
 	}
-	
+
 	public int getId() {
 		return id;
 	}

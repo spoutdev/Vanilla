@@ -27,6 +27,7 @@
 package org.spout.vanilla.window;
 
 import org.spout.api.inventory.InventoryBase;
+
 import org.spout.vanilla.controller.TransactionWindowOwner;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
@@ -34,7 +35,6 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
  * This window contains the player inventory items with additional slots above
  */
 public class TransactionWindow extends Window {
-
 	public TransactionWindow(int id, String title, VanillaPlayer owner, TransactionWindowOwner... windowOwners) {
 		super(id, title, owner, windowOwners);
 		InventoryBase[] all = new InventoryBase[windowOwners.length + 1];

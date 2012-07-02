@@ -53,7 +53,7 @@ public class PlayerQuickbar extends InventoryRange {
 	public InventorySlot getSlotInventory(int slot) {
 		return this.slots[slot];
 	}
-	
+
 	/**
 	 * Sets the quickbar slot index the player currently has selected
 	 * @param slotIndex to set to
@@ -62,7 +62,7 @@ public class PlayerQuickbar extends InventoryRange {
 		this.checkSlotRange(slotIndex);
 		this.currentSlot = slotIndex;
 	}
-	
+
 	/**
 	 * Gets the quickbar slot index the player currently has selected
 	 * @return slot index

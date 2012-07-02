@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.WindowOwner;

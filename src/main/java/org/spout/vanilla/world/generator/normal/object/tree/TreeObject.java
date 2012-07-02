@@ -35,8 +35,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.block.plant.Sapling;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 import org.spout.vanilla.world.generator.object.LargePlantObject;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public abstract class TreeObject extends LargePlantObject {
 	// metadata control

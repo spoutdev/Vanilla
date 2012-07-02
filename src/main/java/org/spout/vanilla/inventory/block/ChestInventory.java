@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory.block;
 
 import org.spout.api.inventory.Inventory;
+
 import org.spout.vanilla.controller.block.Chest;
 import org.spout.vanilla.inventory.VanillaInventory;
 

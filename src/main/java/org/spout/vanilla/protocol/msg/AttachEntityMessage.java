@@ -27,27 +27,29 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
-public final class AttachEntityMessage extends Message implements TransformableMessage{
+public final class AttachEntityMessage extends Message implements TransformableMessage {
 	private int id, vehicle;
 
 	public AttachEntityMessage(int id, int vehicle) {
 		this.id = id;
 		this.vehicle = vehicle;
 	}
-	
+
 	@Override
 	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
 		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
 			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
 		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
 			id = ((VanillaConnectionInfo) info).getEntityId();
-		} 
+		}
 		if (vehicle == ((VanillaConnectionInfo) info).getEntityId()) {
 			vehicle = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
 		} else if (vehicle == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {

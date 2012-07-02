@@ -29,7 +29,6 @@ package org.spout.vanilla.protocol.proxy;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 
 public class VanillaConnectionInfo implements ConnectionInfo {
-	
 	private final String playerName;
 	private final int entityId;
 
@@ -47,10 +46,9 @@ public class VanillaConnectionInfo implements ConnectionInfo {
 	public String getIdentifier() {
 		return playerName;
 	}
-	
+
 	public int getEntityId() {
 		return entityId;
 	}
-	
 }
 

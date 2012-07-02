@@ -86,7 +86,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 			int[] distances = new int[4];
 			for (BlockFace face : BlockFaces.NESW) {
 				distances[i] = this.getHoleDistance(block.translate(face));
-				if (distances[i] != -1 && distances[i]  < distance) {
+				if (distances[i] != -1 && distances[i] < distance) {
 					distance = distances[i];
 				}
 				i++;

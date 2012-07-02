@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.object;
 
 import java.util.Random;
+
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -59,7 +60,7 @@ public abstract class RotatableObject extends RandomObject {
 		final Vector3 rotated = applyRotation(x, y, z);
 		world.setBlockMaterial(rotated.getFloorX(), rotated.getFloorY(), rotated.getFloorZ(), material, data, source);
 	}
-	
+
 	private Vector3 applyRotation(int x, int y, int z) {
 		return MathHelper.round(MathHelper.transform(new Vector3(x, y, z).subtract(center), rotation).add(center));
 	}

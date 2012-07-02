@@ -32,6 +32,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 public final class EntityInteractionMessage extends Message implements TransformableMessage {
@@ -43,19 +44,19 @@ public final class EntityInteractionMessage extends Message implements Transform
 		this.target = target;
 		this.punching = punching;
 	}
-	
+
 	@Override
 	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
 		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
 			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
 		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
 			id = ((VanillaConnectionInfo) info).getEntityId();
-		} 
+		}
 		if (target == ((VanillaConnectionInfo) info).getEntityId()) {
 			target = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
 		} else if (target == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
 			target = ((VanillaConnectionInfo) info).getEntityId();
-		} 
+		}
 		return this;
 	}
 

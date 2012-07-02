@@ -30,6 +30,7 @@ import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.Protocol;
+
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
@@ -42,7 +43,7 @@ public class VanillaProtocol extends Protocol {
 	public VanillaProtocol() {
 		super("Vanilla", new VanillaCodecLookupService(), new VanillaHandlerLookupService());
 	}
-	
+
 	@Override
 	public Message getChatMessage(String message) {
 		return new ChatMessage(message);
@@ -52,7 +53,7 @@ public class VanillaProtocol extends Protocol {
 	public Message getKickMessage(String message) {
 		return new KickMessage(message);
 	}
-	
+
 	@Override
 	public Message getIntroductionMessage(String playerName) {
 		return new HandshakeMessage(playerName);

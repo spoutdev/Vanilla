@@ -104,13 +104,12 @@ public class NetherPortalObject extends RotatableObject {
 
 	/**
 	 * Attempts to place a portal near the given coordinates.
-	 *
 	 * @param world the world to place in
 	 * @param x the x coordinate
 	 * @param z the z coordinate
 	 * @param random the random used to find an angle
 	 * @return a point for placing entities inside output portals, or null if no portal could be
-	 * placed
+	 *         placed
 	 */
 	public static Point placePortal(World world, int x, int z, Random random) {
 		final NetherPortalObject portal = new NetherPortalObject(random);

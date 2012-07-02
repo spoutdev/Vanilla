@@ -29,8 +29,8 @@ package org.spout.vanilla;
 import java.util.HashSet;
 
 import org.spout.api.Source;
-import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.component.Controller;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
@@ -101,7 +101,7 @@ public class VanillaListener implements Listener {
 	@EventHandler
 	public void onRegionLoad(RegionLoadEvent event) {
 		Region region = event.getRegion();
-			
+
 		RegionSpawner spawner = new RegionSpawner(region);
 		region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
 
@@ -116,7 +116,7 @@ public class VanillaListener implements Listener {
 			spawner.addSpawnableType(VanillaControllerTypes.COW, grass, 5);
 
 			spawner.addSpawnableType(VanillaControllerTypes.CHICKEN, grass, 5);
-		}	
+		}
 		if (worldConfig.SPAWN_MONSTERS.getBoolean()) {
 			HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
 			endStone.add(VanillaMaterials.END_STONE);

@@ -30,6 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
@@ -37,7 +38,6 @@ import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class Lava extends Liquid {
-
 	public Lava(String name, int id, boolean flowing) {
 		super(name, id, flowing);
 	}

@@ -49,7 +49,7 @@ public class NetherPortal extends Portal {
 	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
 	}
-	
+
 	/**
 	 * Tries to create a portal model at the location given
 	 * @param bottomBlock of the portal (is Obsidian)

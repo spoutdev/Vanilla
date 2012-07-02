@@ -41,7 +41,6 @@ public enum MapMaterialColor {
 	STONE(112, 112, 112),
 	WATER(64, 64, 255),
 	WOOD(104, 83, 50);
-
 	private final float r, g, b;
 	protected final MapColor[] levels;
 

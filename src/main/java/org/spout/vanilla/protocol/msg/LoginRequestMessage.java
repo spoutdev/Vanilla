@@ -27,12 +27,14 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.ConnectionInfoMessage;
 import org.spout.api.protocol.proxy.ProxyStartMessage;
 import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
@@ -40,11 +42,11 @@ public final class LoginRequestMessage extends Message implements ConnectionInfo
 	private final int id, dimension, mode, difficulty, worldHeight, maxPlayers;
 	private final String name, worldType;
 	private final boolean server;
-	
+
 	public LoginRequestMessage(String name) {
 		this(false, VanillaPlugin.MINECRAFT_PROTOCOL_ID, name, 0, 0, 0, 256, 0, "");
 	}
-	
+
 	public LoginRequestMessage(int id, String name, int mode, int dimension, int difficulty, int worldHeight, int maxPlayers, String worldType) {
 		this(true, id, name, mode, dimension, difficulty, worldHeight, maxPlayers, worldType);
 	}
@@ -60,7 +62,7 @@ public final class LoginRequestMessage extends Message implements ConnectionInfo
 		this.worldType = worldType;
 		this.server = server;
 	}
-	
+
 	@Override
 	public ConnectionInfo getConnectionInfo(boolean upstream, ConnectionInfo info) {
 		if (info != null && !(info instanceof VanillaConnectionInfo)) {
@@ -76,7 +78,7 @@ public final class LoginRequestMessage extends Message implements ConnectionInfo
 			}
 		}
 	}
-	
+
 	@Override
 	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
 		if (!upstream || connects == 1) {
@@ -153,5 +155,4 @@ public final class LoginRequestMessage extends Message implements ConnectionInfo
 				.append(this.worldType, other.worldType)
 				.isEquals();
 	}
-
 }

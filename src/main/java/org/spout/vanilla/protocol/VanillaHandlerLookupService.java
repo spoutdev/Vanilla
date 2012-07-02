@@ -85,9 +85,8 @@ import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.WindowClickMessage;
 
 public class VanillaHandlerLookupService extends HandlerLookupService {
-	
 	protected static final Map<Class<? extends Message>, MessageHandler<?>> handlers = new HashMap<Class<? extends Message>, MessageHandler<?>>();
-	
+
 	public VanillaHandlerLookupService() {
 		super();
 	}

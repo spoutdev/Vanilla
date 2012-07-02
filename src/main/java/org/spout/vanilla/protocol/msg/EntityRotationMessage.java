@@ -32,6 +32,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 public final class EntityRotationMessage extends Message implements TransformableMessage {
@@ -43,14 +44,14 @@ public final class EntityRotationMessage extends Message implements Transformabl
 		this.rotation = rotation;
 		this.pitch = pitch;
 	}
-	
+
 	@Override
 	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
 		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
 			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
 		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
 			id = ((VanillaConnectionInfo) info).getEntityId();
-		} 
+		}
 		return this;
 	}
 

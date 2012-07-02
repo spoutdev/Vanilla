@@ -26,10 +26,14 @@
  */
 package org.spout.vanilla.data;
 
+import java.util.UUID;
+
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.math.Vector3;
+
+import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * Various data keys used in Vanilla. This class is intended to help developers use the set keys Vanilla creates with the powerful
@@ -40,6 +44,14 @@ public class Data {
 	public static final DefaultedKey<Dimension> DIMENSION = new DefaultedKeyImpl<Dimension>("dimension", Dimension.NORMAL);
 	public static final DefaultedKey<Difficulty> DIFFICULTY = new DefaultedKeyImpl<Difficulty>("difficulty", Difficulty.EASY);
 	public static final DefaultedKey<WorldType> WORLD_TYPE = new DefaultedKeyImpl<WorldType>("world_type", WorldType.DEFAULT);
+	/**
+	 * World link recalls a stored UUID which would be 'linked' to this world. Linking means the following...
+	 * - Age
+	 * - Seed
+	 * - Portals from the world with the stored UUID would go to the UUID recalled (if applicable, cases such as nethers).
+	 * If the value is the default (null) then it means this world has no link to it.
+	 */
+	public static final DefaultedKey<UUID> WORLD_LINK = new DefaultedKeyImpl<UUID>("world_link", null);
 	//Player-specific
 	public static final DefaultedKey<GameMode> GAMEMODE = new DefaultedKeyImpl<GameMode>("game_mode", GameMode.SURVIVAL);
 	//Controller-specific
@@ -56,7 +68,7 @@ public class Data {
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific
-	public static final DefaultedKey<ItemStack> HELD_ITEM = new DefaultedKeyImpl<ItemStack>("held_item", null);
+	public static final DefaultedKey<ItemStack> HELD_ITEM = new DefaultedKeyImpl<ItemStack>("held_item", new ItemStack(VanillaMaterials.AIR, 1));
 	public static final DefaultedKey<Integer> UNCOLLECTABLE_TICKS = new DefaultedKeyImpl<Integer>("uncollectable_ticks", 5);
 	//Slime-specific
 	public static final DefaultedKey<Byte> SLIME_SIZE = new SlimeSize("slime_size");

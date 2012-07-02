@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.bootstrap;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.protocol.bootstrap.BootstrapProtocol;
+
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
@@ -50,7 +51,7 @@ public class VanillaBootstrapProtocol extends BootstrapProtocol {
 	public Protocol getDefaultProtocol() {
 		return vanilla;
 	}
-	
+
 	@Override
 	public Message getChatMessage(String message) {
 		return new ChatMessage(message);
@@ -60,7 +61,7 @@ public class VanillaBootstrapProtocol extends BootstrapProtocol {
 	public Message getKickMessage(String message) {
 		return new KickMessage(message);
 	}
-	
+
 	@Override
 	public Message getIntroductionMessage(String playerName) {
 		return new HandshakeMessage(playerName);

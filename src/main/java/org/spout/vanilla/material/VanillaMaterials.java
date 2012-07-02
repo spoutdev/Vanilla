@@ -558,7 +558,7 @@ public final class VanillaMaterials {
 	public static Material getMaterial(short minecraftId) {
 		return reverseTable.get(minecraftId);
 	}
-	
+
 	public static Material getMaterial(short minecraftId, short data) {
 		return reverseTable.get(minecraftId).getSubMaterial(data);
 	}

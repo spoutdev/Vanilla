@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.redstone;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -38,7 +39,7 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
-
+import org.spout.api.material.range.ListEffectRange;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
@@ -49,7 +50,22 @@ import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class RedstoneRepeater extends GroundAttachable implements Directional, Mineable, RedstoneSource, RedstoneTarget, DynamicMaterial {
+	private static final EffectRange[] physicsRanges;
 	private final boolean powered;
+	static {
+		physicsRanges = new EffectRange[4];
+		BlockFaces base = BlockFaces.NESWBT.append(BlockFace.THIS);
+		List<BlockFace> tmpFaces = new ArrayList<BlockFace>();
+		for (int i = 0; i < physicsRanges.length; i++) {
+			for (BlockFace face : base) {
+				tmpFaces.add(face);
+			}
+			BlockFace current = BlockFaces.ESWN.get(i);
+			tmpFaces.remove(current.getOpposite());
+			physicsRanges[i] = new ListEffectRange(tmpFaces.toArray(new BlockFace[0])).translate(current);
+			tmpFaces.clear();
+		}
+	}
 
 	public RedstoneRepeater(String name, int id, boolean powered) {
 		super(name, id);
@@ -98,6 +114,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
 		boolean receiving = this.isReceivingPower(block);
+		System.out.println("RECEIVING: " + receiving);
 		if (this.isPowered() != receiving) {
 			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay(block), receiving ? 1 : 0, null);
 		}
@@ -150,7 +167,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	@Override
 	public boolean isReceivingPower(Block block) {
 		BlockFace face = this.getFacing(block).getOpposite();
-		return RedstoneUtil.isPowered(block.translate(face), face.getOpposite());
+		return RedstoneUtil.isPowered(block.translate(face));
 	}
 
 	@Override
@@ -173,12 +190,16 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	@Override
 	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
 		boolean receiving = this.isReceivingPower(block);
-		if ((data & 1) != 0) {
-			this.setPowered(block, true);
+		if ((data & 1) == 1) {
+			// Was receiving and should power up
+			if (!this.isPowered()) {
+				this.setPowered(block, true);
+			}
 			if (!receiving) {
 				block.dynamicUpdate(updateTime + this.getTickDelay(block));
 			}
 		} else if (receiving != this.isPowered()) {
+			// Was not receiving and should update state
 			this.setPowered(block, receiving);
 		}
 	}
@@ -186,5 +207,10 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	@Override
 	public EffectRange getDynamicRange() {
 		return EffectRange.THIS;
+	}
+
+	@Override
+	public EffectRange getPhysicsRange(short data) {
+		return physicsRanges[data & 0x3];
 	}
 }

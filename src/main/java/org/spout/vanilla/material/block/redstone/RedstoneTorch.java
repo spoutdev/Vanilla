@@ -34,20 +34,19 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
-import org.spout.api.math.IntVector3;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.misc.Torch;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget, DynamicMaterial {
-	public static final int TICK_DELAY = 2;
+	public static final int TICK_DELAY = 100;
 	private static final EffectRange physicsRange = new ListEffectRange(
-			new ListEffectRange(IntVector3.createList(0, 2, 0)),
-			EffectRange.THIS_AND_NEIGHBORS);
+			new ListEffectRange(BlockFaces.NESWT).translate(BlockFace.TOP),
+			new ListEffectRange(BlockFaces.NESWB));
 	private boolean powered;
 
 	public RedstoneTorch(String name, int id, boolean powered) {

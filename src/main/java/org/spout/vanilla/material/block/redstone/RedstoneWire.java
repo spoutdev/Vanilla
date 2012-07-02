@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block.redstone;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
@@ -64,25 +63,16 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 		return true;
 	}
 
-	private void disableRedstone(Block middle, List<Block> wires) {
+	private void disableRedstone(Block middle) {
 		Block block;
 		for (BlockFace face : BlockFaces.NESWBT) {
 			block = middle.translate(face);
 			if (block.getMaterial().equals(this)) {
 				if (block.getData() > 0) {
 					block.setData(0);
-					wires.add(block);
-					this.disableRedstone(block, wires);
+					this.disableRedstone(block);
 				}
 			}
-		}
-	}
-
-	private void disableAllRedstone(Block block, List<Block> wires) {
-		block = block.setSource(this);
-		this.disableRedstone(block, wires);
-		for (BlockFace face : BlockFaces.NESWB) {
-			this.disableRedstone(block.translate(face), wires);
 		}
 	}
 
@@ -103,8 +93,11 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 				block.setMaterial(this, receiving);
 			} else {
 				//Power became less, disable all attached wires and recalculate
-				List<Block> wires = new ArrayList<Block>();
-				this.disableAllRedstone(block, wires);
+				block = block.setSource(this);
+				this.disableRedstone(block);
+				for (BlockFace face : BlockFaces.NESWB) {
+					this.disableRedstone(block.translate(face));
+				}
 			}
 		}
 	}
@@ -221,12 +214,12 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 		}
 		//check below
 		if (!RedstoneUtil.isConductor(mat)) {
-			if (target.translate(BlockFace.BOTTOM).getMaterial().equals(this)) {
+			if (target.translate(BlockFace.BOTTOM).isMaterial(this)) {
 				return true;
 			}
 		}
 		//check above
-		if (target.translate(BlockFace.TOP).getMaterial().equals(this)) {
+		if (target.translate(BlockFace.TOP).isMaterial(this)) {
 			if (!RedstoneUtil.isConductor(block.translate(BlockFace.TOP))) {
 				return true;
 			}

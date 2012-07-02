@@ -51,7 +51,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
 public class StoneButton extends AbstractAttachable implements Mineable, PointAttachable, RedstoneSource, DynamicMaterial {
-	public static final int TICK_DELAY = 20;
+	public static final int TICK_DELAY = 1000;
 
 	public StoneButton(String name, int id) {
 		super(name, id);

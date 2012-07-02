@@ -41,7 +41,7 @@ import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.util.RedstonePowerMode;
 
 public abstract class PressurePlate extends GroundAttachable implements Mineable, RedstoneSource, DynamicMaterial {
-	public static final int TICK_DELAY = 20 * 50;
+	public static final int TICK_DELAY = 1000;
 	private static final EffectRange physicsRange = new CubicEffectRange(1);
 
 	public PressurePlate(String name, int id) {

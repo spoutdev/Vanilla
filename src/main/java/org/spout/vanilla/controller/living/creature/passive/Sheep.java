@@ -102,7 +102,7 @@ public class Sheep extends Creature implements Passive {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		if (!isSheared()) {
 			if (source == DamageCause.BURN) {
-				drops.add(new ItemStack(Wool.GRAY, 1));
+				drops.add(new ItemStack(Wool.GRAY_WOOL, 1));
 			} else {
 				drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial(sheepColor), 1));
 			}

@@ -39,12 +39,12 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class DoubleSlab extends Solid implements Mineable {
-	public static final DoubleSlab STONE = new DoubleSlab("Stone Double Slab", Slab.STONE);
-	public static final DoubleSlab SANDSTONE = new DoubleSlab("Sandstone Double Slab", 1, STONE, Slab.SANDSTONE);
-	public static final DoubleSlab WOOD = new DoubleSlab("Wooden Double Slab", 2, STONE, Slab.WOOD);
-	public static final DoubleSlab COBBLESTONE = new DoubleSlab("Cobblestone Double Slab", 3, STONE, Slab.COBBLESTONE);
-	public static final DoubleSlab BRICK = new DoubleSlab("Brick Double Slab", 4, STONE, Slab.BRICK);
-	public static final DoubleSlab STONE_BRICK = new DoubleSlab("Stone Brick Double Slab", 5, STONE, Slab.STONE_BRICK);
+	public static final DoubleSlab STONE_SLAB = new DoubleSlab("Stone Double Slab", Slab.STONE_SLAB);
+	public static final DoubleSlab SANDSTONE_SLAB = new DoubleSlab("Sandstone Double Slab", 1, STONE_SLAB, Slab.SANDSTONE_SLAB);
+	public static final DoubleSlab WOOD_SLAB = new DoubleSlab("Wooden Double Slab", 2, STONE_SLAB, Slab.WOOD_SLAB);
+	public static final DoubleSlab COBBLESTONE_SLAB = new DoubleSlab("Cobblestone Double Slab", 3, STONE_SLAB, Slab.COBBLESTONE_SLAB);
+	public static final DoubleSlab BRICK_SLAB = new DoubleSlab("Brick Double Slab", 4, STONE_SLAB, Slab.BRICK_SLAB);
+	public static final DoubleSlab STONE_BRICK_SLAB = new DoubleSlab("Stone Brick Double Slab", 5, STONE_SLAB, Slab.STONE_BRICK_SLAB);
 	private Slab singletype;
 
 	public Slab getSingleType() {
@@ -69,7 +69,7 @@ public class DoubleSlab extends Solid implements Mineable {
 
 	@Override
 	public boolean canBurn() {
-		return this == WOOD;
+		return this == WOOD_SLAB;
 	}
 
 	@Override

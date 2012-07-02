@@ -287,9 +287,9 @@ public final class VanillaMaterials {
 	public static final EndPortal END_PORTAL = new EndPortal("End Portal", 119);
 	public static final EndPortalFrame END_PORTAL_FRAME = new EndPortalFrame("End Portal Frame", 120);
 	//================
-	public static final DoubleSlab DOUBLE_SLABS = DoubleSlab.STONE;
-	public static final Slab SLAB = Slab.STONE;
-	public static final Wool WOOL = Wool.WHITE;
+	public static final DoubleSlab DOUBLE_SLABS = DoubleSlab.STONE_SLAB;
+	public static final Slab SLAB = Slab.STONE_SLAB;
+	public static final Wool WOOL = Wool.WHITE_WOOL;
 	public static final Brick BRICK = new Brick("Brick Block", 45);
 	public static final TNT TNT = new TNT("TNT", 46);
 	public static final BookShelf BOOKSHELF = new BookShelf("Bookshelf", 47);

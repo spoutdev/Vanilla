@@ -26,24 +26,34 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.special;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
+import org.spout.vanilla.world.generator.normal.biome.IcyBiome;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.world.generator.normal.biome.basic.RiverBiome;
+public class FrozenRiverBiome extends IcyBiome {
+	private final static ScalePoint NOISE = new ScalePoint();
 
-public class FrozenRiverBiome extends RiverBiome {
-	public FrozenRiverBiome(int biomeId) {
-		super(biomeId);
+	static {
+		NOISE.SetSourceModule(0, NormalBiome.MASTER);
+		NOISE.setxScale(0.080);
+		NOISE.setyScale(0.080);
+		NOISE.setzScale(0.080);
 	}
 
-	@Override
-	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		super.replaceBlocks(blockData, x, chunkY, z);
-		if (chunkY * 16 <= NormalGenerator.SEA_LEVEL && (chunkY + 1) * 16 > NormalGenerator.SEA_LEVEL
-				&& blockData.get(x, NormalGenerator.SEA_LEVEL, z) == VanillaMaterials.STATIONARY_WATER.getId()) {
-			blockData.set(x, NormalGenerator.SEA_LEVEL, z, VanillaMaterials.ICE.getId());
-		}
+	public FrozenRiverBiome(int biomeId) {
+		super(biomeId, NOISE);
+
+		this.minDensityTerrainHeight = 55;
+		this.maxDensityTerrainHeight = 56;
+
+		this.minDensityTerrainThickness = 0;
+		this.maxDensityTerrainThickness = 1;
+
+		this.upperHeightMapScale = 2f;
+		this.bottomHeightMapScale = 2f;
+
+		this.densityTerrainThicknessScale = 2f;
+		this.densityTerrainHeightScale = 2f;
 	}
 
 	@Override

@@ -43,7 +43,6 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 public abstract class NormalBiome extends VanillaBiome {
 	// the master noise to be used by biomes extending this class
@@ -136,7 +135,7 @@ public abstract class NormalBiome extends VanillaBiome {
 			return;
 		}
 
-		final byte size = (byte) blockData.getSize().getY();
+		final short size = (short) blockData.getSize().getY();
 
 		final int startY = chunkY * 16;
 		final int endY = startY + size;
@@ -205,62 +204,6 @@ public abstract class NormalBiome extends VanillaBiome {
 	}
 
 	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-
-		final byte size = (byte) blockData.getSize().getY();
-
-		if (size < 16) {
-			return; // ignore samples
-		}
-
-		final int endY = chunkY * 16;
-		final int startY = endY + size - 1;
-
-		final byte maxGroudCoverDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, 0, z) * 2 + 4, 2D, 5D);
-		final byte sampleSize = (byte) (maxGroudCoverDepth + 1);
-
-		boolean hasSurface = false;
-		byte groundCoverDepth = 0;
-		// check the column above by sampling, determining any missing blocks
-		// to add to the current column
-		if (blockData.get(x, startY, z) != VanillaMaterials.AIR.getId()) {
-			final int nextChunkStart = (chunkY + 1) * 16;
-			final int nextChunkEnd = nextChunkStart + sampleSize;
-			final CuboidShortBuffer sample = getSample(blockData.getWorld(), x, nextChunkStart, nextChunkEnd, z);
-			for (int y = nextChunkStart; y < nextChunkEnd; y++) {
-				if (sample.get(x, y, z) != VanillaMaterials.AIR.getId()) {
-					groundCoverDepth++;
-				} else {
-					hasSurface = true;
-					break;
-				}
-			}
-		}
-		// place ground cover
-		for (int y = startY; y >= endY; y--) {
-			final short id = blockData.get(x, y, z);
-			if (id == VanillaMaterials.AIR.getId()) {
-				hasSurface = true;
-				groundCoverDepth = 0;
-				if (y <= NormalGenerator.SEA_LEVEL) {
-					blockData.set(x, y, z, VanillaMaterials.STATIONARY_WATER.getId());
-				}
-			} else {
-				if (hasSurface) {
-					if (groundCoverDepth == 0) {
-						short topCover = y >= NormalGenerator.SEA_LEVEL
-								? VanillaMaterials.GRASS.getId() : VanillaMaterials.DIRT.getId();
-						blockData.set(x, y, z, topCover);
-						groundCoverDepth++;
-					} else if (groundCoverDepth < maxGroudCoverDepth) {
-						blockData.set(x, y, z, VanillaMaterials.DIRT.getId());
-						groundCoverDepth++;
-					} else {
-						hasSurface = false;
-					}
-				}
-			}
-		}
-		// place bedrock
 		if (chunkY == 0) {
 			final byte bedrockDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 2 + 4, 1D, 5D);
 			for (int y = 0; y <= bedrockDepth; y++) {
@@ -282,9 +225,40 @@ public abstract class NormalBiome extends VanillaBiome {
 		if (size >= 16) {
 			size = 15; // samples should not be larger than a column
 		}
-		// currently, using different size params will cause errors with the cuboid short buffer...
-		CuboidShortBuffer sample = new CuboidShortBuffer(world, x, startY, z, size, size, size);
+		CuboidShortBuffer sample = new CuboidShortBuffer(world, x, startY, z, 1, size, 1);
 		fill(sample, x, startY, endY, z);
 		return sample;
+	}
+
+	public float getBottomHeightMapScale() {
+		return bottomHeightMapScale;
+	}
+
+	public float getUpperHeightMapScale() {
+		return upperHeightMapScale;
+	}
+
+	public float getDensityTerrainHeightScale() {
+		return densityTerrainHeightScale;
+	}
+
+	public float getDensityTerrainThicknessScale() {
+		return densityTerrainThicknessScale;
+	}
+
+	public byte getMinDensityTerrainHeight() {
+		return minDensityTerrainHeight;
+	}
+
+	public byte getMaxDensityTerrainHeight() {
+		return maxDensityTerrainHeight;
+	}
+
+	public byte getMinDensityTerrainThickness() {
+		return minDensityTerrainThickness;
+	}
+
+	public byte getMaxDensityTerrainThickness() {
+		return maxDensityTerrainThickness;
 	}
 }

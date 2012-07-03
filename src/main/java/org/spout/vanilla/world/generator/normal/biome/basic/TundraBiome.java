@@ -28,14 +28,11 @@ package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.configuration.BiomeConfiguration;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.world.generator.normal.biome.IcyBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-public class TundraBiome extends NormalBiome {
+public class TundraBiome extends IcyBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
@@ -46,9 +43,7 @@ public class TundraBiome extends NormalBiome {
 	}
 
 	public TundraBiome(int id) {
-		super(id, NOISE/*
-				 * , new PondDecorator()
-				 */);
+		super(id, NOISE);
 
 		this.minDensityTerrainHeight = BiomeConfiguration.TUNDRA_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
 		this.maxDensityTerrainHeight = BiomeConfiguration.TUNDRA_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
@@ -66,33 +61,5 @@ public class TundraBiome extends NormalBiome {
 	@Override
 	public String getName() {
 		return "Tundra";
-	}
-
-	@Override
-	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		super.replaceBlocks(blockData, x, chunkY, z);
-		final byte size = (byte) blockData.getSize().getY();
-		final int startY = chunkY * 16;
-		final int endY = startY + size;
-		if (blockData.get(x, startY, z) == VanillaMaterials.AIR.getId()) {
-			if (getSample(blockData.getWorld(), x, startY - 1, startY, z).get(x, startY - 1, z)
-					!= VanillaMaterials.AIR.getId()) {
-				blockData.set(x, startY, z, VanillaMaterials.SNOW.getId());
-			}
-		}
-		boolean hasSurface = false;
-		for (int y = startY; y < endY; y++) {
-			short id = blockData.get(x, y, z);
-			if (id == VanillaMaterials.GRASS.getId()) {
-				hasSurface = true;
-			} else if (id == VanillaMaterials.AIR.getId() && hasSurface) {
-				blockData.set(x, y, z, VanillaMaterials.SNOW.getId());
-				hasSurface = false;
-			}
-		}
-		if (chunkY * 16 <= NormalGenerator.SEA_LEVEL && (chunkY + 1) * 16 > NormalGenerator.SEA_LEVEL
-				&& blockData.get(x, NormalGenerator.SEA_LEVEL, z) == VanillaMaterials.STATIONARY_WATER.getId()) {
-			blockData.set(x, NormalGenerator.SEA_LEVEL, z, VanillaMaterials.ICE.getId());
-		}
 	}
 }

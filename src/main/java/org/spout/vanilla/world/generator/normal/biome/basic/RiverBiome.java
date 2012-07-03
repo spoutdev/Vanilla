@@ -27,10 +27,11 @@
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
+import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-public class RiverBiome extends NormalBiome {
+public class RiverBiome extends GrassyBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {

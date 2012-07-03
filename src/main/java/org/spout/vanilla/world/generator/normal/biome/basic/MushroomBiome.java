@@ -28,12 +28,11 @@ package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-public class MushroomBiome extends NormalBiome {
+public class MushroomBiome extends GrassyBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
@@ -45,19 +44,8 @@ public class MushroomBiome extends NormalBiome {
 
 	public MushroomBiome(int biomeId) {
 		super(biomeId, NOISE);
-	}
-
-	@Override
-	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		super.replaceBlocks(blockData, x, chunkY, z);
-		final byte size = (byte) blockData.getSize().getY();
-		final int startY = chunkY * 16;
-		final int endY = startY + size;
-		for (int y = startY; y < endY; y++) {
-			if (blockData.get(x, y, z) == VanillaMaterials.GRASS.getId()) {
-				blockData.set(x, y, z, VanillaMaterials.MYCELIUM.getId());
-			}
-		}
+		
+		this.topCover = VanillaMaterials.MYCELIUM;
 	}
 
 	@Override

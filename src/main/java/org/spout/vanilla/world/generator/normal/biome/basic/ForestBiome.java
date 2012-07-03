@@ -28,12 +28,11 @@ package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.configuration.BiomeConfiguration;
+import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-public class ForestBiome extends NormalBiome {
+public class ForestBiome extends GrassyBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
@@ -44,9 +43,7 @@ public class ForestBiome extends NormalBiome {
 	}
 
 	public ForestBiome(int biomeId) {
-		super(biomeId, NOISE/*
-				 * , new PondDecorator(), new TreeDecorator(), new GrassDecorator()
-				 */);
+		super(biomeId, NOISE);
 
 		this.minDensityTerrainHeight = BiomeConfiguration.FOREST_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
 		this.maxDensityTerrainHeight = BiomeConfiguration.FOREST_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
@@ -59,11 +56,6 @@ public class ForestBiome extends NormalBiome {
 
 		this.densityTerrainThicknessScale = BiomeConfiguration.FOREST_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
 		this.densityTerrainHeightScale = BiomeConfiguration.FOREST_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
-	}
-
-	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		super.generateColumn(blockData, x, chunkY, z);
 	}
 
 	@Override

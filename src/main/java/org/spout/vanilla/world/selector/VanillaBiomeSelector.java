@@ -181,7 +181,7 @@ public class VanillaBiomeSelector extends BiomeSelector {
 			if ((int) (shoreDivide.GetValue(x, 0, z) + 1) == 0) {
 				if (shoreValue > 0) {
 					// rivers
-					if (rivers.GetValue(x, 0, z) > 0.45) {
+					if (rivers.GetValue(x, 0, z) > 0.2) {
 						return RIVER;
 					}
 					return SWAMP;
@@ -189,7 +189,7 @@ public class VanillaBiomeSelector extends BiomeSelector {
 			}
 			if (shoreValue > 0.4) {
 				// rivers
-				if (rivers.GetValue(x, 0, z) > 0.45) {
+				if (rivers.GetValue(x, 0, z) > 0.2) {
 					return RIVER;
 				}
 				return BEACH;
@@ -211,7 +211,7 @@ public class VanillaBiomeSelector extends BiomeSelector {
 			}
 		}
 		// rivers
-		if (rivers.GetValue(x, 0, z) > 0.45) {
+		if (rivers.GetValue(x, 0, z) > 0.2) {
 			if (primaryValue == 3) {
 				if ((int) (secondary.GetValue(x, 0, z) + 1) == 1) {
 					return FROZEN_RIVER;
@@ -222,7 +222,7 @@ public class VanillaBiomeSelector extends BiomeSelector {
 		// main biomes and their hills
 		if (primaryValue == 1) {
 			if ((int) (secondary.GetValue(x, 0, z) + 1) == 0) {
-				if (hills.GetValue(x, 0, z) > 0.6) {
+				if (hills.GetValue(x, 0, z) > 0.3) {
 					return DESERT_HILLS;
 				}
 				return DESERT;
@@ -231,24 +231,24 @@ public class VanillaBiomeSelector extends BiomeSelector {
 		}
 		if (primaryValue == 2) {
 			if ((int) (secondary.GetValue(x, 0, z) + 1) == 0) {
-				if (hills.GetValue(x, 0, z) > 0.6) {
+				if (hills.GetValue(x, 0, z) > 0.3) {
 					return FOREST_HILLS;
 				}
 				return FOREST;
 			}
-			if (hills.GetValue(x, 0, z) > 0.6) {
+			if (hills.GetValue(x, 0, z) > 0.3) {
 				return JUNGLE_HILLS;
 			}
 			return JUNGLE;
 		}
 		if (primaryValue == 3) {
 			if ((int) (secondary.GetValue(x, 0, z) + 1) == 0) {
-				if (hills.GetValue(x, 0, z) > 0.6) {
+				if (hills.GetValue(x, 0, z) > 0.3) {
 					return TAIGA_HILLS;
 				}
 				return TAIGA;
 			}
-			if (hills.GetValue(x, 0, z) > 0.6) {
+			if (hills.GetValue(x, 0, z) > 0.3) {
 				return TUNDRA_HILLS;
 			}
 			return TUNDRA;

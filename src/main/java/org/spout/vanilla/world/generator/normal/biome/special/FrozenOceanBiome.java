@@ -26,24 +26,35 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.special;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
+import org.spout.vanilla.configuration.BiomeConfiguration;
+import org.spout.vanilla.world.generator.normal.biome.IcyBiome;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.world.generator.normal.biome.basic.OceanBiome;
+public class FrozenOceanBiome extends IcyBiome {
+	private final static ScalePoint NOISE = new ScalePoint();
 
-public class FrozenOceanBiome extends OceanBiome {
-	public FrozenOceanBiome(int biomeId) {
-		super(biomeId);
+	static {
+		NOISE.SetSourceModule(0, NormalBiome.MASTER);
+		NOISE.setxScale(BiomeConfiguration.OCEAN_X_SCALE.getDouble());
+		NOISE.setyScale(BiomeConfiguration.OCEAN_Y_SCALE.getDouble());
+		NOISE.setzScale(BiomeConfiguration.OCEAN_Z_SCALE.getDouble());
 	}
 
-	@Override
-	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		super.replaceBlocks(blockData, x, chunkY, z);
-		if (chunkY * 16 <= NormalGenerator.SEA_LEVEL && (chunkY + 1) * 16 > NormalGenerator.SEA_LEVEL
-				&& blockData.get(x, NormalGenerator.SEA_LEVEL, z) == VanillaMaterials.STATIONARY_WATER.getId()) {
-			blockData.set(x, NormalGenerator.SEA_LEVEL, z, VanillaMaterials.ICE.getId());
-		}
+	public FrozenOceanBiome(int biomeId) {
+		super(biomeId, NOISE);
+
+		this.minDensityTerrainHeight = BiomeConfiguration.OCEAN_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
+		this.maxDensityTerrainHeight = BiomeConfiguration.OCEAN_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
+
+		this.minDensityTerrainThickness = BiomeConfiguration.OCEAN_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
+		this.maxDensityTerrainThickness = BiomeConfiguration.OCEAN_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
+
+		this.upperHeightMapScale = BiomeConfiguration.OCEAN_UPPER_HEIGHT_MAP_SCALE.getFloat();
+		this.bottomHeightMapScale = BiomeConfiguration.OCEAN_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
+
+		this.densityTerrainThicknessScale = BiomeConfiguration.OCEAN_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
+		this.densityTerrainHeightScale = BiomeConfiguration.OCEAN_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
 	}
 
 	@Override

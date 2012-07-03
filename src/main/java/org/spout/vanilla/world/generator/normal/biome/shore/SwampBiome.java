@@ -29,9 +29,10 @@ package org.spout.vanilla.world.generator.normal.biome.shore;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 import org.spout.vanilla.configuration.BiomeConfiguration;
+import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-public class SwampBiome extends NormalBiome {
+public class SwampBiome extends GrassyBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {

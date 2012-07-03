@@ -28,14 +28,11 @@ package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
-import org.spout.api.math.MathHelper;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.configuration.BiomeConfiguration;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
+import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 
-public class DesertBiome extends NormalBiome {
+public class DesertBiome extends SandyBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
@@ -46,9 +43,7 @@ public class DesertBiome extends NormalBiome {
 	}
 
 	public DesertBiome(int biomeId) {
-		super(biomeId, NOISE/*
-				 * , new CactusDecorator()
-				 */);
+		super(biomeId, NOISE);
 
 		this.minDensityTerrainHeight = BiomeConfiguration.DESERT_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
 		this.maxDensityTerrainHeight = BiomeConfiguration.DESERT_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
@@ -61,74 +56,12 @@ public class DesertBiome extends NormalBiome {
 
 		this.densityTerrainThicknessScale = BiomeConfiguration.DESERT_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
 		this.densityTerrainHeightScale = BiomeConfiguration.DESERT_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
+		
+		this.hasWater = false;
 	}
 
 	@Override
 	public String getName() {
 		return "Desert";
-	}
-
-	@Override
-	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-
-		final byte size = (byte) blockData.getSize().getY();
-
-		if (size < 16) {
-			return; // ignore samples
-		}
-
-		final int endY = chunkY * 16;
-		final int startY = endY + size - 1;
-
-		final byte sandDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 4 + 4, 3, 4);
-		final byte sandstoneDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -6, z) * 4 + 3, 0, 3);
-
-		final byte maxGroudCoverDepth = (byte) (sandDepth + sandstoneDepth);
-		final byte sampleSize = (byte) (maxGroudCoverDepth + 1);
-
-		boolean hasSurface = false;
-		byte groundCoverDepth = 0;
-		// check the column above by sampling, determining any missing blocks
-		// to add to the current column
-		if (blockData.get(x, startY, z) != VanillaMaterials.AIR.getId()) {
-			final int nextChunkStart = (chunkY + 1) * 16;
-			final int nextChunkEnd = nextChunkStart + sampleSize;
-			final CuboidShortBuffer sample = getSample(blockData.getWorld(), x, nextChunkStart, nextChunkEnd, z);
-			for (int y = nextChunkStart; y < nextChunkEnd; y++) {
-				if (sample.get(x, y, z) != VanillaMaterials.AIR.getId()) {
-					groundCoverDepth++;
-				} else {
-					hasSurface = true;
-					break;
-				}
-			}
-		}
-		// place ground cover
-		for (int y = startY; y >= endY; y--) {
-			final short id = blockData.get(x, y, z);
-			if (id == VanillaMaterials.AIR.getId()) {
-				hasSurface = true;
-				groundCoverDepth = 0;
-			} else {
-				if (hasSurface) {
-					if (groundCoverDepth < sandDepth) {
-						blockData.set(x, y, z, VanillaMaterials.SAND.getId());
-						groundCoverDepth++;
-					} else if (groundCoverDepth < maxGroudCoverDepth) {
-						blockData.set(x, y, z, VanillaMaterials.SANDSTONE.getId());
-						groundCoverDepth++;
-					} else {
-						hasSurface = false;
-					}
-				}
-			}
-		}
-		// place bedrock
-		if (chunkY == 0) {
-			final byte bedrockDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 2 + 4, 1D, 5D);
-			for (int y = 0; y <= bedrockDepth; y++) {
-				blockData.set(x, y, z, VanillaMaterials.BEDROCK.getId());
-			}
-		}
 	}
 }

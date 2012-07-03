@@ -235,7 +235,7 @@ public class SmoothPopulator implements Populator {
 				return;
 			}
 			// do the actual shifting
-			for (byte y = 127; y >= endY + shift; y--) {
+			for (byte y = 127; y >= 0; y--) {
 				final Block block = world.getBlock(x, y, z);
 				BlockMaterial currentMaterial = block.getMaterial();
 				if (FLUIDS.contains(currentMaterial)) {

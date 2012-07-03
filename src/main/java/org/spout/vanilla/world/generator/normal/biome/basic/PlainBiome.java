@@ -29,9 +29,10 @@ package org.spout.vanilla.world.generator.normal.biome.basic;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 
 import org.spout.vanilla.configuration.BiomeConfiguration;
+import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-public class PlainBiome extends NormalBiome {
+public class PlainBiome extends GrassyBiome {
 	private final static ScalePoint NOISE = new ScalePoint();
 
 	static {
@@ -42,9 +43,7 @@ public class PlainBiome extends NormalBiome {
 	}
 
 	public PlainBiome(int id) {
-		super(id, NOISE/*
-				 * , new PondDecorator(), new GrassDecorator(), new FlowerDecorator()
-				 */);
+		super(id, NOISE);
 
 		this.minDensityTerrainHeight = BiomeConfiguration.PLAINS_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
 		this.maxDensityTerrainHeight = BiomeConfiguration.PLAINS_MAX_DENSITY_TERRAIN_HEIGHT.getByte();

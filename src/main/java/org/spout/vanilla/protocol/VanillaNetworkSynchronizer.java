@@ -36,6 +36,9 @@ import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
+import org.spout.api.geo.cuboid.ChunkSnapshot.EntityType;
+import org.spout.api.geo.cuboid.ChunkSnapshot.ExtraData;
+import org.spout.api.geo.cuboid.ChunkSnapshot.SnapshotType;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
@@ -283,7 +286,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			owner.getSession().send(false, CCMsg);
 		}
 
-		ChunkSnapshot snapshot = c.getSnapshot(false);
+		ChunkSnapshot snapshot = c.getSnapshot(SnapshotType.BOTH, EntityType.NO_ENTITIES, ExtraData.NO_EXTRA_DATA);
 		short[] rawBlockIdArray = snapshot.getBlockIds();
 		short[] rawBlockData = snapshot.getBlockData();
 		byte[] rawBlockLight = snapshot.getBlockLight();

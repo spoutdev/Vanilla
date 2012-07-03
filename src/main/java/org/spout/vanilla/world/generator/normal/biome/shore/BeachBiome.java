@@ -57,8 +57,6 @@ public class BeachBiome extends SandyBiome {
 
 		this.densityTerrainThicknessScale = BiomeConfiguration.BEACH_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
 		this.densityTerrainHeightScale = BiomeConfiguration.BEACH_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
-		
-		this.hasWater = true;
 	}
 
 	@Override

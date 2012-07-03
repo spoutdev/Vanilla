@@ -112,6 +112,7 @@ public class Chicken extends Creature implements Passive {
 		} else if (nextEgg != NEVER) {
 			nextEgg--;
 		}
+		super.onTick(dt);
 	}
 
 	private int getRandomNextEggTime() {

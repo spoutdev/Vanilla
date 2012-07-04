@@ -26,35 +26,12 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.special;
 
-import net.royawesome.jlibnoise.module.modifier.ScalePoint;
-import org.spout.vanilla.configuration.BiomeConfiguration;
 import org.spout.vanilla.world.generator.normal.biome.IcyBiome;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public class FrozenOceanBiome extends IcyBiome {
-	private final static ScalePoint NOISE = new ScalePoint();
-
-	static {
-		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(BiomeConfiguration.OCEAN_X_SCALE.getDouble());
-		NOISE.setyScale(BiomeConfiguration.OCEAN_Y_SCALE.getDouble());
-		NOISE.setzScale(BiomeConfiguration.OCEAN_Z_SCALE.getDouble());
-	}
-
 	public FrozenOceanBiome(int biomeId) {
-		super(biomeId, NOISE);
-
-		this.minDensityTerrainHeight = BiomeConfiguration.OCEAN_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.maxDensityTerrainHeight = BiomeConfiguration.OCEAN_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
-
-		this.minDensityTerrainThickness = BiomeConfiguration.OCEAN_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
-		this.maxDensityTerrainThickness = BiomeConfiguration.OCEAN_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
-
-		this.upperHeightMapScale = BiomeConfiguration.OCEAN_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		this.bottomHeightMapScale = BiomeConfiguration.OCEAN_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
-
-		this.densityTerrainThicknessScale = BiomeConfiguration.OCEAN_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
-		this.densityTerrainHeightScale = BiomeConfiguration.OCEAN_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
+		super(biomeId);
+		setMinMax((byte) 44, (byte) 53);
 	}
 
 	@Override

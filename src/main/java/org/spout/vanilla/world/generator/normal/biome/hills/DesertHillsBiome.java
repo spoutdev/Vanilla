@@ -31,9 +31,7 @@ import org.spout.vanilla.world.generator.normal.biome.basic.DesertBiome;
 public class DesertHillsBiome extends DesertBiome {
 	public DesertHillsBiome(int biomeId) {
 		super(biomeId);
-		this.minDensityTerrainHeight = 67;
-		this.maxDensityTerrainHeight = 72;
-		this.maxDensityTerrainThickness = 8;
+		setMinMax((byte) 67, (byte) 75);
 	}
 
 	@Override

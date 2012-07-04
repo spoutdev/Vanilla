@@ -31,9 +31,7 @@ import org.spout.vanilla.world.generator.normal.biome.basic.JungleBiome;
 public class JungleHillsBiome extends JungleBiome {
 	public JungleHillsBiome(int biomeId) {
 		super(biomeId);
-		this.minDensityTerrainHeight = 67;
-		this.maxDensityTerrainHeight = 73;
-		this.maxDensityTerrainThickness = 10;
+		setMinMax((byte) 67, (byte) 75);
 	}
 
 	@Override

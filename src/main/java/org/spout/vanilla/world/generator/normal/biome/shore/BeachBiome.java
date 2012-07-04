@@ -26,37 +26,13 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.shore;
 
-import net.royawesome.jlibnoise.module.modifier.ScalePoint;
-
-
-import org.spout.vanilla.configuration.BiomeConfiguration;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 
 public class BeachBiome extends SandyBiome {
-	private final static ScalePoint NOISE = new ScalePoint();
-
-	static {
-		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(BiomeConfiguration.BEACH_X_SCALE.getDouble());
-		NOISE.setyScale(BiomeConfiguration.BEACH_Y_SCALE.getDouble());
-		NOISE.setzScale(BiomeConfiguration.BEACH_Z_SCALE.getDouble());
-	}
 
 	public BeachBiome(int biomeId) {
-		super(biomeId, NOISE);
-
-		this.minDensityTerrainHeight = BiomeConfiguration.BEACH_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.maxDensityTerrainHeight = BiomeConfiguration.BEACH_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
-
-		this.minDensityTerrainThickness = BiomeConfiguration.BEACH_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
-		this.maxDensityTerrainThickness = BiomeConfiguration.BEACH_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
-
-		this.upperHeightMapScale = BiomeConfiguration.BEACH_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		this.bottomHeightMapScale = BiomeConfiguration.BEACH_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
-
-		this.densityTerrainThicknessScale = BiomeConfiguration.BEACH_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
-		this.densityTerrainHeightScale = BiomeConfiguration.BEACH_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
+		super(biomeId);
+		setMinMax((byte) 62, (byte) 63);
 	}
 
 	@Override

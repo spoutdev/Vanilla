@@ -26,35 +26,12 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
-import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
-
 public class RiverBiome extends GrassyBiome {
-	private final static ScalePoint NOISE = new ScalePoint();
-
-	static {
-		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(0.080);
-		NOISE.setyScale(0.080);
-		NOISE.setzScale(0.080);
-	}
-
 	public RiverBiome(int biomeId) {
-		super(biomeId, NOISE);
-
-		this.minDensityTerrainHeight = 55;
-		this.maxDensityTerrainHeight = 56;
-
-		this.minDensityTerrainThickness = 0;
-		this.maxDensityTerrainThickness = 1;
-
-		this.upperHeightMapScale = 2f;
-		this.bottomHeightMapScale = 2f;
-
-		this.densityTerrainThicknessScale = 2f;
-		this.densityTerrainHeightScale = 2f;
+		super(biomeId);
+		setMinMax((byte) 55, (byte) 57);
 	}
 
 	@Override

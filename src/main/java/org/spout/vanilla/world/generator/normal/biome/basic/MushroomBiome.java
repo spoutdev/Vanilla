@@ -26,25 +26,13 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
-import net.royawesome.jlibnoise.module.modifier.ScalePoint;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public class MushroomBiome extends GrassyBiome {
-	private final static ScalePoint NOISE = new ScalePoint();
-
-	static {
-		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(0.080D);
-		NOISE.setyScale(0.045D);
-		NOISE.setzScale(0.080D);
-	}
-
 	public MushroomBiome(int biomeId) {
-		super(biomeId, NOISE);
-		
+		super(biomeId);
+		setMinMax((byte) 67, (byte) 72);
 		this.topCover = VanillaMaterials.MYCELIUM;
 	}
 

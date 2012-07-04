@@ -26,36 +26,12 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
-import net.royawesome.jlibnoise.module.modifier.ScalePoint;
-
-import org.spout.vanilla.configuration.BiomeConfiguration;
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public class JungleBiome extends GrassyBiome {
-	private final static ScalePoint NOISE = new ScalePoint();
-
-	static {
-		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(BiomeConfiguration.JUNGLE_X_SCALE.getDouble());
-		NOISE.setyScale(BiomeConfiguration.JUNGLE_Y_SCALE.getDouble());
-		NOISE.setzScale(BiomeConfiguration.JUNGLE_Z_SCALE.getDouble());
-	}
-
 	public JungleBiome(int biomeId) {
-		super(biomeId, NOISE);
-
-		this.minDensityTerrainHeight = BiomeConfiguration.JUNGLE_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.maxDensityTerrainHeight = BiomeConfiguration.JUNGLE_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
-
-		this.minDensityTerrainThickness = BiomeConfiguration.JUNGLE_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
-		this.maxDensityTerrainThickness = BiomeConfiguration.JUNGLE_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
-
-		this.upperHeightMapScale = BiomeConfiguration.JUNGLE_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		this.bottomHeightMapScale = BiomeConfiguration.JUNGLE_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
-
-		this.densityTerrainThicknessScale = BiomeConfiguration.JUNGLE_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
-		this.densityTerrainHeightScale = BiomeConfiguration.JUNGLE_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
+		super(biomeId);
+		setMinMax((byte) 67, (byte) 73);
 	}
 
 	@Override

@@ -27,10 +27,8 @@
 package org.spout.vanilla.world.generator.normal.biome;
 
 import net.royawesome.jlibnoise.NoiseQuality;
-import net.royawesome.jlibnoise.module.Module;
 import net.royawesome.jlibnoise.module.combiner.Add;
 import net.royawesome.jlibnoise.module.combiner.Multiply;
-import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.modifier.Exponent;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
@@ -46,33 +44,21 @@ import org.spout.vanilla.world.generator.VanillaBiome;
 
 public abstract class NormalBiome extends VanillaBiome {
 	// the master noise to be used by biomes extending this class
-	protected static final Add MASTER = new Add();
+	protected static final ScalePoint MASTER = new ScalePoint();
 	// the parts for the master noise
 	private static final Perlin ELEVATION = new Perlin();
 	private static final Perlin ROUGHNESS = new Perlin();
 	private static final Perlin DETAIL = new Perlin();
+		// a turbulent version of the modified master, used for density gen
+	private static final Turbulence TURBULENT_MASTER = new Turbulence();
 	// a scaled version of the elevation for block replacing
 	protected static final ScalePoint BLOCK_REPLACER = new ScalePoint();
-	// a modified version of the master, provided by the extending biome
-	private final Module modifiedMaster;
-	// a turbulent version of the modified master, used for density gen
-	private final Turbulence mainMaster = new Turbulence();
-	// noise used to gen the height map parts, based on the mainMaster
-	private final Clamp bottomHeightMapMaster = new Clamp();
-	private final Clamp upperHeightMapMaster = new Clamp();
-	// params to be modified by the extending biome
-	// these are defaults to gen forest terrain (appropriate for many biomes)
 	// limits of height maps
-	protected byte minDensityTerrainHeight = 71;
-	protected byte maxDensityTerrainHeight = 74;
-	protected byte minDensityTerrainThickness = 0;
-	protected byte maxDensityTerrainThickness = 3;
+	private byte min;
+	private byte max;
+	private byte diff;
 	// scale of height maps
-	protected float upperHeightMapScale = 4f;
-	protected float bottomHeightMapScale = 5f;
-	// scale of the density layer
-	protected float densityTerrainThicknessScale = 6f;
-	protected float densityTerrainHeightScale = 4f;
+	private final float heightMapScale = 4f;
 
 	static {
 		ELEVATION.setFrequency(0.2D);
@@ -97,35 +83,31 @@ public abstract class NormalBiome extends VanillaBiome {
 		multiply.SetSourceModule(0, ROUGHNESS);
 		multiply.SetSourceModule(1, DETAIL);
 
-		MASTER.SetSourceModule(0, multiply);
-		MASTER.SetSourceModule(1, ELEVATION);
+		final Add add = new Add();
+		add.SetSourceModule(0, multiply);
+		add.SetSourceModule(1, ELEVATION);
+		
+		MASTER.SetSourceModule(0, add);
+		MASTER.setxScale(0.08);
+		MASTER.setyScale(0.04);
+		MASTER.setzScale(0.08);
 
 		BLOCK_REPLACER.SetSourceModule(0, ELEVATION);
 		BLOCK_REPLACER.setxScale(4D);
 		BLOCK_REPLACER.setyScale(1D);
 		BLOCK_REPLACER.setzScale(4D);
-	}
-
-	protected NormalBiome(int biomeId, Module modifiedMaster, Decorator... decorators) {
-		super(biomeId, decorators);
-
-		this.modifiedMaster = modifiedMaster;
-
+		
 		final Exponent contrast = new Exponent();
-		contrast.SetSourceModule(0, modifiedMaster);
+		contrast.SetSourceModule(0, MASTER);
 		contrast.setExponent(1.5D);
 
-		mainMaster.SetSourceModule(0, contrast);
-		mainMaster.setFrequency(0.005D);
-		mainMaster.setPower(6D);
+		TURBULENT_MASTER.SetSourceModule(0, contrast);
+		TURBULENT_MASTER.setFrequency(0.005D);
+		TURBULENT_MASTER.setPower(6D);
+	}
 
-		bottomHeightMapMaster.SetSourceModule(0, mainMaster);
-		bottomHeightMapMaster.setUpperBound(0D);
-		bottomHeightMapMaster.setLowerBound(-minDensityTerrainHeight);
-
-		upperHeightMapMaster.SetSourceModule(0, mainMaster);
-		upperHeightMapMaster.setUpperBound(maxDensityTerrainThickness);
-		upperHeightMapMaster.setLowerBound(0D);
+	protected NormalBiome(int biomeId, Decorator... decorators) {
+		super(biomeId, decorators);
 	}
 
 	@Override
@@ -148,10 +130,10 @@ public abstract class NormalBiome extends VanillaBiome {
 	protected void fill(CuboidShortBuffer blockData, int x, int startY, int endY, int z) {
 
 		final int seed = (int) blockData.getWorld().getSeed();
-		ROUGHNESS.setSeed(seed);
-		DETAIL.setSeed(seed);
 		ELEVATION.setSeed(seed);
-		mainMaster.setSeed(seed);
+		ROUGHNESS.setSeed(seed * 2);
+		DETAIL.setSeed(seed * 3);
+		TURBULENT_MASTER.setSeed(seed * 5);
 
 		final int densityTerrainHeightMin = getDensityTerrainHeight(x, z);
 		final int densityTerrainHeightMax = densityTerrainHeightMin + getDensityTerrainThickness(x, z);
@@ -173,7 +155,7 @@ public abstract class NormalBiome extends VanillaBiome {
 				}
 				break; // we're done for the entire world column!
 			}
-			if (mainMaster.GetValue(x, y, z) > 0) {
+			if (TURBULENT_MASTER.GetValue(x, y, z) > 0) {
 				blockData.set(x, y, z, VanillaMaterials.STONE.getId());
 			} else {
 				blockData.set(x, y, z, VanillaMaterials.AIR.getId());
@@ -182,25 +164,21 @@ public abstract class NormalBiome extends VanillaBiome {
 	}
 
 	private int getDensityTerrainHeight(int x, int z) {
-		return (int) MathHelper.clamp(modifiedMaster.GetValue(x, minDensityTerrainHeight, z) * densityTerrainHeightScale
-				+ minDensityTerrainHeight + (maxDensityTerrainHeight - minDensityTerrainHeight) / 2,
-				minDensityTerrainHeight, maxDensityTerrainHeight);
+		return (int) MathHelper.clamp(MASTER.GetValue(x, min, z) * diff / 2 + diff / 2 + min, min, max);
 	}
 
-	private int getDensityTerrainThickness(int x, int z) { //TODO this does not seem right...you work with doubles, and then just cast them to an int? Pretty big loss of precision...
-		return (int) MathHelper.clamp(modifiedMaster.GetValue(x, minDensityTerrainHeight, z) * densityTerrainThicknessScale
-				+ minDensityTerrainThickness + (maxDensityTerrainThickness - minDensityTerrainThickness) / 2,
-				minDensityTerrainThickness, maxDensityTerrainThickness);
+	private int getDensityTerrainThickness(int x, int z) {
+		return (int) MathHelper.clamp(MASTER.GetValue(x, -min, z) * diff / 2 + diff / 2, 0, diff);
 	}
 
 	private int getBottomHeightMapValue(int x, int z, int densityTerrainHeightMin) {
-		return (int) Math.ceil(bottomHeightMapMaster.GetValue(x, densityTerrainHeightMin, z)
-				* bottomHeightMapScale + densityTerrainHeightMin + 1);
+		return (int) Math.ceil(TURBULENT_MASTER.GetValue(x, densityTerrainHeightMin, z)
+				* heightMapScale + densityTerrainHeightMin + 1);
 	}
 
 	private int getUpperHeightMapValue(int x, int z, int densityTerrainHeightMax) {
-		return (int) Math.ceil(upperHeightMapMaster.GetValue(x, densityTerrainHeightMax, z)
-				* upperHeightMapScale + densityTerrainHeightMax);
+		return (int) Math.ceil(TURBULENT_MASTER.GetValue(x, densityTerrainHeightMax, z)
+				* heightMapScale + densityTerrainHeightMax);
 	}
 
 	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
@@ -230,35 +208,17 @@ public abstract class NormalBiome extends VanillaBiome {
 		return sample;
 	}
 
-	public float getBottomHeightMapScale() {
-		return bottomHeightMapScale;
+	protected void setMinMax(byte min, byte max) {
+		this.min = min;
+		this.max = max;
+		this.diff = (byte) (max - min);
 	}
 
-	public float getUpperHeightMapScale() {
-		return upperHeightMapScale;
+	public byte getMin() {
+		return min;
 	}
 
-	public float getDensityTerrainHeightScale() {
-		return densityTerrainHeightScale;
-	}
-
-	public float getDensityTerrainThicknessScale() {
-		return densityTerrainThicknessScale;
-	}
-
-	public byte getMinDensityTerrainHeight() {
-		return minDensityTerrainHeight;
-	}
-
-	public byte getMaxDensityTerrainHeight() {
-		return maxDensityTerrainHeight;
-	}
-
-	public byte getMinDensityTerrainThickness() {
-		return minDensityTerrainThickness;
-	}
-
-	public byte getMaxDensityTerrainThickness() {
-		return maxDensityTerrainThickness;
+	public byte getMax() {
+		return max;
 	}
 }

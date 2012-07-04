@@ -26,37 +26,12 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
-import net.royawesome.jlibnoise.module.modifier.ScalePoint;
-
-import org.spout.vanilla.configuration.BiomeConfiguration;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 
 public class DesertBiome extends SandyBiome {
-	private final static ScalePoint NOISE = new ScalePoint();
-
-	static {
-		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(BiomeConfiguration.DESERT_X_SCALE.getDouble());
-		NOISE.setyScale(BiomeConfiguration.DESERT_Y_SCALE.getDouble());
-		NOISE.setzScale(BiomeConfiguration.DESERT_Z_SCALE.getDouble());
-	}
-
 	public DesertBiome(int biomeId) {
-		super(biomeId, NOISE);
-
-		this.minDensityTerrainHeight = BiomeConfiguration.DESERT_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.maxDensityTerrainHeight = BiomeConfiguration.DESERT_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
-
-		this.minDensityTerrainThickness = BiomeConfiguration.BEACH_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
-		this.maxDensityTerrainThickness = BiomeConfiguration.DESERT_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
-
-		this.upperHeightMapScale = BiomeConfiguration.DESERT_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		this.bottomHeightMapScale = BiomeConfiguration.DESERT_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
-
-		this.densityTerrainThicknessScale = BiomeConfiguration.DESERT_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
-		this.densityTerrainHeightScale = BiomeConfiguration.DESERT_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
-		
+		super(biomeId);
+		setMinMax((byte) 66, (byte) 69);
 		this.hasWater = false;
 	}
 

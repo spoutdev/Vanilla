@@ -26,36 +26,13 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.shore;
 
-import net.royawesome.jlibnoise.module.modifier.ScalePoint;
-
-import org.spout.vanilla.configuration.BiomeConfiguration;
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public class SwampBiome extends GrassyBiome {
-	private final static ScalePoint NOISE = new ScalePoint();
-
-	static {
-		NOISE.SetSourceModule(0, NormalBiome.MASTER);
-		NOISE.setxScale(BiomeConfiguration.SWAMP_X_SCALE.getDouble());
-		NOISE.setyScale(BiomeConfiguration.SWAMP_Y_SCALE.getDouble());
-		NOISE.setzScale(BiomeConfiguration.SWAMP_Z_SCALE.getDouble());
-	}
 
 	public SwampBiome(int biomeId) {
-		super(biomeId, NOISE);
-
-		this.minDensityTerrainHeight = BiomeConfiguration.SWAMP_MIN_DENSITY_TERRAIN_HEIGHT.getByte();
-		this.maxDensityTerrainHeight = BiomeConfiguration.SWAMP_MAX_DENSITY_TERRAIN_HEIGHT.getByte();
-
-		this.minDensityTerrainThickness = BiomeConfiguration.SWAMP_MIN_DENSITY_TERRAIN_THICKNESS.getByte();
-		this.maxDensityTerrainThickness = BiomeConfiguration.SWAMP_MAX_DENSITY_TERRAIN_THICKNESS.getByte();
-
-		this.upperHeightMapScale = BiomeConfiguration.SWAMP_UPPER_HEIGHT_MAP_SCALE.getFloat();
-		this.bottomHeightMapScale = BiomeConfiguration.SWAMP_BOTTOM_HEIGHT_MAP_SCALE.getFloat();
-
-		this.densityTerrainThicknessScale = BiomeConfiguration.SWAMP_DENSITY_TERRAIN_THICKNESS_SCALE.getFloat();
-		this.densityTerrainHeightScale = BiomeConfiguration.SWAMP_DENSITY_TERRAIN_HEIGHT_SCALE.getFloat();
+		super(biomeId);
+		setMinMax((byte) 60, (byte) 63);
 	}
 
 	@Override

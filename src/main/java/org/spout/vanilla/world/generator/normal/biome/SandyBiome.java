@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
-import net.royawesome.jlibnoise.module.Module;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.math.MathHelper;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
@@ -36,8 +35,8 @@ import org.spout.vanilla.world.generator.normal.NormalGenerator;
 public abstract class SandyBiome extends NormalBiome {
 	protected boolean hasWater = true;
 
-	public SandyBiome(int biomeId, Module modifiedMaster, Decorator... decorators) {
-		super(biomeId, modifiedMaster, decorators);
+	public SandyBiome(int biomeId, Decorator... decorators) {
+		super(biomeId, decorators);
 	}
 
 	@Override

@@ -44,7 +44,7 @@ import org.spout.vanilla.world.generator.VanillaBiome;
 
 public abstract class NormalBiome extends VanillaBiome {
 	// the master noise to be used by biomes extending this class
-	protected static final ScalePoint MASTER = new ScalePoint();
+	private static final ScalePoint MASTER = new ScalePoint();
 	// the parts for the master noise
 	private static final Perlin ELEVATION = new Perlin();
 	private static final Perlin ROUGHNESS = new Perlin();
@@ -58,7 +58,7 @@ public abstract class NormalBiome extends VanillaBiome {
 	private byte max;
 	private byte diff;
 	// scale of height maps
-	private final float heightMapScale = 4f;
+	private final float HEIGHT_MAP_SCALE = 4f;
 
 	static {
 		ELEVATION.setFrequency(0.2D);
@@ -173,12 +173,12 @@ public abstract class NormalBiome extends VanillaBiome {
 
 	private int getBottomHeightMapValue(int x, int z, int densityTerrainHeightMin) {
 		return (int) Math.ceil(TURBULENT_MASTER.GetValue(x, densityTerrainHeightMin, z)
-				* heightMapScale + densityTerrainHeightMin + 1);
+				* HEIGHT_MAP_SCALE + densityTerrainHeightMin + 1);
 	}
 
 	private int getUpperHeightMapValue(int x, int z, int densityTerrainHeightMax) {
 		return (int) Math.ceil(TURBULENT_MASTER.GetValue(x, densityTerrainHeightMax, z)
-				* heightMapScale + densityTerrainHeightMax);
+				* HEIGHT_MAP_SCALE + densityTerrainHeightMax);
 	}
 
 	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {

@@ -49,16 +49,16 @@ public abstract class NormalBiome extends VanillaBiome {
 	private static final Perlin ELEVATION = new Perlin();
 	private static final Perlin ROUGHNESS = new Perlin();
 	private static final Perlin DETAIL = new Perlin();
-		// a turbulent version of the modified master, used for density gen
+	// scale of height maps
+	private static final float HEIGHT_MAP_SCALE = 4f;
+	// a turbulent version of the modified master, used for density gen
 	private static final Turbulence TURBULENT_MASTER = new Turbulence();
 	// a scaled version of the elevation for block replacing
 	protected static final ScalePoint BLOCK_REPLACER = new ScalePoint();
-	// limits of height maps
+	// height settings
 	private byte min;
 	private byte max;
 	private byte diff;
-	// scale of height maps
-	private final float HEIGHT_MAP_SCALE = 4f;
 
 	static {
 		ELEVATION.setFrequency(0.2D);

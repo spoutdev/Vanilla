@@ -1,21 +1,24 @@
 recipes:
-  Bed:
-    type: Shaped
-    result: BED,1
-    ingredients:
-      A: WOOL
-      B: PLANK
-    rows: ['AAA', 'BBB']
-  
-  OrangeDye:
-    type: Shapeless
-    result: ORANGE_DYE,1
-    ingredients: [ROSE_RED, DANDELION_YELLOW]
-    
+
   Plank:
     type: Shapeless
-    result: PLANK,1
+    result: PLANK,4
     ingredients: [LOG]
+    
+  Stick:
+    type: Shapeless
+    result: STICK,4
+    ingredients: 
+      P: PLANK
+    rows: ['P', 'P']
+
+  Torch:
+    type: Shaped
+    result: TORCH,4
+    ingredients:
+      C: COAL
+      S: STICK
+    rows: ['C', 'S']
     
   Crafting Table:
     type: Shaped
@@ -23,3 +26,76 @@ recipes:
     ingredients:
       A: PLANK
     rows: ['AA', 'AA']
+    
+  Furnace:
+    type: Shaped
+    result: FURNACE,1
+    ingredients:
+      C: COBBLESTONE
+    rows: ['CCC', 'CCC', 'CCC']
+    
+  Chest:
+    type: Shaped
+    result: CHEST,1
+    ingredients:
+      P: PLANK
+    rows: ['PPP', 'P P', 'PPP']
+    
+  Block_GOLD:
+    type: Shaped
+    result: GOLD_BLOCK,1
+    ingredients: 
+      G: GOLD_INGOT
+    rows: ['GGG', 'GGG', 'GGG']
+
+  Block_IRON:
+    type: Shaped
+    result: IRON_BLOCK,1
+    ingredients: 
+      I: IRON_INGOT
+    rows: ['III', 'III', 'III']
+
+  Block_Lapis:
+    type: Shaped
+    result: LAPIS_LAZULI_BLOCK,1
+    ingredients: 
+      L: LAPIS_LAZULI
+    rows: ['LLL', 'LLL', 'LLL']
+
+  Block_Diamond:
+    type: Shaped
+    result: DIAMOND_BLOCK,1
+    ingredients: 
+      D: INGOT_DIAMOND
+    rows: ['DDD', 'DDD', 'DDD']
+
+    
+    
+  GlowStone:
+    type: Shaped
+    result: GLOWSTONE_BLOCK,1
+    ingredients:
+      G: GLOWSTONE_DUST
+    rows: ['GG', 'GG']
+    
+  Wool:
+    type: Shaped
+    result: WOOL,1
+    ingredients:
+      S: STRING
+    rows: ['SS', 'SS'] 
+    
+  TNT:
+    type: Shaped
+    result: TNT,1
+    ingredients:
+      G: GUNPOWDER
+      S: SAND
+    rows: ['GSG', 'SGS', GSG']
+    
+  WoodenSlab:
+    type: Shaped
+    result: SLAB_WOOD,6
+    ingredients:
+      P: PLANKS
+    rows: ['PPP']

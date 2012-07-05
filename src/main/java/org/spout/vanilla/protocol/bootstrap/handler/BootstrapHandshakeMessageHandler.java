@@ -77,7 +77,7 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 				session.send(false, true, new HandshakeMessage(sessionId));
 			}
 		} else {
-			session.disconnect("Handshake already exchanged.", false);
+			session.disconnect(false, "Handshake already exchanged.");
 		}
 	}
 

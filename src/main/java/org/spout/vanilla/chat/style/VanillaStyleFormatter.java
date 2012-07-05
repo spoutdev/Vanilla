@@ -24,17 +24,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.handler;
+package org.spout.vanilla.chat.style;
 
-import org.spout.api.player.Player;
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.chat.style.StyleFormatter;
 
-import org.spout.vanilla.protocol.msg.KickMessage;
+/**
+ * @author zml2008
+ */
+public class VanillaStyleFormatter implements StyleFormatter {
+	public static final String COLOR_CHAR = "\u00A7";
 
-public final class KickMessageHandler extends MessageHandler<KickMessage> {
-	@Override
-	public void handle(boolean upstream, Session session, Player player, KickMessage message) {
-		session.disconnect(false, message.getReason());
+	private final char styleChar;
+
+	public VanillaStyleFormatter(char styleChar) {
+		this.styleChar = styleChar;
+	}
+
+	public char getStyleChar() {
+		return styleChar;
+	}
+
+	public String format(String text) {
+		return COLOR_CHAR + styleChar + text;
 	}
 }

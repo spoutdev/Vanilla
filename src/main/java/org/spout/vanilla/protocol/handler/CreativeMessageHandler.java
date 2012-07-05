@@ -79,7 +79,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 					}
 				}
 			} else {
-				player.kick("Unknown item ID: " + message.getId() + " and durability " + message.getDamage() + "!");
+				player.kick("Unknown item ID: ", message.getId(), " and durability ", message.getDamage(), "!");
 			}
 		}
 	}

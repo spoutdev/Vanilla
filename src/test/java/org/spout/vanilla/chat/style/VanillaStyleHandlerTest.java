@@ -24,17 +24,23 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.handler;
+package org.spout.vanilla.chat.style;
 
-import org.spout.api.player.Player;
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.junit.Test;
+import org.spout.api.chat.style.ChatStyle;
 
-import org.spout.vanilla.protocol.msg.KickMessage;
+import static org.junit.Assert.fail;
 
-public final class KickMessageHandler extends MessageHandler<KickMessage> {
-	@Override
-	public void handle(boolean upstream, Session session, Player player, KickMessage message) {
-		session.disconnect(false, message.getReason());
+/**
+ * @author zml2008
+ */
+public class VanillaStyleHandlerTest {
+	@Test
+	public void testInclusion() {
+		for (ChatStyle style : ChatStyle.getValues()) {
+			if (!(VanillaStyleHandler.INSTANCE.getFormatter(style) instanceof VanillaStyleFormatter)) {
+				fail("Style " + style.getName() + " does not have a formatter in VanillaStyleHandler but needs one");
+			}
+		}
 	}
 }

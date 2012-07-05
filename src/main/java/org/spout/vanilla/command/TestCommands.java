@@ -30,8 +30,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.ChatColor;
 import org.spout.api.Spout;
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
@@ -140,7 +140,7 @@ public class TestCommands {
 
 		for (int i = 0; i < types.size(); i++) {
 			if (numbers.get(i) < 0) {
-				source.sendMessage(ChatColor.RED + "Increasing number of " + types.get(i).getName() + "s spawed to " + 0);
+				source.sendMessage(ChatStyle.RED, "Increasing number of ", types.get(i).getName(), "s spawned to 0");
 				numbers.set(i, 0);
 			}
 			toSpawn += numbers.get(i);
@@ -155,9 +155,9 @@ public class TestCommands {
 			int k = 0;
 			for (int i = 0; i < types.size(); i++) {
 				if (numbers.get(i) == 1) {
-					source.sendMessage(ChatColor.YELLOW + "Spawning a " + types.get(i).getName());
+					source.sendMessage(ChatStyle.YELLOW, "Spawning a ", types.get(i).getName());
 				} else {
-					source.sendMessage(ChatColor.YELLOW + "Spawning " + numbers.get(i) + " " + types.get(i).getName() + "s");
+					source.sendMessage(ChatStyle.YELLOW, "Spawning ", numbers.get(i) + " ", types.get(i).getName() + "s");
 				}
 				for (int j = 0; j < numbers.get(i); j++) {
 					typeArray[k++] = types.get(i);
@@ -187,7 +187,7 @@ public class TestCommands {
 	public void tppos(CommandContext args, CommandSource source) throws CommandException {
 		Player player = Spout.getEngine().getPlayer(args.getString(0), true);
 		if (!(source instanceof Player) && player == null) {
-			throw new CommandException("Must specifiy a valid player to tppos from the console.");
+			throw new CommandException("Must specify a valid player to tppos from the console.");
 		}
 
 		World world = Spout.getEngine().getWorld(args.getString(1));
@@ -252,7 +252,7 @@ public class TestCommands {
 		}
 
 		BlockController controller = block.getController();
-		player.sendMessage("Material: " + controller.getMaterial().getName());
+		player.sendMessage("Material: ", controller.getMaterial().getName());
 	}
 
 	@Command(aliases = {"vanish", "v"}, desc = "Toggle your visibility", min = 0, max = 0)
@@ -312,7 +312,7 @@ public class TestCommands {
 		}
 		if (count > 0) {
 			if (!isConsole) {
-				source.sendMessage(count + " entity(es) have been killed. The console has a listing of what controllers were killed.");
+				source.sendMessage(count, " entity(es) have been killed. The console has a listing of what controllers were killed.");
 			}
 		} else {
 			source.sendMessage("No valid entities found to kill");

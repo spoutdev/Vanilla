@@ -28,8 +28,8 @@ package org.spout.vanilla.command;
 
 import java.util.Set;
 
-import org.spout.api.ChatColor;
 import org.spout.api.Spout;
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
@@ -167,7 +167,7 @@ public class AdministrationCommands {
 
 		vplayer.getInventory().getMain().addItem(new ItemStack(material, data, count), false);
 
-		source.sendMessage("Gave " + vplayer.getPlayer().getName() + " " + count + " " + material.getSubMaterial(data).getDisplayName());
+		source.sendMessage("Gave ", vplayer.getPlayer().getName(), " ", count, " ", material.getSubMaterial(data).getDisplayName());
 	}
 
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
@@ -180,10 +180,10 @@ public class AdministrationCommands {
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		ops.setOp(playerName, false);
-		source.sendMessage(ChatColor.YELLOW + playerName + " had their operator status revoked!");
+		source.sendMessage(ChatStyle.YELLOW, playerName, " had their operator status revoked!");
 		Player player = Spout.getEngine().getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
-			player.sendMessage(ChatColor.YELLOW + "You have your operator status revoked!");
+			player.sendMessage(ChatStyle.YELLOW, "You have your operator status revoked!");
 		}
 	}
 
@@ -197,10 +197,10 @@ public class AdministrationCommands {
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		ops.setOp(playerName, true);
-		source.sendMessage(ChatColor.YELLOW + playerName + " is now an operator!");
+		source.sendMessage(ChatStyle.YELLOW, playerName, " is now an operator!");
 		Player player = Spout.getEngine().getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
-			player.sendMessage(ChatColor.YELLOW + "You are now an operator!");
+			player.sendMessage(ChatStyle.YELLOW, "You are now an operator!");
 		}
 	}
 
@@ -251,7 +251,7 @@ public class AdministrationCommands {
 		}
 
 		sky.setTime(relative ? (sky.getTime() + time) : time);
-		source.sendMessage("Set " + world.getName() + "'s time to: " + sky.getTime());
+		source.sendMessage("Set ", world.getName(), "'s time to: ", sky.getTime());
 	}
 
 	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|survival|creative> (0 = SURVIVAL, 1 = CREATIVE)", desc = "Change a player's game mode", min = 1, max = 2)
@@ -302,7 +302,7 @@ public class AdministrationCommands {
 				throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
 		}
 		if (!player.equals(source)) {
-			source.sendMessage(p.getPlayer().getName() + "'s game mode has been changed to " + message + ".");
+			source.sendMessage(p.getPlayer().getName(), "'s game mode has been changed to ", message, ".");
 		}
 	}
 
@@ -315,7 +315,7 @@ public class AdministrationCommands {
 				@SuppressWarnings("unused")
 				Player sender = (Player) source;
 				int amount = args.getInteger(0);
-				source.sendMessage("You have been given " + amount + " xp.");
+				source.sendMessage("You have been given ", amount, " xp.");
 				// TODO: Give player 'amount' of xp.
 			} else {
 				throw new CommandException("You must be a player to give yourself xp.");
@@ -327,7 +327,7 @@ public class AdministrationCommands {
 			Player player = Spout.getEngine().getPlayer(args.getString(0), true);
 			if (player != null) {
 				int amount = args.getInteger(1);
-				player.sendMessage("You have been given " + amount + " xp.");
+				player.sendMessage("You have been given ", amount, " xp.");
 				// TODO: Give player 'amount' of xp.
 			} else {
 				throw new CommandException(args.getString(0) + " is not online.");
@@ -456,8 +456,8 @@ public class AdministrationCommands {
 	@Command(aliases = {"version", "vr"}, usage = "", desc = "Print out the version information for Vanilla", min = 0, max = 0)
 	@CommandPermissions("vanilla.command.version")
 	public void getVersion(CommandContext args, CommandSource source) {
-		source.sendMessage("Vanilla " + plugin.getDescription().getVersion() + " (Implementing Minecraft protocol v" + plugin.getDescription().getData("protocol").get() + ")");
-		source.sendMessage("Powered by Spout " + Spout.getEngine().getVersion() + " (Implementing SpoutAPI " + Spout.getAPIVersion() + ")");
+		source.sendMessage("Vanilla ", plugin.getDescription().getVersion(), " (Implementing Minecraft protocol v", plugin.getDescription().getData("protocol").get(), ")");
+		source.sendMessage("Powered by Spout " + Spout.getEngine().getVersion(), " (Implementing SpoutAPI ", Spout.getAPIVersion(), ")");
 	}
 
 	@Command(aliases = {"biome"}, usage = "", desc = "Print out the name of the biome at the current location", min = 0, max = 0)
@@ -472,6 +472,6 @@ public class AdministrationCommands {
 		}
 		Point pos = player.getEntity().getPosition();
 		Biome biome = pos.getWorld().getBiomeType(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
-		source.sendMessage("Current biome: " + (biome != null ? biome.getName() : "null"));
+		source.sendMessage("Current biome: ", (biome != null ? biome.getName() : "none"));
 	}
 }

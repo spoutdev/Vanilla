@@ -54,9 +54,9 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 	public void handleServer(final Session session, final Player player, final EncryptionKeyResponseMessage message) {
 		Session.State state = session.getState();
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
-			session.disconnect("Handshake not sent", false);
+			session.disconnect(false, "Handshake not sent");
 		} else if (state != Session.State.EXCHANGE_ENCRYPTION) {
-			session.disconnect("Encryption was not requested", false);
+			session.disconnect(false, "Encryption was not requested");
 		} else {
 			int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
 			String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();

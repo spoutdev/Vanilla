@@ -31,12 +31,9 @@ import org.spout.api.protocol.Protocol;
 import org.spout.api.protocol.bootstrap.BootstrapProtocol;
 
 import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.msg.ChatMessage;
-import org.spout.vanilla.protocol.msg.HandshakeMessage;
-import org.spout.vanilla.protocol.msg.KickMessage;
 
 public class VanillaBootstrapProtocol extends BootstrapProtocol {
-	private static final Protocol vanilla = new VanillaProtocol();
+	private static final Protocol VANILLA_PROTOCOL = new VanillaProtocol();
 
 	public VanillaBootstrapProtocol() {
 		super("VanillaBootstrap", new VanillaBootstrapCodecLookupService(), new VanillaBootstrapHandlerLookupService());
@@ -49,21 +46,21 @@ public class VanillaBootstrapProtocol extends BootstrapProtocol {
 
 	@Override
 	public Protocol getDefaultProtocol() {
-		return vanilla;
+		return VANILLA_PROTOCOL;
 	}
 
 	@Override
-	public Message getChatMessage(String message) {
-		return new ChatMessage(message);
+	public Message getChatMessage(Object... message) {
+		return VANILLA_PROTOCOL.getChatMessage(message);
 	}
 
 	@Override
-	public Message getKickMessage(String message) {
-		return new KickMessage(message);
+	public Message getKickMessage(Object... message) {
+		return VANILLA_PROTOCOL.getKickMessage(message);
 	}
 
 	@Override
 	public Message getIntroductionMessage(String playerName) {
-		return new HandshakeMessage(playerName);
+		return VANILLA_PROTOCOL.getIntroductionMessage(playerName);
 	}
 }

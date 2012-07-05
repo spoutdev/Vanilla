@@ -26,11 +26,13 @@
  */
 package org.spout.vanilla.protocol;
 
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.Protocol;
 
+import org.spout.vanilla.chat.style.VanillaStyleHandler;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
@@ -45,13 +47,13 @@ public class VanillaProtocol extends Protocol {
 	}
 
 	@Override
-	public Message getChatMessage(String message) {
-		return new ChatMessage(message);
+	public Message getChatMessage(Object... message) {
+		return new ChatMessage(ChatStyle.stringify(VanillaStyleHandler.ID, message));
 	}
 
 	@Override
-	public Message getKickMessage(String message) {
-		return new KickMessage(message);
+	public Message getKickMessage(Object... message) {
+		return new KickMessage(ChatStyle.stringify(VanillaStyleHandler.ID, message));
 	}
 
 	@Override

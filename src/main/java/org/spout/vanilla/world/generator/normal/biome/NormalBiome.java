@@ -56,9 +56,9 @@ public abstract class NormalBiome extends VanillaBiome {
 	// a scaled version of the elevation for block replacing
 	protected static final ScalePoint BLOCK_REPLACER = new ScalePoint();
 	// height settings
-	private byte min;
-	private byte max;
-	private byte diff;
+	protected byte min;
+	protected byte max;
+	protected byte diff;
 
 	static {
 		ELEVATION.setFrequency(0.2D);

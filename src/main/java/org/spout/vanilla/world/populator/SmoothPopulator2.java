@@ -139,13 +139,7 @@ public class SmoothPopulator2 implements Populator {
 				final int lx = x + xx;
 				final int lz = z + zz;
 				final CuboidShortBuffer buffer = new CuboidShortBuffer(world, lx, 0, lz, 1, 128, 1);
-				if (biome instanceof GrassySmoothBiome) {
-					((GrassySmoothBiome) biome).generateColumn(buffer, lx, 0, lz);
-				} else if (biome instanceof SandySmoothBiome) {
-					((SandySmoothBiome) biome).generateColumn(buffer, lx, 0, lz);
-				} else if (biome instanceof IcySmoothBiome) {
-					((IcySmoothBiome) biome).generateColumn(buffer, lx, 0, lz);
-				}
+				biome.generateColumn(buffer, lx, 0, lz);
 				for (short y = 0; y < 128; y++) {
 					world.setBlockMaterial(lx, y, lz, (BlockMaterial) MaterialRegistry.get(buffer.get(lx, y, lz)), (short) 0, world);
 				}

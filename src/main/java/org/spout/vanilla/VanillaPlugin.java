@@ -69,7 +69,9 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 import org.spout.vanilla.resources.MapPalette;
+import org.spout.vanilla.resources.RecipeYaml;
 import org.spout.vanilla.resources.loader.MapPaletteLoader;
+import org.spout.vanilla.resources.loader.RecipeLoader;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -131,6 +133,7 @@ public class VanillaPlugin extends CommonPlugin {
 		config = new VanillaConfiguration(getDataFolder());
 		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
 		Spout.getFilesystem().registerLoader("mappalette", new MapPaletteLoader());
+		Spout.getFilesystem().registerLoader("recipe", new RecipeLoader());
 
 		if (engine.getPlatform() == Platform.SERVER || engine.getPlatform() == Platform.PROXY) {
 			int port = 25565;
@@ -150,6 +153,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 		VanillaMaterials.initialize();
 		MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/resources/map/mapColorPalette.dat");
+		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/resources/recipes.yml");
 		getLogger().info("loaded");
 	}
 

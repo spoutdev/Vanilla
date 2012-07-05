@@ -38,7 +38,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.Flower;
 
-public class FlowerDecorator implements Decorator {
+public class FlowerDecorator extends Decorator {
 	private static final List<Flower> flowers = new ArrayList<Flower>();
 
 	static {

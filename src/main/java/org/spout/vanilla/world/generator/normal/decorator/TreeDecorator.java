@@ -41,7 +41,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
 
-public class TreeDecorator implements Decorator {
+public class TreeDecorator extends Decorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {

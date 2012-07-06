@@ -37,8 +37,8 @@ public class Water extends Liquid {
 	}
 
 	@Override
-	public int getTickDelay() {
-		return 20;
+	public int getFlowDelay() {
+		return 250;
 	}
 
 	@Override

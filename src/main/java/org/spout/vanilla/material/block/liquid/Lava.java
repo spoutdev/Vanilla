@@ -88,8 +88,8 @@ public class Lava extends Liquid {
 	}
 
 	@Override
-	public int getTickDelay() {
-		return 10;
+	public int getFlowDelay() {
+		return 1500;
 	}
 
 	@Override

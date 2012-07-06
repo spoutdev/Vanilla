@@ -44,7 +44,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial, Source {
 	private final boolean flowing;
-	private static boolean useDelay = false; //TODO: This is here to prevent a lot of problems...
+	private static boolean useDelay = true; //TODO: This is here to prevent a lot of problems...
 	public static final int MAX_HOLE_DISTANCE = 5;
 
 	public Liquid(String name, int id, boolean flowing) {
@@ -69,7 +69,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		if (useDelay) {
 			//TODO: Dynamic updates are not continuous
 			// It will flow upon placement, but requires physics to continue
-			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay());
+			block.dynamicUpdate(block.getWorld().getAge() + this.getFlowDelay());
 		} else {
 			this.doPhysics(block);
 		}
@@ -228,10 +228,10 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	public abstract boolean hasFlowSource();
 
 	/**
-	 * Gets the tick delay between updates of this liquid
+	 * Gets the delay in milliseconds between updates of this liquid
 	 * @return the tick delay of this Liquid
 	 */
-	public abstract int getTickDelay();
+	public abstract int getFlowDelay();
 
 	/**
 	 * Sets whether this liquid is flowing down
@@ -294,7 +294,10 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	public int getHoleDistance(Block from, int currentDistance, int maxDistance) {
 		//TODO: Try to implement this system in a model-like structure, like explosion models
 		if (currentDistance >= maxDistance || isLiquidObstacle(from.getMaterial())) {
-			// Break
+			// Break, because we can not flow through obstacles
+			return -1;
+		} else if (this.isMaterial(from.getMaterial()) && this.isSource(from)) {
+			// Break, because we can not flow towards another source block
 			return -1;
 		} else if (!isLiquidObstacle(from.translate(BlockFace.BOTTOM).getMaterial())) {
 			// Found a hole

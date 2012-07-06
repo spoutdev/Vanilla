@@ -76,9 +76,12 @@ public class TestCommands {
 			throw new CommandException("You must be a player to cause an explosion");
 		}
 
-		VanillaPlayer player = (VanillaPlayer) source;
+		Entity entity = ((Player) source).getEntity();
+		Point position = entity.getPosition();
+		if (entity.getController() instanceof VanillaPlayer) {
+			position = position.add(((VanillaPlayer) entity.getController()).getLookingAt());
+		}
 
-		Point position = player.getParent().getPosition().add(player.getLookingAt());
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
 	}
 

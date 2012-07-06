@@ -64,6 +64,11 @@ public class Plank extends Solid implements Fuel, Mineable {
 		return Instrument.BASSGUITAR;
 	}
 
+	@Override
+	public boolean canBurn() {
+		return true;
+	}
+
 	public WoodType getType() {
 		return type;
 	}

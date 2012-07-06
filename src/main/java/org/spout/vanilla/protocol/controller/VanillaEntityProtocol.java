@@ -56,7 +56,16 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 	public Message[] getUpdateMessage(Entity entity) {
 		Controller controller = entity.getController();
-		Transform previousPosition = entity.getLastTransform();
+		if (!(controller instanceof VanillaActionController)) {
+			return new Message[0];
+		}
+		VanillaActionController vController = (VanillaActionController) controller;
+
+		// You have to use the last known CLIENT transform
+		// The last tick transform delta is not enough to properly send update messages
+		// For most entities, an update takes more than one tick before an update message is ready
+		// Do NOT use entity.getLastTransform() because it is not a delta since last tick!
+		Transform previousPosition = vController.getLastClientTransform();
 		Transform newPosition = entity.getTransform();
 
 		int lastX = protocolifyPosition(previousPosition.getPosition().getX());
@@ -75,8 +84,9 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 		List<Message> messages = new ArrayList<Message>(3);
 
-		if ((controller instanceof VanillaActionController && ((VanillaActionController) controller).needsPositionUpdate()) || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
+		if (vController.needsPositionUpdate() || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
 			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch));
+			vController.setLastClientTransform(newPosition.copy());
 		} else {
 			boolean moved = !previousPosition.getPosition().equals(newPosition.getPosition());
 			boolean looked = !previousPosition.getRotation().equals(newPosition.getRotation());
@@ -88,6 +98,9 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 				}
 			} else if (looked) {
 				messages.add(new EntityRotationMessage(entity.getId(), newYaw, newPitch));
+			}
+			if (moved || looked) {
+				vController.setLastClientTransform(newPosition);
 			}
 		}
 

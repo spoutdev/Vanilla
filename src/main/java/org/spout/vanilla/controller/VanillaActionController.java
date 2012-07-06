@@ -41,6 +41,7 @@ import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.component.controller.PlayerController;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
@@ -65,6 +66,8 @@ public abstract class VanillaActionController extends Controller implements Vani
 	private final VanillaControllerType type;
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();
+	// Protocol: last known updated client transform
+	private Transform lastClientTransform = new Transform();
 	// Controller flags
 	private boolean isFlammable = true;
 	// Tick effects
@@ -94,6 +97,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 		getParent().setCollision(new CollisionModel(area));
 		getParent().getCollision().setStrategy(CollisionStrategy.SOLID);
 		data().put(Data.CONTROLLER_TYPE, getType().getID());
+		this.lastClientTransform = getParent().getTransform();
 
 		// Load data
 		airTicks = data().get(Data.AIR_TICKS);
@@ -184,6 +188,25 @@ public abstract class VanillaActionController extends Controller implements Vani
 	@Override
 	public VanillaControllerType getType() {
 		return type;
+	}
+
+	/**
+	 * Sets the last known transformation known by the clients<br>
+	 * This should only be called by the protocol classes
+	 * 
+	 * @param transform to set to
+	 */
+	public void setLastClientTransform(Transform transform) {
+		this.lastClientTransform = transform;
+	}
+
+	/**
+	 * Gets the last known transformation updated to the clients
+	 * 
+	 * @return the last known transform by the clients
+	 */
+	public Transform getLastClientTransform() {
+		return this.lastClientTransform;
 	}
 
 	public BoundingBox getBounds() {

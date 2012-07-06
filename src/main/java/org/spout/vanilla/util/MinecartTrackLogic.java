@@ -113,7 +113,6 @@ public class MinecartTrackLogic implements Source {
 	}
 
 	public boolean setState(RailsState state) {
-		System.out.println("SETTING TO " + state);
 		if (state == this.getState()) {
 			return false;
 		}
@@ -239,8 +238,6 @@ public class MinecartTrackLogic implements Source {
 		//Update this track piece based on environment
 		this.neighbours.clear();
 		this.genNeighbours(true);
-
-		System.out.println("Refreshing: " + this.toString());
 
 		if (this.neighbours.size() == 1) {
 			//align tracks straight to face this direction

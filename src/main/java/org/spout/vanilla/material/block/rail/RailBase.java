@@ -29,9 +29,11 @@ package org.spout.vanilla.material.block.rail;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
@@ -133,6 +135,22 @@ public abstract class RailBase extends GroundAttachable implements Mineable {
 	 * @return the rail state
 	 */
 	public abstract RailsState getState(Block block);
+
+	@Override
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		RailsState state = this.getState(block);
+		if (state.isSloped()) {
+			// Check if the facing side is still supporting
+			BlockMaterial att = block.translate(state.getDirections()[0]).getMaterial();
+			if (att instanceof VanillaBlockMaterial) {
+				if (((VanillaBlockMaterial) att).canSupport(this, BlockFace.TOP)) {
+					return;
+				}
+			}
+			this.onDestroy(block);
+		}
+	}
 
 	public void doTrackLogic(Block block) {
 		MinecartTrackLogic logic = MinecartTrackLogic.create(block);

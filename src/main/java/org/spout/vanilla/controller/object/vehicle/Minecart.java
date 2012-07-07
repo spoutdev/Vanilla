@@ -86,6 +86,12 @@ public abstract class Minecart extends Substance implements Vehicle {
 		setHealth(40, HealthChangeReason.SPAWN);
 	}
 
+	@Override
+	public void onDeath() {
+		super.onDeath();
+		this.leaveState();
+	}
+
 	public void generateRailData(Point position) {
 		this.railsBlock = position.getWorld().getBlock(position);
 		this.blockType = this.railsBlock.getMaterial();
@@ -104,6 +110,13 @@ public abstract class Minecart extends Substance implements Vehicle {
 		}
 	}
 
+	private void leaveState() {
+		//Turn off detector rails if needed
+		if (this.railMaterial == VanillaMaterials.RAIL_DETECTOR) {
+			VanillaMaterials.RAIL_DETECTOR.setPowering(this.railsBlock, false);
+		}
+	}
+	
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
@@ -125,12 +138,21 @@ public abstract class Minecart extends Substance implements Vehicle {
 		if (position.getWorld() == null) {
 			return;
 		}
+
+		this.leaveState();
+
 		this.generateRailData(position);
 
 		Vector2 velocity = this.getVelocity().toVector2();
 		float velocityY = this.getVelocity().getY() - 0.04f;
 
 		if (this.railState != null) {
+			//Turn on detector rails if needed
+			if (this.railMaterial == VanillaMaterials.RAIL_DETECTOR) {
+				VanillaMaterials.RAIL_DETECTOR.setPowering(this.railsBlock, true);
+			}
+			
+			
 			//on tracks
 			this.previousPosY = position.getY();
 

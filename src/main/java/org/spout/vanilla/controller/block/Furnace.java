@@ -133,22 +133,47 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 		return inventory;
 	}
 
-	public void setBurnTime(int burnTime) {
+	/**
+	 * Sets the remaining burn time for the current Furnace recipe to complete
+	 * 
+	 * @param burnTime in seconds
+	 */
+	public void setBurnTime(float burnTime) {
 		this.burnTime = burnTime;
 	}
 
+	/**
+	 * Gets the remaining burn time for the current Furnace recipe to complete
+	 * 
+	 * @return burnTime in seconds
+	 */
 	public float getBurnTime() {
 		return burnTime;
 	}
 
-	public void setProgress(int progress) {
+	/**
+	 * Sets the progress of burning
+	 * 
+	 * @param progress in seconds to set to
+	 */
+	public void setProgress(float progress) {
 		this.progress = progress;
 	}
 
+	/**
+	 * Gets the progress of burning
+	 * 
+	 * @return progress in seconds
+	 */
 	public float getProgress() {
 		return progress;
 	}
 
+	/**
+	 * Gets whether this Furnace is burning
+	 * 
+	 * @return True if it is burning, False if not
+	 */
 	public boolean isBurning() {
 		return burnTime > 0;
 	}

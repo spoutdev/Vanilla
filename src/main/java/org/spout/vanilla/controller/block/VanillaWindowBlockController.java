@@ -93,6 +93,11 @@ public abstract class VanillaWindowBlockController extends VanillaBlockControlle
 		return this.viewers.keySet();
 	}
 
+	/**
+	 * Gets an array of viewers currently viewing this controller
+	 * 
+	 * @return an array of player viewers
+	 */
 	public VanillaPlayer[] getViewerArray() {
 		return this.viewers.keySet().toArray(new VanillaPlayer[0]);
 	}

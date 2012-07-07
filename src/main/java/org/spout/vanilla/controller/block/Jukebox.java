@@ -68,10 +68,22 @@ public class Jukebox extends VanillaBlockController {
 		return ((MusicDisc) current.getSubMaterial()).getMusic();
 	}
 
+	/**
+	 * Tests whether this Jukebox can play the item specified
+	 * 
+	 * @param item to play
+	 * @return True if it can play it, False if not
+	 */
 	public boolean canPlay(ItemStack item) {
 		return item != null && this.canPlay(item.getSubMaterial());
 	}
 
+	/**
+	 * Tests whether this Jukebox can play the item material specified
+	 * 
+	 * @param material to play
+	 * @return True if it can play it, False if not
+	 */
 	public boolean canPlay(Material material) {
 		return material instanceof MusicDisc;
 	}
@@ -115,6 +127,9 @@ public class Jukebox extends VanillaBlockController {
 	public void onTick(float dt) {
 	}
 
+	/**
+	 * Stops this Jukebox from playing music
+	 */
 	public void stopMusic() {
 		playBlockEffect(getBlock(), null, 48, PlayEffectMessage.Messages.MUSIC_DISC, Music.NONE.getId());
 	}

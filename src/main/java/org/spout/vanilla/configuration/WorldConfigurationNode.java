@@ -52,14 +52,31 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 		this.name = worldname;
 	}
 
+	/**
+	 * Gets the world name of this world configuration node
+	 * 
+	 * @return the world name
+	 */
 	public String getWorldName() {
 		return this.name;
 	}
 
+	/**
+	 * Gets the parent configuration of this world configuration node
+	 * 
+	 * @return the parent configuration
+	 */
 	public WorldConfiguration getParent() {
 		return this.parent;
 	}
 
+	/**
+	 * Sets some of the default values for this configuration node
+	 * 
+	 * @param sky default
+	 * @param generator default
+	 * @return this node
+	 */
 	public WorldConfigurationNode setDefaults(String sky, String generator) {
 		this.SKY_TYPE.setDefaultValue(sky);
 		this.GENERATOR.setDefaultValue(generator);

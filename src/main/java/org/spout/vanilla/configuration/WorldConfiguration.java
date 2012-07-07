@@ -55,10 +55,24 @@ public class WorldConfiguration extends YamlConfiguration {
 		return worldNodes.values();
 	}
 
+	/**
+	 * Gets the world configuration of a certain world<br>
+	 * Creates a new one if it doesn't exist
+	 * 
+	 * @param world of the configuration
+	 * @return the World configuration node
+	 */
 	public WorldConfigurationNode getOrCreate(World world) {
 		return getOrCreate(world.getName());
 	}
 
+	/**
+	 * Gets the world configuration of a certain world<br>
+	 * Creates a new one if it doesn't exist
+	 * 
+	 * @param worldname of the configuration
+	 * @return the World configuration node
+	 */
 	public WorldConfigurationNode getOrCreate(String worldname) {
 		synchronized (worldNodes) {
 			WorldConfigurationNode node = worldNodes.get(worldname);

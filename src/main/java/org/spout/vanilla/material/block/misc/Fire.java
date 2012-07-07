@@ -148,7 +148,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	 * @param block to spread from
 	 */
 	public void onSpread(Block block) {
-		Vector3 offset = spreadBlocks.get((int) (Math.random() * (double) (spreadBlocks.size() - 1)));
+		Vector3 offset = spreadBlocks.get((int) (Math.random() * spreadBlocks.size()));
 		block = block.translate(offset);
 		if (block.getMaterial() instanceof Liquid) {
 			return;
@@ -185,8 +185,8 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		if (this.canSpread(b)) {
 			// Destroy attached blocks using random chance (1/8 chance)
 			//TODO: Get correct randomness...
-			if ((int) (Math.random() * 7) == 0) {
-				Block att = b.translate(BlockFaces.NESWBT.get((int) (Math.random() * 5)));
+			if (Math.random() < 0.125) {
+				Block att = b.translate(BlockFaces.NESWBT.get((int) (Math.random() * 6)));
 				if (isBurnable(att.getMaterial())) {
 					att.setMaterial(VanillaMaterials.AIR);
 				}

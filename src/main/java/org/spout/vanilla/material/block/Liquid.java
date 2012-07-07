@@ -229,7 +229,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	/**
 	 * Gets the delay in milliseconds between updates of this liquid
-	 * @return the tick delay of this Liquid
+	 * @return the millisecond delay of this Liquid
 	 */
 	public abstract int getFlowDelay();
 

@@ -66,28 +66,63 @@ public class Sign extends VanillaBlockController {
 		}
 	}
 
+	/**
+	 * Gets the block range within players can see changes to this Sign
+	 * 
+	 * @return player view block range
+	 */
 	public int getRange() {
 		return range;
 	}
 
+	/**
+	 * Sets the block range within players can see changes to this Sign
+	 * 
+	 * @param range to set to
+	 */
 	public void setRange(int range) {
 		this.range = range;
 	}
 
+	/**
+	 * Gets the current lines of text of this Sign
+	 * 
+	 * @return an array of String lines shown on this Sign
+	 */
 	public String[] getText() {
 		return text;
 	}
 
-	public void setText(String[] text) {
+	/**
+	 * Sets the current lines of this Sign
+	 * 
+	 * @param text to set to
+	 */
+	public void setText(String[] text) throws IllegalArgumentException {
+		if (text.length != 4) {
+			throw new IllegalArgumentException("The amount of lines have to equal 4");
+		}
 		this.text = text;
 		update();
 	}
 
+	/**
+	 * Gets the line text at a certain line row
+	 * 
+	 * @param line row index
+	 * @return the text of that row
+	 */
 	public String getLine(int line) {
 		return text[line];
 	}
 
-	public void setLine(String text, int line) {
+	/**
+	 * Sets the line text at a certain line row
+	 * 
+	 * @param line row index
+	 * @param text to set the line to
+	 */
+	public void setLine(int line, String text) {
 		this.text[line] = text;
 		update();
 	}

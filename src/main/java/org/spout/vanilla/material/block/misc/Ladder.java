@@ -41,7 +41,7 @@ import org.spout.vanilla.material.item.weapon.Sword;
 public class Ladder extends AbstractAttachable implements Mineable {
 	public Ladder(String name, int id) {
 		super(name, id);
-		this.setAttachable(BlockFaces.WESN).setHardness(0.4F).setResistance(0.7F).setOpacity(1);
+		this.setAttachable(BlockFaces.WESN).setHardness(0.4F).setResistance(0.7F).setTransparent();
 	}
 
 	@Override

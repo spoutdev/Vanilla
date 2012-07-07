@@ -49,6 +49,11 @@ public class NoteBlock extends VanillaBlockController {
 		return below instanceof VanillaBlockMaterial ? ((VanillaBlockMaterial) below).getInstrument() : Instrument.PIANO;
 	}
 
+	/**
+	 * Sets the powered state of this Note Block, possibly causing it to play the note
+	 * 
+	 * @param powered state to set to
+	 */
 	public void setPowered(boolean powered) {
 		if (this.powered != powered) {
 			this.powered = powered;
@@ -58,18 +63,36 @@ public class NoteBlock extends VanillaBlockController {
 		}
 	}
 
+	/**
+	 * Gets whether this Note Block is powered by Redstone
+	 * 
+	 * @return True if it is powered, False if not
+	 */
 	public boolean isPowered() {
 		return this.powered;
 	}
 
+	/**
+	 * Gets the note value of this Note Block
+	 * 
+	 * @return the note value
+	 */
 	public int getNote() {
 		return this.note;
 	}
 
+	/**
+	 * Sets the note value of this Note Block
+	 * 
+	 * @param note value to set to
+	 */
 	public void setNote(int note) {
 		this.note = note % 25;
 	}
 
+	/**
+	 * Plays the note of this Note Block
+	 */
 	public void play() {
 		VanillaNetworkUtil.playBlockAction(this.getBlock(), this.getInstrument().getId(), (byte) this.getNote());
 	}

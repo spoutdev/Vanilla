@@ -96,7 +96,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 	public void onAttached() {
 		getParent().setCollision(new CollisionModel(area));
 		getParent().getCollision().setStrategy(CollisionStrategy.SOLID);
-		data().put(Data.CONTROLLER_TYPE, getType().getID());
+		data().put(Data.CONTROLLER_TYPE, getType().getMinecraftId());
 		this.lastClientTransform = getParent().getTransform();
 
 		// Load data
@@ -140,7 +140,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 				return;
 			}
 		}
-		checkFireTicks();
+		updateFireTicks();
 
 		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
@@ -209,22 +209,49 @@ public abstract class VanillaActionController extends Controller implements Vani
 		return this.lastClientTransform;
 	}
 
+	/**
+	 * Gets the bounding box for the entity that this controller supplies
+	 * 
+	 * @return the bounding box for the entity
+	 */
 	public BoundingBox getBounds() {
 		return this.area;
 	}
 
+	/**
+	 * Tests if a velocity update is needed for this entity<br>
+	 * This is called by the entity protocol
+	 * 
+	 * @return True if a velocity update is needed
+	 */
 	public boolean needsVelocityUpdate() {
 		return velocityTicks % 5 == 0;
 	}
 
+	/**
+	 * Tests if a position update is needed for this entity<br>
+	 * This is called by the entity protocol
+	 * 
+	 * @return True if a position update is needed
+	 */
 	public boolean needsPositionUpdate() {
-		return positionTicks % 30 == 0; //TODO Fix this in VanillaEntityProtocol
+		return positionTicks % 30 == 0;
 	}
 
+	/**
+	 * Gets the current velocity of this controller
+	 * 
+	 * @return the velocity
+	 */
 	public Vector3 getVelocity() {
 		return velocity;
 	}
 
+	/**
+	 * Sets the current velocity for this controller
+	 * 
+	 * @param velocity to set to
+	 */
 	public void setVelocity(Vector3 velocity) {
 		if (velocity == null) {
 			if (Spout.debugMode()) {
@@ -238,7 +265,8 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Gets the speed of the controller during the prior movement. This will always be lower than the maximum speed.
-	 * @return
+	 * 
+	 * @return the moved velocity
 	 */
 	public Vector3 getMovementSpeed() {
 		return movementSpeed;
@@ -246,12 +274,18 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Gets the maximum speed this controller is allowed to move at once.
-	 * @return
+	 * 
+	 * @return the maximum velocity
 	 */
 	public Vector3 getMaxSpeed() {
 		return maxSpeed;
 	}
 
+	/**
+	 * Sets the maximum speed this controller is allowed to move at once.
+	 * 
+	 * @param maxSpeed to set to
+	 */
 	public void setMaxSpeed(Vector3 maxSpeed) {
 		this.maxSpeed = maxSpeed;
 	}
@@ -302,7 +336,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 		this.fireTicks = fireTicks;
 	}
 
-	private void checkFireTicks() {
+	private void updateFireTicks() {
 		if (fireTicks > 0) {
 			if (!isFlammable) {
 				fireTicks -= 4;
@@ -412,10 +446,20 @@ public abstract class VanillaActionController extends Controller implements Vani
 		getParent().rotate(degrees, x, y, z);
 	}
 
+	/**
+	 * Sets the yaw angle for this controller
+	 * 
+	 * @param angle to set to
+	 */
 	public void yaw(float angle) {
 		getParent().yaw(angle);
 	}
 
+	/**
+	 * Sets the pitch angle for this controller
+	 * 
+	 * @param angle to set to
+	 */
 	public void pitch(float angle) {
 		getParent().pitch(angle);
 	}
@@ -428,10 +472,20 @@ public abstract class VanillaActionController extends Controller implements Vani
 		getParent().roll(angle);
 	}
 
+	/**
+	 * Gets the position of this controller at the start of this tick
+	 * 
+	 * @return previous position
+	 */
 	public Vector3 getPreviousPosition() {
 		return getParent().getLastTransform().getPosition();
 	}
 
+	/**
+	 * Gets the rotation of this controller at the start of this tick
+	 * 
+	 * @return previous rotation
+	 */
 	public Quaternion getPreviousRotation() {
 		return getParent().getLastTransform().getRotation();
 	}
@@ -444,14 +498,30 @@ public abstract class VanillaActionController extends Controller implements Vani
 		return rand;
 	}
 
+	/**
+	 * Gets the health of this controller (hitpoints)
+	 * 
+	 * @return the health value
+	 */
 	public int getHealth() {
 		return health;
 	}
 
+	/**
+	 * Gets the maximum health this controller can have
+	 * 
+	 * @return the maximum health
+	 */
 	public int getMaxHealth() {
 		return maxHealth;
 	}
 
+	/**
+	 * Sets the current health value for this controller
+	 * 
+	 * @param health hitpoints value to set to
+	 * @param source of the change
+	 */
 	public void setHealth(int health, Source source) {
 		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getParent(), source, health);
 		Spout.getEngine().getEventManager().callEvent(event);
@@ -464,6 +534,11 @@ public abstract class VanillaActionController extends Controller implements Vani
 		}
 	}
 
+	/**
+	 * Sets the maximum health this controller can have
+	 * 
+	 * @param maxHealth to set to
+	 */
 	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
 	}

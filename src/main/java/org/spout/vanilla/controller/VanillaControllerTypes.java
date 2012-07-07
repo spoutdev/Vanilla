@@ -186,7 +186,7 @@ public class VanillaControllerTypes {
 			if (Modifier.isStatic(field.getModifiers()) && VanillaControllerType.class.isAssignableFrom(field.getType())) {
 				try {
 					VanillaControllerType type = (VanillaControllerType) field.get(null);
-					ID_LOOKUP.put(type.getID(), type);
+					ID_LOOKUP.put(type.getMinecraftId(), type);
 				} catch (IllegalAccessException e) {
 					continue;
 				}

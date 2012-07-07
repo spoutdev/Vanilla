@@ -52,7 +52,7 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 public class FenceGate extends VanillaBlockMaterial implements Mineable, Openable, RedstoneTarget {
 	public FenceGate(String name, int id) {
 		super(name, id);
-		this.setHardness(2.0F).setResistance(3.0F).setOpacity((byte) 1);
+		this.setHardness(2.0F).setResistance(3.0F).setTransparent();
 	}
 
 	@Override

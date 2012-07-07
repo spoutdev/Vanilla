@@ -33,6 +33,7 @@ import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
@@ -95,7 +96,7 @@ public class CakeBlock extends Solid implements Mineable {
 	/**
 	 * Represents the size of a cake material.
 	 */
-	public enum CakeSize {
+	public enum CakeSize implements DataSource {
 		FULL(0x0),
 		FIVE_PIECES(0x1),
 		FOUR_PIECES(0x2),
@@ -108,6 +109,7 @@ public class CakeBlock extends Solid implements Mineable {
 			this.data = (short) data;
 		}
 
+		@Override
 		public short getData() {
 			return data;
 		}

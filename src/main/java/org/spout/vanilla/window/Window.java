@@ -69,38 +69,83 @@ public class Window implements InventoryViewer {
 		this.inventory = new InventoryBundle(inventories);
 	}
 
+	/**
+	 * Gets the Inventory Bundle containing all shown inventories in this Window
+	 * 
+	 * @return the inventory of this window
+	 */
 	public InventoryBundle getInventory() {
 		return this.inventory;
 	}
 
+	/**
+	 * Gets the Inventory size to send to the clients
+	 * 
+	 * @return inventory size
+	 */
 	public int getInventorySize() {
 		return this.inventory.getSize();
 	}
 
+	/**
+	 * Gets the 'minecraft' or 'notchian' window Id of this Window
+	 * 
+	 * @return window id
+	 */
 	public int getId() {
 		return this.id;
 	}
 
+	/**
+	 * Gets whether this Window has a close message or not
+	 * 
+	 * @return True if it has a close message, False if not
+	 */
 	public boolean hasCloseMessage() {
 		return true;
 	}
 
+	/**
+	 * Gets the unique Id of this Window instance
+	 * 
+	 * @return window id
+	 */
 	public int getInstanceId() {
 		return this.instanceId;
 	}
 
+	/**
+	 * Gets the title of this Window shown
+	 * 
+	 * @return the title
+	 */
 	public String getTitle() {
 		return this.title;
 	}
 
+	/**
+	 * Sets the title shown by this Window
+	 * 
+	 * @param title to set to
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+	/**
+	 * Gets the player viewing this Window
+	 * 
+	 * @return the player
+	 */
 	public Player getPlayer() {
 		return this.owner.getPlayer();
 	}
 
+	/**
+	 * Gets the Vanilla player controller owner of this Window
+	 * 
+	 * @return the owner player controller
+	 */
 	public VanillaPlayer getOwner() {
 		return this.owner;
 	}
@@ -181,6 +226,9 @@ public class Window implements InventoryViewer {
 		return result;
 	}
 
+	/**
+	 * Drops the item that is currently on the player's cursor
+	 */
 	public void dropItemOnCursor() {
 		if (this.hasItemOnCursor()) {
 			ItemUtil.dropItemNaturally(this.getOwner().getParent().getPosition(), this.getItemOnCursor());

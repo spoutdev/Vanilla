@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.material.block;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -32,16 +32,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.controlled.SignBase;
-import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.material.block.misc.Torch;
 
 public abstract class Fence extends VanillaBlockMaterial implements Mineable {
 	public Fence(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
 	}
 
 	@Override
@@ -55,10 +50,5 @@ public abstract class Fence extends VanillaBlockMaterial implements Mineable {
 			}
 		}
 		return false;
-	}
-
-	@Override
-	public boolean canBurn() {
-		return true;
 	}
 }

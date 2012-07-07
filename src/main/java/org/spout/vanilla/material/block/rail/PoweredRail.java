@@ -65,9 +65,8 @@ public class PoweredRail extends RailBase implements RedstoneTarget {
 			block = block.translate(face);
 			if (!block.getMaterial().equals(this) || !this.isConnected(block, face)) {
 				return false;
-			} else {
-				// Is the block receiving power?
-				
+			} else if (RedstoneUtil.isReceivingPower(block)) {
+				return true;
 			}
 		}
 		return false;

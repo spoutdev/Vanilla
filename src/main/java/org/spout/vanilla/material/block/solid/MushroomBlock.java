@@ -40,6 +40,7 @@ import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.EnchantmentUtil;
+import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class MushroomBlock extends Solid implements Fuel, Mineable {
@@ -53,6 +54,11 @@ public class MushroomBlock extends Solid implements Fuel, Mineable {
 	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
 	}
 
 	@Override

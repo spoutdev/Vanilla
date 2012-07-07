@@ -35,6 +35,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Brick extends Solid implements Mineable {
@@ -56,5 +57,10 @@ public class Brick extends Solid implements Mineable {
 			drops.add(new ItemStack(this, 1));
 		}
 		return drops;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSDRUM;
 	}
 }

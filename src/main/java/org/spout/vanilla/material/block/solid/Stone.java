@@ -38,6 +38,7 @@ import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
+import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Stone extends Solid implements Mineable {
@@ -49,6 +50,11 @@ public class Stone extends Solid implements Mineable {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSDRUM;
 	}
 
 	@Override

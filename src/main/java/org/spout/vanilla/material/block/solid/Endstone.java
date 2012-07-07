@@ -35,6 +35,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Endstone extends Solid implements Mineable {
@@ -46,6 +47,11 @@ public class Endstone extends Solid implements Mineable {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSDRUM;
 	}
 
 	@Override

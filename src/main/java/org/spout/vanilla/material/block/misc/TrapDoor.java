@@ -63,7 +63,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Mineable, Open
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isOpen(block)) {
 				this.setOpen(block, powered);
-				playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_FIZZ);
+				playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_DOOR);
 			}
 		}
 	}

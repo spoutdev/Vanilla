@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc.fence;
+package org.spout.vanilla.material.block.fence;
 
 import java.util.ArrayList;
 
@@ -35,9 +35,10 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.misc.Fence;
+import org.spout.vanilla.material.block.Fence;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.Instrument;
 
 public class WoodenFence extends Fence implements Fuel {
 	public final float BURN_TIME = 15.f;
@@ -50,6 +51,16 @@ public class WoodenFence extends Fence implements Fuel {
 	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
+	}
+
+	@Override
+	public boolean canBurn() {
+		return true;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
 	}
 
 	@Override

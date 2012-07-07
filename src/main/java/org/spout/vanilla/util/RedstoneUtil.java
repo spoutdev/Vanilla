@@ -32,6 +32,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 
 public class RedstoneUtil {
@@ -113,6 +114,8 @@ public class RedstoneUtil {
 		if (mat instanceof RedstoneSource && to != BlockFace.THIS) {
 			if (((RedstoneSource) mat).hasRedstonePowerTo(block, to, powerMode)) {
 				return true;
+			} else if (mat.equals(VanillaMaterials.REDSTONE_WIRE)) {
+				return false;
 			}
 		}
 		if (mat instanceof VanillaBlockMaterial) {

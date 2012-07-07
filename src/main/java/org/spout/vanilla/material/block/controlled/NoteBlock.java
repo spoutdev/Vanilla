@@ -74,21 +74,26 @@ public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
 	}
 
 	@Override
+	public org.spout.vanilla.controller.block.NoteBlock getController(Block block) {
+		return (org.spout.vanilla.controller.block.NoteBlock) super.getController(block);
+	}
+
+	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
+		org.spout.vanilla.controller.block.NoteBlock controller = getController(block);
 		if (type == Action.RIGHT_CLICK) {
-			org.spout.vanilla.controller.block.NoteBlock controller = (org.spout.vanilla.controller.block.NoteBlock) block.getController();
 			controller.setNote(controller.getNote() + 1);
 			controller.play();
-		} else if (type == Action.LEFT_CLICK && VanillaPlayerUtil.isCreative(entity)) {
-			((org.spout.vanilla.controller.block.NoteBlock) block.getController()).play();
+		} else if (type == Action.LEFT_CLICK && VanillaPlayerUtil.isSurvival(entity)) {
+			controller.play();
 		}
 	}
 
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		((org.spout.vanilla.controller.block.NoteBlock) block.getController()).setPowered(isReceivingPower(block));
+		getController(block).setPowered(isReceivingPower(block));
 	}
 
 	@Override

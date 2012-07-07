@@ -35,6 +35,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class StoneBrick extends Solid implements Mineable {
@@ -50,6 +51,11 @@ public class StoneBrick extends Solid implements Mineable {
 	private StoneBrick(String name, int data, StoneBrick parent) {
 		super(name, 98, data, parent);
 		this.setHardness(1.5F).setResistance(10.0F);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSDRUM;
 	}
 
 	@Override

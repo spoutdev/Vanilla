@@ -29,6 +29,7 @@ package org.spout.vanilla.material.block.solid;
 import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 
 public class Bedrock extends Solid {
@@ -40,5 +41,10 @@ public class Bedrock extends Solid {
 	@Override
 	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSDRUM;
 	}
 }

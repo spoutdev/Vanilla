@@ -36,7 +36,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.PondObject;
 import org.spout.vanilla.world.generator.normal.object.PondObject.PondType;
 
-public class PondDecorator implements Decorator {
+public class PondDecorator extends Decorator {
 	// generation odd, 'ODD' chunk per chunk
 	private static final byte ODD = 24;
 	// odd that a lava pond will be picked

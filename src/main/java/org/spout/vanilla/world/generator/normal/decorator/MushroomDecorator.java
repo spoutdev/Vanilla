@@ -41,7 +41,7 @@ import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
 
-public class MushroomDecorator implements Decorator {
+public class MushroomDecorator extends Decorator {
 	/*
 		 * Stores the differant types of mushrooms.
 		 */

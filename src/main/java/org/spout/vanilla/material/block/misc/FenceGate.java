@@ -83,7 +83,7 @@ public class FenceGate extends VanillaBlockMaterial implements Mineable, Openabl
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		if (block.getMaterial().equals(this)) {
+		if (!(oldMaterial instanceof FenceGate) && block.getMaterial().equals(this)) {
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isOpen(block)) {
 				this.setOpen(block, powered);

@@ -66,11 +66,10 @@ public abstract class BaseProtocolTest {
 	}
 
 	@Test
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void testMessageEncoding() throws IOException {
 		for (Message message : testMessages) {
-			@SuppressWarnings("rawtypes")
 			MessageCodec codec = codecLookup.find(message.getClass());
-			@SuppressWarnings("unchecked")
 			ChannelBuffer encoded = codec.encodeToServer(message);
 			Message decoded = codec.decodeFromClient(encoded);
 			assertEquals("Failed (C -> S) for: " + message.getClass().getName(), message, decoded);

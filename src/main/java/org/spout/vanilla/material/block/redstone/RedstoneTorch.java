@@ -89,7 +89,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 
 	@Override
 	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isPowered(this.getBlockAttachedTo(block));
+		return RedstoneUtil.isEmittingPower(this.getBlockAttachedTo(block));
 	}
 
 	@Override

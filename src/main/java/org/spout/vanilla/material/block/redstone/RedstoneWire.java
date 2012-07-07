@@ -209,7 +209,7 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 	public boolean isConnectedToSource(Block block, BlockFace face) {
 		Block target = block.translate(face);
 		BlockMaterial mat = target.getMaterial();
-		if (mat instanceof RedstoneSource || mat instanceof RedstoneTarget) {
+		if (mat instanceof RedstoneSource) {
 			return true;
 		}
 		//check below

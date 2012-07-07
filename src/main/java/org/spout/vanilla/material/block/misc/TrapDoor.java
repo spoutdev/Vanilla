@@ -59,7 +59,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Mineable, Open
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		if (block.getMaterial().equals(this)) {
+		if (!(oldMaterial instanceof TrapDoor) && block.getMaterial().equals(this)) {
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isOpen(block)) {
 				this.setOpen(block, powered);
@@ -80,7 +80,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Mineable, Open
 
 	@Override
 	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isReceivingPower(block, false);
+		return RedstoneUtil.isReceivingPower(block);
 	}
 
 	@Override

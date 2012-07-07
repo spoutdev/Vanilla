@@ -97,7 +97,7 @@ public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
 	}
 
 	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isReceivingPower(block, false);
+		return RedstoneUtil.isReceivingPower(block);
 	}
 
 	@Override

@@ -95,7 +95,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 
 	@Override
 	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isReceivingPower(block, false);
+		return RedstoneUtil.isReceivingPower(block);
 	}
 
 	@Override

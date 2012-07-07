@@ -167,7 +167,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	@Override
 	public boolean isReceivingPower(Block block) {
 		BlockFace face = this.getFacing(block).getOpposite();
-		return RedstoneUtil.isPowered(block.translate(face));
+		return RedstoneUtil.isEmittingPower(block.translate(face));
 	}
 
 	@Override

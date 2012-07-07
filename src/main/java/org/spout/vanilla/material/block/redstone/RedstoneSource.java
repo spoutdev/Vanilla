@@ -32,6 +32,10 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.util.RedstonePowerMode;
 
+/**
+ * Defines a material that can supply redstone power<br>
+ * Redstone wire will automatically attach to this material
+ */
 public interface RedstoneSource extends Source {
 	/**
 	 * Gets how much redstone power this redstone source block provides to the direction given.<br>

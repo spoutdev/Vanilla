@@ -32,7 +32,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 
 public class RedstoneUtil {
@@ -54,51 +53,69 @@ public class RedstoneUtil {
 		return mat instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) mat).isRedstoneConductor();
 	}
 
-	public static boolean isReceivingPower(Block block, boolean wiresAttach) {
-		if (wiresAttach) {
-			for (BlockFace face : BlockFaces.BTEWNS) {
-				if (isPowered(block.translate(face), face.getOpposite())) {
-					return true;
-				}
-			}
-		} else if (isPowered(block.translate(BlockFace.TOP), BlockFace.BOTTOM)) {
-			return true;
-		} else {
-			Block relBlock;
-			for (BlockFace face : BlockFaces.NESWB) {
-				relBlock = block.translate(face);
-				if (relBlock.getMaterial().equals(VanillaMaterials.REDSTONE_WIRE)) {
-					return VanillaMaterials.REDSTONE_WIRE.hasRedstonePowerTo(relBlock, face.getOpposite(), RedstonePowerMode.ALL);
-				} else if (isPowered(relBlock, face.getOpposite(), RedstonePowerMode.ALLEXCEPTWIRE)) {
-					return true;
-				}
+	/**
+	 * Gets if the given block receives Redstone power or not
+	 * @param block to get it of
+	 * @return True if it receives power, False if not
+	 */
+	public static boolean isReceivingPower(Block block) {
+		for (BlockFace face : BlockFaces.NESWBT) {
+			if (isEmittingPower(block.translate(face), face.getOpposite())) {
+				return true;
 			}
 		}
 		return false;
 	}
 
-	public static boolean isReceivingPower(Block block) {
-		return isReceivingPower(block, true);
+	/**
+	 * Gets if the given block is emitting power to surrounding blocks
+	 * 
+	 * @param block to check
+	 * @return True if emitting power, False if not
+	 */
+	public static boolean isEmittingPower(Block block) {
+		return isEmittingPower(block, RedstonePowerMode.ALL);
 	}
 
-	public static boolean isPowered(Block block) {
-		return isPowered(block, RedstonePowerMode.ALL);
+	/**
+	 * Gets if the given block is emitting power to surrounding blocks
+	 * 
+	 * @param block to check
+	 * @param to the face it is powering
+	 * @return True if emitting power, False if not
+	 */
+	public static boolean isEmittingPower(Block block, BlockFace to) {
+		return isEmittingPower(block, to, RedstonePowerMode.ALL);
 	}
 
-	public static boolean isPowered(Block block, BlockFace to) {
-		return isPowered(block, to, RedstonePowerMode.ALL);
+	/**
+	 * Gets if the given block is emitting power to surrounding blocks
+	 * 
+	 * @param block to check
+	 * @param powerMode to use when reading power
+	 * @return True if emitting power, False if not
+	 */
+	public static boolean isEmittingPower(Block block, RedstonePowerMode powerMode) {
+		return isEmittingPower(block, BlockFace.THIS, powerMode);
 	}
 
-	public static boolean isPowered(Block block, RedstonePowerMode powerMode) {
-		return isPowered(block, BlockFace.THIS, powerMode);
-	}
-
-	public static boolean isPowered(Block block, BlockFace to, RedstonePowerMode powerMode) {
+	/**
+	 * Gets if the given block is emitting power to surrounding blocks
+	 * 
+	 * @param block to check
+	 * @param to the face it is powering
+	 * @param powerMode to use when reading power
+	 * @return True if emitting power, False if not
+	 */
+	public static boolean isEmittingPower(Block block, BlockFace to, RedstonePowerMode powerMode) {
 		BlockMaterial mat = block.getMaterial();
 		// Use direction for sources
 		if (mat instanceof RedstoneSource && to != BlockFace.THIS) {
-			return ((RedstoneSource) mat).hasRedstonePowerTo(block, to, powerMode);
-		} else if (mat instanceof VanillaBlockMaterial) {
+			if (((RedstoneSource) mat).hasRedstonePowerTo(block, to, powerMode)) {
+				return true;
+			}
+		}
+		if (mat instanceof VanillaBlockMaterial) {
 			return ((VanillaBlockMaterial) mat).hasRedstonePower(block, powerMode);
 		} else {
 			return false;

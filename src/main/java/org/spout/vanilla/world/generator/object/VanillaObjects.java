@@ -58,7 +58,7 @@ import org.spout.vanilla.world.generator.theend.object.SpireObject;
  * like. For unaltered objects, please create a new instance.
  */
 public class VanillaObjects {
-	public static final BigTreeObject BIG_OAK_TREE = new BigTreeObject(TreeType.OAK);
+	public static final BigTreeObject BIG_OAK_TREE = new BigTreeObject();
 	public static final CactusStackObject CACTUS_STACK = new CactusStackObject();
 	public static final DungeonObject DUNGEON = new DungeonObject();
 	public static final HugeMushroomObject HUGE_RED_MUSHROOM = new HugeMushroomObject(HugeMushroomType.RED);
@@ -75,10 +75,10 @@ public class VanillaObjects {
 	public static final PondObject LAVA_POND = new PondObject(PondType.LAVA);
 	public static final PondObject WATER_POND = new PondObject(PondType.WATER);
 	public static final ShrubObject SHRUB = new ShrubObject();
-	public static final SmallTreeObject SMALL_OAK_TREE = new SmallTreeObject(TreeType.OAK);
-	public static final SmallTreeObject SMALL_BIRCH_TREE = new SmallTreeObject(TreeType.BIRCH);
-	public static final SmallTreeObject SMALL_JUNGLE_TREE = new SmallTreeObject(TreeType.JUNGLE);
-	public static final SwampTreeObject SWAMP_TREE = new SwampTreeObject(TreeType.OAK);
+	public static final SmallTreeObject SMALL_OAK_TREE = new SmallTreeObject();
+	public static final SmallTreeObject SMALL_BIRCH_TREE = new SmallTreeObject();
+	public static final SmallTreeObject SMALL_JUNGLE_TREE = new SmallTreeObject();
+	public static final SwampTreeObject SWAMP_TREE = new SwampTreeObject();
 	public static final PineTreeObject PINE_TREE = new PineTreeObject();
 	public static final SpruceTreeObject SPRUCE_TREE = new SpruceTreeObject();
 	public static final SugarCaneStackObject SUGAR_CANE_STACK = new SugarCaneStackObject();
@@ -89,6 +89,8 @@ public class VanillaObjects {
 	private static final Map<String, WorldGeneratorObject> BY_NAME = new HashMap<String, WorldGeneratorObject>();
 
 	static {
+		SMALL_BIRCH_TREE.setTreeType(TreeType.BIRCH);
+		SMALL_JUNGLE_TREE.setTreeType(TreeType.JUNGLE);
 		SMALL_JUNGLE_TREE.setBaseHeight((byte) 4);
 		SMALL_JUNGLE_TREE.setRandomHeight((byte) 10);
 		SMALL_JUNGLE_TREE.addLogVines(true);

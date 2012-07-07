@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.world.generator.normal.biome;
 
+import java.util.Random;
+
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.combiner.Add;
 import net.royawesome.jlibnoise.module.combiner.Multiply;
@@ -41,6 +43,9 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public abstract class NormalBiome extends VanillaBiome {
 	// the master noise to be used by biomes extending this class
@@ -220,5 +225,20 @@ public abstract class NormalBiome extends VanillaBiome {
 
 	public byte getMax() {
 		return max;
+	}
+	
+	public TreeObject getRandomTree(Random random) {
+		if (random.nextInt(10) == 0) {
+			return new BigTreeObject();
+		} else {
+			return new SmallTreeObject();
+		}
+	}
+	
+	public byte getAmountOfTrees(Random random) {
+		if (random.nextInt(10) == 0) {
+			return 1;
+		}
+		return 0;
 	}
 }

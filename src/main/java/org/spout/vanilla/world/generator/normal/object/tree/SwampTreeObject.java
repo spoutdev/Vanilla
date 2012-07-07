@@ -34,14 +34,14 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class SwampTreeObject extends SmallTreeObject {
-	public SwampTreeObject(Random random, TreeType treeType) {
-		super(random, treeType);
+	public SwampTreeObject(Random random) {
+		super(random);
 		addLeavesVines(true);
 		setLeavesRadiusIncreaseXZ((byte) 1);
 	}
 
-	public SwampTreeObject(TreeType treeType) {
-		this(null, treeType);
+	public SwampTreeObject() {
+		this(null);
 	}
 
 	@Override

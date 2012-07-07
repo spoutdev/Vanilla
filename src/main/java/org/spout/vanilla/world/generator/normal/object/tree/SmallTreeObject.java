@@ -45,12 +45,12 @@ public class SmallTreeObject extends TreeObject {
 	private boolean addLeavesVines = false;
 	private boolean addLogVines = false;
 
-	public SmallTreeObject(TreeType treeType) {
-		this(null, treeType);
+	public SmallTreeObject() {
+		this(null);
 	}
 
-	public SmallTreeObject(Random random, TreeType treeType) {
-		super(random, (byte) 4, (byte) 3, treeType.getMetadata());
+	public SmallTreeObject(Random random) {
+		super(random, (byte) 4, (byte) 3, (short) 0);
 		overridable.add(VanillaMaterials.AIR);
 		overridable.add(VanillaMaterials.LEAVES);
 		overridable.add(Sapling.DEFAULT);

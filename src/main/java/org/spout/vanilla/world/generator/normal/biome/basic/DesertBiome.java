@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
+import java.util.Random;
+
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 
 public class DesertBiome extends SandyBiome {
@@ -38,5 +40,10 @@ public class DesertBiome extends SandyBiome {
 	@Override
 	public String getName() {
 		return "Desert";
+	}
+
+	@Override
+	public byte getAmountOfTrees(Random random) {
+		return 0;
 	}
 }

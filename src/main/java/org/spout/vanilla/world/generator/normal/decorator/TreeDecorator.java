@@ -27,19 +27,16 @@
 package org.spout.vanilla.world.generator.normal.decorator;
 
 import java.util.Random;
-
 import org.spout.api.generator.biome.Biome;
+
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.VanillaBiomes;
-import org.spout.vanilla.world.generator.normal.object.tree.HugeTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
-import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
 
 public class TreeDecorator extends Decorator {
 	@Override
@@ -48,29 +45,32 @@ public class TreeDecorator extends Decorator {
 			return;
 		}
 		final Biome biome = chunk.getBiomeType(7, 7, 7);
-		final World world = chunk.getWorld();
-		final byte amount = getNumberOfTrees(biome);
-		for (byte i = 0; i < amount; i++) {
-			final TreeObject tree = getTree(random, biome);
-			if (tree == null) {
+		if (!(biome instanceof NormalBiome)) {
+			return;
+		}
+		final NormalBiome normalBiome = (NormalBiome) biome;
+		final byte amount = normalBiome.getAmountOfTrees(random);
+		for (byte count = 0; count < amount; count++) {
+			final TreeObject tree = normalBiome.getRandomTree(random);
+			final World world = chunk.getWorld();
+			final int x = chunk.getBlockX(random);
+			final int z = chunk.getBlockZ(random);
+			final byte y = getHighestWorkableBlock(world, x, z);
+			if (y == -1) {
 				continue;
 			}
-
-			final int worldX = chunk.getBlockX(random);
-			final int worldZ = chunk.getBlockZ(random);
-			final int worldY = getHighestWorkableBlock(world, worldX, worldZ);
-			if (!tree.canPlaceObject(world, worldX, worldY, worldZ)) {
-				continue;
+			if (tree.canPlaceObject(world, x, y, z)) {
+				tree.placeObject(world, x, y, z);
 			}
-
-			tree.placeObject(world, worldX, worldY, worldZ);
-			tree.randomizeHeight();
 		}
 	}
 
-	private int getHighestWorkableBlock(World w, int x, int z) {
-		int y = 127;
-		while (w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
+	private byte getHighestWorkableBlock(World w, int x, int z) {
+		byte y = 127;
+		BlockMaterial material;
+		while ((material = w.getBlockMaterial(x, y, z)) == VanillaMaterials.AIR
+				|| material == VanillaMaterials.LEAVES || material == VanillaMaterials.STATIONARY_WATER
+				|| material == VanillaMaterials.WATER) {
 			y--;
 			if (y == 0) {
 				return -1;
@@ -78,47 +78,5 @@ public class TreeDecorator extends Decorator {
 		}
 		y++;
 		return y;
-	}
-
-	// trees in jungle : 50
-	//		jungle trees have a custom height of random.nextInt(3) + random.nextInt(7) + 4 (according to mc)
-	// trees in forest : 10
-	// trees in swamp : 2
-	// plains don't have trees!!!
-	private byte getNumberOfTrees(Biome biome) {
-		if (biome == VanillaBiomes.FOREST) {
-			return 10;
-		} else if (biome == VanillaBiomes.SWAMP) {
-			return 2;
-		} else if (biome == VanillaBiomes.JUNGLE) {
-			return 50;
-		} else {
-			return 0;
-		}
-	}
-
-	private TreeObject getTree(Random random, Biome biome) {
-		if (biome == VanillaBiomes.FOREST) {
-			return new SmallTreeObject(random, TreeType.OAK);
-		} else if (biome == VanillaBiomes.SWAMP) {
-			final SmallTreeObject tree = new SmallTreeObject(random, TreeType.OAK);
-			tree.addLeavesVines(true);
-			tree.setLeavesRadiusIncreaseXZ((byte) 1);
-			return tree;
-		} else if (biome == VanillaBiomes.JUNGLE) {
-			if (random.nextInt(27) == 0) {
-				return new HugeTreeObject(random);
-			} else if (random.nextInt(3) == 0) {
-				final SmallTreeObject tree = new SmallTreeObject(random, TreeType.JUNGLE);
-				tree.setBaseHeight((byte) 4);
-				tree.setRandomHeight((byte) 10);
-				tree.addLogVines(true);
-				return tree;
-			} else {
-				return new ShrubObject(random);
-			}
-		} else {
-			return null;
-		}
 	}
 }

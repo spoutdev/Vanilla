@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.shore;
 
+import java.util.Random;
+
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 
 public class BeachBiome extends SandyBiome {
@@ -38,5 +40,10 @@ public class BeachBiome extends SandyBiome {
 	@Override
 	public String getName() {
 		return "Beach";
+	}
+
+	@Override
+	public byte getAmountOfTrees(Random random) {
+		return 0;
 	}
 }

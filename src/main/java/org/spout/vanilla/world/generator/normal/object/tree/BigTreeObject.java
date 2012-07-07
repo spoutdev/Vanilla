@@ -46,12 +46,12 @@ public class BigTreeObject extends TreeObject {
 	private float widthScale = 1;
 	private float branchSlope = 0.381f;
 
-	public BigTreeObject(TreeType type) {
-		this(null, type);
+	public BigTreeObject() {
+		this(null);
 	}
 
-	public BigTreeObject(Random random, TreeType type) {
-		super(random, (byte) 5, (byte) 12, type.getMetadata());
+	public BigTreeObject(Random random) {
+		super(random, (byte) 5, (byte) 12, (short) 0);
 		overridable.add(VanillaMaterials.AIR);
 		overridable.add(VanillaMaterials.LEAVES);
 		overridable.add(Sapling.DEFAULT);

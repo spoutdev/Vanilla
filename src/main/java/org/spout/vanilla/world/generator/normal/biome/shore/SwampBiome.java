@@ -26,17 +26,32 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.shore;
 
+import java.util.Random;
+
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.world.generator.normal.object.tree.SwampTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class SwampBiome extends GrassyBiome {
 
 	public SwampBiome(int biomeId) {
-		super(biomeId);
+		super(biomeId, new TreeDecorator());
 		setMinMax((byte) 60, (byte) 63);
 	}
 
 	@Override
 	public String getName() {
 		return "Swampland";
+	}
+
+	@Override
+	public byte getAmountOfTrees(Random random) {
+		return (byte) (2 + super.getAmountOfTrees(random));
+	}
+
+	@Override
+	public TreeObject getRandomTree(Random random) {
+		return new SwampTreeObject();
 	}
 }

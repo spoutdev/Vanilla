@@ -26,16 +26,24 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
+import java.util.Random;
+
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
 public class ForestBiome extends GrassyBiome {
 	public ForestBiome(int biomeId) {
-		super(biomeId);
+		super(biomeId, new TreeDecorator());
 		setMinMax((byte) 67, (byte) 72);
 	}
 
 	@Override
 	public String getName() {
 		return "Forest";
+	}
+
+	@Override
+	public byte getAmountOfTrees(Random random) {
+		return (byte) (10 + super.getAmountOfTrees(random));
 	}
 }

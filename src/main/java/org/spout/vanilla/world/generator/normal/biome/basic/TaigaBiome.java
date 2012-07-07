@@ -26,16 +26,35 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
+import java.util.Random;
+
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.world.generator.normal.object.tree.PineTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.SpruceTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class TaigaBiome extends GrassyBiome {
 	public TaigaBiome(int biomeId) {
-		super(biomeId);
+		super(biomeId, new TreeDecorator());
 		setMinMax((byte) 67, (byte) 71);
 	}
 
 	@Override
 	public String getName() {
 		return "Taiga";
+	}
+	
+	@Override
+	public byte getAmountOfTrees(Random random) {
+		return (byte) (10 + super.getAmountOfTrees(random));
+	}
+
+	@Override
+	public TreeObject getRandomTree(Random random) {
+		if (random.nextInt(3) == 0) {
+			return new SpruceTreeObject();
+		}
+		return new PineTreeObject();
 	}
 }

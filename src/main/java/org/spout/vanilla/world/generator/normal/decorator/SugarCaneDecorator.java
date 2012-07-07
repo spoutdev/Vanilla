@@ -38,7 +38,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 /**
  * Decorator that decorates a biome with sugar canes.
  */
-public class SugarCaneDecorator implements Decorator {
+public class SugarCaneDecorator extends Decorator {
 	/* How many times should we try to generate a sugar cane stack.
 		 * Seems a lot, but vanilla mc does 10 reed decorations per chunk.
 		 * Each decoration does 20 tries, so 200 tries total.

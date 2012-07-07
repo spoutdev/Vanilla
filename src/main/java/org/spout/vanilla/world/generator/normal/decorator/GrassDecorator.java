@@ -35,7 +35,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class GrassDecorator implements Decorator {
+public class GrassDecorator extends Decorator {
 	private int minSteps = 7, maxSteps = 20, chance = 30;
 
 	@Override

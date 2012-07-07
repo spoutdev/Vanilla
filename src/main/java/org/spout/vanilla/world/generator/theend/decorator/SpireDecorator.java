@@ -35,7 +35,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
-public class SpireDecorator implements Decorator {
+public class SpireDecorator extends Decorator {
 	// Generation odds, chunk per 'ODD' chunk
 	private static final byte ODD = 5;
 

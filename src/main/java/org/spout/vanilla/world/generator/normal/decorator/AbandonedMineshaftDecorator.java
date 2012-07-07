@@ -31,7 +31,7 @@ import java.util.Random;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.cuboid.Chunk;
 
-public class AbandonedMineshaftDecorator implements Decorator {
+public class AbandonedMineshaftDecorator extends Decorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
 	}

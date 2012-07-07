@@ -27,9 +27,13 @@
 package org.spout.vanilla.material.block.solid;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.RandomBlockMaterial;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -40,10 +44,15 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Grass extends Solid implements Mineable {
+public class Grass extends Solid implements Mineable, RandomBlockMaterial {
+	private static final int GROWTH_RANGE = 2;
 	public Grass(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(0.8F);
+	}
+	
+	public boolean canBurn() {
+		return true;
 	}
 
 	@Override
@@ -61,5 +70,32 @@ public class Grass extends Solid implements Mineable {
 			drops.add(new ItemStack(VanillaMaterials.DIRT, 1));
 		}
 		return drops;
+	}
+
+	@Override
+	public void onRandomTick(World world, int x, int y, int z) {
+		final Random r = new Random();
+		//Attempt to decay grass
+		BlockMaterial above = world.getBlockMaterial(x, y + 1, z);
+		if (above != VanillaMaterials.AIR && above != VanillaMaterials.SNOW) {
+			world.setBlockMaterial(x, y, z, VanillaMaterials.DIRT, (short) 0, world);
+		} else {
+		//Attempt to grow grass
+			for (int dx = -GROWTH_RANGE; dx < GROWTH_RANGE; dx++) {
+				for (int dy = -GROWTH_RANGE; dy < GROWTH_RANGE; dy++) {
+					for (int dz = -GROWTH_RANGE; dz < GROWTH_RANGE; dz++) {
+						if (r.nextInt(4) == 0) {
+							BlockMaterial material = world.getBlockMaterial(x + dx, y + dy, z + dz);
+							if (material == VanillaMaterials.DIRT) {
+								material = world.getBlockMaterial(x + dx, y + dy + 1, z + dz);
+								if (material == VanillaMaterials.AIR || material == VanillaMaterials.SNOW) {
+									world.setBlockMaterial(x + dx, y + dy, z + dz, VanillaMaterials.GRASS, (short) 0, world);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }

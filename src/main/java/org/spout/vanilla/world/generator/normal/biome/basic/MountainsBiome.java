@@ -31,7 +31,7 @@ import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 public class MountainsBiome extends GrassyBiome {
 	public MountainsBiome(int biomeId) {
 		super(biomeId);
-		setMinMax((byte) 67, (byte) 86);
+		setMinMax((byte) 67, (byte) 107);
 	}
 
 	@Override

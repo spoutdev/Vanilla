@@ -38,7 +38,7 @@ import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomeGenerator;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
-import org.spout.vanilla.world.populator.SmoothPopulator2;
+import org.spout.vanilla.world.populator.SmoothPopulator;
 import org.spout.vanilla.world.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGenerator {
@@ -49,10 +49,10 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 	public void registerBiomes() {
 		//selector = new WhittakerBiomeSelector(2.0, 2.0, 0.35, 0.05, true);
 		// if you want to check out a particular biome, use this!
-		//selector = new PerBlockBiomeSelector(VanillaBiomes.MUSHROOM);
+		//selector = new PerBlockBiomeSelector(VanillaBiomes.MUSHROOM_SHORE);
 		selector = new VanillaBiomeSelector(5f);
 		setSelector(selector);
-		addPopulator(new SmoothPopulator2());
+		addPopulator(new SmoothPopulator());
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.FROZEN_OCEAN);
 		register(VanillaBiomes.PLAIN);

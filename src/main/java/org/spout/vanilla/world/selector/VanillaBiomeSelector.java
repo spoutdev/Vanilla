@@ -232,14 +232,14 @@ public class VanillaBiomeSelector extends BiomeSelector {
 		if (primaryValue == 2) {
 			if ((int) (secondary.GetValue(x, 0, z) + 1) == 0) {
 				if (hills.GetValue(x, 0, z) > 0.3) {
-					return FOREST_HILLS;
+					return JUNGLE_HILLS;
 				}
-				return FOREST;
+				return JUNGLE;
 			}
 			if (hills.GetValue(x, 0, z) > 0.3) {
-				return JUNGLE_HILLS;
+				return FOREST_HILLS;
 			}
-			return JUNGLE;
+			return FOREST;
 		}
 		if (primaryValue == 3) {
 			if ((int) (secondary.GetValue(x, 0, z) + 1) == 0) {

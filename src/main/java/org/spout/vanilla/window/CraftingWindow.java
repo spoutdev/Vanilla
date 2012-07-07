@@ -30,10 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.Spout;
-import org.spout.api.inventory.InventoryBase;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.Recipe;
-import org.spout.api.inventory.RecipeManager;
+import org.spout.api.inventory.*;
+import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.controller.WindowOwner;
@@ -71,7 +69,7 @@ public abstract class CraftingWindow extends Window {
 			return false;
 		}
 	}
-
+	
 	@Override
 	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
 		if (inventory == this.getCraftingGrid().getGrid()) {
@@ -86,37 +84,123 @@ public abstract class CraftingWindow extends Window {
 		if (inventory == this.getCraftingGrid() && clickedSlot == this.getCraftingGrid().getOutput().getOffset()) {
 			ItemStack output = this.getCraftingGrid().getOutput().getItem();
 			if (output == null) {
-				return false;
+				return true;
 			}
 			if (shift) {
-				return this.obtainOutputAll();
-			} else if (itemOnCursor == null || itemOnCursor.equalsIgnoreSize(output)) {
-				return this.obtainOutputSingle();
-			} else {
-				return false;
+				InventorySlot slot = this.craftingGrid.getOutput();
+				ItemStack clickedItem = slot.getItem().clone();
+				ItemStack[] before = this.craftingGrid.getGrid().getClonedContents();
+				ItemStack items = new ItemStack(clickedItem.getMaterial(), 0);
+				while (clickedItem.equalsIgnoreSize(slot.getItem())) {
+					items.setAmount(items.getAmount() + 1);
+					subtractFromCraftingArray();
+				}
+				if (!owner.getInventory().getMain().canItemFit(items, true, true)) {
+					this.craftingGrid.setContents(before);
+				} else {
+					owner.getInventory().getMain().addItem(items);
+				}
 			}
 		}
 		return super.onClick(inventory, clickedSlot, rightClick, shift);
 	}
 
-	private boolean obtainOutputSingle() {
-		//TODO: Obtain item from slot and subtract items from grid using current recipe
-		// Performs crafting ONCE
+	@Override
+	public boolean onLeftClick(InventoryBase inventory, int clickedSlot, boolean shift) {
+		if (inventory == this.getCraftingGrid() && clickedSlot == this.getCraftingGrid().getOutput().getOffset()) {
+			InventorySlot slot = this.craftingGrid.getOutput();
+			ItemStack clickedItem = slot.getItem();
+			if (clickedItem == null) {
+				if (this.hasItemOnCursor()) {
+					return false;
+				}
+				return true;
+			}
 
-		return false;
+			if (!this.hasItemOnCursor()) {
+				// clicked item > cursor
+				this.setItemOnCursor(clickedItem);
+				slot.setItem(null);
+				subtractFromCraftingArray();
+				return true;
+			}
+			
+			// clickedItem != null && this.hasItemOnCursor()
+			// clicked item + cursor
+			ItemStack cursorItem = this.getItemOnCursor();
+			if (!cursorItem.equalsIgnoreSize(clickedItem)) {
+				return false;
+			}
+			
+			// stack
+			cursorItem.stack(clickedItem);
+			slot.setItem(clickedItem.getAmount() <= 0 ? null : clickedItem);
+			this.setItemOnCursor(cursorItem);
+			subtractFromCraftingArray();
+			return true;		
+		}
+		return super.onLeftClick(inventory, clickedSlot, shift);
 	}
 
-	private boolean obtainOutputAll() {
-		//TODO: Obtain item from slot and subtract items from grid using current recipe
-		// Obtains as many items as possible and puts it in the main player inventory
-
-		return false;
+	@Override
+	public boolean onRightClick(InventoryBase inventory, int clickedSlot, boolean shift) {
+		if (inventory == this.getCraftingGrid() && clickedSlot == this.getCraftingGrid().getOutput().getOffset()) {
+			InventorySlot slot = craftingGrid.getOutput();
+			ItemStack clickedItem = slot.getItem();
+			if (shift) {
+				
+			}
+			if (clickedItem == null) {
+				if (this.hasItemOnCursor()) {
+					return false;
+				}
+				return true;
+			}
+			
+			if (this.hasItemOnCursor()) {
+				// clicked item + cursor
+				ItemStack cursorItem = this.getItemOnCursor();
+				if (!cursorItem.equalsIgnoreSize(clickedItem)) {
+					return false;
+				}
+				if (cursorItem.getAmount() + clickedItem.getAmount() > cursorItem.getMaxStackSize()) {
+					return false;
+				}
+				cursorItem.stack(clickedItem);
+				slot.setItem(null);
+				this.setItemOnCursor(cursorItem);
+			} else {
+				this.setItemOnCursor(clickedItem.clone());
+				slot.setItem(null);
+			}
+			subtractFromCraftingArray();
+			return true;
+		}
+		return super.onRightClick(inventory, clickedSlot, shift);
 	}
 
-	/**
-	 * Updates the output item using the current items in the grid
-	 * @return True if a recipe was found, False if not
-	 */
+	private void subtractFromCraftingArray() {
+		ItemStack[] clonedContents = craftingGrid.getGrid().getClonedContents();
+		for (int i = 0; i < clonedContents.length; i++) {
+			ItemStack clickedItem = clonedContents[i];
+			if (clickedItem == null) continue;
+			clickedItem.setAmount(clickedItem.getAmount() - 1);
+			if (clickedItem.isEmpty()) {
+				clickedItem = null;
+			}
+			clonedContents[i] = clickedItem;
+		}
+		List<InventoryViewer> viewers = craftingGrid.getViewers();
+		for (InventoryViewer viewer : viewers) {
+			craftingGrid.removeViewer(viewer);
+		}
+		craftingGrid.getGrid().setContents(clonedContents);
+		for (InventoryViewer viewer : viewers) {
+			craftingGrid.addViewer(viewer);
+		}
+		craftingGrid.notifyViewers(craftingGrid.getGrid().getSize() - 1, craftingGrid.getGrid().getItem(craftingGrid.getGrid().getSize() - 1)); // Notify all of last change
+	}
+	
 	private boolean updateOutput() {
 		RecipeManager recipeManager = Spout.getEngine().getRecipeManager();
 		InventoryBase grid = craftingGrid.getGrid();
@@ -141,8 +225,7 @@ public abstract class CraftingWindow extends Window {
 				cntr = 0;
 			}
 		}
-		Recipe recipe = null;
-		recipe = recipeManager.matchShapedRecipe(materials);
+		Recipe recipe = recipeManager.matchShapedRecipe(materials);
 		if (recipe == null) {
 			recipe = recipeManager.matchShapelessRecipe(shapeless);
 		}
@@ -151,6 +234,8 @@ public abstract class CraftingWindow extends Window {
 				this.getCraftingGrid().getOutput().setItem(recipe.getResult());
 			}
 			return true;
+		} else {
+			craftingGrid.getOutput().setItem(null);
 		}
 		return false;
 	}

@@ -53,7 +53,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		} else {
 			int slot = window.getSlotIndexMap().getSpoutSlot(message.getSlot());
 			if (slot != -1) {
-				result = window.onClick(slot, message.isRightClick(), message.isShift());
+				result = window.onClickGlobal(slot, message.isRightClick(), message.isShift());
 			}
 		}
 		session.send(false, new TransactionMessage(message.getWindowId(), message.getTransaction(), result));

@@ -57,10 +57,10 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 
 	@Override
 	public void onTick(float dt) {
-		ItemStack input = inventory.getIngredient(), output = inventory.getOutput();
+		ItemStack input = inventory.getIngredient().getItem(), output = inventory.getOutput().getItem();
 		if (burnTime <= 0 && inventory.hasIngredient() && inventory.hasFuel()) {
 			// Start burning
-			ItemStack fuelStack = inventory.getFuel();
+			ItemStack fuelStack = inventory.getFuel().getItem();
 			Fuel fuel = (Fuel) fuelStack.getMaterial();
 			burnTime = fuel.getFuelTime();
 			burnStartTime = burnTime;
@@ -72,7 +72,7 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 			craftTime = ingredient.getCraftTime();
 
 			int amount = fuelStack.getAmount();
-			inventory.setFuel(fuelStack.setAmount(amount - 1));
+			inventory.getFuel().setItem(fuelStack.setAmount(amount - 1));
 		}
 
 		if (burnTime > 0) {
@@ -86,7 +86,7 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 				if (progress <= 0) {
 					progress += dt;
 					progressIncrement = 0;
-					craftTime = ((TimedCraftable) inventory.getIngredient().getMaterial()).getCraftTime();
+					craftTime = ((TimedCraftable) inventory.getIngredient().getItem().getMaterial()).getCraftTime();
 				} else {
 					progress += dt;
 					progressIncrement += 180 / (craftTime * 20);
@@ -116,8 +116,8 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 
 				int inputAmount = input.getAmount();
 				int outputAmount = output.getAmount();
-				inventory.setIngredient(input.setAmount(inputAmount - 1));
-				inventory.setOutput(output.setAmount(outputAmount));
+				inventory.getIngredient().setItem(input.setAmount(inputAmount - 1));
+				inventory.getOutput().setItem(output.setAmount(outputAmount));
 			}
 
 			// Update viewers

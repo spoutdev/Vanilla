@@ -216,12 +216,39 @@ public class Window implements InventoryViewer {
 		return this.slotIndexMap;
 	}
 
-	public boolean onClick(int clickedSlot, boolean rightClick, boolean shift) {
+	/**
+	 * Performs a click in this Window as a whole<br>
+	 * Called by the protocol handlers
+	 * 
+	 * @param clickedSlot
+	 * @param rightClick
+	 * @param shift
+	 * @return True if successful, False if not
+	 */
+	public boolean onClickGlobal(int clickedSlot, boolean rightClick, boolean shift) {
+		InventoryBase inventory = null;
+		for (InventoryBase subInv : this.inventory.getInventories()) {
+			int size = subInv.getSize();
+			if (clickedSlot < size) {
+				inventory = subInv;
+				break;
+			} else {
+				clickedSlot -= size;
+			}
+		}
+		if (inventory == null) {
+			return false;
+		} else {
+			return onClick(inventory, clickedSlot, rightClick, shift);
+		}
+	}
+
+	public boolean onClick(InventoryBase inventory, int clickedSlot, boolean rightClick, boolean shift) {
 		boolean result;
 		if (rightClick) {
-			result = onRightClick(clickedSlot, shift);
+			result = onRightClick(inventory, clickedSlot, shift);
 		} else {
-			result = onLeftClick(clickedSlot, shift);
+			result = onLeftClick(inventory, clickedSlot, shift);
 		}
 		return result;
 	}
@@ -250,7 +277,7 @@ public class Window implements InventoryViewer {
 	 * @param clickedSlot
 	 * @return True to notify that the operation was allowed
 	 */
-	public boolean onShiftClick(int clickedSlot) {
+	public boolean onShiftClick(InventoryBase inventory, int clickedSlot) {
 		return false; //TODO: Implement shift-transferring
 	}
 
@@ -259,12 +286,12 @@ public class Window implements InventoryViewer {
 	 * @param clickedSlot
 	 * @return True to notify that the operation was allowed
 	 */
-	public boolean onLeftClick(int clickedSlot) {
-		ItemStack clickedItem = this.inventory.getItem(clickedSlot);
+	public boolean onLeftClick(InventoryBase inventory, int clickedSlot) {
+		ItemStack clickedItem = inventory.getItem(clickedSlot);
 		if (clickedItem == null) {
 			if (this.hasItemOnCursor()) {
 				// cursor > clicked item
-				this.inventory.setItem(clickedSlot, this.getItemOnCursor());
+				inventory.setItem(clickedSlot, this.getItemOnCursor());
 				this.setItemOnCursor(null);
 				return true;
 			}
@@ -275,7 +302,7 @@ public class Window implements InventoryViewer {
 		if (!this.hasItemOnCursor()) {
 			// clicked item > cursor
 			this.setItemOnCursor(clickedItem);
-			this.inventory.setItem(clickedSlot, null);
+			inventory.setItem(clickedSlot, null);
 			return true;
 		}
 
@@ -284,14 +311,14 @@ public class Window implements InventoryViewer {
 		if (cursorItem.equalsIgnoreSize(clickedItem)) {
 			// stack
 			clickedItem.stack(cursorItem);
-			this.inventory.setItem(clickedSlot, clickedItem);
+			inventory.setItem(clickedSlot, clickedItem);
 			this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
 			return true;
 		}
 
 		// swap
 		this.setItemOnCursor(clickedItem);
-		this.inventory.setItem(clickedSlot, cursorItem);
+		inventory.setItem(clickedSlot, cursorItem);
 		return true;
 	}
 
@@ -300,8 +327,8 @@ public class Window implements InventoryViewer {
 	 * @param clickedSlot
 	 * @return True to notify that the operation was allowed
 	 */
-	public boolean onRightClick(int clickedSlot) {
-		ItemStack clickedItem = this.inventory.getItem(clickedSlot);
+	public boolean onRightClick(InventoryBase inventory, int clickedSlot) {
+		ItemStack clickedItem = inventory.getItem(clickedSlot);
 		if (clickedItem == null) {
 			if (this.hasItemOnCursor()) {
 				// cursor > clicked item
@@ -309,7 +336,7 @@ public class Window implements InventoryViewer {
 				clickedItem = cursorItem.clone();
 				clickedItem.setAmount(1);
 				cursorItem.setAmount(cursorItem.getAmount() - clickedItem.getAmount());
-				this.inventory.setItem(clickedSlot, clickedItem);
+				inventory.setItem(clickedSlot, clickedItem);
 				this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
 				return true;
 			}
@@ -322,7 +349,7 @@ public class Window implements InventoryViewer {
 			if (!cursorItem.equalsIgnoreSize(clickedItem)) {
 				// swap
 				this.setItemOnCursor(clickedItem);
-				this.inventory.setItem(clickedSlot, cursorItem);
+				inventory.setItem(clickedSlot, cursorItem);
 				return true;
 			}
 
@@ -333,7 +360,7 @@ public class Window implements InventoryViewer {
 			// transfer one item
 			clickedItem.setAmount(clickedItem.getAmount() + 1);
 			cursorItem.setAmount(cursorItem.getAmount() - 1);
-			this.inventory.setItem(clickedSlot, clickedItem);
+			inventory.setItem(clickedSlot, clickedItem);
 			this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
 			return true;
 		}
@@ -342,7 +369,7 @@ public class Window implements InventoryViewer {
 		ItemStack newItem = clickedItem.clone();
 		newItem.setAmount(newItem.getAmount() / 2);
 		clickedItem.setAmount(clickedItem.getAmount() - newItem.getAmount());
-		this.inventory.setItem(clickedSlot, newItem.getAmount() <= 0 ? null : newItem);
+		inventory.setItem(clickedSlot, newItem.getAmount() <= 0 ? null : newItem);
 		this.setItemOnCursor(clickedItem.getAmount() <= 0 ? null : clickedItem);
 		return true;
 	}
@@ -353,12 +380,12 @@ public class Window implements InventoryViewer {
 	 * @param shift whether shift was pressed
 	 * @return True to notify that the operation was allowed
 	 */
-	public boolean onRightClick(int clickedSlot, boolean shift) {
+	public boolean onRightClick(InventoryBase inventory, int clickedSlot, boolean shift) {
 		if (shift) {
-			return this.onShiftClick(clickedSlot);
+			return this.onShiftClick(inventory, clickedSlot);
+		} else {
+			return this.onRightClick(inventory, clickedSlot);
 		}
-
-		return this.onRightClick(clickedSlot);
 	}
 
 	/**
@@ -367,21 +394,25 @@ public class Window implements InventoryViewer {
 	 * @param shift whether shift was pressed
 	 * @return True to notify that the operation was allowed
 	 */
-	public boolean onLeftClick(int clickedSlot, boolean shift) {
+	public boolean onLeftClick(InventoryBase inventory, int clickedSlot, boolean shift) {
 		if (shift) {
-			return this.onShiftClick(clickedSlot);
+			return this.onShiftClick(inventory, clickedSlot);
+		} else {
+			return this.onLeftClick(inventory, clickedSlot);
 		}
-
-		return this.onLeftClick(clickedSlot);
 	}
 
 	@Override
 	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
-		this.getPlayer().getNetworkSynchronizer().onSlotSet(inventory, slot, item);
+		if (inventory == this.inventory) {
+			this.getPlayer().getNetworkSynchronizer().onSlotSet(inventory, slot, item);
+		}
 	}
 
 	@Override
 	public void updateAll(InventoryBase inventory, ItemStack[] slots) {
-		this.getPlayer().getNetworkSynchronizer().updateAll(inventory, slots);
+		if (inventory == this.inventory) {
+			this.getPlayer().getNetworkSynchronizer().updateAll(inventory, slots);
+		}
 	}
 }

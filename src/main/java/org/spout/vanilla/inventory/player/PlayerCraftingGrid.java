@@ -26,45 +26,16 @@
  */
 package org.spout.vanilla.inventory.player;
 
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.StringUtil;
 
-import org.spout.vanilla.inventory.CraftingGrid;
-import org.spout.vanilla.inventory.VanillaInventory;
+import org.spout.vanilla.inventory.CraftingInventory;
 
-public class PlayerCraftingGrid extends Inventory implements CraftingGrid, VanillaInventory {
-	private final int[] GRID_ARRAY = StringUtil.getIntArray("0-1, 3-4");
-	private static final int OUTPUT_SLOT = 4, ROW_SIZE = 2, COLUMN_SIZE = 2;
+public class PlayerCraftingGrid extends CraftingInventory {
+	private static final int ROW_SIZE = 2, COLUMN_SIZE = 2;
 	private static final long serialVersionUID = 1L;
 
 	public PlayerCraftingGrid() {
-		super(5);
-	}
-
-	@Override
-	public int getOutputSlot() {
-		return OUTPUT_SLOT;
-	}
-
-	@Override
-	public int getRowSize() {
-		return ROW_SIZE;
-	}
-
-	@Override
-	public int getColumnSize() {
-		return COLUMN_SIZE;
-	}
-
-	@Override
-	public int[] getGridArray() {
-		return GRID_ARRAY;
-	}
-
-	@Override
-	public Inventory getGridInventory() {
-		return this;
+		super(COLUMN_SIZE, ROW_SIZE);
 	}
 
 	/**
@@ -97,13 +68,5 @@ public class PlayerCraftingGrid extends Inventory implements CraftingGrid, Vanil
 	 */
 	public ItemStack getBottomRightInput() {
 		return this.getItem(3);
-	}
-
-	/**
-	 * Returns the current {@link ItemStack} in the output slot (slot 40) ; can return null.
-	 * @return output item stack
-	 */
-	public ItemStack getOutput() {
-		return this.getItem(4);
 	}
 }

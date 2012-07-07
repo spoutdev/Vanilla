@@ -26,43 +26,13 @@
  */
 package org.spout.vanilla.inventory.block;
 
-import org.spout.api.inventory.Inventory;
-import org.spout.api.util.StringUtil;
+import org.spout.vanilla.inventory.CraftingInventory;
 
-import org.spout.vanilla.inventory.CraftingGrid;
-import org.spout.vanilla.inventory.VanillaInventory;
-
-public class CraftingTableInventory extends Inventory implements VanillaInventory, CraftingGrid {
-	private final int[] GRID_ARRAY = StringUtil.getIntArray("0-5, 7-9");
-	private static final int OUTPUT_SLOT = 6, ROW_SIZE = 3, COLUMN_SIZE = 3;
+public class CraftingTableInventory extends CraftingInventory {
+	private static final int ROW_SIZE = 3, COLUMN_SIZE = 3;
 	private static final long serialVersionUID = 1L;
 
 	public CraftingTableInventory() {
-		super(10);
-	}
-
-	@Override
-	public int getOutputSlot() {
-		return OUTPUT_SLOT;
-	}
-
-	@Override
-	public int getRowSize() {
-		return ROW_SIZE;
-	}
-
-	@Override
-	public int getColumnSize() {
-		return COLUMN_SIZE;
-	}
-
-	@Override
-	public int[] getGridArray() {
-		return GRID_ARRAY;
-	}
-
-	@Override
-	public Inventory getGridInventory() {
-		return this;
+		super(COLUMN_SIZE, ROW_SIZE);
 	}
 }

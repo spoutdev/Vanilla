@@ -27,7 +27,7 @@
 package org.spout.vanilla.inventory.block;
 
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
 
 import org.spout.vanilla.controller.block.Furnace;
 import org.spout.vanilla.inventory.VanillaInventory;
@@ -40,10 +40,16 @@ import org.spout.vanilla.material.TimedCraftable;
 public class FurnaceInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
 	private final Furnace owner;
+	private final InventorySlot output;
+	private final InventorySlot fuel;
+	private final InventorySlot ingredient;
 
 	public FurnaceInventory(Furnace owner) {
 		super(3);
 		this.owner = owner;
+		this.fuel = this.createSlot(0);
+		this.output = this.createSlot(1);
+		this.ingredient = this.createSlot(2);
 	}
 
 	/**
@@ -55,51 +61,27 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 	}
 
 	/**
-	 * Returns the {@link ItemStack} in the output slot (slot 37); can return null.
-	 * @return output item stack
+	 * Returns the {@link InventorySlot} of the output slot (slot 37)
+	 * @return output slot
 	 */
-	public ItemStack getOutput() {
-		return getItem(1);
+	public InventorySlot getOutput() {
+		return this.output;
 	}
 
 	/**
-	 * Sets the output of the inventory.
-	 * @param output
+	 * Returns the {@link InventorySlot} of the fuel slot (slot 35)
+	 * @return fuel slot
 	 */
-	public void setOutput(ItemStack output) {
-		setItem(1, output);
+	public InventorySlot getFuel() {
+		return this.fuel;
 	}
 
 	/**
-	 * Returns the {@link ItemStack} in the fuel slot (slot 35); can return null.
-	 * @return fuel item stack
+	 * Returns the {@link InventorySlot} of the ingredient slot (slot 38)
+	 * @return ingredient slot
 	 */
-	public ItemStack getFuel() {
-		return getItem(0);
-	}
-
-	/**
-	 * Sets the fuel slot of the inventory
-	 * @param fuel
-	 */
-	public void setFuel(ItemStack fuel) {
-		setItem(0, fuel);
-	}
-
-	/**
-	 * Returns the {@link ItemStack} in the ingredient slot (slot 38); can return null.
-	 * @return ingredient item stack
-	 */
-	public ItemStack getIngredient() {
-		return getItem(2);
-	}
-
-	/**
-	 * Sets the {@link ItemStack} in the ingredient slot (slot 39); can return null;
-	 * @param ingredient
-	 */
-	public void setIngredient(ItemStack ingredient) {
-		setItem(2, ingredient);
+	public InventorySlot getIngredient() {
+		return this.ingredient;
 	}
 
 	/**
@@ -107,7 +89,7 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 	 * @return true if has fuel in slot.
 	 */
 	public boolean hasFuel() {
-		return getFuel() != null && getFuel().getMaterial() instanceof Fuel;
+		return getFuel().getItem() != null && getFuel().getItem().getMaterial() instanceof Fuel;
 	}
 
 	/**
@@ -115,6 +97,6 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 	 * @return true if has ingredient in slot.
 	 */
 	public boolean hasIngredient() {
-		return getIngredient() != null && getIngredient().getMaterial() instanceof TimedCraftable;
+		return getIngredient().getItem() != null && getIngredient().getItem().getMaterial() instanceof TimedCraftable;
 	}
 }

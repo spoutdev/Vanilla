@@ -33,7 +33,7 @@ import org.spout.vanilla.util.SlotIndexMap;
  * The default player window always displayed
  */
 public class DefaultWindow extends CraftingWindow {
-	private static final SlotIndexMap SLOTS = new SlotIndexMap("36-44, 27-35, 18-26, 9-17, 8, 7, 3, 4, 0, 6, 1, 2, 5");
+	private static final SlotIndexMap SLOTS = new SlotIndexMap("36-44, 27-35, 18-26, 9-17, 1, 2, 3, 4, 0, 6, 7, 8, 5");
 
 	public DefaultWindow(VanillaPlayer owner) {
 		super(-1, "Inventory", owner, owner.getInventory().getCraftingGrid());

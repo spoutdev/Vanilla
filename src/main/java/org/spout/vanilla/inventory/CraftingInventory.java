@@ -27,38 +27,52 @@
 package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.special.InventoryRange;
+import org.spout.api.inventory.special.InventorySlot;
 
-/**
- * Represents a crafting grid.
- */
-public interface CraftingGrid {
+public class CraftingInventory extends Inventory implements VanillaInventory {
+	private static final long serialVersionUID = 1L;
+	private final int columns, rows;
+	private final InventorySlot output;
+	private final InventoryRange grid;
+
+	public CraftingInventory(int columns, int rows) {
+		super(columns * rows + 1);
+		this.columns = columns;
+		this.rows = rows;
+		this.grid = this.createRange(0, this.getSize() - 1);
+		this.output = this.createSlot(this.getSize() - 1);
+	}
+
 	/**
-	 * Gets the slot index of the output slot in the grid.
+	 * Gets the output slot in the grid.
 	 * @return output slot
 	 */
-	public int getOutputSlot();
+	public InventorySlot getOutput() {
+		return this.output;
+	}
 
 	/**
 	 * Gets the row size of the grid.
 	 * @return row size
 	 */
-	public int getRowSize();
+	public int getRowSize() {
+		return this.rows;
+	}
 
 	/**
 	 * Gets the column size of the grid.
 	 * @return column size
 	 */
-	public int getColumnSize();
+	public int getColumnSize() {
+		return this.columns;
+	}
 
 	/**
-	 * Gets an array with the slot indexes of the rows bottom to top.
-	 * @return row array
+	 * Gets the grid contained in this inventory
+	 * @return grid inventory range
 	 */
-	public int[] getGridArray();
-
-	/**
-	 * Gets the inventory associated with the grid.
-	 * @return inventory.
-	 */
-	public Inventory getGridInventory();
+	public InventoryRange getGrid() {
+		return this.grid;
+	}
 }

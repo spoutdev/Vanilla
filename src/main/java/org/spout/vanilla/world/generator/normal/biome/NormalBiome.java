@@ -143,21 +143,17 @@ public abstract class NormalBiome extends VanillaBiome {
 		final int densityTerrainHeightMin = getDensityTerrainHeight(x, z);
 		final int densityTerrainHeightMax = densityTerrainHeightMin + getDensityTerrainThickness(x, z);
 
-		final int bottomHeightMapHeight = getBottomHeightMapValue(x, z, densityTerrainHeightMin);
-		final int upperHeightMapHeight = getUpperHeightMapValue(x, z, densityTerrainHeightMax);
+		final int heightMapHeight = getHeightMapValue(x, z, densityTerrainHeightMin);
 
 		for (int y = startY; y < endY; y++) {
 			if (y <= densityTerrainHeightMin) {
-				for (; y <= bottomHeightMapHeight && y < endY; y++) {
+				for (; y <= heightMapHeight && y < endY; y++) {
 					blockData.set(x, y, z, VanillaMaterials.STONE.getId());
 				}
 				if (y >= endY) { // if not, we fill the rest with density terrain
 					break;
 				}
 			} else if (y > densityTerrainHeightMax) {
-				for (; y < upperHeightMapHeight && y < endY; y++) {
-					blockData.set(x, y, z, VanillaMaterials.STONE.getId());
-				}
 				break; // we're done for the entire world column!
 			}
 			if (TURBULENT_MASTER.GetValue(x, y, z) > 0) {
@@ -176,14 +172,9 @@ public abstract class NormalBiome extends VanillaBiome {
 		return (int) MathHelper.clamp(MASTER.GetValue(x, -min, z) * diff / 2 + diff / 2, 0, diff);
 	}
 
-	private int getBottomHeightMapValue(int x, int z, int densityTerrainHeightMin) {
+	private int getHeightMapValue(int x, int z, int densityTerrainHeightMin) {
 		return (int) Math.ceil(TURBULENT_MASTER.GetValue(x, densityTerrainHeightMin, z)
 				* HEIGHT_MAP_SCALE + densityTerrainHeightMin + 1);
-	}
-
-	private int getUpperHeightMapValue(int x, int z, int densityTerrainHeightMax) {
-		return (int) Math.ceil(TURBULENT_MASTER.GetValue(x, densityTerrainHeightMax, z)
-				* HEIGHT_MAP_SCALE + densityTerrainHeightMax);
 	}
 
 	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {

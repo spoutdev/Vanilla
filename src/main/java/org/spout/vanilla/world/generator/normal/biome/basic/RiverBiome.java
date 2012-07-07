@@ -27,11 +27,12 @@
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
 public class RiverBiome extends GrassyBiome {
 	public RiverBiome(int biomeId) {
-		super(biomeId, new TreeDecorator());
+		super(biomeId, new OreDecorator(), new TreeDecorator());
 		setMinMax((byte) 55, (byte) 57);
 	}
 

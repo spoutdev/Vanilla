@@ -123,11 +123,11 @@ public class SmoothPopulator extends Populator {
 					}
 				}
 				if (biome instanceof GrassySmoothBiome) {
-					((GrassySmoothBiome) biome).setMinMax((byte) Math.round(minTotal / counter), (byte) Math.round(maxTotal / counter));
+					((GrassySmoothBiome) biome).setMinMax((byte) (minTotal / counter), (byte) (maxTotal / counter));
 				} else if (biome instanceof SandySmoothBiome) {
-					((SandySmoothBiome) biome).setMinMax((byte) Math.round(minTotal / counter), (byte) Math.round(maxTotal / counter));
+					((SandySmoothBiome) biome).setMinMax((byte) (minTotal / counter), (byte) (maxTotal / counter));
 				} else if (biome instanceof IcySmoothBiome) {
-					((IcySmoothBiome) biome).setMinMax((byte) Math.round(minTotal / counter), (byte) Math.round(maxTotal / counter));
+					((IcySmoothBiome) biome).setMinMax((byte) (minTotal / counter), (byte) (maxTotal / counter));
 				}
 			}
 		}

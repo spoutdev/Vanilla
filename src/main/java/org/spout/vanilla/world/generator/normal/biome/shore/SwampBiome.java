@@ -29,6 +29,7 @@ package org.spout.vanilla.world.generator.normal.biome.shore;
 import java.util.Random;
 
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 import org.spout.vanilla.world.generator.normal.object.tree.SwampTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
@@ -36,8 +37,8 @@ import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 public class SwampBiome extends GrassyBiome {
 
 	public SwampBiome(int biomeId) {
-		super(biomeId, new TreeDecorator());
-		setMinMax((byte) 60, (byte) 63);
+		super(biomeId, new OreDecorator(), new TreeDecorator());
+		setMinMax((byte) 60, (byte) 64);
 	}
 
 	@Override

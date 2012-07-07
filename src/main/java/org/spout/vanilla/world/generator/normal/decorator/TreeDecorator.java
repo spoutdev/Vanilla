@@ -68,9 +68,8 @@ public class TreeDecorator extends Decorator {
 	private byte getHighestWorkableBlock(World w, int x, int z) {
 		byte y = 127;
 		BlockMaterial material;
-		while ((material = w.getBlockMaterial(x, y, z)) == VanillaMaterials.AIR
-				|| material == VanillaMaterials.LEAVES || material == VanillaMaterials.STATIONARY_WATER
-				|| material == VanillaMaterials.WATER) {
+		while ((material = w.getBlockMaterial(x, y, z)) != VanillaMaterials.DIRT
+				&& material != VanillaMaterials.GRASS) {
 			y--;
 			if (y == 0) {
 				return -1;

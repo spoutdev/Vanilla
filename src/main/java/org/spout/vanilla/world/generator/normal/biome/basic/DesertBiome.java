@@ -29,10 +29,11 @@ package org.spout.vanilla.world.generator.normal.biome.basic;
 import java.util.Random;
 
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
+import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 
 public class DesertBiome extends SandyBiome {
 	public DesertBiome(int biomeId) {
-		super(biomeId);
+		super(biomeId, new OreDecorator());
 		setMinMax((byte) 66, (byte) 69);
 		this.hasWater = false;
 	}

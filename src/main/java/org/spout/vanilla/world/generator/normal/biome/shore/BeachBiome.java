@@ -29,11 +29,12 @@ package org.spout.vanilla.world.generator.normal.biome.shore;
 import java.util.Random;
 
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
+import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 
 public class BeachBiome extends SandyBiome {
 
 	public BeachBiome(int biomeId) {
-		super(biomeId);
+		super(biomeId, new OreDecorator());
 		setMinMax((byte) 62, (byte) 63);
 	}
 

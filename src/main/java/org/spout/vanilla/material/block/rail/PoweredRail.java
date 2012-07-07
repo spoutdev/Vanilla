@@ -40,7 +40,6 @@ import org.spout.vanilla.util.RedstoneUtil;
 public class PoweredRail extends RailBase implements RedstoneTarget {
 	public PoweredRail(String name, int id) {
 		super(name, id);
-		this.setHardness(0.7F).setResistance(1.2F).setOpacity((byte) 0);
 	}
 
 	@Override

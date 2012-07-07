@@ -35,7 +35,7 @@ public abstract class Portal extends VanillaBlockMaterial {
 
 	public Portal(String name, int id) {
 		super(name, id);
-		this.setHardness(-1.0F).setResistance(0.0F).setOpacity((byte) 1);
+		this.setHardness(-1.0F).setResistance(0.0F).setTransparent();
 	}
 
 	@Override

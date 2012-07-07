@@ -40,7 +40,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 public class FarmLand extends VanillaBlockMaterial implements Mineable {
 	public FarmLand(String name, int id) {
 		super(name, id);
-		this.setHardness(0.6F).setResistance(1.0F).setOpacity((byte) 15);
+		this.setHardness(0.6F).setResistance(1.0F).setOpaque();
 	}
 
 	@Override

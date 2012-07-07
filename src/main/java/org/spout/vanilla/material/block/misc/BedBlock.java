@@ -44,7 +44,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class BedBlock extends VanillaBlockMaterial implements Mineable {
 	public BedBlock(String name, int id) {
 		super(name, id);
-		this.setHardness(0.2F).setResistance(0.3F).setOpacity((byte) 1);
+		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 	}
 
 	@Override

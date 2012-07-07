@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.util.MoveReaction;
@@ -35,6 +36,7 @@ public class EndPortalFrame extends VanillaBlockMaterial {
 	public EndPortalFrame(String name, int id) {
 		super(name, id);
 		this.setHardness(-1.0F).setResistance(6000000.0F);
+		this.getOcclusion().set(BlockFace.BOTTOM);
 	}
 
 	@Override

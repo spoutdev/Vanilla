@@ -40,11 +40,10 @@ import org.spout.vanilla.util.RailsState;
 import org.spout.vanilla.util.RedstonePowerMode;
 
 public class DetectorRail extends RailBase implements RedstoneSource, DynamicMaterial {
-	public static final int TICK_DELAY = 20;
+	public static final int TICK_DELAY = 1000;
 
 	public DetectorRail(String name, int id) {
 		super(name, id);
-		this.setHardness(0.7F).setResistance(1.2F).setOpacity((byte) 0);
 	}
 
 	@Override

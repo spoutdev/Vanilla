@@ -60,7 +60,7 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 	public Piston(String name, int id, boolean sticky) {
 		super(name, id);
 		this.sticky = sticky;
-		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 0);
+		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
 	}
 
 	public boolean isSticky() {

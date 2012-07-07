@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.material.item.minecart;
 
 import org.spout.api.entity.component.Controller;
 

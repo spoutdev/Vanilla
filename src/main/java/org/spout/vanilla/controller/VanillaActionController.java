@@ -528,6 +528,8 @@ public abstract class VanillaActionController extends Controller implements Vani
 		if (!event.isCancelled()) {
 			if (event.getChange() > maxHealth) {
 				this.health = maxHealth;
+			} else if (event.getChange() <= 0) {
+				this.getParent().kill();
 			} else {
 				this.health = event.getChange();
 			}

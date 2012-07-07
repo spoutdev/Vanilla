@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.material.item.minecart;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
@@ -33,7 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
-import org.spout.vanilla.material.block.rail.Rail;
+import org.spout.vanilla.material.block.rail.RailBase;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class MinecartItem extends VanillaItemMaterial {
@@ -54,7 +54,7 @@ public class MinecartItem extends VanillaItemMaterial {
 		super.onInteract(entity, block, type, clickedface);
 
 		//is clicked position a track?
-		if (block.getMaterial() instanceof Rail) {
+		if (block.getMaterial() instanceof RailBase) {
 			//spawn minecart on rail
 			block.getWorld().createAndSpawnEntity(block.getPosition(), this.getSpawnedEntity());
 			//TODO: Subtracting one from the held item?

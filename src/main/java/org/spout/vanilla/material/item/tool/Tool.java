@@ -117,7 +117,7 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 		return true;
 	}
 
-	public int getDamageModifier(VanillaActionController damaged, ItemStack heldItem) {
+	public int getDamageBonus(VanillaActionController damaged, ItemStack heldItem) {
 		// These enchantments conflict with each other, so only one is possible per item
 		int damage = 0;
 		if (EnchantmentUtil.hasEnchantment(heldItem, Enchantments.BANE_OF_ARTHROPODS)) {

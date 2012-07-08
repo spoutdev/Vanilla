@@ -26,10 +26,7 @@
  */
 package org.spout.vanilla.material.block.redstone;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -39,6 +36,7 @@ import org.spout.api.material.range.ListEffectRange;
 import org.spout.api.material.range.PlusEffectRange;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -47,7 +45,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class RedstoneWire extends GroundAttachable implements Mineable, RedstoneSource, RedstoneTarget {
+public class RedstoneWire extends GroundAttachable implements Mineable, RedstoneSource, RedstoneTarget, InitializableMaterial {
 	private static final EffectRange physicsRange = new ListEffectRange(
 			new PlusEffectRange(2, false),
 			new CubicEffectRange(1));
@@ -56,6 +54,11 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 	public RedstoneWire(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
+	}
+
+	@Override
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.REDSTONE_DUST);
 	}
 
 	@Override
@@ -144,13 +147,6 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 	@Override
 	public boolean isReceivingPower(Block block) {
 		return this.getReceivingPower(block) > 0;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.REDSTONE_DUST, 1));
-		return drops;
 	}
 
 	public short getReceivingPower(Block block) {

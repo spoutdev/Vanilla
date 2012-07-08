@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import java.util.ArrayList;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -38,10 +36,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class BrewingStand extends ControlledMaterial implements Mineable {
 	public BrewingStand(String name, int id) {
@@ -50,13 +46,12 @@ public class BrewingStand extends ControlledMaterial implements Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Pickaxe) {
-			drops.add(new ItemStack(VanillaMaterials.BREWING_STAND, 1));
+	public boolean canDrop(Block block, ItemStack holding) {
+		if (holding != null && holding.getMaterial().getMaterial() instanceof Pickaxe) {
+			return super.canDrop(block, holding);
+		} else {
+			return false;
 		}
-		return drops;
 	}
 
 	@Override

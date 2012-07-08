@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
@@ -36,7 +34,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Web extends VanillaBlockMaterial implements Mineable {
 	public Web(String name, int id) {
@@ -50,13 +47,12 @@ public class Web extends VanillaBlockMaterial implements Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && (held.getMaterial().equals(VanillaMaterials.SHEARS) || held.getMaterial() instanceof Sword)) {
-			drops.add(new ItemStack(this, 1));
+	public boolean canDrop(Block block, ItemStack holding) {
+		if (holding != null && holding.getMaterial() instanceof Sword || holding.isMaterial(VanillaMaterials.SHEARS)) {
+			return super.canDrop(block, holding);
+		} else {
+			return false;
 		}
-		return drops;
 	}
 
 	@Override

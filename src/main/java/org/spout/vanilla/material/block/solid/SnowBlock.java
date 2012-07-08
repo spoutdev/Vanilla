@@ -26,24 +26,25 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.EnchantmentUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class SnowBlock extends Solid implements Mineable {
+public class SnowBlock extends Solid implements Mineable, InitializableMaterial {
 	public SnowBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.2F).setResistance(0.3F);
+	}
+
+	@Override
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.SNOW, 4);
 	}
 
 	@Override
@@ -52,16 +53,11 @@ public class SnowBlock extends Solid implements Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Spade) {
-			if (EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-				drops.add(new ItemStack(this, 1));
-			} else {
-				drops.add(new ItemStack(VanillaMaterials.SNOWBALL, 4));
-			}
+	public boolean canDrop(Block block, ItemStack holding) {
+		if (holding != null && holding.getMaterial() instanceof Spade) {
+			return super.canDrop(block, holding);
+		} else {
+			return false;
 		}
-		return drops;
 	}
 }

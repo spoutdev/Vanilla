@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.ore;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.InitializableMaterial;
@@ -56,6 +57,15 @@ public class DiamondOre extends Ore implements InitializableMaterial, TimedCraft
 	@Override
 	public float getCraftTime() {
 		return Furnace.SMELT_TIME;
+	}
+
+	@Override
+	public boolean canDrop(Block block, ItemStack holding) {
+		if (holding != null && holding.isMaterial(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
+			return super.canDrop(block, holding);
+		} else {
+			return false;
+		}
 	}
 
 	@Override

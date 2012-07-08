@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -112,13 +111,6 @@ public class Cactus extends GroundAttachable implements Plant, TimedCraftable {
 	@Override
 	public float getCraftTime() {
 		return Furnace.SMELT_TIME;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(this, 1));
-		return drops;
 	}
 
 	@Override

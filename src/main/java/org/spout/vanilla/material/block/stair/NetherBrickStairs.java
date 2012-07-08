@@ -26,14 +26,11 @@
  */
 package org.spout.vanilla.material.block.stair;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.block.Stairs;
 import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class NetherBrickStairs extends Stairs {
 	public NetherBrickStairs(String name, int id) {
@@ -42,12 +39,11 @@ public class NetherBrickStairs extends Stairs {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Pickaxe) {
-			drops.add(new ItemStack(this, 1));
+	public boolean canDrop(Block block, ItemStack holding) {
+		if (holding != null && holding.getMaterial().getMaterial() instanceof Pickaxe) {
+			return super.canDrop(block, holding);
+		} else {
+			return false;
 		}
-		return drops;
 	}
 }

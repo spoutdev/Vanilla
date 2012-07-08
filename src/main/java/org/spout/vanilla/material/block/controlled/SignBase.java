@@ -26,12 +26,9 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import java.util.ArrayList;
-
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -39,6 +36,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.block.Sign;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
@@ -46,10 +44,15 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.MoveReaction;
 
-public abstract class SignBase extends AbstractAttachable implements Mineable {
+public abstract class SignBase extends AbstractAttachable implements Mineable, InitializableMaterial {
 	public SignBase(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setOpacity((byte) 1);
+	}
+
+	@Override
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.SIGN);
 	}
 
 	@Override
@@ -97,12 +100,5 @@ public abstract class SignBase extends AbstractAttachable implements Mineable {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Sword ? (short) 2 : (short) 1;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.SIGN, block.getData(), 1));
-		return drops;
 	}
 }

@@ -26,28 +26,22 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import java.util.ArrayList;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 
-public class FarmLand extends VanillaBlockMaterial implements Mineable {
+public class FarmLand extends VanillaBlockMaterial implements Mineable, InitializableMaterial {
 	public FarmLand(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(1.0F).setOpaque();
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.DIRT, 1));
-		return drops;
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.DIRT);
 	}
 
 	@Override

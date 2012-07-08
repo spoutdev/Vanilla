@@ -36,7 +36,6 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class TallGrass extends DeadBush {
 	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass");
@@ -69,10 +68,9 @@ public class TallGrass extends DeadBush {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
+	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial().equals(VanillaMaterials.SHEARS)) {
+		if (holding != null && holding.isMaterial(VanillaMaterials.SHEARS)) {
 			drops.add(new ItemStack(this, 1));
 		} else {
 			Random rand = new Random();

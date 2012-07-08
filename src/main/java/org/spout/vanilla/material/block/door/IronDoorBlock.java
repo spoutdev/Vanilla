@@ -26,31 +26,33 @@
  */
 package org.spout.vanilla.material.block.door;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.DoorBlock;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class IronDoorBlock extends DoorBlock {
+public class IronDoorBlock extends DoorBlock implements InitializableMaterial {
 	public IronDoorBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(5.0F).setResistance(8.3F).setOpacity((byte) 1);
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Pickaxe) {
-			drops.add(new ItemStack(VanillaMaterials.IRON_DOOR, 1));
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.IRON_DOOR);
+	}
+
+	@Override
+	public boolean canDrop(Block block, ItemStack holding) {
+		if (holding != null && holding.getMaterial().getMaterial() instanceof Pickaxe) {
+			return super.canDrop(block, holding);
+		} else {
+			return false;
 		}
-		return drops;
 	}
 
 	@Override

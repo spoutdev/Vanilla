@@ -26,27 +26,21 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import java.util.ArrayList;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
-import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
-import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Glass extends Solid implements Mineable {
 	public Glass(String name, int id) {
 		super(name, id);
 		this.setHardness(0.3F).setResistance(0.5F).setTransparent();
+		this.clearDropMaterials();
 	}
 
 	@Override
@@ -65,16 +59,6 @@ public class Glass extends Solid implements Mineable {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.CLICK;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-			drops.add(new ItemStack(this, 1));
-		}
-		return drops;
 	}
 
 	@Override

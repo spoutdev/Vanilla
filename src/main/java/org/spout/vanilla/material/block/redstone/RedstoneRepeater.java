@@ -33,13 +33,13 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
@@ -49,7 +49,7 @@ import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class RedstoneRepeater extends GroundAttachable implements Directional, Mineable, RedstoneSource, RedstoneTarget, DynamicMaterial {
+public class RedstoneRepeater extends GroundAttachable implements Directional, Mineable, RedstoneSource, RedstoneTarget, DynamicMaterial, InitializableMaterial {
 	private static final EffectRange[] physicsRanges;
 	private final boolean powered;
 	static {
@@ -71,6 +71,11 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 		super(name, id);
 		this.powered = powered;
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity(0).setOcclusion(BlockFaces.NONE).getOcclusion().set(BlockFace.BOTTOM, true);
+	}
+
+	@Override
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.REDSTONE_REPEATER);
 	}
 
 	public boolean isPowered() {
@@ -168,13 +173,6 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	public boolean isReceivingPower(Block block) {
 		BlockFace face = this.getFacing(block).getOpposite();
 		return RedstoneUtil.isEmittingPower(block.translate(face));
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(this, 1));
-		return drops;
 	}
 
 	@Override

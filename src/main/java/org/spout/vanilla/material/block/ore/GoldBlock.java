@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.ore;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
@@ -49,11 +47,11 @@ public class GoldBlock extends Solid implements Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (holding != null && holding.getMaterial().equals(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
-			drops.add(new ItemStack(this, 1));
+	public boolean canDrop(Block block, ItemStack holding) {
+		if (holding != null && holding.isMaterial(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
+			return super.canDrop(block, holding);
+		} else {
+			return false;
 		}
-		return drops;
 	}
 }

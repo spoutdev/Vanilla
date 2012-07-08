@@ -26,12 +26,9 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import java.util.ArrayList;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
@@ -46,6 +43,7 @@ public class CakeBlock extends Solid implements Mineable {
 	public CakeBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
+		this.clearDropMaterials();
 	}
 
 	@Override
@@ -68,11 +66,6 @@ public class CakeBlock extends Solid implements Mineable {
 				player.setHunger((short) (player.getHunger() + 2));
 			}
 		}
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		return new ArrayList<ItemStack>();
 	}
 
 	/**

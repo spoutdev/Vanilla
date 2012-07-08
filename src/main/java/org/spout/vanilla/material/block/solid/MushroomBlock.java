@@ -41,7 +41,6 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class MushroomBlock extends Solid implements Fuel, Mineable {
 	public final float BURN_TIME = 15.f;
@@ -62,10 +61,9 @@ public class MushroomBlock extends Solid implements Fuel, Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
+	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
+		if (holding != null && holding.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
 			drops.add(new ItemStack(this, 1));
 		} else {
 			int amount = new Random().nextInt(0 - 2 + 1) + 0;

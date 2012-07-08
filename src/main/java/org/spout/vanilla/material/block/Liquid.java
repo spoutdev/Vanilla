@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.material.block;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.spout.api.Source;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
@@ -44,13 +41,13 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial, Source {
 	private final boolean flowing;
-	private static boolean useDelay = true; //TODO: This is here to prevent a lot of problems...
 	public static final int MAX_HOLE_DISTANCE = 5;
 
 	public Liquid(String name, int id, boolean flowing) {
 		super(name, id);
 		this.flowing = flowing;
 		this.setLiquidObstacle(false).setHardness(100.0F).setResistance(166.7F).setOpacity(2).setCollision(CollisionStrategy.SOFT);
+		this.clearDropMaterials();
 	}
 
 	@Override
@@ -59,20 +56,14 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 
 	@Override
-	public List<ItemStack> getDrops(Block block, ItemStack holding) {
-		return Collections.emptyList();
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		block.dynamicUpdate(block.getWorld().getAge() + this.getFlowDelay());
 	}
 
 	@Override
-	public void onUpdate(BlockMaterial oldMaterial, Block block) {
-		super.onUpdate(oldMaterial, block);
-		if (useDelay) {
-			//TODO: Dynamic updates are not continuous
-			// It will flow upon placement, but requires physics to continue
-			block.dynamicUpdate(block.getWorld().getAge() + this.getFlowDelay());
-		} else {
-			this.doPhysics(block);
-		}
+	public boolean canDrop(Block block, ItemStack holding) {
+		return false;
 	}
 
 	private boolean onFlow(Block block) {
@@ -319,7 +310,8 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		}
 	}
 
-	private boolean doPhysics(Block block) {
+	@Override
+	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
 		// Update flowing down state
 		if (this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
 			// Set non-source water blocks to flow down
@@ -358,20 +350,12 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 				this.setLevel(block, newlevel);
 				if (newlevel < oldlevel) {
 					// Don't flow when level is reduced
-					return true;
+					return;
 				}
 			}
 		}
 		// Flow outwards
-		return this.onFlow(block);
-	}
-
-	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
-		if (useDelay) {
-			// TODO: Does not always update, or does not always fire this update function
-			this.doPhysics(block);
-		}
+		this.onFlow(block);
 	}
 
 	@Override

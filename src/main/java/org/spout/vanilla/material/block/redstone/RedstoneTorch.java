@@ -26,23 +26,21 @@
  */
 package org.spout.vanilla.material.block.redstone;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.misc.Torch;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget, DynamicMaterial {
+public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarget, DynamicMaterial, InitializableMaterial {
 	public static final int TICK_DELAY = 100;
 	private static final EffectRange physicsRange = new ListEffectRange(
 			new ListEffectRange(BlockFaces.NESWT).translate(BlockFace.TOP),
@@ -52,6 +50,11 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	public RedstoneTorch(String name, int id, boolean powered) {
 		super(name, id);
 		this.powered = powered;
+	}
+
+	@Override
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.REDSTONE_TORCH_ON);
 	}
 
 	@Override
@@ -110,13 +113,6 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	@Override
 	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
 		return this.isPowered() && direction == BlockFace.TOP;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.REDSTONE_TORCH_ON, 1));
-		return drops;
 	}
 
 	@Override

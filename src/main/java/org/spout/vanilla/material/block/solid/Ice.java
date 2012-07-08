@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -48,6 +46,7 @@ public class Ice extends Solid implements Mineable {
 	public Ice(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setOcclusion(BlockFaces.NONE).setOpacity((byte) 2);
+		this.clearDropMaterials();
 	}
 
 	@Override
@@ -77,15 +76,5 @@ public class Ice extends Solid implements Mineable {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-			drops.add(new ItemStack(this, 1));
-		}
-		return drops;
 	}
 }

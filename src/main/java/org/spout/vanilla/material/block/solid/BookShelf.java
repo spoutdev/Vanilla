@@ -26,28 +26,26 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import java.util.ArrayList;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class BookShelf extends Solid implements Mineable, Fuel {
+public class BookShelf extends Solid implements Mineable, Fuel, InitializableMaterial {
 	public final float BURN_TIME = 15.f;
 
 	public BookShelf(String name, int id) {
 		super(name, id);
 		this.setHardness(1.5F).setResistance(2.5F).setOpacity((byte) 1);
+	}
+
+	@Override
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.BOOK, 3);
 	}
 
 	@Override
@@ -63,18 +61,6 @@ public class BookShelf extends Solid implements Mineable, Fuel {
 	@Override
 	public boolean canBurn() {
 		return true;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-			drops.add(new ItemStack(this, 1));
-		} else {
-			drops.add(new ItemStack(VanillaMaterials.BOOK, 3));
-		}
-		return drops;
 	}
 
 	@Override

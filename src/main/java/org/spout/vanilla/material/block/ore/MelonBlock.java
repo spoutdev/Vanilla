@@ -26,36 +26,21 @@
  */
 package org.spout.vanilla.material.block.ore;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
-import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
-import org.spout.vanilla.util.EnchantmentUtil;
 
-public class MelonBlock extends Ore {
+public class MelonBlock extends Ore implements InitializableMaterial {
 	public MelonBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(1.0F).setResistance(1.7F);
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (holding != null && holding.getMaterial() instanceof Tool) {
-			if (EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
-				drops.add(new ItemStack(this, 1));
-			} else {
-				drops.add(new ItemStack(VanillaMaterials.MELON_SLICE, new Random().nextInt(3 - 7 + 1) + 3));
-			}
-		}
-		return drops;
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.MELON_SLICE, 1, 3);
 	}
 
 	@Override

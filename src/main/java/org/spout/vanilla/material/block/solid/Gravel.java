@@ -65,7 +65,7 @@ public class Gravel extends Solid implements Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
+	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		if (rand.nextInt(10) == 0) {
 			drops.add(new ItemStack(VanillaMaterials.FLINT, 1));

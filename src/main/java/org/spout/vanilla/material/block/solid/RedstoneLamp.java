@@ -26,18 +26,14 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import java.util.ArrayList;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 
-public class RedstoneLamp extends Solid implements Mineable {
+public class RedstoneLamp extends Solid implements Mineable, InitializableMaterial {
 	private final boolean on;
 
 	public RedstoneLamp(String name, int id, boolean on) {
@@ -45,6 +41,11 @@ public class RedstoneLamp extends Solid implements Mineable {
 		this.on = on;
 		// TODO: The resistance is not correct (?)
 		this.setHardness(0.3F).setResistance(0.5F);
+	}
+
+	@Override
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.REDSTONE_LAMP_ON);
 	}
 
 	/**
@@ -58,13 +59,6 @@ public class RedstoneLamp extends Solid implements Mineable {
 	@Override
 	public byte getLightLevel(short data) {
 		return on ? (byte) 15 : (byte) 0;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.REDSTONE_LAMP_ON, 1));
-		return drops;
 	}
 
 	@Override

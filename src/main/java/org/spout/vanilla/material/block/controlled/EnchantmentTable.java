@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import java.util.ArrayList;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -43,7 +41,6 @@ import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class EnchantmentTable extends ControlledMaterial implements Directional, Mineable {
 	public EnchantmentTable(String name, int id) {
@@ -94,12 +91,11 @@ public class EnchantmentTable extends ControlledMaterial implements Directional,
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Pickaxe) {
-			drops.add(new ItemStack(this, 1));
+	public boolean canDrop(Block block, ItemStack holding) {
+		if (holding != null && holding.getMaterial().getMaterial() instanceof Pickaxe) {
+			return super.canDrop(block, holding);
+		} else {
+			return false;
 		}
-		return drops;
 	}
 }

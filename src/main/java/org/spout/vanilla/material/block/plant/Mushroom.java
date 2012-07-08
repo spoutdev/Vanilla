@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-import java.util.ArrayList;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
@@ -104,13 +102,6 @@ public class Mushroom extends GroundAttachable implements Plant {
 			return block.getLight() <= 12;
 		}
 		return false;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(this, 1));
-		return drops;
 	}
 
 	@Override

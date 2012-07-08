@@ -86,7 +86,7 @@ public class WheatCrop extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
+	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 		int stage = getGrowthStage(block);
 		//final stage

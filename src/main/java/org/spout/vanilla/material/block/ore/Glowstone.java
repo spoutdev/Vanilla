@@ -26,26 +26,25 @@
  */
 package org.spout.vanilla.material.block.ore;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.SignBase;
-import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
-import org.spout.vanilla.util.EnchantmentUtil;
 
-public class Glowstone extends Ore {
+public class Glowstone extends Ore implements InitializableMaterial {
 	public Glowstone(String name, int id) {
 		super(name, id);
 		this.setHardness(0.3F).setResistance(0.5F).setOpacity((byte) 0);
+	}
+
+	@Override
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.GLOWSTONE_DUST, 2, 4);
 	}
 
 	@Override
@@ -61,19 +60,6 @@ public class Glowstone extends Ore {
 	@Override
 	public byte getLightLevel(short data) {
 		return 15;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (holding != null && holding.getMaterial() instanceof Tool) {
-			if (EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
-				drops.add(new ItemStack(this, 1));
-			} else {
-				drops.add(new ItemStack(VanillaMaterials.GLOWSTONE_DUST, new Random().nextInt(3) + 2));
-			}
-		}
-		return drops;
 	}
 
 	@Override

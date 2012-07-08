@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.ore;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
@@ -35,15 +33,14 @@ import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.Furnace;
-import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.EnchantmentUtil;
 
 public class CoalOre extends Ore implements TimedCraftable {
 	public CoalOre(String name, int id) {
 		super(name, id);
 		this.setHardness(3.0F).setResistance(5.0F);
+		this.setDropMaterial(VanillaMaterials.COAL_ORE, 1);
 	}
 
 	@Override
@@ -62,15 +59,11 @@ public class CoalOre extends Ore implements TimedCraftable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+	public boolean canDrop(Block block, ItemStack holding) {
 		if (holding != null && holding.getMaterial() instanceof Pickaxe) {
-			if (EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
-				drops.add(new ItemStack(this, 1));
-			} else {
-				drops.add(new ItemStack(VanillaMaterials.COAL, 1));
-			}
+			return super.canDrop(block, holding);
+		} else {
+			return false;
 		}
-		return drops;
 	}
 }

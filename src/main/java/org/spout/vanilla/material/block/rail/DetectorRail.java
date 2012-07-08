@@ -26,11 +26,8 @@
  */
 package org.spout.vanilla.material.block.rail;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
@@ -107,13 +104,6 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 	@Override
 	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
 		return this.isPowering(block) && direction == BlockFace.BOTTOM;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(this, 1));
-		return drops;
 	}
 
 	@Override

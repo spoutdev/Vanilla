@@ -476,7 +476,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (item == null) {
 			message = new SetWindowSlotMessage(window.getInstanceId(), slot);
 		} else {
-			message = new SetWindowSlotMessage(window.getInstanceId(), slot, getMinecraftId(item.getMaterial().getId()), item.getAmount(), item.getData(), item.getNBTData());
+			message = new SetWindowSlotMessage(window.getInstanceId(), slot, getMinecraftId(item.getMaterial()), item.getAmount(), item.getData(), item.getNBTData());
 		}
 		queuedInventoryUpdates.put(slot, message);
 	}

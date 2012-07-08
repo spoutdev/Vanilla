@@ -26,10 +26,7 @@
  */
 package org.spout.vanilla.material.block.rail;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -112,12 +109,5 @@ public class PoweredRail extends RailBase implements RedstoneTarget {
 	@Override
 	public RailsState getState(Block block) {
 		return RailsState.get(block.getData() & 0x7);
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(this, 1));
-		return drops;
 	}
 }

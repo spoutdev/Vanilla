@@ -27,6 +27,7 @@
 package org.spout.vanilla.material;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -337,19 +338,19 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @return a list of drops
 	 */
 	public List<ItemStack> getDrops(Block block, ItemStack holding) {
-		if (!canDrop(block, holding)) {
-			return Collections.<ItemStack>emptyList();
-		}
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (holding != null && EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
-			drops.add(new ItemStack(this, 1));
-		} else {
-			for (Material m : dropMaterials.keySet()) {
-				int[] amount = dropMaterials.get(m);
-				drops.add(new ItemStack(m, amount[(int) Math.random() * amount.length]));
+		if (canDrop(block, holding)) {
+			if (holding != null && EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
+				return Arrays.asList(new ItemStack(this, 1));
+			} else if (!this.dropMaterials.isEmpty()) {
+				ArrayList<ItemStack> drops = new ArrayList<ItemStack>(this.dropMaterials.size());
+				for (Material m : dropMaterials.keySet()) {
+					int[] amount = dropMaterials.get(m);
+					drops.add(new ItemStack(m, amount[(int) (Math.random() * amount.length)]));
+				}
+				return drops;
 			}
 		}
-		return drops;
+		return Collections.<ItemStack>emptyList();
 	}
 
 	/**
@@ -434,6 +435,11 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	public VanillaBlockMaterial removeDropMaterial(Material dropMaterial) {
 		dropMaterials.remove(dropMaterial);
+		return this;
+	}
+
+	public VanillaBlockMaterial clearDropMaterials() {
+		dropMaterials.clear();
 		return this;
 	}
 

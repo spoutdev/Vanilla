@@ -42,7 +42,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Vines extends VanillaBlockMaterial implements Plant {
 	public Vines(String name, int id) {
@@ -246,10 +245,9 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
+	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial().equals(VanillaMaterials.SHEARS)) {
+		if (holding != null && holding.isMaterial(VanillaMaterials.SHEARS)) {
 			drops.add(new ItemStack(this, 1));
 		}
 		return drops;

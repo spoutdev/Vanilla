@@ -26,25 +26,26 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Stone extends Solid implements Mineable {
+public class Stone extends Solid implements Mineable, InitializableMaterial {
 	public Stone(String name, int id) {
 		super(name, id);
 		this.setHardness(1.5F).setResistance(10.0F);
+	}
+
+	@Override
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.COBBLESTONE);
 	}
 
 	@Override
@@ -58,16 +59,11 @@ public class Stone extends Solid implements Mineable {
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Pickaxe) {
-			if (EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-				drops.add(new ItemStack(this, 1));
-			} else {
-				drops.add(new ItemStack(VanillaMaterials.COBBLESTONE, 1));
-			}
+	public boolean canDrop(Block block, ItemStack holding) {
+		if (holding != null && holding.getMaterial() instanceof Pickaxe) {
+			return super.canDrop(block, holding);
+		} else {
+			return false;
 		}
-		return drops;
 	}
 }

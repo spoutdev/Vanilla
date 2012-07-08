@@ -26,27 +26,31 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
-public class SugarCaneBlock extends GroundAttachable {
+public class SugarCaneBlock extends GroundAttachable implements InitializableMaterial {
 	private final Set<Material> allowedBases = new HashSet<Material>(4);
 
 	public SugarCaneBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 		this.addAllowedBase(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND, VanillaMaterials.SUGAR_CANE_BLOCK);
+	}
+
+	@Override
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.SUGAR_CANE);
 	}
 
 	@Override
@@ -71,13 +75,6 @@ public class SugarCaneBlock extends GroundAttachable {
 			}
 		}
 		return false;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.SUGAR_CANE, 1));
-		return drops;
 	}
 
 	public void addAllowedBase(Material... materials) {

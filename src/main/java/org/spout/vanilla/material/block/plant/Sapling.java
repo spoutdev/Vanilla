@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
@@ -111,13 +110,6 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 			}
 			this.growTree(block);
 		}
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(this, 1));
-		return drops;
 	}
 
 	/**

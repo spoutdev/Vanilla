@@ -26,14 +26,12 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import java.util.ArrayList;
-
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -41,10 +39,15 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class BedBlock extends VanillaBlockMaterial implements Mineable {
+public class BedBlock extends VanillaBlockMaterial implements Mineable, InitializableMaterial {
 	public BedBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
+	}
+
+	@Override
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.BED);
 	}
 
 	@Override
@@ -136,13 +139,6 @@ public class BedBlock extends VanillaBlockMaterial implements Mineable {
 		return false;
 	}
 
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.BED, 1));
-		return drops;
-	}
-
 	/**
 	 * Gets the top or face door block when either of the blocks is given
 	 * @param bedBlock the top or bottom bed block
@@ -182,4 +178,6 @@ public class BedBlock extends VanillaBlockMaterial implements Mineable {
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
+
+
 }

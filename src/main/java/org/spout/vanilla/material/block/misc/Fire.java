@@ -27,12 +27,10 @@
 package org.spout.vanilla.material.block.misc;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -64,11 +62,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	public Fire(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
-	}
-
-	@Override
-	public List<ItemStack> getDrops(Block block, ItemStack holding) {
-		return Collections.emptyList();
+		this.clearDropMaterials();
 	}
 
 	@Override

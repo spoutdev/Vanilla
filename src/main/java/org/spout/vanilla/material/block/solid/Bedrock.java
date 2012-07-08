@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
@@ -36,6 +37,7 @@ public class Bedrock extends Solid {
 	public Bedrock(String name, int id) {
 		super(name, id);
 		this.setResistance(6000000.0F).setHardness(-1.0F);
+		this.clearDropMaterials();
 	}
 
 	@Override
@@ -46,5 +48,10 @@ public class Bedrock extends Solid {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.BASSDRUM;
+	}
+
+	@Override
+	public boolean canDrop(Block block, ItemStack holding) {
+		return false;
 	}
 }

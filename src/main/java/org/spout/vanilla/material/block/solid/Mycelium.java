@@ -26,40 +26,26 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import java.util.ArrayList;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.EnchantmentUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Mycelium extends Solid implements Mineable {
+public class Mycelium extends Solid implements Mineable, InitializableMaterial {
 	public Mycelium(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(0.8F);
 	}
 
 	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
+	public void initialize() {
+		this.setDropMaterial(VanillaMaterials.DIRT);
 	}
 
 	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-		if (held != null && held.getMaterial() instanceof Tool && EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-			drops.add(new ItemStack(this, 1));
-		} else {
-			drops.add(new ItemStack(VanillaMaterials.DIRT, 1));
-		}
-		return drops;
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Spade ? (short) 1 : (short) 2;
 	}
 }

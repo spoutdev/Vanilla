@@ -26,11 +26,8 @@
  */
 package org.spout.vanilla.material.block.piston;
 
-import java.util.ArrayList;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -38,6 +35,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.PlusEffectRange;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -51,7 +49,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 
 import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockAction;
 
-public class Piston extends VanillaBlockMaterial implements Directional, Mineable, RedstoneTarget {
+public class Piston extends VanillaBlockMaterial implements Directional, Mineable, RedstoneTarget, InitializableMaterial {
 	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);
 	public static final int maxLength = 13;
 	public static final EffectRange physicsRange = new PlusEffectRange(maxLength, true);
@@ -61,6 +59,15 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 		super(name, id);
 		this.sticky = sticky;
 		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
+	}
+
+	@Override
+	public void initialize() {
+		if (this.isSticky()) {
+			this.setDropMaterial(VanillaMaterials.PISTON_STICKY_BASE);
+		} else {
+			this.setDropMaterial(VanillaMaterials.PISTON_BASE);
+		}
 	}
 
 	public boolean isSticky() {
@@ -269,17 +276,6 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (sticky) {
-			drops.add(new ItemStack(VanillaMaterials.PISTON_STICKY_BASE, block.getData(), 1));
-		} else {
-			drops.add(new ItemStack(VanillaMaterials.PISTON_BASE, block.getData(), 1));
-		}
-		return drops;
 	}
 
 	@Override

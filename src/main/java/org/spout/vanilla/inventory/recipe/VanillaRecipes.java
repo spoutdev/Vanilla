@@ -32,27 +32,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.spout.api.Spout;
 import org.spout.api.inventory.Recipe;
 import org.spout.api.inventory.RecipeBuilder;
-import org.spout.api.inventory.ShapedRecipe;
-import org.spout.api.inventory.ShapelessRecipe;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.resources.RecipeYaml;
 
 public class VanillaRecipes {
-	public static final ShapelessRecipe WOODEN_PLANK;
-	public static final ShapelessRecipe BONE_MEAL;
-	public static final ShapedRecipe WOODEN_PICKAXE;
 	private static final Map<String, Recipe> yamlRecipes = new ConcurrentHashMap<String, Recipe>();
 
-	public VanillaRecipes() {
-	}
-
-	static {
-		WOODEN_PLANK = add(create().setResult(VanillaMaterials.PLANK, 4).addIngredient(VanillaMaterials.LOG).buildShapelessRecipe());
-		BONE_MEAL = add(create().setResult(Dye.BONE_MEAL, 3).addIngredient(VanillaMaterials.BONE).buildShapelessRecipe());
-		WOODEN_PICKAXE = add(create().setResult(VanillaMaterials.WOODEN_PICKAXE, 1).addIngredient('P', VanillaMaterials.PLANK).addIngredient('S', VanillaMaterials.STICK).addRow("PPP").addRow("ESE").addRow("ESE").buildShapedRecipe());
-		for (String key : yamlRecipes.keySet()) {
-			yamlRecipes.put(key, add(yamlRecipes.get(key)));
+	public static void initialize() {
+		for (String key : RecipeYaml.DEFAULT.getRecipes().keySet()) {
+			yamlRecipes.put(key, add(RecipeYaml.DEFAULT.getRecipes().get(key)));
 		}
 	}
 
@@ -65,7 +53,7 @@ public class VanillaRecipes {
 		return yamlRecipes.get(name);
 	}
 
-	private static RecipeBuilder<?> create() {
-		return new RecipeBuilder<RecipeBuilder<?>>();
+	private static RecipeBuilder create() {
+		return new RecipeBuilder();
 	}
 }

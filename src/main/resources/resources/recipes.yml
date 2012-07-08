@@ -1,14 +1,35 @@
+# By default, includedata is false. This means all the INGREDIENTS are treated as their parent.
+# Includedata does NOT affect the data in the result
 recipes:
-  Plank:
+  OakPlank:
     type: Shapeless
-    result: PLANK,4
-    ingredients: [LOG]
+    result: OAK_PLANK,4
+    ingredients: [WOOD]
+    includedata: true
+
+  PinePlank:
+    type: Shapeless
+    result: PINE_PLANK,4
+    ingredients: [SPRUCE_WOOD]
+    includedata: true
+
+  BirtchPlank:
+    type: Shapeless
+    result: BIRCH_PLANK,4
+    ingredients: [BIRCH_WOOD]
+    includedata: true
+
+  JunglePlank:
+    type: Shapeless
+    result: JUNGLE_PLANK,4
+    ingredients: [JUNGLE_WOOD]
+    includedata: true
 
   Sticks:
     type: Shaped
-    result: STICK,1
+    result: STICK,4
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
     rows: ['A', 'A']
 
   Torches:
@@ -23,7 +44,7 @@ recipes:
     type: Shaped
     result: CRAFTING_TABLE,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
     rows: ['AA', 'AA']
 
   Furnace:
@@ -37,7 +58,7 @@ recipes:
     type: Shaped
     result: CHEST,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
     rows: ['AAA', 'A A', 'AAA']
 
   Gold Block:
@@ -58,14 +79,14 @@ recipes:
     type: Shaped
     result: DIAMOND_BLOCK,1
     ingredients:
-      A: DIAMOND_INGOT
+      A: DIAMOND
     rows: ['AAA', 'AAA', 'AAA']
 
   Lapis Lazuli Block:
     type: Shaped
     result: LAPIS_LAZULI_BLOCK,1
     ingredients:
-      A: DYE
+      A: LAPIS_LAZULI_ORE
     rows: ['AAA', 'AAA', 'AAA']
 
   Glowstone:
@@ -77,10 +98,11 @@ recipes:
 
   Wool:
     type: Shaped
-    result: WOOL,1
+    result: WHITE_WOOL,1
     ingredients:
       A: STRING
     rows: ['AA', 'AA']
+    includedata: true
 
   TNT:
     type: Shaped
@@ -92,9 +114,9 @@ recipes:
 
   Wooden Slabs:
     type: Shaped
-    result: WOOD_SLAB,6
+    result: WOODEN_SLAB,6
     ingredients:
-      A: PLANKS
+      A: OAK_PLANK
     rows: ['AAA']
 
   Stone Slabs:
@@ -134,35 +156,35 @@ recipes:
 
   Wooden Stairs:
     type: Shaped
-    result: STAIRS_WOODEN,4
+    result: WOODEN_STAIRS,4
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
     rows: ['  A', ' AA', 'AAA']
 
   Cobblestone Stairs:
     type: Shaped
-    result: STAIRS_COBBLESTONE,4
+    result: COBBLESTONE_STAIRS,4
     ingredients:
       A: COBBLESTONE
     rows: ['  A', ' AA', 'AAA']
 
   Brick Stairs:
     type: Shaped
-    result: STAIRS_BRICK,4
+    result: BRICK_STAIRS,4
     ingredients:
       A: BRICK_BLOCK
     rows: ['  A', ' AA', 'AAA']
 
   Stone Brick Stairs:
     type: Shaped
-    result: STAIRS_STONE_BRICK,4
+    result: STONE_BRICK_STAIRS,4
     ingredients:
       A: STONE_BRICK
     rows: ['  A', ' AA', 'AAA']
 
   Nether Brick Stairs:
     type: Shaped
-    result: STAIRS_NETHER_BRICK,4
+    result: NETHER_BRICK_STAIRS,4
     ingredients:
       A: NETHER_BRICK
     rows: ['  A', ' AA', 'AAA']
@@ -192,7 +214,7 @@ recipes:
     type: Shaped
     result: BOOKSHELF,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
       B: BOOK
     rows: ['AAA', 'BBB', 'AAA']
 
@@ -205,21 +227,22 @@ recipes:
 
   Smooth Sandstone:
     type: Shaped
-    result: SMOOTH,1
+    result: SMOOTH_SANDSTONE,1
     ingredients:
       A: SANDSTONE
     rows: ['AA', 'AA']
 
   Decorative Sandstone:
     type: Shaped
-    result: DECORATIVE,1
+    result: DECORATIVE_SANDSTONE,1
     ingredients:
-      A: SLAB
+      A: SANDSTONE_SLAB
     rows: ['A', 'A']
+    includedata: true
 
   Jack-O-Lantern:
     type: Shaped
-    result: JACK_O_LANTERN,1
+    result: JACK_'O'_LANTERN,1
     ingredients:
       A: PUMPKIN
       B: TORCH
@@ -229,7 +252,7 @@ recipes:
     type: Shaped
     result: WOODEN_AXE,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
       B: STICK
     rows: ['AA', 'AB', ' B']
 
@@ -269,7 +292,7 @@ recipes:
     type: Shaped
     result: WOODEN_PICKAXE,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
       B: STICK
     rows: ['AAA', ' B ', ' B ']
 
@@ -277,7 +300,7 @@ recipes:
     type: Shaped
     result: WOODEN_PICKAXE,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
       B: STICK
     rows: ['AAA', ' B ', ' B ']
 
@@ -317,7 +340,7 @@ recipes:
     type: Shaped
     result: WOODEN_SHOVEL,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
       B: STICK
     rows: ['A', 'B', 'B']
 
@@ -357,7 +380,7 @@ recipes:
     type: Shaped
     result: WOODEN_HOE,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
       B: STICK
     rows: ['AA', ' B', ' B']
 
@@ -413,7 +436,7 @@ recipes:
     result: COMPASS,1
     ingredients:
       A: IRON_INGOT
-      B: REDSTONE_DUST
+      B: REDSTONE_WIRE
     rows: [' A ', 'ABA', ' A ']
 
   Map:
@@ -429,7 +452,7 @@ recipes:
     result: COMPASS,1
     ingredients:
       A: GOLD_INGOT
-      B: REDSTONE_DUST
+      B: REDSTONE_WIRE
     rows: [' A ', 'ABA', ' A ']
 
   Fishing Rod:
@@ -456,7 +479,7 @@ recipes:
     type: Shaped
     result: WOODEN_SWORD,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
       B: STICK
     rows: ['A', 'A', 'B']
 
@@ -498,7 +521,7 @@ recipes:
     ingredients:
       A: STICK
       B: STRING
-    rows: [' AB', 'A B', ' AB]
+    rows: [' AB', 'A B', ' AB']
 
   Arrows:
     type: Shaped
@@ -658,7 +681,7 @@ recipes:
 
   Powered Minecart:
     type: Shaped
-    result: MINECART_FURNACE,1
+    result: MINECART_WITH_FURNACE,1
     ingredients:
       A: MINECART
       B: FURNACE
@@ -666,7 +689,7 @@ recipes:
 
   Storage Minecart:
     type: Shaped
-    result: MINECART_CHEST,1
+    result: MINECART_WITH_CHEST,1
     ingredients:
       A: MINECART
       B: CHEST
@@ -682,11 +705,11 @@ recipes:
 
   Powered Rails:
     type: Shaped
-    result: RAIL_POWERED,16
+    result: POWERED_RAIL,16
     ingredients:
       A: GOLD_INGOT
       B: STICK
-      C: REDSTONE_DUST
+      C: REDSTONE_WIRE
     rows: ['A A', 'ABA', 'ACA']
 
   Detector Rails:
@@ -695,21 +718,21 @@ recipes:
     ingredients:
       A: IRON_INGOT
       B: STONE_PRESSURE_PLATE
-      C: REDSTONE_DUST
+      C: REDSTONE_WIRE
     rows: ['A A', 'ABA', 'A A']
 
   Boat:
     type: Shaped
     result: BOAT,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
     rows: ['A A', 'AAA']
 
   Wooden Door:
     type: Shaped
     result: WOODEN_DOOR,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
     rows: ['AA', 'AA', 'AA']
 
   Iron Door:
@@ -723,14 +746,14 @@ recipes:
     type: Shaped
     result: TRAPDOOR,2
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
     rows: ['AAA', 'AAA']
 
   Wooden Pressure Plate:
     type: Shaped
     result: WOODEN_PRESSURE_PLATE,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
     rows: ['AA']
 
   Stone Pressure Plate:
@@ -749,10 +772,10 @@ recipes:
 
   Redstone Torch:
     type: Shaped
-    result: REDSTONE_TORCH_ON,1
+    result: REDSTONE_TORCH_(ON),1
     ingredients:
       A: STICK
-      B: REDSTONE_DUST
+      B: REDSTONE_WIRE
     rows: ['B', 'A']
 
   Lever:
@@ -765,17 +788,17 @@ recipes:
 
   Note Block:
     type: Shaped
-    result: NOTEBLOCK,1
+    result: NOTE_BLOCK,1
     ingredients:
-      A: PLANK
-      B: REDSTONE_DUST
+      A: OAK_PLANK
+      B: REDSTONE_WIRE
     rows: ['AAA', 'ABA', 'AAA']
 
   Jukebox:
     type: Shaped
     result: JUKEBOX,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
       B: DIAMOND
     rows: ['AAA', 'ABA', 'AAA']
 
@@ -785,7 +808,7 @@ recipes:
     ingredients:
       A: COBBLESTONE
       B: BOW
-      C: REDSTONE_DUST
+      C: REDSTONE_WIRE
     rows: ['AAA', 'ABA', 'ACA']
 
   Redstone Repeater:
@@ -793,15 +816,15 @@ recipes:
     result: REDSTONE_REPEATER,1
     ingredients:
       A: REDSTONE_TORCH
-      B: REDSTONE_DUST
+      B: REDSTONE_WIRE
       C: STONE
     rows: ['ABA', 'CCC']
 
   Piston:
     type: Shaped
-    result: PISTON_BASE,1
+    result: PISTON,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
       B: COBBLESTONE
       C: IRON_INGOT
       D: REDSTONE
@@ -809,17 +832,17 @@ recipes:
 
   Sticky Piston:
     type: Shaped
-    result: PISTON_STICKY_BASE,1
+    result: STICKY_PISTON,1
     ingredients:
       A: SLIMEBALL
-      B: PISTON_BASE
+      B: PISTON
     rows: ['A', 'B']
 
   Redstone Lamp:
     type: Shaped
-    result: REDSTONE_LAMP_OFF,1
+    result: REDSTONE_LAMP,1
     ingredients:
-      A: REDSTONE_DUST
+      A: REDSTONE_WIRE
       B: GLOWSTONE_BLOCK
     rows: [' A ', 'ABA', ' A ']
 
@@ -827,7 +850,7 @@ recipes:
     type: Shaped
     result: BOWL,4
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
     rows: ['A A', ' A ']
 
   Mushroom Stew:
@@ -851,7 +874,7 @@ recipes:
     type: Shaped
     result: CAKE,1
     ingredients:
-      A: MILK_BUCKET
+      A: MILK
       B: WHEAT
       C: SUGAR
       D: EGG
@@ -864,6 +887,7 @@ recipes:
       A: WHEAT
       B: COCOA_BEANS
     rows: ['ABA']
+    includedata: true
 
   Golden Apple:
     type: Shaped
@@ -875,15 +899,15 @@ recipes:
 
   Melon:
     type: Shaped
-    result: MELON_BLOCK,1
+    result: MELON,1
     ingredients:
-      A: MELON_SLICE
+      A: MELONBLOCK_SLICE
     rows: ['AAA', 'AAA', 'AAA']
 
   Melon Seeds:
     type: Shapeless
-    result: MELON_SEEDS,1
-    ingredients: [MELON_SLICE]
+    result: MELONBLOCK_SEEDS,1
+    ingredients: [MELONBLOCK_SLICE]
 
   Pumpkin Seeds:
     type: Shapeless
@@ -907,7 +931,7 @@ recipes:
 
   Lapis Lazuli:
     type: Shapeless
-    result: LAPIS_LAZULI,9
+    result: LAPIS_LAZULI_ORE,9
     ingredients: [LAPIS_LAZULI_BLOCK]
 
   Painting:
@@ -915,14 +939,14 @@ recipes:
     result: PAINTING,1
     ingredients:
       A: STICK
-      B: WOOL
+      B: WHITE_WOOL
     rows: ['AAA', 'ABA', 'AAA']
 
   Sign:
     type: Shaped
     result: SIGN,1
     ingredients:
-      A: PLANK
+      A: OAK_PLANK
       B: STICK
     rows: ['AAA', 'AAA', ' B ']
 
@@ -963,7 +987,7 @@ recipes:
 
   Fence:
     type: Shaped
-    result: FENCE,6
+    result: WOODEN_FENCE,6
     ingredients:
       A: STICK
     rows: ['AAA', 'AAA']
@@ -980,15 +1004,15 @@ recipes:
     result: FENCE_GATE,1
     ingredients:
       A: STICK
-      B: PLANK
+      B: OAK_PLANK
     rows: ['ABA', 'ABA']
 
   Beds:
     type: Shaped
     result: BED,1
     ingredients:
-      A: WOOL
-      B: PLANK
+      A: WHITE_WOOL
+      B: OAK_PLANK
     rows: ['AAA', 'BBB']
 
   Gold Ingot:
@@ -1010,143 +1034,171 @@ recipes:
 
   Light Gray Dye:
     type: Shapeless
-    result: LIGHT_GRAY,2
+    result: LIGHT_GRAY_DYE,2
     ingredients: [BONE_MEAL, INK_SACK]
+    includedata: true
 
   Light Gray Dye 2:
     type: Shapeless
-    result: LIGHT_GRAY,3
-    ingredients: [BONE_MEAL, BONE_MEAL, GREY]
+    result: LIGHT_GRAY_DYE,3
+    ingredients: [BONE_MEAL, BONE_MEAL, GRAY_DYE]
+    includedata: true
 
   Gray Dye:
     type: Shapeless
-    result: GRAY,2
+    result: GRAY_DYE,2
     ingredients: [BONE_MEAL, INK_SACK]
+    includedata: true
 
   Rose Red:
     type: Shapeless
     result: ROSE_RED,2
     ingredients: [ROSE]
+    includedata: true
 
   Orange Dye:
     type: Shapeless
-    result: ORANGE,2
+    result: ORANGE_DYE,2
     ingredients: [ROSE_RED, DANDELION_YELLOW]
+    includedata: true
 
   Dandelion Yellow:
     type: Shapeless
     result: DANDELION_YELLOW,2
     ingredients: [DANDELION]
+    includedata: true
 
   Light Blue Dye:
     type: Shapeless
-    result: LIGHT_BLUE,2
-    ingredients: [LAPIS_LAZULI, BONE_MEAL]
+    result: LIGHT_BLUE_DYE,2
+    ingredients: [LAPIS_LAZULI_ORE, BONE_MEAL]
+    includedata: true
 
   Cyan Dye:
     type: Shapeless
-    result: CYAN,2
-    ingredients: [CACTUS_GREEN, LAPIS_LAZULI]
+    result: CYAN_DYE,2
+    ingredients: [CACTUS_GREEN, LAPIS_LAZULI_ORE]
+    includedata: true
 
   Purple Dye:
     type: Shapeless
-    result: PURPLE,2
-    ingredients: [ROSE_RED, LAPIS_LAZULI]
+    result: PURPLE_DYE,2
+    ingredients: [ROSE_RED, LAPIS_LAZULI_ORE]
+    includedata: true
 
   Magenta Dye:
     type: Shapeless
-    result: MAGENTA,2
-    ingredients: [PURPLE, PINK]
+    result: MAGENTA_DYE,2
+    ingredients: [PURPLE_DYE, PINK_DYE]
+    includedata: true
 
   Magenta Dye 2:
     type: Shapeless
-    result: MAGENTA,4
-    ingredients: [LAPIS_LAZULI, BONE_MEAL, ROSE_RED, ROSE_RED]
+    result: MAGENTA_DYE,4
+    ingredients: [LAPIS_LAZULI_ORE, BONE_MEAL, ROSE_RED, ROSE_RED]
+    includedata: true
 
   Magenta Dye 3:
     type: Shapeless
-    result: MAGENTA,3
-    ingredients: [LAPIS_LAZULI,PINK, ROSE_RED]
+    result: MAGENTA_DYE,3
+    ingredients: [LAPIS_LAZULI_ORE,PINK, ROSE_RED]
+    includedata: true
 
   Pink Dye:
     type: Shapeless
-    result: PINK,2
+    result: PINK_DYE,2
     ingredients: [ROSE_RED, BONE_MEAL]
+    includedata: true
 
   Light Gray Wool:
     type: Shapeless
-    result: SILVER_WOOL,1
-    ingredients: [WOOL, LIGHT_GRAY]
+    result: LIGHT_GRAY_WOOL,1
+    ingredients: [WHITE_WOOL, LIGHT_GRAY_DYE]
+    includedata: true
 
   Gray Wool:
     type: Shapeless
     result: GRAY_WOOL,1
-    ingredients: [WOOL, GRAY]
+    ingredients: [WHITE_WHITE_WOOL, GRAY_DYE]
+    includedata: true
 
   Black Wool:
     type: Shapeless
     result: BLACK_WOOL,1
-    ingredients: [WOOL, INK_SACK]
+    ingredients: [WHITE_WOOL, INK_SACK]
+    includedata: true
 
   Red Wool:
     type: Shapeless
     result: RED_WOOL,1
-    ingredients: [WOOL, ROSE_RED]
+    ingredients: [WHITE_WOOL, ROSE_RED]
+    includedata: true
 
   Orange Wool:
     type: Shapeless
     result: ORANGE_WOOL,1
-    ingredients: [WOOL, ORANGE]
+    ingredients: [WHITE_WOOL, ORANGE_DYE]
+    includedata: true
 
   Yellow Wool:
     type: Shapeless
     result: YELLOW_WOOL,1
-    ingredients: [WOOL, DANDELION_YELLOW]
+    ingredients: [WHITE_WOOL, DANDELION_YELLOW]
+    includedata: true
 
   Lime Wool:
     type: Shapeless
     result: LIME_WOOL,1
-    ingredients: [WOOL, LIME]
+    ingredients: [WHITE_WOOL, LIME_DYE]
+    includedata: true
 
   Green Wool:
     type: Shapeless
     result: GREEN_WOOL,1
-    ingredients: [WOOL, CACTUS_GREEN]
+    ingredients: [WHITE_WOOL, CACTUS_GREEN]
+    includedata: true
 
   Light Blue Wool:
     type: Shapeless
-    result: LIGHTBLUE_WOOL,1
-    ingredients: [WOOL, LIGHTBLUE]
+    result: LIGHT_BLUE_WOOL,1
+    ingredients: [WHITE_WOOL, LIGHT_BLUE_DYE]
+    includedata: true
 
   Cyan Wool:
     type: Shapeless
     result: CYAN_WOOL,1
-    ingredients: [WOOL, CYAN]
+    ingredients: [WHITE_WOOL, CYAN_DYE]
+    includedata: true
 
   Blue Wool:
     type: Shapeless
     result: BLUE_WOOL,1
-    ingredients: [WOOL, LAPIS_LAZULI]
+    ingredients: [WHITE_WOOL, LAPIS_LAZULI]
+    includedata: true
 
   Purple Wool:
     type: Shapeless
     result: PURPLE_WOOL,1
-    ingredients: [WOOL, PURPLE]
+    ingredients: [WHITE_WOOL, PURPLE_DYE]
+    includedata: true
 
   Magenta Wool:
     type: Shapeless
     result: MAGENTA_WOOL,1
-    ingredients: [WOOL, MAGENTA]
+    ingredients: [WHITE_WOOL, MAGENTA_DYE]
+    includedata: true
 
   Pink Wool:
     type: Shapeless
     result: PINK_WOOL,1
-    ingredients: [WOOL, PINK]
+    ingredients: [WHITE_WOOL, PINK_DYE]
+    includedata: true
 
   Brown Wool:
     type: Shapeless
     result: BROWN_WOOL,1
-    ingredients: [WOOL, COCOA_BEANS]
+    ingredients: [WHITE_WOOL, COCOA_BEANS]
+    includedata: true
 
   Glass Bottle:
     type: Shaped
@@ -1187,7 +1239,7 @@ recipes:
 
   Blaze Powder:
     type: Shapeless
-    result: GLISTERING MELON,1
+    result: GLISTERING_MELONBLOCK,1
     ingredients: [MELON_SLICE, GOLD_NUGGET]
 
   Gold Nugget:

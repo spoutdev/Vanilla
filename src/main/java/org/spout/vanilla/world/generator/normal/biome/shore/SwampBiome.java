@@ -53,6 +53,6 @@ public class SwampBiome extends GrassyBiome {
 
 	@Override
 	public TreeObject getRandomTree(Random random) {
-		return new SwampTreeObject();
+		return new SwampTreeObject(random);
 	}
 }

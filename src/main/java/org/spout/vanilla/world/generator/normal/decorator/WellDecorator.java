@@ -41,7 +41,7 @@ import org.spout.vanilla.world.generator.normal.object.WellObject;
 public class WellDecorator extends Decorator {
 	// a well object for generation
 	// the object isn't random, so we can use a static instance
-	private static final WellObject well = new WellObject();
+	private static final WellObject WELL = new WellObject();
 	// generation odd, 'ODD' chunk per chunk
 	private static final short ODD = 1000;
 
@@ -60,14 +60,14 @@ public class WellDecorator extends Decorator {
 		if (y == -1) {
 			return;
 		}
-		if (well.canPlaceObject(world, x, y, z)) {
-			well.placeObject(world, x, y, z);
+		if (WELL.canPlaceObject(world, x, y, z)) {
+			WELL.placeObject(world, x, y, z);
 		}
 	}
 
 	private int getHighestWorkableBlock(World w, int x, int z) {
 		int y = 127;
-		while (w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
+		while (w.getBlockMaterial(x, y, z) != VanillaMaterials.SAND) {
 			y--;
 			if (y == 0) {
 				return -1;

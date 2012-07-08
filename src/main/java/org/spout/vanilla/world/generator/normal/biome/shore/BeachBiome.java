@@ -35,7 +35,7 @@ public class BeachBiome extends SandyBiome {
 
 	public BeachBiome(int biomeId) {
 		super(biomeId, new OreDecorator());
-		setMinMax((byte) 62, (byte) 63);
+		setMinMax((byte) 62, (byte) 64);
 	}
 
 	@Override

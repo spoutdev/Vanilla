@@ -220,9 +220,9 @@ public abstract class NormalBiome extends VanillaBiome {
 	
 	public TreeObject getRandomTree(Random random) {
 		if (random.nextInt(10) == 0) {
-			return new BigTreeObject();
+			return new BigTreeObject(random);
 		} else {
-			return new SmallTreeObject();
+			return new SmallTreeObject(random);
 		}
 	}
 	

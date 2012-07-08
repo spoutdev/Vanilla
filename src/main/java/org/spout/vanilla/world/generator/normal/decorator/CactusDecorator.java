@@ -30,44 +30,38 @@ import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.object.largeplant.CactusStackObject;
 
 public class CactusDecorator extends Decorator {
+	private static final byte AMOUNT = 2;
+	private static final CactusStackObject CACTUS = new CactusStackObject();
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
-		if (chunk.getY() < 4) {
+		if (chunk.getY() != 4) {
 			return;
 		}
-		int genInChunk = random.nextInt(100);
-		if (genInChunk <= 20) {
-			return;
-		}
-		int px = chunk.getBlockX(random);
-		int pz = chunk.getBlockZ(random);
-		int py = getHighestWorkableBlock(chunk.getWorld(), px, pz);
-		if (py == -1) {
-			return;
-		}
-		int height = random.nextInt(3) + 1;
-		for (int i = py; i < py + height; ++i) {
-			Block block = chunk.getBlock(px, i, pz);
-			if (!VanillaMaterials.CACTUS.canPlace(block, (short) 0, BlockFace.TOP, false)) {
-				break;
+		final World world = chunk.getWorld();
+		CACTUS.setRandom(random);
+		for (byte count = 0; count < AMOUNT; count++) {
+			final int x = chunk.getBlockX(random);
+			final int z = chunk.getBlockZ(random);
+			final int y = getHighestWorkableBlock(world, x, z);
+			CACTUS.randomize();
+			if (y != -1 && CACTUS.canPlaceObject(world, x, y, z)) {
+				CACTUS.placeObject(world, x, y, z);
 			}
-
-			VanillaMaterials.CACTUS.onPlacement(block, (short) 0, BlockFace.TOP, false);
 		}
 	}
 
-	private int getHighestWorkableBlock(World world, int px, int pz) {
+	private int getHighestWorkableBlock(World world, int x, int z) {
 		int y = world.getHeight();
-		while (world.getBlockMaterial(px, y, pz) != VanillaMaterials.SAND && world.getBlockMaterial(px, y, pz) != VanillaMaterials.SANDSTONE) {
+		while (world.getBlockMaterial(x, y, z) != VanillaMaterials.SAND) {
 			y--;
-			if (y == 0 || world.getBlockMaterial(px, y, pz) == VanillaMaterials.WATER) {
+			if (y == 0) {
 				return -1;
 			}
 		}

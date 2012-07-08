@@ -43,13 +43,9 @@ import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 
 public class SmoothPopulator extends Populator {
 	private static final byte CHUNK_SIZE = 16;
-	private static final byte SMOOTH_SIZE = 4;
-	private static final byte TOTAL_SIZE;
+	private static final byte SMOOTH_SIZE = 3;
+	private static final byte TOTAL_SIZE = CHUNK_SIZE + SMOOTH_SIZE * 2;
 
-	static {
-		TOTAL_SIZE = CHUNK_SIZE + SMOOTH_SIZE * 2;
-	}
-	
 	public SmoothPopulator() {
 		super(true);
 	}

@@ -56,15 +56,15 @@ public class JungleBiome extends GrassyBiome {
 	@Override
 	public TreeObject getRandomTree(Random random) {
 		if (random.nextInt(10) == 0) {
-			return new BigTreeObject();
+			return new BigTreeObject(random);
 		}
 		if (random.nextInt(2) == 0) {
-			return new ShrubObject();
+			return new ShrubObject(random);
 		}
 		if (random.nextInt(3) == 0) {
-			return new HugeTreeObject();
+			return new HugeTreeObject(random);
 		}
-		final SmallTreeObject smallJungleTree = new SmallTreeObject();
+		final SmallTreeObject smallJungleTree = new SmallTreeObject(random);
 		smallJungleTree.setTreeType(TreeObject.TreeType.JUNGLE);
 		smallJungleTree.setBaseHeight((byte) 4);
 		smallJungleTree.setRandomHeight((byte) 10);

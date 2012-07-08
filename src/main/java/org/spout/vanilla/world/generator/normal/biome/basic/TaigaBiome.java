@@ -54,8 +54,8 @@ public class TaigaBiome extends GrassyBiome {
 	@Override
 	public TreeObject getRandomTree(Random random) {
 		if (random.nextInt(3) == 0) {
-			return new SpruceTreeObject();
+			return new SpruceTreeObject(random);
 		}
-		return new PineTreeObject();
+		return new PineTreeObject(random);
 	}
 }

@@ -44,7 +44,7 @@ import static org.junit.Assert.assertSame;
 public class RecipeTreeTest {
 	@Test
 	public void treeTest() {
-		RecipeBuilder<RecipeBuilder<?>> builder = new RecipeBuilder<RecipeBuilder<?>>();
+		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("AAA").addRow("BBB").addRow("AAA");
 		ShapedRecipe recipe = builder.buildShapedRecipe();
@@ -54,6 +54,44 @@ public class RecipeTreeTest {
 		testIngredients.add(new ArrayList<Material>(Arrays.asList(VanillaMaterials.ARROW, VanillaMaterials.ARROW, VanillaMaterials.ARROW)));
 		RecipeTree tree = new RecipeTree();
 		tree.addRecipe(recipe);
-		assertSame(recipe, tree.matchShapedRecipe(testIngredients));
+		System.out.println("");
+		assertSame(recipe, tree.matchShapedRecipe(testIngredients, true));
+		System.out.println("");
+		System.out.println("");
+	}
+	
+	@Test
+	public void treeTest2() {
+		RecipeBuilder builder = new RecipeBuilder();
+		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
+		builder.addRow("BB").addRow("AA");
+		ShapedRecipe recipe = builder.buildShapedRecipe();
+		List<List<Material>> testIngredients = new ArrayList<List<Material>>();
+		testIngredients.add(new ArrayList<Material>(Arrays.asList(VanillaMaterials.BEDROCK, VanillaMaterials.BEDROCK)));
+		testIngredients.add(new ArrayList<Material>(Arrays.asList(VanillaMaterials.ARROW, VanillaMaterials.ARROW)));
+		RecipeTree tree = new RecipeTree();
+		tree.addRecipe(recipe);
+		System.out.println("");
+		assertSame(recipe, tree.matchShapedRecipe(testIngredients, true));
+		System.out.println("");
+		System.out.println("");
+	}
+	
+	@Test
+	public void treeTest3() {
+		RecipeBuilder builder = new RecipeBuilder();
+		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
+		builder.addRow("BB").addRow("AA");
+		ShapedRecipe recipe = builder.buildShapedRecipe();
+		List<List<Material>> testIngredients = new ArrayList<List<Material>>();
+		testIngredients.add(new ArrayList<Material>(Arrays.asList(null, null, (Material) null)));
+		testIngredients.add(new ArrayList<Material>(Arrays.asList(VanillaMaterials.BEDROCK, VanillaMaterials.BEDROCK, null)));
+		testIngredients.add(new ArrayList<Material>(Arrays.asList(VanillaMaterials.ARROW, VanillaMaterials.ARROW, null)));
+		RecipeTree tree = new RecipeTree();
+		tree.addRecipe(recipe);
+		System.out.println("");
+		assertSame(recipe, tree.matchShapedRecipe(testIngredients, true));
+		System.out.println("");
+		System.out.println("");
 	}
 }

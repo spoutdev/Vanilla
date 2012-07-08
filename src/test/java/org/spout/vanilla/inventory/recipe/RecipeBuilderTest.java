@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory.recipe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -38,12 +39,17 @@ import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import org.spout.api.inventory.CommonRecipeManager;
+import org.spout.vanilla.material.block.solid.Plank;
 
 public class RecipeBuilderTest {
 	@Test
 	public void singleIngredientsTest() {
-		RecipeBuilder<RecipeBuilder<?>> builder = new RecipeBuilder<RecipeBuilder<?>>();
+		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient(VanillaMaterials.DIAMOND).addIngredient(VanillaMaterials.DIAMOND_BLOCK);
 		builder.addIngredient(VanillaMaterials.DIRT, 2);
 		ShapelessRecipe recipe = builder.buildShapelessRecipe();
@@ -60,7 +66,7 @@ public class RecipeBuilderTest {
 
 	@Test
 	public void characterIngredientsTest() {
-		RecipeBuilder<RecipeBuilder<?>> builder = new RecipeBuilder<RecipeBuilder<?>>();
+		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient(VanillaMaterials.ARROW).addIngredient(VanillaMaterials.BEDROCK);
 		builder.addIngredient(VanillaMaterials.CACTUS);
 		ShapelessRecipe recipe = builder.buildShapelessRecipe();
@@ -80,7 +86,7 @@ public class RecipeBuilderTest {
 
 	@Test
 	public void overwritingMaterialsTest() {
-		RecipeBuilder<RecipeBuilder<?>> builder = new RecipeBuilder<RecipeBuilder<?>>();
+		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addIngredient('B', VanillaMaterials.CACTUS).addIngredient('A', VanillaMaterials.DIRT);
 		ShapedRecipe recipe = builder.buildShapedRecipe();
@@ -97,7 +103,7 @@ public class RecipeBuilderTest {
 
 	@Test
 	public void shapedAmountsTest() {
-		RecipeBuilder<RecipeBuilder<?>> builder = new RecipeBuilder<RecipeBuilder<?>>();
+		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("AAA").addRow("BBB").addRow("AAA");
 		ShapedRecipe recipe = builder.buildShapedRecipe();
@@ -114,7 +120,7 @@ public class RecipeBuilderTest {
 
 	@Test
 	public void rowsTest() {
-		RecipeBuilder<RecipeBuilder<?>> builder = new RecipeBuilder<RecipeBuilder<?>>();
+		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("AAA").addRow("BBB").addRow("AAA");
 		ShapedRecipe recipe = builder.buildShapedRecipe();
@@ -132,7 +138,7 @@ public class RecipeBuilderTest {
 
 	@Test
 	public void replaceRowsTest() {
-		RecipeBuilder<RecipeBuilder<?>> builder = new RecipeBuilder<RecipeBuilder<?>>();
+		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("AAA").addRow("BBB").addRow("AAA").replaceRow(1, "CCC");
 		ShapedRecipe recipe = builder.buildShapedRecipe();
@@ -149,17 +155,44 @@ public class RecipeBuilderTest {
 	}
 
 	@Test
+	public void dataTest() {
+		VanillaMaterials.initialize();
+		RecipeBuilder builder = new RecipeBuilder();
+		CommonRecipeManager manager = new CommonRecipeManager();
+		builder.addIngredient('A', Plank.BIRCH).addIngredient('B', VanillaMaterials.BEDROCK);
+		builder.addRow("AAA").addRow("BBB").addRow("AAA");
+		builder.setIncludeData(true);
+		ShapedRecipe withData = builder.buildShapedRecipe();
+		assertNotNull(withData);
+		manager.addRecipe(withData);
+		List<List<Material>> rows = new ArrayList<List<Material>>();
+		rows.add(new ArrayList<Material>(Arrays.asList(Plank.PLANK, Plank.PLANK, Plank.PLANK)));
+		rows.add(new ArrayList<Material>(Arrays.asList(VanillaMaterials.BEDROCK, VanillaMaterials.BEDROCK, VanillaMaterials.BEDROCK)));
+		rows.add(new ArrayList<Material>(Arrays.asList(Plank.PLANK, Plank.PLANK, Plank.PLANK)));
+		List<List<Material>> rows2 = new ArrayList<List<Material>>();
+		rows2.add(new ArrayList<Material>(Arrays.asList(Plank.PLANK, Plank.PLANK, Plank.PLANK)));
+		rows2.add(new ArrayList<Material>(Arrays.asList(VanillaMaterials.BEDROCK, VanillaMaterials.BEDROCK, VanillaMaterials.BEDROCK)));
+		rows2.add(new ArrayList<Material>(Arrays.asList(Plank.PLANK, Plank.PLANK, Plank.PLANK)));
+		assertNull(manager.matchShapedRecipe(rows));
+		builder.setIncludeData(false);
+		ShapedRecipe noData = builder.buildShapedRecipe();
+		assertNotNull(noData);
+		assertTrue(manager.addRecipe(noData));
+		assertSame(noData, manager.matchShapedRecipe(rows));
+	}
+
+	@Test
 	public void cloneTest() {
-		RecipeBuilder<RecipeBuilder<?>> builder = new RecipeBuilder<RecipeBuilder<?>>();
+		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("AAA").addRow("BBB").addRow("AAA");
 		ShapedRecipe recipe1 = builder.buildShapedRecipe();
-		RecipeBuilder<RecipeBuilder<?>> builder2 = new RecipeBuilder<RecipeBuilder<?>>();
+		RecipeBuilder builder2 = new RecipeBuilder();
 		builder2.clone(recipe1);
 		builder2.replaceRow(1, "CCC");
 		ShapedRecipe recipe2 = builder2.buildShapedRecipe();
 		assertTrue(!recipe1.equals(recipe2));
-		RecipeBuilder<RecipeBuilder<?>> builder3 = new RecipeBuilder<RecipeBuilder<?>>();
+		RecipeBuilder builder3 = new RecipeBuilder();
 		builder3.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder3.addRow("AAA").addRow("CCC").addRow("AAA");
 		ShapedRecipe recipe3 = builder3.buildShapedRecipe();

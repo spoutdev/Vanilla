@@ -65,8 +65,7 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 	}
 
 	public boolean isAttachedTo(Block block, BlockFace face) {
-		int mask = getMask(face);
-		return (block.getData() & mask) == mask;
+		return block.isDataBitSet(getMask(face));
 	}
 
 	/**

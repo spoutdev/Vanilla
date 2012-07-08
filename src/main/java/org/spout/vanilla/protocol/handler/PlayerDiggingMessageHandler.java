@@ -139,13 +139,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			if (heldItem != null) {
 				if (heldItem.getMaterial() instanceof Tool && blockMaterial instanceof Mineable) {
 					short penalty = ((Tool) heldItem.getMaterial()).getDurabilityPenalty((Mineable) blockMaterial.getMaterial(), heldItem);
-					if (penalty != 0) {
-						if (heldItem.getData() - penalty < 1) {
-							currentSlot.setItem(null);
-						} else {
-							currentSlot.addItemData(0, penalty);
-						}
-					}
+					currentSlot.addItemData(penalty);
 				}
 			}
 			if (heldItem == null) {

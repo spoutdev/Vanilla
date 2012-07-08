@@ -47,10 +47,4 @@ public abstract class ControlledMaterial extends Solid {
 		block.getWorld().createAndSpawnEntity(block.getPosition(), type.createController());
 		return true;
 	}
-
-	@Override
-	public void onDestroyBlock(Block block) {
-		super.onDestroyBlock(block);
-		block.setController(null);
-	}
 }

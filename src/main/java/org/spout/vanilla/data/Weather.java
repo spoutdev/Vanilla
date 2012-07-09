@@ -33,20 +33,31 @@ import gnu.trove.map.hash.TIntObjectHashMap;
  * Enum of the vanilla weather states.
  */
 public enum Weather {
-	CLEAR(0),
-	RAIN(1),
-	THUNDERSTORM(2);
+	CLEAR(0, false),
+	RAIN(1, true),
+	THUNDERSTORM(2, true);
 	final int id;
+	final boolean raining;
 	private final static TIntObjectMap<Weather> weathers = new TIntObjectHashMap<Weather>();
 
-	private Weather(int id) {
+	private Weather(int id, boolean rain) {
 		this.id = id;
+		this.raining = rain;
 	}
 
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Gets if this Weather state has rain
+	 * 
+	 * @return True if it has rain, false if not
+	 */
+	public boolean isRaining() {
+		return this.raining;
+	}
+	
 	public static Weather get(int id) {
 		return weathers.get(id);
 	}

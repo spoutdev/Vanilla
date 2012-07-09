@@ -239,8 +239,6 @@ public class VanillaPlugin extends CommonPlugin {
 			} else {
 				throw new IllegalArgumentException("Invalid sky type for world '" + world.getName() + "': " + skyType);
 			}
-			sky.setWorld(world);
-			VanillaSky.setSky(world, sky);
 			world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
 		}
 	}

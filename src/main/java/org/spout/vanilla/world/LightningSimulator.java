@@ -35,23 +35,45 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 import org.spout.api.player.Player;
+import org.spout.api.tickable.ITickable;
 
 import org.spout.vanilla.controller.object.misc.Lightning;
-import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.data.Weather;
 
-public class LightningSimulator {
+public class LightningSimulator implements ITickable {
 	private static final int MAX_LIGHTNING_BRANCHES = 5;
 	private static Random ra = new Random();
-	final World world;
+	final WeatherSimulator weather;
 	final HashMap<Player, Integer> playerCountdown = new HashMap<Player, Integer>();
 	Intensity stormIntensity = null;
+	protected float previousThunderStrength, currentThunderStrength;
 
-	public LightningSimulator(World world) {
-		this.world = world;
+	public LightningSimulator(WeatherSimulator weather) {
+		this.weather = weather;
 	}
 
-	public void onTick() {
+	public World getWorld() {
+		return this.weather.getWorld();
+	}
+
+	/**
+	 * Gets the strength of the thunder storm, which is affected by the duration
+	 * 
+	 * @param factor to apply to the changing states
+	 * @return the strength
+	 */
+	public float getThunderStrength(float factor) {
+		return (this.previousThunderStrength + factor * (this.currentThunderStrength - this.previousThunderStrength));
+	}
+
+	@Override
+	public void onTick(float dt) {
+		this.previousThunderStrength = this.currentThunderStrength;
+		if (this.weather.isThundering()) {
+			this.currentThunderStrength = Math.min(1.0f, this.currentThunderStrength + 0.01f);
+		} else {
+			this.currentThunderStrength = Math.max(0.0f, this.currentThunderStrength - 0.01f);
+		}		
 		try {
 			updatePlayerTimers();
 		} catch (Exception e) {
@@ -60,16 +82,12 @@ public class LightningSimulator {
 	}
 
 	public void updatePlayerTimers() {
-		VanillaSky sky = VanillaSky.getSky(world);
-		if (sky == null) {
-			return;
-		}
-		if (sky.hasWeather() && sky.getWeather() == Weather.THUNDERSTORM) {
+		if (this.weather.getCurrent() == Weather.THUNDERSTORM) {
 			if (stormIntensity == null) {
 				stormIntensity = Intensity.getRandomIntensity(ra);
 			}
 			List<Player> toStrike = new ArrayList<Player>();
-			for (Player player : world.getPlayers()) {
+			for (Player player : getWorld().getPlayers()) {
 				if (!player.isOnline()) {
 					return;
 				}
@@ -130,6 +148,7 @@ public class LightningSimulator {
 							adjustY += (ra.nextBoolean() ? -1 : 1) * ra.nextInt(8);
 							adjustZ += (ra.nextBoolean() ? -1 : 1) * ra.nextInt(2);
 						}
+						World world = getWorld();
 						world.createAndSpawnEntity(new Point(world, x + adjustX, y + adjustY, z + adjustZ), new Lightning());
 					}
 					//success, go to the next player
@@ -144,7 +163,7 @@ public class LightningSimulator {
 	}
 
 	public boolean isRainingAt(int x, int y, int z) {
-		return VanillaSky.getSky(world).hasWeather() && !(VanillaSky.getSky(world).getWeather() == Weather.CLEAR);
+		return this.weather.getCurrent().isRaining();
 	}
 }
 

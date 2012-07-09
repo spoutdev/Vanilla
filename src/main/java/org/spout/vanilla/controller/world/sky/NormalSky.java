@@ -30,9 +30,12 @@ import org.spout.api.Spout;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.world.VanillaSky;
+import org.spout.vanilla.data.Data;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
+import org.spout.vanilla.util.VanillaMathHelper;
+import org.spout.vanilla.world.WeatherSimulator;
 
 public class NormalSky extends VanillaSky {
 	public NormalSky() {
@@ -40,8 +43,32 @@ public class NormalSky extends VanillaSky {
 	}
 
 	@Override
+	public void onAttached() {
+		super.onAttached();
+		this.getWorld().setSkyLight((byte) 15);
+	}
+
+	/**
+	 * Updates the time as a celestial sky system
+	 * 
+	 * @param time to use
+	 * @param timeFactor unknown factor, use 1.0f
+	 */
+	public void updateCelestialTime(long time, float timeFactor) {
+        float celestial = VanillaMathHelper.getRealCelestialAngle(time, timeFactor);
+        WeatherSimulator weather = this.getWeatherSimulator();
+        if (weather != null) {
+            celestial = (float) ((double) celestial * (1.0d - (double) (weather.getRainStrength(timeFactor) * 5f) / 16d));
+            celestial = (float) ((double) celestial * (1.0d - (double) (weather.getThunderStrength(timeFactor) * 5f) / 16d));
+        }
+        this.getWorld().setSkyLight((byte) (celestial * (float) SKY_LIGHT_RANGE + MIN_SKY_LIGHT));
+
+        broadcastMessage(new TimeUpdateMessage(time));
+	}
+
+	@Override
 	public void updateTime(long time) {
-		broadcastMessage(new TimeUpdateMessage(time));
+		this.updateCelestialTime(time, 1.0f);
 	}
 
 	@Override
@@ -50,6 +77,7 @@ public class NormalSky extends VanillaSky {
 		if (event.isCancelled()) {
 			return;
 		}
+		this.getWorld().getDataMap().put(Data.WEATHER, newWeather);
 
 		byte reason = (newWeather.equals(Weather.RAIN) || newWeather.equals(Weather.THUNDERSTORM)) ? ChangeGameStateMessage.BEGIN_RAINING : ChangeGameStateMessage.END_RAINING;
 		broadcastMessage(new ChangeGameStateMessage(reason));

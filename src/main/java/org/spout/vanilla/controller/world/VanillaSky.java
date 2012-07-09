@@ -27,7 +27,6 @@
 package org.spout.vanilla.controller.world;
 
 import java.util.HashMap;
-import java.util.Random;
 
 import org.spout.api.entity.component.Controller;
 import org.spout.api.geo.World;
@@ -37,25 +36,24 @@ import org.spout.api.protocol.Message;
 import org.spout.vanilla.controller.VanillaController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.data.Weather;
-import org.spout.vanilla.world.LightningSimulator;
+import org.spout.vanilla.world.WeatherSimulator;
 
 /**
  * Represents a sky in Vanilla
  */
 public abstract class VanillaSky extends Controller implements VanillaController {
+	public static final byte MIN_SKY_LIGHT = 4;
+	public static final byte MAX_SKY_LIGHT = 15;
+	public static final byte SKY_LIGHT_RANGE = MAX_SKY_LIGHT - MIN_SKY_LIGHT;
 	protected long maxTime, time = 0, countdown = 20, rate;
-	protected boolean hasWeather, forceWeatherUpdate = false;
-	protected Weather weather = Weather.CLEAR, forecast = Weather.CLEAR;
-	protected final Random random = new Random();
-	protected float ticksUntilWeatherChange = random.nextFloat() * 5 * 60;
-	private LightningSimulator simulator;
-	private World world;
+	private Long setTime; // The time manually set
+	private WeatherSimulator weather;
 	private static final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
 
 	public VanillaSky(VanillaControllerType type, boolean hasWeather, long maxTime, long rate) {
 		super(type);
 		this.maxTime = maxTime;
-		this.hasWeather = hasWeather;
+		this.weather = hasWeather ? null : new WeatherSimulator(this);
 		this.rate = rate;
 	}
 
@@ -71,12 +69,8 @@ public abstract class VanillaSky extends Controller implements VanillaController
 		this(type, false, 24000, 20);
 	}
 
-	public VanillaSky setWorld(World newWorld) {
-		world = newWorld;
-		return this;
-	}
-
 	public void broadcastMessage(Message message) {
+		World world = getWorld();
 		for (Player player : world.getPlayers()) {
 			if (!player.isOnline()) {
 				continue;
@@ -91,13 +85,29 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	@Override
 	public void onAttached() {
 		getParent().setCollision(null);
-		simulator = new LightningSimulator(getParent().getWorld());
+		synchronized (skies) {
+			skies.put(getWorld(), this);
+		}
+	}
+
+	@Override
+	public void onDetached() {
+		super.onDetached();
+		synchronized (skies) {
+			World world = getWorld();
+			if (skies.get(world) == this) {
+				skies.remove(world);
+			}
+		}
 	}
 
 	@Override
 	public void onTick(float dt) {
-
 		// Keep time
+		if (setTime != null) {
+			this.time = setTime;
+			setTime = null;
+		}
 		countdown--;
 		if (countdown <= 0) {
 			if (time >= maxTime) {
@@ -109,20 +119,9 @@ public abstract class VanillaSky extends Controller implements VanillaController
 			countdown = 20;
 			updateTime(time);
 		}
-
-		// Keep weather
-		if (hasWeather) {
-			ticksUntilWeatherChange -= dt;
-			if (forceWeatherUpdate || ticksUntilWeatherChange <= 0) {
-				updateWeather(weather, forecast);
-				weather = forecast;
-				forecast = Weather.get(random.nextInt(3));
-				ticksUntilWeatherChange = random.nextFloat() * 5 * 60;
-				forceWeatherUpdate = false;
-			}
-		}
-		if (hasWeather && simulator != null) {
-			simulator.onTick();
+		// Weather
+		if (this.hasWeather()) {
+			this.weather.onTick(dt);
 		}
 	}
 
@@ -136,7 +135,7 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	 * @param time
 	 */
 	public void setTime(long time) {
-		this.time = time;
+		this.setTime = time;
 	}
 
 	/**
@@ -144,7 +143,11 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	 * @return time
 	 */
 	public long getTime() {
-		return time;
+		if (setTime != null) {
+			return setTime;
+		} else {
+			return time;
+		}
 	}
 
 	/**
@@ -183,11 +186,20 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	}
 
 	/**
+	 * Gets the Weather Simulator
+	 * 
+	 * @return the weather simulator, or null if no weather is enabled
+	 */
+	public WeatherSimulator getWeatherSimulator() {
+		return this.weather;
+	}
+
+	/**
 	 * Whether or not the sky can produce weather
 	 * @return true if sky has weather.
 	 */
 	public boolean hasWeather() {
-		return hasWeather;
+		return this.weather != null;
 	}
 
 	/**
@@ -195,7 +207,11 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	 * @param hasWeather
 	 */
 	public void setHasWeather(boolean hasWeather) {
-		this.hasWeather = hasWeather;
+		if (hasWeather && this.weather == null) {
+			this.weather = new WeatherSimulator(this);
+		} else {
+			this.weather = null;
+		}
 	}
 
 	/**
@@ -203,7 +219,7 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	 * @return weather
 	 */
 	public Weather getWeather() {
-		return weather;
+		return this.weather == null ? Weather.CLEAR : this.weather.getCurrent();
 	}
 
 	/**
@@ -211,8 +227,10 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	 * @param forecast
 	 */
 	public void setWeather(Weather forecast) {
-		this.forecast = forecast;
-		this.forceWeatherUpdate = true;
+		if (this.weather != null) {
+			this.weather.setForecast(forecast);
+			this.weather.forceUpdate();
+		}
 	}
 
 	/**
@@ -220,7 +238,7 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	 * @return forecast
 	 */
 	public Weather getForecast() {
-		return forecast;
+		return this.weather == null ? Weather.CLEAR : this.weather.getForecast();
 	}
 
 	/**
@@ -231,15 +249,13 @@ public abstract class VanillaSky extends Controller implements VanillaController
 		return getParent().getWorld();
 	}
 
-	public static void setSky(World world, VanillaSky sky) {
-		skies.put(world, sky);
-	}
-
 	public static VanillaSky getSky(World world) {
-		return skies.get(world);
+		synchronized (skies) {
+			return skies.get(world);
+		}
 	}
 
 	protected abstract void updateTime(long time);
 
-	protected abstract void updateWeather(Weather oldWeather, Weather newWeather);
+	public abstract void updateWeather(Weather oldWeather, Weather newWeather);
 }

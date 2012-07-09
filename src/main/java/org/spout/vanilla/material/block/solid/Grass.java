@@ -58,10 +58,10 @@ public class Grass extends Solid implements Mineable, RandomBlockMaterial, Initi
 
 	@Override
 	public void onRandomTick(World world, int x, int y, int z) {
-		final Random r = new Random();
+		final Random r = new Random(world.getAge());
 		//Attempt to decay grass
 		BlockMaterial above = world.getBlockMaterial(x, y + 1, z);
-		if (above != VanillaMaterials.AIR && above != VanillaMaterials.SNOW) {
+		if (above.isOpaque()) {
 			world.setBlockMaterial(x, y, z, VanillaMaterials.DIRT, (short) 0, world);
 		} else {
 		//Attempt to grow grass
@@ -69,11 +69,14 @@ public class Grass extends Solid implements Mineable, RandomBlockMaterial, Initi
 				for (int dy = -GROWTH_RANGE; dy < GROWTH_RANGE; dy++) {
 					for (int dz = -GROWTH_RANGE; dz < GROWTH_RANGE; dz++) {
 						if (r.nextInt(4) == 0) {
-							BlockMaterial material = world.getBlockMaterial(x + dx, y + dy, z + dz);
-							if (material == VanillaMaterials.DIRT) {
-								material = world.getBlockMaterial(x + dx, y + dy + 1, z + dz);
-								if (material == VanillaMaterials.AIR || material == VanillaMaterials.SNOW) {
-									world.setBlockMaterial(x + dx, y + dy, z + dz, VanillaMaterials.GRASS, (short) 0, world);
+							int light = Math.max(world.getBlockLight(x + dx, y + dy, z + dz), world.getBlockSkyLight(x + dx, y + dy, z + dz));
+							if (light > 7) {
+								BlockMaterial material = world.getBlockMaterial(x + dx, y + dy, z + dz);
+								if (material == VanillaMaterials.DIRT) {
+									material = world.getBlockMaterial(x + dx, y + dy + 1, z + dz);
+									if (!material.isOpaque()) {
+										world.setBlockMaterial(x + dx, y + dy, z + dz, VanillaMaterials.GRASS, (short) 0, world);
+									}
 								}
 							}
 						}

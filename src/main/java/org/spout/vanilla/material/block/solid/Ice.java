@@ -26,9 +26,14 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
@@ -41,8 +46,10 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.world.generator.normal.biome.IcyBiome;
 
-public class Ice extends Solid implements Mineable {
+public class Ice extends Solid implements Mineable, RandomBlockMaterial {
+	private static final int GROWTH_RANGE = 1;
 	public Ice(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setOcclusion(BlockFaces.NONE).setOpacity((byte) 2);
@@ -76,5 +83,28 @@ public class Ice extends Solid implements Mineable {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public void onRandomTick(World world, int x, int y, int z) {
+		if (world.getBlockLight(x, y, z) > 11) {
+			world.setBlockMaterial(x, y, z, VanillaMaterials.WATER, (short) 0, world);
+		} else if (world.getBiomeType(x, y, z) instanceof IcyBiome){
+			Random r = new Random(world.getAge());
+			for (int dx = -GROWTH_RANGE; dx < GROWTH_RANGE; dx++) {
+				for (int dy = -GROWTH_RANGE; dy < GROWTH_RANGE; dy++) {
+					for (int dz = -GROWTH_RANGE; dz < GROWTH_RANGE; dz++) {
+						if (r.nextInt(4) == 0) {
+							if (world.getBlockLight(x + dx, y + dy, z + dz) > 11) {
+								BlockMaterial material = world.getBlockMaterial(x + dx, y + dy, z + dz);
+								if (material == VanillaMaterials.WATER) {
+									world.setBlockMaterial(x + dx, y + dy, z + dz, VanillaMaterials.ICE, (short) 0, world);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }

@@ -38,42 +38,37 @@ import org.spout.vanilla.material.VanillaMaterials;
  * Decorator that decorates a biome with pumpkins.
  */
 public class PumpkinDecorator extends Decorator {
+	private static final byte ODD = 120;
 	// Control how many pumpkins per patch
 	private static final byte BASE_AMOUNT = 1;
 	private static final byte RAND_AMOUNT = 8;
-	// Offset from main point control
-	private static final byte RAND_X = 8;
-	private static final byte RAND_Z = 8;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
-		if (chunk.getY() < 4) {
+		if (chunk.getY() != 4) {
 			return;
 		}
-		generatePumpkinPatch(chunk.getWorld(), random, chunk.getBlockX(random) + 8, chunk.getBlockZ(random) + 8);
-	}
-
-	private void generatePumpkinPatch(World world, Random random, int x, int z) {
-		int amount = random.nextInt(RAND_AMOUNT) + BASE_AMOUNT;
-		for (int i = 0; i < amount; i++) {
-			final int px = x + (random.nextBoolean() ? random.nextInt(RAND_X) : -random.nextInt(RAND_X));
-			final int pz = z + (random.nextBoolean() ? random.nextInt(RAND_Z) : -random.nextInt(RAND_Z));
-			final int py = getHighestWorkableBlock(world, px, pz);
-			if (canPlacePumpkin(world, px, py, pz)) {
-				world.getBlock(px, py, pz).setMaterial(VanillaMaterials.PUMPKIN, (short) random.nextInt(4));
+		if (random.nextInt(ODD) != 0) {
+			return;
+		}
+		final World world = chunk.getWorld();
+		final int x = chunk.getBlockX(random);
+		final int z = chunk.getBlockZ(random);
+		for (int amount = random.nextInt(RAND_AMOUNT) + BASE_AMOUNT; amount >= 0; amount--) {
+			final int xx = x - 7 + random.nextInt(15);
+			final int zz = z - 7 + random.nextInt(15);
+			final int yy = getHighestWorkableBlock(world, xx, zz);
+			if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR) {
+				world.setBlockMaterial(xx, yy, zz, VanillaMaterials.PUMPKIN, (short) random.nextInt(4), world);
 			}
 		}
 	}
 
-	private boolean canPlacePumpkin(World world, int x, int y, int z) {
-		return world.getBlockMaterial(x, y - 1, z) == VanillaMaterials.GRASS;
-	}
-
-	private int getHighestWorkableBlock(World w, int x, int z) {
-		int y = w.getHeight() - 1;
-		while (w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
+	private byte getHighestWorkableBlock(World w, int x, int z) {
+		byte y = 127;
+		while (w.getBlockMaterial(x, y, z) != VanillaMaterials.GRASS) {
 			y--;
-			if (y == 0 || w.getBlockMaterial(x, y, z) == VanillaMaterials.WATER) {
+			if (y == 0) {
 				return -1;
 			}
 		}

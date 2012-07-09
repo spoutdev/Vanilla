@@ -174,7 +174,7 @@ public abstract class NormalBiome extends VanillaBiome {
 	}
 
 	private int getHeightMapValue(int x, int z, int densityTerrainHeightMin) {
-		return (int) Math.ceil(TURBULENT_MASTER.GetValue(x, densityTerrainHeightMin, z)
+		return (int) (TURBULENT_MASTER.GetValue(x, densityTerrainHeightMin, z)
 				* HEIGHT_MAP_SCALE + densityTerrainHeightMin + 1);
 	}
 

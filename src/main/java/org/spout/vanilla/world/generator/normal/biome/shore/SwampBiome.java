@@ -30,6 +30,7 @@ import java.util.Random;
 
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 import org.spout.vanilla.world.generator.normal.object.tree.SwampTreeObject;
@@ -37,7 +38,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class SwampBiome extends GrassyBiome {
 	public SwampBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new TreeDecorator(new SwampTreeWGOFactory()), new SugarCaneDecorator((byte) 6, (byte) 25, (byte) 2));
+		super(biomeId, new OreDecorator(), new TreeDecorator(new SwampTreeWGOFactory()), new SugarCaneDecorator((byte) 6, (byte) 25, (byte) 2), new PumpkinDecorator());
 		setMinMax((byte) 60, (byte) 64);
 	}
 

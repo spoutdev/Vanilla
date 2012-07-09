@@ -37,7 +37,10 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CubicEffectRange;
+import org.spout.api.material.range.EffectIterator;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.material.range.ListEffectRange;
+import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.Data;
@@ -45,23 +48,23 @@ import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.solid.TNT;
 
 public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
-	private static EffectRange dynamicRange = new CubicEffectRange(1);
-	private static List<Vector3> spreadBlocks = new ArrayList<Vector3>();
+	private static final EffectRange SPREAD_RANGE;
 
 	static {
+		List<IntVector3> blocks = new ArrayList<IntVector3>();
 		for (int x = -1; x <= 1; x++) {
-			for (int y = -1; y <= 1; y++) {
-				for (int z = -1; z <= 1; z++) {
+			for (int z = -1; z <= 1; z++) {
+				for (int y = -1; y <= 4; y++) {
 					if (x != 0 || y != 0 || z != 0) {
-						spreadBlocks.add(new Vector3(x, y, z));
+						blocks.add(new IntVector3(x, y, z));
 					}
 				}
 			}
-		}		
+		}
+		SPREAD_RANGE = new ListEffectRange(blocks);
 	}
 
 	public Fire(String name, int id) {
@@ -111,50 +114,36 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 	@Override
 	public EffectRange getDynamicRange() {
-		return dynamicRange;
+		return SPREAD_RANGE;
 	}
 
 	/**
-	 * Checks if a given block material can be burned by fire
+	 * Checks if the given fire block has a burn source at a certain face<br>
+	 * It checks if the fire has a {@link org.spout.vanilla.material.Burnable} block at the face
 	 * 
-	 * @param material to check
-	 * @return True if it can burn, False if not
+	 * @param block of the fire
+	 * @param to the face the source is
+	 * @return True if it has a source there, False if not
 	 */
-	public static boolean isBurnable(BlockMaterial material) {
+	public boolean hasBurningSource(Block block, BlockFace to) {
+		BlockMaterial material = block.translate(to).getMaterial();
 		return material instanceof Burnable && ((Burnable) material).getBurnPower() > 0;
 	}
 
 	/**
-	 * Checks if the given fire block can actually spread out<br>
-	 * It checks if the fire has a burnable block nearby
+	 * Checks if the given fire block has a burn source<br>
+	 * It checks if the fire has a {@link org.spout.vanilla.material.Burnable} block nearby
 	 * 
 	 * @param block of the fire
-	 * @return True if it can spread, False if not
+	 * @return True if it has a source, False if not
 	 */
 	public boolean hasBurningSource(Block block) {
 		for (BlockFace face : BlockFaces.NESWBT) {
-			if (isBurnable(block.translate(face).getMaterial())) {
+			if (hasBurningSource(block, face)) {
 				return true;
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * Causes a single spread call to a random neighbor<br>
-	 * May not actually create new fire.
-	 * 
-	 * @param block to spread from
-	 */
-	public void onSpread(Block block) {
-		Vector3 offset = spreadBlocks.get((int) (Math.random() * spreadBlocks.size()));
-		block = block.translate(offset);
-		if (block.getMaterial() instanceof Liquid) {
-			return;
-		}
-		if (this.canPlace(block, (short) 0, BlockFace.BOTTOM, false)) {
-			this.onPlacement(block, (short) 0, BlockFace.BOTTOM, false);
-		}
 	}
 
 	/**
@@ -196,7 +185,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
             }
 
             // Put fire in it's place?
-            if (random.nextInt(fireStrength + 10) < 5) { //TODO: && !world.isAboveGround(x, y, z)) {
+            if (random.nextInt(fireStrength + 10) < 5 && hasBurningSource(block)) { //TODO: && !world.isAboveGround(x, y, z)) {
                 int newData = fireStrength + random.nextInt(5) / 4;
                 if (newData > 15) {
                     newData = 15;
@@ -205,27 +194,15 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
             }
 		}
 	}
-	
-	private void scheduleNext(Block block) {
-		//TODO: Get correct randomness...
+
+	@Override
+	public void onPlacement(Block block, Region r, long currentTime) {
 		block.dynamicUpdate(block.getWorld().getAge() + 2000);
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
-		scheduleNext(b);
-	}
-	
-	@Override
 	public void onDynamicUpdate(Block b, Region r, long updateTime, long queuedTime, int data, Object hint) {
-		boolean degrades = this.canDegrade(b);
 		Random rand = new Random();
-
-		// Fade out fire if raining
-		if (degrades && this.hasRainNearby(b)) {
-			this.onDestroy(b);
-			return;
-		}
 
 		// Make fire strength increase over time
 		short blockData = b.getData();
@@ -233,31 +210,81 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 			b.setData(blockData + rand.nextInt(4) / 3);
 		}
 
-		if (degrades) {
+		if (this.canDegrade(b)) {
+			// Fade out fire if raining
+			if (this.hasRainNearby(b)) {
+				this.onDestroy(b);
+				return;
+			}
+
 			// Fires without source burn less long
 			if (!hasBurningSource(b) && data > 3) {
 				this.onDestroy(b);
 				return;
 			}
 
-			// If fire is done with and the block below can not combust, destroy
-			if (data == 15 && rand.nextInt(4) == 0 && !isBurnable(b.translate(BlockFace.BOTTOM).getMaterial())) {
+			// If fire is done with and the block below can not support fire, destroy
+			if (data == 15 && rand.nextInt(4) == 0 && !hasBurningSource(b, BlockFace.BOTTOM)) {
 				this.onDestroy(b);
 				return;
 			}
 		}
 
 		// Try to instantly combust surrounding blocks
-		for (BlockFace face : BlockFaces.NESW) {
-			tryCombust(b.translate(face), rand, data, 300);
+		for (BlockFace face : BlockFaces.NESWBT) {
+			tryCombust(b.translate(face), rand, data, BlockFaces.TB.contains(face) ? 250 : 300);
 		}
-		tryCombust(b.translate(BlockFace.TOP), rand, data, 250);
-		tryCombust(b.translate(BlockFace.BOTTOM), rand, data, 250);
 
 		// Spreading logic
-		this.onSpread(b);
+		int chanceFactor, firePower, netChance;
+		Block sBlock;
+		EffectIterator iter = SPREAD_RANGE.getEffectIterator();
+		while (iter.hasNext()) {
+			IntVector3 offset = iter.next();
+
+			// Don't spread to the middle or to non-air and other fire blocks
+			if (offset.getX() == 0 && offset.getY() == 0 && offset.getZ() == 0) {
+				continue;
+			}
+			sBlock = b.translate(offset.getX(), offset.getY(), offset.getZ());
+			if (!sBlock.isMaterial(VanillaMaterials.AIR, this)) {
+				continue;
+			}
+
+			// Get power level for this fire
+			firePower = 0;
+			for (BlockFace face : BlockFaces.NESWBT) {
+				BlockMaterial mat = sBlock.translate(face).getMaterial();
+				if (mat instanceof Burnable) {
+					firePower = Math.max(firePower, ((Burnable) mat).getBurnPower());
+				}
+			}
+			if (firePower == 0) {
+				continue;
+			}
+
+			// Calculate and use the net chance of spreading
+			// Higher blocks have a lower chance of spreading
+			if (offset.getY() > 1) {
+				chanceFactor = (int) (offset.getY() * 100);
+			} else {
+				chanceFactor = 100;
+			}
+			netChance = (firePower + 40) / (data + 30);
+            if (netChance <= 0 || rand.nextInt(chanceFactor) > netChance) {
+                continue;
+            }
+
+            // Don't spread if it has rain falling nearby
+            if (hasRainNearby(sBlock)) {
+            	continue;
+            }
+
+            // Set new fire block with randomly increasing power (1/4 chance for +1 for fire power)
+            sBlock.setMaterial(this, Math.min(15, data + rand.nextInt(5) / 4));
+		}
 
 		// Schedule for a next update
-		this.scheduleNext(b);
+		b.dynamicUpdate(b.getWorld().getAge() + 2000);
 	}
 }

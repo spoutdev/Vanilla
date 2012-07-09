@@ -40,7 +40,8 @@ import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 
-public class Snow extends GroundAttachable implements Mineable, RandomBlockMaterial, InitializableMaterial {	public Snow(String name, int id) {
+public class Snow extends GroundAttachable implements Mineable, RandomBlockMaterial, InitializableMaterial {
+	public Snow(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false).setHardness(0.1F).setResistance(0.2F).setTransparent();
 		this.getOcclusion().set(BlockFace.BOTTOM);

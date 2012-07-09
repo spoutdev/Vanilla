@@ -29,8 +29,13 @@ package org.spout.vanilla.material.block.solid;
 import java.util.Random;
 
 import org.spout.api.geo.World;
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.RandomBlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.range.CubicEffectRange;
+import org.spout.api.material.range.EffectIterator;
+import org.spout.api.material.range.EffectRange;
+import org.spout.api.math.IntVector3;
 
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
@@ -40,7 +45,7 @@ import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 
 public class Grass extends Solid implements Mineable, RandomBlockMaterial, InitializableMaterial {
-	private static final int GROWTH_RANGE = 2;
+	private static final EffectRange GROWTH_RANGE = new CubicEffectRange(2);
 	public Grass(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(0.8F);
@@ -60,25 +65,20 @@ public class Grass extends Solid implements Mineable, RandomBlockMaterial, Initi
 	public void onRandomTick(World world, int x, int y, int z) {
 		final Random r = new Random(world.getAge());
 		//Attempt to decay grass
-		BlockMaterial above = world.getBlockMaterial(x, y + 1, z);
-		if (above.isOpaque()) {
-			world.setBlockMaterial(x, y, z, VanillaMaterials.DIRT, (short) 0, world);
+		Block block = world.getBlock(x, y, z);
+		if (block.translate(BlockFace.TOP).getMaterial().isOpaque()) {
+			block.setMaterial(VanillaMaterials.DIRT);
 		} else {
-		//Attempt to grow grass
-			for (int dx = -GROWTH_RANGE; dx < GROWTH_RANGE; dx++) {
-				for (int dy = -GROWTH_RANGE; dy < GROWTH_RANGE; dy++) {
-					for (int dz = -GROWTH_RANGE; dz < GROWTH_RANGE; dz++) {
-						if (r.nextInt(4) == 0) {
-							int light = Math.max(world.getBlockLight(x + dx, y + dy, z + dz), world.getBlockSkyLight(x + dx, y + dy, z + dz));
-							if (light > 7) {
-								BlockMaterial material = world.getBlockMaterial(x + dx, y + dy, z + dz);
-								if (material == VanillaMaterials.DIRT) {
-									material = world.getBlockMaterial(x + dx, y + dy + 1, z + dz);
-									if (!material.isOpaque()) {
-										world.setBlockMaterial(x + dx, y + dy, z + dz, VanillaMaterials.GRASS, (short) 0, world);
-									}
-								}
-							}
+			//Attempt to grow grass
+			Block around;
+			EffectIterator iter = GROWTH_RANGE.getEffectIterator();
+			while (iter.hasNext()) {
+				IntVector3 next = iter.next();
+				if (r.nextInt(4) == 0) {
+					around = block.translate(next.getX(), next.getY(), next.getZ());
+					if (around.isMaterial(VanillaMaterials.DIRT) && around.getLight() > 7) {
+						if (!around.translate(BlockFace.TOP).getMaterial().isOpaque()) {
+							around.setMaterial(VanillaMaterials.GRASS);
 						}
 					}
 				}

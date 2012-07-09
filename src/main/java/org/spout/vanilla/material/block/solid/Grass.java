@@ -45,6 +45,7 @@ import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 
 public class Grass extends Solid implements Mineable, RandomBlockMaterial, InitializableMaterial {
+	private static final byte MIN_GROWTH_LIGHT = 7;
 	private static final EffectRange GROWTH_RANGE = new CubicEffectRange(2);
 	public Grass(String name, int id) {
 		super(name, id);
@@ -76,7 +77,7 @@ public class Grass extends Solid implements Mineable, RandomBlockMaterial, Initi
 				IntVector3 next = iter.next();
 				if (r.nextInt(4) == 0) {
 					around = block.translate(next.getX(), next.getY(), next.getZ());
-					if (around.isMaterial(VanillaMaterials.DIRT) && around.getLight() > 7) {
+					if (around.isMaterial(VanillaMaterials.DIRT) && around.getLight() > MIN_GROWTH_LIGHT) {
 						if (!around.translate(BlockFace.TOP).getMaterial().isOpaque()) {
 							around.setMaterial(VanillaMaterials.GRASS);
 						}

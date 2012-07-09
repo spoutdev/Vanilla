@@ -36,15 +36,14 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectIterator;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 import org.spout.api.math.IntVector3;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.Data;
 import org.spout.vanilla.data.Dimension;
+import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -146,6 +145,10 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		return false;
 	}
 
+	private static boolean isAboveGround(Block block) {
+		return false; //TODO: Expose API columns and/or heightmap to get height!
+	}
+
 	/**
 	 * Gets if rain is falling nearby the block specified
 	 * 
@@ -153,7 +156,14 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	 * @return True if it is raining, False if not
 	 */
 	public boolean hasRainNearby(Block block) {
-		//TODO: Implement this!
+		Weather weather = block.getWorld().getDataMap().get(Data.WEATHER);
+		if (weather == Weather.RAIN || weather == Weather.THUNDERSTORM) {
+			for (BlockFace face : BlockFaces.NESW) {
+				if (isAboveGround(block.translate(face))) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
@@ -185,7 +195,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
             }
 
             // Put fire in it's place?
-            if (random.nextInt(fireStrength + 10) < 5 && hasBurningSource(block)) { //TODO: && !world.isAboveGround(x, y, z)) {
+            if (random.nextInt(fireStrength + 10) < 5 && hasBurningSource(block) && isAboveGround(block)) {
                 int newData = fireStrength + random.nextInt(5) / 4;
                 if (newData > 15) {
                     newData = 15;
@@ -247,7 +257,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 				continue;
 			}
 			sBlock = b.translate(offset.getX(), offset.getY(), offset.getZ());
-			if (!sBlock.isMaterial(VanillaMaterials.AIR, this)) {
+			if (!sBlock.isMaterial(VanillaMaterials.AIR)) {
 				continue;
 			}
 

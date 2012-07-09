@@ -147,14 +147,14 @@ public abstract class NormalBiome extends VanillaBiome {
 		final int heightMapHeight = getHeightMapValue(x, z, densityTerrainHeightMin);
 
 		for (int y = startY; y < endY; y++) {
-			if (y <= densityTerrainHeightMin) {
+			if (y < densityTerrainHeightMin) {
 				for (; y <= heightMapHeight && y < endY; y++) {
 					blockData.set(x, y, z, VanillaMaterials.STONE.getId());
 				}
 				if (y >= endY) { // if not, we fill the rest with density terrain
 					break;
 				}
-			} else if (y > densityTerrainHeightMax) {
+			} else if (y >= densityTerrainHeightMax) {
 				break; // we're done for the entire world column!
 			}
 			if (TURBULENT_MASTER.GetValue(x, y, z) > 0) {

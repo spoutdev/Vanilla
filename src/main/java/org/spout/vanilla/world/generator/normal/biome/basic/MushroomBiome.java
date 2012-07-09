@@ -31,10 +31,11 @@ import java.util.Random;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 
 public class MushroomBiome extends GrassyBiome {
 	public MushroomBiome(int biomeId) {
-		super(biomeId, new OreDecorator());
+		super(biomeId, new OreDecorator(), new SandAndClayDecorator());
 		setMinMax((byte) 67, (byte) 72);
 		this.topCover = VanillaMaterials.MYCELIUM;
 	}

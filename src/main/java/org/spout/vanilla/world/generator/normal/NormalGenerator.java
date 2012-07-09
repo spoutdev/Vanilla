@@ -47,7 +47,6 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 
 	@Override
 	public void registerBiomes() {
-		//selector = new WhittakerBiomeSelector(2.0, 2.0, 0.35, 0.05, true);
 		// if you want to check out a particular biome, use this!
 		//selector = new PerBlockBiomeSelector(VanillaBiomes.MUSHROOM_SHORE);
 		selector = new VanillaBiomeSelector(5f);

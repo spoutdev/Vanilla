@@ -31,8 +31,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.spout.api.generator.WorldGeneratorObject;
+import org.spout.vanilla.material.VanillaMaterials;
 
 import org.spout.vanilla.world.generator.nether.object.NetherPortalObject;
+import org.spout.vanilla.world.generator.normal.object.BlockPatchObject;
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;
 import org.spout.vanilla.world.generator.normal.object.OreObject;
 import org.spout.vanilla.world.generator.normal.object.OreObject.OreType;
@@ -85,6 +87,8 @@ public class VanillaObjects {
 	public static final WellObject WELL = new WellObject();
 	public static final SpireObject SPIRE = new SpireObject();
 	public static final NetherPortalObject NETHER_PORTAL = new NetherPortalObject();
+	public static final BlockPatchObject SAND = new BlockPatchObject(VanillaMaterials.SAND);
+	public static final BlockPatchObject CLAY = new BlockPatchObject(VanillaMaterials.CLAY_BLOCK);
 	// for the '/obj' test command
 	private static final Map<String, WorldGeneratorObject> BY_NAME = new HashMap<String, WorldGeneratorObject>();
 
@@ -94,6 +98,10 @@ public class VanillaObjects {
 		SMALL_JUNGLE_TREE.setBaseHeight((byte) 4);
 		SMALL_JUNGLE_TREE.setRandomHeight((byte) 10);
 		SMALL_JUNGLE_TREE.addLogVines(true);
+		CLAY.setHeightRadius((byte) 1);
+		CLAY.getOverridableMaterials().clear();
+		CLAY.getOverridableMaterials().add(VanillaMaterials.DIRT);
+		CLAY.getOverridableMaterials().add(VanillaMaterials.CLAY_BLOCK);
 		// for the '/obj' test command
 		for (Field objectField : VanillaObjects.class.getDeclaredFields()) {
 			objectField.setAccessible(true);

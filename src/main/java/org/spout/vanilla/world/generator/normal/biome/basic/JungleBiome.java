@@ -31,6 +31,7 @@ import java.util.Random;
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
@@ -41,7 +42,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class JungleBiome extends GrassyBiome {
 	public JungleBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new TreeDecorator(new JungleTreeWGOFactory()), new SugarCaneDecorator(), new PumpkinDecorator());
+		super(biomeId, new OreDecorator(), new SandAndClayDecorator(), new TreeDecorator(new JungleTreeWGOFactory()), new SugarCaneDecorator(), new PumpkinDecorator());
 		setMinMax((byte) 67, (byte) 73);
 	}
 

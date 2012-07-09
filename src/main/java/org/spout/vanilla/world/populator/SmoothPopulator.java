@@ -85,9 +85,7 @@ public class SmoothPopulator extends Populator {
 								smoothBiome.setTopCover(((GrassyBiome) current).getTopCover());
 								smoothBiomeMap[xx + zz * CHUNK_SIZE] = smoothBiome;
 							} else if (current instanceof SandyBiome) {
-								final SandySmoothBiome smoothBiome = new SandySmoothBiome();
-								smoothBiome.setHasWater(((SandyBiome) current).hasWater());
-								smoothBiomeMap[xx + zz * CHUNK_SIZE] = smoothBiome;
+								smoothBiomeMap[xx + zz * CHUNK_SIZE] = new SandySmoothBiome();
 							} else if (current instanceof IcyBiome) {
 								smoothBiomeMap[xx + zz * CHUNK_SIZE] = new IcySmoothBiome();
 							} else {
@@ -188,10 +186,6 @@ public class SmoothPopulator extends Populator {
 			this.min = min;
 			this.max = max;
 			this.diff = (byte) (max - min);
-		}
-
-		public void setHasWater(boolean hasWater) {
-			this.hasWater = hasWater;
 		}
 	}
 

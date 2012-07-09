@@ -37,7 +37,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class SwampBiome extends GrassyBiome {
 	public SwampBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new TreeDecorator(new SwampTreeWGOFactory()), new SugarCaneDecorator());
+		super(biomeId, new OreDecorator(), new TreeDecorator(new SwampTreeWGOFactory()), new SugarCaneDecorator((byte) 6, (byte) 25, (byte) 2));
 		setMinMax((byte) 60, (byte) 64);
 	}
 

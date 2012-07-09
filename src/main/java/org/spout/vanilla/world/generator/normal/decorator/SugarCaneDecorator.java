@@ -40,9 +40,22 @@ import org.spout.vanilla.world.generator.normal.object.largeplant.SugarCaneStack
  * Decorator that decorates a biome with sugar canes.
  */
 public class SugarCaneDecorator extends Decorator {
-	private static final byte ATTEMPTS = 20;
-	private static final byte AMOUNT = 6;
 	private static final SugarCaneStackObject CANES = new SugarCaneStackObject();
+	private final byte maxClusterSize;
+	private final byte clusterPlaceAttempts;
+	private final byte numberOfClusters;
+
+	public SugarCaneDecorator() {
+		this.maxClusterSize = 6;
+		this.clusterPlaceAttempts = 20;
+		this.numberOfClusters = 1;
+	}
+
+	public SugarCaneDecorator(byte maxClusterSize, byte clusterPlaceAttempts, byte numberOfClusters) {
+		this.maxClusterSize = maxClusterSize;
+		this.clusterPlaceAttempts = clusterPlaceAttempts;
+		this.numberOfClusters = numberOfClusters;
+	}
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -51,16 +64,18 @@ public class SugarCaneDecorator extends Decorator {
 		}
 		final World world = chunk.getWorld();
 		CANES.setRandom(random);
-		for (byte count = 0; count < ATTEMPTS; count++) {
+		byte successfulClusterCount = 0;
+		for (byte count = 0; count < clusterPlaceAttempts; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);
 			if (y == -1 || !CANES.canPlaceObject(world, x, y, z)) {
 				continue;
 			}
+			successfulClusterCount++;
 			CANES.randomize();
 			CANES.placeObject(world, x, y, z);
-			for (byte placed = 1; placed < AMOUNT; placed++) {
+			for (byte placed = 1; placed < maxClusterSize; placed++) {
 				final int xx = x - 3 + random.nextInt(7);
 				final int zz = z - 3 + random.nextInt(7);
 				CANES.randomize();
@@ -68,7 +83,9 @@ public class SugarCaneDecorator extends Decorator {
 					CANES.placeObject(world, xx, y, zz);
 				}
 			}
-			return;
+			if (successfulClusterCount >= numberOfClusters) {
+				return;
+			}
 		}
 	}
 

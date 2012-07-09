@@ -33,7 +33,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 public abstract class SandyBiome extends NormalBiome {
-	protected boolean hasWater = true;
 
 	public SandyBiome(int biomeId, Decorator... decorators) {
 		super(biomeId, decorators);
@@ -80,7 +79,7 @@ public abstract class SandyBiome extends NormalBiome {
 			if (id == VanillaMaterials.AIR.getId()) {
 				hasSurface = true;
 				groundCoverDepth = 0;
-				if (hasWater && y <= NormalGenerator.SEA_LEVEL) {
+				if (y <= NormalGenerator.SEA_LEVEL) {
 					blockData.set(x, y, z, VanillaMaterials.STATIONARY_WATER.getId());
 				}
 			} else {
@@ -99,9 +98,5 @@ public abstract class SandyBiome extends NormalBiome {
 		}
 		// place bedrock
 		super.replaceBlocks(blockData, x, chunkY, z);
-	}
-
-	public boolean hasWater() {
-		return hasWater;
 	}
 }

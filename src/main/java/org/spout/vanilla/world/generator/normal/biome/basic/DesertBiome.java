@@ -36,9 +36,8 @@ import org.spout.vanilla.world.generator.normal.decorator.WellDecorator;
 
 public class DesertBiome extends SandyBiome {
 	public DesertBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new CactusDecorator(), new SugarCaneDecorator(), new WellDecorator());
+		super(biomeId, new OreDecorator(), new CactusDecorator(), new SugarCaneDecorator((byte) 6, (byte) 30, (byte) 3), new WellDecorator());
 		setMinMax((byte) 66, (byte) 69);
-		this.hasWater = false;
 	}
 
 	@Override

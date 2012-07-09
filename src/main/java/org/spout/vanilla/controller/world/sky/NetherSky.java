@@ -36,6 +36,12 @@ public class NetherSky extends VanillaSky {
 	}
 
 	@Override
+	public void onAttached() {
+		super.onAttached();
+		this.getWorld().setSkyLight(MIN_SKY_LIGHT);
+	}
+
+	@Override
 	public void updateTime(long time) {
 	}
 

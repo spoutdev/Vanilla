@@ -36,12 +36,18 @@ public class TheEndSky extends VanillaSky {
 	}
 
 	@Override
+	public void onAttached() {
+		super.onAttached();
+		this.getWorld().setSkyLight(MIN_SKY_LIGHT);
+	}
+
+	@Override
 	protected void updateTime(long time) {
 		//To change body of implemented methods use File | Settings | File Templates.
 	}
 
 	@Override
-	protected void updateWeather(Weather oldWeather, Weather newWeather) {
+	public void updateWeather(Weather oldWeather, Weather newWeather) {
 		//To change body of implemented methods use File | Settings | File Templates.
 	}
 }

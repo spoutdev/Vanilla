@@ -129,7 +129,7 @@ public class PondObject extends RandomObject {
 		for (byte px = 0; px < 16; px++) {
 			for (byte pz = 0; pz < 16; pz++) {
 				for (byte py = -1; py < 4; py++) {
-					if (world.getBlockSkyLight(x + px, y + py + 1, z + pz) > 0) {
+					if (world.getBlockSkyLightRaw(x + px, y + py + 1, z + pz) > 0) {
 						final Block block = world.getBlock(x + px, y + py, z + pz);
 						final BlockMaterial material = block.getMaterial();
 						if (material == VanillaMaterials.DIRT) {

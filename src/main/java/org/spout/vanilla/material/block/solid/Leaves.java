@@ -34,6 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
@@ -43,7 +44,7 @@ import org.spout.vanilla.material.item.misc.Shears;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 
-public class Leaves extends Solid implements Mineable {
+public class Leaves extends Solid implements Mineable, Burnable {
 	public static final Leaves DEFAULT = new Leaves("Leaves");
 	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 1, DEFAULT);
 	public static final Leaves BIRCH = new Leaves("Birch Leaves", 2, DEFAULT);
@@ -62,17 +63,26 @@ public class Leaves extends Solid implements Mineable {
 
 	@Override
 	public boolean canSupport(BlockMaterial mat, BlockFace face) {
-		return mat.equals(VanillaMaterials.VINES) || mat instanceof SignBase;
+		if (mat.equals(VanillaMaterials.FIRE)) {
+			return true;
+		} else {
+			return mat.equals(VanillaMaterials.VINES) || mat instanceof SignBase;
+		}
+	}
+
+	@Override
+	public int getBurnPower() {
+		return 30;
+	}
+
+	@Override
+	public int getCombustChance() {
+		return 60;
 	}
 
 	@Override
 	public boolean isRedstoneConductor() {
 		return false;
-	}
-
-	@Override
-	public boolean canBurn() {
-		return true;
 	}
 
 	@Override

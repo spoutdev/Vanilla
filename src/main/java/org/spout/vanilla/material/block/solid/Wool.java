@@ -29,14 +29,18 @@ package org.spout.vanilla.material.block.solid;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 
-public class Wool extends Solid implements Mineable {
+public class Wool extends Solid implements Mineable, Burnable {
 	public static final Wool WHITE_WOOL = new Wool("White Wool");
 	public static final Wool ORANGE_WOOL = new Wool("Orange Wool", WoolColor.ORANGE, WHITE_WOOL);
 	public static final Wool MAGENTA_WOOL = new Wool("Magenta Wool", WoolColor.MAGENTA, WHITE_WOOL);
@@ -67,6 +71,16 @@ public class Wool extends Solid implements Mineable {
 		this.setHardness(0.8F).setResistance(1.3F);
 	}
 
+	@Override
+	public int getBurnPower() {
+		return 30;
+	}
+
+	@Override
+	public int getCombustChance() {
+		return 60;
+	}
+
 	public WoolColor getColor() {
 		return color;
 	}
@@ -77,8 +91,12 @@ public class Wool extends Solid implements Mineable {
 	}
 
 	@Override
-	public boolean canBurn() {
-		return true;
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		if (material.equals(VanillaMaterials.FIRE)) {
+			return true;
+		} else {
+			return super.canSupport(material, face);
+		}
 	}
 
 	@Override

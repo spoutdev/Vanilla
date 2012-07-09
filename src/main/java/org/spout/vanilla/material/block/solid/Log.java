@@ -36,8 +36,10 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.Furnace;
@@ -47,7 +49,7 @@ import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCraftable {
+public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCraftable, Burnable {
 	public static final Log DEFAULT = new Log("Wood", Sapling.DEFAULT);
 	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT, Sapling.SPRUCE);
 	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT, Sapling.BIRCH);
@@ -105,6 +107,16 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 	}
 
 	@Override
+	public int getBurnPower() {
+		return 5;
+	}
+
+	@Override
+	public int getCombustChance() {
+		return 5;
+	}
+
+	@Override
 	public ItemStack getResult() {
 		return new ItemStack(Coal.CHARCOAL, 1);
 	}
@@ -120,8 +132,12 @@ public class Log extends Solid implements DynamicMaterial, Fuel, Plant, TimedCra
 	}
 
 	@Override
-	public boolean canBurn() {
-		return true;
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		if (material.equals(VanillaMaterials.FIRE)) {
+			return true;
+		} else {
+			return super.canSupport(material, face);
+		}
 	}
 
 	@Override

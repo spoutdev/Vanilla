@@ -32,6 +32,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.object.moving.PrimedTnt;
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
@@ -40,7 +41,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class TNT extends Solid implements Mineable, RedstoneTarget {
+public class TNT extends Solid implements Mineable, RedstoneTarget, Burnable {
 	public TNT(String name, int id) {
 		super(name, id);
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
@@ -52,8 +53,18 @@ public class TNT extends Solid implements Mineable, RedstoneTarget {
 	}
 
 	@Override
+	public int getBurnPower() {
+		return 15;
+	}
+
+	@Override
+	public int getCombustChance() {
+		return 100;
+	}
+
+	@Override
 	public boolean canSupport(BlockMaterial mat, BlockFace face) {
-		return false;
+		return mat.equals(VanillaMaterials.FIRE);
 	}
 
 	@Override
@@ -70,11 +81,6 @@ public class TNT extends Solid implements Mineable, RedstoneTarget {
 		if (this.isReceivingPower(block)) {
 			this.onIgnite(block);
 		}
-	}
-
-	@Override
-	public boolean canBurn() {
-		return true;
 	}
 
 	@Override

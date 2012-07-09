@@ -37,16 +37,27 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.controller.living.Living;
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 
-public class Vines extends VanillaBlockMaterial implements Plant {
+public class Vines extends VanillaBlockMaterial implements Plant, Burnable {
 	public Vines(String name, int id) {
 		super(name, id);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
+	}
+
+	@Override
+	public int getBurnPower() {
+		return 15;
+	}
+
+	@Override
+	public int getCombustChance() {
+		return 100;
 	}
 
 	private int getMask(BlockFace face) {
@@ -157,7 +168,7 @@ public class Vines extends VanillaBlockMaterial implements Plant {
 
 	@Override
 	public boolean canSupport(BlockMaterial material, BlockFace face) {
-		return false;
+		return material.equals(VanillaMaterials.FIRE);
 	}
 
 	@Override

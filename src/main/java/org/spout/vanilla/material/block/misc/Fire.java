@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.misc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
@@ -39,9 +40,13 @@ import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.data.Data;
+import org.spout.vanilla.data.Dimension;
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.material.block.solid.TNT;
 
 public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	private static EffectRange dynamicRange = new CubicEffectRange(1);
@@ -116,7 +121,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	 * @return True if it can burn, False if not
 	 */
 	public static boolean isBurnable(BlockMaterial material) {
-		return material instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) material).canBurn();
+		return material instanceof Burnable && ((Burnable) material).getBurnPower() > 0;
 	}
 
 	/**
@@ -126,7 +131,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	 * @param block of the fire
 	 * @return True if it can spread, False if not
 	 */
-	public boolean canSpread(Block block) {
+	public boolean hasBurningSource(Block block) {
 		for (BlockFace face : BlockFaces.NESWBT) {
 			if (isBurnable(block.translate(face).getMaterial())) {
 				return true;
@@ -153,53 +158,104 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	}
 
 	/**
+	 * Gets if rain is falling nearby the block specified
+	 * 
+	 * @param block to check it nearby of
+	 * @return True if it is raining, False if not
+	 */
+	public boolean hasRainNearby(Block block) {
+		//TODO: Implement this!
+		return false;
+	}
+
+	/**
 	 * Checks if the fire can degrade (disappear over time)
+	 * 
 	 * @param block of the fire
 	 * @return True if it can degrade, False if not
 	 */
 	public boolean canDegrade(Block block) {
-		if (block.translate(BlockFace.BOTTOM).isMaterial(VanillaMaterials.NETHERRACK)) {
+		BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial();
+		if (below.equals(VanillaMaterials.NETHERRACK)) {
+			return false;
+		}
+		if (below.equals(VanillaMaterials.BEDROCK) && block.getWorld().getDataMap().get(Data.DIMENSION) == Dimension.THE_END) {
 			return false;
 		}
 		return true;
 	}
 
+	public void tryCombust(Block block, Random random, int fireStrength, int chance) {
+		BlockMaterial mat = block.getMaterial();
+		if (mat instanceof Burnable && random.nextInt(((Burnable) mat).getCombustChance()) < chance) {
+            // Destroy the old block
+			if (mat instanceof TNT) {
+            	((TNT) mat).onIgnite(block); // Ignite TNT
+            } else {
+            	block.setMaterial(VanillaMaterials.AIR); // prevent drops
+            }
+
+            // Put fire in it's place?
+            if (random.nextInt(fireStrength + 10) < 5) { //TODO: && !world.isAboveGround(x, y, z)) {
+                int newData = fireStrength + random.nextInt(5) / 4;
+                if (newData > 15) {
+                    newData = 15;
+                }
+                block.setMaterial(this, fireStrength);
+            }
+		}
+	}
+	
 	private void scheduleNext(Block block) {
 		//TODO: Get correct randomness...
-		block.dynamicUpdate(block.getWorld().getAge() + (long) (Math.random() * 400) + 800);
+		block.dynamicUpdate(block.getWorld().getAge() + 2000);
 	}
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		scheduleNext(b);
 	}
-
+	
 	@Override
 	public void onDynamicUpdate(Block b, Region r, long updateTime, long queuedTime, int data, Object hint) {
-		if (this.canSpread(b)) {
-			// Destroy attached blocks using random chance (1/8 chance)
-			//TODO: Get correct randomness...
-			if (Math.random() < 0.125) {
-				Block att = b.translate(BlockFaces.NESWBT.get((int) (Math.random() * 6)));
-				if (isBurnable(att.getMaterial())) {
-					att.setMaterial(VanillaMaterials.AIR);
-				}
-			}
+		boolean degrades = this.canDegrade(b);
+		Random rand = new Random();
 
-			// Spread fire
-			this.onSpread(b);
+		// Fade out fire if raining
+		if (degrades && this.hasRainNearby(b)) {
+			this.onDestroy(b);
+			return;
 		}
 
-		// Fire degradation
-		if (this.canDegrade(b)) {
-			short bdata = b.getData();
-			if (bdata >= 15) {
-				b.setMaterial(VanillaMaterials.AIR);
+		// Make fire strength increase over time
+		short blockData = b.getData();
+		if (blockData < 15) {
+			b.setData(blockData + rand.nextInt(4) / 3);
+		}
+
+		if (degrades) {
+			// Fires without source burn less long
+			if (!hasBurningSource(b) && data > 3) {
+				this.onDestroy(b);
 				return;
-			} else {
-				b.setData(bdata + 1);
+			}
+
+			// If fire is done with and the block below can not combust, destroy
+			if (data == 15 && rand.nextInt(4) == 0 && !isBurnable(b.translate(BlockFace.BOTTOM).getMaterial())) {
+				this.onDestroy(b);
+				return;
 			}
 		}
+
+		// Try to instantly combust surrounding blocks
+		for (BlockFace face : BlockFaces.NESW) {
+			tryCombust(b.translate(face), rand, data, 300);
+		}
+		tryCombust(b.translate(BlockFace.TOP), rand, data, 250);
+		tryCombust(b.translate(BlockFace.BOTTOM), rand, data, 250);
+
+		// Spreading logic
+		this.onSpread(b);
 
 		// Schedule for a next update
 		this.scheduleNext(b);

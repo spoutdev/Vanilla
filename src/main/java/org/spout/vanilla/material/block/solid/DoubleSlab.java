@@ -71,11 +71,6 @@ public class DoubleSlab extends Solid implements Mineable {
 	}
 
 	@Override
-	public boolean canBurn() {
-		return this == WOOD_SLAB;
-	}
-
-	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}

@@ -298,13 +298,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	/**
-	 * Gets if this block material can burn and be destroyed as a result of fire
-	 */
-	public boolean canBurn() {
-		return false;
-	}
-
-	/**
 	 * Gets the move reaction of block material for the block specified
 	 * @param block that is being moved
 	 * @return the move reaction

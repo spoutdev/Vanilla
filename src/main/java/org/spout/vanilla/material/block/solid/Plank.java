@@ -26,16 +26,20 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class Plank extends Solid implements Fuel, Mineable {
+public class Plank extends Solid implements Fuel, Mineable, Burnable {
 	public static final Plank PLANK = new Plank("Oak Plank");
 	public static final Plank PINE = new Plank("Pine Plank", WoodType.PINE, PLANK);
 	public static final Plank BIRCH = new Plank("Birch Plank", WoodType.BIRCH, PLANK);
@@ -61,8 +65,12 @@ public class Plank extends Solid implements Fuel, Mineable {
 	}
 
 	@Override
-	public boolean canBurn() {
-		return true;
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		if (material.equals(VanillaMaterials.FIRE)) {
+			return true;
+		} else {
+			return super.canSupport(material, face);
+		}
 	}
 
 	public WoodType getType() {
@@ -99,5 +107,15 @@ public class Plank extends Solid implements Fuel, Mineable {
 	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
+	}
+
+	@Override
+	public int getBurnPower() {
+		return 5;
+	}
+
+	@Override
+	public int getCombustChance() {
+		return 20;
 	}
 }

@@ -45,7 +45,7 @@ public class SugarCaneBlock extends GroundAttachable implements InitializableMat
 	public SugarCaneBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
-		this.addAllowedBase(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND, VanillaMaterials.SUGAR_CANE_BLOCK);
+		this.addAllowedBase(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND);
 	}
 
 	@Override
@@ -54,27 +54,29 @@ public class SugarCaneBlock extends GroundAttachable implements InitializableMat
 	}
 
 	@Override
-	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		return super.canAttachTo(material, face) && this.allowedBases.contains(material);
-	}
-
-	@Override
-	public boolean canSupport(BlockMaterial material, BlockFace face) {
-		return face == BlockFace.TOP && material.equals(VanillaMaterials.SUGAR_CANE_BLOCK);
-	}
-
-	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
-		if (super.canAttachTo(block, face)) {
-			BlockMaterial wmat;
+		BlockMaterial material = block.getMaterial();
+		if (!super.canAttachTo(material, face)) {
+			return false;
+		}
+		// Can always attach to sugar canes
+		if (material.equals(VanillaMaterials.SUGAR_CANE_BLOCK)) {
+			return true;
+		}
+		// Only attach to bases with water around it
+		if (this.allowedBases.contains(material)) {
 			for (BlockFace around : BlockFaces.NESW) {
-				wmat = block.translate(around).getMaterial();
-				if (wmat.equals(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+				if (block.translate(around).isMaterial(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 					return true;
 				}
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		return face == BlockFace.TOP && material.equals(VanillaMaterials.SUGAR_CANE_BLOCK);
 	}
 
 	public void addAllowedBase(Material... materials) {

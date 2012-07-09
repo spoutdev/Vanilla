@@ -66,12 +66,7 @@ public class Solid extends VanillaBlockMaterial {
 			return true;
 		}
 
-		//solids that can burn support fire on all sides
-		if (this.canBurn()) {
-			return true;
-		}
-
-		//other solids only support fire on top
+		//solids only support fire on top
 		return face == BlockFace.TOP;
 	}
 }

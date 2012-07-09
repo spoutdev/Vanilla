@@ -26,13 +26,17 @@
  */
 package org.spout.vanilla.material.block.stair;
 
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Stairs;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class WoodenStairs extends Stairs implements Fuel {
+public class WoodenStairs extends Stairs implements Fuel, Burnable {
 	public final float BURN_TIME = 15.f;
 
 	public WoodenStairs(String name, int id) {
@@ -51,7 +55,26 @@ public class WoodenStairs extends Stairs implements Fuel {
 	}
 
 	@Override
+	public boolean canSupport(BlockMaterial mat, BlockFace face) {
+		if (mat.equals(VanillaMaterials.FIRE)) {
+			return true;
+		} else {
+			return super.canSupport(mat, face);
+		}
+	}
+
+	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
+	}
+
+	@Override
+	public int getBurnPower() {
+		return 5;
+	}
+
+	@Override
+	public int getCombustChance() {
+		return 20;
 	}
 }

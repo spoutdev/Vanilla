@@ -34,10 +34,11 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class TallGrass extends DeadBush {
+public class TallGrass extends DeadBush implements Burnable {
 	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass");
 	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, DEAD_GRASS);
 	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS);
@@ -50,6 +51,21 @@ public class TallGrass extends DeadBush {
 	private TallGrass(String name, int data, TallGrass parent) {
 		super(name, 31, data, parent);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
+	}
+
+	@Override
+	public boolean canSupport(BlockMaterial mat, BlockFace face) {
+		return mat.equals(VanillaMaterials.FIRE);
+	}
+
+	@Override
+	public int getBurnPower() {
+		return 60;
+	}
+
+	@Override
+	public int getCombustChance() {
+		return 100;
 	}
 
 	@Override

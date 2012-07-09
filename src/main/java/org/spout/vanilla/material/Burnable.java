@@ -24,38 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.fence;
+package org.spout.vanilla.material;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
+/**
+ * A material that can be burned or strengthen nearby fires
+ */
+public interface Burnable {
+	/**
+	 * Gets the chance for this material to catch fire
+	 * 
+	 * @return the chance, a value from 0 to 100
+	 */
+	public int getCombustChance();
 
-import org.spout.vanilla.material.block.Fence;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.Instrument;
-
-public class NetherBrickFence extends Fence {
-	public NetherBrickFence(String name, int id) {
-		super(name, id);
-		this.setResistance(30.F);
-	}
-
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSDRUM;
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial().getMaterial() instanceof Pickaxe) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
-	}
+	/**
+	 * Gets the amount of power this material supplies to nearby fire<br>
+	 * This material can only keep the fire alive if the value is greater than 0
+	 * 
+	 * @return the fire power, a value from 0 to 100
+	 */
+	public int getBurnPower();
 }

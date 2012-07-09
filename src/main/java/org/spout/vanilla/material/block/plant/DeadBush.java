@@ -58,6 +58,11 @@ public class DeadBush extends GroundAttachable implements Plant {
 	}
 
 	@Override
+	public boolean canSupport(BlockMaterial mat, BlockFace face) {
+		return false;
+	}
+
+	@Override
 	public int getMinimumLightToGrow() {
 		return 0;
 	}

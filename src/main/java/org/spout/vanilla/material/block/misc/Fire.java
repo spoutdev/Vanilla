@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
@@ -36,9 +34,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectIterator;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.material.range.ListEffectRange;
 import org.spout.api.math.IntVector3;
 
 import org.spout.vanilla.data.Data;
@@ -50,21 +48,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.TNT;
 
 public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
-	private static final EffectRange SPREAD_RANGE;
-
-	static {
-		List<IntVector3> blocks = new ArrayList<IntVector3>();
-		for (int x = -1; x <= 1; x++) {
-			for (int z = -1; z <= 1; z++) {
-				for (int y = -1; y <= 4; y++) {
-					if (x != 0 || y != 0 || z != 0) {
-						blocks.add(new IntVector3(x, y, z));
-					}
-				}
-			}
-		}
-		SPREAD_RANGE = new ListEffectRange(blocks);
-	}
+	private static final EffectRange SPREAD_RANGE = new CuboidEffectRange(-1, -1, -1, 1, 4, 1);
 
 	public Fire(String name, int id) {
 		super(name, id);
@@ -145,10 +129,6 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		return false;
 	}
 
-	private static boolean isAboveGround(Block block) {
-		return false; //TODO: Expose API columns and/or heightmap to get height!
-	}
-
 	/**
 	 * Gets if rain is falling nearby the block specified
 	 * 
@@ -159,7 +139,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		Weather weather = block.getWorld().getDataMap().get(Data.WEATHER);
 		if (weather == Weather.RAIN || weather == Weather.THUNDERSTORM) {
 			for (BlockFace face : BlockFaces.NESW) {
-				if (isAboveGround(block.translate(face))) {
+				if (block.translate(face).isAtSurface()) {
 					return true;
 				}
 			}
@@ -184,27 +164,6 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		return true;
 	}
 
-	public void tryCombust(Block block, Random random, int fireStrength, int chance) {
-		BlockMaterial mat = block.getMaterial();
-		if (mat instanceof Burnable && random.nextInt(((Burnable) mat).getCombustChance()) < chance) {
-            // Destroy the old block
-			if (mat instanceof TNT) {
-            	((TNT) mat).onIgnite(block); // Ignite TNT
-            } else {
-            	block.setMaterial(VanillaMaterials.AIR); // prevent drops
-            }
-
-            // Put fire in it's place?
-            if (random.nextInt(fireStrength + 10) < 5 && hasBurningSource(block) && isAboveGround(block)) {
-                int newData = fireStrength + random.nextInt(5) / 4;
-                if (newData > 15) {
-                    newData = 15;
-                }
-                block.setMaterial(this, fireStrength);
-            }
-		}
-	}
-
 	@Override
 	public void onPlacement(Block block, Region r, long currentTime) {
 		block.dynamicUpdate(block.getWorld().getAge() + 2000);
@@ -221,19 +180,13 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		}
 
 		if (this.canDegrade(b)) {
-			// Fade out fire if raining
-			if (this.hasRainNearby(b)) {
+			// Fires without source burn less long, rain fades out fire
+			if (this.hasRainNearby(b) || (!hasBurningSource(b) && data > 3)) {
 				this.onDestroy(b);
 				return;
 			}
 
-			// Fires without source burn less long
-			if (!hasBurningSource(b) && data > 3) {
-				this.onDestroy(b);
-				return;
-			}
-
-			// If fire is done with and the block below can not support fire, destroy
+			// If fire is done with and the block below can not fuel fire, destroy
 			if (data == 15 && rand.nextInt(4) == 0 && !hasBurningSource(b, BlockFace.BOTTOM)) {
 				this.onDestroy(b);
 				return;
@@ -241,13 +194,27 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		}
 
 		// Try to instantly combust surrounding blocks
+		Block sBlock;
 		for (BlockFace face : BlockFaces.NESWBT) {
-			tryCombust(b.translate(face), rand, data, BlockFaces.TB.contains(face) ? 250 : 300);
+			int chance = BlockFaces.TB.contains(face) ? 250 : 300;
+			sBlock = b.translate(face);
+			BlockMaterial mat = sBlock.getMaterial();
+			if (mat instanceof Burnable && rand.nextInt(((Burnable) mat).getCombustChance()) < chance) {
+				// Destroy the old block
+				if (mat instanceof TNT) {
+					((TNT) mat).onIgnite(sBlock); // Ignite TNT
+				} else {
+					sBlock.setMaterial(VanillaMaterials.AIR); // prevent drops
+				}
+				// Put fire in it's place?
+				if (rand.nextInt(data + 10) < 5 && hasBurningSource(sBlock) && sBlock.isAtSurface()) {
+					sBlock.setMaterial(this, Math.min(15, data + rand.nextInt(5) / 4));
+				}
+			}
 		}
 
 		// Spreading logic
 		int chanceFactor, firePower, netChance;
-		Block sBlock;
 		EffectIterator iter = SPREAD_RANGE.getEffectIterator();
 		while (iter.hasNext()) {
 			IntVector3 offset = iter.next();
@@ -256,7 +223,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 			if (offset.getX() == 0 && offset.getY() == 0 && offset.getZ() == 0) {
 				continue;
 			}
-			sBlock = b.translate(offset.getX(), offset.getY(), offset.getZ());
+			sBlock = b.translate(offset);
 			if (!sBlock.isMaterial(VanillaMaterials.AIR)) {
 				continue;
 			}
@@ -275,23 +242,19 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 			// Calculate and use the net chance of spreading
 			// Higher blocks have a lower chance of spreading
+			// Don't spread if it has rain falling nearby
 			if (offset.getY() > 1) {
 				chanceFactor = (int) (offset.getY() * 100);
 			} else {
 				chanceFactor = 100;
 			}
 			netChance = (firePower + 40) / (data + 30);
-            if (netChance <= 0 || rand.nextInt(chanceFactor) > netChance) {
-                continue;
-            }
+			if (netChance <= 0 || rand.nextInt(chanceFactor) > netChance || hasRainNearby(sBlock)) {
+				continue;
+			}
 
-            // Don't spread if it has rain falling nearby
-            if (hasRainNearby(sBlock)) {
-            	continue;
-            }
-
-            // Set new fire block with randomly increasing power (1/4 chance for +1 for fire power)
-            sBlock.setMaterial(this, Math.min(15, data + rand.nextInt(5) / 4));
+			// Set new fire block with randomly increasing power (1/4 chance for +1 for fire power)
+			sBlock.setMaterial(this, Math.min(15, data + rand.nextInt(5) / 4));
 		}
 
 		// Schedule for a next update

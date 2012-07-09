@@ -103,7 +103,7 @@ public class Ice extends Solid implements Mineable, RandomBlockMaterial {
 			while (iter.hasNext()) {
 				IntVector3 next = iter.next();
 				if (r.nextInt(4) == 0) {
-					around = block.translate(next.getX(), next.getY(), next.getZ());
+					around = block.translate(next);
 					if (around.getLight() > MIN_GROWTH_LIGHT && around.getMaterial() instanceof Water) {
 						around.setMaterial(VanillaMaterials.ICE);
 					}

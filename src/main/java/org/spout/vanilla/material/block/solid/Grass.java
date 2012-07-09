@@ -76,7 +76,7 @@ public class Grass extends Solid implements Mineable, RandomBlockMaterial, Initi
 			while (iter.hasNext()) {
 				IntVector3 next = iter.next();
 				if (r.nextInt(4) == 0) {
-					around = block.translate(next.getX(), next.getY(), next.getZ());
+					around = block.translate(next);
 					if (around.isMaterial(VanillaMaterials.DIRT) && around.getLight() > MIN_GROWTH_LIGHT) {
 						if (!around.translate(BlockFace.TOP).getMaterial().isOpaque()) {
 							around.setMaterial(VanillaMaterials.GRASS);

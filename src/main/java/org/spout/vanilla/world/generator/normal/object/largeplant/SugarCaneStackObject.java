@@ -40,7 +40,7 @@ public class SugarCaneStackObject extends LargePlantObject {
 	}
 
 	public SugarCaneStackObject(Random random) {
-		super(random, (byte) 2, (byte) 3);
+		super(random, (byte) 2, (byte) 4);
 	}
 
 	@Override

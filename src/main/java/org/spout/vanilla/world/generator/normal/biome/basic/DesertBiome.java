@@ -31,11 +31,12 @@ import java.util.Random;
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.CactusDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.WellDecorator;
 
 public class DesertBiome extends SandyBiome {
 	public DesertBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new CactusDecorator(), new WellDecorator());
+		super(biomeId, new OreDecorator(), new CactusDecorator(), new SugarCaneDecorator(), new WellDecorator());
 		setMinMax((byte) 66, (byte) 69);
 		this.hasWater = false;
 	}

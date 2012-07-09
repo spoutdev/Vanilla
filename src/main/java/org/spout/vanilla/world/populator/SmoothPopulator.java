@@ -43,7 +43,7 @@ import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 
 public class SmoothPopulator extends Populator {
 	private static final byte CHUNK_SIZE = 16;
-	private static final byte SMOOTH_SIZE = 3;
+	private static final byte SMOOTH_SIZE = 5;
 	private static final byte TOTAL_SIZE = CHUNK_SIZE + SMOOTH_SIZE * 2;
 
 	public SmoothPopulator() {
@@ -81,9 +81,13 @@ public class SmoothPopulator extends Populator {
 						final NormalBiome nearby = biomeMap[sx + SMOOTH_SIZE + (sz + SMOOTH_SIZE) * TOTAL_SIZE];
 						if (current != nearby) {
 							if (current instanceof GrassyBiome) {
-								smoothBiomeMap[xx + zz * CHUNK_SIZE] = new GrassySmoothBiome();
+								final GrassySmoothBiome smoothBiome = new GrassySmoothBiome();
+								smoothBiome.setTopCover(((GrassyBiome) current).getTopCover());
+								smoothBiomeMap[xx + zz * CHUNK_SIZE] = smoothBiome;
 							} else if (current instanceof SandyBiome) {
-								smoothBiomeMap[xx + zz * CHUNK_SIZE] = new SandySmoothBiome();
+								final SandySmoothBiome smoothBiome = new SandySmoothBiome();
+								smoothBiome.setHasWater(((SandyBiome) current).hasWater());
+								smoothBiomeMap[xx + zz * CHUNK_SIZE] = smoothBiome;
 							} else if (current instanceof IcyBiome) {
 								smoothBiomeMap[xx + zz * CHUNK_SIZE] = new IcySmoothBiome();
 							} else {
@@ -145,14 +149,6 @@ public class SmoothPopulator extends Populator {
 				}
 			}
 		}
-		/*
-		 * for (byte xx = 0; xx < CHUNK_SIZE; xx++) { for (byte zz = 0; zz < CHUNK_SIZE; zz++) {
-		 * final NormalBiome biome = smoothBiomeMap[xx + zz * CHUNK_SIZE]; if (biome instanceof
-		 * GrassySmoothBiome || biome instanceof SandySmoothBiome || biome instanceof
-		 * IcySmoothBiome) { world.setBlockMaterial(x + xx, 100, z + zz,
-		 * VanillaMaterials.GOLD_BLOCK, (short) 0, world); } }
-		}
-		 */
 	}
 
 	private static class GrassySmoothBiome extends GrassyBiome {
@@ -171,6 +167,10 @@ public class SmoothPopulator extends Populator {
 			this.max = max;
 			this.diff = (byte) (max - min);
 		}
+
+		public void setTopCover(BlockMaterial topCover) {
+			this.topCover = topCover;
+		}
 	}
 
 	private static class SandySmoothBiome extends SandyBiome {
@@ -188,6 +188,10 @@ public class SmoothPopulator extends Populator {
 			this.min = min;
 			this.max = max;
 			this.diff = (byte) (max - min);
+		}
+
+		public void setHasWater(boolean hasWater) {
+			this.hasWater = hasWater;
 		}
 	}
 

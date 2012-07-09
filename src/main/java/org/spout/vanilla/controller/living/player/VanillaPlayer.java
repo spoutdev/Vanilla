@@ -77,7 +77,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected float foodSaturation = 5.0f, exhaustion = 0.0f;
 	protected boolean poisoned;
 	protected boolean flying;
-	protected final PlayerInventory playerInventory = new PlayerInventory();
+	protected final PlayerInventory playerInventory = new PlayerInventory(this);
 	protected Window activeWindow = new DefaultWindow(this);
 	protected String tabListName;
 	protected GameMode gameMode;

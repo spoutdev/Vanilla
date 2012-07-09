@@ -55,15 +55,15 @@ public class NormalSky extends VanillaSky {
 	 * @param timeFactor unknown factor, use 1.0f
 	 */
 	public void updateCelestialTime(long time, float timeFactor) {
-        float celestial = VanillaMathHelper.getRealCelestialAngle(time, timeFactor);
-        WeatherSimulator weather = this.getWeatherSimulator();
-        if (weather != null) {
-            celestial = (float) ((double) celestial * (1.0d - (double) (weather.getRainStrength(timeFactor) * 5f) / 16d));
-            celestial = (float) ((double) celestial * (1.0d - (double) (weather.getThunderStrength(timeFactor) * 5f) / 16d));
-        }
-        this.getWorld().setSkyLight((byte) (celestial * (float) SKY_LIGHT_RANGE + MIN_SKY_LIGHT));
+		float celestial = VanillaMathHelper.getRealCelestialAngle(time, timeFactor);
+		WeatherSimulator weather = this.getWeatherSimulator();
+		if (weather != null) {
+			celestial = (float) ((double) celestial * (1.0d - (double) (weather.getRainStrength(timeFactor) * 5f) / 16d));
+			celestial = (float) ((double) celestial * (1.0d - (double) (weather.getThunderStrength(timeFactor) * 5f) / 16d));
+		}
+		this.getWorld().setSkyLight((byte) (celestial * (float) SKY_LIGHT_RANGE + MIN_SKY_LIGHT));
 
-        broadcastMessage(new TimeUpdateMessage(time));
+		broadcastMessage(new TimeUpdateMessage(time));
 	}
 
 	@Override

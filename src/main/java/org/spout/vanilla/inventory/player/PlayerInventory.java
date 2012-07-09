@@ -29,6 +29,7 @@ package org.spout.vanilla.inventory.player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.special.InventoryBundle;
 
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.VanillaInventory;
 
 /**
@@ -40,12 +41,23 @@ public class PlayerInventory extends InventoryBundle implements VanillaInventory
 	private final PlayerCraftingGrid craftingGrid;
 	private final PlayerArmorInventory armor;
 	private final PlayerQuickbar quickbar;
+	private final VanillaPlayer owner;
 
-	public PlayerInventory() {
+	public PlayerInventory(VanillaPlayer owner) {
 		this.main = this.addInventory(new Inventory(36));
 		this.craftingGrid = this.addInventory(new PlayerCraftingGrid());
 		this.armor = this.addInventory(new PlayerArmorInventory());
-		this.quickbar = new PlayerQuickbar(this.main);
+		this.quickbar = new PlayerQuickbar(owner, this.main);
+		this.owner = owner;
+	}
+
+	/**
+	 * Gets the owner of this Player Inventory
+	 * 
+	 * @return the owner
+	 */
+	public VanillaPlayer getOwner() {
+		return this.owner;
 	}
 
 	/**

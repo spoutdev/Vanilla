@@ -39,16 +39,16 @@ public class VanillaMathHelper {
 	 */
 	public static float getCelestialAngle(long timeMillis, float timeMillisTune) {
 		float timeFactor = ((float) (timeMillis % 24000) + timeMillisTune) / 24000f - 0.25f;
-        if(timeFactor < 0) {
-        	timeFactor++;
-        } else if(timeFactor > 1) {
-        	timeFactor--;
-        }
+		if(timeFactor < 0) {
+			timeFactor++;
+		} else if(timeFactor > 1) {
+			timeFactor--;
+		}
 
-        float value = ((float) MathHelper.cos(timeFactor * MathHelper.PI) + 1.0f) / 2.0f;
-        timeFactor += (1.0f - value - timeFactor) / 3f;
-        return timeFactor;
-    }
+		float value = ((float) MathHelper.cos(timeFactor * MathHelper.PI) + 1.0f) / 2.0f;
+		timeFactor += (1.0f - value - timeFactor) / 3f;
+		return timeFactor;
+	}
 
 	/**
 	 * Gets the (real?) celestial angle at a certain time of the day<br>
@@ -59,14 +59,14 @@ public class VanillaMathHelper {
 	 * @return celestial angle, a value from 0 to 1
 	 */
 	public static float getRealCelestialAngle(long timeMillis, float timeMillisTune) {
-        float celestial = VanillaMathHelper.getCelestialAngle(timeMillis, timeMillisTune);
-        celestial *= MathHelper.TWO_PI;
-        celestial = 1.0f - ((float) MathHelper.cos(celestial) * 2.0f + 0.5f);
-        if(celestial < 0) {
-        	celestial = 0.0f;
-        } else if(celestial > 1) {
-        	celestial = 1.0f;
-        }
-        return 1.0f - celestial;
+		float celestial = VanillaMathHelper.getCelestialAngle(timeMillis, timeMillisTune);
+		celestial *= MathHelper.TWO_PI;
+		celestial = 1.0f - ((float) MathHelper.cos(celestial) * 2.0f + 0.5f);
+		if(celestial < 0) {
+			celestial = 0.0f;
+		} else if(celestial > 1) {
+			celestial = 1.0f;
+		}
+		return 1.0f - celestial;
 	}
 }

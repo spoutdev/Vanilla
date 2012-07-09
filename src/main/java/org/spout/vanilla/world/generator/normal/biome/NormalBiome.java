@@ -43,6 +43,7 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator.TreeWGOFactory;
 import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
@@ -91,7 +92,7 @@ public abstract class NormalBiome extends VanillaBiome {
 		final Add add = new Add();
 		add.SetSourceModule(0, multiply);
 		add.SetSourceModule(1, ELEVATION);
-		
+
 		MASTER.SetSourceModule(0, add);
 		MASTER.setxScale(0.08);
 		MASTER.setyScale(0.04);
@@ -101,7 +102,7 @@ public abstract class NormalBiome extends VanillaBiome {
 		BLOCK_REPLACER.setxScale(4D);
 		BLOCK_REPLACER.setyScale(1D);
 		BLOCK_REPLACER.setzScale(4D);
-		
+
 		final Exponent contrast = new Exponent();
 		contrast.SetSourceModule(0, MASTER);
 		contrast.setExponent(1.5D);
@@ -217,19 +218,23 @@ public abstract class NormalBiome extends VanillaBiome {
 	public byte getMax() {
 		return max;
 	}
-	
-	public TreeObject getRandomTree(Random random) {
-		if (random.nextInt(10) == 0) {
-			return new BigTreeObject(random);
-		} else {
-			return new SmallTreeObject(random);
+
+	public static class NormalTreeWGOFactory implements TreeWGOFactory {
+		@Override
+		public TreeObject make(Random random) {
+			if (random.nextInt(10) == 0) {
+				return new BigTreeObject(random);
+			} else {
+				return new SmallTreeObject(random);
+			}
 		}
-	}
-	
-	public byte getAmountOfTrees(Random random) {
-		if (random.nextInt(10) == 0) {
-			return 1;
+
+		@Override
+		public byte amount(Random random) {
+			if (random.nextInt(10) == 0) {
+				return 1;
+			}
+			return 0;
 		}
-		return 0;
 	}
 }

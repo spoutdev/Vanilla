@@ -36,9 +36,8 @@ import org.spout.vanilla.world.generator.normal.object.tree.SwampTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class SwampBiome extends GrassyBiome {
-
 	public SwampBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new TreeDecorator(), new SugarCaneDecorator());
+		super(biomeId, new OreDecorator(), new TreeDecorator(new SwampTreeWGOFactory()), new SugarCaneDecorator());
 		setMinMax((byte) 60, (byte) 64);
 	}
 
@@ -47,13 +46,15 @@ public class SwampBiome extends GrassyBiome {
 		return "Swampland";
 	}
 
-	@Override
-	public byte getAmountOfTrees(Random random) {
-		return (byte) (2 + super.getAmountOfTrees(random));
-	}
+	private static class SwampTreeWGOFactory extends NormalTreeWGOFactory {
+		@Override
+		public byte amount(Random random) {
+			return (byte) (2 + super.amount(random));
+		}
 
-	@Override
-	public TreeObject getRandomTree(Random random) {
-		return new SwampTreeObject(random);
+		@Override
+		public TreeObject make(Random random) {
+			return new SwampTreeObject(random);
+		}
 	}
 }

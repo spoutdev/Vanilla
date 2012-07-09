@@ -40,9 +40,4 @@ public class TundraBiome extends IcyBiome {
 	public String getName() {
 		return "Tundra";
 	}
-
-	@Override
-	public byte getAmountOfTrees(Random random) {
-		return 0;
-	}
 }

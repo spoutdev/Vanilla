@@ -45,9 +45,4 @@ public class DesertBiome extends SandyBiome {
 	public String getName() {
 		return "Desert";
 	}
-
-	@Override
-	public byte getAmountOfTrees(Random random) {
-		return 0;
-	}
 }

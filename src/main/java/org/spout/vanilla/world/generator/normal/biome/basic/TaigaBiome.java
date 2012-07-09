@@ -37,7 +37,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class TaigaBiome extends GrassyBiome {
 	public TaigaBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new TreeDecorator());
+		super(biomeId, new OreDecorator(), new TreeDecorator(new TaigaTreeWGOFactory()));
 		setMinMax((byte) 67, (byte) 71);
 	}
 
@@ -45,17 +45,19 @@ public class TaigaBiome extends GrassyBiome {
 	public String getName() {
 		return "Taiga";
 	}
-	
-	@Override
-	public byte getAmountOfTrees(Random random) {
-		return (byte) (10 + super.getAmountOfTrees(random));
-	}
 
-	@Override
-	public TreeObject getRandomTree(Random random) {
-		if (random.nextInt(3) == 0) {
-			return new SpruceTreeObject(random);
+	private static class TaigaTreeWGOFactory extends NormalTreeWGOFactory {
+		@Override
+		public byte amount(Random random) {
+			return (byte) (10 + super.amount(random));
 		}
-		return new PineTreeObject(random);
+
+		@Override
+		public TreeObject make(Random random) {
+			if (random.nextInt(3) == 0) {
+				return new SpruceTreeObject(random);
+			}
+			return new PineTreeObject(random);
+		}
 	}
 }

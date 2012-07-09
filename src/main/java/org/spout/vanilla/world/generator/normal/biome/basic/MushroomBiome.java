@@ -43,9 +43,4 @@ public class MushroomBiome extends GrassyBiome {
 	public String getName() {
 		return "Mushroom Island";
 	}
-
-	@Override
-	public byte getAmountOfTrees(Random random) {
-		return 0;
-	}
 }

@@ -35,7 +35,7 @@ import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
 public class ForestBiome extends GrassyBiome {
 	public ForestBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new TreeDecorator(), new SugarCaneDecorator());
+		super(biomeId, new OreDecorator(), new TreeDecorator(new ForestTreeWGOFactory()), new SugarCaneDecorator());
 		setMinMax((byte) 67, (byte) 72);
 	}
 
@@ -44,8 +44,10 @@ public class ForestBiome extends GrassyBiome {
 		return "Forest";
 	}
 
-	@Override
-	public byte getAmountOfTrees(Random random) {
-		return (byte) (10 + super.getAmountOfTrees(random));
+	private static class ForestTreeWGOFactory extends NormalTreeWGOFactory {
+		@Override
+		public byte amount(Random random) {
+			return (byte) (10 + super.amount(random));
+		}
 	}
 }

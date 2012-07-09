@@ -33,7 +33,7 @@ import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
 public class RiverBiome extends GrassyBiome {
 	public RiverBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new TreeDecorator(), new SugarCaneDecorator());
+		super(biomeId, new OreDecorator(), new TreeDecorator(new NormalTreeWGOFactory()), new SugarCaneDecorator());
 		setMinMax((byte) 55, (byte) 57);
 	}
 

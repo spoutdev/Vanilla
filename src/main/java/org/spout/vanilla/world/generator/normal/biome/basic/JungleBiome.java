@@ -40,7 +40,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class JungleBiome extends GrassyBiome {
 	public JungleBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new TreeDecorator(), new SugarCaneDecorator());
+		super(biomeId, new OreDecorator(), new TreeDecorator(new JungleTreeWGOFactory()), new SugarCaneDecorator());
 		setMinMax((byte) 67, (byte) 73);
 	}
 
@@ -49,27 +49,29 @@ public class JungleBiome extends GrassyBiome {
 		return "Jungle";
 	}
 
-	@Override
-	public byte getAmountOfTrees(Random random) {
-		return (byte) (50 + super.getAmountOfTrees(random));
-	}
+	private static class JungleTreeWGOFactory extends NormalTreeWGOFactory {
+		@Override
+		public byte amount(Random random) {
+			return (byte) (50 + super.amount(random));
+		}
 
-	@Override
-	public TreeObject getRandomTree(Random random) {
-		if (random.nextInt(10) == 0) {
-			return new BigTreeObject(random);
+		@Override
+		public TreeObject make(Random random) {
+			if (random.nextInt(10) == 0) {
+				return new BigTreeObject(random);
+			}
+			if (random.nextInt(2) == 0) {
+				return new ShrubObject(random);
+			}
+			if (random.nextInt(3) == 0) {
+				return new HugeTreeObject(random);
+			}
+			final SmallTreeObject smallJungleTree = new SmallTreeObject(random);
+			smallJungleTree.setTreeType(TreeObject.TreeType.JUNGLE);
+			smallJungleTree.setBaseHeight((byte) 4);
+			smallJungleTree.setRandomHeight((byte) 10);
+			smallJungleTree.addLogVines(true);
+			return smallJungleTree;
 		}
-		if (random.nextInt(2) == 0) {
-			return new ShrubObject(random);
-		}
-		if (random.nextInt(3) == 0) {
-			return new HugeTreeObject(random);
-		}
-		final SmallTreeObject smallJungleTree = new SmallTreeObject(random);
-		smallJungleTree.setTreeType(TreeObject.TreeType.JUNGLE);
-		smallJungleTree.setBaseHeight((byte) 4);
-		smallJungleTree.setRandomHeight((byte) 10);
-		smallJungleTree.addLogVines(true);
-		return smallJungleTree;
 	}
 }

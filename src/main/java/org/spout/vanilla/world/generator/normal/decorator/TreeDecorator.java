@@ -35,28 +35,30 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class TreeDecorator extends Decorator {
+	private final TreeWGOFactory factory;
+
+	public TreeDecorator(TreeWGOFactory factory) {
+		this.factory = factory;
+	}
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		final Biome biome = chunk.getBiomeType(7, 7, 7);
-		if (!(biome instanceof NormalBiome)) {
-			return;
-		}
-		final NormalBiome normalBiome = (NormalBiome) biome;
-		final byte amount = normalBiome.getAmountOfTrees(random);
+		final Biome decorating = chunk.getBiomeType(7, 7, 7);
+		final byte amount = factory.amount(random);
 		for (byte count = 0; count < amount; count++) {
-			final TreeObject tree = normalBiome.getRandomTree(random);
+			final TreeObject tree = factory.make(random);
 			final World world = chunk.getWorld();
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
+			final Biome target = world.getBiomeType(x, 64, z);
 			final byte y = getHighestWorkableBlock(world, x, z);
-			if (y == -1) {
+			if (y == -1 || decorating != target) {
 				continue;
 			}
 			if (tree.canPlaceObject(world, x, y, z)) {
@@ -77,5 +79,11 @@ public class TreeDecorator extends Decorator {
 		}
 		y++;
 		return y;
+	}
+
+	public static interface TreeWGOFactory {
+		public TreeObject make(Random random);
+
+		public byte amount(Random random);
 	}
 }

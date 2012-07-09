@@ -43,9 +43,4 @@ public class BeachBiome extends SandyBiome {
 	public String getName() {
 		return "Beach";
 	}
-
-	@Override
-	public byte getAmountOfTrees(Random random) {
-		return 0;
-	}
 }

@@ -29,8 +29,11 @@ package org.spout.vanilla.resources.loader;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.List;
+import java.util.logging.Level;
+
 import org.spout.api.Spout;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.inventory.Recipe;
@@ -40,6 +43,7 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.resource.BasicResourceLoader;
 import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.config.yaml.YamlConfiguration;
+
 import org.spout.vanilla.resources.RecipeYaml;
 
 public class RecipeLoader extends BasicResourceLoader<RecipeYaml>{
@@ -66,7 +70,7 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml>{
 			String[] resultString = recipe.getNode("result").getString().split(",");
 			Material matched = MaterialRegistry.get(resultString[0]);
 			if (matched == null) {
-				Spout.getLogger().warning("Unknown material: " + resultString[0]);
+				Spout.getLogger().log(Level.WARNING, "Unknown material: {0}", resultString[0]);
 				continue;
 			}
 			int amount;
@@ -80,27 +84,36 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml>{
 				for (String inKey : recipe.getNode("ingredients").getKeys(false)) {
 					Material ingredient = MaterialRegistry.get(recipe.getNode("ingredients").getNode(inKey).getString());
 					if (ingredient == null) {
-						Spout.getLogger().warning("Unknown material ingredient: " + recipe.getNode("ingredients").getNode(inKey).getString());
+						Spout.getLogger().log(Level.WARNING, "Unknown material ingredient: {0}", recipe.getNode("ingredients").getNode(inKey).getString());
 						continue;
 					}
 					builder.addIngredient(inKey.charAt(0), ingredient);
 				}
-				for (Object rowObject : recipe.getNode("rows").getList(new ArrayList<String>())) {
-					String row = (String) rowObject;
+				for (Iterator<String> it = recipe.getNode("rows").getStringList().iterator(); it.hasNext();) {
+					String row = it.next();
 					List<Character> rowChars = new ArrayList<Character>();
 					for (char c : row.toCharArray()) {
 						rowChars.add(c);
 					}
 					builder.addRow(rowChars);
 				}
-				recipes.put(key, builder.buildShapedRecipe());
+				try {
+					recipes.put(key, builder.buildShapedRecipe());
+				} catch (IllegalStateException ex) {
+					Spout.getLogger().log(Level.WARNING, "Error when adding recipe {0} because: {1}", new Object[]{key, ex.getMessage()});
+					
+				}
 			} else if (recipe.getNode("type").getString().equalsIgnoreCase("Shapeless")) {
 				for (String rowString : recipe.getNode("ingredients").getStringList(new ArrayList<String>())) {
 					Material ingredient = MaterialRegistry.get(rowString);
 					if (ingredient == null) continue;
 					builder.addIngredient(ingredient);
 				}
-				recipes.put(key, builder.buildShapelessRecipe());
+				try {
+					recipes.put(key, builder.buildShapelessRecipe());
+				} catch (IllegalStateException ex) {
+					Spout.getLogger().log(Level.WARNING, "Error when adding recipe {0} because: {1}", new Object[]{key, ex.getMessage()});
+				}
 			} else {
 				if (Spout.debugMode()) {
 					Spout.log("Unknown type " + recipe.getNode("type") + " when loading recipe from recipes.yml");

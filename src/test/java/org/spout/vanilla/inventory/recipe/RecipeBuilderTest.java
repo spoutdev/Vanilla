@@ -52,6 +52,7 @@ public class RecipeBuilderTest {
 		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient(VanillaMaterials.DIAMOND).addIngredient(VanillaMaterials.DIAMOND_BLOCK);
 		builder.addIngredient(VanillaMaterials.DIRT, 2);
+		builder.setResult(VanillaMaterials.ARROW, 1);
 		ShapelessRecipe recipe = builder.buildShapelessRecipe();
 		List<Material> materials = new ArrayList<Material>();
 		materials.add(VanillaMaterials.DIAMOND);
@@ -69,6 +70,7 @@ public class RecipeBuilderTest {
 		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient(VanillaMaterials.ARROW).addIngredient(VanillaMaterials.BEDROCK);
 		builder.addIngredient(VanillaMaterials.CACTUS);
+		builder.setResult(VanillaMaterials.ARROW, 1);
 		ShapelessRecipe recipe = builder.buildShapelessRecipe();
 		List<Material> testIngredients = new ArrayList<Material>();
 		List<Material> recipeIngredients = new ArrayList<Material>();
@@ -89,6 +91,8 @@ public class RecipeBuilderTest {
 		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addIngredient('B', VanillaMaterials.CACTUS).addIngredient('A', VanillaMaterials.DIRT);
+		builder.setResult(VanillaMaterials.ARROW, 1);
+		builder.addRow("AB");
 		ShapedRecipe recipe = builder.buildShapedRecipe();
 		List<Material> testIngredients = new ArrayList<Material>();
 		List<Material> recipeIngredients = new ArrayList<Material>();
@@ -106,6 +110,7 @@ public class RecipeBuilderTest {
 		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("AAA").addRow("BBB").addRow("AAA");
+		builder.setResult(VanillaMaterials.ARROW, 1);
 		ShapedRecipe recipe = builder.buildShapedRecipe();
 		List<Material> testIngredients = new ArrayList<Material>();
 		List<Material> recipeIngredients = new ArrayList<Material>();
@@ -123,6 +128,7 @@ public class RecipeBuilderTest {
 		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("AAA").addRow("BBB").addRow("AAA");
+		builder.setResult(VanillaMaterials.ARROW, 1);
 		ShapedRecipe recipe = builder.buildShapedRecipe();
 		List<List<Character>> rows = recipe.getRows();
 		assertTrue(rows.get(0).get(0) == 'A');
@@ -141,6 +147,7 @@ public class RecipeBuilderTest {
 		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("AAA").addRow("BBB").addRow("AAA").replaceRow(1, "CCC");
+		builder.setResult(VanillaMaterials.ARROW, 1);
 		ShapedRecipe recipe = builder.buildShapedRecipe();
 		List<List<Character>> rows = recipe.getRows();
 		assertTrue(rows.get(0).get(0) == 'A');
@@ -162,6 +169,7 @@ public class RecipeBuilderTest {
 		builder.addIngredient('A', Plank.BIRCH).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("AAA").addRow("BBB").addRow("AAA");
 		builder.setIncludeData(true);
+		builder.setResult(VanillaMaterials.ARROW, 1);
 		ShapedRecipe withData = builder.buildShapedRecipe();
 		assertNotNull(withData);
 		manager.addRecipe(withData);
@@ -186,6 +194,7 @@ public class RecipeBuilderTest {
 		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("AAA").addRow("BBB").addRow("AAA");
+		builder.setResult(VanillaMaterials.ARROW, 1);
 		ShapedRecipe recipe1 = builder.buildShapedRecipe();
 		RecipeBuilder builder2 = new RecipeBuilder();
 		builder2.clone(recipe1);
@@ -195,6 +204,7 @@ public class RecipeBuilderTest {
 		RecipeBuilder builder3 = new RecipeBuilder();
 		builder3.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder3.addRow("AAA").addRow("CCC").addRow("AAA");
+		builder3.setResult(VanillaMaterials.ARROW, 1);
 		ShapedRecipe recipe3 = builder3.buildShapedRecipe();
 		assertTrue(recipe2.equals(recipe3));
 	}

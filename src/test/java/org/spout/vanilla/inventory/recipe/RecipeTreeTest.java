@@ -47,6 +47,7 @@ public class RecipeTreeTest {
 		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("AAA").addRow("BBB").addRow("AAA");
+		builder.setResult(VanillaMaterials.ARROW, 1);
 		ShapedRecipe recipe = builder.buildShapedRecipe();
 		List<List<Material>> testIngredients = new ArrayList<List<Material>>();
 		testIngredients.add(new ArrayList<Material>(Arrays.asList(VanillaMaterials.ARROW, VanillaMaterials.ARROW, VanillaMaterials.ARROW)));
@@ -65,6 +66,7 @@ public class RecipeTreeTest {
 		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("BB").addRow("AA");
+		builder.setResult(VanillaMaterials.ARROW, 1);
 		ShapedRecipe recipe = builder.buildShapedRecipe();
 		List<List<Material>> testIngredients = new ArrayList<List<Material>>();
 		testIngredients.add(new ArrayList<Material>(Arrays.asList(VanillaMaterials.BEDROCK, VanillaMaterials.BEDROCK)));
@@ -82,6 +84,7 @@ public class RecipeTreeTest {
 		RecipeBuilder builder = new RecipeBuilder();
 		builder.addIngredient('A', VanillaMaterials.ARROW).addIngredient('B', VanillaMaterials.BEDROCK);
 		builder.addRow("BB").addRow("AA");
+		builder.setResult(VanillaMaterials.ARROW, 1);
 		ShapedRecipe recipe = builder.buildShapedRecipe();
 		List<List<Material>> testIngredients = new ArrayList<List<Material>>();
 		testIngredients.add(new ArrayList<Material>(Arrays.asList(null, null, (Material) null)));

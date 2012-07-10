@@ -30,23 +30,26 @@ import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.world.generator.normal.object.BlockPatchObject;
+import org.spout.vanilla.material.block.plant.TallGrass;
 
-public class SandAndClayDecorator extends Decorator {
-	private static final byte FIRST_SAND_ROUND = 3;
-	private static final byte SECOND_SAND_ROUND = 1;
-	private static final byte CLAY_ROUND = 1;
-	private static final BlockPatchObject SAND = new BlockPatchObject(VanillaMaterials.SAND);
-	private static final BlockPatchObject CLAY = new BlockPatchObject(VanillaMaterials.CLAY_BLOCK);
+public class TallGrassDecorator extends Decorator {
+	private final TallGrassFactory factory;
+	// Control how much grass to place
+	private final byte amount;
 
-	static {
-		CLAY.setHeightRadius((byte) 1);
-		CLAY.getOverridableMaterials().clear();
-		CLAY.getOverridableMaterials().add(VanillaMaterials.DIRT);
+	public TallGrassDecorator(TallGrassFactory factory) {
+		this(factory, (byte) 1);
+	}
+
+	public TallGrassDecorator(TallGrassFactory factory, byte amount) {
+		this.factory = factory;
+		this.amount = amount;
 	}
 
 	@Override
@@ -55,37 +58,31 @@ public class SandAndClayDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		SAND.setRandom(random);
-		CLAY.setRandom(random);
-		for (byte count = 0; count < FIRST_SAND_ROUND; count++) {
+		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
-			final int y = getHighestWorkableBlock(world, x, z);
-			if (y != -1 && SAND.canPlaceObject(world, x, y, z)) {
-				SAND.placeObject(world, x, y, z);
-			}
-		}
-		for (byte count = 0; count < CLAY_ROUND; count++) {
-			final int x = chunk.getBlockX(random);
-			final int z = chunk.getBlockZ(random);
-			final int y = getHighestWorkableBlock(world, x, z);
-			if (y != -1 && CLAY.canPlaceObject(world, x, y, z)) {
-				CLAY.placeObject(world, x, y, z);
-			}
-		}
-		for (byte count = 0; count < SECOND_SAND_ROUND; count++) {
-			final int x = chunk.getBlockX(random);
-			final int z = chunk.getBlockZ(random);
-			final int y = getHighestWorkableBlock(world, x, z);
-			if (y != -1 && SAND.canPlaceObject(world, x, y, z)) {
-				SAND.placeObject(world, x, y, z);
+			for (byte size = 32; size >= 0; size--) {
+				final int xx = x - 7 + random.nextInt(15);
+				final int zz = z - 7 + random.nextInt(15);
+				final int yy = getHighestWorkableBlock(world, xx, zz);
+				if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
+						&& canTallGrassStay(world.getBlock(xx, yy, zz))) {
+					final TallGrass grass = factory.make(random);
+					world.setBlockMaterial(xx, yy, zz, grass, grass.getData(), world);
+				}
 			}
 		}
 	}
 
+	// TODO: this needs to be added to tall grass itself (valid for flowers too)
+	private boolean canTallGrassStay(Block block) {
+		return (block.getLight() > 7 || block.isAtSurface())
+				&& block.translate(BlockFace.BOTTOM).getMaterial().equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND);
+	}
+
 	private int getHighestWorkableBlock(World world, int x, int z) {
 		byte y = 127;
-		while (!(world.getBlockMaterial(x, y, z) instanceof Solid)) {
+		while (world.getBlockMaterial(x, y, z).equals(VanillaMaterials.AIR, VanillaMaterials.LEAVES)) {
 			y--;
 			if (y == 0) {
 				return -1;
@@ -93,5 +90,9 @@ public class SandAndClayDecorator extends Decorator {
 		}
 		y++;
 		return y;
+	}
+
+	public static interface TallGrassFactory {
+		public TallGrass make(Random random);
 	}
 }

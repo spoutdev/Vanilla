@@ -101,7 +101,6 @@ public class VanillaObjects {
 		CLAY.setHeightRadius((byte) 1);
 		CLAY.getOverridableMaterials().clear();
 		CLAY.getOverridableMaterials().add(VanillaMaterials.DIRT);
-		CLAY.getOverridableMaterials().add(VanillaMaterials.CLAY_BLOCK);
 		// for the '/obj' test command
 		for (Field objectField : VanillaObjects.class.getDeclaredFields()) {
 			objectField.setAccessible(true);

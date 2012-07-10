@@ -33,11 +33,13 @@ import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
 public class ForestBiome extends GrassyBiome {
 	public ForestBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new SandAndClayDecorator(), new TreeDecorator(new ForestTreeWGOFactory()), new SugarCaneDecorator(), new PumpkinDecorator());
+		super(biomeId, new OreDecorator(), new SandAndClayDecorator(), new TreeDecorator(new ForestTreeWGOFactory()),
+				new TallGrassDecorator(new NormalTallGrassFactory(), (byte) 5), new SugarCaneDecorator(), new PumpkinDecorator());
 		setMinMax((byte) 67, (byte) 72);
 	}
 

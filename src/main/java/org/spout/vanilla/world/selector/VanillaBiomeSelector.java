@@ -189,7 +189,7 @@ public class VanillaBiomeSelector extends BiomeSelector {
 			}
 			if (shoreValue > 0.4) {
 				// rivers
-				if (rivers.GetValue(x, 0, z) > 0.2) {
+				if (rivers.GetValue(x, 0, z) > 0) {
 					return RIVER;
 				}
 				return BEACH;
@@ -211,7 +211,7 @@ public class VanillaBiomeSelector extends BiomeSelector {
 			}
 		}
 		// rivers
-		if (rivers.GetValue(x, 0, z) > 0.2) {
+		if (rivers.GetValue(x, 0, z) > 0) {
 			if (primaryValue == 3) {
 				if ((int) (secondary.GetValue(x, 0, z) + 1) == 1) {
 					return FROZEN_RIVER;

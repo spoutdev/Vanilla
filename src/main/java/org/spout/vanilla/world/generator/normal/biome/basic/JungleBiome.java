@@ -27,12 +27,15 @@
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import java.util.Random;
+import org.spout.vanilla.material.block.plant.TallGrass;
 
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.HugeTreeObject;
@@ -42,7 +45,8 @@ import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class JungleBiome extends GrassyBiome {
 	public JungleBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new SandAndClayDecorator(), new TreeDecorator(new JungleTreeWGOFactory()), new SugarCaneDecorator(), new PumpkinDecorator());
+		super(biomeId, new OreDecorator(), new SandAndClayDecorator(), new TreeDecorator(new JungleTreeWGOFactory()),
+				new TallGrassDecorator(new JungleTallGrassFactory(), (byte) 15), new SugarCaneDecorator(), new PumpkinDecorator());
 		setMinMax((byte) 67, (byte) 73);
 	}
 
@@ -74,6 +78,16 @@ public class JungleBiome extends GrassyBiome {
 			smallJungleTree.setRandomHeight((byte) 10);
 			smallJungleTree.addLogVines(true);
 			return smallJungleTree;
+		}
+	}
+
+	private static class JungleTallGrassFactory implements TallGrassFactory {
+		@Override
+		public TallGrass make(Random random) {
+			if (random.nextInt(4) == 0) {
+				return TallGrass.FERN;
+			}
+			return TallGrass.TALL_GRASS;
 		}
 	}
 }

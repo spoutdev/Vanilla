@@ -46,9 +46,7 @@ public class SugarCaneDecorator extends Decorator {
 	private final byte numberOfClusters;
 
 	public SugarCaneDecorator() {
-		this.maxClusterSize = 6;
-		this.clusterPlaceAttempts = 20;
-		this.numberOfClusters = 1;
+		this((byte) 6, (byte) 20, (byte) 1);
 	}
 
 	public SugarCaneDecorator(byte maxClusterSize, byte clusterPlaceAttempts, byte numberOfClusters) {

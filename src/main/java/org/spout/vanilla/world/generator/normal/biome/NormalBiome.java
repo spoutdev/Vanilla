@@ -42,7 +42,9 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.plant.TallGrass;
 import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator.TreeWGOFactory;
 import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
@@ -110,6 +112,7 @@ public abstract class NormalBiome extends VanillaBiome {
 		TURBULENT_MASTER.SetSourceModule(0, contrast);
 		TURBULENT_MASTER.setFrequency(0.005D);
 		TURBULENT_MASTER.setPower(6D);
+		TURBULENT_MASTER.setRoughness(1);
 	}
 
 	protected NormalBiome(int biomeId, Decorator... decorators) {
@@ -235,6 +238,13 @@ public abstract class NormalBiome extends VanillaBiome {
 				return 1;
 			}
 			return 0;
+		}
+	}
+
+	public static class NormalTallGrassFactory implements TallGrassFactory {
+		@Override
+		public TallGrass make(Random random) {
+			return TallGrass.TALL_GRASS;
 		}
 	}
 }

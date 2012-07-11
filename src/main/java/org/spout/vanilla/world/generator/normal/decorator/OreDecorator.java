@@ -36,18 +36,19 @@ import org.spout.vanilla.world.generator.normal.object.OreObject;
 import org.spout.vanilla.world.generator.normal.object.OreObject.OreType;
 
 public class OreDecorator extends Decorator {
-	public static OreObject[] objects;
+	private static final OreObject[] ORES;
 
 	static {
-		objects = new OreObject[8];
-		objects[0] = new OreObject(OreType.DIRT);
-		objects[1] = new OreObject(OreType.GRAVEL);
-		objects[2] = new OreObject(OreType.COAL);
-		objects[3] = new OreObject(OreType.IRON);
-		objects[4] = new OreObject(OreType.REDSTONE);
-		objects[5] = new OreObject(OreType.LAPIS_LAZULI);
-		objects[6] = new OreObject(OreType.GOLD);
-		objects[7] = new OreObject(OreType.DIAMOND);
+		ORES = new OreObject[]{
+			new OreObject(OreType.DIRT),
+			new OreObject(OreType.GRAVEL),
+			new OreObject(OreType.COAL),
+			new OreObject(OreType.IRON),
+			new OreObject(OreType.REDSTONE),
+			new OreObject(OreType.LAPIS_LAZULI),
+			new OreObject(OreType.GOLD),
+			new OreObject(OreType.DIAMOND)
+		};
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public class OreDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		for (OreObject object : objects) {
+		for (OreObject object : ORES) {
 			object.setRandom(random);
 			for (byte i = 0; i < object.getCount(); i++) {
 				final int x = chunk.getBlockX(random);

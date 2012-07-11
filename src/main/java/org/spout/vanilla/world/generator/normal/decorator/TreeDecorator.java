@@ -56,7 +56,7 @@ public class TreeDecorator extends Decorator {
 			final World world = chunk.getWorld();
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
-			final byte y = getHighestWorkableBlock(world, x, z);
+			final int y = getHighestWorkableBlock(world, x, z);
 			final Biome target = world.getBiomeType(x, 64, z);
 			if (y == -1 || decorating != target) {
 				continue;
@@ -67,8 +67,8 @@ public class TreeDecorator extends Decorator {
 		}
 	}
 
-	private byte getHighestWorkableBlock(World w, int x, int z) {
-		byte y = 127;
+	private int getHighestWorkableBlock(World w, int x, int z) {
+		int y = w.getHeight();
 		BlockMaterial material;
 		while ((material = w.getBlockMaterial(x, y, z)) != VanillaMaterials.DIRT
 				&& material != VanillaMaterials.GRASS) {

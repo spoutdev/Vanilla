@@ -57,6 +57,7 @@ public class FlowerDecorator extends Decorator {
 		if (random.nextInt(ODD) != 0) {
 			return;
 		}
+		BlockMaterial flower = VanillaMaterials.DANDELION;
 		final World world = chunk.getWorld();
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
@@ -67,9 +68,12 @@ public class FlowerDecorator extends Decorator {
 				final int yy = getHighestWorkableBlock(world, xx, zz);
 				if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
 						&& canFlowerStay(world.getBlock(xx, yy, zz))) {
-					BlockMaterial flower = random.nextInt(4) == 0 ? VanillaMaterials.ROSE : VanillaMaterials.DANDELION;
 					world.setBlockMaterial(xx, yy, zz, flower, (short) 0, world);
 				}
+			}
+			if (count == amount - 1 && random.nextInt(4) == 0) {
+				flower = VanillaMaterials.ROSE;
+				count--;
 			}
 		}
 	}
@@ -81,7 +85,7 @@ public class FlowerDecorator extends Decorator {
 	}
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
-		byte y = 127;
+		int y = world.getHeight();
 		while (world.getBlockMaterial(x, y, z).equals(VanillaMaterials.AIR, VanillaMaterials.LEAVES)) {
 			y--;
 			if (y == 0) {

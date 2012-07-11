@@ -64,8 +64,8 @@ public class PumpkinDecorator extends Decorator {
 		}
 	}
 
-	private byte getHighestWorkableBlock(World w, int x, int z) {
-		byte y = 127;
+	private int getHighestWorkableBlock(World w, int x, int z) {
+		int y = w.getHeight();
 		while (w.getBlockMaterial(x, y, z) != VanillaMaterials.GRASS) {
 			y--;
 			if (y == 0) {

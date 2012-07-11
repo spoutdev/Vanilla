@@ -31,6 +31,7 @@ import java.util.Random;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
@@ -84,8 +85,10 @@ public class SandAndClayDecorator extends Decorator {
 	}
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
-		byte y = 127;
-		while (!(world.getBlockMaterial(x, y, z) instanceof Solid)) {
+		int y = world.getHeight();
+		BlockMaterial material;
+		while ((material = world.getBlockMaterial(x, y, z)) == VanillaMaterials.ICE
+				|| !(material instanceof Solid)) {
 			y--;
 			if (y == 0) {
 				return -1;

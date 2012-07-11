@@ -66,7 +66,7 @@ public class WellDecorator extends Decorator {
 	}
 
 	private int getHighestWorkableBlock(World w, int x, int z) {
-		int y = 127;
+		int y = w.getHeight();
 		while (w.getBlockMaterial(x, y, z) != VanillaMaterials.SAND) {
 			y--;
 			if (y == 0) {

@@ -60,11 +60,7 @@ public class SmallTreeObject extends TreeObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		if (y < 1 || y + totalHeight + 2 > w.getHeight()) {
-			return false;
-		}
-		final BlockMaterial under = w.getBlockMaterial(x, y - 1, z);
-		if (under != VanillaMaterials.DIRT && under != VanillaMaterials.GRASS) {
+		if (!super.canPlaceObject(w, x, y, z)) {
 			return false;
 		}
 		byte radiusToCheck = radiusIncrease;
@@ -155,7 +151,7 @@ public class SmallTreeObject extends TreeObject {
 	private void growVines(World world, int x, int y, int z, short facing) {
 		for (byte yy = 0; yy < 5; yy++) {
 			Block block = world.getBlock(x, y - yy, z);
-			if (block.getMaterial() != VanillaMaterials.AIR) {
+			if (!block.isMaterial(VanillaMaterials.AIR)) {
 				return;
 			}
 

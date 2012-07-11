@@ -31,7 +31,7 @@ import java.util.Random;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.liquid.Water;
 
 public class SwampTreeObject extends SmallTreeObject {
 	public SwampTreeObject(Random random) {
@@ -46,11 +46,7 @@ public class SwampTreeObject extends SmallTreeObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		if (y < 1 || y + totalHeight + 2 > w.getHeight()) {
-			return false;
-		}
-		final BlockMaterial under = w.getBlockMaterial(x, y - 1, z);
-		if (under != VanillaMaterials.DIRT && under != VanillaMaterials.GRASS) {
+		if (!super.canPlaceObject(w, x, y, z)) {
 			return false;
 		}
 		byte radiusToCheck = radiusIncrease;
@@ -62,8 +58,7 @@ public class SwampTreeObject extends SmallTreeObject {
 				for (byte zz = (byte) -radiusToCheck; zz < radiusToCheck + 1; zz++) {
 					final BlockMaterial material = w.getBlockMaterial(x + xx, y + yy, z + zz);
 					if (!overridable.contains(material)) {
-						if (yy == 0 && (material == VanillaMaterials.WATER
-								|| material == VanillaMaterials.STATIONARY_WATER)) {
+						if (yy == 0 && material instanceof Water) {
 							continue;
 						}
 						return false;

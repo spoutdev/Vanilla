@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator.normal.object.tree;
 import java.util.Random;
 
 import org.spout.api.geo.World;
-import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.Sapling;
@@ -51,7 +50,7 @@ public class PineTreeObject extends TreeObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		if (y < 1 || y + totalHeight + 1 > 128) {
+		if (!super.canPlaceObject(w, x, y, z)) {
 			return false;
 		}
 		findRandomLeavesSize();
@@ -68,8 +67,7 @@ public class PineTreeObject extends TreeObject {
 				}
 			}
 		}
-		final BlockMaterial under = w.getBlockMaterial(x, y - 1, z);
-		return under == VanillaMaterials.DIRT || under == VanillaMaterials.GRASS;
+		return true;
 	}
 
 	@Override

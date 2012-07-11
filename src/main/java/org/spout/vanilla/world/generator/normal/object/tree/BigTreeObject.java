@@ -32,7 +32,6 @@ import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -59,8 +58,7 @@ public class BigTreeObject extends TreeObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		final BlockMaterial under = w.getBlockMaterial(x, y - 1, z);
-		if (under != VanillaMaterials.GRASS && under != VanillaMaterials.DIRT) {
+		if (!super.canPlaceObject(w, x, y, z)) {
 			return false;
 		}
 		final Point base = new Point(w, x, y, z);

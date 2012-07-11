@@ -45,8 +45,8 @@ public class CactusStackObject extends LargePlantObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		final BlockMaterial bellow = w.getBlockMaterial(x, y - 1, z);
-		return (bellow == VanillaMaterials.SAND || bellow == VanillaMaterials.CACTUS)
+		final BlockMaterial below = w.getBlockMaterial(x, y - 1, z);
+		return (below.equals(VanillaMaterials.SAND, VanillaMaterials.CACTUS))
 				&& w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR
 				&& w.getBlockMaterial(x - 1, y, z) == VanillaMaterials.AIR
 				&& w.getBlockMaterial(x + 1, y, z) == VanillaMaterials.AIR
@@ -60,7 +60,7 @@ public class CactusStackObject extends LargePlantObject {
 			if (!canPlaceObject(w, x, y + yy, z)) {
 				return;
 			}
-			w.getBlock(x, y + yy, z).setMaterial(VanillaMaterials.CACTUS);
+			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.CACTUS, (short) 0, w);
 		}
 	}
 }

@@ -45,9 +45,8 @@ public class SugarCaneStackObject extends LargePlantObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		final BlockMaterial bellow = w.getBlockMaterial(x, y - 1, z);
-		return (bellow == VanillaMaterials.DIRT || bellow == VanillaMaterials.GRASS
-				|| bellow == VanillaMaterials.SAND || bellow == VanillaMaterials.SUGAR_CANE_BLOCK)
+		final BlockMaterial below = w.getBlockMaterial(x, y - 1, z);
+		return below.equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND, VanillaMaterials.SUGAR_CANE_BLOCK)
 				&& w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR
 				&& (w.getBlockMaterial(x - 1, y - 1, z) == VanillaMaterials.STATIONARY_WATER
 				|| w.getBlockMaterial(x + 1, y - 1, z) == VanillaMaterials.STATIONARY_WATER
@@ -61,7 +60,7 @@ public class SugarCaneStackObject extends LargePlantObject {
 			if (w.getBlockMaterial(x, y + yy, z) != VanillaMaterials.AIR) {
 				return;
 			}
-			w.getBlock(x, y + yy, z).setMaterial(VanillaMaterials.SUGAR_CANE_BLOCK);
+			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.SUGAR_CANE_BLOCK, (short) 0, w);
 		}
 	}
 }

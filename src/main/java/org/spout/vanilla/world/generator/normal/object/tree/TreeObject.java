@@ -34,6 +34,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.world.generator.object.LargePlantObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
@@ -76,6 +77,19 @@ public abstract class TreeObject extends LargePlantObject {
 		logMetadata = type.metadata;
 	}
 
+	@Override
+	public boolean canPlaceObject(World w, int x, int y, int z) {
+		// Can only place trees within height range of the world
+		if (y < 1 || y + totalHeight + 2 > w.getHeight()) {
+			return false;
+		}
+		// Can only place trees on dirt and grass surfaces
+		if (!w.getBlockMaterial(x, y - 1, z).equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
+			return false;
+		}
+		return true;
+	}
+
 	public static void growTree(Sapling sapling, Block pos, Random random) {
 		final TreeObject tree;
 		final World world = pos.getWorld();
@@ -95,9 +109,9 @@ public abstract class TreeObject extends LargePlantObject {
 					}
 				}
 			}
-			if (saplingCount > 3 && firstSapling.translate(1, 0, 1).getMaterial() == Sapling.JUNGLE
-					&& firstSapling.translate(0, 0, 1).getMaterial() == Sapling.JUNGLE
-					&& firstSapling.translate(1, 0, 0).getMaterial() == Sapling.JUNGLE) {
+			if (saplingCount > 3 && firstSapling.translate(1, 0, 1).isMaterial(Sapling.JUNGLE)
+					&& firstSapling.translate(0, 0, 1).isMaterial(Sapling.JUNGLE)
+					&& firstSapling.translate(1, 0, 0).isMaterial(Sapling.JUNGLE)) {
 				pos = firstSapling;
 				tree = VanillaObjects.HUGE_JUNGLE_TREE;
 			} else {

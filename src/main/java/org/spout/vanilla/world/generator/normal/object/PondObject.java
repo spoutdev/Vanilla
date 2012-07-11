@@ -139,7 +139,7 @@ public class PondObject extends RandomObject {
 								block.setMaterial(VanillaMaterials.GRASS);
 							}
 						} else if (material == VanillaMaterials.STATIONARY_WATER
-								&& block.translate(0, 1, 0).getMaterial() == VanillaMaterials.AIR) {
+								&& block.translate(0, 1, 0).isMaterial(VanillaMaterials.AIR)) {
 							final Biome biome = block.getBiomeType();
 							if (biome == VanillaBiomes.TAIGA || biome == VanillaBiomes.TUNDRA) {
 								block.setMaterial(VanillaMaterials.ICE);

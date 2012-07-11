@@ -62,11 +62,7 @@ public class HugeTreeObject extends TreeObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		if (y < 1 || y + totalHeight + 1 > w.getHeight()) {
-			return false;
-		}
-		final BlockMaterial under = w.getBlockMaterial(x, y - 1, z);
-		if (under != VanillaMaterials.DIRT && under != VanillaMaterials.GRASS) {
+		if (!super.canPlaceObject(w, x, y, z)) {
 			return false;
 		}
 		byte checkRadius = 1;

@@ -63,8 +63,7 @@ public class ShrubDecorator extends Decorator {
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
 		byte y = 127;
-		BlockMaterial material;
-		while ((material = world.getBlockMaterial(x, y, z)) == VanillaMaterials.AIR || material == VanillaMaterials.LEAVES) {
+		while (world.getBlockMaterial(x, y, z).equals(VanillaMaterials.AIR,  VanillaMaterials.LEAVES)) {
 			y--;
 			if (y == 0 || world.getBlockMaterial(x, y, z) == VanillaMaterials.WATER) {
 				return -1;

@@ -34,6 +34,7 @@ import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.solid.MushroomBlock;
 import org.spout.vanilla.world.generator.object.LargePlantObject;
 
 public class HugeMushroomObject extends LargePlantObject {
@@ -158,7 +159,7 @@ public class HugeMushroomObject extends LargePlantObject {
 		}
 		final short data = useTextureMetadata ? (short) 10 : (short) 0;
 		for (int yy = y; yy < totalHeight + y; yy++) { // generate stem
-			world.getBlock(x, yy, z).setMaterial(stemMaterial, data);
+			world.setBlockMaterial(x, yy, z, stemMaterial, data, world);
 		}
 	}
 
@@ -273,11 +274,7 @@ public class HugeMushroomObject extends LargePlantObject {
 	}
 
 	private void checkIfUseTextureMetadata() {
-		if ((capMaterial == VanillaMaterials.HUGE_BROWN_MUSHROOM || capMaterial == VanillaMaterials.HUGE_RED_MUSHROOM) && (stemMaterial == VanillaMaterials.HUGE_BROWN_MUSHROOM || stemMaterial == VanillaMaterials.HUGE_RED_MUSHROOM)) {
-			useTextureMetadata = true;
-		} else {
-			useTextureMetadata = false;
-		}
+		useTextureMetadata = (capMaterial instanceof MushroomBlock && stemMaterial instanceof MushroomBlock);
 	}
 
 	public void setCapRadius(byte capRadius) {

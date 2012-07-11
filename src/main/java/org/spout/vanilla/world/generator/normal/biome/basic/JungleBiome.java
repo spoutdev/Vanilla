@@ -31,6 +31,7 @@ import org.spout.vanilla.material.block.plant.TallGrass;
 
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
@@ -48,7 +49,7 @@ public class JungleBiome extends GrassyBiome {
 	public JungleBiome(int biomeId) {
 		super(biomeId, new OreDecorator(), new SandAndClayDecorator(), new TreeDecorator(new JungleTreeWGOFactory()),
 				new FlowerDecorator((byte) 4), new TallGrassDecorator(new JungleTallGrassFactory(), (byte) 15),
-				new SugarCaneDecorator(), new PumpkinDecorator());
+				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
 		setMinMax((byte) 67, (byte) 73);
 	}
 

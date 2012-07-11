@@ -99,7 +99,8 @@ public class Mushroom extends GroundAttachable implements Plant {
 	@Override
 	public boolean isValidPosition(Block block, BlockFace attachedFace, boolean seekAlternative) {
 		if (super.isValidPosition(block, attachedFace, seekAlternative)) {
-			return block.getLight() <= 12;
+			final Block under = block.translate(BlockFace.BOTTOM);
+			return under.isMaterial(VanillaMaterials.MYCELIUM) || block.getLight() <= 12 && under.getMaterial().isOpaque();
 		}
 		return false;
 	}

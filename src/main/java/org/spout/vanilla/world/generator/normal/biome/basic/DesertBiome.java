@@ -29,6 +29,7 @@ package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.CactusDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
@@ -36,7 +37,8 @@ import org.spout.vanilla.world.generator.normal.decorator.WellDecorator;
 
 public class DesertBiome extends SandyBiome {
 	public DesertBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new SandAndClayDecorator(), new CactusDecorator(), new SugarCaneDecorator((byte) 6, (byte) 30, (byte) 3), new WellDecorator());
+		super(biomeId, new OreDecorator(), new SandAndClayDecorator(), new CactusDecorator(),
+				new MushroomDecorator(), new SugarCaneDecorator((byte) 6, (byte) 30, (byte) 3), new WellDecorator());
 		setMinMax((byte) 66, (byte) 69);
 	}
 

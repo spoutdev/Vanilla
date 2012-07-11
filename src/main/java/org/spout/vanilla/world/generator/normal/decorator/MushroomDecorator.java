@@ -26,33 +26,27 @@
  */
 package org.spout.vanilla.world.generator.normal.decorator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
-import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.VanillaBiomes;
-import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
-import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
+import org.spout.vanilla.material.block.plant.Mushroom;
 
 public class MushroomDecorator extends Decorator {
-	/*
-		 * Stores the differant types of mushrooms.
-		 */
-	private static final List<BlockMaterial> MUSHROOMS = new ArrayList<BlockMaterial>();
-	private static final List<HugeMushroomType> HUGE_MUSHROOMS = new ArrayList<HugeMushroomType>();
+	private final byte odd;
+	private final byte amount;
 
-	static {
-		MUSHROOMS.add(VanillaMaterials.RED_MUSHROOM);
-		MUSHROOMS.add(VanillaMaterials.BROWN_MUSHROOM);
-		HUGE_MUSHROOMS.add(HugeMushroomType.RED);
-		HUGE_MUSHROOMS.add(HugeMushroomType.BROWN);
+	public MushroomDecorator() {
+		this((byte) 64, (byte) 1);
+	}
+
+	public MushroomDecorator(byte odd, byte amount) {
+		this.odd = odd;
+		this.amount = amount;
 	}
 
 	@Override
@@ -60,36 +54,34 @@ public class MushroomDecorator extends Decorator {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		// get some stuff we'll need for both sizes
-		final Biome biome = chunk.getBiomeType(7, 7, 7);
-		final World world = chunk.getWorld();
-		// first up, normal mushrooms
-		final byte mushroomAmount = getNumberOfMushrooms(random, biome);
-		for (byte i = 0; i < mushroomAmount; i++) {
-			final int worldX = chunk.getBlockX(random);
-			final int worldZ = chunk.getBlockZ(random);
-			final int worldY = getHighestWorkableBlock(world, worldX, worldZ);
-			final BlockMaterial material = world.getBlockMaterial(worldX, worldY - 1, worldZ);
-			if (material == VanillaMaterials.GRASS || material == VanillaMaterials.DIRT || material == VanillaMaterials.MYCELIUM) {
-				world.setBlockMaterial(worldX, worldY, worldZ, getMushroom(random), (short) 0, world);
-			}
+		if (random.nextInt(odd) != 0) {
+			return;
 		}
-		// now we handle the huge ones
-		final byte hugeMushroomAmount = getNumberOfHugeMushrooms(random, biome);
-		for (byte i = 0; i < hugeMushroomAmount; i++) {
-			final int worldX = chunk.getBlockX(random);
-			final int worldZ = chunk.getBlockZ(random);
-			final int worldY = getHighestWorkableBlock(world, worldX, worldZ);
-			final HugeMushroomObject hugeMushroom = new HugeMushroomObject(random, getHugeMushroom(random));
-			if (hugeMushroom.canPlaceObject(world, worldX, worldY, worldZ)) {
-				hugeMushroom.placeObject(world, worldX, worldY, worldZ);
+		final World world = chunk.getWorld();
+		for (byte count = 0; count < amount; count++) {
+			final int x = chunk.getBlockX(random);
+			final int z = chunk.getBlockZ(random);
+			final Mushroom mushroom = random.nextInt(4) == 0 ? VanillaMaterials.RED_MUSHROOM : VanillaMaterials.BROWN_MUSHROOM;
+			final boolean surface = random.nextBoolean();
+			for (byte size = 5; size >= 0; size--) {
+				final int xx = x - 7 + random.nextInt(15);
+				final int zz = z - 7 + random.nextInt(15);
+				final int yy = surface ? getHighestWorkableBlock(world, xx, zz)
+						: getHighestWorkableBlock(world, xx, random.nextInt(64), zz);
+				if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
+						&& mushroom.isValidPosition(world.getBlock(xx, yy, zz), BlockFace.BOTTOM, false)) {
+					world.setBlockMaterial(xx, yy, zz, mushroom, (short) 0, world);
+				}
 			}
 		}
 	}
 
 	private int getHighestWorkableBlock(World w, int x, int z) {
-		int y = 127;
-		while (w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
+		return getHighestWorkableBlock(w, x, w.getHeight(), z);
+	}
+
+	private int getHighestWorkableBlock(World w, int x, int y, int z) {
+		while (!w.getBlockMaterial(x, y, z).isOpaque()) {
 			y--;
 			if (y == 0) {
 				return -1;
@@ -97,41 +89,5 @@ public class MushroomDecorator extends Decorator {
 		}
 		y++;
 		return y;
-	}
-
-	/* 
-	 * Suggested numbers based on mc specs:
-	 *  Mushroom biome:
-	 *	  mushroom: 0 to 3
-	 *	  huge mushroom: 0 to 1
-	 *  Swamp biome:
-	 *	  mushroom: 0 to 7
-	 *	  huge mushroom: 0 to 0
-	 *  All misc biomes:
-	 *	  huge mushroom: 0 to 0
-	 *	  mushroom: 0 to 3
-	 */
-	private byte getNumberOfMushrooms(Random random, Biome biome) {
-		if (biome == VanillaBiomes.SWAMP) {
-			return (byte) random.nextInt(7);
-		} else {
-			return (byte) random.nextInt(3);
-		}
-	}
-
-	private byte getNumberOfHugeMushrooms(Random random, Biome biome) {
-		if (biome == VanillaBiomes.MUSHROOM) {
-			return (byte) random.nextInt(2);
-		} else {
-			return 0;
-		}
-	}
-
-	private BlockMaterial getMushroom(Random random) {
-		return MUSHROOMS.get(random.nextInt(MUSHROOMS.size()));
-	}
-
-	private HugeMushroomType getHugeMushroom(Random random) {
-		return HUGE_MUSHROOMS.get(random.nextInt(HUGE_MUSHROOMS.size()));
 	}
 }

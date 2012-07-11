@@ -96,9 +96,9 @@ public abstract class NormalBiome extends VanillaBiome {
 		add.SetSourceModule(1, ELEVATION);
 
 		MASTER.SetSourceModule(0, add);
-		MASTER.setxScale(0.08);
+		MASTER.setxScale(0.07);
 		MASTER.setyScale(0.04);
-		MASTER.setzScale(0.08);
+		MASTER.setzScale(0.07);
 
 		BLOCK_REPLACER.SetSourceModule(0, ELEVATION);
 		BLOCK_REPLACER.setxScale(4D);
@@ -191,7 +191,6 @@ public abstract class NormalBiome extends VanillaBiome {
 	}
 
 	protected CuboidShortBuffer getSample(World world, int x, int startY, int endY, int z) {
-
 		int size;
 
 		if (endY <= startY) {
@@ -203,7 +202,7 @@ public abstract class NormalBiome extends VanillaBiome {
 		if (size >= 16) {
 			size = 15; // samples should not be larger than a column
 		}
-		CuboidShortBuffer sample = new CuboidShortBuffer(world, x, startY, z, 1, size, 1);
+		final CuboidShortBuffer sample = new CuboidShortBuffer(world, x, startY, z, 1, size, 1);
 		fill(sample, x, startY, endY, z);
 		return sample;
 	}

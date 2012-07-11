@@ -26,13 +26,13 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
-import java.util.Random;
 import org.spout.vanilla.world.generator.normal.biome.IcyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 
 public class TundraBiome extends IcyBiome {
 	public TundraBiome(int id) {
-		super(id, new OreDecorator());
+		super(id, new OreDecorator(), new SandAndClayDecorator());
 		setMinMax((byte) 67, (byte) 70);
 	}
 

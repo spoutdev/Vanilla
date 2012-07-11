@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
@@ -37,7 +38,8 @@ import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 public class OceanBiome extends GrassyBiome {
 	public OceanBiome(int biomeId) {
 		super(biomeId, new OreDecorator(), new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
-				new TallGrassDecorator(new NormalTallGrassFactory()), new SugarCaneDecorator(), new PumpkinDecorator());
+				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()), new SugarCaneDecorator(),
+				new PumpkinDecorator());
 		setMinMax((byte) 44, (byte) 53);
 	}
 

@@ -26,60 +26,65 @@
  */
 package org.spout.vanilla.world.generator.normal.decorator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.plant.Flower;
 
 public class FlowerDecorator extends Decorator {
-	private static final List<Flower> flowers = new ArrayList<Flower>();
+	private static final byte ODD = 10;
+	private final byte amount;
 
-	static {
-		flowers.add(VanillaMaterials.DANDELION);
-		flowers.add(VanillaMaterials.ROSE);
+	public FlowerDecorator() {
+		this((byte) 2);
+	}
+
+	public FlowerDecorator(byte amount) {
+		this.amount = amount;
 	}
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
-		if (chunk.getY() < 4) {
+		if (chunk.getY() != 4) {
 			return;
 		}
-		int howMany = random.nextInt(15);
-		Flower flower = getRandomFlower(random);
-		for (int i = 0; i < howMany; i++) {
-			int dx = random.nextInt(Chunk.BLOCKS.SIZE);
-			int dz = random.nextInt(Chunk.BLOCKS.SIZE);
-			int dy = getHighestWorkableBlock(chunk, dx, dz);
-			if (dy == -1) {
-				continue;
-			}
-			Block block = chunk.getBlock(dx, dy, dz).translate(BlockFace.TOP);
-			if (flower.canPlace(block, (short) 0, BlockFace.TOP, false)) {
-				flower.onPlacement(block, (short) 0, BlockFace.TOP, false);
-			}
-			if (flower.canAttachTo(block, BlockFace.TOP)) {
-				block.translate(BlockFace.TOP).setMaterial(flower);
+		if (random.nextInt(ODD) != 0) {
+			return;
+		}
+		final World world = chunk.getWorld();
+		for (byte count = 0; count < amount; count++) {
+			final int x = chunk.getBlockX(random);
+			final int z = chunk.getBlockZ(random);
+			for (byte size = 5; size >= 0; size--) {
+				final int xx = x - 7 + random.nextInt(15);
+				final int zz = z - 7 + random.nextInt(15);
+				final int yy = getHighestWorkableBlock(world, xx, zz);
+				if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
+						&& canFlowerStay(world.getBlock(xx, yy, zz))) {
+					BlockMaterial flower = random.nextInt(4) == 0 ? VanillaMaterials.ROSE : VanillaMaterials.DANDELION;
+					world.setBlockMaterial(xx, yy, zz, flower, (short) 0, world);
+				}
 			}
 		}
 	}
 
-	private Flower getRandomFlower(Random random) {
-		int which = random.nextInt(flowers.size());
-		return flowers.get(which);
+	//TODO: add this to flower material
+	private boolean canFlowerStay(Block block) {
+		return (block.getLight() > 7 || block.isAtSurface())
+				&& block.translate(BlockFace.BOTTOM).getMaterial().equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND);
 	}
 
-	private int getHighestWorkableBlock(Chunk c, int px, int pz) {
-		int y = 15;
-		while (c.getBlockMaterial(px, y, pz) != VanillaMaterials.GRASS) {
+	private int getHighestWorkableBlock(World world, int x, int z) {
+		byte y = 127;
+		while (world.getBlockMaterial(x, y, z).equals(VanillaMaterials.AIR, VanillaMaterials.LEAVES)) {
 			y--;
-			if (y == 0 || c.getBlockMaterial(px, y, pz) == VanillaMaterials.WATER) {
+			if (y == 0) {
 				return -1;
 			}
 		}

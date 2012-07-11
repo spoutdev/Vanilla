@@ -27,17 +27,18 @@
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
 public class PlainBiome extends GrassyBiome {
 	public PlainBiome(int id) {
-		super(id, new OreDecorator(), new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
-				new TallGrassDecorator(new NormalTallGrassFactory(), (byte) 10), new SugarCaneDecorator(), new PumpkinDecorator());
+		super(id, new OreDecorator(), new SandAndClayDecorator(), new FlowerDecorator((byte) 4),
+				new TallGrassDecorator(new NormalTallGrassFactory(), (byte) 10), new SugarCaneDecorator(),
+				new PumpkinDecorator());
 		setMinMax((byte) 67, (byte) 69);
 	}
 

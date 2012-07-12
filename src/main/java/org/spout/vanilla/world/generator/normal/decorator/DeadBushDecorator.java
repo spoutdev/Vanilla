@@ -31,19 +31,20 @@ import java.util.Random;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
-import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
 
-public class HugeMushroomDecorator extends Decorator {
+public class DeadBushDecorator extends Decorator {
+	private final byte odd;
 	private final byte amount;
 
-	public HugeMushroomDecorator() {
-		this((byte) 1);
+	public DeadBushDecorator() {
+		this((byte) 12, (byte) 2);
 	}
 
-	public HugeMushroomDecorator(byte amount) {
+	public DeadBushDecorator(byte odd, byte amount) {
+		this.odd = odd;
 		this.amount = amount;
 	}
 
@@ -52,24 +53,26 @@ public class HugeMushroomDecorator extends Decorator {
 		if (chunk.getY() != 4) {
 			return;
 		}
+		if (random.nextInt(odd) != 0) {
+			return;
+		}
 		final World world = chunk.getWorld();
-		final HugeMushroomObject mushroom = new HugeMushroomObject(random,
-				random.nextBoolean() ? HugeMushroomType.BROWN : HugeMushroomType.RED);
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
-			final int y = getHighestWorkableBlock(world, x, z);
-			mushroom.randomize();
-			if (y != -1 && mushroom.canPlaceObject(world, x, y, z)) {
-				mushroom.placeObject(world, x, y, z);
+			final int xx = x - 7 + random.nextInt(15);
+			final int zz = z - 7 + random.nextInt(15);
+			final int yy = getHighestWorkableBlock(world, xx, zz);
+			if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
+					&& VanillaMaterials.DEAD_BUSH.canAttachTo(world.getBlockMaterial(xx, yy - 1, zz), BlockFace.BOTTOM)) {
+				world.setBlockMaterial(xx, yy, zz, VanillaMaterials.DEAD_BUSH, (short) 0, world);
 			}
 		}
-
 	}
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
 		int y = world.getHeight();
-		while (!world.getBlockMaterial(x, y, z).equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.MYCELIUM)) {
+		while (world.getBlockMaterial(x, y, z).equals(VanillaMaterials.AIR, VanillaMaterials.LEAVES)) {
 			y--;
 			if (y == 0) {
 				return -1;

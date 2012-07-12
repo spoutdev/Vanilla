@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -85,9 +84,9 @@ public class Snow extends GroundAttachable implements Mineable, RandomBlockMater
 	}
 
 	@Override
-	public void onRandomTick(World world, int x, int y, int z) {
-		if (world.getBlockLight(x, y, z) > 11) {
-			world.setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, world);
+	public void onRandomTick(Block block) {
+		if (block.getBlockLight() > 11) {
+			block.setMaterial(VanillaMaterials.AIR);
 		}
 	}
 }

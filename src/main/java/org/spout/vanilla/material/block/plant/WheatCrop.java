@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.plant;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -36,6 +37,9 @@ import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.range.CuboidEffectRange;
+import org.spout.api.material.range.EffectRange;
+import org.spout.api.math.IntVector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
@@ -111,7 +115,6 @@ public class WheatCrop extends GroundAttachable implements Plant, RandomBlockMat
 		return block.getData() == 0x7;
 	}
 
-	// TODO: Grow
 	// TODO: Trampling
 
 	@Override
@@ -119,10 +122,51 @@ public class WheatCrop extends GroundAttachable implements Plant, RandomBlockMat
 		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 
+	private static final EffectRange FARMLAND_CHECK_RANGE = new CuboidEffectRange(-1, -1, -1, 1, -1, 1);
+
+	/**
+	 * Gets the chance of the crop block growing<br>
+	 * The higher the value, the lower the chance.
+	 * 
+	 * @param block to check
+	 * @return the growth chance
+	 */
+	private int getGrowthChance(Block block) {
+		float rate = 1.0f;
+		Block rel;
+		for (IntVector3 coord : FARMLAND_CHECK_RANGE) {
+			rel = block.translate(coord);
+			if (rel.isMaterial(VanillaMaterials.FARMLAND)) {
+				if (rel.getData() > 0) {
+					if (rel.getX() != 0 && rel.getZ() != 0) {
+						rate += 0.75f;
+					} else {
+						rate += 3.0f;
+					}
+				}        		
+			}
+		}
+
+		// Half, yes or no? Check for neighboring crops
+		if (block.translate(-1, 0, -1).isMaterial(this) || block.translate(1, 0, 1).isMaterial(this)
+				|| block.translate(-1, 0, 1).isMaterial(this) || block.translate(1, 0, -1).isMaterial(this)) {
+			return (int) (50f / rate);
+		}
+		if ((block.translate(-1, 0, 0).isMaterial(this) || block.translate(1, 0, 0).isMaterial(this))
+				&& (block.translate(0, 0, -1).isMaterial(this) || block.translate(0, 0, 1).isMaterial(this))) {
+			return (int) (50f / rate);
+		}
+		return (int) (25f / rate);
+	}
+
 	@Override
 	public void onRandomTick(Block block) {
-		if (!this.isFullyGrown(block)) {
-			this.setGrowthStage(block, this.getGrowthStage(block) + 1);
+		if (!this.isFullyGrown(block) && block.translate(BlockFace.TOP).getLight() >= 9) {
+			// Grow using a calculated chance of growing
+			Random rand = new Random(block.getWorld().getAge());
+			if (rand.nextInt(getGrowthChance(block) + 1) == 0) {
+				this.setGrowthStage(block, this.getGrowthStage(block) + 1);
+			}
 		}
 	}
 }

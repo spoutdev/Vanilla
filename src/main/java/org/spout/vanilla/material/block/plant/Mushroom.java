@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.Random;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
@@ -33,7 +35,11 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.range.CuboidEffectRange;
+import org.spout.api.material.range.EffectRange;
+import org.spout.api.math.IntVector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
@@ -46,7 +52,10 @@ import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomOb
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
 import org.spout.vanilla.world.generator.object.LargePlantObject;
 
-public class Mushroom extends GroundAttachable implements Plant {
+public class Mushroom extends GroundAttachable implements Plant, RandomBlockMaterial {
+	private static final EffectRange MUSHROOM_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
+	private static final int MAX_PER_GROUP = 5;
+
 	public Mushroom(String name, int id) {
 		super(name, id);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
@@ -108,5 +117,31 @@ public class Mushroom extends GroundAttachable implements Plant {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Sword ? (short) 2 : (short) 1;
+	}
+
+	@Override
+	public void onRandomTick(Block block) {
+		Random rand = new Random(block.getWorld().getAge());
+		if (rand.nextInt(25) == 0) {
+			// can we spread?
+			int max = MAX_PER_GROUP;
+			for (IntVector3 coord : MUSHROOM_RANGE) {
+				if (block.translate(coord).isMaterial(this) && --max <= 0) {
+					return;
+				}
+			}
+			// spread from the source (4 times)
+			Block newShroom = null;
+			for (int i = 0; i < 4; i++) {
+				newShroom = block.translate(rand.nextInt(3) - 1, rand.nextInt(2) - rand.nextInt(2), rand.nextInt(3) - 1);
+				if (newShroom.isMaterial(VanillaMaterials.AIR) && this.canPlace(newShroom, (short) 0, BlockFace.BOTTOM, false)) {
+					block = newShroom;
+				}				
+			}
+			// try to place at last
+			if (block.isMaterial(VanillaMaterials.AIR) && this.canPlace(block, (short) 0, BlockFace.BOTTOM, false)) {
+				this.onPlacement(block, (short) 0, BlockFace.BOTTOM, false);
+			}
+		}
 	}
 }

@@ -35,16 +35,14 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class DeadBushDecorator extends Decorator {
-	private final byte odd;
+public class LilyPadDecorator extends Decorator {
 	private final byte amount;
 
-	public DeadBushDecorator() {
-		this((byte) 12, (byte) 2);
+	public LilyPadDecorator() {
+		this((byte) 1);
 	}
 
-	public DeadBushDecorator(byte odd, byte amount) {
-		this.odd = odd;
+	public LilyPadDecorator(byte amount) {
 		this.amount = amount;
 	}
 
@@ -53,17 +51,18 @@ public class DeadBushDecorator extends Decorator {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		if (random.nextInt(odd) != 0) {
-			return;
-		}
 		final World world = chunk.getWorld();
 		for (byte count = 0; count < amount; count++) {
-			final int x = chunk.getBlockX(random) - 7 + random.nextInt(15);
-			final int z = chunk.getBlockZ(random) - 7 + random.nextInt(15);
-			final int y = getHighestWorkableBlock(world, x, z);
-			if (y != -1 && world.getBlockMaterial(x, y, z) == VanillaMaterials.AIR
-					&& VanillaMaterials.DEAD_BUSH.canAttachTo(world.getBlockMaterial(x, y - 1, z), BlockFace.TOP)) {
-				world.setBlockMaterial(x, y, z, VanillaMaterials.DEAD_BUSH, (short) 0, world);
+			final int x = chunk.getBlockX(random);
+			final int z = chunk.getBlockZ(random);
+			for (byte size = 4; size >= 0; size--) {
+				final int xx = x - 7 + random.nextInt(15);
+				final int zz = z - 7 + random.nextInt(15);
+				final int yy = getHighestWorkableBlock(world, xx, zz);
+				if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
+						&& VanillaMaterials.LILY_PAD.canAttachTo(world.getBlockMaterial(xx, yy - 1, zz), BlockFace.TOP)) {
+					world.setBlockMaterial(xx, yy, zz, VanillaMaterials.LILY_PAD, (short) 0, world);
+				}
 			}
 		}
 	}

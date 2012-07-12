@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.solid;
 
 import java.util.Random;
 
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -36,7 +35,6 @@ import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CubicEffectRange;
-import org.spout.api.material.range.EffectIterator;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 
@@ -53,7 +51,7 @@ import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.normal.biome.IcyBiome;
 
 public class Ice extends Solid implements Mineable, RandomBlockMaterial {
-	private static final byte MIN_GROWTH_LIGHT = 11;
+	private static final byte MIN_MELT_LIGHT = 11;
 	private static final EffectRange GROWTH_RANGE = new CubicEffectRange(1);
 
 	public Ice(String name, int id) {
@@ -92,19 +90,16 @@ public class Ice extends Solid implements Mineable, RandomBlockMaterial {
 	}
 
 	@Override
-	public void onRandomTick(World world, int x, int y, int z) {
-		Block block = world.getBlock(x, y, z);
-		if (block.getLight() > MIN_GROWTH_LIGHT) {
+	public void onRandomTick(Block block) {
+		if (block.getBlockLight() > MIN_MELT_LIGHT) {
 			block.setMaterial(VanillaMaterials.WATER);
-		} else if (world.getBiomeType(x, y, z) instanceof IcyBiome){
-			Random r = new Random(world.getAge());
+		} else if (block.getBiomeType() instanceof IcyBiome){
+			Random r = new Random(block.getWorld().getAge());
 			Block around;
-			EffectIterator iter = GROWTH_RANGE.getEffectIterator();
-			while (iter.hasNext()) {
-				IntVector3 next = iter.next();
+			for (IntVector3 next : GROWTH_RANGE) {
 				if (r.nextInt(4) == 0) {
 					around = block.translate(next);
-					if (around.getLight() > MIN_GROWTH_LIGHT && around.getMaterial() instanceof Water) {
+					if (around.getLight() > MIN_MELT_LIGHT && around.getMaterial() instanceof Water) {
 						around.setMaterial(VanillaMaterials.ICE);
 					}
 				}

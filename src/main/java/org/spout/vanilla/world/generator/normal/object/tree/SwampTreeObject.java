@@ -30,6 +30,7 @@ import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 
 import org.spout.vanilla.material.block.liquid.Water;
 
@@ -46,7 +47,12 @@ public class SwampTreeObject extends SmallTreeObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		if (!super.canPlaceObject(w, x, y, z)) {
+		// Can only place trees within height range of the world
+		if (y < 1 || y + totalHeight + 2 > w.getHeight()) {
+			return false;
+		}
+		// Can only place trees on dirt and grass surfaces
+		if (!w.getBlockMaterial(x, y - 1, z).equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
 			return false;
 		}
 		byte radiusToCheck = radiusIncrease;

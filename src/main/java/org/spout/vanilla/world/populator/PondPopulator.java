@@ -24,61 +24,52 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.decorator;
+package org.spout.vanilla.world.populator;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
+import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.PondObject;
 import org.spout.vanilla.world.generator.normal.object.PondObject.PondType;
 
-public class PondDecorator extends Decorator {
-	// generation odd, 'ODD' chunk per chunk
-	private static final byte ODD = 24;
-	// odd that a lava pond will be picked
-	private static final byte LAVA_POND_ODD = 11;
+public class PondPopulator extends Populator {
+	private static final byte WATER_ODD = 4;
+	private static final byte LAVA_ODD = 8;
+	private static final byte LAVA_SURFACE_ODD = 10;
+	private static final PondObject WATER_POND = new PondObject(PondType.WATER);
+	private static final PondObject LAVA_POND = new PondObject(PondType.LAVA);
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		if (random.nextInt(ODD) != 0) {
-			return;
-		}
 		final World world = chunk.getWorld();
-		for (byte i = 0; i < 1; i++) {
-			final int worldX = chunk.getBlockX(random);
-			final int worldZ = chunk.getBlockZ(random);
-			final int worldY = getHighestWorkableBlock(world, worldX, worldZ) - random.nextInt(4) - 1;
-			final PondObject pond = new PondObject(random, getPondType(random));
-			if (pond.canPlaceObject(world, worldX, worldY, worldZ)) {
-				pond.placeObject(world, worldX, worldY, worldZ);
+		if (random.nextInt(WATER_ODD) == 0) {
+			final int x = chunk.getBlockX(random);
+			final int z = chunk.getBlockZ(random);
+			final int y = random.nextInt(128);
+			WATER_POND.setRandom(random);
+			WATER_POND.randomize();
+			if (WATER_POND.canPlaceObject(world, x, y, z)) {
+				WATER_POND.placeObject(world, x, y, z);
 			}
 		}
-	}
-
-	private PondType getPondType(Random random) {
-		if (random.nextInt(LAVA_POND_ODD) == 0) {
-			return PondType.LAVA;
-		} else {
-			return PondType.WATER;
-		}
-	}
-
-	private int getHighestWorkableBlock(World w, int x, int z) {
-		int y = 127;
-		while (w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR) {
-			y--;
-			if (y == 0) {
-				return -1;
+		if (random.nextInt(LAVA_ODD) == 0) {
+			final int x = chunk.getBlockX(random);
+			final int z = chunk.getBlockZ(random);
+			final int y = random.nextInt(120) + 8;
+			if (y >= 63 && random.nextInt(LAVA_SURFACE_ODD) != 0) {
+				return;
+			}
+			LAVA_POND.setRandom(random);
+			LAVA_POND.randomize();
+			if (LAVA_POND.canPlaceObject(world, x, y, z)) {
+				LAVA_POND.placeObject(world, x, y, z);
 			}
 		}
-		y++;
-		return y;
 	}
 }

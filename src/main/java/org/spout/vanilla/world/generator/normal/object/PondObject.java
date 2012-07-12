@@ -35,7 +35,8 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.world.generator.VanillaBiomes;
+import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.biome.IcyBiome;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
 public class PondObject extends RandomObject {
@@ -129,19 +130,21 @@ public class PondObject extends RandomObject {
 		for (byte px = 0; px < 16; px++) {
 			for (byte pz = 0; pz < 16; pz++) {
 				for (byte py = -1; py < 4; py++) {
-					if (world.getBlockSkyLightRaw(x + px, y + py + 1, z + pz) > 0) {
-						final Block block = world.getBlock(x + px, y + py, z + pz);
+					final Block block = world.getBlock(x + px, y + py, z + pz);
+					if (block.isAtSurface()) {
 						final BlockMaterial material = block.getMaterial();
 						if (material == VanillaMaterials.DIRT) {
-							if (block.getBiomeType() == VanillaBiomes.MUSHROOM) {
-								block.setMaterial(VanillaMaterials.MYCELIUM);
+							final BlockMaterial top;
+							final Biome biome = block.getBiomeType();
+							if (biome instanceof GrassyBiome) {
+								top = ((GrassyBiome) biome).getTopCover();
 							} else {
-								block.setMaterial(VanillaMaterials.GRASS);
+								top = VanillaMaterials.GRASS;
 							}
+							block.setMaterial(top);
 						} else if (material == VanillaMaterials.STATIONARY_WATER
 								&& block.translate(0, 1, 0).isMaterial(VanillaMaterials.AIR)) {
-							final Biome biome = block.getBiomeType();
-							if (biome == VanillaBiomes.TAIGA || biome == VanillaBiomes.TUNDRA) {
+							if (block.getBiomeType() instanceof IcyBiome) {
 								block.setMaterial(VanillaMaterials.ICE);
 							}
 						}

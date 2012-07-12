@@ -24,18 +24,31 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.decorator;
+package org.spout.vanilla.world.populator;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
+import org.spout.api.generator.Populator;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-/**
- * Decorator that decorates a biome with a village.
- */
-public class VillageDecorator extends Decorator {
+import org.spout.vanilla.world.generator.normal.object.DungeonObject;
+
+public class DungeonPopulator extends Populator{
+	private static final DungeonObject DUNGEON = new DungeonObject();
+	private static final byte ATTEMPTS = 8;
 	@Override
 	public void populate(Chunk chunk, Random random) {
+		DUNGEON.setRandom(random);
+		final World world = chunk.getWorld();
+		for (byte count = 0; count < ATTEMPTS; count++) {
+			final int x = chunk.getBlockX(random);
+			final int z = chunk.getBlockZ(random);
+			final int y = random.nextInt(128);
+			DUNGEON.randomize();
+			if (DUNGEON.canPlaceObject(world, x, y, z)) {
+				DUNGEON.placeObject(world, x, y, z);
+			}
+		}
 	}
 }

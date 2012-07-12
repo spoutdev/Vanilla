@@ -27,21 +27,22 @@
 package org.spout.vanilla.world.generator.normal.decorator;
 
 import java.util.Random;
-import org.spout.api.generator.biome.Biome;
-
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.material.BlockMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
+import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
 
-public class TreeDecorator extends Decorator {
-	private final TreeWGOFactory factory;
+public class HugeMushroomDecorator extends Decorator {
+	private final byte amount;
 
-	public TreeDecorator(TreeWGOFactory factory) {
-		this.factory = factory;
+	public HugeMushroomDecorator() {
+		this((byte) 1);
+	}
+
+	public HugeMushroomDecorator(byte amount) {
+		this.amount = amount;
 	}
 
 	@Override
@@ -49,27 +50,24 @@ public class TreeDecorator extends Decorator {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		final Biome decorating = chunk.getBiomeType(0, 0, 0);
-		final byte amount = factory.amount(random);
+		final World world = chunk.getWorld();
+		final HugeMushroomObject mushroom = new HugeMushroomObject(random,
+				random.nextBoolean() ? HugeMushroomType.BROWN : HugeMushroomType.RED);
 		for (byte count = 0; count < amount; count++) {
-			final TreeObject tree = factory.make(random);
-			final World world = chunk.getWorld();
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);
-			final Biome target = world.getBiomeType(x, 64, z);
-			if (y == -1 || decorating != target) {
-				continue;
-			}
-			if (tree.canPlaceObject(world, x, y, z)) {
-				tree.placeObject(world, x, y, z);
+			mushroom.randomize();
+			if (y != -1 && mushroom.canPlaceObject(world, x, y, z)) {
+				mushroom.placeObject(world, x, y, z);
 			}
 		}
+
 	}
 
-	private int getHighestWorkableBlock(World w, int x, int z) {
-		int y = w.getHeight();
-		while (!w.getBlockMaterial(x, y, z).equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
+	private int getHighestWorkableBlock(World world, int x, int z) {
+		int y = world.getHeight();
+		while (!world.getBlockMaterial(x, y, z).equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.MYCELIUM)) {
 			y--;
 			if (y == 0) {
 				return -1;
@@ -77,11 +75,5 @@ public class TreeDecorator extends Decorator {
 		}
 		y++;
 		return y;
-	}
-
-	public static interface TreeWGOFactory {
-		public TreeObject make(Random random);
-
-		public byte amount(Random random);
 	}
 }

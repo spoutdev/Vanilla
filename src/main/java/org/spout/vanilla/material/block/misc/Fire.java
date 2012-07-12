@@ -35,7 +35,6 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
-import org.spout.api.material.range.EffectIterator;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 
@@ -215,9 +214,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 		// Spreading logic
 		int chanceFactor, firePower, netChance;
-		EffectIterator iter = SPREAD_RANGE.getEffectIterator();
-		while (iter.hasNext()) {
-			IntVector3 offset = iter.next();
+		for (IntVector3 offset : SPREAD_RANGE) {
 
 			// Don't spread to the middle or to non-air and other fire blocks
 			if (offset.getX() == 0 && offset.getY() == 0 && offset.getZ() == 0) {

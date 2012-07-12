@@ -34,6 +34,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -44,7 +45,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class WheatCrop extends GroundAttachable implements Plant {
+public class WheatCrop extends GroundAttachable implements Plant, RandomBlockMaterial {
 	public WheatCrop(String name, int id) {
 		super(name, id);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
@@ -110,11 +111,18 @@ public class WheatCrop extends GroundAttachable implements Plant {
 		return block.getData() == 0x7;
 	}
 
+	// TODO: Grow
+	// TODO: Trampling
+
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 
-	// TODO: Grow
-	// TODO: Trampling
+	@Override
+	public void onRandomTick(Block block) {
+		if (!this.isFullyGrown(block)) {
+			this.setGrowthStage(block, this.getGrowthStage(block) + 1);
+		}
+	}
 }

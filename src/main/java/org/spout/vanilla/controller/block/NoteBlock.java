@@ -51,7 +51,6 @@ public class NoteBlock extends VanillaBlockController {
 
 	/**
 	 * Sets the powered state of this Note Block, possibly causing it to play the note
-	 * 
 	 * @param powered state to set to
 	 */
 	public void setPowered(boolean powered) {
@@ -65,7 +64,6 @@ public class NoteBlock extends VanillaBlockController {
 
 	/**
 	 * Gets whether this Note Block is powered by Redstone
-	 * 
 	 * @return True if it is powered, False if not
 	 */
 	public boolean isPowered() {
@@ -74,7 +72,6 @@ public class NoteBlock extends VanillaBlockController {
 
 	/**
 	 * Gets the note value of this Note Block
-	 * 
 	 * @return the note value
 	 */
 	public int getNote() {
@@ -83,7 +80,6 @@ public class NoteBlock extends VanillaBlockController {
 
 	/**
 	 * Sets the note value of this Note Block
-	 * 
 	 * @param note value to set to
 	 */
 	public void setNote(int note) {

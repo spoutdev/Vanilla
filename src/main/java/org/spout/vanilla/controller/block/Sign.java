@@ -68,7 +68,6 @@ public class Sign extends VanillaBlockController {
 
 	/**
 	 * Gets the block range within players can see changes to this Sign
-	 * 
 	 * @return player view block range
 	 */
 	public int getRange() {
@@ -77,7 +76,6 @@ public class Sign extends VanillaBlockController {
 
 	/**
 	 * Sets the block range within players can see changes to this Sign
-	 * 
 	 * @param range to set to
 	 */
 	public void setRange(int range) {
@@ -86,7 +84,6 @@ public class Sign extends VanillaBlockController {
 
 	/**
 	 * Gets the current lines of text of this Sign
-	 * 
 	 * @return an array of String lines shown on this Sign
 	 */
 	public String[] getText() {
@@ -95,7 +92,6 @@ public class Sign extends VanillaBlockController {
 
 	/**
 	 * Sets the current lines of this Sign
-	 * 
 	 * @param text to set to
 	 */
 	public void setText(String[] text) throws IllegalArgumentException {
@@ -108,7 +104,6 @@ public class Sign extends VanillaBlockController {
 
 	/**
 	 * Gets the line text at a certain line row
-	 * 
 	 * @param line row index
 	 * @return the text of that row
 	 */
@@ -118,7 +113,6 @@ public class Sign extends VanillaBlockController {
 
 	/**
 	 * Sets the line text at a certain line row
-	 * 
 	 * @param line row index
 	 * @param text to set the line to
 	 */

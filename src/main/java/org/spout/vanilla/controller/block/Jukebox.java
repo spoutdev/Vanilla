@@ -70,7 +70,6 @@ public class Jukebox extends VanillaBlockController {
 
 	/**
 	 * Tests whether this Jukebox can play the item specified
-	 * 
 	 * @param item to play
 	 * @return True if it can play it, False if not
 	 */
@@ -80,7 +79,6 @@ public class Jukebox extends VanillaBlockController {
 
 	/**
 	 * Tests whether this Jukebox can play the item material specified
-	 * 
 	 * @param material to play
 	 * @return True if it can play it, False if not
 	 */

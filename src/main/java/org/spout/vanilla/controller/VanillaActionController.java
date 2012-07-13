@@ -193,7 +193,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 	/**
 	 * Sets the last known transformation known by the clients<br>
 	 * This should only be called by the protocol classes
-	 * 
 	 * @param transform to set to
 	 */
 	public void setLastClientTransform(Transform transform) {
@@ -202,7 +201,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Gets the last known transformation updated to the clients
-	 * 
 	 * @return the last known transform by the clients
 	 */
 	public Transform getLastClientTransform() {
@@ -211,7 +209,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Gets the bounding box for the entity that this controller supplies
-	 * 
 	 * @return the bounding box for the entity
 	 */
 	public BoundingBox getBounds() {
@@ -221,7 +218,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 	/**
 	 * Tests if a velocity update is needed for this entity<br>
 	 * This is called by the entity protocol
-	 * 
 	 * @return True if a velocity update is needed
 	 */
 	public boolean needsVelocityUpdate() {
@@ -231,7 +227,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 	/**
 	 * Tests if a position update is needed for this entity<br>
 	 * This is called by the entity protocol
-	 * 
 	 * @return True if a position update is needed
 	 */
 	public boolean needsPositionUpdate() {
@@ -240,7 +235,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Gets the current velocity of this controller
-	 * 
 	 * @return the velocity
 	 */
 	public Vector3 getVelocity() {
@@ -249,7 +243,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Sets the current velocity for this controller
-	 * 
 	 * @param velocity to set to
 	 */
 	public void setVelocity(Vector3 velocity) {
@@ -265,7 +258,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Gets the speed of the controller during the prior movement. This will always be lower than the maximum speed.
-	 * 
 	 * @return the moved velocity
 	 */
 	public Vector3 getMovementSpeed() {
@@ -274,7 +266,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Gets the maximum speed this controller is allowed to move at once.
-	 * 
 	 * @return the maximum velocity
 	 */
 	public Vector3 getMaxSpeed() {
@@ -283,7 +274,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Sets the maximum speed this controller is allowed to move at once.
-	 * 
 	 * @param maxSpeed to set to
 	 */
 	public void setMaxSpeed(Vector3 maxSpeed) {
@@ -448,7 +438,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Sets the yaw angle for this controller
-	 * 
 	 * @param angle to set to
 	 */
 	public void yaw(float angle) {
@@ -457,7 +446,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Sets the pitch angle for this controller
-	 * 
 	 * @param angle to set to
 	 */
 	public void pitch(float angle) {
@@ -474,7 +462,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Gets the position of this controller at the start of this tick
-	 * 
 	 * @return previous position
 	 */
 	public Vector3 getPreviousPosition() {
@@ -483,7 +470,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Gets the rotation of this controller at the start of this tick
-	 * 
 	 * @return previous rotation
 	 */
 	public Quaternion getPreviousRotation() {
@@ -500,7 +486,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Gets the health of this controller (hitpoints)
-	 * 
 	 * @return the health value
 	 */
 	public int getHealth() {
@@ -509,7 +494,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Gets the maximum health this controller can have
-	 * 
 	 * @return the maximum health
 	 */
 	public int getMaxHealth() {
@@ -518,7 +502,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Sets the current health value for this controller
-	 * 
 	 * @param health hitpoints value to set to
 	 * @param source of the change
 	 */
@@ -538,7 +521,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	/**
 	 * Sets the maximum health this controller can have
-	 * 
 	 * @param maxHealth to set to
 	 */
 	public void setMaxHealth(int maxHealth) {

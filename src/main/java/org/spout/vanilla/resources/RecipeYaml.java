@@ -29,17 +29,18 @@ package org.spout.vanilla.resources;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.spout.api.inventory.Recipe;
 import org.spout.api.resource.Resource;
 
 public class RecipeYaml extends Resource {
 	public static RecipeYaml DEFAULT;
 	private Map<String, Recipe> recipes = new HashMap<String, Recipe>();
-	
+
 	public RecipeYaml(Map<String, Recipe> recipes) {
 		this.recipes = recipes;
 	}
-	
+
 	public Map<String, Recipe> getRecipes() {
 		return Collections.unmodifiableMap(recipes);
 	}

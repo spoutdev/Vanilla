@@ -49,7 +49,6 @@ public class BrewingStand extends VanillaWindowBlockController implements Transa
 
 	/**
 	 * Gets the remaining time for brewing to complete
-	 * 
 	 * @return the brewing time
 	 */
 	public float getBrewTime() {

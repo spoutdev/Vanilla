@@ -127,7 +127,6 @@ public class WheatCrop extends GroundAttachable implements Plant, RandomBlockMat
 	/**
 	 * Gets the chance of the crop block growing<br>
 	 * The higher the value, the lower the chance.
-	 * 
 	 * @param block to check
 	 * @return the growth chance
 	 */
@@ -143,7 +142,7 @@ public class WheatCrop extends GroundAttachable implements Plant, RandomBlockMat
 					} else {
 						rate += 3.0f;
 					}
-				}        		
+				}
 			}
 		}
 

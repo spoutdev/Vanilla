@@ -43,9 +43,9 @@ public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginReq
 	@Override
 	public void handleServer(final Session session, final Player player, final LoginRequestMessage message) {
 		if (message.getId() > VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
-			session.disconnect(false, new Object[] {"Outdated server!"});
+			session.disconnect(false, new Object[]{"Outdated server!"});
 		} else if (message.getId() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
-			session.disconnect(false, new Object[] {"Outdated client!"});
+			session.disconnect(false, new Object[]{"Outdated client!"});
 		} else {
 			String handshakeUsername = session.getDataMap().get(VanillaProtocol.HANDSHAKE_USERNAME);
 			handshakeUsername = handshakeUsername.split(";")[0];

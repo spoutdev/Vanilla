@@ -29,19 +29,17 @@ package org.spout.vanilla.util;
 import org.spout.api.math.MathHelper;
 
 public class VanillaMathHelper {
-
 	/**
 	 * Gets the celestial angle at a certain time of the day
-	 * 
 	 * @param timeMillis time
 	 * @param timeMillisTune fine runing
 	 * @return celestial angle
 	 */
 	public static float getCelestialAngle(long timeMillis, float timeMillisTune) {
 		float timeFactor = ((float) (timeMillis % 24000) + timeMillisTune) / 24000f - 0.25f;
-		if(timeFactor < 0) {
+		if (timeFactor < 0) {
 			timeFactor++;
-		} else if(timeFactor > 1) {
+		} else if (timeFactor > 1) {
 			timeFactor--;
 		}
 
@@ -53,7 +51,6 @@ public class VanillaMathHelper {
 	/**
 	 * Gets the (real?) celestial angle at a certain time of the day<br>
 	 * The use of this function is unknown...
-	 * 
 	 * @param timeMillis time
 	 * @param timeMillisTune fine runing
 	 * @return celestial angle, a value from 0 to 1
@@ -62,9 +59,9 @@ public class VanillaMathHelper {
 		float celestial = VanillaMathHelper.getCelestialAngle(timeMillis, timeMillisTune);
 		celestial *= MathHelper.TWO_PI;
 		celestial = 1.0f - ((float) MathHelper.cos(celestial) * 2.0f + 0.5f);
-		if(celestial < 0) {
+		if (celestial < 0) {
 			celestial = 0.0f;
-		} else if(celestial > 1) {
+		} else if (celestial > 1) {
 			celestial = 1.0f;
 		}
 		return 1.0f - celestial;

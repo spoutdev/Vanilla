@@ -28,12 +28,8 @@ package org.spout.vanilla.chat.style;
 
 import org.spout.api.chat.style.StyleFormatter;
 
-/**
- * @author zml2008
- */
 public class VanillaStyleFormatter implements StyleFormatter {
 	public static final String COLOR_CHAR = "\u00A7";
-
 	private final char styleChar;
 
 	public VanillaStyleFormatter(char styleChar) {

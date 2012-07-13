@@ -365,7 +365,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets whether this Block Material can spawn drops when dug by the held item specified
-	 * 
 	 * @param block to be broken
 	 * @param holding item of the diggers
 	 * @return True if it spawns items, False if not
@@ -386,7 +385,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Sets the mining level required for this block to spawn drops
-	 * 
 	 * @param miningLevel to set to
 	 * @return this material
 	 */
@@ -397,7 +395,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets the mining level required for this block to spawn drops
-	 * 
 	 * @return mining level
 	 */
 	public int getMiningLevel() {
@@ -407,7 +404,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	/**
 	 * Sets the mining type of this Block material<br>
 	 * This type is used when checking for drops
-	 * 
 	 * @param miningType to set to
 	 * @return this material
 	 */
@@ -419,7 +415,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	/**
 	 * Gets the mining type of this Block material<br>
 	 * This type is used when checking for drops
-	 * 
 	 * @return the mining type
 	 */
 	public MiningType getMiningType() {

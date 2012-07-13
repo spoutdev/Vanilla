@@ -40,14 +40,14 @@ public class OrePopulator extends Populator {
 
 	static {
 		ORES = new OreObject[]{
-			new OreObject(OreType.DIRT),
-			new OreObject(OreType.GRAVEL),
-			new OreObject(OreType.COAL),
-			new OreObject(OreType.IRON),
-			new OreObject(OreType.REDSTONE),
-			new OreObject(OreType.LAPIS_LAZULI),
-			new OreObject(OreType.GOLD),
-			new OreObject(OreType.DIAMOND)
+				new OreObject(OreType.DIRT),
+				new OreObject(OreType.GRAVEL),
+				new OreObject(OreType.COAL),
+				new OreObject(OreType.IRON),
+				new OreObject(OreType.REDSTONE),
+				new OreObject(OreType.LAPIS_LAZULI),
+				new OreObject(OreType.GOLD),
+				new OreObject(OreType.DIAMOND)
 		};
 	}
 

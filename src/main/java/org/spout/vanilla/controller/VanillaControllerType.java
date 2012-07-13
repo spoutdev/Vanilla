@@ -49,7 +49,6 @@ public class VanillaControllerType extends EmptyConstructorControllerType {
 
 	/**
 	 * Gets the unique Minecraft ID for this controller type
-	 * 
 	 * @return the Minecraft id
 	 */
 	public int getMinecraftId() {

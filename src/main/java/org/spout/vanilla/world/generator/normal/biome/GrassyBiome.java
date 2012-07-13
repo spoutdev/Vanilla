@@ -30,12 +30,13 @@ import org.spout.api.generator.biome.Decorator;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 public abstract class GrassyBiome extends NormalBiome {
 	protected BlockMaterial topCover = VanillaMaterials.GRASS;
-	
+
 	public GrassyBiome(int biomeId, Decorator... decorators) {
 		super(biomeId, decorators);
 	}

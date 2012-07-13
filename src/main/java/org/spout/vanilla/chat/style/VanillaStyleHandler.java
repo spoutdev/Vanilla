@@ -38,7 +38,6 @@ import org.spout.api.chat.style.StyleHandler;
 public class VanillaStyleHandler extends StyleHandler {
 	public static final VanillaStyleHandler INSTANCE = new VanillaStyleHandler();
 	public static final int ID = register(INSTANCE);
-
 	private final Pattern stylePattern;
 
 	public VanillaStyleHandler() {

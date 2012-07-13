@@ -174,7 +174,7 @@ public class AdministrationCommands {
 	@CommandPermissions("vanilla.command.deop")
 	public void deop(CommandContext args, CommandSource source) throws CommandException {
 		if (args.length() != 1) {
-			throw new CommandException("Please only provide a player to OP!");
+			throw new CommandException("Please provide a player to remove operator status!");
 		}
 
 		String playerName = args.getString(0);
@@ -183,7 +183,7 @@ public class AdministrationCommands {
 		source.sendMessage(ChatStyle.YELLOW, playerName, " had their operator status revoked!");
 		Player player = Spout.getEngine().getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
-			player.sendMessage(ChatStyle.YELLOW, "You have your operator status revoked!");
+			player.sendMessage(ChatStyle.YELLOW, "You had your operator status revoked!");
 		}
 	}
 
@@ -191,7 +191,7 @@ public class AdministrationCommands {
 	@CommandPermissions("vanilla.command.op")
 	public void op(CommandContext args, CommandSource source) throws CommandException {
 		if (args.length() != 1) {
-			throw new CommandException("Please only provide a player to OP!");
+			throw new CommandException("Please player to OP!");
 		}
 
 		String playerName = args.getString(0);
@@ -232,7 +232,7 @@ public class AdministrationCommands {
 			}
 		}
 
-		World world = null;
+		World world;
 		if (args.length() == 3) {
 			world = plugin.getEngine().getWorld(args.getString(2));
 			if (world == null) {

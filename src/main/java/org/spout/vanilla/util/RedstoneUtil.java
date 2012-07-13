@@ -70,7 +70,6 @@ public class RedstoneUtil {
 
 	/**
 	 * Gets if the given block is emitting power to surrounding blocks
-	 * 
 	 * @param block to check
 	 * @return True if emitting power, False if not
 	 */
@@ -80,7 +79,6 @@ public class RedstoneUtil {
 
 	/**
 	 * Gets if the given block is emitting power to surrounding blocks
-	 * 
 	 * @param block to check
 	 * @param to the face it is powering
 	 * @return True if emitting power, False if not
@@ -91,7 +89,6 @@ public class RedstoneUtil {
 
 	/**
 	 * Gets if the given block is emitting power to surrounding blocks
-	 * 
 	 * @param block to check
 	 * @param powerMode to use when reading power
 	 * @return True if emitting power, False if not
@@ -102,7 +99,6 @@ public class RedstoneUtil {
 
 	/**
 	 * Gets if the given block is emitting power to surrounding blocks
-	 * 
 	 * @param block to check
 	 * @param to the face it is powering
 	 * @param powerMode to use when reading power

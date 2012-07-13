@@ -101,7 +101,6 @@ public class BedBlock extends VanillaBlockMaterial implements Mineable, Initiali
 
 	/**
 	 * Creates a bed using the parameters specified
-	 * 
 	 * @param footBlock of the bed
 	 * @param facing of the bed
 	 */
@@ -178,6 +177,4 @@ public class BedBlock extends VanillaBlockMaterial implements Mineable, Initiali
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
-
-
 }

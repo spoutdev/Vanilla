@@ -46,7 +46,7 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	public static final byte MAX_SKY_LIGHT = 15;
 	public static final byte SKY_LIGHT_RANGE = MAX_SKY_LIGHT - MIN_SKY_LIGHT;
 	protected long maxTime, time = 0, countdown = 20, rate;
-	private Long setTime; // The time manually set
+	private Long setTime;
 	private WeatherSimulator weather;
 	private static final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
 
@@ -187,7 +187,6 @@ public abstract class VanillaSky extends Controller implements VanillaController
 
 	/**
 	 * Gets the Weather Simulator
-	 * 
 	 * @return the weather simulator, or null if no weather is enabled
 	 */
 	public WeatherSimulator getWeatherSimulator() {

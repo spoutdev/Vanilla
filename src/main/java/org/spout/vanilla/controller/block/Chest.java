@@ -97,7 +97,6 @@ public class Chest extends VanillaWindowBlockController implements TransactionWi
 
 	/**
 	 * Checks if this Chest is a double chest
-	 * 
 	 * @return True if it is a double chest
 	 */
 	public boolean isDouble() {
@@ -106,7 +105,6 @@ public class Chest extends VanillaWindowBlockController implements TransactionWi
 
 	/**
 	 * Gets whether this Chest is opened
-	 * 
 	 * @return True if it is opened, False if not
 	 */
 	public boolean isOpened() {

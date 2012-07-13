@@ -116,7 +116,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 			VanillaMaterials.RAIL_DETECTOR.setPowering(this.railsBlock, false);
 		}
 	}
-	
+
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
@@ -151,8 +151,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 			if (this.railMaterial == VanillaMaterials.RAIL_DETECTOR) {
 				VanillaMaterials.RAIL_DETECTOR.setPowering(this.railsBlock, true);
 			}
-			
-			
+
 			//on tracks
 			this.previousPosY = position.getY();
 

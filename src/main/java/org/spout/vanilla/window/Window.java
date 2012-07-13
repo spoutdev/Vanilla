@@ -71,7 +71,6 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Gets the Inventory Bundle containing all shown inventories in this Window
-	 * 
 	 * @return the inventory of this window
 	 */
 	public InventoryBundle getInventory() {
@@ -80,7 +79,6 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Gets the Inventory size to send to the clients
-	 * 
 	 * @return inventory size
 	 */
 	public int getInventorySize() {
@@ -89,7 +87,6 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Gets the 'minecraft' or 'notchian' window Id of this Window
-	 * 
 	 * @return window id
 	 */
 	public int getId() {
@@ -98,7 +95,6 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Gets whether this Window has a close message or not
-	 * 
 	 * @return True if it has a close message, False if not
 	 */
 	public boolean hasCloseMessage() {
@@ -107,7 +103,6 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Gets the unique Id of this Window instance
-	 * 
 	 * @return window id
 	 */
 	public int getInstanceId() {
@@ -116,7 +111,6 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Gets the title of this Window shown
-	 * 
 	 * @return the title
 	 */
 	public String getTitle() {
@@ -125,7 +119,6 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Sets the title shown by this Window
-	 * 
 	 * @param title to set to
 	 */
 	public void setTitle(String title) {
@@ -134,7 +127,6 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Gets the player viewing this Window
-	 * 
 	 * @return the player
 	 */
 	public Player getPlayer() {
@@ -143,7 +135,6 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Gets the Vanilla player controller owner of this Window
-	 * 
 	 * @return the owner player controller
 	 */
 	public VanillaPlayer getOwner() {
@@ -219,7 +210,6 @@ public class Window implements InventoryViewer {
 	/**
 	 * Performs a click in this Window as a whole<br>
 	 * Called by the protocol handlers
-	 * 
 	 * @param clickedSlot
 	 * @param rightClick
 	 * @param shift

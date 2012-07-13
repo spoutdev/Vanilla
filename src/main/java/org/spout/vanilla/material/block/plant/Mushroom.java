@@ -136,7 +136,7 @@ public class Mushroom extends GroundAttachable implements Plant, RandomBlockMate
 				newShroom = block.translate(rand.nextInt(3) - 1, rand.nextInt(2) - rand.nextInt(2), rand.nextInt(3) - 1);
 				if (newShroom.isMaterial(VanillaMaterials.AIR) && this.canPlace(newShroom, (short) 0, BlockFace.BOTTOM, false)) {
 					block = newShroom;
-				}				
+				}
 			}
 			// try to place at last
 			if (block.isMaterial(VanillaMaterials.AIR) && this.canPlace(block, (short) 0, BlockFace.BOTTOM, false)) {

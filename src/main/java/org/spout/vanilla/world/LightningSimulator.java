@@ -58,7 +58,6 @@ public class LightningSimulator implements ITickable {
 
 	/**
 	 * Gets the strength of the thunder storm, which is affected by the duration
-	 * 
 	 * @param factor to apply to the changing states
 	 * @return the strength
 	 */
@@ -73,7 +72,7 @@ public class LightningSimulator implements ITickable {
 			this.currentThunderStrength = Math.min(1.0f, this.currentThunderStrength + 0.01f);
 		} else {
 			this.currentThunderStrength = Math.max(0.0f, this.currentThunderStrength - 0.01f);
-		}		
+		}
 		try {
 			updatePlayerTimers();
 		} catch (Exception e) {

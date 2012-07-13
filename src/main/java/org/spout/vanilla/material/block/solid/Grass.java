@@ -45,6 +45,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 public class Grass extends Solid implements Mineable, RandomBlockMaterial, InitializableMaterial {
 	private static final byte MIN_GROWTH_LIGHT = 7;
 	private static final EffectRange GROWTH_RANGE = new CubicEffectRange(2);
+
 	public Grass(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(0.8F);

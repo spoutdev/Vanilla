@@ -50,7 +50,6 @@ public class NormalSky extends VanillaSky {
 
 	/**
 	 * Updates the time as a celestial sky system
-	 * 
 	 * @param time to use
 	 * @param timeFactor unknown factor, use 1.0f
 	 */

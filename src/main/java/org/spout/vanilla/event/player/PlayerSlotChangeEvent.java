@@ -30,6 +30,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
 public class PlayerSlotChangeEvent extends PlayerEvent {
@@ -45,7 +46,6 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 
 	/**
 	 * Gets the Vanilla Player controller of the player
-	 * 
 	 * @return Vanilla Player controller
 	 */
 	public VanillaPlayer getController() {
@@ -54,7 +54,6 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 
 	/**
 	 * Gets whether the slot has actually changed
-	 * 
 	 * @return True if it changed, False if not
 	 */
 	public boolean hasChanged() {
@@ -63,7 +62,6 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 
 	/**
 	 * Gets the previously selected slot
-	 * 
 	 * @return previously selected slot
 	 */
 	public InventorySlot getOldSlot() {
@@ -72,7 +70,6 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 
 	/**
 	 * Gets the newly selected slot
-	 * 
 	 * @return newly selected slot
 	 */
 	public InventorySlot getNewSlot() {
@@ -81,7 +78,6 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 
 	/**
 	 * Gets the previously selected slot index
-	 * 
 	 * @return previously selected slot index
 	 */
 	public int getOldSlotIndex() {
@@ -90,7 +86,6 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 
 	/**
 	 * Gets the newly selected slot index
-	 * 
 	 * @return newly selected slot index
 	 */
 	public int getNewSlotIndex() {
@@ -99,7 +94,6 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 
 	/**
 	 * Sets the newly selected slot index
-	 * 
 	 * @param slot to select instead
 	 */
 	public void setNewSlotIndex(int slot) throws IndexOutOfBoundsException {

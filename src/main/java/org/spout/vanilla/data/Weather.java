@@ -51,13 +51,12 @@ public enum Weather {
 
 	/**
 	 * Gets if this Weather state has rain
-	 * 
 	 * @return True if it has rain, false if not
 	 */
 	public boolean isRaining() {
 		return this.raining;
 	}
-	
+
 	public static Weather get(int id) {
 		return weathers.get(id);
 	}

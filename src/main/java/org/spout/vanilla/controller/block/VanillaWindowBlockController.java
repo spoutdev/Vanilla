@@ -95,7 +95,6 @@ public abstract class VanillaWindowBlockController extends VanillaBlockControlle
 
 	/**
 	 * Gets an array of viewers currently viewing this controller
-	 * 
 	 * @return an array of player viewers
 	 */
 	public VanillaPlayer[] getViewerArray() {

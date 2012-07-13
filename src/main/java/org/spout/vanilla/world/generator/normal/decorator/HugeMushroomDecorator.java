@@ -64,7 +64,6 @@ public class HugeMushroomDecorator extends Decorator {
 				mushroom.placeObject(world, x, y, z);
 			}
 		}
-
 	}
 
 	private int getHighestWorkableBlock(World world, int x, int z) {

@@ -31,8 +31,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.spout.api.generator.WorldGeneratorObject;
-import org.spout.vanilla.material.VanillaMaterials;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.nether.object.NetherPortalObject;
 import org.spout.vanilla.world.generator.normal.object.BlockPatchObject;
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;

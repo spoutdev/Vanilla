@@ -53,7 +53,6 @@ public class PlayerInventory extends InventoryBundle implements VanillaInventory
 
 	/**
 	 * Gets the owner of this Player Inventory
-	 * 
 	 * @return the owner
 	 */
 	public VanillaPlayer getOwner() {

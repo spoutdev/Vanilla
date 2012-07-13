@@ -39,6 +39,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
+
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -52,6 +53,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class RedstoneRepeater extends GroundAttachable implements Directional, Mineable, RedstoneSource, RedstoneTarget, DynamicMaterial, InitializableMaterial {
 	private static final EffectRange[] physicsRanges;
 	private final boolean powered;
+
 	static {
 		physicsRanges = new EffectRange[4];
 		BlockFaces base = BlockFaces.NESWBT.append(BlockFace.THIS);

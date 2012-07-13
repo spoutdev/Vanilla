@@ -30,7 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.Spout;
-import org.spout.api.inventory.*;
+import org.spout.api.inventory.InventoryBase;
+import org.spout.api.inventory.InventoryViewer;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Recipe;
+import org.spout.api.inventory.RecipeManager;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.Material;
 
@@ -124,20 +128,20 @@ public abstract class CraftingWindow extends Window {
 				subtractFromCraftingArray();
 				return true;
 			}
-			
+
 			// clickedItem != null && this.hasItemOnCursor()
 			// clicked item + cursor
 			ItemStack cursorItem = this.getItemOnCursor();
 			if (!cursorItem.equalsIgnoreSize(clickedItem)) {
 				return false;
 			}
-			
+
 			// stack
 			cursorItem.stack(clickedItem);
 			slot.setItem(clickedItem.getAmount() <= 0 ? null : clickedItem);
 			this.setItemOnCursor(cursorItem);
 			subtractFromCraftingArray();
-			return true;		
+			return true;
 		}
 		return super.onLeftClick(inventory, clickedSlot, shift);
 	}
@@ -148,7 +152,7 @@ public abstract class CraftingWindow extends Window {
 			InventorySlot slot = craftingGrid.getOutput();
 			ItemStack clickedItem = slot.getItem();
 			if (shift) {
-				
+
 			}
 			if (clickedItem == null) {
 				if (this.hasItemOnCursor()) {
@@ -156,7 +160,7 @@ public abstract class CraftingWindow extends Window {
 				}
 				return true;
 			}
-			
+
 			if (this.hasItemOnCursor()) {
 				// clicked item + cursor
 				ItemStack cursorItem = this.getItemOnCursor();
@@ -183,7 +187,9 @@ public abstract class CraftingWindow extends Window {
 		ItemStack[] clonedContents = craftingGrid.getGrid().getClonedContents();
 		for (int i = 0; i < clonedContents.length; i++) {
 			ItemStack clickedItem = clonedContents[i];
-			if (clickedItem == null) continue;
+			if (clickedItem == null) {
+				continue;
+			}
 			clickedItem.setAmount(clickedItem.getAmount() - 1);
 			if (clickedItem.isEmpty()) {
 				clickedItem = null;
@@ -200,7 +206,7 @@ public abstract class CraftingWindow extends Window {
 		}
 		craftingGrid.notifyViewers(craftingGrid.getGrid().getSize() - 1, craftingGrid.getGrid().getItem(craftingGrid.getGrid().getSize() - 1)); // Notify all of last change
 	}
-	
+
 	private boolean updateOutput() {
 		RecipeManager recipeManager = Spout.getEngine().getRecipeManager();
 		InventoryBase grid = craftingGrid.getGrid();

@@ -165,7 +165,6 @@ public class MonsterSpawner extends VanillaBlockController {
 	 * Gets the range within this monster spawner checks for Entities<br>
 	 * Players have to be within this range to cause this Monster Spawner to spawn<br>
 	 * Nearby entities within the range are counted and compared to the max entity count set on this spawner.
-	 * 
 	 * @return the range in blocks
 	 */
 	public int getRange() {
@@ -176,7 +175,6 @@ public class MonsterSpawner extends VanillaBlockController {
 	 * Sets the range within this monster spawner checks for Entities<br>
 	 * Players have to be within this range to cause this Monster Spawner to spawn<br>
 	 * Nearby entities within the range are counted and compared to the max entity count set on this spawner.
-	 * 
 	 * @param range in blocks to set to
 	 */
 	public void setRange(int range) {
@@ -185,7 +183,6 @@ public class MonsterSpawner extends VanillaBlockController {
 
 	/**
 	 * Gets the maximum amount of entities spawned by this Monster Spawner
-	 * 
 	 * @return the maximum amount of entities
 	 */
 	public int getMaxEntities() {
@@ -194,7 +191,6 @@ public class MonsterSpawner extends VanillaBlockController {
 
 	/**
 	 * Sets the maximum amount of entities spawned by this Monster Spawner
-	 * 
 	 * @return maxEntities to set to
 	 */
 	public void setMaxEntities(int maxEntities) {
@@ -203,7 +199,6 @@ public class MonsterSpawner extends VanillaBlockController {
 
 	/**
 	 * Gets the next controller type spawned by this Monster Spawner
-	 * 
 	 * @return the next spawned controller type
 	 */
 	public VanillaControllerType getNextSpawn() {
@@ -212,7 +207,6 @@ public class MonsterSpawner extends VanillaBlockController {
 
 	/**
 	 * Sets the next controller type spawned by this Monster Spawner
-	 * 
 	 * @param nextSpawn to set to
 	 */
 	public void setNextSpawn(VanillaControllerType nextSpawn) {

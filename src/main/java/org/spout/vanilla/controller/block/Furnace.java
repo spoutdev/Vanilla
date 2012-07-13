@@ -135,7 +135,6 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 
 	/**
 	 * Sets the remaining burn time for the current Furnace recipe to complete
-	 * 
 	 * @param burnTime in seconds
 	 */
 	public void setBurnTime(float burnTime) {
@@ -144,7 +143,6 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 
 	/**
 	 * Gets the remaining burn time for the current Furnace recipe to complete
-	 * 
 	 * @return burnTime in seconds
 	 */
 	public float getBurnTime() {
@@ -153,7 +151,6 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 
 	/**
 	 * Sets the progress of burning
-	 * 
 	 * @param progress in seconds to set to
 	 */
 	public void setProgress(float progress) {
@@ -162,7 +159,6 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 
 	/**
 	 * Gets the progress of burning
-	 * 
 	 * @return progress in seconds
 	 */
 	public float getProgress() {
@@ -171,7 +167,6 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 
 	/**
 	 * Gets whether this Furnace is burning
-	 * 
 	 * @return True if it is burning, False if not
 	 */
 	public boolean isBurning() {

@@ -54,7 +54,6 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 
 	/**
 	 * Gets the world name of this world configuration node
-	 * 
 	 * @return the world name
 	 */
 	public String getWorldName() {
@@ -63,7 +62,6 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 
 	/**
 	 * Gets the parent configuration of this world configuration node
-	 * 
 	 * @return the parent configuration
 	 */
 	public WorldConfiguration getParent() {
@@ -72,7 +70,6 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 
 	/**
 	 * Sets some of the default values for this configuration node
-	 * 
 	 * @param sky default
 	 * @param generator default
 	 * @return this node

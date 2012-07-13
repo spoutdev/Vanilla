@@ -34,9 +34,10 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;
 
-public class DungeonPopulator extends Populator{
+public class DungeonPopulator extends Populator {
 	private static final DungeonObject DUNGEON = new DungeonObject();
 	private static final byte ATTEMPTS = 8;
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {

@@ -93,7 +93,7 @@ public class Ice extends Solid implements Mineable, RandomBlockMaterial {
 	public void onRandomTick(Block block) {
 		if (block.getBlockLight() > MIN_MELT_LIGHT) {
 			block.setMaterial(VanillaMaterials.WATER);
-		} else if (block.getBiomeType() instanceof IcyBiome){
+		} else if (block.getBiomeType() instanceof IcyBiome) {
 			Random r = new Random(block.getWorld().getAge());
 			Block around;
 			for (IntVector3 next : GROWTH_RANGE) {

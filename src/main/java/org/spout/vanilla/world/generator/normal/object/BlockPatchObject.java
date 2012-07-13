@@ -44,7 +44,7 @@ public class BlockPatchObject extends RandomObject {
 	private byte heightRadius = 2;
 	// material to place
 	private BlockMaterial material;
-	private BlockMaterial placeIn =  VanillaMaterials.STATIONARY_WATER;
+	private BlockMaterial placeIn = VanillaMaterials.STATIONARY_WATER;
 	// materials to be replaced
 	private final Set<BlockMaterial> overridable = new HashSet<BlockMaterial>();
 

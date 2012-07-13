@@ -24,18 +24,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.decorator;
+package org.spout.vanilla.world.populator;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
+import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.world.generator.normal.object.OreObject;
 import org.spout.vanilla.world.generator.normal.object.OreObject.OreType;
 
-public class OreDecorator extends Decorator {
+public class OrePopulator extends Populator {
 	private static final OreObject[] ORES;
 
 	static {

@@ -31,7 +31,6 @@ import java.util.Random;
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
@@ -43,7 +42,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class TaigaBiome extends GrassyBiome {
 	public TaigaBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new SandAndClayDecorator(), new TreeDecorator(new TaigaTreeWGOFactory()),
+		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new TaigaTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()), new MushroomDecorator(),
 				new SugarCaneDecorator(), new PumpkinDecorator());
 		setMinMax((byte) 67, (byte) 71);

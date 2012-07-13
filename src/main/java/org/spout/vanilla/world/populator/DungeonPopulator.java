@@ -39,6 +39,9 @@ public class DungeonPopulator extends Populator{
 	private static final byte ATTEMPTS = 8;
 	@Override
 	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() != 4) {
+			return;
+		}
 		DUNGEON.setRandom(random);
 		final World world = chunk.getWorld();
 		for (byte count = 0; count < ATTEMPTS; count++) {

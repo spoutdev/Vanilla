@@ -39,6 +39,8 @@ import org.spout.vanilla.world.generator.VanillaBiomeGenerator;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.populator.DungeonPopulator;
+import org.spout.vanilla.world.populator.FallingLiquidPopulator;
+import org.spout.vanilla.world.populator.OrePopulator;
 import org.spout.vanilla.world.populator.PondPopulator;
 import org.spout.vanilla.world.populator.SmoothPopulator;
 import org.spout.vanilla.world.selector.VanillaBiomeSelector;
@@ -56,6 +58,8 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 		addPopulator(new SmoothPopulator());
 		addPopulator(new PondPopulator());
 		addPopulator(new DungeonPopulator());
+		addPopulator(new OrePopulator());
+		addPopulator(new FallingLiquidPopulator());
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.FROZEN_OCEAN);
 		register(VanillaBiomes.PLAIN);

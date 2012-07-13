@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator.normal.biome.basic;
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
@@ -38,7 +37,7 @@ import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
 public class SmallMountainsBiome extends GrassyBiome {
 	public SmallMountainsBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
+		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
 		setMinMax((byte) 67, (byte) 87);

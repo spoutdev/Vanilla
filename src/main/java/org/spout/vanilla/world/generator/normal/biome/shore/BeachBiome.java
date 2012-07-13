@@ -26,18 +26,16 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.shore;
 
-import java.util.Random;
 
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.OreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 
 public class BeachBiome extends SandyBiome {
 
 	public BeachBiome(int biomeId) {
-		super(biomeId, new OreDecorator(), new SandAndClayDecorator(), new MushroomDecorator(), new SugarCaneDecorator());
+		super(biomeId, new SandAndClayDecorator(), new MushroomDecorator(), new SugarCaneDecorator());
 		setMinMax((byte) 62, (byte) 64);
 	}
 

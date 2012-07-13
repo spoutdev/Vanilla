@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.populator;
+package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
 
@@ -32,24 +32,15 @@ import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.world.generator.normal.object.OreObject;
-import org.spout.vanilla.world.generator.normal.object.OreObject.OreType;
+import org.spout.vanilla.world.generator.normal.object.PondObject;
+import org.spout.vanilla.world.generator.normal.object.PondObject.PondType;
 
-public class OrePopulator extends Populator {
-	private static final OreObject[] ORES;
-
-	static {
-		ORES = new OreObject[]{
-				new OreObject(OreType.DIRT),
-				new OreObject(OreType.GRAVEL),
-				new OreObject(OreType.COAL),
-				new OreObject(OreType.IRON),
-				new OreObject(OreType.REDSTONE),
-				new OreObject(OreType.LAPIS_LAZULI),
-				new OreObject(OreType.GOLD),
-				new OreObject(OreType.DIAMOND)
-		};
-	}
+public class PondPopulator extends Populator {
+	private static final byte WATER_ODD = 4;
+	private static final byte LAVA_ODD = 8;
+	private static final byte LAVA_SURFACE_ODD = 10;
+	private static final PondObject WATER_POND = new PondObject(PondType.WATER);
+	private static final PondObject LAVA_POND = new PondObject(PondType.LAVA);
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -57,13 +48,27 @@ public class OrePopulator extends Populator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		for (OreObject object : ORES) {
-			object.setRandom(random);
-			for (byte i = 0; i < object.getCount(); i++) {
-				final int x = chunk.getBlockX(random);
-				final int y = random.nextInt(object.getMaxHeight());
-				final int z = chunk.getBlockZ(random);
-				object.placeObject(world, x, y, z);
+		if (random.nextInt(WATER_ODD) == 0) {
+			final int x = chunk.getBlockX(random);
+			final int z = chunk.getBlockZ(random);
+			final int y = random.nextInt(128);
+			WATER_POND.setRandom(random);
+			WATER_POND.randomize();
+			if (WATER_POND.canPlaceObject(world, x, y, z)) {
+				WATER_POND.placeObject(world, x, y, z);
+			}
+		}
+		if (random.nextInt(LAVA_ODD) == 0) {
+			final int x = chunk.getBlockX(random);
+			final int z = chunk.getBlockZ(random);
+			final int y = random.nextInt(120) + 8;
+			if (y >= 63 && random.nextInt(LAVA_SURFACE_ODD) != 0) {
+				return;
+			}
+			LAVA_POND.setRandom(random);
+			LAVA_POND.randomize();
+			if (LAVA_POND.canPlaceObject(world, x, y, z)) {
+				LAVA_POND.placeObject(world, x, y, z);
 			}
 		}
 	}

@@ -46,7 +46,7 @@ public class SugarCaneStackObject extends LargePlantObject {
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		final BlockMaterial below = w.getBlockMaterial(x, y - 1, z);
-		return below.equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND, VanillaMaterials.SUGAR_CANE_BLOCK)
+		return below.equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND)
 				&& w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR
 				&& (w.getBlockMaterial(x - 1, y - 1, z) == VanillaMaterials.STATIONARY_WATER
 				|| w.getBlockMaterial(x + 1, y - 1, z) == VanillaMaterials.STATIONARY_WATER

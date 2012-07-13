@@ -38,11 +38,11 @@ import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomeGenerator;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
-import org.spout.vanilla.world.populator.DungeonPopulator;
-import org.spout.vanilla.world.populator.FallingLiquidPopulator;
-import org.spout.vanilla.world.populator.OrePopulator;
-import org.spout.vanilla.world.populator.PondPopulator;
-import org.spout.vanilla.world.populator.SmoothPopulator;
+import org.spout.vanilla.world.generator.normal.populator.DungeonPopulator;
+import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator;
+import org.spout.vanilla.world.generator.normal.populator.OrePopulator;
+import org.spout.vanilla.world.generator.normal.populator.PondPopulator;
+import org.spout.vanilla.world.generator.normal.populator.SmoothPopulator;
 import org.spout.vanilla.world.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGenerator {

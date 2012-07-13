@@ -24,23 +24,23 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.populator;
+package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
 
 import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.world.generator.normal.object.PondObject;
-import org.spout.vanilla.world.generator.normal.object.PondObject.PondType;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class PondPopulator extends Populator {
-	private static final byte WATER_ODD = 4;
-	private static final byte LAVA_ODD = 8;
-	private static final byte LAVA_SURFACE_ODD = 10;
-	private static final PondObject WATER_POND = new PondObject(PondType.WATER);
-	private static final PondObject LAVA_POND = new PondObject(PondType.LAVA);
+public class FallingLiquidPopulator extends Populator {
+	private static final byte WATER_ATTEMPTS = 50;
+	private static final byte LAVA_ATTEMPTS = 20;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -48,28 +48,43 @@ public class PondPopulator extends Populator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		if (random.nextInt(WATER_ODD) == 0) {
+		final int height = world.getHeight();
+		for (byte count = 0; count < WATER_ATTEMPTS; count++) {
 			final int x = chunk.getBlockX(random);
+			final int y = random.nextInt(height) + 8;
 			final int z = chunk.getBlockZ(random);
-			final int y = random.nextInt(128);
-			WATER_POND.setRandom(random);
-			WATER_POND.randomize();
-			if (WATER_POND.canPlaceObject(world, x, y, z)) {
-				WATER_POND.placeObject(world, x, y, z);
+			final Block block = world.getBlock(x, y, z);
+			if (isValidSourcePoint(block)) {
+				block.setMaterial(VanillaMaterials.WATER);
 			}
 		}
-		if (random.nextInt(LAVA_ODD) == 0) {
+		for (byte count = 0; count < LAVA_ATTEMPTS; count++) {
 			final int x = chunk.getBlockX(random);
+			final int y = random.nextInt(height) + 8;
 			final int z = chunk.getBlockZ(random);
-			final int y = random.nextInt(120) + 8;
-			if (y >= 63 && random.nextInt(LAVA_SURFACE_ODD) != 0) {
-				return;
-			}
-			LAVA_POND.setRandom(random);
-			LAVA_POND.randomize();
-			if (LAVA_POND.canPlaceObject(world, x, y, z)) {
-				LAVA_POND.placeObject(world, x, y, z);
+			final Block block = world.getBlock(x, y, z);
+			if (isValidSourcePoint(block)) {
+				block.setMaterial(VanillaMaterials.LAVA);
 			}
 		}
+	}
+
+	private boolean isValidSourcePoint(Block block) {
+		if (!block.isMaterial(VanillaMaterials.STONE, VanillaMaterials.AIR)
+				|| !block.translate(BlockFace.TOP).isMaterial(VanillaMaterials.STONE)
+				|| !block.translate(BlockFace.BOTTOM).isMaterial(VanillaMaterials.STONE)) {
+			return false;
+		}
+		byte adjacentStoneCount = 0;
+		byte adjacentAirCount = 0;
+		for (final BlockFace face : BlockFaces.NSEW) {
+			final BlockMaterial material = block.translate(face).getMaterial();
+			if (material == VanillaMaterials.AIR) {
+				adjacentAirCount++;
+			} else if (material == VanillaMaterials.STONE) {
+				adjacentStoneCount++;
+			}
+		}
+		return adjacentStoneCount == 3 && adjacentAirCount == 1;
 	}
 }

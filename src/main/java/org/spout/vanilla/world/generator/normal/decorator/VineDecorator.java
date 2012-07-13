@@ -59,12 +59,17 @@ public class VineDecorator extends Decorator {
 				final int zz = z - 3 + random.nextInt(7);
 				final Block block = world.getBlock(xx, y, zz);
 				if (block.isMaterial(VanillaMaterials.AIR)) {
-					faceCheck:
-					for (final BlockFace face : BlockFaces.NESWT) {
-						if (VanillaMaterials.VINES.canPlace(block, (short) 0, face, false)) {
-							block.setMaterial(VanillaMaterials.VINES);
-							VanillaMaterials.VINES.setFaceAttached(block, face, true);
-							break faceCheck;
+					if (block.translate(BlockFace.TOP).isMaterial(VanillaMaterials.VINES)) {
+						block.setMaterial(VanillaMaterials.VINES);
+						block.setData(block.translate(BlockFace.TOP));
+					} else {
+						faceCheck:
+						for (final BlockFace face : BlockFaces.NESW) {
+							if (VanillaMaterials.VINES.canPlace(block, (short) 0, face, false)) {
+								block.setMaterial(VanillaMaterials.VINES);
+								VanillaMaterials.VINES.setFaceAttached(block, face, true);
+								break faceCheck;
+							}
 						}
 					}
 				}

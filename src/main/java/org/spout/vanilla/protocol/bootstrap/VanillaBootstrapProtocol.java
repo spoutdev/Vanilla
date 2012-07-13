@@ -48,19 +48,4 @@ public class VanillaBootstrapProtocol extends BootstrapProtocol {
 	public Protocol getDefaultProtocol() {
 		return VANILLA_PROTOCOL;
 	}
-
-	@Override
-	public Message getChatMessage(Object... message) {
-		return VANILLA_PROTOCOL.getChatMessage(message);
-	}
-
-	@Override
-	public Message getKickMessage(Object... message) {
-		return VANILLA_PROTOCOL.getKickMessage(message);
-	}
-
-	@Override
-	public Message getIntroductionMessage(String playerName) {
-		return VANILLA_PROTOCOL.getIntroductionMessage(playerName);
-	}
 }

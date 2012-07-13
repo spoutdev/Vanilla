@@ -26,8 +26,12 @@
  */
 package org.spout.vanilla.chat.style;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import gnu.trove.map.TCharObjectMap;
+import gnu.trove.map.hash.TCharObjectHashMap;
+import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.chat.style.StyleFormatter;
 import org.spout.api.chat.style.StyleHandler;
@@ -36,9 +40,11 @@ import org.spout.api.chat.style.StyleHandler;
  * A Vanilla implementation of chat styles
  */
 public class VanillaStyleHandler extends StyleHandler {
+	private static final TCharObjectMap<ChatStyle> BY_CHAR = new TCharObjectHashMap<ChatStyle>();
 	public static final VanillaStyleHandler INSTANCE = new VanillaStyleHandler();
 	public static final int ID = register(INSTANCE);
 	private final Pattern stylePattern;
+	private final Pattern styleExtractPattern;
 
 	public VanillaStyleHandler() {
 		super();
@@ -65,21 +71,56 @@ public class VanillaStyleHandler extends StyleHandler {
 		registerFormatter(ChatStyle.ITALIC, new VanillaStyleFormatter('o'));
 		registerFormatter(ChatStyle.RESET, new VanillaStyleFormatter('r'));
 		StringBuilder stylePatternString = new StringBuilder();
+		StringBuilder styleExtractPatternString = new StringBuilder();
 		stylePatternString.append("(?i)").append(VanillaStyleFormatter.COLOR_CHAR).append("([");
+		styleExtractPatternString.append("(?i)(?:").append(VanillaStyleFormatter.COLOR_CHAR).append("([");
 		for (StyleFormatter formatter : getFormatters()) {
 			if (formatter instanceof VanillaStyleFormatter) {
 				stylePatternString.append(((VanillaStyleFormatter) formatter).getStyleChar());
+				styleExtractPatternString.append(((VanillaStyleFormatter) formatter).getStyleChar());
 			}
 		}
+
 		stylePatternString.append("])");
+		styleExtractPatternString.append("]))?([^").append(VanillaStyleFormatter.COLOR_CHAR).append("]+)");
 		stylePattern = Pattern.compile(stylePatternString.toString());
+		styleExtractPattern = Pattern.compile(styleExtractPatternString.toString());
+	}
+
+	@Override
+	public void registerFormatter(ChatStyle style, StyleFormatter formatter) {
+		if (formatter instanceof VanillaStyleFormatter) {
+			BY_CHAR.put(((VanillaStyleFormatter) formatter).getStyleChar(), style);
+		}
+		super.registerFormatter(style, formatter);
 	}
 
 	public Pattern getStylePattern() {
 		return stylePattern;
 	}
 
+	public ChatStyle byChar(char c) {
+		return BY_CHAR.get(c);
+	}
+
 	public String stripStyle(String formatted) {
 		return stylePattern.matcher(formatted).replaceAll("");
+	}
+
+	public ChatArguments extractArguments(String str) {
+		ChatArguments args = new ChatArguments();
+		Matcher matcher = styleExtractPattern.matcher(str);
+		while (matcher.find()) {
+			if (matcher.group(1) != null) {
+				ChatStyle style = byChar(matcher.group(1).charAt(0));
+				if (style == null) {
+					args.append(matcher.group(0));
+					continue;
+				}
+				args.append(style);
+			}
+			args.append(matcher.group(2));
+		}
+		return args;
 	}
 }

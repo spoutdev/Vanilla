@@ -29,6 +29,9 @@ package org.spout.vanilla.controller;
 import org.spout.api.entity.component.controller.BlockController;
 import org.spout.api.material.BlockMaterial;
 
+/**
+ * A controller that is always at a fixed position handling Block logic a Block material can't do
+ */
 public abstract class VanillaBlockController extends BlockController implements VanillaController {
 	protected VanillaBlockController(VanillaControllerType type, BlockMaterial blockMaterial) {
 		super(type, blockMaterial);

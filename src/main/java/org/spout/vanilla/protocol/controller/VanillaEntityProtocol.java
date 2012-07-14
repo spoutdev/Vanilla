@@ -65,18 +65,18 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		// The last tick transform delta is not enough to properly send update messages
 		// For most entities, an update takes more than one tick before an update message is ready
 		// Do NOT use entity.getLastTransform() because it is not a delta since last tick!
-		Transform previousPosition = vController.getLastClientTransform();
-		Transform newPosition = entity.getTransform();
+		Transform prevTransform = vController.getLastClientTransform();
+		Transform newTransform = entity.getTransform();
 
-		int lastX = protocolifyPosition(previousPosition.getPosition().getX());
-		int lastY = protocolifyPosition(previousPosition.getPosition().getY());
-		int lastZ = protocolifyPosition(previousPosition.getPosition().getZ());
+		int lastX = protocolifyPosition(prevTransform.getPosition().getX());
+		int lastY = protocolifyPosition(prevTransform.getPosition().getY());
+		int lastZ = protocolifyPosition(prevTransform.getPosition().getZ());
 
-		int newX = protocolifyPosition(newPosition.getPosition().getX());
-		int newY = protocolifyPosition(newPosition.getPosition().getY());
-		int newZ = protocolifyPosition(newPosition.getPosition().getZ());
-		int newYaw = protocolifyRotation(newPosition.getRotation().getYaw());
-		int newPitch = protocolifyRotation(newPosition.getRotation().getPitch());
+		int newX = protocolifyPosition(newTransform.getPosition().getX());
+		int newY = protocolifyPosition(newTransform.getPosition().getY());
+		int newZ = protocolifyPosition(newTransform.getPosition().getZ());
+		int newYaw = protocolifyRotation(newTransform.getRotation().getYaw());
+		int newPitch = protocolifyRotation(newTransform.getRotation().getPitch());
 
 		int deltaX = newX - lastX;
 		int deltaY = newY - lastY;
@@ -86,21 +86,21 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 		if (vController.needsPositionUpdate() || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
 			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch));
-			vController.setLastClientTransform(newPosition.copy());
+			vController.setLastClientTransform(newTransform);
 		} else {
-			boolean moved = !previousPosition.getPosition().equals(newPosition.getPosition());
-			boolean looked = !previousPosition.getRotation().equals(newPosition.getRotation());
+			boolean moved = !prevTransform.getPosition().equals(newTransform.getPosition());
+			boolean looked = !prevTransform.getRotation().equals(newTransform.getRotation());
 			if (moved) {
 				if (looked) {
 					messages.add(new RelativeEntityPositionRotationMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
+					vController.setLastClientTransform(newTransform);
 				} else {
 					messages.add(new RelativeEntityPositionMessage(entity.getId(), deltaX, deltaY, deltaZ));
+					vController.getLastClientTransform().setPosition(newTransform.getPosition());
 				}
 			} else if (looked) {
 				messages.add(new EntityRotationMessage(entity.getId(), newYaw, newPitch));
-			}
-			if (moved || looked) {
-				vController.setLastClientTransform(newPosition);
+				vController.getLastClientTransform().setRotation(newTransform.getRotation());
 			}
 		}
 

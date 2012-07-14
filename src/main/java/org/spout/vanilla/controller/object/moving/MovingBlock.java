@@ -24,27 +24,37 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.block;
+package org.spout.vanilla.controller.object.moving;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.material.block.SolidMoving;
+import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.util.ItemUtil;
 
 /**
- * Represents a block that can move, such as sand or gravel.
+ * Represents a block that can move, such as sand or gravel.<br>
+ * This is not a Block Controller, because unlike Block Controllers, it can move freely
  */
-public class MovingBlock extends VanillaBlockController {
-	private final SolidMoving material;
+public class MovingBlock extends Substance {
+	private final BlockMaterial material;
 
-	public MovingBlock(SolidMoving block) {
-		super(VanillaControllerTypes.FALLING_BLOCK, block);
+	public MovingBlock(BlockMaterial block) {
+		super(VanillaControllerTypes.FALLING_BLOCK);
 		material = block;
+	}
+
+	/**
+	 * Gets the material this moving block represents
+	 * 
+	 * @return the material
+	 */
+	public BlockMaterial getMaterial() {
+		return this.material;
 	}
 
 	@Override
@@ -53,7 +63,7 @@ public class MovingBlock extends VanillaBlockController {
 
 	@Override
 	public void onTick(float dt) {
-		Block block = this.getBlock();
+		Block block = getParent().getWorld().getBlock(getParent().getPosition());
 		if (block.translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
 			//can we place here?
 			if (block.getMaterial().isPlacementObstacle() || !this.material.canPlace(block, this.material.getData(), BlockFace.BOTTOM, true)) {
@@ -65,7 +75,11 @@ public class MovingBlock extends VanillaBlockController {
 			}
 			getParent().kill();
 		} else {
-			getParent().translate(new Vector3(0, -0.5, 0).multiply(dt));
+			// gravity
+			this.setVelocity(this.getVelocity().subtract(0, 0.04, 0));
+			this.move();
+			// slow-down
+			this.setVelocity(this.getVelocity().multiply(0.98));
 		}
 	}
 }

@@ -43,7 +43,9 @@ import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 
 public class Grass extends Solid implements Mineable, RandomBlockMaterial, InitializableMaterial {
-	private static final byte MIN_GROWTH_LIGHT = 4;
+	private static final byte MIN_SPREAD_LIGHT = 9; // at this light level grass spreads to other dirt blocks
+	private static final byte MIN_DECAY_LIGHT = 4; // at this light level grass decays to dirt
+	private static final int MIN_DECAY_OPACITY = 1; // at this opacity grass decays to dirt
 	private static final EffectRange GROWTH_RANGE = new CubicEffectRange(2);
 
 	public Grass(String name, int id) {
@@ -66,9 +68,10 @@ public class Grass extends Solid implements Mineable, RandomBlockMaterial, Initi
 		final Random r = new Random(block.getWorld().getAge());
 		//Attempt to decay grass
 		Block above = block.translate(BlockFace.TOP);
-		if (above.getLight() < MIN_GROWTH_LIGHT && above.getMaterial().getOpacity() > 1) {
+		int light = above.getLight();
+		if (light < MIN_DECAY_LIGHT && above.getMaterial().getOpacity() > MIN_DECAY_OPACITY) {
 			block.setMaterial(VanillaMaterials.DIRT);
-		} else {
+		} else if (light >= MIN_SPREAD_LIGHT) {
 			//Attempt to grow grass
 			Block around;
 			for (IntVector3 next : GROWTH_RANGE) {
@@ -76,7 +79,7 @@ public class Grass extends Solid implements Mineable, RandomBlockMaterial, Initi
 					around = block.translate(next);
 					if (around.isMaterial(VanillaMaterials.DIRT)) {
 						above = around.translate(BlockFace.TOP);
-						if (above.getLight() >= MIN_GROWTH_LIGHT && above.getMaterial().getOpacity() <= 1) {
+						if (above.getLight() >= MIN_DECAY_LIGHT && above.getMaterial().getOpacity() <= MIN_DECAY_OPACITY) {
 							around.setMaterial(VanillaMaterials.GRASS);
 						}
 					}

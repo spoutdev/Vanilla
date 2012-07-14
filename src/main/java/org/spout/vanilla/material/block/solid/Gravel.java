@@ -36,12 +36,12 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.SolidMoving;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class Gravel extends Solid implements Mineable {
+public class Gravel extends SolidMoving implements Mineable {
 	private Random rand = new Random();
 
 	public Gravel(String name, int id) {

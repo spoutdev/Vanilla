@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol;
 
 import org.spout.api.chat.ChatArguments;
-import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.protocol.Message;

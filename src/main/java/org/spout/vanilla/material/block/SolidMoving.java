@@ -24,27 +24,40 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.controller;
+package org.spout.vanilla.material.block;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.component.Controller;
-import org.spout.api.protocol.Message;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.controller.block.MovingBlock;
+import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 
-import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
+public class SolidMoving extends Solid {
+	public SolidMoving(short dataMask, String name, int id) {
+		super(dataMask, name, id);
+	}
 
-public class BasicObjectEntityProtocol extends BasicEntityProtocol {
-	public BasicObjectEntityProtocol(int spawnID) {
-		super(spawnID);
+	public SolidMoving(String name, int id, int data, VanillaBlockMaterial parent) {
+		super(name, id, data, parent);
+	}
+
+	public SolidMoving(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
-	public Message[] getSpawnMessage(Entity entity) {
-		Controller c = entity.getController();
-		if (c == null) {
-			return null;
-		}
+	public boolean hasPhysics() {
+		return true;
+	}
 
-		int id = entity.getId();
-		return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), entity.getPosition())};
+	@Override
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		if (!block.translate(BlockFace.BOTTOM).getMaterial().isPlacementObstacle()) {
+			// turn this block into a mobile block
+			block.getWorld().createAndSpawnEntity(block.getPosition(), new MovingBlock(this));
+			block.setMaterial(VanillaMaterials.AIR);
+		}
 	}
 }

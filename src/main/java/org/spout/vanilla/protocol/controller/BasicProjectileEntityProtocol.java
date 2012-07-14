@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.controller;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
-import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.object.Projectile;
@@ -49,14 +48,10 @@ public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
 		Projectile pro = (Projectile) c;
 
 		int id = entity.getId();
-		Vector3 pos = entity.getPosition().multiply(32).floor();
 
 		Entity shooter = pro.getShooter();
 		int shooterid = shooter == null ? 0 : shooter.getId();
-		Vector3 vel = pro.getVelocity();
 
-		Vector3 dir = vel.multiply(8000).floor();
-
-		return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), pos, shooterid, dir)};
+		return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), entity.getPosition(), shooterid, pro.getVelocity())};
 	}
 }

@@ -38,30 +38,31 @@ import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 public final class SpawnVehicleMessage extends Message implements TransformableMessage {
 	private int id;
-	private final int type, x, y, z, fireballId, fireballX, fireballY, fireballZ;
+	private final int type, fireballId;
+	private final double x, y, z, fireballX, fireballY, fireballZ;
 
 	public SpawnVehicleMessage(int id, int type, Vector3 pos) {
-		this(id, type, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
+		this(id, type, pos.getX(), pos.getY(), pos.getZ());
 	}
 
-	public SpawnVehicleMessage(int id, int type, int x, int y, int z) {
+	public SpawnVehicleMessage(int id, int type, double x, double y, double z) {
 		this(id, type, x, y, z, 0, 0, 0, 0);
 	}
 
 	public SpawnVehicleMessage(int id, int type, Vector3 pos, int fbId, Vector3 fbPos) {
-		this(id, type, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), fbId, (int) fbPos.getX(), (int) fbPos.getY(), (int) fbPos.getZ());
+		this(id, type, pos.getX(), pos.getY(), pos.getZ(), fbId, fbPos.getX(), fbPos.getY(), fbPos.getZ());
 	}
 
-	public SpawnVehicleMessage(int id, int type, int x, int y, int z, int fbId, int fbX, int fbY, int fbZ) {
+	public SpawnVehicleMessage(int id, int type, double x, double y, double z, int fbId, double fbX, double fbY, double fbZ) {
 		this.id = id;
 		this.type = type;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		fireballId = fbId;
-		fireballX = fbX;
-		fireballY = fbY;
-		fireballZ = fbZ;
+		this.fireballId = fbId;
+		this.fireballX = fbX;
+		this.fireballY = fbY;
+		this.fireballZ = fbZ;
 	}
 
 	@Override
@@ -82,15 +83,15 @@ public final class SpawnVehicleMessage extends Message implements TransformableM
 		return type;
 	}
 
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 
-	public int getZ() {
+	public double getZ() {
 		return z;
 	}
 
@@ -102,15 +103,15 @@ public final class SpawnVehicleMessage extends Message implements TransformableM
 		return fireballId;
 	}
 
-	public int getFireballX() {
+	public double getFireballX() {
 		return fireballX;
 	}
 
-	public int getFireballY() {
+	public double getFireballY() {
 		return fireballY;
 	}
 
-	public int getFireballZ() {
+	public double getFireballZ() {
 		return fireballZ;
 	}
 

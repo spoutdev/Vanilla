@@ -28,6 +28,8 @@ package org.spout.vanilla.protocol.codec;
 
 import java.io.IOException;
 
+import net.royawesome.jlibnoise.MathHelper;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
@@ -44,14 +46,14 @@ public final class SpawnVehicleCodec extends MessageCodec<SpawnVehicleMessage> {
 	public SpawnVehicleMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
 		int type = buffer.readUnsignedByte();
-		int x = buffer.readInt();
-		int y = buffer.readInt();
-		int z = buffer.readInt();
+		double x = buffer.readInt() / 32.0;
+		double y = buffer.readInt() / 32.0;
+		double z = buffer.readInt() / 32.0;
 		int fireballId = buffer.readInt();
 		if (fireballId != 0) {
-			int fireballX = buffer.readShort();
-			int fireballY = buffer.readShort();
-			int fireballZ = buffer.readShort();
+			double fireballX = buffer.readShort() / 8000.0;
+			double fireballY = buffer.readShort() / 8000.0;
+			double fireballZ = buffer.readShort() / 8000.0;
 			return new SpawnVehicleMessage(id, type, x, y, z, fireballId, fireballX, fireballY, fireballZ);
 		}
 		return new SpawnVehicleMessage(id, type, x, y, z);
@@ -62,14 +64,14 @@ public final class SpawnVehicleCodec extends MessageCodec<SpawnVehicleMessage> {
 		ChannelBuffer buffer = ChannelBuffers.buffer(message.hasFireball() ? 27 : 21);
 		buffer.writeInt(message.getId());
 		buffer.writeByte(message.getType());
-		buffer.writeInt(message.getX());
-		buffer.writeInt(message.getY());
-		buffer.writeInt(message.getZ());
+		buffer.writeInt(MathHelper.floor(message.getX() * 32.0));
+		buffer.writeInt(MathHelper.floor(message.getY() * 32.0));
+		buffer.writeInt(MathHelper.floor(message.getZ() * 32.0));
 		buffer.writeInt(message.getFireballId());
 		if (message.hasFireball()) {
-			buffer.writeShort(message.getFireballX());
-			buffer.writeShort(message.getFireballY());
-			buffer.writeShort(message.getFireballZ());
+			buffer.writeShort((int) (message.getFireballX() * 8000.0));
+			buffer.writeShort((int) (message.getFireballY() * 8000.0));
+			buffer.writeShort((int) (message.getFireballZ() * 8000.0));
 		}
 		return buffer;
 	}

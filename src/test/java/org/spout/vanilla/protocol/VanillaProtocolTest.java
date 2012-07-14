@@ -133,7 +133,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new SpawnPlayerMessage(24, "risaccess1", 8000, 28, 900, 0, 0, 89),
 			new SpawnDroppedItemMessage(1234, 89, 3, (short) 4, 1, 2, 3, 34, 56, 55),
 			new CollectItemMessage(1234, 5678),
-			new SpawnVehicleMessage(1, 3, 3, 654, 1234, 778, 656, 4354, 6564),
+			new SpawnVehicleMessage(1, 3, 3.0, 654.0, 1234.0, 77, 0.54, 0.23, 0.7),
 			new SpawnMobMessage(123, 255, 1, 2, 4, 34, 55, 33, TEST_PARAMS),
 			new SpawnPaintingMessage(4, "KEBAB", 2, 3, 4, 56),
 			new SpawnExperienceOrbMessage(34, 1, 2, 3, (short) 34),

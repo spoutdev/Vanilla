@@ -27,23 +27,23 @@
 package org.spout.vanilla.controller.block;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaBlockController;
-import org.spout.vanilla.controller.VanillaControllerType;
-import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.material.block.SolidMoving;
+import org.spout.vanilla.util.ItemUtil;
 
 /**
  * Represents a block that can move, such as sand or gravel.
  */
 public class MovingBlock extends VanillaBlockController {
-	private final BlockMaterial material;
+	private final SolidMoving material;
 
-	public MovingBlock(VanillaControllerType type, BlockMaterial block) {
-		super(type, block);
+	public MovingBlock(SolidMoving block) {
+		super(VanillaControllerTypes.FALLING_BLOCK, block);
 		material = block;
 	}
 
@@ -53,22 +53,19 @@ public class MovingBlock extends VanillaBlockController {
 
 	@Override
 	public void onTick(float dt) {
-		Point pos = getParent().getPosition();
-		Block block = pos.getWorld().getBlock(pos);
-		if (block.translate(0, -1, 0).getMaterial().isSolid()) {
-			BlockMaterial mat = material;
-			short data = mat.getData();
+		Block block = this.getBlock();
+		if (block.translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
 			//can we place here?
-			if (block.getMaterial().isPlacementObstacle()) {
+			if (block.getMaterial().isPlacementObstacle() || !this.material.canPlace(block, this.material.getData(), BlockFace.BOTTOM, true)) {
 				//spawn an item
-				Item item = new Item(new ItemStack(mat, data, 1), Vector3.ZERO);
-				block.getWorld().createAndSpawnEntity(pos, item);
+				ItemStack item = new ItemStack(this.material, this.material.getData(), 1);
+				ItemUtil.dropItemNaturally(block.getPosition(), item);
 			} else {
-				block.setMaterial(mat, data);
+				this.material.onPlacement(block, this.material.getData(), BlockFace.BOTTOM, true);
 			}
 			getParent().kill();
 		} else {
-			getParent().translate(getParent().getPosition().subtract(0, 0.50, 0).multiply(dt));
+			getParent().translate(new Vector3(0, -0.5, 0).multiply(dt));
 		}
 	}
 }

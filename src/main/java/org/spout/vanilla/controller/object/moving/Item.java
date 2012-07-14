@@ -30,6 +30,7 @@ import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
@@ -91,13 +92,25 @@ public class Item extends Substance {
 
 	@Override
 	public void onTick(float dt) {
-		if (uncollectableTicks > 0) {
-			uncollectableTicks--;
-			super.onTick(dt);
-			return;
+		super.onTick(dt);
+
+		// gravity
+		this.setVelocity(this.getVelocity().subtract(0, 0.04, 0));
+		this.move();
+		// slow-down
+		this.setVelocity(this.getVelocity().multiply(0.98));
+
+		//TODO: proper entity on ground function
+		if (getParent().getWorld().getBlock(getParent().getPosition()).translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
+			this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
 		}
 
-		super.onTick(dt);
+		//TODO: Block friction / burn damage / etc.
+
+		if (uncollectableTicks > 0) {
+			uncollectableTicks--;
+			return;
+		}
 
 		Player closestPlayer = getParent().getWorld().getNearestPlayer(getParent(), distance);
 		if (closestPlayer == null) {

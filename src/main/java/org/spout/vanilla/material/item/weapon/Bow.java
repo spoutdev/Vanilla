@@ -26,11 +26,45 @@
  */
 package org.spout.vanilla.material.item.weapon;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.controller.object.projectile.Arrow;
 import org.spout.vanilla.material.item.RangedWeapon;
 
 public class Bow extends RangedWeapon {
 	public Bow(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setRangedDamage(9).setEnchantability(1);
+	}
+
+	@Override
+	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
+		super.onInteract(entity, block, type, clickedface);
+		if (type == Action.RIGHT_CLICK) {
+			shoot(entity);
+		}
+	}
+
+	@Override
+	public void onInteract(Entity entity, Entity other, Action type) {
+		super.onInteract(entity, other, type);
+		if (type == Action.RIGHT_CLICK) {
+			shoot(entity);
+		}
+	}
+
+	@Override
+	public void onInteract(Entity entity, Action type) {
+		super.onInteract(entity, type);
+		if (type == Action.RIGHT_CLICK) {
+			shoot(entity);
+		}
+	}
+
+	public void shoot(Entity entity) {
+		//TODO: Get random direction and such
+		entity.getWorld().createAndSpawnEntity(entity.getPosition(), new Arrow(entity.getRotation(), 0.8f));
 	}
 }

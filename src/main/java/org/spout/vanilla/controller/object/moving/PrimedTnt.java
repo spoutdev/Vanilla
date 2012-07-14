@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
+import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.util.explosion.ExplosionModels;
@@ -48,8 +49,20 @@ public class PrimedTnt extends Substance {
 
 	@Override
 	public void onTick(float dt) {
+		super.onTick(dt);
+		// gravity
+		this.setVelocity(this.getVelocity().subtract(0, 0.04, 0));
+		this.move();
+		// slow-down
+		this.setVelocity(this.getVelocity().multiply(0.98));
+
+		//TODO: proper entity on ground function
+		if (getParent().getWorld().getBlock(getParent().getPosition()).translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
+			this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
+		}
+
 		timeToExplode -= dt;
-		if (timeToExplode <= 0.f) {
+		if (timeToExplode <= 0.0f) {
 			//TODO: Event? We don't have the blocks, as that is internally handled...
 			ExplosionModels.SPHERICAL.execute(this.getParent().getPosition(), this.radius);
 			this.getParent().kill();

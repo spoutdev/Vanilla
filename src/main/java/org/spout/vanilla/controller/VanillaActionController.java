@@ -196,7 +196,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 	 * @param transform to set to
 	 */
 	public void setLastClientTransform(Transform transform) {
-		this.lastClientTransform = transform;
+		this.lastClientTransform = transform.copy();
 	}
 
 	/**

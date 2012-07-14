@@ -37,11 +37,17 @@ public class Arrow extends Projectile {
 
 	public Arrow(Quaternion rotation, float charge) {
 		super(VanillaControllerTypes.SHOT_ARROW, rotation, MAX_ARROW_SPEED);
-		setVelocity(getVelocity().multiply(charge));
+		this.setVelocity(rotation.getAxisAngles().multiply(charge));
 	}
 
 	public Arrow(Quaternion rotation, Vector3 maxSpeed, float charge) {
 		super(VanillaControllerTypes.SHOT_ARROW, rotation, maxSpeed);
-		setVelocity(getVelocity().multiply(charge));
+		this.setVelocity(rotation.getAxisAngles().multiply(charge));
+	}
+
+	@Override
+	public void onTick(float dt) {
+		super.onTick(dt);
+		this.move();
 	}
 }

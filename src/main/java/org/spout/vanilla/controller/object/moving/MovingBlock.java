@@ -30,7 +30,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
@@ -63,6 +62,7 @@ public class MovingBlock extends Substance {
 
 	@Override
 	public void onTick(float dt) {
+		super.onTick(dt);
 		Block block = getParent().getWorld().getBlock(getParent().getPosition());
 		if (block.translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
 			//can we place here?

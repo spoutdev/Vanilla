@@ -56,6 +56,7 @@ public class Projectile extends Substance {
 
 	@Override
 	public void onTick(float dt) {
+		super.onTick(dt);
 		//position += velocity.transform(rotation) * dt;
 		//parent.setPosition(parent.getPosition().add(velocity.transform(t.getRotation()).multiply(dt)));
 	}

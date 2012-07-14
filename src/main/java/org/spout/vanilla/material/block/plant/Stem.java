@@ -50,6 +50,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public abstract class Stem extends GroundAttachable implements Crop, RandomBlockMaterial {
 	public Stem(String name, int id) {
 		super(name, id);
+		this.setLiquidObstacle(false);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
 	}
 

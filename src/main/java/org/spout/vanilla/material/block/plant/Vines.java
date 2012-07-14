@@ -47,6 +47,7 @@ import org.spout.vanilla.material.item.weapon.Sword;
 public class Vines extends VanillaBlockMaterial implements Plant, Burnable {
 	public Vines(String name, int id) {
 		super(name, id);
+		this.setLiquidObstacle(false);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 	}
 

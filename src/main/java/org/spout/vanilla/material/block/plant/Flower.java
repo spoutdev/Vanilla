@@ -38,6 +38,7 @@ import org.spout.vanilla.material.item.weapon.Sword;
 public class Flower extends GroundAttachable implements Plant {
 	public Flower(String name, int id) {
 		super(name, id);
+		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 

@@ -154,18 +154,19 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		// Make fire strength increase over time
 		short blockData = b.getData();
 		if (blockData < 15) {
-			b.setData(blockData + rand.nextInt(4) / 3);
+			blockData += rand.nextInt(4) / 3;
+			b.setData(blockData);
 		}
 
 		if (this.canDegrade(b)) {
 			// Fires without source burn less long, rain fades out fire
-			if (VanillaBlockUtil.hasRainNearby(b) || (!hasBurningSource(b) && data > 3)) {
+			if (VanillaBlockUtil.hasRainNearby(b) || (!hasBurningSource(b) && blockData > 3)) {
 				this.onDestroy(b);
 				return;
 			}
 
 			// If fire is done with and the block below can not fuel fire, destroy
-			if (data == 15 && rand.nextInt(4) == 0 && !hasBurningSource(b, BlockFace.BOTTOM)) {
+			if (blockData == 15 && rand.nextInt(4) == 0 && !hasBurningSource(b, BlockFace.BOTTOM)) {
 				this.onDestroy(b);
 				return;
 			}
@@ -185,8 +186,8 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 					sBlock.setMaterial(VanillaMaterials.AIR); // prevent drops
 				}
 				// Put fire in it's place?
-				if (rand.nextInt(data + 10) < 5 && hasBurningSource(sBlock) && !VanillaBlockUtil.isRaining(sBlock)) {
-					sBlock.setMaterial(this, Math.min(15, data + rand.nextInt(5) / 4));
+				if (rand.nextInt(blockData + 10) < 5 && hasBurningSource(sBlock) && !VanillaBlockUtil.isRaining(sBlock)) {
+					sBlock.setMaterial(this, Math.min(15, blockData + rand.nextInt(5) / 4));
 				}
 			}
 		}
@@ -224,13 +225,13 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 			} else {
 				chanceFactor = 100;
 			}
-			netChance = (firePower + 40) / (data + 30);
+			netChance = (firePower + 40) / (blockData + 30);
 			if (netChance <= 0 || rand.nextInt(chanceFactor) > netChance || VanillaBlockUtil.hasRainNearby(sBlock)) {
 				continue;
 			}
 
 			// Set new fire block with randomly increasing power (1/4 chance for +1 for fire power)
-			sBlock.setMaterial(this, Math.min(15, data + rand.nextInt(5) / 4));
+			sBlock.setMaterial(this, Math.min(15, blockData + rand.nextInt(5) / 4));
 		}
 
 		// Schedule for a next update

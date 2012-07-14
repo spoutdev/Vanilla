@@ -60,11 +60,13 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 
 	private Sapling(String name) {
 		super(dataMask, name, 6);
+		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 
 	private Sapling(String name, int data, Sapling parent) {
 		super(name, 6, data, parent);
+		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 

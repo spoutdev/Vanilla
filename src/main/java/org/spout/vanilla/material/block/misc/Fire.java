@@ -40,11 +40,11 @@ import org.spout.api.math.IntVector3;
 
 import org.spout.vanilla.data.Data;
 import org.spout.vanilla.data.Dimension;
-import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.TNT;
+import org.spout.vanilla.util.VanillaBlockUtil;
 
 public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	private static final EffectRange SPREAD_RANGE = new CuboidEffectRange(-1, -1, -1, 1, 4, 1);
@@ -127,23 +127,6 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	}
 
 	/**
-	 * Gets if rain is falling nearby the block specified
-	 * @param block to check it nearby of
-	 * @return True if it is raining, False if not
-	 */
-	public boolean hasRainNearby(Block block) {
-		Weather weather = block.getWorld().getDataMap().get(Data.WEATHER);
-		if (weather == Weather.RAIN || weather == Weather.THUNDERSTORM) {
-			for (BlockFace face : BlockFaces.NESW) {
-				if (block.translate(face).isAtSurface()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * Checks if the fire can degrade (disappear over time)
 	 * @param block of the fire
 	 * @return True if it can degrade, False if not
@@ -176,7 +159,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 		if (this.canDegrade(b)) {
 			// Fires without source burn less long, rain fades out fire
-			if (this.hasRainNearby(b) || (!hasBurningSource(b) && data > 3)) {
+			if (VanillaBlockUtil.hasRainNearby(b) || (!hasBurningSource(b) && data > 3)) {
 				this.onDestroy(b);
 				return;
 			}
@@ -202,7 +185,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 					sBlock.setMaterial(VanillaMaterials.AIR); // prevent drops
 				}
 				// Put fire in it's place?
-				if (rand.nextInt(data + 10) < 5 && hasBurningSource(sBlock) && sBlock.isAtSurface()) {
+				if (rand.nextInt(data + 10) < 5 && hasBurningSource(sBlock) && !VanillaBlockUtil.isRaining(sBlock)) {
 					sBlock.setMaterial(this, Math.min(15, data + rand.nextInt(5) / 4));
 				}
 			}
@@ -242,7 +225,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 				chanceFactor = 100;
 			}
 			netChance = (firePower + 40) / (data + 30);
-			if (netChance <= 0 || rand.nextInt(chanceFactor) > netChance || hasRainNearby(sBlock)) {
+			if (netChance <= 0 || rand.nextInt(chanceFactor) > netChance || VanillaBlockUtil.hasRainNearby(sBlock)) {
 				continue;
 			}
 

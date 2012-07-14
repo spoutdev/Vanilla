@@ -26,14 +26,24 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.RandomBlockMaterial;
+import org.spout.api.material.range.CuboidEffectRange;
+import org.spout.api.material.range.EffectRange;
+import org.spout.api.math.IntVector3;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Crop;
+import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.VanillaBlockUtil;
 
-public class FarmLand extends VanillaBlockMaterial implements Mineable, InitializableMaterial {
+public class FarmLand extends VanillaBlockMaterial implements Mineable, InitializableMaterial, RandomBlockMaterial {
+	private static final EffectRange WATER_CHECK_RANGE = new CuboidEffectRange(-4, 0, -4, 4, 1, 4);
+	private static final EffectRange CROP_CHECK_RANGE = new CuboidEffectRange(-1, 1, -1, 1, 1, 1);
 	public FarmLand(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(1.0F).setOpaque();
@@ -47,5 +57,60 @@ public class FarmLand extends VanillaBlockMaterial implements Mineable, Initiali
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Spade ? (short) 1 : (short) 2;
+	}
+
+	/**
+	 * Tests whether a certain farm land block is wet<br>
+	 * This wet state is set gradually if water is nearby
+	 * 
+	 * @param block of the Farm land
+	 * @return True if wet, False if not
+	 */
+	public boolean isWet(Block block) {
+		return block.getData() > 0;
+	}
+
+	/**
+	 * Tests whether a certain farm land block has water nearby<br>
+	 * To obtain the wet state of the block, use {@link isWet()}
+	 * 
+	 * @param block of the Farm land
+	 * @return True if water is nearby, False if not
+	 */
+	public boolean hasWaterNearby(Block block) {
+		for (IntVector3 coord : WATER_CHECK_RANGE) {
+			if (block.translate(coord).getMaterial() instanceof Water) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Tests whether a certain farm land block has crops nearby<br>
+	 * 
+	 * @param block of the Farm land
+	 * @return True if crops are nearby, False if not
+	 */
+	public boolean hasCropsNearby(Block block) {
+		for (IntVector3 coord : CROP_CHECK_RANGE) {
+			if (block.translate(coord).getMaterial() instanceof Crop) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public void onRandomTick(Block block) {
+		if (VanillaBlockUtil.isRaining(block) || hasWaterNearby(block)) {
+			block.setData(7);
+		} else if (this.isWet(block)) {
+			// gradually reduce wet state
+			block.setData(block.getData() - 1);
+		} else if (!hasCropsNearby(block)) {
+			// not wet and has no crops connecting to this farm land, turn this block into dirt
+			block.setMaterial(VanillaMaterials.DIRT);
+		}
 	}
 }

@@ -26,23 +26,28 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.Random;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
+import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public abstract class Stem extends GroundAttachable implements Plant {
+public abstract class Stem extends GroundAttachable implements Crop, RandomBlockMaterial {
 	public Stem(String name, int id) {
 		super(name, id);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
@@ -98,5 +103,29 @@ public abstract class Stem extends GroundAttachable implements Plant {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Sword ? (short) 2 : (short) 1;
+	}
+
+	@Override
+	public void onRandomTick(Block block) {
+		if (block.translate(BlockFace.TOP).getLight() < 9) {
+			return;
+		}
+		int chance = VanillaBlockUtil.getCropGrowthChance(block) + 1;
+		Random rand = new Random(block.getWorld().getAge());
+		if (rand.nextInt(chance) == 0) {
+			if (isFullyGrown(block)) {
+				for (BlockFace face : BlockFaces.NESW) {
+					if (block.translate(face).isMaterial(this)) {
+						return;
+					}
+				}
+				Block spread = block.translate(BlockFaces.NESW.get(rand.nextInt(4)));
+				if (spread.isMaterial(VanillaMaterials.AIR) && spread.translate(BlockFace.BOTTOM).isMaterial(VanillaMaterials.FARMLAND)) {
+					spread.setMaterial(this);
+				}
+			} else {
+				block.setData(block.getData() + 1);
+			}
+		}
 	}
 }

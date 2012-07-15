@@ -60,6 +60,7 @@ public class Grass extends SpreadingSolid implements Mineable, RandomBlockMateri
 
 	@Override
 	public boolean canDecayAt(Block block) {
-		return block.translate(BlockFace.TOP).getMaterial().isOpaque();
+		block = block.translate(BlockFace.TOP);
+		return block.getMaterial().getOpacity() > 1 && block.getLight() < 4;
 	}
 }

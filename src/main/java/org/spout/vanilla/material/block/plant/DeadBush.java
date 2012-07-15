@@ -45,11 +45,13 @@ public class DeadBush extends GroundAttachable implements Plant {
 
 	public DeadBush(short dataMask, String name, int id) {
 		super(dataMask, name, id);
+		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 
 	public DeadBush(String name, int id, int data, VanillaBlockMaterial parent) {
 		super(name, id, data, parent);
+		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 

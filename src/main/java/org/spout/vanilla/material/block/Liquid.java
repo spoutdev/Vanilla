@@ -33,6 +33,7 @@ import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
@@ -102,6 +103,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	/**
 	 * Let's this liquid flow from the block to the direction given
+	 * 
 	 * @param block to flow from
 	 * @param to flow to
 	 * @return True if flowing was successful
@@ -116,29 +118,31 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 				return false;
 			}
 		}
-		block = block.translate(to).setSource(this);
-		BlockMaterial material = block.getMaterial();
-		if (this.isMaterial(material)) {
-			if (this.isSource(block)) {
-				return true;
+		Block spread = block.translate(to).setSource(this);
+		BlockMaterial spreadMat = spread.getMaterial();
+		if (this.isMaterial(spreadMat)) {
+			if (this.isSource(spread)) {
+				// If the block above was a non-flowing source, return false to make it spread outwards
+				// If the block above was not a source, return true to stop spreading
+				return !this.isSource(block) || this.isFlowingDown(block);
 			} else {
 				// Compare levels
-				if (level > this.getLevel(block)) {
-					if (material != this.getFlowingMaterial()) {
+				if (level > this.getLevel(spread)) {
+					if (spreadMat != this.getFlowingMaterial()) {
 						// Make sure the material is adjusted
-						block.setMaterial(this.getFlowingMaterial(), block.getData());
+						spread.setMaterial(this.getFlowingMaterial(), spread.getData());
 					}
-					this.setLevel(block, level);
+					this.setLevel(spread, level);
 					if (to == BlockFace.BOTTOM) {
-						this.setFlowingDown(block, true);
+						this.setFlowingDown(spread, true);
 					}
 					// Update blocks around
 					return true;
 				}
 			}
-		} else if (!isLiquidObstacle(material)) {
+		} else if (!isLiquidObstacle(spreadMat)) {
 			// Create a new liquid
-			this.onSpread(block, level, to.getOpposite());
+			this.onSpread(spread, level, to.getOpposite());
 			return true;
 		}
 		return false;
@@ -172,33 +176,49 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	/**
 	 * Gets the maximum possible liquid level
+	 * 
 	 * @return the max level
 	 */
 	public abstract int getMaxLevel();
 
 	/**
 	 * Gets the liquid type to use for flowing liquids
+	 * 
 	 * @return the flowing material
 	 */
 	public abstract Liquid getFlowingMaterial();
 
 	/**
 	 * Gets the liquid type to use for stationary liquids
+	 * 
 	 * @return the stationary material
 	 */
 	public abstract Liquid getStationaryMaterial();
 
 	/**
 	 * Checks if the material given is either the flowing or stationary type of this Liquid
+	 * 
 	 * @param material to check
 	 * @return True if it is this liquid, False if not
 	 */
-	public boolean isMaterial(BlockMaterial material) {
-		return material.equals(this.getFlowingMaterial(), this.getStationaryMaterial());
+	@Override
+	public boolean isMaterial(Material... materials) {
+		for (Material material : materials) {
+			if (material.equals(this.getFlowingMaterial(), this.getStationaryMaterial())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean equals(Material... materials) {
+		return super.isMaterial(materials);
 	}
 
 	/**
 	 * Gets the level of a liquid
+	 * 
 	 * @param block of the liquid
 	 * @return the level, or negative if it has no liquid
 	 */

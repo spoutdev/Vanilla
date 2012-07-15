@@ -38,6 +38,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 public class Mycelium extends SpreadingSolid implements Mineable, InitializableMaterial {
 	public Mycelium(String name, int id) {
 		super(name, id);
+		this.setHardness(0.6F).setResistance(0.8F);
 	}
 
 	@Override
@@ -57,6 +58,7 @@ public class Mycelium extends SpreadingSolid implements Mineable, InitializableM
 
 	@Override
 	public boolean canDecayAt(Block block) {
-		return block.translate(BlockFace.TOP).getMaterial().isOpaque();
+		block = block.translate(BlockFace.TOP);
+		return block.getMaterial().getOpacity() > 1 && block.getLight() < 4;
 	}
 }

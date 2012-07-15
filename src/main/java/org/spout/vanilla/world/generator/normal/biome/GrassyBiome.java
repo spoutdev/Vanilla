@@ -53,7 +53,7 @@ public abstract class GrassyBiome extends NormalBiome {
 		final int endY = chunkY * 16;
 		final int startY = endY + size - 1;
 
-		final byte maxGroudCoverDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, 0, z) * 2 + 4, 2D, 5D);
+		final byte maxGroudCoverDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, 0, z) * 2 + 4, 2, 5);
 		final byte sampleSize = (byte) (maxGroudCoverDepth + 1);
 
 		boolean hasSurface = false;

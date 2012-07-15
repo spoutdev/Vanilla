@@ -52,12 +52,10 @@ public abstract class SandyBiome extends NormalBiome {
 		final int endY = chunkY * 16;
 		final int startY = endY + size - 1;
 
-		final byte sandDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 4 + 4, 3, 4);
-		final byte sandstoneDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -6, z) * 4 + 3, 0, 3);
-
+		final byte sandDepth = (byte) MathHelper.clamp(Math.round(BLOCK_REPLACER.GetValue(x, -5, z) * 0.5 + 3.5), 3, 4);
+		final byte sandstoneDepth = (byte) MathHelper.clamp(Math.round(BLOCK_REPLACER.GetValue(x, -6, z) + 2), 1, 3);
 		final byte maxGroudCoverDepth = (byte) (sandDepth + sandstoneDepth);
 		final byte sampleSize = (byte) (maxGroudCoverDepth + 1);
-
 		boolean hasSurface = false;
 		byte groundCoverDepth = 0;
 		// check the column above by sampling, determining any missing blocks

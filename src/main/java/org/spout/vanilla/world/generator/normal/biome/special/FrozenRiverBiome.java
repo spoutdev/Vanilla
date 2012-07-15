@@ -27,10 +27,11 @@
 package org.spout.vanilla.world.generator.normal.biome.special;
 
 import org.spout.vanilla.world.generator.normal.biome.SnowyBiome;
+import org.spout.vanilla.world.generator.normal.decorator.SnowAndIceDecorator;
 
 public class FrozenRiverBiome extends SnowyBiome {
 	public FrozenRiverBiome(int biomeId) {
-		super(biomeId);
+		super(biomeId, new SnowAndIceDecorator());
 		setMinMax((byte) 55, (byte) 57);
 	}
 

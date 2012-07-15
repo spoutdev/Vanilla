@@ -31,6 +31,7 @@ import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.SnowAndIceDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 
@@ -38,7 +39,8 @@ public class PlainBiome extends GrassyBiome {
 	public PlainBiome(int id) {
 		super(id, new SandAndClayDecorator(), new FlowerDecorator((byte) 4),
 				new TallGrassDecorator(new NormalTallGrassFactory(), (byte) 10),
-				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
+				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator(),
+				new SnowAndIceDecorator());
 		setMinMax((byte) 67, (byte) 69);
 	}
 

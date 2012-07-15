@@ -27,7 +27,7 @@
 package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
-import net.royawesome.jlibnoise.MathHelper;
+
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
@@ -35,7 +35,9 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class CavePopulator extends Populator {
@@ -113,10 +115,10 @@ public class CavePopulator extends Populator {
 		}
 
 		for (; startingNode < nodeAmount; startingNode++) {
-			final float horizontalSize = (float) (1.5 + MathHelper.sin((startingNode * Math.PI) / nodeAmount) * horizontalScale);
+			final float horizontalSize = (float) (1.5 + Math.sin((startingNode * Math.PI) / nodeAmount) * horizontalScale);
 			final float verticalSize = horizontalSize * verticalScale;
-			final float diskXZ = (float) MathHelper.cos(verticalAngle);
-			target = target.add(MathHelper.cos(horizontalAngle) * diskXZ, MathHelper.sin(verticalAngle), MathHelper.sin(horizontalAngle) * diskXZ);
+			final float diskXZ = (float) Math.cos(verticalAngle);
+			target = target.add(Math.cos(horizontalAngle) * diskXZ, Math.sin(verticalAngle), Math.sin(horizontalAngle) * diskXZ);
 
 			if (extraVerticalScale) {
 				verticalAngle *= 0.92;
@@ -144,19 +146,19 @@ public class CavePopulator extends Populator {
 				}
 			}
 
-			final int xOffset = target.getBlockX() - middle.getFloorX();
-			final int zOffset = target.getBlockZ() - middle.getFloorZ();
-			final int nodesLeft = nodeAmount - startingNode;
+			final float xOffset = target.getX() - middle.getX();
+			final float zOffset = target.getZ() - middle.getZ();
+			final float nodesLeft = nodeAmount - startingNode;
 			final float offsetHorizontalScale = horizontalScale + 18;
 
 			if ((xOffset * xOffset + zOffset * zOffset) - nodesLeft * nodesLeft > offsetHorizontalScale * offsetHorizontalScale) {
 				return;
 			}
 
-			if (target.getBlockX() < middle.getFloorX() - 16 - horizontalSize * 2
-					|| target.getBlockZ() < middle.getFloorZ() - 16 - horizontalSize * 2
-					|| target.getBlockX() > middle.getFloorX() + 16 + horizontalSize * 2
-					|| target.getBlockZ() > middle.getFloorZ() + 16 + horizontalSize * 2) {
+			if (target.getX() < middle.getX() - 16 - horizontalSize * 2
+					|| target.getZ() < middle.getZ() - 16 - horizontalSize * 2
+					|| target.getX() > middle.getX() + 16 + horizontalSize * 2
+					|| target.getZ() > middle.getZ() + 16 + horizontalSize * 2) {
 				continue;
 			}
 

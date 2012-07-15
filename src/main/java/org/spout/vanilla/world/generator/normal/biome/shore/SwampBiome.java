@@ -34,6 +34,7 @@ import org.spout.vanilla.world.generator.normal.decorator.LilyPadDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.SnowAndIceDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
@@ -45,7 +46,7 @@ public class SwampBiome extends GrassyBiome {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new SwampTreeWGOFactory()),
 				new TallGrassDecorator(new NormalTallGrassFactory()), new DeadBushDecorator(), new LilyPadDecorator(),
 				new MushroomDecorator((byte) 1, (byte) 3), new SugarCaneDecorator((byte) 6, (byte) 25, (byte) 2),
-				new PumpkinDecorator());
+				new PumpkinDecorator(), new SnowAndIceDecorator());
 		setMinMax((byte) 61, (byte) 64);
 	}
 

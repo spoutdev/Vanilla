@@ -48,7 +48,7 @@ public class GravityAction extends LogicRunnable<VanillaActionController> {
 		if (!entity.isObserver() && future.getWorld().getChunkFromBlock(future, LoadOption.NO_LOAD) == null) {
 			return false;
 		}
-		BlockMaterial block = entity.getWorld().getBlock(future).getMaterial();
+		BlockMaterial block = entity.getWorld().getBlock(future, entity).getMaterial();
 		return !block.isSolid();
 	}
 

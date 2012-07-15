@@ -61,7 +61,7 @@ public class WellObject extends WorldGeneratorObject {
 		}
 		for (int xx = x - 2; xx < x + 3; xx++) {
 			for (int zz = z - 2; zz < z + 3; zz++) {
-				final Block block = w.getBlock(xx, y - 1, zz);
+				final Block block = w.getBlock(xx, y - 1, zz, w);
 				if (!overridable.contains(block.getMaterial()) || !overridable.contains(block.translate(BlockFace.BOTTOM).getMaterial())) {
 					return false;
 				}

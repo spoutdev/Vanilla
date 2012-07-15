@@ -57,7 +57,7 @@ public class VineDecorator extends Decorator {
 			for (short y = 64; y < 128; y++) {
 				final int xx = x - 3 + random.nextInt(7);
 				final int zz = z - 3 + random.nextInt(7);
-				final Block block = world.getBlock(xx, y, zz);
+				final Block block = world.getBlock(xx, y, zz, world);
 				if (block.isMaterial(VanillaMaterials.AIR)) {
 					if (block.translate(BlockFace.TOP).isMaterial(VanillaMaterials.VINES)) {
 						block.setMaterial(VanillaMaterials.VINES);

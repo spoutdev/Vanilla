@@ -93,7 +93,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 	}
 
 	public void generateRailData(Point position) {
-		this.railsBlock = position.getWorld().getBlock(position);
+		this.railsBlock = position.getWorld().getBlock(position, getParent());
 		this.blockType = this.railsBlock.getMaterial();
 		if (!(this.blockType instanceof RailBase)) {
 			this.railsBlock = this.railsBlock.translate(BlockFace.BOTTOM);
@@ -237,7 +237,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 		//post-move updates
 		if (this.railState != null) {
 			//snap to correct Y when changing sloped rail downwards
-			Block newBlock = position.getWorld().getBlock(position);
+			Block newBlock = position.getWorld().getBlock(position, getParent());
 
 			Vector2 blockChange = new Vector2(newBlock.getX() - this.railsBlock.getX(), newBlock.getZ() - this.railsBlock.getZ());
 

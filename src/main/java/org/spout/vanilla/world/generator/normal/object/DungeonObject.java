@@ -114,7 +114,7 @@ public class DungeonObject extends RandomObject {
 			for (byte attempts = 0; attempts < 6; attempts++) {
 				final int xx = random.nextInt(radiusX * 2 + 1) - radiusX + x;
 				final int zz = random.nextInt(radiusZ * 2 + 1) - radiusZ + z;
-				final Block middle = w.getBlock(xx, y, zz);
+				final Block middle = w.getBlock(xx, y, zz, w);
 				if (middle.getMaterial() != VanillaMaterials.AIR) {
 					continue;
 				}

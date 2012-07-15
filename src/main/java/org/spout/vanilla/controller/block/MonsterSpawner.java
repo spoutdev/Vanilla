@@ -103,7 +103,7 @@ public class MonsterSpawner extends VanillaBlockController {
 	private VanillaControllerType getSpawnType() {
 		Block block = getBlock();
 		World world = block.getWorld();
-		Block below = world.getBlock(block.getPosition().subtract(Vector3.UNIT_Y));
+		Block below = world.getBlock(block.getPosition().subtract(Vector3.UNIT_Y), world);
 		if (below.getMaterial() == VanillaMaterials.GRASS && block.getLight() > 8) {
 			int i = random.nextInt(6);
 			switch (i) {

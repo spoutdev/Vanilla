@@ -245,7 +245,7 @@ public class TestCommands {
 
 		Player player = (Player) source;
 		Entity playerEntity = player.getEntity();
-		Block block = playerEntity.getWorld().getBlock(playerEntity.getPosition().subtract(0, 1, 0));
+		Block block = playerEntity.getWorld().getBlock(playerEntity.getPosition().subtract(0, 1, 0), playerEntity);
 		if (!block.hasController()) {
 			player.sendMessage("Block has no entity!");
 			return;

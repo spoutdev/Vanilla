@@ -63,7 +63,7 @@ public class MovingBlock extends Substance {
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
-		Block block = getParent().getWorld().getBlock(getParent().getPosition());
+		Block block = getParent().getWorld().getBlock(getParent().getPosition(), getParent());
 		if (block.translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
 			//can we place here?
 			if (block.getMaterial().isPlacementObstacle() || !this.material.canPlace(block, this.material.getData(), BlockFace.BOTTOM, true)) {

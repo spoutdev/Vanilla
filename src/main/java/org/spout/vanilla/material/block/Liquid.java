@@ -118,7 +118,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 				return false;
 			}
 		}
-		Block spread = block.translate(to).setSource(this);
+		block = block.getWorld().getBlock(block.getX(), block.getY(), block.getZ(), this).translate(to);
 		BlockMaterial spreadMat = spread.getMaterial();
 		if (this.isMaterial(spreadMat)) {
 			if (this.isSource(spread)) {

@@ -95,7 +95,7 @@ public class ExplosionModelSpherical extends ExplosionModel implements Source {
 				//this block has been destroyed
 				if (!slot.block.destroy) {
 					slot.block.destroy = true;
-					Block block = world.getBlock(slot.block.realx, slot.block.realy, slot.block.realz);
+					Block block = world.getBlock(slot.block.realx, slot.block.realy, slot.block.realz, this);
 					blocksToDestroy.add(block);
 				}
 

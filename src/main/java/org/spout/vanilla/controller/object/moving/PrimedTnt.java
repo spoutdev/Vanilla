@@ -57,7 +57,7 @@ public class PrimedTnt extends Substance {
 		this.setVelocity(this.getVelocity().multiply(0.98));
 
 		//TODO: proper entity on ground function
-		if (getParent().getWorld().getBlock(getParent().getPosition()).translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
+		if (getParent().getWorld().getBlock(getParent().getPosition(), getParent()).translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
 			this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
 		}
 

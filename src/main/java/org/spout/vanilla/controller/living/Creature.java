@@ -73,7 +73,7 @@ public abstract class Creature extends Living {
 		// Handle drowning and suffocation damage
 		Point headPos = getHeadPosition();
 		if (getParent().isObserver() || headPos.getWorld().getChunkFromBlock(headPos, LoadOption.NO_LOAD) != null) {
-			Block head = getParent().getWorld().getBlock(headPos);
+			Block head = getParent().getWorld().getBlock(headPos, getParent());
 			if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 				airTicks++;
 				if (head.getMaterial().equals(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {

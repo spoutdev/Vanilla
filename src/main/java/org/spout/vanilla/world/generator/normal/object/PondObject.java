@@ -112,7 +112,7 @@ public class PondObject extends RandomObject {
 				if (stonyTop) {
 					for (byte py = 1; py < 5; py++) {
 						if (isWallBlock(px, py, pz, topHeightMap)) {
-							final Block block = world.getBlock(px + x, py + y - 1, pz + z);
+							final Block block = world.getBlock(px + x, py + y - 1, pz + z, world);
 							if (random.nextBoolean() && block.getMaterial().isOpaque()) {
 								block.setMaterial(VanillaMaterials.STONE);
 							}
@@ -130,7 +130,7 @@ public class PondObject extends RandomObject {
 		for (byte px = 0; px < 16; px++) {
 			for (byte pz = 0; pz < 16; pz++) {
 				for (byte py = -1; py < 4; py++) {
-					final Block block = world.getBlock(x + px, y + py, z + pz);
+					final Block block = world.getBlock(x + px, y + py, z + pz, world);
 					if (block.isAtSurface()) {
 						final BlockMaterial material = block.getMaterial();
 						if (material == VanillaMaterials.DIRT) {

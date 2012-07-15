@@ -127,19 +127,19 @@ public class RegionSpawner implements Runnable {
 		int y = chunk.getBlockY() + randY;
 		int z = chunk.getBlockZ() + randZ;
 		World world = chunk.getWorld();
-		if (world.getChunkFromBlock(x, y + 1, z, LoadOption.NO_LOAD) != null && world.getBlock(x, y + 1, z).getMaterial() != BlockMaterial.AIR) {
+		if (world.getChunkFromBlock(x, y + 1, z, LoadOption.NO_LOAD) != null && world.getBlockMaterial(x, y + 1, z) != BlockMaterial.AIR) {
 			return false;
 		}
-		if (world.getChunkFromBlock(x + 1, y, z, LoadOption.NO_LOAD) != null && world.getBlock(x + 1, y, z).getMaterial() != BlockMaterial.AIR) {
+		if (world.getChunkFromBlock(x + 1, y, z, LoadOption.NO_LOAD) != null &&world.getBlockMaterial(x + 1, y, z) != BlockMaterial.AIR) {
 			return false;
 		}
-		if (world.getChunkFromBlock(x - 1, y, z, LoadOption.NO_LOAD) != null && world.getBlock(x - 1, y, z).getMaterial() != BlockMaterial.AIR) {
+		if (world.getChunkFromBlock(x - 1, y, z, LoadOption.NO_LOAD) != null &&world.getBlockMaterial(x - 1, y, z) != BlockMaterial.AIR) {
 			return false;
 		}
-		if (world.getChunkFromBlock(x, y, z + 1, LoadOption.NO_LOAD) != null && world.getBlock(x, y, z + 1).getMaterial() != BlockMaterial.AIR) {
+		if (world.getChunkFromBlock(x, y, z + 1, LoadOption.NO_LOAD) != null &&world.getBlockMaterial(x, y, z + 1) != BlockMaterial.AIR) {
 			return false;
 		}
-		if (world.getChunkFromBlock(x, y, z - 1, LoadOption.NO_LOAD) != null && world.getBlock(x, y, z - 1).getMaterial() != BlockMaterial.AIR) {
+		if (world.getChunkFromBlock(x, y, z - 1, LoadOption.NO_LOAD) != null &&world.getBlockMaterial(x, y, z - 1) != BlockMaterial.AIR) {
 			return false;
 		}
 

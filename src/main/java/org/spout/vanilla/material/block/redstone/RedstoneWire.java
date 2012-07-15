@@ -96,7 +96,7 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 				block.setMaterial(this, receiving);
 			} else {
 				//Power became less, disable all attached wires and recalculate
-				block = block.setSource(this);
+				block = block.getWorld().getBlock(block.getX(), block.getY(), block.getZ(), this);
 				this.disableRedstone(block);
 				for (BlockFace face : BlockFaces.NESWB) {
 					this.disableRedstone(block.translate(face));

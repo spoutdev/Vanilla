@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.component.controller.BlockController;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -42,12 +41,7 @@ public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
 			return;
 		}
 
-		Block block = player.getEntity().getWorld().getBlock(message.getX(), message.getY(), message.getZ());
-		if (block == null) {
-			return;
-		}
-
-		BlockController controller = block.getController();
+		BlockController controller = player.getEntity().getWorld().getBlockController(message.getX(), message.getY(), message.getZ());
 		if (controller == null || !(controller instanceof Sign)) {
 			return;
 		}

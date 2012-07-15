@@ -69,7 +69,7 @@ public class MushroomDecorator extends Decorator {
 				final int yy = surface ? getHighestWorkableBlock(world, xx, zz)
 						: getHighestWorkableBlock(world, xx, random.nextInt(64), zz);
 				if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
-						&& mushroom.isValidPosition(world.getBlock(xx, yy, zz), BlockFace.BOTTOM, false)) {
+						&& mushroom.isValidPosition(world.getBlock(xx, yy, zz, world), BlockFace.BOTTOM, false)) {
 					world.setBlockMaterial(xx, yy, zz, mushroom, (short) 0, world);
 				}
 			}

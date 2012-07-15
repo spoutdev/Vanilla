@@ -170,7 +170,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 
 		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
-		Block head = getParent().getWorld().getBlock(getHeadPosition());
+		Block head = getParent().getWorld().getBlock(getHeadPosition(), getParent());
 		if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 			airTicks++;
 			ItemStack helmet = getInventory().getArmor().getHelmet().getItem();

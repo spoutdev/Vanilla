@@ -28,9 +28,11 @@ package org.spout.vanilla.world.generator;
 
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.Decorator;
+import org.spout.vanilla.data.Climate;
 
 public abstract class VanillaBiome extends Biome {
 	private final int biomeId;
+	private Climate climate = Climate.MODERATE;
 
 	protected VanillaBiome(int biomeId, Decorator... decorators) {
 		super(decorators);
@@ -39,5 +41,23 @@ public abstract class VanillaBiome extends Biome {
 
 	public int getBiomeId() {
 		return biomeId;
+	}
+
+	/**
+	 * Gets the Climate of this Biome
+	 * 
+	 * @return the climate
+	 */
+	public Climate getClimate() {
+		return this.climate;
+	}
+
+	/**
+	 * Sets the Climate for this Biome
+	 * 
+	 * @param climate to set to
+	 */
+	public void setClimate(Climate climate) {
+		this.climate = climate;
 	}
 }

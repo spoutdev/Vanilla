@@ -30,12 +30,14 @@ import org.spout.api.generator.biome.Decorator;
 import org.spout.api.math.MathHelper;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
+import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 public abstract class SandyBiome extends NormalBiome {
 	public SandyBiome(int biomeId, Decorator... decorators) {
 		super(biomeId, decorators);
+		this.setClimate(Climate.WARM);
 	}
 
 	@Override

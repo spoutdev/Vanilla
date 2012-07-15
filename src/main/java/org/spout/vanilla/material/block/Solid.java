@@ -62,11 +62,12 @@ public class Solid extends VanillaBlockMaterial {
 
 	@Override
 	public boolean canSupport(BlockMaterial material, BlockFace face) {
-		if (!material.equals(VanillaMaterials.FIRE)) {
-			return true;
+		// Solids only support fire on top
+		if (material.equals(VanillaMaterials.FIRE)) {
+			return face == BlockFace.TOP;
 		}
 
-		//solids only support fire on top
-		return face == BlockFace.TOP;
+		// Anything else is supported to all sides
+		return true;
 	}
 }

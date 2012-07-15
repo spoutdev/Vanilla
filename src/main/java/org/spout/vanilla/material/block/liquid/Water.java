@@ -27,11 +27,15 @@
 package org.spout.vanilla.material.block.liquid;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.RandomBlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
-public class Water extends Liquid {
+public class Water extends Liquid implements RandomBlockMaterial {
 	public Water(String name, int id, boolean flowing) {
 		super(name, id, flowing);
 	}
@@ -80,5 +84,30 @@ public class Water extends Liquid {
 	@Override
 	public Liquid getStationaryMaterial() {
 		return VanillaMaterials.STATIONARY_WATER;
+	}
+
+	@Override
+	public void onRandomTick(Block block) {
+		//TODO: This should really be in the tick task of the sky controller
+		// Water freezing
+		if (block.getData() != 0) {
+			return;
+		}
+		if (!block.isAtSurface()) {
+			return;
+		}
+		if (!Climate.get(block).isFreezing()) {
+			return;
+		}
+		if (VanillaMaterials.ICE.canDecayAt(block)) {
+			return;
+		}
+		// Has nearby non-water blocks?
+		for (BlockFace face : BlockFaces.NESW) {
+			if (!(block.translate(face).getMaterial() instanceof Water)) {
+				block.setMaterial(VanillaMaterials.ICE);
+				return;
+			}
+		}
 	}
 }

@@ -36,12 +36,14 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.bootstrap.handler.auth.LoginAuthThread;
+import org.spout.vanilla.protocol.bootstrap.handler.auth.LoginAuth;
 import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 
 public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginRequestMessage> {
 	@Override
 	public void handleServer(final Session session, final Player player, final LoginRequestMessage message) {
+		long start = System.currentTimeMillis();
+		Spout.getLogger().info("Handshake response took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
 		if (message.getId() > VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
 			session.disconnect(false, new Object[]{"Outdated server!"});
 		} else if (message.getId() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
@@ -57,24 +59,35 @@ public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginReq
 
 			if (VanillaConfiguration.ONLINE_MODE.getBoolean() && !VanillaConfiguration.ENCRYPT_MODE.getBoolean()) {
 				final String finalName = message.getName();
-				Runnable runnable = new Runnable() {
-					@Override
-					public void run() {
-						playerConnect(session, finalName);
-					}
-				};
-				Spout.getEngine().getScheduler().scheduleAsyncTask(VanillaPlugin.getInstance(), new LoginAuthThread(session, finalName, runnable));
+				Thread loginAuth = new Thread(new LoginAuth(session, finalName, new PlayerConnectRunnable(session, finalName)), "Login Auth for [" + finalName + "]");
+				loginAuth.setDaemon(true);
+				loginAuth.start();
 			} else {
 				playerConnect(session, message.getName());
 			}
 		}
+		System.out.println("Handling login request for " + session + " took " + (System.currentTimeMillis() - start) + " ms");
 	}
 
 	public static void playerConnect(Session session, String name) {
 		Event event = new PlayerConnectEvent(session, name);
 		session.getEngine().getEventManager().callEvent(event);
 		if (Spout.getEngine().debugMode()) {
-			Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + "ms");
+			Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
+		}
+	}
+	
+	private static class PlayerConnectRunnable implements Runnable {
+		private final Session session;
+		private final String name;
+		private PlayerConnectRunnable(Session session, String name) {
+			this.session = session;
+			this.name = name;
+		}
+
+		@Override
+		public void run() {
+			BootstrapLoginRequestMessageHandler.playerConnect(session, name);
 		}
 	}
 }

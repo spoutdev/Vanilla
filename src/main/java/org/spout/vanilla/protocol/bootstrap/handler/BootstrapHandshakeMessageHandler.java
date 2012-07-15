@@ -53,6 +53,7 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 
 	@Override
 	public void handleServer(Session session, Player player, HandshakeMessage message) {
+		long start = System.currentTimeMillis();
 		Session.State state = session.getState();
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
 			session.getDataMap().put(VanillaProtocol.LOGIN_TIME, System.currentTimeMillis());
@@ -79,6 +80,7 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 		} else {
 			session.disconnect(false, new Object[]{"Handshake already exchanged."});
 		}
+		System.out.println("Handling handshake for " + session + " took " + (System.currentTimeMillis() - start) + " ms");
 	}
 
 	private final static SecureRandom random = new SecureRandom();

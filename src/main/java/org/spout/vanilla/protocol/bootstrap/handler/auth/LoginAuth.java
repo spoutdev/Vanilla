@@ -38,11 +38,12 @@ import java.net.URLEncoder;
 
 import org.spout.api.Spout;
 import org.spout.api.protocol.Session;
+import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.VanillaProtocol;
 
-public class LoginAuthThread implements Runnable {
+public class LoginAuth implements Runnable {
 	private final static String URLBase = "http://session.minecraft.net/game/checkserver.jsp?";
 	private final static String userPrefix = "user=";
 	private final static String idPrefix = "&serverId=";
@@ -51,7 +52,7 @@ public class LoginAuthThread implements Runnable {
 	private final String name;
 	private final Runnable runnable;
 
-	public LoginAuthThread(Session session, String name, Runnable runnable) {
+	public LoginAuth(Session session, String name, Runnable runnable) {
 		this.session = session;
 		this.name = name;
 		this.runnable = runnable;
@@ -92,7 +93,6 @@ public class LoginAuthThread implements Runnable {
 		}
 
 		HttpURLConnection httpConnection = (HttpURLConnection) connection;
-
 		httpConnection.setConnectTimeout(30000);
 		httpConnection.setReadTimeout(30000);
 
@@ -108,8 +108,8 @@ public class LoginAuthThread implements Runnable {
 		try {
 			in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
 			String reply = in.readLine();
-			if (reply != null && reply.equals(authString)) {
-				Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable);
+			if (authString.equals(reply)) {
+				Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable, TaskPriority.CRITICAL);
 			} else {
 				failed("Auth server refused authentication");
 			}

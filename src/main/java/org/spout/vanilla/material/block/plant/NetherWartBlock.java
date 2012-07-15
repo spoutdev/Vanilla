@@ -41,6 +41,7 @@ import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
+import org.spout.vanilla.world.generator.VanillaBiomes;
 
 public class NetherWartBlock extends GroundAttachable implements Plant, Growing, RandomBlockMaterial {
 	public NetherWartBlock(String name, int id) {
@@ -93,6 +94,17 @@ public class NetherWartBlock extends GroundAttachable implements Plant, Growing,
 
 	@Override
 	public void onRandomTick(Block block) {
-		
+		if (this.isFullyGrown(block) || block.getBiomeType() != VanillaBiomes.NETHERRACK) {
+			return;
+		}
+		Random rand = new Random(block.getWorld().getAge());
+		if (rand.nextInt(10) != 0) {
+			return;
+		}
+		int minLight = this.getMinimumLightToGrow();
+		if (minLight > 0 && block.translate(BlockFace.TOP).getLight() < minLight) {
+			return;
+		}
+		this.setGrowthStage(block, this.getGrowthStage(block) + 1);
 	}
 }

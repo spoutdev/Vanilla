@@ -46,7 +46,6 @@ public class SugarCaneBlock extends StackGrowingBase implements InitializableMat
 	public SugarCaneBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
-		this.setLiquidObstacle(false);
 		this.addAllowedBase(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND);
 	}
 

@@ -81,8 +81,6 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		 * hacky workaround.
 		 */
 
-		System.out.println(message.toString());
-
 		if (message.getDirection() == 255) {
 			// Right clicked air with an item.
 			PlayerInteractEvent event = eventManager.callEvent(new PlayerInteractEvent(player, null, holding, Action.RIGHT_CLICK, true));

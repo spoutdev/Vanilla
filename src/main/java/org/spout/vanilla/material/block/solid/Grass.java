@@ -26,28 +26,18 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import java.util.Random;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.range.CubicEffectRange;
-import org.spout.api.material.range.EffectRange;
-import org.spout.api.math.IntVector3;
 
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.SpreadingSolid;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 
-public class Grass extends Solid implements Mineable, RandomBlockMaterial, InitializableMaterial {
-	private static final byte MIN_SPREAD_LIGHT = 9; // at this light level grass spreads to other dirt blocks
-	private static final byte MIN_DECAY_LIGHT = 4; // at this light level grass decays to dirt
-	private static final int MIN_DECAY_OPACITY = 1; // at this opacity grass decays to dirt
-	private static final EffectRange GROWTH_RANGE = new CubicEffectRange(2);
-
+public class Grass extends SpreadingSolid implements Mineable, RandomBlockMaterial, InitializableMaterial {
 	public Grass(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(0.8F);
@@ -55,7 +45,7 @@ public class Grass extends Solid implements Mineable, RandomBlockMaterial, Initi
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.DIRT);
+		this.setReplacedMaterial(VanillaMaterials.DIRT).setDropMaterial(VanillaMaterials.DIRT);
 	}
 
 	@Override
@@ -64,27 +54,12 @@ public class Grass extends Solid implements Mineable, RandomBlockMaterial, Initi
 	}
 
 	@Override
-	public void onRandomTick(Block block) {
-		final Random r = new Random(block.getWorld().getAge());
-		//Attempt to decay grass
-		Block above = block.translate(BlockFace.TOP);
-		int light = above.getLight();
-		if (light < MIN_DECAY_LIGHT && above.getMaterial().getOpacity() > MIN_DECAY_OPACITY) {
-			block.setMaterial(VanillaMaterials.DIRT);
-		} else if (light >= MIN_SPREAD_LIGHT) {
-			//Attempt to grow grass
-			Block around;
-			for (IntVector3 next : GROWTH_RANGE) {
-				if (r.nextInt(4) == 0) {
-					around = block.translate(next);
-					if (around.isMaterial(VanillaMaterials.DIRT)) {
-						above = around.translate(BlockFace.TOP);
-						if (above.getLight() >= MIN_DECAY_LIGHT && above.getMaterial().getOpacity() <= MIN_DECAY_OPACITY) {
-							around.setMaterial(VanillaMaterials.GRASS);
-						}
-					}
-				}
-			}
-		}
+	public int getMinimumLightToSpread() {
+		return 9;
+	}
+
+	@Override
+	public boolean canDecayAt(Block block) {
+		return block.translate(BlockFace.TOP).getMaterial().isOpaque();
 	}
 }

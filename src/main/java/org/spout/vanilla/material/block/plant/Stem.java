@@ -70,6 +70,36 @@ public abstract class Stem extends GroundAttachable implements Crop, RandomBlock
 	}
 
 	@Override
+	public int getGrowthStage(Block block) {
+		return block.getDataField(0x7);
+	}
+
+	@Override
+	public void setGrowthStage(Block block, int stage) {
+		block.setData(stage & 0x7);
+	}
+
+	@Override
+	public boolean addGrowthStage(Block block, int amount) {
+		int stage = this.getGrowthStage(block);
+		if (stage == this.getNumGrowthStages() - 1) {
+			return false;
+		} else {
+			stage += amount;
+			if (stage >= this.getNumGrowthStages()) {
+				stage = this.getNumGrowthStages() - 1;
+			}
+			this.setGrowthStage(block, stage);
+			return true;
+		}
+	}
+
+	@Override
+	public boolean isFullyGrown(Block block) {
+		return block.getData() == 0x7;
+	}
+
+	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		return face == BlockFace.TOP && material.equals(VanillaMaterials.FARMLAND);
 	}
@@ -87,18 +117,6 @@ public abstract class Stem extends GroundAttachable implements Crop, RandomBlock
 				this.setGrowthStage(block, 0x7);
 			}
 		}
-	}
-
-	public int getGrowthStage(Block block) {
-		return block.getData();
-	}
-
-	public void setGrowthStage(Block block, int stage) {
-		block.setData(stage & 0x7);
-	}
-
-	public boolean isFullyGrown(Block block) {
-		return block.getData() == 0x7;
 	}
 
 	@Override
@@ -125,7 +143,7 @@ public abstract class Stem extends GroundAttachable implements Crop, RandomBlock
 					spread.setMaterial(this);
 				}
 			} else {
-				block.setData(block.getData() + 1);
+				block.addData(1);
 			}
 		}
 	}

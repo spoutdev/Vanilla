@@ -33,7 +33,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
@@ -42,8 +41,6 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 
 public class NetherWartBlock extends GroundAttachable implements Plant {
-	private GrowthStage stage = GrowthStage.SEEDLING;
-
 	public NetherWartBlock(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false);
@@ -66,6 +63,36 @@ public class NetherWartBlock extends GroundAttachable implements Plant {
 	}
 
 	@Override
+	public int getGrowthStage(Block block) {
+		return block.getDataField(0x3);
+	}
+
+	@Override
+	public void setGrowthStage(Block block, int stage) {
+		block.setData(stage & 0x3);
+	}
+
+	@Override
+	public boolean addGrowthStage(Block block, int amount) {
+		int stage = this.getGrowthStage(block);
+		if (stage == this.getNumGrowthStages() - 1) {
+			return false;
+		} else {
+			stage += amount;
+			if (stage >= this.getNumGrowthStages()) {
+				stage = this.getNumGrowthStages() - 1;
+			}
+			this.setGrowthStage(block, stage);
+			return true;
+		}
+	}
+
+	@Override
+	public boolean isFullyGrown(Block block) {
+		return block.getData() == 0x3;
+	}
+
+	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		return material.equals(VanillaMaterials.SOUL_SAND) && super.canAttachTo(material, face);
 	}
@@ -73,28 +100,8 @@ public class NetherWartBlock extends GroundAttachable implements Plant {
 	@Override
 	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.NETHER_WART, stage == GrowthStage.LAST ? new Random().nextInt(4) + 2 : 1));
+		drops.add(new ItemStack(VanillaMaterials.NETHER_WART, this.isFullyGrown(block) ? new Random().nextInt(4) + 2 : 1));
 		return drops;
-	}
-
-	public GrowthStage getGrowthStage() {
-		return stage;
-	}
-
-	public enum GrowthStage implements DataSource {
-		SEEDLING(1),
-		MIDDLE(2),
-		LAST(3);
-		private final short data;
-
-		GrowthStage(int data) {
-			this.data = (short) data;
-		}
-
-		@Override
-		public short getData() {
-			return data;
-		}
 	}
 
 	@Override

@@ -71,13 +71,32 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	}
 
 	@Override
-	public boolean hasGrowthStages() {
+	public int getGrowthStage(Block block) {
+		return 0;
+	}
+
+	@Override
+	public void setGrowthStage(Block block, int stage) {
+	}
+
+	@Override
+	public boolean addGrowthStage(Block block, int amount) {
+		return false;
+	}
+
+	@Override
+	public boolean isFullyGrown(Block block) {
 		return true;
 	}
 
 	@Override
+	public boolean hasGrowthStages() {
+		return false;
+	}
+
+	@Override
 	public int getNumGrowthStages() {
-		return 3;
+		return 0;
 	}
 
 	@Override

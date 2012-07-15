@@ -139,6 +139,71 @@ public class Cactus extends GroundAttachable implements Plant, TimedCraftable, D
 	}
 
 	@Override
+	public int getGrowthStage(Block block) {
+		block = getBase(block);
+		// go up to the max stage count
+		for (int i = 0; i < this.getNumGrowthStages(); i++) {
+			block = block.translate(BlockFace.TOP);
+			if (!block.isMaterial(this)) {
+				return i;
+			}
+		}
+		return this.getNumGrowthStages() - 1;
+	}
+
+	@Override
+	public void setGrowthStage(Block block, int stage) {
+		block = getBase(block);
+		if (stage >= this.getNumGrowthStages()) {
+			stage = this.getNumGrowthStages() - 1;
+		}
+		for (int i = 0; i < stage; i++) {
+			block = block.translate(BlockFace.TOP);
+			block.setMaterial(this);
+		}
+	}
+
+	@Override
+	public boolean addGrowthStage(Block block, int amount) {
+		if (amount <= 0) {
+			return false;
+		}
+		Block b = getBase(block).translate(BlockFace.TOP);
+		boolean changed = false;
+		for (int i = 1; i < getNumGrowthStages(); i++) {
+			Block next = b.translate(0, i, 0);
+			if (next.getMaterial() == VanillaMaterials.AIR) {
+				changed = true;
+				next.setMaterial(this);
+				amount--;
+				if (amount == 0) {
+					break;
+				}
+			}
+		}
+		return changed;
+	}
+
+	/**
+	 * Gets the base block this Cactus rests on
+	 * 
+	 * @param block of the Cactus
+	 * @return the base Block
+	 */
+	public Block getBase(Block block) {
+		// get the bottom block
+		while (block.isMaterial(this)) {
+			block = block.translate(BlockFace.BOTTOM);
+		}
+		return block;
+	}
+	
+	@Override
+	public boolean isFullyGrown(Block block) {
+		return block.getData() == 0x3;
+	}
+
+	@Override
 	public EffectRange getDynamicRange() {
 		return dynamicRange;
 	}
@@ -152,13 +217,7 @@ public class Cactus extends GroundAttachable implements Plant, TimedCraftable, D
 
 	@Override
 	public void onDynamicUpdate(Block b, Region r, long updateTime, long queuedTime, int data, Object hint) {
-		for (int i = 1; i < getNumGrowthStages(); i++) {
-			Block next = b.translate(0, i, 0);
-			if (next.getMaterial() == VanillaMaterials.AIR) {
-				next.setMaterial(this);
-				break;
-			}
-		}
+		this.addGrowthStage(b, 1);
 		b.dynamicUpdate(r.getWorld().getAge() + 1000 * 150);
 	}
 }

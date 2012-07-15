@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -48,8 +49,27 @@ public class Flower extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public int getNumGrowthStages() {
+	public int getGrowthStage(Block block) {
 		return 0;
+	}
+
+	@Override
+	public void setGrowthStage(Block block, int stage) {
+	}
+
+	@Override
+	public boolean addGrowthStage(Block block, int amount) {
+		return false;
+	}
+
+	@Override
+	public boolean isFullyGrown(Block block) {
+		return true;
+	}
+
+	@Override
+	public int getNumGrowthStages() {
+		return 1;
 	}
 
 	@Override

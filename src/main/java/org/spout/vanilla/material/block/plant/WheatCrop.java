@@ -69,6 +69,36 @@ public class WheatCrop extends GroundAttachable implements Crop, RandomBlockMate
 	}
 
 	@Override
+	public int getGrowthStage(Block block) {
+		return block.getDataField(0x7);
+	}
+
+	@Override
+	public void setGrowthStage(Block block, int stage) {
+		block.setData(stage & 0x7);
+	}
+
+	@Override
+	public boolean addGrowthStage(Block block, int amount) {
+		int stage = this.getGrowthStage(block);
+		if (stage == this.getNumGrowthStages() - 1) {
+			return false;
+		} else {
+			stage += amount;
+			if (stage >= this.getNumGrowthStages()) {
+				stage = this.getNumGrowthStages() - 1;
+			}
+			this.setGrowthStage(block, stage);
+			return true;
+		}
+	}
+
+	@Override
+	public boolean isFullyGrown(Block block) {
+		return block.getData() == 0x7;
+	}
+
+	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		return face == BlockFace.TOP && material.equals(VanillaMaterials.FARMLAND);
 	}
@@ -101,18 +131,6 @@ public class WheatCrop extends GroundAttachable implements Crop, RandomBlockMate
 		return drops;
 	}
 
-	public int getGrowthStage(Block block) {
-		return block.getData();
-	}
-
-	public void setGrowthStage(Block block, int stage) {
-		block.setData(stage & 0x7);
-	}
-
-	public boolean isFullyGrown(Block block) {
-		return block.getData() == 0x7;
-	}
-
 	// TODO: Trampling
 
 	@Override
@@ -122,12 +140,12 @@ public class WheatCrop extends GroundAttachable implements Crop, RandomBlockMate
 
 	@Override
 	public void onRandomTick(Block block) {
-		if (!this.isFullyGrown(block) && block.translate(BlockFace.TOP).getLight() >= 9) {
+		if (!this.isFullyGrown(block) && block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToGrow()) {
 			// Grow using a calculated chance of growing
 			Random rand = new Random(block.getWorld().getAge());
 			int chance = VanillaBlockUtil.getCropGrowthChance(block);
 			if (rand.nextInt(chance + 1) == 0) {
-				this.setGrowthStage(block, this.getGrowthStage(block) + 1);
+				this.addGrowthStage(block, 1);
 			}
 		}
 	}

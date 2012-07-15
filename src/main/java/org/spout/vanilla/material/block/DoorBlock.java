@@ -154,53 +154,6 @@ public abstract class DoorBlock extends GroundAttachable implements Mineable, Op
 		bottomHalf.setMaterial(this, bottomData);
 	}
 
-	//TODO: Place in SpoutAPI
-	public static BlockFace rotate(BlockFace from, int notchCount) {
-		while (notchCount > 0) {
-			switch (from) {
-				case NORTH:
-					from = BlockFace.EAST;
-					break;
-				case EAST:
-					from = BlockFace.SOUTH;
-					break;
-				case SOUTH:
-					from = BlockFace.WEST;
-					break;
-				case WEST:
-					from = BlockFace.NORTH;
-					break;
-				default:
-					return from;
-			}
-			if (notchCount-- == 0) {
-				return from;
-			}
-		}
-		while (notchCount < 0) {
-			switch (from) {
-				case NORTH:
-					from = BlockFace.WEST;
-					break;
-				case WEST:
-					from = BlockFace.SOUTH;
-					break;
-				case SOUTH:
-					from = BlockFace.EAST;
-					break;
-				case EAST:
-					from = BlockFace.NORTH;
-					break;
-				default:
-					return from;
-			}
-			if (notchCount++ == 0) {
-				return from;
-			}
-		}
-		return from;
-	}
-
 	private boolean isDoorBlock(Block bottomBlock) {
 		return bottomBlock.getMaterial().equals(this) || bottomBlock.translate(BlockFace.TOP).getMaterial().equals(this);
 	}
@@ -214,8 +167,8 @@ public abstract class DoorBlock extends GroundAttachable implements Mineable, Op
 		BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource()).getOpposite();
 		Block above = block.translate(BlockFace.TOP);
 		if (!above.getMaterial().isPlacementObstacle()) {
-			Block left = block.translate(rotate(facing, -1));
-			Block right = block.translate(rotate(facing, 1));
+			Block left = block.translate(BlockFaces.NESW.previous(facing, 1));
+			Block right = block.translate(BlockFaces.NESW.next(facing, 1));
 			boolean hingeLeft = isDoorBlock(right) || (!isDoorBlock(left) && !isHingeBlock(right) && isHingeBlock(left));
 			create(block, above, facing, hingeLeft, false);
 			return true;

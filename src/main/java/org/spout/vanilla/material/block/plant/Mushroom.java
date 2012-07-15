@@ -91,13 +91,32 @@ public class Mushroom extends GroundAttachable implements Plant, RandomBlockMate
 	}
 
 	@Override
+	public int getGrowthStage(Block block) {
+		return 0;
+	}
+
+	@Override
+	public void setGrowthStage(Block block, int stage) {
+	}
+
+	@Override
+	public boolean addGrowthStage(Block block, int amount) {
+		return false;
+	}
+
+	@Override
+	public boolean isFullyGrown(Block block) {
+		return true;
+	}
+
+	@Override
 	public boolean hasGrowthStages() {
 		return false;
 	}
 
 	@Override
 	public int getNumGrowthStages() {
-		return 0;
+		return 1;
 	}
 
 	@Override

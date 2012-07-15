@@ -51,7 +51,6 @@ import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.util.OutwardIterator;
-
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -73,6 +72,7 @@ import org.spout.vanilla.resources.MapPalette;
 import org.spout.vanilla.resources.RecipeYaml;
 import org.spout.vanilla.resources.loader.MapPaletteLoader;
 import org.spout.vanilla.resources.loader.RecipeLoader;
+import org.spout.vanilla.thread.SpawnLoaderThread;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -208,22 +208,38 @@ public class VanillaPlugin extends CommonPlugin {
 		final int total = (diameter * diameter * diameter) / 6;
 		final int progressStep = total / 10;
 		final OutwardIterator oi = new OutwardIterator();
+		
+		SpawnLoaderThread[] loaderThreads = new SpawnLoaderThread[16];
+		
 		for (World world : worlds) {
 			// Initialize the first chunks
-			int progress = 0;
 			Point point = world.getSpawnPoint().getPosition();
 			int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
 			int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
 			int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
-			oi.reset(cx, cy, cz, radius);
+			
 			final String initChunkType = world.getAge() <= 0 ? "Generating" : "Loading";
+			
+			for (int i = 0; i < 16; i++) {
+				loaderThreads[i] = new SpawnLoaderThread(total, progressStep, initChunkType);
+			}
+			
+			oi.reset(cx, cy, cz, radius);
 			while (oi.hasNext()) {
 				IntVector3 v = oi.next();
-				progress++;
-				if (progress % progressStep == 0) {
-					Spout.getLogger().info(initChunkType + " [" + world.getName() + "], " + (progress / progressStep) * 10 + "% Complete");
+				SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
+			}
+			
+			for (int i = 0; i < 16; i++) {
+				loaderThreads[i].start();
+			}
+			
+			for (int i = 0; i < 16; i++) {
+				try {
+					loaderThreads[i].join();
+				} catch (InterruptedException ie) {
+					Spout.getLogger().info("Interrupted when waiting for spawn area to load");
 				}
-				world.getChunk(v.getX(), v.getY(), v.getZ());
 			}
 
 			WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(world);

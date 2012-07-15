@@ -85,6 +85,7 @@ public class VanillaPlugin extends CommonPlugin {
 	private Engine engine;
 	private VanillaConfiguration config;
 	private static VanillaPlugin instance;
+	private int port = 25565;
 
 	@Override
 	public void onDisable() {
@@ -105,6 +106,14 @@ public class VanillaPlugin extends CommonPlugin {
 		} catch (ConfigurationException e) {
 			getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
 		}
+
+		//Universal Plug and Play
+		if (engine.getPlatform() == Platform.SERVER || engine.getPlatform() == Platform.PROXY) {
+			if (VanillaConfiguration.UPNP.getBoolean()) {
+				((Server)engine).mapUPnPPort(port, VanillaConfiguration.MOTD.getString());
+			}
+		}
+
 		//Commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
 		engine.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);
@@ -137,7 +146,6 @@ public class VanillaPlugin extends CommonPlugin {
 		Spout.getFilesystem().registerLoader("recipe", new RecipeLoader());
 
 		if (engine.getPlatform() == Platform.SERVER || engine.getPlatform() == Platform.PROXY) {
-			int port = 25565;
 			String[] split = engine.getAddress().split(":");
 			if (split.length > 1) {
 				try {
@@ -245,7 +253,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 	/**
 	 * Gets the running instance of VanillaPlugin
-	 * @return
+	 * @return the running instance of VanillaPlugin
 	 */
 	public static VanillaPlugin getInstance() {
 		return instance;

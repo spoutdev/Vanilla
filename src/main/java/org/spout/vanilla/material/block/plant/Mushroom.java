@@ -43,6 +43,7 @@ import org.spout.api.math.IntVector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.Spreading;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -52,7 +53,7 @@ import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomOb
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
 import org.spout.vanilla.world.generator.object.LargePlantObject;
 
-public class Mushroom extends GroundAttachable implements Plant, RandomBlockMaterial {
+public class Mushroom extends GroundAttachable implements Spreading, Plant, RandomBlockMaterial {
 	private static final EffectRange MUSHROOM_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
 	private static final int MAX_PER_GROUP = 5;
 
@@ -91,37 +92,8 @@ public class Mushroom extends GroundAttachable implements Plant, RandomBlockMate
 	}
 
 	@Override
-	public int getGrowthStage(Block block) {
+	public int getMinimumLightToSpread() {
 		return 0;
-	}
-
-	@Override
-	public void setGrowthStage(Block block, int stage) {
-	}
-
-	@Override
-	public boolean addGrowthStage(Block block, int amount) {
-		return false;
-	}
-
-	@Override
-	public boolean isFullyGrown(Block block) {
-		return true;
-	}
-
-	@Override
-	public boolean hasGrowthStages() {
-		return false;
-	}
-
-	@Override
-	public int getNumGrowthStages() {
-		return 1;
-	}
-
-	@Override
-	public int getMinimumLightToGrow() {
-		return 8;
 	}
 
 	@Override

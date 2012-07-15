@@ -24,34 +24,17 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.material.block;
 
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
+/**
+ * A material that can spread itself to surrounding blocks.
+ */
+public interface Spreading {
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
-
-public class Flower extends GroundAttachable implements Plant {
-	public Flower(String name, int id) {
-		super(name, id);
-		this.setLiquidObstacle(false);
-		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
-	}
-
-	@Override
-	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		if (super.canAttachTo(material, face)) {
-			return material.equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND);
-		}
-		return false;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
-	}
+	/**
+	 * Gets the mimimum required light for this Growing material to spread
+	 * 
+	 * @return minimum light
+	 */
+	public int getMinimumLightToSpread();
 }

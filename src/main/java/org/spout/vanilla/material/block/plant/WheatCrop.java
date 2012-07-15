@@ -40,6 +40,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
+import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -47,19 +48,14 @@ import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class WheatCrop extends GroundAttachable implements Crop, RandomBlockMaterial {
+public class WheatCrop extends GroundAttachable implements Growing, Crop, RandomBlockMaterial {
 	public WheatCrop(String name, int id) {
 		super(name, id);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
 	}
 
 	@Override
-	public boolean hasGrowthStages() {
-		return true;
-	}
-
-	@Override
-	public int getNumGrowthStages() {
+	public int getGrowthStageCount() {
 		return 8;
 	}
 
@@ -76,21 +72,6 @@ public class WheatCrop extends GroundAttachable implements Crop, RandomBlockMate
 	@Override
 	public void setGrowthStage(Block block, int stage) {
 		block.setData(stage & 0x7);
-	}
-
-	@Override
-	public boolean addGrowthStage(Block block, int amount) {
-		int stage = this.getGrowthStage(block);
-		if (stage == this.getNumGrowthStages() - 1) {
-			return false;
-		} else {
-			stage += amount;
-			if (stage >= this.getNumGrowthStages()) {
-				stage = this.getNumGrowthStages() - 1;
-			}
-			this.setGrowthStage(block, stage);
-			return true;
-		}
 	}
 
 	@Override
@@ -145,7 +126,7 @@ public class WheatCrop extends GroundAttachable implements Crop, RandomBlockMate
 			Random rand = new Random(block.getWorld().getAge());
 			int chance = VanillaBlockUtil.getCropGrowthChance(block);
 			if (rand.nextInt(chance + 1) == 0) {
-				this.addGrowthStage(block, 1);
+				this.setGrowthStage(block, this.getGrowthStage(block));
 			}
 		}
 	}

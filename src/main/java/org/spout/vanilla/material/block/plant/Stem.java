@@ -40,6 +40,7 @@ import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
+import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -47,7 +48,8 @@ import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public abstract class Stem extends GroundAttachable implements Crop, RandomBlockMaterial {
+public abstract class Stem extends GroundAttachable implements Growing, Crop, RandomBlockMaterial {
+	private BlockMaterial lastMaterial;
 	public Stem(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false);
@@ -55,20 +57,15 @@ public abstract class Stem extends GroundAttachable implements Crop, RandomBlock
 	}
 
 	@Override
-	public boolean hasGrowthStages() {
-		return true;
-	}
-
-	@Override
-	public int getNumGrowthStages() {
+	public int getGrowthStageCount() {
 		return 8;
 	}
 
 	@Override
 	public int getMinimumLightToGrow() {
-		return 9;  //TODO Verify this.
+		return 9;
 	}
-
+	
 	@Override
 	public int getGrowthStage(Block block) {
 		return block.getDataField(0x7);
@@ -80,25 +77,28 @@ public abstract class Stem extends GroundAttachable implements Crop, RandomBlock
 	}
 
 	@Override
-	public boolean addGrowthStage(Block block, int amount) {
-		int stage = this.getGrowthStage(block);
-		if (stage == this.getNumGrowthStages() - 1) {
-			return false;
-		} else {
-			stage += amount;
-			if (stage >= this.getNumGrowthStages()) {
-				stage = this.getNumGrowthStages() - 1;
-			}
-			this.setGrowthStage(block, stage);
-			return true;
-		}
-	}
-
-	@Override
 	public boolean isFullyGrown(Block block) {
 		return block.getData() == 0x7;
 	}
 
+	/**
+	 * Sets the material placed after this Stem is fully grown
+	 * 
+	 * @param material of the last stage
+	 */
+	public void setLastStageMaterial(BlockMaterial material) {
+		this.lastMaterial = material;
+	}
+
+	/**
+	 * Gets the material placed after this Stem is fully grown
+	 * 
+	 * @return material of the last stage
+	 */
+	public BlockMaterial getLastStageMaterial() {
+		return this.lastMaterial;
+	}
+	
 	@Override
 	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
 		return face == BlockFace.TOP && material.equals(VanillaMaterials.FARMLAND);
@@ -126,7 +126,7 @@ public abstract class Stem extends GroundAttachable implements Crop, RandomBlock
 
 	@Override
 	public void onRandomTick(Block block) {
-		if (block.translate(BlockFace.TOP).getLight() < 9) {
+		if (block.translate(BlockFace.TOP).getLight() < this.getMinimumLightToGrow()) {
 			return;
 		}
 		int chance = VanillaBlockUtil.getCropGrowthChance(block) + 1;
@@ -134,13 +134,16 @@ public abstract class Stem extends GroundAttachable implements Crop, RandomBlock
 		if (rand.nextInt(chance) == 0) {
 			if (isFullyGrown(block)) {
 				for (BlockFace face : BlockFaces.NESW) {
-					if (block.translate(face).isMaterial(this)) {
+					if (block.translate(face).isMaterial(this.getLastStageMaterial())) {
 						return;
 					}
 				}
 				Block spread = block.translate(BlockFaces.NESW.get(rand.nextInt(4)));
-				if (spread.isMaterial(VanillaMaterials.AIR) && spread.translate(BlockFace.BOTTOM).isMaterial(VanillaMaterials.FARMLAND)) {
-					spread.setMaterial(this);
+				if (spread.isMaterial(VanillaMaterials.AIR)) {
+					BlockMaterial belowSpread = spread.translate(BlockFace.BOTTOM).getMaterial();
+					if (belowSpread.equals(VanillaMaterials.FARMLAND, VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
+						spread.setMaterial(this.getLastStageMaterial());
+					}
 				}
 			} else {
 				block.addData(1);

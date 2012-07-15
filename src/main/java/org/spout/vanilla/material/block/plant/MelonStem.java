@@ -26,9 +26,17 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-public class MelonStem extends Stem {
+import org.spout.vanilla.material.InitializableMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
+
+public class MelonStem extends Stem implements InitializableMaterial {
 	public MelonStem(String name, int id) {
 		super(name, id);
 		this.setHardness(0.3F);
+	}
+
+	@Override
+	public void initialize() {
+		this.setLastStageMaterial(VanillaMaterials.MELON_BLOCK);
 	}
 }

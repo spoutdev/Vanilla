@@ -46,10 +46,11 @@ import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.Spreading;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 
-public class Vines extends VanillaBlockMaterial implements Plant, Burnable, RandomBlockMaterial {
+public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, RandomBlockMaterial {
 	private static final EffectRange VINE_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
 	private static final int MAX_PER_GROUP = 5;
 
@@ -99,42 +100,13 @@ public class Vines extends VanillaBlockMaterial implements Plant, Burnable, Rand
 	}
 
 	@Override
-	public int getGrowthStage(Block block) {
-		return 0;
-	}
-
-	@Override
-	public void setGrowthStage(Block block, int stage) {
-	}
-
-	@Override
-	public boolean addGrowthStage(Block block, int amount) {
-		return false;
-	}
-
-	@Override
-	public boolean isFullyGrown(Block block) {
-		return true;
-	}
-
-	@Override
-	public boolean hasGrowthStages() {
-		return false;
-	}
-
-	@Override
-	public int getNumGrowthStages() {
-		return 1;
-	}
-
-	@Override
-	public int getMinimumLightToGrow() {
-		return 0;
-	}
-
-	@Override
 	public boolean hasPhysics() {
 		return true;
+	}
+
+	@Override
+	public int getMinimumLightToSpread() {
+		return 0;
 	}
 
 	@Override
@@ -308,6 +280,10 @@ public class Vines extends VanillaBlockMaterial implements Plant, Burnable, Rand
 	public void onRandomTick(Block block) {
 		Random rand = new Random(block.getWorld().getAge());
 		if (rand.nextInt(4) != 0) {
+			return;
+		}
+		int minLight = getMinimumLightToSpread();
+		if (minLight > 0 && block.getLight() < minLight) {
 			return;
 		}
 

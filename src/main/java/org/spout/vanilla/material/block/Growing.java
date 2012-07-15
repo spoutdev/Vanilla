@@ -24,34 +24,51 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.material.block;
 
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
+import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
+/**
+ * A material that can grow over time. Growing could happen using multiple blocks. If that is the case, <br>
+ * it does not matter what block you use when changing growth stages.
+ */
+public interface Growing {
 
-public class Flower extends GroundAttachable implements Plant {
-	public Flower(String name, int id) {
-		super(name, id);
-		this.setLiquidObstacle(false);
-		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
-	}
+	/**
+	 * Gets the mimimum required light for this Growing material to grow
+	 * 
+	 * @return minimum light
+	 */
+	public int getMinimumLightToGrow();
 
-	@Override
-	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		if (super.canAttachTo(material, face)) {
-			return material.equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND);
-		}
-		return false;
-	}
+	/**
+	 * Gets the amount of growth stages this Growing material has
+	 * 
+	 * @return amount of growth stages
+	 */
+	public int getGrowthStageCount();
 
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
-	}
+	/**
+	 * Gets the current growth stage of this Growing material
+	 * 
+	 * @param block of the Plant
+	 * @return growth stage
+	 */
+	public int getGrowthStage(Block block);
+
+	/**
+	 * Sets the growth stage of this Growing material
+	 * 
+	 * @param block of the plant
+	 * @param stage to set to
+	 */
+	public void setGrowthStage(Block block, int stage);
+
+	/**
+	 * Gets if this Growing material is fully grown
+	 * 
+	 * @param block of the Plant
+	 * @return True if fully grown, False if not
+	 */
+	public boolean isFullyGrown(Block block);
 }

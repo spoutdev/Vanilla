@@ -32,15 +32,17 @@ import java.util.Random;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 
-public class NetherWartBlock extends GroundAttachable implements Plant {
+public class NetherWartBlock extends GroundAttachable implements Plant, Growing, RandomBlockMaterial {
 	public NetherWartBlock(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false);
@@ -48,12 +50,7 @@ public class NetherWartBlock extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public boolean hasGrowthStages() {
-		return true;
-	}
-
-	@Override
-	public int getNumGrowthStages() {
+	public int getGrowthStageCount() {
 		return 3;
 	}
 
@@ -70,21 +67,6 @@ public class NetherWartBlock extends GroundAttachable implements Plant {
 	@Override
 	public void setGrowthStage(Block block, int stage) {
 		block.setData(stage & 0x3);
-	}
-
-	@Override
-	public boolean addGrowthStage(Block block, int amount) {
-		int stage = this.getGrowthStage(block);
-		if (stage == this.getNumGrowthStages() - 1) {
-			return false;
-		} else {
-			stage += amount;
-			if (stage >= this.getNumGrowthStages()) {
-				stage = this.getNumGrowthStages() - 1;
-			}
-			this.setGrowthStage(block, stage);
-			return true;
-		}
 	}
 
 	@Override
@@ -107,5 +89,10 @@ public class NetherWartBlock extends GroundAttachable implements Plant {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Sword ? (short) 2 : (short) 1;
+	}
+
+	@Override
+	public void onRandomTick(Block block) {
+		
 	}
 }

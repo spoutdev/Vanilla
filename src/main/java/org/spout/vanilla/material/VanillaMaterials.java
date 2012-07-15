@@ -324,7 +324,7 @@ public final class VanillaMaterials {
 	public static final SugarCaneBlock SUGAR_CANE_BLOCK = new SugarCaneBlock("Sugar Cane", 83);
 	public static final Jukebox JUKEBOX = new Jukebox("Jukebox", 84);
 	public static final WoodenFence WOODEN_FENCE = new WoodenFence("Wooden Fence", 85);
-	public static final Pumpkin PUMPKIN = new Pumpkin("Pumpkin", 86, false);
+	public static final Pumpkin PUMPKIN_BLOCK = new Pumpkin("Pumpkin", 86, false);
 	public static final NetherRack NETHERRACK = new NetherRack("Netherrack", 87);
 	public static final SoulSand SOUL_SAND = new SoulSand("Soul Sand", 88);
 	public static final Glowstone GLOWSTONE_BLOCK = new Glowstone("Glowstone Block", 89);

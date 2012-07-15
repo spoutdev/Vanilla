@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.plant;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
@@ -37,9 +38,9 @@ import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.item.tool.Tool;
 
-public class SugarCaneBlock extends GroundAttachable implements InitializableMaterial {
+public class SugarCaneBlock extends StackGrowingBase implements InitializableMaterial {
 	private final Set<Material> allowedBases = new HashSet<Material>(4);
 
 	public SugarCaneBlock(String name, int id) {
@@ -52,6 +53,11 @@ public class SugarCaneBlock extends GroundAttachable implements InitializableMat
 	@Override
 	public void initialize() {
 		this.setDropMaterial(VanillaMaterials.SUGAR_CANE);
+	}
+
+	@Override
+	public long getGrowTime(Block block) {
+		return (150 * 1000) + new Random(block.getWorld().getAge()).nextInt(21000) - 10000;
 	}
 
 	@Override
@@ -84,5 +90,10 @@ public class SugarCaneBlock extends GroundAttachable implements InitializableMat
 		for (Material mat : materials) {
 			allowedBases.add(mat);
 		}
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return 1;
 	}
 }

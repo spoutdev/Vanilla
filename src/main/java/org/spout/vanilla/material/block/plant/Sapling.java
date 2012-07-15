@@ -42,6 +42,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
+import org.spout.vanilla.material.block.Spreading;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.solid.Log;
 import org.spout.vanilla.material.item.misc.Dye;
@@ -50,7 +51,7 @@ import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
-public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMaterial {
+public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel, DynamicMaterial {
 	public static final Sapling DEFAULT = new Sapling("Sapling");
 	public static final Sapling SPRUCE = new Sapling("Spruce Sapling", 1, DEFAULT);
 	public static final Sapling BIRCH = new Sapling("Birch Sapling", 2, DEFAULT);
@@ -71,42 +72,14 @@ public class Sapling extends GroundAttachable implements Plant, Fuel, DynamicMat
 	}
 
 	@Override
-	public int getGrowthStage(Block block) {
-		return 0;
-	}
-
-	@Override
-	public void setGrowthStage(Block block, int stage) {
-	}
-
-	@Override
-	public boolean addGrowthStage(Block block, int amount) {
-		return false;
-	}
-
-	@Override
-	public boolean isFullyGrown(Block block) {
-		return true;
-	}
-
-	@Override
-	public boolean hasGrowthStages() {
-		return false;
-	}
-
-	@Override
-	public int getNumGrowthStages() {
-		return 0;
-	}
-
-	@Override
-	public int getMinimumLightToGrow() {
-		return 8;
-	}
-
-	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
+	}
+
+	@Override
+	public int getMinimumLightToSpread() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override

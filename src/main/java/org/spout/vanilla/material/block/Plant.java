@@ -26,64 +26,7 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.geo.cuboid.Block;
 import org.spout.vanilla.material.Mineable;
 
-/**
- * A plant which can grow
- */
 public interface Plant extends Mineable {
-	/**
-	 * Gets the mimimum required light for this Plant to grow
-	 * 
-	 * @return minimum light
-	 */
-	public int getMinimumLightToGrow();
-
-	/**
-	 * Gets the current growth stage of a Plant
-	 * 
-	 * @param block of the Plant
-	 * @return growth stage
-	 */
-	public int getGrowthStage(Block block);
-
-	/**
-	 * Sets the growth stage of a Plant
-	 * 
-	 * @param block of the plant
-	 * @param stage to set to
-	 */
-	public void setGrowthStage(Block block, int stage);
-
-	/**
-	 * Adds a value to the growth stage of this Plant
-	 * 
-	 * @param block of the plant
-	 * @param amount to add
-	 * @return True if the stages were added, False if this Plant was already fully grown
-	 */
-	public boolean addGrowthStage(Block block, int amount);
-
-	/**
-	 * Gets if the Plant is fully grown
-	 * 
-	 * @param block of the Plant
-	 * @return True if fully grown, False if not
-	 */
-	public boolean isFullyGrown(Block block);
-
-	/**
-	 * Gets whether this type of Plant has growth stages
-	 * 
-	 * @return True if it has Growth stages, False if not
-	 */
-	public boolean hasGrowthStages();
-
-	/**
-	 * Gets the amount of growth stages this Plant has
-	 * 
-	 * @return amount of growth stages
-	 */
-	public int getNumGrowthStages();
 }

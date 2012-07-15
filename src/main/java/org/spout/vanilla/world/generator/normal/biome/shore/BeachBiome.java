@@ -29,13 +29,13 @@ package org.spout.vanilla.world.generator.normal.biome.shore;
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.SnowAndIceDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.SnowDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 
 public class BeachBiome extends SandyBiome {
 	public BeachBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new MushroomDecorator(), new SugarCaneDecorator(),
-				new SnowAndIceDecorator());
+				new SnowDecorator());
 		setMinMax((byte) 62, (byte) 64);
 	}
 

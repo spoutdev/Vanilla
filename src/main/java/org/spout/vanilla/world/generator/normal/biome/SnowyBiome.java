@@ -88,9 +88,6 @@ public abstract class SnowyBiome extends NormalBiome {
 					if (groundCoverDepth == 0) {
 						if (y >= NormalGenerator.SEA_LEVEL) {
 							blockData.set(x, y, z, VanillaMaterials.GRASS.getId());
-							if (y + 1 <= startY) {
-								blockData.set(x, y + 1, z, VanillaMaterials.SNOW.getId());
-							}
 						} else {
 							blockData.set(x, y, z, VanillaMaterials.DIRT.getId());
 						}
@@ -102,13 +99,6 @@ public abstract class SnowyBiome extends NormalBiome {
 						hasSurface = false;
 					}
 				}
-			}
-		}
-		// check for snow at the top of the column
-		if (blockData.get(x, endY, z) == VanillaMaterials.AIR.getId()) {
-			if (getSample(blockData.getWorld(), x, endY - 1, endY, z).get(x, endY - 1, z)
-					!= VanillaMaterials.AIR.getId()) {
-				blockData.set(x, endY, z, VanillaMaterials.SNOW.getId());
 			}
 		}
 		// place bedrock

@@ -31,12 +31,12 @@ import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.HugeMushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.SnowAndIceDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.SnowDecorator;
 
 public class MushroomBiome extends GrassyBiome {
 	public MushroomBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new HugeMushroomDecorator(),
-				new MushroomDecorator((byte) 1, (byte) 1), new SnowAndIceDecorator());
+				new MushroomDecorator((byte) 1, (byte) 1), new SnowDecorator());
 		setMinMax((byte) 67, (byte) 73);
 		this.topCover = VanillaMaterials.MYCELIUM;
 	}

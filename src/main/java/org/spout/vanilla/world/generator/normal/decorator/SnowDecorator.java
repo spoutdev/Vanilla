@@ -39,7 +39,7 @@ import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
-public class SnowAndIceDecorator extends Decorator {
+public class SnowDecorator extends Decorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
@@ -58,11 +58,7 @@ public class SnowAndIceDecorator extends Decorator {
 						if (under.isMaterial(VanillaMaterials.SNOW, VanillaMaterials.ICE)) {
 							continue;
 						}
-						if (under.isMaterial(VanillaMaterials.WATER, VanillaMaterials.STATIONARY_WATER)) {
-							under.setMaterial(VanillaMaterials.ICE);
-						} else {
-							block.setMaterial(VanillaMaterials.SNOW);
-						}
+						block.setMaterial(VanillaMaterials.SNOW);
 					}
 				}
 			}

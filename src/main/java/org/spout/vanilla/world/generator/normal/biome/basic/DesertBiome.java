@@ -31,7 +31,7 @@ import org.spout.vanilla.world.generator.normal.decorator.CactusDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.DeadBushDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.SnowAndIceDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.SnowDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.WellDecorator;
 
@@ -40,7 +40,7 @@ public class DesertBiome extends SandyBiome {
 		super(biomeId, new SandAndClayDecorator(), new CactusDecorator(),
 				new DeadBushDecorator((byte) 8, (byte) 2), new MushroomDecorator(),
 				new SugarCaneDecorator((byte) 6, (byte) 30, (byte) 3), new WellDecorator(),
-				new SnowAndIceDecorator());
+				new SnowDecorator());
 		setMinMax((byte) 66, (byte) 69);
 	}
 

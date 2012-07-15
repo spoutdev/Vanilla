@@ -37,7 +37,7 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
-import org.spout.vanilla.world.generator.normal.biome.IcyBiome;
+import org.spout.vanilla.world.generator.normal.biome.SnowyBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 
@@ -86,7 +86,7 @@ public class SmoothPopulator extends Populator {
 								smoothBiomeMap[xx + zz * CHUNK_SIZE] = smoothBiome;
 							} else if (current instanceof SandyBiome) {
 								smoothBiomeMap[xx + zz * CHUNK_SIZE] = new SandySmoothBiome();
-							} else if (current instanceof IcyBiome) {
+							} else if (current instanceof SnowyBiome) {
 								smoothBiomeMap[xx + zz * CHUNK_SIZE] = new IcySmoothBiome();
 							} else {
 								smoothBiomeMap[xx + zz * CHUNK_SIZE] = current;
@@ -189,7 +189,7 @@ public class SmoothPopulator extends Populator {
 		}
 	}
 
-	private static class IcySmoothBiome extends IcyBiome {
+	private static class IcySmoothBiome extends SnowyBiome {
 		public IcySmoothBiome() {
 			super(1003);
 		}

@@ -33,8 +33,8 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
-public abstract class IcyBiome extends NormalBiome {
-	public IcyBiome(int biomeId, Decorator... decorators) {
+public abstract class SnowyBiome extends NormalBiome {
+	public SnowyBiome(int biomeId, Decorator... decorators) {
 		super(biomeId, decorators);
 	}
 

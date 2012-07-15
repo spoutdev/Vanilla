@@ -150,7 +150,7 @@ public class SmallTreeObject extends TreeObject {
 
 	private void growVines(World world, int x, int y, int z, short facing) {
 		for (byte yy = 0; yy < 5; yy++) {
-			Block block = world.getBlock(x, y - yy, z);
+			Block block = world.getBlock(x, y - yy, z, world);
 			if (!block.isMaterial(VanillaMaterials.AIR)) {
 				return;
 			}

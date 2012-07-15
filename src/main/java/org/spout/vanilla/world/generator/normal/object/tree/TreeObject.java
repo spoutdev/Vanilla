@@ -101,7 +101,7 @@ public abstract class TreeObject extends LargePlantObject {
 					if (world.getBlockMaterial(x + xx, y, z + zz) == Sapling.JUNGLE) {
 						saplingCount++;
 						if (saplingCount == 1) {
-							firstSapling = world.getBlock(x + xx, y, z + zz);
+							firstSapling = world.getBlock(x + xx, y, z + zz, world);
 						}
 					}
 				}

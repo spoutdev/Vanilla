@@ -53,7 +53,7 @@ public class FallingLiquidPopulator extends Populator {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(height) + 8;
 			final int z = chunk.getBlockZ(random);
-			final Block block = world.getBlock(x, y, z);
+			final Block block = world.getBlock(x, y, z, world);
 			if (isValidSourcePoint(block)) {
 				block.setMaterial(VanillaMaterials.WATER);
 			}
@@ -62,7 +62,7 @@ public class FallingLiquidPopulator extends Populator {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(height) + 8;
 			final int z = chunk.getBlockZ(random);
-			final Block block = world.getBlock(x, y, z);
+			final Block block = world.getBlock(x, y, z, world);
 			if (isValidSourcePoint(block)) {
 				block.setMaterial(VanillaMaterials.LAVA);
 			}

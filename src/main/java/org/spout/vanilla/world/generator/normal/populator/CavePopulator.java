@@ -229,7 +229,7 @@ public class CavePopulator extends Populator {
 					for (int y = end.getBlockY() - 1; y >= start.getBlockY(); y--) {
 						final float yOffset = (y + 0.5f - target.getBlockY()) / verticalSize;
 						if (yOffset > -0.7 && xOffset * xOffset + yOffset * yOffset + zOffset * zOffset < 1) {
-							final Block block = world.getBlock(chunk.getBlockX(x), y, chunk.getBlockZ(z));
+							final Block block = world.getBlock(chunk.getBlockX(x), y, chunk.getBlockZ(z), world);
 							if (block.isMaterial(VanillaMaterials.STONE, VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
 								if (y < 10) {
 									block.setMaterial(VanillaMaterials.STATIONARY_LAVA);

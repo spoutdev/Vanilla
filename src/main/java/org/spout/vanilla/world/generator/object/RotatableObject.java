@@ -48,7 +48,7 @@ public abstract class RotatableObject extends RandomObject {
 	}
 
 	protected Block getBlock(World world, int x, int y, int z) {
-		return world.getBlock(applyRotation(x, y, z));
+		return world.getBlock(applyRotation(x, y, z), world);
 	}
 
 	protected BlockMaterial getBlockMaterial(World world, int x, int y, int z) {

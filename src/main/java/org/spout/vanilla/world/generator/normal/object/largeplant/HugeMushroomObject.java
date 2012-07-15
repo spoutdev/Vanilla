@@ -121,13 +121,13 @@ public class HugeMushroomObject extends LargePlantObject {
 					} else {
 						data = 0;
 					}
-					world.getBlock(xx, yy, zz).setMaterial(capMaterial, data);
+					world.setBlockMaterial(xx, yy, zz, capMaterial, data, world);
 				}
 			}
 		}
 		final short data = useTextureMetadata ? (short) 10 : (short) 0;
 		for (int yy = y; yy < capYStart; yy++) { // generate stem
-			world.getBlock(x, yy, z).setMaterial(stemMaterial, data);
+			world.setBlockMaterial(x, yy, z, stemMaterial, data, world);
 		}
 	}
 
@@ -153,7 +153,7 @@ public class HugeMushroomObject extends LargePlantObject {
 					} else {
 						data = 0;
 					}
-					world.getBlock(xx, yy, zz).setMaterial(capMaterial, data);
+					world.setBlockMaterial(xx, yy, zz, capMaterial, data, world);
 				}
 			}
 		}

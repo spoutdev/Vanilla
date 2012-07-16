@@ -80,7 +80,7 @@ import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 public class VanillaPlugin extends CommonPlugin {
-	private static final int loaderThreadCount = 1;
+	private static final int loaderThreadCount = 16;
 	public static final int MINECRAFT_PROTOCOL_ID = 29;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
 	private Engine engine;

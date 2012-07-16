@@ -39,6 +39,7 @@ public class FurnaceWindow extends TransactionWindow {
 	private static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("30-38, 21-29, 12-20, 3-11, 1, 2, 0");
 	protected final FurnaceInventory furnaceInv;
+	private int lastProgress = -1, lastBurnTime = -1;
 
 	public FurnaceWindow(VanillaPlayer owner, Furnace furnace) {
 		super(2, "Furnace", owner, furnace);
@@ -61,7 +62,10 @@ public class FurnaceWindow extends TransactionWindow {
 	 * @param burnTime
 	 */
 	public void updateBurnTime(int burnTime) {
-		this.sendMessage(new WindowPropertyMessage(this, FIRE_ICON, burnTime));
+		if (this.lastBurnTime != burnTime) {
+			this.lastBurnTime = burnTime;
+			this.sendMessage(new WindowPropertyMessage(this, FIRE_ICON, burnTime));
+		}
 	}
 
 	/**
@@ -70,6 +74,9 @@ public class FurnaceWindow extends TransactionWindow {
 	 * @param progress
 	 */
 	public void updateProgress(int progress) {
-		this.sendMessage(new WindowPropertyMessage(this, PROGRESS_ARROW, progress));
+		if (this.lastProgress != progress) {
+			this.lastProgress = progress;
+			this.sendMessage(new WindowPropertyMessage(this, PROGRESS_ARROW, progress));
+		}
 	}
 }

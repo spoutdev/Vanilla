@@ -33,6 +33,8 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
+import org.spout.vanilla.data.Data;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.ItemUtil;
 
 /**
@@ -40,11 +42,35 @@ import org.spout.vanilla.util.ItemUtil;
  * This is not a Block Controller, because unlike Block Controllers, it can move freely
  */
 public class MovingBlock extends Substance {
-	private final BlockMaterial material;
+	private BlockMaterial material;
+
+	/**
+	 * Creates a moving block controller. Intended for deserialization only.
+	 */
+	protected MovingBlock() {
+		this(VanillaMaterials.SAND);
+	}
 
 	public MovingBlock(BlockMaterial block) {
 		super(VanillaControllerTypes.FALLING_BLOCK);
 		material = block;
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		if (data().containsKey(Data.HELD_ITEM)) {
+			ItemStack item = data().get(Data.HELD_ITEM);
+			if (item.getMaterial() instanceof BlockMaterial) {
+				this.material = (BlockMaterial) item.getMaterial();
+			}
+		}
+	}
+
+	@Override
+	public void onSave() {
+		super.onSave();
+		data().put(Data.HELD_ITEM, new ItemStack(this.material, 1));
 	}
 
 	/**
@@ -54,10 +80,6 @@ public class MovingBlock extends Substance {
 	 */
 	public BlockMaterial getMaterial() {
 		return this.material;
-	}
-
-	@Override
-	public void onAttached() {
 	}
 
 	@Override

@@ -32,8 +32,8 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.TransactionMessage;
-import org.spout.vanilla.protocol.msg.WindowClickMessage;
+import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
+import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 import org.spout.vanilla.window.Window;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
@@ -56,6 +56,6 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 				result = window.onClickGlobal(slot, message.isRightClick(), message.isShift());
 			}
 		}
-		session.send(false, new TransactionMessage(message.getWindowId(), message.getTransaction(), result));
+		session.send(false, new WindowTransactionMessage(message.getWindowInstanceId(), message.getTransaction(), result));
 	}
 }

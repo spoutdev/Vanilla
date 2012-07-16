@@ -35,7 +35,7 @@ import org.spout.vanilla.protocol.codec.BlockActionCodec;
 import org.spout.vanilla.protocol.codec.BlockChangeCodec;
 import org.spout.vanilla.protocol.codec.ChangeGameStateCodec;
 import org.spout.vanilla.protocol.codec.ChatCodec;
-import org.spout.vanilla.protocol.codec.CloseWindowCodec;
+import org.spout.vanilla.protocol.codec.WindowCloseCodec;
 import org.spout.vanilla.protocol.codec.CollectItemCodec;
 import org.spout.vanilla.protocol.codec.CompressedChunkCodec;
 import org.spout.vanilla.protocol.codec.CreateEntityCodec;
@@ -65,7 +65,7 @@ import org.spout.vanilla.protocol.codec.KickCodec;
 import org.spout.vanilla.protocol.codec.LoadChunkCodec;
 import org.spout.vanilla.protocol.codec.LoginRequestCodec;
 import org.spout.vanilla.protocol.codec.MultiBlockChangeCodec;
-import org.spout.vanilla.protocol.codec.OpenWindowCodec;
+import org.spout.vanilla.protocol.codec.WindowOpenCodec;
 import org.spout.vanilla.protocol.codec.PlayEffectCodec;
 import org.spout.vanilla.protocol.codec.PlayerAbilityCodec;
 import org.spout.vanilla.protocol.codec.PlayerBlockPlacementCodec;
@@ -74,14 +74,14 @@ import org.spout.vanilla.protocol.codec.PlayerListCodec;
 import org.spout.vanilla.protocol.codec.PlayerLookCodec;
 import org.spout.vanilla.protocol.codec.PlayerPositionCodec;
 import org.spout.vanilla.protocol.codec.PlayerPositionLookCodec;
-import org.spout.vanilla.protocol.codec.ProgressBarCodec;
+import org.spout.vanilla.protocol.codec.WindowPropertyCodec;
 import org.spout.vanilla.protocol.codec.RelativeEntityPositionCodec;
 import org.spout.vanilla.protocol.codec.RelativeEntityPositionRotationCodec;
 import org.spout.vanilla.protocol.codec.RespawnCodec;
 import org.spout.vanilla.protocol.codec.ServerListPingCodec;
 import org.spout.vanilla.protocol.codec.SetExperienceCodec;
-import org.spout.vanilla.protocol.codec.SetWindowSlotCodec;
-import org.spout.vanilla.protocol.codec.SetWindowSlotsCodec;
+import org.spout.vanilla.protocol.codec.WindowSetSlotCodec;
+import org.spout.vanilla.protocol.codec.WindowSetSlotsCodec;
 import org.spout.vanilla.protocol.codec.SpawnDroppedItemCodec;
 import org.spout.vanilla.protocol.codec.SpawnExperienceOrbCodec;
 import org.spout.vanilla.protocol.codec.SpawnLightningStrikeCodec;
@@ -93,7 +93,7 @@ import org.spout.vanilla.protocol.codec.SpawnVehicleCodec;
 import org.spout.vanilla.protocol.codec.StatisticCodec;
 import org.spout.vanilla.protocol.codec.TileEntityDataCodec;
 import org.spout.vanilla.protocol.codec.TimeUpdateCodec;
-import org.spout.vanilla.protocol.codec.TransactionCodec;
+import org.spout.vanilla.protocol.codec.WindowTransactionCodec;
 import org.spout.vanilla.protocol.codec.UpdateHealthCodec;
 import org.spout.vanilla.protocol.codec.UpdateSignCodec;
 import org.spout.vanilla.protocol.codec.UseBedCodec;
@@ -203,19 +203,19 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x47 */
 			bind(SpawnLightningStrikeCodec.class); //Minecraft protocol page -> Thunderbolt :/
 			/* 0x64 */
-			bind(OpenWindowCodec.class);
+			bind(WindowOpenCodec.class);
 			/* 0x65 */
-			bind(CloseWindowCodec.class);
+			bind(WindowCloseCodec.class);
 			/* 0x66 */
 			bind(WindowClickCodec.class);
 			/* 0x67 */
-			bind(SetWindowSlotCodec.class);
+			bind(WindowSetSlotCodec.class);
 			/* 0x68 */
-			bind(SetWindowSlotsCodec.class);
+			bind(WindowSetSlotsCodec.class);
 			/* 0x69 */
-			bind(ProgressBarCodec.class); //Update Window Property on the protocol page!
+			bind(WindowPropertyCodec.class); //Update Window Property on the protocol page!
 			/* 0x6A */
-			bind(TransactionCodec.class);
+			bind(WindowTransactionCodec.class);
 			/* 0x6B */
 			bind(CreativeCodec.class);
 			/* 0x6C */

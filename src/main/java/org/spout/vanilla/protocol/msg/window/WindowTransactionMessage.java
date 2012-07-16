@@ -24,65 +24,42 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.protocol.msg.window;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.WindowMessage;
+import org.spout.vanilla.window.Window;
 
-import org.spout.nbt.CompoundMap;
+public final class WindowTransactionMessage extends WindowMessage {
+	private final int transaction;
+	private final boolean accepted;
 
-public final class SetWindowSlotMessage extends Message {
-	private final int id, slot, item, count, damage;
-	private final CompoundMap nbtData;
-
-	public SetWindowSlotMessage(int id, int slot) {
-		this(id, slot, -1, 0, 0, null);
+	public WindowTransactionMessage(Window window, int transaction, boolean accepted) {
+		this(window.getInstanceId(), transaction, accepted);
 	}
 
-	public SetWindowSlotMessage(int id, int slot, int item, int count, int damage, CompoundMap nbtData) {
-		this.id = id;
-		this.slot = slot;
-		this.item = item;
-		this.count = count;
-		this.damage = damage;
-		this.nbtData = nbtData;
+	public WindowTransactionMessage(int windowInstanceId, int transaction, boolean accepted) {
+		super(windowInstanceId);
+		this.transaction = transaction;
+		this.accepted = accepted;
 	}
 
-	public int getId() {
-		return id;
+	public int getTransaction() {
+		return transaction;
 	}
 
-	public int getSlot() {
-		return slot;
-	}
-
-	public int getItem() {
-		return item;
-	}
-
-	public int getCount() {
-		return count;
-	}
-
-	public int getDamage() {
-		return damage;
-	}
-
-	public CompoundMap getNbtData() {
-		return nbtData;
+	public boolean isAccepted() {
+		return accepted;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("id", id)
-				.append("slot", slot)
-				.append("item", item)
-				.append("count", count)
-				.append("damage", damage)
-				.append("nbtData", nbtData)
+				.append("id", this.getWindowInstanceId())
+				.append("transaction", transaction)
+				.append("accepted", accepted)
 				.toString();
 	}
 
@@ -94,14 +71,11 @@ public final class SetWindowSlotMessage extends Message {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final SetWindowSlotMessage other = (SetWindowSlotMessage) obj;
+		final WindowTransactionMessage other = (WindowTransactionMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.id, other.id)
-				.append(this.slot, other.slot)
-				.append(this.item, other.item)
-				.append(this.count, other.count)
-				.append(this.damage, other.damage)
-				.append(this.nbtData, other.nbtData)
+				.append(this.getWindowInstanceId(), other.getWindowInstanceId())
+				.append(this.transaction, other.transaction)
+				.append(this.accepted, other.accepted)
 				.isEquals();
 	}
 }

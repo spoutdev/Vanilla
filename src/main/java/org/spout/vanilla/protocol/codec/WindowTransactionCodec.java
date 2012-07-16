@@ -24,40 +24,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.protocol.codec;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import java.io.IOException;
 
-import org.spout.api.protocol.Message;
-import org.spout.api.util.SpoutToStringStyle;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 
-public final class CloseWindowMessage extends Message {
-	private final int id;
+import org.spout.api.protocol.MessageCodec;
 
-	public CloseWindowMessage(int id) {
-		this.id = id;
-	}
+import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 
-	public int getId() {
-		return id;
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("id", id)
-				.toString();
+public final class WindowTransactionCodec extends MessageCodec<WindowTransactionMessage> {
+	public WindowTransactionCodec() {
+		super(WindowTransactionMessage.class, 0x6A);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final CloseWindowMessage other = (CloseWindowMessage) obj;
-		return this.id == other.id;
+	public WindowTransactionMessage decode(ChannelBuffer buffer) throws IOException {
+		int id = buffer.readUnsignedByte();
+		int transaction = buffer.readUnsignedShort();
+		boolean accepted = buffer.readUnsignedByte() != 0;
+		return new WindowTransactionMessage(id, transaction, accepted);
+	}
+
+	@Override
+	public ChannelBuffer encode(WindowTransactionMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.buffer(4);
+		buffer.writeByte(message.getWindowInstanceId());
+		buffer.writeShort(message.getTransaction());
+		buffer.writeByte(message.isAccepted() ? 1 : 0);
+		return buffer;
 	}
 }

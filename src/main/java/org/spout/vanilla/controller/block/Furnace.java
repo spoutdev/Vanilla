@@ -35,16 +35,14 @@ import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.block.FurnaceWindow;
-
-import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacket;
 
 public class Furnace extends VanillaWindowBlockController implements TransactionWindowOwner {
 	private final FurnaceInventory inventory;
 	private float burnTime = 0, burnIncrement = 0, burnStartTime = 0;
 	private float progress = 0, progressIncrement = 0, craftTime = 0;
+	private boolean isBurningState = false;
 
 	public Furnace() {
 		super(VanillaControllerTypes.FURNACE, VanillaMaterials.FURNACE);
@@ -53,6 +51,7 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 
 	@Override
 	public void onAttached() {
+		this.isBurningState = getBlock().getMaterial() == VanillaMaterials.FURNACE_BURNING;
 	}
 
 	@Override
@@ -122,9 +121,15 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 
 			// Update viewers
 			for (VanillaPlayer player : this.getViewers()) {
-				int window = player.getActiveWindow().getInstanceId();
-				sendPacket(player.getPlayer(), new ProgressBarMessage(window, org.spout.vanilla.material.block.controlled.Furnace.FIRE_ICON, (int) burnIncrement), new ProgressBarMessage(window, org.spout.vanilla.material.block.controlled.Furnace.PROGRESS_ARROW, (int) progressIncrement));
+				FurnaceWindow window = (FurnaceWindow) player.getActiveWindow();
+				window.updateBurnTime((int) burnIncrement);
+				window.updateProgress((int) progressIncrement);
 			}
+		}
+		// Update burning state
+		if (this.isBurning() != this.isBurningState) {
+			this.isBurningState = this.isBurning();
+			VanillaMaterials.FURNACE.setBurning(this.getBlock(), this.isBurningState);
 		}
 	}
 

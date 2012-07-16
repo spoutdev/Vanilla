@@ -73,9 +73,9 @@ import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
-import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
-import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
@@ -472,9 +472,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		Message message;
 		if (item == null) {
-			message = new SetWindowSlotMessage(window.getInstanceId(), slot);
+			message = new WindowSetSlotMessage(window.getInstanceId(), slot);
 		} else {
-			message = new SetWindowSlotMessage(window.getInstanceId(), slot, getMinecraftId(item.getMaterial()), item.getAmount(), item.getData(), item.getNBTData());
+			message = new WindowSetSlotMessage(window.getInstanceId(), slot, getMinecraftId(item.getMaterial()), item.getAmount(), item.getData(), item.getNBTData());
 		}
 		queuedInventoryUpdates.put(slot, message);
 	}
@@ -492,7 +492,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return;
 		}
 
-		session.send(false, new SetWindowSlotsMessage((byte) window.getInstanceId(), window.getSlotIndexMap().getMinecraftItems(slots)));
+		session.send(false, new WindowSetSlotsMessage((byte) window.getInstanceId(), window.getSlotIndexMap().getMinecraftItems(slots)));
 		queuedInventoryUpdates.clear();
 	}
 }

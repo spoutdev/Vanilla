@@ -33,27 +33,23 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.msg.ProgressBarMessage;
+import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 
-public final class ProgressBarCodec extends MessageCodec<ProgressBarMessage> {
-	public ProgressBarCodec() {
-		super(ProgressBarMessage.class, 0x69);
+public final class WindowCloseCodec extends MessageCodec<WindowCloseMessage> {
+	public WindowCloseCodec() {
+		super(WindowCloseMessage.class, 0x65);
 	}
 
 	@Override
-	public ProgressBarMessage decode(ChannelBuffer buffer) throws IOException {
+	public WindowCloseMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readUnsignedByte();
-		int progressBar = buffer.readUnsignedShort();
-		int value = buffer.readUnsignedShort();
-		return new ProgressBarMessage(id, progressBar, value);
+		return new WindowCloseMessage(id);
 	}
 
 	@Override
-	public ChannelBuffer encode(ProgressBarMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(5);
-		buffer.writeByte(message.getId());
-		buffer.writeShort(message.getProgressBar());
-		buffer.writeShort(message.getValue());
+	public ChannelBuffer encode(WindowCloseMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.buffer(1);
+		buffer.writeByte(message.getWindowInstanceId());
 		return buffer;
 	}
 }

@@ -36,20 +36,20 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.nbt.CompoundMap;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
 
-public final class SetWindowSlotCodec extends MessageCodec<SetWindowSlotMessage> {
-	public SetWindowSlotCodec() {
-		super(SetWindowSlotMessage.class, 0x67);
+public final class WindowSetSlotCodec extends MessageCodec<WindowSetSlotMessage> {
+	public WindowSetSlotCodec() {
+		super(WindowSetSlotMessage.class, 0x67);
 	}
 
 	@Override
-	public SetWindowSlotMessage decode(ChannelBuffer buffer) throws IOException {
+	public WindowSetSlotMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readUnsignedByte();
 		int slot = buffer.readUnsignedShort();
 		int item = buffer.readUnsignedShort();
 		if (item == 0xFFFF) {
-			return new SetWindowSlotMessage(id, slot);
+			return new WindowSetSlotMessage(id, slot);
 		}
 
 		int count = buffer.readUnsignedByte();
@@ -58,13 +58,13 @@ public final class SetWindowSlotCodec extends MessageCodec<SetWindowSlotMessage>
 		if (ChannelBufferUtils.hasNbtData(item)) {
 			nbtData = ChannelBufferUtils.readCompound(buffer);
 		}
-		return new SetWindowSlotMessage(id, slot, item, count, damage, nbtData);
+		return new WindowSetSlotMessage(id, slot, item, count, damage, nbtData);
 	}
 
 	@Override
-	public ChannelBuffer encode(SetWindowSlotMessage message) throws IOException {
+	public ChannelBuffer encode(WindowSetSlotMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeByte(message.getId());
+		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(message.getSlot());
 		buffer.writeShort(message.getItem());
 		if (message.getItem() != -1) {

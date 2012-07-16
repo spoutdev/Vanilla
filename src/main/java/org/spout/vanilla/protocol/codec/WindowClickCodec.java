@@ -36,7 +36,7 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.nbt.CompoundMap;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.WindowClickMessage;
+import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 
 public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 	public WindowClickCodec() {
@@ -69,7 +69,7 @@ public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 		int item = message.getItem();
 
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeByte(message.getWindowId());
+		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(message.getSlot());
 		buffer.writeByte(message.isRightClick() ? 1 : 0);
 		buffer.writeShort(message.getTransaction());
@@ -78,7 +78,7 @@ public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 		if (item != -1) {
 			buffer.writeByte(message.getCount());
 			buffer.writeShort(message.getDamage());
-			if (ChannelBufferUtils.hasNbtData(message.getWindowId())) {
+			if (ChannelBufferUtils.hasNbtData(message.getItem())) {
 				ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
 			}
 		}

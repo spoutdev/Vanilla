@@ -24,40 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.protocol.msg.window;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.WindowMessage;
+import org.spout.vanilla.window.Window;
 
-public final class ProgressBarMessage extends Message {
-	private final int id, progressBar, value;
+public final class WindowCloseMessage extends WindowMessage {
 
-	public ProgressBarMessage(int id, int progressBar, int value) {
-		this.id = id;
-		this.progressBar = progressBar;
-		this.value = value;
+	public WindowCloseMessage(Window window) {
+		super(window);
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public int getProgressBar() {
-		return progressBar;
-	}
-
-	public int getValue() {
-		return value;
+	public WindowCloseMessage(int windowInstanceId) {
+		super(windowInstanceId);
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("id", id)
-				.append("progressBar", progressBar)
-				.append("value", value)
+				.append("id", this.getWindowInstanceId())
 				.toString();
 	}
 
@@ -69,11 +57,7 @@ public final class ProgressBarMessage extends Message {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final ProgressBarMessage other = (ProgressBarMessage) obj;
-		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.id, other.id)
-				.append(this.progressBar, other.progressBar)
-				.append(this.value, other.value)
-				.isEquals();
+		final WindowCloseMessage other = (WindowCloseMessage) obj;
+		return this.getWindowInstanceId() == other.getWindowInstanceId();
 	}
 }

@@ -61,7 +61,6 @@ import org.spout.vanilla.protocol.handler.UpdateSignHandler;
 import org.spout.vanilla.protocol.handler.WindowClickMessageHandler;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.protocol.msg.ChatMessage;
-import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
 import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
 import org.spout.vanilla.protocol.msg.EntityActionMessage;
@@ -82,7 +81,8 @@ import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
-import org.spout.vanilla.protocol.msg.WindowClickMessage;
+import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
+import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 
 public class VanillaHandlerLookupService extends HandlerLookupService {
 	protected static final Map<Class<? extends Message>, MessageHandler<?>> handlers = new HashMap<Class<? extends Message>, MessageHandler<?>>();
@@ -104,7 +104,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(PlayerDiggingMessage.class, PlayerDiggingMessageHandler.class);
 			bind(PlayerBlockPlacementMessage.class, PlayerBlockPlacementMessageHandler.class);
 			bind(WindowClickMessage.class, WindowClickMessageHandler.class);
-			bind(CloseWindowMessage.class, CloseWindowMessageHandler.class);
+			bind(WindowCloseMessage.class, CloseWindowMessageHandler.class);
 			bind(HeldItemChangeMessage.class, HeldItemChangeMessageHandler.class);
 			bind(EntityActionMessage.class, EntityActionMessageHandler.class);
 			bind(AnimationMessage.class, AnimationMessageHandler.class);

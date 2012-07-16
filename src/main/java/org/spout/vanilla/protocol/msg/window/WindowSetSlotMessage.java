@@ -24,52 +24,43 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.protocol.msg.window;
 
-import org.spout.api.protocol.Message;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.nbt.CompoundMap;
+import org.spout.vanilla.protocol.msg.WindowMessage;
+import org.spout.vanilla.window.Window;
 
-public final class WindowClickMessage extends Message {
-	private final int id, slot;
-	private final boolean rightClick, shift;
-	private final int transaction, item, count, damage;
+public final class WindowSetSlotMessage extends WindowMessage {
+	private final int slot, item, count, damage;
 	private final CompoundMap nbtData;
 
-	public WindowClickMessage(int id, int slot, boolean rightClick, int transaction, boolean shift) {
-		this(id, slot, rightClick, transaction, shift, -1, 0, 0, null);
+	public WindowSetSlotMessage(Window window, int slot) {
+		this(window.getInstanceId(), slot, -1, 0, 0, null);
 	}
 
-	public WindowClickMessage(int id, int slot, boolean rightClick, int transaction, boolean shift, int item, int count, int damage, CompoundMap nbtData) {
-		this.id = id;
+	public WindowSetSlotMessage(Window window, int slot, int item, int count, int damage, CompoundMap nbtData) {
+		this(window.getInstanceId(), slot, item, count, damage, nbtData);
+	}
+
+	public WindowSetSlotMessage(int windowInstanceId, int slot) {
+		this(windowInstanceId, slot, -1, 0, 0, null);
+	}
+
+	public WindowSetSlotMessage(int windowInstanceId, int slot, int item, int count, int damage, CompoundMap nbtData) {
+		super(windowInstanceId);
 		this.slot = slot;
-		this.rightClick = rightClick;
-		this.transaction = transaction;
-		this.shift = shift;
 		this.item = item;
 		this.count = count;
 		this.damage = damage;
 		this.nbtData = nbtData;
 	}
 
-	public int getWindowId() {
-		return id;
-	}
-
 	public int getSlot() {
 		return slot;
-	}
-
-	public boolean isRightClick() {
-		return rightClick;
-	}
-
-	public boolean isShift() {
-		return shift;
-	}
-
-	public int getTransaction() {
-		return transaction;
 	}
 
 	public int getItem() {
@@ -90,7 +81,14 @@ public final class WindowClickMessage extends Message {
 
 	@Override
 	public String toString() {
-		return "WindowClickMessage{id=" + id + ",slot=" + slot + ",rightClick=" + rightClick + ",shift=" + shift + ",transaction=" + transaction + ",item=" + item + ",count=" + count + ",damage=" + damage + ",nbtData=" + nbtData + "}";
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("id", this.getWindowInstanceId())
+				.append("slot", slot)
+				.append("item", item)
+				.append("count", count)
+				.append("damage", damage)
+				.append("nbtData", nbtData)
+				.toString();
 	}
 
 	@Override
@@ -101,13 +99,10 @@ public final class WindowClickMessage extends Message {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final WindowClickMessage other = (WindowClickMessage) obj;
+		final WindowSetSlotMessage other = (WindowSetSlotMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.id, other.id)
+				.append(this.getWindowInstanceId(), other.getWindowInstanceId())
 				.append(this.slot, other.slot)
-				.append(this.rightClick, other.rightClick)
-				.append(this.shift, other.shift)
-				.append(this.transaction, other.transaction)
 				.append(this.item, other.item)
 				.append(this.count, other.count)
 				.append(this.damage, other.damage)

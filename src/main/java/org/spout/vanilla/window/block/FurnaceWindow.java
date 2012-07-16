@@ -31,10 +31,12 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.vanilla.controller.block.Furnace;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
+import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
 import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.TransactionWindow;
 
 public class FurnaceWindow extends TransactionWindow {
+	private static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("30-38, 21-29, 12-20, 3-11, 1, 2, 0");
 	protected final FurnaceInventory furnaceInv;
 
@@ -51,5 +53,23 @@ public class FurnaceWindow extends TransactionWindow {
 		} else {
 			return super.onClick(inventory, clickedSlot, rightClick, shift);
 		}
+	}
+
+	/**
+	 * Updates the Burn time of the Furnace
+	 * 
+	 * @param burnTime
+	 */
+	public void updateBurnTime(int burnTime) {
+		this.sendMessage(new WindowPropertyMessage(this, FIRE_ICON, burnTime));
+	}
+
+	/**
+	 * Updates the Progress of the Furnace
+	 * 
+	 * @param progress
+	 */
+	public void updateProgress(int progress) {
+		this.sendMessage(new WindowPropertyMessage(this, PROGRESS_ARROW, progress));
 	}
 }

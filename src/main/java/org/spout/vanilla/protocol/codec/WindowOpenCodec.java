@@ -33,23 +33,30 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.msg.CloseWindowMessage;
+import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 
-public final class CloseWindowCodec extends MessageCodec<CloseWindowMessage> {
-	public CloseWindowCodec() {
-		super(CloseWindowMessage.class, 0x65);
+public final class WindowOpenCodec extends MessageCodec<WindowOpenMessage> {
+	public WindowOpenCodec() {
+		super(WindowOpenMessage.class, 0x64);
 	}
 
 	@Override
-	public CloseWindowMessage decode(ChannelBuffer buffer) throws IOException {
+	public WindowOpenMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readUnsignedByte();
-		return new CloseWindowMessage(id);
+		int type = buffer.readUnsignedByte();
+		String title = ChannelBufferUtils.readString(buffer);
+		int slots = buffer.readUnsignedByte();
+		return new WindowOpenMessage(id, type, title, slots);
 	}
 
 	@Override
-	public ChannelBuffer encode(CloseWindowMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(1);
-		buffer.writeByte(message.getId());
+	public ChannelBuffer encode(WindowOpenMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		buffer.writeByte(message.getWindowInstanceId());
+		buffer.writeByte(message.getType());
+		ChannelBufferUtils.writeString(buffer, message.getTitle());
+		buffer.writeByte(message.getSlots());
 		return buffer;
 	}
 }

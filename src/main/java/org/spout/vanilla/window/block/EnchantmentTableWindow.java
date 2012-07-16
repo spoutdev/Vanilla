@@ -28,6 +28,7 @@ package org.spout.vanilla.window.block;
 
 import org.spout.vanilla.controller.block.EnchantmentTable;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
 import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.TransactionWindow;
 
@@ -37,5 +38,15 @@ public class EnchantmentTableWindow extends TransactionWindow {
 	public EnchantmentTableWindow(VanillaPlayer owner, EnchantmentTable table) {
 		super(4, "Enchant", owner, table);
 		this.setSlotIndexMap(SLOTS);
+	}
+
+	/**
+	 * Updates the enchantment level of an Item displayed in this window
+	 * 
+	 * @param index of the item (0, 1 or 2)
+	 * @param level of enchantment of the item
+	 */
+	public void updateItemLevel(int index, int level) {
+		this.sendMessage(new WindowPropertyMessage(this, index, level));
 	}
 }

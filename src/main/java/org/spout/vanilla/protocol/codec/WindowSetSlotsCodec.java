@@ -40,15 +40,15 @@ import org.spout.nbt.CompoundMap;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
 
-public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessage> {
-	public SetWindowSlotsCodec() {
-		super(SetWindowSlotsMessage.class, 0x68);
+public final class WindowSetSlotsCodec extends MessageCodec<WindowSetSlotsMessage> {
+	public WindowSetSlotsCodec() {
+		super(WindowSetSlotsMessage.class, 0x68);
 	}
 
 	@Override
-	public SetWindowSlotsMessage decode(ChannelBuffer buffer) throws IOException {
+	public WindowSetSlotsMessage decode(ChannelBuffer buffer) throws IOException {
 		byte id = buffer.readByte();
 		short count = buffer.readShort();
 		ItemStack[] items = new ItemStack[count];
@@ -66,15 +66,15 @@ public final class SetWindowSlotsCodec extends MessageCodec<SetWindowSlotsMessag
 				items[slot] = new ItemStack(VanillaMaterials.getMaterial((short) item, (short) data), data, itemCount).setNBTData(nbtData);
 			}
 		}
-		return new SetWindowSlotsMessage(id, items);
+		return new WindowSetSlotsMessage(id, items);
 	}
 
 	@Override
-	public ChannelBuffer encode(SetWindowSlotsMessage message) throws IOException {
+	public ChannelBuffer encode(WindowSetSlotsMessage message) throws IOException {
 		ItemStack[] items = message.getItems();
 
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeByte(message.getId());
+		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(items.length);
 		for (ItemStack item : items) {
 			if (item == null) {

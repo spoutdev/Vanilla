@@ -24,36 +24,31 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec;
+package org.spout.vanilla.protocol.msg;
 
-import java.io.IOException;
+import org.spout.api.protocol.Message;
+import org.spout.vanilla.window.Window;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+/**
+ * An abstraction of messages meant for Windows
+ */
+public abstract class WindowMessage extends Message {
+	private final int instanceId;
 
-import org.spout.api.protocol.MessageCodec;
-
-import org.spout.vanilla.protocol.msg.TransactionMessage;
-
-public final class TransactionCodec extends MessageCodec<TransactionMessage> {
-	public TransactionCodec() {
-		super(TransactionMessage.class, 0x6A);
+	public WindowMessage(Window window) {
+		this.instanceId = window.getInstanceId();
 	}
 
-	@Override
-	public TransactionMessage decode(ChannelBuffer buffer) throws IOException {
-		int id = buffer.readUnsignedByte();
-		int transaction = buffer.readUnsignedShort();
-		boolean accepted = buffer.readUnsignedByte() != 0;
-		return new TransactionMessage(id, transaction, accepted);
+	public WindowMessage(int instanceId) {
+		this.instanceId = instanceId;
 	}
 
-	@Override
-	public ChannelBuffer encode(TransactionMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(4);
-		buffer.writeByte(message.getId());
-		buffer.writeShort(message.getTransaction());
-		buffer.writeByte(message.isAccepted() ? 1 : 0);
-		return buffer;
+	/**
+	 * Gets the unique instance Id of the Window this Window Message is of
+	 * 
+	 * @return Window instance Id
+	 */
+	public int getWindowInstanceId() {
+		return this.instanceId;
 	}
 }

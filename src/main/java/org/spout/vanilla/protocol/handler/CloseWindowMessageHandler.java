@@ -31,11 +31,11 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.CloseWindowMessage;
+import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 
-public final class CloseWindowMessageHandler extends MessageHandler<CloseWindowMessage> {
+public final class CloseWindowMessageHandler extends MessageHandler<WindowCloseMessage> {
 	@Override
-	public void handleServer(Session session, Player player, CloseWindowMessage message) {
+	public void handleServer(Session session, Player player, WindowCloseMessage message) {
 		if (session == null || player == null || message == null) {
 			return;
 		}

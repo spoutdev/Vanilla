@@ -41,7 +41,6 @@ import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.ChatMessage;
-import org.spout.vanilla.protocol.msg.CloseWindowMessage;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.CreateEntityMessage;
@@ -71,7 +70,6 @@ import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
 import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.MultiBlockChangeMessage;
-import org.spout.vanilla.protocol.msg.OpenWindowMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
@@ -80,14 +78,11 @@ import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
-import org.spout.vanilla.protocol.msg.ProgressBarMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
 import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.protocol.msg.SetExperienceMessage;
-import org.spout.vanilla.protocol.msg.SetWindowSlotMessage;
-import org.spout.vanilla.protocol.msg.SetWindowSlotsMessage;
 import org.spout.vanilla.protocol.msg.SpawnDroppedItemMessage;
 import org.spout.vanilla.protocol.msg.SpawnExperienceOrbMessage;
 import org.spout.vanilla.protocol.msg.SpawnLightningStrikeMessage;
@@ -99,11 +94,16 @@ import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
 import org.spout.vanilla.protocol.msg.StatisticMessage;
 import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
 import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
-import org.spout.vanilla.protocol.msg.TransactionMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.UseBedMessage;
-import org.spout.vanilla.protocol.msg.WindowClickMessage;
+import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
+import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
+import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
+import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
 
@@ -160,13 +160,13 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayEffectMessage(34566, 1, 2, 34, 5),
 			new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, GameMode.CREATIVE),
 			new SpawnLightningStrikeMessage(34, 1, 23, 45, 55),
-			new OpenWindowMessage(1, 2, "container.furnace", 42),
-			new CloseWindowMessage(23),
+			new WindowOpenMessage(1, 2, "container.furnace", 42),
+			new WindowCloseMessage(23),
 			new WindowClickMessage(1, 2, false, 34, true, 5, 5, 12, null),
-			new SetWindowSlotMessage(1, 2, 45, 5, 5, null),
-			new SetWindowSlotsMessage((byte) 3, new ItemStack[]{new ItemStack(VanillaMaterials.PISTON_BASE, 3), new ItemStack(VanillaMaterials.ARROW, 23)}),
-			new ProgressBarMessage(2, 4, 55),
-			new TransactionMessage(1, 55, true),
+			new WindowSetSlotMessage(1, 2, 45, 5, 5, null),
+			new WindowSetSlotsMessage((byte) 3, new ItemStack[]{new ItemStack(VanillaMaterials.PISTON_BASE, 3), new ItemStack(VanillaMaterials.ARROW, 23)}),
+			new WindowPropertyMessage(2, 4, 55),
+			new WindowTransactionMessage(1, 55, true),
 			new CreativeMessage((short) 1, (short) 2, (short) 3, (short) 4, null),
 			new EnchantItemMessage(2, 3),
 			new UpdateSignMessage(1, 2, 3, new String[]{"This", "is", "a", "sign"}),

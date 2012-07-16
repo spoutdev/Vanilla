@@ -24,47 +24,41 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.protocol.msg.window;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.WindowMessage;
+import org.spout.vanilla.window.Window;
 
-public final class OpenWindowMessage extends Message {
-	private final int id, type, slots;
-	private final String title;
+public final class WindowPropertyMessage extends WindowMessage {
+	private final int progressBar, value;
 
-	public OpenWindowMessage(int id, int type, String title, int slots) {
-		this.id = id;
-		this.type = type;
-		this.title = title;
-		this.slots = slots;
+	public WindowPropertyMessage(Window window, int progressBar, int value) {
+		this(window.getInstanceId(), progressBar, value);
 	}
 
-	public int getId() {
-		return id;
+	public WindowPropertyMessage(int windowInstanceId, int progressBar, int value) {
+		super(windowInstanceId);
+		this.progressBar = progressBar;
+		this.value = value;
 	}
 
-	public int getType() {
-		return type;
+	public int getProgressBar() {
+		return progressBar;
 	}
 
-	public int getSlots() {
-		return slots;
-	}
-
-	public String getTitle() {
-		return title;
+	public int getValue() {
+		return value;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("id", id)
-				.append("type", type)
-				.append("slots", slots)
-				.append("title", title)
+				.append("id", this.getWindowInstanceId())
+				.append("progressBar", progressBar)
+				.append("value", value)
 				.toString();
 	}
 
@@ -76,12 +70,11 @@ public final class OpenWindowMessage extends Message {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final OpenWindowMessage other = (OpenWindowMessage) obj;
+		final WindowPropertyMessage other = (WindowPropertyMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.id, other.id)
-				.append(this.type, other.type)
-				.append(this.slots, other.slots)
-				.append(this.title, other.title)
+				.append(this.getWindowInstanceId(), other.getWindowInstanceId())
+				.append(this.progressBar, other.progressBar)
+				.append(this.value, other.value)
 				.isEquals();
 	}
 }

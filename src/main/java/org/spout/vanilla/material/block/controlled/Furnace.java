@@ -37,6 +37,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -44,7 +45,6 @@ import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Furnace extends ControlledMaterial implements Directional, Mineable {
-	public static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
 	public static final float SMELT_TIME = 10.f;
 	private final boolean burning;
 
@@ -65,6 +65,16 @@ public class Furnace extends ControlledMaterial implements Directional, Mineable
 	 */
 	public boolean isBurning() {
 		return this.burning;
+	}
+
+	/**
+	 * Sets the burning state of a Furnace block
+	 * 
+	 * @param block of the Furnace
+	 * @param burning state to set to
+	 */
+	public void setBurning(Block block, boolean burning) {
+		block.setMaterial(burning ? VanillaMaterials.FURNACE_BURNING : VanillaMaterials.FURNACE, block.getData());
 	}
 
 	@Override

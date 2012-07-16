@@ -34,8 +34,9 @@ import org.spout.api.player.Player;
 
 import org.spout.vanilla.controller.WindowOwner;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.CloseWindowMessage;
-import org.spout.vanilla.protocol.msg.OpenWindowMessage;
+import org.spout.vanilla.protocol.msg.WindowMessage;
+import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.SlotIndexMap;
@@ -157,7 +158,7 @@ public class Window implements InventoryViewer {
 		if (this.isOpen()) {
 			return false;
 		}
-		sendPacket(this.getPlayer(), new OpenWindowMessage(this.getInstanceId(), this.getId(), this.getTitle(), getInventorySize()));
+		sendPacket(this.getPlayer(), new WindowOpenMessage(this.getInstanceId(), this.getId(), this.getTitle(), getInventorySize()));
 		this.isOpen = true;
 		this.inventory.addViewer(this);
 		this.inventory.notifyViewers();
@@ -177,7 +178,7 @@ public class Window implements InventoryViewer {
 		}
 		this.isOpen = false;
 		if (this.hasCloseMessage()) {
-			sendPacket(this.getPlayer(), new CloseWindowMessage(this.getInstanceId()));
+			sendPacket(this.getPlayer(), new WindowCloseMessage(this.getInstanceId()));
 		}
 		this.inventory.removeViewer(this);
 		for (WindowOwner owner : this.windowOwners) {
@@ -185,6 +186,15 @@ public class Window implements InventoryViewer {
 		}
 		this.dropItemOnCursor();
 		return true;
+	}
+
+	/**
+	 * Sends a Window Message to the owner of this Window
+	 * 
+	 * @param message to send
+	 */
+	public void sendMessage(WindowMessage message) {
+		this.getPlayer().getSession().send(false, message);
 	}
 
 	public boolean hasItemOnCursor() {

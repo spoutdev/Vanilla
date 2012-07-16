@@ -24,41 +24,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.protocol.msg.window;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.spout.api.protocol.Message;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.WindowMessage;
+import org.spout.vanilla.window.Window;
 
-public final class TransactionMessage extends Message {
-	private final int id, transaction;
-	private final boolean accepted;
+public final class WindowSetSlotsMessage extends WindowMessage {
+	private final ItemStack[] items;
 
-	public TransactionMessage(int id, int transaction, boolean accepted) {
-		this.id = id;
-		this.transaction = transaction;
-		this.accepted = accepted;
+	public WindowSetSlotsMessage(Window window, ItemStack[] items) {
+		this(window.getInstanceId(), items);
 	}
 
-	public int getId() {
-		return id;
+	public WindowSetSlotsMessage(int windowInstanceId, ItemStack[] items) {
+		super(windowInstanceId);
+		this.items = items;
 	}
 
-	public int getTransaction() {
-		return transaction;
-	}
-
-	public boolean isAccepted() {
-		return accepted;
+	public ItemStack[] getItems() {
+		return items;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("id", id)
-				.append("transaction", transaction)
-				.append("accepted", accepted)
+				.append("id", this.getWindowInstanceId())
+				.append("items", items, true)
 				.toString();
 	}
 
@@ -70,11 +65,10 @@ public final class TransactionMessage extends Message {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final TransactionMessage other = (TransactionMessage) obj;
+		final WindowSetSlotsMessage other = (WindowSetSlotsMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.id, other.id)
-				.append(this.transaction, other.transaction)
-				.append(this.accepted, other.accepted)
+				.append(this.getWindowInstanceId(), other.getWindowInstanceId())
+				.append(this.items, other.items)
 				.isEquals();
 	}
 }

@@ -24,51 +24,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.protocol.codec;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import java.io.IOException;
 
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.protocol.Message;
-import org.spout.api.util.SpoutToStringStyle;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 
-public final class SetWindowSlotsMessage extends Message {
-	private final byte id;
-	private final ItemStack[] items;
+import org.spout.api.protocol.MessageCodec;
 
-	public SetWindowSlotsMessage(byte id, ItemStack[] items) {
-		this.id = id;
-		this.items = items;
-	}
+import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
 
-	public byte getId() {
-		return id;
-	}
-
-	public ItemStack[] getItems() {
-		return items;
+public final class WindowPropertyCodec extends MessageCodec<WindowPropertyMessage> {
+	public WindowPropertyCodec() {
+		super(WindowPropertyMessage.class, 0x69);
 	}
 
 	@Override
-	public String toString() {
-		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("id", id)
-				.append("items", items, true)
-				.toString();
+	public WindowPropertyMessage decode(ChannelBuffer buffer) throws IOException {
+		int id = buffer.readUnsignedByte();
+		int progressBar = buffer.readUnsignedShort();
+		int value = buffer.readUnsignedShort();
+		return new WindowPropertyMessage(id, progressBar, value);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final SetWindowSlotsMessage other = (SetWindowSlotsMessage) obj;
-		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.id, other.id)
-				.append(this.items, other.items)
-				.isEquals();
+	public ChannelBuffer encode(WindowPropertyMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.buffer(5);
+		buffer.writeByte(message.getWindowInstanceId());
+		buffer.writeShort(message.getProgressBar());
+		buffer.writeShort(message.getValue());
+		return buffer;
 	}
 }

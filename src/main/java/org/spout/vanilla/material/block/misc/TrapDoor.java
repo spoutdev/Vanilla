@@ -108,8 +108,8 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Mineable, Open
 	}
 
 	@Override
-	public BlockFace getAttachedFace(Block block) {
-		return BlockFaces.WESN.get(block.getData() & ~0x4);
+	public BlockFace getAttachedFace(short data) {
+		return BlockFaces.WESN.get(data & 0x3);
 	}
 
 	@Override

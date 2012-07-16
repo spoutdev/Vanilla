@@ -67,6 +67,13 @@ public interface Attachable {
 	public BlockFace getAttachedFace(Block block);
 
 	/**
+	 * Gets the face the block is attached to
+	 * @param data of the block
+	 * @return to which face the block is attached to
+	 */
+	public BlockFace getAttachedFace(short data);
+
+	/**
 	 * Returns the block that this attachable is attached to
 	 * @param block of this attachable
 	 * @return the block

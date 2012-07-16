@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import java.util.EnumMap;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
@@ -51,12 +53,11 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
 public class StoneButton extends AbstractAttachable implements Mineable, PointAttachable, RedstoneSource, DynamicMaterial {
 	public static final int TICK_DELAY = 1000;
-	private static final EffectRange[] physicsRanges;
+	private static EnumMap<BlockFace, EffectRange> physicsRanges = new EnumMap<BlockFace, EffectRange>(BlockFace.class);
 
 	static {
-		physicsRanges = new EffectRange[4];
-		for (int i = 0; i < physicsRanges.length; i++) {
-			physicsRanges[i] = new ListEffectRange(EffectRange.THIS_AND_NEIGHBORS, EffectRange.THIS_AND_NEIGHBORS.translate(BlockFaces.NSEW.get(i)));
+		for (BlockFace face : BlockFaces.NESW) {
+			physicsRanges.put(face, new ListEffectRange(EffectRange.THIS_AND_NEIGHBORS, EffectRange.THIS_AND_NEIGHBORS.translate(face)));
 		}
 	}
 
@@ -115,8 +116,8 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	}
 
 	@Override
-	public BlockFace getAttachedFace(Block block) {
-		return BlockFaces.NSEW.get(block.getDataField(0x7) - 1);
+	public BlockFace getAttachedFace(short data) {
+		return BlockFaces.NSEW.get((data & 0x7) - 1);
 	}
 
 	public boolean isPressed(Block block) {
@@ -157,6 +158,6 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 
 	@Override
 	public EffectRange getPhysicsRange(short data) {
-		return physicsRanges[((data & 0x7) - 1) & 0x3];
+		return physicsRanges.get(getAttachedFace(data));
 	}
 }

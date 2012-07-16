@@ -47,8 +47,8 @@ public class Torch extends AbstractAttachable implements Mineable, PointAttachab
 	}
 
 	@Override
-	public BlockFace getAttachedFace(Block block) {
-		return BlockFaces.NSEWB.get(block.getData() - 1, BlockFace.BOTTOM);
+	public BlockFace getAttachedFace(short data) {
+		return BlockFaces.NSEWB.get(data - 1, BlockFace.BOTTOM);
 	}
 
 	@Override

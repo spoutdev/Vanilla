@@ -58,7 +58,7 @@ public class GroundAttachable extends AbstractAttachable {
 	}
 
 	@Override
-	public BlockFace getAttachedFace(Block block) {
+	public BlockFace getAttachedFace(short data) {
 		return BlockFace.BOTTOM;
 	}
 }

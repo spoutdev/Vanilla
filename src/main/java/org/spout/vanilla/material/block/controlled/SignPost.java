@@ -46,4 +46,9 @@ public class SignPost extends SignBase {
 		// can only attach to signs and torches
 		return material instanceof SignBase || material instanceof Torch;
 	}
+
+	@Override
+	public BlockFace getAttachedFace(short data) {
+		return BlockFace.BOTTOM;
+	}
 }

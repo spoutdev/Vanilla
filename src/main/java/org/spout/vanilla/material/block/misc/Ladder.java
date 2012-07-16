@@ -47,8 +47,8 @@ public class Ladder extends AbstractAttachable implements Mineable {
 	}
 
 	@Override
-	public BlockFace getAttachedFace(Block block) {
-		return BlockFaces.WESN.get(block.getData() - 2);
+	public BlockFace getAttachedFace(short data) {
+		return BlockFaces.WESN.get(data - 2);
 	}
 
 	@Override

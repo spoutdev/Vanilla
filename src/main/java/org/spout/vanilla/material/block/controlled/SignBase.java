@@ -86,12 +86,8 @@ public abstract class SignBase extends AbstractAttachable implements Mineable, I
 	}
 
 	@Override
-	public BlockFace getAttachedFace(Block block) {
-		if (block.getMaterial().equals(VanillaMaterials.SIGN_POST)) {
-			return BlockFace.BOTTOM;
-		}
-
-		return BlockFaces.NSWE.get(block.getData() - 2);
+	public BlockFace getAttachedFace(short data) {
+		return BlockFaces.NSWE.get(data - 2);
 	}
 
 	@Override

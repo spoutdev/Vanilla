@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import java.util.EnumMap;
+
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -48,13 +50,11 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
 public class Lever extends AbstractAttachable implements Mineable, RedstoneSource {
-	private static final EffectRange[] physicsRanges;
+	private static EnumMap<BlockFace, EffectRange> physicsRanges = new EnumMap<BlockFace, EffectRange>(BlockFace.class);
 
 	static {
-		physicsRanges = new EffectRange[6];
-		BlockFaces faces = BlockFaces.NESWB.append(BlockFace.BOTTOM);
-		for (int i = 0; i < physicsRanges.length; i++) {
-			physicsRanges[i] = new ListEffectRange(EffectRange.THIS_AND_NEIGHBORS, EffectRange.THIS_AND_NEIGHBORS.translate(faces.get(i)));
+		for (BlockFace face : BlockFaces.NESWBT) {
+			physicsRanges.put(face, new ListEffectRange(EffectRange.THIS_AND_NEIGHBORS, EffectRange.THIS_AND_NEIGHBORS.translate(face)));
 		}
 	}
 
@@ -123,8 +123,8 @@ public class Lever extends AbstractAttachable implements Mineable, RedstoneSourc
 	}
 
 	@Override
-	public BlockFace getAttachedFace(Block block) {
-		return BlockFaces.NSEWB.get(block.getDataField(0x7) - 1);
+	public BlockFace getAttachedFace(short data) {
+		return BlockFaces.NSEWB.get((data & 0x7) - 1);
 	}
 
 	@Override
@@ -154,13 +154,6 @@ public class Lever extends AbstractAttachable implements Mineable, RedstoneSourc
 
 	@Override
 	public EffectRange getPhysicsRange(short data) {
-		data = (short) ((data & 0x7) - 1);
-		if (data < 0) {
-			return physicsRanges[0];
-		} else if (data >= physicsRanges.length) {
-			return physicsRanges[physicsRanges.length - 1];
-		} else {
-			return physicsRanges[data];
-		}
+		return physicsRanges.get(getAttachedFace(data));
 	}
 }

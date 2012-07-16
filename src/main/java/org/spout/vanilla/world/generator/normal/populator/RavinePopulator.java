@@ -40,7 +40,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class CavePopulator extends Populator {
+public class RavinePopulator extends Populator {
 	private static final byte OVERLAP = 8;
 
 	@Override
@@ -54,43 +54,24 @@ public class CavePopulator extends Populator {
 		for (int cx = chunkX - 8; cx <= chunkX + 8; cx++) {
 			for (int cz = chunkZ - 8; cz <= chunkZ + 8; cz++) {
 				final Random chunkRandom = WorldGeneratorUtils.getRandom(world, cx, 4, cz, 9001);
-				generateCave(world.getChunk(cx, 4, cz), chunk, chunkRandom);
+				generateRavine(world.getChunk(cx, 4, cz), chunk, chunkRandom);
 			}
 		}
 	}
 
-	private void generateCave(Chunk chunk, Chunk originChunk, Random random) {
-		if (random.nextInt(15) != 0) {
+	private void generateRavine(Chunk chunk, Chunk originChunk, Random random) {
+		if (random.nextInt(50) != 0) {
 			return;
 		}
 
-		final int numberOfCaves = random.nextInt(40);
-		final World world = chunk.getWorld();
-
-		for (int caveCount = 0; caveCount < numberOfCaves; caveCount++) {
-			final Point target = new Point(world, chunk.getBlockX(random), random.nextInt(128), chunk.getBlockZ(random));
-			int numberOfSmallCaves = 1;
-
-			if (random.nextInt(4) == 0) {
-				generateLargeCaveNode(originChunk, target, new Random(random.nextLong()));
-				numberOfSmallCaves += random.nextInt(4);
-			}
-
-			for (int count = 0; count < numberOfSmallCaves; count++) {
-				final float randomHorizontalAngle = random.nextFloat() * (float) Math.PI * 2;
-				final float randomVerticalAngle = ((random.nextFloat() - 0.5f) * 2) / 8;
-				float horizontalScale = random.nextFloat() * 2 + random.nextFloat();
-
-				if (random.nextInt(10) == 0) {
-					horizontalScale *= random.nextFloat() * random.nextFloat() * 3 + 1;
-				}
-
-				generateCaveBranch(originChunk, target, horizontalScale, 1, randomHorizontalAngle, randomVerticalAngle, 0, 0, new Random(random.nextLong()));
-			}
-		}
+		final Point target = new Point(chunk.getWorld(), chunk.getBlockX(random), random.nextInt(47) + 20, chunk.getBlockZ(random));
+		final float randomHorizontalAngle = (float) (random.nextFloat() * Math.PI * 2);
+		final float randomVerticalAngle = ((random.nextFloat() - 0.5f) * 2) / 8;
+		final float horizontalScale = (random.nextFloat() * 2 + random.nextFloat()) * 2;
+		generateRavineNodes(originChunk, target, horizontalScale, 3, randomHorizontalAngle, randomVerticalAngle, 0, 0, random);
 	}
 
-	private void generateCaveBranch(Chunk chunk, Point target, float horizontalScale, float verticalScale,
+	private void generateRavineNodes(Chunk chunk, Point target, float horizontalScale, float verticalScale,
 			float horizontalAngle, float verticalAngle, int startingNode, int nodeAmount, Random random) {
 
 		final Vector3 middle = new Vector3(chunk.getBlockX(8), 0, chunk.getBlockZ(8));
@@ -102,8 +83,6 @@ public class CavePopulator extends Populator {
 			nodeAmount = size - random.nextInt(size / 4);
 		}
 
-		final int intersectionNode = random.nextInt(nodeAmount / 2) + nodeAmount / 4;
-		final boolean extraVerticalScale = random.nextInt(6) == 0;
 		final boolean lastNode;
 
 		if (startingNode == -1) {
@@ -113,36 +92,32 @@ public class CavePopulator extends Populator {
 			lastNode = false;
 		}
 
+		final float[] horizontalScales = new float[128];
+
+		for (short y = 0; y < 128; y++) {
+			final float xzScale = y == 0 || random.nextInt(3) == 0 ? 1 + random.nextFloat() * random.nextFloat() : 1;
+			horizontalScales[y] = xzScale * xzScale;
+		}
+
 		for (; startingNode < nodeAmount; startingNode++) {
-			final float horizontalSize = (float) (1.5 + Math.sin((startingNode * Math.PI) / nodeAmount) * horizontalScale);
-			final float verticalSize = horizontalSize * verticalScale;
+			float horizontalSize = (float) (1.5 + Math.sin((startingNode * Math.PI) / nodeAmount) * horizontalScale);
+			float verticalSize = horizontalSize * verticalScale;
 			final float diskXZ = (float) Math.cos(verticalAngle);
 			target = target.add(Math.cos(horizontalAngle) * diskXZ, Math.sin(verticalAngle), Math.sin(horizontalAngle) * diskXZ);
 
-			if (extraVerticalScale) {
-				verticalAngle *= 0.92;
-			} else {
-				verticalAngle *= 0.7;
-			}
+			horizontalSize *= random.nextFloat() * 0.25 + 0.75;
+			verticalSize *= random.nextFloat() * 0.25 + 0.75;
 
-			verticalAngle += verticalOffset * 0.1;
-			horizontalAngle += horizontalOffset * 0.1;
-			verticalOffset *= 0.9;
-			horizontalOffset *= 0.75;
+			verticalAngle *= 0.7;
+			verticalAngle += verticalOffset * 0.05;
+			horizontalAngle += horizontalOffset * 0.05;
+			verticalOffset *= 0.8;
+			horizontalOffset *= 0.5;
 			verticalOffset += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 2;
 			horizontalOffset += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 4;
 
-			if (!lastNode) {
-
-				if (startingNode == intersectionNode && horizontalScale > 1 && nodeAmount > 0) {
-					generateCaveBranch(chunk, target, random.nextFloat() * 0.5f + 0.5f, 1, horizontalAngle - ((float) Math.PI / 2), verticalAngle / 3, startingNode, nodeAmount, new Random(random.nextLong()));
-					generateCaveBranch(chunk, target, random.nextFloat() * 0.5f + 0.5f, 1, horizontalAngle + ((float) Math.PI / 2), verticalAngle / 3, startingNode, nodeAmount, new Random(random.nextLong()));
-					return;
-				}
-
-				if (random.nextInt(4) == 0) {
-					continue;
-				}
+			if (!lastNode && random.nextInt(4) == 0) {
+				continue;
 			}
 
 			final float xOffset = target.getX() - middle.getX();
@@ -165,7 +140,7 @@ public class CavePopulator extends Populator {
 					MathHelper.floor(target.getBlockY() - verticalSize) - 1, MathHelper.floor(target.getBlockZ() - horizontalSize) - chunk.getBlockZ(-1));
 			final Point end = new Point(chunk.getWorld(), MathHelper.floor(target.getBlockX() + horizontalSize) - chunk.getBlockX(1),
 					MathHelper.floor(target.getBlockY() + verticalSize) + 1, MathHelper.floor(target.getBlockZ() + horizontalSize) - chunk.getBlockZ(1));
-			final CaveNode node = new CaveNode(chunk, start, end, target, verticalSize, horizontalSize);
+			final RavineNode node = new RavineNode(chunk, start, end, target, verticalSize, horizontalSize, horizontalScales);
 
 			if (node.canPlace()) {
 				node.place();
@@ -177,11 +152,7 @@ public class CavePopulator extends Populator {
 		}
 	}
 
-	private void generateLargeCaveNode(Chunk chunk, Point target, Random random) {
-		generateCaveBranch(chunk, target, random.nextFloat() * 6 + 1, 0.5f, 0, 0, -1, -1, random);
-	}
-
-	private static class CaveNode {
+	private static class RavineNode {
 		private final World world;
 		private final Chunk chunk;
 		private final Point start;
@@ -189,9 +160,10 @@ public class CavePopulator extends Populator {
 		private final Point target;
 		private final float verticalSize;
 		private final float horizontalSize;
+		private final float[] horizontalScales;
 
-		private CaveNode(Chunk chunk, Point start, Point end, Point target,
-				float verticalSize, float horizontalSize) {
+		private RavineNode(Chunk chunk, Point start, Point end, Point target,
+				float verticalSize, float horizontalSize, float[] horizontalScales) {
 			this.world = chunk.getWorld();
 			this.chunk = chunk;
 			this.start = clamp(start);
@@ -199,6 +171,7 @@ public class CavePopulator extends Populator {
 			this.target = target;
 			this.verticalSize = verticalSize;
 			this.horizontalSize = horizontalSize;
+			this.horizontalScales = horizontalScales;
 		}
 
 		private boolean canPlace() {
@@ -229,7 +202,7 @@ public class CavePopulator extends Populator {
 					}
 					for (int y = end.getBlockY() - 1; y >= start.getBlockY(); y--) {
 						final float yOffset = (y + 0.5f - target.getBlockY()) / verticalSize;
-						if (yOffset > -0.7 && xOffset * xOffset + yOffset * yOffset + zOffset * zOffset < 1) {
+						if ((xOffset * xOffset + zOffset * zOffset) * horizontalScales[y] + (yOffset * yOffset) / 6 < 1) {
 							final Block block = world.getBlock(chunk.getBlockX(x), y, chunk.getBlockZ(z), world);
 							if (block.isMaterial(VanillaMaterials.STONE, VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
 								if (y < 10) {

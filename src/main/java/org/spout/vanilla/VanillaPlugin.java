@@ -80,6 +80,7 @@ import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 public class VanillaPlugin extends CommonPlugin {
+	private static final int loaderThreadCount = 1;
 	public static final int MINECRAFT_PROTOCOL_ID = 29;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
 	private Engine engine;
@@ -209,7 +210,7 @@ public class VanillaPlugin extends CommonPlugin {
 		final int progressStep = total / 10;
 		final OutwardIterator oi = new OutwardIterator();
 		
-		SpawnLoaderThread[] loaderThreads = new SpawnLoaderThread[16];
+		SpawnLoaderThread[] loaderThreads = new SpawnLoaderThread[loaderThreadCount];
 		
 		for (World world : worlds) {
 			// Initialize the first chunks
@@ -220,7 +221,7 @@ public class VanillaPlugin extends CommonPlugin {
 			
 			final String initChunkType = world.getAge() <= 0 ? "Generating" : "Loading";
 			
-			for (int i = 0; i < 16; i++) {
+			for (int i = 0; i < loaderThreadCount; i++) {
 				loaderThreads[i] = new SpawnLoaderThread(total, progressStep, initChunkType);
 			}
 			
@@ -230,11 +231,11 @@ public class VanillaPlugin extends CommonPlugin {
 				SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
 			}
 			
-			for (int i = 0; i < 16; i++) {
+			for (int i = 0; i < loaderThreadCount; i++) {
 				loaderThreads[i].start();
 			}
 			
-			for (int i = 0; i < 16; i++) {
+			for (int i = 0; i < loaderThreadCount; i++) {
 				try {
 					loaderThreads[i].join();
 				} catch (InterruptedException ie) {

@@ -24,12 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.decorator;
+package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
+import org.spout.api.generator.Populator;
 
 import org.spout.api.generator.biome.Biome;
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -39,7 +39,7 @@ import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
-public class SnowDecorator extends Decorator {
+public class SnowPopulator extends Populator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {

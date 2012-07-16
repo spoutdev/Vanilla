@@ -34,7 +34,6 @@ import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.SnowDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
@@ -50,8 +49,7 @@ public class JungleBiome extends GrassyBiome {
 	public JungleBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new JungleTreeWGOFactory()),
 				new FlowerDecorator((byte) 4), new TallGrassDecorator(new JungleTallGrassFactory(), (byte) 15),
-				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator(), new VineDecorator(),
-				new SnowDecorator());
+				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator(), new VineDecorator());
 		setMinMax((byte) 67, (byte) 73);
 	}
 

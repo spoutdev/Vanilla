@@ -41,7 +41,7 @@ public class VineDecorator extends Decorator {
 	private final byte amount;
 
 	public VineDecorator() {
-		this((byte) 15);
+		this((byte) 50);
 	}
 
 	public VineDecorator(byte amount) {
@@ -50,6 +50,9 @@ public class VineDecorator extends Decorator {
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() != 4) {
+			return;
+		}
 		final World world = chunk.getWorld();
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);

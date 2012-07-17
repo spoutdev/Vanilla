@@ -45,8 +45,8 @@ import org.spout.vanilla.inventory.CraftingInventory;
 public abstract class CraftingWindow extends Window {
 	protected final CraftingInventory craftingGrid;
 
-	public CraftingWindow(int id, String title, VanillaPlayer owner, CraftingInventory craftingGrid, WindowOwner... windowOwners) {
-		super(id, title, owner, windowOwners);
+	public CraftingWindow(WindowType type, String title, VanillaPlayer owner, CraftingInventory craftingGrid, WindowOwner... windowOwners) {
+		super(type, title, owner, windowOwners);
 		this.craftingGrid = craftingGrid;
 	}
 

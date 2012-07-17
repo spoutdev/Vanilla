@@ -50,17 +50,6 @@ public final class PlayEffectMessage extends Message {
 		this.data = data;
 	}
 
-	/*
-	 * 0 	South - East
-1 	South
-2 	South - West
-3 	East
-4 	(Up or middle ?)
-5 	West
-6 	North - East
-7 	North
-8 	North - West 
-	 */
 	public static final int SMOKE_NORTH_EAST = 0;
 	public static final int SMOKE_EAST = 1;
 	public static final int SMOKE_SOUTH_EAST = 2;

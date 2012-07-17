@@ -31,23 +31,25 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.WindowMessage;
 import org.spout.vanilla.window.Window;
+import org.spout.vanilla.window.WindowType;
 
 public final class WindowOpenMessage extends WindowMessage {
-	private final int type, slots;
+	private final int slots;
 	private final String title;
+	private final WindowType type;
 
-	public WindowOpenMessage(Window window, int type, String title, int slots) {
-		this(window.getInstanceId(), type, title, slots);
+	public WindowOpenMessage(Window window) {
+		this(window.getInstanceId(), window.getType(), window.getTitle(), window.getInventorySize());
 	}
 
-	public WindowOpenMessage(int windowInstanceId, int type, String title, int slots) {
+	public WindowOpenMessage(int windowInstanceId, WindowType type, String title, int slots) {
 		super(windowInstanceId);
 		this.type = type;
 		this.title = title;
 		this.slots = slots;
 	}
 
-	public int getType() {
+	public WindowType getType() {
 		return type;
 	}
 

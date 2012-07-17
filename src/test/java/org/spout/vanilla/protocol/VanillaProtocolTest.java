@@ -104,6 +104,7 @@ import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
 import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
 import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
 import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
+import org.spout.vanilla.window.WindowType;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
 
@@ -160,7 +161,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayEffectMessage(34566, 1, 2, 34, 5),
 			new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, GameMode.CREATIVE),
 			new SpawnLightningStrikeMessage(34, 1, 23, 45, 55),
-			new WindowOpenMessage(1, 2, "container.furnace", 42),
+			new WindowOpenMessage(1, WindowType.FURNACE, "container.furnace", 42),
 			new WindowCloseMessage(23),
 			new WindowClickMessage(1, 2, false, 34, true, 5, 5, 12, null),
 			new WindowSetSlotMessage(1, 2, 45, 5, 5, null),

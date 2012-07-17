@@ -36,14 +36,14 @@ public class DefaultWindow extends CraftingWindow {
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("36-44, 27-35, 18-26, 9-17, 1, 2, 3, 4, 0, 6, 7, 8, 5");
 
 	public DefaultWindow(VanillaPlayer owner) {
-		super(-1, "Inventory", owner, owner.getInventory().getCraftingGrid());
+		super(WindowType.DEFAULT, "Inventory", owner, owner.getInventory().getCraftingGrid());
 		this.setInventory(owner.getInventory().getMain(), owner.getInventory().getCraftingGrid(), owner.getInventory().getArmor());
 		this.setSlotIndexMap(SLOTS);
 	}
 
 	@Override
-	public boolean hasCloseMessage() {
-		return false;
+	public boolean isDefaultWindow() {
+		return true;
 	}
 
 	@Override

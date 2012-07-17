@@ -30,18 +30,19 @@ import org.spout.vanilla.controller.block.Chest;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.TransactionWindow;
+import org.spout.vanilla.window.WindowType;
 
 public class ChestWindow extends TransactionWindow {
 	public static final SlotIndexMap SMALL_CHEST_SLOTS = new SlotIndexMap("54-62, 45-53, 36-44, 27-35, 18-26, 9-17, 0-8");
 	public static final SlotIndexMap LARGE_CHEST_SLOTS = new SlotIndexMap("81-89, 72-80, 63-71, 54-62, 45-53, 36-44, 27-35, 18-26, 9-17, 0-8");
 
 	public ChestWindow(VanillaPlayer owner, Chest chest1, Chest chest2) {
-		super(0, "Double Chest", owner, chest1, chest2);
+		super(WindowType.CHEST, "Double Chest", owner, chest1, chest2);
 		this.setSlotIndexMap(LARGE_CHEST_SLOTS);
 	}
 
 	public ChestWindow(VanillaPlayer owner, Chest chest) {
-		super(0, "Chest", owner, chest);
+		super(WindowType.CHEST, "Chest", owner, chest);
 		this.setSlotIndexMap(SMALL_CHEST_SLOTS);
 	}
 }

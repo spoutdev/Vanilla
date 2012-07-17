@@ -31,12 +31,13 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
 import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.TransactionWindow;
+import org.spout.vanilla.window.WindowType;
 
 public class EnchantmentTableWindow extends TransactionWindow {
 	private static final SlotIndexMap SLOTS = new SlotIndexMap("28-36, 19-27, 10-18, 1-9, 0");
 
 	public EnchantmentTableWindow(VanillaPlayer owner, EnchantmentTable table) {
-		super(4, "Enchant", owner, table);
+		super(WindowType.ENCHANTMENTTABLE, "Enchant", owner, table);
 		this.setSlotIndexMap(SLOTS);
 	}
 

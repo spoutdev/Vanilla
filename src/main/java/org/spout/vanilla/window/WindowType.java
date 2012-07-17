@@ -24,22 +24,50 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.handler;
+package org.spout.vanilla.window;
 
-import org.spout.api.player.Player;
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import gnu.trove.map.hash.TIntObjectHashMap;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+/**
+ * Available Window Types in the Notchian Minecraft client
+ */
+public enum WindowType {
+	DEFAULT(-1),
+	CHEST(0),
+	CRAFTINGTABLE(1),
+	FURNACE(2),
+	DISPENSER(3),
+	ENCHANTMENTTABLE(4),
+	BREWINGSTAND(5);
 
-public final class CloseWindowMessageHandler extends MessageHandler<WindowCloseMessage> {
-	@Override
-	public void handleServer(Session session, Player player, WindowCloseMessage message) {
-		if (session == null || player == null || message == null) {
-			return;
+	private static final TIntObjectHashMap<WindowType> values = new TIntObjectHashMap<WindowType>();
+	static {
+		for (WindowType type : values()) {
+			values.put(type.getId(), type);
 		}
-		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
-		controller.closeWindow();
+	}
+
+	private final int id;
+	private WindowType(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * Gets the type Id of this Window Type
+	 * 
+	 * @return Type Id
+	 */
+	public int getId() {
+		return this.id;
+	}
+
+	/**
+	 * Gets a certain Window Type by Id
+	 * 
+	 * @param id of the type
+	 * @return Window Type, or null if not found
+	 */
+	public static WindowType getById(int id) {
+		return values.get(id);
 	}
 }

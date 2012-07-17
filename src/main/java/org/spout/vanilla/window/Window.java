@@ -41,11 +41,9 @@ import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.SlotIndexMap;
 
-import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacket;
-
 public class Window implements InventoryViewer {
 	private static final SlotIndexMap DEFAULT_SLOTS = new SlotIndexMap();
-	protected final int id;
+	protected final WindowType type;
 	protected final int instanceId;
 	protected String title;
 	protected final VanillaPlayer owner;
@@ -55,8 +53,8 @@ public class Window implements InventoryViewer {
 	protected boolean isOpen = false;
 	protected WindowOwner[] windowOwners;
 
-	public Window(int id, String title, VanillaPlayer owner, WindowOwner... windowOwners) {
-		this.id = id;
+	public Window(WindowType type, String title, VanillaPlayer owner, WindowOwner... windowOwners) {
+		this.type = type;
 		this.title = title;
 		this.owner = owner;
 		this.instanceId = InventoryUtil.nextWindowId();
@@ -87,19 +85,21 @@ public class Window implements InventoryViewer {
 	}
 
 	/**
-	 * Gets the 'minecraft' or 'notchian' window Id of this Window
-	 * @return window id
+	 * Gets the 'minecraft' or 'notchian' window type of this Window
+	 * @return window type
 	 */
-	public int getId() {
-		return this.id;
+	public WindowType getType() {
+		return this.type;
 	}
 
 	/**
-	 * Gets whether this Window has a close message or not
-	 * @return True if it has a close message, False if not
+	 * Gets whether this Window is the default Window<br>
+	 * Default windows don't have open and close messages
+	 * 
+	 * @return True if it is the default Window, False if not
 	 */
-	public boolean hasCloseMessage() {
-		return true;
+	public boolean isDefaultWindow() {
+		return false;
 	}
 
 	/**
@@ -158,7 +158,9 @@ public class Window implements InventoryViewer {
 		if (this.isOpen()) {
 			return false;
 		}
-		sendPacket(this.getPlayer(), new WindowOpenMessage(this.getInstanceId(), this.getId(), this.getTitle(), getInventorySize()));
+		if (!this.isDefaultWindow()) {
+			sendMessage(new WindowOpenMessage(this));
+		}
 		this.isOpen = true;
 		this.inventory.addViewer(this);
 		this.inventory.notifyViewers();
@@ -177,8 +179,8 @@ public class Window implements InventoryViewer {
 			return false;
 		}
 		this.isOpen = false;
-		if (this.hasCloseMessage()) {
-			sendPacket(this.getPlayer(), new WindowCloseMessage(this.getInstanceId()));
+		if (!this.isDefaultWindow()) {
+			sendMessage(new WindowCloseMessage(this));
 		}
 		this.inventory.removeViewer(this);
 		for (WindowOwner owner : this.windowOwners) {

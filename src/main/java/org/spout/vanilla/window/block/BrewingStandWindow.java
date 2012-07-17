@@ -33,13 +33,14 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.TransactionWindow;
+import org.spout.vanilla.window.WindowType;
 
 public class BrewingStandWindow extends TransactionWindow {
 	public static final SlotIndexMap SLOT_INDEX_MAP = new SlotIndexMap("31-39, 22-30, 13-21, 4-12, 0-3");
 	protected final BrewingStandInventory brewing;
 
 	public BrewingStandWindow(VanillaPlayer owner, BrewingStand stand) {
-		super(5, "Brewing Stand", owner, stand);
+		super(WindowType.BREWINGSTAND, "Brewing Stand", owner, stand);
 		setSlotIndexMap(SLOT_INDEX_MAP);
 		this.brewing = stand.getInventory();
 	}

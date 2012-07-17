@@ -41,7 +41,7 @@ import org.spout.vanilla.protocol.bootstrap.handler.BootstrapLoginRequestMessage
 import org.spout.vanilla.protocol.bootstrap.handler.BootstrapPingMessageHandler;
 import org.spout.vanilla.protocol.handler.AnimationMessageHandler;
 import org.spout.vanilla.protocol.handler.ChatMessageHandler;
-import org.spout.vanilla.protocol.handler.CloseWindowMessageHandler;
+import org.spout.vanilla.protocol.handler.WindowCloseMessageHandler;
 import org.spout.vanilla.protocol.handler.CreativeMessageHandler;
 import org.spout.vanilla.protocol.handler.EntityActionMessageHandler;
 import org.spout.vanilla.protocol.handler.EntityHeadYawMessageHandler;
@@ -104,7 +104,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(PlayerDiggingMessage.class, PlayerDiggingMessageHandler.class);
 			bind(PlayerBlockPlacementMessage.class, PlayerBlockPlacementMessageHandler.class);
 			bind(WindowClickMessage.class, WindowClickMessageHandler.class);
-			bind(WindowCloseMessage.class, CloseWindowMessageHandler.class);
+			bind(WindowCloseMessage.class, WindowCloseMessageHandler.class);
 			bind(HeldItemChangeMessage.class, HeldItemChangeMessageHandler.class);
 			bind(EntityActionMessage.class, EntityActionMessageHandler.class);
 			bind(AnimationMessage.class, AnimationMessageHandler.class);

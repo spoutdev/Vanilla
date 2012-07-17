@@ -34,6 +34,7 @@ import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
 import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.TransactionWindow;
+import org.spout.vanilla.window.WindowType;
 
 public class FurnaceWindow extends TransactionWindow {
 	private static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
@@ -42,7 +43,7 @@ public class FurnaceWindow extends TransactionWindow {
 	private int lastProgress = -1, lastBurnTime = -1;
 
 	public FurnaceWindow(VanillaPlayer owner, Furnace furnace) {
-		super(2, "Furnace", owner, furnace);
+		super(WindowType.FURNACE, "Furnace", owner, furnace);
 		this.setSlotIndexMap(SLOTS);
 		this.furnaceInv = furnace.getInventory();
 	}

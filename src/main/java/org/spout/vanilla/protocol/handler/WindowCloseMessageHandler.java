@@ -24,30 +24,23 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window.block;
+package org.spout.vanilla.protocol.handler;
 
-import org.spout.vanilla.controller.block.CraftingTable;
+import org.spout.api.player.Player;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.inventory.block.CraftingTableInventory;
-import org.spout.vanilla.util.SlotIndexMap;
-import org.spout.vanilla.window.CraftingWindow;
-import org.spout.vanilla.window.WindowType;
+import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 
-public class CraftingTableWindow extends CraftingWindow {
-	private static final SlotIndexMap SLOTS = new SlotIndexMap("37-45, 28-36, 19-27, 10-18, 1-3, 4-6, 7-9, 0");
-
-	public CraftingTableWindow(VanillaPlayer owner, CraftingTable craftingTable) {
-		this(owner, craftingTable, new CraftingTableInventory());
-	}
-
-	private CraftingTableWindow(VanillaPlayer owner, CraftingTable craftingTable, CraftingTableInventory inventory) {
-		super(WindowType.CRAFTINGTABLE, "Crafting", owner, inventory, craftingTable);
-		this.setInventory(owner.getInventory().getMain(), inventory);
-		this.setSlotIndexMap(SLOTS);
-	}
-
+public final class WindowCloseMessageHandler extends MessageHandler<WindowCloseMessage> {
 	@Override
-	public int getInventorySize() {
-		return this.getInventory().getSize() - this.getOwner().getInventory().getMain().getSize();
+	public void handleServer(Session session, Player player, WindowCloseMessage message) {
+		if (session == null || player == null || message == null) {
+			return;
+		}
+		System.out.println(message);
+		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
+		controller.closeWindow();
 	}
 }

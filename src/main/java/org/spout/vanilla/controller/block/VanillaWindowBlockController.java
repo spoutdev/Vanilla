@@ -80,12 +80,23 @@ public abstract class VanillaWindowBlockController extends VanillaBlockControlle
 
 	@Override
 	public Window removeViewer(VanillaPlayer player) {
-		return this.viewers.remove(player);
+		try {
+			return this.viewers.remove(player);
+		} finally {
+			onViewersChanged();
+		}
 	}
 
 	@Override
 	public void addViewer(VanillaPlayer player, Window window) {
 		this.viewers.put(player, window);
+		this.onViewersChanged();
+	}
+
+	/**
+	 * Is called when a viewer got removed or added
+	 */
+	public void onViewersChanged() {
 	}
 
 	@Override

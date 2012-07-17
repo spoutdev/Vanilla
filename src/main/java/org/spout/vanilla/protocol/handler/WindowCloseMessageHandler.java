@@ -39,7 +39,7 @@ public final class WindowCloseMessageHandler extends MessageHandler<WindowCloseM
 		if (session == null || player == null || message == null) {
 			return;
 		}
-		System.out.println(message);
+
 		VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
 		controller.closeWindow();
 	}

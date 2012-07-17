@@ -52,7 +52,6 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 			return;
 		}
 
-		System.out.println(message);
 		Window active = controller.getActiveWindow();
 
 		if (message.getId() == -1) {

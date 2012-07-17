@@ -49,4 +49,14 @@ public class TransactionWindow extends Window {
 	public int getInventorySize() {
 		return this.getInventory().getSize() - this.getOwner().getInventory().getMain().getSize();
 	}
+
+	@Override
+	public boolean close() {
+		if (super.close()) {
+			this.dropItemOnCursor();
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

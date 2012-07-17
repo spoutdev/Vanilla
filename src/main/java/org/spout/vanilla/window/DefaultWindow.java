@@ -50,4 +50,16 @@ public class DefaultWindow extends CraftingWindow {
 	public int getInstanceId() {
 		return 0;
 	}
+
+	@Override
+	public boolean close() {
+		if (super.close()) {
+			if (this.getOwner().isSurvival()) {
+				this.dropItemOnCursor();
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

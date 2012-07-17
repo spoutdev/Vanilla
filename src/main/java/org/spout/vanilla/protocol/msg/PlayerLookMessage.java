@@ -45,10 +45,10 @@ public final class PlayerLookMessage extends Message {
 		double rp = Math.toRadians(pitch);
 		double ry = Math.toRadians(yaw);
 		float x = (float) (-Math.cos(rp) * Math.sin(ry));
-		float y = (float) (-Math.sin(ry));
+		float y = (float) (-Math.sin(rp));
 		float z = (float) (Math.cos(rp) * Math.cos(ry));
 		lookingAt = new Vector3(x, y, z);
-		roll = lookingAt.getZ();
+		roll = 0.0f; // There is no roll
 	}
 
 	public float getYaw() {

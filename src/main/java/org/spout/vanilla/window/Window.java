@@ -38,7 +38,6 @@ import org.spout.vanilla.protocol.msg.WindowMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 import org.spout.vanilla.util.InventoryUtil;
-import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.SlotIndexMap;
 
 public class Window implements InventoryViewer {
@@ -186,7 +185,6 @@ public class Window implements InventoryViewer {
 		for (WindowOwner owner : this.windowOwners) {
 			owner.removeViewer(this.getOwner());
 		}
-		this.dropItemOnCursor();
 		return true;
 	}
 
@@ -260,7 +258,7 @@ public class Window implements InventoryViewer {
 	 */
 	public void dropItemOnCursor() {
 		if (this.hasItemOnCursor()) {
-			ItemUtil.dropItemNaturally(this.getOwner().getParent().getPosition(), this.getItemOnCursor());
+			this.getOwner().dropItem(this.getItemOnCursor());
 			this.setItemOnCursor(null);
 		}
 	}

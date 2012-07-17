@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living.player;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.Source;
@@ -38,13 +39,14 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
-import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.GameMode;
@@ -60,6 +62,7 @@ import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.util.EnchantmentUtil;
+import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.window.DefaultWindow;
@@ -535,24 +538,48 @@ public class VanillaPlayer extends Human implements PlayerController {
 		return playerInventory;
 	}
 
+	private static Vector3 getRandomVelocity(Random rand, float force) {
+		return new Vector3(rand.nextFloat(), 0.0, rand.nextFloat()).normalize().multiply(force * rand.nextFloat());
+	}
+
+	/**
+	 * Drops the item specified into a random direction
+	 * 
+	 * @param item to drop
+	 */
+	public void dropItemRandom(ItemStack item) {
+		Random rand = new Random(getParent().getWorld().getAge());
+		Point position = this.getHeadPosition().subtract(0.0, 0.3, 0.0);
+		Vector3 velocity = getRandomVelocity(rand, 0.5f).add(0.0, 0.2, 0.0);
+		ItemUtil.dropItem(position, item, velocity);
+	}
+
+	/**
+	 * Drops the item specified into the direction the player looks
+	 * 
+	 * @param item to drop
+	 */
+	public void dropItem(ItemStack item) {
+		Random rand = new Random(getParent().getWorld().getAge());
+		Point position = this.getHeadPosition().subtract(0.0, 0.3, 0.0);
+		Vector3 velocity = getLookingAt().multiply(0.3).add(0.0, 0.1, 0.0);
+		velocity = velocity.add(getRandomVelocity(rand, 0.02f));
+		velocity = velocity.add(0.0f, (rand.nextFloat() - rand.nextFloat()) * 0.1f, 0.0f);
+		ItemUtil.dropItem(position, item, velocity);
+	}
+
 	/**
 	 * Drops the player's current item.
 	 */
 	public void dropItem() {
-		ItemStack current = this.getInventory().getQuickbar().getCurrentItem();
+		InventorySlot slot = this.getInventory().getQuickbar().getCurrentSlotInventory();
+		ItemStack current = slot.getItem();
 		if (current == null) {
 			return;
 		}
-		ItemStack drop = new ItemStack(current.getMaterial(), 1);
-		drop.setNBTData(current.getNBTData());
-		Item control = new Item(drop, getHeadPosition().subtract(getLookingAt()));
-		if (current.getAmount() > 1) {
-			current.setAmount(current.getAmount() - 1);
-		} else {
-			current = null;
-		}
-		this.getInventory().getQuickbar().setCurrentItem(current);
-		getParent().getWorld().createAndSpawnEntity(getHeadPosition().add(0.0, 0.4, 0.0), control);
+		ItemStack drop = current.clone().setAmount(1);
+		slot.addItemAmount(-1);
+		this.dropItem(drop);
 	}
 
 	/**

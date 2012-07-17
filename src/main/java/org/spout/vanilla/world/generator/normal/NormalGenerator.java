@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.normal;
 
 import java.util.Random;
+import org.spout.api.generator.biome.BiomePopulator;
 
 import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.api.geo.World;
@@ -44,24 +45,20 @@ import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator
 import org.spout.vanilla.world.generator.normal.populator.OrePopulator;
 import org.spout.vanilla.world.generator.normal.populator.PondPopulator;
 import org.spout.vanilla.world.generator.normal.populator.SmoothPopulator;
+import org.spout.vanilla.world.generator.normal.populator.SnowPopulator;
 import org.spout.vanilla.world.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGenerator {
-	private BiomeSelector selector;
 	public final static int SEA_LEVEL = 63;
 
 	@Override
 	public void registerBiomes() {
 		// if you want to check out a particular biome, use this!
 		//selector = new PerBlockBiomeSelector(VanillaBiomes.MUSHROOM_SHORE);
-		selector = new VanillaBiomeSelector(5f);
-		setSelector(selector);
-		addPopulator(new SmoothPopulator());
-		addPopulator(new CavePopulator());
-		addPopulator(new PondPopulator());
-		addPopulator(new DungeonPopulator());
-		addPopulator(new OrePopulator());
-		addPopulator(new FallingLiquidPopulator());
+		setSelector(new VanillaBiomeSelector(5f));
+		addPopulators(new SmoothPopulator(), new CavePopulator(), new PondPopulator(),
+				new DungeonPopulator(), new OrePopulator(), new FallingLiquidPopulator(),
+				new BiomePopulator(getBiomeMap()), new SnowPopulator());
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.FROZEN_OCEAN);
 		register(VanillaBiomes.PLAIN);
@@ -96,6 +93,7 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 
 		//Moves the spawn out of the ocean (and likely on to a beach, as in MC).
 		int shift = 0;
+		final BiomeSelector selector = getSelector();
 		while (selector.pickBiome(shift, 0, world.getSeed()) == VanillaBiomes.OCEAN && shift < 16000) {
 			shift += 16;
 		}

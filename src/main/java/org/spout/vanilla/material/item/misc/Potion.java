@@ -167,6 +167,15 @@ public class Potion extends VanillaItemMaterial {
 		super(name, 373, data, parent);
 	}
 
+	/**
+	 * Gets whether this type of Potion is a Splash potion
+	 * 
+	 * @return True if it is a Splash potion, False if not
+	 */
+	public boolean isSplash() {
+		return (this.getData() & ACTION_SPLASH) == ACTION_SPLASH;
+	}
+
 	@Override
 	public Potion getParentMaterial() {
 		return (Potion) super.getParentMaterial();

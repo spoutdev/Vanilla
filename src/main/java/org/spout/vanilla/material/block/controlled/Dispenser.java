@@ -26,26 +26,60 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
+import java.util.Random;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.controller.object.projectile.Arrow;
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.material.item.misc.Potion;
+import org.spout.vanilla.material.item.misc.SpawnEgg;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.util.MoveReaction;
+import org.spout.vanilla.util.RedstoneUtil;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Dispenser extends ControlledMaterial implements Directional, Mineable {
+public class Dispenser extends ControlledMaterial implements Directional, Mineable, RedstoneTarget {
 	public Dispenser(String name, int id) {
 		super(VanillaControllerTypes.DISPENSER, name, id);
 		this.setHardness(3.5F).setResistance(5.8F);
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return true;
+	}
+
+	@Override
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		getController(block).setPowered(this.isReceivingPower(block));
+	}
+
+	@Override
+	public org.spout.vanilla.controller.block.Dispenser getController(Block block) {
+		return (org.spout.vanilla.controller.block.Dispenser) super.getController(block);
 	}
 
 	@Override
@@ -61,6 +95,71 @@ public class Dispenser extends ControlledMaterial implements Directional, Mineab
 	@Override
 	public BlockFace getFacing(Block block) {
 		return BlockFaces.EWNS.get(block.getData() - 2);
+	}
+
+	/**
+	 * Shoots an item from this Dispenser
+	 * 
+	 * @param block of the Dispenser
+	 * @param item to shoot
+	 */
+	public boolean shootItem(Block block, ItemStack item) {
+		if (item == null) {
+			VanillaNetworkUtil.playBlockEffect(block, null, Messages.RANDOM_CLICK_2);
+			return false;
+		}
+		Random rand = new Random(block.getWorld().getAge());
+		Vector3 direction = this.getFacing(block).getOffset();
+
+		// Calculate position to shoot from
+		Point position = block.getPosition().add(direction.multiply(0.6));
+		Controller controller = null;
+
+		// Calculate shooting velocity using facing direction
+		Vector3 velocity = direction.multiply(rand.nextDouble() * 0.1 + 0.2);
+		// Set velocity y to above (0.2)
+		velocity = velocity.multiply(1.0, 0.0, 1.0).add(0.0, 0.2, 0.0);
+		velocity = velocity.add(0.045 * rand.nextGaussian(), 0.045 * rand.nextGaussian(), 0.045 * rand.nextGaussian());
+
+		Messages message;
+		Material material = item.getSubMaterial();
+		//TODO: Implement the following 'special' shoot cases:
+		// - eggs, arrows, fireballs and snowballs
+		// - potions, exp. bottles and monster eggs
+
+		if (material.equals(VanillaMaterials.ARROW)) {
+			message = Messages.RANDOM_BOW;
+			controller = new Arrow(new Quaternion(1.0f, direction.add(0.0, 0.1, 0.0)), 1.1f, 6.0f);
+		} else if (material.equals(VanillaMaterials.EGG)) {
+			message = Messages.RANDOM_BOW;
+			//TODO: Spawn
+		} else if (material.equals(VanillaMaterials.SNOWBALL)) {
+			message = Messages.RANDOM_BOW;
+			//TODO: Spawn
+		} else if (material instanceof Potion && ((Potion) material).isSplash()) {
+			message = Messages.RANDOM_BOW;
+			//TODO: Spawn
+		} else if (material.equals(VanillaMaterials.EXP_BOTTLE)) {
+			message = Messages.RANDOM_BOW;
+			//TODO: Spawn
+		} else if (material instanceof SpawnEgg) {
+			message = Messages.RANDOM_BOW;
+			//TODO: Spawn
+		} else if (material.equals(VanillaMaterials.FIRE_CHARGE)) {
+			message = Messages.SHOOT_FIREBALL;
+			//TODO: Spawn
+		} else {
+			message = Messages.RANDOM_CLICK_1;
+			position = position.subtract(0.0, 0.3, 0.0);
+			controller = new Item(item, velocity);
+		}
+
+		if (controller != null) {
+			block.getWorld().createAndSpawnEntity(position, controller);
+		}
+		VanillaNetworkUtil.playBlockEffect(block, null, message);
+		VanillaNetworkUtil.playBlockEffect(block, null, Messages.PARTICLE_SMOKE, PlayEffectMessage.getSmokeDirection(direction));
+		return true;
 	}
 
 	@Override
@@ -91,7 +190,13 @@ public class Dispenser extends ControlledMaterial implements Directional, Mineab
 			}
 
 			// Open the dispenser
-			((org.spout.vanilla.controller.block.Dispenser) block.getController()).open((VanillaPlayer) controller);
+			getController(block).open((VanillaPlayer) controller);
 		}
+	}
+
+
+	@Override
+	public boolean isReceivingPower(Block block) {
+		return RedstoneUtil.isReceivingPower(block);
 	}
 }

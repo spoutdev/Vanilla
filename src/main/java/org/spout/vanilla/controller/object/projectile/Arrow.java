@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.controller.object.projectile;
 
+import java.util.Random;
+
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
@@ -33,21 +36,42 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Projectile;
 
 public class Arrow extends Projectile {
-	private static final Vector3 MAX_ARROW_SPEED = new Vector3(10, 10, 10); //TODO are these numbers right?
+	private static final Vector3 MAX_ARROW_SPEED = new Vector3(0.8, 0.8, 0.8); //TODO are these numbers right?
 
-	public Arrow(Quaternion rotation, float charge) {
-		super(VanillaControllerTypes.SHOT_ARROW, rotation, MAX_ARROW_SPEED);
-		this.setVelocity(rotation.getAxisAngles().multiply(charge));
+	protected Arrow() {
+		super(VanillaControllerTypes.SHOT_ARROW, Quaternion.IDENTITY, MAX_ARROW_SPEED);
 	}
 
-	public Arrow(Quaternion rotation, Vector3 maxSpeed, float charge) {
+	public Arrow(Quaternion rotation, float charge, float randomCharge) {
+		this(rotation, charge, randomCharge, MAX_ARROW_SPEED);
+	}
+
+	public Arrow(Quaternion rotation, float charge, float randomCharge, Vector3 maxSpeed) {
 		super(VanillaControllerTypes.SHOT_ARROW, rotation, maxSpeed);
-		this.setVelocity(rotation.getAxisAngles().multiply(charge));
+		Random rand = new Random();
+		Vector3 randVel = new Vector3(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian()).multiply(randomCharge).multiply(0.0075);
+		this.setVelocity(rotation.getAxisAngles().add(randVel).multiply(charge));
+	}
+
+	public Arrow(Quaternion rotation, Vector3 velocity, Vector3 maxSpeed) {
+		super(VanillaControllerTypes.SHOT_ARROW, rotation, maxSpeed);
+		this.setVelocity(velocity);
 	}
 
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
+		// gravity
+		this.setVelocity(this.getVelocity().subtract(0, 0.04, 0));
 		this.move();
+		// slow-down
+		this.setVelocity(this.getVelocity().multiply(0.98));
+
+		//TODO: proper entity on ground function
+		Block below = getParent().getWorld().getBlock(getParent().getPosition().subtract(0.0, 0.2, 0.0), getParent());
+		if (below.getMaterial().isSolid()) {
+			//this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
+			this.setVelocity(this.getVelocity().multiply(0.7, 0.0, 0.7).add(0.0, 0.06, 0.0));
+		}
 	}
 }

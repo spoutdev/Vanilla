@@ -64,7 +64,6 @@ public class Bow extends RangedWeapon {
 	}
 
 	public void shoot(Entity entity) {
-		//TODO: Get random direction and such
-		entity.getWorld().createAndSpawnEntity(entity.getPosition(), new Arrow(entity.getRotation(), 0.8f));
+		entity.getWorld().createAndSpawnEntity(entity.getPosition(), new Arrow(entity.getRotation(), 0.8f, 1.0f));
 	}
 }

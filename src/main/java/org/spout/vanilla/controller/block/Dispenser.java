@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.block;
 
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.controller.TransactionWindowOwner;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -35,6 +36,7 @@ import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.block.DispenserWindow;
 
 public class Dispenser extends VanillaWindowBlockController implements TransactionWindowOwner {
+	private boolean isPowered = false;
 	private final DispenserInventory inventory;
 
 	public Dispenser() {
@@ -48,6 +50,67 @@ public class Dispenser extends VanillaWindowBlockController implements Transacti
 
 	@Override
 	public void onAttached() {
+		this.isPowered = VanillaMaterials.DISPENSER.isReceivingPower(this.getBlock());
+	}
+
+	/**
+	 * Shoots the next Item
+	 * 
+	 * @return True if an item was shot, False if not
+	 */
+	public boolean shootItem() {
+		return this.shootItem(this.pollNextItem());
+	}
+
+	/**
+	 * Shoots an item from this Dispenser
+	 * 
+	 * @param item to shoot
+	 * @return True if an item was shot, False if not
+	 */
+	public boolean shootItem(ItemStack item) {
+		return VanillaMaterials.DISPENSER.shootItem(this.getBlock(), item);
+	}
+
+	/**
+	 * Polls the next Item from this Dispenser<br>
+	 * If this Dispenser is empty, null is returned
+	 * 
+	 * @return the item, or null if none available
+	 */
+	public ItemStack pollNextItem() {
+		for (int i = 0; i < this.inventory.getSize(); i++) {
+			ItemStack item = this.inventory.getItem(i);
+			if (item != null) {
+				this.inventory.addItemAmount(i, -1);
+				return item.clone().setAmount(1);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Gets whether this Dispenser is being powered
+	 * 
+	 * @return True if powered, False if not
+	 */
+	public boolean isPowered() {
+		return this.isPowered;
+	}
+
+	/**
+	 * Sets the powered state of this Dispenser<br>
+	 * Will shoot an item when power goes from low to high
+	 * 
+	 * @param powered state to set to
+	 */
+	public void setPowered(boolean powered) {
+		if (this.isPowered != powered) {
+			this.isPowered = powered;
+			if (powered) {
+				this.shootItem();
+			}
+		}
 	}
 
 	@Override

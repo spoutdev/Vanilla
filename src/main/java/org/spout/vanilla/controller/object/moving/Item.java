@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.object.moving;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
@@ -101,8 +102,10 @@ public class Item extends Substance {
 		this.setVelocity(this.getVelocity().multiply(0.98));
 
 		//TODO: proper entity on ground function
-		if (getParent().getWorld().getBlock(getParent().getPosition(), getParent()).translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
-			this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
+		Block below = getParent().getWorld().getBlock(getParent().getPosition().subtract(0.0, 0.2, 0.0), getParent());
+		if (below.getMaterial().isSolid()) {
+			//this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
+			this.setVelocity(this.getVelocity().multiply(0.7, 0.0, 0.7).add(0.0, 0.06, 0.0));
 		}
 
 		//TODO: Block friction / burn damage / etc.

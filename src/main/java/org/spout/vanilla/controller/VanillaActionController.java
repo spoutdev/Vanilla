@@ -78,7 +78,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 	// Velocity-related
 	private Vector3 velocity = Vector3.ZERO;
 	private Vector3 movementSpeed = Vector3.ZERO;
-	private Vector3 maxSpeed = Vector3.ZERO;
+	private Vector3 maxSpeed = new Vector3(0.4, 0.4, 0.4);
 	// Controller characteristics
 	private int health = 1;
 	private int maxHealth = 1;
@@ -105,9 +105,11 @@ public abstract class VanillaActionController extends Controller implements Vani
 		health = data().get(Data.HEALTH);
 		isFlammable = data().get(Data.FLAMMABLE);
 		maxHealth = data().get(Data.MAX_HEALTH);
-		maxSpeed = data().get(Data.MAX_SPEED);
-		movementSpeed = data().get(Data.MOVEMENT_SPEED);
-		velocity = data().get(Data.VELOCITY);
+		maxSpeed = data().get(Data.MAX_SPEED, maxSpeed);
+		movementSpeed = data().get(Data.MOVEMENT_SPEED, movementSpeed);
+		if (data().containsKey(Data.VELOCITY)) {
+			velocity = data().get(Data.VELOCITY);
+		}
 	}
 
 	@Override

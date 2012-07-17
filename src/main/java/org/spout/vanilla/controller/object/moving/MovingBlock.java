@@ -44,13 +44,6 @@ import org.spout.vanilla.util.ItemUtil;
 public class MovingBlock extends Substance {
 	private BlockMaterial material;
 
-	/**
-	 * Creates a moving block controller. Intended for deserialization only.
-	 */
-	protected MovingBlock() {
-		this(VanillaMaterials.SAND);
-	}
-
 	public MovingBlock(BlockMaterial block) {
 		super(VanillaControllerTypes.FALLING_BLOCK);
 		material = block;
@@ -68,9 +61,8 @@ public class MovingBlock extends Substance {
 	}
 
 	@Override
-	public void onSave() {
-		super.onSave();
-		data().put(Data.HELD_ITEM, new ItemStack(this.material, 1));
+	public boolean isSavable() {
+		return false;
 	}
 
 	/**

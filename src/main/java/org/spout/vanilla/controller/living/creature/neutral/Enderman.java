@@ -32,6 +32,7 @@ import java.util.Set;
 import org.spout.api.Source;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
+import org.spout.api.data.Data;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaActionController;
@@ -39,7 +40,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.Data;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Enderman extends Creature implements Neutral {

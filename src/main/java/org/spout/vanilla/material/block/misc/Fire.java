@@ -38,7 +38,7 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 
-import org.spout.vanilla.data.Data;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -136,7 +136,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		if (below.equals(VanillaMaterials.NETHERRACK)) {
 			return false;
 		}
-		if (below.equals(VanillaMaterials.BEDROCK) && block.getWorld().getDataMap().get(Data.DIMENSION) == Dimension.THE_END) {
+		if (below.equals(VanillaMaterials.BEDROCK) && block.getWorld().getDataMap().get(VanillaData.DIMENSION) == Dimension.THE_END) {
 			return false;
 		}
 		return true;

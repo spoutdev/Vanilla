@@ -36,10 +36,9 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.VanillaMaterials;
 
 /**
- * Various data keys used in Vanilla. This class is intended to help developers use the set keys Vanilla creates with the powerful
- * datatable concept without knowing the actual keys.
+ * * Common Vanilla-like data mappings that are found in Vanilla.
  */
-public class Data {
+public class VanillaData {
 	//World-specific
 	public static final DefaultedKey<Dimension> DIMENSION = new DefaultedKeyImpl<Dimension>("dimension", Dimension.NORMAL);
 	public static final DefaultedKey<Difficulty> DIFFICULTY = new DefaultedKeyImpl<Difficulty>("difficulty", Difficulty.EASY);
@@ -70,10 +69,7 @@ public class Data {
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific
-	public static final DefaultedKey<ItemStack> HELD_ITEM = new DefaultedKeyImpl<ItemStack>("held_item", new ItemStack(VanillaMaterials.AIR, 1));
 	public static final DefaultedKey<Integer> UNCOLLECTABLE_TICKS = new DefaultedKeyImpl<Integer>("uncollectable_ticks", 5);
 	//Slime-specific
 	public static final DefaultedKey<Byte> SLIME_SIZE = new SlimeSize("slime_size");
-	//Human-specific
-	public static final DefaultedKey<String> TITLE = new DefaultedKeyImpl<String>("title", "Steve");
 }

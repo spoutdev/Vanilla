@@ -31,7 +31,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.controller.TransactionWindowOwner;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.Data;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
@@ -53,8 +53,8 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 
 	@Override
 	public void onAttached() {
-		if (data().containsKey(Data.ITEMS)) {
-			this.inventory.setContents(data().get(Data.ITEMS));
+		if (data().containsKey(VanillaData.ITEMS)) {
+			this.inventory.setContents(data().get(VanillaData.ITEMS));
 		}
 		this.isBurningState = getBlock().getMaterial() == VanillaMaterials.FURNACE_BURNING;
 	}
@@ -62,7 +62,7 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put(Data.ITEMS, this.inventory.getContents());
+		data().put(VanillaData.ITEMS, this.inventory.getContents());
 	}
 
 	@Override

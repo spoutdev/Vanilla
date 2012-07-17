@@ -28,6 +28,7 @@ package org.spout.vanilla.controller.living;
 
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
+import org.spout.api.data.Data;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
@@ -36,7 +37,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.Data;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 

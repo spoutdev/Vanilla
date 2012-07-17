@@ -57,7 +57,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.ControllerChangeReason;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.controller.world.RegionSpawner;
-import org.spout.vanilla.data.Data;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
@@ -77,7 +77,7 @@ public class VanillaListener implements Listener {
 		Player player = event.getPlayer();
 		Entity playerEntity = player.getEntity();
 		player.getSession().setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
-		VanillaPlayer vanillaPlayer = new VanillaPlayer(player, playerEntity.getWorld().getDataMap().get(Data.GAMEMODE));
+		VanillaPlayer vanillaPlayer = new VanillaPlayer(player, playerEntity.getWorld().getDataMap().get(VanillaData.GAMEMODE));
 
 		playerEntity.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
 

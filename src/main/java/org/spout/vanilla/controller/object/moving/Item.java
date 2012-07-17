@@ -27,6 +27,7 @@
 package org.spout.vanilla.controller.object.moving;
 
 import org.spout.api.collision.CollisionStrategy;
+import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
@@ -38,7 +39,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.Substance;
-import org.spout.vanilla.data.Data;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 
@@ -80,14 +81,14 @@ public class Item extends Substance {
 			is = data().get(Data.HELD_ITEM).clone();
 		}
 
-		uncollectableTicks = data().get(Data.UNCOLLECTABLE_TICKS, uncollectableTicks);
+		uncollectableTicks = data().get(VanillaData.UNCOLLECTABLE_TICKS, uncollectableTicks);
 	}
 
 	@Override
 	public void onSave() {
 		super.onSave();
 		data().put(Data.HELD_ITEM, is);
-		data().put(Data.UNCOLLECTABLE_TICKS, uncollectableTicks);
+		data().put(VanillaData.UNCOLLECTABLE_TICKS, uncollectableTicks);
 	}
 
 	@Override

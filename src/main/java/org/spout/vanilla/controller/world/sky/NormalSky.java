@@ -30,7 +30,7 @@ import org.spout.api.Spout;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.world.VanillaSky;
-import org.spout.vanilla.data.Data;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
@@ -76,7 +76,7 @@ public class NormalSky extends VanillaSky {
 		if (event.isCancelled()) {
 			return;
 		}
-		this.getWorld().getDataMap().put(Data.WEATHER, newWeather);
+		this.getWorld().getDataMap().put(VanillaData.WEATHER, newWeather);
 
 		byte reason = (newWeather.equals(Weather.RAIN) || newWeather.equals(Weather.THUNDERSTORM)) ? ChangeGameStateMessage.BEGIN_RAINING : ChangeGameStateMessage.END_RAINING;
 		broadcastMessage(new ChangeGameStateMessage(reason));

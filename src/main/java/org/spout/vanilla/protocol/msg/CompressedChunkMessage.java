@@ -41,7 +41,7 @@ public final class CompressedChunkMessage extends Message {
 
 	public CompressedChunkMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, int unused, byte[][] data, byte[] biomeData) {
 		if (hasAdditionalData.length != data.length || data.length != 16) {
-			throw new IllegalArgumentException("Data and hasAdditionalDta must have a length of 16");
+			throw new IllegalArgumentException("Data and hasAdditionalData must have a length of 16");
 		}
 		this.x = x;
 		this.z = z;

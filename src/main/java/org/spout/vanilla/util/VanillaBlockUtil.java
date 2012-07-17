@@ -33,7 +33,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
-import org.spout.vanilla.data.Data;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class VanillaBlockUtil {
@@ -46,7 +46,7 @@ public class VanillaBlockUtil {
 	 * @return True if it is raining, False if not
 	 */
 	public static boolean hasRainNearby(Block block) {
-		if (block.getWorld().getDataMap().get(Data.WEATHER).isRaining()) {
+		if (block.getWorld().getDataMap().get(VanillaData.WEATHER).isRaining()) {
 			for (BlockFace face : BlockFaces.NESW) {
 				if (block.translate(face).isAtSurface()) {
 					return true;
@@ -63,7 +63,7 @@ public class VanillaBlockUtil {
 	 * @return True if rain is falling on the Block, false if not
 	 */
 	public static boolean isRaining(Block block) {
-		return block.getWorld().getDataMap().get(Data.WEATHER).isRaining() && block.isAtSurface();
+		return block.getWorld().getDataMap().get(VanillaData.WEATHER).isRaining() && block.isAtSurface();
 	}
 
 	/**

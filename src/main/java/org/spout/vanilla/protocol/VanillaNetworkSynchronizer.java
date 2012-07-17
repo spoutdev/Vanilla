@@ -57,7 +57,7 @@ import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.Data;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
@@ -331,10 +331,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	protected void worldChanged(World world) {
 		//Grab world characteristics.
-		GameMode gamemode = world.getDataMap().get(Data.GAMEMODE);
-		Difficulty difficulty = world.getDataMap().get(Data.DIFFICULTY);
-		Dimension dimension = world.getDataMap().get(Data.DIMENSION);
-		WorldType worldType = world.getDataMap().get(Data.WORLD_TYPE);
+		GameMode gamemode = world.getDataMap().get(VanillaData.GAMEMODE);
+		Difficulty difficulty = world.getDataMap().get(VanillaData.DIFFICULTY);
+		Dimension dimension = world.getDataMap().get(VanillaData.DIMENSION);
+		WorldType worldType = world.getDataMap().get(VanillaData.WORLD_TYPE);
 
 		//TODO Handle infinite height
 		if (first) {

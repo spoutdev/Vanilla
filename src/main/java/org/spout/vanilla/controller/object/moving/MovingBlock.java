@@ -33,8 +33,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
-import org.spout.vanilla.data.Data;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.util.ItemUtil;
 
 /**
@@ -47,17 +46,6 @@ public class MovingBlock extends Substance {
 	public MovingBlock(BlockMaterial block) {
 		super(VanillaControllerTypes.FALLING_BLOCK);
 		material = block;
-	}
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		if (data().containsKey(Data.HELD_ITEM)) {
-			ItemStack item = data().get(Data.HELD_ITEM);
-			if (item.getMaterial() instanceof BlockMaterial) {
-				this.material = (BlockMaterial) item.getMaterial();
-			}
-		}
 	}
 
 	@Override

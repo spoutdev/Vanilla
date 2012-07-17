@@ -59,7 +59,7 @@ import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
-import org.spout.vanilla.data.Data;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
@@ -190,9 +190,9 @@ public class VanillaPlugin extends CommonPlugin {
 				World world = engine.loadWorld(worldNode.getWorldName(), generator);
 
 				// Apply general settings
-				world.getDataMap().put(Data.GAMEMODE, GameMode.valueOf(worldNode.GAMEMODE.getString().toUpperCase()));
-				world.getDataMap().put(Data.DIFFICULTY, Difficulty.valueOf(worldNode.DIFFICULTY.getString().toUpperCase()));
-				world.getDataMap().put(Data.DIMENSION, Dimension.valueOf(worldNode.SKY_TYPE.getString().toUpperCase()));
+				world.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(worldNode.GAMEMODE.getString().toUpperCase()));
+				world.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(worldNode.DIFFICULTY.getString().toUpperCase()));
+				world.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(worldNode.SKY_TYPE.getString().toUpperCase()));
 
 				// Grab safe spawn if newly created world.
 				if (world.getAge() <= 0) {

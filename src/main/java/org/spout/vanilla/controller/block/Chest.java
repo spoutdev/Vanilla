@@ -33,7 +33,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.TransactionWindowOwner;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.Data;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaNetworkUtil;
@@ -51,15 +51,15 @@ public class Chest extends VanillaWindowBlockController implements TransactionWi
 
 	@Override
 	public void onAttached() {
-		if (data().containsKey(Data.ITEMS)) {
-			this.inventory.setContents(data().get(Data.ITEMS));
+		if (data().containsKey(VanillaData.ITEMS)) {
+			this.inventory.setContents(data().get(VanillaData.ITEMS));
 		}
 	}
 
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put(Data.ITEMS, this.inventory.getContents());
+		data().put(VanillaData.ITEMS, this.inventory.getContents());
 	}
 
 	@Override

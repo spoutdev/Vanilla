@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.spout.api.Spout;
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.Protection;
@@ -90,7 +91,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			for (Protection p : protections) {
 				if (p.contains(point) && !vp.isOp()) {
 					player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID & 0xFF, block.getData() & 0xF));
-					player.sendMessage("This area is a protected spawn point!");
+					player.sendMessage(ChatStyle.DARK_RED + "This area is a protected spawn point!");
 					return;
 				}
 			}

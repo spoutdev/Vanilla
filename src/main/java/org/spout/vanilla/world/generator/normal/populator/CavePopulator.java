@@ -68,7 +68,8 @@ public class CavePopulator extends Populator {
 		final World world = chunk.getWorld();
 
 		for (int caveCount = 0; caveCount < numberOfCaves; caveCount++) {
-			final Point target = new Point(world, chunk.getBlockX(random), random.nextInt(128), chunk.getBlockZ(random));
+			final Point target = new Point(world, chunk.getBlockX(random),
+					random.nextInt(random.nextInt(120) + 8), chunk.getBlockZ(random));
 			int numberOfSmallCaves = 1;
 
 			if (random.nextInt(4) == 0) {
@@ -161,10 +162,10 @@ public class CavePopulator extends Populator {
 				continue;
 			}
 
-			final Point start = new Point(chunk.getWorld(), MathHelper.floor(target.getBlockX() - horizontalSize) - chunk.getBlockX(-1),
-					MathHelper.floor(target.getBlockY() - verticalSize) - 1, MathHelper.floor(target.getBlockZ() - horizontalSize) - chunk.getBlockZ(-1));
-			final Point end = new Point(chunk.getWorld(), MathHelper.floor(target.getBlockX() + horizontalSize) - chunk.getBlockX(1),
-					MathHelper.floor(target.getBlockY() + verticalSize) + 1, MathHelper.floor(target.getBlockZ() + horizontalSize) - chunk.getBlockZ(1));
+			final Point start = new Point(chunk.getWorld(), MathHelper.floor(target.getX() - horizontalSize) - chunk.getBlockX(-1),
+					MathHelper.floor(target.getY() - verticalSize) - 1, MathHelper.floor(target.getZ() - horizontalSize) - chunk.getBlockZ(-1));
+			final Point end = new Point(chunk.getWorld(), MathHelper.floor(target.getX() + horizontalSize) - chunk.getBlockX(1),
+					MathHelper.floor(target.getY() + verticalSize) + 1, MathHelper.floor(target.getZ() + horizontalSize) - chunk.getBlockZ(1));
 			final CaveNode node = new CaveNode(chunk, start, end, target, verticalSize, horizontalSize);
 
 			if (node.canPlace()) {
@@ -221,14 +222,14 @@ public class CavePopulator extends Populator {
 
 		private void place() {
 			for (int x = start.getBlockX(); x < end.getBlockX(); x++) {
-				final float xOffset = (chunk.getBlockX(x) + 0.5f - target.getBlockX()) / horizontalSize;
+				final float xOffset = (chunk.getBlockX(x) + 0.5f - target.getX()) / horizontalSize;
 				for (int z = start.getBlockZ(); z < end.getBlockZ(); z++) {
-					final float zOffset = (chunk.getBlockZ(z) + 0.5f - target.getBlockZ()) / horizontalSize;
+					final float zOffset = (chunk.getBlockZ(z) + 0.5f - target.getZ()) / horizontalSize;
 					if (xOffset * xOffset + zOffset * zOffset >= 1) {
 						continue;
 					}
 					for (int y = end.getBlockY() - 1; y >= start.getBlockY(); y--) {
-						final float yOffset = (y + 0.5f - target.getBlockY()) / verticalSize;
+						final float yOffset = (y + 0.5f - target.getY()) / verticalSize;
 						if (yOffset > -0.7 && xOffset * xOffset + yOffset * yOffset + zOffset * zOffset < 1) {
 							final Block block = world.getBlock(chunk.getBlockX(x), y, chunk.getBlockZ(z), world);
 							if (block.isMaterial(VanillaMaterials.STONE, VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {

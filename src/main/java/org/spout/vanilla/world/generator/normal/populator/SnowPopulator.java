@@ -48,6 +48,8 @@ public class SnowPopulator extends Populator {
 		final World world = chunk.getWorld();
 		final int x = chunk.getBlockX();
 		final int z = chunk.getBlockZ();
+		final int[][] snowHeights = new int[16][16];
+		boolean hasSnow = false;
 		for (byte xx = 0; xx < 16; xx++) {
 			for (byte zz = 0; zz < 16; zz++) {
 				final Block block = world.getBlock(x + xx, world.getSurfaceHeight(x + xx, z + zz) + 1, z + zz, world);
@@ -56,10 +58,42 @@ public class SnowPopulator extends Populator {
 					if (block.isMaterial(VanillaMaterials.AIR)) {
 						final Block under = block.translate(BlockFace.BOTTOM);
 						if (under.isMaterial(VanillaMaterials.SNOW, VanillaMaterials.ICE)) {
+							snowHeights[xx][zz] = (short) block.getY() << 16;
 							continue;
 						}
-						block.setMaterial(VanillaMaterials.SNOW);
+						hasSnow = true;
+						snowHeights[xx][zz] = (short) block.getY() << 16 | (short) (random.nextInt(5) + 1);
 					}
+				} else {
+					snowHeights[xx][zz] = (short) block.getY() << 16;
+				}
+			}
+		}
+		if (!hasSnow) {
+			return;
+		}
+		for (byte xx = 0; xx < 16; xx++) {
+			for (byte zz = 0; zz < 16; zz++) {
+				short totalSnowHeight = 0;
+				short counter = 0;
+				for (byte sx = -1; sx <= 1; sx++) {
+					for (byte sz = -1; sz <= 1; sz++) {
+						if (xx + sx >= 0 && xx + sx < 16 && zz + sz >= 0 && zz + sz < 16) {
+							totalSnowHeight += (short) snowHeights[xx + sx][zz + sz];
+							counter++;
+						}
+					}
+				}
+				snowHeights[xx][zz] = (short) (snowHeights[xx][zz] >> 16) << 16 | (short) (totalSnowHeight / counter);
+			}
+		}
+		for (byte xx = 0; xx < 16; xx++) {
+			for (byte zz = 0; zz < 16; zz++) {
+				final short height = (short) snowHeights[xx][zz];
+				if (height > 0) {
+					final Block block = world.getBlock(x + xx, (short) (snowHeights[xx][zz] >> 16), z + zz, world);
+					block.setMaterial(VanillaMaterials.SNOW);
+					block.setData(height - 1);
 				}
 			}
 		}

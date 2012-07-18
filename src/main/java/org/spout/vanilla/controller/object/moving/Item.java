@@ -76,7 +76,6 @@ public class Item extends Substance {
 	public void onAttached() {
 		super.onAttached();
 		getParent().getCollision().setStrategy(CollisionStrategy.SOFT);
-		//registerAction(new GravityAction());
 		if (data().containsKey(Data.HELD_ITEM)) {
 			is = data().get(Data.HELD_ITEM).clone();
 		}
@@ -104,7 +103,6 @@ public class Item extends Substance {
 		//TODO: proper entity on ground function
 		Block below = getParent().getWorld().getBlock(getParent().getPosition().subtract(0.0, 0.2, 0.0), getParent());
 		if (below.getMaterial().isSolid()) {
-			//this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
 			this.setVelocity(this.getVelocity().multiply(0.7, 0.0, 0.7).add(0.0, 0.06, 0.0));
 		}
 

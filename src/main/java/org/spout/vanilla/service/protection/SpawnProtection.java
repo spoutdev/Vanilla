@@ -24,42 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.service.protection;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
+import org.spout.api.geo.Protection;
+import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.MathHelper;
+import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.SpreadingSolid;
-import org.spout.vanilla.material.item.tool.Spade;
-import org.spout.vanilla.material.item.tool.Tool;
+public class SpawnProtection extends Protection {
+	private final Vector3 center;
+	private final int radius;
 
-public class Mycelium extends SpreadingSolid implements Mineable, InitializableMaterial {
-	public Mycelium(String name, int id) {
-		super(name, id);
-		this.setHardness(0.6F).setResistance(0.8F);
+	public SpawnProtection(String name, World world, Vector3 center, int radius) {
+		super(name, world);
+		this.center = center;
+		this.radius = radius;
 	}
 
 	@Override
-	public void initialize() {
-		this.setReplacedMaterial(VanillaMaterials.DIRT).setDropMaterial(VanillaMaterials.DIRT);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public int getMinimumLightToSpread() {
-		return 9;
-	}
-
-	@Override
-	public boolean canDecayAt(Block block) {
-		block = block.translate(BlockFace.TOP);
-		return block.getMaterial().getOpacity() > 1 && block.getLight() < 4;
+	public boolean contains(Point point) {
+		return MathHelper.distance(center, point) <= radius;
 	}
 }

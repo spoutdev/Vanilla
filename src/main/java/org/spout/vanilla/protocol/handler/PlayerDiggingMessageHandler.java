@@ -26,9 +26,13 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.spout.api.Spout;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.Protection;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
@@ -38,9 +42,11 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
+import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterial;
@@ -50,6 +56,7 @@ import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
+import org.spout.vanilla.service.VanillaProtectionService;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -70,9 +77,24 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		int face = message.getFace();
 
 		World w = player.getEntity().getWorld();
-		Block block = w.getBlock(x, y, z, player.getEntity());
+		Point point = new Point(w, x, y, z);
+		Block block = w.getBlock(point, player.getEntity());
 		BlockMaterial blockMaterial = block.getMaterial();
+		int minecraftID = VanillaMaterials.getMinecraftId(blockMaterial);
 		BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(face);
+		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
+
+		//Don't block protections if dropping an item, silly Notch...
+		if (state != PlayerDiggingMessage.STATE_DROP_ITEM) {
+			Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
+			for (Protection p : protections) {
+				if (p.contains(point) && !vp.isOp()) {
+					player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID & 0xFF, block.getData() & 0xF));
+					player.sendMessage("This area is a protected spawn point!");
+					return;
+				}
+			}
+		}
 
 		if (x == 0 && y == 0 && z == 0 && face == 0 && state == 4) {
 			((VanillaPlayer) player.getEntity().getController()).dropItem();
@@ -87,7 +109,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 		InventorySlot currentSlot = VanillaPlayerUtil.getCurrentSlot(player.getEntity());
 		ItemStack heldItem = currentSlot.getItem();
-		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
+
 
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {
 			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable);
@@ -133,8 +155,8 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			}
 
 			long diggingTicks = vp.getDiggingTicks();
-			int damageDone = 0;
-			int totalDamage = 0;
+			int damageDone;
+			int totalDamage;
 
 			if (heldItem != null) {
 				if (heldItem.getMaterial() instanceof Tool && blockMaterial instanceof Mineable) {
@@ -152,22 +174,9 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 			totalDamage = ((int) blockMaterial.getHardness() - damageDone);
 			if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
-				if (!(blockMaterial instanceof Mineable)) {
-					player.kick("The block you tried to dig is not MINEABLE. No blocks for you.");
-					return;
-				}
-				if (totalDamage < -30) {// This can be removed after VANILLA-97 is fixed.
-					System.out.println("[DEBUG] Player spent much more time mining than expected: " + (-totalDamage) + " damage more. Block: " + blockMaterial.getClass().getName());
-				}
-				if (!vp.addAndCheckMiningSpeed(totalDamage)) {
-					player.kick("Stop speed-mining!");
-					return;
-				}
 				blockMaterial.onDestroy(block);
 			}
 			if (block.getMaterial() != VanillaMaterials.AIR) {
-				player.getSession().send(false, new BlockChangeMessage(x, y, z, blockMaterial.getId(), blockMaterial.getData()));
-			} else {
 				PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
 				sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
 			}

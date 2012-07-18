@@ -43,7 +43,6 @@ public class EnchantmentTableWindow extends TransactionWindow {
 
 	/**
 	 * Updates the enchantment level of an Item displayed in this window
-	 * 
 	 * @param index of the item (0, 1 or 2)
 	 * @param level of enchantment of the item
 	 */

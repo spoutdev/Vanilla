@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.msg.window;
 
 import org.spout.nbt.CompoundMap;
+
 import org.spout.vanilla.protocol.msg.WindowMessage;
 import org.spout.vanilla.window.Window;
 

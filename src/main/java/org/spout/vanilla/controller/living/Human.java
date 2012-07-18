@@ -37,7 +37,6 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.msg.AnimationMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 

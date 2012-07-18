@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 /**
@@ -58,7 +59,6 @@ public abstract class SpreadingSolid extends Solid implements Spreading, RandomB
 
 	/**
 	 * Sets the material replaced by this spreading solid material
-	 * 
 	 * @param material to set to
 	 * @return this spreading solid material
 	 */
@@ -69,7 +69,6 @@ public abstract class SpreadingSolid extends Solid implements Spreading, RandomB
 
 	/**
 	 * Gets the material replaced by this spreading solid material
-	 * 
 	 * @return replacement material
 	 */
 	public BlockMaterial getReplacedMaterial() {
@@ -78,10 +77,9 @@ public abstract class SpreadingSolid extends Solid implements Spreading, RandomB
 
 	/**
 	 * Tests if the block can decay at the block specified<br><br>
-	 * 
-	 * <b>Note: This should not operate on the block itself, 
+	 * <p/>
+	 * <b>Note: This should not operate on the block itself,
 	 * as the block is not necessarily this material</b>
-	 * 
 	 * @param block of this Spreading solid
 	 * @return True if it can decay, False if not
 	 */
@@ -89,7 +87,6 @@ public abstract class SpreadingSolid extends Solid implements Spreading, RandomB
 
 	/**
 	 * Tests if the block can spread from the block specified
-	 * 
 	 * @param block of this Spreading solid
 	 * @return True if it can spread, False if not
 	 */
@@ -99,7 +96,6 @@ public abstract class SpreadingSolid extends Solid implements Spreading, RandomB
 
 	/**
 	 * Attempts to decay this material at the block specified
-	 * 
 	 * @param block of this material
 	 */
 	public void onDecay(Block block) {
@@ -108,7 +104,6 @@ public abstract class SpreadingSolid extends Solid implements Spreading, RandomB
 
 	/**
 	 * Attempts to spread this material at the block specified
-	 * 
 	 * @param block of this material
 	 */
 	public void onSpread(Block block) {
@@ -128,7 +123,6 @@ public abstract class SpreadingSolid extends Solid implements Spreading, RandomB
 
 	/**
 	 * Gets the block range within this block can spread
-	 * 
 	 * @return spread range
 	 */
 	public EffectRange getSpreadRange() {

@@ -72,7 +72,7 @@ public class RavinePopulator extends Populator {
 	}
 
 	private void generateRavineNodes(Chunk chunk, Point target, float horizontalScale, float verticalScale,
-			float horizontalAngle, float verticalAngle, int startingNode, int nodeAmount, Random random) {
+									 float horizontalAngle, float verticalAngle, int startingNode, int nodeAmount, Random random) {
 
 		final Vector3 middle = new Vector3(chunk.getBlockX(8), 0, chunk.getBlockZ(8));
 		float horizontalOffset = 0;
@@ -163,7 +163,7 @@ public class RavinePopulator extends Populator {
 		private final float[] horizontalScales;
 
 		private RavineNode(Chunk chunk, Point start, Point end, Point target,
-				float verticalSize, float horizontalSize, float[] horizontalScales) {
+						   float verticalSize, float horizontalSize, float[] horizontalScales) {
 			this.world = chunk.getWorld();
 			this.chunk = chunk;
 			this.start = clamp(start);

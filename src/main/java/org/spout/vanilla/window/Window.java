@@ -94,7 +94,6 @@ public class Window implements InventoryViewer {
 	/**
 	 * Gets whether this Window is the default Window<br>
 	 * Default windows don't have open and close messages
-	 * 
 	 * @return True if it is the default Window, False if not
 	 */
 	public boolean isDefaultWindow() {
@@ -190,7 +189,6 @@ public class Window implements InventoryViewer {
 
 	/**
 	 * Sends a Window Message to the owner of this Window
-	 * 
 	 * @param message to send
 	 */
 	public void sendMessage(WindowMessage message) {

@@ -31,6 +31,7 @@ import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -44,6 +45,7 @@ import org.spout.vanilla.util.VanillaBlockUtil;
 public class FarmLand extends VanillaBlockMaterial implements Mineable, InitializableMaterial, RandomBlockMaterial {
 	private static final EffectRange WATER_CHECK_RANGE = new CuboidEffectRange(-4, 0, -4, 4, 1, 4);
 	private static final EffectRange CROP_CHECK_RANGE = new CuboidEffectRange(-1, 1, -1, 1, 1, 1);
+
 	public FarmLand(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(1.0F).setOpaque();
@@ -62,7 +64,6 @@ public class FarmLand extends VanillaBlockMaterial implements Mineable, Initiali
 	/**
 	 * Tests whether a certain farm land block is wet<br>
 	 * This wet state is set gradually if water is nearby
-	 * 
 	 * @param block of the Farm land
 	 * @return True if wet, False if not
 	 */
@@ -73,7 +74,6 @@ public class FarmLand extends VanillaBlockMaterial implements Mineable, Initiali
 	/**
 	 * Tests whether a certain farm land block has water nearby<br>
 	 * To obtain the wet state of the block, use {@link isWet()}
-	 * 
 	 * @param block of the Farm land
 	 * @return True if water is nearby, False if not
 	 */
@@ -88,7 +88,6 @@ public class FarmLand extends VanillaBlockMaterial implements Mineable, Initiali
 
 	/**
 	 * Tests whether a certain farm land block has crops nearby<br>
-	 * 
 	 * @param block of the Farm land
 	 * @return True if crops are nearby, False if not
 	 */
@@ -100,7 +99,7 @@ public class FarmLand extends VanillaBlockMaterial implements Mineable, Initiali
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void onRandomTick(Block block) {
 		if (VanillaBlockUtil.isRaining(block) || hasWaterNearby(block)) {

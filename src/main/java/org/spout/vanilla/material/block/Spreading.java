@@ -30,10 +30,8 @@ package org.spout.vanilla.material.block;
  * A material that can spread itself to surrounding blocks.
  */
 public interface Spreading {
-
 	/**
 	 * Gets the mimimum required light for this Growing material to spread
-	 * 
 	 * @return minimum light
 	 */
 	public int getMinimumLightToSpread();

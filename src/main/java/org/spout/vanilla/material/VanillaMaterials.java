@@ -518,7 +518,6 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial EXP_BOTTLE = new VanillaItemMaterial("Experience Bottle", 128);
 	public static final BlockItem FIRE_CHARGE = new BlockItem("Fire Charge", 385, VanillaMaterials.FIRE); //Basic Implementation
 	public static final Potion POTION = Potion.WATER_BOTTLE;
-
 	private static boolean initialized = false;
 	private final static AtomicShortArray conversionTable = new AtomicShortArray(Short.MAX_VALUE);
 	private final static TShortObjectHashMap<Material> reverseTable = new TShortObjectHashMap<Material>(500);

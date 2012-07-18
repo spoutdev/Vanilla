@@ -99,7 +99,6 @@ public class Dispenser extends ControlledMaterial implements Directional, Mineab
 
 	/**
 	 * Shoots an item from this Dispenser
-	 * 
 	 * @param block of the Dispenser
 	 * @param item to shoot
 	 */
@@ -193,7 +192,6 @@ public class Dispenser extends ControlledMaterial implements Directional, Mineab
 			getController(block).open((VanillaPlayer) controller);
 		}
 	}
-
 
 	@Override
 	public boolean isReceivingPower(Block block) {

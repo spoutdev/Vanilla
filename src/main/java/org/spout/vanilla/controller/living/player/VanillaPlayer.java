@@ -544,7 +544,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Drops the item specified into a random direction
-	 * 
 	 * @param item to drop
 	 */
 	public void dropItemRandom(ItemStack item) {
@@ -556,7 +555,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Drops the item specified into the direction the player looks
-	 * 
 	 * @param item to drop
 	 */
 	public void dropItem(ItemStack item) {

@@ -34,14 +34,12 @@ import org.spout.api.geo.World;
 import org.spout.api.math.IntVector3;
 
 public class SpawnLoaderThread extends Thread {
-	
 	private final static AtomicInteger size = new AtomicInteger();
 	private final static ConcurrentLinkedQueue<IntPoint3> queue = new ConcurrentLinkedQueue<IntPoint3>();
-
 	private final int step;
 	private final int total;
 	private final String initChunkType;
-	
+
 	public SpawnLoaderThread(int total, int step, String initChunkType) {
 		this.step = step;
 		this.total = total;
@@ -52,7 +50,7 @@ public class SpawnLoaderThread extends Thread {
 		queue.add(new IntPoint3(w, x, y, z));
 		size.incrementAndGet();
 	}
-	
+
 	public void run() {
 		boolean done = false;
 		int remaining = size.get();
@@ -69,20 +67,17 @@ public class SpawnLoaderThread extends Thread {
 			p.getWorld().getChunk(p.getX(), p.getY(), p.getZ());
 		}
 	}
-	
-	private static class IntPoint3 extends IntVector3 {
 
+	private static class IntPoint3 extends IntVector3 {
 		private final World w;
-		
+
 		public IntPoint3(World w, int x, int y, int z) {
 			super(x, y, z);
 			this.w = w;
 		}
-		
+
 		public World getWorld() {
 			return w;
 		}
-		
 	}
-	
 }

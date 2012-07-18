@@ -37,9 +37,9 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
-import org.spout.vanilla.world.generator.normal.biome.SnowyBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
+import org.spout.vanilla.world.generator.normal.biome.SnowyBiome;
 
 public class SmoothPopulator extends Populator {
 	private static final byte CHUNK_SIZE = 16;

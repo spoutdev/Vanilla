@@ -76,10 +76,11 @@ public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginReq
 			Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
 		}
 	}
-	
+
 	private static class PlayerConnectRunnable implements Runnable {
 		private final Session session;
 		private final String name;
+
 		private PlayerConnectRunnable(Session session, String name) {
 			this.session = session;
 			this.name = name;

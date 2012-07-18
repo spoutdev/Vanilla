@@ -169,7 +169,6 @@ public class Potion extends VanillaItemMaterial {
 
 	/**
 	 * Gets whether this type of Potion is a Splash potion
-	 * 
 	 * @return True if it is a Splash potion, False if not
 	 */
 	public boolean isSplash() {

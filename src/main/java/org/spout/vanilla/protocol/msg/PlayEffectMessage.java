@@ -62,7 +62,6 @@ public final class PlayEffectMessage extends Message {
 
 	/**
 	 * Gets the data effect value to use for the smoke particle effect
-	 * 
 	 * @param direction the smoke goes
 	 * @return the data of that direction
 	 */
@@ -156,23 +155,23 @@ public final class PlayEffectMessage extends Message {
 		/**
 		 * Plays a click sound, Id = 1000
 		 */
-		RANDOM_CLICK_1(1000), 
+		RANDOM_CLICK_1(1000),
 		/**
 		 * Plays a click sound, Id = 1001
 		 */
-		RANDOM_CLICK_2(1001), 
+		RANDOM_CLICK_2(1001),
 		/**
 		 * Plays the sound of an arrow being shot by a bow, Id = 1002
 		 */
-		RANDOM_BOW(1002), 
+		RANDOM_BOW(1002),
 		/**
 		 * Plays a random sound for a door open/closing, Id = 1003
 		 */
-		RANDOM_DOOR(1003), 
+		RANDOM_DOOR(1003),
 		/**
 		 * Plays a random sound of fire sizzling, Id = 1004
 		 */
-		RANDOM_FIZZ(1004), 
+		RANDOM_FIZZ(1004),
 		/**
 		 * Plays the music of a certain record, Id = 1005
 		 */
@@ -180,11 +179,11 @@ public final class PlayEffectMessage extends Message {
 		/**
 		 * Plays the sound of a ghast shrieking, Id = 1007
 		 */
-		GHAST_CHARGE(1007), 
+		GHAST_CHARGE(1007),
 		/**
 		 * Plays the sound of a ghast shooting a fireball, Id = 1008
 		 */
-		GHAST_FIREBALL(1008), 
+		GHAST_FIREBALL(1008),
 		/**
 		 * Plays the sound of something other than ghasts shooting a fireball, Id = 1009
 		 */
@@ -192,11 +191,11 @@ public final class PlayEffectMessage extends Message {
 		/**
 		 * Plays the sound of a zombie breaking wood, Id = 1010
 		 */
-		ZOMBIE_DAMAGE_WOOD(1010), 
+		ZOMBIE_DAMAGE_WOOD(1010),
 		/**
 		 * Plays the sound of a zombie breaking metal, Id = 1011
 		 */
-		ZOMBIE_DAMAGE_METAL(1011), 
+		ZOMBIE_DAMAGE_METAL(1011),
 		/**
 		 * Plays the sound of a zombie breaking something other than wood or metal, Id = 1012
 		 */
@@ -204,15 +203,15 @@ public final class PlayEffectMessage extends Message {
 		/**
 		 * Plays a particle effect of Smoke, Id = 2000
 		 */
-		PARTICLE_SMOKE(2000), 
+		PARTICLE_SMOKE(2000),
 		/**
 		 * Plays the sound and particle effect of a Block being broken, Id = 2001
 		 */
-		PARTICLE_BREAKBLOCK(2001), 
+		PARTICLE_BREAKBLOCK(2001),
 		/**
 		 * Plays the sound and particle effect of a Splash potion breaking, Id = 2002
 		 */
-		PARTICLE_SPLASHPOTION(2002), 
+		PARTICLE_SPLASHPOTION(2002),
 		/**
 		 * Plays the particle effect of the ender eye item, Id = 2003
 		 */

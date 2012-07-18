@@ -116,7 +116,7 @@ public class Furnace extends VanillaWindowBlockController implements Transaction
 			// Decrement the burn
 			burnTimeRemaining -= dt;
 		}
-	
+
 		// Take new ingredient if needed
 		if (craftTimeRemaining <= 0 && inventory.hasIngredient()) {
 			TimedCraftable ingredient = (TimedCraftable) input.getMaterial();

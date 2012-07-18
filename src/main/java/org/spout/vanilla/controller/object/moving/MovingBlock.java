@@ -33,7 +33,6 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.util.ItemUtil;
 
 /**
@@ -55,7 +54,6 @@ public class MovingBlock extends Substance {
 
 	/**
 	 * Gets the material this moving block represents
-	 * 
 	 * @return the material
 	 */
 	public BlockMaterial getMaterial() {

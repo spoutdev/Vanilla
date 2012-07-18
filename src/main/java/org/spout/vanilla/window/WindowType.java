@@ -39,8 +39,8 @@ public enum WindowType {
 	DISPENSER(3),
 	ENCHANTMENTTABLE(4),
 	BREWINGSTAND(5);
-
 	private static final TIntObjectHashMap<WindowType> values = new TIntObjectHashMap<WindowType>();
+
 	static {
 		for (WindowType type : values()) {
 			values.put(type.getId(), type);
@@ -48,13 +48,13 @@ public enum WindowType {
 	}
 
 	private final int id;
+
 	private WindowType(int id) {
 		this.id = id;
 	}
 
 	/**
 	 * Gets the type Id of this Window Type
-	 * 
 	 * @return Type Id
 	 */
 	public int getId() {
@@ -63,7 +63,6 @@ public enum WindowType {
 
 	/**
 	 * Gets a certain Window Type by Id
-	 * 
 	 * @param id of the type
 	 * @return Window Type, or null if not found
 	 */

@@ -33,6 +33,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -41,7 +42,6 @@ public class VanillaBlockUtil {
 
 	/**
 	 * Gets if rain is falling nearby the block specified
-	 * 
 	 * @param block to check it nearby of
 	 * @return True if it is raining, False if not
 	 */
@@ -58,7 +58,6 @@ public class VanillaBlockUtil {
 
 	/**
 	 * Gets if rain is falling on top of the block specified
-	 * 
 	 * @param block to check
 	 * @return True if rain is falling on the Block, false if not
 	 */
@@ -69,7 +68,6 @@ public class VanillaBlockUtil {
 	/**
 	 * Gets the chance of a crop block growing<br>
 	 * The higher the value, the lower the chance.
-	 * 
 	 * @param block to check
 	 * @return the growth chance
 	 */

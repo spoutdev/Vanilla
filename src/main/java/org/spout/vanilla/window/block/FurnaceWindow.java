@@ -59,7 +59,6 @@ public class FurnaceWindow extends TransactionWindow {
 
 	/**
 	 * Updates the Burn time of the Furnace
-	 * 
 	 * @param burnTime
 	 */
 	public void updateBurnTime(int burnTime) {
@@ -71,7 +70,6 @@ public class FurnaceWindow extends TransactionWindow {
 
 	/**
 	 * Updates the Progress of the Furnace
-	 * 
 	 * @param progress
 	 */
 	public void updateProgress(int progress) {

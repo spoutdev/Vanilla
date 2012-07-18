@@ -28,6 +28,7 @@ package org.spout.vanilla.data;
 
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.cuboid.Block;
+
 import org.spout.vanilla.world.generator.VanillaBiome;
 
 /**
@@ -37,8 +38,8 @@ public enum Climate {
 	WARM(true, false, false, true),
 	MODERATE(true, false, false, true),
 	COLD(false, true, true, false);
-
 	private final boolean melting, freezing, snow, rain;
+
 	private Climate(boolean melting, boolean freezing, boolean snow, boolean rain) {
 		this.melting = melting;
 		this.freezing = freezing;
@@ -48,7 +49,6 @@ public enum Climate {
 
 	/**
 	 * Gets whether snow and ice melts in this Climate
-	 * 
 	 * @return True if ice and snow melts, False if not
 	 */
 	public boolean isMelting() {
@@ -57,7 +57,6 @@ public enum Climate {
 
 	/**
 	 * Gets whether water freezes in this Climate
-	 * 
 	 * @return True if water freezes, False if not
 	 */
 	public boolean isFreezing() {
@@ -66,7 +65,6 @@ public enum Climate {
 
 	/**
 	 * Gets whether there is rainfall in this Climate
-	 * 
 	 * @return True if it rains, False if not
 	 */
 	public boolean hasRainfall() {
@@ -75,7 +73,6 @@ public enum Climate {
 
 	/**
 	 * Gets whether there is snowfall in this Climate
-	 * 
 	 * @return True if it snows, False if not
 	 */
 	public boolean hasSnowfall() {
@@ -84,7 +81,6 @@ public enum Climate {
 
 	/**
 	 * Gets the Climate at the Block specified
-	 * 
 	 * @param block position
 	 * @return the Climate
 	 */

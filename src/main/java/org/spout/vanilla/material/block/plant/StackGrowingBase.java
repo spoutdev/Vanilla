@@ -32,6 +32,7 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
+
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Growing;
@@ -68,7 +69,6 @@ public abstract class StackGrowingBase extends GroundAttachable implements Plant
 
 	/**
 	 * Gets the time between two grow events of this Plant
-	 * 
 	 * @param block of this Plant
 	 * @return the time in milliseconds, can be random
 	 */
@@ -101,7 +101,6 @@ public abstract class StackGrowingBase extends GroundAttachable implements Plant
 
 	/**
 	 * Gets the base block this Plant rests on
-	 * 
 	 * @param block of the Cactus
 	 * @return the base Block
 	 */
@@ -115,7 +114,6 @@ public abstract class StackGrowingBase extends GroundAttachable implements Plant
 
 	/**
 	 * Gets the top block of this Plant
-	 * 
 	 * @param block of this Plant
 	 * @return the top block
 	 */

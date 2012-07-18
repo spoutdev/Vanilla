@@ -27,6 +27,7 @@
 package org.spout.vanilla.controller.block;
 
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.controller.TransactionWindowOwner;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -65,7 +66,6 @@ public class Dispenser extends VanillaWindowBlockController implements Transacti
 
 	/**
 	 * Shoots the next Item
-	 * 
 	 * @return True if an item was shot, False if not
 	 */
 	public boolean shootItem() {
@@ -74,7 +74,6 @@ public class Dispenser extends VanillaWindowBlockController implements Transacti
 
 	/**
 	 * Shoots an item from this Dispenser
-	 * 
 	 * @param item to shoot
 	 * @return True if an item was shot, False if not
 	 */
@@ -85,7 +84,6 @@ public class Dispenser extends VanillaWindowBlockController implements Transacti
 	/**
 	 * Polls the next Item from this Dispenser<br>
 	 * If this Dispenser is empty, null is returned
-	 * 
 	 * @return the item, or null if none available
 	 */
 	public ItemStack pollNextItem() {
@@ -101,7 +99,6 @@ public class Dispenser extends VanillaWindowBlockController implements Transacti
 
 	/**
 	 * Gets whether this Dispenser is being powered
-	 * 
 	 * @return True if powered, False if not
 	 */
 	public boolean isPowered() {
@@ -111,7 +108,6 @@ public class Dispenser extends VanillaWindowBlockController implements Transacti
 	/**
 	 * Sets the powered state of this Dispenser<br>
 	 * Will shoot an item when power goes from low to high
-	 * 
 	 * @param powered state to set to
 	 */
 	public void setPowered(boolean powered) {

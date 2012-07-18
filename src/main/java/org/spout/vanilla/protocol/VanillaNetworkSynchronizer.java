@@ -57,10 +57,10 @@ import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
@@ -153,9 +153,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	protected void initChunk(Point p) {
 
-		int x = (int) p.getChunkX();
-		int y = (int) p.getChunkY();// + SEALEVEL_CHUNK;
-		int z = (int) p.getChunkZ();
+		int x = p.getChunkX();
+		int y = p.getChunkY();// + SEALEVEL_CHUNK;
+		int z = p.getChunkZ();
 
 		if (y < 0 || y >= p.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
 			return;

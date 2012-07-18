@@ -27,8 +27,8 @@
 package org.spout.vanilla.world.generator.normal;
 
 import java.util.Random;
-import org.spout.api.generator.biome.BiomePopulator;
 
+import org.spout.api.generator.biome.BiomePopulator;
 import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;

@@ -69,7 +69,6 @@ public class Furnace extends ControlledMaterial implements Directional, Mineable
 
 	/**
 	 * Sets the burning state of a Furnace block
-	 * 
 	 * @param block of the Furnace
 	 * @param burning state to set to
 	 */

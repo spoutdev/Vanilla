@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.spout.api.protocol.Message;
+
 import org.spout.vanilla.window.Window;
 
 /**
@@ -45,7 +46,6 @@ public abstract class WindowMessage extends Message {
 
 	/**
 	 * Gets the unique instance Id of the Window this Window Message is of
-	 * 
 	 * @return Window instance Id
 	 */
 	public int getWindowInstanceId() {

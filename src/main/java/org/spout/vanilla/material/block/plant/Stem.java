@@ -50,6 +50,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public abstract class Stem extends GroundAttachable implements Growing, Crop, RandomBlockMaterial {
 	private BlockMaterial lastMaterial;
+
 	public Stem(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false);
@@ -65,7 +66,7 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Ra
 	public int getMinimumLightToGrow() {
 		return 9;
 	}
-	
+
 	@Override
 	public int getGrowthStage(Block block) {
 		return block.getDataField(0x7);
@@ -83,7 +84,6 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Ra
 
 	/**
 	 * Sets the material placed after this Stem is fully grown
-	 * 
 	 * @param material of the last stage
 	 */
 	public void setLastStageMaterial(BlockMaterial material) {
@@ -92,13 +92,12 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Ra
 
 	/**
 	 * Gets the material placed after this Stem is fully grown
-	 * 
 	 * @return material of the last stage
 	 */
 	public BlockMaterial getLastStageMaterial() {
 		return this.lastMaterial;
 	}
-	
+
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
 		return face == BlockFace.TOP && block.isMaterial(VanillaMaterials.FARMLAND);

@@ -49,8 +49,11 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.plugin.Platform;
+import org.spout.api.plugin.ServiceManager;
+import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.util.OutwardIterator;
+
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -59,10 +62,10 @@ import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.controller.world.sky.NetherSky;
 import org.spout.vanilla.controller.world.sky.NormalSky;
 import org.spout.vanilla.controller.world.sky.TheEndSky;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -72,6 +75,8 @@ import org.spout.vanilla.resources.MapPalette;
 import org.spout.vanilla.resources.RecipeYaml;
 import org.spout.vanilla.resources.loader.MapPaletteLoader;
 import org.spout.vanilla.resources.loader.RecipeLoader;
+import org.spout.vanilla.service.protection.SpawnProtection;
+import org.spout.vanilla.service.VanillaProtectionService;
 import org.spout.vanilla.thread.SpawnLoaderThread;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
@@ -83,18 +88,13 @@ public class VanillaPlugin extends CommonPlugin {
 	private static final int loaderThreadCount = 16;
 	public static final int MINECRAFT_PROTOCOL_ID = 29;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
+	private static VanillaPlugin instance;
 	private Engine engine;
 	private VanillaConfiguration config;
-	private static VanillaPlugin instance;
 	private int port = 25565;
 
 	@Override
 	public void onDisable() {
-		try {
-			config.save();
-		} catch (ConfigurationException e) {
-			getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);
-		}
 		instance = null;
 		getLogger().info("disabled");
 	}
@@ -111,7 +111,7 @@ public class VanillaPlugin extends CommonPlugin {
 		//Universal Plug and Play
 		if (engine.getPlatform() == Platform.SERVER || engine.getPlatform() == Platform.PROXY) {
 			if (VanillaConfiguration.UPNP.getBoolean()) {
-				((Server)engine).mapUPnPPort(port, VanillaConfiguration.MOTD.getString());
+				((Server) engine).mapUPnPPort(port, VanillaConfiguration.MOTD.getString());
 			}
 		}
 
@@ -158,7 +158,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 			((Server) engine).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
 		} else if (engine.getPlatform() == Platform.CLIENT) {
-			//TODO if (engine instanceof Client) do stuff? | No, check engine.getPlatform()
+			//TODO Do something?
 		}
 
 		VanillaMaterials.initialize();
@@ -182,7 +182,7 @@ public class VanillaPlugin extends CommonPlugin {
 					generator = new NetherGenerator();
 				} else if (generatorName.equalsIgnoreCase("flat")) {
 					generator = new FlatGenerator(64);
-				} else if (generatorName.equalsIgnoreCase("theend") || generatorName.equalsIgnoreCase("the_end")) {
+				} else if (generatorName.equalsIgnoreCase("the_end")) {
 					generator = new TheEndGenerator();
 				} else {
 					throw new IllegalArgumentException("Invalid generator name for world '" + worldNode.getWorldName() + "': " + generatorName);
@@ -205,36 +205,44 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 
 		final int radius = VanillaConfiguration.SPAWN_RADIUS.getInt();
+		final int protectionRadius = VanillaConfiguration.SPAWN_PROTECTION_RADIUS.getInt();
 		final int diameter = (radius << 1) + 1;
 		final int total = (diameter * diameter * diameter) / 6;
 		final int progressStep = total / 10;
 		final OutwardIterator oi = new OutwardIterator();
-		
 		SpawnLoaderThread[] loaderThreads = new SpawnLoaderThread[loaderThreadCount];
-		
+
+		if (worlds.isEmpty()) {
+			return;
+		}
+		//Register protection service used for spawn protection.
+		engine.getServiceManager().register(ProtectionService.class, new VanillaProtectionService(), this, ServiceManager.ServicePriority.Highest);
+
 		for (World world : worlds) {
 			// Initialize the first chunks
 			Point point = world.getSpawnPoint().getPosition();
 			int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
 			int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
 			int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
-			
+
+			((VanillaProtectionService) engine.getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, point, protectionRadius));
+
 			final String initChunkType = world.getAge() <= 0 ? "Generating" : "Loading";
-			
+
 			for (int i = 0; i < loaderThreadCount; i++) {
 				loaderThreads[i] = new SpawnLoaderThread(total, progressStep, initChunkType);
 			}
-			
+
 			oi.reset(cx, cy, cz, radius);
 			while (oi.hasNext()) {
 				IntVector3 v = oi.next();
 				SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
 			}
-			
+
 			for (int i = 0; i < loaderThreadCount; i++) {
 				loaderThreads[i].start();
 			}
-			
+
 			for (int i = 0; i < loaderThreadCount; i++) {
 				try {
 					loaderThreads[i].join();
@@ -244,7 +252,6 @@ public class VanillaPlugin extends CommonPlugin {
 			}
 
 			WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(world);
-			// Additional settings
 
 			// Keep spawn loaded
 			if (worldConfig.LOADED_SPAWN.getBoolean()) {

@@ -102,7 +102,6 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	/**
 	 * Let's this liquid flow from the block to the direction given
-	 * 
 	 * @param block to flow from
 	 * @param to flow to
 	 * @return True if flowing was successful
@@ -175,28 +174,24 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	/**
 	 * Gets the maximum possible liquid level
-	 * 
 	 * @return the max level
 	 */
 	public abstract int getMaxLevel();
 
 	/**
 	 * Gets the liquid type to use for flowing liquids
-	 * 
 	 * @return the flowing material
 	 */
 	public abstract Liquid getFlowingMaterial();
 
 	/**
 	 * Gets the liquid type to use for stationary liquids
-	 * 
 	 * @return the stationary material
 	 */
 	public abstract Liquid getStationaryMaterial();
 
 	/**
 	 * Checks if the material given is either the flowing or stationary type of this Liquid
-	 * 
 	 * @param material to check
 	 * @return True if it is this liquid, False if not
 	 */
@@ -217,7 +212,6 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	/**
 	 * Gets the level of a liquid
-	 * 
 	 * @param block of the liquid
 	 * @return the level, or negative if it has no liquid
 	 */

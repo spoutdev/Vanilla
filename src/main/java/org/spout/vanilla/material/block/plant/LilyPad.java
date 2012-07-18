@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 
@@ -42,8 +43,15 @@ public class LilyPad extends GroundAttachable implements Mineable {
 	}
 
 	@Override
-	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		return face == BlockFace.TOP && material.equals(VanillaMaterials.STATIONARY_WATER);
+	public boolean canAttachTo(Block block, BlockFace face) {
+		if (face != BlockFace.TOP) {
+			return false;
+		}
+		BlockMaterial material = block.getMaterial();
+		if (material instanceof Water) {
+			return ((Water) material).isSource(block);
+		}
+		return false;
 	}
 
 	@Override

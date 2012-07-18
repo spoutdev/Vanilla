@@ -29,12 +29,23 @@ package org.spout.vanilla.map;
 public class Map {
 	private final short width, height;
 	private final byte[] colors;
+	private final int id;
 	private boolean changed = false;
 
 	public Map(int width, int height) {
 		this.width = (short) width;
 		this.height = (short) height;
 		this.colors = new byte[128 * 128];
+		this.id = 0;
+	}
+
+	/**
+	 * Gets the Instance Id of this Map
+	 * 
+	 * @return Map Instance Id
+	 */
+	public int getInstanceId() {
+		return this.id;
 	}
 
 	/**

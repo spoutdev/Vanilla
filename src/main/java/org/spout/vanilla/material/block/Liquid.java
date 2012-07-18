@@ -74,14 +74,13 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		} else {
 			// Find out all the hole distance
 			int distance = Integer.MAX_VALUE;
-			int i = 0;
+			int i;
 			int[] distances = new int[4];
-			for (BlockFace face : BlockFaces.NESW) {
-				distances[i] = this.getHoleDistance(block.translate(face));
+			for (i = 0; i < distances.length; i++) {
+				distances[i] = this.getHoleDistance(block.translate(BlockFaces.NESW.get(i)));
 				if (distances[i] != -1 && distances[i] < distance) {
 					distance = distances[i];
 				}
-				i++;
 			}
 			boolean flowed = false;
 			if (distance == Integer.MAX_VALUE) {
@@ -121,10 +120,10 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		Block spread = block.getWorld().getBlock(block.getX(), block.getY(), block.getZ(), this).translate(to);
 		BlockMaterial spreadMat = spread.getMaterial();
 		if (this.isMaterial(spreadMat)) {
-			if (this.isSource(spread)) {
+			if (this.isMaximumLevel(spread)) {
 				// If the block above was a non-flowing source, return false to make it spread outwards
 				// If the block above was not a source, return true to stop spreading
-				return !this.isSource(block) || this.isFlowingDown(block);
+				return !this.isSource(block);
 			} else {
 				// Compare levels
 				if (level > this.getLevel(spread)) {
@@ -263,12 +262,23 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 
 	/**
+	 * Gets whether this liquid is at it's maximum level
+	 * 
+	 * @param block of the liquid
+	 * @return True if it is at the maximum level, False if not
+	 */
+	public boolean isMaximumLevel(Block block) {
+		return block.getDataField(0x7) == 0x0;
+	}
+
+	/**
 	 * Gets whether this liquid is a source
+	 * 
 	 * @param block of the liquid
 	 * @return True if it is a source, False if not
 	 */
 	public boolean isSource(Block block) {
-		return block.getDataField(0x7) == 0x0;
+		return block.getData() == 0x0;
 	}
 
 	public boolean isFlowing() {
@@ -335,7 +345,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		// Update flowing down state
 		if (this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
 			// Set non-source water blocks to flow down
-			if (!this.isSource(block)) {
+			if (!this.isFlowingDown(block)) {
 				this.setFlowingDown(block, true);
 				this.setLevel(block, this.getMaxLevel());
 			}
@@ -346,8 +356,8 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 				this.setLevel(block, 0);
 			}
 		}
-		// Update liquid level for non-source blocks
-		if (!this.isSource(block)) {
+		// Update liquid level for non-maxed blocks
+		if (!this.isMaximumLevel(block)) {
 			int counter = 0;
 			int oldlevel = this.getLevel(block);
 			int newlevel = -2;
@@ -356,7 +366,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 				neigh = block.translate(face);
 				if (this.isMaterial(neigh.getMaterial())) {
 					newlevel = Math.max(newlevel, this.getLevel(neigh) - 1);
-					if (this.hasFlowSource() && this.isSource(neigh) && !this.isFlowingDown(neigh)) {
+					if (this.hasFlowSource() && this.isSource(neigh)) {
 						counter++;
 						if (counter >= 2) {
 							newlevel = this.getMaxLevel();

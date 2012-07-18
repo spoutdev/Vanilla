@@ -45,20 +45,12 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 
 public class Cactus extends StackGrowingBase implements TimedCraftable {
-	private Set<BlockMaterial> allowedNeighbours = new HashSet<BlockMaterial>();
+	private Set<BlockMaterial> deniedNeighbours = new HashSet<BlockMaterial>();
 
 	public Cactus(String name, int id) {
 		super(name, id);
-		addAllowedNeighbour(VanillaMaterials.AIR,
-				VanillaMaterials.TORCH,
-				VanillaMaterials.REDSTONE_TORCH_OFF,
-				VanillaMaterials.REDSTONE_TORCH_ON,
-				VanillaMaterials.LEVER,
-				VanillaMaterials.DEAD_BUSH,
-				VanillaMaterials.TALL_GRASS,
-				VanillaMaterials.REDSTONE_WIRE
-		);
 		this.setHardness(0.4F).setResistance(0.7F).setTransparent();
+		this.addDeniedNeighbour(VanillaMaterials.WEB, VanillaMaterials.STONE_PRESSURE_PLATE, VanillaMaterials.WOODEN_PRESSURE_PLATE);
 	}
 
 	@Override
@@ -74,9 +66,9 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 	}
 
 	@Override
-	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		if (super.canAttachTo(material, face)) {
-			return material.equals(VanillaMaterials.SAND, VanillaMaterials.CACTUS);
+	public boolean canAttachTo(Block block, BlockFace face) {
+		if (super.canAttachTo(block, face)) {
+			return block.isMaterial(VanillaMaterials.SAND, VanillaMaterials.CACTUS);
 		}
 		return false;
 	}
@@ -87,7 +79,7 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 			BlockMaterial mat;
 			for (BlockFace face : BlockFaces.NESW) {
 				mat = block.translate(face).getMaterial();
-				if (!this.allowedNeighbours.contains(mat)) {
+				if (mat.isSolid() || this.deniedNeighbours.contains(mat)) {
 					return false;
 				}
 			}
@@ -101,9 +93,9 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 		return face == BlockFace.TOP && material.equals(VanillaMaterials.CACTUS);
 	}
 
-	public void addAllowedNeighbour(BlockMaterial... additions) {
+	public void addDeniedNeighbour(BlockMaterial... additions) {
 		for (BlockMaterial mat : additions) {
-			this.allowedNeighbours.add(mat);
+			this.deniedNeighbours.add(mat);
 		}
 	}
 

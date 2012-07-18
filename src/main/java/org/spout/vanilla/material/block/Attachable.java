@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 public interface Attachable {
@@ -38,17 +37,9 @@ public interface Attachable {
 
 	/**
 	 * Checks if this material can be attached to certain face of a block material
-	 * @param material to attach to
+	 * @param block to attach to
 	 * @param face of the material to attach to
 	 * @return if this material can be attached to face of the block material given
-	 */
-	public boolean canAttachTo(BlockMaterial material, BlockFace face);
-
-	/**
-	 * Checks if this material can be attached to certain face of a block
-	 * @param block to attach to
-	 * @param face of the block to attach to
-	 * @return if this material can be attached to face of the block given
 	 */
 	public boolean canAttachTo(Block block, BlockFace face);
 

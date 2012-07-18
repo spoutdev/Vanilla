@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
@@ -49,12 +50,14 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	private Slab(String name) {
 		super((short) 0x0007, name, 44);
 		this.setHardness(2.0F).setResistance(10.0F).setTransparent();
+		this.setCollision(CollisionStrategy.SOLID);
 		//TODO: Make bottom or top half occlude bottom or top
 	}
 
 	private Slab(String name, int data, Slab parent) {
 		super(name, 44, data, parent);
 		this.setHardness(2.0F).setResistance(10.0F).setTransparent();
+		this.setCollision(CollisionStrategy.SOLID);
 		//TODO: Make bottom or top half occlude bottom or top
 	}
 

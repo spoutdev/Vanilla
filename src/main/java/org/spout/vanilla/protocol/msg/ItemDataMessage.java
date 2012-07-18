@@ -28,12 +28,23 @@ package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class ItemDataMessage extends Message {
 	private final short type, id;
 	private final byte[] data;
+
+	public ItemDataMessage(ItemStack item, byte[] data) {
+		this(item.getMaterial(), item.getData(), data);
+	}
+
+	public ItemDataMessage(Material material, short id, byte[] data) {
+		this(VanillaMaterials.getMinecraftId(material), id, data);
+	}
 
 	public ItemDataMessage(short type, short id, byte[] data) {
 		this.type = type;

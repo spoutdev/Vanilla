@@ -62,7 +62,7 @@ public class DeadBushDecorator extends Decorator {
 			final int z = chunk.getBlockZ(random) - 7 + random.nextInt(15);
 			final int y = getHighestWorkableBlock(world, x, z);
 			if (y != -1 && world.getBlockMaterial(x, y, z) == VanillaMaterials.AIR
-					&& VanillaMaterials.DEAD_BUSH.canAttachTo(world.getBlockMaterial(x, y - 1, z), BlockFace.TOP)) {
+					&& VanillaMaterials.DEAD_BUSH.canAttachTo(world.getBlock(x, y - 1, z, world), BlockFace.TOP)) {
 				world.setBlockMaterial(x, y, z, VanillaMaterials.DEAD_BUSH, (short) 0, world);
 			}
 		}

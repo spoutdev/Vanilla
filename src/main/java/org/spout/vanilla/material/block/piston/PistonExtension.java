@@ -61,13 +61,18 @@ public class PistonExtension extends ControlledMaterial implements Directional, 
 	}
 
 	@Override
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		return false;
+	}
+
+	@Override
 	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
 	}
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return Piston.BTEWNS.get(block.getData() & 0x7);
+		return Piston.BTEWNS.get(block.getDataField(0x7));
 	}
 
 	@Override

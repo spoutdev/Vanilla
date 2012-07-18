@@ -100,8 +100,8 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Ra
 	}
 	
 	@Override
-	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		return face == BlockFace.TOP && material.equals(VanillaMaterials.FARMLAND);
+	public boolean canAttachTo(Block block, BlockFace face) {
+		return face == BlockFace.TOP && block.isMaterial(VanillaMaterials.FARMLAND);
 	}
 
 	@Override

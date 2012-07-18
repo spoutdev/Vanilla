@@ -61,10 +61,10 @@ public class SugarCaneBlock extends StackGrowingBase implements InitializableMat
 
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
-		BlockMaterial material = block.getMaterial();
-		if (!super.canAttachTo(material, face)) {
+		if (!super.canAttachTo(block, face)) {
 			return false;
 		}
+		BlockMaterial material = block.getMaterial();
 		// Can always attach to sugar canes
 		if (material.equals(VanillaMaterials.SUGAR_CANE_BLOCK)) {
 			return true;

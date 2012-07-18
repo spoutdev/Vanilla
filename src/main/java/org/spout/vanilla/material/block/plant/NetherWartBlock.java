@@ -31,7 +31,6 @@ import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -76,8 +75,11 @@ public class NetherWartBlock extends GroundAttachable implements Plant, Growing,
 	}
 
 	@Override
-	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		return material.equals(VanillaMaterials.SOUL_SAND) && super.canAttachTo(material, face);
+	public boolean canAttachTo(Block block, BlockFace face) {
+		if (face == BlockFace.TOP) {
+			return block.isMaterial(VanillaMaterials.SOUL_SAND);
+		}
+		return false;
 	}
 
 	@Override

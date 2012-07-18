@@ -83,9 +83,9 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 	}
 
 	@Override
-	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		if (super.canAttachTo(material, face)) {
-			return material.equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT);
+	public boolean canAttachTo(Block block, BlockFace face) {
+		if (super.canAttachTo(block, face)) {
+			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT);
 		}
 		return false;
 	}

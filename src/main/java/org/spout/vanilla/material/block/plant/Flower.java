@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -43,9 +43,9 @@ public class Flower extends GroundAttachable implements Plant {
 	}
 
 	@Override
-	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
-		if (super.canAttachTo(material, face)) {
-			return material.equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND);
+	public boolean canAttachTo(Block block, BlockFace face) {
+		if (super.canAttachTo(block, face)) {
+			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND);
 		}
 		return false;
 	}

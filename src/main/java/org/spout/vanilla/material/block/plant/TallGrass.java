@@ -35,7 +35,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class TallGrass extends DeadBush implements Burnable {
@@ -72,11 +71,9 @@ public class TallGrass extends DeadBush implements Burnable {
 	}
 
 	@Override
-	public boolean canAttachTo(BlockMaterial material, BlockFace face) {
+	public boolean canAttachTo(Block block, BlockFace face) {
 		if (face == BlockFace.TOP) {
-			if (material.equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT)) {
-				return ((VanillaBlockMaterial) material).canSupport(this, face);
-			}
+			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT);
 		}
 		return false;
 	}

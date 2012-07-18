@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -43,6 +44,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public abstract class DoorBlock extends GroundAttachable implements Mineable, Openable, RedstoneTarget {
 	public DoorBlock(String name, int id) {
 		super(name, id);
+		this.setCollision(CollisionStrategy.SOLID);
 	}
 
 	@Override

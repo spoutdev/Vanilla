@@ -57,6 +57,8 @@ public abstract class NormalBiome extends VanillaBiome {
 	private static final Perlin ELEVATION = new Perlin();
 	private static final Perlin ROUGHNESS = new Perlin();
 	private static final Perlin DETAIL = new Perlin();
+	// the noise generator minus the turbulence
+	private static final Exponent CONTRAST = new Exponent();
 	// scale of height maps
 	private static final float HEIGHT_MAP_SCALE = 4f;
 	// a turbulent version of the modified master, used for density gen
@@ -66,7 +68,6 @@ public abstract class NormalBiome extends VanillaBiome {
 	// height settings
 	protected byte min;
 	protected byte max;
-	protected byte diff;
 
 	static {
 		ELEVATION.setFrequency(0.2D);
@@ -96,20 +97,19 @@ public abstract class NormalBiome extends VanillaBiome {
 		add.SetSourceModule(1, ELEVATION);
 
 		MASTER.SetSourceModule(0, add);
-		MASTER.setxScale(0.07);
+		MASTER.setxScale(0.06);
 		MASTER.setyScale(0.04);
-		MASTER.setzScale(0.07);
+		MASTER.setzScale(0.06);
 
 		BLOCK_REPLACER.SetSourceModule(0, ELEVATION);
 		BLOCK_REPLACER.setxScale(4D);
 		BLOCK_REPLACER.setyScale(1D);
 		BLOCK_REPLACER.setzScale(4D);
 
-		final Exponent contrast = new Exponent();
-		contrast.SetSourceModule(0, MASTER);
-		contrast.setExponent(1.5D);
+		CONTRAST.SetSourceModule(0, MASTER);
+		CONTRAST.setExponent(1D);
 
-		TURBULENT_MASTER.SetSourceModule(0, contrast);
+		TURBULENT_MASTER.SetSourceModule(0, CONTRAST);
 		TURBULENT_MASTER.setFrequency(0.005D);
 		TURBULENT_MASTER.setPower(6D);
 		TURBULENT_MASTER.setRoughness(1);
@@ -137,7 +137,7 @@ public abstract class NormalBiome extends VanillaBiome {
 	}
 
 	protected void fill(CuboidShortBuffer blockData, int x, int startY, int endY, int z) {
-
+		
 		final int seed = (int) blockData.getWorld().getSeed();
 		ELEVATION.setSeed(seed);
 		ROUGHNESS.setSeed(seed * 2);
@@ -169,11 +169,13 @@ public abstract class NormalBiome extends VanillaBiome {
 	}
 
 	private int getDensityTerrainHeight(int x, int z) {
-		return (int) MathHelper.clamp(MASTER.GetValue(x, min, z) * diff / 2 + diff / 2 + min, min, max);
+		final int diff = max - min;
+		return (int) MathHelper.clamp(CONTRAST.GetValue(x, min, z) * diff / 2 + diff / 2 + min, min, max);
 	}
 
 	private int getDensityTerrainThickness(int x, int z) {
-		return (int) MathHelper.clamp(MASTER.GetValue(x, -min, z) * diff / 2 + diff / 2, 0, diff);
+		final int diff = max - min;
+		return (int) MathHelper.clamp(CONTRAST.GetValue(x, -min, z) * diff / 2 + diff / 2, 0, diff);
 	}
 
 	private int getHeightMapValue(int x, int z, int densityTerrainHeightMin) {
@@ -210,7 +212,6 @@ public abstract class NormalBiome extends VanillaBiome {
 	protected void setMinMax(byte min, byte max) {
 		this.min = min;
 		this.max = max;
-		this.diff = (byte) (max - min);
 	}
 
 	public byte getMin() {

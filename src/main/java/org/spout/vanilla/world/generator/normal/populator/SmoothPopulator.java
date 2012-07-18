@@ -163,7 +163,6 @@ public class SmoothPopulator extends Populator {
 		public void setMinMax(byte min, byte max) {
 			this.min = min;
 			this.max = max;
-			this.diff = (byte) (max - min);
 		}
 
 		public void setTopCover(BlockMaterial topCover) {
@@ -185,7 +184,6 @@ public class SmoothPopulator extends Populator {
 		public void setMinMax(byte min, byte max) {
 			this.min = min;
 			this.max = max;
-			this.diff = (byte) (max - min);
 		}
 	}
 
@@ -203,7 +201,6 @@ public class SmoothPopulator extends Populator {
 		public void setMinMax(byte min, byte max) {
 			this.min = min;
 			this.max = max;
-			this.diff = (byte) (max - min);
 		}
 	}
 }

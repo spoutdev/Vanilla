@@ -27,8 +27,8 @@
 package org.spout.vanilla.world.generator.normal;
 
 import java.util.Random;
-
 import org.spout.api.generator.biome.BiomePopulator;
+
 import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -44,6 +44,7 @@ import org.spout.vanilla.world.generator.normal.populator.DungeonPopulator;
 import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator;
 import org.spout.vanilla.world.generator.normal.populator.OrePopulator;
 import org.spout.vanilla.world.generator.normal.populator.PondPopulator;
+import org.spout.vanilla.world.generator.normal.populator.RavinePopulator;
 import org.spout.vanilla.world.generator.normal.populator.SmoothPopulator;
 import org.spout.vanilla.world.generator.normal.populator.SnowPopulator;
 import org.spout.vanilla.world.selector.VanillaBiomeSelector;
@@ -56,9 +57,9 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 		// if you want to check out a particular biome, use this!
 		//selector = new PerBlockBiomeSelector(VanillaBiomes.MUSHROOM_SHORE);
 		setSelector(new VanillaBiomeSelector(5f));
-		addPopulators(new SmoothPopulator(), new CavePopulator(), new PondPopulator(),
-				new DungeonPopulator(), new OrePopulator(), new FallingLiquidPopulator(),
-				new BiomePopulator(getBiomeMap()), new SnowPopulator());
+		addPopulators(new SmoothPopulator(), new CavePopulator(), new RavinePopulator(),
+				new PondPopulator(), new DungeonPopulator(), new OrePopulator(),
+				new FallingLiquidPopulator(), new BiomePopulator(getBiomeMap()), new SnowPopulator());
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.FROZEN_OCEAN);
 		register(VanillaBiomes.PLAIN);

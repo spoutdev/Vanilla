@@ -27,28 +27,26 @@
 package org.spout.vanilla.controller.living.creature.passive;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.controller.living.logic.DropItemTimeBasedLogic;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Chicken extends Creature implements Passive {
-	private int nextEgg = getNextEggTime();
+
 	public static final int MINIMUM_EGG_BREEDING_TIME = 6000;
 	public static final int MAXIMUM_EGG_BREEDING_TIME = 12000;
 	public static final int NEVER = -1;
-	private Random random = new Random();
+	private boolean layingEggsEnabled = true;
+	private DropItemTimeBasedLogic dropItemLogic;
 
 	public Chicken() {
 		super(VanillaControllerTypes.CHICKEN);
@@ -58,6 +56,8 @@ public class Chicken extends Creature implements Passive {
 	public void onAttached() {
 		setHealth(4, HealthChangeReason.SPAWN);
 		setMaxHealth(4);
+		dropItemLogic = new DropItemTimeBasedLogic(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
+		registerProcess(dropItemLogic);
 		super.onAttached();
 	}
 
@@ -82,42 +82,24 @@ public class Chicken extends Creature implements Passive {
 	}
 
 	/**
-	 * Sets the time until the next egg spawns. Pass Chicken.NEVER to disable
-	 * egg spawning.
-	 * @param time
+	 * Check if laying Eggs is enabled.
+	 * @return <b>false</b>, if laying eggs is enabled. <b>false</b> otherwise.
 	 */
-	public void setNextEggTime(int time) {
-		nextEgg = time;
+	public boolean isLayingEggsEnabled() {
+		return layingEggsEnabled;
 	}
 
 	/**
-	 * @return the time until the next egg spawns.
+	 * Enable/Disable laying of eggs.
+	 * @param layingEggsEnabled
 	 */
-	public int getNextEggTime() {
-		return nextEgg;
-	}
-
-	@Override
-	public void onTick(float dt) {
-		if (nextEgg == 0) {
-			Item item = new Item(new ItemStack(VanillaMaterials.EGG, 1),
-					Vector3.ZERO);
-			getParent()
-					.getLastTransform()
-					.getPosition()
-					.getWorld()
-					.createAndSpawnEntity(
-							getParent().getLastTransform().getPosition(), item);
-			nextEgg = getRandomNextEggTime();
-		} else if (nextEgg != NEVER) {
-			nextEgg--;
+	public void setLayingEggsEnabled(boolean layingEggsEnabled) {
+		if (this.layingEggsEnabled && dropItemLogic != null) {
+			unregisterProcess(dropItemLogic);
+			this.layingEggsEnabled = false;
+		} else {
+			registerProcess(dropItemLogic);
+			this.layingEggsEnabled = layingEggsEnabled;
 		}
-		super.onTick(dt);
-	}
-
-	private int getRandomNextEggTime() {
-		return random.nextInt(MAXIMUM_EGG_BREEDING_TIME
-				- MINIMUM_EGG_BREEDING_TIME)
-				+ MINIMUM_EGG_BREEDING_TIME;
 	}
 }

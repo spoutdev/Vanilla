@@ -36,7 +36,7 @@ public class EndPortalFrame extends VanillaBlockMaterial {
 	public EndPortalFrame(String name, int id) {
 		super(name, id);
 		this.setHardness(-1.0F).setResistance(6000000.0F);
-		this.getOcclusion().set(BlockFace.BOTTOM);
+		this.setOcclusion((short) 0, BlockFace.BOTTOM);
 	}
 
 	@Override

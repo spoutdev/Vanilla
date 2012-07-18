@@ -43,7 +43,7 @@ public class Snow extends GroundAttachable implements Mineable, RandomBlockMater
 	public Snow(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false).setHardness(0.1F).setResistance(0.2F).setTransparent();
-		this.getOcclusion().set(BlockFace.BOTTOM);
+		this.setOcclusion((short) 0, BlockFace.BOTTOM);
 	}
 
 	@Override

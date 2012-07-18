@@ -72,7 +72,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	public RedstoneRepeater(String name, int id, boolean powered) {
 		super(name, id);
 		this.powered = powered;
-		this.setHardness(0.0F).setResistance(0.0F).setOpacity(0).setOcclusion(BlockFaces.NONE).getOcclusion().set(BlockFace.BOTTOM, true);
+		this.setHardness(0.0F).setResistance(0.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 	}
 
 	@Override

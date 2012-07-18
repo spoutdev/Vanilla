@@ -30,6 +30,7 @@ import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.util.flag.ByteFlagContainer;
 
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -46,19 +47,19 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	public static final Slab BRICK_SLAB = new Slab("Brick Slab", 4, STONE_SLAB);
 	public static final Slab STONE_BRICK_SLAB = new Slab("Stone Brick Slab", 5, STONE_SLAB);
 	private DoubleSlab doubletype;
+	private final ByteFlagContainer occlusionTop = new ByteFlagContainer(BlockFace.TOP);
+	private final ByteFlagContainer occlusionBottom = new ByteFlagContainer(BlockFace.BOTTOM);
 
 	private Slab(String name) {
 		super((short) 0x0007, name, 44);
-		this.setHardness(2.0F).setResistance(10.0F).setTransparent();
+		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
 		this.setCollision(CollisionStrategy.SOLID);
-		//TODO: Make bottom or top half occlude bottom or top
 	}
 
 	private Slab(String name, int data, Slab parent) {
 		super(name, 44, data, parent);
-		this.setHardness(2.0F).setResistance(10.0F).setTransparent();
+		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
 		this.setCollision(CollisionStrategy.SOLID);
-		//TODO: Make bottom or top half occlude bottom or top
 	}
 
 	public Slab setDoubleType(DoubleSlab doubletype) {
@@ -144,6 +145,15 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 			return super.canDrop(block, holding);
 		} else {
 			return false;
+		}
+	}
+
+	@Override
+	public ByteFlagContainer getOcclusion(short data) {
+		if ((data & 0x8) == 0x8) {
+			return this.occlusionTop;
+		} else {
+			return this.occlusionBottom;
 		}
 	}
 }

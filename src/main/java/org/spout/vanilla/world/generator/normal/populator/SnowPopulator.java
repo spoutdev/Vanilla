@@ -26,75 +26,70 @@
  */
 package org.spout.vanilla.world.generator.normal.populator;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
 
+import net.royawesome.jlibnoise.NoiseQuality;
+import net.royawesome.jlibnoise.module.source.Perlin;
+
 import org.spout.api.generator.Populator;
-import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.data.Climate;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
 public class SnowPopulator extends Populator {
+	private static final Perlin SNOW_HEIGHT= new Perlin();
+	
+	static {
+		SNOW_HEIGHT.setFrequency(0.2D);
+		SNOW_HEIGHT.setLacunarity(1D);
+		SNOW_HEIGHT.setNoiseQuality(NoiseQuality.STANDARD);
+		SNOW_HEIGHT.setPersistence(0.7D);
+		SNOW_HEIGHT.setOctaveCount(1);
+	}
+	
 	@Override
 	public void populate(Chunk chunk, Random random) {
+
+		final int seed = (int) chunk.getWorld().getSeed();
+		SNOW_HEIGHT.setSeed(seed);
+		
 		if (chunk.getY() != 4) {
 			return;
 		}
+		final LinkedList<Snowflake> flakes = new LinkedList<Snowflake>();
 		final World world = chunk.getWorld();
 		final int x = chunk.getBlockX();
 		final int z = chunk.getBlockZ();
-		final int[][] snowHeights = new int[16][16];
-		boolean hasSnow = false;
 		for (byte xx = 0; xx < 16; xx++) {
 			for (byte zz = 0; zz < 16; zz++) {
-				final Block block = world.getBlock(x + xx, world.getSurfaceHeight(x + xx, z + zz) + 1, z + zz, world);
-				final Biome target = block.getBiomeType();
-				if (target instanceof VanillaBiome && ((VanillaBiome) target).getClimate() == Climate.COLD) {
-					if (block.isMaterial(VanillaMaterials.AIR)) {
-						final Block under = block.translate(BlockFace.BOTTOM);
-						if (under.isMaterial(VanillaMaterials.SNOW, VanillaMaterials.ICE)) {
-							snowHeights[xx][zz] = (short) block.getY() << 16;
-							continue;
-						}
-						hasSnow = true;
-						snowHeights[xx][zz] = (short) block.getY() << 16 | (short) (random.nextInt(5) + 1);
+				final Block block = world.getBlock(x + xx, world.getHeight() - 1, z + zz, world);
+				if (block.getBiomeType() instanceof VanillaBiome) {
+					VanillaBiome biome = (VanillaBiome) block.getBiomeType();
+					if (biome.getClimate() != Climate.COLD) {
+						continue;
 					}
-				} else {
-					snowHeights[xx][zz] = (short) block.getY() << 16;
+				}
+				
+				int count = (int) ((SNOW_HEIGHT.GetValue(x + xx + 0.001, 0.123, z + zz + 0.1) + 1.0) * 4.0);
+				for (int i = 0; i < count; i++) {
+					flakes.add(new Snowflake(world, x + xx, z + zz, random));
 				}
 			}
 		}
-		if (!hasSnow) {
+		
+		if (flakes.isEmpty()) {
 			return;
 		}
-		for (byte xx = 0; xx < 16; xx++) {
-			for (byte zz = 0; zz < 16; zz++) {
-				short totalSnowHeight = 0;
-				short counter = 0;
-				for (byte sx = -1; sx <= 1; sx++) {
-					for (byte sz = -1; sz <= 1; sz++) {
-						if (xx + sx >= 0 && xx + sx < 16 && zz + sz >= 0 && zz + sz < 16) {
-							totalSnowHeight += (short) snowHeights[xx + sx][zz + sz];
-							counter++;
-						}
-					}
-				}
-				snowHeights[xx][zz] = (short) (snowHeights[xx][zz] >> 16) << 16 | (short) (totalSnowHeight / counter);
-			}
-		}
-		for (byte xx = 0; xx < 16; xx++) {
-			for (byte zz = 0; zz < 16; zz++) {
-				final short height = (short) snowHeights[xx][zz];
-				if (height > 0) {
-					final Block block = world.getBlock(x + xx, (short) (snowHeights[xx][zz] >> 16), z + zz, world);
-					block.setMaterial(VanillaMaterials.SNOW);
-					block.setData(height - 1);
-				}
+		
+		Iterator<Snowflake> iter = flakes.iterator();
+		while (iter.hasNext()) {
+			Snowflake next = iter.next();
+			while (!next.fall()) {
 			}
 		}
 	}

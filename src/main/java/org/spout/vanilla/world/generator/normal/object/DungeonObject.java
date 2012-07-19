@@ -31,10 +31,13 @@ import java.util.Random;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.material.item.misc.MusicDisc;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
 public class DungeonObject extends RandomObject {
@@ -52,6 +55,7 @@ public class DungeonObject extends RandomObject {
 	private boolean addSpawner = true;
 	private boolean addChests = true;
 	private byte maxNumberOfChests = 2;
+	private LootChestObject chestObject;
 
 	public DungeonObject() {
 		this(null);
@@ -60,6 +64,23 @@ public class DungeonObject extends RandomObject {
 	public DungeonObject(Random random) {
 		super(random);
 		randomizeRadius();
+		double ELEVEN = 1.0 / 11.0;
+		chestObject = new LootChestObject(random);
+		chestObject.setMaxNumberOfStacks(8);
+		chestObject.addMaterial(VanillaMaterials.SADDLE, 		ELEVEN, 		1, 1)
+					.addMaterial(VanillaMaterials.IRON_INGOT, 	ELEVEN, 		1, 4)
+					.addMaterial(VanillaMaterials.BREAD, 		ELEVEN, 		1, 2)
+					.addMaterial(VanillaMaterials.WHEAT, 		ELEVEN, 		1, 4)
+					.addMaterial(VanillaMaterials.GUNPOWDER, 	ELEVEN, 		1, 4)
+					.addMaterial(VanillaMaterials.STRING, 		ELEVEN, 		1, 4)
+					.addMaterial(VanillaMaterials.BUCKET, 		ELEVEN, 		1, 1)
+					.addMaterial(Dye.COCOA_BEANS, 				ELEVEN, 		1, 3)
+					.addMaterial(VanillaMaterials.REDSTONE_DUST, 1.0 / 22.0, 	1, 4)
+					.addMaterial(VanillaMaterials.GOLDEN_APPLE, 1.0 / 1100.0, 	1, 1);
+		double discProbability = (1.0 / 110.0) / (double) MusicDisc.values().length;
+		for (Material disc:MusicDisc.values()) {
+			chestObject.addMaterial(disc, discProbability, 						1, 1);
+		}
 	}
 
 	@Override
@@ -127,12 +148,10 @@ public class DungeonObject extends RandomObject {
 				if (adjacentSolidBlockCount != 1) {
 					continue;
 				}
-				w.setBlockMaterial(xx, y, zz, VanillaMaterials.CHEST, (short) 0, w);
-				chestCount++;
+				chestObject.placeObject(w, xx, y, zz);
 				if (chestCount == maxNumberOfChests) {
 					break;
 				}
-				//TODO: add loot
 			}
 		}
 		if (addSpawner) {

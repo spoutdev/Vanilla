@@ -149,6 +149,7 @@ public class DungeonObject extends RandomObject {
 					continue;
 				}
 				chestObject.placeObject(w, xx, y, zz);
+				chestCount ++;
 				if (chestCount == maxNumberOfChests) {
 					break;
 				}

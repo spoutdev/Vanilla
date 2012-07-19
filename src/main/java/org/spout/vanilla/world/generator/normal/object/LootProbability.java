@@ -99,7 +99,7 @@ public class LootProbability {
 		if (max == min) {
 			amount = min;
 		} else {
-			amount = random.nextInt(max - min) + min;
+			amount = random.nextInt(max - min + 1) + min;
 		}
 		return new ItemStack(getLoot(), amount);
 	}

@@ -43,14 +43,13 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.block.BlockSnapshot;
-import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.MiningType;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstonePowerMode;
@@ -201,7 +200,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 			if (item == null) {
 				continue;
 			}
-			block.getPosition().getWorld().createAndSpawnEntity(block.getPosition(), new Item(item, new Vector3(0, 5, 0)));
+			ItemUtil.dropItemNaturally(block.getPosition(), item);
 		}
 	}
 

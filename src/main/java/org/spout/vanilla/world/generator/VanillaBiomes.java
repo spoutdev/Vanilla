@@ -53,7 +53,7 @@ import org.spout.vanilla.world.generator.theend.biome.EndStoneBiome;
 public class VanillaBiomes {
 	//TODO These numbers need to be checked...
 	public static final VanillaBiome OCEAN = new OceanBiome(0);
-	public static final VanillaBiome PLAIN = new PlainBiome(1);
+	public static final VanillaBiome PLAINS = new PlainBiome(1);
 	public static final VanillaBiome DESERT = new DesertBiome(2);
 	public static final VanillaBiome DESERT_HILLS = new DesertHillsBiome(17);
 	public static final VanillaBiome MOUNTAINS = new MountainsBiome(3);

@@ -56,13 +56,13 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 	public void registerBiomes() {
 		// if you want to check out a particular biome, use this!
 		//setSelector(new PerBlockBiomeSelector(VanillaBiomes.TAIGA));
-		setSelector(new VanillaBiomeSelector(5f));
+		setSelector(new VanillaBiomeSelector());
 		addPopulators(new SmoothPopulator(), new CavePopulator(), new RavinePopulator(),
 				new PondPopulator(), new DungeonPopulator(), new OrePopulator(),
 				new FallingLiquidPopulator(), new BiomePopulator(getBiomeMap()), new SnowPopulator());
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.FROZEN_OCEAN);
-		register(VanillaBiomes.PLAIN);
+		register(VanillaBiomes.PLAINS);
 		register(VanillaBiomes.DESERT);
 		register(VanillaBiomes.DESERT_HILLS);
 		register(VanillaBiomes.SMALL_MOUNTAINS);

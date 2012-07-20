@@ -39,8 +39,10 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
 public class SnowObject extends WorldGeneratorObject implements Source {
@@ -68,51 +70,50 @@ public class SnowObject extends WorldGeneratorObject implements Source {
 	public boolean fall(World world, IntVector3 position) {
 		Block current = world.getBlock(position.getX(), position.getY(), position.getZ(), this);
 		Block under = current.translate(BlockFace.BOTTOM);
-		if (under.isMaterial(VanillaMaterials.ICE)) {
+		BlockMaterial underMat = under.getMaterial();
+		if (underMat.equals(VanillaMaterials.ICE)) {
 			return true;
-		} else if (under.isMaterial(VanillaMaterials.AIR, VanillaMaterials.SNOW)) {
+		} else if (underMat.equals(VanillaMaterials.AIR, VanillaMaterials.SNOW)) {
 			position.setY(position.getY() - 1);
 			return false;
-		} else {
+		} else if (underMat instanceof Water) {
 			// Set ice, if it falls on water
-			if (under.isMaterial(VanillaMaterials.WATER, VanillaMaterials.STATIONARY_WATER)) {
-				under.setMaterial(VanillaMaterials.ICE);
-				return true;
-			} else {
-				int newSnowHeight = 0;
-				if (current.isMaterial(VanillaMaterials.SNOW)) {
-					newSnowHeight = current.getData() + 1;
-					// Collect neighbors
-					ArrayList<IntVector3> slopes = new ArrayList<IntVector3>();
-					for (IntVector3 neighbor : NEIGHBORS) {
-						if (current.translate(neighbor).isMaterial(VanillaMaterials.AIR)) { // probably more types
-							slopes.add(neighbor);
-						}
-					}
-
-					// if there are slopes, move the flake to one of them. In 1 out of 6 times, stack the existing pile though.
-					if (!slopes.isEmpty() && newSnowHeight < 15 && random.nextInt(6) != 0) {
-						position.set(slopes.get(random.nextInt(slopes.size())));
-						return false;
+			under.setMaterial(VanillaMaterials.ICE);
+			return true;
+		} else {
+			int newSnowHeight = 0;
+			if (current.isMaterial(VanillaMaterials.SNOW)) {
+				newSnowHeight = current.getData() + 1;
+				// Collect neighbors
+				ArrayList<IntVector3> slopes = new ArrayList<IntVector3>();
+				for (IntVector3 neighbor : NEIGHBORS) {
+					Block n = current.translate(neighbor);
+					if (n.isMaterial(VanillaMaterials.AIR) && Climate.get(n).hasSnowfall()) { // probably more types
+						slopes.add(neighbor);
 					}
 				}
 
-				BlockMaterial below = current.translate(BlockFace.BOTTOM).getMaterial();
-				// Check if the material can support snow
-				if (below instanceof VanillaBlockMaterial) {
-					if (((VanillaBlockMaterial) below).canSupport(VanillaMaterials.SNOW, BlockFace.TOP)) {
-						current.setMaterial(VanillaMaterials.SNOW, newSnowHeight);
-						return true;
-					}
+				// if there are slopes, move the flake to one of them. In 1 out of 6 times, stack the existing pile though.
+				if (!slopes.isEmpty() && newSnowHeight < 15 && random.nextInt(6) != 0) {
+					position.set(slopes.get(random.nextInt(slopes.size())));
+					return false;
 				}
-				//move flake randomly
-				position.setX(position.getX() + random.nextInt(2) == 0 ? -1 : 1);
-				position.setZ(position.getZ() + random.nextInt(2) == 0 ? -1 : 1);
-				if (!this.setHighestWorkableBlock(world, position)) {
+			}
+
+			// Check if the material can support snow
+			if (underMat instanceof VanillaBlockMaterial) {
+				if (((VanillaBlockMaterial) underMat).canSupport(VanillaMaterials.SNOW, BlockFace.TOP)) {
+					current.setMaterial(VanillaMaterials.SNOW, newSnowHeight);
 					return true;
 				}
-				return false;
 			}
+			//move flake randomly
+			position.setX(position.getX() + random.nextInt(2) == 0 ? -1 : 1);
+			position.setZ(position.getZ() + random.nextInt(2) == 0 ? -1 : 1);
+			if (!this.setHighestWorkableBlock(world, position)) {
+				return true;
+			}
+			return false;
 		}
 	}
 

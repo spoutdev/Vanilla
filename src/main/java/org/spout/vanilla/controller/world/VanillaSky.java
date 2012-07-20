@@ -28,45 +28,51 @@ package org.spout.vanilla.controller.world;
 
 import java.util.HashMap;
 
-import org.spout.api.entity.component.Controller;
 import org.spout.api.geo.World;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.controller.VanillaController;
-import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.world.WeatherSimulator;
 
 /**
  * Represents a sky in Vanilla
  */
-public abstract class VanillaSky extends Controller implements VanillaController {
+public abstract class VanillaSky implements Runnable {
 	public static final byte MIN_SKY_LIGHT = 4;
 	public static final byte MAX_SKY_LIGHT = 15;
 	public static final byte SKY_LIGHT_RANGE = MAX_SKY_LIGHT - MIN_SKY_LIGHT;
 	protected long maxTime, time = 0, countdown = 20, rate;
 	private Long setTime;
+	private final World world;
 	private WeatherSimulator weather;
 	private static final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
 
-	public VanillaSky(VanillaControllerType type, boolean hasWeather, long maxTime, long rate) {
-		super(type);
+	public VanillaSky(World world, boolean hasWeather, long maxTime, long rate) {
 		this.maxTime = maxTime;
-		this.weather = hasWeather ? null : new WeatherSimulator(this);
+		this.weather = hasWeather ? new WeatherSimulator(this) : null;
 		this.rate = rate;
+		this.world = world;
 	}
 
-	public VanillaSky(VanillaControllerType type, boolean hasWeather, long maxTime) {
-		this(type, hasWeather, maxTime, 20);
+	public VanillaSky(World world, boolean hasWeather, long maxTime) {
+		this(world, hasWeather, maxTime, 20);
 	}
 
-	public VanillaSky(VanillaControllerType type, boolean hasWeather) {
-		this(type, hasWeather, 24000, 20);
+	public VanillaSky(World world, boolean hasWeather) {
+		this(world, hasWeather, 24000, 20);
 	}
 
-	public VanillaSky(VanillaControllerType type) {
-		this(type, false, 24000, 20);
+	public VanillaSky(World world) {
+		this(world, false, 24000, 20);
+	}
+
+	public void onAttach() {
+		setSky(this.world, this);
+	}
+
+	public void onDetach() {
+		setSky(this.world, null);
 	}
 
 	public void broadcastMessage(Message message) {
@@ -81,28 +87,9 @@ public abstract class VanillaSky extends Controller implements VanillaController
 			player.getSession().send(false, message);
 		}
 	}
-
+	
 	@Override
-	public void onAttached() {
-		getParent().setCollision(null);
-		synchronized (skies) {
-			skies.put(getWorld(), this);
-		}
-	}
-
-	@Override
-	public void onDetached() {
-		super.onDetached();
-		synchronized (skies) {
-			World world = getWorld();
-			if (skies.get(world) == this) {
-				skies.remove(world);
-			}
-		}
-	}
-
-	@Override
-	public void onTick(float dt) {
+	public void run() {
 		// Keep time
 		if (setTime != null) {
 			this.time = setTime;
@@ -121,13 +108,8 @@ public abstract class VanillaSky extends Controller implements VanillaController
 		}
 		// Weather
 		if (this.hasWeather()) {
-			this.weather.onTick(dt);
+			this.weather.onTick(0.05f);
 		}
-	}
-
-	@Override
-	public boolean isSavable() {
-		return false;
 	}
 
 	/**
@@ -245,7 +227,17 @@ public abstract class VanillaSky extends Controller implements VanillaController
 	 * @return world
 	 */
 	public World getWorld() {
-		return getParent().getWorld();
+		return this.world;
+	}
+
+	public static void setSky(World world, VanillaSky sky) {
+		synchronized (skies) {
+			if (sky == null) {
+				skies.remove(world);
+			} else {
+				skies.put(world, sky);
+			}
+		}
 	}
 
 	public static VanillaSky getSky(World world) {

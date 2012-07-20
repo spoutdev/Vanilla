@@ -26,18 +26,13 @@
  */
 package org.spout.vanilla.controller.world.sky;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.api.geo.World;
 import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.data.Weather;
 
 public class TheEndSky extends VanillaSky {
-	public TheEndSky() {
-		super(VanillaControllerTypes.THE_END_SKY, false);
-	}
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
+	public TheEndSky(World world) {
+		super(world, false);
 		this.getWorld().setSkyLight(MIN_SKY_LIGHT);
 	}
 

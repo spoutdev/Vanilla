@@ -345,12 +345,11 @@ public class AdministrationCommands {
 			world = player.getEntity().getWorld();
 		} else if (args.length() == 2) {
 			world = plugin.getEngine().getWorld(args.getString(1));
+			if (world == null) {
+				throw new CommandException("Invalid world '" + args.getString(1) + "'.");
+			}
 		} else {
 			throw new CommandException("You need to specify a world.");
-		}
-
-		if (world == null) {
-			throw new CommandException("Invalid world '" + args.getString(1) + "'.");
 		}
 
 		Weather weather;
@@ -387,7 +386,7 @@ public class AdministrationCommands {
 
 		VanillaSky sky = VanillaSky.getSky(world);
 		if (sky == null) {
-			throw new CommandException("The world '" + args.getString(1) + "' is not availible.");
+			throw new CommandException("The sky of world '" + world.getName() + "' is not availible.");
 		}
 
 		sky.setWeather(weather);

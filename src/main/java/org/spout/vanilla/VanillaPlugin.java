@@ -52,6 +52,7 @@ import org.spout.api.plugin.Platform;
 import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.Protocol;
+import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.OutwardIterator;
 
 import org.spout.vanilla.command.AdministrationCommands;
@@ -263,15 +264,16 @@ public class VanillaPlugin extends CommonPlugin {
 			String skyType = worldConfig.SKY_TYPE.getString();
 			VanillaSky sky;
 			if (skyType.equalsIgnoreCase("normal")) {
-				sky = new NormalSky();
+				sky = new NormalSky(world);
 			} else if (skyType.equalsIgnoreCase("nether")) {
-				sky = new NetherSky();
+				sky = new NetherSky(world);
 			} else if (skyType.equalsIgnoreCase("the_end")) {
-				sky = new TheEndSky();
+				sky = new TheEndSky(world);
 			} else {
 				throw new IllegalArgumentException("Invalid sky type for world '" + world.getName() + "': " + skyType);
 			}
-			world.createAndSpawnEntity(new Point(world, 0, 0, 0), sky);
+			world.getTaskManager().scheduleSyncRepeatingTask(this, sky, 50, 50, TaskPriority.NORMAL);
+			sky.onAttach();
 		}
 	}
 

@@ -27,8 +27,8 @@
 package org.spout.vanilla.controller.world.sky;
 
 import org.spout.api.Spout;
+import org.spout.api.geo.World;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;
@@ -38,13 +38,8 @@ import org.spout.vanilla.util.VanillaMathHelper;
 import org.spout.vanilla.world.WeatherSimulator;
 
 public class NormalSky extends VanillaSky {
-	public NormalSky() {
-		super(VanillaControllerTypes.NORMAL_SKY, true);
-	}
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
+	public NormalSky(World world) {
+		super(world, true);
 		this.getWorld().setSkyLight((byte) 15);
 	}
 

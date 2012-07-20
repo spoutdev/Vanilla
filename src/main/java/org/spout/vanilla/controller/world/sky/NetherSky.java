@@ -26,18 +26,13 @@
  */
 package org.spout.vanilla.controller.world.sky;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.api.geo.World;
 import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.data.Weather;
 
 public class NetherSky extends VanillaSky {
-	public NetherSky() {
-		super(VanillaControllerTypes.NETHER_SKY, false);
-	}
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
+	public NetherSky(World world) {
+		super(world, false);
 		this.getWorld().setSkyLight(MIN_SKY_LIGHT);
 	}
 

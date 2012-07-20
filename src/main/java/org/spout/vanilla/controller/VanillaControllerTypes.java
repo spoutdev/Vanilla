@@ -85,9 +85,6 @@ import org.spout.vanilla.controller.object.projectile.GhastFireball;
 import org.spout.vanilla.controller.object.projectile.Snowball;
 import org.spout.vanilla.controller.object.vehicle.Boat;
 import org.spout.vanilla.controller.object.vehicle.minecart.TransportMinecart;
-import org.spout.vanilla.controller.world.sky.NetherSky;
-import org.spout.vanilla.controller.world.sky.NormalSky;
-import org.spout.vanilla.controller.world.sky.TheEndSky;
 import org.spout.vanilla.protocol.controller.BasicObjectEntityProtocol;
 import org.spout.vanilla.protocol.controller.BasicProjectileEntityProtocol;
 import org.spout.vanilla.protocol.controller.living.BlazeEntityProtocol;
@@ -157,9 +154,6 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType PAINTINGS = new VanillaControllerType(-1, Painting.class, "Painting", new PaintingEntityProtocol());
 	public static final VanillaControllerType HUMAN = new VanillaControllerType(-1, Human.class, "Human", new HumanEntityProtocol());
 	// World
-	public static final VanillaControllerType NORMAL_SKY = new VanillaControllerType(-2, NormalSky.class, "Normal Sky");
-	public static final VanillaControllerType NETHER_SKY = new VanillaControllerType(-3, NetherSky.class, "Nether Sky");
-	public static final VanillaControllerType THE_END_SKY = new VanillaControllerType(-4, TheEndSky.class, "The End Sky");
 	public static final VanillaControllerType LIGHTNING = new VanillaControllerType(-7, Lightning.class, "Lightning", new LightningEntityProtocol());
 	// Block
 	public static final VanillaControllerType FURNACE = new VanillaControllerType(-5, Furnace.class, "Furnace");

@@ -29,8 +29,17 @@ package org.spout.vanilla.util;
 import org.spout.api.math.MathHelper;
 
 public class VanillaMathHelper {
+	private static final float[] SIN_TABLE = new float[65536];
+
+	static {
+		for (int i = 0; i < 65536; i++) {
+			SIN_TABLE[i] = (float) Math.sin((i * Math.PI * 2) / 65536);
+		}
+	}
+
 	/**
 	 * Gets the celestial angle at a certain time of the day
+	 *
 	 * @param timeMillis time
 	 * @param timeMillisTune fine runing
 	 * @return celestial angle
@@ -49,8 +58,9 @@ public class VanillaMathHelper {
 	}
 
 	/**
-	 * Gets the (real?) celestial angle at a certain time of the day<br>
-	 * The use of this function is unknown...
+	 * Gets the (real?) celestial angle at a certain time of the day<br> The use
+	 * of this function is unknown...
+	 *
 	 * @param timeMillis time
 	 * @param timeMillisTune fine runing
 	 * @return celestial angle, a value from 0 to 1
@@ -65,5 +75,23 @@ public class VanillaMathHelper {
 			celestial = 1.0f;
 		}
 		return 1.0f - celestial;
+	}
+
+	/**
+	 * sin using a table
+	 *
+	 * @param angle the angle
+	 */
+	public static float sin(float angle) {
+		return SIN_TABLE[(int) (angle * 10430.38) & 65535];
+	}
+
+	/**
+	 * cos using a table
+	 *
+	 * @param angle the angle
+	 */
+	public static float cos(float angle) {
+		return SIN_TABLE[(int) (angle * 10430.38 + 16384) & 65535];
 	}
 }

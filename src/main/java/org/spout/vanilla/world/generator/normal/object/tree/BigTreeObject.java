@@ -36,6 +36,7 @@ import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.Sapling;
+import org.spout.vanilla.util.VanillaMathHelper;
 
 public class BigTreeObject extends TreeObject {
 	private float trunkHeightMultiplier = 0.618f;
@@ -116,8 +117,8 @@ public class BigTreeObject extends TreeObject {
 			for (byte count = 0; count < groupsPerLayer; count++) {
 				final float randomAngle = (float) (Math.PI * 2f * random.nextFloat());
 				final float scale = widthScale * layerSize * (random.nextFloat() + 0.328f);
-				final int groupX = (int) (scale * Math.sin(randomAngle) + x + 0.5);
-				final int groupZ = (int) (scale * Math.cos(randomAngle) + z + 0.5);
+				final int groupX = (int) (scale * VanillaMathHelper.sin(randomAngle) + x + 0.5);
+				final int groupZ = (int) (scale * VanillaMathHelper.cos(randomAngle) + z + 0.5);
 				final Point group = new Point(world, groupX, groupY, groupZ);
 				if (getAvailableBlockSpace(group, group.add(0, leafDistanceLimit, 0)) != -1) {
 					continue;

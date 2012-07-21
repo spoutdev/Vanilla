@@ -39,6 +39,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.VanillaMathHelper;
 
 public class CavePopulator extends Populator {
 	private static final byte OVERLAP = 8;
@@ -115,10 +116,10 @@ public class CavePopulator extends Populator {
 		}
 
 		for (; startingNode < nodeAmount; startingNode++) {
-			final float horizontalSize = (float) (1.5 + Math.sin(startingNode * Math.PI / nodeAmount) * horizontalScale);
+			final float horizontalSize = (float) (1.5 + VanillaMathHelper.sin(startingNode * (float) Math.PI / nodeAmount) * horizontalScale);
 			final float verticalSize = horizontalSize * verticalScale;
-			final float diskXZ = (float) Math.cos(verticalAngle);
-			target = target.add(Math.cos(horizontalAngle) * diskXZ, Math.sin(verticalAngle), Math.sin(horizontalAngle) * diskXZ);
+			final float diskXZ = VanillaMathHelper.cos(verticalAngle);
+			target = target.add(VanillaMathHelper.cos(horizontalAngle) * diskXZ, VanillaMathHelper.sin(verticalAngle), VanillaMathHelper.sin(horizontalAngle) * diskXZ);
 
 			if (extraVerticalScale) {
 				verticalAngle *= 0.92;

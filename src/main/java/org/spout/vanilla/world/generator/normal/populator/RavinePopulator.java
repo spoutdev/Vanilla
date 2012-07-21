@@ -39,6 +39,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.VanillaMathHelper;
 
 public class RavinePopulator extends Populator {
 	private static final byte OVERLAP = 8;
@@ -101,10 +102,10 @@ public class RavinePopulator extends Populator {
 		}
 
 		for (; startingNode < nodeAmount; startingNode++) {
-			float horizontalSize = (float) (1.5 + Math.sin((startingNode * Math.PI) / nodeAmount) * horizontalScale);
+			float horizontalSize = (float) (1.5 + VanillaMathHelper.sin(startingNode * (float) Math.PI / nodeAmount) * horizontalScale);
 			float verticalSize = horizontalSize * verticalScale;
-			final float diskXZ = (float) Math.cos(verticalAngle);
-			target = target.add(Math.cos(horizontalAngle) * diskXZ, Math.sin(verticalAngle), Math.sin(horizontalAngle) * diskXZ);
+			final float diskXZ = (float) VanillaMathHelper.cos(verticalAngle);
+			target = target.add(VanillaMathHelper.cos(horizontalAngle) * diskXZ, VanillaMathHelper.sin(verticalAngle), VanillaMathHelper.sin(horizontalAngle) * diskXZ);
 
 			horizontalSize *= random.nextFloat() * 0.25 + 0.75;
 			verticalSize *= random.nextFloat() * 0.25 + 0.75;

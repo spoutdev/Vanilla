@@ -59,6 +59,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
+		block.syncResetDynamic();
 		block.dynamicUpdate(block.getWorld().getAge() + this.getFlowDelay());
 	}
 

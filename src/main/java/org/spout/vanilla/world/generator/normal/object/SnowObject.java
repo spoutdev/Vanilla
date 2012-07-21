@@ -141,12 +141,13 @@ public class SnowObject extends WorldGeneratorObject implements Source {
 
 	private boolean setHighestWorkableBlock(World world, IntVector3 position) {
 		int y = world.getHeight();
-		while (world.getBlockMaterial(position.getY(), y, position.getZ()).equals(VanillaMaterials.AIR)) {
+		while (world.getBlockMaterial(position.getX(), y, position.getZ()).equals(VanillaMaterials.AIR)) {
 			y--;
 			if (y == 0) {
 				return  false;
 			}
 		}
+		y++;
 		y++;
 		position.setY(y);
 		return true;

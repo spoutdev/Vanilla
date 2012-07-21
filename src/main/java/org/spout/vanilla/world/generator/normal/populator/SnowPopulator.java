@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.world.generator.normal.populator;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Random;
 
 import net.royawesome.jlibnoise.NoiseQuality;
@@ -40,6 +38,7 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.normal.object.SnowObject;
 
 public class SnowPopulator extends Populator {
 	private static final Perlin SNOW_HEIGHT= new Perlin();
@@ -54,14 +53,13 @@ public class SnowPopulator extends Populator {
 	
 	@Override
 	public void populate(Chunk chunk, Random random) {
-
+		SnowObject snowObject = new SnowObject(random);
 		final int seed = (int) chunk.getWorld().getSeed();
 		SNOW_HEIGHT.setSeed(seed);
 		
 		if (chunk.getY() != 4) {
 			return;
 		}
-		final LinkedList<Snowflake> flakes = new LinkedList<Snowflake>();
 		final World world = chunk.getWorld();
 		final int x = chunk.getBlockX();
 		final int z = chunk.getBlockZ();
@@ -77,19 +75,8 @@ public class SnowPopulator extends Populator {
 				
 				int count = (int) ((SNOW_HEIGHT.GetValue(x + xx + 0.001, 0.123, z + zz + 0.1) + 1.0) * 4.0);
 				for (int i = 0; i < count; i++) {
-					flakes.add(new Snowflake(world, x + xx, z + zz, random));
+					snowObject.placeObject(world, x + xx, 0, z + zz);
 				}
-			}
-		}
-		
-		if (flakes.isEmpty()) {
-			return;
-		}
-		
-		Iterator<Snowflake> iter = flakes.iterator();
-		while (iter.hasNext()) {
-			Snowflake next = iter.next();
-			while (!next.fall()) {
 			}
 		}
 	}

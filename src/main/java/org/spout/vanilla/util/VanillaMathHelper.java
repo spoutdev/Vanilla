@@ -78,18 +78,22 @@ public class VanillaMathHelper {
 	}
 
 	/**
-	 * sin using a table
+	 * Sinus calculations using a table. Should yield the same values as MC's
+	 * MathHelper.sin
 	 *
 	 * @param angle the angle
+	 * @return the sinus of the angle
 	 */
 	public static float sin(float angle) {
 		return SIN_TABLE[(int) (angle * 10430.38) & 65535];
 	}
 
 	/**
-	 * cos using a table
+	 * Cosinus calculations using a table. Should yield the same values as MC's
+	 * MathHelper.cos
 	 *
 	 * @param angle the angle
+	 * @return the cosinus of the angle
 	 */
 	public static float cos(float angle) {
 		return SIN_TABLE[(int) (angle * 10430.38 + 16384) & 65535];

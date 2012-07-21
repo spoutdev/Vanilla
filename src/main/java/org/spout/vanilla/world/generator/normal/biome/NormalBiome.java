@@ -161,12 +161,12 @@ public abstract class NormalBiome extends VanillaBiome {
 
 	private int getDensityTerrainThickness(int x, int z) {
 		final float scale = (max - min) / 2f;
-		return (int) Math.round(MASTER.GetValue(x, max, z) * scale + scale);
+		return (int) Math.round(MASTER.GetValue(x, 1337, z) * scale + scale);
 	}
 
 	private int getHeightMapValue(int x, int z) {
 		final int scale = max - min;
-		return (int) Math.round(TURBULENT_MASTER.GetValue(x, min, z) * scale + scale + min);
+		return (int) Math.round(TURBULENT_MASTER.GetValue(x, 63, z) * scale + scale + min);
 	}
 
 	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {

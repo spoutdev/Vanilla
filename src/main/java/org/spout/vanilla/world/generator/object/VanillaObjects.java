@@ -36,10 +36,12 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.nether.object.NetherPortalObject;
 import org.spout.vanilla.world.generator.normal.object.BlockPatchObject;
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;
+import org.spout.vanilla.world.generator.normal.object.LootChestObject;
 import org.spout.vanilla.world.generator.normal.object.OreObject;
 import org.spout.vanilla.world.generator.normal.object.OreObject.OreType;
 import org.spout.vanilla.world.generator.normal.object.PondObject;
 import org.spout.vanilla.world.generator.normal.object.PondObject.PondType;
+import org.spout.vanilla.world.generator.normal.object.SnowObject;
 import org.spout.vanilla.world.generator.normal.object.WellObject;
 import org.spout.vanilla.world.generator.normal.object.largeplant.CactusStackObject;
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
@@ -89,6 +91,8 @@ public class VanillaObjects {
 	public static final NetherPortalObject NETHER_PORTAL = new NetherPortalObject();
 	public static final BlockPatchObject SAND = new BlockPatchObject(VanillaMaterials.SAND);
 	public static final BlockPatchObject CLAY = new BlockPatchObject(VanillaMaterials.CLAY_BLOCK);
+	public static final LootChestObject LOOT_CHEST = new LootChestObject();
+	public static final SnowObject SNOW = new SnowObject();
 	// for the '/obj' test command
 	private static final Map<String, WorldGeneratorObject> BY_NAME = new HashMap<String, WorldGeneratorObject>();
 

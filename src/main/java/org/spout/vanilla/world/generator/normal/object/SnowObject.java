@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.spout.api.Source;
-import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -39,20 +38,24 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.object.RandomObject;
 
-public class SnowObject extends WorldGeneratorObject implements Source {
-	private final Random random;
+public class SnowObject extends RandomObject implements Source {
 	private static final int MAX_ITERATIONS = 10; // Endless loop prevention
 	private static final EffectRange NEIGHBORS = new CuboidEffectRange(-1, 0, -1, 1, 0, 1);
 
+	public SnowObject() {
+		this(null);
+	}
+	
 	public SnowObject(Random random) {
-		super();
-		this.random = random;
+		super(random);
 	}
 
 	@Override
@@ -137,6 +140,10 @@ public class SnowObject extends WorldGeneratorObject implements Source {
 			return;
 		}
 		for (int i = 0; i < MAX_ITERATIONS && !this.fall(world, position); i++);
+	}
+	
+	@Override
+	public void randomize() {
 	}
 
 	private boolean setHighestWorkableBlock(World world, IntVector3 position) {

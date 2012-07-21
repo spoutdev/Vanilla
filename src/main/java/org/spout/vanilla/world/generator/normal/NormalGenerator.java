@@ -59,7 +59,7 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 		setSelector(new VanillaBiomeSelector());
 		addPopulators(new SmoothPopulator(), new CavePopulator(), new RavinePopulator(),
 				new PondPopulator(), new DungeonPopulator(), new OrePopulator(),
-				new FallingLiquidPopulator(), new BiomePopulator(getBiomeMap()), new SnowPopulator());
+				new BiomePopulator(getBiomeMap()), new FallingLiquidPopulator(), new SnowPopulator());
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.FROZEN_OCEAN);
 		register(VanillaBiomes.PLAINS);

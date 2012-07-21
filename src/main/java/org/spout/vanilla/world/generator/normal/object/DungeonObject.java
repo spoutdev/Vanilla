@@ -131,6 +131,7 @@ public class DungeonObject extends RandomObject {
 			}
 		}
 		if (addChests) {
+			chestObject.setRandom(random);
 			byte chestCount = 0;
 			for (byte attempts = 0; attempts < 6; attempts++) {
 				final int xx = random.nextInt(radiusX * 2 + 1) - radiusX + x;

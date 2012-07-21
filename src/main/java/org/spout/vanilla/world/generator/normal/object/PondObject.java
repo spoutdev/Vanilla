@@ -33,9 +33,12 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 import org.spout.vanilla.world.generator.normal.biome.SnowyBiome;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
@@ -94,10 +97,14 @@ public class PondObject extends RandomObject {
 	public void placeObject(World world, int x, int y, int z) {
 		x -= 8;
 		z -= 8;
+		Biome biome = world.getBiomeType(x, y, z);
+		boolean sandy = biome instanceof SandyBiome;
 		for (byte px = 0; px < 16; px++) {
 			for (byte pz = 0; pz < 16; pz++) {
+				boolean columnHasWater = false;
 				for (byte py = (byte) -holeHeightMap[16 * px + pz]; py < 0; py++) {
 					world.setBlockMaterial(px + x, py + y, pz + z, liquid, (short) 0, world);
+					columnHasWater = true;
 				}
 				if (stoneWalls) {
 					for (byte py = 1; py < 5; py++) {
@@ -117,6 +124,12 @@ public class PondObject extends RandomObject {
 								block.setMaterial(VanillaMaterials.STONE);
 							}
 						}
+					}
+				}
+				if (sandy && columnHasWater) {
+					int ty = topHeightMap[16 * px + pz] + y;
+					if (world.getBlockMaterial(x + px, ty, z + pz).equals(VanillaMaterials.SAND)) {
+						world.setBlockMaterial(x + px, ty, z + pz, VanillaMaterials.SANDSTONE, (short) 0, world);
 					}
 				}
 			}

@@ -57,7 +57,7 @@ import static org.spout.vanilla.world.generator.VanillaBiomes.TUNDRA;
 import static org.spout.vanilla.world.generator.VanillaBiomes.TUNDRA_HILLS;
 
 public class VanillaBiomeSelector extends BiomeSelector {
-	private static final float DEFAULT_SCALE = 3.5f;
+	private static final float DEFAULT_SCALE = 2.5f;
 	//
 	private static final float CONTINENTS_THRESHOLD = -0.1f;
 	private static final float LAND_THRESHOLD = 0;

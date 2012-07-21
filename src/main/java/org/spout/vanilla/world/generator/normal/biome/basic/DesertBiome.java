@@ -39,7 +39,7 @@ public class DesertBiome extends SandyBiome {
 		super(biomeId, new SandAndClayDecorator(), new CactusDecorator(),
 				new DeadBushDecorator((byte) 8, (byte) 2), new MushroomDecorator(),
 				new SugarCaneDecorator((byte) 6, (byte) 30, (byte) 3), new WellDecorator());
-		setMinMax((byte) 66, (byte) 69);
+		setMinMax((byte) 66, (byte) 72);
 	}
 
 	@Override

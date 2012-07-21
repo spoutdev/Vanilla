@@ -32,7 +32,7 @@ import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 public class FrozenOceanBiome extends SnowyBiome {
 	public FrozenOceanBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator());
-		setMinMax((byte) 44, (byte) 53);
+		setMinMax((byte) 44, (byte) 50);
 	}
 
 	@Override

@@ -31,7 +31,6 @@ import java.util.Random;
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.combiner.Add;
 import net.royawesome.jlibnoise.module.combiner.Multiply;
-import net.royawesome.jlibnoise.module.modifier.Exponent;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
@@ -57,10 +56,6 @@ public abstract class NormalBiome extends VanillaBiome {
 	private static final Perlin ELEVATION = new Perlin();
 	private static final Perlin ROUGHNESS = new Perlin();
 	private static final Perlin DETAIL = new Perlin();
-	// the noise generator minus the turbulence
-	private static final Exponent CONTRAST = new Exponent();
-	// scale of height maps
-	private static final float HEIGHT_MAP_SCALE = 4f;
 	// a turbulent version of the modified master, used for density gen
 	private static final Turbulence TURBULENT_MASTER = new Turbulence();
 	// a scaled version of the elevation for block replacing
@@ -70,22 +65,22 @@ public abstract class NormalBiome extends VanillaBiome {
 	protected byte max;
 
 	static {
-		ELEVATION.setFrequency(0.2D);
-		ELEVATION.setLacunarity(1D);
+		ELEVATION.setFrequency(0.2);
+		ELEVATION.setLacunarity(1);
 		ELEVATION.setNoiseQuality(NoiseQuality.STANDARD);
-		ELEVATION.setPersistence(0.7D);
+		ELEVATION.setPersistence(0.7);
 		ELEVATION.setOctaveCount(1);
 
-		ROUGHNESS.setFrequency(0.53D);
-		ROUGHNESS.setLacunarity(1D);
+		ROUGHNESS.setFrequency(0.53);
+		ROUGHNESS.setLacunarity(1);
 		ROUGHNESS.setNoiseQuality(NoiseQuality.STANDARD);
-		ROUGHNESS.setPersistence(0.9D);
+		ROUGHNESS.setPersistence(0.9);
 		ROUGHNESS.setOctaveCount(1);
 
-		DETAIL.setFrequency(0.7D);
-		DETAIL.setLacunarity(1D);
+		DETAIL.setFrequency(0.7);
+		DETAIL.setLacunarity(1);
 		DETAIL.setNoiseQuality(NoiseQuality.STANDARD);
-		DETAIL.setPersistence(0.7D);
+		DETAIL.setPersistence(0.7);
 		DETAIL.setOctaveCount(1);
 
 		final Multiply multiply = new Multiply();
@@ -102,16 +97,13 @@ public abstract class NormalBiome extends VanillaBiome {
 		MASTER.setzScale(0.06);
 
 		BLOCK_REPLACER.SetSourceModule(0, ELEVATION);
-		BLOCK_REPLACER.setxScale(4D);
-		BLOCK_REPLACER.setyScale(1D);
-		BLOCK_REPLACER.setzScale(4D);
+		BLOCK_REPLACER.setxScale(4);
+		BLOCK_REPLACER.setyScale(1);
+		BLOCK_REPLACER.setzScale(4);
 
-		CONTRAST.SetSourceModule(0, MASTER);
-		CONTRAST.setExponent(1D);
-
-		TURBULENT_MASTER.SetSourceModule(0, CONTRAST);
-		TURBULENT_MASTER.setFrequency(0.005D);
-		TURBULENT_MASTER.setPower(6D);
+		TURBULENT_MASTER.SetSourceModule(0, MASTER);
+		TURBULENT_MASTER.setFrequency(0.005);
+		TURBULENT_MASTER.setPower(8);
 		TURBULENT_MASTER.setRoughness(1);
 	}
 
@@ -137,56 +129,50 @@ public abstract class NormalBiome extends VanillaBiome {
 	}
 
 	protected void fill(CuboidShortBuffer blockData, int x, int startY, int endY, int z) {
-		
+
 		final int seed = (int) blockData.getWorld().getSeed();
 		ELEVATION.setSeed(seed);
 		ROUGHNESS.setSeed(seed * 2);
 		DETAIL.setSeed(seed * 3);
 		TURBULENT_MASTER.setSeed(seed * 5);
 
-		final int densityTerrainHeightMin = getDensityTerrainHeight(x, z);
-		final int densityTerrainHeightMax = densityTerrainHeightMin + getDensityTerrainThickness(x, z);
-
-		final int heightMapHeight = getHeightMapValue(x, z, densityTerrainHeightMin);
-
-		for (int y = startY; y < endY; y++) {
-			if (y < densityTerrainHeightMin) {
-				for (; y <= heightMapHeight && y < endY; y++) {
-					blockData.set(x, y, z, VanillaMaterials.STONE.getId());
-				}
-				if (y >= endY) { // if not, we fill the rest with density terrain
-					break;
-				}
-			} else if (y >= densityTerrainHeightMax) {
-				break; // we're done for the entire world column!
-			}
-			if (TURBULENT_MASTER.GetValue(x, y, z) > 0) {
+		final int heightMapHeight = getHeightMapValue(x, z);
+		final int densityTerrainHeight = getDensityTerrainThickness(x, z) + heightMapHeight;
+		int y = startY;
+		for (; y < endY; y++) {
+			if (y <= heightMapHeight) {
 				blockData.set(x, y, z, VanillaMaterials.STONE.getId());
 			} else {
-				blockData.set(x, y, z, VanillaMaterials.AIR.getId());
+				break;
+			}
+		}
+		for (; y < endY; y++) {
+			if (y <= densityTerrainHeight) {
+				if (TURBULENT_MASTER.GetValue(x, y, z) > 0) {
+					blockData.set(x, y, z, VanillaMaterials.STONE.getId());
+				} else {
+					blockData.set(x, y, z, VanillaMaterials.AIR.getId());
+				}
+			} else {
+				break;
 			}
 		}
 	}
 
-	private int getDensityTerrainHeight(int x, int z) {
-		final int diff = max - min;
-		return (int) MathHelper.clamp(CONTRAST.GetValue(x, min, z) * diff / 2 + diff / 2 + min, min, max);
-	}
-
 	private int getDensityTerrainThickness(int x, int z) {
-		final int diff = max - min;
-		return (int) MathHelper.clamp(CONTRAST.GetValue(x, -min, z) * diff / 2 + diff / 2, 0, diff);
+		final float scale = (max - min) / 2f;
+		return (int) Math.round(MASTER.GetValue(x, max, z) * scale + scale);
 	}
 
-	private int getHeightMapValue(int x, int z, int densityTerrainHeightMin) {
-		return (int) (TURBULENT_MASTER.GetValue(x, densityTerrainHeightMin, z)
-				* HEIGHT_MAP_SCALE + densityTerrainHeightMin + 1);
+	private int getHeightMapValue(int x, int z) {
+		final int scale = max - min;
+		return (int) Math.round(TURBULENT_MASTER.GetValue(x, min, z) * scale + scale + min);
 	}
 
 	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
 		if (chunkY == 0) {
-			final byte bedrockDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 2 + 4, 1D, 5D);
-			for (int y = 0; y <= bedrockDepth; y++) {
+			final byte bedrockDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 2 + 4, 1, 5);
+			for (byte y = 0; y <= bedrockDepth; y++) {
 				blockData.set(x, y, z, VanillaMaterials.BEDROCK.getId());
 			}
 		}

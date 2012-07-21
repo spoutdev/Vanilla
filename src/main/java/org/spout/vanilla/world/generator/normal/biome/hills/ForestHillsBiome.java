@@ -31,7 +31,7 @@ import org.spout.vanilla.world.generator.normal.biome.basic.ForestBiome;
 public class ForestHillsBiome extends ForestBiome {
 	public ForestHillsBiome(int biomeId) {
 		super(biomeId);
-		setMinMax((byte) 67, (byte) 75);
+		setMinMax((byte) 67, (byte) 80);
 	}
 
 	@Override

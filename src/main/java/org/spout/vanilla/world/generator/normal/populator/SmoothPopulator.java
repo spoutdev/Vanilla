@@ -43,7 +43,7 @@ import org.spout.vanilla.world.generator.normal.biome.SnowyBiome;
 
 public class SmoothPopulator extends Populator {
 	private static final byte CHUNK_SIZE = 16;
-	private static final byte SMOOTH_SIZE = 5;
+	private static final byte SMOOTH_SIZE = 3;
 	private static final byte TOTAL_SIZE = CHUNK_SIZE + SMOOTH_SIZE * 2;
 
 	public SmoothPopulator() {
@@ -76,8 +76,8 @@ public class SmoothPopulator extends Populator {
 			for (byte zz = 0; zz < CHUNK_SIZE; zz++) {
 				final NormalBiome current = biomeMap[xx + SMOOTH_SIZE + (zz + SMOOTH_SIZE) * TOTAL_SIZE];
 				nearbyCheck:
-				for (byte sx = (byte) (xx - SMOOTH_SIZE); sx < xx + SMOOTH_SIZE; sx++) {
-					for (byte sz = (byte) (zz - SMOOTH_SIZE); sz < zz + SMOOTH_SIZE; sz++) {
+				for (byte sx = (byte) (xx - SMOOTH_SIZE); sx <= xx + SMOOTH_SIZE; sx++) {
+					for (byte sz = (byte) (zz - SMOOTH_SIZE); sz <= zz + SMOOTH_SIZE; sz++) {
 						final NormalBiome nearby = biomeMap[sx + SMOOTH_SIZE + (sz + SMOOTH_SIZE) * TOTAL_SIZE];
 						if (current != nearby) {
 							if (current instanceof GrassyBiome) {
@@ -121,11 +121,11 @@ public class SmoothPopulator extends Populator {
 					}
 				}
 				if (biome instanceof GrassySmoothBiome) {
-					((GrassySmoothBiome) biome).setMinMax((byte) (minTotal / counter), (byte) (maxTotal / counter));
+					((GrassySmoothBiome) biome).setMinMax((byte) Math.round(minTotal / counter), (byte) Math.round(maxTotal / counter));
 				} else if (biome instanceof SandySmoothBiome) {
-					((SandySmoothBiome) biome).setMinMax((byte) (minTotal / counter), (byte) (maxTotal / counter));
+					((SandySmoothBiome) biome).setMinMax((byte) Math.round(minTotal / counter), (byte) Math.round(maxTotal / counter));
 				} else if (biome instanceof IcySmoothBiome) {
-					((IcySmoothBiome) biome).setMinMax((byte) (minTotal / counter), (byte) (maxTotal / counter));
+					((IcySmoothBiome) biome).setMinMax((byte) Math.round(minTotal / counter), (byte) Math.round(maxTotal / counter));
 				}
 			}
 		}
@@ -140,9 +140,9 @@ public class SmoothPopulator extends Populator {
 				}
 				final int lx = x + xx;
 				final int lz = z + zz;
-				final CuboidShortBuffer buffer = new CuboidShortBuffer(world, lx, 0, lz, 1, 128, 1);
+				final CuboidShortBuffer buffer = new CuboidShortBuffer(world, lx, 0, lz, 1, 256, 1);
 				biome.generateColumn(buffer, lx, 0, lz);
-				for (short y = 0; y < 128; y++) {
+				for (short y = 0; y < 256; y++) {
 					world.setBlockMaterial(lx, y, lz, (BlockMaterial) MaterialRegistry.get(buffer.get(lx, y, lz)), (short) 0, world);
 				}
 			}

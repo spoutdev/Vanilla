@@ -31,7 +31,7 @@ import org.spout.vanilla.world.generator.normal.biome.basic.JungleBiome;
 public class JungleHillsBiome extends JungleBiome {
 	public JungleHillsBiome(int biomeId) {
 		super(biomeId);
-		setMinMax((byte) 67, (byte) 75);
+		setMinMax((byte) 67, (byte) 80);
 	}
 
 	@Override

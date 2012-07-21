@@ -31,7 +31,7 @@ import org.spout.vanilla.world.generator.normal.biome.basic.DesertBiome;
 public class DesertHillsBiome extends DesertBiome {
 	public DesertHillsBiome(int biomeId) {
 		super(biomeId);
-		setMinMax((byte) 67, (byte) 75);
+		setMinMax((byte) 67, (byte) 80);
 	}
 
 	@Override

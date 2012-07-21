@@ -31,7 +31,7 @@ import org.spout.vanilla.world.generator.normal.biome.basic.MushroomBiome;
 public class MushroomShoreBiome extends MushroomBiome {
 	public MushroomShoreBiome(int biomeId) {
 		super(biomeId);
-		setMinMax((byte) 64, (byte) 67);
+		setMinMax((byte) 64, (byte) 68);
 	}
 
 	@Override

@@ -34,7 +34,7 @@ import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 public class BeachBiome extends SandyBiome {
 	public BeachBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new MushroomDecorator(), new SugarCaneDecorator());
-		setMinMax((byte) 62, (byte) 64);
+		setMinMax((byte) 61, (byte) 64);
 	}
 
 	@Override

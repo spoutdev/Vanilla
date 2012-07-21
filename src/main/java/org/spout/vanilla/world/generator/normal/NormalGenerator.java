@@ -55,7 +55,7 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 	@Override
 	public void registerBiomes() {
 		// if you want to check out a particular biome, use this!
-		//setSelector(new PerBlockBiomeSelector(VanillaBiomes.TAIGA));
+		//setSelector(new PerBlockBiomeSelector(VanillaBiomes.MOUNTAINS));
 		setSelector(new VanillaBiomeSelector());
 		addPopulators(new SmoothPopulator(), new CavePopulator(), new RavinePopulator(),
 				new PondPopulator(), new DungeonPopulator(), new OrePopulator(),

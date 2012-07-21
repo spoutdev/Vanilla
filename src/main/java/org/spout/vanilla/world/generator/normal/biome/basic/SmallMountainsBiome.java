@@ -40,7 +40,7 @@ public class SmallMountainsBiome extends GrassyBiome {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
-		setMinMax((byte) 67, (byte) 87);
+		setMinMax((byte) 67, (byte) 95);
 	}
 
 	@Override

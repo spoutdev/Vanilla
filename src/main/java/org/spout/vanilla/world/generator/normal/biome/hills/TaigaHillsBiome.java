@@ -31,7 +31,7 @@ import org.spout.vanilla.world.generator.normal.biome.basic.TaigaBiome;
 public class TaigaHillsBiome extends TaigaBiome {
 	public TaigaHillsBiome(int biomeId) {
 		super(biomeId);
-		setMinMax((byte) 67, (byte) 75);
+		setMinMax((byte) 67, (byte) 80);
 	}
 
 	@Override

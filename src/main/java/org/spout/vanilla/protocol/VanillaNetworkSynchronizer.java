@@ -461,20 +461,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		VanillaPlayer controller = (VanillaPlayer) c;
 		Window window = controller.getActiveWindow();
 
-		if (window.getInventory() != inventory) {
-			return;
-		}
-
-		slot = window.getSlotIndexMap().getMinecraftSlot(slot);
-		if (slot == -1) {
-			return;
-		}
-
 		Message message;
 		if (item == null) {
-			message = new WindowSetSlotMessage(window.getInstanceId(), slot);
+			message = new WindowSetSlotMessage(window, slot);
 		} else {
-			message = new WindowSetSlotMessage(window.getInstanceId(), slot, getMinecraftId(item.getMaterial()), item.getAmount(), item.getData(), item.getNBTData());
+			message = new WindowSetSlotMessage(window, slot, getMinecraftId(item.getMaterial()), item.getAmount(), item.getData(), item.getNBTData());
 		}
 		queuedInventoryUpdates.put(slot, message);
 	}
@@ -488,11 +479,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		Window window = ((VanillaPlayer) c).getActiveWindow();
 
-		if (window.getInventory() != inventory) {
-			return;
-		}
-
-		session.send(false, new WindowSetSlotsMessage((byte) window.getInstanceId(), window.getSlotIndexMap().getMinecraftItems(slots)));
+		session.send(false, new WindowSetSlotsMessage(window, slots));
 		queuedInventoryUpdates.clear();
 	}
 }

@@ -84,19 +84,22 @@ public class SnowObject extends WorldGeneratorObject implements Source {
 			int newSnowHeight = 0;
 			if (current.isMaterial(VanillaMaterials.SNOW)) {
 				newSnowHeight = current.getData() + 1;
-				// Collect neighbors
-				ArrayList<IntVector3> slopes = new ArrayList<IntVector3>();
-				for (IntVector3 neighbor : NEIGHBORS) {
-					Block n = current.translate(neighbor);
-					if (n.isMaterial(VanillaMaterials.AIR) && Climate.get(n).hasSnowfall()) { // probably more types
-						slopes.add(neighbor);
+				// In 1 out of 6 times, stack the existing pile.
+				if (random.nextInt(6) != 0 && newSnowHeight < 15) {
+					// Collect neighbors
+					ArrayList<IntVector3> slopes = new ArrayList<IntVector3>();
+					for (IntVector3 neighbor : NEIGHBORS) {
+						Block n = current.translate(neighbor);
+						if (n.isMaterial(VanillaMaterials.AIR) && Climate.get(n).hasSnowfall()) { // probably more types
+							slopes.add(neighbor);
+						}
 					}
-				}
 
-				// if there are slopes, move the flake to one of them. In 1 out of 6 times, stack the existing pile though.
-				if (!slopes.isEmpty() && newSnowHeight < 15 && random.nextInt(6) != 0) {
-					position.set(slopes.get(random.nextInt(slopes.size())));
-					return false;
+					// if there are slopes, move the flake to one of them. 
+					if (!slopes.isEmpty()) {
+						position.set(slopes.get(random.nextInt(slopes.size())));
+						return false;
+					}
 				}
 			}
 

@@ -33,16 +33,22 @@ import org.spout.vanilla.window.TransactionWindow;
 import org.spout.vanilla.window.WindowType;
 
 public class ChestWindow extends TransactionWindow {
-	public static final SlotIndexMap SMALL_CHEST_SLOTS = new SlotIndexMap("54-62, 45-53, 36-44, 27-35, 18-26, 9-17, 0-8");
-	public static final SlotIndexMap LARGE_CHEST_SLOTS = new SlotIndexMap("81-89, 72-80, 63-71, 54-62, 45-53, 36-44, 27-35, 18-26, 9-17, 0-8");
+	private static final SlotIndexMap SMALL_MAIN_SLOTS = new SlotIndexMap("54-62, 45-53, 36-44, 27-35");
+	private static final SlotIndexMap SMALL_CHEST_SLOTS = new SlotIndexMap("18-26, 9-17, 0-8");
+	private static final SlotIndexMap LARGE_MAIN_SLOTS = new SlotIndexMap("81-89, 72-80, 63-71, 54-62");
+	private static final SlotIndexMap LARGE_CHEST1_SLOTS = new SlotIndexMap("45-53, 36-44, 27-35");
+	private static final SlotIndexMap LARGE_CHEST2_SLOTS = new SlotIndexMap("18-26, 9-17, 0-8");
 
 	public ChestWindow(VanillaPlayer owner, Chest chest1, Chest chest2) {
 		super(WindowType.CHEST, "Double Chest", owner, chest1, chest2);
-		this.setSlotIndexMap(LARGE_CHEST_SLOTS);
+		this.addInventory(owner.getInventory().getMain(), LARGE_MAIN_SLOTS);
+		this.addInventory(chest1.getInventory(), LARGE_CHEST1_SLOTS);
+		this.addInventory(chest2.getInventory(), LARGE_CHEST2_SLOTS);
 	}
 
 	public ChestWindow(VanillaPlayer owner, Chest chest) {
 		super(WindowType.CHEST, "Chest", owner, chest);
-		this.setSlotIndexMap(SMALL_CHEST_SLOTS);
+		this.addInventory(owner.getInventory().getMain(), SMALL_MAIN_SLOTS);
+		this.addInventory(chest.getInventory(), SMALL_CHEST_SLOTS);
 	}
 }

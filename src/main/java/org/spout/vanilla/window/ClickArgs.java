@@ -24,31 +24,42 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window.block;
+package org.spout.vanilla.window;
 
-import org.spout.vanilla.controller.block.EnchantmentTable;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
-import org.spout.vanilla.util.SlotIndexMap;
-import org.spout.vanilla.window.TransactionWindow;
-import org.spout.vanilla.window.WindowType;
-
-public class EnchantmentTableWindow extends TransactionWindow {
-	private static final SlotIndexMap MAIN_SLOTS = new SlotIndexMap("28-36, 19-27, 10-18, 1-9");
-	private static final SlotIndexMap ENCHANT_SLOTS = new SlotIndexMap("0");
-
-	public EnchantmentTableWindow(VanillaPlayer owner, EnchantmentTable table) {
-		super(WindowType.ENCHANTMENTTABLE, "Enchant", owner, table);
-		this.addInventory(owner.getInventory().getMain(), MAIN_SLOTS);
-		this.addInventory(table.getInventory(), ENCHANT_SLOTS);
+/**
+ * Stores information of a Window item click event
+ */
+public class ClickArgs {
+	private final boolean rightClick, shift;
+	public ClickArgs(boolean rightClick, boolean shift) {
+		this.rightClick = rightClick;
+		this.shift = shift;
 	}
 
 	/**
-	 * Updates the enchantment level of an Item displayed in this window
-	 * @param index of the item (0, 1 or 2)
-	 * @param level of enchantment of the item
+	 * Gets whether it was a right mouse click
+	 * 
+	 * @return True if it was a right click, False if not
 	 */
-	public void updateItemLevel(int index, int level) {
-		this.sendMessage(new WindowPropertyMessage(this, index, level));
+	public boolean isRightClick() {
+		return this.rightClick;
+	}
+
+	/**
+	 * Gets whether it was a left mouse click
+	 * 
+	 * @return True if it was a left click, False if not
+	 */
+	public boolean isLeftClick() {
+		return !this.rightClick;
+	}
+
+	/**
+	 * Gets whether shift was down while clicking
+	 * 
+	 * @return True if shift was down, False if not
+	 */
+	public boolean isShiftDown() {
+		return this.shift;
 	}
 }

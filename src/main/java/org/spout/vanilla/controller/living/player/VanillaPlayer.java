@@ -511,8 +511,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public void setWindow(Window activeWindow) {
 		Window old = this.activeWindow;
 		this.activeWindow = activeWindow;
-		old.close();
-		activeWindow.open();
+		if (old.isOpen()) {
+			old.close();
+		}
+		if (!activeWindow.isOpen()) {
+			activeWindow.open();
+		}
 	}
 
 	/**

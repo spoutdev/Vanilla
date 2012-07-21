@@ -26,37 +26,29 @@
  */
 package org.spout.vanilla.window;
 
-import org.spout.api.inventory.InventoryBase;
-
-import org.spout.vanilla.controller.TransactionWindowOwner;
+import org.spout.vanilla.controller.WindowOwner;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 
 /**
  * This window contains the player inventory items with additional slots above
  */
 public class TransactionWindow extends Window {
-	public TransactionWindow(WindowType type, String title, VanillaPlayer owner, TransactionWindowOwner... windowOwners) {
+	public TransactionWindow(WindowType type, String title, VanillaPlayer owner, WindowOwner... windowOwners) {
 		super(type, title, owner, windowOwners);
-		InventoryBase[] all = new InventoryBase[windowOwners.length + 1];
-		all[0] = owner.getInventory().getMain();
-		for (int i = 0; i < windowOwners.length; i++) {
-			all[i + 1] = windowOwners[i].getInventory();
-		}
-		this.setInventory(all);
 	}
 
 	@Override
-	public int getInventorySize() {
-		return this.getInventory().getSize() - this.getOwner().getInventory().getMain().getSize();
+	public void open() {
+		sendMessage(new WindowOpenMessage(this, this.getInventorySize() - this.getOwner().getInventory().getMain().getSize()));
+		super.open();
 	}
 
 	@Override
-	public boolean close() {
-		if (super.close()) {
-			this.dropItemOnCursor();
-			return true;
-		} else {
-			return false;
-		}
+	public void close() {
+		sendMessage(new WindowCloseMessage(this));
+		super.close();
+		this.dropItemOnCursor();
 	}
 }

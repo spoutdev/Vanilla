@@ -26,7 +26,10 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import java.util.Map.Entry;
+
 import org.spout.api.entity.Entity;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.player.Player;
@@ -36,6 +39,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
+import org.spout.vanilla.window.ClickArgs;
 import org.spout.vanilla.window.Window;
 
 public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
@@ -57,9 +61,9 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 		if (message.getId() == -1) {
 			//Taking item from existing slot
 			active.setItemOnCursor(null);
-			int slot = active.getSlotIndexMap().getSpoutSlot(message.getSlot());
-			if (slot != -1) {
-				active.onClickGlobal(slot, false, false);
+			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
+			if (entry != null) {
+				active.onClick(entry.getKey(), entry.getValue(), new ClickArgs(false, false));
 			}
 		} else {
 			Material material = VanillaMaterials.getMaterial(message.getId());
@@ -72,10 +76,9 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 					active.setItemOnCursor(item);
 					active.onOutsideClick();
 				} else {
-					int slot = active.getSlotIndexMap().getSpoutSlot(message.getSlot());
-					if (slot != -1) {
-						active.setItemOnCursor(null);
-						active.getInventory().setItem(slot, item);
+					Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
+					if (entry != null) {
+						active.onCreativeClick(entry.getKey(), entry.getValue(), item);
 					}
 				}
 			} else {

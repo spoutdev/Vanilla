@@ -29,12 +29,15 @@ package org.spout.vanilla.window.block;
 import org.spout.vanilla.controller.block.CraftingTable;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
+import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 import org.spout.vanilla.util.SlotIndexMap;
 import org.spout.vanilla.window.CraftingWindow;
 import org.spout.vanilla.window.WindowType;
 
 public class CraftingTableWindow extends CraftingWindow {
-	private static final SlotIndexMap SLOTS = new SlotIndexMap("37-45, 28-36, 19-27, 10-18, 1-3, 4-6, 7-9, 0");
+	private static final SlotIndexMap MAIN_SLOTS = new SlotIndexMap("37-45, 28-36, 19-27, 10-18");
+	private static final SlotIndexMap CRAFTING_SLOTS = new SlotIndexMap("1-3, 4-6, 7-9, 0");
 
 	public CraftingTableWindow(VanillaPlayer owner, CraftingTable craftingTable) {
 		this(owner, craftingTable, new CraftingTableInventory());
@@ -42,22 +45,20 @@ public class CraftingTableWindow extends CraftingWindow {
 
 	private CraftingTableWindow(VanillaPlayer owner, CraftingTable craftingTable, CraftingTableInventory inventory) {
 		super(WindowType.CRAFTINGTABLE, "Crafting", owner, inventory, craftingTable);
-		this.setInventory(owner.getInventory().getMain(), inventory);
-		this.setSlotIndexMap(SLOTS);
+		this.addInventory(owner.getInventory().getMain(), MAIN_SLOTS);
+		this.addInventory(this.getCraftingGrid(), CRAFTING_SLOTS);
 	}
 
 	@Override
-	public int getInventorySize() {
-		return this.getInventory().getSize() - this.getOwner().getInventory().getMain().getSize();
+	public void open() {
+		sendMessage(new WindowOpenMessage(this, this.getInventorySize() - this.getOwner().getInventory().getMain().getSize()));
+		super.open();
 	}
 
 	@Override
-	public boolean close() {
-		if (super.close()) {
-			this.dropItemOnCursor();
-			return true;
-		} else {
-			return false;
-		}
+	public void close() {
+		sendMessage(new WindowCloseMessage(this));
+		super.close();
+		this.dropItemOnCursor();
 	}
 }

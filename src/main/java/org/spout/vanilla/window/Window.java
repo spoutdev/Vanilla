@@ -26,29 +26,30 @@
  */
 package org.spout.vanilla.window;
 
+import java.util.AbstractMap.SimpleEntry;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.special.InventoryBundle;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.controller.WindowOwner;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.WindowMessage;
-import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
-import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.SlotIndexMap;
 
 public class Window implements InventoryViewer {
-	private static final SlotIndexMap DEFAULT_SLOTS = new SlotIndexMap();
 	protected final WindowType type;
 	protected final int instanceId;
 	protected String title;
 	protected final VanillaPlayer owner;
-	protected InventoryBundle inventory;
+	protected Map<InventoryBase, SlotIndexMap> inventories = new HashMap<InventoryBase, SlotIndexMap>();
 	protected ItemStack itemOnCursor;
-	protected SlotIndexMap slotIndexMap = DEFAULT_SLOTS;
 	protected boolean isOpen = false;
 	protected WindowOwner[] windowOwners;
 
@@ -60,27 +61,55 @@ public class Window implements InventoryViewer {
 		this.windowOwners = windowOwners;
 	}
 
-	public void setInventory(InventoryBase... inventories) {
-		if (this.inventory != null) {
-			this.inventory.removeViewer(this);
-		}
-		this.inventory = new InventoryBundle(inventories);
-	}
-
 	/**
-	 * Gets the Inventory Bundle containing all shown inventories in this Window
-	 * @return the inventory of this window
-	 */
-	public InventoryBundle getInventory() {
-		return this.inventory;
-	}
-
-	/**
-	 * Gets the Inventory size to send to the clients
+	 * Gets the amount of items contained within this Window
+	 * 
 	 * @return inventory size
 	 */
 	public int getInventorySize() {
-		return this.inventory.getSize();
+		int size = 0;
+		for (InventoryBase inventory : this.inventories.keySet()) {
+			size += inventory.getSize();
+		}
+		return size;
+	}
+
+	/**
+	 * Gets the Inventory and slot index from a protocol slot
+	 * 
+	 * @param protocolSlot to look at
+	 * @return the Inventory and slot index at the slot, or null if not found
+	 */
+	public Entry<InventoryBase, Integer> getInventoryEntry(int protocolSlot) {
+		// get the inventory at the slot
+		int spoutSlot;
+		for (Entry<InventoryBase, SlotIndexMap> inventory : this.inventories.entrySet()) {
+			spoutSlot = inventory.getValue().getSpoutSlot(protocolSlot);
+			if (spoutSlot != -1) {
+				// return inventory and converted slot
+				return new SimpleEntry<InventoryBase, Integer>(inventory.getKey(), spoutSlot);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Gets a set of entries containing the inventories and slot index maps contained within this Window
+	 * 
+	 * @return inventory data
+	 */
+	public Set<Entry<InventoryBase, SlotIndexMap>> getInventoryData() {
+		return this.inventories.entrySet();
+	}
+
+	/**
+	 * Adds a new Inventory to this Window, mapped to the slots specified
+	 * 
+	 * @param inventory to add
+	 * @param slots of the inventory (protocol)
+	 */
+	public void addInventory(InventoryBase inventory, SlotIndexMap slots) {
+		this.inventories.put(inventory, slots);
 	}
 
 	/**
@@ -89,15 +118,6 @@ public class Window implements InventoryViewer {
 	 */
 	public WindowType getType() {
 		return this.type;
-	}
-
-	/**
-	 * Gets whether this Window is the default Window<br>
-	 * Default windows don't have open and close messages
-	 * @return True if it is the default Window, False if not
-	 */
-	public boolean isDefaultWindow() {
-		return false;
 	}
 
 	/**
@@ -149,42 +169,40 @@ public class Window implements InventoryViewer {
 	}
 
 	/**
-	 * Opens this window
-	 * @return True if opening was possible, False if not
+	 * Called when this Window is opened
 	 */
-	public boolean open() {
-		if (this.isOpen()) {
-			return false;
-		}
-		if (!this.isDefaultWindow()) {
-			sendMessage(new WindowOpenMessage(this));
-		}
+	public void open() {
 		this.isOpen = true;
-		this.inventory.addViewer(this);
-		this.inventory.notifyViewers();
 		for (WindowOwner owner : this.windowOwners) {
 			owner.addViewer(this.getOwner(), this);
 		}
-		return true;
+		for (InventoryBase inventory : this.inventories.keySet()) {
+			inventory.addViewer(this);
+		}
+		// send updated slots
+		ItemStack[] items = new ItemStack[this.getInventorySize()];
+		int i;
+		for (Entry<InventoryBase, SlotIndexMap> inventory : this.inventories.entrySet()) {
+			i = 0;
+			for (ItemStack item : inventory.getKey()) {
+				items[inventory.getValue().getMinecraftSlot(i)] = item;
+				i++;
+			}
+		}
+		this.getPlayer().getNetworkSynchronizer().updateAll(null, items);
 	}
 
 	/**
-	 * Closes this window
-	 * @return True if closing was possible, False if not
+	 * Called when this Window is closed
 	 */
-	public boolean close() {
-		if (!this.isOpen()) {
-			return false;
-		}
+	public void close() {
 		this.isOpen = false;
-		if (!this.isDefaultWindow()) {
-			sendMessage(new WindowCloseMessage(this));
-		}
-		this.inventory.removeViewer(this);
 		for (WindowOwner owner : this.windowOwners) {
 			owner.removeViewer(this.getOwner());
 		}
-		return true;
+		for (InventoryBase inventory : this.inventories.keySet()) {
+			inventory.removeViewer(this);
+		}
 	}
 
 	/**
@@ -207,48 +225,113 @@ public class Window implements InventoryViewer {
 		this.itemOnCursor = item;
 	}
 
-	public void setSlotIndexMap(SlotIndexMap map) {
-		this.slotIndexMap = map;
-	}
-
-	public SlotIndexMap getSlotIndexMap() {
-		return this.slotIndexMap;
+	/**
+	 * Performs a creative click in this Window
+	 * 
+	 * @param inventory that got clicked
+	 * @param clickedSlot of the item in the Inventory
+	 * @param item the player set it to
+	 */
+	public void onCreativeClick(InventoryBase inventory, int clickedSlot, ItemStack item) {
+		this.setItemOnCursor(null);
+		inventory.setItem(clickedSlot, item);
 	}
 
 	/**
-	 * Performs a click in this Window as a whole<br>
-	 * Called by the protocol handlers
-	 * @param clickedSlot
-	 * @param rightClick
-	 * @param shift
-	 * @return True if successful, False if not
+	 * Performs a click by the user
+	 * 
+	 * @param inventory that was clicked
+	 * @param clickedSlot of the item that was clicked
+	 * @param rightClick	True when right clicked by the mouse, False if not
+	 * @param shift was down
+	 * @return True if successful
 	 */
-	public boolean onClickGlobal(int clickedSlot, boolean rightClick, boolean shift) {
-		InventoryBase inventory = null;
-		for (InventoryBase subInv : this.inventory.getInventories()) {
-			int size = subInv.getSize();
-			if (clickedSlot < size) {
-				inventory = subInv;
-				break;
-			} else {
-				clickedSlot -= size;
-			}
-		}
-		if (inventory == null) {
+	public boolean onClick(InventoryBase inventory, int clickedSlot, ClickArgs args) {
+		if (args.isShiftDown()) {
+			//TODO: Implement shift-transferring
 			return false;
-		} else {
-			return onClick(inventory, clickedSlot, rightClick, shift);
-		}
-	}
+		} else if (args.isLeftClick()) {
+			ItemStack clickedItem = inventory.getItem(clickedSlot);
+			if (clickedItem == null) {
+				if (this.hasItemOnCursor()) {
+					// cursor > clicked item
+					inventory.setItem(clickedSlot, this.getItemOnCursor());
+					this.setItemOnCursor(null);
+					return true;
+				}
 
-	public boolean onClick(InventoryBase inventory, int clickedSlot, boolean rightClick, boolean shift) {
-		boolean result;
-		if (rightClick) {
-			result = onRightClick(inventory, clickedSlot, shift);
+				return true;
+			}
+
+			if (!this.hasItemOnCursor()) {
+				// clicked item > cursor
+				this.setItemOnCursor(clickedItem);
+				inventory.setItem(clickedSlot, null);
+				return true;
+			}
+
+			// clicked item + cursor
+			ItemStack cursorItem = this.getItemOnCursor();
+			if (cursorItem.equalsIgnoreSize(clickedItem)) {
+				// stack
+				clickedItem.stack(cursorItem);
+				inventory.setItem(clickedSlot, clickedItem);
+				this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
+				return true;
+			}
+
+			// swap
+			this.setItemOnCursor(clickedItem);
+			inventory.setItem(clickedSlot, cursorItem);
+			return true;
+		} else if (args.isRightClick()) {
+			ItemStack clickedItem = inventory.getItem(clickedSlot);
+			if (clickedItem == null) {
+				if (this.hasItemOnCursor()) {
+					// cursor > clicked item
+					ItemStack cursorItem = this.getItemOnCursor();
+					clickedItem = cursorItem.clone();
+					clickedItem.setAmount(1);
+					cursorItem.setAmount(cursorItem.getAmount() - clickedItem.getAmount());
+					inventory.setItem(clickedSlot, clickedItem);
+					this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
+					return true;
+				}
+
+				return true;
+			}
+			if (this.hasItemOnCursor()) {
+				// clicked item + cursor
+				ItemStack cursorItem = this.getItemOnCursor();
+				if (!cursorItem.equalsIgnoreSize(clickedItem)) {
+					// swap
+					this.setItemOnCursor(clickedItem);
+					inventory.setItem(clickedSlot, cursorItem);
+					return true;
+				}
+
+				if (clickedItem.getAmount() >= clickedItem.getMaxStackSize()) {
+					return false;
+				}
+
+				// transfer one item
+				clickedItem.setAmount(clickedItem.getAmount() + 1);
+				cursorItem.setAmount(cursorItem.getAmount() - 1);
+				inventory.setItem(clickedSlot, clickedItem);
+				this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
+				return true;
+			}
+
+			// 1/2 clicked item > cursor
+			ItemStack newItem = clickedItem.clone();
+			newItem.setAmount(newItem.getAmount() / 2);
+			clickedItem.setAmount(clickedItem.getAmount() - newItem.getAmount());
+			inventory.setItem(clickedSlot, newItem.getAmount() <= 0 ? null : newItem);
+			this.setItemOnCursor(clickedItem.getAmount() <= 0 ? null : clickedItem);
+			return true;
 		} else {
-			result = onLeftClick(inventory, clickedSlot, shift);
+			return false;
 		}
-		return result;
 	}
 
 	/**
@@ -270,147 +353,19 @@ public class Window implements InventoryViewer {
 		return true;
 	}
 
-	/**
-	 * Called when the player left or right clicks on an item while holding shift
-	 * @param clickedSlot
-	 * @return True to notify that the operation was allowed
-	 */
-	public boolean onShiftClick(InventoryBase inventory, int clickedSlot) {
-		return false; //TODO: Implement shift-transferring
-	}
-
-	/**
-	 * Called when the player left-clicks on a slot without holding shift
-	 * @param clickedSlot
-	 * @return True to notify that the operation was allowed
-	 */
-	public boolean onLeftClick(InventoryBase inventory, int clickedSlot) {
-		ItemStack clickedItem = inventory.getItem(clickedSlot);
-		if (clickedItem == null) {
-			if (this.hasItemOnCursor()) {
-				// cursor > clicked item
-				inventory.setItem(clickedSlot, this.getItemOnCursor());
-				this.setItemOnCursor(null);
-				return true;
-			}
-
-			return true;
-		}
-
-		if (!this.hasItemOnCursor()) {
-			// clicked item > cursor
-			this.setItemOnCursor(clickedItem);
-			inventory.setItem(clickedSlot, null);
-			return true;
-		}
-
-		// clicked item + cursor
-		ItemStack cursorItem = this.getItemOnCursor();
-		if (cursorItem.equalsIgnoreSize(clickedItem)) {
-			// stack
-			clickedItem.stack(cursorItem);
-			inventory.setItem(clickedSlot, clickedItem);
-			this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
-			return true;
-		}
-
-		// swap
-		this.setItemOnCursor(clickedItem);
-		inventory.setItem(clickedSlot, cursorItem);
-		return true;
-	}
-
-	/**
-	 * Called when the player right-clicks on a slot without holding shift
-	 * @param clickedSlot
-	 * @return True to notify that the operation was allowed
-	 */
-	public boolean onRightClick(InventoryBase inventory, int clickedSlot) {
-		ItemStack clickedItem = inventory.getItem(clickedSlot);
-		if (clickedItem == null) {
-			if (this.hasItemOnCursor()) {
-				// cursor > clicked item
-				ItemStack cursorItem = this.getItemOnCursor();
-				clickedItem = cursorItem.clone();
-				clickedItem.setAmount(1);
-				cursorItem.setAmount(cursorItem.getAmount() - clickedItem.getAmount());
-				inventory.setItem(clickedSlot, clickedItem);
-				this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
-				return true;
-			}
-
-			return true;
-		}
-		if (this.hasItemOnCursor()) {
-			// clicked item + cursor
-			ItemStack cursorItem = this.getItemOnCursor();
-			if (!cursorItem.equalsIgnoreSize(clickedItem)) {
-				// swap
-				this.setItemOnCursor(clickedItem);
-				inventory.setItem(clickedSlot, cursorItem);
-				return true;
-			}
-
-			if (clickedItem.getAmount() >= clickedItem.getMaxStackSize()) {
-				return false;
-			}
-
-			// transfer one item
-			clickedItem.setAmount(clickedItem.getAmount() + 1);
-			cursorItem.setAmount(cursorItem.getAmount() - 1);
-			inventory.setItem(clickedSlot, clickedItem);
-			this.setItemOnCursor(cursorItem.getAmount() <= 0 ? null : cursorItem);
-			return true;
-		}
-
-		// 1/2 clicked item > cursor
-		ItemStack newItem = clickedItem.clone();
-		newItem.setAmount(newItem.getAmount() / 2);
-		clickedItem.setAmount(clickedItem.getAmount() - newItem.getAmount());
-		inventory.setItem(clickedSlot, newItem.getAmount() <= 0 ? null : newItem);
-		this.setItemOnCursor(clickedItem.getAmount() <= 0 ? null : clickedItem);
-		return true;
-	}
-
-	/**
-	 * Called when the player right-clicks on a slot in this window
-	 * @param clickedSlot
-	 * @param shift whether shift was pressed
-	 * @return True to notify that the operation was allowed
-	 */
-	public boolean onRightClick(InventoryBase inventory, int clickedSlot, boolean shift) {
-		if (shift) {
-			return this.onShiftClick(inventory, clickedSlot);
-		} else {
-			return this.onRightClick(inventory, clickedSlot);
-		}
-	}
-
-	/**
-	 * Called when the player left-clicks on a slot in this window
-	 * @param clickedSlot
-	 * @param shift whether shift was pressed
-	 * @return True to notify that the operation was allowed
-	 */
-	public boolean onLeftClick(InventoryBase inventory, int clickedSlot, boolean shift) {
-		if (shift) {
-			return this.onShiftClick(inventory, clickedSlot);
-		} else {
-			return this.onLeftClick(inventory, clickedSlot);
-		}
-	}
-
 	@Override
 	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
-		if (inventory == this.inventory) {
-			this.getPlayer().getNetworkSynchronizer().onSlotSet(inventory, slot, item);
+		// convert to MC slot and update
+		SlotIndexMap slots = this.inventories.get(inventory);
+		if (slots != null) {
+			this.getPlayer().getNetworkSynchronizer().onSlotSet(null, slots.getMinecraftSlot(slot), item);
 		}
 	}
 
 	@Override
 	public void updateAll(InventoryBase inventory, ItemStack[] slots) {
-		if (inventory == this.inventory) {
-			this.getPlayer().getNetworkSynchronizer().updateAll(inventory, slots);
+		for (int i = 0; i < slots.length; i++) {
+			this.onSlotSet(inventory, i, slots[i]);
 		}
 	}
 }

@@ -31,7 +31,6 @@ import java.util.List;
 
 import org.spout.api.Spout;
 import org.spout.api.inventory.InventoryBase;
-import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Recipe;
 import org.spout.api.inventory.RecipeManager;
@@ -55,23 +54,15 @@ public abstract class CraftingWindow extends Window {
 	}
 
 	@Override
-	public boolean open() {
-		if (super.open()) {
-			this.craftingGrid.getGrid().addViewer(this);
-			return true;
-		} else {
-			return false;
-		}
+	public void open() {
+		super.open();
+		this.craftingGrid.getGrid().addViewer(this);
 	}
 
 	@Override
-	public boolean close() {
-		if (super.close()) {
-			this.craftingGrid.getGrid().removeViewer(this);
-			return true;
-		} else {
-			return false;
-		}
+	public void close() {
+		super.close();
+		this.craftingGrid.getGrid().removeViewer(this);
 	}
 
 	@Override
@@ -84,13 +75,13 @@ public abstract class CraftingWindow extends Window {
 	}
 
 	@Override
-	public boolean onClick(InventoryBase inventory, int clickedSlot, boolean rightClick, boolean shift) {
+	public boolean onClick(InventoryBase inventory, int clickedSlot, ClickArgs args) {
 		if (inventory == this.getCraftingGrid() && clickedSlot == this.getCraftingGrid().getOutput().getOffset()) {
 			ItemStack output = this.getCraftingGrid().getOutput().getItem();
 			if (output == null) {
 				return true;
 			}
-			if (shift) {
+			if (args.isShiftDown()) {
 				InventorySlot slot = this.craftingGrid.getOutput();
 				ItemStack clickedItem = slot.getItem().clone();
 				ItemStack[] before = this.craftingGrid.getGrid().getClonedContents();
@@ -104,83 +95,70 @@ public abstract class CraftingWindow extends Window {
 				} else {
 					owner.getInventory().getMain().addItem(items);
 				}
-			}
-		}
-		return super.onClick(inventory, clickedSlot, rightClick, shift);
-	}
-
-	@Override
-	public boolean onLeftClick(InventoryBase inventory, int clickedSlot, boolean shift) {
-		if (inventory == this.getCraftingGrid() && clickedSlot == this.getCraftingGrid().getOutput().getOffset()) {
-			InventorySlot slot = this.craftingGrid.getOutput();
-			ItemStack clickedItem = slot.getItem();
-			if (clickedItem == null) {
-				if (this.hasItemOnCursor()) {
-					return false;
+				return true;
+			} else if (args.isLeftClick()) {
+				InventorySlot slot = this.craftingGrid.getOutput();
+				ItemStack clickedItem = slot.getItem();
+				if (clickedItem == null) {
+					if (this.hasItemOnCursor()) {
+						return false;
+					}
+					return true;
 				}
-				return true;
-			}
 
-			if (!this.hasItemOnCursor()) {
-				// clicked item > cursor
-				this.setItemOnCursor(clickedItem);
-				slot.setItem(null);
-				subtractFromCraftingArray();
-				return true;
-			}
-
-			// clickedItem != null && this.hasItemOnCursor()
-			// clicked item + cursor
-			ItemStack cursorItem = this.getItemOnCursor();
-			if (!cursorItem.equalsIgnoreSize(clickedItem)) {
-				return false;
-			}
-
-			// stack
-			cursorItem.stack(clickedItem);
-			slot.setItem(clickedItem.getAmount() <= 0 ? null : clickedItem);
-			this.setItemOnCursor(cursorItem);
-			subtractFromCraftingArray();
-			return true;
-		}
-		return super.onLeftClick(inventory, clickedSlot, shift);
-	}
-
-	@Override
-	public boolean onRightClick(InventoryBase inventory, int clickedSlot, boolean shift) {
-		if (inventory == this.getCraftingGrid() && clickedSlot == this.getCraftingGrid().getOutput().getOffset()) {
-			InventorySlot slot = craftingGrid.getOutput();
-			ItemStack clickedItem = slot.getItem();
-			if (shift) {
-
-			}
-			if (clickedItem == null) {
-				if (this.hasItemOnCursor()) {
-					return false;
+				if (!this.hasItemOnCursor()) {
+					// clicked item > cursor
+					this.setItemOnCursor(clickedItem);
+					slot.setItem(null);
+					subtractFromCraftingArray();
+					return true;
 				}
-				return true;
-			}
 
-			if (this.hasItemOnCursor()) {
+				// clickedItem != null && this.hasItemOnCursor()
 				// clicked item + cursor
 				ItemStack cursorItem = this.getItemOnCursor();
 				if (!cursorItem.equalsIgnoreSize(clickedItem)) {
 					return false;
 				}
-				if (cursorItem.getAmount() + clickedItem.getAmount() > cursorItem.getMaxStackSize()) {
-					return false;
-				}
+
+				// stack
 				cursorItem.stack(clickedItem);
-				slot.setItem(null);
+				slot.setItem(clickedItem.getAmount() <= 0 ? null : clickedItem);
 				this.setItemOnCursor(cursorItem);
-			} else {
-				this.setItemOnCursor(clickedItem.clone());
-				slot.setItem(null);
+				subtractFromCraftingArray();
+				return true;
+			} else if (args.isRightClick()) {
+				InventorySlot slot = craftingGrid.getOutput();
+				ItemStack clickedItem = slot.getItem();
+
+				if (clickedItem == null) {
+					if (this.hasItemOnCursor()) {
+						return false;
+					}
+					return true;
+				}
+
+				if (this.hasItemOnCursor()) {
+					// clicked item + cursor
+					ItemStack cursorItem = this.getItemOnCursor();
+					if (!cursorItem.equalsIgnoreSize(clickedItem)) {
+						return false;
+					}
+					if (cursorItem.getAmount() + clickedItem.getAmount() > cursorItem.getMaxStackSize()) {
+						return false;
+					}
+					cursorItem.stack(clickedItem);
+					slot.setItem(null);
+					this.setItemOnCursor(cursorItem);
+				} else {
+					this.setItemOnCursor(clickedItem.clone());
+					slot.setItem(null);
+				}
+				subtractFromCraftingArray();
+				return true;
 			}
-			subtractFromCraftingArray();
-			return true;
 		}
-		return super.onRightClick(inventory, clickedSlot, shift);
+		return super.onClick(inventory, clickedSlot, args);
 	}
 
 	private void subtractFromCraftingArray() {
@@ -196,15 +174,7 @@ public abstract class CraftingWindow extends Window {
 			}
 			clonedContents[i] = clickedItem;
 		}
-		List<InventoryViewer> viewers = craftingGrid.getViewers();
-		for (InventoryViewer viewer : viewers) {
-			craftingGrid.removeViewer(viewer);
-		}
 		craftingGrid.getGrid().setContents(clonedContents);
-		for (InventoryViewer viewer : viewers) {
-			craftingGrid.addViewer(viewer);
-		}
-		craftingGrid.notifyViewers(craftingGrid.getGrid().getSize() - 1, craftingGrid.getGrid().getItem(craftingGrid.getGrid().getSize() - 1)); // Notify all of last change
 	}
 
 	private boolean updateOutput() {

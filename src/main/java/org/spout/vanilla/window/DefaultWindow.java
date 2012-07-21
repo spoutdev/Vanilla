@@ -33,17 +33,15 @@ import org.spout.vanilla.util.SlotIndexMap;
  * The default player window always displayed
  */
 public class DefaultWindow extends CraftingWindow {
-	private static final SlotIndexMap SLOTS = new SlotIndexMap("36-44, 27-35, 18-26, 9-17, 1, 2, 3, 4, 0, 6, 7, 8, 5");
+	private static final SlotIndexMap MAIN_SLOTS = new SlotIndexMap("36-44, 27-35, 18-26, 9-17");
+	private static final SlotIndexMap CRAFTING_SLOTS = new SlotIndexMap("1-4, 0");
+	private static final SlotIndexMap ARMOR_SLOTS = new SlotIndexMap("6, 7, 8, 5");
 
 	public DefaultWindow(VanillaPlayer owner) {
 		super(WindowType.DEFAULT, "Inventory", owner, owner.getInventory().getCraftingGrid());
-		this.setInventory(owner.getInventory().getMain(), owner.getInventory().getCraftingGrid(), owner.getInventory().getArmor());
-		this.setSlotIndexMap(SLOTS);
-	}
-
-	@Override
-	public boolean isDefaultWindow() {
-		return true;
+		this.addInventory(owner.getInventory().getMain(), MAIN_SLOTS);
+		this.addInventory(owner.getInventory().getCraftingGrid(), CRAFTING_SLOTS);
+		this.addInventory(owner.getInventory().getArmor(), ARMOR_SLOTS);
 	}
 
 	@Override
@@ -52,14 +50,10 @@ public class DefaultWindow extends CraftingWindow {
 	}
 
 	@Override
-	public boolean close() {
-		if (super.close()) {
-			if (this.getOwner().isSurvival()) {
-				this.dropItemOnCursor();
-			}
-			return true;
-		} else {
-			return false;
+	public void close() {
+		super.close();
+		if (this.getOwner().isSurvival()) {
+			this.dropItemOnCursor();
 		}
 	}
 }

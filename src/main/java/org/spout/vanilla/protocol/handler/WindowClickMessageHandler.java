@@ -26,7 +26,10 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import java.util.Map.Entry;
+
 import org.spout.api.entity.Entity;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -34,6 +37,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
+import org.spout.vanilla.window.ClickArgs;
 import org.spout.vanilla.window.Window;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
@@ -47,14 +51,19 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		VanillaPlayer controller = (VanillaPlayer) entity.getController();
 		Window window = controller.getActiveWindow();
 		boolean result = false;
-		if (message.getSlot() == 64537) {
-			// outside the window
-			result = window.onOutsideClick();
-		} else {
-			int slot = window.getSlotIndexMap().getSpoutSlot(message.getSlot());
-			if (slot != -1) {
-				result = window.onClickGlobal(slot, message.isRightClick(), message.isShift());
+		try {
+			if (message.getSlot() == 64537) {
+				// outside the window
+				result = window.onOutsideClick();
+			} else {
+				// inside the window
+				Entry<InventoryBase, Integer> entry = window.getInventoryEntry(message.getSlot());
+				if (entry != null) {
+					result = window.onClick(entry.getKey(), entry.getValue(), new ClickArgs(message.isRightClick(), message.isShift()));
+				}
 			}
+		} catch (Throwable t) {
+			t.printStackTrace();
 		}
 		session.send(false, new WindowTransactionMessage(message.getWindowInstanceId(), message.getTransaction(), result));
 	}

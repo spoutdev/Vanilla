@@ -26,12 +26,7 @@
  */
 package org.spout.vanilla.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -107,30 +102,5 @@ public class VanillaBlockUtil {
 			return (int) (50f / rate);
 		}
 		return (int) (25f / rate);
-	}
-
-	/**
-	 * Gets a vertical column of chunks
-	 * 
-	 * @param middle chunk
-	 * @return list of chunks in the column
-	 */
-	public static List<Chunk> getChunkColumn(Chunk middle) {
-		Chunk top = middle;
-		Chunk tmp;
-		while (true) {
-			tmp = top.getRelative(BlockFace.TOP, LoadOption.NO_LOAD);
-			if (tmp != null && tmp.isLoaded()) {
-				top = tmp;
-			} else {
-				break;
-			}
-		}
-		List<Chunk> rval = new ArrayList<Chunk>();
-		while (top != null && top.isLoaded()) {
-			rval.add(top);
-			top = top.getRelative(BlockFace.BOTTOM, LoadOption.NO_LOAD);
-		}
-		return rval;
 	}
 }

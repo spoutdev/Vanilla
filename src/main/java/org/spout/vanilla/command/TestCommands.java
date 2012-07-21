@@ -46,10 +46,8 @@ import org.spout.api.entity.spawn.SpawnArrangement;
 import org.spout.api.entity.spawn.SpiralSpawnArrangement;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.WorldGeneratorObject;
-import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 
@@ -59,7 +57,6 @@ import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.effect.type.Speed;
-import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;

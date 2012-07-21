@@ -56,7 +56,6 @@ import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaBlockUtil;
 
 public class AdministrationCommands {
 	private final VanillaPlugin plugin;
@@ -418,8 +417,20 @@ public class AdministrationCommands {
 			player.getNetworkSynchronizer().sendChunk(player.getEntity().getChunk());
 			source.sendMessage("Chunk resent");
 		} else if (args.getString(0, "").contains("relight")) {
-			for (Chunk chunk : VanillaBlockUtil.getChunkColumn(player.getEntity().getChunk())) {
-				chunk.initLighting();
+			Chunk middle = player.getEntity().getChunk();
+			Chunk top = middle;
+			Chunk tmp;
+			while (true) {
+				tmp = top.getRelative(BlockFace.TOP, LoadOption.NO_LOAD);
+				if (tmp != null && tmp.isLoaded()) {
+					top = tmp;
+				} else {
+					break;
+				}
+			}
+			while (top != null && top.isLoaded()) {
+				top.initLighting();
+				top = top.getRelative(BlockFace.BOTTOM, LoadOption.NO_LOAD);
 			}
 			source.sendMessage("Chunk lighting is being initialized");
 		}

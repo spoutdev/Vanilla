@@ -35,6 +35,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.plant.Sapling;
+import org.spout.vanilla.util.VanillaMathHelper;
 
 public class HugeTreeObject extends TreeObject {
 	// size control
@@ -87,8 +88,8 @@ public class HugeTreeObject extends TreeObject {
 		final byte leavesEnd = (byte) (totalHeight - 2 - random.nextInt(4));
 		for (byte yy = (byte) (totalHeight / 2); yy < leavesEnd; yy += random.nextInt(4) + 2) {
 			final float randAngleInRads = (float) (2f * Math.PI * random.nextFloat());
-			final float xx = (float) Math.cos(randAngleInRads);
-			final float zz = (float) Math.sin(randAngleInRads);
+			final float xx = VanillaMathHelper.cos(randAngleInRads);
+			final float zz = VanillaMathHelper.sin(randAngleInRads);
 			generateLeaves(w, (int) (x + (xx * 4f + 0.5f)), y + yy, (int) (z + (zz * 4f + 0.5f)), (byte) 0);
 			for (byte branchLengthCount = 0; branchLengthCount < branchLength; branchLengthCount++) {
 				w.setBlockMaterial(((int) (xx * branchLengthCount + 1.5f) + x),
@@ -123,8 +124,8 @@ public class HugeTreeObject extends TreeObject {
 					final BlockMaterial material = world.getBlockMaterial(x + xx, y + yy, z + zz);
 					if (!(material instanceof Solid || material instanceof Liquid)
 							&& (xx > -1 || zz > -1 || circle < radius * radius)
-							&& ((xx < 1 && zz < 1) || circle < Math.pow(radius + 1, 2))
-							&& (random.nextInt(4) != 0 || circle < Math.pow(radius - 1, 2))) {
+							&& ((xx < 1 && zz < 1) || circle < (radius + 1) * (radius + 1))
+							&& (random.nextInt(4) != 0 || circle < (radius - 1) * (radius - 1))) {
 						world.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LEAVES, leavesMetadata, world);
 					}
 				}

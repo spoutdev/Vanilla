@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.world.generator.normal.object;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -43,7 +43,7 @@ import org.spout.vanilla.world.generator.object.RandomObject;
 
 public class LootChestObject extends RandomObject {
 	private int maxNumberOfStacks = 8;
-	private final List<LootProbability> loot = new LinkedList<LootProbability>();
+	private final List<LootProbability> loot = new ArrayList<LootProbability>();
 	private double currentPMax = 0.0;
 
 	public LootChestObject() {

@@ -55,7 +55,7 @@ public class DungeonObject extends RandomObject {
 	private boolean addSpawner = true;
 	private boolean addChests = true;
 	private byte maxNumberOfChests = 2;
-	private LootChestObject chestObject;
+	private final LootChestObject chestObject;
 
 	public DungeonObject() {
 		this(null);
@@ -64,7 +64,7 @@ public class DungeonObject extends RandomObject {
 	public DungeonObject(Random random) {
 		super(random);
 		randomizeRadius();
-		double ELEVEN = 1.0 / 11.0;
+		final double ELEVEN = 1.0 / 11.0;
 		chestObject = new LootChestObject(random);
 		chestObject.setMaxNumberOfStacks(8);
 		chestObject.addMaterial(VanillaMaterials.SADDLE, 		ELEVEN, 		1, 1)
@@ -77,7 +77,7 @@ public class DungeonObject extends RandomObject {
 					.addMaterial(Dye.COCOA_BEANS, 				ELEVEN, 		1, 3)
 					.addMaterial(VanillaMaterials.REDSTONE_DUST, 1.0 / 22.0, 	1, 4)
 					.addMaterial(VanillaMaterials.GOLDEN_APPLE, 1.0 / 1100.0, 	1, 1);
-		double discProbability = (1.0 / 110.0) / (double) MusicDisc.values().length;
+		final double discProbability = (1.0 / 110.0) / (double) MusicDisc.values().length;
 		for (Material disc:MusicDisc.values()) {
 			chestObject.addMaterial(disc, discProbability, 						1, 1);
 		}

@@ -115,7 +115,7 @@ public class CavePopulator extends Populator {
 		}
 
 		for (; startingNode < nodeAmount; startingNode++) {
-			final float horizontalSize = (float) (1.5 + Math.sin((startingNode * Math.PI) / nodeAmount) * horizontalScale);
+			final float horizontalSize = (float) (1.5 + Math.sin(startingNode * Math.PI / nodeAmount) * horizontalScale);
 			final float verticalSize = horizontalSize * verticalScale;
 			final float diskXZ = (float) Math.cos(verticalAngle);
 			target = target.add(Math.cos(horizontalAngle) * diskXZ, Math.sin(verticalAngle), Math.sin(horizontalAngle) * diskXZ);

@@ -59,7 +59,7 @@ public class OrePopulator extends Populator {
 		final World world = chunk.getWorld();
 		for (OreObject object : ORES) {
 			object.setRandom(random);
-			for (byte i = 0; i < object.getCount(); i++) {
+			for (byte i = 0; i < object.getAmount(); i++) {
 				final int x = chunk.getBlockX(random);
 				final int y = random.nextInt(object.getMaxHeight());
 				final int z = chunk.getBlockZ(random);

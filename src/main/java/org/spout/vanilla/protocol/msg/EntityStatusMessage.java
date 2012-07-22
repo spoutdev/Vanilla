@@ -42,6 +42,7 @@ public final class EntityStatusMessage extends Message implements TransformableM
 	public static final byte WOLF_TAMED = 7;
 	public static final byte WOLF_SHAKING = 8;
 	public static final byte EATING_ACCEPTED = 9;
+	public static final byte SHEEP_EAT_GRASS = 10;
 	private int id;
 	private final byte status;
 

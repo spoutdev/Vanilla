@@ -88,7 +88,7 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Random
 		super.onInteractBy(entity, block, type, clickedFace);
 		InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
 		ItemStack current = inv.getItem();
-		if (current != null && current.getSubMaterial().equals(Dye.BONE_MEAL)) {
+		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
 			if (this.getGrowthStage(block) != 0x7) {
 				if (VanillaPlayerUtil.isSurvival(entity)) {
 					inv.addItemAmount(0, -1);

@@ -71,7 +71,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Rand
 		}
 		InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
 		ItemStack current = inv.getItem();
-		if (current != null && current.getSubMaterial().equals(Dye.BONE_MEAL)) {
+		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
 			if (VanillaPlayerUtil.isSurvival(entity)) {
 				inv.addItemAmount(0, -1);
 			}

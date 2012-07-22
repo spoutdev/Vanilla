@@ -372,7 +372,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		if (this.miningLevel == 0) {
 			return true;
 		}
-		Material heldMaterial = holding.getSubMaterial();
+		Material heldMaterial = holding.getMaterial();
 		if (heldMaterial instanceof Tool) {
 			Tool heldTool = (Tool) heldMaterial;
 			if (this.miningType.isInstance(heldTool) && heldTool.getMiningLevel() >= this.miningLevel) {

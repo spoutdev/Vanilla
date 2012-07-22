@@ -65,7 +65,7 @@ public class Jukebox extends VanillaBlockController {
 			return Music.NONE;
 		}
 
-		return ((MusicDisc) current.getSubMaterial()).getMusic();
+		return ((MusicDisc) current.getMaterial()).getMusic();
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class Jukebox extends VanillaBlockController {
 	 * @return True if it can play it, False if not
 	 */
 	public boolean canPlay(ItemStack item) {
-		return item != null && this.canPlay(item.getSubMaterial());
+		return item != null && this.canPlay(item.getMaterial());
 	}
 
 	/**

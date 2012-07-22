@@ -68,7 +68,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		World world = player.getEntity().getWorld();
 		InventorySlot currentSlot = VanillaPlayerUtil.getCurrentSlot(player.getEntity());
 		ItemStack holding = currentSlot.getItem();
-		Material holdingMat = holding == null ? null : holding.getSubMaterial();
+		Material holdingMat = holding == null ? null : holding.getMaterial();
 
 		/*
 		 * The notch client's packet sending is weird. Here's how it works: If

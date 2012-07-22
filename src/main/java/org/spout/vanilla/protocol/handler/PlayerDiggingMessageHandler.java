@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.handler;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
@@ -47,7 +46,6 @@ import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterial;
@@ -57,7 +55,6 @@ import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
-import org.spout.vanilla.service.VanillaProtectionService;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -127,10 +124,10 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
 			} else if (!isInteractable) {
 				// interacting with nothing using item
-				heldItem.getSubMaterial().onInteract(player.getEntity(), Action.LEFT_CLICK);
+				heldItem.getMaterial().onInteract(player.getEntity(), Action.LEFT_CLICK);
 			} else {
 				// interacting with block using item
-				heldItem.getSubMaterial().onInteract(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
+				heldItem.getMaterial().onInteract(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
 				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
 			}
 
@@ -161,7 +158,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 			if (heldItem != null) {
 				if (heldItem.getMaterial() instanceof Tool && blockMaterial instanceof Mineable) {
-					short penalty = ((Tool) heldItem.getMaterial()).getDurabilityPenalty((Mineable) blockMaterial.getMaterial(), heldItem);
+					short penalty = ((Tool) heldItem.getMaterial()).getDurabilityPenalty((Mineable) blockMaterial, heldItem);
 					currentSlot.addItemData(penalty);
 				}
 			}

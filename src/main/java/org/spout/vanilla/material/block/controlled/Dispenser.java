@@ -121,7 +121,7 @@ public class Dispenser extends ControlledMaterial implements Directional, Mineab
 		velocity = velocity.add(0.045 * rand.nextGaussian(), 0.045 * rand.nextGaussian(), 0.045 * rand.nextGaussian());
 
 		Messages message;
-		Material material = item.getSubMaterial();
+		Material material = item.getMaterial();
 		//TODO: Implement the following 'special' shoot cases:
 		// - eggs, arrows, fireballs and snowballs
 		// - potions, exp. bottles and monster eggs

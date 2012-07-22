@@ -74,9 +74,9 @@ public abstract class Creature extends Living {
 		Point headPos = getHeadPosition();
 		if (getParent().isObserver() || headPos.getWorld().getChunkFromBlock(headPos, LoadOption.NO_LOAD) != null) {
 			Block head = getParent().getWorld().getBlock(headPos, getParent());
-			if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+			if (head.isMaterial(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 				airTicks++;
-				if (head.getMaterial().equals(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+				if (head.isMaterial(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 					// Drowning
 					if (airTicks >= 300 && airTicks % 20 == 0) {
 						damage(4, DamageCause.DROWN);

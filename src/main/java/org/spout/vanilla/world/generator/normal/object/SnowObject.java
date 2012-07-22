@@ -76,7 +76,7 @@ public class SnowObject extends RandomObject implements Source {
 		BlockMaterial underMat = under.getMaterial();
 		if (underMat.equals(VanillaMaterials.ICE)) {
 			return true;
-		} else if (underMat.equals(VanillaMaterials.AIR, VanillaMaterials.SNOW)) {
+		} else if (underMat.isMaterial(VanillaMaterials.AIR, VanillaMaterials.SNOW)) {
 			position.setY(position.getY() - 1);
 			return false;
 		} else if (underMat instanceof Water) {

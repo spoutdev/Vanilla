@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.liquid;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
@@ -100,6 +101,16 @@ public class Lava extends Liquid {
 	@Override
 	public int getMaxLevel() {
 		return 3;
+	}
+
+	@Override
+	public boolean isMaterial(Material... materials) {
+		for (Material material : materials) {
+			if (material instanceof Lava) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

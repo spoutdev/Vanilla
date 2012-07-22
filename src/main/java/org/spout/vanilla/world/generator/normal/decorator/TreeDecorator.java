@@ -68,7 +68,7 @@ public class TreeDecorator extends Decorator {
 
 	private int getHighestWorkableBlock(World w, int x, int z) {
 		int y = w.getHeight();
-		while (!w.getBlockMaterial(x, y, z).equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
+		while (!w.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
 			y--;
 			if (y == 0) {
 				return -1;

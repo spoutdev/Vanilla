@@ -63,7 +63,7 @@ public class Leaves extends Solid implements Mineable, Burnable {
 
 	@Override
 	public boolean canSupport(BlockMaterial mat, BlockFace face) {
-		if (mat.equals(VanillaMaterials.FIRE, VanillaMaterials.SNOW, VanillaMaterials.VINES) || mat instanceof SignBase) {
+		if (mat.isMaterial(VanillaMaterials.FIRE, VanillaMaterials.SNOW, VanillaMaterials.VINES) || mat instanceof SignBase) {
 			return true;
 		} else {
 			return false;

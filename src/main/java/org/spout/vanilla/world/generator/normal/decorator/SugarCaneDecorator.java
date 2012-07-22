@@ -88,7 +88,7 @@ public class SugarCaneDecorator extends Decorator {
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
 		int y = world.getHeight();
-		while (!world.getBlockMaterial(x, y, z).equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND)) {
+		while (!world.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND)) {
 			y--;
 			if (y == 0) {
 				return -1;

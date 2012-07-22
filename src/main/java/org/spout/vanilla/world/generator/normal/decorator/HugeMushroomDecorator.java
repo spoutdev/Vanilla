@@ -68,7 +68,7 @@ public class HugeMushroomDecorator extends Decorator {
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
 		int y = world.getHeight();
-		while (!world.getBlockMaterial(x, y, z).equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.MYCELIUM)) {
+		while (!world.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.MYCELIUM)) {
 			y--;
 			if (y == 0) {
 				return -1;

@@ -174,14 +174,14 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
 		Block head = getParent().getWorld().getBlock(getHeadPosition(), getParent());
-		if (head.getMaterial().equals(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+		if (head.isMaterial(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 			airTicks++;
 			ItemStack helmet = getInventory().getArmor().getHelmet().getItem();
 			int level = 0;
 			if (helmet != null && EnchantmentUtil.hasEnchantment(helmet, Enchantments.RESPIRATION)) {
 				level = EnchantmentUtil.getEnchantmentLevel(helmet, Enchantments.RESPIRATION);
 			}
-			if (head.getMaterial().equals(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+			if (head.isMaterial(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 				// Drowning
 				int ticksBeforeDrowning = level == 0 ? 300 : level * 300; // Increase time before drowning by 15 seconds per enchantment level
 				if (airTicks >= ticksBeforeDrowning && airTicks % 20 == 0) {

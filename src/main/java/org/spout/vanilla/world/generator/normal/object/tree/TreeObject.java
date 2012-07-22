@@ -84,7 +84,7 @@ public abstract class TreeObject extends LargePlantObject {
 			return false;
 		}
 		// Can only place trees on dirt and grass surfaces
-		return w.getBlockMaterial(x, y - 1, z).equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS);
+		return w.getBlockMaterial(x, y - 1, z).isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS);
 	}
 
 	public static void growTree(Sapling sapling, Block pos, Random random) {

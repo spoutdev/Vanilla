@@ -76,12 +76,12 @@ public class TallGrassDecorator extends Decorator {
 	// TODO: this needs to be added to tall grass itself (valid for flowers too)
 	private boolean canTallGrassStay(Block block) {
 		return (block.getLight() > 7 || block.isAtSurface())
-				&& block.translate(BlockFace.BOTTOM).getMaterial().equals(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND);
+				&& block.translate(BlockFace.BOTTOM).getMaterial().isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND);
 	}
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
 		int y = world.getHeight();
-		while (world.getBlockMaterial(x, y, z).equals(VanillaMaterials.AIR, VanillaMaterials.LEAVES)) {
+		while (world.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.AIR, VanillaMaterials.LEAVES)) {
 			y--;
 			if (y == 0) {
 				return -1;

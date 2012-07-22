@@ -29,7 +29,6 @@ package org.spout.vanilla.material.item.tool;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -43,8 +42,7 @@ public class Hoe extends InteractTool {
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
 		super.onInteract(entity, block, type, clickedface);
 		if (type == Action.RIGHT_CLICK) {
-			BlockMaterial mat = block.getMaterial();
-			if (mat.equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
+			if (block.isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
 				block.setMaterial(VanillaMaterials.FARMLAND);
 				setMaxDurability((short) (getMaxDurability() - 1)); // TODO right place?
 			}

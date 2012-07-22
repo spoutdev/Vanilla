@@ -197,19 +197,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	 * @return True if it is this liquid, False if not
 	 */
 	@Override
-	public boolean isMaterial(Material... materials) {
-		for (Material material : materials) {
-			if (material.equals(this.getFlowingMaterial(), this.getStationaryMaterial())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public boolean equals(Material... materials) {
-		return super.isMaterial(materials);
-	}
+	public abstract boolean isMaterial(Material... materials);
 
 	/**
 	 * Gets the level of a liquid

@@ -39,6 +39,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.util.VanillaMathHelper;
 
 public class CavePopulator extends Populator {
@@ -207,8 +208,7 @@ public class CavePopulator extends Populator {
 			for (int x = start.getBlockX(); x < end.getBlockX(); x++) {
 				for (int z = start.getBlockZ(); z < end.getBlockZ(); z++) {
 					for (int y = end.getBlockY() + 1; y >= start.getBlockY() - 1; y--) {
-						if (world.getBlockMaterial(chunk.getBlockX(x), y, chunk.getBlockZ(z)).
-								equals(VanillaMaterials.WATER, VanillaMaterials.STATIONARY_WATER)) {
+						if (world.getBlockMaterial(chunk.getBlockX(x), y, chunk.getBlockZ(z)) instanceof Water) {
 							return false;
 						}
 						if (y != start.getBlockY() - 1 && x != start.getBlockX() && x != end.getBlockX() - 1

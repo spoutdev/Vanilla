@@ -52,7 +52,7 @@ public class SwampTreeObject extends SmallTreeObject {
 			return false;
 		}
 		// Can only place trees on dirt and grass surfaces
-		if (!w.getBlockMaterial(x, y - 1, z).equals(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
+		if (!w.getBlockMaterial(x, y - 1, z).isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
 			return false;
 		}
 		byte radiusToCheck = radiusIncrease;

@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.liquid;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.Material;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -74,6 +75,16 @@ public class Water extends Liquid implements RandomBlockMaterial {
 			}
 			block.setDataField(0x7, 7 - level);
 		}
+	}
+
+	@Override
+	public boolean isMaterial(Material... materials) {
+		for (Material material : materials) {
+			if (material instanceof Water) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

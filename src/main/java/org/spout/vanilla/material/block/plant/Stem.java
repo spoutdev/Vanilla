@@ -140,7 +140,7 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Ra
 				Block spread = block.translate(BlockFaces.NESW.get(rand.nextInt(4)));
 				if (spread.isMaterial(VanillaMaterials.AIR)) {
 					BlockMaterial belowSpread = spread.translate(BlockFace.BOTTOM).getMaterial();
-					if (belowSpread.equals(VanillaMaterials.FARMLAND, VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
+					if (belowSpread.isMaterial(VanillaMaterials.FARMLAND, VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
 						spread.setMaterial(this.getLastStageMaterial());
 					}
 				}

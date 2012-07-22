@@ -83,7 +83,7 @@ public class Chicken extends Creature implements Passive {
 
 	/**
 	 * Check if laying Eggs is enabled.
-	 * @return <b>false</b>, if laying eggs is enabled. <b>false</b> otherwise.
+	 * @return <b>true</b>, if laying eggs is enabled. <b>false</b> otherwise.
 	 */
 	public boolean isLayingEggsEnabled() {
 		return layingEggsEnabled;

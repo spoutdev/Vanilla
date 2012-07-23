@@ -33,7 +33,7 @@ import org.spout.vanilla.util.SlotIndexMap;
  * The default player window always displayed
  */
 public class DefaultWindow extends CraftingWindow {
-	private static final SlotIndexMap MAIN_SLOTS = new SlotIndexMap("36-44, 27-35, 18-26, 9-17");
+	private static final SlotIndexMap MAIN_SLOTS = SlotIndexMap.GRID_9x4.translate(9);
 	private static final SlotIndexMap CRAFTING_SLOTS = new SlotIndexMap("1-4, 0");
 	private static final SlotIndexMap ARMOR_SLOTS = new SlotIndexMap("6, 7, 8, 5");
 

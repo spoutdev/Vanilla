@@ -33,12 +33,10 @@ import org.spout.vanilla.window.TransactionWindow;
 import org.spout.vanilla.window.WindowType;
 
 public class DispenserWindow extends TransactionWindow {
-	private static final SlotIndexMap MAIN_SLOTS = new SlotIndexMap("36-44, 27-35, 18-26, 9-17");
-	private static final SlotIndexMap DISPENSER_SLOTS = new SlotIndexMap("0-8");
+	private static final SlotIndexMap DISPENSER_SLOTS = SlotIndexMap.GRID_3x3;
 
 	public DispenserWindow(VanillaPlayer owner, Dispenser dispenser) {
-		super(WindowType.DISPENSER, "Dispenser", owner, dispenser);
-		this.addInventory(owner.getInventory().getMain(), MAIN_SLOTS);
+		super(WindowType.DISPENSER, "Dispenser", owner, 9, dispenser);
 		this.addInventory(dispenser.getInventory(), DISPENSER_SLOTS);
 	}
 }

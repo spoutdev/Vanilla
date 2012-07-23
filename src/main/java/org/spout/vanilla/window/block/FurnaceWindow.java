@@ -39,16 +39,14 @@ import org.spout.vanilla.window.WindowType;
 
 public class FurnaceWindow extends TransactionWindow {
 	private static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
-	private static final SlotIndexMap MAIN_SLOTS = new SlotIndexMap("30-38, 21-29, 12-20, 3-11");
-	private static final SlotIndexMap FURNACE_SLOTS = new SlotIndexMap("1, 2, 0");
+	private static final SlotIndexMap FURNACE_SLOTS = new SlotIndexMap("2-0");
 
 	protected final FurnaceInventory furnaceInv;
 	private int lastProgress = -1, lastBurnTime = -1;
 
 	public FurnaceWindow(VanillaPlayer owner, Furnace furnace) {
-		super(WindowType.FURNACE, "Furnace", owner, furnace);
+		super(WindowType.FURNACE, "Furnace", owner, 3, furnace);
 		this.furnaceInv = furnace.getInventory();
-		this.addInventory(owner.getInventory().getMain(), MAIN_SLOTS);
 		this.addInventory(this.furnaceInv, FURNACE_SLOTS);
 	}
 

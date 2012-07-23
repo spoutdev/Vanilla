@@ -36,7 +36,7 @@ import org.spout.vanilla.window.CraftingWindow;
 import org.spout.vanilla.window.WindowType;
 
 public class CraftingTableWindow extends CraftingWindow {
-	private static final SlotIndexMap MAIN_SLOTS = new SlotIndexMap("37-45, 28-36, 19-27, 10-18");
+	private static final SlotIndexMap MAIN_SLOTS = SlotIndexMap.GRID_9x4.translate(10);
 	private static final SlotIndexMap CRAFTING_SLOTS = new SlotIndexMap("1-3, 4-6, 7-9, 0");
 
 	public CraftingTableWindow(VanillaPlayer owner, CraftingTable craftingTable) {

@@ -33,11 +33,28 @@ import org.spout.api.util.StringUtil;
  * Maps Spout and Minecraft item slot indices to make them easily obtainable
  */
 public class SlotIndexMap {
+	public static final SlotIndexMap DEFAULT = new SlotIndexMap();
+	public static final SlotIndexMap GRID_9x1 = new SlotIndexMap("0-8");
+	public static final SlotIndexMap GRID_9x2 = new SlotIndexMap("9-17, 0-8");
+	public static final SlotIndexMap GRID_9x3 = new SlotIndexMap("18-26, 9-17, 0-8");
+	public static final SlotIndexMap GRID_9x4 = new SlotIndexMap("27-35, 18-26, 9-17, 0-8");
+	public static final SlotIndexMap GRID_9x5 = new SlotIndexMap("36-44, 27-35, 18-26, 9-17, 0-8");
+	public static final SlotIndexMap GRID_9x6 = new SlotIndexMap("45-53, 36-44, 27-35, 18-26, 9-17, 0-8");
+	public static final SlotIndexMap GRID_3x3 = new SlotIndexMap("0-8");
+
+	private final int offset;
 	private final int[] toMC;
 	private final int[] toSpout;
 
 	public SlotIndexMap() {
 		this.toMC = this.toSpout = null;
+		this.offset = 0;
+	}
+
+	public SlotIndexMap(SlotIndexMap base, int offset) {
+		this.offset = base.offset + offset;
+		this.toMC = base.toMC;
+		this.toSpout = base.toSpout;
 	}
 
 	public SlotIndexMap(String elements) {
@@ -45,6 +62,7 @@ public class SlotIndexMap {
 	}
 
 	public SlotIndexMap(int[] toMC) {
+		this.offset = 0;
 		this.toMC = toMC;
 		int max = 0;
 		for (int value : toMC) {
@@ -59,11 +77,22 @@ public class SlotIndexMap {
 	}
 
 	/**
+	 * Translates all the slots by the amount specified and returns a new Slot Index Map with the translated values
+	 * 
+	 * @param offset to translate
+	 * @return a new translated Slot Index Map
+	 */
+	public SlotIndexMap translate(int offset) {
+		return new SlotIndexMap(this, offset);
+	}
+
+	/**
 	 * Gets the Spout slot index from a Minecraft slot index
 	 * @param mcSlotIndex
 	 * @return the Spout slot index
 	 */
 	public int getSpoutSlot(int mcSlotIndex) {
+		mcSlotIndex -= this.offset;
 		if (toSpout == null) {
 			return mcSlotIndex;
 		} else if (mcSlotIndex < 0 || mcSlotIndex >= toSpout.length) {
@@ -79,11 +108,11 @@ public class SlotIndexMap {
 	 */
 	public int getMinecraftSlot(int spoutSlotIndex) {
 		if (toMC == null) {
-			return spoutSlotIndex;
+			return spoutSlotIndex + this.offset;
 		} else if (spoutSlotIndex < 0 || spoutSlotIndex >= toMC.length) {
 			return -1;
 		}
-		return toMC[spoutSlotIndex];
+		return toMC[spoutSlotIndex] + this.offset;
 	}
 
 	/**

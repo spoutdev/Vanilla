@@ -47,6 +47,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 	private Material blockType = VanillaMaterials.AIR;
 	private RailBase railMaterial;
 	private RailsState railState;
+	private int regentick = 0;
 	private Vector3 groundFrictionModifier = new Vector3(0.5, 0.5, 0.5);
 	private Vector3 airFrictionModifier = new Vector3(0.95, 0.95, 0.95);
 	private Vector2[] railMovement = new Vector2[]{Vector2.ZERO, Vector2.ZERO};
@@ -83,7 +84,8 @@ public abstract class Minecart extends Substance implements Vehicle {
 		this.getBounds().set(-0.35f, 0.0f, -0.49f, 0.35f, 0.49f, 0.49f);
 		this.setVelocity(new Vector3(0, 0, 0.2)); //temporary!
 		this.setMaxSpeed(new Vector3(0.4, 0.4, 0.4)); //first two 0.4 need to be 0 - TODO: Use yaw instead?
-		setHealth(40, HealthChangeReason.SPAWN);
+		setMaxHealth(6);
+		setHealth(6, HealthChangeReason.SPAWN);
 	}
 
 	@Override
@@ -129,10 +131,15 @@ public abstract class Minecart extends Substance implements Vehicle {
 
 		//update health to regenerate
 		int health = getHealth();
-		if (health < 40) {
-			setHealth(health + 1, HealthChangeReason.REGENERATION);
+		if (health < 6) {
+			if (regentick >= 7) {
+				setHealth(health + 1, HealthChangeReason.REGENERATION);
+				regentick = 0;
+			}
+			else {
+				regentick++;
+			}
 		}
-
 		//get current rail below minecart
 		Point position = getParent().getPosition();
 		if (position.getWorld() == null) {

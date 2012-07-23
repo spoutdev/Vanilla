@@ -54,11 +54,11 @@ public class Chicken extends Creature implements Passive {
 
 	@Override
 	public void onAttached() {
-		setHealth(4, HealthChangeReason.SPAWN);
+		super.onAttached();
 		setMaxHealth(4);
+		setHealth(4, HealthChangeReason.SPAWN);
 		dropItemLogic = new DropItemTimeBasedLogic(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
 		registerProcess(dropItemLogic);
-		super.onAttached();
 	}
 
 	@Override

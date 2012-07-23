@@ -52,9 +52,9 @@ public class Cow extends Creature implements Passive {
 
 	@Override
 	public void onAttached() {
-		setHealth(4, HealthChangeReason.SPAWN);
-		setMaxHealth(4);
 		super.onAttached();
+		setMaxHealth(10);
+		setHealth(10, HealthChangeReason.SPAWN);
 	}
 
 	@Override

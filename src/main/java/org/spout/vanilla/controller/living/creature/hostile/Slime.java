@@ -67,10 +67,10 @@ public class Slime extends Creature implements Hostile {
 
 	@Override
 	public void onAttached() {
-		int health = size > 0 ? size * 4 : 1;
-		setHealth(health, HealthChangeReason.SPAWN);
-		setMaxHealth(health);
 		super.onAttached();
+		int health = size > 0 ? size * 4 : 1;
+		setMaxHealth(health);
+		setHealth(health, HealthChangeReason.SPAWN);
 	}
 
 	@Override

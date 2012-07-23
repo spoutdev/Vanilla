@@ -27,9 +27,17 @@
 package org.spout.vanilla.controller.living.creature.passive;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Mooshroom extends Cow {
 	public Mooshroom() {
 		super(VanillaControllerTypes.MOOSHROOM);
+	}
+	
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		setMaxHealth(10);
+		setHealth(10, HealthChangeReason.SPAWN);
 	}
 }

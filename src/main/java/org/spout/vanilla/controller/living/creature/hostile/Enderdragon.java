@@ -46,9 +46,9 @@ public class Enderdragon extends Creature implements Hostile, Boss {
 
 	@Override
 	public void onAttached() {
-		setHealth(200, HealthChangeReason.SPAWN);
-		setMaxHealth(200);
 		super.onAttached();
+		setMaxHealth(200);
+		setHealth(200, HealthChangeReason.SPAWN);
 	}
 
 	@Override

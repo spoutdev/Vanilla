@@ -45,9 +45,9 @@ public class Silverfish extends Creature implements Hostile {
 
 	@Override
 	public void onAttached() {
-		setHealth(8, HealthChangeReason.SPAWN);
-		setMaxHealth(8);
 		super.onAttached();
+		setMaxHealth(8);
+		setHealth(8, HealthChangeReason.SPAWN);
 	}
 
 	@Override

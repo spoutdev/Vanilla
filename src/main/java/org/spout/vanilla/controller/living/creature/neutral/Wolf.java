@@ -43,16 +43,15 @@ public class Wolf extends Creature implements Tameable, Neutral {
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		// master = data().get("controlling_entity", master);
 		if (master != null) {
-			setHealth(20, HealthChangeReason.SPAWN);
 			setMaxHealth(20);
+			setHealth(20, HealthChangeReason.SPAWN);
 		} else {
-			setHealth(8, HealthChangeReason.SPAWN);
 			setMaxHealth(8);
+			setHealth(8, HealthChangeReason.SPAWN);
 		}
-
-		super.onAttached();
 	}
 
 	@Override

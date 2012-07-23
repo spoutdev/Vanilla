@@ -128,9 +128,6 @@ public abstract class VanillaActionController extends Controller implements Vani
 	@Override
 	public void onTick(float dt) {
 		if (deathTicks > 0) {
-			if (getHealth() > 0) {
-				deathTicks = 0;
-			} else {
 				deathTicks--;
 				if (deathTicks == 0) {
 					if (this instanceof PlayerController) {
@@ -140,14 +137,20 @@ public abstract class VanillaActionController extends Controller implements Vani
 					}
 				}
 				return;
-			}
 		}
 		updateFireTicks();
 
 		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
-			VanillaNetworkUtil.broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
-			deathTicks = 30;
+			if (type.equals(VanillaControllerTypes.MINECART)){
+				getParent().kill();
+				
+			}
+			else {
+				VanillaNetworkUtil.broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
+				deathTicks = 30;
+			}
+			
 			onDeath();
 		}
 
@@ -513,9 +516,8 @@ public abstract class VanillaActionController extends Controller implements Vani
 		if (!event.isCancelled()) {
 			if (event.getChange() > maxHealth) {
 				this.health = maxHealth;
-			} else if (event.getChange() <= 0) {
-				this.getParent().kill();
-			} else {
+			}
+			else {
 				this.health = event.getChange();
 			}
 		}

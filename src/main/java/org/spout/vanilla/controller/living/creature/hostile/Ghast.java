@@ -46,9 +46,9 @@ public class Ghast extends Creature implements Hostile {
 
 	@Override
 	public void onAttached() {
-		setHealth(10, HealthChangeReason.SPAWN);
-		setMaxHealth(10);
 		super.onAttached();
+		setMaxHealth(10);
+		setHealth(10, HealthChangeReason.SPAWN);
 	}
 
 	@Override

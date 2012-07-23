@@ -52,11 +52,11 @@ public class Sheep extends Creature implements Passive {
 
 	@Override
 	public void onAttached() {
-		setHealth(8, HealthChangeReason.SPAWN);
+		super.onAttached();
 		setMaxHealth(8);
+		setHealth(8, HealthChangeReason.SPAWN);
 		final SheepEatGrassLogic eatGrassLogic = new SheepEatGrassLogic(this);
 		registerProcess(eatGrassLogic);
-		super.onAttached();
 		isSheared = data().get("sheep_sheared", false);
 		sheepColor = data().get("sheep_color", (short) 0);
 	}

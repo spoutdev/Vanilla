@@ -49,9 +49,9 @@ public class Skeleton extends Creature implements Hostile {
 
 	@Override
 	public void onAttached() {
-		setHealth(20, HealthChangeReason.SPAWN);
-		setMaxHealth(20);
 		super.onAttached();
+		setMaxHealth(20);
+		setHealth(20, HealthChangeReason.SPAWN);
 	}
 
 	@Override

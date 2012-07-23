@@ -52,9 +52,9 @@ public class Spider extends Creature implements Hostile {
 
 	@Override
 	public void onAttached() {
-		setHealth(16, HealthChangeReason.SPAWN);
-		setMaxHealth(16);
 		super.onAttached();
+		setMaxHealth(16);
+		setHealth(16, HealthChangeReason.SPAWN);
 	}
 
 	@Override

@@ -43,17 +43,10 @@ public class Ocelot extends Creature implements Tameable, Passive {
 
 	@Override
 	public void onAttached() {
-		// TODO Check these values...
-		// master = data().get("controlling_entity", master);
-		if (master != null) {
-			setHealth(20, HealthChangeReason.SPAWN);
-			setMaxHealth(20);
-		} else {
-			setHealth(8, HealthChangeReason.SPAWN);
-			setMaxHealth(8);
-		}
-
 		super.onAttached();
+		setMaxHealth(10);
+		setHealth(10, HealthChangeReason.SPAWN);
+		// master = data().get("controlling_entity", master);
 	}
 
 	@Override

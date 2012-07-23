@@ -38,8 +38,8 @@ public class Villager extends Creature implements Passive {
 
 	@Override
 	public void onAttached() {
-		setHealth(20, HealthChangeReason.SPAWN);
-		setMaxHealth(20);
 		super.onAttached();
+		setMaxHealth(20);
+		setHealth(20, HealthChangeReason.SPAWN);
 	}
 }

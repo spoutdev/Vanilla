@@ -47,9 +47,9 @@ public class Pig extends Creature implements Passive {
 
 	@Override
 	public void onAttached() {
-		setHealth(10, HealthChangeReason.SPAWN);
-		setMaxHealth(10);
 		super.onAttached();
+		setMaxHealth(10);
+		setHealth(10, HealthChangeReason.SPAWN);
 	}
 
 	@Override

@@ -52,9 +52,9 @@ public class Zombie extends Creature implements Hostile {
 
 	@Override
 	public void onAttached() {
-		setHealth(16, HealthChangeReason.SPAWN);
-		setMaxHealth(20);
 		super.onAttached();
+		setMaxHealth(20);
+		setHealth(20, HealthChangeReason.SPAWN);
 	}
 
 	@Override

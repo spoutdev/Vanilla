@@ -138,14 +138,14 @@ public class VanillaNetworkUtil {
 	 * Sends a block action message to all nearby players in a 48-block radius
 	 */
 	public static void playBlockAction(Block block, byte arg1, byte arg2) {
-		sendPacketsToNearbyPlayers(block.getPosition(), 48, new BlockActionMessage(block, arg1, arg2));
+		sendPacketsToNearbyPlayers(block.getPosition(), 48, new BlockActionMessage(block, arg1, arg2, (byte) block.getMaterial().getId()));
 	}
 
 	/**
 	 * Sends a block action message to all nearby players
 	 */
 	public static void playBlockAction(Block block, int range, byte arg1, byte arg2) {
-		sendPacketsToNearbyPlayers(block.getPosition(), range, new BlockActionMessage(block, arg1, arg2));
+		sendPacketsToNearbyPlayers(block.getPosition(), range, new BlockActionMessage(block, arg1, arg2, (byte) block.getMaterial().getId()));
 	}
 
 	/**

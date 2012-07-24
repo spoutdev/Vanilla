@@ -63,6 +63,7 @@ import org.spout.vanilla.protocol.codec.ItemDataCodec;
 import org.spout.vanilla.protocol.codec.KeepAliveCodec;
 import org.spout.vanilla.protocol.codec.KickCodec;
 import org.spout.vanilla.protocol.codec.LoadChunkCodec;
+import org.spout.vanilla.protocol.codec.LocaleViewDistanceCodec;
 import org.spout.vanilla.protocol.codec.LoginRequestCodec;
 import org.spout.vanilla.protocol.codec.MultiBlockChangeCodec;
 import org.spout.vanilla.protocol.codec.PlayEffectCodec;
@@ -87,6 +88,7 @@ import org.spout.vanilla.protocol.codec.SpawnPlayerCodec;
 import org.spout.vanilla.protocol.codec.SpawnPositionCodec;
 import org.spout.vanilla.protocol.codec.SpawnVehicleCodec;
 import org.spout.vanilla.protocol.codec.StatisticCodec;
+import org.spout.vanilla.protocol.codec.TabCompleteCodec;
 import org.spout.vanilla.protocol.codec.TileEntityDataCodec;
 import org.spout.vanilla.protocol.codec.TimeUpdateCodec;
 import org.spout.vanilla.protocol.codec.UpdateHealthCodec;
@@ -233,6 +235,10 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			bind(PlayerListCodec.class);
 			/* 0xCA */
 			bind(PlayerAbilityCodec.class);
+			/* 0xCB */
+			bind(TabCompleteCodec.class);
+			/* 0xCC */
+			bind(LocaleViewDistanceCodec.class);
 			/* 0xCD */
 			bind(ClientStatusCodec.class);
 			/* 0xFA */

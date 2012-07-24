@@ -62,9 +62,8 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 					result = window.onClick(entry.getKey(), entry.getValue(), new ClickArgs(message.isRightClick(), message.isShift()));
 				}
 			}
-		} catch (Throwable t) {
-			t.printStackTrace();
+		} finally {
+			session.send(false, new WindowTransactionMessage(message.getWindowInstanceId(), message.getTransaction(), result));
 		}
-		session.send(false, new WindowTransactionMessage(message.getWindowInstanceId(), message.getTransaction(), result));
 	}
 }

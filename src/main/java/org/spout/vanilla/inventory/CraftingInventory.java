@@ -26,9 +26,18 @@
  */
 package org.spout.vanilla.inventory;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.spout.api.Spout;
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.InventoryBase;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Recipe;
+import org.spout.api.inventory.RecipeManager;
 import org.spout.api.inventory.special.InventoryRange;
 import org.spout.api.inventory.special.InventorySlot;
+import org.spout.api.material.Material;
 
 public class CraftingInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
@@ -74,5 +83,71 @@ public class CraftingInventory extends Inventory implements VanillaInventory {
 	 */
 	public InventoryRange getGrid() {
 		return this.grid;
+	}
+
+	@Override
+	public void onSlotChanged(int slot, ItemStack item) {
+		super.onSlotChanged(slot, item);
+		if (slot != this.getOutput().getOffset()) {
+			this.updateOutput();
+		}
+	}
+
+	/**
+	 * Crafts the current recipe, subtracting all the requirements from the crafting grid
+	 */
+	public void craft() {
+		ItemStack[] clonedContents = this.getGrid().getClonedContents();
+		for (int i = 0; i < clonedContents.length; i++) {
+			ItemStack clickedItem = clonedContents[i];
+			if (clickedItem == null) {
+				continue;
+			}
+			clickedItem.setAmount(clickedItem.getAmount() - 1);
+			if (clickedItem.isEmpty()) {
+				clickedItem = null;
+			}
+			clonedContents[i] = clickedItem;
+		}
+		this.getGrid().setContents(clonedContents);
+	}
+
+	private boolean updateOutput() {
+		RecipeManager recipeManager = Spout.getEngine().getRecipeManager();
+		InventoryBase grid = this.getGrid();
+		int rowSize = this.getRowSize();
+		List<List<Material>> materials = new ArrayList<List<Material>>();
+		List<Material> current = new ArrayList<Material>();
+		List<Material> shapeless = new ArrayList<Material>();
+		int cntr = 0;
+		for (ItemStack item : grid) {
+			cntr++;
+			Material mat = null;
+			if (item != null) {
+				mat = item.getMaterial();
+			}
+			current.add(mat);
+			if (mat != null) {
+				shapeless.add(mat);
+			}
+			if (cntr >= rowSize) {
+				materials.add(current);
+				current = new ArrayList<Material>();
+				cntr = 0;
+			}
+		}
+		Recipe recipe = recipeManager.matchShapedRecipe(materials);
+		if (recipe == null) {
+			recipe = recipeManager.matchShapelessRecipe(shapeless);
+		}
+		if (recipe != null) {
+			if (this.getOutput().getItem() == null) {
+				this.getOutput().setItem(recipe.getResult());
+			}
+			return true;
+		} else {
+			this.getOutput().setItem(null);
+		}
+		return false;
 	}
 }

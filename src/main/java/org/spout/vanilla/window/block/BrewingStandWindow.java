@@ -31,7 +31,7 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.vanilla.controller.block.BrewingStand;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
-import org.spout.vanilla.util.SlotIndexMap;
+import org.spout.vanilla.util.intmap.SlotIndexMap;
 import org.spout.vanilla.window.ClickArgs;
 import org.spout.vanilla.window.TransactionWindow;
 import org.spout.vanilla.window.WindowType;

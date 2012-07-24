@@ -29,12 +29,13 @@ package org.spout.vanilla.window.block;
 import org.spout.vanilla.controller.block.EnchantmentTable;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
-import org.spout.vanilla.util.SlotIndexMap;
+import org.spout.vanilla.util.intmap.SlotIndexCollection;
+import org.spout.vanilla.util.intmap.SlotIndexRow;
 import org.spout.vanilla.window.TransactionWindow;
 import org.spout.vanilla.window.WindowType;
 
 public class EnchantmentTableWindow extends TransactionWindow {
-	private static final SlotIndexMap ENCHANT_SLOTS = new SlotIndexMap("0");
+	private static final SlotIndexCollection ENCHANT_SLOTS = new SlotIndexRow(1);
 
 	public EnchantmentTableWindow(VanillaPlayer owner, EnchantmentTable table) {
 		super(WindowType.ENCHANTMENTTABLE, "Enchant", owner, 1, table);

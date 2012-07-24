@@ -24,95 +24,101 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util;
+package org.spout.vanilla.util.intmap;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.StringUtil;
 
 /**
  * Maps Spout and Minecraft item slot indices to make them easily obtainable
  */
-public class SlotIndexMap {
-	public static final SlotIndexMap DEFAULT = new SlotIndexMap();
-	public static final SlotIndexMap GRID_9x1 = new SlotIndexMap("0-8");
-	public static final SlotIndexMap GRID_9x2 = new SlotIndexMap("9-17, 0-8");
-	public static final SlotIndexMap GRID_9x3 = new SlotIndexMap("18-26, 9-17, 0-8");
-	public static final SlotIndexMap GRID_9x4 = new SlotIndexMap("27-35, 18-26, 9-17, 0-8");
-	public static final SlotIndexMap GRID_9x5 = new SlotIndexMap("36-44, 27-35, 18-26, 9-17, 0-8");
-	public static final SlotIndexMap GRID_9x6 = new SlotIndexMap("45-53, 36-44, 27-35, 18-26, 9-17, 0-8");
-	public static final SlotIndexMap GRID_3x3 = new SlotIndexMap("0-8");
+public class SlotIndexCollection {
+	public static final SlotIndexCollection DEFAULT = new SlotIndexCollection(Integer.MAX_VALUE);
+	private final int offset, size;
 
-	private final int offset;
-	private final int[] toMC;
-	private final int[] toSpout;
-
-	public SlotIndexMap() {
-		this.toMC = this.toSpout = null;
-		this.offset = 0;
+	public SlotIndexCollection(int size) {
+		this(size, 0);
 	}
 
-	public SlotIndexMap(SlotIndexMap base, int offset) {
-		this.offset = base.offset + offset;
-		this.toMC = base.toMC;
-		this.toSpout = base.toSpout;
-	}
-
-	public SlotIndexMap(String elements) {
-		this(StringUtil.getIntArray(elements));
-	}
-
-	public SlotIndexMap(int[] toMC) {
-		this.offset = 0;
-		this.toMC = toMC;
-		int max = 0;
-		for (int value : toMC) {
-			if (value > max) {
-				max = value;
-			}
-		}
-		this.toSpout = new int[max + 1];
-		for (int i = 0; i < this.toMC.length; i++) {
-			this.toSpout[this.toMC[i]] = i;
-		}
+	public SlotIndexCollection(int size, int offset) {
+		this.offset = offset;
+		this.size = size;
 	}
 
 	/**
-	 * Translates all the slots by the amount specified and returns a new Slot Index Map with the translated values
+	 * Gets the offset of the mapped information
+	 * 
+	 * @return the translated offset
+	 */
+	public int getOffset() {
+		return this.offset;
+	}
+
+	/**
+	 * Gets the size of the mapped information
+	 * 
+	 * @return collection size
+	 */
+	public int getSize() {
+		return this.size;
+	}
+
+	/**
+	 * Checks if the Spout slot is contained in this collection
+	 * 
+	 * @param spoutSlotIndex to check
+	 * @return True if contained, False if not
+	 */
+	public boolean containsSpoutSlot(int spoutSlotIndex) {
+		return spoutSlotIndex >= 0 && spoutSlotIndex < this.getSize();
+	}
+
+	/**
+	 * Checks if the Minecraft slot is contained in this collection
+	 * 
+	 * @param mcSlotIndex to check
+	 * @return True if contained, False if not
+	 */
+	public boolean containsMinecraftSlot(int mcSlotIndex) {
+		return mcSlotIndex >= 0 && mcSlotIndex < this.getSize();
+	}
+
+	/**
+	 * Translates all the slots by the amount specified and returns a new Slot Index Collection with the translated values
 	 * 
 	 * @param offset to translate
-	 * @return a new translated Slot Index Map
+	 * @return a new translated Slot Index Collection
 	 */
-	public SlotIndexMap translate(int offset) {
-		return new SlotIndexMap(this, offset);
+	public SlotIndexCollection translate(int offset) {
+		return new SlotIndexCollection(this.getOffset() + offset);
 	}
 
 	/**
 	 * Gets the Spout slot index from a Minecraft slot index
+	 * 
 	 * @param mcSlotIndex
-	 * @return the Spout slot index
+	 * @return the Spout slot index, or -1 if not contained
 	 */
 	public int getSpoutSlot(int mcSlotIndex) {
-		mcSlotIndex -= this.offset;
-		if (toSpout == null) {
+		mcSlotIndex -= this.getOffset();
+		if (containsMinecraftSlot(mcSlotIndex)) {
 			return mcSlotIndex;
-		} else if (mcSlotIndex < 0 || mcSlotIndex >= toSpout.length) {
+		} else {
 			return -1;
 		}
-		return toSpout[mcSlotIndex];
 	}
 
 	/**
 	 * Gets the minecraft slot index from a spout slot index
+	 * 
 	 * @param spoutSlotIndex
-	 * @return the Minecraft slot index
+	 * @return the Minecraft slot index, or -1 if not contained
 	 */
 	public int getMinecraftSlot(int spoutSlotIndex) {
-		if (toMC == null) {
-			return spoutSlotIndex + this.offset;
-		} else if (spoutSlotIndex < 0 || spoutSlotIndex >= toMC.length) {
+		if (containsSpoutSlot(spoutSlotIndex)) {
+			return spoutSlotIndex + this.getOffset();
+		} else {
 			return -1;
 		}
-		return toMC[spoutSlotIndex] + this.offset;
 	}
 
 	/**

@@ -47,9 +47,9 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 	public FurnaceInventory(Furnace owner) {
 		super(3);
 		this.owner = owner;
-		this.fuel = this.createSlot(0);
-		this.ingredient = this.createSlot(1);
-		this.output = this.createSlot(2);
+		this.output = this.createSlot(0);
+		this.fuel = this.createSlot(1);
+		this.ingredient = this.createSlot(2);
 	}
 
 	/**

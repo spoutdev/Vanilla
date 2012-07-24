@@ -28,12 +28,13 @@ package org.spout.vanilla.window.block;
 
 import org.spout.vanilla.controller.block.Dispenser;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.util.SlotIndexMap;
+import org.spout.vanilla.util.intmap.SlotIndexCollection;
+import org.spout.vanilla.util.intmap.SlotIndexRow;
 import org.spout.vanilla.window.TransactionWindow;
 import org.spout.vanilla.window.WindowType;
 
 public class DispenserWindow extends TransactionWindow {
-	private static final SlotIndexMap DISPENSER_SLOTS = SlotIndexMap.GRID_3x3;
+	private static final SlotIndexCollection DISPENSER_SLOTS = new SlotIndexRow(9);
 
 	public DispenserWindow(VanillaPlayer owner, Dispenser dispenser) {
 		super(WindowType.DISPENSER, "Dispenser", owner, 9, dispenser);

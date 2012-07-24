@@ -41,14 +41,14 @@ import org.spout.vanilla.controller.WindowOwner;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.WindowMessage;
 import org.spout.vanilla.util.InventoryUtil;
-import org.spout.vanilla.util.SlotIndexMap;
+import org.spout.vanilla.util.intmap.SlotIndexCollection;
 
 public class Window implements InventoryViewer {
 	protected final WindowType type;
 	protected final int instanceId;
 	protected String title;
 	protected final VanillaPlayer owner;
-	protected Map<InventoryBase, SlotIndexMap> inventories = new HashMap<InventoryBase, SlotIndexMap>();
+	protected Map<InventoryBase, SlotIndexCollection> inventories = new HashMap<InventoryBase, SlotIndexCollection>();
 	protected ItemStack itemOnCursor;
 	protected boolean isOpen = false;
 	protected WindowOwner[] windowOwners;
@@ -83,7 +83,7 @@ public class Window implements InventoryViewer {
 	public Entry<InventoryBase, Integer> getInventoryEntry(int protocolSlot) {
 		// get the inventory at the slot
 		int spoutSlot;
-		for (Entry<InventoryBase, SlotIndexMap> inventory : this.inventories.entrySet()) {
+		for (Entry<InventoryBase, SlotIndexCollection> inventory : this.inventories.entrySet()) {
 			spoutSlot = inventory.getValue().getSpoutSlot(protocolSlot);
 			if (spoutSlot != -1) {
 				// return inventory and converted slot
@@ -98,7 +98,7 @@ public class Window implements InventoryViewer {
 	 * 
 	 * @return inventory data
 	 */
-	public Set<Entry<InventoryBase, SlotIndexMap>> getInventoryData() {
+	public Set<Entry<InventoryBase, SlotIndexCollection>> getInventoryData() {
 		return this.inventories.entrySet();
 	}
 
@@ -108,7 +108,7 @@ public class Window implements InventoryViewer {
 	 * @param inventory to add
 	 * @param slots of the inventory (protocol)
 	 */
-	public void addInventory(InventoryBase inventory, SlotIndexMap slots) {
+	public void addInventory(InventoryBase inventory, SlotIndexCollection slots) {
 		this.inventories.put(inventory, slots);
 	}
 
@@ -182,11 +182,9 @@ public class Window implements InventoryViewer {
 		// send updated slots
 		ItemStack[] items = new ItemStack[this.getInventorySize()];
 		int i;
-		for (Entry<InventoryBase, SlotIndexMap> inventory : this.inventories.entrySet()) {
-			i = 0;
-			for (ItemStack item : inventory.getKey()) {
-				items[inventory.getValue().getMinecraftSlot(i)] = item;
-				i++;
+		for (Entry<InventoryBase, SlotIndexCollection> inventory : this.inventories.entrySet()) {
+			for (i = 0; i < inventory.getKey().getSize(); i++) {
+				items[inventory.getValue().getMinecraftSlot(i)] = inventory.getKey().getItem(i);
 			}
 		}
 		this.getPlayer().getNetworkSynchronizer().updateAll(null, items);
@@ -356,7 +354,7 @@ public class Window implements InventoryViewer {
 	@Override
 	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
 		// convert to MC slot and update
-		SlotIndexMap slots = this.inventories.get(inventory);
+		SlotIndexCollection slots = this.inventories.get(inventory);
 		if (slots != null) {
 			this.getPlayer().getNetworkSynchronizer().onSlotSet(null, slots.getMinecraftSlot(slot), item);
 		}

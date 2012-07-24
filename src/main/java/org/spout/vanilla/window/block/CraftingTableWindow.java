@@ -31,13 +31,15 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
-import org.spout.vanilla.util.SlotIndexMap;
+import org.spout.vanilla.util.intmap.SlotIndexCollection;
+import org.spout.vanilla.util.intmap.SlotIndexGrid;
+import org.spout.vanilla.util.intmap.SlotIndexMap;
 import org.spout.vanilla.window.CraftingWindow;
 import org.spout.vanilla.window.WindowType;
 
 public class CraftingTableWindow extends CraftingWindow {
-	private static final SlotIndexMap MAIN_SLOTS = SlotIndexMap.GRID_9x4.translate(10);
-	private static final SlotIndexMap CRAFTING_SLOTS = new SlotIndexMap("1-3, 4-6, 7-9, 0");
+	private static final SlotIndexCollection MAIN_SLOTS = new SlotIndexGrid(9, 4, 10);
+	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexMap("1-3, 4-6, 7-9, 0");
 
 	public CraftingTableWindow(VanillaPlayer owner, CraftingTable craftingTable) {
 		this(owner, craftingTable, new CraftingTableInventory());

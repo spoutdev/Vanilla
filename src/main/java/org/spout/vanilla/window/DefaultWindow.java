@@ -27,15 +27,18 @@
 package org.spout.vanilla.window;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.util.SlotIndexMap;
+import org.spout.vanilla.util.intmap.SlotIndexCollection;
+import org.spout.vanilla.util.intmap.SlotIndexGrid;
+import org.spout.vanilla.util.intmap.SlotIndexMap;
+import org.spout.vanilla.util.intmap.SlotIndexRow;
 
 /**
  * The default player window always displayed
  */
 public class DefaultWindow extends CraftingWindow {
-	private static final SlotIndexMap MAIN_SLOTS = SlotIndexMap.GRID_9x4.translate(9);
-	private static final SlotIndexMap CRAFTING_SLOTS = new SlotIndexMap("1-4, 0");
-	private static final SlotIndexMap ARMOR_SLOTS = new SlotIndexMap("6, 7, 8, 5");
+	private static final SlotIndexCollection MAIN_SLOTS = new SlotIndexGrid(9, 4, 9);
+	private static final SlotIndexCollection ARMOR_SLOTS = new SlotIndexRow(4, 5);
+	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexMap("1-4, 0");
 
 	public DefaultWindow(VanillaPlayer owner) {
 		super(WindowType.DEFAULT, "Inventory", owner, owner.getInventory().getCraftingGrid());

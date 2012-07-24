@@ -67,10 +67,9 @@ public abstract class CraftingWindow extends Window {
 
 	@Override
 	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
+		super.onSlotSet(inventory, slot, item);
 		if (inventory == this.getCraftingGrid().getGrid()) {
 			updateOutput();
-		} else {
-			super.onSlotSet(inventory, slot, item);
 		}
 	}
 

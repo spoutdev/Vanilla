@@ -24,28 +24,49 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window.block;
+package org.spout.vanilla.util.intmap;
 
-import org.spout.vanilla.controller.block.Chest;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.util.intmap.SlotIndexCollection;
-import org.spout.vanilla.util.intmap.SlotIndexGrid;
-import org.spout.vanilla.window.TransactionWindow;
-import org.spout.vanilla.window.WindowType;
+/**
+ * A mathematic slot index map that inverts the slot in a fixed amount of steps<br>
+ * For example, a 3x3 map would equal a regular Slot Index Map with the elements:<br><br>
+ * <b>6-8, 3-5, 0-2</b>
+ */
+public class SlotIndexGrid extends SlotIndexCollection {
+	private final int width, height;
 
-public class ChestWindow extends TransactionWindow {
-	private static final SlotIndexCollection SMALL_CHEST_SLOTS = new SlotIndexGrid(9, 3);
-	private static final SlotIndexCollection LARGE_CHEST1_SLOTS = new SlotIndexGrid(9, 3, 27);
-	private static final SlotIndexCollection LARGE_CHEST2_SLOTS = new SlotIndexGrid(9, 3);
-
-	public ChestWindow(VanillaPlayer owner, Chest chest1, Chest chest2) {
-		super(WindowType.CHEST, "Double Chest", owner, 54, chest1, chest2);
-		this.addInventory(chest1.getInventory(), LARGE_CHEST1_SLOTS);
-		this.addInventory(chest2.getInventory(), LARGE_CHEST2_SLOTS);
+	public SlotIndexGrid(int width, int height) {
+		this(width, height, 0);
 	}
 
-	public ChestWindow(VanillaPlayer owner, Chest chest) {
-		super(WindowType.CHEST, "Chest", owner, 27, chest);
-		this.addInventory(chest.getInventory(), SMALL_CHEST_SLOTS);
+	public SlotIndexGrid(int width, int height, int offset) {
+		super(width * height, offset);
+		this.width = width;
+		this.height = height;
+	}
+
+	private int convertSlot(int slot) {
+		if (containsSpoutSlot(slot)) {
+			final int row = this.height - (slot / this.width) - 1;
+			final int column = slot % this.width;
+			return this.width * row + column;
+		} else {
+			return -1;
+		}
+	}
+
+	@Override
+	public SlotIndexGrid translate(int offset) {
+		return new SlotIndexGrid(this.width, this.height, this.getOffset() + offset);
+	}
+
+	@Override
+	public int getMinecraftSlot(int spoutSlotIndex) {
+		final int mcSlot = convertSlot(spoutSlotIndex);
+		return mcSlot == -1 ? -1 : mcSlot + this.getOffset();
+	}
+
+	@Override
+	public int getSpoutSlot(int mcSlotIndex) {
+		return convertSlot(mcSlotIndex - this.getOffset());
 	}
 }

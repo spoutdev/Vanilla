@@ -32,14 +32,15 @@ import org.spout.vanilla.controller.block.Furnace;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
-import org.spout.vanilla.util.SlotIndexMap;
+import org.spout.vanilla.util.intmap.SlotIndexCollection;
+import org.spout.vanilla.util.intmap.SlotIndexRow;
 import org.spout.vanilla.window.ClickArgs;
 import org.spout.vanilla.window.TransactionWindow;
 import org.spout.vanilla.window.WindowType;
 
 public class FurnaceWindow extends TransactionWindow {
 	private static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
-	private static final SlotIndexMap FURNACE_SLOTS = new SlotIndexMap("2-0");
+	private static final SlotIndexCollection FURNACE_SLOTS = new SlotIndexRow(3);
 
 	protected final FurnaceInventory furnaceInv;
 	private int lastProgress = -1, lastBurnTime = -1;

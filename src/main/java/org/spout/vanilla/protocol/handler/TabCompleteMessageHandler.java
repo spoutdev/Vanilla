@@ -24,41 +24,29 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec;
+package org.spout.vanilla.protocol.handler;
 
-import java.io.IOException;
+import org.spout.api.Spout;
+import org.spout.api.player.Player;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
+import org.spout.vanilla.protocol.msg.TabCompleteMessage;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-
-import org.spout.api.protocol.MessageCodec;
-
-import org.spout.vanilla.protocol.msg.BlockActionMessage;
-
-public final class BlockActionCodec extends MessageCodec<BlockActionMessage> {
-	public BlockActionCodec() {
-		super(BlockActionMessage.class, 0x36);
-	}
+public final class TabCompleteMessageHandler extends MessageHandler<TabCompleteMessage> {
 
 	@Override
-	public BlockActionMessage decode(ChannelBuffer buffer) throws IOException {
-		int x = buffer.readInt();
-		int y = buffer.readUnsignedShort();
-		int z = buffer.readInt();
-		byte firstByte = buffer.readByte();
-		byte secondByte = buffer.readByte();
-		byte blockId = buffer.readByte();
-		return new BlockActionMessage(x, y, z, firstByte, secondByte, blockId);
-	}
+	public void handleServer(Session session, Player player, TabCompleteMessage message) {
+		if (player == null) {
+			return;
+		}
 
-	@Override
-	public ChannelBuffer encode(BlockActionMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(12);
-		buffer.writeInt(message.getX());
-		buffer.writeShort(message.getY());
-		buffer.writeInt(message.getZ());
-		buffer.writeByte(message.getFirstByte());
-		buffer.writeByte(message.getSecondByte());
-		return buffer;
+		String text = message.getText();
+		text = text.trim();
+		String[] text2 = text.split(" ");
+
+		Player p = Spout.getEngine().getPlayer(text2[text2.length - 1], false);
+		if (p != null) {
+			session.send(false, new TabCompleteMessage(p.getName()));
+		}
 	}
 }

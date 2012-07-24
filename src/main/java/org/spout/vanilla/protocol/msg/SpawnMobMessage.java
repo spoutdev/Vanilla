@@ -42,13 +42,14 @@ import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 public final class SpawnMobMessage extends Message implements TransformableMessage {
 	private int id;
 	private final int type, x, y, z, yaw, pitch, headYaw;
+	private final short velocityZ, velocityX, velocityY;
 	private final List<Parameter<?>> parameters;
 
-	public SpawnMobMessage(int id, int type, Vector3 pos, int yaw, int pitch, int headYaw, List<Parameter<?>> parameters) {
-		this(id, type, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), yaw, pitch, headYaw, parameters);
+	public SpawnMobMessage(int id, int type, Vector3 pos, int yaw, int pitch, int headYaw, short velocityZ, short velocityX, short velocityY, List<Parameter<?>> parameters) {
+		this(id, type, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), yaw, pitch, headYaw, velocityZ, velocityX, velocityY, parameters);
 	}
 
-	public SpawnMobMessage(int id, int type, int x, int y, int z, int yaw, int pitch, int headYaw, List<Parameter<?>> parameters) {
+	public SpawnMobMessage(int id, int type, int x, int y, int z, int yaw, int pitch, int headYaw, short velocityZ, short velocityX, short velocityY, List<Parameter<?>> parameters) {
 		this.id = id;
 		this.type = type;
 		this.x = x;
@@ -57,6 +58,9 @@ public final class SpawnMobMessage extends Message implements TransformableMessa
 		this.yaw = yaw;
 		this.pitch = pitch;
 		this.headYaw = headYaw;
+		this.velocityZ = velocityZ;
+		this.velocityX = velocityX;
+		this.velocityY = velocityY;
 		this.parameters = parameters;
 	}
 
@@ -102,6 +106,18 @@ public final class SpawnMobMessage extends Message implements TransformableMessa
 		return headYaw;
 	}
 
+	public short getVelocityZ() {
+		return velocityZ;
+	}
+	
+	public short getVelocityX() {
+		return velocityX;
+	}
+	
+	public short getVelocityY() {
+		return velocityY;
+	}
+
 	public List<Parameter<?>> getParameters() {
 		return parameters;
 	}
@@ -117,6 +133,9 @@ public final class SpawnMobMessage extends Message implements TransformableMessa
 				.append("yaw", yaw)
 				.append("pitch", pitch)
 				.append("headYaw", headYaw)
+				.append("velocityz", velocityZ)
+				.append("velocityx", velocityX)
+				.append("velocityY", velocityY)
 				.append("parameters", parameters)
 				.toString();
 	}
@@ -139,6 +158,9 @@ public final class SpawnMobMessage extends Message implements TransformableMessa
 				.append(this.yaw, other.yaw)
 				.append(this.pitch, other.pitch)
 				.append(this.headYaw, other.headYaw)
+				.append(this.velocityZ, other.velocityZ)
+				.append(this.velocityX, other.velocityX)
+				.append(this.velocityY, other.velocityY)
 				.append(this.parameters, other.parameters)
 				.isEquals();
 	}

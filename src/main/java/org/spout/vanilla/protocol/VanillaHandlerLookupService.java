@@ -57,6 +57,7 @@ import org.spout.vanilla.protocol.handler.PlayerLookMessageHandler;
 import org.spout.vanilla.protocol.handler.PlayerPositionLookMessageHandler;
 import org.spout.vanilla.protocol.handler.PlayerPositionMessageHandler;
 import org.spout.vanilla.protocol.handler.RespawnMessageHandler;
+import org.spout.vanilla.protocol.handler.TabCompleteMessageHandler;
 import org.spout.vanilla.protocol.handler.UpdateSignHandler;
 import org.spout.vanilla.protocol.handler.WindowClickMessageHandler;
 import org.spout.vanilla.protocol.handler.WindowCloseMessageHandler;
@@ -69,6 +70,7 @@ import org.spout.vanilla.protocol.msg.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
 import org.spout.vanilla.protocol.msg.GroundMessage;
+import org.spout.vanilla.protocol.msg.TabCompleteMessage;
 import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
@@ -121,6 +123,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(ClientStatusMessage.class, ClientStatusHandler.class);
 			bind(CustomDataMessage.class, CustomDataMessageHandler.class);
 			bind(EncryptionKeyResponseMessage.class, BootstrapEncryptionKeyResponseMessageHandler.class);
+			bind(TabCompleteMessage.class, TabCompleteMessageHandler.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

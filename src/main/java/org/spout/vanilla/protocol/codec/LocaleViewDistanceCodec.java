@@ -27,54 +27,34 @@
 package org.spout.vanilla.protocol.codec;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-
 import org.spout.api.protocol.MessageCodec;
-import org.spout.api.util.Parameter;
-
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.SpawnMobMessage;
+import org.spout.vanilla.protocol.msg.LocalViewDistanceMessage;
 
-public final class SpawnMobCodec extends MessageCodec<SpawnMobMessage> {
-	public SpawnMobCodec() {
-		super(SpawnMobMessage.class, 0x18);
+public class LocaleViewDistanceCodec extends MessageCodec<LocalViewDistanceMessage> {
+	public LocaleViewDistanceCodec() {
+		super(LocalViewDistanceMessage.class, 0xCC);
 	}
 
 	@Override
-	public SpawnMobMessage decode(ChannelBuffer buffer) throws IOException {
-		int id = buffer.readInt();
-		int type = buffer.readUnsignedByte();
-		int x = buffer.readInt();
-		int y = buffer.readInt();
-		int z = buffer.readInt();
-		int yaw = buffer.readUnsignedByte();
-		int pitch = buffer.readUnsignedByte();
-		int headYaw = buffer.readUnsignedByte();
-		short velocityZ = buffer.readShort();
-		short velocityX = buffer.readShort();
-		short velocityY = buffer.readShort();
-		List<Parameter<?>> parameters = ChannelBufferUtils.readParameters(buffer);
-		return new SpawnMobMessage(id, type, x, y, z, yaw, pitch, headYaw, velocityZ, velocityX, velocityY, parameters);
+	public LocalViewDistanceMessage decode(ChannelBuffer buffer) throws IOException {
+		String locale = ChannelBufferUtils.readString(buffer);
+		byte viewDistance = buffer.readByte();
+		byte chatFlags = buffer.readByte();
+		byte difficulty = buffer.readByte();
+		return new LocalViewDistanceMessage(locale, viewDistance, chatFlags, difficulty);
 	}
 
 	@Override
-	public ChannelBuffer encode(SpawnMobMessage message) throws IOException {
+	public ChannelBuffer encode(LocalViewDistanceMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeInt(message.getId());
-		buffer.writeByte(message.getType());
-		buffer.writeInt(message.getX());
-		buffer.writeInt(message.getY());
-		buffer.writeInt(message.getZ());
-		buffer.writeByte(message.getYaw());
-		buffer.writeByte(message.getPitch());
-		buffer.writeByte(message.getHeadYaw());
-		buffer.writeShort(message.getVelocityZ());
-		buffer.writeShort(message.getVelocityX());
-		buffer.writeShort(message.getVelocityY());
-		ChannelBufferUtils.writeParameters(buffer, message.getParameters());
+		ChannelBufferUtils.writeString(buffer, message.getLocale());
+		buffer.writeByte(message.getViewDistance());
+		buffer.writeInt(message.getChatFlags());
+		buffer.writeByte(message.getDifficulty());
 		return buffer;
 	}
 }

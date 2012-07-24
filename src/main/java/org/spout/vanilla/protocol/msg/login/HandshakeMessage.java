@@ -24,42 +24,10 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
+package org.spout.vanilla.protocol.msg.login;
 
 import org.spout.api.protocol.Message;
-import org.spout.api.util.SpoutToStringStyle;
 
-public final class HandshakeMessage extends Message {
-	private final String identifier;
+public abstract class HandshakeMessage extends Message {
 
-	public HandshakeMessage(String identifier) {
-		this.identifier = identifier;
-	}
-
-	public String getIdentifier() {
-		return identifier;
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("identifier", identifier)
-				.toString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final HandshakeMessage other = (HandshakeMessage) obj;
-		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.identifier, other.identifier)
-				.isEquals();
-	}
 }

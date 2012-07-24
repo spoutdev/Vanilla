@@ -69,7 +69,7 @@ import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.LoadChunkMessage;
-import org.spout.vanilla.protocol.msg.LoginRequestMessage;
+import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;

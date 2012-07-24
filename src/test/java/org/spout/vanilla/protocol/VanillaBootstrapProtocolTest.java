@@ -32,9 +32,9 @@ import org.spout.api.protocol.common.message.CustomDataMessage;
 import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapCodecLookupService;
 import org.spout.vanilla.protocol.msg.EncryptionKeyRequestMessage;
 import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
-import org.spout.vanilla.protocol.msg.HandshakeMessage;
+import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
-import org.spout.vanilla.protocol.msg.LoginRequestMessage;
+import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 
 public class VanillaBootstrapProtocolTest extends BaseProtocolTest {

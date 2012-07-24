@@ -38,8 +38,8 @@ import org.spout.api.security.SecurityHandler;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.EncryptionKeyRequestMessage;
-import org.spout.vanilla.protocol.msg.HandshakeMessage;
-import org.spout.vanilla.protocol.msg.LoginRequestMessage;
+import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
+import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 
 public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMessage> {
 	@Override

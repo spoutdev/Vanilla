@@ -32,7 +32,9 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.HandshakeMessage;
+import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
+import org.spout.vanilla.protocol.msg.login.handshake.ClientHandshakeMessage;
+import org.spout.vanilla.protocol.msg.login.handshake.ServerHandshakeMessage;
 
 public final class HandshakeCodec extends MessageCodec<HandshakeMessage> {
 	public HandshakeCodec() {
@@ -40,15 +42,29 @@ public final class HandshakeCodec extends MessageCodec<HandshakeMessage> {
 	}
 
 	@Override
-	public HandshakeMessage decode(ChannelBuffer buffer) {
-		String identifier = ChannelBufferUtils.readString(buffer);
-		return new HandshakeMessage(identifier);
+	public HandshakeMessage decodeFromClient(ChannelBuffer buffer) {
+		byte protoVersion = buffer.readByte();
+		String username = ChannelBufferUtils.readString(buffer);
+		String hostname = ChannelBufferUtils.readString(buffer);
+		int port = buffer.readInt();
+		return new ClientHandshakeMessage(protoVersion, username, hostname, port);
 	}
 
 	@Override
-	public ChannelBuffer encode(HandshakeMessage message) {
+	public HandshakeMessage decodeFromServer(ChannelBuffer buffer) {
+		return null; //TODO Handle this correctly on SpoutClient
+	}
+
+	@Override
+	public ChannelBuffer encodeToClient(HandshakeMessage message) {
+		ServerHandshakeMessage server = (ServerHandshakeMessage) message;
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		ChannelBufferUtils.writeString(buffer, message.getIdentifier());
+		ChannelBufferUtils.writeString(buffer, server.getHash());
 		return buffer;
+	}
+
+	@Override
+	public ChannelBuffer encodeToServer(HandshakeMessage message) {
+		return null; //TODO Handle this correctly on SpoutClient
 	}
 }

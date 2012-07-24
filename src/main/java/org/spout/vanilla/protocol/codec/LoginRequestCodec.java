@@ -29,10 +29,13 @@ package org.spout.vanilla.protocol.codec;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
+import org.spout.api.Spout;
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.LoginRequestMessage;
+import org.spout.vanilla.protocol.msg.login.request.ClientLoginRequestMessage;
+import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
+import org.spout.vanilla.protocol.msg.login.request.ServerLoginRequestMessage;
 
 public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 	public LoginRequestCodec() {
@@ -41,41 +44,38 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 
 	@Override
 	public LoginRequestMessage decodeFromServer(ChannelBuffer buffer) {
-		int version = buffer.readInt();
-		String name = ChannelBufferUtils.readString(buffer);
+		int id = buffer.readInt();
 		String worldType = ChannelBufferUtils.readString(buffer);
-		int mode = buffer.readInt();
-		int dimension = buffer.readInt();
-		int difficulty = buffer.readByte();
-		int worldHeight = ChannelBufferUtils.getExpandedHeight(buffer.readUnsignedByte());
-		int maxPlayers = buffer.readUnsignedByte();
-		return new LoginRequestMessage(true, version, name, mode, dimension, difficulty, worldHeight, maxPlayers, worldType);
+		byte mode = buffer.readByte();
+		byte dimension = buffer.readByte();
+		byte difficulty = buffer.readByte();
+		short notUsed = buffer.readUnsignedByte();
+		short maxPlayers = buffer.readUnsignedByte();
+		return new ServerLoginRequestMessage(id, worldType, mode, dimension, difficulty, maxPlayers);
 	}
 
 	@Override
 	public LoginRequestMessage decodeFromClient(ChannelBuffer buffer) {
-		int version = buffer.readInt();
-		String name = ChannelBufferUtils.readString(buffer);
-		String worldType = ChannelBufferUtils.readString(buffer);
-		int mode = buffer.readInt();
-		int dimension = buffer.readInt();
-		int difficulty = buffer.readByte();
-		int worldHeight = ChannelBufferUtils.getExpandedHeight(buffer.readUnsignedByte());
-		int maxPlayers = buffer.readUnsignedByte();
-		return new LoginRequestMessage(false, version, name, mode, dimension, difficulty, worldHeight, maxPlayers, worldType);
+		Spout.log("Hey I am a client and I want to connect!");
+		return new ClientLoginRequestMessage();
 	}
 
 	@Override
-	public ChannelBuffer encode(LoginRequestMessage message) {
+	public ChannelBuffer encodeToClient(LoginRequestMessage message) {
+		ServerLoginRequestMessage server = (ServerLoginRequestMessage) message;
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeInt(message.getId());
-		ChannelBufferUtils.writeString(buffer, message.getName());
-		ChannelBufferUtils.writeString(buffer, message.getWorldType());
-		buffer.writeInt(message.getGameMode());
-		buffer.writeInt(message.getDimension());
-		buffer.writeByte(message.getDifficulty());
-		buffer.writeByte(ChannelBufferUtils.getShifts(message.getWorldHeight()) - 1);
-		buffer.writeByte(message.getMaxPlayers());
+		buffer.writeInt(server.getId());
+		ChannelBufferUtils.writeString(buffer, server.getWorldType());
+		buffer.writeByte(server.getGameMode());
+		buffer.writeByte(server.getDimension());
+		buffer.writeByte(server.getDifficulty());
+		buffer.writeByte(0);
+		buffer.writeByte(server.getMaxPlayers());
 		return buffer;
+	}
+
+	@Override
+	public ChannelBuffer encodeToServer(LoginRequestMessage message) {
+		return ChannelBuffers.dynamicBuffer();
 	}
 }

@@ -41,6 +41,7 @@ import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.ChatMessage;
+import org.spout.vanilla.protocol.msg.ClientStatusMessage;
 import org.spout.vanilla.protocol.msg.CollectItemMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.CreateEntityMessage;
@@ -180,7 +181,8 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new CustomDataMessage("EMERGENCY", new byte[]{0, 1, 1, 8, 9, 9, 8, 8, 8, 1, 9, 9, 9, 1, 1, 9, 7, 2, 5, 3}),
 			new ServerListPingMessage(),
 			new KickMessage("This is a test"),
-			new PlayerAbilityMessage(true, true, true, true)
+			new PlayerAbilityMessage(true, true, true, true),
+			new ClientStatusMessage((byte) 0)
 	};
 
 	static {

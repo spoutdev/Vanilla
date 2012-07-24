@@ -59,6 +59,7 @@ public class Sheep extends Creature implements Passive {
 		registerProcess(eatGrassLogic);
 		isSheared = data().get("sheep_sheared", false);
 		sheepColor = data().get("sheep_color", (short) 0);
+		setDeathAnimation(true);
 	}
 
 	@Override

@@ -48,6 +48,7 @@ public class Silverfish extends Creature implements Hostile {
 		super.onAttached();
 		setMaxHealth(8);
 		setHealth(8, HealthChangeReason.SPAWN);
+		setDeathAnimation(true);
 	}
 
 	@Override

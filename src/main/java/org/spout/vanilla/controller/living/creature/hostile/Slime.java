@@ -71,6 +71,7 @@ public class Slime extends Creature implements Hostile {
 		int health = size > 0 ? size * 4 : 1;
 		setMaxHealth(health);
 		setHealth(health, HealthChangeReason.SPAWN);
+		setDeathAnimation(true);
 	}
 
 	@Override

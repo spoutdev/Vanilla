@@ -52,6 +52,7 @@ public class Wolf extends Creature implements Tameable, Neutral {
 			setMaxHealth(8);
 			setHealth(8, HealthChangeReason.SPAWN);
 		}
+		setDeathAnimation(true);
 	}
 
 	@Override

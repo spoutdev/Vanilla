@@ -41,5 +41,6 @@ public class Villager extends Creature implements Passive {
 		super.onAttached();
 		setMaxHealth(20);
 		setHealth(20, HealthChangeReason.SPAWN);
+		setDeathAnimation(true);
 	}
 }

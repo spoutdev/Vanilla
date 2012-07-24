@@ -50,6 +50,7 @@ public class PigZombie extends Zombie implements Neutral {
 		super.onAttached();
 		setMaxHealth(20);
 		setHealth(20, HealthChangeReason.SPAWN);
+		setDeathAnimation(true);
 	}
 
 	@Override

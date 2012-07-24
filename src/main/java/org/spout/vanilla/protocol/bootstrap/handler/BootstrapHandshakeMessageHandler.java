@@ -44,63 +44,59 @@ import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMessage> {
 	@Override
 	public void handleClient(Session session, Player player, HandshakeMessage message) {
-		if (message.getIdentifier().equals("-")) {
-			session.send(true, new LoginRequestMessage(player.getName()));
-		} else {
-			session.disconnect("Online mode not supported for backend servers");
-		}
+		//TODO Compatibility for SpoutClient
 	}
 
 	@Override
 	public void handleServer(Session session, Player player, HandshakeMessage message) {
-		long start = System.currentTimeMillis();
-		Session.State state = session.getState();
-		if (state == Session.State.EXCHANGE_HANDSHAKE) {
-			session.getDataMap().put(VanillaProtocol.LOGIN_TIME, System.currentTimeMillis());
-			session.getDataMap().put(VanillaProtocol.HANDSHAKE_USERNAME, message.getIdentifier());
-			if (VanillaConfiguration.ENCRYPT_MODE.getBoolean()) {
-				session.setState(Session.State.EXCHANGE_ENCRYPTION);
-				String sessionId = getSessionId();
-				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
-				int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
-				String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
-				AsymmetricCipherKeyPair keys = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
-				session.send(false, true, new EncryptionKeyRequestMessage(sessionId, keys.getPublic(), false));
-			} else if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
-				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
-				String sessionId = getSessionId();
-				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
-				session.send(false, true, new HandshakeMessage(sessionId));
-			} else {
-				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
-				String sessionId = "-";
-				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
-				session.send(false, true, new HandshakeMessage(sessionId));
-			}
-		} else {
-			session.disconnect(false, new Object[]{"Handshake already exchanged."});
-		}
-		System.out.println("Handling handshake for " + session + " took " + (System.currentTimeMillis() - start) + " ms");
-	}
-
-	private final static SecureRandom random = new SecureRandom();
-
-	static {
-		synchronized (random) {
-			random.nextBytes(new byte[1]);
-		}
-	}
-
-	private final String getSessionId() {
-		long sessionId;
-		synchronized (random) {
-			sessionId = random.nextLong();
-		}
-		StringBuilder sb = new StringBuilder();
-		if (sessionId < 0) {
-			sessionId = (-sessionId) & 0x7FFFFFFFFFFFFFFFL;
-			sb.append("-");
-		}
-		return sb.append(Long.toString(sessionId, 16)).toString();
+//		long start = System.currentTimeMillis();
+//		Session.State state = session.getState();
+//		if (state == Session.State.EXCHANGE_HANDSHAKE) {
+//			session.getDataMap().put(VanillaProtocol.LOGIN_TIME, System.currentTimeMillis());
+//			session.getDataMap().put(VanillaProtocol.HANDSHAKE_USERNAME, message.getUsername());
+//			if (VanillaConfiguration.ENCRYPT_MODE.getBoolean()) {
+//				session.setState(Session.State.EXCHANGE_ENCRYPTION);
+//				String sessionId = getSessionId();
+//				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
+//				int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
+//				String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
+//				AsymmetricCipherKeyPair keys = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
+//				session.send(false, true, new EncryptionKeyRequestMessage(sessionId, keys.getPublic(), false));
+//			} else if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
+//				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
+//				String sessionId = getSessionId();
+//				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
+//				session.send(false, true, new HandshakeMessage(message.getProtocolVersion(), message.getUsername(), message.getHostname(), message.getPort()));
+//			} else {
+//				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
+//				String sessionId = "-";
+//				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
+//				session.send(false, true, new HandshakeMessage(message.getProtocolVersion(), message.getUsername(), message.getHostname(), message.getPort()));
+//			}
+//		} else {
+//			session.disconnect(false, new Object[]{"Handshake already exchanged."});
+//		}
+//		System.out.println("Handling handshake for " + session + " took " + (System.currentTimeMillis() - start) + " ms");
+//	}
+//
+//	private final static SecureRandom random = new SecureRandom();
+//
+//	static {
+//		synchronized (random) {
+//			random.nextBytes(new byte[1]);
+//		}
+//	}
+//
+//	private final String getSessionId() {
+//		long sessionId;
+//		synchronized (random) {
+//			sessionId = random.nextLong();
+//		}
+//		StringBuilder sb = new StringBuilder();
+//		if (sessionId < 0) {
+//			sessionId = (-sessionId) & 0x7FFFFFFFFFFFFFFFL;
+//			sb.append("-");
+//		}
+//		return sb.append(Long.toString(sessionId, 16)).toString();
 	}
 }

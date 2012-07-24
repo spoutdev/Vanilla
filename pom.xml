@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mainClass>org.spout.vanilla.VanillaPlugin</mainClass>
 		<spoutVersion>dev-SNAPSHOT</spoutVersion>
-		<protocolVersion>29</protocolVersion>
+		<protocolVersion>31</protocolVersion>
 		<buildNumber>0</buildNumber>
 	</properties>
 

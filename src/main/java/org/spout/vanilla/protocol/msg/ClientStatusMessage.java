@@ -49,4 +49,18 @@ public class ClientStatusMessage extends Message {
                 .append("status", status)
                 .toString();
     }
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ClientStatusMessage other = (ClientStatusMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.status, other.status)
+				.isEquals();
+	}
 }

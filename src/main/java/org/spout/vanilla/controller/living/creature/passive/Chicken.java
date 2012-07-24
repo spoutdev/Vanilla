@@ -59,6 +59,7 @@ public class Chicken extends Creature implements Passive {
 		setHealth(4, HealthChangeReason.SPAWN);
 		dropItemLogic = new DropItemTimeBasedLogic(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
 		registerProcess(dropItemLogic);
+		setDeathAnimation(true);
 	}
 
 	@Override

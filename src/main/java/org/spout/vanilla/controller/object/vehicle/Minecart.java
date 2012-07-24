@@ -26,16 +26,23 @@
  */
 package org.spout.vanilla.controller.object.vehicle;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.spout.api.Source;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.object.Substance;
+import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
@@ -47,6 +54,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 	private Material blockType = VanillaMaterials.AIR;
 	private RailBase railMaterial;
 	private RailsState railState;
+	private int regentick = 0;
 	private Vector3 groundFrictionModifier = new Vector3(0.5, 0.5, 0.5);
 	private Vector3 airFrictionModifier = new Vector3(0.95, 0.95, 0.95);
 	private Vector2[] railMovement = new Vector2[]{Vector2.ZERO, Vector2.ZERO};
@@ -83,7 +91,8 @@ public abstract class Minecart extends Substance implements Vehicle {
 		this.getBounds().set(-0.35f, 0.0f, -0.49f, 0.35f, 0.49f, 0.49f);
 		this.setVelocity(new Vector3(0, 0, 0.2)); //temporary!
 		this.setMaxSpeed(new Vector3(0.4, 0.4, 0.4)); //first two 0.4 need to be 0 - TODO: Use yaw instead?
-		setHealth(40, HealthChangeReason.SPAWN);
+		setMaxHealth(6);
+		setHealth(6, HealthChangeReason.SPAWN);
 	}
 
 	@Override
@@ -129,10 +138,15 @@ public abstract class Minecart extends Substance implements Vehicle {
 
 		//update health to regenerate
 		int health = getHealth();
-		if (health < 40) {
-			setHealth(health + 1, HealthChangeReason.REGENERATION);
+		if (health < 6) {
+			if (regentick >= 7) {
+				setHealth(health + 1, HealthChangeReason.REGENERATION);
+				regentick = 0;
+			}
+			else {
+				regentick++;
+			}
 		}
-
 		//get current rail below minecart
 		Point position = getParent().getPosition();
 		if (position.getWorld() == null) {
@@ -330,5 +344,12 @@ public abstract class Minecart extends Substance implements Vehicle {
 	 * @param dt
 	 */
 	public void onVelocityUpdated(float dt) {
+	}
+	
+	@Override
+	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
+		Set<ItemStack> drops = new HashSet<ItemStack>();
+		drops.add(new ItemStack(VanillaMaterials.MINECART, 1));
+		return drops;
 	}
 }

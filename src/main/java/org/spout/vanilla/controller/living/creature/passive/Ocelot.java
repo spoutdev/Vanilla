@@ -46,6 +46,7 @@ public class Ocelot extends Creature implements Tameable, Passive {
 		super.onAttached();
 		setMaxHealth(10);
 		setHealth(10, HealthChangeReason.SPAWN);
+		setDeathAnimation(true);
 		// master = data().get("controlling_entity", master);
 	}
 

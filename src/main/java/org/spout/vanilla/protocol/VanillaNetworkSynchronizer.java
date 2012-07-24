@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.protocol;
 
-import gnu.trove.iterator.TIntObjectIterator;
-import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.set.TIntSet;
 
 import org.spout.api.entity.Entity;
@@ -40,7 +38,6 @@ import org.spout.api.geo.cuboid.ChunkSnapshot.EntityType;
 import org.spout.api.geo.cuboid.ChunkSnapshot.ExtraData;
 import org.spout.api.geo.cuboid.ChunkSnapshot.SnapshotType;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Quaternion;
@@ -74,9 +71,6 @@ import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
-import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
-import org.spout.vanilla.window.Window;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
@@ -89,7 +83,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@SuppressWarnings("unused")
 	private static final int POSITION_UPDATE_TICKS = 20;
 	private static final int TIMEOUT = 15000;
-	private final TIntObjectHashMap<Message> queuedInventoryUpdates = new TIntObjectHashMap<Message>();
 	private boolean first = true;
 	private long lastKeepAlive = System.currentTimeMillis();
 	private TSyncIntPairObjectHashMap<TSyncIntHashSet> initializedChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
@@ -371,11 +364,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			lastKeepAlive = currentTime;
 			owner.getSession().send(false, true, PingMsg);
 		}
-
-		for (TIntObjectIterator<Message> i = queuedInventoryUpdates.iterator(); i.hasNext(); ) {
-			i.advance();
-			session.send(false, i.value());
-		}
 		super.preSnapshot();
 	}
 
@@ -449,37 +437,5 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 		}
 		super.syncEntity(e);
-	}
-
-	@Override
-	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
-		Controller c = owner.getEntity().getController();
-		if (!(c instanceof VanillaPlayer)) {
-			return;
-		}
-
-		VanillaPlayer controller = (VanillaPlayer) c;
-		Window window = controller.getActiveWindow();
-
-		Message message;
-		if (item == null) {
-			message = new WindowSetSlotMessage(window, slot);
-		} else {
-			message = new WindowSetSlotMessage(window, slot, getMinecraftId(item.getMaterial()), item.getAmount(), item.getData(), item.getNBTData());
-		}
-		queuedInventoryUpdates.put(slot, message);
-	}
-
-	@Override
-	public void updateAll(InventoryBase inventory, ItemStack[] slots) {
-		Controller c = owner.getEntity().getController();
-		if (!(c instanceof VanillaPlayer)) {
-			return;
-		}
-
-		Window window = ((VanillaPlayer) c).getActiveWindow();
-
-		session.send(false, new WindowSetSlotsMessage(window, slots));
-		queuedInventoryUpdates.clear();
 	}
 }

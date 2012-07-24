@@ -155,6 +155,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 		} else {
 			creativeTick(dt);
 		}
+
+		// Update window
+		this.getActiveWindow().onTick(dt);
 	}
 
 	@Override

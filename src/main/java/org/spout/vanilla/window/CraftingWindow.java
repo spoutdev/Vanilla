@@ -26,16 +26,9 @@
  */
 package org.spout.vanilla.window;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.spout.api.Spout;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.Recipe;
-import org.spout.api.inventory.RecipeManager;
 import org.spout.api.inventory.special.InventorySlot;
-import org.spout.api.material.Material;
 
 import org.spout.vanilla.controller.WindowOwner;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -66,14 +59,6 @@ public abstract class CraftingWindow extends Window {
 	}
 
 	@Override
-	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
-		super.onSlotSet(inventory, slot, item);
-		if (inventory == this.getCraftingGrid().getGrid()) {
-			updateOutput();
-		}
-	}
-
-	@Override
 	public boolean onClick(InventoryBase inventory, int clickedSlot, ClickArgs args) {
 		if (inventory == this.getCraftingGrid() && clickedSlot == this.getCraftingGrid().getOutput().getOffset()) {
 			ItemStack output = this.getCraftingGrid().getOutput().getItem();
@@ -87,7 +72,7 @@ public abstract class CraftingWindow extends Window {
 				ItemStack items = new ItemStack(clickedItem.getMaterial(), 0);
 				while (clickedItem.equalsIgnoreSize(slot.getItem())) {
 					items.setAmount(items.getAmount() + 1);
-					subtractFromCraftingArray();
+					this.craftingGrid.craft();
 				}
 				if (!owner.getInventory().getMain().canItemFit(items, true, true)) {
 					this.craftingGrid.setContents(before);
@@ -109,7 +94,7 @@ public abstract class CraftingWindow extends Window {
 					// clicked item > cursor
 					this.setItemOnCursor(clickedItem);
 					slot.setItem(null);
-					subtractFromCraftingArray();
+					this.craftingGrid.craft();
 					return true;
 				}
 
@@ -124,7 +109,7 @@ public abstract class CraftingWindow extends Window {
 				cursorItem.stack(clickedItem);
 				slot.setItem(clickedItem.getAmount() <= 0 ? null : clickedItem);
 				this.setItemOnCursor(cursorItem);
-				subtractFromCraftingArray();
+				this.craftingGrid.craft();
 				return true;
 			} else if (args.isRightClick()) {
 				InventorySlot slot = craftingGrid.getOutput();
@@ -150,68 +135,13 @@ public abstract class CraftingWindow extends Window {
 					slot.setItem(null);
 					this.setItemOnCursor(cursorItem);
 				} else {
-					this.setItemOnCursor(clickedItem.clone());
+					this.setItemOnCursor(clickedItem);
 					slot.setItem(null);
 				}
-				subtractFromCraftingArray();
+				this.craftingGrid.craft();
 				return true;
 			}
 		}
 		return super.onClick(inventory, clickedSlot, args);
-	}
-
-	private void subtractFromCraftingArray() {
-		ItemStack[] clonedContents = craftingGrid.getGrid().getClonedContents();
-		for (int i = 0; i < clonedContents.length; i++) {
-			ItemStack clickedItem = clonedContents[i];
-			if (clickedItem == null) {
-				continue;
-			}
-			clickedItem.setAmount(clickedItem.getAmount() - 1);
-			if (clickedItem.isEmpty()) {
-				clickedItem = null;
-			}
-			clonedContents[i] = clickedItem;
-		}
-		craftingGrid.getGrid().setContents(clonedContents);
-	}
-
-	private boolean updateOutput() {
-		RecipeManager recipeManager = Spout.getEngine().getRecipeManager();
-		InventoryBase grid = craftingGrid.getGrid();
-		int rowSize = craftingGrid.getRowSize();
-		List<List<Material>> materials = new ArrayList<List<Material>>();
-		List<Material> current = new ArrayList<Material>();
-		List<Material> shapeless = new ArrayList<Material>();
-		int cntr = 0;
-		for (ItemStack item : grid) {
-			cntr++;
-			Material mat = null;
-			if (item != null) {
-				mat = item.getMaterial();
-			}
-			current.add(mat);
-			if (mat != null) {
-				shapeless.add(mat);
-			}
-			if (cntr >= rowSize) {
-				materials.add(current);
-				current = new ArrayList<Material>();
-				cntr = 0;
-			}
-		}
-		Recipe recipe = recipeManager.matchShapedRecipe(materials);
-		if (recipe == null) {
-			recipe = recipeManager.matchShapelessRecipe(shapeless);
-		}
-		if (recipe != null) {
-			if (this.getCraftingGrid().getOutput().getItem() == null) {
-				this.getCraftingGrid().getOutput().setItem(recipe.getResult());
-			}
-			return true;
-		} else {
-			craftingGrid.getOutput().setItem(null);
-		}
-		return false;
 	}
 }

@@ -38,11 +38,9 @@ import org.spout.api.event.Result;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
-import org.spout.api.event.player.PlayerLeaveEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
 import org.spout.api.geo.cuboid.Region;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
@@ -62,7 +60,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class VanillaListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -88,14 +85,6 @@ public class VanillaListener implements Listener {
 
 		// Make them visible to everyone by default
 		vanillaPlayer.setVisible(true);
-	}
-
-	@EventHandler(order = Order.LATEST)
-	public void onPlayerLeave(PlayerLeaveEvent event) {
-		InventoryBase inv = VanillaPlayerUtil.getInventory(event.getPlayer().getEntity());
-		if (inv != null) {
-			inv.removeViewer(event.getPlayer().getNetworkSynchronizer());
-		}
 	}
 
 	@EventHandler

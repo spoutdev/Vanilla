@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.window;
 
+import gnu.trove.iterator.TIntObjectIterator;
+import gnu.trove.map.hash.TIntObjectHashMap;
+
 import java.util.AbstractMap.SimpleEntry;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,18 +39,22 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.player.Player;
+import org.spout.api.tickable.ITickable;
 
 import org.spout.vanilla.controller.WindowOwner;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.WindowMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 
-public class Window implements InventoryViewer {
+public class Window implements InventoryViewer, ITickable {
 	protected final WindowType type;
 	protected final int instanceId;
 	protected String title;
 	protected final VanillaPlayer owner;
+	protected final TIntObjectHashMap<ItemStack> queuedInventoryUpdates = new TIntObjectHashMap<ItemStack>(); // items to update
 	protected Map<InventoryBase, SlotIndexCollection> inventories = new HashMap<InventoryBase, SlotIndexCollection>();
 	protected ItemStack itemOnCursor;
 	protected boolean isOpen = false;
@@ -179,15 +186,7 @@ public class Window implements InventoryViewer {
 		for (InventoryBase inventory : this.inventories.keySet()) {
 			inventory.addViewer(this);
 		}
-		// send updated slots
-		ItemStack[] items = new ItemStack[this.getInventorySize()];
-		int i;
-		for (Entry<InventoryBase, SlotIndexCollection> inventory : this.inventories.entrySet()) {
-			for (i = 0; i < inventory.getKey().getSize(); i++) {
-				items[inventory.getValue().getMinecraftSlot(i)] = inventory.getKey().getItem(i);
-			}
-		}
-		this.getPlayer().getNetworkSynchronizer().updateAll(null, items);
+		this.refreshItems();
 	}
 
 	/**
@@ -200,6 +199,35 @@ public class Window implements InventoryViewer {
 		}
 		for (InventoryBase inventory : this.inventories.keySet()) {
 			inventory.removeViewer(this);
+		}
+	}
+
+	public void refreshItems() {
+		// send updated slots
+		ItemStack[] items = new ItemStack[this.getInventorySize()];
+		int i, mcSlot;
+		for (Entry<InventoryBase, SlotIndexCollection> inventory : this.inventories.entrySet()) {
+			for (i = 0; i < inventory.getKey().getSize(); i++) {
+				mcSlot = inventory.getValue().getMinecraftSlot(i);
+				items[mcSlot] = inventory.getKey().getItem(i);
+			}
+		}
+		this.sendMessage(new WindowSetSlotsMessage(this, items));
+	}
+	
+	@Override
+	public void onTick(float dt) {
+		int queued = this.queuedInventoryUpdates.size();
+		if (queued > 0) {
+			if (queued > 12) {
+				this.refreshItems();
+			} else {
+				for (TIntObjectIterator<ItemStack> i = queuedInventoryUpdates.iterator(); i.hasNext(); ) {
+					i.advance();
+					this.sendMessage(new WindowSetSlotMessage(this, i.key(), i.value()));
+				}
+			}
+			this.queuedInventoryUpdates.clear();
 		}
 	}
 
@@ -220,7 +248,7 @@ public class Window implements InventoryViewer {
 	}
 
 	public void setItemOnCursor(ItemStack item) {
-		this.itemOnCursor = item;
+		this.itemOnCursor = item == null ? null : item.clone();
 	}
 
 	/**
@@ -356,14 +384,8 @@ public class Window implements InventoryViewer {
 		// convert to MC slot and update
 		SlotIndexCollection slots = this.inventories.get(inventory);
 		if (slots != null) {
-			this.getPlayer().getNetworkSynchronizer().onSlotSet(null, slots.getMinecraftSlot(slot), item);
-		}
-	}
-
-	@Override
-	public void updateAll(InventoryBase inventory, ItemStack[] slots) {
-		for (int i = 0; i < slots.length; i++) {
-			this.onSlotSet(inventory, i, slots[i]);
+			slot = slots.getMinecraftSlot(slot);
+			this.queuedInventoryUpdates.put(slot, item);
 		}
 	}
 }

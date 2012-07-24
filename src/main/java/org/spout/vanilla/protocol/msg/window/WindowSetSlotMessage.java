@@ -28,10 +28,12 @@ package org.spout.vanilla.protocol.msg.window;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.nbt.CompoundMap;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.WindowMessage;
 import org.spout.vanilla.window.Window;
 
@@ -40,7 +42,27 @@ public final class WindowSetSlotMessage extends WindowMessage {
 	private final CompoundMap nbtData;
 
 	public WindowSetSlotMessage(Window window, int slot) {
-		this(window.getInstanceId(), slot, -1, 0, 0, null);
+		this(window.getInstanceId(), slot);
+	}
+
+	public WindowSetSlotMessage(Window window, int slot, ItemStack item) {
+		this(window.getInstanceId(), slot, item);
+	}
+
+	public WindowSetSlotMessage(int windowInstanceId, int slot, ItemStack item) {
+		super(windowInstanceId);
+		this.slot = slot;
+		if (item == null) {
+			this.item = -1;
+			this.count = 0;
+			this.damage = 0;
+			this.nbtData = null;
+		} else {
+			this.item = VanillaMaterials.getMinecraftId(item.getMaterial());
+			this.damage = item.getData();
+			this.count = item.getAmount();
+			this.nbtData = item.getNBTData();
+		}
 	}
 
 	public WindowSetSlotMessage(Window window, int slot, int item, int count, int damage, CompoundMap nbtData) {

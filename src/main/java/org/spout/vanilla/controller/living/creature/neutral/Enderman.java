@@ -58,6 +58,7 @@ public class Enderman extends Creature implements Neutral {
 		if (data().containsKey(Data.HELD_ITEM)) {
 			heldItem = data().get(Data.HELD_ITEM);
 		}
+		setDeathAnimation(true);
 		getParent().setCollision(new CollisionModel(new BoundingBox(1, 3, 1, 2, 3, 1)));
 	}
 

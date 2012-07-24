@@ -39,5 +39,6 @@ public class CaveSpider extends Spider {
 		super.onAttached();
 		setMaxHealth(12);
 		setHealth(12, HealthChangeReason.SPAWN);
+		setDeathAnimation(true);
 	}
 }

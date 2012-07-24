@@ -55,6 +55,7 @@ public class Spider extends Creature implements Hostile {
 		super.onAttached();
 		setMaxHealth(16);
 		setHealth(16, HealthChangeReason.SPAWN);
+		setDeathAnimation(true);
 	}
 
 	@Override

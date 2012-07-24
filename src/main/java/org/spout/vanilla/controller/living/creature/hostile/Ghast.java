@@ -49,6 +49,7 @@ public class Ghast extends Creature implements Hostile {
 		super.onAttached();
 		setMaxHealth(10);
 		setHealth(10, HealthChangeReason.SPAWN);
+		setDeathAnimation(true);
 	}
 
 	@Override

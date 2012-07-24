@@ -48,6 +48,7 @@ public class Giant extends Creature implements Hostile {
 		super.onAttached();
 		setMaxHealth(100);
 		setHealth(100, HealthChangeReason.SPAWN);
+		setDeathAnimation(true);
 	}
 
 	@Override

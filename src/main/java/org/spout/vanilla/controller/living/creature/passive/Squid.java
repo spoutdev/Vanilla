@@ -49,6 +49,7 @@ public class Squid extends Creature implements Passive {
 		super.onAttached();
 		setMaxHealth(10);
 		setHealth(10, HealthChangeReason.SPAWN);
+		setDeathAnimation(true);
 	}
 
 	@Override

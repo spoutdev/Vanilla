@@ -141,13 +141,10 @@ public class CraftingInventory extends Inventory implements VanillaInventory {
 			recipe = recipeManager.matchShapelessRecipe(shapeless);
 		}
 		if (recipe != null) {
-			if (this.getOutput().getItem() == null) {
-				this.getOutput().setItem(recipe.getResult());
-			}
+			this.getOutput().setItem(recipe.getResult());
 			return true;
-		} else {
-			this.getOutput().setItem(null);
 		}
+		this.getOutput().setItem(null);
 		return false;
 	}
 }

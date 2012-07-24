@@ -36,12 +36,15 @@ import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
+import org.spout.vanilla.protocol.msg.login.request.ClientLoginRequestMessage;
+import org.spout.vanilla.protocol.msg.login.request.ServerLoginRequestMessage;
 
 public class VanillaBootstrapProtocolTest extends BaseProtocolTest {
 	private static final VanillaBootstrapCodecLookupService CODEC_LOOKUP = new VanillaBootstrapCodecLookupService();
 	private static final Message[] TEST_MESSAGES = new Message[]{
-			new LoginRequestMessage(0, "Tester", 0, -1, 0, 128, 20, "MAGICAL"),
-			new HandshakeMessage("Player"),
+			new ClientLoginRequestMessage(),
+			new ServerLoginRequestMessage(0, "", (byte) 0, (byte) 0, (byte) 0, (short) 10),
+			new HandshakeMessage((byte) 42, "Spouty", "SpoutTron", 9001),
 			new ServerListPingMessage(),
 			new EncryptionKeyResponseMessage(new byte[]{(byte) 7, (byte) 4, (byte) 1, (byte) 122}, true),
 			new EncryptionKeyRequestMessage("This is a server", new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 10}, true),

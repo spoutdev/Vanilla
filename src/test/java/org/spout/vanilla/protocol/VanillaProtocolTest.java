@@ -98,6 +98,8 @@ import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.UseBedMessage;
+import org.spout.vanilla.protocol.msg.login.request.ClientLoginRequestMessage;
+import org.spout.vanilla.protocol.msg.login.request.ServerLoginRequestMessage;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
@@ -113,8 +115,9 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
 	private static final Message[] TEST_MESSAGES = new Message[]{
 			new KeepAliveMessage(42),
-			new LoginRequestMessage(0, "Tester", 0, -1, 0, 256, 20, "MAGICAL"),
-			new HandshakeMessage("Player"),
+			new ClientLoginRequestMessage(),
+			new ServerLoginRequestMessage(0, "", (byte) 0, (byte) 0, (byte) 0, (short) 10),
+			new HandshakeMessage((byte) 42, "Spouty", "SpoutTron", 9001),
 			new ChatMessage("<Spouty> This is a thing called a chat message"),
 			new TimeUpdateMessage(666L),
 			new EntityEquipmentMessage(234, 3, 2, 3),

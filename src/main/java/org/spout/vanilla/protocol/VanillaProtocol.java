@@ -58,6 +58,6 @@ public class VanillaProtocol extends Protocol {
 
 	@Override
 	public Message getIntroductionMessage(String playerName) {
-		return new HandshakeMessage(playerName);
+		return null; //return new HandshakeMessage(playerName); //TODO Fix this Raphfrk
 	}
 }

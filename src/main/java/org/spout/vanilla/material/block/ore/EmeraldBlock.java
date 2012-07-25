@@ -24,38 +24,34 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec;
+package org.spout.vanilla.material.block.ore;
 
-import java.io.IOException;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.item.tool.Pickaxe;
+import org.spout.vanilla.material.item.tool.Tool;
 
-import org.spout.api.protocol.MessageCodec;
-
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.SlotData;
-import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
-
-public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMessage> {
-	public EntityEquipmentCodec() {
-		super(EntityEquipmentMessage.class, 0x05);
+public class EmeraldBlock extends Solid implements Mineable {
+	public EmeraldBlock(String name, int id) {
+		super(name, id);
+		this.setHardness(5.0F).setResistance(10.0F);
 	}
 
 	@Override
-	public EntityEquipmentMessage decode(ChannelBuffer buffer) throws IOException {
-		int id = buffer.readInt();
-		int slot = buffer.readUnsignedShort();
-		SlotData slotData = ChannelBufferUtils.getSlotData(buffer);
-		return new EntityEquipmentMessage(id, slot, slotData);
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityEquipmentMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeInt(message.getId());
-		buffer.writeShort(message.getSlot());
-		ChannelBufferUtils.writeCompound(buffer, message.getItem().createNBT());
-		return buffer;
+	public boolean canDrop(Block block, ItemStack holding) {
+		if (holding != null && holding.isMaterial(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
+			return super.canDrop(block, holding);
+		} else {
+			return false;
+		}
 	}
 }

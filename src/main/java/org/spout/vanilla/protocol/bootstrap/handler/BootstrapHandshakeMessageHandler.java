@@ -26,18 +26,13 @@
  */
 package org.spout.vanilla.protocol.bootstrap.handler;
 
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Random;
 
-import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.api.protocol.Session.State;
 import org.spout.api.security.SecurityHandler;
 
 import org.spout.vanilla.VanillaPlugin;

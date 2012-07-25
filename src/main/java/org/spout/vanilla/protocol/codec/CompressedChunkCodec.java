@@ -56,7 +56,6 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		short primaryBitMap = buffer.readShort();
 		short addBitMap = buffer.readShort();
 		int compressedSize = buffer.readInt();
-		int unused = buffer.readInt();
 		byte[] compressedData = new byte[compressedSize];
 		buffer.readBytes(compressedData);
 
@@ -119,7 +118,7 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 			size += biomeData.length;
 		}
 
-		return new CompressedChunkMessage(x, z, contiguous, hasAdditionalData, unused, data, biomeData);
+		return new CompressedChunkMessage(x, z, contiguous, hasAdditionalData, data, biomeData);
 	}
 
 	@Override
@@ -181,7 +180,6 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		}
 
 		buffer.writeInt(compressed);
-		buffer.writeInt(message.getUnused());
 		buffer.writeBytes(compressedData, 0, compressed);
 
 		return buffer;

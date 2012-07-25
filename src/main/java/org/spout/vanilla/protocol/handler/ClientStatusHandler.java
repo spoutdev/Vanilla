@@ -27,16 +27,36 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.Spout;
+import org.spout.api.event.Event;
+import org.spout.api.event.player.PlayerConnectEvent;
+import org.spout.api.geo.World;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.ClientStatusMessage;
+import org.spout.vanilla.protocol.msg.login.request.ServerLoginRequestMessage;
 
 public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
-    @Override
-    public void handleServer(Session session, Player player, ClientStatusMessage message) {
-        //TODO Do we handle anything? Should we send chunks when the client says "I am a'okay to log in?", what does "I am a'okay to login even mean?"
-        //For now lets print out when the client sends it
-        Spout.log("Client sent: " + message.toString());
-    }
+	@Override
+	public void handleServer(Session session, Player player, ClientStatusMessage message) {
+		// TODO Do we handle anything? Should we send chunks when the client says "I am a'okay to log in?", what does "I am a'okay to login even mean?"
+		// For now lets print out when the client sends it
+		Spout.log("Client sent: " + message.toString());
+		World world = Spout.getEngine().getWorlds().iterator().next();
+		if (message.getStatus() == ClientStatusMessage.INITIAL_SPAWN) {
+			session.send(false, new ServerLoginRequestMessage(player.getEntity().getId(), world.getDataMap().get(VanillaData.WORLD_TYPE).name(), world.getDataMap().get(VanillaData.GAMEMODE).getId(), (byte) world.getDataMap().get(VanillaData.DIMENSION).getId(), world.getDataMap().get(VanillaData.DIFFICULTY).getId(), (short) Spout.getEngine().getMaxPlayers()));
+			playerConnect(session, player.getName());
+		}
+
+	}
+
+	public static void playerConnect(Session session, String name) {
+		Event event = new PlayerConnectEvent(session, name);
+		session.getEngine().getEventManager().callEvent(event);
+		if (Spout.getEngine().debugMode()) {
+			Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
+		}
+	}
 }

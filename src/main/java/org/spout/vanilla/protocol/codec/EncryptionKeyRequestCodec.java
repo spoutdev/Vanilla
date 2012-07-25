@@ -48,7 +48,7 @@ public final class EncryptionKeyRequestCodec extends MessageCodec<EncryptionKeyR
 		int tokenLength = buffer.readShort() &0xFFFF;
 		byte[] token = new byte[tokenLength];
 		buffer.readBytes(token);
-		return new EncryptionKeyRequestMessage(sessionId, publicKey, true, token);
+		return new EncryptionKeyRequestMessage(sessionId, publicKey, false, token);
 	}
 
 	@Override

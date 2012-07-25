@@ -35,11 +35,10 @@ public final class CompressedChunkMessage extends Message {
 	private final int x, z;
 	private final boolean contiguous;
 	private final boolean[] hasAdditionalData;
-	private final int unused;
 	private final byte[][] data;
 	private final byte[] biomeData;
 
-	public CompressedChunkMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, int unused, byte[][] data, byte[] biomeData) {
+	public CompressedChunkMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, byte[][] data, byte[] biomeData) {
 		if (hasAdditionalData.length != data.length || data.length != 16) {
 			throw new IllegalArgumentException("Data and hasAdditionalData must have a length of 16");
 		}
@@ -47,7 +46,6 @@ public final class CompressedChunkMessage extends Message {
 		this.z = z;
 		this.contiguous = contiguous;
 		this.hasAdditionalData = hasAdditionalData;
-		this.unused = unused;
 		this.data = data;
 		this.biomeData = biomeData;
 	}
@@ -68,10 +66,6 @@ public final class CompressedChunkMessage extends Message {
 		return contiguous;
 	}
 
-	public int getUnused() {
-		return unused;
-	}
-
 	public byte[][] getData() {
 		return data;
 	}
@@ -87,7 +81,6 @@ public final class CompressedChunkMessage extends Message {
 				.append("z", z)
 				.append("hasAdditionalData", hasAdditionalData)
 				.append("contiguous", contiguous)
-				.append("unusedValue", unused)
 				.append("data", data, false)
 				.append("biomeData", data, false)
 				.toString();
@@ -107,7 +100,6 @@ public final class CompressedChunkMessage extends Message {
 				.append(this.z, other.z)
 				.append(this.contiguous, other.contiguous)
 				.append(this.hasAdditionalData, other.hasAdditionalData)
-				.append(this.unused, other.unused)
 				.append(this.data, other.data)
 				.append(this.biomeData, other.biomeData)
 				.isEquals();

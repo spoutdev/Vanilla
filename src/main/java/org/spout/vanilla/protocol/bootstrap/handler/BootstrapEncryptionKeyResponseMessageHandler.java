@@ -71,7 +71,6 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 				kickInvalidUser(session);
 				return;
 			}
-
 			final byte[] savedValidateToken = (byte[]) session.getDataMap().get("verifytoken");
 
 			boolean equals = true;
@@ -93,12 +92,13 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 
 			String handshakeUsername = session.getDataMap().get(VanillaProtocol.HANDSHAKE_USERNAME);
 			final String finalName = handshakeUsername.split(";")[0];
-			Thread loginAuth = new Thread(new LoginAuth(session, finalName, new PlayerConnectRunnable(session, finalName)));
+			Thread loginAuth = new Thread(new LoginAuth(session, finalName, null));
 			loginAuth.start();
 			while (loginAuth.isAlive()) {
 			}
 			// If we get in that if, it means the player is legit
 			if (session.isConnected()) {
+				
 				session.sendAll(false, true, new EncryptionKeyResponseMessage(new byte[0], false, new byte[0]));
 				return;
 
@@ -136,29 +136,5 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 
 	private static void kickInvalidUser(Session session) {
 		session.disconnect(false, new Object[] { "Failed to verify username!" });
-	}
-
-	private static class PlayerConnectRunnable implements Runnable {
-		private final Session session;
-		private final String name;
-
-		private PlayerConnectRunnable(Session session, String name) {
-			this.session = session;
-			this.name = name;
-		}
-
-		@Override
-		public void run() {
-			BootstrapEncryptionKeyResponseMessageHandler.playerConnect(session, name);
-		}
-
-	}
-
-	public static void playerConnect(Session session, String name) {
-		Event event = new PlayerConnectEvent(session, name);
-		session.getEngine().getEventManager().callEvent(event);
-		if (Spout.getEngine().debugMode()) {
-			Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
-		}
 	}
 }

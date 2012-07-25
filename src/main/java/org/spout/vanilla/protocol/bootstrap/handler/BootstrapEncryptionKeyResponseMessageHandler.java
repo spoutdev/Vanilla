@@ -31,19 +31,15 @@ import java.security.MessageDigest;
 
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
-import org.bouncycastle.crypto.BufferedBlockCipher;
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.params.KeyParameter;
-import org.bouncycastle.crypto.params.ParametersWithIV;
 
 import org.spout.api.Spout;
+import org.spout.api.event.Event;
+import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.api.security.EncryptionChannelProcessor;
 import org.spout.api.security.SecurityHandler;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.handler.auth.LoginAuth;
@@ -54,9 +50,9 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 	public void handleServer(final Session session, final Player player, final EncryptionKeyResponseMessage message) {
 		Session.State state = session.getState();
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
-			session.disconnect(false, new Object[]{"Handshake not sent"});
+			session.disconnect(false, new Object[] { "Handshake not sent" });
 		} else if (state != Session.State.EXCHANGE_ENCRYPTION) {
-			session.disconnect(false, new Object[]{"Encryption was not requested"});
+			session.disconnect(false, new Object[] { "Encryption was not requested" });
 		} else {
 			int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
 			String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
@@ -68,47 +64,45 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 			final byte[] initialVector = SecurityHandler.getInstance().processAll(cipher, message.getEncodedArray());
 
 			String sessionId = session.getDataMap().get(VanillaProtocol.SESSION_ID);
-			AsymmetricCipherKeyPair keys = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
-			byte[] publicKeyEncoded = SecurityHandler.getInstance().encodeKey(keys.getPublic());
 
-			String sha1Hash = sha1Hash(new Object[]{sessionId, initialVector, publicKeyEncoded});
+			final byte[] validateToken = SecurityHandler.getInstance().processAll(cipher, message.getVerifyTokenArray());
+
+			if (validateToken.length != 4) {
+				kickInvalidUser(session);
+				return;
+			}
+
+			final byte[] savedValidateToken = (byte[]) session.getDataMap().get("verifytoken");
+
+			boolean equals = true;
+			for (int i = 0; i < validateToken.length && equals; i++) {
+				if (validateToken[i] != savedValidateToken[i]) {
+					equals = false;
+				}
+			}
+
+			if (!equals) {
+				kickInvalidUser(session);
+				return;
+			}
+
+			byte[] publicKeyEncoded = SecurityHandler.getInstance().encodeKey(pair.getPublic());
+
+			String sha1Hash = sha1Hash(new Object[] { sessionId, initialVector, publicKeyEncoded });
 			session.getDataMap().put(VanillaProtocol.SESSION_ID, sha1Hash);
 
 			String handshakeUsername = session.getDataMap().get(VanillaProtocol.HANDSHAKE_USERNAME);
 			final String finalName = handshakeUsername.split(";")[0];
+			Thread loginAuth = new Thread(new LoginAuth(session, finalName, new PlayerConnectRunnable(session, finalName)));
+			loginAuth.start();
+			while (loginAuth.isAlive()) {
+			}
+			// If we get in that if, it means the player is legit
+			if (session.isConnected()) {
+				session.sendAll(false, true, new EncryptionKeyResponseMessage(new byte[0], false, new byte[0]));
+				return;
 
-			Runnable runnable = new Runnable() {
-				public void run() {
-					final boolean useAuth = false;
-					if (useAuth) {
-						// this whole section needs to be moved into a Runnable and executed if authing works
-						String streamCipher = VanillaConfiguration.ENCRYPT_STREAM_ALGORITHM.getString();
-						String streamWrapper = VanillaConfiguration.ENCRYPT_STREAM_WRAPPER.getString();
-
-						BufferedBlockCipher fromClientCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
-						BufferedBlockCipher toClientCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
-
-						CipherParameters symmetricKey = new ParametersWithIV(new KeyParameter(initialVector), initialVector);
-
-						fromClientCipher.init(SecurityHandler.DECRYPT_MODE, symmetricKey);
-						toClientCipher.init(SecurityHandler.ENCRYPT_MODE, symmetricKey);
-
-						EncryptionChannelProcessor fromClientProcessor = new EncryptionChannelProcessor(fromClientCipher, 32);
-						EncryptionChannelProcessor toClientProcessor = new EncryptionChannelProcessor(toClientCipher, 32);
-
-						EncryptionKeyResponseMessage response = new EncryptionKeyResponseMessage(new byte[0], false);
-						response.setProcessor(toClientProcessor);
-
-						message.getProcessorHandler().setProcessor(fromClientProcessor);
-
-						session.send(false, true, response);
-					}
-
-					session.disconnect("Encryption not supported yet");
-				}
-			};
-
-			Spout.getEngine().getScheduler().scheduleAsyncTask(VanillaPlugin.getInstance(), new LoginAuth(session, finalName, runnable));
+			}
 		}
 	}
 
@@ -137,6 +131,34 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 			}
 		} catch (Exception ioe) {
 			return null;
+		}
+	}
+
+	private static void kickInvalidUser(Session session) {
+		session.disconnect(false, new Object[] { "Failed to verify username!" });
+	}
+
+	private static class PlayerConnectRunnable implements Runnable {
+		private final Session session;
+		private final String name;
+
+		private PlayerConnectRunnable(Session session, String name) {
+			this.session = session;
+			this.name = name;
+		}
+
+		@Override
+		public void run() {
+			BootstrapEncryptionKeyResponseMessageHandler.playerConnect(session, name);
+		}
+
+	}
+
+	public static void playerConnect(Session session, String name) {
+		Event event = new PlayerConnectEvent(session, name);
+		session.getEngine().getEventManager().callEvent(event);
+		if (Spout.getEngine().debugMode()) {
+			Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
 		}
 	}
 }

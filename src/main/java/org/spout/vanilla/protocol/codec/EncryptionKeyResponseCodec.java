@@ -43,15 +43,19 @@ public class EncryptionKeyResponseCodec extends MessageCodec<EncryptionKeyRespon
 		int length = buffer.readShort() & 0xFFFF;
 		byte[] encoded = new byte[length];
 		buffer.readBytes(encoded);
-		return new EncryptionKeyResponseMessage(encoded, true);
+		int validateTokenLength = buffer.readShort() & 0xFFFF;
+		byte[] validateToken = new byte[validateTokenLength];
+		buffer.readBytes(validateToken);
+		return new EncryptionKeyResponseMessage(encoded, true, validateToken);
 	}
 
 	@Override
 	public ChannelBuffer encode(EncryptionKeyResponseMessage message) {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		byte[] encoded = message.getEncodedArray();
-		buffer.writeShort((short) encoded.length);
-		buffer.writeBytes(encoded);
+		buffer.writeShort((short) message.getEncodedArray().length);
+		buffer.writeBytes(message.getEncodedArray());
+		buffer.writeShort((short) message.getVerifyTokenArray().length);
+		buffer.writeBytes(message.getVerifyTokenArray());
 		return buffer;
 	}
 }

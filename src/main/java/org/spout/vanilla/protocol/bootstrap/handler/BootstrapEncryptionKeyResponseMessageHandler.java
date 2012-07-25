@@ -32,9 +32,6 @@ import java.security.MessageDigest;
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 
-import org.spout.api.Spout;
-import org.spout.api.event.Event;
-import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -73,16 +70,11 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 			}
 			final byte[] savedValidateToken = (byte[]) session.getDataMap().get("verifytoken");
 
-			boolean equals = true;
-			for (int i = 0; i < validateToken.length && equals; i++) {
+			for (int i = 0; i < validateToken.length; i++) {
 				if (validateToken[i] != savedValidateToken[i]) {
-					equals = false;
+					kickInvalidUser(session);
+					return;
 				}
-			}
-
-			if (!equals) {
-				kickInvalidUser(session);
-				return;
 			}
 
 			byte[] publicKeyEncoded = SecurityHandler.getInstance().encodeKey(pair.getPublic());
@@ -94,15 +86,6 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 			final String finalName = handshakeUsername.split(";")[0];
 			Thread loginAuth = new Thread(new LoginAuth(session, finalName, null));
 			loginAuth.start();
-			while (loginAuth.isAlive()) {
-			}
-			// If we get in that if, it means the player is legit
-			if (session.isConnected()) {
-				
-				session.sendAll(false, true, new EncryptionKeyResponseMessage(new byte[0], false, new byte[0]));
-				return;
-
-			}
 		}
 	}
 

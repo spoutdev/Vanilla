@@ -27,62 +27,26 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class BlockActionMessage extends Message {
-	private final int x, y, z;
-	byte firstByte, secondByte, blockId;
+public class TabCompleteMessage extends Message {
 
-	public BlockActionMessage(Block block, byte firstByte, byte secondByte, byte blockId) {
-		this(block.getX(), block.getY(), block.getZ(), firstByte, secondByte, blockId);
-	}
+	private String text;
 
-	public BlockActionMessage(int x, int y, int z, byte firstByte, byte secondByte, byte blockId) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.firstByte = firstByte;
-		this.secondByte = secondByte;
-		this.blockId = blockId;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public int getZ() {
-		return z;
-	}
-
-	public int getFirstByte() {
-		return firstByte;
-	}
-
-	public int getSecondByte() {
-		return secondByte;
-	}
-	
-	public int getBlockId() {
-		return blockId;
+	public TabCompleteMessage(String text) {
+		this.text = text;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("x", x)
-				.append("y", y)
-				.append("z", z)
-				.append("firstByte", firstByte)
-				.append("secondByte", secondByte)
-				.append("blockId", blockId)
-				.toString();
+		.append("text", text)
+		.toString();
+	}
+
+	public String getText() {
+		return text;
 	}
 
 	@Override
@@ -93,14 +57,10 @@ public final class BlockActionMessage extends Message {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final BlockActionMessage other = (BlockActionMessage) obj;
+		final TabCompleteMessage other = (TabCompleteMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.x, other.x)
-				.append(this.y, other.y)
-				.append(this.z, other.z)
-				.append(this.firstByte, other.firstByte)
-				.append(this.secondByte, other.secondByte)
-				.append(this.blockId, other.blockId)
-				.isEquals();
+			.append(this.text, other.text)
+			.isEquals();
 	}
+
 }

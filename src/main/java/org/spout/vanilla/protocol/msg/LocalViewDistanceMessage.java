@@ -27,63 +27,31 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class BlockActionMessage extends Message {
-	private final int x, y, z;
-	byte firstByte, secondByte, blockId;
+public class LocalViewDistanceMessage extends Message {
 
-	public BlockActionMessage(Block block, byte firstByte, byte secondByte, byte blockId) {
-		this(block.getX(), block.getY(), block.getZ(), firstByte, secondByte, blockId);
-	}
+	private String locale;
+	private byte viewDistance, chatFlags, difficulty;
 
-	public BlockActionMessage(int x, int y, int z, byte firstByte, byte secondByte, byte blockId) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.firstByte = firstByte;
-		this.secondByte = secondByte;
-		this.blockId = blockId;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public int getZ() {
-		return z;
-	}
-
-	public int getFirstByte() {
-		return firstByte;
-	}
-
-	public int getSecondByte() {
-		return secondByte;
-	}
-	
-	public int getBlockId() {
-		return blockId;
+	public LocalViewDistanceMessage(String locale, byte viewDistance, byte chatFlags, byte difficulty) {
+		this.locale = locale;
+		this.viewDistance = viewDistance;
+		this.chatFlags = chatFlags;
+		this.difficulty = difficulty;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("x", x)
-				.append("y", y)
-				.append("z", z)
-				.append("firstByte", firstByte)
-				.append("secondByte", secondByte)
-				.append("blockId", blockId)
-				.toString();
+		.append("locale", locale)
+		.append("viewdistance", viewDistance)
+		.append("chatflags", chatFlags)
+		.append("difficulty", difficulty)
+		.toString();
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -93,14 +61,45 @@ public final class BlockActionMessage extends Message {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final BlockActionMessage other = (BlockActionMessage) obj;
+		final LocalViewDistanceMessage other = (LocalViewDistanceMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.x, other.x)
-				.append(this.y, other.y)
-				.append(this.z, other.z)
-				.append(this.firstByte, other.firstByte)
-				.append(this.secondByte, other.secondByte)
-				.append(this.blockId, other.blockId)
-				.isEquals();
+			.append(this.locale, other.locale)
+			.append(this.viewDistance, other.viewDistance)
+			.append(this.chatFlags, other.chatFlags)
+			.append(this.difficulty, other.difficulty)
+			.isEquals();
 	}
+
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public byte getViewDistance() {
+		return viewDistance;
+	}
+
+	public void setViewDistance(byte viewDistance) {
+		this.viewDistance = viewDistance;
+	}
+
+	public byte getChatFlags() {
+		return chatFlags;
+	}
+
+	public void setChatFlags(byte chatFlags) {
+		this.chatFlags = chatFlags;
+	}
+
+	public byte getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(byte difficulty) {
+		this.difficulty = difficulty;
+	}
+
 }

@@ -75,6 +75,8 @@ import org.spout.vanilla.material.block.misc.Web;
 import org.spout.vanilla.material.block.ore.CoalOre;
 import org.spout.vanilla.material.block.ore.DiamondBlock;
 import org.spout.vanilla.material.block.ore.DiamondOre;
+import org.spout.vanilla.material.block.ore.EmeraldBlock;
+import org.spout.vanilla.material.block.ore.EmeraldOre;
 import org.spout.vanilla.material.block.ore.Glowstone;
 import org.spout.vanilla.material.block.ore.GoldBlock;
 import org.spout.vanilla.material.block.ore.GoldOre;
@@ -260,6 +262,7 @@ public final class VanillaMaterials {
 	public static final IronOre IRON_ORE = new IronOre("Iron Ore", 15);
 	public static final GoldOre GOLD_ORE = new GoldOre("Gold Ore", 14);
 	public static final DiamondOre DIAMOND_ORE = new DiamondOre("Diamond Ore", 56);
+	public static final EmeraldOre EMERALD_ORE = new EmeraldOre("Emerald Ore", 129);
 	public static final LapisLazuliOre LAPIS_LAZULI_ORE = new LapisLazuliOre("Lapis Lazuli Ore", 21);
 	public static final RedstoneOre REDSTONE_ORE = new RedstoneOre("Redstone Ore", 73, false);
 	public static final RedstoneOre GLOWING_REDSTONE_ORE = new RedstoneOre("Glowing Redstone Ore", 74, true);
@@ -267,6 +270,7 @@ public final class VanillaMaterials {
 	public static final GoldBlock GOLD_BLOCK = new GoldBlock("Gold Block", 41);
 	public static final IronBlock IRON_BLOCK = new IronBlock("Iron Block", 42);
 	public static final DiamondBlock DIAMOND_BLOCK = new DiamondBlock("Diamond Block", 57);
+	public static final EmeraldBlock EMERALD_BLOCK = new EmeraldBlock("Emerald Block", 133);
 	public static final LapisLazuliBlock LAPIS_LAZULI_BLOCK = new LapisLazuliBlock("Lapis Lazuli Block", 22);
 	//== Plants ==
 	public static final TallGrass TALL_GRASS = TallGrass.TALL_GRASS;
@@ -433,6 +437,7 @@ public final class VanillaMaterials {
 	public static final Clay CLAY = new Clay("Clay", 337);
 	public static final BlockItem REDSTONE_DUST = new BlockItem("Redstone", 331, VanillaMaterials.REDSTONE_WIRE);
 	public static final VanillaItemMaterial DIAMOND = new VanillaItemMaterial("Diamond", 264);
+	public static final VanillaItemMaterial EMERALD = new VanillaItemMaterial("Emerald", 388);
 	public static final VanillaItemMaterial IRON_INGOT = new VanillaItemMaterial("Iron Ingot", 265);
 	public static final VanillaItemMaterial GOLD_INGOT = new VanillaItemMaterial("Gold Ingot", 266);
 	public static final Stick STICK = new Stick("Stick", 280);

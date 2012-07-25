@@ -42,6 +42,7 @@ import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.VanillaProtocol;
+import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
 
 public class LoginAuth implements Runnable {
 	private final static String URLBase = "http://session.minecraft.net/game/checkserver.jsp?";
@@ -112,7 +113,10 @@ public class LoginAuth implements Runnable {
 				if (runnable != null) {
 					Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable, TaskPriority.CRITICAL);
 				}
-				
+				if (session.getState().equals(Session.State.EXCHANGE_ENCRYPTION)) {
+					session.sendAll(false, true, new EncryptionKeyResponseMessage(new byte[0], false, new byte[0]));
+				}
+
 			} else {
 				failed("Auth server refused authentication");
 			}

@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.protocol.msg;
 
+import java.util.Arrays;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Message;
@@ -36,31 +38,34 @@ import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 public final class DestroyEntityMessage extends Message implements TransformableMessage {
-	private int id;
+	private int[] id;
 
-	public DestroyEntityMessage(int id) {
+	public DestroyEntityMessage(int[] id) {
 		this.id = id;
 	}
 
 	@Override
 	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
-		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
-			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
-		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
-			id = ((VanillaConnectionInfo) info).getEntityId();
+		for (int i = 0; i < id.length; i++) {
+			if (id[i] == ((VanillaConnectionInfo) info).getEntityId()) {
+				id[i] = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
+			} else if (id[i] == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
+				id[i] = ((VanillaConnectionInfo) info).getEntityId();
+			}
 		}
+
 		return this;
 	}
 
-	public int getId() {
+	public int[] getId() {
 		return id;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("id", id)
-				.toString();
+		.append("id", Arrays.toString(id))
+		.toString();
 	}
 
 	@Override
@@ -72,6 +77,6 @@ public final class DestroyEntityMessage extends Message implements Transformable
 			return false;
 		}
 		final DestroyEntityMessage other = (DestroyEntityMessage) obj;
-		return this.id == other.id;
+		return Arrays.equals(this.id, other.id);
 	}
 }

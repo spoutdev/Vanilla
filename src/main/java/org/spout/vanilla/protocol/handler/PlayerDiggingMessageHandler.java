@@ -78,7 +78,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		Point point = new Point(w, x, y, z);
 		Block block = w.getBlock(point, player.getEntity());
 		BlockMaterial blockMaterial = block.getMaterial();
-		int minecraftID = VanillaMaterials.getMinecraftId(blockMaterial);
+		short minecraftID = VanillaMaterials.getMinecraftId(blockMaterial);
 		BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(face);
 		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
 
@@ -87,7 +87,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
 			for (Protection p : protections) {
 				if (p.contains(point) && !vp.isOp()) {
-					player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID & 0xFF, block.getData() & 0xF));
+					player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID, block.getData() & 0xF));
 					player.sendMessage(ChatStyle.DARK_RED + "This area is a protected spawn point!");
 					return;
 				}

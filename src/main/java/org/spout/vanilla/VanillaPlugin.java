@@ -130,10 +130,10 @@ public class VanillaPlugin extends CommonPlugin {
 		//Events
 		engine.getEventManager().registerEvents(new VanillaListener(this), this);
 
-		//if (engine.getPlatform() == Platform.SERVER) {
+		if (engine.getPlatform() == Platform.SERVER) {
 			//Worlds
 			setupWorlds();
-		//}
+		}
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
 	}

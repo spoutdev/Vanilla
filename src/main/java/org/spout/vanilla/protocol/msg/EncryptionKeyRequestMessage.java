@@ -35,12 +35,12 @@ import org.spout.api.util.SpoutToStringStyle;
 public final class EncryptionKeyRequestMessage extends EncryptionKeyResponseMessage {
 	private final String sessionId;
 
-	public EncryptionKeyRequestMessage(String sessionId, CipherParameters publicKey, boolean locking) {
-		this(sessionId, SecurityHandler.getInstance().encodeKey(publicKey), locking);
+	public EncryptionKeyRequestMessage(String sessionId, CipherParameters publicKey, boolean locking, byte[] verifyToken) {
+		this(sessionId, SecurityHandler.getInstance().encodeKey(publicKey), locking, verifyToken);
 	}
 
-	public EncryptionKeyRequestMessage(String sessionId, byte[] encoded, boolean locking) {
-		super(encoded, locking);
+	public EncryptionKeyRequestMessage(String sessionId, byte[] encoded, boolean locking, byte[] verifyToken) {
+		super(encoded, locking, verifyToken);
 		this.sessionId = sessionId;
 	}
 
@@ -60,6 +60,7 @@ public final class EncryptionKeyRequestMessage extends EncryptionKeyResponseMess
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.encoded, other.encoded)
 				.append(this.sessionId, other.sessionId)
+				.append(this.verifyToken, other.verifyToken)
 				.isEquals();
 	}
 
@@ -68,6 +69,7 @@ public final class EncryptionKeyRequestMessage extends EncryptionKeyResponseMess
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("encoded", encoded)
 				.append("sessionId", sessionId)
+				.append("verifytoken", verifyToken)
 				.toString();
 	}
 }

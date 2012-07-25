@@ -77,18 +77,5 @@ public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginReq
 //		}
 //	}
 //
-//	private static class PlayerConnectRunnable implements Runnable {
-//		private final Session session;
-//		private final String name;
-//
-//		private PlayerConnectRunnable(Session session, String name) {
-//			this.session = session;
-//			this.name = name;
-//		}
-//
-//		@Override
-//		public void run() {
-//			BootstrapLoginRequestMessageHandler.playerConnect(session, name);
-//		}
 	}
 }

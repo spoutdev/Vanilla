@@ -26,77 +26,93 @@
  */
 package org.spout.vanilla.protocol.bootstrap.handler;
 
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Random;
 
+import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.api.protocol.Session.State;
 import org.spout.api.security.SecurityHandler;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.EncryptionKeyRequestMessage;
 import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
-import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 
 public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMessage> {
 	@Override
 	public void handleClient(Session session, Player player, HandshakeMessage message) {
-		//TODO Compatibility for SpoutClient
+		// TODO Compatibility for SpoutClient
 	}
 
 	@Override
 	public void handleServer(Session session, Player player, HandshakeMessage message) {
-//		long start = System.currentTimeMillis();
-//		Session.State state = session.getState();
-//		if (state == Session.State.EXCHANGE_HANDSHAKE) {
-//			session.getDataMap().put(VanillaProtocol.LOGIN_TIME, System.currentTimeMillis());
-//			session.getDataMap().put(VanillaProtocol.HANDSHAKE_USERNAME, message.getUsername());
-//			if (VanillaConfiguration.ENCRYPT_MODE.getBoolean()) {
-//				session.setState(Session.State.EXCHANGE_ENCRYPTION);
-//				String sessionId = getSessionId();
-//				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
-//				int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
-//				String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
-//				AsymmetricCipherKeyPair keys = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
-//				session.send(false, true, new EncryptionKeyRequestMessage(sessionId, keys.getPublic(), false));
-//			} else if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
-//				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
-//				String sessionId = getSessionId();
-//				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
-//				session.send(false, true, new HandshakeMessage(message.getProtocolVersion(), message.getUsername(), message.getHostname(), message.getPort()));
-//			} else {
-//				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
-//				String sessionId = "-";
-//				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
-//				session.send(false, true, new HandshakeMessage(message.getProtocolVersion(), message.getUsername(), message.getHostname(), message.getPort()));
-//			}
-//		} else {
-//			session.disconnect(false, new Object[]{"Handshake already exchanged."});
-//		}
-//		System.out.println("Handling handshake for " + session + " took " + (System.currentTimeMillis() - start) + " ms");
-//	}
-//
-//	private final static SecureRandom random = new SecureRandom();
-//
-//	static {
-//		synchronized (random) {
-//			random.nextBytes(new byte[1]);
-//		}
-//	}
-//
-//	private final String getSessionId() {
-//		long sessionId;
-//		synchronized (random) {
-//			sessionId = random.nextLong();
-//		}
-//		StringBuilder sb = new StringBuilder();
-//		if (sessionId < 0) {
-//			sessionId = (-sessionId) & 0x7FFFFFFFFFFFFFFFL;
-//			sb.append("-");
-//		}
-//		return sb.append(Long.toString(sessionId, 16)).toString();
+
+		if (message.getProtocolVersion() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
+			session.disconnect("Outdated client!");
+			return;
+		} else if (message.getProtocolVersion() > VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
+			session.disconnect("Outdated server!");
+			return;
+		}
+		long start = System.currentTimeMillis();
+		Session.State state = session.getState();
+		if (state == Session.State.EXCHANGE_HANDSHAKE) {
+			session.getDataMap().put(VanillaProtocol.LOGIN_TIME, System.currentTimeMillis());
+			session.getDataMap().put(VanillaProtocol.HANDSHAKE_USERNAME, message.getUsername());
+			if (VanillaConfiguration.ENCRYPT_MODE.getBoolean()) {
+				session.setState(Session.State.EXCHANGE_ENCRYPTION);
+				String sessionId = getSessionId();
+				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
+				int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
+				String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
+				AsymmetricCipherKeyPair keys = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
+				byte[] randombyte = new byte[4];
+				random.nextBytes(randombyte);
+				session.getDataMap().put("verifytoken", randombyte);
+				session.send(false, true, new EncryptionKeyRequestMessage(sessionId, keys.getPublic(), false, randombyte));
+			} else if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
+				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
+				String sessionId = getSessionId();
+				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
+				session.send(false, true, new HandshakeMessage(message.getProtocolVersion(), message.getUsername(), message.getHostname(), message.getPort()));
+			} else {
+				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
+				String sessionId = "-";
+				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
+				session.send(false, true, new HandshakeMessage(message.getProtocolVersion(), message.getUsername(), message.getHostname(), message.getPort()));
+			}
+		} else {
+			session.disconnect(false, new Object[] { "Handshake already exchanged." });
+		}
+		System.out.println("Handling handshake for " + session + " took " + (System.currentTimeMillis() - start) + " ms");
+	}
+
+	private final static SecureRandom random = new SecureRandom();
+
+	static {
+		synchronized (random) {
+			random.nextBytes(new byte[1]);
+		}
+	}
+
+	private final String getSessionId() {
+		long sessionId;
+		synchronized (random) {
+			sessionId = random.nextLong();
+		}
+		StringBuilder sb = new StringBuilder();
+		if (sessionId < 0) {
+			sessionId = (-sessionId) & 0x7FFFFFFFFFFFFFFFL;
+			sb.append("-");
+		}
+		return sb.append(Long.toString(sessionId, 16)).toString();
 	}
 }

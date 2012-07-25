@@ -87,7 +87,7 @@ import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 public class VanillaPlugin extends CommonPlugin {
 	private static final int loaderThreadCount = 16;
-	public static final int MINECRAFT_PROTOCOL_ID = 29;
+	public static final int MINECRAFT_PROTOCOL_ID = 39;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
 	private static VanillaPlugin instance;
 	private Engine engine;
@@ -166,6 +166,7 @@ public class VanillaPlugin extends CommonPlugin {
 		MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/resources/map/mapColorPalette.dat");
 		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/resources/recipes.yml");
 		VanillaRecipes.initialize();
+
 		getLogger().info("loaded");
 	}
 

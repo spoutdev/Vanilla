@@ -353,7 +353,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 					sendPacket(player, new SpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId));
 				} else {
 					invisibleFor.add(player);
-					sendPacket(player, new DestroyEntityMessage(parent.getId()));
+					sendPacket(player, new DestroyEntityMessage(new int[] {parent.getId() }));
 				}
 			}
 		}

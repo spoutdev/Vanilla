@@ -45,7 +45,7 @@ public final class BlockChangeCodec extends MessageCodec<BlockChangeMessage> {
 		int x = buffer.readInt();
 		int y = buffer.readUnsignedByte();
 		int z = buffer.readInt();
-		int type = buffer.readUnsignedByte();
+		short type = buffer.readShort();
 		int metadata = buffer.readUnsignedByte();
 		return new BlockChangeMessage(x, y, z, type, metadata);
 	}

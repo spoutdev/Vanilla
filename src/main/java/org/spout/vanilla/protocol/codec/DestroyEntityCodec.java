@@ -42,14 +42,21 @@ public final class DestroyEntityCodec extends MessageCodec<DestroyEntityMessage>
 
 	@Override
 	public DestroyEntityMessage decode(ChannelBuffer buffer) throws IOException {
-		int id = buffer.readInt();
-		return new DestroyEntityMessage(id);
+		byte length = buffer.readByte();
+		int[] entityid = new int[length];
+		for (int i = 0; i < length; i++) {
+			entityid[i] = buffer.readInt();
+		}
+		return new DestroyEntityMessage(entityid);
 	}
 
 	@Override
 	public ChannelBuffer encode(DestroyEntityMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(4);
-		buffer.writeInt(message.getId());
+		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		buffer.writeByte(message.getId().length);
+		for (int i = 0; i < message.getId().length; i++) {
+			buffer.writeInt(message.getId()[i]);
+		}
 		return buffer;
 	}
 }

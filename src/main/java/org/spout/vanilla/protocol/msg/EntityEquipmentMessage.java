@@ -33,6 +33,7 @@ import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
+import org.spout.vanilla.protocol.SlotData;
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 public final class EntityEquipmentMessage extends Message implements TransformableMessage {
@@ -41,13 +42,13 @@ public final class EntityEquipmentMessage extends Message implements Transformab
 	public static final int LEGGINGS_SLOT = 2;
 	public static final int CHESTPLATE_SLOT = 3;
 	public static final int HELMET_SLOT = 4;
-	private int id, slot, item, damage;
+	private int id, slot;
+	private SlotData slotData;
 
-	public EntityEquipmentMessage(int id, int slot, int item, int damage) {
+	public EntityEquipmentMessage(int id, int slot, SlotData slotData) {
 		this.id = id;
 		this.slot = slot;
-		this.item = item;
-		this.damage = damage;
+		this.slotData = slotData;
 	}
 
 	@Override
@@ -67,13 +68,9 @@ public final class EntityEquipmentMessage extends Message implements Transformab
 	public int getSlot() {
 		return slot;
 	}
-
-	public int getItem() {
-		return item;
-	}
-
-	public int getDamage() {
-		return damage;
+	
+	public SlotData getItem() {
+		return slotData;
 	}
 
 	@Override
@@ -81,8 +78,7 @@ public final class EntityEquipmentMessage extends Message implements Transformab
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("id", id)
 				.append("slot", slot)
-				.append("item", item)
-				.append("damage", damage)
+				.append("slotdata", slotData)
 				.toString();
 	}
 
@@ -98,8 +94,7 @@ public final class EntityEquipmentMessage extends Message implements Transformab
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.id, other.id)
 				.append(this.slot, other.slot)
-				.append(this.item, other.item)
-				.append(this.damage, other.damage)
+				.append(this.slotData, other.slotData)
 				.isEquals();
 	}
 }

@@ -76,27 +76,27 @@ public final class ChannelBufferUtils {
 			buf.writeByte(type << 5 | index & 0x1F);
 
 			switch (type) {
-				case Parameter.TYPE_BYTE:
-					buf.writeByte(((Parameter<Byte>) parameter).getValue());
-					break;
-				case Parameter.TYPE_SHORT:
-					buf.writeShort(((Parameter<Short>) parameter).getValue());
-					break;
-				case Parameter.TYPE_INT:
-					buf.writeInt(((Parameter<Integer>) parameter).getValue());
-					break;
-				case Parameter.TYPE_FLOAT:
-					buf.writeFloat(((Parameter<Float>) parameter).getValue());
-					break;
-				case Parameter.TYPE_STRING:
-					writeString(buf, ((Parameter<String>) parameter).getValue());
-					break;
-				case Parameter.TYPE_ITEM:
-					ItemStack item = ((Parameter<ItemStack>) parameter).getValue();
-					buf.writeShort(item.getMaterial().getId());
-					buf.writeByte(item.getAmount());
-					buf.writeShort(item.getData());
-					break;
+			case Parameter.TYPE_BYTE:
+				buf.writeByte(((Parameter<Byte>) parameter).getValue());
+				break;
+			case Parameter.TYPE_SHORT:
+				buf.writeShort(((Parameter<Short>) parameter).getValue());
+				break;
+			case Parameter.TYPE_INT:
+				buf.writeInt(((Parameter<Integer>) parameter).getValue());
+				break;
+			case Parameter.TYPE_FLOAT:
+				buf.writeFloat(((Parameter<Float>) parameter).getValue());
+				break;
+			case Parameter.TYPE_STRING:
+				writeString(buf, ((Parameter<String>) parameter).getValue());
+				break;
+			case Parameter.TYPE_ITEM:
+				ItemStack item = ((Parameter<ItemStack>) parameter).getValue();
+				buf.writeShort(item.getMaterial().getId());
+				buf.writeByte(item.getAmount());
+				buf.writeShort(item.getData());
+				break;
 			}
 		}
 
@@ -116,28 +116,28 @@ public final class ChannelBufferUtils {
 			int index = b & 0x1F;
 
 			switch (type) {
-				case Parameter.TYPE_BYTE:
-					parameters.add(new Parameter<Byte>(type, index, buf.readByte()));
-					break;
-				case Parameter.TYPE_SHORT:
-					parameters.add(new Parameter<Short>(type, index, buf.readShort()));
-					break;
-				case Parameter.TYPE_INT:
-					parameters.add(new Parameter<Integer>(type, index, buf.readInt()));
-					break;
-				case Parameter.TYPE_FLOAT:
-					parameters.add(new Parameter<Float>(type, index, buf.readFloat()));
-					break;
-				case Parameter.TYPE_STRING:
-					parameters.add(new Parameter<String>(type, index, readString(buf)));
-					break;
-				case Parameter.TYPE_ITEM:
-					int id = buf.readShort();
-					int count = buf.readByte();
-					short data = buf.readShort();
-					ItemStack item = new ItemStack(Material.get((short) id), data, count);
-					parameters.add(new Parameter<ItemStack>(type, index, item));
-					break;
+			case Parameter.TYPE_BYTE:
+				parameters.add(new Parameter<Byte>(type, index, buf.readByte()));
+				break;
+			case Parameter.TYPE_SHORT:
+				parameters.add(new Parameter<Short>(type, index, buf.readShort()));
+				break;
+			case Parameter.TYPE_INT:
+				parameters.add(new Parameter<Integer>(type, index, buf.readInt()));
+				break;
+			case Parameter.TYPE_FLOAT:
+				parameters.add(new Parameter<Float>(type, index, buf.readFloat()));
+				break;
+			case Parameter.TYPE_STRING:
+				parameters.add(new Parameter<String>(type, index, readString(buf)));
+				break;
+			case Parameter.TYPE_ITEM:
+				int id = buf.readShort();
+				int count = buf.readByte();
+				short data = buf.readShort();
+				ItemStack item = new ItemStack(Material.get((short) id), data, count);
+				parameters.add(new Parameter<ItemStack>(type, index, item));
+				break;
 			}
 		}
 
@@ -148,8 +148,7 @@ public final class ChannelBufferUtils {
 	 * Writes a string to the buffer.
 	 * @param buf The buffer.
 	 * @param str The string.
-	 * @throws IllegalArgumentException if the string is too long <em>after</em>
-	 * it is encoded.
+	 * @throws IllegalArgumentException if the string is too long <em>after</em> it is encoded.
 	 */
 	public static void writeString(ChannelBuffer buf, String str) {
 		int len = str.length();
@@ -168,8 +167,7 @@ public final class ChannelBufferUtils {
 	 * @param buf The buffer.
 	 * @param str The string.
 	 * @throws UnsupportedEncodingException if the encoding isn't supported.
-	 * @throws IllegalArgumentException if the string is too long <em>after</em>
-	 * it is encoded.
+	 * @throws IllegalArgumentException if the string is too long <em>after</em> it is encoded.
 	 */
 	public static void writeUtf8String(ChannelBuffer buf, String str) throws UnsupportedEncodingException {
 		byte[] bytes = str.getBytes(CHARSET_UTF8.name());
@@ -318,7 +316,7 @@ public final class ChannelBufferUtils {
 	}
 
 	public static boolean hasNbtData(int id) {
-		//VanillaMaterials.
+		// VanillaMaterials.
 		Material mat = VanillaMaterials.getMaterial((short) id);
 		if (!(mat instanceof VanillaMaterial)) {
 			return false;
@@ -343,8 +341,44 @@ public final class ChannelBufferUtils {
 	}
 
 	/**
+	 * Create a SlotData stucture
+	 * @param buf The buffer to decode the Slot field
+	 * @return The according SlotData
+	 */
+	public static SlotData getSlotData(ChannelBuffer buf) {
+		SlotData slotData = null;
+		short id = buf.readShort();
+		if (id != -1) {
+			byte itemCount = buf.readByte();
+			short damage = buf.readShort();
+			if (SlotData.CanEnchant(id)) {
+				CompoundMap enchantInfo = readCompound(buf);
+				slotData = new SlotData(id, itemCount, damage, enchantInfo);
+			} else {
+				slotData = new SlotData(id, itemCount, damage);
+			}
+		} else {
+			slotData = new SlotData(id);
+		}
+		return slotData;
+	}
+
+	public static void writeSlotData(ChannelBuffer buf, SlotData slotData) {
+		buf.writeByte(slotData.getId());
+		if (slotData.getId() != -1) {
+			buf.writeByte(slotData.getCount());
+			buf.writeShort(slotData.getDamage());
+
+			if (SlotData.CanEnchant(slotData.getId())) {
+				writeCompound(buf, slotData.createNBT());
+			}
+		}
+	}
+
+	/**
 	 * Default private constructor to prevent instantiation.
 	 */
 	private ChannelBufferUtils() {
 	}
+
 }

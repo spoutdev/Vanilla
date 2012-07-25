@@ -109,7 +109,10 @@ public class LoginAuth implements Runnable {
 			in = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
 			String reply = in.readLine();
 			if (authString.equals(reply)) {
-				Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable, TaskPriority.CRITICAL);
+				if (runnable != null) {
+					Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable, TaskPriority.CRITICAL);
+				}
+				
 			} else {
 				failed("Auth server refused authentication");
 			}

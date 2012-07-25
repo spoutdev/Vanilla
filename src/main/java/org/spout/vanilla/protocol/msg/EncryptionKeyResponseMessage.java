@@ -35,17 +35,18 @@ import org.spout.api.protocol.ProcessorSetupMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
 public class EncryptionKeyResponseMessage extends Message implements ProcessorSetupMessage {
-	protected final byte[] encoded;
+	protected final byte[] encoded, verifyToken;
 	private final boolean locking;
 	private ChannelProcessor processor;
 	private ProcessorHandler handler;
 
-	public EncryptionKeyResponseMessage(byte[] encoded, boolean locking) {
+	public EncryptionKeyResponseMessage(byte[] encoded, boolean locking, byte[] verifyToken) {
 		if (encoded == null) {
 			throw new IllegalArgumentException("Encoded parameter may not be null");
 		}
 		this.encoded = encoded;
 		this.locking = locking;
+		this.verifyToken = verifyToken;
 	}
 
 	@Override
@@ -68,6 +69,10 @@ public class EncryptionKeyResponseMessage extends Message implements ProcessorSe
 
 	public byte[] getEncodedArray() {
 		return encoded;
+	}
+	
+	public byte[] getVerifyTokenArray() {
+		return verifyToken;
 	}
 
 	@Override

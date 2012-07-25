@@ -115,7 +115,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
 	private static final Message[] TEST_MESSAGES = new Message[]{
 			new KeepAliveMessage(42),
-			new ClientLoginRequestMessage(),
+			//new ClientLoginRequestMessage(),
 			new ServerLoginRequestMessage(0, "", (byte) 0, (byte) 0, (byte) 0, (short) 10),
 			new HandshakeMessage((byte) 42, "Spouty", "SpoutTron", 9001),
 			new ChatMessage("<Spouty> This is a thing called a chat message"),
@@ -178,8 +178,8 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new ItemDataMessage((short) 1, (short) 2, new byte[]{2, 3, 8, 127, 123}),
 			new TileEntityDataMessage(23, 45, 903, 1, 98, 0, 0),
 			new StatisticMessage(1, (byte) 5),
-			new EncryptionKeyResponseMessage(new byte[]{(byte) 7, (byte) 4, (byte) 1, (byte) 122}, true),
-			new EncryptionKeyRequestMessage("This is a server", new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 10}, true),
+			new EncryptionKeyResponseMessage(new byte[]{(byte) 7, (byte) 4, (byte) 1, (byte) 122}, true, new byte[]{(byte) 6, (byte) 3, (byte) 4, (byte) 122}),
+			new EncryptionKeyRequestMessage("This is a server", new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 10}, true, new byte[]{(byte) 12, (byte) 54, (byte) 4, (byte) 122}),
 			new PlayerListMessage("Player", true, (short) 23),
 			new CustomDataMessage("EMERGENCY", new byte[]{0, 1, 1, 8, 9, 9, 8, 8, 8, 1, 9, 9, 9, 1, 1, 9, 7, 2, 5, 3}),
 			new ServerListPingMessage(),

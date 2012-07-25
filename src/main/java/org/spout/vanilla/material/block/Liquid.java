@@ -37,8 +37,10 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.util.NanoStopWatch;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.util.flowing.LiquidModel;
 
 public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial, Source {
 	private final boolean flowing;
@@ -73,31 +75,9 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		if (this.onFlow(block, BlockFace.BOTTOM)) {
 			return true;
 		} else {
-			// Find out all the hole distance
-			int distance = Integer.MAX_VALUE;
-			int maxHole = MAX_HOLE_DISTANCE;
-			int i;
-			int[] distances = new int[4];
-			for (i = 0; i < distances.length; i++) {
-				distances[i] = this.getHoleDistance(block, BlockFaces.NESW.get(i), maxHole);
-				if (distances[i] != -1 && distances[i] < distance) {
-					distance = distances[i];
-					maxHole = distance + 1;
-				}
-			}
 			boolean flowed = false;
-			if (distance != Integer.MAX_VALUE) {
-				// Flow to all matching directions
-				for (i = 0; i < distances.length; i++) {
-					if (distances[i] != -1 && distances[i] <= distance) {
-						flowed |= this.onFlow(block, BlockFaces.NESW.get(i));
-					}
-				}
-			} else {
-				// No hole found, flow in all directions
-				for (BlockFace face : BlockFaces.NESW) {
-					flowed |= this.onFlow(block, face);
-				}
+			for (BlockFace direction : LiquidModel.INSTANCE.getHoleDirections(block)) {
+				flowed |= this.onFlow(block, direction);
 			}
 			return flowed;
 		}
@@ -264,6 +244,16 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	 */
 	public boolean isSource(Block block) {
 		return block.getData() == 0x0;
+	}
+
+	/**
+	 * Gets whether this liquid is a source
+	 * 
+	 * @param data of the block of the liquid
+	 * @return True if it is a source, False if not
+	 */
+	public boolean isSource(short data) {
+		return data == 0x0;
 	}
 
 	public boolean isFlowing() {

@@ -90,8 +90,18 @@ public abstract class SpreadingSolid extends Solid implements Spreading, RandomB
 	 * @param block of this Spreading solid
 	 * @return True if it can spread, False if not
 	 */
-	public boolean canSpreadAt(Block block) {
+	public boolean canSpreadFrom(Block block) {
 		return block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToSpread();
+	}
+
+	/**
+	 * Tests if the block can spread from the block specified to a specific block
+	 * @param from the block to spread
+	 * @param to the block to spread
+	 * @return True if it can spread, False if not
+	 */
+	public boolean canSpreadTo(Block from, Block to) {
+		return !this.canDecayAt(to);
 	}
 
 	/**
@@ -113,7 +123,7 @@ public abstract class SpreadingSolid extends Solid implements Spreading, RandomB
 			if (rand.nextInt(4) == 0) {
 				around = block.translate(next);
 				if (around.isMaterial(this.replacedMaterial)) {
-					if (!this.canDecayAt(around)) {
+					if (canSpreadTo(block, around)) {
 						around.setMaterial(this);
 					}
 				}
@@ -134,7 +144,7 @@ public abstract class SpreadingSolid extends Solid implements Spreading, RandomB
 		// Attempt to decay or spread this material
 		if (this.canDecayAt(block)) {
 			this.onDecay(block);
-		} else if (this.canSpreadAt(block)) {
+		} else if (this.canSpreadFrom(block)) {
 			this.onSpread(block);
 		}
 	}

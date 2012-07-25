@@ -101,7 +101,7 @@ public class Water extends Liquid implements RandomBlockMaterial {
 	public void onRandomTick(Block block) {
 		//TODO: This should really be in the tick task of the sky controller
 		// Water freezing
-		if (block.getData() != 0) {
+		if (!isSource(block)) {
 			return;
 		}
 		if (!block.isAtSurface()) {

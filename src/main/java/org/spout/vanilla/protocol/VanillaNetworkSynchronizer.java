@@ -369,7 +369,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	public void updateBlock(Chunk chunk, int x, int y, int z, BlockMaterial material, short data) {
-		int id = getMinecraftId(material);
+		short id = getMinecraftId(material);
 		if ((data & 0xF) > 15) {
 			data = 0;
 		}
@@ -377,7 +377,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		y += chunk.getBlockY();
 		z += chunk.getBlockZ();
 		if (y >= 0 && y < chunk.getWorld().getHeight()) {
-			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id & 0xFF, data & 0xF);
+			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id, data & 0xF);
 			session.send(false, BCM);
 		}
 	}

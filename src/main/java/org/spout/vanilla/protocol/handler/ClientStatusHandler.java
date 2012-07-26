@@ -36,7 +36,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.ClientStatusMessage;
-import org.spout.vanilla.protocol.msg.login.request.ServerLoginRequestMessage;
+import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 
 public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 	@Override
@@ -46,8 +46,8 @@ public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 		Spout.log("Client sent: " + message.toString());
 		World world = Spout.getEngine().getWorlds().iterator().next();
 		if (message.getStatus() == ClientStatusMessage.INITIAL_SPAWN) {
-			session.send(false, new ServerLoginRequestMessage(player.getEntity().getId(), world.getDataMap().get(VanillaData.WORLD_TYPE).name(), world.getDataMap().get(VanillaData.GAMEMODE).getId(), (byte) world.getDataMap().get(VanillaData.DIMENSION).getId(), world.getDataMap().get(VanillaData.DIFFICULTY).getId(), (short) Spout.getEngine().getMaxPlayers()));
-			playerConnect(session, player.getName());
+			playerConnect(session, (String) session.getDataMap().get("username"));
+			session.send(false, true, new LoginRequestMessage(session.getPlayer().getEntity().getId(), world.getDataMap().get(VanillaData.WORLD_TYPE).getName(), world.getDataMap().get(VanillaData.GAMEMODE).getId(), (byte) world.getDataMap().get(VanillaData.DIMENSION).getId(), world.getDataMap().get(VanillaData.DIFFICULTY).getId(), (short) Spout.getEngine().getMaxPlayers()));
 		}
 
 	}

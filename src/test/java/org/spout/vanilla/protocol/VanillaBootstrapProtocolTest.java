@@ -46,8 +46,8 @@ public class VanillaBootstrapProtocolTest extends BaseProtocolTest {
 			//new ServerLoginRequestMessage(0, "", (byte) 0, (byte) 0, (byte) 0, (short) 10),
 			new HandshakeMessage((byte) 42, "Spouty", "SpoutTron", 9001),
 			new ServerListPingMessage(),
-			new EncryptionKeyResponseMessage(new byte[]{(byte) 7, (byte) 4, (byte) 1, (byte) 122}, true, new byte[]{(byte) 6, (byte) 30, (byte) 4, (byte) 122}),
-			new EncryptionKeyRequestMessage("This is a server", new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 10}, true, new byte[]{(byte) 43, (byte) 2, (byte) 12, (byte) 10}),
+			new EncryptionKeyResponseMessage(true, new byte[]{(byte) 7, (byte) 4, (byte) 1, (byte) 122}, new byte[]{(byte) 6, (byte) 30, (byte) 4, (byte) 122}),
+			new EncryptionKeyRequestMessage("This is a server", true, new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 10}, new byte[]{(byte) 43, (byte) 2, (byte) 12, (byte) 10}),
 			new KickMessage("This is a test"),
 			new CustomDataMessage("CHANNEL:ONE", new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 4})};
 

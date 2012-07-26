@@ -28,11 +28,12 @@ package org.spout.vanilla.protocol.msg.login.request;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 
-public final class ServerLoginRequestMessage extends LoginRequestMessage {
+public final class ServerLoginRequestMessage extends Message {
 	private final int id;
 	private final byte dimension, mode, difficulty;
 	private final String worldType;

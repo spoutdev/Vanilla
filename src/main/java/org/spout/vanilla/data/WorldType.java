@@ -27,6 +27,15 @@
 package org.spout.vanilla.data;
 
 public enum WorldType {
-	DEFAULT,
-	SUPER_FLAT
+	DEFAULT("default"),
+	SUPER_FLAT("SUPERFLAT");
+	
+	private final String name;
+	WorldType(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
 }

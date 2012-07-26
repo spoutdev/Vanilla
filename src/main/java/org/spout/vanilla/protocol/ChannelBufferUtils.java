@@ -155,7 +155,7 @@ public final class ChannelBufferUtils {
 		if (len >= 65536) {
 			throw new IllegalArgumentException("String too long.");
 		}
-
+		System.out.println("STRING CHECK LENGTH " + len + " STRING: " + str);
 		buf.writeShort(len);
 		for (int i = 0; i < len; ++i) {
 			buf.writeChar(str.charAt(i));

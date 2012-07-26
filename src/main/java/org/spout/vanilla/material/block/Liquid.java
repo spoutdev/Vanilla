@@ -69,7 +69,12 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		return false;
 	}
 
-	private boolean onFlow(Block block) {
+	/**
+	 * Let's the liquid flow from the block in all possible directions
+	 * @param block to flow from
+	 * @return True if flowing was successful
+	 */
+	public boolean onFlow(Block block) {
 		// Flow below, and if not possible, spread outwards
 		if (this.onFlow(block, BlockFace.BOTTOM)) {
 			return true;

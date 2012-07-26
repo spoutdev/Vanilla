@@ -35,17 +35,17 @@ import org.spout.api.protocol.ProcessorSetupMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
 public class EncryptionKeyResponseMessage extends Message implements ProcessorSetupMessage {
-	protected final byte[] encoded, verifyToken;
+	private final short secretLength, verifyLength;
+	private final byte[] secret, verifyToken;
 	private final boolean locking;
 	private ChannelProcessor processor;
 	private ProcessorHandler handler;
 
-	public EncryptionKeyResponseMessage(byte[] encoded, boolean locking, byte[] verifyToken) {
-		if (encoded == null) {
-			throw new IllegalArgumentException("Encoded parameter may not be null");
-		}
-		this.encoded = encoded;
+	public EncryptionKeyResponseMessage(boolean locking, short secretLength, byte[] secret, short verifyLength, byte[] verifyToken) {
 		this.locking = locking;
+		this.secretLength = secretLength;
+		this.secret = secret;
+		this.verifyLength = verifyLength;
 		this.verifyToken = verifyToken;
 	}
 
@@ -67,8 +67,8 @@ public class EncryptionKeyResponseMessage extends Message implements ProcessorSe
 		return handler;
 	}
 
-	public byte[] getEncodedArray() {
-		return encoded;
+	public byte[] getSecretArray() {
+		return secret;
 	}
 	
 	public byte[] getVerifyTokenArray() {
@@ -90,14 +90,12 @@ public class EncryptionKeyResponseMessage extends Message implements ProcessorSe
 		}
 		final EncryptionKeyResponseMessage other = (EncryptionKeyResponseMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.encoded, other.encoded)
 				.isEquals();
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("encoded", encoded)
 				.toString();
 	}
 }

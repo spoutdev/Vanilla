@@ -32,6 +32,7 @@ import java.security.MessageDigest;
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 
+import org.spout.api.Spout;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -58,7 +59,7 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 
 			AsymmetricCipherKeyPair pair = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
 			cipher.init(SecurityHandler.DECRYPT_MODE, pair.getPrivate());
-			final byte[] initialVector = SecurityHandler.getInstance().processAll(cipher, message.getEncodedArray());
+			final byte[] initialVector = SecurityHandler.getInstance().processAll(cipher, message.getSecretArray());
 
 			String sessionId = session.getDataMap().get(VanillaProtocol.SESSION_ID);
 
@@ -84,6 +85,7 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 
 			String handshakeUsername = session.getDataMap().get(VanillaProtocol.HANDSHAKE_USERNAME);
 			final String finalName = handshakeUsername.split(";")[0];
+			Spout.log("Test");
 			Thread loginAuth = new Thread(new LoginAuth(session, finalName, null));
 			loginAuth.start();
 		}

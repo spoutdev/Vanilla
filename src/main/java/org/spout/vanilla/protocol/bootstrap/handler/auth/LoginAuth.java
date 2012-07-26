@@ -114,7 +114,7 @@ public class LoginAuth implements Runnable {
 					Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable, TaskPriority.CRITICAL);
 				}
 				if (session.getState().equals(Session.State.EXCHANGE_ENCRYPTION)) {
-					session.sendAll(false, true, new EncryptionKeyResponseMessage(new byte[0], false, new byte[0]));
+					session.sendAll(false, true, new EncryptionKeyResponseMessage(false, (short) 0, new byte[0], (short) 0, new byte[0]));
 				}
 
 			} else {

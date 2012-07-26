@@ -49,7 +49,6 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 
 	@Override
 	public void handleServer(Session session, Player player, HandshakeMessage message) {
-
 		if (message.getProtocolVersion() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
 			session.disconnect("Outdated client!");
 			return;
@@ -72,7 +71,8 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 				byte[] randombyte = new byte[4];
 				random.nextBytes(randombyte);
 				session.getDataMap().put("verifytoken", randombyte);
-				session.send(false, true, new EncryptionKeyRequestMessage(sessionId, keys.getPublic(), false, randombyte));
+				byte[] secret = SecurityHandler.getInstance().encodeKey(keys.getPublic());
+				session.send(false, true, new EncryptionKeyRequestMessage(sessionId, false, (short) secret.length, secret, (short) randombyte.length, randombyte));
 			} else if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
 				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
 				String sessionId = getSessionId();

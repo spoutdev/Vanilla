@@ -113,10 +113,6 @@ public class LoginAuth implements Runnable {
 				if (runnable != null) {
 					Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable, TaskPriority.CRITICAL);
 				}
-				if (session.getState().equals(Session.State.EXCHANGE_ENCRYPTION)) {
-					session.sendAll(false, true, new EncryptionKeyResponseMessage(false, (short) 0, new byte[0], (short) 0, new byte[0]));
-				}
-
 			} else {
 				failed("Auth server refused authentication");
 			}

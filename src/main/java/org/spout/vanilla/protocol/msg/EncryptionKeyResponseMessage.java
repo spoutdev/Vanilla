@@ -35,17 +35,14 @@ import org.spout.api.protocol.ProcessorSetupMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
 public class EncryptionKeyResponseMessage extends Message implements ProcessorSetupMessage {
-	private final short secretLength, verifyLength;
 	private final byte[] secret, verifyToken;
 	private final boolean locking;
 	private ChannelProcessor processor;
 	private ProcessorHandler handler;
 
-	public EncryptionKeyResponseMessage(boolean locking, short secretLength, byte[] secret, short verifyLength, byte[] verifyToken) {
+	public EncryptionKeyResponseMessage(boolean locking, byte[] secret, byte[] verifyToken) {
 		this.locking = locking;
-		this.secretLength = secretLength;
 		this.secret = secret;
-		this.verifyLength = verifyLength;
 		this.verifyToken = verifyToken;
 	}
 

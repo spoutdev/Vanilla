@@ -46,7 +46,7 @@ public class EncryptionKeyResponseCodec extends MessageCodec<EncryptionKeyRespon
 		int validateTokenLength = buffer.readShort() & 0xFFFF;
 		byte[] validateToken = new byte[validateTokenLength];
 		buffer.readBytes(validateToken);
-		return new EncryptionKeyResponseMessage(false, (short) length, secret, (short) validateTokenLength, validateToken);
+		return new EncryptionKeyResponseMessage(false, secret, validateToken);
 	}
 
 	@Override

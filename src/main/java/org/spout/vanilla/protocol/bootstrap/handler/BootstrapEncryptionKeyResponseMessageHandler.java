@@ -31,13 +31,16 @@ import java.security.MessageDigest;
 
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
-
+import org.bouncycastle.crypto.BufferedBlockCipher;
+import org.bouncycastle.crypto.CipherParameters;
+import org.bouncycastle.crypto.params.KeyParameter;
+import org.bouncycastle.crypto.params.ParametersWithIV;
 import org.spout.api.Spout;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.api.security.EncryptionChannelProcessor;
 import org.spout.api.security.SecurityHandler;
-
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.bootstrap.handler.auth.LoginAuth;
@@ -86,7 +89,33 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 			String handshakeUsername = session.getDataMap().get(VanillaProtocol.HANDSHAKE_USERNAME);
 			final String finalName = handshakeUsername.split(";")[0];
 			Spout.log("Test");
-			Thread loginAuth = new Thread(new LoginAuth(session, finalName, null));
+			
+			Runnable runnable = new Runnable() {
+				public void run() {
+					String streamCipher = VanillaConfiguration.ENCRYPT_STREAM_ALGORITHM.getString();
+					String streamWrapper = VanillaConfiguration.ENCRYPT_STREAM_WRAPPER.getString();
+
+					BufferedBlockCipher fromClientCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
+					BufferedBlockCipher toClientCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
+
+					CipherParameters symmetricKey = new ParametersWithIV(new KeyParameter(initialVector), initialVector);
+
+					fromClientCipher.init(SecurityHandler.DECRYPT_MODE, symmetricKey);
+					toClientCipher.init(SecurityHandler.ENCRYPT_MODE, symmetricKey);
+
+					EncryptionChannelProcessor fromClientProcessor = new EncryptionChannelProcessor(fromClientCipher, 32);
+					EncryptionChannelProcessor toClientProcessor = new EncryptionChannelProcessor(toClientCipher, 32);
+
+					EncryptionKeyResponseMessage response = new EncryptionKeyResponseMessage(false, new byte[0], new byte[0]);
+					response.setProcessor(toClientProcessor);
+
+					message.getProcessorHandler().setProcessor(fromClientProcessor);
+
+					session.send(false, true, response);
+				}
+			};
+			
+			Thread loginAuth = new Thread(new LoginAuth(session, finalName, runnable));
 			loginAuth.start();
 		}
 	}

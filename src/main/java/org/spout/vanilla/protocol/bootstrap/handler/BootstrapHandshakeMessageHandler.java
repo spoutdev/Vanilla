@@ -56,7 +56,6 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 			session.disconnect("Outdated server!");
 			return;
 		}
-		long start = System.currentTimeMillis();
 		Session.State state = session.getState();
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
 			session.getDataMap().put(VanillaProtocol.LOGIN_TIME, System.currentTimeMillis());
@@ -72,7 +71,7 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 				random.nextBytes(randombyte);
 				session.getDataMap().put("verifytoken", randombyte);
 				byte[] secret = SecurityHandler.getInstance().encodeKey(keys.getPublic());
-				session.send(false, true, new EncryptionKeyRequestMessage(sessionId, false, (short) secret.length, secret, (short) randombyte.length, randombyte));
+				session.send(false, true, new EncryptionKeyRequestMessage(sessionId, false, secret, randombyte));
 			} else if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
 				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
 				String sessionId = getSessionId();
@@ -85,7 +84,6 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 		} else {
 			session.disconnect(false, new Object[] { "Handshake already exchanged." });
 		}
-		System.out.println("Handling handshake for " + session + " took " + (System.currentTimeMillis() - start) + " ms");
 	}
 
 	private final static SecureRandom random = new SecureRandom();

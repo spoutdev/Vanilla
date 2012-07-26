@@ -37,14 +37,13 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.util.NanoStopWatch;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.util.flowing.LiquidModel;
 
 public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial, Source {
 	private final boolean flowing;
-	public static final int MAX_HOLE_DISTANCE = 5;
+	private int delay;
 
 	public Liquid(String name, int id, boolean flowing) {
 		super(name, id);
@@ -206,7 +205,19 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	 * Gets the delay in milliseconds between updates of this liquid
 	 * @return the millisecond delay of this Liquid
 	 */
-	public abstract int getFlowDelay();
+	public int getFlowDelay() {
+		return this.delay;
+	}
+
+	/**
+	 * Sets the delay in milliseconds between updates of this liquid
+	 * @param delay in milliseconds to set to
+	 * @return this Liquid
+	 */
+	public Liquid setFlowDelay(int delay) {
+		this.delay = delay;
+		return this;
+	}
 
 	/**
 	 * Sets whether this liquid is flowing down
@@ -267,53 +278,6 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
-	}
-
-	/**
-	 * Gets the distance to the nearest hole<br>
-	 * Returns -1 if no hole was found
-	 * @param from which block to start looking
-	 * @param direction to check
-	 * @return the hole distance, or -1 if no hole is found
-	 */
-	public int getHoleDistance(Block from, BlockFace direction, int maxDistance) {
-		return getHoleDistance(from.translate(direction), direction.getOpposite(), 0, maxDistance);
-	}
-
-	private int getHoleDistance(Block from, BlockFace fromFace, int currentDistance, int maxDistance) {
-		//TODO: Try to implement this system in a model-like structure, like explosion models
-		if (currentDistance >= maxDistance) {
-			// out of range
-			return -1;
-		}
-		BlockMaterial fromMat = from.getMaterial();
-		if (isLiquidObstacle(fromMat)) {
-			// Break, because we can not flow through obstacles
-			return -1;
-		} else if (this.isMaterial(fromMat) && this.isSource(from)) {
-			// Break, because we can not flow towards another source block
-			return -1;
-		} else if (!isLiquidObstacle(from.translate(BlockFace.BOTTOM).getMaterial())) {
-			// Found a hole
-			return 0;
-		}
-		currentDistance++;
-		int distance = Integer.MAX_VALUE;
-		int selfDistance;
-		for (BlockFace face : BlockFaces.NESW) {
-			if (face == fromFace) {
-				continue;
-			}
-			selfDistance = getHoleDistance(from.translate(face), face.getOpposite(), currentDistance, maxDistance);
-			if (selfDistance != -1 && selfDistance < distance) {
-				distance = selfDistance;
-			}
-		}
-		if (distance == Integer.MAX_VALUE) {
-			return -1;
-		} else {
-			return distance + 1;
-		}
 	}
 
 	@Override

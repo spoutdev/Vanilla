@@ -39,11 +39,9 @@ import org.spout.vanilla.material.block.Liquid;
 public class Water extends Liquid implements RandomBlockMaterial {
 	public Water(String name, int id, boolean flowing) {
 		super(name, id, flowing);
-	}
-
-	@Override
-	public int getFlowDelay() {
-		return 250;
+		this.setFlowDelay(250);
+		//TODO: Allow this to get past the tests
+		//this.setFlowDelay(VanillaConfiguration.WATER_DELAY.getInt());
 	}
 
 	@Override

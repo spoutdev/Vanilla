@@ -41,6 +41,9 @@ import org.spout.vanilla.util.VanillaNetworkUtil;
 public class Lava extends Liquid {
 	public Lava(String name, int id, boolean flowing) {
 		super(name, id, flowing);
+		this.setFlowDelay(1500);
+		//TODO: Allow this to get past the tests
+		//this.setFlowDelay(VanillaConfiguration.LAVA_DELAY.getInt());
 	}
 
 	@Override
@@ -86,11 +89,6 @@ public class Lava extends Liquid {
 		for (int i = 0; i < 8; i++) {
 			VanillaNetworkUtil.playBlockEffect(block, null, Messages.PARTICLE_SMOKE, PlayEffectMessage.SMOKE_MIDDLE);
 		}
-	}
-
-	@Override
-	public int getFlowDelay() {
-		return 1500;
 	}
 
 	@Override

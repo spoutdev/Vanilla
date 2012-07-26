@@ -77,12 +77,10 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
 				String sessionId = getSessionId();
 				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
-				session.send(false, true, new HandshakeMessage(message.getProtocolVersion(), message.getUsername(), message.getHostname(), message.getPort()));
 			} else {
 				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
 				String sessionId = "-";
 				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
-				session.send(false, true, new HandshakeMessage(message.getProtocolVersion(), message.getUsername(), message.getHostname(), message.getPort()));
 			}
 		} else {
 			session.disconnect(false, new Object[] { "Handshake already exchanged." });

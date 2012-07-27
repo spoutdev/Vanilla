@@ -32,7 +32,7 @@ import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.object.moving.XPOrb;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.SpawnExperienceOrbMessage;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnExperienceOrbMessage;
 
 public class XPOrbEntityProtocol extends VanillaEntityProtocol {
 	@Override
@@ -45,6 +45,6 @@ public class XPOrbEntityProtocol extends VanillaEntityProtocol {
 		int x = (int) (entity.getPosition().getX() * 32);
 		int y = (int) (entity.getPosition().getY() * 32);
 		int z = (int) (entity.getPosition().getZ() * 32);
-		return new Message[]{new SpawnExperienceOrbMessage(id, x, y, z, (short) 1)}; //TODO improve efficiency, can be more than one experience orb in one packet!
+		return new Message[]{new EntitySpawnExperienceOrbMessage(id, x, y, z, (short) 1)}; //TODO improve efficiency, can be more than one experience orb in one packet!
 	}
 }

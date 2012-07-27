@@ -30,22 +30,28 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.protocol.msg.AnimationMessage;
-import org.spout.vanilla.protocol.msg.EntityActionMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 
-public final class AnimationMessageHandler extends MessageHandler<AnimationMessage> {
+public final class AnimationMessageHandler extends MessageHandler<EntityAnimationMessage> {
 	@Override
-	public void handleServer(Session session, Player player, AnimationMessage message) {
+	public void handleServer(Session session, Player player, EntityAnimationMessage message) {
 		if (player == null || player.getEntity() == null) {
 			return;
 		}
 
 		switch (message.getAnimation()) {
-			case AnimationMessage.ANIMATION_CROUCH:
+			case EntityAnimationMessage.ANIMATION_EAT_FOOD:
+				//TODO: Allow or deny event?
+				session.send(false, new EntityStatusMessage(player.getEntity().getId(), EntityStatusMessage.EATING_ACCEPTED));
+				//TODO: Set the eating state in the VanillaActionController
+				break;
+			case EntityAnimationMessage.ANIMATION_CROUCH:
 				session.send(false, new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_CROUCH));
 				//TODO Set this in VanillaActionController as apparently any entity can crouch?
 				break;
-			case AnimationMessage.ANIMATION_UNCROUCH:
+			case EntityAnimationMessage.ANIMATION_UNCROUCH:
 				session.send(false, new EntityActionMessage(player.getEntity().getId(), EntityActionMessage.ACTION_UNCROUCH));
 				//TODO Set this in VanillaActionController as apparently any entity can crouch?
 				break;

@@ -37,7 +37,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.protocol.msg.AnimationMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class Human extends Living {
@@ -71,7 +71,7 @@ public class Human extends Living {
 	public void onTick(float dt) {
 		super.onTick(dt);
 		if (isDigging && (getDiggingTicks() % 20) == 0) {
-			VanillaNetworkUtil.sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_SWING_ARM));
+			VanillaNetworkUtil.sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new EntityAnimationMessage(getParent().getId(), EntityAnimationMessage.ANIMATION_SWING_ARM));
 		}
 	}
 
@@ -227,7 +227,7 @@ public class Human extends Living {
 		}
 		previousDiggingTime = getDiggingTime();
 		isDigging = false;
-		VanillaNetworkUtil.sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new AnimationMessage(getParent().getId(), AnimationMessage.ANIMATION_NONE));
+		VanillaNetworkUtil.sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new EntityAnimationMessage(getParent().getId(), EntityAnimationMessage.ANIMATION_NONE));
 		if (!position.equals(diggingPosition)) {
 			return false;
 		}

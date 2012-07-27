@@ -30,7 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;
 
 public class BasicObjectEntityProtocol extends BasicEntityProtocol {
 	public BasicObjectEntityProtocol(int spawnID) {
@@ -45,6 +45,6 @@ public class BasicObjectEntityProtocol extends BasicEntityProtocol {
 		}
 
 		int id = entity.getId();
-		return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), entity.getPosition())};
+		return new Message[]{new EntitySpawnVehicleMessage(id, this.getSpawnID(), entity.getPosition())};
 	}
 }

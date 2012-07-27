@@ -53,8 +53,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
-import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -81,7 +81,8 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		int minecraftID = VanillaMaterials.getMinecraftId(blockMaterial);
 		BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(face);
 		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
-
+		
+		
 		//Don't block protections if dropping an item, silly Notch...
 		if (state != PlayerDiggingMessage.STATE_DROP_ITEM) {
 			Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);

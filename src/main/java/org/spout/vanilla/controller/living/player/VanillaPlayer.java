@@ -55,12 +55,12 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.armor.Armor;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
-import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
-import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.VanillaNetworkUtil;
@@ -350,10 +350,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 						itemId = currentItem.getMaterial().getId();
 					}
 
-					sendPacket(player, new SpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId));
+					sendPacket(player, new EntitySpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId));
 				} else {
 					invisibleFor.add(player);
-					sendPacket(player, new DestroyEntityMessage(parent.getId()));
+					sendPacket(player, new EntityDestroyMessage(parent.getId()));
 				}
 			}
 		}

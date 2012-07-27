@@ -41,7 +41,7 @@ import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.protocol.msg.EntityInteractionMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityInteractionMessage;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class EntityInteractionMessageHandler extends MessageHandler<EntityInteractionMessage> {

@@ -38,8 +38,8 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.Living;
-import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
-import org.spout.vanilla.protocol.msg.SpawnMobMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnMobMessage;
 
 public class BasicMobEntityProtocol extends BasicEntityProtocol {
 	public BasicMobEntityProtocol(int mobSpawnID) {
@@ -77,7 +77,7 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 			headyaw = ((Living) c).getHeadYaw();
 		}
 		List<Parameter<?>> parameters = this.getSpawnParameters(c);
-		return new Message[]{new SpawnMobMessage(id, this.getSpawnID(), pos, r, p, headyaw, parameters)};
+		return new Message[]{new EntitySpawnMobMessage(id, this.getSpawnID(), pos, r, p, headyaw, parameters)};
 	}
 
 	@Override

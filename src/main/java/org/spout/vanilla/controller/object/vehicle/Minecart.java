@@ -42,7 +42,6 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.object.Substance;
-import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
@@ -234,7 +233,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 		} else {
 			//on the ground
 			velocity = velocity.multiply(this.groundFrictionModifier.toVector2());
-			velocityY *= this.groundFrictionModifier.getY();
+			velocityY *= 0;
 		}
 
 		//update velocity and move

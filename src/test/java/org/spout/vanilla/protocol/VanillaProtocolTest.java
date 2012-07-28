@@ -178,7 +178,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EncryptionKeyResponseMessage(new byte[]{(byte) 7, (byte) 4, (byte) 1, (byte) 122}, true),
 			new EncryptionKeyRequestMessage("This is a server", new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 10}, true),
 			new PlayerListMessage("Player", true, (short) 23),
-			new CustomDataMessage("EMERGENCY", new byte[]{0, 1, 1, 8, 9, 9, 8, 8, 8, 1, 9, 9, 9, 1, 1, 9, 7, 2, 5, 3}),
+			new CustomDataMessage("EMERGENCY", new byte[]{0, 1, 1, 8, 9, 9, 8, 8, 8, 1, 9, 9, 9, 1, 1, 9, 7, 2, 5,                3}), //
 			new ServerListPingMessage(),
 			new KickMessage("This is a test"),
 			new PlayerAbilityMessage(true, true, true, true)

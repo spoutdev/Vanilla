@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.bootstrap.handler;
+package org.spout.vanilla.protocol.handler.bootstrap;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -46,7 +46,7 @@ import org.spout.api.security.SecurityHandler;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.bootstrap.handler.auth.LoginAuth;
+import org.spout.vanilla.protocol.handler.bootstrap.auth.LoginAuth;
 import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
 
 public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler<EncryptionKeyResponseMessage> {

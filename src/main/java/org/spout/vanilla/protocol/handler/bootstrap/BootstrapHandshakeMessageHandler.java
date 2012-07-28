@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.bootstrap.handler;
+package org.spout.vanilla.protocol.handler.bootstrap;
 
 import java.security.SecureRandom;
 

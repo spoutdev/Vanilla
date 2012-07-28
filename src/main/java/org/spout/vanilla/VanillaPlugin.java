@@ -71,7 +71,6 @@ import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.bootstrap.VanillaBootstrapProtocol;
 import org.spout.vanilla.resources.MapPalette;
 import org.spout.vanilla.resources.RecipeYaml;
 import org.spout.vanilla.resources.loader.MapPaletteLoader;
@@ -154,8 +153,9 @@ public class VanillaPlugin extends CommonPlugin {
 				}
 			}
 
-			((Server) engine).bind(new InetSocketAddress(split[0], port), new VanillaBootstrapProtocol());
+			((Server) engine).bind(new InetSocketAddress(split[0], port), new VanillaProtocol());
 		} else if (engine.getPlatform() == Platform.CLIENT) {
+			Protocol.registerProtocol("Vanilla", new VanillaProtocol());
 			//TODO Do something?
 		}
 

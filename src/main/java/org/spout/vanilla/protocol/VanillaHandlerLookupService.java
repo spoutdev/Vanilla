@@ -35,10 +35,10 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.common.handler.CustomDataMessageHandler;
 import org.spout.api.protocol.common.message.CustomDataMessage;
 
-import org.spout.vanilla.protocol.bootstrap.handler.BootstrapEncryptionKeyResponseMessageHandler;
-import org.spout.vanilla.protocol.bootstrap.handler.BootstrapHandshakeMessageHandler;
-import org.spout.vanilla.protocol.bootstrap.handler.BootstrapLoginRequestMessageHandler;
-import org.spout.vanilla.protocol.bootstrap.handler.BootstrapPingMessageHandler;
+import org.spout.vanilla.protocol.handler.bootstrap.BootstrapEncryptionKeyResponseMessageHandler;
+import org.spout.vanilla.protocol.handler.bootstrap.BootstrapHandshakeMessageHandler;
+import org.spout.vanilla.protocol.handler.bootstrap.BootstrapLoginRequestMessageHandler;
+import org.spout.vanilla.protocol.handler.bootstrap.BootstrapPingMessageHandler;
 import org.spout.vanilla.protocol.handler.AnimationMessageHandler;
 import org.spout.vanilla.protocol.handler.ChatMessageHandler;
 import org.spout.vanilla.protocol.handler.CreativeMessageHandler;

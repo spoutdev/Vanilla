@@ -24,38 +24,23 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.bootstrap;
+package org.spout.vanilla.protocol.handler.bootstrap;
 
-import org.spout.api.protocol.CodecLookupService;
-import org.spout.api.protocol.common.codec.CustomDataCodec;
+import org.spout.api.Spout;
+import org.spout.api.player.Player;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.protocol.codec.EncryptionKeyRequestCodec;
-import org.spout.vanilla.protocol.codec.EncryptionKeyResponseCodec;
-import org.spout.vanilla.protocol.codec.HandshakeCodec;
-import org.spout.vanilla.protocol.codec.KickCodec;
-import org.spout.vanilla.protocol.codec.LoginRequestCodec;
-import org.spout.vanilla.protocol.codec.ServerListPingCodec;
+import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.event.game.ServerListPingEvent;
+import org.spout.vanilla.protocol.msg.KickMessage;
+import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 
-public class VanillaBootstrapCodecLookupService extends CodecLookupService {
-	public VanillaBootstrapCodecLookupService() {
-		super();
-		try {
-			/* 0x01 */
-			bind(LoginRequestCodec.class);
-			/* 0x02 */
-			bind(HandshakeCodec.class);
-			/* 0xFA */
-			bind(CustomDataCodec.class);
-			/* 0xFC */
-			bind(EncryptionKeyResponseCodec.class);
-			/* 0xFD */
-			bind(EncryptionKeyRequestCodec.class);
-			/* 0xFE */
-			bind(ServerListPingCodec.class);
-			/* 0xFF */
-			bind(KickCodec.class);
-		} catch (Exception ex) {
-			throw new ExceptionInInitializerError(ex);
-		}
+public class BootstrapPingMessageHandler extends MessageHandler<ServerListPingMessage> {
+	@Override
+	public void handleServer(Session session, Player player, ServerListPingMessage message) {
+		ServerListPingEvent event = new ServerListPingEvent(session.getAddress().getAddress(), VanillaConfiguration.MOTD.getString(), Spout.getEngine().getOnlinePlayers().length, Spout.getEngine().getMaxPlayers());
+		Spout.getEngine().getEventManager().callEvent(event);
+		session.send(false, true, new KickMessage(event.getMessage()));
 	}
 }

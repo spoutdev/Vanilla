@@ -32,17 +32,20 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
 public class PlayerAbilityMessage extends Message {
-	private final boolean isInvincible, isFlying, canFly, canInstantDestroy;
+	private final boolean godMode, isFlying, canFly, creativeMode;
+	private final byte flyingSpeed, walkingSpeed;
 
-	public PlayerAbilityMessage(boolean isInvincible, boolean isFlying, boolean canFly, boolean canInstantDestroy) {
-		this.isInvincible = isInvincible;
+	public PlayerAbilityMessage(boolean godMode, boolean isFlying, boolean canFly, boolean creativeMode, byte flyingSpeed, byte walkingSpeed) {
+		this.godMode = godMode;
 		this.isFlying = isFlying;
 		this.canFly = canFly;
-		this.canInstantDestroy = canInstantDestroy;
+		this.creativeMode = creativeMode;
+		this.flyingSpeed = flyingSpeed;
+		this.walkingSpeed = walkingSpeed;
 	}
 
-	public boolean isInvincible() {
-		return isInvincible;
+	public boolean isGodMode() {
+		return godMode;
 	}
 
 	public boolean isFlying() {
@@ -53,17 +56,27 @@ public class PlayerAbilityMessage extends Message {
 		return canFly;
 	}
 
-	public boolean canInstantDestroy() {
-		return canInstantDestroy;
+	public boolean isCreativeMode() {
+		return creativeMode;
+	}
+
+	public byte getFlyingSpeed() {
+		return flyingSpeed;
+	}
+
+	public byte getWalkingSpeed() {
+		return walkingSpeed;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("isInvincible", isInvincible)
+				.append("godMode", godMode)
 				.append("isFlying", isFlying)
 				.append("canFly", canFly)
-				.append("canInstantDestroy", canInstantDestroy)
+				.append("creativeMode", creativeMode)
+				.append("flyingSpeed", flyingSpeed)
+				.append("walkingSpeed", walkingSpeed)
 				.toString();
 	}
 
@@ -77,10 +90,12 @@ public class PlayerAbilityMessage extends Message {
 		}
 		final PlayerAbilityMessage other = (PlayerAbilityMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.isInvincible, other.isInvincible)
+				.append(this.godMode, other.godMode)
 				.append(this.isFlying, other.isFlying)
 				.append(this.canFly, other.canFly)
-				.append(this.canInstantDestroy, other.canInstantDestroy)
+				.append(this.creativeMode, other.creativeMode)
+				.append(this.flyingSpeed, other.flyingSpeed)
+				.append(this.walkingSpeed, other.walkingSpeed)
 				.isEquals();
 	}
 }

@@ -43,12 +43,7 @@ public final class RespawnCodec extends MessageCodec<RespawnMessage> {
 
 	@Override
 	public RespawnMessage decode(ChannelBuffer buffer) throws IOException {
-		int dimension = buffer.readInt();
-		byte difficulty = buffer.readByte();
-		byte mode = buffer.readByte();
-		int worldHeight = ChannelBufferUtils.getExpandedHeight(buffer.readShort());
-		String worldType = ChannelBufferUtils.readString(buffer);
-		return new RespawnMessage(dimension, difficulty, mode, worldHeight, worldType);
+		return new RespawnMessage();
 	}
 
 	@Override

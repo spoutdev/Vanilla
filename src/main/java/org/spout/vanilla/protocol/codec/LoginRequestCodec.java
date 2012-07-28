@@ -54,15 +54,22 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 		return new LoginRequestMessage(id, worldType, mode, dimension, difficulty, maxPlayers);
 	}
 
-	/*@Override
+	@Override
 	public LoginRequestMessage decodeFromClient(ChannelBuffer buffer) {
 		Spout.log("Hey I am a client and I want to connect!");
-		return new ClientLoginRequestMessage();
-	}*/
+		int id = buffer.readInt();
+		String worldType = ChannelBufferUtils.readString(buffer);
+		byte mode = buffer.readByte();
+		byte dimension = buffer.readByte();
+		byte difficulty = buffer.readByte();
+		short notUsed = buffer.readUnsignedByte();
+		short maxPlayers = buffer.readUnsignedByte();
+		return new LoginRequestMessage(id, worldType, mode, dimension, difficulty, maxPlayers);
+	}
 
 	@Override
 	public ChannelBuffer encodeToClient(LoginRequestMessage message) {
-		LoginRequestMessage server =  message;
+		LoginRequestMessage server = message;
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		System.out.println(server.toString());
 		buffer.writeInt(server.getId());
@@ -77,7 +84,7 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 
 	@Override
 	public ChannelBuffer encodeToServer(LoginRequestMessage message) {
-		LoginRequestMessage server =  message;
+		LoginRequestMessage server = message;
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeByte(server.getId());
 		ChannelBufferUtils.writeString(buffer, server.getWorldType());

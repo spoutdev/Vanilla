@@ -43,7 +43,7 @@ public class VanillaBootstrapProtocolTest extends BaseProtocolTest {
 	private static final VanillaBootstrapCodecLookupService CODEC_LOOKUP = new VanillaBootstrapCodecLookupService();
 	private static final Message[] TEST_MESSAGES = new Message[]{
 			//new ClientLoginRequestMessage(),
-			//new ServerLoginRequestMessage(0, "", (byte) 0, (byte) 0, (byte) 0, (short) 10),
+			new LoginRequestMessage(0, "", (byte) 0, (byte) 0, (byte) 0, (short) 10),
 			new HandshakeMessage((byte) 42, "Spouty", "SpoutTron", 9001),
 			new ServerListPingMessage(),
 			new EncryptionKeyResponseMessage(true, new byte[]{(byte) 7, (byte) 4, (byte) 1, (byte) 122}, new byte[]{(byte) 6, (byte) 30, (byte) 4, (byte) 122}),

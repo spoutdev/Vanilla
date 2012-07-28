@@ -63,6 +63,9 @@ import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
 import org.spout.vanilla.protocol.msg.ExplosionMessage;
 import org.spout.vanilla.protocol.msg.GroundMessage;
+import org.spout.vanilla.protocol.msg.LocalViewDistanceMessage;
+import org.spout.vanilla.protocol.msg.NamedSoundEffectMessage;
+import org.spout.vanilla.protocol.msg.TabCompleteMessage;
 import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 import org.spout.vanilla.protocol.msg.ItemDataMessage;
@@ -98,8 +101,6 @@ import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.UseBedMessage;
-import org.spout.vanilla.protocol.msg.login.request.ClientLoginRequestMessage;
-import org.spout.vanilla.protocol.msg.login.request.ServerLoginRequestMessage;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
@@ -116,11 +117,11 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final Message[] TEST_MESSAGES = new Message[]{
 			new KeepAliveMessage(42),
 			//new ClientLoginRequestMessage(),
-			new ServerLoginRequestMessage(0, "", (byte) 0, (byte) 0, (byte) 0, (short) 10),
+			new LoginRequestMessage(0, "", (byte) 0, (byte) 0, (byte) 0, (short) 10),
 			new HandshakeMessage((byte) 42, "Spouty", "SpoutTron", 9001),
 			new ChatMessage("<Spouty> This is a thing called a chat message"),
 			new TimeUpdateMessage(666L),
-			new EntityEquipmentMessage(234, 3),
+			new EntityEquipmentMessage(0x3D, 3),
 			new SpawnPositionMessage(42, 42, 42),
 			new EntityInteractionMessage(1123, 4455, true),
 			new UpdateHealthMessage((short) 1, (short) 2, 3.4F),
@@ -163,6 +164,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new BlockActionMessage(1, 2, 3, (byte) 4, (byte) 5, (byte) 29),
 			new ExplosionMessage(3, 4, 5, 24, new byte[]{1, 2, 3, 1, 1, 2, 1, 1, 1}),
 			new PlayEffectMessage(34566, 1, 2, 34, 5),
+			new NamedSoundEffectMessage("step.grass", 0,0,0, 6.0f, (byte) 2),
 			new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, GameMode.CREATIVE),
 			new SpawnLightningStrikeMessage(34, 1, 23, 45, 55),
 			new WindowOpenMessage(1, WindowType.FURNACE, "container.furnace", 42),
@@ -185,7 +187,9 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new ServerListPingMessage(),
 			new KickMessage("This is a test"),
 			new PlayerAbilityMessage(true, true, true, true),
-			new ClientStatusMessage((byte) 0)
+			new ClientStatusMessage((byte) 0),
+			new TabCompleteMessage("asdfg"),
+			new LocalViewDistanceMessage("en_GB", (byte)0, (byte)8, (byte)0),
 	};
 
 	static {

@@ -24,67 +24,60 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg.login;
+package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
+public class NamedSoundEffectMessage extends Message {
 
-public final class LoginRequestMessage extends Message {
-	private final int id;
-	private final byte dimension, mode, difficulty;
-	private final String worldType;
-	private final short maxPlayers;
-
-	public LoginRequestMessage(int id, String worldType, byte mode, byte dimension, byte difficulty, short maxPlayers) {
-		this.id = id;
-		this.worldType = worldType;
-		this.mode = mode;
-		this.dimension = dimension;
-		this.difficulty = difficulty;
-		this.maxPlayers = maxPlayers;
+	private final String soundName;
+	private final int effectPositionX, effectPositionY, effectPositionZ;
+	private final float volume;
+	private final byte pitch;
+	public NamedSoundEffectMessage(String soundName, int effectPositionX, int effectPositionY, int effectPositionZ, float volume, byte pitch) {
+		this.soundName = soundName;
+		this.effectPositionX = effectPositionX;
+		this.effectPositionY = effectPositionY;
+		this.effectPositionZ = effectPositionZ;
+		this.volume = volume;
+		this.pitch = pitch;
 	}
 
-	public LoginRequestMessage() {
-		this(-1,"",(byte)-1,(byte)-1,(byte)-1, (short)-1);
+	public String getSoundName() {
+		return soundName;
 	}
 
-	public int getId() {
-		return id;
+	public int getEffectPositionX() {
+		return effectPositionX;
 	}
 
-	public String getWorldType() {
-		return worldType;
+	public int getEffectPositionY() {
+		return effectPositionY;
 	}
 
-	public byte getGameMode() {
-		return mode;
+	public int getEffectPositionZ() {
+		return effectPositionZ;
 	}
 
-	public byte getDimension() {
-		return dimension;
+	public float getVolume() {
+		return volume;
 	}
 
-	public byte getDifficulty() {
-		return difficulty;
-	}
-
-	public short getMaxPlayers() {
-		return maxPlayers;
+	public byte getPitch() {
+		return pitch;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("id", id)
-				.append("worldType", worldType)
-				.append("mode", mode)
-				.append("dimension", dimension)
-				.append("difficulty", difficulty)
-				.append("maxPlayers", maxPlayers)
+				.append("soundName", soundName)
+				.append("effectPositionX", effectPositionX)
+				.append("effectPositionY", effectPositionY)
+				.append("effectPositionZ", effectPositionZ)
+				.append("volume", volume)
+				.append("pitch", pitch)
 				.toString();
 	}
 
@@ -93,17 +86,18 @@ public final class LoginRequestMessage extends Message {
 		if (obj == null) {
 			return false;
 		}
-		if (!getClass().equals(obj.getClass())) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final LoginRequestMessage other = (LoginRequestMessage) obj;
+		final NamedSoundEffectMessage other = (NamedSoundEffectMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.id, other.id)
-				.append(this.worldType, other.worldType)
-				.append(this.mode, other.mode)
-				.append(this.dimension, other.dimension)
-				.append(this.difficulty, other.difficulty)
-				.append(this.maxPlayers, other.maxPlayers)
+				.append(this.soundName, other.soundName)
+				.append(this.effectPositionX, other.effectPositionX)
+				.append(this.effectPositionY, other.effectPositionY)
+				.append(this.effectPositionZ, other.effectPositionZ)
+				.append(this.volume, other.volume)
+				.append(this.pitch, other.pitch)
 				.isEquals();
 	}
+
 }

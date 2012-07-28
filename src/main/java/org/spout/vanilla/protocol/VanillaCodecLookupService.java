@@ -66,6 +66,7 @@ import org.spout.vanilla.protocol.codec.LoadChunkCodec;
 import org.spout.vanilla.protocol.codec.LocaleViewDistanceCodec;
 import org.spout.vanilla.protocol.codec.LoginRequestCodec;
 import org.spout.vanilla.protocol.codec.MultiBlockChangeCodec;
+import org.spout.vanilla.protocol.codec.NamedSoundEffectCodec;
 import org.spout.vanilla.protocol.codec.PlayEffectCodec;
 import org.spout.vanilla.protocol.codec.PlayerAbilityCodec;
 import org.spout.vanilla.protocol.codec.PlayerBlockPlacementCodec;
@@ -201,6 +202,8 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			bind(ExplosionCodec.class);
 			/* 0x3D */
 			bind(PlayEffectCodec.class);
+			/* 0x3E */
+			bind(NamedSoundEffectCodec.class);
 			/* 0x46 */
 			bind(ChangeGameStateCodec.class);
 			/* 0x47 */

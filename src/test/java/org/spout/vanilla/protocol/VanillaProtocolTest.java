@@ -67,12 +67,11 @@ import org.spout.vanilla.protocol.msg.LocalViewDistanceMessage;
 import org.spout.vanilla.protocol.msg.NamedSoundEffectMessage;
 import org.spout.vanilla.protocol.msg.TabCompleteMessage;
 import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
+import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 import org.spout.vanilla.protocol.msg.ItemDataMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
-import org.spout.vanilla.protocol.msg.LoadChunkMessage;
-import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.MultiBlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
@@ -157,7 +156,6 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntityEffectMessage(1, (byte) 1, (byte) 1, (short) 34),
 			new EntityRemoveEffectMessage(1, (byte) 1),
 			new SetExperienceMessage(1.2F, (short) 2, (short) 3),
-			new LoadChunkMessage(0, -2, true),
 			new CompressedChunkMessage(1, 2, true, new boolean[16], new byte[][]{new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null, null, null, null, null, new byte[Chunk.BLOCKS.HALF_VOLUME * 5], null, null, null, null, null}, new byte[16 * 16]),
 			new MultiBlockChangeMessage(2, 3, new short[]{2, 3, 4, /**/ 3, 6, 4, /**/ 8, 5, 5}, new short[]{1, 2, 3}, new byte[]{3, 4, 5}),
 			new BlockChangeMessage(1, 2, 3, (short)87, 2),

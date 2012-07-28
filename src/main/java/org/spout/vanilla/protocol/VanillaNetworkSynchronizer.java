@@ -131,15 +131,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (column.isEmpty()) {
 				if (initializedChunks.remove(x, z) != null) {
 					activeChunks.remove(x, z);
-					CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, null, null, null, true);
-					session.send(false, CCMsg);
 				}
 			}
-			byte[][] data = new byte[16][];
-			data[y] = AIR_CHUNK_DATA;
-			byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
-			Arrays.fill(biomeData, (byte) 1);
-			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, new boolean[16], data, biomeData, true);
+			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, null, null, null, true);
 			session.send(false, CCMsg);
 		}
 	}

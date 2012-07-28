@@ -33,7 +33,7 @@ import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.SlotData;
+import org.spout.nbt.CompoundMap;
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 public final class EntityEquipmentMessage extends Message implements TransformableMessage {
@@ -42,43 +42,59 @@ public final class EntityEquipmentMessage extends Message implements Transformab
 	public static final int LEGGINGS_SLOT = 2;
 	public static final int CHESTPLATE_SLOT = 3;
 	public static final int HELMET_SLOT = 4;
-	private int id, slot;
-	private SlotData slotData;
+	private int entityId, slot, id, count, damage;
+	private CompoundMap nbtData;
 
-	public EntityEquipmentMessage(int id, int slot, SlotData slotData) {
-		this.id = id;
+	public EntityEquipmentMessage(int id, int slot)
+	{
+		this(id, slot, -1, 0, 0, null);
+	}
+	public EntityEquipmentMessage(int entityId, int slot, int id, int count, int damage, CompoundMap nbtData) {
+		this.entityId = entityId;
 		this.slot = slot;
-		this.slotData = slotData;
+		this.id = id;
+		this.count = count;
+		this.damage = damage;
+		this.nbtData = nbtData;
 	}
 
-	@Override
-	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
-		if (id == ((VanillaConnectionInfo) info).getEntityId()) {
-			id = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
-		} else if (id == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
-			id = ((VanillaConnectionInfo) info).getEntityId();
-		}
-		return this;
+	public int getEntityId() {
+		return entityId;
 	}
-
-	public int getId() {
-		return id;
-	}
-
 	public int getSlot() {
 		return slot;
 	}
-	
-	public SlotData getItem() {
-		return slotData;
+	public int getId() {
+		return id;
+	}
+	public int getCount() {
+		return count;
+	}
+	public int getDamage() {
+		return damage;
+	}
+	public CompoundMap getNbtData() {
+		return nbtData;
+	}
+	@Override
+	public Message transform(boolean upstream, int connects, ConnectionInfo info, ConnectionInfo auxChannelInfo) {
+		if (entityId == ((VanillaConnectionInfo) info).getEntityId()) {
+			entityId = ((VanillaConnectionInfo) auxChannelInfo).getEntityId();
+		} else if (entityId == ((VanillaConnectionInfo) auxChannelInfo).getEntityId()) {
+			entityId = ((VanillaConnectionInfo) info).getEntityId();
+		}
+		return this;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("id", id)
+				.append("entityId", entityId)
 				.append("slot", slot)
-				.append("slotdata", slotData)
+				.append("id", id)
+				.append("count", count)
+				.append("damage", damage)
+				.append("nbtData", nbtData)
 				.toString();
 	}
 
@@ -92,9 +108,12 @@ public final class EntityEquipmentMessage extends Message implements Transformab
 		}
 		final EntityEquipmentMessage other = (EntityEquipmentMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.id, other.id)
+				.append(this.entityId, other.entityId)
 				.append(this.slot, other.slot)
-				.append(this.slotData, other.slotData)
+				.append(this.id, other.id)
+				.append(this.count, other.count)
+				.append(this.damage, other.damage)
+				.append(this.nbtData, other.nbtData)
 				.isEquals();
 	}
 }

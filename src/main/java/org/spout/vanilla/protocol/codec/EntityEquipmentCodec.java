@@ -33,8 +33,8 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
+import org.spout.nbt.CompoundMap;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.SlotData;
 import org.spout.vanilla.protocol.msg.EntityEquipmentMessage;
 
 public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMessage> {
@@ -44,10 +44,20 @@ public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMess
 
 	@Override
 	public EntityEquipmentMessage decode(ChannelBuffer buffer) throws IOException {
-		int id = buffer.readInt();
+		int entityId = buffer.readInt();
 		int slot = buffer.readUnsignedShort();
-		SlotData slotData = ChannelBufferUtils.getSlotData(buffer);
-		return new EntityEquipmentMessage(id, slot, slotData);
+		int id = buffer.readUnsignedShort();
+		if (id == 0xFFFF) {
+			return new EntityEquipmentMessage(entityId, slot);
+		}
+
+		int count = buffer.readUnsignedByte();
+		int damage = buffer.readShort();
+		CompoundMap nbtData = null;
+		if (ChannelBufferUtils.hasNbtData(id)) {
+			nbtData = ChannelBufferUtils.readCompound(buffer);
+		}
+		return new EntityEquipmentMessage(entityId, slot, id, count, damage, nbtData);
 	}
 
 	@Override
@@ -55,7 +65,14 @@ public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMess
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(message.getId());
 		buffer.writeShort(message.getSlot());
-		ChannelBufferUtils.writeCompound(buffer, message.getItem().createNBT());
+		buffer.writeShort(message.getId());
+		if (message.getId() != -1) {
+			buffer.writeByte(message.getCount());
+			buffer.writeShort(message.getDamage());
+			if (ChannelBufferUtils.hasNbtData(message.getId())) {
+				ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
+			}
+		}
 		return buffer;
 	}
 }

@@ -62,7 +62,6 @@ import org.spout.vanilla.protocol.codec.HeldItemChangeCodec;
 import org.spout.vanilla.protocol.codec.ItemDataCodec;
 import org.spout.vanilla.protocol.codec.KeepAliveCodec;
 import org.spout.vanilla.protocol.codec.KickCodec;
-import org.spout.vanilla.protocol.codec.LoadChunkCodec;
 import org.spout.vanilla.protocol.codec.LocaleViewDistanceCodec;
 import org.spout.vanilla.protocol.codec.LoginRequestCodec;
 import org.spout.vanilla.protocol.codec.MultiBlockChangeCodec;
@@ -187,8 +186,6 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			bind(EntityRemoveEffectCodec.class);
 			/* 0x2B */
 			bind(SetExperienceCodec.class);
-			/* 0x32 */
-			bind(LoadChunkCodec.class); //TODO not sure about this one, Map Column Allocation on the protocol page o.O
 			/* 0x33 */
 			bind(CompressedChunkCodec.class); //TODO rename on the minecraft protocol page
 			/* 0x34 */

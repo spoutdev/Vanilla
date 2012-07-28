@@ -131,43 +131,43 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (column.isEmpty()) {
 				if (initializedChunks.remove(x, z) != null) {
 					activeChunks.remove(x, z);
-					LoadChunkMessage unLoadChunk = new LoadChunkMessage(x, z, false);
-					owner.getSession().send(false, unLoadChunk);
+					//LoadChunkMessage unLoadChunk = new LoadChunkMessage(x, z, false);
+					//owner.getSession().send(false, unLoadChunk);
 				}
-			}/* else {
+			} else {
 				byte[][] data = new byte[16][];
 				data[y] = AIR_CHUNK_DATA;
-				CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], 0, data, null);
-				session.send(CCMsg);
-			}*/
+				CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], data, null, true);
+				session.send(true, CCMsg);
+			}
 		}
 	}
 
 	@Override
 	protected void initChunk(Point p) {
-
-		int x = p.getChunkX();
-		int y = p.getChunkY();// + SEALEVEL_CHUNK;
-		int z = p.getChunkZ();
-
-		if (y < 0 || y >= p.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
-			return;
-		}
-
-		TSyncIntHashSet column = initializedChunks.get(x, z);
-		if (column == null) {
-			column = new TSyncIntHashSet();
-			synchronized (initChunkLock) {
-				TSyncIntHashSet oldColumn = initializedChunks.putIfAbsent(x, z, column);
-				if (oldColumn == null) {
-					LoadChunkMessage LCMsg = new LoadChunkMessage(x, z, true);
-					owner.getSession().send(false, LCMsg);
-				} else {
-					column = oldColumn;
-				}
-			}
-		}
-		column.add(y);
+//
+//		int x = p.getChunkX();
+//		int y = p.getChunkY();// + SEALEVEL_CHUNK;
+//		int z = p.getChunkZ();
+//
+//		if (y < 0 || y >= p.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
+//			return;
+//		}
+//
+//		TSyncIntHashSet column = initializedChunks.get(x, z);
+//		if (column == null) {
+//			column = new TSyncIntHashSet();
+//			synchronized (initChunkLock) {
+//				TSyncIntHashSet oldColumn = initializedChunks.putIfAbsent(x, z, column);
+//				if (oldColumn == null) {
+//					//LoadChunkMessage LCMsg = new LoadChunkMessage(x, z, true);
+//					//owner.getSession().send(false, LCMsg);
+//				} else {
+//					column = oldColumn;
+//				}
+//			}
+//		}
+//		column.add(y);
 	}
 
 	private static BlockMaterial[][] getColumnTopmostMaterials(Point p) {
@@ -259,8 +259,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				packetChunkData[cube] = getChunkHeightMap(heights, materials, cube);
 			}
 
-			LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
-			owner.getSession().send(false, loadChunk);
+			//LoadChunkMessage loadChunk = new LoadChunkMessage(x, z, true);
+			//owner.getSession().send(false, loadChunk);
 
 			Chunk chunk = p.getWorld().getChunkFromBlock(p);
 			byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
@@ -334,8 +334,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			first = false;
 			int entityId = owner.getEntity().getId();
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
-//			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, owner.getName(), gamemode.getId(), dimension.getId(), difficulty.getId(), 256, session.getEngine().getMaxPlayers(), worldType.toString());
-//			owner.getSession().send(false, true, idMsg);
+			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) session.getEngine().getMaxPlayers());
+			owner.getSession().send(false, true, idMsg);
 			owner.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
 				ItemStack slotItem = vc.getInventory().getArmor().getItem(slot);

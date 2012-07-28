@@ -80,10 +80,7 @@ import org.spout.vanilla.service.protection.SpawnProtection;
 import org.spout.vanilla.service.VanillaProtectionService;
 import org.spout.vanilla.thread.SpawnLoaderThread;
 import org.spout.vanilla.world.generator.VanillaGenerator;
-import org.spout.vanilla.world.generator.flat.FlatGenerator;
-import org.spout.vanilla.world.generator.nether.NetherGenerator;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.world.generator.theend.TheEndGenerator;
+import org.spout.vanilla.world.generator.VanillaGenerators;
 
 public class VanillaPlugin extends CommonPlugin {
 	private static final int loaderThreadCount = 16;
@@ -176,16 +173,8 @@ public class VanillaPlugin extends CommonPlugin {
 			if (worldNode.LOAD.getBoolean()) {
 				// Obtain generator and start generating world
 				String generatorName = worldNode.GENERATOR.getString();
-				VanillaGenerator generator;
-				if (generatorName.equalsIgnoreCase("normal")) {
-					generator = new NormalGenerator();
-				} else if (generatorName.equalsIgnoreCase("nether")) {
-					generator = new NetherGenerator();
-				} else if (generatorName.equalsIgnoreCase("flat")) {
-					generator = new FlatGenerator(64);
-				} else if (generatorName.equalsIgnoreCase("the_end")) {
-					generator = new TheEndGenerator();
-				} else {
+				VanillaGenerator generator = VanillaGenerators.getGenerator(generatorName);
+				if (generator == null) {
 					throw new IllegalArgumentException("Invalid generator name for world '" + worldNode.getWorldName() + "': " + generatorName);
 				}
 				World world = engine.loadWorld(worldNode.getWorldName(), generator);

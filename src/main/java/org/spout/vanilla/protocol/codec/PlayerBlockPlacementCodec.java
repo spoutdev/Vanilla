@@ -58,9 +58,7 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 		if (id != 0xFFFF) {
 			count = buffer.readUnsignedByte();
 			damage = buffer.readShort();
-			if (ChannelBufferUtils.hasNbtData(id)) {
-				nbtData = ChannelBufferUtils.readCompound(buffer);
-			}
+			nbtData = ChannelBufferUtils.readCompound(buffer);
 		}
 		
 		float dx = ((float) (buffer.readByte() & 0xFF)) / 16.0F;

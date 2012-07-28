@@ -43,19 +43,18 @@ import org.spout.api.scheduler.TaskPriority;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.VanillaProtocol;
 
-public class LoginAuth implements Runnable {
+public class MineLoginAuthHandler extends LoginAuthHandler {
 	private final static String URLBase = "http://session.minecraft.net/game/checkserver.jsp?";
 	private final static String userPrefix = "user=";
 	private final static String idPrefix = "&serverId=";
 	private final static String authString = "YES";
-	private final Session session;
-	private final String name;
-	private final Runnable runnable;
+	
+	static {
+		LoginAuthRegistry.register("minecraft.net", MineLoginAuthHandler.class);
+	}
 
-	public LoginAuth(Session session, String name, Runnable runnable) {
-		this.session = session;
-		this.name = name;
-		this.runnable = runnable;
+	public MineLoginAuthHandler(Session session, String name, Runnable runnable) {
+		super(session, name, runnable);
 	}
 
 	public void run() {

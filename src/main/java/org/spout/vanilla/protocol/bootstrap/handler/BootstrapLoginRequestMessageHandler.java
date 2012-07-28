@@ -36,7 +36,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.bootstrap.handler.auth.LoginAuth;
+import org.spout.vanilla.protocol.bootstrap.handler.auth.LoginAuthRegistry;
 import org.spout.vanilla.protocol.msg.LoginRequestMessage;
 
 public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginRequestMessage> {
@@ -59,7 +59,7 @@ public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginReq
 
 			if (VanillaConfiguration.ONLINE_MODE.getBoolean() && !VanillaConfiguration.ENCRYPT_MODE.getBoolean()) {
 				final String finalName = message.getName();
-				Thread loginAuth = new Thread(new LoginAuth(session, finalName, new PlayerConnectRunnable(session, finalName)), "Login Auth for [" + finalName + "]");
+				Thread loginAuth = new Thread(LoginAuthRegistry.create(session, finalName, new PlayerConnectRunnable(session, finalName)), "Login Auth for [" + finalName + "]");
 				loginAuth.setDaemon(true);
 				loginAuth.start();
 			} else {
@@ -86,7 +86,6 @@ public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginReq
 			this.name = name;
 		}
 
-		@Override
 		public void run() {
 			BootstrapLoginRequestMessageHandler.playerConnect(session, name);
 		}

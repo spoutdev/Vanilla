@@ -46,7 +46,7 @@ import org.spout.api.security.SecurityHandler;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.bootstrap.handler.auth.LoginAuth;
+import org.spout.vanilla.protocol.bootstrap.handler.auth.LoginAuthRegistry;
 import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
 
 public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler<EncryptionKeyResponseMessage> {
@@ -108,7 +108,7 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 				}
 			};
 
-			Spout.getEngine().getScheduler().scheduleAsyncTask(VanillaPlugin.getInstance(), new LoginAuth(session, finalName, runnable));
+			Spout.getEngine().getScheduler().scheduleAsyncTask(VanillaPlugin.getInstance(), LoginAuthRegistry.create(session, finalName, runnable));
 		}
 	}
 

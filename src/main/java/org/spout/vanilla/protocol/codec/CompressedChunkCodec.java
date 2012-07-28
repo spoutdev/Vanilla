@@ -33,10 +33,8 @@ import java.util.zip.Inflater;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.protocol.MessageCodec;
-
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 
 public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMessage> {
@@ -134,14 +132,7 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 			buffer.writeShort(0);
 			buffer.writeShort(0);
 			buffer.writeInt(UNLOAD_COMPRESSED.length);
-			buffer.writeInt(0);
 			buffer.writeBytes(UNLOAD_COMPRESSED);
-			int readable = buffer.readableBytes();
-			StringBuilder sb = new StringBuilder("Compressed unload packet: ");
-			for (int i = 0; i < readable; i++) {
-				sb.append(buffer.getByte(i) + ", ");
-			}
-			System.out.println(sb);
 			return buffer;
 		}
 		short sectionsSentBitmap = 0;

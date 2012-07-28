@@ -44,6 +44,10 @@ public final class RespawnMessage extends Message {
 		this.worldType = worldType;
 	}
 
+	public RespawnMessage() {
+		this(0,(byte)0,(byte)0,0,"");
+	}
+
 	public int getDimension() {
 		return dimension;
 	}

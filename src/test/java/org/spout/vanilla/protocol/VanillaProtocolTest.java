@@ -153,7 +153,6 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntityEffectMessage(1, (byte) 1, (byte) 1, (short) 34),
 			new EntityRemoveEffectMessage(1, (byte) 1),
 			new SetExperienceMessage(1.2F, (short) 2, (short) 3),
-			new LoadChunkMessage(0, -2, true),
 			new CompressedChunkMessage(1, 2, true, new boolean[16], new byte[][]{new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null, null, null, null, null, new byte[Chunk.BLOCKS.HALF_VOLUME * 5], null, null, null, null, null}, new byte[16 * 16]),
 			new MultiBlockChangeMessage(2, 3, new short[]{2, 3, 4, /**/ 3, 6, 4, /**/ 8, 5, 5}, new short[]{1, 2, 3}, new byte[]{3, 4, 5}),
 			new BlockChangeMessage(1, 2, 3, (short)87, 2),
@@ -181,7 +180,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new CustomDataMessage("EMERGENCY", new byte[]{0, 1, 1, 8, 9, 9, 8, 8, 8, 1, 9, 9, 9, 1, 1, 9, 7, 2, 5, 3}),
 			new ServerListPingMessage(),
 			new KickMessage("This is a test"),
-			new PlayerAbilityMessage(true, true, true, true),
+			new PlayerAbilityMessage(true, true, true, true, (byte) 0, (byte) 5),
 			new ClientStatusMessage((byte) 0)
 	};
 

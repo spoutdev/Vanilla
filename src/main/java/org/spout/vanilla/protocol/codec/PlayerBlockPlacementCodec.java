@@ -50,18 +50,24 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 		int z = buffer.readInt();
 		int direction = buffer.readUnsignedByte();
 
-		int id = buffer.readUnsignedShort();
-		if (id == -1) {
-			return new PlayerBlockPlacementMessage(x, y, z, direction);
-		}
-
-		int count = buffer.readUnsignedByte();
-		int damage = buffer.readShort();
+		int count = 0;
+		int damage = 0;
 		CompoundMap nbtData = null;
-		if (ChannelBufferUtils.hasNbtData(id)) {
-			nbtData = ChannelBufferUtils.readCompound(buffer);
+		
+		int id = buffer.readUnsignedShort();
+		if (id != 0xFFFF) {
+			count = buffer.readUnsignedByte();
+			damage = buffer.readShort();
+			if (ChannelBufferUtils.hasNbtData(id)) {
+				nbtData = ChannelBufferUtils.readCompound(buffer);
+			}
 		}
-		return new PlayerBlockPlacementMessage(x, y, z, direction, id, count, damage, nbtData);
+		
+		float dx = ((float) (buffer.readByte() & 0xFF)) / 16.0F;
+		float dy = ((float) (buffer.readByte() & 0xFF)) / 16.0F;
+		float dz = ((float) (buffer.readByte() & 0xFF)) / 16.0F;
+		
+		return new PlayerBlockPlacementMessage(x, y, z, direction, id, count, damage, nbtData, dx, dy, dz);
 	}
 
 	@Override
@@ -81,6 +87,9 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 				ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
 			}
 		}
+		buffer.writeByte((int) (message.getDX() * 16.0F));
+		buffer.writeByte((int) (message.getDY() * 16.0F));
+		buffer.writeByte((int) (message.getDZ() * 16.0F));
 		return buffer;
 	}
 }

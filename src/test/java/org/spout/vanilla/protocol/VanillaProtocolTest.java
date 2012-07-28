@@ -128,7 +128,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerLookMessage(1F, 2F, false),
 			new PlayerPositionLookMessage(1, 2, 5, 3.62, 4, 3, false),
 			new PlayerDiggingMessage(PlayerDiggingMessage.STATE_START_DIGGING, 1, 2, 3, 4),
-			new PlayerBlockPlacementMessage(1, 2, 3, 4, 89, 2, 7, null),
+			new PlayerBlockPlacementMessage(1, 2, 3, 4, 89, 2, 7, null, 9F, 19F, 20F),
 			new HeldItemChangeMessage(4),
 			new UseBedMessage(0, 3, 42, 42, 42),
 			new AnimationMessage(1234, AnimationMessage.ANIMATION_HURT),

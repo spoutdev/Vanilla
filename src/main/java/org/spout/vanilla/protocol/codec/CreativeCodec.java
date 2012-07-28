@@ -55,9 +55,7 @@ public class CreativeCodec extends MessageCodec<CreativeMessage> {
 		short amount = buffer.readByte();
 		short damage = buffer.readShort();
 		CompoundMap nbtData = null;
-		if (ChannelBufferUtils.hasNbtData(id)) {
-			nbtData = ChannelBufferUtils.readCompound(buffer);
-		}
+		nbtData = ChannelBufferUtils.readCompound(buffer);
 		return new CreativeMessage(slot, id, amount, damage, nbtData);
 	}
 

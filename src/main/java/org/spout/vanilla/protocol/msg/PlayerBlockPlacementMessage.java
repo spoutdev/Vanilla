@@ -35,13 +35,14 @@ import org.spout.nbt.CompoundMap;
 
 public final class PlayerBlockPlacementMessage extends Message {
 	private final int id, x, y, z, direction, count, damage;
+	private final float dx, dy, dz;
 	private CompoundMap nbtData;
 
-	public PlayerBlockPlacementMessage(int x, int y, int z, int direction) {
-		this(x, y, z, direction, -1, 0, 0, null);
+	public PlayerBlockPlacementMessage(int x, int y, int z, int direction, float dx, float dy, float dz) {
+		this(x, y, z, direction, -1, 0, 0, null, dx, dy, dz);
 	}
 
-	public PlayerBlockPlacementMessage(int x, int y, int z, int direction, int id, int count, int damage, CompoundMap nbtData) {
+	public PlayerBlockPlacementMessage(int x, int y, int z, int direction, int id, int count, int damage, CompoundMap nbtData, float dx, float dy, float dz) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
@@ -50,6 +51,9 @@ public final class PlayerBlockPlacementMessage extends Message {
 		this.count = count;
 		this.damage = damage;
 		this.nbtData = nbtData;
+		this.dx = dx;
+		this.dy = dy;
+		this.dz = dz;
 	}
 
 	public int getCount() {
@@ -82,6 +86,18 @@ public final class PlayerBlockPlacementMessage extends Message {
 
 	public CompoundMap getNbtData() {
 		return nbtData;
+	}
+	
+	public float getDX() {
+		return dx;
+	}
+	
+	public float getDY() {
+		return dy;
+	}
+	
+	public float getDZ() {
+		return dz;
 	}
 
 	@Override

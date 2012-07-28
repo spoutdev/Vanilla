@@ -212,7 +212,7 @@ public final class ChannelBufferUtils {
 
 	public static CompoundMap readCompound(ChannelBuffer buf) {
 		int len = buf.readShort();
-		if (len >= 0) {
+		if (len > 0) {
 			byte[] bytes = new byte[len];
 			buf.readBytes(bytes);
 			NBTInputStream str = null;

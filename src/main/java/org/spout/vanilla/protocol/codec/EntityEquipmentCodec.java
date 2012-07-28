@@ -53,10 +53,7 @@ public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMess
 
 		int count = buffer.readUnsignedByte();
 		int damage = buffer.readShort();
-		CompoundMap nbtData = null;
-		if (ChannelBufferUtils.hasNbtData(id)) {
-			nbtData = ChannelBufferUtils.readCompound(buffer);
-		}
+		CompoundMap nbtData = ChannelBufferUtils.readCompound(buffer);
 		return new EntityEquipmentMessage(entityId, slot, id, count, damage, nbtData);
 	}
 
@@ -71,6 +68,8 @@ public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMess
 			buffer.writeShort(message.getDamage());
 			if (ChannelBufferUtils.hasNbtData(message.getId())) {
 				ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
+			} else {
+				buffer.writeShort(-1);
 			}
 		}
 		return buffer;

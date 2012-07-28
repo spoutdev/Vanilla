@@ -59,10 +59,7 @@ public final class WindowSetSlotsCodec extends MessageCodec<WindowSetSlotsMessag
 			} else {
 				byte itemCount = buffer.readByte();
 				short data = buffer.readShort();
-				CompoundMap nbtData = null;
-				if (ChannelBufferUtils.hasNbtData(item)) {
-					nbtData = ChannelBufferUtils.readCompound(buffer);
-				}
+				CompoundMap nbtData = ChannelBufferUtils.readCompound(buffer);
 				items[slot] = new ItemStack(VanillaMaterials.getMaterial((short) item, (short) data), data, itemCount).setNBTData(nbtData);
 			}
 		}
@@ -84,10 +81,10 @@ public final class WindowSetSlotsCodec extends MessageCodec<WindowSetSlotsMessag
 				buffer.writeByte(item.getAmount());
 				buffer.writeShort(item.getData());
 				Material material = item.getMaterial();
-				if (material instanceof VanillaMaterial) {
-					if (((VanillaMaterial) material).hasNBTData()) {
-						ChannelBufferUtils.writeCompound(buffer, item.getNBTData());
-					}
+				if (material instanceof VanillaMaterial && ((VanillaMaterial) material).hasNBTData()) {
+					ChannelBufferUtils.writeCompound(buffer, item.getNBTData());
+				} else {
+					buffer.writeShort(-1);
 				}
 			}
 		}

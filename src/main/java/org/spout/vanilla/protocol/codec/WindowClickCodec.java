@@ -57,10 +57,7 @@ public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 
 		int count = buffer.readUnsignedByte();
 		int damage = buffer.readUnsignedShort();
-		CompoundMap nbtData = null;
-		if (ChannelBufferUtils.hasNbtData(item)) {
-			nbtData = ChannelBufferUtils.readCompound(buffer);
-		}
+		CompoundMap nbtData = ChannelBufferUtils.readCompound(buffer);
 		return new WindowClickMessage(id, slot, rightClick, transaction, shift, item, count, damage, nbtData);
 	}
 
@@ -80,6 +77,8 @@ public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 			buffer.writeShort(message.getDamage());
 			if (ChannelBufferUtils.hasNbtData(message.getItem())) {
 				ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
+			} else {
+				buffer.writeShort(-1);
 			}
 		}
 		return buffer;

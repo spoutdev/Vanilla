@@ -85,6 +85,8 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 			buffer.writeShort(message.getDamage());
 			if (ChannelBufferUtils.hasNbtData(id)) {
 				ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
+			} else {
+				buffer.writeShort(-1);
 			}
 		}
 		buffer.writeByte((int) (message.getDX() * 16.0F));

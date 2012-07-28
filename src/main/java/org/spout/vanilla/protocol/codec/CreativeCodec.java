@@ -68,6 +68,8 @@ public class CreativeCodec extends MessageCodec<CreativeMessage> {
 		buffer.writeShort(message.getDamage());
 		if (ChannelBufferUtils.hasNbtData(message.getId())) {
 			ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
+		} else {
+			buffer.writeShort(-1);
 		}
 		return buffer;
 	}

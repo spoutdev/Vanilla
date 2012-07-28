@@ -72,6 +72,8 @@ public final class WindowSetSlotCodec extends MessageCodec<WindowSetSlotMessage>
 			buffer.writeShort(message.getDamage());
 			if (ChannelBufferUtils.hasNbtData(message.getItem())) {
 				ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
+			} else {
+				buffer.writeShort(-1);
 			}
 		}
 		return buffer;

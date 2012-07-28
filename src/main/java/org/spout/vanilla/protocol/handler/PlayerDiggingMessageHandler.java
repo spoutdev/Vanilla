@@ -55,7 +55,6 @@ import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
-import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -72,16 +71,14 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		int y = message.getY();
 		int z = message.getZ();
 		int state = message.getState();
-		int face = message.getFace();
 
 		World w = player.getEntity().getWorld();
 		Point point = new Point(w, x, y, z);
 		Block block = w.getBlock(point, player.getEntity());
 		BlockMaterial blockMaterial = block.getMaterial();
 		int minecraftID = VanillaMaterials.getMinecraftId(blockMaterial);
-		BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(face);
+		BlockFace clickedFace = message.getFace();
 		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
-		
 		
 		//Don't block protections if dropping an item, silly Notch...
 		if (state != PlayerDiggingMessage.STATE_DROP_ITEM) {
@@ -95,7 +92,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			}
 		}
 
-		if (x == 0 && y == 0 && z == 0 && face == 0 && state == 4) {
+		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
 			((VanillaPlayer) player.getEntity().getController()).dropItem();
 			return;
 		}

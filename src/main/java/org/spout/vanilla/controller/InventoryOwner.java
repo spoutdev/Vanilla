@@ -24,18 +24,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util;
+package org.spout.vanilla.controller;
 
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
+import org.spout.api.inventory.InventoryBase;
 
-public class VanillaMessageHandlerUtils {
+public interface InventoryOwner extends WindowController {
 	/**
-	 * Converts a network block face to a spout one!
-	 * @param messageFace The network face!
-	 * @return The spout one!
+	 * Gets the inventory of this controller
+	 * @return The Inventory of this controller
 	 */
-	public static BlockFace messageToBlockFace(int messageFace) {
-		return BlockFaces.BTEWNS.get(messageFace, BlockFace.THIS);
-	}
+	public InventoryBase getInventory();
 }

@@ -41,7 +41,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.player.Player;
 import org.spout.api.tickable.ITickable;
 
-import org.spout.vanilla.controller.WindowOwner;
+import org.spout.vanilla.controller.WindowController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.WindowMessage;
 import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
@@ -58,9 +58,9 @@ public class Window implements InventoryViewer, ITickable {
 	protected Map<InventoryBase, SlotIndexCollection> inventories = new HashMap<InventoryBase, SlotIndexCollection>();
 	protected ItemStack itemOnCursor;
 	protected boolean isOpen = false;
-	protected WindowOwner[] windowOwners;
+	protected WindowController[] windowOwners;
 
-	public Window(WindowType type, String title, VanillaPlayer owner, WindowOwner... windowOwners) {
+	public Window(WindowType type, String title, VanillaPlayer owner, WindowController... windowOwners) {
 		this.type = type;
 		this.title = title;
 		this.owner = owner;
@@ -180,7 +180,7 @@ public class Window implements InventoryViewer, ITickable {
 	 */
 	public void open() {
 		this.isOpen = true;
-		for (WindowOwner owner : this.windowOwners) {
+		for (WindowController owner : this.windowOwners) {
 			owner.addViewer(this.getOwner(), this);
 		}
 		for (InventoryBase inventory : this.inventories.keySet()) {
@@ -194,7 +194,7 @@ public class Window implements InventoryViewer, ITickable {
 	 */
 	public void close() {
 		this.isOpen = false;
-		for (WindowOwner owner : this.windowOwners) {
+		for (WindowController owner : this.windowOwners) {
 			owner.removeViewer(this.getOwner());
 		}
 		for (InventoryBase inventory : this.inventories.keySet()) {

@@ -48,7 +48,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.InteractTool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
-import org.spout.vanilla.util.VanillaMessageHandlerUtils;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerBlockPlacementMessageHandler extends MessageHandler<PlayerBlockPlacementMessage> {
@@ -80,8 +79,8 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		 * usually happens. Sometimes it doesn't happen like that. Therefore, a
 		 * hacky workaround.
 		 */
-
-		if (message.getDirection() == 255) {
+		BlockFace clickedFace = message.getDirection();
+		if (clickedFace == BlockFace.THIS) {
 			// Right clicked air with an item.
 			PlayerInteractEvent event = eventManager.callEvent(new PlayerInteractEvent(player, null, holding, Action.RIGHT_CLICK, true));
 			if (!event.isCancelled() && holdingMat != null) {
@@ -94,10 +93,6 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 			//Get clicked block and validated face against it was placed
 			Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ(), player.getEntity());
-			BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(message.getDirection());
-			if (clickedFace == BlockFace.THIS) {
-				return;
-			}
 			if (clickedBlock.getY() >= world.getHeight() || clickedBlock.getY() < 0) {
 				return;
 			}

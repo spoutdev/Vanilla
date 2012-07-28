@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
@@ -37,9 +38,10 @@ public final class PlayerDiggingMessage extends Message {
 	public static final int STATE_UPDATE_BLOCK = 3;//This should be ignored - the client does not use it, and it could be abused.
 	public static final int STATE_DROP_ITEM = 4;
 	public static final int STATE_CANCEL_DIGGING = 5;
-	private final int state, x, y, z, face;
+	private final int state, x, y, z;
+	private final BlockFace face;
 
-	public PlayerDiggingMessage(int state, int x, int y, int z, int face) {
+	public PlayerDiggingMessage(int state, int x, int y, int z, BlockFace face) {
 		this.state = state;
 		this.x = x;
 		this.y = y;
@@ -63,7 +65,7 @@ public final class PlayerDiggingMessage extends Message {
 		return z;
 	}
 
-	public int getFace() {
+	public BlockFace getFace() {
 		return face;
 	}
 

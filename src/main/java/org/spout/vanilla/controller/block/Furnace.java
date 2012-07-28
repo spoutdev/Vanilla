@@ -28,7 +28,7 @@ package org.spout.vanilla.controller.block;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.TransactionWindowOwner;
+import org.spout.vanilla.controller.InventoryOwner;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.data.VanillaData;
@@ -39,7 +39,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.block.FurnaceWindow;
 
-public class Furnace extends VanillaWindowBlockController implements TransactionWindowOwner {
+public class Furnace extends VanillaWindowBlockController implements InventoryOwner {
 	private final FurnaceInventory inventory;
 	private float burnTimeRemaining = 0, burnTimeTotal = 0;
 	private float craftTimeRemaining = 0, craftTimeTotal = 0;

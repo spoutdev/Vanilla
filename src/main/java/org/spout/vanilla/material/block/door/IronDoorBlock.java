@@ -48,7 +48,7 @@ public class IronDoorBlock extends DoorBlock implements InitializableMaterial {
 
 	@Override
 	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial().getMaterial() instanceof Pickaxe) {
+		if (holding != null && holding.getMaterial() instanceof Pickaxe) {
 			return super.canDrop(block, holding);
 		} else {
 			return false;

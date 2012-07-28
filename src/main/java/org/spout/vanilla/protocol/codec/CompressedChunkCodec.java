@@ -43,6 +43,8 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 	private static final int COMPRESSION_LEVEL = Deflater.BEST_SPEED;
 	private static final int MAX_SECTIONS = 16;
 
+	private final byte[] UNLOAD_COMPRESSED = {0x78, (byte) 0x9C, 0x63, 0x64, 0x1C, (byte) 0xD9, 0x00, 0x00, (byte) 0x81, (byte) 0x80, 0x01, 0x01}; //Fake compressed data, client expects this when unloading
+	
 	public CompressedChunkCodec() {
 		super(CompressedChunkMessage.class, 0x33);
 	}
@@ -128,14 +130,18 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getZ());
 		buffer.writeByte(message.isContiguous() ? 1 : 0);
-		//TODO Is this the spot to handle this? Raphfrk?
-		//Handle unloading
 		if (message.shouldUnload()) {
-			buffer.writeShort(0); //TODO Unsigned short?
-			buffer.writeShort(0); //TODO Unsigned short?
-			byte[] staticCompressed = {0x78, (byte) 0x9C, 0x63, 0x64, 0x1C, (byte) 0xD9, 0x00, 0x00, (byte) 0x81, (byte) 0x80, 0x01, 0x01}; //Fake compressed data, client expects this when unloading
-			buffer.writeInt(staticCompressed.length);
-			buffer.writeBytes(staticCompressed);
+			buffer.writeShort(0);
+			buffer.writeShort(0);
+			buffer.writeInt(UNLOAD_COMPRESSED.length);
+			buffer.writeInt(0);
+			buffer.writeBytes(UNLOAD_COMPRESSED);
+			int readable = buffer.readableBytes();
+			StringBuilder sb = new StringBuilder("Compressed unload packet: ");
+			for (int i = 0; i < readable; i++) {
+				sb.append(buffer.getByte(i) + ", ");
+			}
+			System.out.println(sb);
 			return buffer;
 		}
 		short sectionsSentBitmap = 0;

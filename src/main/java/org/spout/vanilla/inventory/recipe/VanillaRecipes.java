@@ -35,20 +35,18 @@ import org.spout.api.inventory.Recipe;
 import org.spout.vanilla.resources.RecipeYaml;
 
 public class VanillaRecipes {
-	public static final VanillaRecipes INSTANCE = create();
-	private final Map<String, Recipe> yamlRecipes = new ConcurrentHashMap<String, Recipe>();
+	private static final Map<String, Recipe> yamlRecipes = new ConcurrentHashMap<String, Recipe>();
 
-	private static VanillaRecipes create() {
-		VanillaRecipes recipes = new VanillaRecipes();
+	public static void initialize() {
+		yamlRecipes.clear();
 		for (String key : RecipeYaml.DEFAULT.getRecipes().keySet()) {
 			Recipe recipe = RecipeYaml.DEFAULT.getRecipes().get(key);
 			Spout.getEngine().getRecipeManager().addRecipe(recipe);
-			recipes.yamlRecipes.put(key, recipe);
+			yamlRecipes.put(key, recipe);
 		}
-		return recipes;
 	}
 
-	public Recipe get(String name) {
+	public static Recipe get(String name) {
 		return yamlRecipes.get(name);
 	}
 }

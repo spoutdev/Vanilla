@@ -120,7 +120,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new HandshakeMessage((byte) 42, "Spouty", "SpoutTron", 9001),
 			new ChatMessage("<Spouty> This is a thing called a chat message"),
 			new TimeUpdateMessage(666L),
-			new EntityEquipmentMessage(234, 3, new SlotData((byte)-1)),
+			new EntityEquipmentMessage(234, 3),
 			new SpawnPositionMessage(42, 42, 42),
 			new EntityInteractionMessage(1123, 4455, true),
 			new UpdateHealthMessage((short) 1, (short) 2, 3.4F),

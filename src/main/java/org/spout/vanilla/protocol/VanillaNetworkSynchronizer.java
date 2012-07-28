@@ -341,9 +341,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				ItemStack slotItem = vc.getInventory().getArmor().getItem(slot);
 				EntityEquipmentMessage EEMsg;
 				if (slotItem == null) {
-					EEMsg = new EntityEquipmentMessage(entityId, slot, new SlotData((short)-1));
+					EEMsg = new EntityEquipmentMessage(entityId, slot);
 				} else {
-					EEMsg = new EntityEquipmentMessage(entityId, slot, new SlotData(getMinecraftId(slotItem.getMaterial().getId()), (byte)slotItem.getAmount(), slotItem.getData()));
+					EEMsg = new EntityEquipmentMessage(entityId, slot, getMinecraftId(slotItem.getMaterial().getId()), slotItem.getAmount(), slotItem.getData(), slotItem.getNBTData());
 				}
 				owner.getSession().send(false, EEMsg);
 			}

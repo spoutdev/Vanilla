@@ -345,35 +345,6 @@ public final class ChannelBufferUtils {
 	 * @param buf The buffer to decode the Slot field
 	 * @return The according SlotData
 	 */
-	public static SlotData getSlotData(ChannelBuffer buf) {
-		SlotData slotData = null;
-		short id = buf.readShort();
-		if (id != -1) {
-			byte itemCount = buf.readByte();
-			short damage = buf.readShort();
-			if (SlotData.CanEnchant(id)) {
-				CompoundMap enchantInfo = readCompound(buf);
-				slotData = new SlotData(id, itemCount, damage, enchantInfo);
-			} else {
-				slotData = new SlotData(id, itemCount, damage);
-			}
-		} else {
-			slotData = new SlotData(id);
-		}
-		return slotData;
-	}
-
-	public static void writeSlotData(ChannelBuffer buf, SlotData slotData) {
-		buf.writeByte(slotData.getId());
-		if (slotData.getId() != -1) {
-			buf.writeByte(slotData.getCount());
-			buf.writeShort(slotData.getDamage());
-
-			if (SlotData.CanEnchant(slotData.getId())) {
-				writeCompound(buf, slotData.createNBT());
-			}
-		}
-	}
 
 	/**
 	 * Default private constructor to prevent instantiation.

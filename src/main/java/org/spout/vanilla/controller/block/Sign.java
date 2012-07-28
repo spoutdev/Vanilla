@@ -28,11 +28,15 @@ package org.spout.vanilla.controller.block;
 
 import java.util.HashSet;
 
+import org.spout.api.Source;
+import org.spout.api.Spout;
+import org.spout.api.event.EventManager;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.event.block.SignChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
@@ -41,6 +45,7 @@ public class Sign extends VanillaBlockController {
 	private String[] text = new String[4];
 	private HashSet<Player> dirty = new HashSet<Player>();
 	private int range = 20;
+	EventManager eventManager = Spout.getEngine().getEventManager();
 
 	public Sign() {
 		super(VanillaControllerTypes.SIGN, VanillaMaterials.SIGN.getPlacedMaterial());
@@ -92,14 +97,18 @@ public class Sign extends VanillaBlockController {
 
 	/**
 	 * Sets the current lines of this Sign
+	 * @param source which is setting the text lines
 	 * @param text to set to
 	 */
-	public void setText(String[] text) throws IllegalArgumentException {
+	public void setText(Source source, String[] text) throws IllegalArgumentException {
 		if (text.length != 4) {
 			throw new IllegalArgumentException("The amount of lines have to equal 4");
 		}
-		this.text = text;
-		update();
+		SignChangeEvent signChangeEvent = eventManager.callEvent(new SignChangeEvent(this, source, text));
+		if (!signChangeEvent.isCancelled()) {
+			this.text = text;
+			update();
+		}
 	}
 
 	/**
@@ -113,12 +122,18 @@ public class Sign extends VanillaBlockController {
 
 	/**
 	 * Sets the line text at a certain line row
+	 * @param source which sets the line
 	 * @param line row index
 	 * @param text to set the line to
 	 */
-	public void setLine(int line, String text) {
-		this.text[line] = text;
-		update();
+	public void setLine(Source source, int line, String text) {
+		String[] temp = this.text;
+		temp[line] = text;
+		SignChangeEvent signChangeEvent = eventManager.callEvent(new SignChangeEvent(this, source, temp));
+		if (!signChangeEvent.isCancelled()) {
+			this.text[line] = text;
+			update();
+		}
 	}
 
 	private void update() {

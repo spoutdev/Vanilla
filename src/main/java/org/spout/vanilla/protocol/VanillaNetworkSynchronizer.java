@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.protocol;
 
+import java.util.Arrays;
+
 import gnu.trove.set.TIntSet;
 
 import org.spout.api.entity.Entity;
@@ -86,6 +88,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private long lastKeepAlive = System.currentTimeMillis();
 	private TSyncIntPairObjectHashMap<TSyncIntHashSet> initializedChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
 	private TSyncIntPairHashSet activeChunks = new TSyncIntPairHashSet();
+	private Object initChunkLock = new Object();
 
 	static {
 		int i = 0;
@@ -112,8 +115,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		registerProtocolEvents(this);
 	}
 
-	private Object initChunkLock = new Object();
-
 	@Override
 	protected void freeChunk(Point p) {
 		int x = (int) p.getX() >> Chunk.BLOCKS.BITS;
@@ -134,7 +135,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			} else {
 				byte[][] data = new byte[16][];
 				data[y] = AIR_CHUNK_DATA;
-				CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], data, null, true);
+				byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
+				Arrays.fill(biomeData, (byte) 1);
+				CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, new boolean[16], data, biomeData, true);
 				session.send(false, CCMsg);
 			}
 		}

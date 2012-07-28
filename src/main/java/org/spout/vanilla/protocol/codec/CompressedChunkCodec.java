@@ -128,6 +128,16 @@ public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMess
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getZ());
 		buffer.writeByte(message.isContiguous() ? 1 : 0);
+		//TODO Is this the spot to handle this? Raphfrk?
+		//Handle unloading
+		if (message.shouldUnload()) {
+			buffer.writeShort(0); //TODO Unsigned short?
+			buffer.writeShort(0); //TODO Unsigned short?
+			byte[] staticCompressed = {0x78, (byte) 0x9C, 0x63, 0x64, 0x1C, (byte) 0xD9, 0x00, 0x00, (byte) 0x81, (byte) 0x80, 0x01, 0x01}; //Fake compressed data, client expects this when unloading
+			buffer.writeInt(staticCompressed.length);
+			buffer.writeBytes(staticCompressed);
+			return buffer;
+		}
 		short sectionsSentBitmap = 0;
 		short additionalDataBitMap = 0;
 

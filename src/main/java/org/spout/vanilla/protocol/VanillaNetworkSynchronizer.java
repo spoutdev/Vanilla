@@ -126,14 +126,18 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 
 		TIntSet column = initializedChunks.get(x, z);
+		CompressedChunkMessage CCMsg;
 		if (column != null) {
 			column.remove(y);
 			if (column.isEmpty()) {
 				if (initializedChunks.remove(x, z) != null) {
 					activeChunks.remove(x, z);
 				}
+				CCMsg = new CompressedChunkMessage(x, z, true, null, null, null, true);
+			} else {
+				CCMsg = new CompressedChunkMessage(x, z, false, null, null, null, true);
 			}
-			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, null, null, null, true);
+
 			session.send(false, CCMsg);
 		}
 	}

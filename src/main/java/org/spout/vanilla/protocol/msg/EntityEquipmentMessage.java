@@ -45,9 +45,9 @@ public final class EntityEquipmentMessage extends Message implements Transformab
 	private int entityId, slot, id, count, damage;
 	private CompoundMap nbtData;
 
-	public EntityEquipmentMessage(int id, int slot)
+	public EntityEquipmentMessage(int entityId, int slot)
 	{
-		this(id, slot, -1, 0, 0, null);
+		this(entityId, slot, -1, 0, 0, null);
 	}
 	public EntityEquipmentMessage(int entityId, int slot, int id, int count, int damage, CompoundMap nbtData) {
 		this.entityId = entityId;

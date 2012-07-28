@@ -30,30 +30,36 @@ import java.io.IOException;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-
 import org.spout.api.protocol.MessageCodec;
-
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.RespawnMessage;
+import org.spout.vanilla.protocol.msg.NamedSoundEffectMessage;
 
-public final class RespawnCodec extends MessageCodec<RespawnMessage> {
-	public RespawnCodec() {
-		super(RespawnMessage.class, 0x09);
+public class NamedSoundEffectCodec extends MessageCodec<NamedSoundEffectMessage> {
+
+	public NamedSoundEffectCodec() {
+		super(NamedSoundEffectMessage.class, 0x3E);
 	}
 
 	@Override
-	public RespawnMessage decode(ChannelBuffer buffer) throws IOException {
-		return new RespawnMessage();
+	public NamedSoundEffectMessage decode(ChannelBuffer buffer) throws IOException {
+		String soundName = ChannelBufferUtils.readString(buffer);
+		int effectPositionX = buffer.readInt();
+		int effectPositionY = buffer.readInt();
+		int effectPositionZ = buffer.readInt();
+		float volume = buffer.readFloat();
+		byte pitch = buffer.readByte();
+		return new NamedSoundEffectMessage(soundName, effectPositionX, effectPositionY, effectPositionZ, volume, pitch);
 	}
 
 	@Override
-	public ChannelBuffer encode(RespawnMessage message) throws IOException {
+	public ChannelBuffer encode(NamedSoundEffectMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeInt(message.getDimension());
-		buffer.writeByte(message.getDifficulty());
-		buffer.writeByte(message.getGameMode());
-		buffer.writeShort(ChannelBufferUtils.getShifts(message.getWorldHeight()) - 1);
-		ChannelBufferUtils.writeString(buffer, message.getWorldType());
+		ChannelBufferUtils.writeString(buffer, message.getSoundName());
+		buffer.writeInt(message.getEffectPositionX());
+		buffer.writeInt(message.getEffectPositionY());
+		buffer.writeInt(message.getEffectPositionZ());
+		buffer.writeFloat(message.getVolume());
+		buffer.writeByte(message.getPitch());
 		return buffer;
 	}
 }

@@ -47,7 +47,7 @@ public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMess
 		int entityId = buffer.readInt();
 		int slot = buffer.readUnsignedShort();
 		int id = buffer.readUnsignedShort();
-		if (id == 0xFFFF) {
+		if (id == -1) {
 			return new EntityEquipmentMessage(entityId, slot);
 		}
 

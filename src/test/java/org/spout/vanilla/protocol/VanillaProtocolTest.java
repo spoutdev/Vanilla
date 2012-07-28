@@ -64,6 +64,7 @@ import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
 import org.spout.vanilla.protocol.msg.ExplosionMessage;
 import org.spout.vanilla.protocol.msg.GroundMessage;
 import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
+import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 import org.spout.vanilla.protocol.msg.ItemDataMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
@@ -113,7 +114,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final Message[] TEST_MESSAGES = new Message[]{
 			new KeepAliveMessage(42),
 			//new ClientLoginRequestMessage(),
-			new ServerLoginRequestMessage(0, "", (byte) 0, (byte) 0, (byte) 0, (short) 10),
+			new LoginRequestMessage(0, "", (byte) 0, (byte) 0, (byte) 0, (short) 10),
 			new HandshakeMessage((byte) 42, "Spouty", "SpoutTron", 9001),
 			new ChatMessage("<Spouty> This is a thing called a chat message"),
 			new TimeUpdateMessage(666L),

@@ -51,7 +51,7 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 		int direction = buffer.readUnsignedByte();
 
 		int id = buffer.readUnsignedShort();
-		if (id == 0xFFFF) {
+		if (id == -1) {
 			return new PlayerBlockPlacementMessage(x, y, z, direction);
 		}
 

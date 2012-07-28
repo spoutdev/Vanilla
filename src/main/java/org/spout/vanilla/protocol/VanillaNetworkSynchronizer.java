@@ -334,8 +334,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			first = false;
 			int entityId = owner.getEntity().getId();
 			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
-//			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, owner.getName(), gamemode.getId(), dimension.getId(), difficulty.getId(), 256, session.getEngine().getMaxPlayers(), worldType.toString());
-//			owner.getSession().send(false, true, idMsg);
+			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) session.getEngine().getMaxPlayers());
+			owner.getSession().send(false, true, idMsg);
 			owner.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
 				ItemStack slotItem = vc.getInventory().getArmor().getItem(slot);

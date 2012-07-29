@@ -26,10 +26,14 @@
  */
 package org.spout.vanilla.protocol.controller.living;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
@@ -56,7 +60,11 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 			if (hand != null) {
 				item = hand.getMaterial().getId();
 			}
-			return new Message[]{new EntitySpawnPlayerMessage(id, mcp.getTitle(), x, y, z, r, p, item)};
+			//TODO: this is the air parameter, need to actually implement it!
+			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+			parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 300));
+			
+			return new Message[]{new EntitySpawnPlayerMessage(id, mcp.getTitle(), x, y, z, r, p, item, parameters)};
 		}
 
 		return null;

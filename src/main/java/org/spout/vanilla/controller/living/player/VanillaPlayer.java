@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.controller.living.player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -43,6 +45,7 @@ import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaActionController;
@@ -349,8 +352,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 					if (currentItem != null) {
 						itemId = currentItem.getMaterial().getId();
 					}
+					
+					//TODO: this is the air parameter, need to actually implement it!
+					List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+					parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 300));
 
-					sendPacket(player, new EntitySpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId));
+					sendPacket(player, new EntitySpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId, parameters));
 				} else {
 					invisibleFor.add(player);
 					sendPacket(player, new DestroyEntitiesMessage(new int[] {parent.getId()}));

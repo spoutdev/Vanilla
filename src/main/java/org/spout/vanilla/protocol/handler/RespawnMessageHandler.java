@@ -26,11 +26,15 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.spout.api.Spout;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
@@ -65,9 +69,13 @@ public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 		String worldType = point.getWorld().getDataMap().get(VanillaData.WORLD_TYPE).toString();
 		RespawnMessage respawn = new RespawnMessage(dimension, difficulty, gamemode, 256, worldType);
 		session.send(false, respawn);
+		
+		//TODO: this is the air parameter, need to actually implement it!
+		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 300));
 
 		//send spawn to everyone else
-		EntitySpawnPlayerMessage spawn = new EntitySpawnPlayerMessage(player.getEntity().getId(), player.getDisplayName(), point, (int) player.getEntity().getYaw(), (int) player.getEntity().getPitch(), 0);
+		EntitySpawnPlayerMessage spawn = new EntitySpawnPlayerMessage(player.getEntity().getId(), player.getDisplayName(), point, (int) player.getEntity().getYaw(), (int) player.getEntity().getPitch(), 0, parameters);
 		VanillaNetworkUtil.broadcastPacket(new Player[]{player}, spawn);
 	}
 }

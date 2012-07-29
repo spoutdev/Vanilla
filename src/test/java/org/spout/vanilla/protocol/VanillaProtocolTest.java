@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.protocol;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.spout.api.geo.cuboid.Chunk;
@@ -33,6 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.common.message.CustomDataMessage;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -133,7 +135,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntityUseBedMessage(0, 3, 42, 42, 42),
 			new EntityAnimationMessage(1234, EntityAnimationMessage.ANIMATION_HURT),
 			new EntityActionMessage(5, 2),
-			new EntitySpawnPlayerMessage(24, "risaccess1", 8000, 28, 900, 0, 0, 89),
+			new EntitySpawnPlayerMessage(24, "risaccess1", 8000, 28, 900, 0, 0, 89, new ArrayList<Parameter<?>>()),
 			new EntitySpawnItemMessage(1234, 89, 3, (short) 4, 1, 2, 3, 34, 56, 55),
 			new EntityCollectItemMessage(1234, 5678),
 			new EntitySpawnVehicleMessage(1, 3, 3.0, 654.0, 1234.0, 77, 0.54, 0.23, 0.7),

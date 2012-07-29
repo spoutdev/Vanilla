@@ -40,15 +40,6 @@ public final class EntitySpawnPlayerMessage extends EntityMessage {
 	private final int x, y, z, yaw, pitch, item;
 	private final String name;
 	private final List<Parameter<?>> parameters;
-	private static final List<Parameter<?>> NO_PARAMETERS = new ArrayList<Parameter<?>>();
-	
-	public EntitySpawnPlayerMessage(int id, String name, Vector3 position, int yaw, int pitch, int item) {
-		this(id, name, (int) position.getX(), (int) position.getY(), (int) position.getZ(), yaw, pitch, item, NO_PARAMETERS);
-	}
-
-	public EntitySpawnPlayerMessage(int id, String name, int x, int y, int z, int yaw, int pitch, int item) {
-		this(id, name, x, y, z, yaw, pitch, item, NO_PARAMETERS);
-	}
 
 	public EntitySpawnPlayerMessage(int id, String name, Vector3 position, int yaw, int pitch, int item, List<Parameter<?>> parameters) {
 		this(id, name, (int) position.getX(), (int) position.getY(), (int) position.getZ(), yaw, pitch, item, parameters);

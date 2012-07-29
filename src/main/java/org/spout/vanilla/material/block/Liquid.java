@@ -39,10 +39,11 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.util.flowing.LiquidModel;
 
 public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial, Source {
 	private final boolean flowing;
-	public static final int MAX_HOLE_DISTANCE = 5;
+	private int delay;
 
 	public Liquid(String name, int id, boolean flowing) {
 		super(name, id);
@@ -68,34 +69,19 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		return false;
 	}
 
-	private boolean onFlow(Block block) {
+	/**
+	 * Let's the liquid flow from the block in all possible directions
+	 * @param block to flow from
+	 * @return True if flowing was successful
+	 */
+	public boolean onFlow(Block block) {
 		// Flow below, and if not possible, spread outwards
 		if (this.onFlow(block, BlockFace.BOTTOM)) {
 			return true;
 		} else {
-			// Find out all the hole distance
-			int distance = Integer.MAX_VALUE;
-			int i;
-			int[] distances = new int[4];
-			for (i = 0; i < distances.length; i++) {
-				distances[i] = this.getHoleDistance(block.translate(BlockFaces.NESW.get(i)));
-				if (distances[i] != -1 && distances[i] < distance) {
-					distance = distances[i];
-				}
-			}
 			boolean flowed = false;
-			if (distance == Integer.MAX_VALUE) {
-				// No hole found, flow in all directions
-				for (BlockFace face : BlockFaces.NESW) {
-					flowed |= this.onFlow(block, face);
-				}
-			} else {
-				// Flow to all matching directions
-				for (i = 0; i < distances.length; i++) {
-					if (distances[i] != -1 && distances[i] <= distance) {
-						flowed |= this.onFlow(block, BlockFaces.NESW.get(i));
-					}
-				}
+			for (BlockFace direction : LiquidModel.INSTANCE.getHoleDirections(block)) {
+				flowed |= this.onFlow(block, direction);
 			}
 			return flowed;
 		}
@@ -224,7 +210,19 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	 * Gets the delay in milliseconds between updates of this liquid
 	 * @return the millisecond delay of this Liquid
 	 */
-	public abstract int getFlowDelay();
+	public int getFlowDelay() {
+		return this.delay;
+	}
+
+	/**
+	 * Sets the delay in milliseconds between updates of this liquid
+	 * @param delay in milliseconds to set to
+	 * @return this Liquid
+	 */
+	public Liquid setFlowDelay(int delay) {
+		this.delay = delay;
+		return this;
+	}
 
 	/**
 	 * Sets whether this liquid is flowing down
@@ -264,6 +262,16 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		return block.getData() == 0x0;
 	}
 
+	/**
+	 * Gets whether this liquid is a source
+	 * 
+	 * @param data of the block of the liquid
+	 * @return True if it is a source, False if not
+	 */
+	public boolean isSource(short data) {
+		return data == 0x0;
+	}
+
 	public boolean isFlowing() {
 		return flowing;
 	}
@@ -275,52 +283,6 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
-	}
-
-	/**
-	 * Gets the distance to the nearest hole<br>
-	 * Returns -1 if no hole was found
-	 * @param from which block to start looking
-	 * @return the hole distance
-	 */
-	public int getHoleDistance(Block from) {
-		return getHoleDistance(from, 0, MAX_HOLE_DISTANCE);
-	}
-
-	/**
-	 * Gets the distance to the nearest hole<br>
-	 * Returns -1 if no hole was found
-	 * @param from which block to start looking
-	 * @param currentDistance to compare with maxDistance
-	 * @param maxDistance after which to stop searching
-	 * @return the hole distance
-	 */
-	public int getHoleDistance(Block from, int currentDistance, int maxDistance) {
-		//TODO: Try to implement this system in a model-like structure, like explosion models
-		if (currentDistance >= maxDistance || isLiquidObstacle(from.getMaterial())) {
-			// Break, because we can not flow through obstacles
-			return -1;
-		} else if (this.isMaterial(from.getMaterial()) && this.isSource(from)) {
-			// Break, because we can not flow towards another source block
-			return -1;
-		} else if (!isLiquidObstacle(from.translate(BlockFace.BOTTOM).getMaterial())) {
-			// Found a hole
-			return 0;
-		}
-		currentDistance++;
-		int distance = Integer.MAX_VALUE;
-		int selfDistance;
-		for (BlockFace face : BlockFaces.NESW) {
-			selfDistance = getHoleDistance(from.translate(face), currentDistance, maxDistance);
-			if (selfDistance != -1 && selfDistance < distance) {
-				distance = selfDistance;
-			}
-		}
-		if (distance == Integer.MAX_VALUE) {
-			return -1;
-		} else {
-			return distance + 1;
-		}
 	}
 
 	@Override

@@ -37,7 +37,7 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
-import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
@@ -67,7 +67,7 @@ public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 		session.send(false, respawn);
 
 		//send spawn to everyone else
-		SpawnPlayerMessage spawn = new SpawnPlayerMessage(player.getEntity().getId(), player.getDisplayName(), point, (int) player.getEntity().getYaw(), (int) player.getEntity().getPitch(), 0);
+		EntitySpawnPlayerMessage spawn = new EntitySpawnPlayerMessage(player.getEntity().getId(), player.getDisplayName(), point, (int) player.getEntity().getYaw(), (int) player.getEntity().getPitch(), 0);
 		VanillaNetworkUtil.broadcastPacket(new Player[]{player}, spawn);
 	}
 }

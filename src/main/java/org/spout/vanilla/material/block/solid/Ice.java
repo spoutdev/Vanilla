@@ -114,7 +114,12 @@ public class Ice extends SpreadingSolid implements Mineable, InitializableMateri
 	}
 
 	@Override
-	public boolean canSpreadAt(Block block) {
+	public boolean canSpreadFrom(Block block) {
 		return Climate.get(block).isFreezing();
+	}
+
+	@Override
+	public boolean canSpreadTo(Block from, Block to) {
+		return super.canSpreadTo(from, to) && VanillaMaterials.WATER.isSource(to);
 	}
 }

@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol;
 
 import org.spout.api.chat.ChatArguments;
+import org.spout.api.command.Command;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.protocol.Message;
@@ -47,8 +48,14 @@ public class VanillaProtocol extends Protocol {
 	}
 
 	@Override
-	public Message getChatMessage(ChatArguments message) {
-		return new ChatMessage(message.asString(VanillaStyleHandler.ID));
+	public Message getCommandMessage(Command command, ChatArguments args) {
+		if (command.getPreferredName().equals("kick")) {
+			return getKickMessage(args);
+		} else if (command.getPreferredName().equals("say")) {
+			return new ChatMessage(args.asString(VanillaStyleHandler.ID));
+		} else {
+			return new ChatMessage('/' + command.getPreferredName() + args.asString(VanillaStyleHandler.ID));
+		}
 	}
 
 	@Override

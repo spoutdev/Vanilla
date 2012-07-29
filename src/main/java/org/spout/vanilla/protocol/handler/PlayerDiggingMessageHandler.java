@@ -53,9 +53,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
-import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
-import org.spout.vanilla.util.VanillaMessageHandlerUtils;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -72,14 +71,15 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		int y = message.getY();
 		int z = message.getZ();
 		int state = message.getState();
-		int face = message.getFace();
 
 		World w = player.getEntity().getWorld();
 		Point point = new Point(w, x, y, z);
 		Block block = w.getBlock(point, player.getEntity());
 		BlockMaterial blockMaterial = block.getMaterial();
+
 		short minecraftID = VanillaMaterials.getMinecraftId(blockMaterial);
-		BlockFace clickedFace = VanillaMessageHandlerUtils.messageToBlockFace(face);
+		BlockFace clickedFace = message.getFace();
+
 		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
 
 		//Don't block protections if dropping an item, silly Notch...
@@ -88,13 +88,13 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			for (Protection p : protections) {
 				if (p.contains(point) && !vp.isOp()) {
 					player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID, block.getData() & 0xF));
-					player.sendMessage(ChatStyle.DARK_RED + "This area is a protected spawn point!");
+					player.sendMessage(ChatStyle.DARK_RED, "This area is a protected spawn point!");
 					return;
 				}
 			}
 		}
 
-		if (x == 0 && y == 0 && z == 0 && face == 0 && state == 4) {
+		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
 			((VanillaPlayer) player.getEntity().getController()).dropItem();
 			return;
 		}

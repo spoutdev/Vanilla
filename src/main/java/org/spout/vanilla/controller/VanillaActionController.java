@@ -53,8 +53,8 @@ import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityCombustEvent;
-import org.spout.vanilla.protocol.msg.AnimationMessage;
-import org.spout.vanilla.protocol.msg.EntityStatusMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
 import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
@@ -393,7 +393,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 		setHealth(getHealth() - amount, HealthChangeReason.DAMAGE);
 		lastDamager = damager;
 		if (sendHurtMessage) {
-			broadcastPacket(new AnimationMessage(this.getParent().getId(), AnimationMessage.ANIMATION_HURT), new EntityStatusMessage(this.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
+			broadcastPacket(new EntityAnimationMessage(this.getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(this.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
 		}
 	}
 

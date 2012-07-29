@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.window;
 
-import org.spout.vanilla.controller.WindowOwner;
+import org.spout.vanilla.controller.WindowController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
@@ -38,7 +38,7 @@ import org.spout.vanilla.util.intmap.SlotIndexGrid;
 public class TransactionWindow extends Window {
 	private final int transactionSize;
 
-	public TransactionWindow(WindowType type, String title, VanillaPlayer owner, int transactionSize, WindowOwner... windowOwners) {
+	public TransactionWindow(WindowType type, String title, VanillaPlayer owner, int transactionSize, WindowController... windowOwners) {
 		super(type, title, owner, windowOwners);
 		this.transactionSize = transactionSize;
 		this.addInventory(owner.getInventory().getMain(), new SlotIndexGrid(9, 4, transactionSize));

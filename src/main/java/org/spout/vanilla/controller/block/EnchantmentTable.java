@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.controller.block;
 
-import org.spout.vanilla.controller.TransactionWindowOwner;
+import org.spout.vanilla.controller.InventoryOwner;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
@@ -34,7 +34,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.block.EnchantmentTableWindow;
 
-public class EnchantmentTable extends VanillaWindowBlockController implements TransactionWindowOwner {
+public class EnchantmentTable extends VanillaWindowBlockController implements InventoryOwner {
 	private final EnchantmentTableInventory inventory;
 
 	public EnchantmentTable() {

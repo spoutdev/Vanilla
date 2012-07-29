@@ -37,13 +37,13 @@ import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Living;
-import org.spout.vanilla.protocol.msg.DestroyEntityMessage;
-import org.spout.vanilla.protocol.msg.EntityHeadYawMessage;
-import org.spout.vanilla.protocol.msg.EntityRotationMessage;
-import org.spout.vanilla.protocol.msg.EntityTeleportMessage;
-import org.spout.vanilla.protocol.msg.EntityVelocityMessage;
-import org.spout.vanilla.protocol.msg.RelativeEntityPositionMessage;
-import org.spout.vanilla.protocol.msg.RelativeEntityPositionRotationMessage;
+import org.spout.vanilla.protocol.msg.DestroyEntitiesMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityRelativePositionMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityRelativePositionRotationMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityRotationMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityTeleportMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityVelocityMessage;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
@@ -51,7 +51,7 @@ import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	@Override
 	public Message[] getDestroyMessage(Entity entity) {
-		return new Message[]{new DestroyEntityMessage(new int[] {entity.getId()})};
+		return new Message[] {new DestroyEntitiesMessage(new int[] {entity.getId()})};
 	}
 
 	public Message[] getUpdateMessage(Entity entity) {
@@ -92,10 +92,10 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 			boolean looked = !prevTransform.getRotation().equals(newTransform.getRotation());
 			if (moved) {
 				if (looked) {
-					messages.add(new RelativeEntityPositionRotationMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
+					messages.add(new EntityRelativePositionRotationMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
 					vController.setLastClientTransform(newTransform);
 				} else {
-					messages.add(new RelativeEntityPositionMessage(entity.getId(), deltaX, deltaY, deltaZ));
+					messages.add(new EntityRelativePositionMessage(entity.getId(), deltaX, deltaY, deltaZ));
 					vController.getLastClientTransform().setPosition(newTransform.getPosition());
 				}
 			} else if (looked) {

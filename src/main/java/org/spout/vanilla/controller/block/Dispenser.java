@@ -28,7 +28,7 @@ package org.spout.vanilla.controller.block;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.TransactionWindowOwner;
+import org.spout.vanilla.controller.InventoryOwner;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.data.VanillaData;
@@ -37,7 +37,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.block.DispenserWindow;
 
-public class Dispenser extends VanillaWindowBlockController implements TransactionWindowOwner {
+public class Dispenser extends VanillaWindowBlockController implements InventoryOwner {
 	private boolean isPowered = false;
 	private final DispenserInventory inventory;
 

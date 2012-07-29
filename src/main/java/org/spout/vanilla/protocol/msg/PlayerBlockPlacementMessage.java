@@ -28,21 +28,23 @@ package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.nbt.CompoundMap;
 
 public final class PlayerBlockPlacementMessage extends Message {
-	private final int id, x, y, z, direction, count, damage;
+	private final int id, x, y, z, count, damage;
+	private final BlockFace direction;
 	private final float dx, dy, dz;
 	private CompoundMap nbtData;
 
-	public PlayerBlockPlacementMessage(int x, int y, int z, int direction, float dx, float dy, float dz) {
+	public PlayerBlockPlacementMessage(int x, int y, int z, BlockFace direction, float dx, float dy, float dz) {
 		this(x, y, z, direction, -1, 0, 0, null, dx, dy, dz);
 	}
 
-	public PlayerBlockPlacementMessage(int x, int y, int z, int direction, int id, int count, int damage, CompoundMap nbtData, float dx, float dy, float dz) {
+	public PlayerBlockPlacementMessage(int x, int y, int z, BlockFace direction, int id, int count, int damage, CompoundMap nbtData, float dx, float dy, float dz) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
@@ -80,7 +82,7 @@ public final class PlayerBlockPlacementMessage extends Message {
 		return z;
 	}
 
-	public int getDirection() {
+	public BlockFace getDirection() {
 		return direction;
 	}
 

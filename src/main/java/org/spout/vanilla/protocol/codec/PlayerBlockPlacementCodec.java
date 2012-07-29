@@ -31,6 +31,8 @@ import java.io.IOException;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.nbt.CompoundMap;
@@ -48,7 +50,7 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 		int x = buffer.readInt();
 		int y = buffer.readUnsignedByte();
 		int z = buffer.readInt();
-		int direction = buffer.readUnsignedByte();
+		BlockFace direction = BlockFaces.BTEWNS.get(buffer.readUnsignedByte(), BlockFace.THIS);
 
 		int count = 0;
 		int damage = 0;
@@ -76,7 +78,7 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 		buffer.writeInt(message.getX());
 		buffer.writeByte(message.getY());
 		buffer.writeInt(message.getZ());
-		buffer.writeByte(message.getDirection());
+		buffer.writeByte(BlockFaces.BTEWNS.indexOf(message.getDirection(), 255));
 		buffer.writeShort(id);
 		if (id != -1) {
 			buffer.writeByte(message.getCount());

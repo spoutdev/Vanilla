@@ -29,8 +29,8 @@ package org.spout.vanilla.data.effect;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.EntityEffectMessage;
-import org.spout.vanilla.protocol.msg.EntityRemoveEffectMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityEffectMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityRemoveEffectMessage;
 
 public abstract class VanillaEffect extends Effect {
 	public VanillaEffect(VanillaPlayer effected, int id, float duration, int strength) {

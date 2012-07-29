@@ -33,7 +33,7 @@ import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.SpawnPlayerMessage;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {
 	@Override
@@ -56,7 +56,7 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 			if (hand != null) {
 				item = hand.getMaterial().getId();
 			}
-			return new Message[]{new SpawnPlayerMessage(id, mcp.getTitle(), x, y, z, r, p, item)};
+			return new Message[]{new EntitySpawnPlayerMessage(id, mcp.getTitle(), x, y, z, r, p, item)};
 		}
 
 		return null;

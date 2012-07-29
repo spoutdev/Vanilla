@@ -38,8 +38,8 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.controller.object.moving.MovingBlock;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.controller.BasicVehicleEntityProtocol;
-import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
-import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;
 
 public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 	public static final int BLOCK_TYPE_METADATA_INDEX = 30;
@@ -62,7 +62,7 @@ public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 				spawnId = 70; // sand
 			}
 			Point position = entity.getPosition();
-			SpawnVehicleMessage msg = new SpawnVehicleMessage(entity.getId(), spawnId, position);
+			EntitySpawnVehicleMessage msg = new EntitySpawnVehicleMessage(entity.getId(), spawnId, position);
 			return new Message[]{msg, new EntityMetadataMessage(entity.getId(), Arrays.<Parameter<?>>asList(new Parameter<Short>(Parameter.TYPE_SHORT, BLOCK_TYPE_METADATA_INDEX, VanillaMaterials.getMinecraftId(mat))))};
 		} else {
 			return null;

@@ -31,7 +31,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.spout.api.Spout;
 import org.spout.api.inventory.Recipe;
-import org.spout.api.inventory.RecipeBuilder;
 
 import org.spout.vanilla.resources.RecipeYaml;
 
@@ -39,21 +38,15 @@ public class VanillaRecipes {
 	private static final Map<String, Recipe> yamlRecipes = new ConcurrentHashMap<String, Recipe>();
 
 	public static void initialize() {
+		yamlRecipes.clear();
 		for (String key : RecipeYaml.DEFAULT.getRecipes().keySet()) {
-			yamlRecipes.put(key, add(RecipeYaml.DEFAULT.getRecipes().get(key)));
+			Recipe recipe = RecipeYaml.DEFAULT.getRecipes().get(key);
+			Spout.getEngine().getRecipeManager().addRecipe(recipe);
+			yamlRecipes.put(key, recipe);
 		}
-	}
-
-	private static <T extends Recipe> T add(T recipe) {
-		Spout.getEngine().getRecipeManager().addRecipe(recipe);
-		return recipe;
 	}
 
 	public static Recipe get(String name) {
 		return yamlRecipes.get(name);
-	}
-
-	private static RecipeBuilder create() {
-		return new RecipeBuilder();
 	}
 }

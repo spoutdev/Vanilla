@@ -33,11 +33,11 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerType;
-import org.spout.vanilla.controller.WindowOwner;
+import org.spout.vanilla.controller.WindowController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.window.Window;
 
-public abstract class VanillaWindowBlockController extends VanillaBlockController implements WindowOwner {
+public abstract class VanillaWindowBlockController extends VanillaBlockController implements WindowController {
 	private HashMap<VanillaPlayer, Window> viewers = new HashMap<VanillaPlayer, Window>();
 
 	protected VanillaWindowBlockController(VanillaControllerType type, BlockMaterial blockMaterial) {

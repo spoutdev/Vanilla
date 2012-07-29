@@ -31,7 +31,7 @@ import org.spout.api.entity.component.Controller;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.object.Projectile;
-import org.spout.vanilla.protocol.msg.SpawnVehicleMessage;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;
 
 public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
 	public BasicProjectileEntityProtocol(int projectileSpawnID) {
@@ -52,6 +52,6 @@ public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
 		Entity shooter = pro.getShooter();
 		int shooterid = shooter == null ? 0 : shooter.getId();
 
-		return new Message[]{new SpawnVehicleMessage(id, this.getSpawnID(), entity.getPosition(), shooterid, pro.getVelocity())};
+		return new Message[]{new EntitySpawnVehicleMessage(id, this.getSpawnID(), entity.getPosition(), shooterid, pro.getVelocity())};
 	}
 }

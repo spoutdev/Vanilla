@@ -39,11 +39,9 @@ import org.spout.vanilla.material.block.Liquid;
 public class Water extends Liquid implements RandomBlockMaterial {
 	public Water(String name, int id, boolean flowing) {
 		super(name, id, flowing);
-	}
-
-	@Override
-	public int getFlowDelay() {
-		return 250;
+		this.setFlowDelay(250);
+		//TODO: Allow this to get past the tests
+		//this.setFlowDelay(VanillaConfiguration.WATER_DELAY.getInt());
 	}
 
 	@Override
@@ -101,7 +99,7 @@ public class Water extends Liquid implements RandomBlockMaterial {
 	public void onRandomTick(Block block) {
 		//TODO: This should really be in the tick task of the sky controller
 		// Water freezing
-		if (block.getData() != 0) {
+		if (!isSource(block)) {
 			return;
 		}
 		if (!block.isAtSurface()) {

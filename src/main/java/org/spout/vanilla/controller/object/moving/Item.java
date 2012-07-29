@@ -41,7 +41,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.CollectItemMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityCollectItemMessage;
 
 import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacketsToNearbyPlayers;
 
@@ -125,7 +125,7 @@ public class Item extends Substance {
 
 		int collected = getParent().getId();
 		int collector = entity.getId();
-		sendPacketsToNearbyPlayers(entity.getPosition(), entity.getViewDistance(), new CollectItemMessage(collected, collector));
+		sendPacketsToNearbyPlayers(entity.getPosition(), entity.getViewDistance(), new EntityCollectItemMessage(collected, collector));
 		((VanillaPlayer) entity.getController()).getInventory().getMain().addItem(is, true, true);
 		getParent().kill();
 	}

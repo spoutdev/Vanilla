@@ -31,6 +31,8 @@ import java.io.IOException;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
@@ -46,7 +48,7 @@ public final class PlayerDiggingCodec extends MessageCodec<PlayerDiggingMessage>
 		int x = buffer.readInt();
 		int y = buffer.readUnsignedByte();
 		int z = buffer.readInt();
-		int face = buffer.readUnsignedByte();
+		BlockFace face = BlockFaces.BTEWNS.get(buffer.readUnsignedByte(), BlockFace.THIS);
 		return new PlayerDiggingMessage(state, x, y, z, face);
 	}
 
@@ -57,7 +59,7 @@ public final class PlayerDiggingCodec extends MessageCodec<PlayerDiggingMessage>
 		buffer.writeInt(message.getX());
 		buffer.writeByte(message.getY());
 		buffer.writeInt(message.getZ());
-		buffer.writeByte(message.getFace());
+		buffer.writeByte(BlockFaces.BTEWNS.indexOf(message.getFace(), 0));
 		return buffer;
 	}
 }

@@ -26,15 +26,17 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.chat.ChatArguments;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.chat.style.VanillaStyleHandler;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 
 public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
 	@Override
-	public void handleServer(Session session, Player player, ChatMessage message) {
+	public void handle(boolean upstream, Session session, Player player, ChatMessage message) {
 		if (player == null) {
 			return;
 		}
@@ -45,7 +47,23 @@ public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
 		if (text.length() > 100) {
 			session.disconnect("Chat message is too long.");
 		} else {
-			player.chat(text);
+			String command;
+			ChatArguments args;
+			if (text.startsWith("/")) {
+				int spaceIndex = text.indexOf(" ");
+				if (spaceIndex != -1) {
+					command = text.substring(1, spaceIndex);
+					text = text.substring(spaceIndex);
+				} else {
+					command = text.substring(1);
+					text = "";
+				}
+			} else {
+				command = "say";
+			}
+
+			args = ChatArguments.fromString(text, VanillaStyleHandler.ID);
+			player.processCommand(command, args);
 		}
 	}
 }

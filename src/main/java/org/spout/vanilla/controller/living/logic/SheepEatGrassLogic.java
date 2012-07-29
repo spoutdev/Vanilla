@@ -35,7 +35,7 @@ import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.EntityStatusMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 
 /**
  * Logic for Sheeps eating grass.

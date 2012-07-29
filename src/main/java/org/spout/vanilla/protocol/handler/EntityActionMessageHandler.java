@@ -36,8 +36,8 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.EntityActionMessage;
-import org.spout.vanilla.protocol.msg.EntityMetadataMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 
 public final class EntityActionMessageHandler extends MessageHandler<EntityActionMessage> {
 	@Override

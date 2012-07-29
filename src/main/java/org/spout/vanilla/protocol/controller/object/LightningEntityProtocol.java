@@ -31,7 +31,7 @@ import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.object.misc.Lightning;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.SpawnLightningStrikeMessage;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnLightningStrikeMessage;
 
 public class LightningEntityProtocol extends VanillaEntityProtocol {
 	@Override
@@ -43,7 +43,7 @@ public class LightningEntityProtocol extends VanillaEntityProtocol {
 			return null;
 		}
 		Message[] toSend = new Message[1];
-		toSend[0] = new SpawnLightningStrikeMessage(entity.getId(), entity.getPosition().getBlockX(), entity.getPosition().getBlockY(), entity.getPosition().getBlockZ());
+		toSend[0] = new EntitySpawnLightningStrikeMessage(entity.getId(), entity.getPosition().getBlockX(), entity.getPosition().getBlockY(), entity.getPosition().getBlockZ());
 		return toSend;
 	}
 }

@@ -48,6 +48,7 @@ public class EmptyContainer extends BlockItem {
 
 	public EmptyContainer(String name, int id) {
 		super(name, id, VanillaMaterials.AIR);
+		this.setMaxStackSize(16);
 	}
 
 	@Override

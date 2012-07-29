@@ -35,6 +35,7 @@ import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.component.controller.PlayerController;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeGenerator;
@@ -430,9 +431,9 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("Don't be silly...you cannot kill yourself as the console.");
 			}
-			((VanillaPlayer) source).setHealth(0, source);
+			((VanillaPlayer) ((Player) source).getEntity().getController()).setHealth(0, source);
 		} else {
-			VanillaPlayer victim = (VanillaPlayer) Spout.getEngine().getPlayer(args.getString(0), true);
+			VanillaPlayer victim = (VanillaPlayer) Spout.getEngine().getPlayer(args.getString(0), true).getEntity().getController();
 			if (victim != null) {
 				victim.setHealth(0, source);
 			}

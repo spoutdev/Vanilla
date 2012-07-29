@@ -52,8 +52,11 @@ import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.player.PlayerFoodSaturationChangeEvent;
 import org.spout.vanilla.event.player.PlayerHungerChangeEvent;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -85,6 +88,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected float foodSaturation = 5.0f, exhaustion = 0.0f;
 	protected boolean poisoned;
 	protected boolean flying;
+	protected boolean falling;
+	protected boolean jumping;
+	protected float initialYFalling = 0.0f;
 	protected final PlayerInventory playerInventory = new PlayerInventory(this);
 	protected Window activeWindow = new DefaultWindow(this);
 	protected String tabListName;
@@ -226,7 +232,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (exhaustion > 4.0) {
 			exhaustion -= 4.0;
 			if (foodSaturation > 0) {
-				foodSaturation = Math.max(foodSaturation - 0.1f, 0);
+				setFoodSaturation(Math.max(foodSaturation - 0.1f, 0));
 			} else {
 				setHunger((short) Math.max(hunger - 1, 0));
 			}
@@ -234,12 +240,17 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 		boolean changed = false;
 		if (hunger <= 0 && health > 0) {
-			health = (short) Math.max(health - 1, 0);
-			setHealth(health, DamageCause.STARVE);
+
+			int maxDrop = 0;
+			if (((Difficulty) owner.getEntity().getWorld().get(VanillaData.DIFFICULTY)).equals(Difficulty.EASY)) {
+				maxDrop = 10;
+			} else if (((Difficulty) owner.getEntity().getWorld().get(VanillaData.DIFFICULTY)).equals(Difficulty.NORMAL)) {
+				maxDrop = 1;
+			}
+			setHealth((short) Math.max(health - 1, maxDrop), DamageCause.STARVE);
 			changed = true;
 		} else if (hunger >= 18 && health < 20) {
-			health = (short) Math.min(health + 1, 20);
-			setHealth(health, HealthChangeReason.REGENERATION);
+			setHealth((short) Math.min(health + 1, 20), HealthChangeReason.REGENERATION);
 			changed = true;
 		}
 
@@ -293,8 +304,15 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @param foodSaturation The value to set to
 	 */
 	public void setFoodSaturation(float foodSaturation) {
-		// TODO: A event
-		this.foodSaturation = foodSaturation;
+		PlayerFoodSaturationChangeEvent event = new PlayerFoodSaturationChangeEvent(this.getPlayer(), foodSaturation);
+		Spout.getEngine().getEventManager().callEvent(event);
+		if (!event.isCancelled()) {
+			if (event.getFoodSaturation() > hunger) {
+				this.foodSaturation = hunger;
+			} else {
+				this.foodSaturation = event.getFoodSaturation();
+			}
+		}
 		sendUpdateHealth();
 	}
 
@@ -521,6 +539,34 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void setExhaustion(float exhaustion) {
 		this.exhaustion = exhaustion;
+	}
+
+	public boolean isFalling() {
+		return falling;
+	}
+
+	public void setFalling(boolean newFalling) {
+		this.falling = newFalling;
+		if (this.falling) {
+			if (this.initialYFalling == 0.0f) {
+				this.initialYFalling = owner.getEntity().getPosition().getY();
+			}
+
+		} else {
+			int totalDmg = (int) ((this.initialYFalling - owner.getEntity().getPosition().getY()) - 3);
+			if (totalDmg > 0) {
+				setHealth(getHealth() - totalDmg, DamageCause.FALL);
+			}
+			this.initialYFalling = 0.0f;
+		}
+	}
+
+	public boolean isJumping() {
+		return jumping;
+	}
+
+	public void setJumping(boolean jumping) {
+		this.jumping = jumping;
 	}
 
 	public boolean isFlying() {

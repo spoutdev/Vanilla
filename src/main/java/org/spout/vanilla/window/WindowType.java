@@ -38,7 +38,9 @@ public enum WindowType {
 	FURNACE(2),
 	DISPENSER(3),
 	ENCHANTMENTTABLE(4),
-	BREWINGSTAND(5);
+	BREWINGSTAND(5),
+	VILLAGER(6);
+
 	private static final TIntObjectHashMap<WindowType> values = new TIntObjectHashMap<WindowType>();
 
 	static {

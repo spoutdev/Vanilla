@@ -46,7 +46,7 @@ public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMess
 	public EntityEquipmentMessage decode(ChannelBuffer buffer) throws IOException {
 		int entityId = buffer.readInt();
 		int slot = buffer.readUnsignedShort();
-		int id = buffer.readUnsignedShort();
+		int id = buffer.readShort();
 		if (id == -1) {
 			return new EntityEquipmentMessage(entityId, slot);
 		}
@@ -60,7 +60,7 @@ public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMess
 	@Override
 	public ChannelBuffer encode(EntityEquipmentMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeInt(message.getId());
+		buffer.writeInt(message.getEntityId());
 		buffer.writeShort(message.getSlot());
 		buffer.writeShort(message.getId());
 		if (message.getId() != -1) {

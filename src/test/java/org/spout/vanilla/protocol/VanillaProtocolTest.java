@@ -57,6 +57,7 @@ import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 import org.spout.vanilla.protocol.msg.ItemDataMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
+import org.spout.vanilla.protocol.msg.LocalViewDistanceMessage;
 import org.spout.vanilla.protocol.msg.MultiBlockChangeMessage;
 import org.spout.vanilla.protocol.msg.NamedSoundEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
@@ -72,6 +73,7 @@ import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.protocol.msg.SetExperienceMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.StatisticMessage;
+import org.spout.vanilla.protocol.msg.TabCompleteMessage;
 import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
 import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
@@ -117,7 +119,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final Message[] TEST_MESSAGES = new Message[]{
 			new KeepAliveMessage(42),
 			//new ClientLoginRequestMessage(),
-			new LoginRequestMessage(0, "", (byte) 0, (byte) 0, (byte) 0, (short) 10),
+			new LoginRequestMessage(0, "nether", (byte) 0, (byte) 0, (byte) 0, (short) 10),
 			new HandshakeMessage((byte) 42, "Spouty", "SpoutTron", 9001),
 			new ChatMessage("<Spouty> This is a thing called a chat message"),
 			new TimeUpdateMessage(666L),
@@ -133,6 +135,8 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerDiggingMessage(PlayerDiggingMessage.STATE_START_DIGGING, 1, 2, 3, BlockFace.NORTH),
 			new PlayerBlockPlacementMessage(1, 2, 3, BlockFace.NORTH, 89, 2, 7, null, 9F, 19F, 20F),
 			new HeldItemChangeMessage(4),
+			new LocalViewDistanceMessage("en_GB", LocalViewDistanceMessage.VIEW_NORMAL, (byte) 0, (byte) 0),
+			new TabCompleteMessage("behindcursor"),
 			new EntityUseBedMessage(0, 3, 42, 42, 42),
 			new EntityAnimationMessage(1234, EntityAnimationMessage.ANIMATION_HURT),
 			new EntityActionMessage(5, 2),
@@ -179,10 +183,10 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new ItemDataMessage((short) 1, (short) 2, new byte[]{2, 3, 8, 127, 123}),
 			new TileEntityDataMessage(23, 45, 903, 1, 98, 0, 0),
 			new StatisticMessage(1, (byte) 5),
-			new EncryptionKeyResponseMessage(true, new byte[]{(byte) 7, (byte) 4, (byte) 1, (byte) 122}, new byte[]{(byte) 6, (byte) 3, (byte) 4, (byte) 122}),
-			new EncryptionKeyRequestMessage("This is a server", true, new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 10}, new byte[]{(byte) 12, (byte) 54, (byte) 4, (byte) 122}),
+			new EncryptionKeyResponseMessage(false, new byte[]{(byte) 7, (byte) 4, (byte) 1, (byte) 122}, new byte[]{(byte) 6, (byte) 3, (byte) 4, (byte) 122}),
+			new EncryptionKeyRequestMessage("This is a server", false, new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 10}, new byte[]{(byte) 12, (byte) 54, (byte) 4, (byte) 122}),
 			new PlayerListMessage("Player", true, (short) 23),
-			new CustomDataMessage("EMERGENCY", new byte[]{0, 1, 1, 8, 9, 9, 8, 8, 8, 1, 9, 9, 9, 1, 1, 9, 7, 2, 5,                3}), //
+			new CustomDataMessage("EMERGENCY", new byte[]{0, 1, 1, 8, 9, 9, 8, 8, 8, 1, 9, 9, 9, 1, 1, 9, 7, 2, 5, 3}),
 			new ServerListPingMessage(),
 			new KickMessage("This is a test"),
 			new PlayerAbilityMessage(true, true, true, true, (byte) 0, (byte) 5),

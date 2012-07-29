@@ -36,7 +36,7 @@ import org.spout.api.util.SpoutToStringStyle;
 
 public class EncryptionKeyResponseMessage extends Message implements ProcessorSetupMessage {
 	private final byte[] secret, verifyToken;
-	private final boolean locking;
+	private final boolean locking; //TODO: Locking is not used in the codec...should locking be removed?
 	private ChannelProcessor processor;
 	private ProcessorHandler handler;
 

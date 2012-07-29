@@ -24,41 +24,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec;
+package org.spout.vanilla.window.entity;
 
-import java.io.IOException;
+import org.spout.vanilla.controller.living.creature.passive.Villager;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.window.TransactionWindow;
+import org.spout.vanilla.window.WindowType;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+public class VillagerWindow extends TransactionWindow {
 
-import org.spout.api.protocol.MessageCodec;
-
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.RespawnMessage;
-
-public final class RespawnCodec extends MessageCodec<RespawnMessage> {
-	public RespawnCodec() {
-		super(RespawnMessage.class, 0x09);
-	}
-
-	@Override
-	public RespawnMessage decode(ChannelBuffer buffer) throws IOException {
-		int dimension = buffer.readInt();
-		byte difficulty = buffer.readByte();
-		byte creative = buffer.readByte();
-		int height = buffer.readUnsignedShort();
-		String worldType = ChannelBufferUtils.readString(buffer);
-		return new RespawnMessage(dimension, difficulty, creative, height, worldType);
-	}
-
-	@Override
-	public ChannelBuffer encode(RespawnMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeInt(message.getDimension());
-		buffer.writeByte(message.getDifficulty());
-		buffer.writeByte(message.getGameMode());
-		buffer.writeShort(message.getWorldHeight());
-		ChannelBufferUtils.writeString(buffer, message.getWorldType());
-		return buffer;
+	public VillagerWindow(VanillaPlayer owner, Villager villager) {
+		super(WindowType.VILLAGER, "villager", owner, 5, villager);
 	}
 }

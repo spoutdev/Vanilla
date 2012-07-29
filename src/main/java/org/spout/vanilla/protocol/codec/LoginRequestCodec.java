@@ -51,6 +51,20 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 		return new LoginRequestMessage(id, worldType, mode, dimension, difficulty, maxPlayers);
 	}
 
+	/* This is needed for tests to complete. It is not actually used.
+	 * See the commented-out code below this function */
+	@Override
+	public LoginRequestMessage decodeFromClient(ChannelBuffer buffer) {
+		int id = buffer.readInt();
+		String worldType = ChannelBufferUtils.readString(buffer);
+		byte mode = buffer.readByte();
+		byte dimension = buffer.readByte();
+		byte difficulty = buffer.readByte();
+		short notUsed = buffer.readUnsignedByte();
+		short maxPlayers = buffer.readUnsignedByte();
+		return new LoginRequestMessage(id, worldType, mode, dimension, difficulty, maxPlayers);
+	}
+
 	/*@Override
 	public LoginRequestMessage decodeFromClient(ChannelBuffer buffer) {
 		Spout.log("Hey I am a client and I want to connect!");
@@ -76,7 +90,7 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 	public ChannelBuffer encodeToServer(LoginRequestMessage message) {
 		LoginRequestMessage server =  message;
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeByte(server.getId());
+		buffer.writeInt(server.getId());
 		ChannelBufferUtils.writeString(buffer, server.getWorldType());
 		buffer.writeByte(server.getGameMode());
 		buffer.writeByte(server.getDimension());

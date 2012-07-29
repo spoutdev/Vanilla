@@ -54,6 +54,7 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
+import org.spout.vanilla.controller.living.creature.passive.Villager;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.effect.type.Speed;
@@ -349,6 +350,10 @@ public class TestCommands {
 
 		Player player = (Player) source;
 		Entity entity = player.getEntity();
-		entity.getWorld().createAndSpawnEntity(entity.getPosition(), new Human(args.getString(0)));
+		if (args.getString(0).equals("villager")) {
+			entity.getWorld().createAndSpawnEntity(entity.getPosition(), new Villager());
+		} else {
+			entity.getWorld().createAndSpawnEntity(entity.getPosition(), new Human(args.getString(0)));
+		}
 	}
 }

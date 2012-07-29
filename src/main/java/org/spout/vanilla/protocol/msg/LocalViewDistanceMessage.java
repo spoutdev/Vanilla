@@ -31,6 +31,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
 public class LocalViewDistanceMessage extends Message {
+	public static byte VIEW_FAR = 0, VIEW_NORMAL = 1, VIEW_SHORT = 2, VIEW_TINY = 3;
 
 	private String locale;
 	private byte viewDistance, chatFlags, difficulty;

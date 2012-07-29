@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.util.Arrays;
-
 import gnu.trove.set.TIntSet;
 
 import org.spout.api.entity.Entity;

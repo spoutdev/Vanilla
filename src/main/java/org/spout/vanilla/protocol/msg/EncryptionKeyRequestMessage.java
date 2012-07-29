@@ -51,12 +51,20 @@ public final class EncryptionKeyRequestMessage extends EncryptionKeyResponseMess
 		}
 		final EncryptionKeyRequestMessage other = (EncryptionKeyRequestMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.sessionId, other.sessionId)
+				.append(this.isChannelLocking(), other.isChannelLocking())
+				.append(this.getSecretArray(), other.getSecretArray())
+				.append(this.getVerifyTokenArray(), other.getVerifyTokenArray())
 				.isEquals();
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("sessionId", this.sessionId)
+				.append("locking", this.isChannelLocking())
+				.append("secret", this.getSecretArray())
+				.append("verifyToken", this.getVerifyTokenArray())
 				.toString();
 	}
 }

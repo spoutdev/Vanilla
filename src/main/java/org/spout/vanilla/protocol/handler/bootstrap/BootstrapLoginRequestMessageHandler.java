@@ -31,10 +31,6 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.handler.bootstrap.auth.LoginAuth;
 
 public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginRequestMessage> {
 	@Override

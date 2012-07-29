@@ -26,17 +26,27 @@
  */
 package org.spout.vanilla.protocol;
 
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.Command;
+import org.spout.api.entity.component.Controller;
+import org.spout.api.exception.UnknownPacketException;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
+import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
 
+import org.spout.api.protocol.Session;
 import org.spout.vanilla.chat.style.VanillaStyleHandler;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
+import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class VanillaProtocol extends Protocol {
 	public final static DefaultedKey<String> SESSION_ID = new DefaultedKeyImpl<String>("sessionid", "0000000000000000");
@@ -56,6 +66,21 @@ public class VanillaProtocol extends Protocol {
 		} else {
 			return new ChatMessage('/' + command.getPreferredName() + args.asString(VanillaStyleHandler.ID));
 		}
+	}
+
+	public MessageCodec<?> readHeader(ChannelBuffer buf) throws UnknownPacketException {
+		int opcode = buf.readUnsignedByte();
+		MessageCodec<?> codec = getCodecLookupService().find(opcode << 8);
+		if (codec == null) {
+			throw new UnknownPacketException(opcode);
+		}
+		return codec;
+	}
+
+	public ChannelBuffer writeHeader(MessageCodec<?> codec, ChannelBuffer data) {
+		ChannelBuffer buffer = ChannelBuffers.buffer(1);
+		buffer.writeByte(codec.getOpcode());
+		return buffer;
 	}
 
 	@Override

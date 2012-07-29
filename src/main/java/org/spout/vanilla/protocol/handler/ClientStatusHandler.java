@@ -29,11 +29,21 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.Spout;
 import org.spout.api.event.Event;
 import org.spout.api.event.player.PlayerConnectEvent;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
+import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.ClientStatusMessage;
+import org.spout.vanilla.protocol.msg.RespawnMessage;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 	@Override
@@ -41,8 +51,38 @@ public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 		// TODO - need check if player has already connected
 		if (message.getStatus() == ClientStatusMessage.INITIAL_SPAWN) {
 			playerConnect(session, (String) session.getDataMap().get("username"));
-		}
+		} else if (message.getStatus() == ClientStatusMessage.RESPAWN) {
+			PlayerRespawnEvent event = new PlayerRespawnEvent(player.getEntity(), player.getEntity().getLastTransform().getPosition().getWorld().getSpawnPoint().getPosition());
+			Spout.getEngine().getEventManager().callEvent(event);
 
+			if (event.isCancelled()) {
+				return;
+			}
+
+			//Set position for the server
+			Point point = event.getPoint();
+			player.getEntity().setPosition(point);
+			player.getNetworkSynchronizer().setPositionDirty();
+			VanillaPlayer controller = (VanillaPlayer) player.getEntity().getController();
+			controller.setHealth(controller.getMaxHealth(), HealthChangeReason.SPAWN);
+
+			//Send respawn packet back to the client.
+			//TODO We need worlds associated with vanilla storing characteristics
+			int dimension = point.getWorld().getDataMap().get(VanillaData.DIMENSION).getId();
+			byte difficulty = point.getWorld().getDataMap().get(VanillaData.DIFFICULTY).getId();
+			byte gamemode = ((VanillaPlayer) player.getEntity().getController()).getGameMode().getId();
+			String worldType = point.getWorld().getDataMap().get(VanillaData.WORLD_TYPE).toString();
+			RespawnMessage respawn = new RespawnMessage(dimension, difficulty, gamemode, 256, worldType);
+			session.send(false, respawn);
+
+			//send spawn to everyone else
+			EntityProtocol ep = controller.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
+			if (ep != null) {
+				Message[] spawn = ep.getSpawnMessage(player.getEntity());
+				VanillaNetworkUtil.broadcastPacket(new Player[]{player}, spawn);
+
+			}
+		}
 	}
 
 	public static void playerConnect(Session session, String name) {

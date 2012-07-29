@@ -67,6 +67,9 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 
 			if (clickedEntity.getController() instanceof VanillaActionController) {
 				VanillaActionController damaged = (VanillaActionController) clickedEntity.getController();
+				if (clickedEntity.getController() instanceof VanillaPlayer && (!VanillaPlayerUtil.isSurvival(player.getEntity()) || !VanillaPlayerUtil.isSurvival(damaged.getParent()))) {
+					return;
+				}
 				int damage = 1;
 				if (holding != null && holdingMat instanceof VanillaMaterial) {
 					damage = ((VanillaMaterial) holdingMat).getDamage();

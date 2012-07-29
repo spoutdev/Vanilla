@@ -26,16 +26,12 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.component.Controller;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
@@ -94,19 +90,6 @@ public class Furnace extends ControlledMaterial implements Directional, Mineable
 		}
 
 		return false;
-	}
-
-	@Override
-	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
-		if (action == Action.RIGHT_CLICK) {
-			Controller controller = entity.getController();
-			if (!(controller instanceof VanillaPlayer)) {
-				return;
-			}
-
-			// Open the furnace
-			((org.spout.vanilla.controller.block.Furnace) block.getController()).open((VanillaPlayer) controller);
-		}
 	}
 
 	@Override

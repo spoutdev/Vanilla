@@ -26,11 +26,7 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.special.InventorySlot;
-import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.Fuel;
@@ -39,7 +35,6 @@ import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Jukebox extends ControlledMaterial implements Fuel, Mineable {
 	public final float BURN_TIME = 15.f;
@@ -58,25 +53,6 @@ public class Jukebox extends ControlledMaterial implements Fuel, Mineable {
 	@Override
 	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
-	}
-
-	@Override
-	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
-		super.onInteractBy(entity, block, type, clickedFace);
-		if (type == Action.RIGHT_CLICK) {
-			org.spout.vanilla.controller.block.Jukebox controller = (org.spout.vanilla.controller.block.Jukebox) block.getController();
-			controller.eject();
-			InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
-			if (inv != null && controller.canPlay(inv.getItem())) {
-				controller.getInventory().addItem(inv.getItem().clone().setAmount(1));
-				controller.update();
-				if (VanillaPlayerUtil.isSurvival(entity)) {
-					inv.addItemAmount(0, -1);
-				}
-			}
-		} else if (type == Action.RIGHT_CLICK) {
-			((org.spout.vanilla.controller.block.Jukebox) block.getController()).stopMusic();
-		}
 	}
 
 	@Override

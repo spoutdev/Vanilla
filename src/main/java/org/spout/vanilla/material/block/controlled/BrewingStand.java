@@ -26,15 +26,11 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.component.Controller;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -66,16 +62,5 @@ public class BrewingStand extends ControlledMaterial implements Mineable {
 
 	public org.spout.vanilla.controller.block.BrewingStand getController(Block block) {
 		return (org.spout.vanilla.controller.block.BrewingStand) super.getController(block);
-	}
-
-	@Override
-	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
-		if (action == Action.RIGHT_CLICK) {
-			Controller controller = entity.getController();
-			if (!(controller instanceof VanillaPlayer)) {
-				return;
-			}
-			this.getController(block).open((VanillaPlayer) controller);
-		}
 	}
 }

@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.controller;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.controller.BlockController;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.material.BlockMaterial;
 
 /**
@@ -35,5 +37,9 @@ import org.spout.api.material.BlockMaterial;
 public abstract class VanillaBlockController extends BlockController implements VanillaController {
 	protected VanillaBlockController(VanillaControllerType type, BlockMaterial blockMaterial) {
 		super(type, blockMaterial);
+	}
+
+	@Override
+	public void onInteract(Entity entity, Action type) {
 	}
 }

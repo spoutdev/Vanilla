@@ -30,6 +30,7 @@ import java.util.Collection;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
+import org.spout.api.entity.component.controller.BlockController;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.Protection;
@@ -130,6 +131,10 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				// interacting with block using item
 				heldItem.getMaterial().onInteract(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
 				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
+			}
+			// Interaction with controller
+			if (blockMaterial.hasController()) {
+				blockMaterial.getController(block).onInteract(player.getEntity(), Action.LEFT_CLICK);
 			}
 
 			if (isInteractable) {

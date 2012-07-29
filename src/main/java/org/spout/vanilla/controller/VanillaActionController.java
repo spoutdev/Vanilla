@@ -405,7 +405,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 	public void move(Vector3 vect) {
 		getParent().translate(vect);
 	}
-
+	
 	/**
 	 * Uses the current velocity and maximum speed to move this entity.
 	 */

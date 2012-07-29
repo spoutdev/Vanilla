@@ -511,6 +511,14 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.exhaustion = exhaustion;
 	}
 
+	/**
+	 * Adds a value to the exhaustion of the controller; affects hunger loss.
+	 * @param exhaustion to add
+	 */
+	public void addExhaustion(float exhaustion) {
+		this.exhaustion += exhaustion;
+	}
+
 	public boolean isFalling() {
 		return falling;
 	}

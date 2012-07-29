@@ -29,6 +29,8 @@ package org.spout.vanilla.controller.block;
 import java.util.Collection;
 import java.util.HashMap;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.controller.VanillaBlockController;
@@ -45,6 +47,14 @@ public abstract class VanillaWindowBlockController extends VanillaBlockControlle
 	}
 
 	public abstract Window createWindow(VanillaPlayer player);
+
+	@Override
+	public void onInteract(Entity entity, Action type) {
+		super.onInteract(entity, type);
+		if (type == Action.RIGHT_CLICK && entity.getController() instanceof VanillaPlayer) {
+			this.open((VanillaPlayer) entity.getController());
+		}
+	}
 
 	@Override
 	public boolean open(VanillaPlayer player) {

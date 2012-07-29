@@ -62,20 +62,21 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 		if (message.isPunching()) {
 			VanillaPlayer vPlayer = (VanillaPlayer) player.getEntity().getController();
 			holdingMat.onInteract(player.getEntity(), clickedEntity, Action.LEFT_CLICK);
-
+			clickedEntity.getController().onInteract(player.getEntity(), Action.LEFT_CLICK);
+			
 			if (clickedEntity.getController() instanceof VanillaPlayer && !VanillaConfiguration.PLAYER_PVP_ENABLED.getBoolean()) {
 				return;
 			}
 
 			if (clickedEntity.getController() instanceof VanillaActionController) {
 				VanillaActionController damaged = (VanillaActionController) clickedEntity.getController();
-				if (clickedEntity.getController() instanceof VanillaPlayer && (!VanillaPlayerUtil.isSurvival(player.getEntity()) || !VanillaPlayerUtil.isSurvival(damaged.getParent()))) {
+				if (clickedEntity.getController() instanceof VanillaPlayer && (!vPlayer.isSurvival() || !VanillaPlayerUtil.isSurvival(damaged.getParent()))) {
 					return;
 				}
-				((VanillaPlayer) player).setExhaustion(((VanillaPlayer) player).getExhaustion() - ExhaustionLevel.ATTACK_ENEMY.getAmount());
+				vPlayer.addExhaustion(ExhaustionLevel.ATTACK_ENEMY.getAmount());
 
 				if (clickedEntity.getController() instanceof VanillaPlayer) {
-					((VanillaPlayer) clickedEntity.getController()).setExhaustion(((VanillaPlayer) clickedEntity.getController()).getExhaustion() - ExhaustionLevel.RECEIVE_DAMAGE.getAmount());
+					((VanillaPlayer) clickedEntity.getController()).addExhaustion(ExhaustionLevel.RECEIVE_DAMAGE.getAmount());
 				}
 
 				int damage = 1;
@@ -95,6 +96,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 			}
 		} else {
 			holdingMat.onInteract(player.getEntity(), clickedEntity, Action.RIGHT_CLICK);
+			clickedEntity.getController().onInteract(player.getEntity(), Action.RIGHT_CLICK);
 		}
 	}
 }

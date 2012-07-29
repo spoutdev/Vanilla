@@ -26,9 +26,12 @@
  */
 package org.spout.vanilla.controller.block;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 
@@ -40,6 +43,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.misc.MusicDisc;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.Music;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
@@ -55,6 +59,24 @@ public class Jukebox extends VanillaBlockController {
 	public void onAttached() {
 	}
 
+	@Override
+	public void onInteract(Entity entity, Action type) {
+		super.onInteract(entity, type);
+		if (type == Action.RIGHT_CLICK) {
+			this.eject();
+			InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
+			if (inv != null && this.canPlay(inv.getItem())) {
+				this.getInventory().addItem(inv.getItem().clone().setAmount(1));
+				this.update();
+				if (VanillaPlayerUtil.isSurvival(entity)) {
+					inv.addItemAmount(0, -1);
+				}
+			} else {
+				this.stopMusic();
+			}
+		}
+	}
+	
 	/**
 	 * Gets the current music this Jukebox plays
 	 * @return

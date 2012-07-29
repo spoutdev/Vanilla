@@ -209,6 +209,9 @@ public class Window implements InventoryViewer, ITickable {
 		for (Entry<InventoryBase, SlotIndexCollection> inventory : this.inventories.entrySet()) {
 			for (i = 0; i < inventory.getKey().getSize(); i++) {
 				mcSlot = inventory.getValue().getMinecraftSlot(i);
+				if (mcSlot < 0 || mcSlot >= items.length) {
+					continue;
+				}
 				items[mcSlot] = inventory.getKey().getItem(i);
 			}
 		}

@@ -26,11 +26,8 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.Fuel;
@@ -40,7 +37,6 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
 	public final float BURN_TIME = 15.f;
@@ -73,18 +69,6 @@ public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
 	@Override
 	public org.spout.vanilla.controller.block.NoteBlock getController(Block block) {
 		return (org.spout.vanilla.controller.block.NoteBlock) super.getController(block);
-	}
-
-	@Override
-	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
-		super.onInteractBy(entity, block, type, clickedFace);
-		org.spout.vanilla.controller.block.NoteBlock controller = getController(block);
-		if (type == Action.RIGHT_CLICK) {
-			controller.setNote(controller.getNote() + 1);
-			controller.play();
-		} else if (type == Action.LEFT_CLICK && VanillaPlayerUtil.isSurvival(entity)) {
-			controller.play();
-		}
 	}
 
 	@Override

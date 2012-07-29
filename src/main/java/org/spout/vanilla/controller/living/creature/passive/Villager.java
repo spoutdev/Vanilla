@@ -29,6 +29,8 @@ package org.spout.vanilla.controller.living.creature.passive;
 import java.util.Collection;
 import java.util.HashMap;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.vanilla.controller.InventoryOwner;
@@ -56,6 +58,15 @@ public class Villager extends Creature implements Passive, WindowController, Inv
 		setHealth(20, HealthChangeReason.SPAWN);
 		setDeathAnimation(true);
 	}
+
+	@Override
+	public void onInteract(Entity entity, Action type) {
+		super.onInteract(entity, type);
+		if (type == Action.RIGHT_CLICK && entity.getController() instanceof VanillaPlayer) {
+			this.open((VanillaPlayer) entity.getController());
+		}
+	}
+
 	@Override
 	public boolean open(VanillaPlayer player) {
 		if (!this.viewers.containsKey(player)) {

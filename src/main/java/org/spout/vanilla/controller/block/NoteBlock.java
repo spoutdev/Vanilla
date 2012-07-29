@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.controller.block;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -35,6 +37,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.VanillaNetworkUtil;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class NoteBlock extends VanillaBlockController {
 	private int note = 0;
@@ -47,6 +50,17 @@ public class NoteBlock extends VanillaBlockController {
 	public Instrument getInstrument() {
 		BlockMaterial below = this.getBlock().translate(BlockFace.BOTTOM).getMaterial();
 		return below instanceof VanillaBlockMaterial ? ((VanillaBlockMaterial) below).getInstrument() : Instrument.PIANO;
+	}
+
+	@Override
+	public void onInteract(Entity entity, Action type) {
+		super.onInteract(entity, type);
+		if (type == Action.RIGHT_CLICK) {
+			this.setNote(this.getNote() + 1);
+			this.play();
+		} else if (type == Action.LEFT_CLICK && VanillaPlayerUtil.isSurvival(entity)) {
+			this.play();
+		}
 	}
 
 	/**

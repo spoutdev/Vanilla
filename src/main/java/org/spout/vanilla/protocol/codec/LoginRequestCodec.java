@@ -46,7 +46,7 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 		byte mode = buffer.readByte();
 		byte dimension = buffer.readByte();
 		byte difficulty = buffer.readByte();
-		short notUsed = buffer.readUnsignedByte();
+		buffer.readUnsignedByte(); //not used?
 		short maxPlayers = buffer.readUnsignedByte();
 		return new LoginRequestMessage(id, worldType, mode, dimension, difficulty, maxPlayers);
 	}
@@ -60,7 +60,7 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 		byte mode = buffer.readByte();
 		byte dimension = buffer.readByte();
 		byte difficulty = buffer.readByte();
-		short notUsed = buffer.readUnsignedByte();
+		buffer.readUnsignedByte(); //not used?
 		short maxPlayers = buffer.readUnsignedByte();
 		return new LoginRequestMessage(id, worldType, mode, dimension, difficulty, maxPlayers);
 	}

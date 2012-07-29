@@ -30,7 +30,6 @@ import java.util.Collection;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
-import org.spout.api.entity.component.controller.BlockController;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.Protection;

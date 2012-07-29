@@ -31,8 +31,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
-
 public final class ClientLoginRequestMessage extends Message {
 	@Override
 	public String toString() {

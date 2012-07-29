@@ -86,7 +86,8 @@ public class EmptyContainer extends BlockItem {
 
 				InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
 				if (inv != null) {
-					inv.setItem(new ItemStack(cont, 1));
+					inv.addItemAmount(-1);
+					VanillaPlayerUtil.getInventory(entity).addItem(new ItemStack(cont, 1));
 				}
 				return;
 			}

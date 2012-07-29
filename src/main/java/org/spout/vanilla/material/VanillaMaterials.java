@@ -485,7 +485,7 @@ public final class VanillaMaterials {
 	public static final Food COOKED_PORKCHOP = new Food("Cooked Porkchop", 320, 8, FoodEffectType.HUNGER);
 	public static final Food GOLDEN_APPLE = new Food("Golden Apple", 322, 10, FoodEffectType.HUNGER);
 	public static final Food MELON_SLICE = new Food("MelonBlock Slice", 360, 2, FoodEffectType.HUNGER);
-	public static final Food COOKIE = new Food("Cookie", 357, 1, FoodEffectType.HUNGER);
+	public static final Food COOKIE = new Food("Cookie", 357, 2, FoodEffectType.HUNGER);
 	public static final RawBeef RAW_BEEF = new RawBeef("Raw Beef", 363, 3, FoodEffectType.HUNGER);
 	public static final Food STEAK = new Food("Steak", 364, 8, FoodEffectType.HUNGER);
 	public static final RawChicken RAW_CHICKEN = new RawChicken("Raw Chicken", 365, 2, FoodEffectType.HUNGER);

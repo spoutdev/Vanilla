@@ -53,7 +53,7 @@ public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
 				int spaceIndex = text.indexOf(" ");
 				if (spaceIndex != -1) {
 					command = text.substring(1, spaceIndex);
-					text = text.substring(spaceIndex);
+					text = text.substring(spaceIndex + 1);
 				} else {
 					command = text.substring(1);
 					text = "";

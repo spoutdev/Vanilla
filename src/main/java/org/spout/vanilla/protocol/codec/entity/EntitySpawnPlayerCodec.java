@@ -27,11 +27,13 @@
 package org.spout.vanilla.protocol.codec.entity;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
@@ -51,7 +53,8 @@ public final class EntitySpawnPlayerCodec extends MessageCodec<EntitySpawnPlayer
 		int rotation = buffer.readUnsignedByte();
 		int pitch = buffer.readUnsignedByte();
 		int item = buffer.readUnsignedShort();
-		return new EntitySpawnPlayerMessage(id, name, x, y, z, rotation, pitch, item);
+		List<Parameter<?>> parameters = ChannelBufferUtils.readParameters(buffer);
+		return new EntitySpawnPlayerMessage(id, name, x, y, z, rotation, pitch, item, parameters);
 	}
 
 	@Override
@@ -65,6 +68,7 @@ public final class EntitySpawnPlayerCodec extends MessageCodec<EntitySpawnPlayer
 		buffer.writeByte(message.getYaw());
 		buffer.writeByte(message.getPitch());
 		buffer.writeShort(message.getItemId());
+		ChannelBufferUtils.writeParameters(buffer, message.getParameters());
 		return buffer;
 	}
 }

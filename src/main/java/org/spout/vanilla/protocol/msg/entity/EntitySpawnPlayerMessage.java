@@ -26,22 +26,35 @@
  */
 package org.spout.vanilla.protocol.msg.entity;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.math.Vector3;
+import org.spout.api.util.Parameter;
 import org.spout.api.util.SpoutToStringStyle;
-
 import org.spout.vanilla.protocol.msg.EntityMessage;
 
 public final class EntitySpawnPlayerMessage extends EntityMessage {
 	private final int x, y, z, yaw, pitch, item;
 	private final String name;
-
+	private final List<Parameter<?>> parameters;
+	private static final List<Parameter<?>> NO_PARAMETERS = new ArrayList<Parameter<?>>();
+	
 	public EntitySpawnPlayerMessage(int id, String name, Vector3 position, int yaw, int pitch, int item) {
-		this(id, name, (int) position.getX(), (int) position.getY(), (int) position.getZ(), yaw, pitch, item);
+		this(id, name, (int) position.getX(), (int) position.getY(), (int) position.getZ(), yaw, pitch, item, NO_PARAMETERS);
 	}
 
 	public EntitySpawnPlayerMessage(int id, String name, int x, int y, int z, int yaw, int pitch, int item) {
+		this(id, name, x, y, z, yaw, pitch, item, NO_PARAMETERS);
+	}
+
+	public EntitySpawnPlayerMessage(int id, String name, Vector3 position, int yaw, int pitch, int item, List<Parameter<?>> parameters) {
+		this(id, name, (int) position.getX(), (int) position.getY(), (int) position.getZ(), yaw, pitch, item, parameters);
+	}
+
+	public EntitySpawnPlayerMessage(int id, String name, int x, int y, int z, int yaw, int pitch, int item, List<Parameter<?>> parameters) {
 		super(id);
 		this.name = name;
 		this.x = x;
@@ -50,6 +63,7 @@ public final class EntitySpawnPlayerMessage extends EntityMessage {
 		this.yaw = yaw;
 		this.pitch = pitch;
 		this.item = item;
+		this.parameters = parameters;
 	}
 
 	public String getPlayerName() {
@@ -78,6 +92,10 @@ public final class EntitySpawnPlayerMessage extends EntityMessage {
 
 	public int getItemId() {
 		return item;
+	}
+	
+	public List<Parameter<?>> getParameters() {
+		return parameters;
 	}
 
 	@Override

@@ -29,13 +29,10 @@ package org.spout.vanilla.protocol.codec;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
-import org.spout.api.Spout;
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.login.request.ClientLoginRequestMessage;
 import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
-import org.spout.vanilla.protocol.msg.login.request.ServerLoginRequestMessage;
 
 public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 	public LoginRequestCodec() {

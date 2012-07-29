@@ -87,12 +87,18 @@ public class EncryptionKeyResponseMessage extends Message implements ProcessorSe
 		}
 		final EncryptionKeyResponseMessage other = (EncryptionKeyResponseMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.isChannelLocking(), other.isChannelLocking())
+				.append(this.getSecretArray(), other.getSecretArray())
+				.append(this.getVerifyTokenArray(), other.getVerifyTokenArray())
 				.isEquals();
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("locking", this.isChannelLocking())
+				.append("secret", this.getSecretArray())
+				.append("verifyToken", this.getVerifyTokenArray())
 				.toString();
 	}
 }

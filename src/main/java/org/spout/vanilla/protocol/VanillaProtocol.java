@@ -35,7 +35,6 @@ import org.spout.api.protocol.Protocol;
 
 import org.spout.vanilla.chat.style.VanillaStyleHandler;
 import org.spout.vanilla.protocol.msg.ChatMessage;
-import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 
 public class VanillaProtocol extends Protocol {

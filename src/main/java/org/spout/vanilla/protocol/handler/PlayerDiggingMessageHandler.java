@@ -51,6 +51,7 @@ import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
@@ -183,8 +184,10 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
 				sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
 			}
-		} else if (state == PlayerDiggingMessage.STATE_CANCEL_DIGGING) {
-			vp.stopDigging(new Point(w, x, y, z));
+		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
+			if (heldItem.getMaterial() instanceof Food) {
+				((Food)heldItem.getMaterial()).onEat(player.getEntity(), currentSlot);
+			}
 		}
 	}
 }

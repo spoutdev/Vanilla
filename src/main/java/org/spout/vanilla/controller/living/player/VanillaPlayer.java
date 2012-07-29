@@ -26,10 +26,8 @@
  */
 package org.spout.vanilla.controller.living.player;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -46,7 +44,6 @@ import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
-import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -54,26 +51,21 @@ import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerFoodSaturationChangeEvent;
 import org.spout.vanilla.event.player.PlayerHungerChangeEvent;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.armor.Armor;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
-import org.spout.vanilla.protocol.msg.DestroyEntitiesMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.VanillaNetworkUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.window.DefaultWindow;
 import org.spout.vanilla.window.Window;
 
@@ -204,26 +196,33 @@ public class VanillaPlayer extends Human implements PlayerController {
 		short health;
 		health = (short) getHealth();
 
+		boolean changed = false;
 		if (exhaustion > 4.0) {
 			exhaustion -= 4.0;
 			if (foodSaturation > 0) {
-				setFoodSaturation(Math.max(foodSaturation - 0.1f, 0));
+				setFoodSaturation(Math.max(foodSaturation - 1f, 0));
+				changed = true;
 			} else {
 				setHunger((short) Math.max(hunger - 1, 0));
+				changed = true;
 			}
 		}
 
-		boolean changed = false;
 		if (hunger <= 0 && health > 0) {
 
 			int maxDrop = 0;
-			if (((Difficulty) owner.getEntity().getWorld().get(VanillaData.DIFFICULTY)).equals(Difficulty.EASY)) {
+			
+			//TODO: Disabled since there's a save error or something. The if NPE
+			/*if (owner.getEntity().getWorld().get(VanillaData.DIFFICULTY) == Difficulty.EASY) {
 				maxDrop = 10;
-			} else if (((Difficulty) owner.getEntity().getWorld().get(VanillaData.DIFFICULTY)).equals(Difficulty.NORMAL)) {
+			} else if (owner.getEntity().getWorld().get(VanillaData.DIFFICULTY) == Difficulty.NORMAL) {
 				maxDrop = 1;
+			}*/
+			if (maxDrop < health) {
+				setHealth((short) Math.max(health - 1, maxDrop), DamageCause.STARVE);
+				changed = true;
 			}
-			setHealth((short) Math.max(health - 1, maxDrop), DamageCause.STARVE);
-			changed = true;
+			
 		} else if (hunger >= 18 && health < 20) {
 			setHealth((short) Math.min(health + 1, 20), HealthChangeReason.REGENERATION);
 			changed = true;

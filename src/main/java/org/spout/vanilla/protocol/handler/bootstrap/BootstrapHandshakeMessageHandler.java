@@ -60,27 +60,22 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
 			session.getDataMap().put(VanillaProtocol.LOGIN_TIME, System.currentTimeMillis());
 			session.getDataMap().put(VanillaProtocol.HANDSHAKE_USERNAME, message.getUsername());
-			if (VanillaConfiguration.ENCRYPT_MODE.getBoolean()) {
-				session.setState(Session.State.EXCHANGE_ENCRYPTION);
-				String sessionId = getSessionId();
-				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
-				int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
-				String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
-				AsymmetricCipherKeyPair keys = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
-				byte[] randombyte = new byte[4];
-				random.nextBytes(randombyte);
-				session.getDataMap().put("verifytoken", randombyte);
-				byte[] secret = SecurityHandler.getInstance().encodeKey(keys.getPublic());
-				session.send(false, true, new EncryptionKeyRequestMessage(sessionId, false, secret, randombyte));
-			} else if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
-				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
-				String sessionId = getSessionId();
-				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
+			session.setState(Session.State.EXCHANGE_ENCRYPTION);
+			final String sessionId;
+			if (VanillaConfiguration.ONLINE_MODE.getBoolean()) { 
+				sessionId = getSessionId();
 			} else {
-				session.setState(Session.State.EXCHANGE_IDENTIFICATION);
-				String sessionId = "-";
-				session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
+				sessionId = "-";
 			}
+			session.getDataMap().put(VanillaProtocol.SESSION_ID, sessionId);
+			int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
+			String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
+			AsymmetricCipherKeyPair keys = SecurityHandler.getInstance().getKeyPair(keySize, keyAlgorithm);
+			byte[] randombyte = new byte[4];
+			random.nextBytes(randombyte);
+			session.getDataMap().put("verifytoken", randombyte);
+			byte[] secret = SecurityHandler.getInstance().encodeKey(keys.getPublic());
+			session.send(false, true, new EncryptionKeyRequestMessage(sessionId, false, secret, randombyte));
 		} else {
 			session.disconnect(false, new Object[] { "Handshake already exchanged." });
 		}

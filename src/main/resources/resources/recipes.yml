@@ -944,7 +944,7 @@ recipes:
 
   Sign:
     type: Shaped
-    result: SIGN,1
+    result: SIGN,3
     ingredients:
       A: OAK_PLANK
       B: STICK

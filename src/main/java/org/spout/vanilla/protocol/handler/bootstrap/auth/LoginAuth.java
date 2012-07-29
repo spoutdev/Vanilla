@@ -137,6 +137,7 @@ public class LoginAuth implements Runnable {
 	}
 
 	private void failed(String message) {
+		Spout.getLogger().info("Kicking " + name + " due to problem authenticating {" + message + "}");
 		session.disconnect(message);
 	}
 }

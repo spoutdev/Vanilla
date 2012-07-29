@@ -38,6 +38,8 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.DamageCause;
+import org.spout.vanilla.data.Dimension;
+import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -70,6 +72,12 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 				if (clickedEntity.getController() instanceof VanillaPlayer && (!VanillaPlayerUtil.isSurvival(player.getEntity()) || !VanillaPlayerUtil.isSurvival(damaged.getParent()))) {
 					return;
 				}
+				((VanillaPlayer) player).setExhaustion(((VanillaPlayer) player).getExhaustion() - ExhaustionLevel.ATTACK_ENEMY.getAmount());
+
+				if (clickedEntity.getController() instanceof VanillaPlayer) {
+					((VanillaPlayer) clickedEntity.getController()).setExhaustion(((VanillaPlayer) clickedEntity.getController()).getExhaustion() - ExhaustionLevel.RECEIVE_DAMAGE.getAmount());
+				}
+
 				int damage = 1;
 				if (holding != null && holdingMat instanceof VanillaMaterial) {
 					damage = ((VanillaMaterial) holdingMat).getDamage();

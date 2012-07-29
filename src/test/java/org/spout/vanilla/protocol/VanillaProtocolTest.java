@@ -58,6 +58,7 @@ import org.spout.vanilla.protocol.msg.ItemDataMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.MultiBlockChangeMessage;
+import org.spout.vanilla.protocol.msg.NamedSoundEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
@@ -154,6 +155,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntityMetadataMessage(1, TEST_PARAMS),
 			new EntityEffectMessage(1, (byte) 1, (byte) 1, (short) 34),
 			new EntityRemoveEffectMessage(1, (byte) 1),
+			new NamedSoundEffectMessage("random.bow", 12.5f, 0.0f, 12.0f, 1.0f, 1.0f),
 			new DestroyEntitiesMessage(new int[] {2}),
 			new SetExperienceMessage(1.2F, (short) 2, (short) 3),
 			new CompressedChunkMessage(1, 2, true, new boolean[16], new byte[][]{new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null, null, null, null, null, new byte[Chunk.BLOCKS.HALF_VOLUME * 5], null, null, null, null, null}, new byte[16 * 16]),

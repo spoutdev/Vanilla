@@ -30,43 +30,42 @@ import java.io.IOException;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-
 import org.spout.api.protocol.MessageCodec;
+import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.msg.NamedSoundEffectMessage;
 
-import org.spout.vanilla.protocol.msg.ExplosionMessage;
+public final class NamedSoundEffectCodec extends MessageCodec<NamedSoundEffectMessage> {
+	public NamedSoundEffectCodec() {
+		super(NamedSoundEffectMessage.class, 0x3e);
+	}
 
-public final class ExplosionCodec extends MessageCodec<ExplosionMessage> {
-	public ExplosionCodec() {
-		super(ExplosionMessage.class, 0x3C);
+	/*
+	 * Note to the people that like to move the mathematics involved:
+	 * THIS IS PART OF ENCODING AND DECODING
+	 * This task is not part of the one actually wishing to send or handle a message.
+	 * So don't move this logic. Thank you.
+	 */
+
+	@Override
+	public NamedSoundEffectMessage decode(ChannelBuffer buffer) throws IOException {
+		String soundName = ChannelBufferUtils.readString(buffer);
+		float x = (float) buffer.readInt() / 8.0f;
+		float y = (float) buffer.readInt() / 8.0f;
+		float z = (float) buffer.readInt() / 8.0f;
+		float volume = buffer.readFloat();
+		float pitch = 63f / (float) buffer.readUnsignedByte();
+		return new NamedSoundEffectMessage(soundName, x, y, z, volume, pitch);
 	}
 
 	@Override
-	public ExplosionMessage decode(ChannelBuffer buffer) throws IOException {
-		double x = buffer.readDouble();
-		double y = buffer.readDouble();
-		double z = buffer.readDouble();
-		float radius = buffer.readFloat();
-		int records = buffer.readInt();
-		byte[] coordinates = new byte[records * 3];
-		buffer.readBytes(coordinates);
-		buffer.readFloat(); // unknown (x?)
-		buffer.readFloat(); // unknown (y?)
-		buffer.readFloat(); // unknown (z?)
-		return new ExplosionMessage(x, y, z, radius, coordinates);
-	}
-
-	@Override
-	public ChannelBuffer encode(ExplosionMessage message) throws IOException {
+	public ChannelBuffer encode(NamedSoundEffectMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeDouble(message.getX());
-		buffer.writeDouble(message.getY());
-		buffer.writeDouble(message.getZ());
-		buffer.writeFloat(message.getRadius());
-		buffer.writeInt(message.getRecords());
-		buffer.writeBytes(message.getCoordinates());
-		buffer.writeFloat(0.0f); // unknown (x?)
-		buffer.writeFloat(0.0f); // unknown (y?)
-		buffer.writeFloat(0.0f); // unknown (z?)
+		ChannelBufferUtils.writeString(buffer, message.getSoundName());
+		buffer.writeInt((int) (message.getX() * 8.0f));
+		buffer.writeInt((int) (message.getY() * 8.0f));
+		buffer.writeInt((int) (message.getZ() * 8.0f));
+		buffer.writeFloat(message.getVolume());
+		buffer.writeByte((byte) (message.getPitch() * 63f));
 		return buffer;
 	}
 }

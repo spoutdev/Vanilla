@@ -191,7 +191,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				//perform actual placement
 				if (toPlace.onPlacement(target, placedData, targetFace, target == clickedBlock)) {
 					//Remove block from inventory if not in creative mode.
-					if (!((PlayerController) player.getEntity().getController()).hasInfiniteResources()) {
+					if (!((VanillaPlayer) player.getEntity().getController()).hasInfiniteResources()) {
 						currentSlot.addItemAmount(0, -1);
 					}
 				} else {

@@ -328,7 +328,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		return owner;
 	}
 
-	@Override
 	public boolean hasInfiniteResources() {
 		return gameMode.equals(GameMode.CREATIVE);
 	}

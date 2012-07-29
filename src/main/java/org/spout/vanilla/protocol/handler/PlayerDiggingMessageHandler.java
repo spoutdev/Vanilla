@@ -47,6 +47,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -152,6 +153,10 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				return;
 			}
 
+			if (VanillaPlayerUtil.isSurvival(player)) {
+				((VanillaPlayer)player).setExhaustion(((VanillaPlayer)player).getExhaustion() + ExhaustionLevel.BREAK_BLOCK.getAmount());
+			}
+			
 			long diggingTicks = vp.getDiggingTicks();
 			int damageDone;
 			int totalDamage;

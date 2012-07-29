@@ -52,7 +52,9 @@ import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.event.player.PlayerHungerChangeEvent;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.enchantment.Enchantments;
@@ -79,7 +81,7 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacket;
 public class VanillaPlayer extends Human implements PlayerController {
 	protected final Player owner;
 	protected long unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt(), lastPing = 0, lastUserList = 0, foodTimer = 0;
-	protected short count = 0, ping, hunger = 20;
+	protected short count = 0, ping, maxHunger = 20, hunger = maxHunger;
 	protected float foodSaturation = 5.0f, exhaustion = 0.0f;
 	protected boolean poisoned;
 	protected boolean flying;
@@ -148,7 +150,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			player.kick("Connection Timeout!");
 		}
 
-		if (lastUserList++ > 20) {
+		if (lastUserList++ >= 20) {
 			VanillaNetworkUtil.broadcastPacket(new PlayerListMessage(tabListName, true, ping));
 			lastUserList = 0;
 		}
@@ -170,12 +172,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	private void survivalTick(float dt) {
 		if ((distanceMoved += getPreviousPosition().distanceSquared(getParent().getPosition())) >= 1) {
-			exhaustion += 0.01;
+			exhaustion += ExhaustionLevel.WALKING.getAmount();
 			distanceMoved = 0;
 		}
 
 		if (sprinting) {
-			exhaustion += 0.1;
+			exhaustion += ExhaustionLevel.SPRINTING.getAmount();
 		}
 
 		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
@@ -195,7 +197,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 				}
 			} else {
 				// Suffocation
-				int noDamageTicks /* TODO noDamageTicks should probably be made a global variable to account for other damage */ = level == 0 ? 10 : 10 + 20 * level; // Increase time between damage by 1 second per enchantment level
+				int noDamageTicks /* TODO noDamageTicks should probably be made a global variable to account for other damage */= level == 0 ? 10 : 10 + 20 * level; // Increase time between damage by 1 second per enchantment level
 				if (airTicks % noDamageTicks == 0) {
 					damage(1, DamageCause.SUFFOCATE);
 				}
@@ -206,7 +208,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 
 		if (poisoned) {
-			exhaustion += 15.0 / 30 * dt;
+			exhaustion += ExhaustionLevel.FOOD_POISONING.getAmount() / 30 * dt;
 		}
 
 		// Track hunger
@@ -226,7 +228,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			if (foodSaturation > 0) {
 				foodSaturation = Math.max(foodSaturation - 0.1f, 0);
 			} else {
-				hunger = (short) Math.max(hunger - 1, 0);
+				setHunger((short) Math.max(hunger - 1, 0));
 			}
 		}
 
@@ -275,6 +277,53 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public void setHealth(int health, Source source) {
 		super.setHealth(health, source);
 		playerDead = health <= 0;
+		sendUpdateHealth();
+	}
+
+	/**
+	 * Returns the food saturation level of the player attached to the controller. The food bar "jitters" when the bar reaches 0.
+	 * @return food saturation level
+	 */
+	public float getFoodSaturation() {
+		return this.foodSaturation;
+	}
+
+	/**
+	 * Sets the food saturation of the controller. The food bar "jitters" when the bar reaches 0.
+	 * @param foodSaturation The value to set to
+	 */
+	public void setFoodSaturation(float foodSaturation) {
+		// TODO: A event
+		this.foodSaturation = foodSaturation;
+		sendUpdateHealth();
+	}
+
+	/**
+	 * Returns the hunger of the player attached to the controller.
+	 * @return hunger
+	 */
+	public short getHunger() {
+		return hunger;
+	}
+
+	/**
+	 * Sets the hunger of the controller.
+	 * @param hunger
+	 */
+	public void setHunger(short hunger) {
+		PlayerHungerChangeEvent event = new PlayerHungerChangeEvent(this.getPlayer(), hunger);
+		Spout.getEngine().getEventManager().callEvent(event);
+		if (!event.isCancelled()) {
+			if (event.getHunger() > maxHunger) {
+				this.hunger = maxHunger;
+			} else {
+				this.hunger = event.getHunger();
+			}
+		}
+		sendUpdateHealth();
+	}
+
+	public void sendUpdateHealth() {
 		sendPacket(owner, new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
 	}
 
@@ -352,15 +401,15 @@ public class VanillaPlayer extends Human implements PlayerController {
 					if (currentItem != null) {
 						itemId = currentItem.getMaterial().getId();
 					}
-					
-					//TODO: this is the air parameter, need to actually implement it!
+
+					// TODO: this is the air parameter, need to actually implement it!
 					List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 					parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 300));
 
 					sendPacket(player, new EntitySpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId, parameters));
 				} else {
 					invisibleFor.add(player);
-					sendPacket(player, new DestroyEntitiesMessage(new int[] {parent.getId()}));
+					sendPacket(player, new DestroyEntitiesMessage(new int[] { parent.getId() }));
 				}
 			}
 		}
@@ -456,38 +505,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void setPoisoned(boolean poisoned) {
 		this.poisoned = poisoned;
-	}
-
-	/**
-	 * Returns the hunger of the player attached to the controller.
-	 * @return hunger
-	 */
-	public short getHunger() {
-		return hunger;
-	}
-
-	/**
-	 * Sets the hunger of the controller.
-	 * @param hunger
-	 */
-	public void setHunger(short hunger) {
-		this.hunger = hunger;
-	}
-
-	/**
-	 * Returns the food saturation level of the player attached to the controller. The food bar "jitters" when the bar reaches 0.
-	 * @return food saturation level
-	 */
-	public float getFoodSaturation() {
-		return this.foodSaturation;
-	}
-
-	/**
-	 * Sets the food saturation of the controller. The food bar "jitters" when the bar reaches 0.
-	 * @param foodSaturation
-	 */
-	public void setFoodSaturation(float foodSaturation) {
-		this.foodSaturation = foodSaturation;
 	}
 
 	/**

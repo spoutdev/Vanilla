@@ -37,7 +37,6 @@ import org.spout.api.Source;
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.controller.PlayerController;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
@@ -45,8 +44,11 @@ import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
+import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
@@ -59,7 +61,6 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerFoodSaturationChangeEvent;
 import org.spout.vanilla.event.player.PlayerHungerChangeEvent;
 import org.spout.vanilla.inventory.player.PlayerInventory;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.armor.Armor;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
@@ -187,32 +188,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 
 		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
-		Block head = getParent().getWorld().getBlock(getHeadPosition(), getParent());
-		if (head.isMaterial(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
-			airTicks++;
-			ItemStack helmet = getInventory().getArmor().getHelmet().getItem();
-			int level = 0;
-			if (helmet != null && EnchantmentUtil.hasEnchantment(helmet, Enchantments.RESPIRATION)) {
-				level = EnchantmentUtil.getEnchantmentLevel(helmet, Enchantments.RESPIRATION);
-			}
-			if (head.isMaterial(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
-				// Drowning
-				int ticksBeforeDrowning = level == 0 ? 300 : level * 300; // Increase time before drowning by 15 seconds per enchantment level
-				if (airTicks >= ticksBeforeDrowning && airTicks % 20 == 0) {
-					damage(4, DamageCause.DROWN);
-				}
-			} else {
-				// Suffocation
-				int noDamageTicks /* TODO noDamageTicks should probably be made a global variable to account for other damage */= level == 0 ? 10 : 10 + 20 * level; // Increase time between damage by 1 second per enchantment level
-				if (airTicks % noDamageTicks == 0) {
-					damage(1, DamageCause.SUFFOCATE);
-				}
-			}
-		} else {
-			// Reset air ticks if necessary
-			airTicks = 0;
-		}
-
 		if (poisoned) {
 			exhaustion += ExhaustionLevel.FOOD_POISONING.getAmount() / 30 * dt;
 		}
@@ -412,22 +387,17 @@ public class VanillaPlayer extends Human implements PlayerController {
 		Entity parent = getParent();
 		for (Player player : players) {
 			if (player.getEntity().getController() != this) {
-				if (visible) {
-					invisibleFor.remove(player);
-					ItemStack currentItem = VanillaPlayerUtil.getCurrentItem(player.getEntity());
-					int itemId = 0;
-					if (currentItem != null) {
-						itemId = currentItem.getMaterial().getId();
+				EntityProtocol ep = player.getEntity().getController().getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
+				if (ep != null) {
+					if (visible) {
+						invisibleFor.remove(player);
+						Message[] spawn = ep.getSpawnMessage(parent);
+						sendPacket(player, spawn);
+					} else {
+						invisibleFor.add(player);
+						Message[] destroy = ep.getDestroyMessage(parent);
+						sendPacket(player, destroy);
 					}
-
-					// TODO: this is the air parameter, need to actually implement it!
-					List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
-					parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 300));
-
-					sendPacket(player, new EntitySpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId, parameters));
-				} else {
-					invisibleFor.add(player);
-					sendPacket(player, new DestroyEntitiesMessage(new int[] { parent.getId() }));
 				}
 			}
 		}
@@ -662,5 +632,15 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void rollCredits() {
 		owner.getSession().send(false, new ChangeGameStateMessage(ChangeGameStateMessage.ENTER_CREDITS));
+	}
+
+	@Override
+	public int getMaxAirTicks() {
+		ItemStack helmet = getInventory().getArmor().getHelmet().getItem();
+		int level = 0;
+		if (helmet != null && EnchantmentUtil.hasEnchantment(helmet, Enchantments.RESPIRATION)) {
+			level = EnchantmentUtil.getEnchantmentLevel(helmet, Enchantments.RESPIRATION);
+		}
+		return level == 0 ? 300 : level * 300;
 	}
 }

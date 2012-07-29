@@ -76,7 +76,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 	private int fireTicks = 0;
 	private int positionTicks = 0;
 	private int velocityTicks = 0;
-	protected int airTicks = 0;
+	private int airTicks = 0;
 	// Velocity-related
 	private Vector3 velocity = Vector3.ZERO;
 	private Vector3 movementSpeed = Vector3.ZERO;
@@ -141,6 +141,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 				return;
 		}
 		updateFireTicks();
+		updateAirTicks();
 
 		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
@@ -538,5 +539,21 @@ public abstract class VanillaActionController extends Controller implements Vani
 
 	public void setDeathAnimation(boolean hasDeathAnimation) {
 		this.hasDeathAnimation = hasDeathAnimation;
+	}
+
+	public final int getAirTicks() {
+		return airTicks;
+	}
+
+	public final void setAirTicks(int ticks) {
+		this.airTicks = ticks;
+	}
+
+	public void updateAirTicks() {
+		
+	}
+
+	public int getMaxAirTicks() {
+		return 300;
 	}
 }

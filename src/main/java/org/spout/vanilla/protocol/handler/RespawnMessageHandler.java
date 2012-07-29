@@ -32,16 +32,18 @@ import java.util.List;
 import org.spout.api.Spout;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
+import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
@@ -75,7 +77,10 @@ public class RespawnMessageHandler extends MessageHandler<RespawnMessage> {
 		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 300));
 
 		//send spawn to everyone else
-		EntitySpawnPlayerMessage spawn = new EntitySpawnPlayerMessage(player.getEntity().getId(), player.getDisplayName(), point, (int) player.getEntity().getYaw(), (int) player.getEntity().getPitch(), 0, parameters);
-		VanillaNetworkUtil.broadcastPacket(new Player[]{player}, spawn);
+		EntityProtocol ep = controller.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
+		if (ep != null) {
+			Message[] spawn = ep.getSpawnMessage(player.getEntity());
+			VanillaNetworkUtil.broadcastPacket(new Player[]{player}, spawn);
+		}
 	}
 }

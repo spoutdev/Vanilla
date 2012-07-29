@@ -430,11 +430,11 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("Don't be silly...you cannot kill yourself as the console.");
 			}
-			((Player) source).getEntity().kill();
+			((VanillaPlayer) source).setHealth(0, source);
 		} else {
-			Player victim = Spout.getEngine().getPlayer(args.getString(0), true);
+			VanillaPlayer victim = (VanillaPlayer) Spout.getEngine().getPlayer(args.getString(0), true);
 			if (victim != null) {
-				victim.getEntity().kill();
+				victim.setHealth(0, source);
 			}
 		}
 	}

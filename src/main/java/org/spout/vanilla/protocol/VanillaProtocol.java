@@ -92,4 +92,20 @@ public class VanillaProtocol extends Protocol {
 	public Message getIntroductionMessage(String playerName) {
 		return new HandshakeMessage(playerName);
 	}
+
+	@Override
+	public void initializeSession(Session session) {
+		final Player player = session.getPlayer();
+		session.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, player.getEntity()));
+
+		Controller controller = player.getEntity().getController();
+
+		if (controller instanceof VanillaPlayer) {
+			VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
+			// Set protocol and send packets
+			if (vanillaPlayer.isSurvival()) {
+				VanillaNetworkUtil.sendPacket(vanillaPlayer.getPlayer(), new UpdateHealthMessage((short) vanillaPlayer.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
+			}
+		}
+	}
 }

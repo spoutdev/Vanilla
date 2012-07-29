@@ -26,18 +26,26 @@
  */
 package org.spout.vanilla.util.sound;
 
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.vanilla.protocol.msg.NamedSoundEffectMessage;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 
-public class Sound {
+public class Sound extends SoundStore implements VanillaSound {
 	private final String name;
 	private final float volume, pitch;
+	private final int range;
 
-	public Sound(String name, float volume, float pitch) {
+	public Sound(String name) {
+		this(name, 1.0f, 1.0f, 16);
+	}
+
+	public Sound(String name, float volume, float pitch, int range) {
 		this.name = name;
 		this.volume = volume;
 		this.pitch = pitch;
+		this.range = range;
 	}
 
 	public float getDefaultVolume() {
@@ -48,23 +56,36 @@ public class Sound {
 		return this.pitch;
 	}
 
+	public int getDefaultRange() {
+		return this.range;
+	}
+
 	public String getName() {
 		return this.name;
 	}
 
+	@Override
 	public void play(Player player, Vector3 position) {
-		this.play(player, position.getX(), position.getY(), position.getZ());
+		this.play(player, position, this.getDefaultVolume(), this.getDefaultPitch());
 	}
 
+	@Override
 	public void play(Player player, Vector3 position, float volume, float pitch) {
-		this.play(player, position.getX(), position.getY(), position.getZ(), volume, pitch);
+		player.getSession().send(false, new NamedSoundEffectMessage(this.name, position, volume, pitch));
 	}
 
-	public void play(Player player, float x, float y, float z) {
-		this.play(player, x, y, z, this.volume, this.pitch);
+	@Override
+	public void playGlobal(Point position) {
+		this.playGlobal(position, this.getDefaultVolume(), this.getDefaultPitch());
 	}
 
-	public void play(Player player, float x, float y, float z, float volume, float pitch) {
-		player.getSession().send(false, new NamedSoundEffectMessage(this.name, x, y, z, volume, pitch));
+	@Override
+	public void playGlobal(Point position, float volume, float pitch) {
+		this.playGlobal(position, volume, pitch, this.getDefaultRange());
+	}
+
+	@Override
+	public void playGlobal(Point position, float volume, float pitch, int range) {
+		VanillaNetworkUtil.sendPacketsToNearbyPlayers(position, range, new NamedSoundEffectMessage(this.name, position, volume, pitch));
 	}
 }

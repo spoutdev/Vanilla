@@ -30,42 +30,52 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 
-public class RandomSound extends RandomSoundStore implements VanillaSound {
-	private final Sound[] sounds;
-	public RandomSound(Sound... sounds) {
-		this.sounds = sounds;
-	}
+/**
+ * A Vanilla sound that can be sent over the network
+ */
+public interface VanillaSound {
 
-	public Sound[] getSounds() {
-		return this.sounds;
-	}
+	/**
+	 * Plays the sound to all players near the position
+	 * 
+	 * @param position to play at
+	 */
+	public void playGlobal(Point position);
 
-	public Sound getRandomSound() {
-		return sounds[(int) (Math.random() * sounds.length)];
-	}
+	/**
+	 * Plays the sound to all players near the position
+	 * 
+	 * @param position to play at
+	 * @param volume to play at
+	 * @param pitch to play at
+	 */
+	public void playGlobal(Point position, float volume, float pitch);
 
-	@Override
-	public void playGlobal(Point position) {
-		this.getRandomSound().playGlobal(position);
-	}
+	/**
+	 * Plays the sound to all players near the position
+	 * 
+	 * @param position to play at
+	 * @param volume to play at
+	 * @param pitch to play at
+	 * @param range to play in
+	 */
+	public void playGlobal(Point position, float volume, float pitch, int range);
 
-	@Override
-	public void playGlobal(Point position, float volume, float pitch) {
-		this.getRandomSound().playGlobal(position, volume, pitch);
-	}
+	/**
+	 * Plays the sound for the player at the position specified
+	 * 
+	 * @param player to play the sound for
+	 * @param position in the world to play at
+	 */
+	public void play(Player player, Vector3 position);
 
-	@Override
-	public void playGlobal(Point position, float volume, float pitch, int range) {
-		this.getRandomSound().playGlobal(position, volume, pitch, range);
-	}
-
-	@Override
-	public void play(Player player, Vector3 position) {
-		this.getRandomSound().play(player, position);
-	}
-
-	@Override
-	public void play(Player player, Vector3 position, float volume, float pitch) {
-		this.getRandomSound().play(player, position, volume, pitch);
-	}
+	/**
+	 * Plays the sound for the player at the position specified
+	 * 
+	 * @param player to play the sound for
+	 * @param position in the world to play at
+	 * @param volume to play at
+	 * @param pitch to play at
+	 */
+	public void play(Player player, Vector3 position, float volume, float pitch);
 }

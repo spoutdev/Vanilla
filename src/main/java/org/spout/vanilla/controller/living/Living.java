@@ -26,12 +26,16 @@
  */
 package org.spout.vanilla.controller.living;
 
+import org.spout.api.geo.LoadOption;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.vanilla.controller.source.DamageCause;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public abstract class Living extends VanillaActionController {
 	private Point headPos = null;
@@ -140,5 +144,37 @@ public abstract class Living extends VanillaActionController {
 
 	public void setCrouching(boolean crouching) {
 		this.crouching = crouching;
+	}
+	
+	@Override
+	public void updateAirTicks() {
+		// Handle drowning and suffocation damage
+		int airTicks = getAirTicks();
+		Point headPos = getHeadPosition();
+		if (getParent().isObserver() || headPos.getWorld().getChunkFromBlock(headPos, LoadOption.NO_LOAD) != null) {
+			Block head = getParent().getWorld().getBlock(headPos, getParent());
+			if (head.isMaterial(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+				airTicks++;
+				if (head.isMaterial(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+					// Drowning
+					if (airTicks >= getMaxAirTicks() && airTicks % 20 == 0) {
+						damage(4, DamageCause.DROWN);
+					}
+				} else {
+					// Suffocation
+					if (airTicks % 10 == 0) {
+						damage(1, DamageCause.SUFFOCATE);
+					}
+				}
+			} else {
+				airTicks = 0;
+			}
+		}
+		setAirTicks(airTicks);
+	}
+
+	@Override
+	public int getMaxAirTicks() {
+		return 300;
 	}
 }

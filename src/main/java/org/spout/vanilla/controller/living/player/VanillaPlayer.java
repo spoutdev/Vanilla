@@ -39,6 +39,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
@@ -589,6 +590,37 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public PlayerInventory getInventory() {
 		return playerInventory;
+	}
+
+	@Override
+	public Transform getHeadTransform() {
+		Transform trans = new Transform();
+		trans.setPosition(this.getHeadPosition());
+		Vector3 offset = this.getLookingAt();
+		trans.setRotation(MathHelper.rotation(getLookAtPitch(offset), getLookAtYaw(offset), 0.0f));
+		return trans;
+	}
+
+	//TODO: Get these two functions working in the API!
+	public static float getLookAtYaw(Vector3 offset) {
+        float yaw = 0;
+        // Set yaw
+        if (offset.getX() != 0) {
+            // Set yaw start value based on dx
+            if (offset.getX() < 0) {
+            	yaw = 270;
+            } else {
+                yaw = 90;
+            }
+            yaw -= Math.toDegrees(Math.atan(offset.getZ() / offset.getX()));
+        } else if (offset.getZ() < 0) {
+        	yaw = 180;
+        }
+        return yaw;
+	}
+
+	public static float getLookAtPitch(Vector3 offset) {
+		return (float) -Math.toDegrees(Math.atan(offset.getY() / MathHelper.length(offset.getX(), offset.getZ())));
 	}
 
 	private static Vector3 getRandomVelocity(Random rand, float force) {

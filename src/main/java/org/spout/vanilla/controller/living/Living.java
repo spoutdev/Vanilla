@@ -44,6 +44,7 @@ public abstract class Living extends VanillaActionController {
 	private int nextHeadYaw = 0;
 	private boolean headYawChanged;
 	private float headHeight = 1.0f;
+	private int reach = 5;
 	protected boolean crouching;
 
 	protected Living(VanillaControllerType type) {
@@ -76,6 +77,24 @@ public abstract class Living extends VanillaActionController {
 		int tmp = nextHeadYaw;
 		nextHeadYaw = 0;
 		return tmp;
+	}
+
+	/**
+	 * Sets the maximum distance this Living Entity can interact at
+	 * 
+	 * @param reach distance
+	 */
+	public void setReach(int reach) {
+		this.reach = reach;
+	}
+
+	/**
+	 * Gets the maximum distance this Living Entity can interact at
+	 * 
+	 * @return reach distance
+	 */
+	public int getReach() {
+		return this.reach;
 	}
 
 	/**
@@ -117,17 +136,33 @@ public abstract class Living extends VanillaActionController {
 		Transform trans = new Transform();
 		trans.setPosition(this.getHeadPosition());
 		trans.setRotation(this.getParent().getRotation());
-		//TODO: Should the head yaw int (?!) be used during this calculation???
-		//trans.setRotation(Quaternion.rotation(parent.getPitch(), this.headYaw, getParent().getRoll()));
 		return trans;
 	}
 
 	public BlockIterator getHeadBlockView() {
-		return getHeadBlockView(8); //assume a max block radius of 8
+		return getHeadBlockView(this.getReach());
 	}
 
 	public BlockIterator getHeadBlockView(int maxDistance) {
 		return new BlockIterator(this.getParent().getWorld(), this.getHeadTransform(), maxDistance);
+	}
+
+	/**
+	 * Performs a collision test
+	 * 
+	 * @param iterator
+	 * @return the first block this Living entity collides with
+	 */
+	public Block hitTest() {
+		Block block;
+		for (BlockIterator iter = this.getHeadBlockView(); iter.hasNext();) {
+			 block = iter.next();
+			 //TODO: Hit box check
+			 if (!block.getMaterial().isTransparent()) {
+				 return block;
+			 }
+		}
+		return null;
 	}
 
 	public int getHeadYaw() {

@@ -64,6 +64,8 @@ public abstract class CraftingWindow extends Window {
 				this.getOwner().dropItem(item);
 			}
 		}
+		// Drop item on cursor
+		this.dropItemOnCursor();
 	}
 
 	@Override

@@ -28,12 +28,33 @@ package org.spout.vanilla.window.entity;
 
 import org.spout.vanilla.controller.living.creature.passive.Villager;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.window.TransactionWindow;
+import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
+import org.spout.vanilla.util.intmap.SlotIndexCollection;
+import org.spout.vanilla.util.intmap.SlotIndexGrid;
+import org.spout.vanilla.util.intmap.SlotIndexMap;
+import org.spout.vanilla.window.CraftingWindow;
 import org.spout.vanilla.window.WindowType;
 
-public class VillagerWindow extends TransactionWindow {
+public class VillagerWindow extends CraftingWindow {
+	private static final SlotIndexCollection MAIN_SLOTS = new SlotIndexGrid(9, 4, 3);
+	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexMap("0-2");
 
 	public VillagerWindow(VanillaPlayer owner, Villager villager) {
-		super(WindowType.VILLAGER, "villager", owner, 5, villager);
+		super(WindowType.VILLAGER, "villager", owner, villager.getInventory(), villager);
+		this.addInventory(owner.getInventory().getMain(), MAIN_SLOTS);
+		this.addInventory(this.getCraftingGrid(), CRAFTING_SLOTS);
+	}
+
+	@Override
+	public void open() {
+		sendMessage(new WindowOpenMessage(this, this.getInventorySize() - this.getOwner().getInventory().getMain().getSize()));
+		super.open();
+	}
+
+	@Override
+	public void close() {
+		sendMessage(new WindowCloseMessage(this));
+		super.close();
 	}
 }

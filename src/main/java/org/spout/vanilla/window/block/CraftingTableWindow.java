@@ -61,6 +61,5 @@ public class CraftingTableWindow extends CraftingWindow {
 	public void close() {
 		sendMessage(new WindowCloseMessage(this));
 		super.close();
-		this.dropItemOnCursor();
 	}
 }

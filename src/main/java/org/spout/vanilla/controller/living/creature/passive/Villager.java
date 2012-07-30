@@ -31,8 +31,6 @@ import java.util.HashMap;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.vanilla.controller.InventoryOwner;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.WindowController;
@@ -40,11 +38,12 @@ import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.inventory.entity.VillagerInventory;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.entity.VillagerWindow;
 
 public class Villager extends Creature implements Passive, WindowController, InventoryOwner {
-	protected final Inventory inventory = new Inventory(48); //TODO: Verify
+	protected final VillagerInventory inventory = new VillagerInventory();
 	private HashMap<VanillaPlayer, Window> viewers = new HashMap<VanillaPlayer, Window>();
 
 	public Villager() {
@@ -128,7 +127,7 @@ public class Villager extends Creature implements Passive, WindowController, Inv
 	}
 
 	@Override
-	public InventoryBase getInventory() {
+	public VillagerInventory getInventory() {
 		return this.inventory;
 	}
 }

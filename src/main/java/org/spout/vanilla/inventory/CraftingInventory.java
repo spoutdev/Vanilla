@@ -112,8 +112,7 @@ public class CraftingInventory extends Inventory implements VanillaInventory {
 		this.getGrid().setContents(clonedContents);
 	}
 
-	private boolean updateOutput() {
-		RecipeManager recipeManager = Spout.getEngine().getRecipeManager();
+	public boolean updateOutput() {
 		InventoryBase grid = this.getGrid();
 		int rowSize = this.getRowSize();
 		List<List<Material>> materials = new ArrayList<List<Material>>();
@@ -136,6 +135,7 @@ public class CraftingInventory extends Inventory implements VanillaInventory {
 				cntr = 0;
 			}
 		}
+		RecipeManager recipeManager = this.getRecipeManager();
 		Recipe recipe = recipeManager.matchShapedRecipe(materials);
 		if (recipe == null) {
 			recipe = recipeManager.matchShapelessRecipe(shapeless);
@@ -146,5 +146,9 @@ public class CraftingInventory extends Inventory implements VanillaInventory {
 		}
 		this.getOutput().setItem(null);
 		return false;
+	}
+
+	public RecipeManager getRecipeManager() {
+		return Spout.getEngine().getRecipeManager();
 	}
 }

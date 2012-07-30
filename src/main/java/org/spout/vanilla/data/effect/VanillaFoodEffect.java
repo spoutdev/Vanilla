@@ -24,28 +24,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.food;
+package org.spout.vanilla.data.effect;
 
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.protocol.Message;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.controlled.Furnace;
-import org.spout.vanilla.material.item.Food;
-import org.spout.vanilla.material.item.FoodEffect;
+public abstract class VanillaFoodEffect extends Effect {
 
-public class RawFish extends Food implements TimedCraftable {
-	public RawFish(String name, int id, FoodEffect... type) {
-		super(name, id, type);
+	public VanillaFoodEffect(VanillaPlayer effected, float amount){
+		super(effected, 0,1,amount);
+	}
+	
+	public VanillaFoodEffect(VanillaPlayer effected, int duration, float amount) {
+		super(effected, 0, duration, amount);
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.COOKED_FISH, 1);
+	public boolean hasApplianceMessage() {
+		return false;
 	}
 
 	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+	public boolean hasRemovalMessage() {
+		return false;
 	}
+
+	@Override
+	public Message getApplianceMessage() {
+		return null;
+	}
+
+	@Override
+	public Message getRemovalMessage() {
+		return null;
+	}
+	
+	@Override
+	public abstract void onRegistration();
+	
+	@Override
+	public void run() {};
+
 }

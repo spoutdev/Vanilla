@@ -35,9 +35,10 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
  * Represents an entity effect that is applied to an entity.
  */
 public abstract class Effect extends TimedLogicRunnable<VanillaPlayer> {
-	protected int strength, id;
+	protected int id;
+	protected float strength;
 
-	public Effect(VanillaPlayer effected, int id, float duration, int strength) {
+	public Effect(VanillaPlayer effected, int id, float duration, float strength) {
 		super(effected, duration);
 		this.id = id;
 		this.strength = strength;
@@ -79,7 +80,7 @@ public abstract class Effect extends TimedLogicRunnable<VanillaPlayer> {
 	 * Gets the strength of the effect.
 	 * @return strength of effect.
 	 */
-	public int getStrength() {
+	public float getStrength() {
 		return strength;
 	}
 
@@ -87,7 +88,7 @@ public abstract class Effect extends TimedLogicRunnable<VanillaPlayer> {
 	 * Sets the strength of the effect.
 	 * @param strength of effect
 	 */
-	public void setStrength(int strength) {
+	public void setStrength(float strength) {
 		this.strength = strength;
 	}
 

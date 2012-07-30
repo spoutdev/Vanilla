@@ -24,28 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.food;
+package org.spout.vanilla.material.item;
 
-import org.spout.api.inventory.ItemStack;
+import java.lang.reflect.InvocationTargetException;
 
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.controlled.Furnace;
-import org.spout.vanilla.material.item.Food;
-import org.spout.vanilla.material.item.FoodEffect;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaFoodEffect;
 
-public class RawFish extends Food implements TimedCraftable {
-	public RawFish(String name, int id, FoodEffect... type) {
-		super(name, id, type);
+
+public class FoodEffect {
+
+	private final float amount;
+	private final Class<? extends VanillaFoodEffect> effect;
+	public FoodEffect(float amount, Class<? extends VanillaFoodEffect> effect) {
+		this.amount = amount;
+		this.effect = effect;
 	}
 
-	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.COOKED_FISH, 1);
+	public float getAmount() {
+		return amount;
 	}
 
-	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		vPlayer.registerProcess(effect.getConstructor(new Class[] {VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
 	}
+	
+	
 }

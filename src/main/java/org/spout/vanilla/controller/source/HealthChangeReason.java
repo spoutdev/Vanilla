@@ -46,6 +46,10 @@ public enum HealthChangeReason implements Source {
 	 */
 	REGENERATION,
 	/**
+	 * Health changed due to eating.
+	 */
+	EATING,
+	/**
 	 * Health changed due to the entity spawning.
 	 */
 	SPAWN,

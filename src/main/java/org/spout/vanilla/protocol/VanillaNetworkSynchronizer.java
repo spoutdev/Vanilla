@@ -331,13 +331,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			owner.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
 				ItemStack slotItem = vc.getInventory().getArmor().getItem(slot);
-				EntityEquipmentMessage EEMsg;
-				if (slotItem == null) {
-					EEMsg = new EntityEquipmentMessage(entityId, slot);
-				} else {
-					EEMsg = new EntityEquipmentMessage(entityId, slot, getMinecraftId(slotItem.getMaterial().getId()), slotItem.getAmount(), slotItem.getData(), slotItem.getNBTData());
-				}
-				owner.getSession().send(false, EEMsg);
+				owner.getSession().send(false, new EntityEquipmentMessage(entityId, slot, slotItem));
 			}
 		} else {
 			owner.getSession().send(false, new RespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));

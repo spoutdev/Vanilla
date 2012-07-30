@@ -31,19 +31,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.nbt.CompoundMap;
-
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.WindowMessage;
 import org.spout.vanilla.window.Window;
 
 public final class WindowSetSlotMessage extends WindowMessage {
-	private final int slot, item, count, damage;
-	private final CompoundMap nbtData;
-
-	public WindowSetSlotMessage(Window window, int slot) {
-		this(window.getInstanceId(), slot);
-	}
+	private final int slot;
+	private final ItemStack item;
 
 	public WindowSetSlotMessage(Window window, int slot, ItemStack item) {
 		this(window.getInstanceId(), slot, item);
@@ -52,54 +45,15 @@ public final class WindowSetSlotMessage extends WindowMessage {
 	public WindowSetSlotMessage(int windowInstanceId, int slot, ItemStack item) {
 		super(windowInstanceId);
 		this.slot = slot;
-		if (item == null) {
-			this.item = -1;
-			this.count = 0;
-			this.damage = 0;
-			this.nbtData = null;
-		} else {
-			this.item = VanillaMaterials.getMinecraftId(item.getMaterial());
-			this.damage = item.getData();
-			this.count = item.getAmount();
-			this.nbtData = item.getNBTData();
-		}
-	}
-
-	public WindowSetSlotMessage(Window window, int slot, int item, int count, int damage, CompoundMap nbtData) {
-		this(window.getInstanceId(), slot, item, count, damage, nbtData);
-	}
-
-	public WindowSetSlotMessage(int windowInstanceId, int slot) {
-		this(windowInstanceId, slot, -1, 0, 0, null);
-	}
-
-	public WindowSetSlotMessage(int windowInstanceId, int slot, int item, int count, int damage, CompoundMap nbtData) {
-		super(windowInstanceId);
-		this.slot = slot;
 		this.item = item;
-		this.count = count;
-		this.damage = damage;
-		this.nbtData = nbtData;
 	}
 
 	public int getSlot() {
 		return slot;
 	}
 
-	public int getItem() {
+	public ItemStack getItem() {
 		return item;
-	}
-
-	public int getCount() {
-		return count;
-	}
-
-	public int getDamage() {
-		return damage;
-	}
-
-	public CompoundMap getNbtData() {
-		return nbtData;
 	}
 
 	@Override
@@ -108,9 +62,6 @@ public final class WindowSetSlotMessage extends WindowMessage {
 				.append("id", this.getWindowInstanceId())
 				.append("slot", slot)
 				.append("item", item)
-				.append("count", count)
-				.append("damage", damage)
-				.append("nbtData", nbtData)
 				.toString();
 	}
 
@@ -127,9 +78,6 @@ public final class WindowSetSlotMessage extends WindowMessage {
 				.append(this.getWindowInstanceId(), other.getWindowInstanceId())
 				.append(this.slot, other.slot)
 				.append(this.item, other.item)
-				.append(this.count, other.count)
-				.append(this.damage, other.damage)
-				.append(this.nbtData, other.nbtData)
 				.isEquals();
 	}
 }

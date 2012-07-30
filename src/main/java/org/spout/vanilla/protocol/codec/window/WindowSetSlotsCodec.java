@@ -32,13 +32,8 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.nbt.CompoundMap;
-
-import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
 
@@ -53,15 +48,7 @@ public final class WindowSetSlotsCodec extends MessageCodec<WindowSetSlotsMessag
 		short count = buffer.readShort();
 		ItemStack[] items = new ItemStack[count];
 		for (int slot = 0; slot < count; slot++) {
-			int item = buffer.readUnsignedShort();
-			if (item == 0xFFFF) {
-				items[slot] = null;
-			} else {
-				byte itemCount = buffer.readByte();
-				short data = buffer.readShort();
-				CompoundMap nbtData = ChannelBufferUtils.readCompound(buffer);
-				items[slot] = new ItemStack(VanillaMaterials.getMaterial((short) item, (short) data), data, itemCount).setNBTData(nbtData);
-			}
+			items[slot] = ChannelBufferUtils.readItemStack(buffer);
 		}
 		return new WindowSetSlotsMessage(id, items);
 	}
@@ -69,24 +56,11 @@ public final class WindowSetSlotsCodec extends MessageCodec<WindowSetSlotsMessag
 	@Override
 	public ChannelBuffer encode(WindowSetSlotsMessage message) throws IOException {
 		ItemStack[] items = message.getItems();
-
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(items.length);
 		for (ItemStack item : items) {
-			if (item == null) {
-				buffer.writeShort(-1);
-			} else {
-				buffer.writeShort(VanillaMaterials.getMinecraftId(item.getMaterial()));
-				buffer.writeByte(item.getAmount());
-				buffer.writeShort(item.getData());
-				Material material = item.getMaterial();
-				if (material instanceof VanillaMaterial && ((VanillaMaterial) material).hasNBTData()) {
-					ChannelBufferUtils.writeCompound(buffer, item.getNBTData());
-				} else {
-					buffer.writeShort(-1);
-				}
-			}
+			ChannelBufferUtils.writeItemStack(buffer, item);
 		}
 		return buffer;
 	}

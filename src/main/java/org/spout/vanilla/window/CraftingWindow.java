@@ -56,6 +56,14 @@ public abstract class CraftingWindow extends Window {
 	public void close() {
 		super.close();
 		this.craftingGrid.getGrid().removeViewer(this);
+		// Drop any items remaining in the grid
+		for (int i = 0; i < this.craftingGrid.getSize(); i++) {
+			ItemStack item = this.craftingGrid.getItem(i);
+			if (item != null) {
+				this.craftingGrid.setItem(i, null);
+				this.getOwner().dropItem(item);
+			}
+		}
 	}
 
 	@Override

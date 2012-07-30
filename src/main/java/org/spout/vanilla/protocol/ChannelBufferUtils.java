@@ -259,6 +259,32 @@ public final class ChannelBufferUtils {
 		}
 	}
 
+	public static ItemStack readItemStack(ChannelBuffer buffer) {
+		Material material = VanillaMaterials.getMaterial(buffer.readShort());
+		if (material == null) {
+			return null;
+		} else {
+			int count = buffer.readUnsignedByte();
+			int damage = buffer.readUnsignedShort();
+			CompoundMap nbtData = readCompound(buffer);
+			return new ItemStack(material, damage, count).setNBTData(nbtData);
+		}
+	}
+
+	public static void writeItemStack(ChannelBuffer buffer, ItemStack item) {
+		short id = item == null ? (short) -1 : VanillaMaterials.getMinecraftId(item.getMaterial());
+		buffer.writeShort(id);
+		if (id != -1) {
+			buffer.writeByte(item.getAmount());
+			buffer.writeShort(item.getData());
+			if (hasNbtData(id)) {
+				writeCompound(buffer, item.getNBTData());
+			} else {
+				buffer.writeShort(-1);
+			}
+		}
+	}
+
 	public static int getShifts(int height) {
 		if (height == 0) {
 			return 0;

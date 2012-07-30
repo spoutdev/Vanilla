@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.protocol.msg.window;
 
-import org.spout.nbt.CompoundMap;
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.protocol.msg.WindowMessage;
 import org.spout.vanilla.window.Window;
@@ -34,31 +34,28 @@ import org.spout.vanilla.window.Window;
 public final class WindowClickMessage extends WindowMessage {
 	private final int slot;
 	private final boolean rightClick, shift;
-	private final int transaction, item, count, damage;
-	private final CompoundMap nbtData;
+	private final int transaction;
+	private final ItemStack item;
 
 	public WindowClickMessage(Window window, int slot, boolean rightClick, int transaction, boolean shift) {
 		this(window.getInstanceId(), slot, rightClick, transaction, shift);
 	}
 
 	public WindowClickMessage(int windowInstanceId, int slot, boolean rightClick, int transaction, boolean shift) {
-		this(windowInstanceId, slot, rightClick, transaction, shift, -1, 0, 0, null);
+		this(windowInstanceId, slot, rightClick, transaction, shift, null);
 	}
 
-	public WindowClickMessage(Window window, int slot, boolean rightClick, int transaction, boolean shift, int item, int count, int damage, CompoundMap nbtData) {
-		this(window.getInstanceId(), slot, rightClick, transaction, shift, item, count, damage, nbtData);
+	public WindowClickMessage(Window window, int slot, boolean rightClick, int transaction, boolean shift, ItemStack item) {
+		this(window.getInstanceId(), slot, rightClick, transaction, shift, item);
 	}
 
-	public WindowClickMessage(int windowInstanceId, int slot, boolean rightClick, int transaction, boolean shift, int item, int count, int damage, CompoundMap nbtData) {
+	public WindowClickMessage(int windowInstanceId, int slot, boolean rightClick, int transaction, boolean shift, ItemStack item) {
 		super(windowInstanceId);
 		this.slot = slot;
 		this.rightClick = rightClick;
 		this.transaction = transaction;
 		this.shift = shift;
 		this.item = item;
-		this.count = count;
-		this.damage = damage;
-		this.nbtData = nbtData;
 	}
 
 	public int getSlot() {
@@ -77,25 +74,13 @@ public final class WindowClickMessage extends WindowMessage {
 		return transaction;
 	}
 
-	public int getItem() {
+	public ItemStack getItem() {
 		return item;
-	}
-
-	public int getCount() {
-		return count;
-	}
-
-	public int getDamage() {
-		return damage;
-	}
-
-	public CompoundMap getNbtData() {
-		return nbtData;
 	}
 
 	@Override
 	public String toString() {
-		return "WindowClickMessage{id=" + this.getWindowInstanceId() + ",slot=" + slot + ",rightClick=" + rightClick + ",shift=" + shift + ",transaction=" + transaction + ",item=" + item + ",count=" + count + ",damage=" + damage + ",nbtData=" + nbtData + "}";
+		return "WindowClickMessage{id=" + this.getWindowInstanceId() + ",slot=" + slot + ",rightClick=" + rightClick + ",shift=" + shift + ",transaction=" + transaction + ",item=" + item + "}";
 	}
 
 	@Override
@@ -114,9 +99,6 @@ public final class WindowClickMessage extends WindowMessage {
 				.append(this.shift, other.shift)
 				.append(this.transaction, other.transaction)
 				.append(this.item, other.item)
-				.append(this.count, other.count)
-				.append(this.damage, other.damage)
-				.append(this.nbtData, other.nbtData)
 				.isEquals();
 	}
 }

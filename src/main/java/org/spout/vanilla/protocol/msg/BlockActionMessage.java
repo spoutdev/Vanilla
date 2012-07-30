@@ -34,13 +34,14 @@ import org.spout.api.util.SpoutToStringStyle;
 
 public final class BlockActionMessage extends Message {
 	private final int x, y, z;
-	byte firstByte, secondByte, blockId;
+	private final byte firstByte, secondByte;
+	private short blockId;
 
-	public BlockActionMessage(Block block, byte firstByte, byte secondByte, byte blockId) {
-		this(block.getX(), block.getY(), block.getZ(), firstByte, secondByte, blockId);
+	public BlockActionMessage(Block block, short blockId, byte firstByte, byte secondByte) {
+		this(block.getX(), block.getY(), block.getZ(), blockId, firstByte, secondByte);
 	}
 
-	public BlockActionMessage(int x, int y, int z, byte firstByte, byte secondByte, byte blockId) {
+	public BlockActionMessage(int x, int y, int z, short blockId, byte firstByte, byte secondByte) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -68,8 +69,8 @@ public final class BlockActionMessage extends Message {
 	public int getSecondByte() {
 		return secondByte;
 	}
-	
-	public int getBlockId() {
+
+	public short getBlockId() {
 		return blockId;
 	}
 

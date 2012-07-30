@@ -30,14 +30,11 @@ import java.util.Map.Entry;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.InventoryBase;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
 import org.spout.vanilla.window.ClickArgs;
 import org.spout.vanilla.window.Window;
@@ -58,31 +55,20 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 
 		Window active = controller.getActiveWindow();
 
-		if (message.getId() == -1) {
+		if (message.getItem() == null) {
 			//Taking item from existing slot
 			active.setItemOnCursor(null);
 			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
 			if (entry != null) {
 				active.onClick(entry.getKey(), entry.getValue(), new ClickArgs(false, false));
 			}
+		} else if (message.getSlot() == -1) {
+			active.setItemOnCursor(message.getItem());
+			active.onOutsideClick();
 		} else {
-			Material material = VanillaMaterials.getMaterial(message.getId());
-			if (material != null && message.getDamage() != 0) {
-				material = material.getSubMaterial(message.getDamage());
-			}
-			if (material != null) {
-				ItemStack item = new ItemStack(material, message.getAmount());
-				if (message.getSlot() == -1) {
-					active.setItemOnCursor(item);
-					active.onOutsideClick();
-				} else {
-					Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
-					if (entry != null) {
-						active.onCreativeClick(entry.getKey(), entry.getValue(), item);
-					}
-				}
-			} else {
-				player.kick("Unknown item ID: ", message.getId(), " and durability ", message.getDamage(), "!");
+			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
+			if (entry != null) {
+				active.onCreativeClick(entry.getKey(), entry.getValue(), message.getItem());
 			}
 		}
 	}

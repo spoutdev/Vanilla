@@ -28,53 +28,32 @@ package org.spout.vanilla.protocol.msg.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.EntityMessage;
-import org.spout.nbt.CompoundMap;
 
 public final class EntityEquipmentMessage extends EntityMessage {
-
 	public static final int HELD_ITEM = 0;
 	public static final int BOOTS_SLOT = 1;
 	public static final int LEGGINGS_SLOT = 2;
 	public static final int CHESTPLATE_SLOT = 3;
 	public static final int HELMET_SLOT = 4;
-	
-	
-	private int slot, id, count, damage;
-	private CompoundMap nbtData;
 
-	public EntityEquipmentMessage(int id, int slot) {
-		this(id, slot, -1, 0, 0, null);
-	}
+	private int slot;
+	private final ItemStack item;
 
-	public EntityEquipmentMessage(int entityId, int slot, int id, int count, int damage, CompoundMap nbtData) {
+	public EntityEquipmentMessage(int entityId, int slot, ItemStack item) {
 		super(entityId);
 		this.slot = slot;
-		this.id = id;
-		this.count = count;
-		this.damage = damage;
-		this.nbtData = nbtData;
+		this.item = item;
 	}
 
 	public int getSlot() {
 		return slot;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public int getCount() {
-		return count;
-	}
-
-	public int getDamage() {
-		return damage;
-	}
-
-	public CompoundMap getNbtData() {
-		return nbtData;
+	public ItemStack getItem() {
+		return item;
 	}
 
 	@Override
@@ -82,10 +61,7 @@ public final class EntityEquipmentMessage extends EntityMessage {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("id", this.getEntityId())
 				.append("slot", slot)
-				.append("id", id)
-				.append("count", count)
-				.append("damage", damage)
-				.append("nbtData", nbtData)
+				.append("item", item)
 				.toString();
 	}
 
@@ -101,10 +77,7 @@ public final class EntityEquipmentMessage extends EntityMessage {
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.getEntityId(), other.getEntityId())
 				.append(this.slot, other.slot)
-				.append(this.id, other.id)
-				.append(this.count, other.count)
-				.append(this.damage, other.damage)
-				.append(this.nbtData, other.nbtData)
+				.append(this.item, other.item)
 				.isEquals();
 	}
 }

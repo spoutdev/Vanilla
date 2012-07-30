@@ -31,9 +31,8 @@ import java.io.IOException;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageCodec;
-
-import org.spout.nbt.CompoundMap;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
@@ -50,37 +49,19 @@ public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 		boolean rightClick = buffer.readUnsignedByte() != 0;
 		int transaction = buffer.readUnsignedShort();
 		boolean shift = buffer.readUnsignedByte() != 0;
-		int item = buffer.readUnsignedShort();
-		if (item == 0xFFFF) {
-			return new WindowClickMessage(id, slot, rightClick, transaction, shift);
-		}
-
-		int count = buffer.readUnsignedByte();
-		int damage = buffer.readUnsignedShort();
-		CompoundMap nbtData = ChannelBufferUtils.readCompound(buffer);
-		return new WindowClickMessage(id, slot, rightClick, transaction, shift, item, count, damage, nbtData);
+		ItemStack item = ChannelBufferUtils.readItemStack(buffer);
+		return new WindowClickMessage(id, slot, rightClick, transaction, shift, item);
 	}
 
 	@Override
 	public ChannelBuffer encode(WindowClickMessage message) throws IOException {
-		int item = message.getItem();
-
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(message.getSlot());
 		buffer.writeByte(message.isRightClick() ? 1 : 0);
 		buffer.writeShort(message.getTransaction());
 		buffer.writeByte(message.isShift() ? 1 : 0);
-		buffer.writeShort(item);
-		if (item != -1) {
-			buffer.writeByte(message.getCount());
-			buffer.writeShort(message.getDamage());
-			if (ChannelBufferUtils.hasNbtData(message.getItem())) {
-				ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
-			} else {
-				buffer.writeShort(-1);
-			}
-		}
+		ChannelBufferUtils.writeItemStack(buffer, message.getItem());
 		return buffer;
 	}
 }

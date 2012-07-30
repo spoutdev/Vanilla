@@ -28,51 +28,32 @@ package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.nbt.CompoundMap;
-
 public class CreativeMessage extends Message {
-	private final short slot, id, amount, damage;
-	private final CompoundMap nbtData;
+	private final short slot;
+	private final ItemStack item;
 
-	public CreativeMessage(short slot, short id, short amount, short damage, CompoundMap nbtData) {
+	public CreativeMessage(short slot, ItemStack item) {
 		this.slot = slot;
-		this.id = id;
-		this.amount = amount;
-		this.damage = damage;
-		this.nbtData = nbtData;
+		this.item = item;
 	}
 
 	public short getSlot() {
 		return slot;
 	}
 
-	public short getId() {
-		return id;
-	}
-
-	public short getAmount() {
-		return amount;
-	}
-
-	public short getDamage() {
-		return damage;
-	}
-
-	public CompoundMap getNbtData() {
-		return nbtData;
+	public ItemStack getItem() {
+		return item;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("slot", slot)
-				.append("id", id)
-				.append("amount", amount)
-				.append("damage", damage)
-				.append("nbtData", nbtData)
+				.append("item", item)
 				.toString();
 	}
 
@@ -87,10 +68,7 @@ public class CreativeMessage extends Message {
 		final CreativeMessage other = (CreativeMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.slot, other.slot)
-				.append(this.id, other.id)
-				.append(this.amount, other.amount)
-				.append(this.damage, other.damage)
-				.append(this.nbtData, other.nbtData)
+				.append(this.item, other.item)
 				.isEquals();
 	}
 }

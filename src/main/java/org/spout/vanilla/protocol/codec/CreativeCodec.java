@@ -31,9 +31,8 @@ import java.io.IOException;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageCodec;
-
-import org.spout.nbt.CompoundMap;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
@@ -46,31 +45,15 @@ public class CreativeCodec extends MessageCodec<CreativeMessage> {
 	@Override
 	public CreativeMessage decode(ChannelBuffer buffer) throws IOException {
 		short slot = buffer.readShort();
-		short id = buffer.readShort();
-
-		if (id == -1) {
-			return new CreativeMessage(slot, id, (short) 0, (short) 0, null);
-		}
-
-		short amount = buffer.readByte();
-		short damage = buffer.readShort();
-		CompoundMap nbtData = null;
-		nbtData = ChannelBufferUtils.readCompound(buffer);
-		return new CreativeMessage(slot, id, amount, damage, nbtData);
+		ItemStack item = ChannelBufferUtils.readItemStack(buffer);
+		return new CreativeMessage(slot, item);
 	}
 
 	@Override
 	public ChannelBuffer encode(CreativeMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeShort(message.getSlot());
-		buffer.writeShort(message.getId());
-		buffer.writeByte(message.getAmount());
-		buffer.writeShort(message.getDamage());
-		if (ChannelBufferUtils.hasNbtData(message.getId())) {
-			ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
-		} else {
-			buffer.writeShort(-1);
-		}
+		ChannelBufferUtils.writeItemStack(buffer, message.getItem());
 		return buffer;
 	}
 }

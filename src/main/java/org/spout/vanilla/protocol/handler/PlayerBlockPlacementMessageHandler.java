@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.protocol.handler;
 
-import org.spout.api.entity.component.controller.PlayerController;
 import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;

@@ -37,6 +37,9 @@ import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.map.concurrent.AtomicShortArray;
 
+import org.spout.vanilla.data.effect.type.food.FoodSaturation;
+import org.spout.vanilla.data.effect.type.food.Hunger;
+import org.spout.vanilla.data.effect.type.food.Poisoning;
 import org.spout.vanilla.material.block.controlled.BrewingStand;
 import org.spout.vanilla.material.block.controlled.Chest;
 import org.spout.vanilla.material.block.controlled.CraftingTable;
@@ -155,7 +158,7 @@ import org.spout.vanilla.material.block.stair.WoodenStairs;
 import org.spout.vanilla.material.item.BlockItem;
 import org.spout.vanilla.material.item.EmptyContainer;
 import org.spout.vanilla.material.item.Food;
-import org.spout.vanilla.material.item.Food.FoodEffectType;
+import org.spout.vanilla.material.item.FoodEffect;
 import org.spout.vanilla.material.item.FullContainer;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.material.item.armor.chain.ChainBoots;
@@ -243,21 +246,21 @@ public final class VanillaMaterials {
 	public static final NoteBlock NOTEBLOCK = new NoteBlock("Note Block", 25);
 	public static final BedBlock BED_BLOCK = new BedBlock("Bed", 26);
 	public static final Web WEB = new Web("Cobweb", 30);
-	//== Piston ==
+	// == Piston ==
 	public static final Piston PISTON_STICKY_BASE = new Piston("Sticky Piston", 29, true);
 	public static final Piston PISTON_BASE = new Piston("Piston", 33, false);
 	public static final PistonExtension PISTON_EXTENSION = new PistonExtension("Piston (Head)", 34);
 	public static final PistonExtensionMoving PISTON_MOVING = new PistonExtensionMoving("Moved By Piston", 36);
-	//== Rails ==
+	// == Rails ==
 	public static final Rail RAIL = new Rail("Rail", 66);
 	public static final PoweredRail RAIL_POWERED = new PoweredRail("Powered Rail", 27);
 	public static final DetectorRail RAIL_DETECTOR = new DetectorRail("Detector Rail", 28);
-	//== Liquids ==
+	// == Liquids ==
 	public static final Water WATER = new Water("Water", 8, true);
 	public static final Water STATIONARY_WATER = new Water("Stationary Water", 9, false);
 	public static final Lava LAVA = new Lava("Lava", 10, true);
 	public static final Lava STATIONARY_LAVA = new Lava("Stationary Lava", 11, false);
-	//== Ores ==
+	// == Ores ==
 	public static final CoalOre COAL_ORE = new CoalOre("Coal Ore", 16);
 	public static final IronOre IRON_ORE = new IronOre("Iron Ore", 15);
 	public static final GoldOre GOLD_ORE = new GoldOre("Gold Ore", 14);
@@ -266,13 +269,13 @@ public final class VanillaMaterials {
 	public static final LapisLazuliOre LAPIS_LAZULI_ORE = new LapisLazuliOre("Lapis Lazuli Ore", 21);
 	public static final RedstoneOre REDSTONE_ORE = new RedstoneOre("Redstone Ore", 73, false);
 	public static final RedstoneOre GLOWING_REDSTONE_ORE = new RedstoneOre("Glowing Redstone Ore", 74, true);
-	//== Solid blocks ==
+	// == Solid blocks ==
 	public static final GoldBlock GOLD_BLOCK = new GoldBlock("Gold Block", 41);
 	public static final IronBlock IRON_BLOCK = new IronBlock("Iron Block", 42);
 	public static final DiamondBlock DIAMOND_BLOCK = new DiamondBlock("Diamond Block", 57);
 	public static final EmeraldBlock EMERALD_BLOCK = new EmeraldBlock("Emerald Block", 133);
 	public static final LapisLazuliBlock LAPIS_LAZULI_BLOCK = new LapisLazuliBlock("Lapis Lazuli Block", 22);
-	//== Plants ==
+	// == Plants ==
 	public static final TallGrass TALL_GRASS = TallGrass.TALL_GRASS;
 	public static final DeadBush DEAD_BUSH = new DeadBush("Dead Shrubs", 32);
 	public static final Sapling SAPLING = Sapling.DEFAULT;
@@ -280,17 +283,17 @@ public final class VanillaMaterials {
 	public static final Flower ROSE = new Flower("Rose", 38);
 	public static final Mushroom BROWN_MUSHROOM = new Mushroom("Brown Mushroom", 39);
 	public static final Mushroom RED_MUSHROOM = new Mushroom("Red Mushroom", 40);
-	//== Stairs ==
+	// == Stairs ==
 	public static final NetherBrickStairs STAIRS_NETHER_BRICK = new NetherBrickStairs("Nether Brick Stairs", 114);
 	public static final BrickStairs STAIRS_BRICK = new BrickStairs("Brick Stairs", 108);
 	public static final CobblestoneStairs STAIRS_COBBLESTONE = new CobblestoneStairs("Cobblestone Stairs", 67);
 	public static final WoodenStairs STAIRS_WOODEN = new WoodenStairs("Wooden Stairs", 53);
 	public static final StoneBrickStairs STAIRS_STONE_BRICK = new StoneBrickStairs("Stone Brick Stairs", 109);
-	//== Portals ==
+	// == Portals ==
 	public static final NetherPortal PORTAL = new NetherPortal("Portal", 90);
 	public static final EndPortal END_PORTAL = new EndPortal("End Portal", 119);
 	public static final EndPortalFrame END_PORTAL_FRAME = new EndPortalFrame("End Portal Frame", 120);
-	//================
+	// ================
 	public static final DoubleSlab DOUBLE_SLABS = DoubleSlab.STONE_SLAB;
 	public static final Slab SLAB = Slab.STONE_SLAB;
 	public static final Wool WOOL = Wool.WHITE_WOOL;
@@ -364,75 +367,75 @@ public final class VanillaMaterials {
 	/*
 	 * Items
 	 */
-	//== Swords ==
+	// == Swords ==
 	public static final WoodenSword WOODEN_SWORD = new WoodenSword("Wooden Sword", 268, (short) 60);
 	public static final GoldSword GOLD_SWORD = new GoldSword("Gold Sword", 283, (short) 33);
 	public static final StoneSword STONE_SWORD = new StoneSword("Stone Sword", 272, (short) 132);
 	public static final IronSword IRON_SWORD = new IronSword("Iron Sword", 267, (short) 251);
 	public static final DiamondSword DIAMOND_SWORD = new DiamondSword("Diamond Sword", 276, (short) 1562);
-	//== Spades ==
+	// == Spades ==
 	public static final GoldSpade GOLD_SPADE = new GoldSpade("Gold Shovel", 284, (short) 33);
 	public static final WoodenSpade WOODEN_SPADE = new WoodenSpade("Wooden Shovel", 269, (short) 60);
 	public static final StoneSpade STONE_SPADE = new StoneSpade("Stone Shovel", 273, (short) 132);
 	public static final IronSpade IRON_SPADE = new IronSpade("Iron Shovel", 256, (short) 251);
 	public static final DiamondSpade DIAMOND_SPADE = new DiamondSpade("Diamond Shovel", 277, (short) 1562);
-	//== Pickaxes ==
+	// == Pickaxes ==
 	public static final GoldPickaxe GOLD_PICKAXE = new GoldPickaxe("Gold Pickaxe", 285, (short) 33);
 	public static final WoodenPickaxe WOODEN_PICKAXE = new WoodenPickaxe("Wooden Pickaxe", 270, (short) 60);
 	public static final StonePickaxe STONE_PICKAXE = new StonePickaxe("Stone Pickaxe", 274, (short) 132);
 	public static final IronPickaxe IRON_PICKAXE = new IronPickaxe("Iron Pickaxe", 257, (short) 251);
 	public static final DiamondPickaxe DIAMOND_PICKAXE = new DiamondPickaxe("Diamond Pickaxe", 278, (short) 1562);
-	//== Axes ==
+	// == Axes ==
 	public static final GoldAxe GOLD_AXE = new GoldAxe("Gold Axe", 286, (short) 33);
 	public static final WoodenAxe WOODEN_AXE = new WoodenAxe("Wooden Axe", 271, (short) 60);
 	public static final StoneAxe STONE_AXE = new StoneAxe("Stone Axe", 275, (short) 132);
 	public static final IronAxe IRON_AXE = new IronAxe("Iron Axe", 258, (short) 251);
 	public static final DiamondAxe DIAMOND_AXE = new DiamondAxe("Diamond Axe", 279, (short) 1562);
-	//== Hoes ==
+	// == Hoes ==
 	public static final Hoe GOLD_HOE = new Hoe("Gold Hoe", 294, (short) 33);
 	public static final Hoe WOODEN_HOE = new Hoe("Wooden Hoe", 290, (short) 60);
 	public static final Hoe STONE_HOE = new Hoe("Stone Hoe", 291, (short) 132);
 	public static final Hoe IRON_HOE = new Hoe("Iron Hoe", 292, (short) 251);
 	public static final Hoe DIAMOND_HOE = new Hoe("Diamond Hoe", 293, (short) 1562);
-	//== Headwear ==
+	// == Headwear ==
 	public static final LeatherCap LEATHER_CAP = new LeatherCap("Leather Cap", 298, (short) 56);
 	public static final ChainHelmet CHAIN_HELMET = new ChainHelmet("Chain Helmet", 302, (short) 166);
 	public static final IronHelmet IRON_HELMET = new IronHelmet("Iron Helmet", 306, (short) 166);
 	public static final GoldHelmet GOLD_HELMET = new GoldHelmet("Gold Helmet", 314, (short) 78);
 	public static final DiamondHelmet DIAMOND_HELMET = new DiamondHelmet("Diamond Helmet", 310, (short) 364);
-	//== Chestwear ==
+	// == Chestwear ==
 	public static final LeatherTunic LEATHER_TUNIC = new LeatherTunic("Leather Tunic", 299, (short) 81);
 	public static final ChainChestplate CHAIN_CHESTPLATE = new ChainChestplate("Chain Chestplate", 303, (short) 241);
 	public static final IronChestplate IRON_CHESTPLATE = new IronChestplate("Iron Chestplate", 307, (short) 241);
 	public static final DiamondChestplate DIAMOND_CHESTPLATE = new DiamondChestplate("Diamond Chestplate", 311, (short) 529);
 	public static final GoldChestplate GOLD_CHESTPLATE = new GoldChestplate("Gold Chestplate", 315, (short) 113);
-	//== Legwear ==
+	// == Legwear ==
 	public static final LeatherPants LEATHER_PANTS = new LeatherPants("Leather Pants", 300, (short) 76);
 	public static final ChainLeggings CHAIN_LEGGINGS = new ChainLeggings("Chain Leggings", 304, (short) 226);
 	public static final IronLeggings IRON_LEGGINGS = new IronLeggings("Iron Leggings", 308, (short) 226);
 	public static final DiamondLeggings DIAMOND_LEGGINGS = new DiamondLeggings("Diamond Leggings", 312, (short) 496);
 	public static final GoldLeggings GOLD_LEGGINGS = new GoldLeggings("Gold Leggings", 316, (short) 106);
-	//== Footwear ==
+	// == Footwear ==
 	public static final LeatherBoots LEATHER_BOOTS = new LeatherBoots("Leather Boots", 301, (short) 66);
 	public static final ChainBoots CHAIN_BOOTS = new ChainBoots("Chain Boots", 305, (short) 196);
 	public static final IronBoots IRON_BOOTS = new IronBoots("Iron Boots", 309, (short) 196);
 	public static final DiamondBoots DIAMOND_BOOTS = new DiamondBoots("Diamond Boots", 313, (short) 430);
 	public static final GoldBoots GOLD_BOOTS = new GoldBoots("Gold Boots", 317, (short) 92);
-	//== Other tool, weapon and equipment ==
+	// == Other tool, weapon and equipment ==
 	public static final FlintAndSteel FLINT_AND_STEEL = new FlintAndSteel("Flint and Steel", 259, (short) 64);
 	public static final Bow BOW = new Bow("Bow", 261, (short) 385);
 	public static final VanillaItemMaterial ARROW = new VanillaItemMaterial("Arrow", 262);
 	public static final FishingRod FISHING_ROD = new FishingRod("Fishing Rod", 346, (short) 65);
-	//== Buckets=
+	// == Buckets=
 	public static final EmptyContainer BUCKET = new EmptyContainer("Bucket", 325);
 	public static final FullContainer WATER_BUCKET = new FullContainer("Water Bucket", 326, WATER, BUCKET);
 	public static final LavaBucket LAVA_BUCKET = new LavaBucket("Lava Bucket", 327, LAVA, BUCKET);
 	public static final VanillaItemMaterial MILK_BUCKET = new VanillaItemMaterial("Milk", 335);
-	//== Minecarts ==
+	// == Minecarts ==
 	public static final MinecartItem MINECART = new MinecartItem("Minecart", 328);
 	public static final StorageMinecartItem MINECART_CHEST = new StorageMinecartItem("Minecart with Chest", 342);
 	public static final PoweredMinecartItem MINECART_FURNACE = new PoweredMinecartItem("Minecart with Furnace", 343);
-	//== Others ==
+	// == Others ==
 	public static final Coal COAL = Coal.COAL;
 	public static final Clay CLAY = new Clay("Clay", 337);
 	public static final BlockItem REDSTONE_DUST = new BlockItem("Redstone", 331, VanillaMaterials.REDSTONE_WIRE);
@@ -465,8 +468,8 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial COMPASS = new VanillaItemMaterial("Compass", 345);
 	public static final VanillaItemMaterial CLOCK = new VanillaItemMaterial("Clock", 347);
 	public static final VanillaItemMaterial GLOWSTONE_DUST = new VanillaItemMaterial("Glowstone Dust", 348);
-	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, 2, FoodEffectType.HUNGER);
-	public static final Food COOKED_FISH = new Food("Cooked Fish", 350, 5, FoodEffectType.HUNGER);
+	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class));
+	public static final Food COOKED_FISH = new Food("Cooked Fish", 350, new FoodEffect(5, Hunger.class), new FoodEffect(6, FoodSaturation.class));
 	public static final Dye DYE = Dye.INK_SAC;
 	public static final VanillaItemMaterial BONE = new VanillaItemMaterial("Bone", 352);
 	public static final VanillaItemMaterial SUGAR = new VanillaItemMaterial("Sugar", 353);
@@ -477,21 +480,22 @@ public final class VanillaMaterials {
 	public static final Shears SHEARS = new Shears("Shears", 359, (short) 238);
 	public static final VanillaItemMaterial PUMPKIN_SEEDS = new VanillaItemMaterial("Pumpkin Seeds", 361);
 	public static final VanillaItemMaterial MELON_SEEDS = new VanillaItemMaterial("MelonBlock Seeds", 362);
-	//== Food ==
-	public static final Food RED_APPLE = new Food("Apple", 260, 4, FoodEffectType.HUNGER);
-	public static final Food MUSHROOM_SOUP = new Food("Mushroom Soup", 282, 8, FoodEffectType.HUNGER);
-	public static final Food BREAD = new Food("Bread", 297, 5, FoodEffectType.HUNGER);
-	public static final RawPorkchop RAW_PORKCHOP = new RawPorkchop("Raw Porkchop", 319, 3, FoodEffectType.HUNGER);
-	public static final Food COOKED_PORKCHOP = new Food("Cooked Porkchop", 320, 8, FoodEffectType.HUNGER);
-	public static final Food GOLDEN_APPLE = new Food("Golden Apple", 322, 10, FoodEffectType.HUNGER);
-	public static final Food MELON_SLICE = new Food("MelonBlock Slice", 360, 2, FoodEffectType.HUNGER);
-	public static final Food COOKIE = new Food("Cookie", 357, 2, FoodEffectType.HUNGER);
-	public static final RawBeef RAW_BEEF = new RawBeef("Raw Beef", 363, 3, FoodEffectType.HUNGER);
-	public static final Food STEAK = new Food("Steak", 364, 8, FoodEffectType.HUNGER);
-	public static final RawChicken RAW_CHICKEN = new RawChicken("Raw Chicken", 365, 2, FoodEffectType.HUNGER);
-	public static final Food COOKED_CHICKEN = new Food("Cooked Chicken", 366, 6, FoodEffectType.HUNGER);
-	public static final Food ROTTEN_FLESH = new Food("Rotten Flesh", 367, 4, FoodEffectType.HUNGER);
-	//== Music Discs ==
+	// == Food ==
+	public static final Food RED_APPLE = new Food("Apple", 260, new FoodEffect(4, Hunger.class), new FoodEffect(2.4f, FoodSaturation.class));
+	public static final Food MUSHROOM_SOUP = new Food("Mushroom Soup", 282, new FoodEffect(8, Hunger.class), new FoodEffect(9.6f, FoodSaturation.class));
+	public static final Food BREAD = new Food("Bread", 297, new FoodEffect(5, Hunger.class), new FoodEffect(6, FoodSaturation.class));
+	public static final RawPorkchop RAW_PORKCHOP = new RawPorkchop("Raw Porkchop", 319, new FoodEffect(3, Hunger.class), new FoodEffect(1.8f, FoodSaturation.class));
+	public static final Food COOKED_PORKCHOP = new Food("Cooked Porkchop", 320, new FoodEffect(8, Hunger.class), new FoodEffect(12.8f, FoodSaturation.class));
+	// TODO : Regen health for 4 secs
+	public static final Food GOLDEN_APPLE = new Food("Golden Apple", 322, new FoodEffect(10, Hunger.class), new FoodEffect(9.6f, FoodSaturation.class));
+	public static final Food MELON_SLICE = new Food("MelonBlock Slice", 360, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class));
+	public static final Food COOKIE = new Food("Cookie", 357, new FoodEffect(2, Hunger.class), new FoodEffect(0.4f, FoodSaturation.class));
+	public static final RawBeef RAW_BEEF = new RawBeef("Raw Beef", 363, new FoodEffect(3, Hunger.class), new FoodEffect(1.8f, FoodSaturation.class));
+	public static final Food STEAK = new Food("Steak", 364, new FoodEffect(8, Hunger.class), new FoodEffect(12.8f, FoodSaturation.class));
+	public static final RawChicken RAW_CHICKEN = new RawChicken("Raw Chicken", 365, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class), new FoodEffect(30, Poisoning.class));
+	public static final Food COOKED_CHICKEN = new Food("Cooked Chicken", 366, new FoodEffect(6, Hunger.class), new FoodEffect(7.2f, FoodSaturation.class));
+	public static final Food ROTTEN_FLESH = new Food("Rotten Flesh", 367, new FoodEffect(4, Hunger.class), new FoodEffect(0.8f, FoodSaturation.class), new FoodEffect(80, Poisoning.class));
+	// == Music Discs ==
 	public static final MusicDisc GOLD_MUSIC_DISC = new MusicDisc("Music Disc - 13", 2256).setMusic(Music.THIRTEEN);
 	public static final MusicDisc GREEN_MUSIC_DISC = new MusicDisc("Music Disc - cat", 2257).setMusic(Music.CAT);
 	public static final MusicDisc ORANGE_MUSIC_DISC = new MusicDisc("Music Disc - blocks", 2258).setMusic(Music.BLOCKS);
@@ -503,14 +507,14 @@ public final class VanillaMaterials {
 	public static final MusicDisc WHITE_MUSIC_DISC = new MusicDisc("Music Disc - strad", 2264).setMusic(Music.STRAD);
 	public static final MusicDisc FOREST_GREEN_MUSIC_DISC = new MusicDisc("Music Disc - ward", 2265).setMusic(Music.WARD);
 	public static final MusicDisc BROKEN_MUSIC_DISC = new MusicDisc("Music Disc - 11", 2266).setMusic(Music.ELEVEN);
-	//== Potions and special items ==
+	// == Potions and special items ==
 	public static final VanillaItemMaterial ENDER_PEARL = new VanillaItemMaterial("Ender Pearl", 368);
 	public static final BlazeRod BLAZE_ROD = new BlazeRod("Blaze Rod", 369);
 	public static final VanillaItemMaterial GHAST_TEAR = new VanillaItemMaterial("Ghast Tear", 370);
 	public static final VanillaItemMaterial GOLD_NUGGET = new VanillaItemMaterial("Gold Nugget", 371);
 	public static final VanillaItemMaterial NETHER_WART = new VanillaItemMaterial("Nether Wart", 372);
 	public static final VanillaItemMaterial GLASS_BOTTLE = new VanillaItemMaterial("Glass Bottle", 374);
-	public static final Food SPIDER_EYE = new Food("Spider Eye", 375, 2, FoodEffectType.HUNGER);
+	public static final Food SPIDER_EYE = new Food("Spider Eye", 375, new FoodEffect(2, Hunger.class), new FoodEffect(3.2f, FoodSaturation.class), new FoodEffect(100, Poisoning.class));
 	public static final VanillaItemMaterial FERMENTED_SPIDER_EYE = new VanillaItemMaterial("Fermented Spider Eye", 376);
 	public static final VanillaItemMaterial BLAZE_POWDER = new VanillaItemMaterial("Blaze Powder", 377);
 	public static final VanillaItemMaterial MAGMA_CREAM = new VanillaItemMaterial("Magma Cream", 378);
@@ -521,7 +525,7 @@ public final class VanillaMaterials {
 	public static final SpawnEgg SPAWN_EGG = SpawnEgg.PIG;
 	public static final VanillaItemMaterial BOTTLE_O_ENCHANTING = new VanillaItemMaterial("Bottle o' Enchanting", 384);
 	public static final VanillaItemMaterial EXP_BOTTLE = new VanillaItemMaterial("Experience Bottle", 128);
-	public static final BlockItem FIRE_CHARGE = new BlockItem("Fire Charge", 385, VanillaMaterials.FIRE); //Basic Implementation
+	public static final BlockItem FIRE_CHARGE = new BlockItem("Fire Charge", 385, VanillaMaterials.FIRE); // Basic Implementation
 	public static final Potion POTION = Potion.WATER_BOTTLE;
 	private static boolean initialized = false;
 	private final static AtomicShortArray conversionTable = new AtomicShortArray(Short.MAX_VALUE);

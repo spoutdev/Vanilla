@@ -24,28 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.food;
+package org.spout.vanilla.data.effect.type.food;
 
-import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.VanillaFoodEffect;
 
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.controlled.Furnace;
-import org.spout.vanilla.material.item.Food;
-import org.spout.vanilla.material.item.FoodEffect;
+public class FoodSaturation extends VanillaFoodEffect {
 
-public class RawFish extends Food implements TimedCraftable {
-	public RawFish(String name, int id, FoodEffect... type) {
-		super(name, id, type);
+	public FoodSaturation(VanillaPlayer effected, float amount) {
+		super(effected, amount);
 	}
 
 	@Override
-	public ItemStack getResult() {
-		return new ItemStack(VanillaMaterials.COOKED_FISH, 1);
+	public void onRegistration() {
+		this.getParent().setFoodSaturation(this.getParent().getFoodSaturation() + this.getStrength());
 	}
 
-	@Override
-	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
-	}
 }

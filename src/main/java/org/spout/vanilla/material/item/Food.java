@@ -26,27 +26,54 @@
  */
 package org.spout.vanilla.material.item;
 
+import java.lang.reflect.InvocationTargetException;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.inventory.special.InventorySlot;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.util.VanillaPlayerUtil;
+
 public class Food extends VanillaItemMaterial {
-	public enum FoodEffectType {
-		HEALTH,
-		HUNGER,
-		CUSTOM
-	}
 
-	private final int amount;
-	private final FoodEffectType type;
+	private final FoodEffect[] effects;
 
-	public Food(String name, int id, int amount, FoodEffectType type) {
+	public Food(String name, int id, FoodEffect... effects) {
 		super(name, id);
-		this.amount = amount;
-		this.type = type;
+		this.effects = effects;
 	}
 
-	public int getAmount() {
-		return amount;
+	public FoodEffect[] getEffectType() {
+		return effects;
 	}
 
-	public FoodEffectType getEffectType() {
-		return type;
+	public void onEat(Entity entity, InventorySlot slot) {
+		if (VanillaPlayerUtil.isSurvival(entity)) {
+			System.out.println("EATING");
+			for (int i = 0; i < effects.length; i++) {
+				VanillaPlayer vPlayer = (VanillaPlayer) entity.getController();
+				try {
+					effects[i].run(vPlayer);
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			slot.addItemAmount(-1);
+		}
 	}
 }

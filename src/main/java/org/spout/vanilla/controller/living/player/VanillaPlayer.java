@@ -51,10 +51,8 @@ import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerFoodSaturationChangeEvent;
 import org.spout.vanilla.event.player.PlayerHungerChangeEvent;
 import org.spout.vanilla.inventory.player.PlayerInventory;
@@ -198,26 +196,33 @@ public class VanillaPlayer extends Human implements PlayerController {
 		short health;
 		health = (short) getHealth();
 
+		boolean changed = false;
 		if (exhaustion > 4.0) {
 			exhaustion -= 4.0;
 			if (foodSaturation > 0) {
-				setFoodSaturation(Math.max(foodSaturation - 0.1f, 0));
+				setFoodSaturation(Math.max(foodSaturation - 1f, 0));
+				changed = true;
 			} else {
 				setHunger((short) Math.max(hunger - 1, 0));
+				changed = true;
 			}
 		}
 
-		boolean changed = false;
 		if (hunger <= 0 && health > 0) {
 
 			int maxDrop = 0;
-			if (((Difficulty) owner.getEntity().getWorld().get(VanillaData.DIFFICULTY)).equals(Difficulty.EASY)) {
+			
+			//TODO: Disabled since there's a save error or something. The if NPE
+			/*if (owner.getEntity().getWorld().get(VanillaData.DIFFICULTY) == Difficulty.EASY) {
 				maxDrop = 10;
-			} else if (((Difficulty) owner.getEntity().getWorld().get(VanillaData.DIFFICULTY)).equals(Difficulty.NORMAL)) {
+			} else if (owner.getEntity().getWorld().get(VanillaData.DIFFICULTY) == Difficulty.NORMAL) {
 				maxDrop = 1;
+			}*/
+			if (maxDrop < health) {
+				setHealth((short) Math.max(health - 1, maxDrop), DamageCause.STARVE);
+				changed = true;
 			}
-			setHealth((short) Math.max(health - 1, maxDrop), DamageCause.STARVE);
-			changed = true;
+			
 		} else if (hunger >= 18 && health < 20) {
 			setHealth((short) Math.min(health + 1, 20), HealthChangeReason.REGENERATION);
 			changed = true;

@@ -24,13 +24,22 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.effect.type;
+package org.spout.vanilla.data.effect.type.food;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.effect.VanillaEffect;
+import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.data.effect.VanillaFoodEffect;
 
-public class Hunger extends VanillaEffect {
-	public Hunger(VanillaPlayer effected, float duration, int strength) {
-		super(effected, 17, duration, strength);
+public class Health extends VanillaFoodEffect {
+
+	public Health(VanillaPlayer effected, float amount) {
+		super(effected, amount);
 	}
+
+
+	@Override
+	public void onRegistration() {
+		this.getParent().setHealth((int) (this.getParent().getHealth() + this.getStrength()), HealthChangeReason.EATING);
+	}
+
 }

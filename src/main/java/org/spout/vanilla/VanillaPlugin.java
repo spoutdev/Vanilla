@@ -51,6 +51,7 @@ import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.plugin.Platform;
 import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
+import org.spout.api.protocol.PortBinding;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.OutwardIterator;
@@ -82,13 +83,12 @@ import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.VanillaGenerators;
 
 public class VanillaPlugin extends CommonPlugin {
-	private static final int loaderThreadCount = 16;
+	private static final int LOADER_THREAD_COUNT = 16;
 	public static final int MINECRAFT_PROTOCOL_ID = 39;
 	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
 	private static VanillaPlugin instance;
 	private Engine engine;
 	private VanillaConfiguration config;
-	private int port = 25565;
 
 	@Override
 	public void onDisable() {
@@ -105,10 +105,14 @@ public class VanillaPlugin extends CommonPlugin {
 			getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
 		}
 
-		//Universal Plug and Play
-		if (engine.getPlatform() == Platform.SERVER || engine.getPlatform() == Platform.PROXY) {
-			if (VanillaConfiguration.UPNP.getBoolean()) {
-				((Server) engine).mapUPnPPort(port, VanillaConfiguration.MOTD.getString());
+		// Universal Plug and Play
+		if (getEngine() instanceof Server) {
+			for (PortBinding binding : ((Server) getEngine()).getBoundAddresses()) {
+				if (binding.getProtocol() instanceof VanillaProtocol
+						&& binding.getAddress() instanceof InetSocketAddress
+						&& VanillaConfiguration.UPNP.getBoolean()) {
+					((Server) getEngine()).mapUPnPPort(((InetSocketAddress) binding.getAddress()).getPort(), VanillaConfiguration.MOTD.getString());
+				}
 			}
 		}
 
@@ -139,25 +143,9 @@ public class VanillaPlugin extends CommonPlugin {
 		instance = this;
 		engine = getEngine();
 		config = new VanillaConfiguration(getDataFolder());
-		Protocol.registerProtocol("VanillaProtocol", new VanillaProtocol());
 		Spout.getFilesystem().registerLoader("mappalette", new MapPaletteLoader());
 		Spout.getFilesystem().registerLoader("recipe", new RecipeLoader());
-
-		if (engine.getPlatform() == Platform.SERVER || engine.getPlatform() == Platform.PROXY) {
-			String[] split = engine.getAddress().split(":");
-			if (split.length > 1) {
-				try {
-					port = Integer.parseInt(split[1]);
-				} catch (NumberFormatException e) {
-					getLogger().warning(split[1] + " is not a valid port number! Defaulting to " + port + "!");
-				}
-			}
-
-			((Server) engine).bind(new InetSocketAddress(split[0], port), new VanillaProtocol());
-		} else if (engine.getPlatform() == Platform.CLIENT) {
-			Protocol.registerProtocol("Vanilla", new VanillaProtocol());
-			//TODO Do something?
-		}
+		Protocol.registerProtocol(new VanillaProtocol());
 
 		VanillaMaterials.initialize();
 		MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/resources/map/mapColorPalette.dat");
@@ -201,7 +189,7 @@ public class VanillaPlugin extends CommonPlugin {
 		final int total = (diameter * diameter * diameter) / 6;
 		final int progressStep = total / 10;
 		final OutwardIterator oi = new OutwardIterator();
-		SpawnLoaderThread[] loaderThreads = new SpawnLoaderThread[loaderThreadCount];
+		SpawnLoaderThread[] loaderThreads = new SpawnLoaderThread[LOADER_THREAD_COUNT];
 
 		if (worlds.isEmpty()) {
 			return;
@@ -220,7 +208,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 			final String initChunkType = world.getAge() <= 0 ? "Generating" : "Loading";
 
-			for (int i = 0; i < loaderThreadCount; i++) {
+			for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
 				loaderThreads[i] = new SpawnLoaderThread(total, progressStep, initChunkType);
 			}
 
@@ -230,11 +218,11 @@ public class VanillaPlugin extends CommonPlugin {
 				SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
 			}
 
-			for (int i = 0; i < loaderThreadCount; i++) {
+			for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
 				loaderThreads[i].start();
 			}
 
-			for (int i = 0; i < loaderThreadCount; i++) {
+			for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
 				try {
 					loaderThreads[i].join();
 				} catch (InterruptedException ie) {

@@ -38,6 +38,7 @@ import org.spout.api.event.Result;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
+import org.spout.api.event.player.PlayerLoginEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
 import org.spout.api.geo.cuboid.Region;
@@ -57,7 +58,6 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
@@ -68,20 +68,17 @@ public class VanillaListener implements Listener {
 		this.plugin = plugin;
 	}
 
-	@EventHandler(order = Order.EARLIEST)
-	public void onPlayerJoin(PlayerJoinEvent event) {
+	@EventHandler(order = Order.LATEST)
+	public void onPlayerLogin(PlayerLoginEvent event) {
+		if (!event.isAllowed()) {
+			return;
+		}
 		// Set their mode
 		Player player = event.getPlayer();
 		Entity playerEntity = player.getEntity();
-		player.getSession().setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, playerEntity));
 		VanillaPlayer vanillaPlayer = new VanillaPlayer(player, playerEntity.getWorld().getDataMap().get(VanillaData.GAMEMODE));
 
 		playerEntity.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
-
-		// Set protocol and send packets
-		if (vanillaPlayer.isSurvival()) {
-			VanillaNetworkUtil.sendPacket(vanillaPlayer.getPlayer(), new UpdateHealthMessage((short) vanillaPlayer.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
-		}
 
 		// Make them visible to everyone by default
 		vanillaPlayer.setVisible(true);

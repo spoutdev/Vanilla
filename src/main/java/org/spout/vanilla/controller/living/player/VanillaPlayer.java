@@ -343,16 +343,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 			if (player.getEntity().getController() != this) {
 				if (visible) {
 					invisibleFor.remove(player);
-					ItemStack currentItem = VanillaPlayerUtil.getCurrentItem(player.getEntity());
-					int itemId = 0;
-					if (currentItem != null) {
-						itemId = currentItem.getMaterial().getId();
-					}
-
-					sendPacket(player, new EntitySpawnPlayerMessage(parent.getId(), owner.getName(), parent.getPosition(), (int) parent.getYaw(), (int) parent.getPitch(), itemId));
+					player.getNetworkSynchronizer().spawnEntity(parent);
 				} else {
 					invisibleFor.add(player);
-					sendPacket(player, new EntityDestroyMessage(parent.getId()));
+					player.getNetworkSynchronizer().destroyEntity(parent);
 				}
 			}
 		}

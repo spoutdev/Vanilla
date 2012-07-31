@@ -52,6 +52,6 @@ public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
 		}
 
 		Sign sign = (Sign) controller;
-		sign.setText(text);
+		sign.setText(player, text);
 	}
 }

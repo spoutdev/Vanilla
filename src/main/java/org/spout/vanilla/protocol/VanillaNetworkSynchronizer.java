@@ -30,6 +30,7 @@ import gnu.trove.set.TIntSet;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
+import org.spout.api.event.EventHandler;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -59,17 +60,28 @@ import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.WorldType;
+import org.spout.vanilla.event.window.WindowCloseEvent;
+import org.spout.vanilla.event.window.WindowOpenEvent;
+import org.spout.vanilla.event.window.WindowPropertyEvent;
+import org.spout.vanilla.event.window.WindowSetSlotEvent;
+import org.spout.vanilla.event.window.WindowSetSlotsEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
+import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
+import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityTeleportMessage;
+import org.spout.vanilla.window.DefaultWindow;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
@@ -423,5 +435,56 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 		}
 		super.syncEntity(e);
+	}
+
+	private boolean isVanillaProtocol() {
+		return this.getOwner().getSession().getProtocol() instanceof VanillaProtocol;
+	}
+
+	@EventHandler
+	public Message onWindowOpen(WindowOpenEvent event) {
+		if (this.isVanillaProtocol()) {
+			if (event.getWindow() instanceof DefaultWindow) {
+				return null; // no message for the default Window
+			}
+			int size = event.getWindow().getInventorySize() - event.getWindow().getOwner().getInventory().getMain().getSize();
+			return new WindowOpenMessage(event.getWindow(), size);
+		}
+		return null;
+	}
+
+	@EventHandler
+	public Message onWindowClose(WindowCloseEvent event) {
+		if (this.isVanillaProtocol()) {
+			if (event.getWindow() instanceof DefaultWindow) {
+				return null; // no message for the default Window
+			}
+			return new WindowCloseMessage(event.getWindow());
+		}
+		return null;
+	}
+
+	@EventHandler
+	public Message onWindowSetSlot(WindowSetSlotEvent event) {
+		if (this.isVanillaProtocol()) {
+			return new WindowSetSlotMessage(event.getWindow(), event.getSlot(), event.getItem());
+		}
+		return null;
+	}
+
+	@EventHandler
+	public Message onWindowSetSlots(WindowSetSlotsEvent event) {
+		if (this.isVanillaProtocol()) {
+			return new WindowSetSlotsMessage(event.getWindow(), event.getItems());
+		}
+		return null;
+	}
+
+	@EventHandler
+	public Message onWindowProperty(WindowPropertyEvent event) {
+		if (this.isVanillaProtocol()) {
+			return new WindowPropertyMessage(event.getWindow(), event.getId(), event.getValue());
+		}
+		return null;
 	}
 }

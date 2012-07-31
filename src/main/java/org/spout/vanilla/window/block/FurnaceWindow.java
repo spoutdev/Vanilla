@@ -30,8 +30,8 @@ import org.spout.api.inventory.InventoryBase;
 
 import org.spout.vanilla.controller.block.Furnace;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.event.window.WindowPropertyEvent;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
-import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.util.intmap.SlotIndexRow;
 import org.spout.vanilla.window.ClickArgs;
@@ -67,7 +67,7 @@ public class FurnaceWindow extends TransactionWindow {
 	public void updateBurnTime(int burnTime) {
 		if (this.lastBurnTime != burnTime) {
 			this.lastBurnTime = burnTime;
-			this.sendMessage(new WindowPropertyMessage(this, FIRE_ICON, burnTime));
+			this.sendEvent(new WindowPropertyEvent(this, FIRE_ICON, burnTime));
 		}
 	}
 
@@ -78,7 +78,7 @@ public class FurnaceWindow extends TransactionWindow {
 	public void updateProgress(int progress) {
 		if (this.lastProgress != progress) {
 			this.lastProgress = progress;
-			this.sendMessage(new WindowPropertyMessage(this, PROGRESS_ARROW, progress));
+			this.sendEvent(new WindowPropertyEvent(this, PROGRESS_ARROW, progress));
 		}
 	}
 }

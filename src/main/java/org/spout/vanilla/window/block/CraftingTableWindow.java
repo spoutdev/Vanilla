@@ -29,8 +29,6 @@ package org.spout.vanilla.window.block;
 import org.spout.vanilla.controller.block.CraftingTable;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
-import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
-import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.util.intmap.SlotIndexGrid;
 import org.spout.vanilla.util.intmap.SlotIndexMap;
@@ -49,17 +47,5 @@ public class CraftingTableWindow extends CraftingWindow {
 		super(WindowType.CRAFTINGTABLE, "Crafting", owner, inventory, craftingTable);
 		this.addInventory(owner.getInventory().getMain(), MAIN_SLOTS);
 		this.addInventory(this.getCraftingGrid(), CRAFTING_SLOTS);
-	}
-
-	@Override
-	public void open() {
-		sendMessage(new WindowOpenMessage(this, this.getInventorySize() - this.getOwner().getInventory().getMain().getSize()));
-		super.open();
-	}
-
-	@Override
-	public void close() {
-		sendMessage(new WindowCloseMessage(this));
-		super.close();
 	}
 }

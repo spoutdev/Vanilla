@@ -24,23 +24,47 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window.entity;
+package org.spout.vanilla.event.window;
 
-import org.spout.vanilla.controller.living.creature.passive.Villager;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.util.intmap.SlotIndexCollection;
-import org.spout.vanilla.util.intmap.SlotIndexGrid;
-import org.spout.vanilla.util.intmap.SlotIndexMap;
-import org.spout.vanilla.window.CraftingWindow;
-import org.spout.vanilla.window.WindowType;
+import org.spout.api.event.HandlerList;
+import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.window.Window;
 
-public class VillagerWindow extends CraftingWindow {
-	private static final SlotIndexCollection MAIN_SLOTS = new SlotIndexGrid(9, 4, 3);
-	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexMap("0-2");
+public class WindowSetSlotEvent extends WindowEvent {
+	private static HandlerList handlers = new HandlerList();
+	private int slot;
+	private ItemStack item;
 
-	public VillagerWindow(VanillaPlayer owner, Villager villager) {
-		super(WindowType.VILLAGER, "villager", owner, villager.getInventory(), villager);
-		this.addInventory(owner.getInventory().getMain(), MAIN_SLOTS);
-		this.addInventory(this.getCraftingGrid(), CRAFTING_SLOTS);
+	public WindowSetSlotEvent(Window window, int slot, ItemStack item) {
+		super(window);
+		this.slot = slot;
+		this.item = item;
+	}
+
+	/**
+	 * Gets the slot of the Window that got changed
+	 * 
+	 * @return changed slot
+	 */
+	public int getSlot() {
+		return this.slot;
+	}
+
+	/**
+	 * Gets the item the slot is set to
+	 * 
+	 * @return the item
+	 */
+	public ItemStack getItem() {
+		return this.item;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

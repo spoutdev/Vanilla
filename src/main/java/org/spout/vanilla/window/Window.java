@@ -43,9 +43,11 @@ import org.spout.api.tickable.ITickable;
 
 import org.spout.vanilla.controller.WindowController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.WindowMessage;
-import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
-import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
+import org.spout.vanilla.event.window.WindowCloseEvent;
+import org.spout.vanilla.event.window.WindowEvent;
+import org.spout.vanilla.event.window.WindowOpenEvent;
+import org.spout.vanilla.event.window.WindowSetSlotEvent;
+import org.spout.vanilla.event.window.WindowSetSlotsEvent;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 
@@ -186,6 +188,7 @@ public class Window implements InventoryViewer, ITickable {
 		for (InventoryBase inventory : this.inventories.keySet()) {
 			inventory.addViewer(this);
 		}
+		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowOpenEvent(this));
 		this.refreshItems();
 	}
 
@@ -200,6 +203,7 @@ public class Window implements InventoryViewer, ITickable {
 		for (InventoryBase inventory : this.inventories.keySet()) {
 			inventory.removeViewer(this);
 		}
+		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowCloseEvent(this));
 	}
 
 	public void refreshItems() {
@@ -215,7 +219,7 @@ public class Window implements InventoryViewer, ITickable {
 				items[mcSlot] = inventory.getKey().getItem(i);
 			}
 		}
-		this.sendMessage(new WindowSetSlotsMessage(this, items));
+		this.sendEvent(new WindowSetSlotsEvent(this, items));
 	}
 	
 	@Override
@@ -227,7 +231,7 @@ public class Window implements InventoryViewer, ITickable {
 			} else {
 				for (TIntObjectIterator<ItemStack> i = queuedInventoryUpdates.iterator(); i.hasNext(); ) {
 					i.advance();
-					this.sendMessage(new WindowSetSlotMessage(this, i.key(), i.value()));
+					this.sendEvent(new WindowSetSlotEvent(this, i.key(), i.value()));
 				}
 			}
 			this.queuedInventoryUpdates.clear();
@@ -235,11 +239,11 @@ public class Window implements InventoryViewer, ITickable {
 	}
 
 	/**
-	 * Sends a Window Message to the owner of this Window
-	 * @param message to send
+	 * Sends a Window Protocol event to the owner of this Window
+	 * @param event to send
 	 */
-	public void sendMessage(WindowMessage message) {
-		this.getPlayer().getSession().send(false, message);
+	public void sendEvent(WindowEvent event) {
+		this.getPlayer().getNetworkSynchronizer().callProtocolEvent(event);
 	}
 
 	public boolean hasItemOnCursor() {

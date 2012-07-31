@@ -73,7 +73,7 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 
 	@Override
 	public ChannelBuffer encodeToClient(LoginRequestMessage message) {
-		LoginRequestMessage server =  message;
+		LoginRequestMessage server = message;
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		System.out.println(server.toString());
 		buffer.writeInt(server.getId());
@@ -88,7 +88,7 @@ public final class LoginRequestCodec extends MessageCodec<LoginRequestMessage> {
 
 	@Override
 	public ChannelBuffer encodeToServer(LoginRequestMessage message) {
-		LoginRequestMessage server =  message;
+		LoginRequestMessage server = message;
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(server.getId());
 		ChannelBufferUtils.writeString(buffer, server.getWorldType());

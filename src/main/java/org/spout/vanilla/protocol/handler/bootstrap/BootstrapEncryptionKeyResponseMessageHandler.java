@@ -35,6 +35,7 @@ import org.bouncycastle.crypto.BufferedBlockCipher;
 import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
+
 import org.spout.api.Spout;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
@@ -42,6 +43,7 @@ import org.spout.api.protocol.Session;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.security.EncryptionChannelProcessor;
 import org.spout.api.security.SecurityHandler;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
@@ -53,9 +55,9 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 	public void handleServer(final Session session, final Player player, final EncryptionKeyResponseMessage message) {
 		Session.State state = session.getState();
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
-			session.disconnect(false, new Object[] { "Handshake not sent" });
+			session.disconnect(false, new Object[]{"Handshake not sent"});
 		} else if (state != Session.State.EXCHANGE_ENCRYPTION) {
-			session.disconnect(false, new Object[] { "Encryption was not requested" });
+			session.disconnect(false, new Object[]{"Encryption was not requested"});
 		} else {
 			int keySize = VanillaConfiguration.ENCRYPT_KEY_SIZE.getInt();
 			String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
@@ -85,14 +87,14 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 
 			byte[] publicKeyEncoded = SecurityHandler.getInstance().encodeKey(pair.getPublic());
 
-			String sha1Hash = sha1Hash(new Object[] { sessionId, initialVector, publicKeyEncoded });
+			String sha1Hash = sha1Hash(new Object[]{sessionId, initialVector, publicKeyEncoded});
 			session.getDataMap().put(VanillaProtocol.SESSION_ID, sha1Hash);
 
 			String handshakeUsername = session.getDataMap().get(VanillaProtocol.HANDSHAKE_USERNAME);
 			final String finalName = handshakeUsername.split(";")[0];
 			session.getDataMap().put("username", finalName);
 			Spout.log("Test");
-			
+
 			Runnable runnable = new Runnable() {
 				public void run() {
 					String streamCipher = VanillaConfiguration.ENCRYPT_STREAM_ALGORITHM.getString();
@@ -117,7 +119,7 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 					session.send(false, true, response);
 				}
 			};
-			
+
 			if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
 				Thread loginAuth = new Thread(new LoginAuth(session, finalName, runnable));
 				loginAuth.start();
@@ -156,6 +158,6 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 	}
 
 	private static void kickInvalidUser(Session session) {
-		session.disconnect(false, new Object[] { "Failed to verify username!" });
+		session.disconnect(false, new Object[]{"Failed to verify username!"});
 	}
 }

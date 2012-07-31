@@ -30,7 +30,6 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.data.effect.VanillaFoodEffect;
 
 public class Poisoning extends VanillaFoodEffect {
-
 	public Poisoning(VanillaPlayer effected, float amount) {
 		//Unused. Only to get the vPlayer
 		super(effected, 30, 0);
@@ -40,9 +39,9 @@ public class Poisoning extends VanillaFoodEffect {
 	public void onRegistration() {
 		this.getParent().setPoisoned(true);
 	}
+
 	@Override
 	public void run() {
 		this.getParent().setPoisoned(false);
 	}
-
 }

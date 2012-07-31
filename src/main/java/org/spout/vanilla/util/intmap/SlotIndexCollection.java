@@ -46,7 +46,6 @@ public class SlotIndexCollection {
 
 	/**
 	 * Gets the offset of the mapped information
-	 * 
 	 * @return the translated offset
 	 */
 	public int getOffset() {
@@ -55,7 +54,6 @@ public class SlotIndexCollection {
 
 	/**
 	 * Gets the size of the mapped information
-	 * 
 	 * @return collection size
 	 */
 	public int getSize() {
@@ -64,7 +62,6 @@ public class SlotIndexCollection {
 
 	/**
 	 * Checks if the Spout slot is contained in this collection
-	 * 
 	 * @param spoutSlotIndex to check
 	 * @return True if contained, False if not
 	 */
@@ -74,7 +71,6 @@ public class SlotIndexCollection {
 
 	/**
 	 * Checks if the Minecraft slot is contained in this collection
-	 * 
 	 * @param mcSlotIndex to check
 	 * @return True if contained, False if not
 	 */
@@ -84,7 +80,6 @@ public class SlotIndexCollection {
 
 	/**
 	 * Translates all the slots by the amount specified and returns a new Slot Index Collection with the translated values
-	 * 
 	 * @param offset to translate
 	 * @return a new translated Slot Index Collection
 	 */
@@ -94,7 +89,6 @@ public class SlotIndexCollection {
 
 	/**
 	 * Gets the Spout slot index from a Minecraft slot index
-	 * 
 	 * @param mcSlotIndex
 	 * @return the Spout slot index, or -1 if not contained
 	 */
@@ -109,7 +103,6 @@ public class SlotIndexCollection {
 
 	/**
 	 * Gets the minecraft slot index from a spout slot index
-	 * 
 	 * @param spoutSlotIndex
 	 * @return the Minecraft slot index, or -1 if not contained
 	 */

@@ -36,7 +36,6 @@ import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 public class VanillaGenerators {
 	private static final Map<String, VanillaGenerator> generators = new ConcurrentHashMap<String, VanillaGenerator>();
-
 	public static final NormalGenerator NORMAL = addGenerator("normal", new NormalGenerator());
 	public static final NetherGenerator NETHER = addGenerator("nether", new NetherGenerator());
 	public static final FlatGenerator FLAT = addGenerator("flat", new FlatGenerator(64));
@@ -44,7 +43,6 @@ public class VanillaGenerators {
 
 	/**
 	 * Maps a Vanilla Generator to a certain name
-	 * 
 	 * @param name of the generator
 	 * @param generator to map to the name
 	 * @return the generator
@@ -56,7 +54,6 @@ public class VanillaGenerators {
 
 	/**
 	 * Gets the Vanilla Generator mapped to a certain name
-	 * 
 	 * @param name of the Generator
 	 * @return the Generator, or null if not found
 	 */

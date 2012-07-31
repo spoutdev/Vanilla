@@ -61,5 +61,4 @@ public class PlayerFoodSaturationChangeEvent extends PlayerEvent implements Canc
 	public static HandlerList getHandlerList() {
 		return handlers;
 	}
-
 }

@@ -65,7 +65,6 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 public abstract class VanillaActionController extends Controller implements VanillaController {
 	private final VanillaControllerType type;
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
-
 	private static Random rand = new Random();
 	// Protocol: last known updated client transform
 	private Transform lastClientTransform = new Transform();
@@ -130,29 +129,28 @@ public abstract class VanillaActionController extends Controller implements Vani
 	@Override
 	public void onTick(float dt) {
 		if (deathTicks > 0) {
-				deathTicks--;
-				if (deathTicks == 0) {
-					if (this instanceof PlayerController) {
-						deathTicks = 30;
-					} else {
-						getParent().kill();
-					}
+			deathTicks--;
+			if (deathTicks == 0) {
+				if (this instanceof PlayerController) {
+					deathTicks = 30;
+				} else {
+					getParent().kill();
 				}
-				return;
+			}
+			return;
 		}
 		updateFireTicks();
 		updateAirTicks();
 
 		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
-			if (!hasDeathAnimation()){
+			if (!hasDeathAnimation()) {
 				getParent().kill();
-			}
-			else {
+			} else {
 				VanillaNetworkUtil.broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 				deathTicks = 30;
 			}
-			
+
 			onDeath();
 		}
 
@@ -518,8 +516,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 		if (!event.isCancelled()) {
 			if (event.getChange() > maxHealth) {
 				this.health = maxHealth;
-			}
-			else {
+			} else {
 				this.health = event.getChange();
 			}
 		}
@@ -532,7 +529,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
 	}
-	
+
 	public boolean hasDeathAnimation() {
 		return hasDeathAnimation;
 	}
@@ -550,7 +547,7 @@ public abstract class VanillaActionController extends Controller implements Vani
 	}
 
 	public void updateAirTicks() {
-		
+
 	}
 
 	public int getMaxAirTicks() {

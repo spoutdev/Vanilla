@@ -64,8 +64,8 @@ public final class DestroyEntitiesMessage extends Message implements Transformab
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-		.append("id", Arrays.toString(id))
-		.toString();
+				.append("id", Arrays.toString(id))
+				.toString();
 	}
 
 	@Override

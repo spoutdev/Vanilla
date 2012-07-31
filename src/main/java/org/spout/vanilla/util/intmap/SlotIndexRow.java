@@ -30,7 +30,6 @@ package org.spout.vanilla.util.intmap;
  * A reversed row implementation
  */
 public class SlotIndexRow extends SlotIndexCollection {
-
 	public SlotIndexRow(int size) {
 		super(size);
 	}

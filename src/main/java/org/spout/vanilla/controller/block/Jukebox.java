@@ -76,7 +76,7 @@ public class Jukebox extends VanillaBlockController {
 			}
 		}
 	}
-	
+
 	/**
 	 * Gets the current music this Jukebox plays
 	 * @return

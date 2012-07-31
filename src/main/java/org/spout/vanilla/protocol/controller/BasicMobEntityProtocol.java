@@ -78,7 +78,7 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 		}
 		List<Parameter<?>> parameters = this.getSpawnParameters(c);
 		//TODO: Is there a Velocity in a entity class?
-		return new Message[] {new EntitySpawnMobMessage(id, this.getSpawnID(), pos, r, p, headyaw, (short) 0, (short) 0, (short) 0, parameters)};
+		return new Message[]{new EntitySpawnMobMessage(id, this.getSpawnID(), pos, r, p, headyaw, (short) 0, (short) 0, (short) 0, parameters)};
 	}
 
 	@Override

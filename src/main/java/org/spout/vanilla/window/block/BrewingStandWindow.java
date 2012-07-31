@@ -38,7 +38,6 @@ import org.spout.vanilla.window.WindowType;
 
 public class BrewingStandWindow extends TransactionWindow {
 	private static final SlotIndexMap BREWING_SLOTS = new SlotIndexMap("0-3");
-
 	protected final BrewingStandInventory brewing;
 
 	public BrewingStandWindow(VanillaPlayer owner, BrewingStand stand) {

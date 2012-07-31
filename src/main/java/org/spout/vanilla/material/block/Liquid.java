@@ -244,7 +244,6 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	/**
 	 * Gets whether this liquid is at it's maximum level
-	 * 
 	 * @param block of the liquid
 	 * @return True if it is at the maximum level, False if not
 	 */
@@ -254,7 +253,6 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	/**
 	 * Gets whether this liquid is a source
-	 * 
 	 * @param block of the liquid
 	 * @return True if it is a source, False if not
 	 */
@@ -264,7 +262,6 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	/**
 	 * Gets whether this liquid is a source
-	 * 
 	 * @param data of the block of the liquid
 	 * @return True if it is a source, False if not
 	 */

@@ -36,7 +36,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 

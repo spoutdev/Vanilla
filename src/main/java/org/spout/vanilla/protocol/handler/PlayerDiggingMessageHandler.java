@@ -55,8 +55,8 @@ import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
-import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
+import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -110,7 +110,6 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		InventorySlot currentSlot = VanillaPlayerUtil.getCurrentSlot(player.getEntity());
 		ItemStack heldItem = currentSlot.getItem();
 
-
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {
 			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable);
 			if (Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
@@ -159,9 +158,9 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			}
 
 			if (VanillaPlayerUtil.isSurvival(player)) {
-				((VanillaPlayer)player).setExhaustion(((VanillaPlayer)player).getExhaustion() + ExhaustionLevel.BREAK_BLOCK.getAmount());
+				((VanillaPlayer) player).setExhaustion(((VanillaPlayer) player).getExhaustion() + ExhaustionLevel.BREAK_BLOCK.getAmount());
 			}
-			
+
 			long diggingTicks = vp.getDiggingTicks();
 			int damageDone;
 			int totalDamage;
@@ -190,7 +189,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			}
 		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
 			if (heldItem.getMaterial() instanceof Food) {
-				((Food)heldItem.getMaterial()).onEat(player.getEntity(), currentSlot);
+				((Food) heldItem.getMaterial()).onEat(player.getEntity(), currentSlot);
 			}
 		}
 	}

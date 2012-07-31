@@ -81,7 +81,6 @@ public abstract class Living extends VanillaActionController {
 
 	/**
 	 * Sets the maximum distance this Living Entity can interact at
-	 * 
 	 * @param reach distance
 	 */
 	public void setReach(int reach) {
@@ -90,7 +89,6 @@ public abstract class Living extends VanillaActionController {
 
 	/**
 	 * Gets the maximum distance this Living Entity can interact at
-	 * 
 	 * @return reach distance
 	 */
 	public int getReach() {
@@ -149,18 +147,17 @@ public abstract class Living extends VanillaActionController {
 
 	/**
 	 * Performs a collision test
-	 * 
 	 * @param iterator
 	 * @return the first block this Living entity collides with
 	 */
 	public Block hitTest() {
 		Block block;
-		for (BlockIterator iter = this.getHeadBlockView(); iter.hasNext();) {
-			 block = iter.next();
-			 //TODO: Hit box check
-			 if (!block.getMaterial().isTransparent()) {
-				 return block;
-			 }
+		for (BlockIterator iter = this.getHeadBlockView(); iter.hasNext(); ) {
+			block = iter.next();
+			//TODO: Hit box check
+			if (!block.getMaterial().isTransparent()) {
+				return block;
+			}
 		}
 		return null;
 	}
@@ -180,7 +177,7 @@ public abstract class Living extends VanillaActionController {
 	public void setCrouching(boolean crouching) {
 		this.crouching = crouching;
 	}
-	
+
 	@Override
 	public void updateAirTicks() {
 		// Handle drowning and suffocation damage

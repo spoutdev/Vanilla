@@ -41,7 +41,6 @@ import org.spout.vanilla.window.WindowType;
 public class FurnaceWindow extends TransactionWindow {
 	private static final byte PROGRESS_ARROW = 0, FIRE_ICON = 1;
 	private static final SlotIndexCollection FURNACE_SLOTS = new SlotIndexRow(3);
-
 	protected final FurnaceInventory furnaceInv;
 	private int lastProgress = -1, lastBurnTime = -1;
 

@@ -32,15 +32,14 @@ import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
+
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.object.moving.Item;
 
 /**
  * Logic for creatures that drop an {@link Item} every x ticks.
- *
  */
 public class DropItemTimeBasedLogic extends LogicRunnable<Creature> {
-
 	private int itemDropMaxTime;
 	private int itemDropMinTime;
 	private Material itemToDrop;
@@ -49,10 +48,9 @@ public class DropItemTimeBasedLogic extends LogicRunnable<Creature> {
 
 	/**
 	 * Creates the logic for creatures that drop an {@link Item} every x ticks with normal priority.
-	 * 
 	 * @param parent the creature dropping the item
 	 * @param itemToDrop the Item to be creature by the entity
-	 * @param amountOfItems how many of the specified items should be dropped 
+	 * @param amountOfItems how many of the specified items should be dropped
 	 * @param itemDropMinTime the minimum time between to drops
 	 * @param itemDropMaxTime the maximum time between to drops
 	 */
@@ -62,10 +60,9 @@ public class DropItemTimeBasedLogic extends LogicRunnable<Creature> {
 
 	/**
 	 * Creates the logic for creatures that drop an {@link Item} every x ticks.
-	 * 
 	 * @param parent the creature dropping the item
 	 * @param itemToDrop the Item to be creature by the entity
-	 * @param amountOfItems how many of the specified items should be dropped 
+	 * @param amountOfItems how many of the specified items should be dropped
 	 * @param itemDropMinTime the minimum time between to drops
 	 * @param itemDropMaxTime the maximum time between to drops
 	 * @param priority the priority of this logic
@@ -95,5 +92,4 @@ public class DropItemTimeBasedLogic extends LogicRunnable<Creature> {
 		}
 		return false;
 	}
-
 }

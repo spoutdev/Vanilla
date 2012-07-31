@@ -41,7 +41,6 @@ public class Map {
 
 	/**
 	 * Gets the Instance Id of this Map
-	 * 
 	 * @return Map Instance Id
 	 */
 	public int getInstanceId() {

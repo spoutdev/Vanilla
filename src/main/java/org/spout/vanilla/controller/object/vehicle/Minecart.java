@@ -141,8 +141,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 			if (regentick >= 7) {
 				setHealth(health + 1, HealthChangeReason.REGENERATION);
 				regentick = 0;
-			}
-			else {
+			} else {
 				regentick++;
 			}
 		}
@@ -344,7 +343,7 @@ public abstract class Minecart extends Substance implements Vehicle {
 	 */
 	public void onVelocityUpdated(float dt) {
 	}
-	
+
 	@Override
 	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();

@@ -109,7 +109,6 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 					}
 					vPlayer.setExhaustion(vPlayer.getExhaustion() + level);
 				}
-
 			} else {
 				vPlayer.setJumping(false);
 			}
@@ -120,7 +119,6 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 		// Force the chunk to load if needed - if a player moves into an unloaded chunk they will die
 		entity.getWorld().getChunkFromBlock(p);
 		entity.setPosition(p);
-
 	}
 
 	public void handleClient(Session session, Player player, PlayerPositionLookMessage message) {

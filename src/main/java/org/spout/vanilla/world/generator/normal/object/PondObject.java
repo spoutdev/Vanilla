@@ -231,7 +231,7 @@ public class PondObject extends RandomObject {
 			noise = new SphericalNoise[random.nextInt(4) + 4];
 			randomize();
 		}
-		
+
 		private void randomize() {
 			for (byte i = 0; i < noise.length; i++) {
 				noise[i] = new SphericalNoise(random.nextLong());

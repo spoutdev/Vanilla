@@ -76,27 +76,27 @@ public final class ChannelBufferUtils {
 			buf.writeByte(type << 5 | index & 0x1F);
 
 			switch (type) {
-			case Parameter.TYPE_BYTE:
-				buf.writeByte(((Parameter<Byte>) parameter).getValue());
-				break;
-			case Parameter.TYPE_SHORT:
-				buf.writeShort(((Parameter<Short>) parameter).getValue());
-				break;
-			case Parameter.TYPE_INT:
-				buf.writeInt(((Parameter<Integer>) parameter).getValue());
-				break;
-			case Parameter.TYPE_FLOAT:
-				buf.writeFloat(((Parameter<Float>) parameter).getValue());
-				break;
-			case Parameter.TYPE_STRING:
-				writeString(buf, ((Parameter<String>) parameter).getValue());
-				break;
-			case Parameter.TYPE_ITEM:
-				ItemStack item = ((Parameter<ItemStack>) parameter).getValue();
-				buf.writeShort(item.getMaterial().getId());
-				buf.writeByte(item.getAmount());
-				buf.writeShort(item.getData());
-				break;
+				case Parameter.TYPE_BYTE:
+					buf.writeByte(((Parameter<Byte>) parameter).getValue());
+					break;
+				case Parameter.TYPE_SHORT:
+					buf.writeShort(((Parameter<Short>) parameter).getValue());
+					break;
+				case Parameter.TYPE_INT:
+					buf.writeInt(((Parameter<Integer>) parameter).getValue());
+					break;
+				case Parameter.TYPE_FLOAT:
+					buf.writeFloat(((Parameter<Float>) parameter).getValue());
+					break;
+				case Parameter.TYPE_STRING:
+					writeString(buf, ((Parameter<String>) parameter).getValue());
+					break;
+				case Parameter.TYPE_ITEM:
+					ItemStack item = ((Parameter<ItemStack>) parameter).getValue();
+					buf.writeShort(item.getMaterial().getId());
+					buf.writeByte(item.getAmount());
+					buf.writeShort(item.getData());
+					break;
 			}
 		}
 
@@ -116,28 +116,28 @@ public final class ChannelBufferUtils {
 			int index = b & 0x1F;
 
 			switch (type) {
-			case Parameter.TYPE_BYTE:
-				parameters.add(new Parameter<Byte>(type, index, buf.readByte()));
-				break;
-			case Parameter.TYPE_SHORT:
-				parameters.add(new Parameter<Short>(type, index, buf.readShort()));
-				break;
-			case Parameter.TYPE_INT:
-				parameters.add(new Parameter<Integer>(type, index, buf.readInt()));
-				break;
-			case Parameter.TYPE_FLOAT:
-				parameters.add(new Parameter<Float>(type, index, buf.readFloat()));
-				break;
-			case Parameter.TYPE_STRING:
-				parameters.add(new Parameter<String>(type, index, readString(buf)));
-				break;
-			case Parameter.TYPE_ITEM:
-				int id = buf.readShort();
-				int count = buf.readByte();
-				short data = buf.readShort();
-				ItemStack item = new ItemStack(Material.get((short) id), data, count);
-				parameters.add(new Parameter<ItemStack>(type, index, item));
-				break;
+				case Parameter.TYPE_BYTE:
+					parameters.add(new Parameter<Byte>(type, index, buf.readByte()));
+					break;
+				case Parameter.TYPE_SHORT:
+					parameters.add(new Parameter<Short>(type, index, buf.readShort()));
+					break;
+				case Parameter.TYPE_INT:
+					parameters.add(new Parameter<Integer>(type, index, buf.readInt()));
+					break;
+				case Parameter.TYPE_FLOAT:
+					parameters.add(new Parameter<Float>(type, index, buf.readFloat()));
+					break;
+				case Parameter.TYPE_STRING:
+					parameters.add(new Parameter<String>(type, index, readString(buf)));
+					break;
+				case Parameter.TYPE_ITEM:
+					int id = buf.readShort();
+					int count = buf.readByte();
+					short data = buf.readShort();
+					ItemStack item = new ItemStack(Material.get((short) id), data, count);
+					parameters.add(new Parameter<ItemStack>(type, index, item));
+					break;
 			}
 		}
 
@@ -370,11 +370,9 @@ public final class ChannelBufferUtils {
 	 * @param buf The buffer to decode the Slot field
 	 * @return The according SlotData
 	 */
-
 	/**
 	 * Default private constructor to prevent instantiation.
 	 */
 	private ChannelBufferUtils() {
 	}
-
 }

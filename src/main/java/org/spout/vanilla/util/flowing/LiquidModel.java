@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.util.flowing;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -42,6 +42,7 @@ import org.spout.api.material.block.BlockFullState;
 import org.spout.api.material.range.DiamondEffectRange;
 import org.spout.api.math.IntVector3;
 import org.spout.api.util.hashing.ShortPairHashed;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
@@ -50,7 +51,6 @@ import org.spout.vanilla.material.block.Liquid;
  * Is basically a flat disk where 64 elements can have a state.
  */
 public class LiquidModel {
-
 	public static enum State {
 		BLOCKED, OPEN, HOLE;
 	}
@@ -63,6 +63,7 @@ public class LiquidModel {
 			this.absdZ = Math.abs(this.dZ);
 			this.center = (this.dX == 0 && this.absdZ == 1) || (this.dZ == 0 && this.absdX == 1);
 		}
+
 		public final int dX, dZ;
 		public final int absdX, absdZ;
 		private State state;
@@ -70,6 +71,7 @@ public class LiquidModel {
 		public final boolean center;
 		private final List<Element> neighbours = new ArrayList<Element>();
 		public final List<AtomicBoolean> mainDirection = new ArrayList<AtomicBoolean>();
+
 		public void load(World world, int x, int y, int z) {
 			for (AtomicBoolean bool : this.mainDirection) {
 				if (bool.get()) {
@@ -93,11 +95,13 @@ public class LiquidModel {
 			this.state = State.BLOCKED;
 			this.holeDistance = Integer.MAX_VALUE;
 		}
+
 		public void link(Element with) {
 			if (with != null) {
 				this.neighbours.add(with);
 			}
 		}
+
 		public void spreadHole() {
 			if (this.holeDistance != -1) {
 				for (Element element : this.neighbours) {

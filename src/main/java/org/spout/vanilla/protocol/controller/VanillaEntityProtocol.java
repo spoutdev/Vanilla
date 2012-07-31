@@ -51,7 +51,7 @@ import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	@Override
 	public Message[] getDestroyMessage(Entity entity) {
-		return new Message[] {new DestroyEntitiesMessage(new int[] {entity.getId()})};
+		return new Message[]{new DestroyEntitiesMessage(new int[]{entity.getId()})};
 	}
 
 	public Message[] getUpdateMessage(Entity entity) {

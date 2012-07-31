@@ -32,6 +32,7 @@ import org.spout.api.player.Player;
 
 public class RandomSound extends RandomSoundStore implements VanillaSound {
 	private final Sound[] sounds;
+
 	public RandomSound(Sound... sounds) {
 		this.sounds = sounds;
 	}

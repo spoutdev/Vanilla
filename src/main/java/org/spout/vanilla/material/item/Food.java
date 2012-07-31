@@ -30,11 +30,11 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.special.InventorySlot;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Food extends VanillaItemMaterial {
-
 	private final FoodEffect[] effects;
 
 	public Food(String name, int id, FoodEffect... effects) {

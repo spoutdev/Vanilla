@@ -69,18 +69,18 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
-import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
-import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
-import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
-import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
-import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
-import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityTeleportMessage;
+import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
+import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
+import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
 import org.spout.vanilla.window.DefaultWindow;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
@@ -264,7 +264,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			for (int cube = 0; cube < 16; cube++) {
 				packetChunkData[cube] = getChunkHeightMap(heights, materials, cube);
 			}
-
 
 			Chunk chunk = p.getWorld().getChunkFromBlock(p);
 			byte[] biomeData = new byte[Chunk.BLOCKS.AREA];

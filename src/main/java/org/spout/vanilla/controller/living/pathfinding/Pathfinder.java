@@ -30,18 +30,17 @@ import java.util.List;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.controller.living.Creature;
 
 /**
  * An abstract Pathfinder.
  */
 public abstract class Pathfinder {
-
 	protected Creature creature;
 
 	/**
 	 * Creates a Pathfinder.
-	 *
 	 * @param creature the creature that uses this Pathfinder.
 	 */
 	public Pathfinder(Creature creature) {
@@ -50,7 +49,6 @@ public abstract class Pathfinder {
 
 	/**
 	 * Finds the path from 'from' to 'to' and returns an ordered List of PathNodes.
-	 *
 	 * @param from the starting position.
 	 * @param to the target position.
 	 * @return an ordered list from start to target.
@@ -60,7 +58,6 @@ public abstract class Pathfinder {
 	/**
 	 * Checks if a block can be passed.
 	 * A block can be passed when a creature can move to its position.
-	 *
 	 * @param block the block to check.
 	 * @return true if the block is passable
 	 */
@@ -71,7 +68,6 @@ public abstract class Pathfinder {
 	/**
 	 * Checks if a block can be passed.
 	 * A block can be passed when a creature can move to its position.
-	 *
 	 * @param x the x coordinate of the block
 	 * @param y the y coordinate of the block
 	 * @param z the z coordinate of the block
@@ -85,7 +81,6 @@ public abstract class Pathfinder {
 	 * Checks if a position is walkable.
 	 * A position is walkable if the block, which is represented by the position, can be passed,
 	 * and the block beneath the position is solid.
-	 *
 	 * @param x the x coordinate of the block
 	 * @param y the y coordinate of the block
 	 * @param z the z coordinate of the block
@@ -99,7 +94,6 @@ public abstract class Pathfinder {
 	 * Checks if a position is walkable.
 	 * A position is walkable if the block, which is represented by the position, can be passed,
 	 * and the block beneath the position is solid.
-	 *
 	 * @param vector the position in question
 	 * @return true if the block is walkable, false otherwise
 	 */

@@ -30,10 +30,10 @@ import org.spout.api.Spout;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.msg.TabCompleteMessage;
 
 public final class TabCompleteMessageHandler extends MessageHandler<TabCompleteMessage> {
-
 	@Override
 	public void handleServer(Session session, Player player, TabCompleteMessage message) {
 		if (player == null) {

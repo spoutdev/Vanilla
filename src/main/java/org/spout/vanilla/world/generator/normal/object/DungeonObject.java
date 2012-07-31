@@ -67,19 +67,19 @@ public class DungeonObject extends RandomObject {
 		final double ELEVEN = 1.0 / 11.0;
 		chestObject = new LootChestObject(random);
 		chestObject.setMaxNumberOfStacks(8);
-		chestObject.addMaterial(VanillaMaterials.SADDLE, 		ELEVEN, 		1, 1)
-					.addMaterial(VanillaMaterials.IRON_INGOT, 	ELEVEN, 		1, 4)
-					.addMaterial(VanillaMaterials.BREAD, 		ELEVEN, 		1, 2)
-					.addMaterial(VanillaMaterials.WHEAT, 		ELEVEN, 		1, 4)
-					.addMaterial(VanillaMaterials.GUNPOWDER, 	ELEVEN, 		1, 4)
-					.addMaterial(VanillaMaterials.STRING, 		ELEVEN, 		1, 4)
-					.addMaterial(VanillaMaterials.BUCKET, 		ELEVEN, 		1, 1)
-					.addMaterial(Dye.COCOA_BEANS, 				ELEVEN, 		1, 3)
-					.addMaterial(VanillaMaterials.REDSTONE_DUST, 1.0 / 22.0, 	1, 4)
-					.addMaterial(VanillaMaterials.GOLDEN_APPLE, 1.0 / 1100.0, 	1, 1);
+		chestObject.addMaterial(VanillaMaterials.SADDLE, ELEVEN, 1, 1)
+				.addMaterial(VanillaMaterials.IRON_INGOT, ELEVEN, 1, 4)
+				.addMaterial(VanillaMaterials.BREAD, ELEVEN, 1, 2)
+				.addMaterial(VanillaMaterials.WHEAT, ELEVEN, 1, 4)
+				.addMaterial(VanillaMaterials.GUNPOWDER, ELEVEN, 1, 4)
+				.addMaterial(VanillaMaterials.STRING, ELEVEN, 1, 4)
+				.addMaterial(VanillaMaterials.BUCKET, ELEVEN, 1, 1)
+				.addMaterial(Dye.COCOA_BEANS, ELEVEN, 1, 3)
+				.addMaterial(VanillaMaterials.REDSTONE_DUST, 1.0 / 22.0, 1, 4)
+				.addMaterial(VanillaMaterials.GOLDEN_APPLE, 1.0 / 1100.0, 1, 1);
 		final double discProbability = (1.0 / 110.0) / (double) MusicDisc.values().length;
-		for (Material disc:MusicDisc.values()) {
-			chestObject.addMaterial(disc, discProbability, 						1, 1);
+		for (Material disc : MusicDisc.values()) {
+			chestObject.addMaterial(disc, discProbability, 1, 1);
 		}
 	}
 
@@ -150,7 +150,7 @@ public class DungeonObject extends RandomObject {
 					continue;
 				}
 				chestObject.placeObject(w, xx, y, zz);
-				chestCount ++;
+				chestCount++;
 				if (chestCount == maxNumberOfChests) {
 					break;
 				}

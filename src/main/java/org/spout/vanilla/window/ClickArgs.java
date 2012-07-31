@@ -31,6 +31,7 @@ package org.spout.vanilla.window;
  */
 public class ClickArgs {
 	private final boolean rightClick, shift;
+
 	public ClickArgs(boolean rightClick, boolean shift) {
 		this.rightClick = rightClick;
 		this.shift = shift;
@@ -38,7 +39,6 @@ public class ClickArgs {
 
 	/**
 	 * Gets whether it was a right mouse click
-	 * 
 	 * @return True if it was a right click, False if not
 	 */
 	public boolean isRightClick() {
@@ -47,7 +47,6 @@ public class ClickArgs {
 
 	/**
 	 * Gets whether it was a left mouse click
-	 * 
 	 * @return True if it was a left click, False if not
 	 */
 	public boolean isLeftClick() {
@@ -56,7 +55,6 @@ public class ClickArgs {
 
 	/**
 	 * Gets whether shift was down while clicking
-	 * 
 	 * @return True if shift was down, False if not
 	 */
 	public boolean isShiftDown() {

@@ -30,7 +30,6 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.data.effect.VanillaFoodEffect;
 
 public class FoodSaturation extends VanillaFoodEffect {
-
 	public FoodSaturation(VanillaPlayer effected, float amount) {
 		super(effected, amount);
 	}
@@ -39,5 +38,4 @@ public class FoodSaturation extends VanillaFoodEffect {
 	public void onRegistration() {
 		this.getParent().setFoodSaturation(this.getParent().getFoodSaturation() + this.getStrength());
 	}
-
 }

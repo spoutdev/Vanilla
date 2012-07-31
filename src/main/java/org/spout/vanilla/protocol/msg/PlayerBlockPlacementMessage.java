@@ -89,15 +89,15 @@ public final class PlayerBlockPlacementMessage extends Message {
 	public CompoundMap getNbtData() {
 		return nbtData;
 	}
-	
+
 	public float getDX() {
 		return dx;
 	}
-	
+
 	public float getDY() {
 		return dy;
 	}
-	
+
 	public float getDZ() {
 		return dz;
 	}

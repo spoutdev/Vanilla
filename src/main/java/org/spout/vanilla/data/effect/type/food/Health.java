@@ -31,15 +31,12 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.effect.VanillaFoodEffect;
 
 public class Health extends VanillaFoodEffect {
-
 	public Health(VanillaPlayer effected, float amount) {
 		super(effected, amount);
 	}
-
 
 	@Override
 	public void onRegistration() {
 		this.getParent().setHealth((int) (this.getParent().getHealth() + this.getStrength()), HealthChangeReason.EATING);
 	}
-
 }

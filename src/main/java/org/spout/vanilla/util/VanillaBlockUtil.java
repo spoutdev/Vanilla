@@ -111,7 +111,6 @@ public class VanillaBlockUtil {
 
 	/**
 	 * Gets a vertical column of chunks
-	 * 
 	 * @param middle chunk
 	 * @return list of chunks in the column
 	 */

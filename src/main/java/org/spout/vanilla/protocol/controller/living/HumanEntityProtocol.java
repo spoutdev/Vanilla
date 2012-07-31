@@ -43,6 +43,7 @@ import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {
 	private static final int MC_FULL_AIR = 300;
+
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
 		Controller c = entity.getController();
@@ -65,11 +66,11 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 			}
 
 			int percentAirLeft = 100 - (mcp.getAirTicks() * 100 / mcp.getMaxAirTicks());
-			int airLeft = MathHelper.clamp(percentAirLeft * MC_FULL_AIR, 0, MC_FULL_AIR); 
-			
+			int airLeft = MathHelper.clamp(percentAirLeft * MC_FULL_AIR, 0, MC_FULL_AIR);
+
 			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 			parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) airLeft));
-			
+
 			return new Message[]{new EntitySpawnPlayerMessage(id, mcp.getTitle(), x, y, z, r, p, item, parameters)};
 		}
 

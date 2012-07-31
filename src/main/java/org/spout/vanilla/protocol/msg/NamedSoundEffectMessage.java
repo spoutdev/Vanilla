@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
@@ -71,7 +72,7 @@ public class NamedSoundEffectMessage extends Message {
 	public float getPitch() {
 		return this.pitch;
 	}
-	
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)

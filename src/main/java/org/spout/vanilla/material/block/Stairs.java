@@ -40,6 +40,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public abstract class Stairs extends VanillaBlockMaterial implements Mineable, Directional {
 	private final ByteFlagContainer[] occlusion;
+
 	public Stairs(String name, int id) {
 		super(name, id);
 		this.occlusion = new ByteFlagContainer[8];

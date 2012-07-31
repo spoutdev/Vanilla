@@ -40,7 +40,7 @@ public final class CompressedChunkMessage extends Message {
 	private final boolean unload;
 
 	public CompressedChunkMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, byte[][] data, byte[] biomeData) {
-		this(x, z, contiguous,  hasAdditionalData, data, biomeData, false);
+		this(x, z, contiguous, hasAdditionalData, data, biomeData, false);
 	}
 
 	public CompressedChunkMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, byte[][] data, byte[] biomeData, boolean unload) {

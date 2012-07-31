@@ -30,6 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.TransformableMessage;
+
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 /**
@@ -37,6 +38,7 @@ import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
  */
 public abstract class EntityMessage extends Message implements TransformableMessage {
 	private int id;
+
 	public EntityMessage(Entity entity) {
 		this(entity.getId());
 	}
@@ -47,7 +49,6 @@ public abstract class EntityMessage extends Message implements TransformableMess
 
 	/**
 	 * Gets the Id of the Entity this Message is of
-	 * 
 	 * @return the Entity Id
 	 */
 	public int getEntityId() {

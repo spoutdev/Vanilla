@@ -33,13 +33,12 @@ public class RandomSoundStore {
 	public static final RandomSound RANDOM_GLASS = new RandomSound(Sound.RANDOM_GLASS1, Sound.RANDOM_GLASS2, Sound.RANDOM_GLASS3);
 	public static final RandomSound RANDOM_EXPLODE = new RandomSound(Sound.RANDOM_EXPLODE1, Sound.RANDOM_EXPLODE2, Sound.RANDOM_EXPLODE3, Sound.RANDOM_EXPLODE4);
 	public static final RandomSound RANDOM_DOOR = new RandomSound(Sound.RANDOM_DOOR_OPEN, Sound.RANDOM_DOOR_CLOSE);
-	public static final RandomSound AMBIENT_CAVE = new RandomSound(Sound.AMBIENT_CAVE_CAVE1, Sound.AMBIENT_CAVE_CAVE2, Sound.AMBIENT_CAVE_CAVE3, 
-			Sound.AMBIENT_CAVE_CAVE4, Sound.AMBIENT_CAVE_CAVE5, Sound.AMBIENT_CAVE_CAVE6, Sound.AMBIENT_CAVE_CAVE7, Sound.AMBIENT_CAVE_CAVE8, 
+	public static final RandomSound AMBIENT_CAVE = new RandomSound(Sound.AMBIENT_CAVE_CAVE1, Sound.AMBIENT_CAVE_CAVE2, Sound.AMBIENT_CAVE_CAVE3,
+			Sound.AMBIENT_CAVE_CAVE4, Sound.AMBIENT_CAVE_CAVE5, Sound.AMBIENT_CAVE_CAVE6, Sound.AMBIENT_CAVE_CAVE7, Sound.AMBIENT_CAVE_CAVE8,
 			Sound.AMBIENT_CAVE_CAVE9, Sound.AMBIENT_CAVE_CAVE10, Sound.AMBIENT_CAVE_CAVE11, Sound.AMBIENT_CAVE_CAVE12, Sound.AMBIENT_CAVE_CAVE13);
-
 	/*
-	 * Step sounds
-	 */
+		 * Step sounds
+		 */
 	public static final RandomSound STEP_CLOTH = new RandomSound(Sound.STEP_CLOTH1, Sound.STEP_CLOTH2, Sound.STEP_CLOTH3, Sound.STEP_CLOTH4);
 	public static final RandomSound STEP_GRASS = new RandomSound(Sound.STEP_GRASS1, Sound.STEP_GRASS2, Sound.STEP_GRASS3, Sound.STEP_GRASS4);
 	public static final RandomSound STEP_GRAVEL = new RandomSound(Sound.STEP_GRAVEL1, Sound.STEP_GRAVEL2, Sound.STEP_GRAVEL3, Sound.STEP_GRAVEL4);

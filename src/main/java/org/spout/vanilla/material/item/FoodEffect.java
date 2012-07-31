@@ -31,11 +31,10 @@ import java.lang.reflect.InvocationTargetException;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.data.effect.VanillaFoodEffect;
 
-
 public class FoodEffect {
-
 	private final float amount;
 	private final Class<? extends VanillaFoodEffect> effect;
+
 	public FoodEffect(float amount, Class<? extends VanillaFoodEffect> effect) {
 		this.amount = amount;
 		this.effect = effect;
@@ -46,8 +45,6 @@ public class FoodEffect {
 	}
 
 	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[] {VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
+		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
 	}
-	
-	
 }

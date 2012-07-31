@@ -30,16 +30,16 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.data.effect.VanillaFoodEffect;
 
 public class Hunger extends VanillaFoodEffect {
-
 	public Hunger(VanillaPlayer effected, float amount) {
 		super(effected, amount);
 	}
-	
+
 	@Override
 	public void onRegistration() {
 		this.getParent().setHunger((short) (this.getParent().getHunger() + this.getStrength()));
 	}
-	@Override
-	public void run() {}
 
+	@Override
+	public void run() {
+	}
 }

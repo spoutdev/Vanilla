@@ -62,7 +62,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 			VanillaPlayer vPlayer = (VanillaPlayer) player.getEntity().getController();
 			holdingMat.onInteract(player.getEntity(), clickedEntity, Action.LEFT_CLICK);
 			clickedEntity.getController().onInteract(player.getEntity(), Action.LEFT_CLICK);
-			
+
 			if (clickedEntity.getController() instanceof VanillaPlayer && !VanillaConfiguration.PLAYER_PVP_ENABLED.getBoolean()) {
 				return;
 			}

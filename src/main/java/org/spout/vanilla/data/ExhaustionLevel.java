@@ -36,12 +36,12 @@ public enum ExhaustionLevel {
 	ATTACK_ENEMY(0.3f),
 	RECEIVE_DAMAGE(0.3f),
 	FOOD_POISONING(15f);
-	
 	private float amount;
+
 	private ExhaustionLevel(float amount) {
 		this.amount = amount;
 	}
-	
+
 	public float getAmount() {
 		return amount;
 	}

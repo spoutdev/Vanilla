@@ -34,17 +34,14 @@ import org.spout.api.player.Player;
  * A Vanilla sound that can be sent over the network
  */
 public interface VanillaSound {
-
 	/**
 	 * Plays the sound to all players near the position
-	 * 
 	 * @param position to play at
 	 */
 	public void playGlobal(Point position);
 
 	/**
 	 * Plays the sound to all players near the position
-	 * 
 	 * @param position to play at
 	 * @param volume to play at
 	 * @param pitch to play at
@@ -53,7 +50,6 @@ public interface VanillaSound {
 
 	/**
 	 * Plays the sound to all players near the position
-	 * 
 	 * @param position to play at
 	 * @param volume to play at
 	 * @param pitch to play at
@@ -63,7 +59,6 @@ public interface VanillaSound {
 
 	/**
 	 * Plays the sound for the player at the position specified
-	 * 
 	 * @param player to play the sound for
 	 * @param position in the world to play at
 	 */
@@ -71,7 +66,6 @@ public interface VanillaSound {
 
 	/**
 	 * Plays the sound for the player at the position specified
-	 * 
 	 * @param player to play the sound for
 	 * @param position in the world to play at
 	 * @param volume to play at

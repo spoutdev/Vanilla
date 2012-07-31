@@ -37,7 +37,6 @@ import org.spout.api.event.Order;
 import org.spout.api.event.Result;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.event.entity.EntitySpawnEvent;
-import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.player.PlayerLoginEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;

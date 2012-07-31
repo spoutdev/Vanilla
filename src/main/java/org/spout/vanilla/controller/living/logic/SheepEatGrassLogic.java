@@ -26,28 +26,27 @@
  */
 package org.spout.vanilla.controller.living.logic;
 
-import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
-
 import java.util.Random;
 
 import org.spout.api.math.Vector3;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
+
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
+
+import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 
 /**
  * Logic for Sheeps eating grass.
  */
 public class SheepEatGrassLogic extends LogicRunnable<Sheep> {
-
 	private static final int CHANCE_AS_ADULT = 1000;
 	private static final int CHANCE_AS_BABY = 50;
 
 	/**
 	 * Create a LogicRunnable for Sheeps eating grass with normal priority.
-	 * 
 	 * @param parent the sheep eating grass.
 	 */
 	public SheepEatGrassLogic(Sheep parent) {
@@ -56,9 +55,8 @@ public class SheepEatGrassLogic extends LogicRunnable<Sheep> {
 
 	/**
 	 * Create a LogicRunnable for Sheeps eating grass.
-	 * 
 	 * @param parent the sheep eating grass.
-	 * @param priority the priority of this logic. 
+	 * @param priority the priority of this logic.
 	 */
 	public SheepEatGrassLogic(Sheep parent, LogicPriority priority) {
 		super(parent, priority);
@@ -112,11 +110,9 @@ public class SheepEatGrassLogic extends LogicRunnable<Sheep> {
 			return true;
 		}
 		return parent.getParent().getWorld().getBlockMaterial(x, y, z) == VanillaMaterials.GRASS;
-
 	}
 
 	private boolean isBlockEatableTallGrass(int x, int y, int z) {
 		return parent.getParent().getWorld().getBlockMaterial(x, y, z) == VanillaMaterials.TALL_GRASS && parent.getParent().getWorld().getBlockData(x, y, z) == 1;
 	}
-
 }

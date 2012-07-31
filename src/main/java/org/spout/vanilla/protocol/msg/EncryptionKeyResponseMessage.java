@@ -67,7 +67,7 @@ public class EncryptionKeyResponseMessage extends Message implements ProcessorSe
 	public byte[] getSecretArray() {
 		return secret;
 	}
-	
+
 	public byte[] getVerifyTokenArray() {
 		return verifyToken;
 	}

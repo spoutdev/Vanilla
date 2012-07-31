@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.util.SpoutToStringStyle;
 
 public final class EncryptionKeyRequestMessage extends EncryptionKeyResponseMessage {

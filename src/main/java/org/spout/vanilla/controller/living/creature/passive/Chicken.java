@@ -31,6 +31,7 @@ import java.util.Set;
 
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
@@ -41,7 +42,6 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Chicken extends Creature implements Passive {
-
 	public static final int MINIMUM_EGG_BREEDING_TIME = 6000;
 	public static final int MAXIMUM_EGG_BREEDING_TIME = 12000;
 	public static final int NEVER = -1;

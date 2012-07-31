@@ -62,7 +62,7 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 			session.getDataMap().put(VanillaProtocol.HANDSHAKE_USERNAME, message.getUsername());
 			session.setState(Session.State.EXCHANGE_ENCRYPTION);
 			final String sessionId;
-			if (VanillaConfiguration.ONLINE_MODE.getBoolean()) { 
+			if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
 				sessionId = getSessionId();
 			} else {
 				sessionId = "-";
@@ -77,7 +77,7 @@ public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMe
 			byte[] secret = SecurityHandler.getInstance().encodeKey(keys.getPublic());
 			session.send(false, true, new EncryptionKeyRequestMessage(sessionId, false, secret, randombyte));
 		} else {
-			session.disconnect(false, new Object[] { "Handshake already exchanged." });
+			session.disconnect(false, new Object[]{"Handshake already exchanged."});
 		}
 	}
 

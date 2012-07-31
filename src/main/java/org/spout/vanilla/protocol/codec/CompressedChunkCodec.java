@@ -33,16 +33,17 @@ import java.util.zip.Inflater;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.protocol.MessageCodec;
+
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 
 public final class CompressedChunkCodec extends MessageCodec<CompressedChunkMessage> {
 	private static final int COMPRESSION_LEVEL = Deflater.BEST_SPEED;
 	private static final int MAX_SECTIONS = 16;
-
 	private final byte[] UNLOAD_COMPRESSED = {0x78, (byte) 0x9C, 0x63, 0x64, 0x1C, (byte) 0xD9, 0x00, 0x00, (byte) 0x81, (byte) 0x80, 0x01, 0x01}; //Fake compressed data, client expects this when unloading
-	
+
 	public CompressedChunkCodec() {
 		super(CompressedChunkMessage.class, 0x33);
 	}

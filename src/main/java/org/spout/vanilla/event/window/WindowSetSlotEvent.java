@@ -29,6 +29,7 @@ package org.spout.vanilla.event.window;
 import org.spout.api.event.HandlerList;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.window.Window;
 
 public class WindowSetSlotEvent extends WindowEvent {
@@ -47,16 +48,14 @@ public class WindowSetSlotEvent extends WindowEvent {
 
 	/**
 	 * Gets the Inventory within the item got changed
-	 * 
 	 * @return the Inventory of the item
 	 */
 	public InventoryBase getInventory() {
 		return this.inventory;
 	}
-	
+
 	/**
 	 * Gets the slot of the Inventory that got changed
-	 * 
 	 * @return changed slot relative to the Inventory
 	 */
 	public int getSlot() {
@@ -65,16 +64,14 @@ public class WindowSetSlotEvent extends WindowEvent {
 
 	/**
 	 * Gets the global slot in the Window that got changed
-	 * 
 	 * @return changed slot relative to the Window
 	 */
 	public int getGlobalSlot() {
 		return this.globalSlot;
 	}
-	
+
 	/**
 	 * Gets the item the slot is set to
-	 * 
 	 * @return the item
 	 */
 	public ItemStack getItem() {

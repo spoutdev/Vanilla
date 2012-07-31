@@ -54,7 +54,6 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder LAVA_DELAY = new ConfigurationHolder(1500, "physics", "lava", "delay");
 	public static final ConfigurationHolder WATER_PHYSICS = new ConfigurationHolder(true, "physics", "water", "enabled");
 	public static final ConfigurationHolder WATER_DELAY = new ConfigurationHolder(250, "physics", "water", "delay");
-
 	// Player
 	public static final ConfigurationHolder PLAYER_PVP_ENABLED = new ConfigurationHolder(true, "player", "pvp-enabled");
 	public static final ConfigurationHolder PLAYER_SURVIVAL_ENABLE_HEALTH = new ConfigurationHolder(true, "player", "survival", "enable-health");

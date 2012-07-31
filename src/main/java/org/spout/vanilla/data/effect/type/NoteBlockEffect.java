@@ -24,27 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.data.effect.type;
 
-import java.lang.reflect.InvocationTargetException;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.player.Player;
+import org.spout.vanilla.data.effect.GeneralEffect;
+import org.spout.vanilla.data.effect.SoundEffect;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+public class NoteBlockEffect extends GeneralEffect {
+	private static final int NOTE_RANGE = 48;
+	private SoundEffect sound;
 
-public class FoodEffect {
-	private final float amount;
-	private final Class<? extends VanillaEntityFoodEffect> effect;
-
-	public FoodEffect(float amount, Class<? extends VanillaEntityFoodEffect> effect) {
-		this.amount = amount;
-		this.effect = effect;
+	public NoteBlockEffect(SoundEffect sound) {
+		super(NOTE_RANGE);
+		this.sound = sound;
 	}
 
-	public float getAmount() {
-		return amount;
+	public SoundEffect getSound() {
+		return this.sound;
 	}
 
-	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
+	@Override
+	public void play(Player player, Point position, int data) {
+		// calculate pitch
+		float pitch = (float) Math.pow(2.0, (double) (data - 12) / 12.0);
+		this.sound.play(player, position, 3.0f, pitch);
+		//TODO: Find a way to trigger the 'note' particle through a message!
+		//world.a("note", x, y, z, (double) data / 24.0, 0.0, 0.0);
 	}
 }

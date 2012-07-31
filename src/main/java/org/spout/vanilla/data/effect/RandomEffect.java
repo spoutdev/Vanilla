@@ -24,27 +24,43 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.data.effect;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.Set;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.player.Player;
 
-public class FoodEffect {
-	private final float amount;
-	private final Class<? extends VanillaEntityFoodEffect> effect;
+/**
+ * Picks a random Effect when playing
+ */
+public class RandomEffect extends Effect {
+	private final Effect[] effects;
 
-	public FoodEffect(float amount, Class<? extends VanillaEntityFoodEffect> effect) {
-		this.amount = amount;
-		this.effect = effect;
+	public RandomEffect(Effect... effects) {
+		this(getMaxRange(effects), effects);
 	}
 
-	public float getAmount() {
-		return amount;
+	public RandomEffect(int range, Effect... effects) {
+		super(range);
+		this.effects = effects;
 	}
 
-	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
+	public Effect[] getEffects() {
+		return this.effects;
+	}
+
+	public Effect getRandomEffect() {
+		return effects[(int) (Math.random() * effects.length)];
+	}
+
+	@Override
+	public void play(Player player, Point position) {
+		this.getRandomEffect().play(player, position);
+	}
+
+	@Override
+	public void play(Set<Player> players, Point position) {
+		this.getRandomEffect().play(players, position);
 	}
 }

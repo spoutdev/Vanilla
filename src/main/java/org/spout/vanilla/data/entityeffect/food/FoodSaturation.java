@@ -24,27 +24,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
-
-import java.lang.reflect.InvocationTargetException;
+package org.spout.vanilla.data.entityeffect.food;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
 
-public class FoodEffect {
-	private final float amount;
-	private final Class<? extends VanillaEntityFoodEffect> effect;
-
-	public FoodEffect(float amount, Class<? extends VanillaEntityFoodEffect> effect) {
-		this.amount = amount;
-		this.effect = effect;
+public class FoodSaturation extends VanillaEntityFoodEffect {
+	public FoodSaturation(VanillaPlayer effected, float amount) {
+		super(effected, amount);
 	}
 
-	public float getAmount() {
-		return amount;
-	}
-
-	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
+	@Override
+	public void onRegistration() {
+		this.getParent().setFoodSaturation(this.getParent().getFoodSaturation() + this.getStrength());
 	}
 }

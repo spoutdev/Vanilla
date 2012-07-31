@@ -39,17 +39,15 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
-import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
-
-import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
 public class StoneButton extends AbstractAttachable implements Mineable, PointAttachable, RedstoneSource, DynamicMaterial {
 	public static final int TICK_DELAY = 1000;
@@ -105,7 +103,7 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 		if (type != Action.LEFT_CLICK || !VanillaPlayerUtil.isCreative(entity)) {
 			if (!this.isPressed(block)) {
 				this.setPressed(block, true);
-				playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_2);
+				GeneralEffects.RANDOM_CLICK2.playGlobal(block.getPosition(), entity);
 			}
 		}
 	}
@@ -148,7 +146,7 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 			return;
 		}
 		this.setPressed(block, false);
-		playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_CLICK_2);
+		GeneralEffects.RANDOM_CLICK2.playGlobal(block.getPosition());
 	}
 
 	@Override

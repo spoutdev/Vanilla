@@ -38,14 +38,12 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.inventory.block.JukeboxInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.misc.MusicDisc;
-import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.Music;
 import org.spout.vanilla.util.VanillaPlayerUtil;
-
-import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
 public class Jukebox extends VanillaBlockController {
 	private final JukeboxInventory inventory;
@@ -136,7 +134,7 @@ public class Jukebox extends VanillaBlockController {
 		Block block = this.getBlock();
 		block.setData(playing ? 1 : 0); //TODO hmmm? doesn't seem useful at all, since you don't know when the music stops playing...
 		Music music = playing ? this.getMusic() : Music.NONE;
-		playBlockEffect(block, null, 48, PlayEffectMessage.Messages.MUSIC_DISC, music.getId());
+		GeneralEffects.MUSIC_DISC.playGlobal(block.getPosition(), music);
 	}
 
 	public JukeboxInventory getInventory() {
@@ -151,6 +149,6 @@ public class Jukebox extends VanillaBlockController {
 	 * Stops this Jukebox from playing music
 	 */
 	public void stopMusic() {
-		playBlockEffect(getBlock(), null, 48, PlayEffectMessage.Messages.MUSIC_DISC, Music.NONE.getId());
+		GeneralEffects.MUSIC_DISC.playGlobal(getBlock().getPosition(), Music.NONE);
 	}
 }

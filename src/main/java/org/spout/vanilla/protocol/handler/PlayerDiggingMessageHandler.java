@@ -48,19 +48,15 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.data.ExhaustionLevel;
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
-import org.spout.vanilla.protocol.msg.PlayEffectMessage;
-import org.spout.vanilla.protocol.msg.PlayEffectMessage.Messages;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
-
-import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacketsToNearbyPlayers;
 
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
 	@Override
@@ -142,14 +138,13 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				if (fire) {
 					// put out fire
 					VanillaMaterials.FIRE.onDestroy(neigh);
-					VanillaNetworkUtil.playBlockEffect(block, player.getEntity(), PlayEffectMessage.Messages.RANDOM_FIZZ);
+					GeneralEffects.RANDOM_FIZZ.playGlobal(block.getPosition());
 				} else if (vp.isSurvival() && blockMaterial.getHardness() != 0.0f) {
 					vp.startDigging(new Point(w, x, y, z));
 				} else {
 					// insta-break
 					blockMaterial.onDestroy(block);
-					PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
-					sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
+					GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player.getEntity());
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
@@ -184,8 +179,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				blockMaterial.onDestroy(block);
 			}
 			if (block.getMaterial() != VanillaMaterials.AIR) {
-				PlayEffectMessage pem = new PlayEffectMessage(Messages.PARTICLE_BREAKBLOCK.getId(), block, blockMaterial.getId());
-				sendPacketsToNearbyPlayers(player.getEntity(), player.getEntity().getViewDistance(), pem);
+				GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player.getEntity());
 			}
 		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
 			if (heldItem.getMaterial() instanceof Food) {

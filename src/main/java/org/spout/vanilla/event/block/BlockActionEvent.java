@@ -24,27 +24,49 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.event.block;
 
-import java.lang.reflect.InvocationTargetException;
+import org.spout.api.event.Event;
+import org.spout.api.event.HandlerList;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+public class BlockActionEvent extends Event implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private Block block;
+	private BlockMaterial material;
+	private byte data1, data2;
 
-public class FoodEffect {
-	private final float amount;
-	private final Class<? extends VanillaEntityFoodEffect> effect;
-
-	public FoodEffect(float amount, Class<? extends VanillaEntityFoodEffect> effect) {
-		this.amount = amount;
-		this.effect = effect;
+	public BlockActionEvent(Block block, BlockMaterial material, byte data1, byte data2) {
+		this.block = block;
+		this.data1 = data1;
+		this.data2 = data2;
+		this.material = material;
 	}
 
-	public float getAmount() {
-		return amount;
+	public Block getBlock() {
+		return this.block;
 	}
 
-	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
+	public byte getData1() {
+		return this.data1;
+	}
+
+	public byte getData2() {
+		return this.data2;
+	}
+
+	public BlockMaterial getMaterial() {
+		return this.material;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 }

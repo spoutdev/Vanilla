@@ -24,73 +24,54 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.effect;
+package org.spout.vanilla.data.effect.type;
 
 import java.util.Set;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
+import org.spout.vanilla.data.effect.Effect;
+import org.spout.vanilla.event.world.PlayExplosionEffectEvent;
 
-public abstract class Effect {
-	private final int range;
+public class ExplosionEffect extends Effect {
+	private static final int EXPLOSION_RANGE = 64;
+	private static final float DEFAULT_SIZE = 5.0f;
+	private float size;
 
-	public Effect(int range) {
-		this.range = range;
+	public ExplosionEffect() {
+		this(EXPLOSION_RANGE, DEFAULT_SIZE);
 	}
 
-	/**
-	 * Gets the Block range within this Effect is shown to players
-	 * 
-	 * @return range
-	 */
-	public int getRange() {
-		return this.range;
+	public ExplosionEffect(int range, float size) {
+		super(range);
+		this.size = size;
 	}
 
-	/**
-	 * Gets all the Players nearby a certain Point that can receive this Effect
-	 * 
-	 * @param position of this Effect
-	 * @param ignore Entity to ignore
-	 * @return a Set of nearby Players
-	 */
-	public Set<Player> getNearbyPlayers(Point position, Entity ignore) {
-		return position.getWorld().getNearbyPlayers(position, ignore, this.getRange());
+	public float getDefaultSize() {
+		return this.size;
 	}
 
-	protected static int getMaxRange(Effect[] effects) {
-		int range = 0;
-		for (Effect effect : effects) {
-			range = Math.max(range, effect.getRange());
-		}
-		return range;
+	@Override
+	public void play(Player player, Point position) {
+		this.play(player, position, this.getDefaultSize());
 	}
 
-	public abstract void play(Player player, Point position);
-	
-	public void play(Set<Player> players, Point position) {
+	public void play(Player player, Point position, float size) {
+		player.getSession().getNetworkSynchronizer().callProtocolEvent(new PlayExplosionEffectEvent(position, this, size));
+	}
+
+	public void play(Set<Player> players, Point position, float size) {
 		for (Player player : players) {
-			this.play(player, position);
+			this.play(player, position, size);
 		}
 	}
 
-	/**
-	 * Plays the sound globally to everyone
-	 * 
-	 * @param position to play at
-	 */
-	public void playGlobal(Point position) {
-		this.playGlobal(position, null);
+	public void playGlobal(Point position, float size) {
+		this.playGlobal(position, size, null);
 	}
 
-	/**
-	 * Plays the sound globally to everyone near except the Player Entity specified
-	 * 
-	 * @param position to play at
-	 * @param ignore Entity to ignore
-	 */
-	public void playGlobal(Point position, Entity ignore) {
-		this.play(getNearbyPlayers(position, ignore), position);
+	public void playGlobal(Point position, float size, Entity ignore) {
+		this.play(getNearbyPlayers(position, ignore), position, size);
 	}
 }

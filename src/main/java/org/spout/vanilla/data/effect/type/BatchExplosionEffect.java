@@ -24,27 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.data.effect.type;
 
-import java.lang.reflect.InvocationTargetException;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.player.Player;
+import org.spout.vanilla.data.effect.Effect;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+public class BatchExplosionEffect extends ExplosionEffect {
+	private Effect[] effects;
 
-public class FoodEffect {
-	private final float amount;
-	private final Class<? extends VanillaEntityFoodEffect> effect;
-
-	public FoodEffect(float amount, Class<? extends VanillaEntityFoodEffect> effect) {
-		this.amount = amount;
-		this.effect = effect;
+	public BatchExplosionEffect(Effect... effects) {
+		this.effects = effects;
 	}
 
-	public float getAmount() {
-		return amount;
+	public Effect[] getEffects() {
+		return this.effects;
 	}
 
-	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
+	@Override
+	public void play(Player player, Point position, float size) {
+		super.play(player, position, size);
+		for (Effect effect : this.effects) {
+			effect.play(player, position);
+		}
 	}
 }

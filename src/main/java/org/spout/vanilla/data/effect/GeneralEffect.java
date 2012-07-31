@@ -31,66 +31,65 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
+import org.spout.vanilla.event.world.PlayParticleEffectEvent;
 
-public abstract class Effect {
-	private final int range;
+public class GeneralEffect extends Effect {
+	private static final int PARTICLE_RANGE = 32;
+	private final int id;
+	private int data;
 
-	public Effect(int range) {
-		this.range = range;
+	public GeneralEffect(int id) {
+		this(id, 0);
 	}
 
-	/**
-	 * Gets the Block range within this Effect is shown to players
-	 * 
-	 * @return range
-	 */
-	public int getRange() {
-		return this.range;
+	public GeneralEffect(int id, int data) {
+		this(id, data, PARTICLE_RANGE);
 	}
-
-	/**
-	 * Gets all the Players nearby a certain Point that can receive this Effect
-	 * 
-	 * @param position of this Effect
-	 * @param ignore Entity to ignore
-	 * @return a Set of nearby Players
-	 */
-	public Set<Player> getNearbyPlayers(Point position, Entity ignore) {
-		return position.getWorld().getNearbyPlayers(position, ignore, this.getRange());
-	}
-
-	protected static int getMaxRange(Effect[] effects) {
-		int range = 0;
-		for (Effect effect : effects) {
-			range = Math.max(range, effect.getRange());
-		}
-		return range;
-	}
-
-	public abstract void play(Player player, Point position);
 	
-	public void play(Set<Player> players, Point position) {
+	public GeneralEffect(int id, int data, int range) {
+		super(range);
+		this.id = id;
+		this.data = data;
+	}
+
+	/**
+	 * Gets the Id of this Effect
+	 * 
+	 * @return Effect Id
+	 */
+	public int getId() {
+		return this.id;
+	}
+
+	/**
+	 * Gets the Default data for this Effect
+	 * 
+	 * @return default data
+	 */
+	public int getDefaultData() {
+		return this.data;
+	}
+
+	@Override
+	public void play(Player player, Point position) {
+		this.play(player, position, this.getDefaultData());
+	}
+
+	public void play(Player player, Point position, int data) {
+		player.getSession().getNetworkSynchronizer().callProtocolEvent(new PlayParticleEffectEvent(position, this, data));
+	}
+
+	public void play(Set<Player> players, Point position, int data) {
 		for (Player player : players) {
-			this.play(player, position);
+			this.play(player, position, data);
 		}
 	}
 
-	/**
-	 * Plays the sound globally to everyone
-	 * 
-	 * @param position to play at
-	 */
-	public void playGlobal(Point position) {
-		this.playGlobal(position, null);
+	public void playGlobal(Point position, int data) {
+		this.playGlobal(position, data, null);
 	}
 
-	/**
-	 * Plays the sound globally to everyone near except the Player Entity specified
-	 * 
-	 * @param position to play at
-	 * @param ignore Entity to ignore
-	 */
-	public void playGlobal(Point position, Entity ignore) {
-		this.play(getNearbyPlayers(position, ignore), position);
+	public void playGlobal(Point position, int data, Entity ignore) {
+		this.play(getNearbyPlayers(position, ignore), position, data);
 	}
 }

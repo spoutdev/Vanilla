@@ -24,37 +24,69 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util;
+package org.spout.vanilla.event.world;
 
+import org.spout.api.event.Event;
+import org.spout.api.event.HandlerList;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.vanilla.data.effect.SoundEffect;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.data.effect.type.NoteBlockEffect;
 
-public enum Instrument {
-	PIANO(0, "harp", SoundEffects.NOTE_HARP),
-	BASSDRUM(1, "bd", SoundEffects.NOTE_BD),
-	SNAREDRUM(2, "snare", SoundEffects.NOTE_SNARE),
-	CLICK(3, "hat", SoundEffects.NOTE_HAT),
-	BASSGUITAR(4, "bassattack", SoundEffects.NOTE_BASSATTACK);
-	private byte id;
-	private String name;
-	private NoteBlockEffect effect;
+public class PlaySoundEffectEvent extends Event implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private Point position;
+	private SoundEffect sound;
+	private float pitch, volume;
 
-	private Instrument(int id, String name, SoundEffect effect) {
-		this.id = (byte) id;
-		this.name = name;
-		this.effect = new NoteBlockEffect(effect);
+	public PlaySoundEffectEvent(Point position, SoundEffect sound, float volume, float pitch) {
+		this.position = position;
+		this.sound = sound;
+		this.pitch = pitch;
+		this.volume = volume;
 	}
 
-	public String getName() {
-		return this.name;
+	/**
+	 * Gets the Position where the Sound should be played
+	 * 
+	 * @return position of the Sound
+	 */
+	public Point getPosition() {
+		return this.position;
 	}
 
-	public byte getId() {
-		return this.id;
+	/**
+	 * Gets the Sound being played
+	 * 
+	 * @return Sound to play
+	 */
+	public SoundEffect getSound() {
+		return this.sound;
 	}
 
-	public NoteBlockEffect getEffect() {
-		return this.effect;
+	/**
+	 * Gets the Pitch to play the Sound at
+	 * 
+	 * @return Sound pitch
+	 */
+	public float getPitch() {
+		return this.pitch;
+	}
+
+	/**
+	 * Gets the Volume to play the Sound at
+	 * 
+	 * @return Sound volume
+	 */
+	public float getVolume() {
+		return this.volume;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

@@ -24,27 +24,25 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.data.effect.type;
 
-import java.lang.reflect.InvocationTargetException;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.player.Player;
+import org.spout.vanilla.data.effect.GeneralEffect;
+import org.spout.vanilla.util.Music;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+public class MusicDiscEffect extends GeneralEffect {
+	private static final int MUSIC_RANGE = 48;
 
-public class FoodEffect {
-	private final float amount;
-	private final Class<? extends VanillaEntityFoodEffect> effect;
-
-	public FoodEffect(float amount, Class<? extends VanillaEntityFoodEffect> effect) {
-		this.amount = amount;
-		this.effect = effect;
+	public MusicDiscEffect(int id) {
+		super(id, 0, MUSIC_RANGE);
 	}
 
-	public float getAmount() {
-		return amount;
+	public void play(Player player, Point position, Music music) {
+		this.play(player, position, music.getId());
 	}
 
-	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
+	public void playGlobal(Point position, Music music) {
+		this.playGlobal(position, music.getId());
 	}
 }

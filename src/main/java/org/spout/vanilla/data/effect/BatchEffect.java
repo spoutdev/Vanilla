@@ -24,27 +24,49 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.data.effect;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.Set;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.player.Player;
 
-public class FoodEffect {
-	private final float amount;
-	private final Class<? extends VanillaEntityFoodEffect> effect;
+/**
+ * Plays all set Effects when playing
+ */
+public class BatchEffect extends Effect {
+	private final Effect[] effects;
 
-	public FoodEffect(float amount, Class<? extends VanillaEntityFoodEffect> effect) {
-		this.amount = amount;
-		this.effect = effect;
+	public BatchEffect(Effect... effects) {
+		this(getMaxRange(effects), effects);
 	}
 
-	public float getAmount() {
-		return amount;
+	public BatchEffect(int range, Effect... effects) {
+		super(range);
+		this.effects = effects;
 	}
 
-	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
+	public Effect[] getEffects() {
+		return this.effects;
+	}
+
+	@Override
+	public void play(Player player, Point position) {
+		for (Effect effect : this.effects) {
+			effect.play(player, position);
+		}
+	}
+
+	@Override
+	public void play(Set<Player> players, Point position) {
+		int distanceSquared;
+		for (Player player : players) {
+			distanceSquared = (int) player.getEntity().getPosition().distanceSquared(position);
+			for (Effect effect : this.effects) {
+				if (distanceSquared <= (effect.getRange() * effect.getRange())) {
+					effect.play(player, position);
+				}
+			}
+		}
 	}
 }

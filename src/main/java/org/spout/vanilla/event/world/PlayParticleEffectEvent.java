@@ -24,27 +24,59 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.event.world;
 
-import java.lang.reflect.InvocationTargetException;
+import org.spout.api.event.Event;
+import org.spout.api.event.HandlerList;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.vanilla.data.effect.GeneralEffect;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+public class PlayParticleEffectEvent extends Event implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private Point position;
+	private GeneralEffect effect;
+	private int data;
 
-public class FoodEffect {
-	private final float amount;
-	private final Class<? extends VanillaEntityFoodEffect> effect;
-
-	public FoodEffect(float amount, Class<? extends VanillaEntityFoodEffect> effect) {
-		this.amount = amount;
+	public PlayParticleEffectEvent(Point position, GeneralEffect effect, int data) {
+		this.position = position;
 		this.effect = effect;
+		this.data = data;
 	}
 
-	public float getAmount() {
-		return amount;
+	/**
+	 * Gets the Position where the Sound should be played
+	 * 
+	 * @return position of the Sound
+	 */
+	public Point getPosition() {
+		return this.position;
 	}
 
-	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
+	/**
+	 * Gets the Effect to play
+	 * 
+	 * @return the Effect
+	 */
+	public GeneralEffect getEffect() {
+		return this.effect;
+	}
+
+	/**
+	 * Gets the data to use for the Effect
+	 * 
+	 * @return Effect data
+	 */
+	public int getData() {
+		return this.data;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

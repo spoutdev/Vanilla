@@ -60,15 +60,23 @@ import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.WorldType;
+import org.spout.vanilla.event.block.BlockActionEvent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowPropertyEvent;
 import org.spout.vanilla.event.window.WindowSetSlotEvent;
 import org.spout.vanilla.event.window.WindowSetSlotsEvent;
+import org.spout.vanilla.event.world.PlayExplosionEffectEvent;
+import org.spout.vanilla.event.world.PlayParticleEffectEvent;
+import org.spout.vanilla.event.world.PlaySoundEffectEvent;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
+import org.spout.vanilla.protocol.msg.ExplosionMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
+import org.spout.vanilla.protocol.msg.NamedSoundEffectMessage;
+import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
@@ -466,5 +474,36 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@EventHandler
 	public Message onWindowProperty(WindowPropertyEvent event) {
 		return new WindowPropertyMessage(event.getWindow(), event.getId(), event.getValue());
+	}
+
+	@EventHandler
+	public Message onSoundEffect(PlaySoundEffectEvent event) {
+		return new NamedSoundEffectMessage(event.getSound().getName(), event.getPosition(), event.getVolume(), event.getPitch());
+	}
+
+	@EventHandler
+	public Message onExplosionEffect(PlayExplosionEffectEvent event) {
+		return new ExplosionMessage(event.getPosition(), event.getSize(), new byte[0]);
+	}
+
+	@EventHandler
+	public Message onParticleEffect(PlayParticleEffectEvent event) {
+		int x = event.getPosition().getBlockX();
+		int y = event.getPosition().getBlockY();
+		int z = event.getPosition().getBlockZ();
+		if (y < 0 || y > 255) {
+			return null; // don't play effects outside the byte range
+		}
+		return new PlayEffectMessage(event.getEffect().getId(), x, y, z, event.getData());
+	}
+
+	@EventHandler
+	public Message onBlockAction(BlockActionEvent event) {
+		int id = VanillaMaterials.getMinecraftId(event.getMaterial());
+		if (id == -1) {
+			return null;
+		} else {
+			return new BlockActionMessage(event.getBlock(), (short) id, event.getData1(), event.getData2());
+		}
 	}
 }

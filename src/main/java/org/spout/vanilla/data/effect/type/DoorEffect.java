@@ -24,27 +24,48 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.data.effect.type;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.Set;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.player.Player;
+import org.spout.vanilla.data.effect.Effect;
+import org.spout.vanilla.data.effect.store.GeneralEffects;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 
-public class FoodEffect {
-	private final float amount;
-	private final Class<? extends VanillaEntityFoodEffect> effect;
-
-	public FoodEffect(float amount, Class<? extends VanillaEntityFoodEffect> effect) {
-		this.amount = amount;
-		this.effect = effect;
+public class DoorEffect extends Effect {
+	private static final int DOOR_RANGE = 16;
+	
+	public DoorEffect() {
+		super(DOOR_RANGE);
 	}
 
-	public float getAmount() {
-		return amount;
+	@Override
+	public void play(Player player, Point position) {
+		GeneralEffects.RANDOM_DOOR.play(player, position);
 	}
 
-	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
+	public void play(Player player, Point position, boolean open) {
+		if (open) {
+			SoundEffects.RANDOM_DOOR_OPEN.play(player, position);
+		} else {
+			SoundEffects.RANDOM_DOOR_CLOSE.play(player, position);
+		}
+	}
+
+	public void play(Set<Player> players, Point position, boolean open) {
+		for (Player player : players) {
+			this.play(player, position, open);
+		}
+	}
+
+	public void playGlobal(Point position, boolean open) {
+		this.playGlobal(position, open, null);
+	}
+
+	public void playGlobal(Point position, boolean open, Entity ignore) {
+		this.play(getNearbyPlayers(position, ignore), position);
 	}
 }

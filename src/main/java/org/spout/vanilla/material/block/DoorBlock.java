@@ -32,13 +32,12 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstoneUtil;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public abstract class DoorBlock extends GroundAttachable implements Mineable, Openable, RedstoneTarget {
@@ -59,7 +58,7 @@ public abstract class DoorBlock extends GroundAttachable implements Mineable, Op
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isOpen(block)) {
 				this.setOpen(block, powered);
-				VanillaNetworkUtil.playBlockEffect(block, null, PlayEffectMessage.Messages.RANDOM_DOOR);
+				GeneralEffects.DOOR.playGlobal(block.getPosition(), powered);
 			}
 		}
 	}

@@ -24,27 +24,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.data.entityeffect;
 
-import java.lang.reflect.InvocationTargetException;
+import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+import org.spout.vanilla.protocol.msg.entity.EntityEffectMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityRemoveEffectMessage;
 
-public class FoodEffect {
-	private final float amount;
-	private final Class<? extends VanillaEntityFoodEffect> effect;
-
-	public FoodEffect(float amount, Class<? extends VanillaEntityFoodEffect> effect) {
-		this.amount = amount;
-		this.effect = effect;
+public abstract class VanillaEntityEffect extends EntityEffect {
+	public VanillaEntityEffect(VanillaPlayer effected, int id, float duration, int strength) {
+		super(effected, id, duration, strength);
 	}
 
-	public float getAmount() {
-		return amount;
+	@Override
+	public boolean hasApplianceMessage() {
+		return true;
 	}
 
-	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
+	@Override
+	public boolean hasRemovalMessage() {
+		return true;
+	}
+
+	@Override
+	public Message getApplianceMessage() {
+		return new EntityEffectMessage(getParent().getParent().getId(), (byte) id, (byte) strength, (byte) delay);
+	}
+
+	@Override
+	public Message getRemovalMessage() {
+		return new EntityRemoveEffectMessage(getParent().getParent().getId(), (byte) id);
 	}
 }

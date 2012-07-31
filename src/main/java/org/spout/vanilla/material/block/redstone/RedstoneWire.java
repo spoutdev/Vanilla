@@ -140,11 +140,6 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 	}
 
 	@Override
-	public byte getLightLevel(short data) {
-		return (byte) data;
-	}
-
-	@Override
 	public boolean isReceivingPower(Block block) {
 		return this.getReceivingPower(block) > 0;
 	}

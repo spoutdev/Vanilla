@@ -24,27 +24,43 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.data.effect.type;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.Set;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.player.Player;
+import org.spout.vanilla.data.effect.GeneralEffect;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class FoodEffect {
-	private final float amount;
-	private final Class<? extends VanillaEntityFoodEffect> effect;
+public class BreakBlockEffect extends GeneralEffect {
+	private static final int BREAK_RANGE = 160;
 
-	public FoodEffect(float amount, Class<? extends VanillaEntityFoodEffect> effect) {
-		this.amount = amount;
-		this.effect = effect;
+	public BreakBlockEffect(int id) {
+		super(id, 0, BREAK_RANGE);
 	}
 
-	public float getAmount() {
-		return amount;
+	public void play(Player player, Point position, BlockMaterial material) {
+		int id = VanillaMaterials.getMinecraftId(material);
+		if (id != -1) {
+			this.play(player, position, id);
+		}
 	}
 
-	public void run(VanillaPlayer vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayer.class, float.class}).newInstance(vPlayer, amount));
+	public void play(Set<Player> players, Point position, BlockMaterial material) {
+		int id = VanillaMaterials.getMinecraftId(material);
+		if (id != -1) {
+			this.play(players, position, id);
+		}
+	}
+
+	public void playGlobal(Point position, BlockMaterial material) {
+		this.playGlobal(position, material, null);
+	}
+
+	public void playGlobal(Point position, BlockMaterial material, Entity ignore) {
+		this.play(getNearbyPlayers(position, ignore), position, material);
 	}
 }

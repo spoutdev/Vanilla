@@ -38,16 +38,14 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
-import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
-
-import static org.spout.vanilla.util.VanillaNetworkUtil.playBlockEffect;
 
 public class Lever extends AbstractAttachable implements Mineable, RedstoneSource {
 	private static EnumMap<BlockFace, EffectRange> physicsRanges = new EnumMap<BlockFace, EffectRange>(BlockFace.class);
@@ -80,11 +78,7 @@ public class Lever extends AbstractAttachable implements Mineable, RedstoneSourc
 			return;
 		}
 		this.toggle(block);
-		if (this.isDown(block)) {
-			playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_1);
-		} else {
-			playBlockEffect(block, entity, PlayEffectMessage.Messages.RANDOM_CLICK_2);
-		}
+		GeneralEffects.RANDOM_CLICK1.playGlobal(block.getPosition(), entity);
 	}
 
 	public boolean isDown(Block block) {

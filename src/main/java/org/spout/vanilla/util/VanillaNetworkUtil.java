@@ -36,6 +36,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 
+import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 
@@ -58,9 +59,7 @@ public class VanillaNetworkUtil {
 	 */
 	public static void sendPacket(Player[] players, Message... messages) {
 		for (Player player : players) {
-			for (Message message : messages) {
-				sendPacket(player, message);
-			}
+			sendPacket(player, messages);
 		}
 	}
 
@@ -89,6 +88,9 @@ public class VanillaNetworkUtil {
 	 * @param messages specific message to send.
 	 */
 	public static void sendPacket(Player player, Message... messages) {
+		/*if (!(player.getSession().getProtocol() instanceof VanillaProtocol)) {
+			return;
+		}*/
 		for (Message message : messages) {
 			player.getSession().send(false, message);
 		}

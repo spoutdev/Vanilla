@@ -33,6 +33,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.data.Weather;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.world.WeatherSimulator;
 
 /**
@@ -81,13 +82,13 @@ public abstract class VanillaSky implements Runnable {
 			if (!player.isOnline()) {
 				continue;
 			}
-			if (!player.getEntity().getWorld().getName().equals(world.getName())) {
+			if (!player.getEntity().getWorld().equals(world)) {
 				continue;
 			}
-			player.getSession().send(false, message);
+			VanillaNetworkUtil.sendPacket(player, message);
 		}
 	}
-	
+
 	@Override
 	public void run() {
 		// Keep time

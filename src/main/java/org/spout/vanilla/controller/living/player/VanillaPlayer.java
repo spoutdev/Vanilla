@@ -386,17 +386,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 		Entity parent = getParent();
 		for (Player player : players) {
 			if (player.getEntity().getController() != this) {
-				EntityProtocol ep = player.getEntity().getController().getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
-				if (ep != null) {
-					if (visible) {
-						invisibleFor.remove(player);
-						Message[] spawn = ep.getSpawnMessage(parent);
-						sendPacket(player, spawn);
-					} else {
-						invisibleFor.add(player);
-						Message[] destroy = ep.getDestroyMessage(parent);
-						sendPacket(player, destroy);
-					}
+				if (visible) {
+					invisibleFor.remove(player);
+					player.getNetworkSynchronizer().spawnEntity(parent);
+				} else {
+					invisibleFor.add(player);
+					player.getNetworkSynchronizer().destroyEntity(parent);
 				}
 			}
 		}

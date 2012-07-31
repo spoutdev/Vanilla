@@ -28,25 +28,8 @@ package org.spout.vanilla.world.generator.object;
 
 import java.util.Random;
 
-import org.spout.api.generator.WorldGeneratorObject;
+public interface RandomizableObject {
+	public void randomize();
 
-public abstract class RandomObject extends WorldGeneratorObject implements RandomizableObject {
-	protected Random random;
-
-	protected RandomObject() {
-		this.random = new Random();
-	}
-
-	protected RandomObject(Random random) {
-		this.random = random == null ? new Random() : random;
-	}
-
-	@Override
-	public void setRandom(Random random) {
-		this.random = random;
-	}
-
-	public Random getRandom() {
-		return random;
-	}
+	public void setRandom(Random random);
 }

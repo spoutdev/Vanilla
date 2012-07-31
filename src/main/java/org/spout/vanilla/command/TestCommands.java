@@ -59,6 +59,7 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.entityeffect.potion.Speed;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomObject;
+import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class TestCommands {
@@ -208,16 +209,15 @@ public class TestCommands {
 	}
 
 	@Command(aliases = {"object", "obj"}, usage = "<name>", flags = "f", desc = "Spawn a WorldGeneratorObject at your location. Use -f to ignore canPlace check", min = 1, max = 2)
-	public void spawnObject(CommandContext args, CommandSource source) throws CommandException {
+	public void generateObject(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("The source must be a player.");
 		}
-		final Player player = (Player) source;
 		final WorldGeneratorObject object = VanillaObjects.byName(args.getString(0));
 		if (object == null) {
-			player.sendMessage("Invalid object name.");
-			return;
+			throw new CommandException("Invalid object name.");
 		}
+		final Player player = (Player) source;
 		final Point loc = player.getEntity().getPosition();
 		final World world = loc.getWorld();
 		final int x = loc.getBlockX();
@@ -232,8 +232,8 @@ public class TestCommands {
 			player.sendMessage("Forcing placement.");
 		}
 		object.placeObject(world, x, y, z);
-		if (object instanceof RandomObject) {
-			((RandomObject) object).randomize();
+		if (object instanceof RandomizableObject) {
+			((RandomizableObject) object).randomize();
 		}
 	}
 

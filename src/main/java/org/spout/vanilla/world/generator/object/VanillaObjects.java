@@ -55,6 +55,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SpruceTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SwampTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
+import org.spout.vanilla.world.generator.structure.mineshaft.Mineshaft;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
 /**
@@ -93,6 +94,7 @@ public class VanillaObjects {
 	public static final BlockPatchObject CLAY = new BlockPatchObject(VanillaMaterials.CLAY_BLOCK);
 	public static final LootChestObject LOOT_CHEST = new LootChestObject();
 	public static final SnowObject SNOW = new SnowObject();
+	public static final Mineshaft MINESHAFT = new Mineshaft();
 	// for the '/obj' test command
 	private static final Map<String, WorldGeneratorObject> BY_NAME = new HashMap<String, WorldGeneratorObject>();
 

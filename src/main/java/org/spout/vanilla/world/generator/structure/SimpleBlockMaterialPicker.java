@@ -24,29 +24,39 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.object;
+package org.spout.vanilla.world.generator.structure;
 
-import java.util.Random;
+import org.spout.api.material.BlockMaterial;
 
-import org.spout.api.generator.WorldGeneratorObject;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public abstract class RandomObject extends WorldGeneratorObject implements RandomizableObject {
-	protected Random random;
+public class SimpleBlockMaterialPicker implements BlockMaterialPicker {
+	private BlockMaterial outerMaterial = VanillaMaterials.AIR;
+	private BlockMaterial innerMaterial = VanillaMaterials.AIR;
 
-	protected RandomObject() {
-		this.random = new Random();
+	public void setOuterMaterial(BlockMaterial outerMaterial) {
+		this.outerMaterial = outerMaterial;
 	}
 
-	protected RandomObject(Random random) {
-		this.random = random == null ? new Random() : random;
+	public void setInnerMaterial(BlockMaterial innerMaterial) {
+		this.innerMaterial = innerMaterial;
 	}
 
+	public void setOuterInnerMaterials(BlockMaterial outer, BlockMaterial inner) {
+		setOuterMaterial(outer);
+		setInnerMaterial(inner);
+	}
+	
 	@Override
-	public void setRandom(Random random) {
-		this.random = random;
+	public BlockMaterial get(boolean outer) {
+		return outer ? outerMaterial : innerMaterial;
 	}
 
-	public Random getRandom() {
-		return random;
+	public BlockMaterial getInnerMaterial() {
+		return innerMaterial;
+	}
+
+	public BlockMaterial getOuterMaterial() {
+		return outerMaterial;
 	}
 }

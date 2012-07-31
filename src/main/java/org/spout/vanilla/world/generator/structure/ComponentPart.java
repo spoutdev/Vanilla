@@ -24,29 +24,22 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.object;
+package org.spout.vanilla.world.generator.structure;
 
-import java.util.Random;
+public abstract class ComponentPart {
+	protected StructureComponent parent;
 
-import org.spout.api.generator.WorldGeneratorObject;
-
-public abstract class RandomObject extends WorldGeneratorObject implements RandomizableObject {
-	protected Random random;
-
-	protected RandomObject() {
-		this.random = new Random();
+	public ComponentPart(StructureComponent parent) {
+		this.parent = parent;
 	}
 
-	protected RandomObject(Random random) {
-		this.random = random == null ? new Random() : random;
-	}
+	public abstract void fill(BlockMaterialPicker picker, boolean ignoreAir);
 
-	@Override
-	public void setRandom(Random random) {
-		this.random = random;
-	}
+	public abstract void randomFill(float odd, BlockMaterialPicker picker, boolean ignoreAir);
 
-	public Random getRandom() {
-		return random;
+	public abstract void sphericalFill(BlockMaterialPicker picker, boolean ignoreAir);
+
+	public StructureComponent getParent() {
+		return parent;
 	}
 }

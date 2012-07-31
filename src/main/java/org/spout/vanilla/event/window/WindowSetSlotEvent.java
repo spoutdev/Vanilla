@@ -27,29 +27,51 @@
 package org.spout.vanilla.event.window;
 
 import org.spout.api.event.HandlerList;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.window.Window;
 
 public class WindowSetSlotEvent extends WindowEvent {
 	private static HandlerList handlers = new HandlerList();
-	private int slot;
+	private int slot, globalSlot;
 	private ItemStack item;
+	private InventoryBase inventory;
 
-	public WindowSetSlotEvent(Window window, int slot, ItemStack item) {
+	public WindowSetSlotEvent(Window window, InventoryBase inventory, int slot, int globalSlot, ItemStack item) {
 		super(window);
+		this.inventory = inventory;
 		this.slot = slot;
+		this.globalSlot = globalSlot;
 		this.item = item;
 	}
 
 	/**
-	 * Gets the slot of the Window that got changed
+	 * Gets the Inventory within the item got changed
 	 * 
-	 * @return changed slot
+	 * @return the Inventory of the item
+	 */
+	public InventoryBase getInventory() {
+		return this.inventory;
+	}
+	
+	/**
+	 * Gets the slot of the Inventory that got changed
+	 * 
+	 * @return changed slot relative to the Inventory
 	 */
 	public int getSlot() {
 		return this.slot;
 	}
 
+	/**
+	 * Gets the global slot in the Window that got changed
+	 * 
+	 * @return changed slot relative to the Window
+	 */
+	public int getGlobalSlot() {
+		return this.globalSlot;
+	}
+	
 	/**
 	 * Gets the item the slot is set to
 	 * 

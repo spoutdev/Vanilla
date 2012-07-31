@@ -437,54 +437,35 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		super.syncEntity(e);
 	}
 
-	private boolean isVanillaProtocol() {
-		return this.getOwner().getSession().getProtocol() instanceof VanillaProtocol;
-	}
-
 	@EventHandler
 	public Message onWindowOpen(WindowOpenEvent event) {
-		if (this.isVanillaProtocol()) {
-			if (event.getWindow() instanceof DefaultWindow) {
-				return null; // no message for the default Window
-			}
-			int size = event.getWindow().getInventorySize() - event.getWindow().getOwner().getInventory().getMain().getSize();
-			return new WindowOpenMessage(event.getWindow(), size);
+		if (event.getWindow() instanceof DefaultWindow) {
+			return null; // no message for the default Window
 		}
-		return null;
+		int size = event.getWindow().getInventorySize() - event.getWindow().getOwner().getInventory().getMain().getSize();
+		return new WindowOpenMessage(event.getWindow(), size);
 	}
 
 	@EventHandler
 	public Message onWindowClose(WindowCloseEvent event) {
-		if (this.isVanillaProtocol()) {
-			if (event.getWindow() instanceof DefaultWindow) {
-				return null; // no message for the default Window
-			}
-			return new WindowCloseMessage(event.getWindow());
+		if (event.getWindow() instanceof DefaultWindow) {
+			return null; // no message for the default Window
 		}
-		return null;
+		return new WindowCloseMessage(event.getWindow());
 	}
 
 	@EventHandler
 	public Message onWindowSetSlot(WindowSetSlotEvent event) {
-		if (this.isVanillaProtocol()) {
-			return new WindowSetSlotMessage(event.getWindow(), event.getSlot(), event.getItem());
-		}
-		return null;
+		return new WindowSetSlotMessage(event.getWindow(), event.getGlobalSlot(), event.getItem());
 	}
 
 	@EventHandler
 	public Message onWindowSetSlots(WindowSetSlotsEvent event) {
-		if (this.isVanillaProtocol()) {
-			return new WindowSetSlotsMessage(event.getWindow(), event.getItems());
-		}
-		return null;
+		return new WindowSetSlotsMessage(event.getWindow(), event.getItems());
 	}
 
 	@EventHandler
 	public Message onWindowProperty(WindowPropertyEvent event) {
-		if (this.isVanillaProtocol()) {
-			return new WindowPropertyMessage(event.getWindow(), event.getId(), event.getValue());
-		}
-		return null;
+		return new WindowPropertyMessage(event.getWindow(), event.getId(), event.getValue());
 	}
 }

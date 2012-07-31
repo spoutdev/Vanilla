@@ -221,7 +221,7 @@ public class Window implements InventoryViewer, ITickable {
 		}
 		this.sendEvent(new WindowSetSlotsEvent(this, items));
 	}
-	
+
 	@Override
 	public void onTick(float dt) {
 		int queued = this.queuedInventoryUpdates.size();
@@ -231,7 +231,12 @@ public class Window implements InventoryViewer, ITickable {
 			} else {
 				for (TIntObjectIterator<ItemStack> i = queuedInventoryUpdates.iterator(); i.hasNext(); ) {
 					i.advance();
-					this.sendEvent(new WindowSetSlotEvent(this, i.key(), i.value()));
+					int globalSlot = i.key();
+					Entry<InventoryBase, Integer> itemSlot = this.getInventoryEntry(globalSlot);
+					if (itemSlot == null) {
+						continue;
+					}
+					this.sendEvent(new WindowSetSlotEvent(this, itemSlot.getKey(), itemSlot.getValue(), globalSlot, i.value()));
 				}
 			}
 			this.queuedInventoryUpdates.clear();

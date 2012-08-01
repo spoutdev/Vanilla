@@ -96,9 +96,9 @@ public class VanillaProtocol extends Protocol {
 	@Override
 	public void initializeSession(Session session) {
 		final Player player = session.getPlayer();
-		session.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, player.getEntity()));
+		session.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, player));
 
-		Controller controller = player.getEntity().getController();
+		Controller controller = player.getController();
 
 		if (controller instanceof VanillaPlayer) {
 			VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;

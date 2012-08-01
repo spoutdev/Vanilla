@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.handler;
 
 import java.util.Map.Entry;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
@@ -42,13 +41,17 @@ import org.spout.vanilla.window.Window;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
 	@Override
-	public void handleServer(Session session, Player player, WindowClickMessage message) {
-		Entity entity = player.getEntity();
-		if (!(entity.getController() instanceof VanillaPlayer)) {
+	public void handleServer(Session session, WindowClickMessage message) {
+		if(!session.hasPlayer()) {
+			return;
+		}
+		
+		Player player = session.getPlayer();
+		if (!(player.getController() instanceof VanillaPlayer)) {
 			return;
 		}
 
-		VanillaPlayer controller = (VanillaPlayer) entity.getController();
+		VanillaPlayer controller = (VanillaPlayer) player.getController();
 		Window window = controller.getActiveWindow();
 		boolean result = false;
 		try {

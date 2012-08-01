@@ -343,8 +343,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		//TODO Handle infinite height
 		if (first) {
 			first = false;
-			int entityId = owner.getEntity().getId();
-			VanillaPlayer vc = (VanillaPlayer) owner.getEntity().getController();
+			int entityId = owner.getId();
+			VanillaPlayer vc = (VanillaPlayer) owner.getController();
 			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) session.getEngine().getMaxPlayers());
 			owner.getSession().send(false, true, idMsg);
 			owner.getSession().setState(State.GAME);

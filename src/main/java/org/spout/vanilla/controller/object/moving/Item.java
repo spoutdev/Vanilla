@@ -118,7 +118,7 @@ public class Item extends Substance {
 			return;
 		}
 
-		Entity entity = closestPlayer.getEntity();
+		Entity entity = closestPlayer;
 		if (!(entity.getController() instanceof VanillaPlayer)) {
 			return;
 		}

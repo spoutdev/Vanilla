@@ -49,7 +49,7 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 	 * @return Vanilla Player controller
 	 */
 	public VanillaPlayer getController() {
-		return (VanillaPlayer) this.getPlayer().getEntity().getController();
+		return (VanillaPlayer) this.getPlayer().getController();
 	}
 
 	/**

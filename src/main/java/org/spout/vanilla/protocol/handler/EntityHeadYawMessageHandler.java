@@ -37,14 +37,16 @@ import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
 
 public class EntityHeadYawMessageHandler extends MessageHandler<EntityHeadYawMessage> {
 	@Override
-	public void handleServer(Session session, Player player, EntityHeadYawMessage message) {
-		if (player.getEntity().getController() == null) {
+	public void handleServer(Session session, EntityHeadYawMessage message) {
+		if(!session.hasPlayer()) {
 			return;
 		}
-		if (!(player.getEntity().getController() instanceof Living)) {
+
+		Player player = session.getPlayer();
+		if (!(player.getController() instanceof Living)) {
 			return;
 		}
-		Living creature = (Living) player.getEntity().getController();
+		Living creature = (Living) player.getController();
 		creature.setHeadYaw(MathHelper.floor(ChannelBufferUtils.deProtocolifyRotation(message.getHeadYaw())));
 	}
 }

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.protocol.handler.bootstrap;
 
-import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
@@ -34,7 +33,7 @@ import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 
 public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginRequestMessage> {
 	@Override
-	public void handleServer(final Session session, final Player player, final LoginRequestMessage message) {
+	public void handleServer(final Session session, final LoginRequestMessage message) {
 		//		long start = System.currentTimeMillis();
 		//		Spout.getLogger().info("Handshake response took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
 		//		if (message > VanillaPlugin.MINECRAFT_PROTOCOL_ID) {

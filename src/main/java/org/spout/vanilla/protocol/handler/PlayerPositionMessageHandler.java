@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.protocol.handler;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
@@ -40,22 +39,18 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPositionMessage> {
 	@Override
-	public void handleServer(Session session, Player player, PlayerPositionMessage message) {
-		if (player == null) {
+	public void handleServer(Session session, PlayerPositionMessage message) {
+		if(!session.hasPlayer()) {
 			return;
 		}
-
-		Entity entity = player.getEntity();
-
-		if (entity == null) {
-			return;
-		}
+		
+		Player player = session.getPlayer();
 
 		double x = message.getX();
 		double y = message.getY();
 		double z = message.getZ();
 
-		Point ep = entity.getPosition();
+		Point ep = player.getPosition();
 		double dx = x - ep.getX();
 		double dy = y - ep.getY();
 		double dz = z - ep.getZ();
@@ -89,8 +84,8 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 		 */
 
 		// START Hunger / Damage falling implementation. Will probably have a better way to handle that when Collision is implemented
-		if (VanillaPlayerUtil.isSurvival(entity)) {
-			VanillaPlayer vPlayer = (VanillaPlayer) entity.getController();
+		if (VanillaPlayerUtil.isSurvival(player)) {
+			VanillaPlayer vPlayer = (VanillaPlayer) player.getController();
 			if (ep.getY() > y) {
 				vPlayer.setFalling(true);
 			} else {
@@ -115,10 +110,10 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 		}
 		// END Hunger / Damage falling implementation.
 
-		Point p = new Point(entity.getWorld(), (float) x, (float) y, (float) z);
+		Point p = new Point(player.getWorld(), (float) x, (float) y, (float) z);
 		// Force the chunk to load if needed - if a player moves into an unloaded chunk they will die
-		entity.getWorld().getChunkFromBlock(p);
-		entity.setPosition(p);
+		player.getWorld().getChunkFromBlock(p);
+		player.setPosition(p);
 	}
 
 	public void handleClient(Session session, Player player, PlayerPositionLookMessage message) {

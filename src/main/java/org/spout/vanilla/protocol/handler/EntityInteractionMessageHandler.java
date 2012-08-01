@@ -47,21 +47,26 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class EntityInteractionMessageHandler extends MessageHandler<EntityInteractionMessage> {
 	@Override
-	public void handleServer(Session session, Player player, EntityInteractionMessage message) {
-		Entity clickedEntity = player.getEntity().getWorld().getEntity(message.getTarget());
+	public void handleServer(Session session, EntityInteractionMessage message) {
+		if(!session.hasPlayer()) {
+			return;
+		}
+
+		Player player = session.getPlayer();
+		Entity clickedEntity = player.getWorld().getEntity(message.getTarget());
 		if (clickedEntity == null) {
 			return;
 		}
 
-		ItemStack holding = VanillaPlayerUtil.getCurrentItem(player.getEntity());
+		ItemStack holding = VanillaPlayerUtil.getCurrentItem(player);
 		Material holdingMat = holding == null ? VanillaMaterials.AIR : holding.getMaterial();
 		if (holdingMat == null) {
 			holdingMat = VanillaMaterials.AIR;
 		}
 		if (message.isPunching()) {
-			VanillaPlayer vPlayer = (VanillaPlayer) player.getEntity().getController();
-			holdingMat.onInteract(player.getEntity(), clickedEntity, Action.LEFT_CLICK);
-			clickedEntity.getController().onInteract(player.getEntity(), Action.LEFT_CLICK);
+			VanillaPlayer vPlayer = (VanillaPlayer) player.getController();
+			holdingMat.onInteract(player, clickedEntity, Action.LEFT_CLICK);
+			clickedEntity.getController().onInteract(player, Action.LEFT_CLICK);
 
 			if (clickedEntity.getController() instanceof VanillaPlayer && !VanillaConfiguration.PLAYER_PVP_ENABLED.getBoolean()) {
 				return;
@@ -94,8 +99,8 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 				}
 			}
 		} else {
-			holdingMat.onInteract(player.getEntity(), clickedEntity, Action.RIGHT_CLICK);
-			clickedEntity.getController().onInteract(player.getEntity(), Action.RIGHT_CLICK);
+			holdingMat.onInteract(player, clickedEntity, Action.RIGHT_CLICK);
+			clickedEntity.getController().onInteract(player, Action.RIGHT_CLICK);
 		}
 	}
 }

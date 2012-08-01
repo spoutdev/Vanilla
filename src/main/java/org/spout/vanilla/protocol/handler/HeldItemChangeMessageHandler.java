@@ -35,16 +35,18 @@ import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 
 public final class HeldItemChangeMessageHandler extends MessageHandler<HeldItemChangeMessage> {
 	@Override
-	public void handleServer(Session session, Player player, HeldItemChangeMessage message) {
-		if (player == null) {
+	public void handleServer(Session session, HeldItemChangeMessage message) {
+		if(!session.hasPlayer()) {
 			return;
 		}
+
+		Player player = session.getPlayer();
 
 		int newSlot = message.getSlot();
 		if (newSlot < 0 || newSlot > 8) {
 			return;
 		}
 
-		((VanillaPlayer) player.getEntity().getController()).getInventory().getQuickbar().setCurrentSlot(newSlot);
+		((VanillaPlayer) player.getController()).getInventory().getQuickbar().setCurrentSlot(newSlot);
 	}
 }

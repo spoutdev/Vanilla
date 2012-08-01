@@ -82,7 +82,7 @@ public abstract class VanillaSky implements Runnable {
 			if (!player.isOnline()) {
 				continue;
 			}
-			if (!player.getEntity().getWorld().equals(world)) {
+			if (!player.getWorld().equals(world)) {
 				continue;
 			}
 			VanillaNetworkUtil.sendPacket(player, message);

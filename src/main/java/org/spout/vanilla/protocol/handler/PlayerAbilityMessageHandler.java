@@ -36,13 +36,15 @@ import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 
 public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbilityMessage> {
 	@Override
-	public void handleServer(Session session, Player player, PlayerAbilityMessage message) {
-		if (player.getEntity().getController() == null) {
+	public void handleServer(Session session, PlayerAbilityMessage message) {
+		if(!session.hasPlayer()) {
 			return;
 		}
-		if (!(player.getEntity().getController() instanceof VanillaActionController)) {
+		
+		Player player = session.getPlayer();
+		if (!(player.getController() instanceof VanillaActionController)) {
 			return;
 		}
-		((VanillaPlayer) player.getEntity().getController()).setFlying(message.isFlying());
+		((VanillaPlayer) player.getController()).setFlying(message.isFlying());
 	}
 }

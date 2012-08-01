@@ -30,7 +30,6 @@ import java.security.SecureRandom;
 
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 
-import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.security.SecurityHandler;
@@ -43,12 +42,12 @@ import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
 
 public class BootstrapHandshakeMessageHandler extends MessageHandler<HandshakeMessage> {
 	@Override
-	public void handleClient(Session session, Player player, HandshakeMessage message) {
+	public void handleClient(Session session, HandshakeMessage message) {
 		// TODO Compatibility for SpoutClient
 	}
 
 	@Override
-	public void handleServer(Session session, Player player, HandshakeMessage message) {
+	public void handleServer(Session session, HandshakeMessage message) {
 		if (message.getProtocolVersion() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
 			session.disconnect("Outdated client!");
 			return;

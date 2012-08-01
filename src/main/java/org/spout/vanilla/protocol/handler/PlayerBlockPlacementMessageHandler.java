@@ -56,17 +56,22 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 		//refresh the client just in case it assumed something
 		player.getSession().send(false, new BlockChangeMessage(clickedBlock));
 		player.getSession().send(false, new BlockChangeMessage(alterBlock));
-		InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(player.getEntity());
+		InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(player);
 		if (inv != null) {
 			inv.setItem(inv.getItem());
 		}
 	}
 
 	@Override
-	public void handleServer(Session session, Player player, PlayerBlockPlacementMessage message) {
+	public void handleServer(Session session, PlayerBlockPlacementMessage message) {
+		if(!session.hasPlayer()) {
+			return;
+		}
+		
+		Player player = session.getPlayer();
 		EventManager eventManager = session.getEngine().getEventManager();
-		World world = player.getEntity().getWorld();
-		InventorySlot currentSlot = VanillaPlayerUtil.getCurrentSlot(player.getEntity());
+		World world = player.getWorld();
+		InventorySlot currentSlot = VanillaPlayerUtil.getCurrentSlot(player);
 		ItemStack holding = currentSlot.getItem();
 		Material holdingMat = holding == null ? null : holding.getMaterial();
 
@@ -85,7 +90,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			// Right clicked air with an item.
 			PlayerInteractEvent event = eventManager.callEvent(new PlayerInteractEvent(player, null, holding, Action.RIGHT_CLICK, true));
 			if (!event.isCancelled() && holdingMat != null) {
-				holdingMat.onInteract(player.getEntity(), Action.RIGHT_CLICK);
+				holdingMat.onInteract(player, Action.RIGHT_CLICK);
 			}
 		} else {
 
@@ -93,7 +98,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			//This is an anti-hack requirement (else hackers can load far-away chunks and crash the server)
 
 			//Get clicked block and validated face against it was placed
-			Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ(), player.getEntity());
+			Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ(), player);
 			if (clickedBlock.getY() >= world.getHeight() || clickedBlock.getY() < 0) {
 				return;
 			}
@@ -120,11 +125,11 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				if (holdingMat instanceof InteractTool) {
 					durability = ((InteractTool) holdingMat).getMaxDurability();
 				}
-				holdingMat.onInteract(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
+				holdingMat.onInteract(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
 			}
-			clickedMaterial.onInteractBy(player.getEntity(), clickedBlock, Action.RIGHT_CLICK, clickedFace);
+			clickedMaterial.onInteractBy(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
 			if (clickedMaterial.hasController()) {
-				clickedMaterial.getController(clickedBlock).onInteract(player.getEntity(), Action.RIGHT_CLICK);
+				clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
 			}
 
 			if (holdingMat instanceof InteractTool && VanillaPlayerUtil.isSurvival(clickedBlock.getSource())) { //TODO Total hack and is BADDDDDD
@@ -178,8 +183,8 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 						//}
 
 						//For now: simple distance checking
-						Point pos1 = player.getEntity().getPosition();
-						Point pos2 = ((VanillaPlayer) player.getEntity().getController()).getHeadPosition();
+						Point pos1 = player.getPosition();
+						Point pos2 = ((VanillaPlayer) player.getController()).getHeadPosition();
 						Point tpos = target.getPosition();
 
 						if (pos1.distance(tpos) < 0.6 || pos2.distance(tpos) < 0.6) {
@@ -202,7 +207,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 					sound.playGlobal(target.getPosition(), 0.8f, 0.8f);
 					//GeneralEffects.BREAKBLOCK.playGlobal(target.getPosition(), target.getMaterial());
 					// Remove block from inventory if not in creative mode.
-					if (!((VanillaPlayer) player.getEntity().getController()).hasInfiniteResources()) {
+					if (!((VanillaPlayer) player.getController()).hasInfiniteResources()) {
 						currentSlot.addItemAmount(0, -1);
 					}
 				} else {

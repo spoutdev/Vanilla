@@ -77,7 +77,7 @@ public class TestCommands {
 			throw new CommandException("You must be a player to cause an explosion");
 		}
 
-		Entity entity = ((Player) source).getEntity();
+		Entity entity = (Player) source;
 		Point position = entity.getPosition();
 		if (entity.getController() instanceof VanillaPlayer) {
 			position = position.add(((VanillaPlayer) entity.getController()).getLookingAt());
@@ -93,7 +93,7 @@ public class TestCommands {
 		}
 
 		Player player = (Player) source;
-		Point point = player.getEntity().getPosition();
+		Point point = player.getPosition();
 
 		boolean disk = false;
 
@@ -201,7 +201,7 @@ public class TestCommands {
 			Point loc = new Point(world, args.getInteger(2), args.getInteger(3), args.getInteger(4));
 			//Make sure the chunk the player is teleported to is loaded.
 			world.getChunkFromBlock(loc);
-			player.getEntity().setPosition(loc);
+			player.setPosition(loc);
 			player.getNetworkSynchronizer().setPositionDirty();
 		} else {
 			throw new CommandException("Please enter a valid world");
@@ -218,7 +218,7 @@ public class TestCommands {
 			throw new CommandException("Invalid object name.");
 		}
 		final Player player = (Player) source;
-		final Point loc = player.getEntity().getPosition();
+		final Point loc = player.getPosition();
 		final World world = loc.getWorld();
 		final int x = loc.getBlockX();
 		final int y = loc.getBlockY();
@@ -244,8 +244,7 @@ public class TestCommands {
 		}
 
 		Player player = (Player) source;
-		Entity playerEntity = player.getEntity();
-		Block block = playerEntity.getWorld().getBlock(playerEntity.getPosition().subtract(0, 1, 0), playerEntity);
+		Block block = player.getWorld().getBlock(player.getPosition().subtract(0, 1, 0), player);
 		if (!block.hasController()) {
 			player.sendMessage("Block has no entity!");
 			return;
@@ -261,7 +260,7 @@ public class TestCommands {
 			throw new CommandException("Source must be player");
 		}
 
-		Controller controller = ((Player) source).getEntity().getController();
+		Controller controller = ((Player) source).getController();
 		if (!(controller instanceof VanillaPlayer)) {
 			throw new CommandException("Invalid controller");
 		}
@@ -297,7 +296,7 @@ public class TestCommands {
 			throw new CommandException("World specified is not loaded");
 		}
 		if (world == null) {
-			world = ((Player) source).getEntity().getWorld();
+			world = ((Player) source).getWorld();
 		}
 		Set<Entity> entities = world.getAll();
 		int count = 0;
@@ -325,7 +324,7 @@ public class TestCommands {
 			throw new CommandException("You must be a player to view the credits.");
 		}
 
-		Controller controller = ((Player) source).getEntity().getController();
+		Controller controller = ((Player) source).getController();
 		if (controller instanceof VanillaPlayer) {
 			((VanillaPlayer) controller).rollCredits();
 		}
@@ -337,7 +336,7 @@ public class TestCommands {
 			throw new CommandException("You must be a player to apply speed");
 		}
 
-		Controller controller = ((Player) source).getEntity().getController();
+		Controller controller = ((Player) source).getController();
 		controller.registerProcess(new Speed((VanillaPlayer) controller, args.getInteger(0), args.getInteger(1)));
 	}
 
@@ -348,7 +347,7 @@ public class TestCommands {
 		}
 
 		Player player = (Player) source;
-		Entity entity = player.getEntity();
+		Entity entity = player;
 		entity.getWorld().createAndSpawnEntity(entity.getPosition(), new Human(args.getString(0)));
 	}
 }

@@ -35,8 +35,8 @@ import org.spout.vanilla.protocol.msg.TabCompleteMessage;
 
 public final class TabCompleteMessageHandler extends MessageHandler<TabCompleteMessage> {
 	@Override
-	public void handleServer(Session session, Player player, TabCompleteMessage message) {
-		if (player == null) {
+	public void handleServer(Session session, TabCompleteMessage message) {
+		if(!session.hasPlayer()) {
 			return;
 		}
 

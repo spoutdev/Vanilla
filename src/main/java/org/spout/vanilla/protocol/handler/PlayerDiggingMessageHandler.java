@@ -60,25 +60,27 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
 	@Override
-	public void handleServer(Session session, Player player, PlayerDiggingMessage message) {
-		if (player == null || player.getEntity() == null) {
+	public void handleServer(Session session, PlayerDiggingMessage message) {
+		if(!session.hasPlayer()) {
 			return;
 		}
+		
+		Player player = session.getPlayer();
 
 		int x = message.getX();
 		int y = message.getY();
 		int z = message.getZ();
 		int state = message.getState();
 
-		World w = player.getEntity().getWorld();
+		World w = player.getWorld();
 		Point point = new Point(w, x, y, z);
-		Block block = w.getBlock(point, player.getEntity());
+		Block block = w.getBlock(point, player);
 		BlockMaterial blockMaterial = block.getMaterial();
 
 		short minecraftID = VanillaMaterials.getMinecraftId(blockMaterial);
 		BlockFace clickedFace = message.getFace();
 
-		VanillaPlayer vp = ((VanillaPlayer) player.getEntity().getController());
+		VanillaPlayer vp = ((VanillaPlayer) player.getController());
 
 		//Don't block protections if dropping an item, silly Notch...
 		if (state != PlayerDiggingMessage.STATE_DROP_ITEM) {
@@ -93,7 +95,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		}
 
 		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
-			((VanillaPlayer) player.getEntity().getController()).dropItem();
+			((VanillaPlayer) player.getController()).dropItem();
 			return;
 		}
 
@@ -103,7 +105,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			isInteractable = false;
 		}
 
-		InventorySlot currentSlot = VanillaPlayerUtil.getCurrentSlot(player.getEntity());
+		InventorySlot currentSlot = VanillaPlayerUtil.getCurrentSlot(player);
 		ItemStack heldItem = currentSlot.getItem();
 
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {
@@ -118,18 +120,18 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				return;
 			} else if (heldItem == null) {
 				// interacting with block using fist
-				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
+				blockMaterial.onInteractBy(player, block, Action.LEFT_CLICK, clickedFace);
 			} else if (!isInteractable) {
 				// interacting with nothing using item
-				heldItem.getMaterial().onInteract(player.getEntity(), Action.LEFT_CLICK);
+				heldItem.getMaterial().onInteract(player, Action.LEFT_CLICK);
 			} else {
 				// interacting with block using item
-				heldItem.getMaterial().onInteract(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
-				blockMaterial.onInteractBy(player.getEntity(), block, Action.LEFT_CLICK, clickedFace);
+				heldItem.getMaterial().onInteract(player, block, Action.LEFT_CLICK, clickedFace);
+				blockMaterial.onInteractBy(player, block, Action.LEFT_CLICK, clickedFace);
 			}
 			// Interaction with controller
 			if (blockMaterial.hasController()) {
-				blockMaterial.getController(block).onInteract(player.getEntity(), Action.LEFT_CLICK);
+				blockMaterial.getController(block).onInteract(player, Action.LEFT_CLICK);
 			}
 
 			if (isInteractable) {
@@ -144,7 +146,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				} else {
 					// insta-break
 					blockMaterial.onDestroy(block);
-					GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player.getEntity());
+					GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
@@ -179,11 +181,11 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				blockMaterial.onDestroy(block);
 			}
 			if (block.getMaterial() != VanillaMaterials.AIR) {
-				GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player.getEntity());
+				GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
 			}
 		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
 			if (heldItem.getMaterial() instanceof Food) {
-				((Food) heldItem.getMaterial()).onEat(player.getEntity(), currentSlot);
+				((Food) heldItem.getMaterial()).onEat(player, currentSlot);
 			}
 		}
 	}

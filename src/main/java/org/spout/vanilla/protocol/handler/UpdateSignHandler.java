@@ -36,12 +36,14 @@ import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 
 public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
 	@Override
-	public void handleServer(Session session, Player player, UpdateSignMessage message) {
-		if (session == null || player == null || message == null) {
+	public void handleServer(Session session, UpdateSignMessage message) {
+		if(!session.hasPlayer()) {
 			return;
 		}
+		
+		Player player = session.getPlayer();
 
-		BlockController controller = player.getEntity().getWorld().getBlockController(message.getX(), message.getY(), message.getZ());
+		BlockController controller = player.getWorld().getBlockController(message.getX(), message.getY(), message.getZ());
 		if (controller == null || !(controller instanceof Sign)) {
 			return;
 		}

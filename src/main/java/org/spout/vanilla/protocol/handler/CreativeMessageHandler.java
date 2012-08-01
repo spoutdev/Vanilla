@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.handler;
 
 import java.util.Map.Entry;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
@@ -41,13 +40,17 @@ import org.spout.vanilla.window.Window;
 
 public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 	@Override
-	public void handleServer(Session session, Player player, CreativeMessage message) {
-		Entity entity = player.getEntity();
-		if (!(entity.getController() instanceof VanillaPlayer)) {
+	public void handleServer(Session session, CreativeMessage message) {
+		if(!session.hasPlayer()) {
 			return;
 		}
 
-		VanillaPlayer controller = (VanillaPlayer) entity.getController();
+		Player player = session.getPlayer();
+		if (!(player.getController() instanceof VanillaPlayer)) {
+			return;
+		}
+
+		VanillaPlayer controller = (VanillaPlayer) player.getController();
 		if (controller.isSurvival()) {
 			player.kick("Now now, don't try that here. Won't work.");
 			return;

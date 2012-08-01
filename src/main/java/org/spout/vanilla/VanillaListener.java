@@ -74,10 +74,9 @@ public class VanillaListener implements Listener {
 		}
 		// Set their mode
 		Player player = event.getPlayer();
-		Entity playerEntity = player.getEntity();
-		VanillaPlayer vanillaPlayer = new VanillaPlayer(player, playerEntity.getWorld().getDataMap().get(VanillaData.GAMEMODE));
+		VanillaPlayer vanillaPlayer = new VanillaPlayer(player, player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
 
-		playerEntity.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
+		player.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
 
 		// Make them visible to everyone by default
 		vanillaPlayer.setVisible(true);

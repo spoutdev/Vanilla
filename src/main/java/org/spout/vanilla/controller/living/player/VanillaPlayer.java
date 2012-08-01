@@ -101,7 +101,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		setRenderedItemInHand(playerInventory.getQuickbar().getCurrentItem());
 		owner = p;
 		tabListName = owner.getName();
-		compassTarget = owner.getEntity().getWorld().getSpawnPoint().getPosition();
+		compassTarget = owner.getWorld().getSpawnPoint().getPosition();
 		this.gameMode = gameMode;
 		this.title = p.getName();
 	}
@@ -382,7 +382,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public void setVisibleFor(boolean visible, Player... players) {
 		Entity parent = getParent();
 		for (Player player : players) {
-			if (player.getEntity().getController() != this) {
+			if (player.getController() != this) {
 				if (visible) {
 					invisibleFor.remove(player);
 					player.getNetworkSynchronizer().spawnEntity(parent);
@@ -518,11 +518,11 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.falling = newFalling;
 		if (this.falling) {
 			if (this.initialYFalling == 0.0f) {
-				this.initialYFalling = owner.getEntity().getPosition().getY();
+				this.initialYFalling = owner.getPosition().getY();
 			}
 
 		} else {
-			int totalDmg = (int) ((this.initialYFalling - owner.getEntity().getPosition().getY()) - 3);
+			int totalDmg = (int) ((this.initialYFalling - owner.getPosition().getY()) - 3);
 			if (totalDmg > 0) {
 				setHealth(getHealth() - totalDmg, DamageCause.FALL);
 			}

@@ -111,7 +111,7 @@ public class LightningSimulator implements ITickable {
 
 	public void strikePlayers(List<Player> toStrike) {
 		for (Player player : toStrike) {
-			Point playerPos = player.getEntity().getPosition();
+			Point playerPos = player.getPosition();
 			final int posX = MathHelper.floor(playerPos.getX());
 			final int posY = MathHelper.floor(playerPos.getY());
 			final int posZ = MathHelper.floor(playerPos.getZ());

@@ -30,6 +30,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
@@ -50,13 +51,13 @@ public class Plank extends Solid implements Fuel, Mineable, Burnable {
 	public Plank(String name) {
 		super((short) 0x0003, name, 05);
 		this.type = WoodType.OAK;
-		this.setHardness(0.8F).setResistance(1.3F);
+		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_WOOD);
 	}
 
 	public Plank(String name, WoodType type, Plank parent) {
 		super(name, 05, type.getData(), parent);
 		this.type = type;
-		this.setHardness(0.8F).setResistance(1.3F);
+		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_WOOD);
 	}
 
 	@Override

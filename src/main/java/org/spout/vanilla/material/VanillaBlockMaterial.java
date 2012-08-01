@@ -44,6 +44,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.block.BlockSnapshot;
 
+import org.spout.vanilla.data.effect.SoundEffect;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -64,6 +66,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private int miningLevel;
 	private MiningType miningType;
 	private boolean liquidObstacle = true;
+	private SoundEffect stepSound = SoundEffects.STEP_STONE;
 	private Map<Material, int[]> dropMaterials = new HashMap<Material, int[]>();
 
 	public VanillaBlockMaterial(String name, int id) {
@@ -142,6 +145,26 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	@Override
 	public VanillaBlockMaterial setHardness(float hardness) {
 		return (VanillaBlockMaterial) super.setHardness(hardness);
+	}
+
+	/**
+	 * Sets the sound played when the block is being walked over or is being placed
+	 * 
+	 * @param sound to play
+	 * @return this Material
+	 */
+	public VanillaBlockMaterial setStepSound(SoundEffect sound) {
+		this.stepSound = sound;
+		return this;
+	}
+
+	/**
+	 * Gets the sound played when the block is being walked over or is being placed
+	 * 
+	 * @return step sound
+	 */
+	public SoundEffect getStepSound() {
+		return this.stepSound;
 	}
 
 	@Override

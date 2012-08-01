@@ -43,6 +43,8 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.SoundEffect;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.InteractTool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
@@ -187,9 +189,19 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 					}
 				}
 
-				//perform actual placement
+				// Perform actual placement
 				if (toPlace.onPlacement(target, placedData, targetFace, target == clickedBlock)) {
-					//Remove block from inventory if not in creative mode.
+					// Play sound
+					BlockMaterial material = target.getMaterial();
+					SoundEffect sound;
+					if (material instanceof VanillaBlockMaterial) {
+						sound = ((VanillaBlockMaterial) material).getStepSound();
+					} else {
+						sound = SoundEffects.STEP_STONE;
+					}
+					sound.playGlobal(target.getPosition(), 0.8f, 0.8f);
+					//GeneralEffects.BREAKBLOCK.playGlobal(target.getPosition(), target.getMaterial());
+					// Remove block from inventory if not in creative mode.
 					if (!((VanillaPlayer) player.getEntity().getController()).hasInfiniteResources()) {
 						currentSlot.addItemAmount(0, -1);
 					}

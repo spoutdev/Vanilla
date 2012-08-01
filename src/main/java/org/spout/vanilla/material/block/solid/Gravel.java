@@ -32,6 +32,7 @@ import java.util.Random;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SolidMoving;
@@ -44,7 +45,7 @@ public class Gravel extends SolidMoving implements Mineable {
 
 	public Gravel(String name, int id) {
 		super(name, id);
-		this.setHardness(0.6F).setResistance(1.0F);
+		this.setHardness(0.6F).setResistance(1.0F).setStepSound(SoundEffects.STEP_GRAVEL);;
 	}
 
 	@Override

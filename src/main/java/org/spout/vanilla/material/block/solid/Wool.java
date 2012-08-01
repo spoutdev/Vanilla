@@ -33,6 +33,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -62,13 +63,13 @@ public class Wool extends Solid implements Mineable, Burnable {
 	private Wool(String name) {
 		super((short) 0x000F, name, 35);
 		this.color = WoolColor.WHITE;
-		this.setHardness(0.8F).setResistance(1.3F);
+		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_CLOTH);;
 	}
 
 	private Wool(String name, WoolColor color, Wool parent) {
 		super(name, 35, color.getData(), parent);
 		this.color = color;
-		this.setHardness(0.8F).setResistance(1.3F);
+		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_CLOTH);;
 	}
 
 	@Override

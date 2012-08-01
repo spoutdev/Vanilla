@@ -24,41 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Spade;
-import org.spout.vanilla.material.item.tool.Tool;
+public class TripWireHook extends AbstractAttachable {
 
-public class SnowBlock extends Solid implements Mineable, InitializableMaterial {
-	public SnowBlock(String name, int id) {
+	public TripWireHook(String name, int id) {
 		super(name, id);
-		this.setHardness(0.2F).setResistance(0.3F).setStepSound(SoundEffects.STEP_CLOTH);;
+		this.setAttachable(BlockFaces.NESW);
+		this.setHardness(0.0f).setResistance(0.0f).setTransparent();
 	}
 
 	@Override
-	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.SNOW, 4);
+	public void setAttachedFace(Block block, BlockFace attachedFace) {
+		block.setDataField(0x3, BlockFaces.ESWN.indexOf(attachedFace, 0));
 	}
 
 	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial() instanceof Spade) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
+	public BlockFace getAttachedFace(short data) {
+		return BlockFaces.ESWN.get(data);
 	}
 }

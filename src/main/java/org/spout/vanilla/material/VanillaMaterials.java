@@ -74,6 +74,8 @@ import org.spout.vanilla.material.block.misc.Snow;
 import org.spout.vanilla.material.block.misc.StoneButton;
 import org.spout.vanilla.material.block.misc.Torch;
 import org.spout.vanilla.material.block.misc.TrapDoor;
+import org.spout.vanilla.material.block.misc.TripWire;
+import org.spout.vanilla.material.block.misc.TripWireHook;
 import org.spout.vanilla.material.block.misc.Web;
 import org.spout.vanilla.material.block.ore.CoalOre;
 import org.spout.vanilla.material.block.ore.DiamondBlock;
@@ -200,6 +202,7 @@ import org.spout.vanilla.material.item.misc.Shears;
 import org.spout.vanilla.material.item.misc.Sign;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
 import org.spout.vanilla.material.item.misc.Stick;
+import org.spout.vanilla.material.item.misc.StringItem;
 import org.spout.vanilla.material.item.tool.FishingRod;
 import org.spout.vanilla.material.item.tool.FlintAndSteel;
 import org.spout.vanilla.material.item.tool.Hoe;
@@ -364,6 +367,8 @@ public final class VanillaMaterials {
 	public static final DragonEgg DRAGON_EGG = new DragonEgg("Dragon Egg", 122);
 	public static final RedstoneLamp REDSTONE_LAMP_OFF = new RedstoneLamp("Redstone Lamp", 123, false);
 	public static final RedstoneLamp REDSTONE_LAMP_ON = new RedstoneLamp("Redstone Lamp (On)", 124, true);
+	public static final TripWireHook TRIPWIRE_HOOK = new TripWireHook("Trip Wire Hook", 131);
+	public static final TripWire TRIPWIRE = new TripWire("Trip Wire", 132);
 	/*
 	 * Items
 	 */
@@ -445,7 +450,7 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial GOLD_INGOT = new VanillaItemMaterial("Gold Ingot", 266);
 	public static final Stick STICK = new Stick("Stick", 280);
 	public static final VanillaItemMaterial BOWL = new VanillaItemMaterial("Bowl", 281);
-	public static final VanillaItemMaterial STRING = new VanillaItemMaterial("String", 287);
+	public static final StringItem STRING = new StringItem("String", 287, TRIPWIRE);
 	public static final VanillaItemMaterial FEATHER = new VanillaItemMaterial("Feather", 288);
 	public static final VanillaItemMaterial GUNPOWDER = new VanillaItemMaterial("Gunpowder", 289);
 	public static final VanillaItemMaterial WHEAT = new VanillaItemMaterial("Wheat", 296);

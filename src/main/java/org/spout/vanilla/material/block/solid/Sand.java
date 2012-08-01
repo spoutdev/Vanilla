@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -40,7 +41,7 @@ import org.spout.vanilla.util.Instrument;
 public class Sand extends SolidMoving implements Mineable, TimedCraftable {
 	public Sand(String name, int id) {
 		super(name, id);
-		this.setHardness(0.5F).setResistance(0.8F);
+		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_SAND);
 	}
 
 	@Override

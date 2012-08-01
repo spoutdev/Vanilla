@@ -36,6 +36,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
@@ -63,13 +64,13 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 
 	private Log(String name, Sapling sapling) {
 		super(dataMask, name, 17);
-		this.setHardness(2.0F).setResistance(10.F).setOpacity((byte) 1);
+		this.setHardness(2.0F).setResistance(10.F).setStepSound(SoundEffects.STEP_WOOD).setOpacity((byte) 1);
 		this.sapling = sapling;
 	}
 
 	private Log(String name, int data, Log parent, Sapling sapling) {
 		super(name, 17, data, parent);
-		this.setHardness(2.0F).setResistance(10.F).setOpacity((byte) 1);
+		this.setHardness(2.0F).setResistance(10.F).setStepSound(SoundEffects.STEP_WOOD).setOpacity((byte) 1);
 		this.sapling = sapling;
 	}
 

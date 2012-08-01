@@ -69,6 +69,22 @@ public class SoundEffect extends Effect {
 		return this.name;
 	}
 
+	/**
+	 * Gets all the Players nearby a certain Point that can receive this Effect
+	 * 
+	 * @param position of this Effect
+	 * @param ignore Entity to ignore
+	 * @return a Set of nearby Players
+	 */
+	public Set<Player> getNearbyPlayers(Point position, Entity ignore, float volume) {
+		int range = this.getRange();
+		if (volume > 1.0f) {
+			// Multiply range for different volumes
+			range *= volume;
+		}
+		return position.getWorld().getNearbyPlayers(position, ignore, range);
+	}
+
 	@Override
 	public void play(Player player, Point position) {
 		this.play(player, position, this.getDefaultVolume(), this.getDefaultPitch());
@@ -87,8 +103,8 @@ public class SoundEffect extends Effect {
 	public void playGlobal(Point position, float volume, float pitch) {
 		this.playGlobal(position, volume, pitch, null);
 	}
-	
+
 	public void playGlobal(Point position, float volume, float pitch, Entity ignore) {
-		this.play(getNearbyPlayers(position, ignore), position, volume, pitch);
+		this.play(getNearbyPlayers(position, ignore, volume), position, volume, pitch);
 	}
 }

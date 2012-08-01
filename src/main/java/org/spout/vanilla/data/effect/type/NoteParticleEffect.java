@@ -24,24 +24,25 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util;
+package org.spout.vanilla.data.effect.type;
 
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.data.effect.type.NoteSoundEffect;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.player.Player;
+import org.spout.vanilla.data.effect.GeneralEffect;
+import org.spout.vanilla.event.block.BlockActionEvent;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public enum Instrument {
-	PIANO(SoundEffects.NOTE_HARP),
-	BASSDRUM(SoundEffects.NOTE_BD),
-	SNAREDRUM(SoundEffects.NOTE_SNARE),
-	CLICK(SoundEffects.NOTE_HAT),
-	BASSGUITAR(SoundEffects.NOTE_BASSATTACK);
-	private NoteSoundEffect sound;
+public class NoteParticleEffect extends GeneralEffect {
+	private static final int NOTE_RANGE = 16;
 
-	private Instrument(NoteSoundEffect effect) {
-		this.sound = effect;
+	public NoteParticleEffect() {
+		super(-1, 0, NOTE_RANGE);
 	}
 
-	public NoteSoundEffect getEffect() {
-		return this.sound;
+	@Override
+	public void play(Player player, Point position, int note) {
+		Block block = position.getWorld().getBlock(position, position.getWorld());
+		player.getSession().getNetworkSynchronizer().callProtocolEvent(new BlockActionEvent(block, VanillaMaterials.NOTEBLOCK, (byte) 0, (byte) note));
 	}
 }

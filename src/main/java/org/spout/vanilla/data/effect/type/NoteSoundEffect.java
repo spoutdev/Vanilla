@@ -26,30 +26,52 @@
  */
 package org.spout.vanilla.data.effect.type;
 
+import java.util.Set;
+
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
-import org.spout.vanilla.data.effect.GeneralEffect;
 import org.spout.vanilla.data.effect.SoundEffect;
 
-public class NoteBlockEffect extends GeneralEffect {
-	private static final int NOTE_RANGE = 48;
-	private SoundEffect sound;
+public class NoteSoundEffect extends SoundEffect {
 
-	public NoteBlockEffect(SoundEffect sound) {
-		super(NOTE_RANGE);
-		this.sound = sound;
+	public NoteSoundEffect(String name) {
+		super(name, 3.0f, 0.5f);
 	}
 
-	public SoundEffect getSound() {
-		return this.sound;
+	public void play(Player player, Point position, int tone) {
+		this.play(player, position, this.getDefaultVolume(), tone);
 	}
 
-	@Override
-	public void play(Player player, Point position, int data) {
+	public void play(Player player, Point position, float volume, int tone) {
 		// calculate pitch
-		float pitch = (float) Math.pow(2.0, (double) (data - 12) / 12.0);
-		this.sound.play(player, position, 3.0f, pitch);
-		//TODO: Find a way to trigger the 'note' particle through a message!
-		//world.a("note", x, y, z, (double) data / 24.0, 0.0, 0.0);
+		float pitch = (float) Math.pow(2.0, (double) (tone - 12) / 12.0);
+		this.play(player, position, volume, pitch);
+	}
+
+	public void play(Set<Player> players, Point position, int tone) {
+		this.play(players, position, this.getDefaultVolume(), tone);
+	}
+
+	public void play(Set<Player> players, Point position, float volume, int tone) {
+		for (Player player : players) {
+			this.play(player, position, volume, tone);
+		}
+	}
+
+	public void playGlobal(Point position, int tone) {
+		this.playGlobal(position, null, this.getDefaultVolume(), tone);
+	}
+
+	public void playGlobal(Point position, float volume, int tone) {
+		this.play(getNearbyPlayers(position, null, volume), position, volume, tone);
+	}
+
+	public void playGlobal(Point position, Entity ignore, int tone) {
+		this.playGlobal(position, ignore, this.getDefaultVolume(), tone);
+	}
+
+	public void playGlobal(Point position, Entity ignore, float volume, int tone) {
+		this.play(getNearbyPlayers(position, ignore, volume), position, volume, tone);
 	}
 }

@@ -27,6 +27,7 @@
 package org.spout.vanilla.data.effect.store;
 
 import org.spout.vanilla.data.effect.SoundEffect;
+import org.spout.vanilla.data.effect.type.NoteSoundEffect;
 
 public class SoundEffects {
 	public static final SoundEffect AMBIENT_CAVE_CAVE = new SoundEffect("ambient.cave.cave");
@@ -108,13 +109,13 @@ public class SoundEffects {
 	public static final SoundEffect MOB_ZOMBIEPIG_ZPIGANGRY = new SoundEffect("mob.zombiepig.zpigangry");
 	public static final SoundEffect MOB_ZOMBIEPIG_ZPIGDEATH = new SoundEffect("mob.zombiepig.zpigdeath");
 	public static final SoundEffect MOB_ZOMBIEPIG_ZPIGHURT = new SoundEffect("mob.zombiepig.zpighurt");
-	public static final SoundEffect NOTE_BASS = new SoundEffect("note.bass");
-	public static final SoundEffect NOTE_BASSATTACK = new SoundEffect("note.bassattack");
-	public static final SoundEffect NOTE_BD = new SoundEffect("note.bd");
-	public static final SoundEffect NOTE_HARP = new SoundEffect("note.harp");
-	public static final SoundEffect NOTE_HAT = new SoundEffect("note.hat");
-	public static final SoundEffect NOTE_PLING = new SoundEffect("note.pling");
-	public static final SoundEffect NOTE_SNARE = new SoundEffect("note.snare");
+	public static final NoteSoundEffect NOTE_BASS = new NoteSoundEffect("note.bass");
+	public static final NoteSoundEffect NOTE_BASSATTACK = new NoteSoundEffect("note.bassattack");
+	public static final NoteSoundEffect NOTE_BD = new NoteSoundEffect("note.bd");
+	public static final NoteSoundEffect NOTE_HARP = new NoteSoundEffect("note.harp");
+	public static final NoteSoundEffect NOTE_HAT = new NoteSoundEffect("note.hat");
+	public static final NoteSoundEffect NOTE_PLING = new NoteSoundEffect("note.pling");
+	public static final NoteSoundEffect NOTE_SNARE = new NoteSoundEffect("note.snare");
 	public static final SoundEffect PORTAL_PORTAL = new SoundEffect("portal.portal");
 	public static final SoundEffect PORTAL_TRAVEL = new SoundEffect("portal.travel");
 	public static final SoundEffect PORTAL_TRIGGER = new SoundEffect("portal.trigger");
@@ -151,6 +152,4 @@ public class SoundEffects {
 	public static final SoundEffect STEP_WOOD = new SoundEffect("step.wood");
 	public static final SoundEffect TILE_PISTON_IN = new SoundEffect("tile.piston.in");
 	public static final SoundEffect TILE_PISTON_OUT = new SoundEffect("tile.piston.out");
-
-	public static final SoundEffect NOTEPART = new SoundEffect("note");
 }

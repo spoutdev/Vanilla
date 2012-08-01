@@ -28,18 +28,15 @@ package org.spout.vanilla.controller.block;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.player.Player;
 
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.event.block.BlockActionEvent;
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class NoteBlock extends VanillaBlockController {
@@ -107,13 +104,8 @@ public class NoteBlock extends VanillaBlockController {
 	 * Plays the note of this Note Block
 	 */
 	public void play() {
-		Block block = this.getBlock();
-		BlockMaterial material = this.getMaterial();
-		this.getInstrument().getEffect().playGlobal(block.getPosition(), this.getNote());
-//		for (Player player : this.getParent().getWorld().getNearbyPlayers(this.getParent(), 48)) {
-//			BlockActionEvent event = new BlockActionEvent(block, material, this.getInstrument().getId(), (byte) this.getNote());
-//			player.getSession().getNetworkSynchronizer().callProtocolEvent(event);
-//		}
+		this.getInstrument().getEffect().playGlobal(getParent().getPosition(), getNote());
+		GeneralEffects.NOTE_PARTICLE.playGlobal(getParent().getPosition(), getNote());
 	}
 
 	@Override

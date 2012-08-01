@@ -34,6 +34,7 @@ import org.spout.vanilla.data.effect.type.DoorEffect;
 import org.spout.vanilla.data.effect.type.ExplosionEffect;
 import org.spout.vanilla.data.effect.type.LavaFizzEffect;
 import org.spout.vanilla.data.effect.type.MusicDiscEffect;
+import org.spout.vanilla.data.effect.type.NoteParticleEffect;
 import org.spout.vanilla.data.effect.type.SmokeEffect;
 
 public class GeneralEffects {
@@ -55,6 +56,7 @@ public class GeneralEffects {
 	public static final GeneralEffect SPLASHPOTION = new GeneralEffect(2002);
 	public static final GeneralEffect ENDEREYE = new GeneralEffect(2003);
 	public static final GeneralEffect MOBSPAWN = new GeneralEffect(2004);
+	public static final GeneralEffect NOTE_PARTICLE = new NoteParticleEffect();
 	public static final LavaFizzEffect LAVA_FIZZ = new LavaFizzEffect();
 	public static final BatchExplosionEffect EXPLOSION = new BatchExplosionEffect(SoundEffects.RANDOM_EXPLODE);
 	public static final BatchEffect EXTINGUISH = new BatchEffect(SoundEffects.RANDOM_FIZZ, GeneralEffects.SMOKE);

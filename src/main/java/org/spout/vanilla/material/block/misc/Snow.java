@@ -41,6 +41,7 @@ import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 
 public class Snow extends GroundAttachable implements Mineable, RandomBlockMaterial, InitializableMaterial {
+	private static final byte MIN_MELT_LIGHT = 11;
 	public Snow(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();
@@ -85,8 +86,13 @@ public class Snow extends GroundAttachable implements Mineable, RandomBlockMater
 
 	@Override
 	public void onRandomTick(Block block) {
-		if (block.getBlockLight() > 11) {
-			block.setMaterial(VanillaMaterials.AIR);
+		if (block.getBlockLight() > MIN_MELT_LIGHT) {
+			short data = block.getData();
+			if (data > 0) {
+				block.setData(data - 1);
+			} else {
+				block.setMaterial(VanillaMaterials.AIR);
+			}
 		}
 	}
 }

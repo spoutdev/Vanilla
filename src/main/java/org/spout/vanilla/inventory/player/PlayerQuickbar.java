@@ -66,7 +66,7 @@ public class PlayerQuickbar extends InventoryRange {
 	 */
 	public void setCurrentSlot(int slotIndex) {
 		this.checkSlotRange(slotIndex);
-		this.currentSlot = Spout.getEventManager().callEvent(new PlayerSlotChangeEvent(this.owner.getPlayer(), this.currentSlot, slotIndex)).getNewSlotIndex();
+		this.currentSlot = Spout.getEventManager().callEvent(new PlayerSlotChangeEvent(this.owner.getParent(), this.currentSlot, slotIndex)).getNewSlotIndex();
 	}
 
 	/**

@@ -166,7 +166,7 @@ public class AdministrationCommands {
 
 		vplayer.getInventory().getMain().addItem(new ItemStack(material, data, count), false);
 
-		source.sendMessage("Gave ", vplayer.getPlayer().getName(), " ", count, " ", material.getSubMaterial(data).getDisplayName());
+		source.sendMessage("Gave ", vplayer.getParent().getName(), " ", count, " ", material.getSubMaterial(data).getDisplayName());
 	}
 
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
@@ -301,7 +301,7 @@ public class AdministrationCommands {
 				throw new CommandException("A game mode must be either a number between 1 and 2, 'CREATIVE' or 'SURVIVAL'");
 		}
 		if (!player.equals(source)) {
-			source.sendMessage(p.getPlayer().getName(), "'s game mode has been changed to ", message, ".");
+			source.sendMessage(p.getParent().getName(), "'s game mode has been changed to ", message, ".");
 		}
 	}
 

@@ -35,12 +35,13 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 import org.spout.api.player.Player;
-import org.spout.api.tickable.ITickable;
+import org.spout.api.tickable.BasicTickable;
+import org.spout.api.tickable.Tickable;
 
 import org.spout.vanilla.controller.object.misc.Lightning;
 import org.spout.vanilla.data.Weather;
 
-public class LightningSimulator implements ITickable {
+public class LightningSimulator extends BasicTickable {
 	private static final int MAX_LIGHTNING_BRANCHES = 5;
 	private static Random ra = new Random();
 	final WeatherSimulator weather;

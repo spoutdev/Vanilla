@@ -266,7 +266,7 @@ public class TestCommands {
 		}
 
 		VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
-		Player player = vanillaPlayer.getPlayer();
+		Player player = vanillaPlayer.getParent();
 		String name = player.getName();
 		if (invisible.contains(name)) {
 			invisible.remove(name);

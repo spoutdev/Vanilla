@@ -39,7 +39,8 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.player.Player;
-import org.spout.api.tickable.ITickable;
+import org.spout.api.tickable.BasicTickable;
+import org.spout.api.tickable.Tickable;
 
 import org.spout.vanilla.controller.WindowController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -51,7 +52,7 @@ import org.spout.vanilla.event.window.WindowSetSlotsEvent;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 
-public class Window implements InventoryViewer, ITickable {
+public class Window extends BasicTickable implements InventoryViewer {
 	protected final WindowType type;
 	protected final int instanceId;
 	protected String title;
@@ -158,7 +159,7 @@ public class Window implements InventoryViewer, ITickable {
 	 * @return the player
 	 */
 	public Player getPlayer() {
-		return this.owner.getPlayer();
+		return this.owner.getParent();
 	}
 
 	/**

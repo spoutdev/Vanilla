@@ -131,7 +131,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			return;
 		}
 
-		Player player = getPlayer();
+		Player player = getParent();
 		if (player == null || player.getSession() == null) {
 			return;
 		}
@@ -276,7 +276,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @param foodSaturation The value to set to
 	 */
 	public void setFoodSaturation(float foodSaturation) {
-		PlayerFoodSaturationChangeEvent event = new PlayerFoodSaturationChangeEvent(this.getPlayer(), foodSaturation);
+		PlayerFoodSaturationChangeEvent event = new PlayerFoodSaturationChangeEvent(this.getParent(), foodSaturation);
 		Spout.getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
 			if (event.getFoodSaturation() > hunger) {
@@ -301,7 +301,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @param hunger
 	 */
 	public void setHunger(short hunger) {
-		PlayerHungerChangeEvent event = new PlayerHungerChangeEvent(this.getPlayer(), hunger);
+		PlayerHungerChangeEvent event = new PlayerHungerChangeEvent(this.getParent(), hunger);
 		Spout.getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
 			if (event.getHunger() > maxHunger) {
@@ -327,8 +327,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	@Override
-	public Player getPlayer() {
-		return owner;
+	public Player getParent() {
+		return (Player) super.getParent();
 	}
 
 	public boolean hasInfiniteResources() {
@@ -416,7 +416,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @param op
 	 */
 	public void setOp(boolean op) {
-		String playerName = getPlayer().getName();
+		String playerName = getParent().getName();
 		VanillaConfiguration.OPS.setOp(playerName, op);
 	}
 
@@ -425,7 +425,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @return true if an operator.
 	 */
 	public boolean isOp() {
-		String playerName = getPlayer().getName();
+		String playerName = getParent().getName();
 		return VanillaConfiguration.OPS.isOp(playerName);
 	}
 

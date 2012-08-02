@@ -26,5 +26,7 @@
  */
 package org.spout.vanilla.controller;
 
-public interface VanillaController {
+import org.spout.api.entity.component.Controller;
+
+public interface VanillaController extends Controller {
 }

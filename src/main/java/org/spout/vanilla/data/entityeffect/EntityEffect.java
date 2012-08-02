@@ -94,7 +94,7 @@ public abstract class EntityEffect extends TimedLogicRunnable<VanillaPlayer> {
 
 	@Override
 	public void onRegistration() {
-		getParent().getPlayer().getSession().send(false, getApplianceMessage());
+		getParent().getParent().getSession().send(false, getApplianceMessage());
 	}
 
 	@Override
@@ -104,6 +104,6 @@ public abstract class EntityEffect extends TimedLogicRunnable<VanillaPlayer> {
 
 	@Override
 	public void run() {
-		getParent().getPlayer().getSession().send(false, getRemovalMessage());
+		getParent().getParent().getSession().send(false, getRemovalMessage());
 	}
 }

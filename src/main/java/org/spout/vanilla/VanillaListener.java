@@ -147,7 +147,7 @@ public class VanillaListener implements Listener {
 			VanillaPlayer sp = (VanillaPlayer) c;
 			short health = (short) sp.getHealth();
 			health += (short) event.getChange();
-			VanillaNetworkUtil.sendPacket(sp.getPlayer(), new UpdateHealthMessage(health, sp.getHunger(), sp.getFoodSaturation()));
+			VanillaNetworkUtil.sendPacket(sp.getParent(), new UpdateHealthMessage(health, sp.getHunger(), sp.getFoodSaturation()));
 		}
 	}
 }

@@ -38,6 +38,7 @@ import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
+import org.spout.api.entity.component.controller.BasicController;
 import org.spout.api.entity.component.controller.PlayerController;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.geo.cuboid.Block;
@@ -62,7 +63,7 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 /**
  * Controller that is the parent of all entity controllers.
  */
-public abstract class VanillaActionController extends Controller implements VanillaController {
+public abstract class VanillaActionController extends BasicController implements VanillaController {
 	private final VanillaControllerType type;
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();

@@ -38,7 +38,7 @@ public class WeatherSimulator implements ITickable {
 	private final VanillaSky sky;
 	protected final Random random = new Random();
 	protected Weather weather = Weather.CLEAR, forecast = Weather.CLEAR;
-	protected float ticksUntilWeatherChange = random.nextFloat() * 5 * 60;
+	protected float secondsUntilWeatherChange = 120F + random.nextFloat() * 5 * 60;
 	protected boolean forceWeatherUpdate = false;
 	protected LightningSimulator lightning;
 	protected float previousRainStrength, currentRainStrength;
@@ -120,12 +120,12 @@ public class WeatherSimulator implements ITickable {
 
 	@Override
 	public void onTick(float dt) {
-		ticksUntilWeatherChange -= dt;
-		if (forceWeatherUpdate || ticksUntilWeatherChange <= 0) {
+		secondsUntilWeatherChange -= dt;
+		if (forceWeatherUpdate || secondsUntilWeatherChange <= 0) {
 			this.sky.updateWeather(weather, forecast);
 			weather = forecast;
 			forecast = Weather.get(random.nextInt(3));
-			ticksUntilWeatherChange = random.nextFloat() * 5 * 60;
+			secondsUntilWeatherChange = 120F + random.nextFloat() * 5 * 60;
 			forceWeatherUpdate = false;
 		}
 		this.previousRainStrength = this.currentRainStrength;

@@ -57,7 +57,7 @@ public final class ChannelBufferUtils {
 	/**
 	 * The UTF-8 character set.
 	 */
-	private static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
+	public static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
 
 	/**
 	 * Writes a list of parameters (e.g. mob metadata) to the buffer.

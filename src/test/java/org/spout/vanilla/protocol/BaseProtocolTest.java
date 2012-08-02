@@ -56,12 +56,8 @@ public abstract class BaseProtocolTest {
 		for (Message message : testMessages) {
 			MessageCodec<?> codec = codecLookup.find(message.getClass());
 			assertNotNull("Message " + message + " did not have a codec!", codec);
-			int opcode = codec.getOpcode();
-			if (!codec.isExpanded()) {
-				opcode <<= 8;
-			}
-			MessageCodec<?> idCodec = codecLookup.find(opcode);
-			assertNotNull("No codec for opcode " + opcode + " in codec lookup!", idCodec);
+			MessageCodec<?> idCodec = codecLookup.find(codec.getOpcode());
+			assertNotNull("No codec for opcode " + codec.getOpcode() + " in codec lookup!", idCodec);
 		}
 	}
 
@@ -85,19 +81,11 @@ public abstract class BaseProtocolTest {
 		for (Message message : testMessages) {
 			MessageCodec<?> codec = codecLookup.find(message.getClass());
 			if (codec != null) {
-				int opcode = codec.getOpcode();
-				if (!codec.isExpanded()) {
-					opcode <<= 8;
-				}
-				testedOpcodes.add(opcode);
+				testedOpcodes.add(codec.getOpcode());
 			}
 		}
 		for (MessageCodec<?> codec : codecLookup.getCodecs()) {
-			int opcode = codec.getOpcode();
-			if (!codec.isExpanded()) {
-				opcode <<= 8;
-			}
-			assertTrue("Opcode " + opcode + " (non-expanded: " + (opcode >> 8) + ") not tested", testedOpcodes.contains(opcode));
+			assertTrue("Opcode " + codec.getOpcode() + " not tested", testedOpcodes.contains(codec.getOpcode()));
 		}
 	}
 }

@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.protocol;
 
+import java.io.IOException;
+
+import org.apache.commons.lang3.tuple.Pair;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.chat.ChatArguments;
@@ -40,11 +43,15 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
 
 import org.spout.api.protocol.Session;
+import org.spout.api.protocol.common.message.CustomDataMessage;
+import org.spout.api.util.Named;
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.chat.style.VanillaStyleHandler;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class VanillaProtocol extends Protocol {
@@ -68,15 +75,26 @@ public class VanillaProtocol extends Protocol {
 		}
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T extends Message> Message getWrappedMessage(boolean upstream, T dynamicMessage) throws IOException {
+		MessageCodec<T> codec = (MessageCodec<T>)getCodecLookupService().find(dynamicMessage.getClass());
+		ChannelBuffer buffer = codec.encode(upstream, dynamicMessage);
+
+		return new CustomDataMessage(getName(codec), buffer.array());
+	}
+
+	@Override
 	public MessageCodec<?> readHeader(ChannelBuffer buf) throws UnknownPacketException {
 		int opcode = buf.readUnsignedByte();
-		MessageCodec<?> codec = getCodecLookupService().find(opcode << 8);
+		MessageCodec<?> codec = getCodecLookupService().find(opcode);
 		if (codec == null) {
 			throw new UnknownPacketException(opcode);
 		}
 		return codec;
 	}
 
+	@Override
 	public ChannelBuffer writeHeader(MessageCodec<?> codec, ChannelBuffer data) {
 		ChannelBuffer buffer = ChannelBuffers.buffer(1);
 		buffer.writeByte(codec.getOpcode());
@@ -90,7 +108,16 @@ public class VanillaProtocol extends Protocol {
 
 	@Override
 	public Message getIntroductionMessage(String playerName) {
-		return null; //return new HandshakeMessage(playerName); //TODO Fix this Raphfrk
+		//return new HandshakeMessage(VanillaPlugin.MINECRAFT_PROTOCOL_ID, playerName); //TODO Fix this Raphfrk
+		return null;
+	}
+
+	private String getName(MessageCodec<?> codec) {
+		if (codec instanceof Named) {
+			return ((Named) codec).getName();
+		} else {
+			return "Spout-" + codec.getOpcode();
+		}
 	}
 
 	@Override
@@ -107,5 +134,21 @@ public class VanillaProtocol extends Protocol {
 				VanillaNetworkUtil.sendPacket(vanillaPlayer.getPlayer(), new UpdateHealthMessage((short) vanillaPlayer.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
 			}
 		}
+
+		StringBuilder listBuilder = new StringBuilder();
+		for (Pair<Integer, String> item : getDynamicallyRegisteredPackets()) {
+			MessageCodec<?> codec = getCodecLookupService().find(item.getLeft());
+			if (codec != null) {
+				if (listBuilder.length() > 0) {
+					listBuilder.append('\0');
+				}
+				System.out.println(codec);
+				listBuilder.append(getName(codec));
+			} else {
+				throw new IllegalArgumentException("Dynamic packet class" + item.getRight() + " claims to be registered but is not in CodecLookupService!");
+			}
+		}
+
+		session.send(false, new CustomDataMessage("REGISTER", listBuilder.toString().getBytes(ChannelBufferUtils.CHARSET_UTF8)));
 	}
 }

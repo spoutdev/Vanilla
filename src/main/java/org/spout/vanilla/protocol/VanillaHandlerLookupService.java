@@ -26,12 +26,7 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.spout.api.protocol.HandlerLookupService;
-import org.spout.api.protocol.Message;
-import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.common.handler.CustomDataMessageHandler;
 import org.spout.api.protocol.common.message.CustomDataMessage;
 
@@ -87,13 +82,8 @@ import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 
 public class VanillaHandlerLookupService extends HandlerLookupService {
-	protected static final Map<Class<? extends Message>, MessageHandler<?>> handlers = new HashMap<Class<? extends Message>, MessageHandler<?>>();
 
 	public VanillaHandlerLookupService() {
-		super();
-	}
-
-	static {
 		try {
 			bind(HandshakeMessage.class, BootstrapHandshakeMessageHandler.class);
 			bind(LoginRequestMessage.class, BootstrapLoginRequestMessageHandler.class);
@@ -124,15 +114,5 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}
-	}
-
-	protected static <T extends Message> void bind(Class<T> clazz, Class<? extends MessageHandler<T>> handlerClass) throws InstantiationException, IllegalAccessException {
-		handlers.put(clazz, handlerClass.newInstance());
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends Message> MessageHandler<T> find(Class<T> clazz) {
-		return (MessageHandler<T>) handlers.get(clazz);
 	}
 }

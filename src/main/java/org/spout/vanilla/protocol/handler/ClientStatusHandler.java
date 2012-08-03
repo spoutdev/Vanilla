@@ -85,7 +85,6 @@ public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 			if (ep != null) {
 				Message[] spawn = ep.getSpawnMessage(player);
 				VanillaNetworkUtil.broadcastPacket(new Player[]{player}, spawn);
-
 			}
 		}
 	}

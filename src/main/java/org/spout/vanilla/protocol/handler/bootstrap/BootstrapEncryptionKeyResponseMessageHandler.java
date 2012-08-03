@@ -92,7 +92,6 @@ public class BootstrapEncryptionKeyResponseMessageHandler extends MessageHandler
 			String handshakeUsername = session.getDataMap().get(VanillaProtocol.HANDSHAKE_USERNAME);
 			final String finalName = handshakeUsername.split(";")[0];
 			session.getDataMap().put("username", finalName);
-			Spout.log("Test");
 
 			Runnable runnable = new Runnable() {
 				public void run() {

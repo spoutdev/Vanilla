@@ -55,14 +55,6 @@ public class Human extends Living {
 
 	public Human() {
 		super(VanillaControllerTypes.HUMAN);
-		title = data().get(Data.TITLE);
-		setHeadHeight(1.62f);
-		miningDamage = new int[miningDamagePeriod];
-	}
-
-	public Human(String title) {
-		super(VanillaControllerTypes.HUMAN);
-		this.title = title;
 		setHeadHeight(1.62f);
 		miningDamage = new int[miningDamagePeriod];
 	}

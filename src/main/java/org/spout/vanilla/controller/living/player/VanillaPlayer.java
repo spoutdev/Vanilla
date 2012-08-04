@@ -97,11 +97,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @param gameMode {@link GameMode} of the player.
 	 */
 	public VanillaPlayer(GameMode gameMode) {
-		super(""); //TODO Fix this
 		this.gameMode = gameMode;
 		compassTarget = getParent().getWorld().getSpawnPoint().getPosition();
 		tabListName = getParent().getName();
-		title = getParent().getName();
 		setRenderedItemInHand(playerInventory.getQuickbar().getCurrentItem());
 	}
 

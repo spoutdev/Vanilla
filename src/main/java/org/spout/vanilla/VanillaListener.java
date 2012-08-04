@@ -75,6 +75,7 @@ public class VanillaListener implements Listener {
 		// Set their mode
 		Player player = event.getPlayer();
 		VanillaPlayer vanillaPlayer = new VanillaPlayer(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
+		vanillaPlayer.setTitle(player.getDisplayName());
 
 		player.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
 
@@ -129,16 +130,14 @@ public class VanillaListener implements Listener {
 
 	@EventHandler(order = Order.EARLIEST)
 	public void onPermissionNode(PermissionNodeEvent event) {
-		PermissionsSubject subject = event.getSubject();
-		if (VanillaConfiguration.OPS.isOp(subject.getName())) {
+		if (VanillaConfiguration.OPS.isOp(event.getSubject().getName())) {
 			event.setResult(Result.ALLOW);
 		}
 	}
 
 	@EventHandler
 	public void onHealthChange(EntityHealthChangeEvent event) {
-		Source source = event.getSource();
-		if (source == HealthChangeReason.SPAWN) {
+		if (event.getSource() == HealthChangeReason.SPAWN) {
 			return;
 		}
 

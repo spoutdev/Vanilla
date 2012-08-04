@@ -35,6 +35,7 @@ import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
+import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.component.controller.BlockController;
@@ -56,6 +57,7 @@ import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.entityeffect.potion.Speed;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomObject;
@@ -345,9 +347,10 @@ public class TestCommands {
 		if (!(source instanceof Player)) {
 			throw new CommandException("Only a player may spawn an npc");
 		}
-
-		Player player = (Player) source;
-		Entity entity = player;
-		entity.getWorld().createAndSpawnEntity(entity.getPosition(), new Human(args.getString(0)));
+		Player spawner = (Player) source;
+		Human npc = new Human();
+		String title = npc.data().get(Data.TITLE);
+		npc.setTitle(title.equals("") ? "Steve" : title);
+		spawner.getWorld().createAndSpawnEntity(spawner.getPosition(), npc);
 	}
 }

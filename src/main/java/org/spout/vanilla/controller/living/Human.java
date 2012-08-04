@@ -74,7 +74,6 @@ public class Human extends Living {
 		setMaxHealth(20);
 		setHealth(20, HealthChangeReason.SPAWN);
 		getParent().setObserver(true);
-		getParent().setViewDistance(64);
 	}
 
 	@Override

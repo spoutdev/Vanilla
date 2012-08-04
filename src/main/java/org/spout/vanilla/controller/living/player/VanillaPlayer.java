@@ -43,9 +43,12 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
+import org.spout.api.tickable.LogicPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.action.CreativeRunnable;
+import org.spout.vanilla.controller.action.SurvivalRunnable;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
@@ -73,8 +76,7 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacket;
  * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
  */
 public class VanillaPlayer extends Human implements PlayerController {
-	protected final Player owner;
-	protected long unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt(), lastPing = 0, lastUserList = 0, foodTimer = 0;
+	protected long unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt(), lastPing = 0, lastUserList = 0;
 	protected short count = 0, ping, maxHunger = 20, hunger = maxHunger;
 	protected float foodSaturation = 5.0f, exhaustion = 0.0f;
 	protected boolean poisoned;
@@ -86,32 +88,28 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected Window activeWindow = new DefaultWindow(this);
 	protected String tabListName;
 	protected GameMode gameMode;
-	protected int distanceMoved;
 	protected final Set<Player> invisibleFor = new HashSet<Player>();
 	protected Point compassTarget;
 	protected boolean playerDead = false;
 
 	/**
 	 * Constructs a new VanillaPlayer to use as a {@link PlayerController} for the given player.
-	 * @param p {@link Player} parent of the controller.
 	 * @param gameMode {@link GameMode} of the player.
 	 */
-	public VanillaPlayer(Player p, GameMode gameMode) {
-		super(p.getName());
-		setRenderedItemInHand(playerInventory.getQuickbar().getCurrentItem());
-		owner = p;
-		tabListName = owner.getName();
-		compassTarget = owner.getWorld().getSpawnPoint().getPosition();
+	public VanillaPlayer(GameMode gameMode) {
+		super(""); //TODO Fix this
 		this.gameMode = gameMode;
-		this.title = p.getName();
+		compassTarget = getParent().getWorld().getSpawnPoint().getPosition();
+		tabListName = getParent().getName();
+		title = getParent().getName();
+		setRenderedItemInHand(playerInventory.getQuickbar().getCurrentItem());
 	}
 
 	/**
 	 * Constructs a new VanillaPlayer to use as a {@link PlayerController} for the given player.
-	 * @param p {@link Player} parent of the controller.
 	 */
-	public VanillaPlayer(Player p) {
-		this(p, GameMode.SURVIVAL);
+	public VanillaPlayer() {
+		this(GameMode.SURVIVAL);
 	}
 
 	@Override
@@ -121,6 +119,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setPosition(spawn.getPosition());
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
+		//Survival mode
+		registerProcess(new SurvivalRunnable(this, LogicPriority.HIGHEST));
+		//Creative mode
+		registerProcess(new CreativeRunnable(this, LogicPriority.HIGHEST));
 		super.onAttached();
 	}
 
@@ -152,12 +154,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 			lastUserList = 0;
 		}
 
-		if (isSurvival()) {
-			survivalTick(dt);
-		} else {
-			creativeTick(dt);
-		}
-
 		// Update window
 		this.getActiveWindow().onTick(dt);
 	}
@@ -165,77 +161,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public boolean isSavable() {
 		return false;
-	}
-
-	private void survivalTick(float dt) {
-		if ((distanceMoved += getPreviousPosition().distanceSquared(getParent().getPosition())) >= 1) {
-			exhaustion += ExhaustionLevel.WALKING.getAmount();
-			distanceMoved = 0;
-		}
-
-		if (sprinting) {
-			exhaustion += ExhaustionLevel.SPRINTING.getAmount();
-		}
-
-		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
-		if (poisoned) {
-			exhaustion += ExhaustionLevel.FOOD_POISONING.getAmount() / 30 * dt;
-		}
-
-		// Track hunger
-		foodTimer++;
-		if (foodTimer >= 80) {
-			updateHealthAndHunger();
-			foodTimer = 0;
-		}
-	}
-
-	private void updateHealthAndHunger() {
-		short health;
-		health = (short) getHealth();
-
-		boolean changed = false;
-		if (exhaustion > 4.0) {
-			exhaustion -= 4.0;
-			if (foodSaturation > 0) {
-				setFoodSaturation(Math.max(foodSaturation - 1f, 0));
-				changed = true;
-			} else {
-				setHunger((short) Math.max(hunger - 1, 0));
-				changed = true;
-			}
-		}
-
-		if (hunger <= 0 && health > 0) {
-
-			int maxDrop = 0;
-			
-			//TODO: Disabled since there's a save error or something. The if NPE
-			/*if (owner.getEntity().getWorld().get(VanillaData.DIFFICULTY) == Difficulty.EASY) {
-				maxDrop = 10;
-			} else if (owner.getEntity().getWorld().get(VanillaData.DIFFICULTY) == Difficulty.NORMAL) {
-				maxDrop = 1;
-			}*/
-			if (maxDrop < health) {
-				setHealth((short) Math.max(health - 1, maxDrop), DamageCause.STARVE);
-				changed = true;
-			}
-			
-		} else if (hunger >= 18 && health < 20) {
-			setHealth((short) Math.min(health + 1, 20), HealthChangeReason.REGENERATION);
-			changed = true;
-		}
-
-		if (changed && Spout.debugMode()) {
-			System.out.println("Performing health/hunger update...");
-			System.out.println("Food saturation: " + foodSaturation);
-			System.out.println("Hunger: " + hunger);
-			System.out.println("Health: " + health);
-			System.out.println("Exhaustion: " + exhaustion);
-		}
-	}
-
-	private void creativeTick(float dt) {
 	}
 
 	@Override
@@ -425,8 +350,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * @return true if an operator.
 	 */
 	public boolean isOp() {
-		String playerName = getParent().getName();
-		return VanillaConfiguration.OPS.isOp(playerName);
+		return VanillaConfiguration.OPS.isOp(getParent().getName());
 	}
 
 	/**

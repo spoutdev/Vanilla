@@ -26,12 +26,16 @@
  */
 package org.spout.vanilla.controller.block;
 
+import org.spout.api.Spout;
+import org.spout.api.event.EventManager;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.InventoryOwner;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.block.FurnaceBurnEvent;
+import org.spout.vanilla.event.entity.CraftingResultEvent;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
@@ -44,6 +48,7 @@ public class Furnace extends VanillaWindowBlockController implements InventoryOw
 	private float burnTimeRemaining = 0, burnTimeTotal = 0;
 	private float craftTimeRemaining = 0, craftTimeTotal = 0;
 	//private float progress = 0, progressIncrement = 0, craftTime = 0;
+	private EventManager eventManager = Spout.getEngine().getEventManager();
 	private boolean isBurningState = false;
 
 	public Furnace() {
@@ -81,15 +86,18 @@ public class Furnace extends VanillaWindowBlockController implements InventoryOw
 				if (craftTimeRemaining <= 0f) {
 					// finished crafting the item
 					ItemStack result = ((TimedCraftable) input.getMaterial()).getResult();
-					if (output == null) {
-						output = result;
-					} else {
-						output.setAmount(output.getAmount() + result.getAmount());
-					}
+					CraftingResultEvent craftingResultEvent = eventManager.callEvent(new CraftingResultEvent(this.getBlock().getController(),result));
+					if (!craftingResultEvent.isCancelled()){
+						if (output == null) {
+							output = result;
+						} else {
+							output.setAmount(output.getAmount() + result.getAmount());
+						}
 
-					inventory.getIngredient().addItemAmount(-1);
-					inventory.getOutput().setItem(output);
-					craftTimeRemaining = craftTimeTotal = 0.0f;
+						inventory.getIngredient().addItemAmount(-1);
+						inventory.getOutput().setItem(output);
+						craftTimeRemaining = craftTimeTotal = 0.0f;
+					}
 				}
 			} else {
 				craftTimeRemaining = craftTimeTotal = 0.0f;
@@ -99,15 +107,18 @@ public class Furnace extends VanillaWindowBlockController implements InventoryOw
 		// Take new fuel if needed
 		if (burnTimeRemaining <= 0) {
 			if (inventory.hasFuel() && inventory.hasIngredient()) {
-				// Start burning
 				ItemStack fuelStack = inventory.getFuel().getItem();
-				Fuel fuel = (Fuel) fuelStack.getMaterial();
-				burnTimeRemaining = burnTimeTotal = fuel.getFuelTime();
+				FurnaceBurnEvent furnaceBurnEvent = eventManager.callEvent(new FurnaceBurnEvent(this,fuelStack));
+				if (!furnaceBurnEvent.isCancelled()){
+					// Start burning
+					Fuel fuel = (Fuel) fuelStack.getMaterial();
+					burnTimeRemaining = burnTimeTotal = fuel.getFuelTime();
 
-				TimedCraftable ingredient = (TimedCraftable) input.getMaterial();
-				craftTimeRemaining = craftTimeTotal = ingredient.getCraftTime();
+					TimedCraftable ingredient = (TimedCraftable) input.getMaterial();
+					craftTimeRemaining = craftTimeTotal = ingredient.getCraftTime();
 
-				inventory.getFuel().addItemAmount(-1);
+					inventory.getFuel().addItemAmount(-1);
+				}
 			} else {
 				burnTimeRemaining = burnTimeTotal = 0.0f;
 				craftTimeRemaining = craftTimeTotal = 0.0f;

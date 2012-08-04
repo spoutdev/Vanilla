@@ -62,7 +62,7 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 /**
  * Controller that is the parent of all entity controllers.
  */
-public abstract class VanillaActionController extends BasicController implements VanillaController {
+public abstract class VanillaEntityController extends BasicController implements VanillaController {
 	private final VanillaControllerType type;
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();
@@ -86,9 +86,9 @@ public abstract class VanillaActionController extends BasicController implements
 	private int deathTicks = -1;
 	// Damage
 	private Source lastDamage = DamageCause.UNKNOWN;
-	private VanillaActionController lastDamager;
+	private VanillaEntityController lastDamager;
 
-	protected VanillaActionController(VanillaControllerType type) {
+	protected VanillaEntityController(VanillaControllerType type) {
 		super(type);
 		this.type = type;
 	}
@@ -291,7 +291,7 @@ public abstract class VanillaActionController extends BasicController implements
 	 * @param lastDamager Controller that killed this controller, can be null if death was caused by natural sources such as drowning or burning
 	 * @return the drops to disperse.
 	 */
-	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
+	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
 		return new HashSet<ItemStack>();
 	}
 
@@ -387,7 +387,7 @@ public abstract class VanillaActionController extends BasicController implements
 	 * @param damager controller that damaged this controller
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
-	public void damage(int amount, DamageCause cause, VanillaActionController damager, boolean sendHurtMessage) {
+	public void damage(int amount, DamageCause cause, VanillaEntityController damager, boolean sendHurtMessage) {
 		// TODO take potion effects into account
 		setHealth(getHealth() - amount, HealthChangeReason.DAMAGE);
 		lastDamager = damager;

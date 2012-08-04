@@ -46,9 +46,9 @@ import org.spout.api.player.Player;
 import org.spout.api.tickable.LogicPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.VanillaActionController;
-import org.spout.vanilla.controller.action.CreativeRunnable;
-import org.spout.vanilla.controller.action.SurvivalRunnable;
+import org.spout.vanilla.controller.VanillaEntityController;
+import org.spout.vanilla.controller.runnable.gamemode.CreativeRunnable;
+import org.spout.vanilla.controller.runnable.gamemode.SurvivalRunnable;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.data.GameMode;
@@ -160,7 +160,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	@Override
-	public void damage(int amount, DamageCause cause, VanillaActionController damager, boolean sendHurtMessage) {
+	public void damage(int amount, DamageCause cause, VanillaEntityController damager, boolean sendHurtMessage) {
 		double amt = amount;
 		// Calculate damage reduction based on armor and enchantments
 		for (ItemStack item : getInventory().getArmor().getContents()) {
@@ -263,7 +263,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaActionController lastDamager) {
+	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
 		ItemStack[] contents = this.getInventory().getMain().getContents();
 		drops.addAll(Arrays.asList(contents));

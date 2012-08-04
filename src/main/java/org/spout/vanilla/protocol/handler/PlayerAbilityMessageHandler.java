@@ -30,7 +30,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 
@@ -42,7 +42,7 @@ public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbil
 		}
 
 		Player player = session.getPlayer();
-		if (!(player.getController() instanceof VanillaActionController)) {
+		if (!(player.getController() instanceof VanillaEntityController)) {
 			return;
 		}
 		((VanillaPlayer) player.getController()).setFlying(message.isFlying());

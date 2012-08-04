@@ -24,38 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.action;
+package org.spout.vanilla.controller.runnable.gamemode;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.geo.LoadOption;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
-import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
-public class GravityAction extends LogicRunnable<VanillaActionController> {
-	public GravityAction(VanillaActionController parent) {
-		super(parent);
+public class CreativeRunnable extends LogicRunnable<VanillaPlayer> {
+	public CreativeRunnable(VanillaPlayer parent, LogicPriority priority) {
+		super(parent, priority);
 	}
 
 	@Override
 	public boolean shouldRun(float dt) {
-		VanillaActionController controller = getParent();
-		Entity entity = controller.getParent();
-		Point future = entity.getPosition().add(controller.getVelocity());
-		//Non observers entities should not be loading chunks
-		if (!entity.isObserver() && future.getWorld().getChunkFromBlock(future, LoadOption.NO_LOAD) == null) {
-			return false;
-		}
-		BlockMaterial block = entity.getWorld().getBlock(future, entity).getMaterial();
-		return !block.isSolid();
+		return false;
 	}
 
 	@Override
 	public void run() {
-		VanillaActionController controller = getParent();
-		controller.setVelocity(controller.getVelocity().subtract(0, 0.04f, 0));
-		controller.move();
 	}
 }

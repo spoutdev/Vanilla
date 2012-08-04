@@ -35,7 +35,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.data.ExhaustionLevel;
@@ -72,8 +72,8 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 				return;
 			}
 
-			if (clickedEntity.getController() instanceof VanillaActionController) {
-				VanillaActionController damaged = (VanillaActionController) clickedEntity.getController();
+			if (clickedEntity.getController() instanceof VanillaEntityController) {
+				VanillaEntityController damaged = (VanillaEntityController) clickedEntity.getController();
 				if (clickedEntity.getController() instanceof VanillaPlayer && (!vPlayer.isSurvival() || !VanillaPlayerUtil.isSurvival(damaged.getParent()))) {
 					return;
 				}

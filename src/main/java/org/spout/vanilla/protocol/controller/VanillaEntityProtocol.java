@@ -35,7 +35,7 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.protocol.msg.DestroyEntitiesMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
@@ -56,10 +56,10 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 	public Message[] getUpdateMessage(Entity entity) {
 		Controller controller = entity.getController();
-		if (!(controller instanceof VanillaActionController)) {
+		if (!(controller instanceof VanillaEntityController)) {
 			return new Message[0];
 		}
-		VanillaActionController vController = (VanillaActionController) controller;
+		VanillaEntityController vController = (VanillaEntityController) controller;
 
 		// You have to use the last known CLIENT transform
 		// The last tick transform delta is not enough to properly send update messages
@@ -104,8 +104,8 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 			}
 		}
 
-		if (controller instanceof VanillaActionController) {
-			VanillaActionController vaController = (VanillaActionController) controller;
+		if (controller instanceof VanillaEntityController) {
+			VanillaEntityController vaController = (VanillaEntityController) controller;
 			if (vaController.needsVelocityUpdate()) {
 				messages.add(new EntityVelocityMessage(entity.getId(), vaController.getVelocity()));
 			}

@@ -32,12 +32,12 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public abstract class Living extends VanillaActionController {
+public abstract class Living extends VanillaEntityController {
 	private Point headPos = null;
 	private int headYaw = 0;
 	private int lastHeadYaw = 0;
@@ -55,7 +55,7 @@ public abstract class Living extends VanillaActionController {
 	public void onAttached() {
 		super.onAttached();
 		//registerAction(new GravityAction());
-		//registerAction(new WanderAction());
+		//registerAction(new WanderRunnable());
 	}
 
 	@Override

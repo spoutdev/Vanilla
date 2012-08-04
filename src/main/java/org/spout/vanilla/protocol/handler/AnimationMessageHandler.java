@@ -47,15 +47,15 @@ public final class AnimationMessageHandler extends MessageHandler<EntityAnimatio
 			case EntityAnimationMessage.ANIMATION_EAT_FOOD:
 				//TODO: Allow or deny event?
 				session.send(false, new EntityStatusMessage(player.getId(), EntityStatusMessage.EATING_ACCEPTED));
-				//TODO: Set the eating state in the VanillaActionController
+				//TODO: Set the eating state in the VanillaEntityController
 				break;
 			case EntityAnimationMessage.ANIMATION_CROUCH:
 				session.send(false, new EntityActionMessage(player.getId(), EntityActionMessage.ACTION_CROUCH));
-				//TODO Set this in VanillaActionController as apparently any entity can crouch?
+				//TODO Set this in VanillaEntityController as apparently any entity can crouch?
 				break;
 			case EntityAnimationMessage.ANIMATION_UNCROUCH:
 				session.send(false, new EntityActionMessage(player.getId(), EntityActionMessage.ACTION_UNCROUCH));
-				//TODO Set this in VanillaActionController as apparently any entity can crouch?
+				//TODO Set this in VanillaEntityController as apparently any entity can crouch?
 				break;
 			default:
 		}

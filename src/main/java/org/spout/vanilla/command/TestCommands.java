@@ -53,7 +53,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
@@ -301,11 +301,11 @@ public class TestCommands {
 		Set<Entity> entities = world.getAll();
 		int count = 0;
 		for (Entity entity : entities) {
-			if (entity.getController() instanceof PlayerController || (!(entity.getController() instanceof VanillaActionController))) {
+			if (entity.getController() instanceof PlayerController || (!(entity.getController() instanceof VanillaEntityController))) {
 				continue;
 			}
 			count++;
-			((VanillaActionController) entity.getController()).setHealth(0, HealthChangeReason.COMMAND);
+			((VanillaEntityController) entity.getController()).setHealth(0, HealthChangeReason.COMMAND);
 			entity.kill();
 			Spout.log(entity.getController().toString() + " was killed");
 		}

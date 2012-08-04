@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.action;
+package org.spout.vanilla.controller.runnable.ai;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.math.MathHelper;
@@ -32,12 +32,12 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.tickable.LogicRunnable;
 
-import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.VanillaEntityController;
 
-public class WanderAction extends LogicRunnable<VanillaActionController> {
+public class WanderRunnable extends LogicRunnable<VanillaEntityController> {
 	private static final int WANDER_FREQ = 25;
 
-	public WanderAction(VanillaActionController parent) {
+	public WanderRunnable(VanillaEntityController parent) {
 		super(parent);
 	}
 
@@ -48,7 +48,7 @@ public class WanderAction extends LogicRunnable<VanillaActionController> {
 
 	@Override
 	public void run() {
-		VanillaActionController controller = getParent();
+		VanillaEntityController controller = getParent();
 		Entity entity = controller.getParent();
 		//Get the direction the entity is facing
 		Vector3 entityForward = MathHelper.getDirectionVector(entity.getRotation());

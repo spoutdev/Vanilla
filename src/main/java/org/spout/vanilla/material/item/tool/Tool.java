@@ -34,7 +34,7 @@ import java.util.Set;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.controller.VanillaActionController;
+import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.creature.hostile.Silverfish;
 import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
 import org.spout.vanilla.controller.living.creature.hostile.Spider;
@@ -117,7 +117,7 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 		return true;
 	}
 
-	public int getDamageBonus(VanillaActionController damaged, ItemStack heldItem) {
+	public int getDamageBonus(VanillaEntityController damaged, ItemStack heldItem) {
 		// These enchantments conflict with each other, so only one is possible per item
 		int damage = 0;
 		if (EnchantmentUtil.hasEnchantment(heldItem, Enchantments.BANE_OF_ARTHROPODS)) {

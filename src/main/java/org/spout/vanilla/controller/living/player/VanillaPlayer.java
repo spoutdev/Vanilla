@@ -96,8 +96,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public VanillaPlayer(GameMode gameMode) {
 		this.gameMode = gameMode;
-		compassTarget = getParent().getWorld().getSpawnPoint().getPosition();
-		tabListName = getParent().getName();
 		setRenderedItemInHand(playerInventory.getQuickbar().getCurrentItem());
 	}
 
@@ -110,6 +108,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public void onAttached() {
+		compassTarget = getParent().getWorld().getSpawnPoint().getPosition();
+		tabListName = getParent().getName();
 		Transform spawn = getParent().getWorld().getSpawnPoint();
 		Quaternion rotation = spawn.getRotation();
 		getParent().setPosition(spawn.getPosition());

@@ -74,7 +74,7 @@ public class VanillaListener implements Listener {
 		}
 		// Set their mode
 		Player player = event.getPlayer();
-		VanillaPlayer vanillaPlayer = new VanillaPlayer(player, player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
+		VanillaPlayer vanillaPlayer = new VanillaPlayer(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
 
 		player.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
 

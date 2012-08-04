@@ -239,13 +239,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	public void sendUpdateHealth() {
-		sendPacket(owner, new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
+		sendPacket(getParent(), new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
 	}
 
 	@Override
 	public void onDeath() {
 		// Don't count disconnects/unknown exceptions as dead (Yes that's a difference!)
-		if (owner.getSession() != null && owner.getSession().getPlayer() != null) {
+		if (getParent().getSession() != null && getParent().getSession().getPlayer() != null) {
 			super.onDeath();
 			playerDead = true;
 		}
@@ -280,7 +280,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void setCompassTarget(Point compassTarget) {
 		this.compassTarget = compassTarget;
-		sendPacket(owner, new SpawnPositionMessage(compassTarget.getBlockX(), compassTarget.getBlockY(), compassTarget.getBlockZ()));
+		sendPacket(getParent(), new SpawnPositionMessage(compassTarget.getBlockX(), compassTarget.getBlockY(), compassTarget.getBlockZ()));
 	}
 
 	/**
@@ -383,7 +383,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void setGameMode(GameMode gameMode) {
 		this.gameMode = gameMode;
-		sendPacket(owner, new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, gameMode));
+		sendPacket(getParent(), new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, gameMode));
 	}
 
 	/**
@@ -442,11 +442,11 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.falling = newFalling;
 		if (this.falling) {
 			if (this.initialYFalling == 0.0f) {
-				this.initialYFalling = owner.getPosition().getY();
+				this.initialYFalling = getParent().getPosition().getY();
 			}
 
 		} else {
-			int totalDmg = (int) ((this.initialYFalling - owner.getPosition().getY()) - 3);
+			int totalDmg = (int) ((this.initialYFalling - getParent().getPosition().getY()) - 3);
 			if (totalDmg > 0) {
 				setHealth(getHealth() - totalDmg, DamageCause.FALL);
 			}
@@ -585,7 +585,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 * Rolls the credits located on the client.
 	 */
 	public void rollCredits() {
-		owner.getSession().send(false, new ChangeGameStateMessage(ChangeGameStateMessage.ENTER_CREDITS));
+		getParent().getSession().send(false, new ChangeGameStateMessage(ChangeGameStateMessage.ENTER_CREDITS));
 	}
 
 	@Override

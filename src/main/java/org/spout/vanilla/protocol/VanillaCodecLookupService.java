@@ -31,6 +31,7 @@ import org.spout.api.protocol.common.codec.CustomDataCodec;
 
 import org.spout.vanilla.protocol.codec.BlockActionCodec;
 import org.spout.vanilla.protocol.codec.BlockChangeCodec;
+import org.spout.vanilla.protocol.codec.BulkChunkCodec;
 import org.spout.vanilla.protocol.codec.ChangeGameStateCodec;
 import org.spout.vanilla.protocol.codec.ChatCodec;
 import org.spout.vanilla.protocol.codec.ClientStatusCodec;
@@ -195,6 +196,8 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			bind(BlockChangeCodec.class);
 			/* 0x36 */
 			bind(BlockActionCodec.class);
+			/* 0x38 */
+			bind(BulkChunkCodec.class);
 			/* 0x3C */
 			bind(ExplosionCodec.class);
 			/* 0x3D */

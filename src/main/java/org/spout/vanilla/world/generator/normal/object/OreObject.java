@@ -30,9 +30,10 @@ import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.math.SinusHelper;
+import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaMathHelper;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
 public class OreObject extends RandomObject {
@@ -124,10 +125,11 @@ public class OreObject extends RandomObject {
 	@Override
 	public void placeObject(World world, int originX, int originY, int originZ) {
 		final float angle = random.nextFloat() * (float) Math.PI;
-		final float x1 = ((originX + 8) + VanillaMathHelper.sin(angle) * clusterSize / 8);
-		final float x2 = ((originX + 8) - VanillaMathHelper.sin(angle) * clusterSize / 8);
-		final float z1 = ((originZ + 8) + VanillaMathHelper.cos(angle) * clusterSize / 8);
-		final float z2 = ((originZ + 8) - VanillaMathHelper.cos(angle) * clusterSize / 8);
+		Vector2 offset = SinusHelper.get2DAxis(angle).multiply(clusterSize / 8);
+		final float x1 = ((originX + 8) + offset.getX());
+		final float x2 = ((originX + 8) - offset.getX());
+		final float z1 = ((originZ + 8) + offset.getY());
+		final float z2 = ((originZ + 8) - offset.getY());
 		final float y1 = (originY + random.nextInt(3) + 2);
 		final float y2 = (originY + random.nextInt(3) + 2);
 
@@ -135,7 +137,7 @@ public class OreObject extends RandomObject {
 			final float seedX = x1 + (x2 - x1) * count / clusterSize;
 			final float seedY = y1 + (y2 - y1) * count / clusterSize;
 			final float seedZ = z1 + (z2 - z1) * count / clusterSize;
-			final float size = ((VanillaMathHelper.sin(count * (float) Math.PI / clusterSize) + 1) * random.nextFloat() * clusterSize / 16 + 1) / 2;
+			final float size = ((SinusHelper.sin(count * (float) Math.PI / clusterSize) + 1) * random.nextFloat() * clusterSize / 16 + 1) / 2;
 
 			final int startX = (int) (seedX - size);
 			final int startY = (int) (seedY - size);

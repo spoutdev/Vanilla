@@ -36,11 +36,11 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
+import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Water;
-import org.spout.vanilla.util.VanillaMathHelper;
 
 public class CavePopulator extends Populator {
 	private static final byte OVERLAP = 8;
@@ -117,10 +117,9 @@ public class CavePopulator extends Populator {
 		}
 
 		for (; startingNode < nodeAmount; startingNode++) {
-			final float horizontalSize = (float) (1.5 + VanillaMathHelper.sin(startingNode * (float) Math.PI / nodeAmount) * horizontalScale);
+			final float horizontalSize = (float) (1.5 + SinusHelper.sin(startingNode * (float) Math.PI / nodeAmount) * horizontalScale);
 			final float verticalSize = horizontalSize * verticalScale;
-			final float diskXZ = VanillaMathHelper.cos(verticalAngle);
-			target = target.add(VanillaMathHelper.cos(horizontalAngle) * diskXZ, VanillaMathHelper.sin(verticalAngle), VanillaMathHelper.sin(horizontalAngle) * diskXZ);
+			target = target.add(SinusHelper.get3DAxis(horizontalSize, verticalSize));
 
 			if (extraVerticalScale) {
 				verticalAngle *= 0.92;

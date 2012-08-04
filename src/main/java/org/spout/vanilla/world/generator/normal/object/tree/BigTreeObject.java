@@ -32,11 +32,12 @@ import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.SinusHelper;
+import org.spout.api.math.Vector2;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.Sapling;
-import org.spout.vanilla.util.VanillaMathHelper;
 
 public class BigTreeObject extends TreeObject {
 	private float trunkHeightMultiplier = 0.618f;
@@ -115,10 +116,10 @@ public class BigTreeObject extends TreeObject {
 			}
 
 			for (byte count = 0; count < groupsPerLayer; count++) {
-				final float randomAngle = (float) (Math.PI * 2f * random.nextFloat());
 				final float scale = widthScale * layerSize * (random.nextFloat() + 0.328f);
-				final int groupX = (int) (scale * VanillaMathHelper.sin(randomAngle) + x + 0.5);
-				final int groupZ = (int) (scale * VanillaMathHelper.cos(randomAngle) + z + 0.5);
+				Vector2 randomOffset = SinusHelper.getRandom2DAxis(random).multiply(scale);
+				final int groupX = (int) (randomOffset.getX() + x + 0.5);
+				final int groupZ = (int) (randomOffset.getY() + z + 0.5);
 				final Point group = new Point(world, groupX, groupY, groupZ);
 				if (getAvailableBlockSpace(group, group.add(0, leafDistanceLimit, 0)) != -1) {
 					continue;

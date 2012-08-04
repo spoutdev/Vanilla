@@ -27,14 +27,14 @@
 package org.spout.vanilla.data.entityeffect;
 
 import org.spout.api.protocol.Message;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
 public abstract class VanillaEntityFoodEffect extends EntityEffect {
-
-	public VanillaEntityFoodEffect(VanillaPlayer effected, float amount){
-		super(effected, 0,1,amount);
+	public VanillaEntityFoodEffect(VanillaPlayer effected, float amount) {
+		super(effected, 0, 1, amount);
 	}
-	
+
 	public VanillaEntityFoodEffect(VanillaPlayer effected, int duration, float amount) {
 		super(effected, 0, duration, amount);
 	}
@@ -58,11 +58,13 @@ public abstract class VanillaEntityFoodEffect extends EntityEffect {
 	public Message getRemovalMessage() {
 		return null;
 	}
-	
+
 	@Override
 	public abstract void onRegistration();
-	
-	@Override
-	public void run() {};
 
+	@Override
+	public void run() {
+	}
+
+	;
 }

@@ -27,12 +27,12 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
 public class LocalViewDistanceMessage extends Message {
 	public static byte VIEW_FAR = 0, VIEW_NORMAL = 1, VIEW_SHORT = 2, VIEW_TINY = 3;
-
 	private String locale;
 	private byte viewDistance, chatFlags, difficulty;
 
@@ -46,13 +46,12 @@ public class LocalViewDistanceMessage extends Message {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-		.append("locale", locale)
-		.append("viewdistance", viewDistance)
-		.append("chatflags", chatFlags)
-		.append("difficulty", difficulty)
-		.toString();
+				.append("locale", locale)
+				.append("viewdistance", viewDistance)
+				.append("chatflags", chatFlags)
+				.append("difficulty", difficulty)
+				.toString();
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -64,11 +63,11 @@ public class LocalViewDistanceMessage extends Message {
 		}
 		final LocalViewDistanceMessage other = (LocalViewDistanceMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-			.append(this.locale, other.locale)
-			.append(this.viewDistance, other.viewDistance)
-			.append(this.chatFlags, other.chatFlags)
-			.append(this.difficulty, other.difficulty)
-			.isEquals();
+				.append(this.locale, other.locale)
+				.append(this.viewDistance, other.viewDistance)
+				.append(this.chatFlags, other.chatFlags)
+				.append(this.difficulty, other.difficulty)
+				.isEquals();
 	}
 
 	public String getLocale() {
@@ -102,5 +101,4 @@ public class LocalViewDistanceMessage extends Message {
 	public void setDifficulty(byte difficulty) {
 		this.difficulty = difficulty;
 	}
-
 }

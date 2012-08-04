@@ -37,10 +37,10 @@ import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbilityMessage> {
 	@Override
 	public void handleServer(Session session, PlayerAbilityMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 		if (!(player.getController() instanceof VanillaActionController)) {
 			return;

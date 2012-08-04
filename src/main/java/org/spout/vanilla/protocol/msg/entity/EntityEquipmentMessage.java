@@ -30,6 +30,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.msg.EntityMessage;
 
 public final class EntityEquipmentMessage extends EntityMessage {
@@ -38,7 +39,6 @@ public final class EntityEquipmentMessage extends EntityMessage {
 	public static final int LEGGINGS_SLOT = 2;
 	public static final int CHESTPLATE_SLOT = 3;
 	public static final int HELMET_SLOT = 4;
-
 	private int slot;
 	private final ItemStack item;
 

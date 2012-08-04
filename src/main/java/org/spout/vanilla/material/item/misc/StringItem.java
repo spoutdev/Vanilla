@@ -30,7 +30,6 @@ import org.spout.vanilla.material.block.misc.TripWire;
 import org.spout.vanilla.material.item.BlockItem;
 
 public class StringItem extends BlockItem {
-
 	public StringItem(String name, int id, TripWire onPlaceMaterial) {
 		super(name, id, onPlaceMaterial);
 	}

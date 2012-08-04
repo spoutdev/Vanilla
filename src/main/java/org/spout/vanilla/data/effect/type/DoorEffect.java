@@ -31,13 +31,14 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 
 public class DoorEffect extends Effect {
 	private static final int DOOR_RANGE = 16;
-	
+
 	public DoorEffect() {
 		super(DOOR_RANGE);
 	}

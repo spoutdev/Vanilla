@@ -36,7 +36,7 @@ import org.spout.vanilla.protocol.msg.GroundMessage;
 public class GroundMessageHandler extends MessageHandler<GroundMessage> {
 	@Override
 	public void handleServer(Session session, GroundMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
 

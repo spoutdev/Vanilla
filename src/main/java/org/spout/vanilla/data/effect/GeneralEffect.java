@@ -31,6 +31,7 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.event.world.PlayParticleEffectEvent;
 
 public class GeneralEffect extends Effect {
@@ -45,7 +46,7 @@ public class GeneralEffect extends Effect {
 	public GeneralEffect(int id, int data) {
 		this(id, data, PARTICLE_RANGE);
 	}
-	
+
 	public GeneralEffect(int id, int data, int range) {
 		super(range);
 		this.id = id;
@@ -54,7 +55,6 @@ public class GeneralEffect extends Effect {
 
 	/**
 	 * Gets the Id of this Effect
-	 * 
 	 * @return Effect Id
 	 */
 	public int getId() {
@@ -63,7 +63,6 @@ public class GeneralEffect extends Effect {
 
 	/**
 	 * Gets the Default data for this Effect
-	 * 
 	 * @return default data
 	 */
 	public int getDefaultData() {

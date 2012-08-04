@@ -31,6 +31,7 @@ import java.io.IOException;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.Command;
 import org.spout.api.entity.component.Controller;
@@ -41,17 +42,15 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
-
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.common.message.CustomDataMessage;
 import org.spout.api.util.Named;
-import org.spout.vanilla.VanillaPlugin;
+
 import org.spout.vanilla.chat.style.VanillaStyleHandler;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
-import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class VanillaProtocol extends Protocol {
@@ -78,7 +77,7 @@ public class VanillaProtocol extends Protocol {
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends Message> Message getWrappedMessage(boolean upstream, T dynamicMessage) throws IOException {
-		MessageCodec<T> codec = (MessageCodec<T>)getCodecLookupService().find(dynamicMessage.getClass());
+		MessageCodec<T> codec = (MessageCodec<T>) getCodecLookupService().find(dynamicMessage.getClass());
 		ChannelBuffer buffer = codec.encode(upstream, dynamicMessage);
 
 		return new CustomDataMessage(getName(codec), buffer.array());

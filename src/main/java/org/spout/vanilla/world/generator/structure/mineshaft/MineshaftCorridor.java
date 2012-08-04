@@ -146,7 +146,6 @@ public class MineshaftCorridor extends StructureComponent {
 				}
 			}
 		}
-
 	}
 
 	@Override

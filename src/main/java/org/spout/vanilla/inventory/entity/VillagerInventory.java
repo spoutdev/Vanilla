@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory.entity;
 
 import org.spout.api.inventory.RecipeManager;
+
 import org.spout.vanilla.inventory.CraftingInventory;
 
 public class VillagerInventory extends CraftingInventory {

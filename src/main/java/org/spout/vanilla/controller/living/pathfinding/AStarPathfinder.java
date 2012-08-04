@@ -34,20 +34,19 @@ import java.util.Queue;
 import java.util.Set;
 
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.controller.living.Creature;
 
 /**
  * A pathfinder that uses the A*-Algorithm to find a path.
  */
 public class AStarPathfinder extends Pathfinder {
-
 	private static final int PATH_COST_LIMIT_MULTIPLIER = 5;
-	private static final byte[][] DEFAULT_NEIGHBOR_MATRIX = new byte[][] { { -1, 0, 0 }, { 1, 0, 0 }, { 0, 0, -1 }, { 0, 0, 1 }, { -1, 0, 1 }, { 1, 0, 1 }, { -1, 0, -1 }, { 1, 0, -1 }, { 0, -1, 0 },
-			{ 0, 1, 0 }, { -1, 1, 0 }, { 1, 1, 0 }, { -1, -1, 0 }, { 1, -1, 0 }, { 0, 1, -1 }, { 0, 1, 1 }, { 0, -1, 1 }, { 0, -1, -1 }, };
+	private static final byte[][] DEFAULT_NEIGHBOR_MATRIX = new byte[][]{{-1, 0, 0}, {1, 0, 0}, {0, 0, -1}, {0, 0, 1}, {-1, 0, 1}, {1, 0, 1}, {-1, 0, -1}, {1, 0, -1}, {0, -1, 0},
+			{0, 1, 0}, {-1, 1, 0}, {1, 1, 0}, {-1, -1, 0}, {1, -1, 0}, {0, 1, -1}, {0, 1, 1}, {0, -1, 1}, {0, -1, -1},};
 
 	/**
 	 * Creates an A*-Pathfinder.
-	 *
 	 * @param creature the creature that uses this Pathfinder.
 	 */
 	public AStarPathfinder(Creature creature) {
@@ -108,7 +107,6 @@ public class AStarPathfinder extends Pathfinder {
 	/**
 	 * Rebuilds the path into an ordered List.
 	 * The list is ordered from the starting node to the target node.
-	 *
 	 * @param target the target node.
 	 * @return the ordered list.
 	 */
@@ -124,5 +122,4 @@ public class AStarPathfinder extends Pathfinder {
 		}
 		return path;
 	}
-
 }

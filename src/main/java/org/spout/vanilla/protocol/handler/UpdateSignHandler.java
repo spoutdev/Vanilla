@@ -37,10 +37,10 @@ import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
 	@Override
 	public void handleServer(Session session, UpdateSignMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 
 		BlockController controller = player.getWorld().getBlockController(message.getX(), message.getY(), message.getZ());

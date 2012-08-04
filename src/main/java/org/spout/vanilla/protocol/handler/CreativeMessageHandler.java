@@ -41,7 +41,7 @@ import org.spout.vanilla.window.Window;
 public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 	@Override
 	public void handleServer(Session session, CreativeMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
 

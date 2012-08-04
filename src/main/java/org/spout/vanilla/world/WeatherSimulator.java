@@ -30,7 +30,6 @@ import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.tickable.BasicTickable;
-import org.spout.api.tickable.Tickable;
 
 import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.data.Weather;

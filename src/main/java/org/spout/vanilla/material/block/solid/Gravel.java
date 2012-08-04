@@ -45,7 +45,8 @@ public class Gravel extends SolidMoving implements Mineable {
 
 	public Gravel(String name, int id) {
 		super(name, id);
-		this.setHardness(0.6F).setResistance(1.0F).setStepSound(SoundEffects.STEP_GRAVEL);;
+		this.setHardness(0.6F).setResistance(1.0F).setStepSound(SoundEffects.STEP_GRAVEL);
+		;
 	}
 
 	@Override

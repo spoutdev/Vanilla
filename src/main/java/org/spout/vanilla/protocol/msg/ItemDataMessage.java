@@ -32,6 +32,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class ItemDataMessage extends Message {

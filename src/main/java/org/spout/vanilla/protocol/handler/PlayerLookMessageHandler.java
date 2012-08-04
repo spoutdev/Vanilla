@@ -36,10 +36,10 @@ import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 public final class PlayerLookMessageHandler extends MessageHandler<PlayerLookMessage> {
 	@Override
 	public void handleServer(Session session, PlayerLookMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 
 		player.setPitch(message.getPitch());

@@ -53,7 +53,7 @@ public class SnowObject extends RandomObject implements Source {
 	public SnowObject() {
 		this(null);
 	}
-	
+
 	public SnowObject(Random random) {
 		super(random);
 	}
@@ -67,7 +67,6 @@ public class SnowObject extends RandomObject implements Source {
 	/**
 	 * Processes one iteration of snowfall, this may or may not set a block at
 	 * the current position.
-	 * 
 	 * @returns if snow has been placed.
 	 */
 	public boolean fall(World world, IntVector3 position) {
@@ -126,7 +125,6 @@ public class SnowObject extends RandomObject implements Source {
 	/**
 	 * Processes one iteration of snowfall, this may or may not set a block at
 	 * the current position.
-	 * 
 	 * @param world to place in
 	 * @param x coordinate
 	 * @param y coordinate, unused
@@ -139,9 +137,11 @@ public class SnowObject extends RandomObject implements Source {
 		if (!this.setHighestWorkableBlock(world, position)) {
 			return;
 		}
-		for (int i = 0; i < MAX_ITERATIONS && !this.fall(world, position); i++);
+		for (int i = 0; i < MAX_ITERATIONS && !this.fall(world, position); i++) {
+			;
+		}
 	}
-	
+
 	@Override
 	public void randomize() {
 	}
@@ -151,7 +151,7 @@ public class SnowObject extends RandomObject implements Source {
 		while (world.getBlockMaterial(position.getX(), y, position.getZ()).equals(VanillaMaterials.AIR)) {
 			y--;
 			if (y == 0) {
-				return  false;
+				return false;
 			}
 		}
 		y++;

@@ -29,6 +29,7 @@ package org.spout.vanilla.data.effect.type;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.data.effect.GeneralEffect;
 
 public class SmokeEffect extends GeneralEffect {
@@ -48,7 +49,6 @@ public class SmokeEffect extends GeneralEffect {
 
 	/**
 	 * Gets the data effect data to use for the smoke particle effect
-	 * 
 	 * @param direction the smoke goes
 	 * @return the data of that direction
 	 */

@@ -27,6 +27,7 @@
 package org.spout.vanilla.controller.world.sky;
 
 import org.spout.api.geo.World;
+
 import org.spout.vanilla.controller.world.VanillaSky;
 import org.spout.vanilla.data.Weather;
 

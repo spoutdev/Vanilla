@@ -28,6 +28,7 @@ package org.spout.vanilla.event.window;
 
 import org.spout.api.event.HandlerList;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.window.Window;
 
 public class WindowSetSlotsEvent extends WindowEvent {
@@ -41,7 +42,6 @@ public class WindowSetSlotsEvent extends WindowEvent {
 
 	/**
 	 * Gets the new Items that are set for the Window
-	 * 
 	 * @return items
 	 */
 	public ItemStack[] getItems() {

@@ -29,7 +29,6 @@ package org.spout.vanilla.material.block.misc;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class TripWire extends GroundAttachable {
-
 	public TripWire(String name, int id) {
 		super(name, id);
 		this.setHardness(0.0f).setResistance(0.0f).setTransparent();

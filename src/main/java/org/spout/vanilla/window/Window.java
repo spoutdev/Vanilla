@@ -26,21 +26,20 @@
  */
 package org.spout.vanilla.window;
 
-import gnu.trove.iterator.TIntObjectIterator;
-import gnu.trove.map.hash.TIntObjectHashMap;
-
 import java.util.AbstractMap.SimpleEntry;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import gnu.trove.iterator.TIntObjectIterator;
+import gnu.trove.map.hash.TIntObjectHashMap;
+
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.player.Player;
 import org.spout.api.tickable.BasicTickable;
-import org.spout.api.tickable.Tickable;
 
 import org.spout.vanilla.controller.WindowController;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -73,7 +72,6 @@ public class Window extends BasicTickable implements InventoryViewer {
 
 	/**
 	 * Gets the amount of items contained within this Window
-	 * 
 	 * @return inventory size
 	 */
 	public int getInventorySize() {
@@ -86,7 +84,6 @@ public class Window extends BasicTickable implements InventoryViewer {
 
 	/**
 	 * Gets the Inventory and slot index from a protocol slot
-	 * 
 	 * @param protocolSlot to look at
 	 * @return the Inventory and slot index at the slot, or null if not found
 	 */
@@ -105,7 +102,6 @@ public class Window extends BasicTickable implements InventoryViewer {
 
 	/**
 	 * Gets a set of entries containing the inventories and slot index maps contained within this Window
-	 * 
 	 * @return inventory data
 	 */
 	public Set<Entry<InventoryBase, SlotIndexCollection>> getInventoryData() {
@@ -114,7 +110,6 @@ public class Window extends BasicTickable implements InventoryViewer {
 
 	/**
 	 * Adds a new Inventory to this Window, mapped to the slots specified
-	 * 
 	 * @param inventory to add
 	 * @param slots of the inventory (protocol)
 	 */
@@ -266,7 +261,6 @@ public class Window extends BasicTickable implements InventoryViewer {
 
 	/**
 	 * Performs a creative click in this Window
-	 * 
 	 * @param inventory that got clicked
 	 * @param clickedSlot of the item in the Inventory
 	 * @param item the player set it to
@@ -278,10 +272,9 @@ public class Window extends BasicTickable implements InventoryViewer {
 
 	/**
 	 * Performs a click by the user
-	 * 
 	 * @param inventory that was clicked
 	 * @param clickedSlot of the item that was clicked
-	 * @param rightClick	True when right clicked by the mouse, False if not
+	 * @param rightClick True when right clicked by the mouse, False if not
 	 * @param shift was down
 	 * @return True if successful
 	 */

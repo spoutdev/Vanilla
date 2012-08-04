@@ -40,10 +40,10 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPositionMessage> {
 	@Override
 	public void handleServer(Session session, PlayerPositionMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 
 		double x = message.getX();

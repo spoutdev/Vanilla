@@ -57,10 +57,8 @@ import org.spout.vanilla.controller.VanillaActionController;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.entityeffect.potion.Speed;
 import org.spout.vanilla.util.explosion.ExplosionModels;
-import org.spout.vanilla.world.generator.object.RandomObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 

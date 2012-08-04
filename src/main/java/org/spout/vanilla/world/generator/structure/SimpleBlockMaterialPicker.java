@@ -46,7 +46,7 @@ public class SimpleBlockMaterialPicker implements BlockMaterialPicker {
 		setOuterMaterial(outer);
 		setInnerMaterial(inner);
 	}
-	
+
 	@Override
 	public BlockMaterial get(boolean outer) {
 		return outer ? outerMaterial : innerMaterial;

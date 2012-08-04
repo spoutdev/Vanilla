@@ -37,10 +37,10 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 public final class AnimationMessageHandler extends MessageHandler<EntityAnimationMessage> {
 	@Override
 	public void handleServer(Session session, EntityAnimationMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 
 		switch (message.getAnimation()) {

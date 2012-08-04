@@ -48,7 +48,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public class EntityInteractionMessageHandler extends MessageHandler<EntityInteractionMessage> {
 	@Override
 	public void handleServer(Session session, EntityInteractionMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
 

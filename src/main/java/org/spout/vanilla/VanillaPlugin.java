@@ -48,7 +48,6 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
-import org.spout.api.plugin.Platform;
 import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.PortBinding;
@@ -131,8 +130,8 @@ public class VanillaPlugin extends CommonPlugin {
 		engine.getEventManager().registerEvents(new VanillaListener(this), this);
 
 		//if (engine.getPlatform() == Platform.SERVER) {
-			//Worlds
-			setupWorlds();
+		//Worlds
+		setupWorlds();
 		//}
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());

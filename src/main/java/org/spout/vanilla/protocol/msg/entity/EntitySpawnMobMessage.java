@@ -33,10 +33,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.msg.EntityMessage;
 
 public final class EntitySpawnMobMessage extends EntityMessage {
-
 	private final int type, x, y, z, yaw, pitch, headYaw;
 	private final short velocityZ, velocityX, velocityY;
 	private final List<Parameter<?>> parameters;
@@ -91,11 +91,11 @@ public final class EntitySpawnMobMessage extends EntityMessage {
 	public short getVelocityZ() {
 		return velocityZ;
 	}
-	
+
 	public short getVelocityX() {
 		return velocityX;
 	}
-	
+
 	public short getVelocityY() {
 		return velocityY;
 	}

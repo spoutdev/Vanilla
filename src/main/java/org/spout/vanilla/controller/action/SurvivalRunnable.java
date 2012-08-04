@@ -100,7 +100,6 @@ public class SurvivalRunnable extends LogicRunnable<VanillaPlayer> {
 			if (maxDrop < getParent().getHealth()) {
 				getParent().setHealth(Math.max(getParent().getHealth() - 1, maxDrop), DamageCause.STARVE);
 			}
-
 		} else if (getParent().getHunger() >= 18 && getParent().getHealth() < 20) {
 			getParent().setHealth(Math.min(getParent().getHealth() + 1, 20), HealthChangeReason.REGENERATION);
 		}

@@ -28,6 +28,7 @@ package org.spout.vanilla.data.effect.type;
 
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.data.effect.Effect;
 
 public class BatchExplosionEffect extends ExplosionEffect {

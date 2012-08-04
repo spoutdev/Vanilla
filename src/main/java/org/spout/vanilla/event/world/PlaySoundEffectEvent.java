@@ -30,6 +30,7 @@ import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.event.ProtocolEvent;
+
 import org.spout.vanilla.data.effect.SoundEffect;
 
 public class PlaySoundEffectEvent extends Event implements ProtocolEvent {
@@ -47,7 +48,6 @@ public class PlaySoundEffectEvent extends Event implements ProtocolEvent {
 
 	/**
 	 * Gets the Position where the Sound should be played
-	 * 
 	 * @return position of the Sound
 	 */
 	public Point getPosition() {
@@ -56,7 +56,6 @@ public class PlaySoundEffectEvent extends Event implements ProtocolEvent {
 
 	/**
 	 * Gets the Sound being played
-	 * 
 	 * @return Sound to play
 	 */
 	public SoundEffect getSound() {
@@ -65,7 +64,6 @@ public class PlaySoundEffectEvent extends Event implements ProtocolEvent {
 
 	/**
 	 * Gets the Pitch to play the Sound at
-	 * 
 	 * @return Sound pitch
 	 */
 	public float getPitch() {
@@ -74,7 +72,6 @@ public class PlaySoundEffectEvent extends Event implements ProtocolEvent {
 
 	/**
 	 * Gets the Volume to play the Sound at
-	 * 
 	 * @return Sound volume
 	 */
 	public float getVolume() {

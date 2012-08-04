@@ -37,7 +37,6 @@ import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.component.Controller;
 import org.spout.api.entity.component.controller.BasicController;
 import org.spout.api.entity.component.controller.PlayerController;
 import org.spout.api.event.entity.EntityHealthChangeEvent;

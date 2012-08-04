@@ -51,8 +51,6 @@ import org.spout.vanilla.controller.action.CreativeRunnable;
 import org.spout.vanilla.controller.action.SurvivalRunnable;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.DamageCause;
-import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.event.player.PlayerFoodSaturationChangeEvent;
 import org.spout.vanilla.event.player.PlayerHungerChangeEvent;
@@ -442,7 +440,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 			if (this.initialYFalling == 0.0f) {
 				this.initialYFalling = getParent().getPosition().getY();
 			}
-
 		} else {
 			int totalDmg = (int) ((this.initialYFalling - getParent().getPosition().getY()) - 3);
 			if (totalDmg > 0) {
@@ -517,20 +514,20 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	//TODO: Get these two functions working in the API!
 	public static float getLookAtYaw(Vector3 offset) {
-        float yaw = 0;
-        // Set yaw
-        if (offset.getX() != 0) {
-            // Set yaw start value based on dx
-            if (offset.getX() < 0) {
-            	yaw = 270;
-            } else {
-                yaw = 90;
-            }
-            yaw -= Math.toDegrees(Math.atan(offset.getZ() / offset.getX()));
-        } else if (offset.getZ() < 0) {
-        	yaw = 180;
-        }
-        return yaw;
+		float yaw = 0;
+		// Set yaw
+		if (offset.getX() != 0) {
+			// Set yaw start value based on dx
+			if (offset.getX() < 0) {
+				yaw = 270;
+			} else {
+				yaw = 90;
+			}
+			yaw -= Math.toDegrees(Math.atan(offset.getZ() / offset.getX()));
+		} else if (offset.getZ() < 0) {
+			yaw = 180;
+		}
+		return yaw;
 	}
 
 	public static float getLookAtPitch(Vector3 offset) {

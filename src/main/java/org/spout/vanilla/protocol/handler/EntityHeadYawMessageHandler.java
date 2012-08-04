@@ -38,7 +38,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
 public class EntityHeadYawMessageHandler extends MessageHandler<EntityHeadYawMessage> {
 	@Override
 	public void handleServer(Session session, EntityHeadYawMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
 

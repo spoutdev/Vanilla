@@ -149,7 +149,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Sets the sound played when the block is being walked over or is being placed
-	 * 
 	 * @param sound to play
 	 * @return this Material
 	 */
@@ -160,7 +159,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets the sound played when the block is being walked over or is being placed
-	 * 
 	 * @return step sound
 	 */
 	public SoundEffect getStepSound() {

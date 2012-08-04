@@ -36,7 +36,7 @@ import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 public final class HeldItemChangeMessageHandler extends MessageHandler<HeldItemChangeMessage> {
 	@Override
 	public void handleServer(Session session, HeldItemChangeMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
 

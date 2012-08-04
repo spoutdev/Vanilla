@@ -30,6 +30,7 @@ import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.event.ProtocolEvent;
+
 import org.spout.vanilla.data.effect.type.ExplosionEffect;
 
 public class PlayExplosionEffectEvent extends Event implements ProtocolEvent {
@@ -46,7 +47,6 @@ public class PlayExplosionEffectEvent extends Event implements ProtocolEvent {
 
 	/**
 	 * Gets the Position where the Sound should be played
-	 * 
 	 * @return position of the Sound
 	 */
 	public Point getPosition() {
@@ -55,7 +55,6 @@ public class PlayExplosionEffectEvent extends Event implements ProtocolEvent {
 
 	/**
 	 * Gets the Effect to play
-	 * 
 	 * @return the Effect
 	 */
 	public ExplosionEffect getEffect() {
@@ -64,7 +63,6 @@ public class PlayExplosionEffectEvent extends Event implements ProtocolEvent {
 
 	/**
 	 * Gets the size of the Explosion Effect
-	 * 
 	 * @return Effect size
 	 */
 	public float getSize() {

@@ -61,10 +61,10 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
 	@Override
 	public void handleServer(Session session, PlayerDiggingMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 
 		int x = message.getX();

@@ -64,10 +64,10 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 	@Override
 	public void handleServer(Session session, PlayerBlockPlacementMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 		EventManager eventManager = session.getEngine().getEventManager();
 		World world = player.getWorld();

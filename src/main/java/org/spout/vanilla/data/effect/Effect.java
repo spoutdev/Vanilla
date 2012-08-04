@@ -41,7 +41,6 @@ public abstract class Effect {
 
 	/**
 	 * Gets the Block range within this Effect is shown to players
-	 * 
 	 * @return range
 	 */
 	public int getRange() {
@@ -50,7 +49,6 @@ public abstract class Effect {
 
 	/**
 	 * Gets all the Players nearby a certain Point that can receive this Effect
-	 * 
 	 * @param position of this Effect
 	 * @param ignore Entity to ignore
 	 * @return a Set of nearby Players
@@ -68,7 +66,7 @@ public abstract class Effect {
 	}
 
 	public abstract void play(Player player, Point position);
-	
+
 	public void play(Set<Player> players, Point position) {
 		for (Player player : players) {
 			this.play(player, position);
@@ -77,7 +75,6 @@ public abstract class Effect {
 
 	/**
 	 * Plays the sound globally to everyone
-	 * 
 	 * @param position to play at
 	 */
 	public void playGlobal(Point position) {
@@ -86,7 +83,6 @@ public abstract class Effect {
 
 	/**
 	 * Plays the sound globally to everyone near except the Player Entity specified
-	 * 
 	 * @param position to play at
 	 * @param ignore Entity to ignore
 	 */

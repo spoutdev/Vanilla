@@ -28,7 +28,6 @@ package org.spout.vanilla;
 
 import java.util.HashSet;
 
-import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.event.EventHandler;
@@ -42,7 +41,6 @@ import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.permissions.PermissionsSubject;
 import org.spout.api.player.Player;
 import org.spout.api.scheduler.TaskPriority;
 

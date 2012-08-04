@@ -32,6 +32,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.Parameter;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.msg.EntityMessage;
 
 public final class EntityMetadataMessage extends EntityMessage {

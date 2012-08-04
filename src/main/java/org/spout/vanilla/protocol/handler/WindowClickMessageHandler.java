@@ -42,10 +42,10 @@ import org.spout.vanilla.window.Window;
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
 	@Override
 	public void handleServer(Session session, WindowClickMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 		if (!(player.getController() instanceof VanillaPlayer)) {
 			return;

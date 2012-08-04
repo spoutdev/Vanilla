@@ -36,7 +36,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 import org.spout.api.player.Player;
 import org.spout.api.tickable.BasicTickable;
-import org.spout.api.tickable.Tickable;
 
 import org.spout.vanilla.controller.object.misc.Lightning;
 import org.spout.vanilla.data.Weather;

@@ -35,12 +35,11 @@ import org.spout.vanilla.protocol.handler.bootstrap.BootstrapHandshakeMessageHan
 import org.spout.vanilla.protocol.handler.bootstrap.BootstrapLoginRequestMessageHandler;
 import org.spout.vanilla.protocol.handler.bootstrap.BootstrapPingMessageHandler;
 import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;
+import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
-import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 
 public class VanillaBootstrapHandlerLookupService extends HandlerLookupService {
-
 	public VanillaBootstrapHandlerLookupService() {
 		try {
 			bind(HandshakeMessage.class, BootstrapHandshakeMessageHandler.class);

@@ -35,6 +35,7 @@ import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
@@ -52,7 +53,7 @@ public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 		if (message.getStatus() == ClientStatusMessage.INITIAL_SPAWN) {
 			playerConnect(session, (String) session.getDataMap().get("username"));
 		} else if (message.getStatus() == ClientStatusMessage.RESPAWN) {
-			if(!session.hasPlayer()) {
+			if (!session.hasPlayer()) {
 				return;
 			}
 

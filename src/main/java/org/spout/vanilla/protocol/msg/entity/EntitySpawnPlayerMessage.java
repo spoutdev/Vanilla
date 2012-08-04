@@ -29,9 +29,11 @@ package org.spout.vanilla.protocol.msg.entity;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.msg.EntityMessage;
 
 public final class EntitySpawnPlayerMessage extends EntityMessage {
@@ -82,7 +84,7 @@ public final class EntitySpawnPlayerMessage extends EntityMessage {
 	public int getItemId() {
 		return item;
 	}
-	
+
 	public List<Parameter<?>> getParameters() {
 		return parameters;
 	}

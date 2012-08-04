@@ -27,11 +27,11 @@
 package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
 public class TabCompleteMessage extends Message {
-
 	private String text;
 
 	public TabCompleteMessage(String text) {
@@ -41,8 +41,8 @@ public class TabCompleteMessage extends Message {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-		.append("text", text)
-		.toString();
+				.append("text", text)
+				.toString();
 	}
 
 	public String getText() {
@@ -59,8 +59,7 @@ public class TabCompleteMessage extends Message {
 		}
 		final TabCompleteMessage other = (TabCompleteMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-			.append(this.text, other.text)
-			.isEquals();
+				.append(this.text, other.text)
+				.isEquals();
 	}
-
 }

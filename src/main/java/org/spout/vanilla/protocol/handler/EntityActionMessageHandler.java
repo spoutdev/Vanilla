@@ -42,7 +42,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 public final class EntityActionMessageHandler extends MessageHandler<EntityActionMessage> {
 	@Override
 	public void handleServer(Session session, EntityActionMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
 

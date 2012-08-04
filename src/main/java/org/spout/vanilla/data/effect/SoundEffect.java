@@ -31,6 +31,7 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.event.world.PlaySoundEffectEvent;
 
 public class SoundEffect extends Effect {
@@ -71,7 +72,6 @@ public class SoundEffect extends Effect {
 
 	/**
 	 * Gets all the Players nearby a certain Point that can receive this Effect
-	 * 
 	 * @param position of this Effect
 	 * @param ignore Entity to ignore
 	 * @return a Set of nearby Players

@@ -31,10 +31,10 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
+
 import org.spout.vanilla.data.effect.SoundEffect;
 
 public class NoteSoundEffect extends SoundEffect {
-
 	public NoteSoundEffect(String name) {
 		super(name, 3.0f, 0.5f);
 	}

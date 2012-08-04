@@ -27,13 +27,13 @@
 package org.spout.vanilla.controller.living.pathfinding;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+
 import org.spout.api.math.Vector3;
 
 /**
  * A PathNode represents a position in a path.
  */
 public class PathNode implements Comparable<PathNode> {
-
 	private int x;
 	private int y;
 	private int z;
@@ -45,7 +45,6 @@ public class PathNode implements Comparable<PathNode> {
 
 	/**
 	 * Creates a new PathNode.
-	 *
 	 * @param x the x coordinate of the node
 	 * @param y the y coordinate of the node
 	 * @param z the z coordinate of the node
@@ -60,7 +59,6 @@ public class PathNode implements Comparable<PathNode> {
 
 	/**
 	 * Calculates the heuristic cost from this pathnode to another.
-	 *
 	 * @param to the other pathnode.
 	 * @return the heuristic cost.
 	 */
@@ -73,7 +71,6 @@ public class PathNode implements Comparable<PathNode> {
 
 	/**
 	 * Calculates the cost from this pathnode to another.
-	 *
 	 * @param to the other pathnode.
 	 * @return the cost.
 	 */
@@ -93,7 +90,6 @@ public class PathNode implements Comparable<PathNode> {
 
 	/**
 	 * Updates the values of this pathnode.
-	 *
 	 * @param cost the new cost
 	 * @param parent the parent pathnode
 	 * @param target the target pathnode

@@ -82,7 +82,6 @@ import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 
 public class VanillaHandlerLookupService extends HandlerLookupService {
-
 	public VanillaHandlerLookupService() {
 		try {
 			bind(HandshakeMessage.class, BootstrapHandshakeMessageHandler.class);

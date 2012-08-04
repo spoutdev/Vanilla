@@ -40,7 +40,8 @@ import org.spout.vanilla.material.item.tool.Tool;
 public class SnowBlock extends Solid implements Mineable, InitializableMaterial {
 	public SnowBlock(String name, int id) {
 		super(name, id);
-		this.setHardness(0.2F).setResistance(0.3F).setStepSound(SoundEffects.STEP_CLOTH);;
+		this.setHardness(0.2F).setResistance(0.3F).setStepSound(SoundEffects.STEP_CLOTH);
+		;
 	}
 
 	@Override

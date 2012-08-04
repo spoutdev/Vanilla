@@ -37,10 +37,10 @@ import org.spout.vanilla.protocol.msg.ChatMessage;
 public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
 	@Override
 	public void handle(boolean upstream, Session session, ChatMessage message) {
-		if(!session.hasPlayer()) {
+		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 		String text = message.getMessage();
 		text = text.trim();

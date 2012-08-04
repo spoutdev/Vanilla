@@ -42,6 +42,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 
 public class Snow extends GroundAttachable implements Mineable, RandomBlockMaterial, InitializableMaterial {
 	private static final byte MIN_MELT_LIGHT = 11;
+
 	public Snow(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();

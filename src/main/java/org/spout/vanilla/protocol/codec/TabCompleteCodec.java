@@ -28,12 +28,13 @@ package org.spout.vanilla.protocol.codec;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.protocol.MessageCodec;
+
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.TabCompleteMessage;
 
 public class TabCompleteCodec extends MessageCodec<TabCompleteMessage> {
-
 	public TabCompleteCodec() {
 		super(TabCompleteMessage.class, 0xCB);
 	}

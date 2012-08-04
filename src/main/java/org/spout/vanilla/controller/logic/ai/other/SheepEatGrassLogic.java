@@ -39,7 +39,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 
 /**
- * The Sheep's AI for eating grass.
+ * Sheep logic for eating grass
  */
 public class SheepEatGrassLogic extends LogicRunnable<Sheep> {
 	private static final int CHANCE_AS_ADULT = 1000;

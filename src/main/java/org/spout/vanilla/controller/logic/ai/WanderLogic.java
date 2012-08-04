@@ -34,6 +34,9 @@ import org.spout.api.tickable.LogicRunnable;
 
 import org.spout.vanilla.controller.VanillaEntityController;
 
+/**
+ * Basic logic for VanillaEntityControllers that move around in the world.
+ */
 public class WanderLogic extends LogicRunnable<VanillaEntityController> {
 	private static final int WANDER_FREQ = 25;
 

@@ -32,7 +32,7 @@ import org.spout.api.tickable.LogicRunnable;
 import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
 
 /**
- * The Skeleton's attack AI which involves keeping a distance from the player and
+ * The Skeleton's attack logic which involves keeping a distance from the controller and
  * shooting arrows.
  */
 public class SkeletonAttackLogic extends LogicRunnable<Skeleton> {

@@ -39,7 +39,7 @@ import org.spout.api.tickable.LogicRunnable;
 import org.spout.vanilla.controller.object.moving.Item;
 
 /**
- * Logic for controllers that drop an {@link Item} every x ticks.
+ * Controller logic that drops an {@link Item} every x ticks.
  */
 public class ControllerTimedDropItemLogic extends LogicRunnable<Controller> {
 	private int itemDropMaxTime;

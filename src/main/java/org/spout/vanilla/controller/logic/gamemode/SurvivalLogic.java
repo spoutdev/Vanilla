@@ -36,6 +36,9 @@ import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.VanillaData;
 
+/**
+ * Basic logic that applies Survival-mode rules to a VanillaPlayer
+ */
 public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 	private int foodTimer = 0;
 

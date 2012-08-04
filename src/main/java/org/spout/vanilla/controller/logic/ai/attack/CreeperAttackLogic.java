@@ -32,7 +32,7 @@ import org.spout.api.tickable.LogicRunnable;
 import org.spout.vanilla.controller.living.creature.hostile.Creeper;
 
 /**
- * The Creeper's specific attack AI which involves approaching a Player and exploding.
+ * The Creeper's attack logic which involves approaching a controller and exploding.
  */
 public class CreeperAttackLogic extends LogicRunnable<Creeper>{
 	public CreeperAttackLogic(Creeper parent, LogicPriority priority) {

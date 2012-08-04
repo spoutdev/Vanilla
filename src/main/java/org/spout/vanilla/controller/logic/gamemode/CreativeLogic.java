@@ -31,6 +31,9 @@ import org.spout.api.tickable.LogicRunnable;
 
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
+/**
+ * Basic logic that applies Creative-mode rules to VanillaPlayers.
+ */
 public class CreativeLogic extends LogicRunnable<VanillaPlayer> {
 	public CreativeLogic(VanillaPlayer parent, LogicPriority priority) {
 		super(parent, priority);

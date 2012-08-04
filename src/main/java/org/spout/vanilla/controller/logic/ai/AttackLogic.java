@@ -29,13 +29,14 @@ package org.spout.vanilla.controller.logic.ai;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
+import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 
 /**
- * Basic AI for entities that attack other entities. Controllers that simply collide against the
- * other entity without doing anything else (ie Zombies) should use this AI.
+ * Basic logic for VanillaEntityControllers that attack other controllers. VanillaEntityControllers that simply collide against the
+ * other controller without doing anything else (ie Zombies) should use this logic.
  */
-public class AttackLogic extends LogicRunnable<Creature>{
+public class AttackLogic extends LogicRunnable<VanillaEntityController>{
 	public AttackLogic(Creature parent, LogicPriority priority) {
 		super(parent, priority);
 	}

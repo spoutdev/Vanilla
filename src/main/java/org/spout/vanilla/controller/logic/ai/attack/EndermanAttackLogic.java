@@ -32,7 +32,7 @@ import org.spout.api.tickable.LogicRunnable;
 import org.spout.vanilla.controller.living.creature.neutral.Enderman;
 
 /**
- * The Enderman's specific attack AI which involves a "hit and run" style of assault
+ * The Enderman's attack logic which involves a "hit and run" style of assault against a controller.
  */
 public class EndermanAttackLogic extends LogicRunnable<Enderman>{
 	public EndermanAttackLogic(Enderman parent, LogicPriority priority) {

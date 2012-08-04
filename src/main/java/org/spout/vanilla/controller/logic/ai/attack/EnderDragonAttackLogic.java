@@ -32,8 +32,8 @@ import org.spout.api.tickable.LogicRunnable;
 import org.spout.vanilla.controller.living.creature.hostile.EnderDragon;
 
 /**
- * The EnderDragon's attack AI which involves randomly flying around, setting up for a
- * potential "hit and run" against a player.
+ * The EnderDragon's attack logic which involves randomly flying around, setting up for a
+ * potential "hit and run" against a controller.
  */
 public class EnderDragonAttackLogic extends LogicRunnable<EnderDragon>{
 	public EnderDragonAttackLogic(EnderDragon parent, LogicPriority priority) {

@@ -36,7 +36,7 @@ import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.controller.living.logic.DropItemTimeBasedLogic;
+import org.spout.vanilla.controller.logic.ai.other.ControllerTimedDropItemLogic;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -46,7 +46,7 @@ public class Chicken extends Creature implements Passive {
 	public static final int MAXIMUM_EGG_BREEDING_TIME = 12000;
 	public static final int NEVER = -1;
 	private boolean layingEggsEnabled = true;
-	private DropItemTimeBasedLogic dropItemLogic;
+	private ControllerTimedDropItemLogic dropItemLogic;
 
 	public Chicken() {
 		super(VanillaControllerTypes.CHICKEN);
@@ -57,7 +57,7 @@ public class Chicken extends Creature implements Passive {
 		super.onAttached();
 		setMaxHealth(4);
 		setHealth(4, HealthChangeReason.SPAWN);
-		dropItemLogic = new DropItemTimeBasedLogic(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
+		dropItemLogic = new ControllerTimedDropItemLogic(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
 		registerProcess(dropItemLogic);
 		setDeathAnimation(true);
 	}

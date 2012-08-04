@@ -24,24 +24,29 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.runnable.gamemode;
+package org.spout.vanilla.controller.logic.ai.attack;
 
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
 
-public class CreativeRunnable extends LogicRunnable<VanillaPlayer> {
-	public CreativeRunnable(VanillaPlayer parent, LogicPriority priority) {
+/**
+ * The Skeleton's attack AI which involves keeping a distance from the player and
+ * shooting arrows.
+ */
+public class SkeletonAttackLogic extends LogicRunnable<Skeleton> {
+	public SkeletonAttackLogic(Skeleton parent, LogicPriority priority) {
 		super(parent, priority);
 	}
 
 	@Override
 	public boolean shouldRun(float dt) {
-		return false;
+		return false; //TODO Should this extend AttackLogic and call super?
 	}
 
 	@Override
 	public void run() {
+		//TODO Fire arrows at the player at a distance! Skeletons are rangers :P.
 	}
 }

@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.logic;
+package org.spout.vanilla.controller.logic.ai.other;
 
 import java.util.Random;
 
@@ -39,7 +39,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 
 /**
- * Logic for Sheeps eating grass.
+ * The Sheep's AI for eating grass.
  */
 public class SheepEatGrassLogic extends LogicRunnable<Sheep> {
 	private static final int CHANCE_AS_ADULT = 1000;

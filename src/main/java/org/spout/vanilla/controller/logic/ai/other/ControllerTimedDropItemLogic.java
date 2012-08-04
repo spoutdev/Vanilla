@@ -24,8 +24,11 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.logic;
+package org.spout.vanilla.controller.logic.ai.other;
 
+import java.util.Random;
+
+import org.spout.api.entity.component.Controller;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
@@ -33,13 +36,12 @@ import org.spout.api.math.Vector3;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
-import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.object.moving.Item;
 
 /**
- * Logic for creatures that drop an {@link Item} every x ticks.
+ * Logic for controllers that drop an {@link Item} every x ticks.
  */
-public class DropItemTimeBasedLogic extends LogicRunnable<Creature> {
+public class ControllerTimedDropItemLogic extends LogicRunnable<Controller> {
 	private int itemDropMaxTime;
 	private int itemDropMinTime;
 	private Material itemToDrop;
@@ -47,33 +49,33 @@ public class DropItemTimeBasedLogic extends LogicRunnable<Creature> {
 	private int ticksTillNextDrop;
 
 	/**
-	 * Creates the logic for creatures that drop an {@link Item} every x ticks with normal priority.
-	 * @param parent the creature dropping the item
-	 * @param itemToDrop the Item to be creature by the entity
+	 * Creates the logic for controllers that drop an {@link Item} every x ticks with normal priority.
+	 * @param parent the controller dropping the item
+	 * @param itemToDrop the Item to be dropped by the controller
 	 * @param amountOfItems how many of the specified items should be dropped
-	 * @param itemDropMinTime the minimum time between to drops
-	 * @param itemDropMaxTime the maximum time between to drops
+	 * @param itemDropMinTime the minimum time between the drops
+	 * @param itemDropMaxTime the maximum time between the drops
 	 */
-	public DropItemTimeBasedLogic(Creature parent, Material itemToDrop, int amountOfItems, int itemDropMinTime, int itemDropMaxTime) {
+	public ControllerTimedDropItemLogic(Controller parent, Material itemToDrop, int amountOfItems, int itemDropMinTime, int itemDropMaxTime) {
 		this(parent, itemToDrop, amountOfItems, itemDropMinTime, itemDropMaxTime, LogicPriority.NORMAL);
 	}
 
 	/**
-	 * Creates the logic for creatures that drop an {@link Item} every x ticks.
-	 * @param parent the creature dropping the item
-	 * @param itemToDrop the Item to be creature by the entity
+	 * Creates the logic for controllers that drop an {@link Item} every x ticks.
+	 * @param parent the controller dropping the item
+	 * @param itemToDrop the Item to be dropped by the controller
 	 * @param amountOfItems how many of the specified items should be dropped
-	 * @param itemDropMinTime the minimum time between to drops
-	 * @param itemDropMaxTime the maximum time between to drops
+	 * @param itemDropMinTime the minimum time between the drops
+	 * @param itemDropMaxTime the maximum time between the drops
 	 * @param priority the priority of this logic
 	 */
-	public DropItemTimeBasedLogic(Creature parent, Material itemToDrop, int amountOfItems, int itemDropMinTime, int itemDropMaxTime, LogicPriority priority) {
+	public ControllerTimedDropItemLogic(Controller parent, Material itemToDrop, int amountOfItems, int itemDropMinTime, int itemDropMaxTime, LogicPriority priority) {
 		super(parent, priority);
 		this.itemToDrop = itemToDrop;
 		this.numberOfItems = amountOfItems;
 		this.itemDropMinTime = itemDropMinTime;
 		this.itemDropMaxTime = itemDropMaxTime;
-		ticksTillNextDrop = parent.getRandom().nextInt(itemDropMaxTime - itemDropMinTime) + itemDropMinTime;
+		ticksTillNextDrop = new Random().nextInt(itemDropMaxTime - itemDropMinTime) + itemDropMinTime; //TODO Grab a random object from somewhere?
 	}
 
 	@Override
@@ -81,7 +83,7 @@ public class DropItemTimeBasedLogic extends LogicRunnable<Creature> {
 		final Point position = parent.getParent().getLastTransform().getPosition();
 		final Item item = new Item(new ItemStack(itemToDrop, numberOfItems), Vector3.ZERO);
 		position.getWorld().createAndSpawnEntity(position, item);
-		ticksTillNextDrop = parent.getRandom().nextInt(itemDropMaxTime - itemDropMinTime) + itemDropMinTime;
+		ticksTillNextDrop = new Random().nextInt(itemDropMaxTime - itemDropMinTime) + itemDropMinTime; //TODO Grab a random object from somewhere?
 	}
 
 	@Override

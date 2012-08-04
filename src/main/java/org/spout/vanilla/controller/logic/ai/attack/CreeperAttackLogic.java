@@ -24,24 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.controller.living;
+package org.spout.vanilla.controller.logic.ai.attack;
 
-import java.util.List;
+import org.spout.api.tickable.LogicPriority;
+import org.spout.api.tickable.LogicRunnable;
 
-import org.spout.api.entity.component.Controller;
-import org.spout.api.util.Parameter;
+import org.spout.vanilla.controller.living.creature.hostile.Creeper;
 
-import org.spout.vanilla.protocol.controller.BasicMobEntityProtocol;
-
-public class EnderDragonEntityProtocol extends BasicMobEntityProtocol {
-	public EnderDragonEntityProtocol() {
-		super(64);
+/**
+ * The Creeper's specific attack AI which involves approaching a Player and exploding.
+ */
+public class CreeperAttackLogic extends LogicRunnable<Creeper>{
+	public CreeperAttackLogic(Creeper parent, LogicPriority priority) {
+		super(parent, priority);
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-		//TODO: Index 16 (byte): Health bar (0-200)
-		return parameters;
+	public boolean shouldRun(float dt) {
+		return false; //TODO Should this extend AttackLogic and call super?
+	}
+
+	@Override
+	public void run() {
+		//TODO SSSSSSssssssssss boom!
 	}
 }

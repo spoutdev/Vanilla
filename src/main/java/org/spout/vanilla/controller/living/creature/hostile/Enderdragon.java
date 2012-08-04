@@ -39,8 +39,8 @@ import org.spout.vanilla.controller.living.creature.Boss;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 
-public class Enderdragon extends Creature implements Hostile, Boss {
-	public Enderdragon() {
+public class EnderDragon extends Creature implements Hostile, Boss {
+	public EnderDragon() {
 		super(VanillaControllerTypes.ENDERDRAGON);
 	}
 

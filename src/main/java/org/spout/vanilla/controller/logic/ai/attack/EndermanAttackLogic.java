@@ -24,24 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.controller.living;
+package org.spout.vanilla.controller.logic.ai.attack;
 
-import java.util.List;
+import org.spout.api.tickable.LogicPriority;
+import org.spout.api.tickable.LogicRunnable;
 
-import org.spout.api.entity.component.Controller;
-import org.spout.api.util.Parameter;
+import org.spout.vanilla.controller.living.creature.neutral.Enderman;
 
-import org.spout.vanilla.protocol.controller.BasicMobEntityProtocol;
-
-public class EnderDragonEntityProtocol extends BasicMobEntityProtocol {
-	public EnderDragonEntityProtocol() {
-		super(64);
+/**
+ * The Enderman's specific attack AI which involves a "hit and run" style of assault
+ */
+public class EndermanAttackLogic extends LogicRunnable<Enderman>{
+	public EndermanAttackLogic(Enderman parent, LogicPriority priority) {
+		super(parent, priority);
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-		//TODO: Index 16 (byte): Health bar (0-200)
-		return parameters;
+	public boolean shouldRun(float dt) {
+		return false;
+	}
+
+	@Override
+	public void run() {
+		//TODO Attack the player and randomly teleport away!
 	}
 }

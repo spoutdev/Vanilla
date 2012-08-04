@@ -47,8 +47,8 @@ import org.spout.api.tickable.LogicPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.runnable.gamemode.CreativeRunnable;
-import org.spout.vanilla.controller.runnable.gamemode.SurvivalRunnable;
+import org.spout.vanilla.controller.logic.gamemode.CreativeLogic;
+import org.spout.vanilla.controller.logic.gamemode.SurvivalLogic;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.data.GameMode;
@@ -116,9 +116,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
 		//Survival mode
-		registerProcess(new SurvivalRunnable(this, LogicPriority.HIGHEST));
+		registerProcess(new SurvivalLogic(this, LogicPriority.HIGHEST));
 		//Creative mode
-		registerProcess(new CreativeRunnable(this, LogicPriority.HIGHEST));
+		registerProcess(new CreativeLogic(this, LogicPriority.HIGHEST));
 		super.onAttached();
 	}
 

@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.runnable.ai;
+package org.spout.vanilla.controller.logic.ai;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.math.MathHelper;
@@ -34,10 +34,10 @@ import org.spout.api.tickable.LogicRunnable;
 
 import org.spout.vanilla.controller.VanillaEntityController;
 
-public class WanderRunnable extends LogicRunnable<VanillaEntityController> {
+public class WanderLogic extends LogicRunnable<VanillaEntityController> {
 	private static final int WANDER_FREQ = 25;
 
-	public WanderRunnable(VanillaEntityController parent) {
+	public WanderLogic(VanillaEntityController parent) {
 		super(parent);
 	}
 

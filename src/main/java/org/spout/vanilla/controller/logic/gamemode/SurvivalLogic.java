@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.runnable.gamemode;
+package org.spout.vanilla.controller.logic.gamemode;
 
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
@@ -36,10 +36,10 @@ import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.VanillaData;
 
-public class SurvivalRunnable extends LogicRunnable<VanillaPlayer> {
+public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 	private int foodTimer = 0;
 
-	public SurvivalRunnable(VanillaPlayer parent, LogicPriority priority) {
+	public SurvivalLogic(VanillaPlayer parent, LogicPriority priority) {
 		super(parent, priority);
 	}
 

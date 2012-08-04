@@ -55,7 +55,7 @@ public abstract class Living extends VanillaEntityController {
 	public void onAttached() {
 		super.onAttached();
 		//registerAction(new GravityAction());
-		//registerAction(new WanderRunnable());
+		//registerAction(new WanderLogic());
 	}
 
 	@Override

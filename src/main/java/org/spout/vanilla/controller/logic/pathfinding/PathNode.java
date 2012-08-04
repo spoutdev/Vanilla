@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.pathfinding;
+package org.spout.vanilla.controller.logic.pathfinding;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 

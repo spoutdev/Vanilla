@@ -26,8 +26,15 @@
  */
 package org.spout.vanilla.protocol;
 
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 import gnu.trove.set.TIntSet;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.event.EventHandler;
@@ -49,11 +56,12 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEventListener;
+import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
-
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
@@ -92,8 +100,6 @@ import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
 import org.spout.vanilla.window.DefaultWindow;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
-
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
 	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
@@ -104,9 +110,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private static final int TIMEOUT = 15000;
 	private boolean first = true;
 	private long lastKeepAlive = System.currentTimeMillis();
-	private TSyncIntPairObjectHashMap<TSyncIntHashSet> initializedChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
+	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initializedChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
+	private final ConcurrentLinkedQueue<Long> emptyColumns = new ConcurrentLinkedQueue<Long>();
 	private TSyncIntPairHashSet activeChunks = new TSyncIntPairHashSet();
 	private Object initChunkLock = new Object();
+	private final ChunkInit chunkInit;
 
 	static {
 		int i = 0;
@@ -131,8 +139,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public VanillaNetworkSynchronizer(Player player, Entity entity) {
 		super(player, player.getSession(), entity, 3);
 		registerProtocolEvents(this);
+		chunkInit = ChunkInit.getChunkInit(VanillaConfiguration.CHUNK_INIT.getString("client"));
 	}
-
+	
 	@Override
 	protected void freeChunk(Point p) {
 		int x = (int) p.getX() >> Chunk.BLOCKS.BITS;
@@ -144,19 +153,15 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 
 		TIntSet column = initializedChunks.get(x, z);
-		CompressedChunkMessage CCMsg;
 		if (column != null) {
 			column.remove(y);
 			if (column.isEmpty()) {
-				if (initializedChunks.remove(x, z) != null) {
-					activeChunks.remove(x, z);
-				}
-				CCMsg = new CompressedChunkMessage(x, z, true, null, null, null, true);
-			} else {
+				emptyColumns.add(IntPairHashed.key(x, z));
+			} // TODO - is this required?
+			/*
+			else {
 				CCMsg = new CompressedChunkMessage(x, z, false, null, null, null, true);
-			}
-
-			session.send(false, CCMsg);
+			}*/
 		}
 	}
 
@@ -209,58 +214,36 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 		return heights;
 	}
+	
+	private static byte[] emptySkyChunkData;
+	private static byte[] emptyGroundChunkData;
+	static {
+		emptySkyChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
+		emptyGroundChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 
-	private static byte[] getChunkHeightMap(int[][] heights, BlockMaterial[][] materials, int chunkY) {
-		byte[] packetChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
-		int baseY = chunkY << Chunk.BLOCKS.BITS;
-
-		for (int xx = 0; xx < Chunk.BLOCKS.SIZE; xx++) {
-			for (int zz = 0; zz < Chunk.BLOCKS.SIZE; zz++) {
-				int dataOffset = xx | (zz << Chunk.BLOCKS.BITS);
-				int threshold = heights[xx][zz] - baseY;
-				if (chunkY == 0 && threshold < 0) {
-					threshold = 0;
-				}
-				int yy;
-				// Set blocks below height to the solid block
-				for (yy = 0; yy < Chunk.BLOCKS.SIZE && yy <= threshold; yy++) {
-					if (yy == threshold) {
-						BlockMaterial bm = materials[xx][zz];
-						if (bm == null) {
-							bm = VanillaMaterials.STONE;
-						}
-						int converted = getMinecraftId(bm.getId());
-						packetChunkData[dataOffset] = (byte) converted;
-					} else {
-						packetChunkData[dataOffset] = SOLID_BLOCK_ID;
-					}
-					dataOffset += Chunk.BLOCKS.AREA;
-				}
-				// Set sky light of blocks above height to 15
-				// Use half of start offset and add the block id and data length (2 volumes)
-				byte mask = (xx & 0x1) == 0 ? (byte) 0x0F : (byte) 0xF0;
-				dataOffset = Chunk.BLOCKS.DOUBLE_VOLUME + (dataOffset >> 1);
-				for (; yy < Chunk.BLOCKS.SIZE; yy++) {
-					packetChunkData[dataOffset] |= mask;
-					dataOffset += Chunk.BLOCKS.HALF_AREA;
-				}
-			}
+		int j = Chunk.BLOCKS.VOLUME << 1;
+		// Sky light = F
+		for (int i = 0; i < Chunk.BLOCKS.HALF_VOLUME; i++) {
+			emptySkyChunkData[j] = (byte) 0xFF;
 		}
-		return packetChunkData;
 	}
 
+
+
 	@Override
-	public void sendChunk(Chunk c) {
+	public Collection<Chunk> sendChunk(Chunk c) {
 
 		int x = c.getX();
 		int y = c.getY();// + SEALEVEL_CHUNK;
 		int z = c.getZ();
 
 		if (y < 0 || y >= c.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
-			return;
+			return null;
 		}
 
 		initChunk(c.getBase());
+
+		Collection<Chunk> chunks = null;
 
 		if (activeChunks.add(x, z)) {
 			Point p = c.getBase();
@@ -270,7 +253,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			byte[][] packetChunkData = new byte[16][];
 
 			for (int cube = 0; cube < 16; cube++) {
-				packetChunkData[cube] = getChunkHeightMap(heights, materials, cube);
+				Point pp = new Point(c.getWorld(), x << Chunk.BLOCKS.BITS, cube << Chunk.BLOCKS.BITS, z << Chunk.BLOCKS.BITS);
+				packetChunkData[cube] = chunkInit.getChunkData(heights, materials, pp);
 			}
 
 			Chunk chunk = p.getWorld().getChunkFromBlock(p);
@@ -286,37 +270,20 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, new boolean[16], packetChunkData, biomeData);
 			owner.getSession().send(false, CCMsg);
+
+			chunks = chunkInit.getChunks(c);
 		}
 
-		ChunkSnapshot snapshot = c.getSnapshot(SnapshotType.BOTH, EntityType.NO_ENTITIES, ExtraData.NO_EXTRA_DATA);
-		short[] rawBlockIdArray = snapshot.getBlockIds();
-		short[] rawBlockData = snapshot.getBlockData();
-		byte[] rawBlockLight = snapshot.getBlockLight();
-		byte[] rawSkyLight = snapshot.getSkyLight();
-		byte[] fullChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
-
-		int arrIndex = 0;
-		for (int i = 0; i < rawBlockIdArray.length; i++) {
-			short convert = getMinecraftId(rawBlockIdArray[i]);
-			fullChunkData[arrIndex++] = (byte) (convert & 0xFF);
-		}
-
-		for (int i = 0; i < rawBlockData.length; i += 2) {
-			fullChunkData[arrIndex++] = (byte) ((rawBlockData[i + 1] << 4) | (rawBlockData[i] & 0xF));
-		}
-
-		System.arraycopy(rawBlockLight, 0, fullChunkData, arrIndex, rawBlockLight.length);
-		arrIndex += rawBlockLight.length;
-
-		System.arraycopy(rawSkyLight, 0, fullChunkData, arrIndex, rawSkyLight.length);
-
-		arrIndex += rawSkyLight.length;
+		byte[] fullChunkData = ChunkInit.getChunkFullData(c);
 
 		byte[][] packetChunkData = new byte[16][];
 		packetChunkData[y] = fullChunkData;
 		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], packetChunkData, null);
 		owner.getSession().send(false, CCMsg);
+
+		return chunks;
 	}
+	
 
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
@@ -369,7 +336,20 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			lastKeepAlive = currentTime;
 			owner.getSession().send(false, true, PingMsg);
 		}
+		
 		super.preSnapshot();
+		
+		Long key;
+		while ((key = this.emptyColumns.poll()) != null) {
+			int x = IntPairHashed.key1(key);
+			int z = IntPairHashed.key2(key);
+			TIntSet column = initializedChunks.get(x, z);
+			if (column.isEmpty()) {
+				column = initializedChunks.remove(x, z);
+				activeChunks.remove(x, z);
+				session.send(false, new CompressedChunkMessage(x, z, true, null, null, null, true));
+			}
+		}
 	}
 
 	@Override
@@ -504,6 +484,154 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return null;
 		} else {
 			return new BlockActionMessage(event.getBlock(), (short) id, event.getData1(), event.getData2());
+		}
+	}
+	
+	public static enum ChunkInit {
+		CLIENT_SEL, FULL_COLUMN, HEIGHTMAP, EMPTY_COLUMN;
+		
+		public static ChunkInit getChunkInit(String init) {
+			if (init == null) {
+				return CLIENT_SEL;
+			} else if (isEqual(init, "auto", "client", "client_sel")) {
+				return CLIENT_SEL;
+			} else if (isEqual(init, "full", "fullcol", "full_column")) {
+				return FULL_COLUMN;
+			} else if (isEqual(init, "empty", "emptycol", "empty_column")) {
+				return EMPTY_COLUMN;
+			} else if (isEqual(init, "heightmap", "height_map")) {
+				return HEIGHTMAP;
+			} else {
+				Spout.getLogger().info("Invalid chunk init setting, " + init + ", using default setting auto");
+				Spout.getLogger().info("Valid settings are:");
+				Spout.getLogger().info("client_sel Allows client selection, defaults to full columns");
+				Spout.getLogger().info("fullcol    Sends full columns");
+				Spout.getLogger().info("heightmap  Sends a heightmap including the topmost block");
+				Spout.getLogger().info("empty      Sends empty columns");
+				
+				return CLIENT_SEL;
+			}
+		}
+		
+		public Collection<Chunk> getChunks(Chunk c) {
+			if (this.sendColumn()) {
+				int x = c.getX();
+				int z = c.getZ();
+				int height = c.getWorld().getHeight() >> Chunk.BLOCKS.BITS;
+				List<Chunk> chunks = new ArrayList<Chunk>(height);
+				for (int y = 0; y < height; y++) {
+					chunks.add(c.getWorld().getChunk(x, y, z));
+				}
+				return chunks;
+			} else {
+				List<Chunk> chunks = new ArrayList<Chunk>(1);
+				chunks.add(c);
+				return chunks;
+			}
+		}
+		
+		public boolean sendColumn() {
+			return this == CLIENT_SEL || this == FULL_COLUMN;
+		}
+		
+		public byte[] getChunkData(int[][] heights, BlockMaterial[][] materials, Point p) {
+			switch (this) {
+				case CLIENT_SEL: return getChunkFullColumn(heights, materials, p);
+				case FULL_COLUMN: return getChunkFullColumn(heights, materials, p);
+				case HEIGHTMAP: return getChunkHeightMap(heights, materials, p);
+				case EMPTY_COLUMN: return getEmptyChunk(heights, materials, p);
+				default: return getChunkFullColumn(heights, materials, p);
+			}
+		}
+		
+		private static byte[] getChunkFullColumn(int[][] heights, BlockMaterial[][] materials, Point p) {
+			Chunk c = p.getWorld().getChunkFromBlock(p);
+			return getChunkFullData(c);
+		}
+		
+		public static byte[] getChunkFullData(Chunk c) {
+			ChunkSnapshot snapshot = c.getSnapshot(SnapshotType.BOTH, EntityType.NO_ENTITIES, ExtraData.NO_EXTRA_DATA);
+			short[] rawBlockIdArray = snapshot.getBlockIds();
+			short[] rawBlockData = snapshot.getBlockData();
+			byte[] rawBlockLight = snapshot.getBlockLight();
+			byte[] rawSkyLight = snapshot.getSkyLight();
+			byte[] fullChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
+
+			int arrIndex = 0;
+			for (int i = 0; i < rawBlockIdArray.length; i++) {
+				short convert = getMinecraftId(rawBlockIdArray[i]);
+				fullChunkData[arrIndex++] = (byte) (convert & 0xFF);
+			}
+
+			for (int i = 0; i < rawBlockData.length; i += 2) {
+				fullChunkData[arrIndex++] = (byte) ((rawBlockData[i + 1] << 4) | (rawBlockData[i] & 0xF));
+			}
+
+			System.arraycopy(rawBlockLight, 0, fullChunkData, arrIndex, rawBlockLight.length);
+			arrIndex += rawBlockLight.length;
+
+			System.arraycopy(rawSkyLight, 0, fullChunkData, arrIndex, rawSkyLight.length);
+
+			arrIndex += rawSkyLight.length;
+			return fullChunkData;
+		}
+		
+		private static byte[] getEmptyChunk(int[][] heights, BlockMaterial[][] materials, Point p) {
+			int chunkY = p.getChunkY();
+			return chunkY <=4 ? emptyGroundChunkData : emptySkyChunkData;
+		}
+		
+		private static byte[] getChunkHeightMap(int[][] heights, BlockMaterial[][] materials, Point p) {
+			int chunkY = p.getChunkY();
+			byte[] packetChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
+			int baseY = chunkY << Chunk.BLOCKS.BITS;
+
+			for (int xx = 0; xx < Chunk.BLOCKS.SIZE; xx++) {
+				for (int zz = 0; zz < Chunk.BLOCKS.SIZE; zz++) {
+					int dataOffset = xx | (zz << Chunk.BLOCKS.BITS);
+					int threshold = heights[xx][zz] - baseY;
+					if (chunkY == 0 && threshold < 0) {
+						threshold = 0;
+					}
+					int yy;
+					// Set blocks below height to the solid block
+					for (yy = 0; yy < Chunk.BLOCKS.SIZE && yy <= threshold; yy++) {
+						if (yy == threshold) {
+							BlockMaterial bm = materials[xx][zz];
+							if (bm == null) {
+								bm = VanillaMaterials.STONE;
+							}
+							int converted = getMinecraftId(bm.getId());
+							packetChunkData[dataOffset] = (byte) converted;
+						} else {
+							packetChunkData[dataOffset] = SOLID_BLOCK_ID;
+						}
+						dataOffset += Chunk.BLOCKS.AREA;
+					}
+					// Set sky light of blocks above height to 15
+					// Use half of start offset and add the block id and data length (2 volumes)
+					byte mask = (xx & 0x1) == 0 ? (byte) 0x0F : (byte) 0xF0;
+					dataOffset = Chunk.BLOCKS.DOUBLE_VOLUME + (dataOffset >> 1);
+					for (; yy < Chunk.BLOCKS.SIZE; yy++) {
+						packetChunkData[dataOffset] |= mask;
+						dataOffset += Chunk.BLOCKS.HALF_AREA;
+					}
+				}
+			}
+			return packetChunkData;
+		}
+		
+		private static boolean isEqual(String in, String... args) {
+			
+			if (in == null) {
+				return false;
+			}
+			for (String arg : args) {
+				if (arg.toLowerCase().equals(in.toLowerCase())) {
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }

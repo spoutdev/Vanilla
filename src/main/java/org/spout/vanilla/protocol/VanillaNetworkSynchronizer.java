@@ -70,6 +70,7 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.event.block.BlockActionEvent;
+import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowPropertyEvent;
@@ -301,8 +302,19 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	protected void worldChanged(World world) {
 		VanillaPlayer vc = (VanillaPlayer) owner.getController();
 
-		//Grab world characteristics.
-		GameMode gamemode = vc.getGameMode();
+		GameMode gamemode = world.getDataMap().get(VanillaData.GAMEMODE);
+		//The world the player is entering has a different gamemode...
+		if (gamemode != null) {
+			if (gamemode != vc.getGameMode()) {
+				PlayerGameModeChangedEvent event = Spout.getEngine().getEventManager().callEvent(new PlayerGameModeChangedEvent(owner, gamemode));
+				if (!event.isCancelled()) {
+					gamemode = event.getMode();
+				}
+			}
+		} else {
+			//The world has no gamemode setting in its map so default to the Player's GameMode.
+			gamemode = vc.getGameMode();
+		}
 		Difficulty difficulty = world.getDataMap().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getDataMap().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getDataMap().get(VanillaData.WORLD_TYPE);

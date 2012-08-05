@@ -75,10 +75,9 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacket;
  * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
  */
 public class VanillaPlayer extends Human implements PlayerController {
-	protected long unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt(), lastPing = 0, lastUserList = 0;
-	protected short count = 0, ping, maxHunger = 20, hunger = maxHunger;
-	protected float foodSaturation = 5.0f, exhaustion = 0.0f;
-	protected boolean poisoned;
+	private PingProcess pingProcess;
+	private EffectProcess effectProcess;
+	private SurvivalLogic survivalProcess;
 	protected boolean flying;
 	protected boolean falling;
 	protected boolean jumping;
@@ -117,6 +116,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setPosition(spawn.getPosition());
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
+		pingProcess = new PingProcess(this, LogicPriority.HIGHEST);
+		effectProcess = new EffectProcess(this, LogicPriority.HIGHEST);
+		survivalProcess = new SurvivalLogic(this, LogicPriority.HIGHEST);
 		// Survival mode
 		registerProcess(new SurvivalLogic(this, LogicPriority.HIGHEST));
 		// Creative mode
@@ -134,22 +136,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 		Player player = getParent();
 		if (player == null || player.getSession() == null) {
 			return;
-		}
-
-		if (lastPing++ > VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt() / 2) {
-			VanillaNetworkUtil.sendPacket(player, new KeepAliveMessage(getRandom().nextInt()));
-			lastPing = 0;
-		}
-
-		count++;
-		unresponsiveTicks--;
-		if (unresponsiveTicks == 0) {
-			player.kick("Connection Timeout!");
-		}
-
-		if (lastUserList++ >= 20) {
-			VanillaNetworkUtil.broadcastPacket(new PlayerListMessage(tabListName, true, ping));
-			lastUserList = 0;
 		}
 
 		// Update window
@@ -188,63 +174,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 		healthDirty = true;
 	}
 
-	/**
-	 * Returns the food saturation level of the player attached to the controller. The food bar "jitters" when the bar reaches 0.
-	 * 
-	 * @return food saturation level
-	 */
-	public float getFoodSaturation() {
-		return this.foodSaturation;
-	}
-
-	/**
-	 * Sets the food saturation of the controller. The food bar "jitters" when the bar reaches 0.
-	 * 
-	 * @param foodSaturation
-	 *            The value to set to
-	 */
-	public void setFoodSaturation(float foodSaturation) {
-		PlayerFoodSaturationChangeEvent event = new PlayerFoodSaturationChangeEvent(this.getParent(), foodSaturation);
-		Spout.getEngine().getEventManager().callEvent(event);
-		if (!event.isCancelled()) {
-			if (event.getFoodSaturation() > hunger) {
-				this.foodSaturation = hunger;
-			} else {
-				this.foodSaturation = event.getFoodSaturation();
-			}
-			healthDirty = true;
-		}
-	}
-
-	/**
-	 * Returns the hunger of the player attached to the controller.
-	 * 
-	 * @return hunger
-	 */
-	public short getHunger() {
-		return hunger;
-	}
-
-	/**
-	 * Sets the hunger of the controller.
-	 * 
-	 * @param hunger
-	 */
-	public void setHunger(short hunger) {
-		PlayerHungerChangeEvent event = new PlayerHungerChangeEvent(this.getParent(), hunger);
-		Spout.getEngine().getEventManager().callEvent(event);
-		if (!event.isCancelled()) {
-			if (event.getHunger() > maxHunger) {
-				this.hunger = maxHunger;
-			} else {
-				this.hunger = event.getHunger();
-			}
-			healthDirty = true;
-		}
-	}
-
 	public void updateHealth() {
-		sendPacket(getParent(), new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
+		sendPacket(getParent(), new UpdateHealthMessage((short) getHealth(), getSurvivalLogic().getHunger(), getSurvivalLogic().getFoodSaturation()));
 		healthDirty = false;
 	}
 
@@ -263,12 +194,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	public boolean hasInfiniteResources() {
 		return gameMode.equals(GameMode.CREATIVE);
-	}
-
-	public void resetTimeoutTicks() {
-		ping = count;
-		count = 0;
-		unresponsiveTicks = VanillaConfiguration.PLAYER_TIMEOUT_TICKS.getInt();
 	}
 
 	@Override
@@ -297,15 +222,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public Point getCompassTarget() {
 		return compassTarget;
-	}
-
-	/**
-	 * Gets the amount of ticks it takes the client to respond to the server.
-	 * 
-	 * @return ping of player.
-	 */
-	public short getPing() {
-		return ping;
 	}
 
 	/**
@@ -371,52 +287,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public boolean isSurvival() {
 		return gameMode.equals(GameMode.SURVIVAL);
-	}
-
-	/**
-	 * Whether or not the controller is poisoned.
-	 * 
-	 * @return true if poisoned.
-	 */
-	public boolean isPoisoned() {
-		return poisoned;
-	}
-
-	/**
-	 * Sets whether or not the controller is poisoned.
-	 * 
-	 * @param poisoned
-	 */
-	public void setPoisoned(boolean poisoned) {
-		this.poisoned = poisoned;
-	}
-
-	/**
-	 * Returns the exhaustion of the controller; affects hunger loss.
-	 * 
-	 * @return
-	 */
-	public float getExhaustion() {
-		return exhaustion;
-	}
-
-	/**
-	 * Sets the exhaustion of the controller; affects hunger loss.
-	 * 
-	 * @param exhaustion
-	 */
-	public void setExhaustion(float exhaustion) {
-		this.exhaustion = exhaustion;
-	}
-
-	/**
-	 * Adds a value to the exhaustion of the controller; affects hunger loss.
-	 * 
-	 * @param exhaustion
-	 *            to add
-	 */
-	public void addExhaustion(float exhaustion) {
-		this.exhaustion += exhaustion;
 	}
 
 	public boolean isFalling() {
@@ -604,7 +474,24 @@ public class VanillaPlayer extends Human implements PlayerController {
 		return level == 0 ? 300 : level * 300;
 	}
 
+	//TODO Remove dirty stuff
 	public boolean isDirty() {
 		return healthDirty;
+	}
+
+	public void setDirty(boolean dirty) {
+		this.healthDirty = dirty;
+	}
+
+	public PingProcess getPingProcess() {
+		return pingProcess;
+	}
+
+	public EffectProcess getEffectProcess() {
+		return effectProcess;
+	}
+
+	public SurvivalLogic getSurvivalLogic() {
+		return survivalProcess;
 	}
 }

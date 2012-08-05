@@ -26,10 +26,24 @@
  */
 package org.spout.vanilla;
 
+import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceInfo;
+
+import org.jboss.netty.bootstrap.ConnectionlessBootstrap;
+import org.jboss.netty.channel.socket.DatagramChannelFactory;
+import org.jboss.netty.channel.socket.oio.OioDatagramChannelFactory;
 import org.spout.api.Engine;
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -70,6 +84,7 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.protocol.LANThread;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.resources.MapPalette;
 import org.spout.vanilla.resources.RecipeYaml;
@@ -88,9 +103,16 @@ public class VanillaPlugin extends CommonPlugin {
 	private static VanillaPlugin instance;
 	private Engine engine;
 	private VanillaConfiguration config;
+	private JmDNS jmdns = null;
 
 	@Override
 	public void onDisable() {
+		if (jmdns != null) {
+			try {
+				jmdns.close();
+				this.getEngine().getLogger().info("Bonjour Service Discovery disabled");
+			} catch (IOException ignore) { }
+		}
 		instance = null;
 		getLogger().info("disabled");
 	}
@@ -133,7 +155,14 @@ public class VanillaPlugin extends CommonPlugin {
 		//Worlds
 		setupWorlds();
 		//}
-
+		
+		setupBonjour();
+		
+		if (engine instanceof Server && VanillaConfiguration.LAN_DISCOVERY.getBoolean()) {
+			LANThread lanThread = new LANThread();
+			lanThread.start();
+		}
+		
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
 	}
 
@@ -152,6 +181,24 @@ public class VanillaPlugin extends CommonPlugin {
 		VanillaRecipes.initialize();
 
 		getLogger().info("loaded");
+	}
+	
+	private void setupBonjour() {
+		if (getEngine() instanceof Server && VanillaConfiguration.BONJOUR.getBoolean()) {
+			try {
+				jmdns = JmDNS.create();
+				for (PortBinding binding : ((Server) getEngine()).getBoundAddresses()) {
+					if (binding.getAddress() instanceof InetSocketAddress && binding.getProtocol() instanceof VanillaProtocol) {
+						int port = ((InetSocketAddress) binding.getAddress()).getPort();
+						ServiceInfo info = ServiceInfo.create("pipework._tcp.local.", "Spout Server", port, "");
+						jmdns.registerService(info);
+						this.getEngine().getLogger().info("Started Bonjour Service Discovery on port: "  + port);
+					}
+				}
+			} catch (IOException e) {
+				this.getEngine().getLogger().log(Level.WARNING, "Failed to start Bonjour Service Discovery Library", e);
+			}
+		}
 	}
 
 	private void setupWorlds() {

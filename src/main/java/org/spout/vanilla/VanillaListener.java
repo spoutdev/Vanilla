@@ -36,14 +36,13 @@ import org.spout.api.event.Order;
 import org.spout.api.event.Result;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.event.entity.EntitySpawnEvent;
-import org.spout.api.event.player.PlayerLoginEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
+import org.spout.api.event.storage.PlayerLoadEvent;
 import org.spout.api.event.world.RegionLoadEvent;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.player.Player;
 import org.spout.api.scheduler.TaskPriority;
-
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
 import org.spout.vanilla.controller.VanillaControllerTypes;
@@ -55,61 +54,57 @@ import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class VanillaListener implements Listener {
 
-  private final VanillaPlugin plugin;
+	private final VanillaPlugin plugin;
 
-  public VanillaListener(VanillaPlugin plugin) {
-    this.plugin = plugin;
-  }
+	public VanillaListener(VanillaPlugin plugin) {
+		this.plugin = plugin;
+	}
 
-  @EventHandler(order = Order.LATEST)
-  public void onPlayerLogin(PlayerLoginEvent event) {
-    if (!event.isAllowed()) {
-      return;
-    }
-    // Set their mode
-    Player player = event.getPlayer();
-    VanillaPlayer vanillaPlayer = new VanillaPlayer(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
-    vanillaPlayer.setTitle(player.getDisplayName());
+	@EventHandler
+	public void onPlayerLoad(PlayerLoadEvent event) {
+		// Set their mode
+		Player player = event.getPlayer();
+		VanillaPlayer vanillaPlayer = new VanillaPlayer(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
+		vanillaPlayer.setTitle(player.getDisplayName());
 
-    player.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
-  }
+		player.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
+	}
 
-  @EventHandler
-  public void onRegionLoad(RegionLoadEvent event) {
-    Region region = event.getRegion();
+	@EventHandler
+	public void onRegionLoad(RegionLoadEvent event) {
+		Region region = event.getRegion();
 
-    RegionSpawner spawner = new RegionSpawner(region);
-    region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
+		RegionSpawner spawner = new RegionSpawner(region);
+		region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
 
-    WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(event.getWorld());
-    if (worldConfig.SPAWN_ANIMALS.getBoolean()) {
-      HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
-      grass.add(VanillaMaterials.GRASS);
-      spawner.addSpawnableType(VanillaControllerTypes.SHEEP, grass, 5);
+		WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(event.getWorld());
+		if (worldConfig.SPAWN_ANIMALS.getBoolean()) {
+			HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
+			grass.add(VanillaMaterials.GRASS);
+			spawner.addSpawnableType(VanillaControllerTypes.SHEEP, grass, 5);
 
-      spawner.addSpawnableType(VanillaControllerTypes.PIG, grass, 5);
+			spawner.addSpawnableType(VanillaControllerTypes.PIG, grass, 5);
 
-      spawner.addSpawnableType(VanillaControllerTypes.COW, grass, 5);
+			spawner.addSpawnableType(VanillaControllerTypes.COW, grass, 5);
 
-      spawner.addSpawnableType(VanillaControllerTypes.CHICKEN, grass, 5);
-    }
-    if (worldConfig.SPAWN_MONSTERS.getBoolean()) {
-      HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
-      endStone.add(VanillaMaterials.END_STONE);
-      spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
-    }
-  }
+			spawner.addSpawnableType(VanillaControllerTypes.CHICKEN, grass, 5);
+		}
+		if (worldConfig.SPAWN_MONSTERS.getBoolean()) {
+			HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
+			endStone.add(VanillaMaterials.END_STONE);
+			spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
+		}
+	}
 
-  @EventHandler(order = Order.MONITOR)
-  public void onEntitySpawn(EntitySpawnEvent event) {
-    if (event.isCancelled()) {
-      return;
-    }
+
+	@EventHandler(order = Order.MONITOR)
+	public void onEntitySpawn(EntitySpawnEvent event) {
+		if (event.isCancelled()) {
+			return;
+		}
 
     Entity entity = event.getEntity();
     Controller c = entity.getController();

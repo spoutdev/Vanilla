@@ -27,23 +27,12 @@
 package org.spout.vanilla;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
-
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 
-import org.jboss.netty.bootstrap.ConnectionlessBootstrap;
-import org.jboss.netty.channel.socket.DatagramChannelFactory;
-import org.jboss.netty.channel.socket.oio.OioDatagramChannelFactory;
 import org.spout.api.Engine;
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -62,13 +51,13 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
+import org.spout.api.plugin.Platform;
 import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.PortBinding;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.OutwardIterator;
-
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -97,218 +86,214 @@ import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.VanillaGenerators;
 
 public class VanillaPlugin extends CommonPlugin {
+	private static final int LOADER_THREAD_COUNT = 16;
+	public static final int MINECRAFT_PROTOCOL_ID = 39;
+	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
+	private static VanillaPlugin instance;
+	private Engine engine;
+	private VanillaConfiguration config;
+	private JmDNS jmdns = null;
 
-  private static final int LOADER_THREAD_COUNT = 16;
-  public static final int MINECRAFT_PROTOCOL_ID = 39;
-  public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
-  private static VanillaPlugin instance;
-  private Engine engine;
-  private VanillaConfiguration config;
-  private JmDNS jmdns = null;
+	@Override
+	public void onDisable() {
+		if (jmdns != null) {
+			try {
+				jmdns.close();
+				this.getEngine().getLogger().info("Bonjour Service Discovery disabled");
+			} catch (IOException ignore) {
+			}
+		}
+		instance = null;
+		getLogger().info("disabled");
+	}
 
-  @Override
-  public void onDisable() {
-    if (jmdns != null) {
-      try {
-        jmdns.close();
-        this.getEngine().getLogger().info("Bonjour Service Discovery disabled");
-      } catch (IOException ignore) {
-      }
-    }
-    instance = null;
-    getLogger().info("disabled");
-  }
+	@Override
+	public void onEnable() {
+		//Config
+		try {
+			config.load();
+		} catch (ConfigurationException e) {
+			getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
+		}
 
-  @Override
-  public void onEnable() {
-    //Config
-    try {
-      config.load();
-    } catch (ConfigurationException e) {
-      getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
-    }
+		// Universal Plug and Play
+		if (getEngine() instanceof Server) {
+			for (PortBinding binding : ((Server) getEngine()).getBoundAddresses()) {
+				if (binding.getProtocol() instanceof VanillaProtocol
+						&& binding.getAddress() instanceof InetSocketAddress
+						&& VanillaConfiguration.UPNP.getBoolean()) {
+					((Server) getEngine()).mapUPnPPort(((InetSocketAddress) binding.getAddress()).getPort(), VanillaConfiguration.MOTD.getString());
+				}
+			}
+		}
 
-    // Universal Plug and Play
-    if (getEngine() instanceof Server) {
-      for (PortBinding binding : ((Server) getEngine()).getBoundAddresses()) {
-        if (binding.getProtocol() instanceof VanillaProtocol
-                && binding.getAddress() instanceof InetSocketAddress
-                && VanillaConfiguration.UPNP.getBoolean()) {
-          ((Server) getEngine()).mapUPnPPort(((InetSocketAddress) binding.getAddress()).getPort(), VanillaConfiguration.MOTD.getString());
-        }
-      }
-    }
+		//Commands
+		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
+		engine.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);
+		if (engine.debugMode()) {
+			engine.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
+		}
 
-    //Commands
-    CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-    engine.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);
-    if (engine.debugMode()) {
-      engine.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
-    }
+		//Configuration
+		VanillaBlockMaterial.REDSTONE_POWER_MAX = (short) VanillaConfiguration.REDSTONE_MAX_RANGE.getInt();
+		VanillaBlockMaterial.REDSTONE_POWER_MIN = (short) VanillaConfiguration.REDSTONE_MIN_RANGE.getInt();
 
-    //Configuration
-    VanillaBlockMaterial.REDSTONE_POWER_MAX = (short) VanillaConfiguration.REDSTONE_MAX_RANGE.getInt();
-    VanillaBlockMaterial.REDSTONE_POWER_MIN = (short) VanillaConfiguration.REDSTONE_MIN_RANGE.getInt();
+		if (engine.getPlatform() == Platform.SERVER) {
+			//Worlds
+			setupWorlds();
+		}
 
-    //Events
-    engine.getEventManager().registerEvents(new VanillaListener(this), this);
+		setupBonjour();
 
-    //if (engine.getPlatform() == Platform.SERVER) {
-    //Worlds
-    setupWorlds();
-    //}
+		if (engine instanceof Server && VanillaConfiguration.LAN_DISCOVERY.getBoolean()) {
+			LANThread lanThread = new LANThread();
+			lanThread.start();
+		}
 
-    setupBonjour();
+		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
+	}
 
-    if (engine instanceof Server && VanillaConfiguration.LAN_DISCOVERY.getBoolean()) {
-      LANThread lanThread = new LANThread();
-      lanThread.start();
-    }
+	@Override
+	public void onLoad() {
+		instance = this;
+		engine = getEngine();
+		config = new VanillaConfiguration(getDataFolder());
+		Spout.getFilesystem().registerLoader("mappalette", new MapPaletteLoader());
+		Spout.getFilesystem().registerLoader("recipe", new RecipeLoader());
+		Protocol.registerProtocol(new VanillaProtocol());
 
-    getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
-  }
+		VanillaMaterials.initialize();
+		MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/resources/map/mapColorPalette.dat");
+		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/resources/recipes.yml");
+		VanillaRecipes.initialize();
 
-  @Override
-  public void onLoad() {
-    instance = this;
-    engine = getEngine();
-    config = new VanillaConfiguration(getDataFolder());
-    Spout.getFilesystem().registerLoader("mappalette", new MapPaletteLoader());
-    Spout.getFilesystem().registerLoader("recipe", new RecipeLoader());
-    Protocol.registerProtocol(new VanillaProtocol());
+		getLogger().info("loaded");
+	}
 
-    VanillaMaterials.initialize();
-    MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/resources/map/mapColorPalette.dat");
-    RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/resources/recipes.yml");
-    VanillaRecipes.initialize();
+	private void setupBonjour() {
+		if (getEngine() instanceof Server && VanillaConfiguration.BONJOUR.getBoolean()) {
+			try {
+				jmdns = JmDNS.create();
+				for (PortBinding binding : ((Server) getEngine()).getBoundAddresses()) {
+					if (binding.getAddress() instanceof InetSocketAddress && binding.getProtocol() instanceof VanillaProtocol) {
+						int port = ((InetSocketAddress) binding.getAddress()).getPort();
+						ServiceInfo info = ServiceInfo.create("pipework._tcp.local.", "Spout Server", port, "");
+						jmdns.registerService(info);
+						this.getEngine().getLogger().info("Started Bonjour Service Discovery on port: " + port);
+					}
+				}
+			} catch (IOException e) {
+				this.getEngine().getLogger().log(Level.WARNING, "Failed to start Bonjour Service Discovery Library", e);
+			}
+		}
+	}
 
-    getLogger().info("loaded");
-  }
+	private void setupWorlds() {
+		ArrayList<World> worlds = new ArrayList<World>();
 
-  private void setupBonjour() {
-    if (getEngine() instanceof Server && VanillaConfiguration.BONJOUR.getBoolean()) {
-      try {
-        jmdns = JmDNS.create();
-        for (PortBinding binding : ((Server) getEngine()).getBoundAddresses()) {
-          if (binding.getAddress() instanceof InetSocketAddress && binding.getProtocol() instanceof VanillaProtocol) {
-            int port = ((InetSocketAddress) binding.getAddress()).getPort();
-            ServiceInfo info = ServiceInfo.create("pipework._tcp.local.", "Spout Server", port, "");
-            jmdns.registerService(info);
-            this.getEngine().getLogger().info("Started Bonjour Service Discovery on port: " + port);
-          }
-        }
-      } catch (IOException e) {
-        this.getEngine().getLogger().log(Level.WARNING, "Failed to start Bonjour Service Discovery Library", e);
-      }
-    }
-  }
+		for (WorldConfigurationNode worldNode : VanillaConfiguration.WORLDS.getAll()) {
+			if (worldNode.LOAD.getBoolean()) {
+				// Obtain generator and start generating world
+				String generatorName = worldNode.GENERATOR.getString();
+				VanillaGenerator generator = VanillaGenerators.getGenerator(generatorName);
+				if (generator == null) {
+					throw new IllegalArgumentException("Invalid generator name for world '" + worldNode.getWorldName() + "': " + generatorName);
+				}
+				World world = engine.loadWorld(worldNode.getWorldName(), generator);
 
-  private void setupWorlds() {
-    ArrayList<World> worlds = new ArrayList<World>();
+				// Apply general settings
+				world.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(worldNode.GAMEMODE.getString().toUpperCase()));
+				world.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(worldNode.DIFFICULTY.getString().toUpperCase()));
+				world.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(worldNode.SKY_TYPE.getString().toUpperCase()));
 
-    for (WorldConfigurationNode worldNode : VanillaConfiguration.WORLDS.getAll()) {
-      if (worldNode.LOAD.getBoolean()) {
-        // Obtain generator and start generating world
-        String generatorName = worldNode.GENERATOR.getString();
-        VanillaGenerator generator = VanillaGenerators.getGenerator(generatorName);
-        if (generator == null) {
-          throw new IllegalArgumentException("Invalid generator name for world '" + worldNode.getWorldName() + "': " + generatorName);
-        }
-        World world = engine.loadWorld(worldNode.getWorldName(), generator);
+				// Grab safe spawn if newly created world.
+				if (world.getAge() <= 0) {
+					world.setSpawnPoint(new Transform(new Point(generator.getSafeSpawn(world)), Quaternion.IDENTITY, Vector3.ONE));
+				}
 
-        // Apply general settings
-        world.getDataMap().put(VanillaData.GAMEMODE, GameMode.valueOf(worldNode.GAMEMODE.getString().toUpperCase()));
-        world.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.valueOf(worldNode.DIFFICULTY.getString().toUpperCase()));
-        world.getDataMap().put(VanillaData.DIMENSION, Dimension.valueOf(worldNode.SKY_TYPE.getString().toUpperCase()));
+				// Add to worlds
+				worlds.add(world);
+			}
+		}
 
-        // Grab safe spawn if newly created world.
-        if (world.getAge() <= 0) {
-          world.setSpawnPoint(new Transform(new Point(generator.getSafeSpawn(world)), Quaternion.IDENTITY, Vector3.ONE));
-        }
+		final int radius = VanillaConfiguration.SPAWN_RADIUS.getInt();
+		final int protectionRadius = VanillaConfiguration.SPAWN_PROTECTION_RADIUS.getInt();
+		final int diameter = (radius << 1) + 1;
+		final int total = (diameter * diameter * diameter) / 6;
+		final int progressStep = total / 10;
+		final OutwardIterator oi = new OutwardIterator();
+		SpawnLoaderThread[] loaderThreads = new SpawnLoaderThread[LOADER_THREAD_COUNT];
 
-        // Add to worlds
-        worlds.add(world);
-      }
-    }
+		if (worlds.isEmpty()) {
+			return;
+		}
+		//Register protection service used for spawn protection.
+		engine.getServiceManager().register(ProtectionService.class, new VanillaProtectionService(), this, ServiceManager.ServicePriority.Highest);
 
-    final int radius = VanillaConfiguration.SPAWN_RADIUS.getInt();
-    final int protectionRadius = VanillaConfiguration.SPAWN_PROTECTION_RADIUS.getInt();
-    final int diameter = (radius << 1) + 1;
-    final int total = (diameter * diameter * diameter) / 6;
-    final int progressStep = total / 10;
-    final OutwardIterator oi = new OutwardIterator();
-    SpawnLoaderThread[] loaderThreads = new SpawnLoaderThread[LOADER_THREAD_COUNT];
+		for (World world : worlds) {
+			// Initialize the first chunks
+			Point point = world.getSpawnPoint().getPosition();
+			int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
+			int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
+			int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
 
-    if (worlds.isEmpty()) {
-      return;
-    }
-    //Register protection service used for spawn protection.
-    engine.getServiceManager().register(ProtectionService.class, new VanillaProtectionService(), this, ServiceManager.ServicePriority.Highest);
+			((VanillaProtectionService) engine.getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, point, protectionRadius));
 
-    for (World world : worlds) {
-      // Initialize the first chunks
-      Point point = world.getSpawnPoint().getPosition();
-      int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
-      int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
-      int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
+			final String initChunkType = world.getAge() <= 0 ? "Generating" : "Loading";
 
-      ((VanillaProtectionService) engine.getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, point, protectionRadius));
+			for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
+				loaderThreads[i] = new SpawnLoaderThread(total, progressStep, initChunkType);
+			}
 
-      final String initChunkType = world.getAge() <= 0 ? "Generating" : "Loading";
+			oi.reset(cx, cy, cz, radius);
+			while (oi.hasNext()) {
+				IntVector3 v = oi.next();
+				SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
+			}
 
-      for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
-        loaderThreads[i] = new SpawnLoaderThread(total, progressStep, initChunkType);
-      }
+			for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
+				loaderThreads[i].start();
+			}
 
-      oi.reset(cx, cy, cz, radius);
-      while (oi.hasNext()) {
-        IntVector3 v = oi.next();
-        SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
-      }
+			for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
+				try {
+					loaderThreads[i].join();
+				} catch (InterruptedException ie) {
+					Spout.getLogger().info("Interrupted when waiting for spawn area to load");
+				}
+			}
 
-      for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
-        loaderThreads[i].start();
-      }
+			WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(world);
 
-      for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
-        try {
-          loaderThreads[i].join();
-        } catch (InterruptedException ie) {
-          Spout.getLogger().info("Interrupted when waiting for spawn area to load");
-        }
-      }
+			// Keep spawn loaded
+			if (worldConfig.LOADED_SPAWN.getBoolean()) {
+				world.createAndSpawnEntity(point, new PointObserver(radius));
+			}
 
-      WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(world);
+			//TODO Remove sky setting when Weather and Time are Region tasks.
+			// Sky
+			String skyType = worldConfig.SKY_TYPE.getString();
+			VanillaSky sky;
+			if (skyType.equalsIgnoreCase("normal")) {
+				sky = new NormalSky(world);
+			} else if (skyType.equalsIgnoreCase("nether")) {
+				sky = new NetherSky(world);
+			} else if (skyType.equalsIgnoreCase("the_end")) {
+				sky = new TheEndSky(world);
+			} else {
+				throw new IllegalArgumentException("Invalid sky type for world '" + world.getName() + "': " + skyType);
+			}
+			world.getTaskManager().scheduleSyncRepeatingTask(this, sky, 50, 50, TaskPriority.NORMAL);
+			sky.onAttach();
+		}
+	}
 
-      // Keep spawn loaded
-      if (worldConfig.LOADED_SPAWN.getBoolean()) {
-        world.createAndSpawnEntity(point, new PointObserver(radius));
-      }
-
-      //TODO Remove sky setting when Weather and Time are Region tasks.
-      // Sky
-      String skyType = worldConfig.SKY_TYPE.getString();
-      VanillaSky sky;
-      if (skyType.equalsIgnoreCase("normal")) {
-        sky = new NormalSky(world);
-      } else if (skyType.equalsIgnoreCase("nether")) {
-        sky = new NetherSky(world);
-      } else if (skyType.equalsIgnoreCase("the_end")) {
-        sky = new TheEndSky(world);
-      } else {
-        throw new IllegalArgumentException("Invalid sky type for world '" + world.getName() + "': " + skyType);
-      }
-      world.getTaskManager().scheduleSyncRepeatingTask(this, sky, 50, 50, TaskPriority.NORMAL);
-      sky.onAttach();
-    }
-  }
-
-  /**
-   * Gets the running instance of VanillaPlugin
-   *
-   * @return the running instance of VanillaPlugin
-   */
-  public static VanillaPlugin getInstance() {
-    return instance;
-  }
+	/**
+	 * Gets the running instance of VanillaPlugin
+	 *
+	 * @return the running instance of VanillaPlugin
+	 */
+	public static VanillaPlugin getInstance() {
+		return instance;
+	}
 }

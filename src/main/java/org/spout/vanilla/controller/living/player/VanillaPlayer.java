@@ -106,7 +106,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setPosition(spawn.getPosition());
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
-    
+
     pingProcess = new PingProcess(this, LogicPriority.HIGHEST);
     effectProcess = new EffectProcess(this, LogicPriority.HIGHEST);
     survivalLogic = new SurvivalLogic(this, LogicPriority.HIGHEST);
@@ -120,7 +120,7 @@ public class VanillaPlayer extends Human implements PlayerController {
     registerProcess(pingProcess);
     //Effect handler
     registerProcess(effectProcess);
-    
+
 		super.onAttached();
 	}
 
@@ -182,7 +182,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public boolean hasInfiniteResources() {
 		return gameMode.equals(GameMode.CREATIVE);
 	}
-  
+
 	@Override
 	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
 		Set<ItemStack> drops = new HashSet<ItemStack>();
@@ -207,7 +207,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public Point getCompassTarget() {
 		return compassTarget;
 	}
-  
+
 	/**
 	 * Makes the player a server operator.
 	 * @param op
@@ -284,7 +284,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			this.initialYFalling = 0.0f;
 		}
 	}
-  
+
   public boolean isSwimming() {
     Point location = getParent().getPosition();
     BlockMaterial first = location.getWorld().getBlockMaterial(location.getBlockX(), location.getBlockY(), location.getBlockZ());
@@ -439,21 +439,21 @@ public class VanillaPlayer extends Human implements PlayerController {
   public boolean isDirty() {
     return healthDirty;
   }
-  
+
   public void setDirty(boolean newDirty) {
     healthDirty = newDirty;
   }
-  
+
   public PingProcess getPingProcess() {
     return pingProcess;
   }
-  
+
   public EffectProcess getEffectProcess() {
     return effectProcess;
   }
-  
+
   public SurvivalLogic getSurvivalLogic() {
     return survivalLogic;
   }
-  
+
 }

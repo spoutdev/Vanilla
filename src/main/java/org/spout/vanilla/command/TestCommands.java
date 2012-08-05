@@ -63,7 +63,6 @@ import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class TestCommands {
-	private final Set<String> invisible = new HashSet<String>();
 	@SuppressWarnings("unused")
 	private final VanillaPlugin plugin;
 
@@ -252,31 +251,6 @@ public class TestCommands {
 
 		BlockController controller = block.getController();
 		player.sendMessage("Material: ", controller.getMaterial().getName());
-	}
-
-	@Command(aliases = {"vanish", "v"}, desc = "Toggle your visibility", min = 0, max = 0)
-	public void vanish(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("Source must be player");
-		}
-
-		Controller controller = ((Player) source).getController();
-		if (!(controller instanceof VanillaPlayer)) {
-			throw new CommandException("Invalid controller");
-		}
-
-		VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
-		Player player = vanillaPlayer.getParent();
-		String name = player.getName();
-		if (invisible.contains(name)) {
-			invisible.remove(name);
-			vanillaPlayer.setVisible(true);
-			player.sendMessage("You re-appear");
-		} else {
-			invisible.add(name);
-			vanillaPlayer.setVisible(false);
-			player.sendMessage("You vanish into thin air!");
-		}
 	}
 
 	@Command(aliases = {"killall", "ka"}, desc = "Kill all non-player or world entities within a world", min = 0, max = 1)

@@ -59,92 +59,92 @@ import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class VanillaListener implements Listener {
-	private final VanillaPlugin plugin;
 
-	public VanillaListener(VanillaPlugin plugin) {
-		this.plugin = plugin;
-	}
+  private final VanillaPlugin plugin;
 
-	@EventHandler(order = Order.LATEST)
-	public void onPlayerLogin(PlayerLoginEvent event) {
-		if (!event.isAllowed()) {
-			return;
-		}
-		// Set their mode
-		Player player = event.getPlayer();
-		VanillaPlayer vanillaPlayer = new VanillaPlayer(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
-		vanillaPlayer.setTitle(player.getDisplayName());
+  public VanillaListener(VanillaPlugin plugin) {
+    this.plugin = plugin;
+  }
 
-		player.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
+  @EventHandler(order = Order.LATEST)
+  public void onPlayerLogin(PlayerLoginEvent event) {
+    if (!event.isAllowed()) {
+      return;
+    }
+    // Set their mode
+    Player player = event.getPlayer();
+    VanillaPlayer vanillaPlayer = new VanillaPlayer(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
+    vanillaPlayer.setTitle(player.getDisplayName());
 
-		// Make them visible to everyone by default
-		vanillaPlayer.setVisible(true);
-	}
+    player.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
+  }
 
-	@EventHandler
-	public void onRegionLoad(RegionLoadEvent event) {
-		Region region = event.getRegion();
+  @EventHandler
+  public void onRegionLoad(RegionLoadEvent event) {
+    Region region = event.getRegion();
 
-		RegionSpawner spawner = new RegionSpawner(region);
-		region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
+    RegionSpawner spawner = new RegionSpawner(region);
+    region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
 
-		WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(event.getWorld());
-		if (worldConfig.SPAWN_ANIMALS.getBoolean()) {
-			HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
-			grass.add(VanillaMaterials.GRASS);
-			spawner.addSpawnableType(VanillaControllerTypes.SHEEP, grass, 5);
+    WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(event.getWorld());
+    if (worldConfig.SPAWN_ANIMALS.getBoolean()) {
+      HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
+      grass.add(VanillaMaterials.GRASS);
+      spawner.addSpawnableType(VanillaControllerTypes.SHEEP, grass, 5);
 
-			spawner.addSpawnableType(VanillaControllerTypes.PIG, grass, 5);
+      spawner.addSpawnableType(VanillaControllerTypes.PIG, grass, 5);
 
-			spawner.addSpawnableType(VanillaControllerTypes.COW, grass, 5);
+      spawner.addSpawnableType(VanillaControllerTypes.COW, grass, 5);
 
-			spawner.addSpawnableType(VanillaControllerTypes.CHICKEN, grass, 5);
-		}
-		if (worldConfig.SPAWN_MONSTERS.getBoolean()) {
-			HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
-			endStone.add(VanillaMaterials.END_STONE);
-			spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
-		}
-	}
+      spawner.addSpawnableType(VanillaControllerTypes.CHICKEN, grass, 5);
+    }
+    if (worldConfig.SPAWN_MONSTERS.getBoolean()) {
+      HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
+      endStone.add(VanillaMaterials.END_STONE);
+      spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
+    }
+  }
 
-	@EventHandler(order = Order.MONITOR)
-	public void onEntitySpawn(EntitySpawnEvent event) {
-		if (event.isCancelled()) {
-			return;
-		}
+  @EventHandler(order = Order.MONITOR)
+  public void onEntitySpawn(EntitySpawnEvent event) {
+    if (event.isCancelled()) {
+      return;
+    }
 
-		Entity entity = event.getEntity();
-		Controller c = entity.getController();
-		if (c instanceof Sheep) {
-			Sheep sheep = (Sheep) c;
-			sheep.setTimeUntilAdult(100);
-		}
+    Entity entity = event.getEntity();
+    Controller c = entity.getController();
+    if (c instanceof Sheep) {
+      Sheep sheep = (Sheep) c;
+      sheep.setTimeUntilAdult(100);
+    }
 
-		if (c instanceof Ghast) {
-			Ghast ghast = (Ghast) c;
-			ghast.setRedEyes(true);
-		}
-	}
+    if (c instanceof Ghast) {
+      Ghast ghast = (Ghast) c;
+      ghast.setRedEyes(true);
+    }
+  }
 
-	@EventHandler(order = Order.EARLIEST)
-	public void onPermissionNode(PermissionNodeEvent event) {
-		if (VanillaConfiguration.OPS.isOp(event.getSubject().getName())) {
-			event.setResult(Result.ALLOW);
-		}
-	}
+  @EventHandler(order = Order.EARLIEST)
+  public void onPermissionNode(PermissionNodeEvent event) {
+    if (VanillaConfiguration.OPS.isOp(event.getSubject().getName())) {
+      event.setResult(Result.ALLOW);
+    }
+  }
 
-	@EventHandler
-	public void onHealthChange(EntityHealthChangeEvent event) {
-		if (event.getSource() == HealthChangeReason.SPAWN) {
-			return;
-		}
-
-		Controller c = event.getEntity().getController();
-		if (c instanceof VanillaPlayer && ((VanillaPlayer) c).isSurvival()) {
-			VanillaPlayer sp = (VanillaPlayer) c;
-			short health = (short) sp.getHealth();
-			health += (short) event.getChange();
-			VanillaNetworkUtil.sendPacket(sp.getParent(), new UpdateHealthMessage(health, sp.getHunger(), sp.getFoodSaturation()));
-		}
-	}
+  @EventHandler
+  public void onHealthChange(EntityHealthChangeEvent event) {
+    if (event.getSource() == HealthChangeReason.SPAWN) {
+      return;
+    }
+    if (event.isCancelled()) {
+      return;
+    }
+    Controller c = event.getEntity().getController();
+    if (c instanceof VanillaPlayer && ((VanillaPlayer) c).isSurvival()) {
+      VanillaPlayer sp = (VanillaPlayer) c;
+      short health = (short) sp.getHealth();
+      health += (short) event.getChange();
+      VanillaNetworkUtil.sendPacket(sp.getParent(), new UpdateHealthMessage(health, sp.getHunger(), sp.getFoodSaturation()));
+    }
+  }
 }

@@ -86,7 +86,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected Window activeWindow = new DefaultWindow(this);
 	protected String tabListName;
 	protected GameMode gameMode;
-	protected final Set<Player> invisibleFor = new HashSet<Player>();
 	protected Point compassTarget;
 	protected boolean playerDead = false;
 
@@ -294,44 +293,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public short getPing() {
 		return ping;
 	}
-
-	/**
-	 * Sets whether the player is visible for the collection of players given.
-	 * @param visible
-	 * @param players
-	 */
-	public void setVisibleFor(boolean visible, Player... players) {
-		Entity parent = getParent();
-		for (Player player : players) {
-			if (player.getController() != this) {
-				if (visible) {
-					invisibleFor.remove(player);
-					player.getNetworkSynchronizer().spawnEntity(parent);
-				} else {
-					invisibleFor.add(player);
-					player.getNetworkSynchronizer().destroyEntity(parent);
-				}
-			}
-		}
-	}
-
-	/**
-	 * Sets whether the player is visible for everyone.
-	 * @param visible
-	 */
-	public void setVisible(boolean visible) {
-		setVisibleFor(visible, Spout.getEngine().getOnlinePlayers());
-	}
-
-	/**
-	 * Whether or not the player is visible for that player.
-	 * @param player
-	 * @return true if visible for that player
-	 */
-	public boolean isVisibleFor(Player player) {
-		return !invisibleFor.contains(player);
-	}
-
+  
 	/**
 	 * Makes the player a server operator.
 	 * @param op

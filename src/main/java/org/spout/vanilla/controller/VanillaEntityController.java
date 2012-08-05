@@ -511,13 +511,13 @@ public abstract class VanillaEntityController extends BasicController implements
 	 * @param source of the change
 	 */
 	public void setHealth(int health, Source source) {
-		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getParent(), source, health);
+		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getParent(), source, health-this.health);
 		Spout.getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
-			if (event.getChange() > maxHealth) {
+			if (health + event.getChange() > maxHealth) {
 				this.health = maxHealth;
 			} else {
-				this.health = event.getChange();
+				this.health = health + event.getChange();
 			}
 		}
 	}

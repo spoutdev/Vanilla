@@ -514,10 +514,10 @@ public abstract class VanillaEntityController extends BasicController implements
 		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getParent(), source, health-this.health);
 		Spout.getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
-			if (health + event.getChange() > maxHealth) {
+			if (this.health + event.getChange() > maxHealth) {
 				this.health = maxHealth;
 			} else {
-				this.health = health + event.getChange();
+				this.health = this.health + event.getChange();
 			}
 		}
 	}

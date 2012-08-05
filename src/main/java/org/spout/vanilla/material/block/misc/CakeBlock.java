@@ -63,7 +63,7 @@ public class CakeBlock extends Solid implements Mineable {
 
 			if (entity.getController() instanceof VanillaPlayer) {
 				VanillaPlayer player = (VanillaPlayer) entity.getController();
-				player.setHunger((short) (player.getHunger() + 2));
+				player.getSurvivalLogic().setHunger((short) (player.getSurvivalLogic().getHunger() + 2));
 			}
 		}
 	}

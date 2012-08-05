@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 
@@ -40,6 +39,6 @@ public class KeepAliveMessageHandler extends MessageHandler<KeepAliveMessage> {
 		}
 
 		VanillaPlayer mp = (VanillaPlayer) session.getPlayer().getController();
-		mp.resetTimeoutTicks();
+		mp.getPingProcess().resetTimeoutTicks();
 	}
 }

@@ -130,8 +130,8 @@ public class VanillaProtocol extends Protocol {
 			VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
 			// Set protocol and send packets
 			if (vanillaPlayer.isSurvival()) {
-				VanillaNetworkUtil.sendPacket(vanillaPlayer.getParent(), new UpdateHealthMessage((short) vanillaPlayer.getHealth(), vanillaPlayer.getHunger(), vanillaPlayer.getFoodSaturation()));
-			}
+				vanillaPlayer.updateHealth();
+      }
 		}
 
 		StringBuilder listBuilder = new StringBuilder();

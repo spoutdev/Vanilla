@@ -155,7 +155,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			}
 
 			if (VanillaPlayerUtil.isSurvival(player)) {
-				((VanillaPlayer) player.getController()).setExhaustion(((VanillaPlayer) player.getController()).getExhaustion() + ExhaustionLevel.BREAK_BLOCK.getAmount());
+				((VanillaPlayer) player.getController()).getSurvivalLogic().setExhaustion(((VanillaPlayer) player.getController()).getSurvivalLogic().getExhaustion() + ExhaustionLevel.BREAK_BLOCK.getAmount());
 			}
 
 			long diggingTicks = vp.getDiggingTicks();

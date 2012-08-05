@@ -142,9 +142,7 @@ public class VanillaListener implements Listener {
     Controller c = event.getEntity().getController();
     if (c instanceof VanillaPlayer && ((VanillaPlayer) c).isSurvival()) {
       VanillaPlayer sp = (VanillaPlayer) c;
-      short health = (short) sp.getHealth();
-      health += (short) event.getChange();
-      VanillaNetworkUtil.sendPacket(sp.getParent(), new UpdateHealthMessage(health, sp.getHunger(), sp.getFoodSaturation()));
+      sp.updateHealth();
     }
   }
 }

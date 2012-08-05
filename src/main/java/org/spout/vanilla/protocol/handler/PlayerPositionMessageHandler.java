@@ -102,7 +102,7 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 					if (vPlayer.isSprinting()) {
 						level = ExhaustionLevel.SPRINT_JUMP.getAmount();
 					}
-					vPlayer.setExhaustion(vPlayer.getExhaustion() + level);
+					vPlayer.getSurvivalLogic().setExhaustion(vPlayer.getSurvivalLogic().getExhaustion() + level);
 				}
 			} else {
 				vPlayer.setJumping(false);

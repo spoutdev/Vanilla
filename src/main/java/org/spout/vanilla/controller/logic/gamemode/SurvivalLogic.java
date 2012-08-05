@@ -26,21 +26,25 @@
  */
 package org.spout.vanilla.controller.logic.gamemode;
 
+import org.spout.api.Spout;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
-
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.player.PlayerFoodSaturationChangeEvent;
+import org.spout.vanilla.event.player.PlayerHungerChangeEvent;
 
 /**
  * Basic logic that applies Survival-mode rules to a VanillaPlayer
  */
 public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 	private int foodTimer = 0;
+	private short maxHunger = 20, hunger = maxHunger;
+	private float foodSaturation = 5.0f, exhaustion = 0.0f;
 
 	public SurvivalLogic(VanillaPlayer parent, LogicPriority priority) {
 		super(parent, priority);
@@ -58,16 +62,16 @@ public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 	public void run() {
 		float distanceMoved = 0f;
 		if ((distanceMoved += getParent().getPreviousPosition().distanceSquared(getParent().getParent().getPosition())) >= 1) {
-			getParent().setExhaustion(getParent().getExhaustion() + ExhaustionLevel.WALKING.getAmount());
+			setExhaustion(getExhaustion() + ExhaustionLevel.WALKING.getAmount());
 		}
 
 		if (getParent().isSprinting()) {
-			getParent().setExhaustion(getParent().getExhaustion() + ExhaustionLevel.SPRINTING.getAmount());
+			setExhaustion(getExhaustion() + ExhaustionLevel.SPRINTING.getAmount());
 		}
 
 		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
-		if (getParent().isPoisoned()) {
-			getParent().setExhaustion(getParent().getExhaustion() + ExhaustionLevel.FOOD_POISONING.getAmount());
+		if (getParent().getEffectProcess().isPoisoned()) {
+			setExhaustion(getExhaustion() + ExhaustionLevel.FOOD_POISONING.getAmount());
 		}
 
 		// Track hunger
@@ -79,16 +83,16 @@ public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 	}
 
 	private void updateHealthAndHunger() {
-		if (getParent().getExhaustion() > 4.0) {
-			getParent().setExhaustion(getParent().getExhaustion() - 4.0f);
-			if (getParent().getFoodSaturation() > 0) {
-				getParent().setFoodSaturation(Math.max(getParent().getExhaustion() - 1f, 0));
+		if (getExhaustion() > 4.0) {
+			setExhaustion(getExhaustion() - 4.0f);
+			if (getFoodSaturation() > 0) {
+        setFoodSaturation(Math.max(getExhaustion() - 1f, 0));
 			} else {
 				getParent().setHealth(Math.max(getParent().getHealth() - 1, 0), DamageCause.STARVE); //TODO fix Source here, correct?
 			}
 		}
 
-		if (getParent().getHunger() <= 0 && getParent().getHealth() > 0) {
+		if (getHunger() <= 0 && getParent().getHealth() > 0) {
 			int maxDrop;
 			switch ((Difficulty) getParent().getParent().getWorld().get(VanillaData.DIFFICULTY)) {
 				case EASY:
@@ -103,11 +107,86 @@ public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 			if (maxDrop < getParent().getHealth()) {
 				getParent().setHealth(Math.max(getParent().getHealth() - 1, maxDrop), DamageCause.STARVE);
 			}
-		} else if (getParent().getHunger() >= 18 && getParent().getHealth() < 20) {
+		} else if (getHunger() >= 18 && getParent().getHealth() < 20) {
       getParent().setHealth(getParent().getHealth() + 1, HealthChangeReason.REGENERATION);
 		}
     if(getParent().isDirty()) {
       getParent().updateHealth();
     }
+	}
+  
+  
+	/**
+	 * Returns the food saturation level of the player attached to the controller. The food bar "jitters" when the bar reaches 0.
+	 * @return food saturation level
+	 */
+	public float getFoodSaturation() {
+		return this.foodSaturation;
+	}
+
+	/**
+	 * Sets the food saturation of the controller. The food bar "jitters" when the bar reaches 0.
+	 * @param foodSaturation The value to set to
+	 */
+	public void setFoodSaturation(float foodSaturation) {
+		PlayerFoodSaturationChangeEvent event = new PlayerFoodSaturationChangeEvent(getParent().getParent(), foodSaturation);
+		Spout.getEngine().getEventManager().callEvent(event);
+		if (!event.isCancelled()) {
+			if (event.getFoodSaturation() > hunger) {
+				this.foodSaturation = hunger;
+			} else {
+				this.foodSaturation = event.getFoodSaturation();
+			}
+      getParent().setDirty(true);
+		}
+	}
+
+	/**
+	 * Returns the hunger of the player attached to the controller.
+	 * @return hunger
+	 */
+	public short getHunger() {
+		return hunger;
+	}
+
+	/**
+	 * Returns the exhaustion of the controller; affects hunger loss.
+	 * @return
+	 */
+	public float getExhaustion() {
+		return exhaustion;
+	}
+
+	/**
+	 * Sets the exhaustion of the controller; affects hunger loss.
+	 * @param exhaustion
+	 */
+	public void setExhaustion(float exhaustion) {
+		this.exhaustion = exhaustion;
+	}
+
+	/**
+	 * Adds a value to the exhaustion of the controller; affects hunger loss.
+	 * @param exhaustion to add
+	 */
+	public void addExhaustion(float exhaustion) {
+		this.exhaustion += exhaustion;
+	}
+
+	/**
+	 * Sets the hunger of the controller.
+	 * @param hunger
+	 */
+	public void setHunger(short hunger) {
+		PlayerHungerChangeEvent event = new PlayerHungerChangeEvent(getParent().getParent(), hunger);
+		Spout.getEngine().getEventManager().callEvent(event);
+		if (!event.isCancelled()) {
+			if (event.getHunger() > maxHunger) {
+				this.hunger = maxHunger;
+			} else {
+				this.hunger = event.getHunger();
+			}
+      getParent().setDirty(true);
+		}
 	}
 }

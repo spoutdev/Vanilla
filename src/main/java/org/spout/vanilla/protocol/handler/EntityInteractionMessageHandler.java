@@ -77,10 +77,10 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 				if (clickedEntity.getController() instanceof VanillaPlayer && (!vPlayer.isSurvival() || !VanillaPlayerUtil.isSurvival(damaged.getParent()))) {
 					return;
 				}
-				vPlayer.addExhaustion(ExhaustionLevel.ATTACK_ENEMY.getAmount());
+				vPlayer.getSurvivalLogic().addExhaustion(ExhaustionLevel.ATTACK_ENEMY.getAmount());
 
 				if (clickedEntity.getController() instanceof VanillaPlayer) {
-					((VanillaPlayer) clickedEntity.getController()).addExhaustion(ExhaustionLevel.RECEIVE_DAMAGE.getAmount());
+					((VanillaPlayer) clickedEntity.getController()).getSurvivalLogic().addExhaustion(ExhaustionLevel.RECEIVE_DAMAGE.getAmount());
 				}
 
 				int damage = 1;

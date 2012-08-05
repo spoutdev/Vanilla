@@ -24,24 +24,51 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.entityeffect.food;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.spout.vanilla.controller.living.player;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+import org.spout.api.tickable.LogicPriority;
+import org.spout.api.tickable.LogicRunnable;
 
-public class Poisoning extends VanillaEntityFoodEffect {
-	public Poisoning(VanillaPlayer effected, float amount) {
-		//Unused. Only to get the vPlayer
-		super(effected, 30, 0);
+/**
+ *
+ * @author ZNickq
+ */
+public class EffectProcess extends LogicRunnable<VanillaPlayer> {
+  private boolean poisoned;
+  
+  public EffectProcess(VanillaPlayer aThis, LogicPriority logicPriority) {
+    super(aThis, logicPriority);
+  }
+
+  @Override
+  public boolean shouldRun(float f) {
+    return true;
+  }
+
+  @Override
+  public void run() {
+  }
+  
+  
+
+	/**
+	 * Whether or not the controller is poisoned.
+	 * @return true if poisoned.
+	 */
+	public boolean isPoisoned() {
+		return poisoned;
 	}
 
-	@Override
-	public void onRegistration() {
-		this.getParent().getEffectProcess().setPoisoned(true);
+	/**
+	 * Sets whether or not the controller is poisoned.
+	 * @param poisoned
+	 */
+	public void setPoisoned(boolean poisoned) {
+		this.poisoned = poisoned;
 	}
-
-	@Override
-	public void run() {
-		this.getParent().getEffectProcess().setPoisoned(false);
-	}
+  
 }

@@ -81,6 +81,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected boolean flying;
 	protected boolean falling;
 	protected boolean jumping;
+  protected boolean healthDirty;
 	protected float initialYFalling = 0.0f;
 	protected final PlayerInventory playerInventory = new PlayerInventory(this);
 	protected Window activeWindow = new DefaultWindow(this);
@@ -180,6 +181,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public void setHealth(int health, Source source) {
 		super.setHealth(health, source);
 		playerDead = health <= 0;
+    healthDirty = true;
 	}
 
 	/**
@@ -203,6 +205,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 			} else {
 				this.foodSaturation = event.getFoodSaturation();
 			}
+      healthDirty = true;
 		}
 	}
 
@@ -227,11 +230,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 			} else {
 				this.hunger = event.getHunger();
 			}
+      healthDirty = true;
 		}
 	}
 
 	public void updateHealth() {
 		sendPacket(getParent(), new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
+    healthDirty = false;
 	}
 
 	@Override
@@ -551,4 +556,8 @@ public class VanillaPlayer extends Human implements PlayerController {
 		}
 		return level == 0 ? 300 : level * 300;
 	}
+
+  public boolean isDirty() {
+    return healthDirty;
+  }
 }

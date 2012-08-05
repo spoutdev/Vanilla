@@ -79,9 +79,7 @@ public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 	}
 
 	private void updateHealthAndHunger() {
-    boolean dirty = false;
 		if (getParent().getExhaustion() > 4.0) {
-      dirty = true;
 			getParent().setExhaustion(getParent().getExhaustion() - 4.0f);
 			if (getParent().getFoodSaturation() > 0) {
 				getParent().setFoodSaturation(Math.max(getParent().getExhaustion() - 1f, 0));
@@ -103,14 +101,12 @@ public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 					maxDrop = 0;
 			}
 			if (maxDrop < getParent().getHealth()) {
-        dirty = true;
 				getParent().setHealth(Math.max(getParent().getHealth() - 1, maxDrop), DamageCause.STARVE);
 			}
 		} else if (getParent().getHunger() >= 18 && getParent().getHealth() < 20) {
-      dirty = true;
       getParent().setHealth(getParent().getHealth() + 1, HealthChangeReason.REGENERATION);
 		}
-    if(dirty) {
+    if(getParent().isDirty()) {
       getParent().updateHealth();
     }
 	}

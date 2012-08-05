@@ -588,6 +588,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 	}
 
 	@Override
+	public void updateAirTicks() {
+		if (this.isSurvival()) {
+			super.updateAirTicks();
+		}
+	}
+
+	@Override
 	public int getMaxAirTicks() {
 		ItemStack helmet = getInventory().getArmor().getHelmet().getItem();
 		int level = 0;

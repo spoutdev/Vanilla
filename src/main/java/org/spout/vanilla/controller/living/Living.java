@@ -190,7 +190,7 @@ public abstract class Living extends VanillaEntityController {
 				if (head.isMaterial(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
 					// Drowning
 					if (airTicks >= getMaxAirTicks() && airTicks % 20 == 0) {
-						damage(4, DamageCause.DROWN);
+						damage(2, DamageCause.DROWN);
 					}
 				} else {
 					// Suffocation

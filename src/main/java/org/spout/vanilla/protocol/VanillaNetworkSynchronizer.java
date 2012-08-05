@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
@@ -228,8 +229,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 	}
 
-
-
 	@Override
 	public Collection<Chunk> sendChunk(Chunk c) {
 
@@ -284,7 +283,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		return chunks;
 	}
 	
-
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
 		//TODO: Implement Spout Protocol
@@ -301,8 +299,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	protected void worldChanged(World world) {
+		VanillaPlayer vc = (VanillaPlayer) owner.getController();
+
 		//Grab world characteristics.
-		GameMode gamemode = world.getDataMap().get(VanillaData.GAMEMODE);
+		GameMode gamemode = vc.getGameMode();
 		Difficulty difficulty = world.getDataMap().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getDataMap().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getDataMap().get(VanillaData.WORLD_TYPE);
@@ -311,7 +311,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (first) {
 			first = false;
 			int entityId = owner.getId();
-			VanillaPlayer vc = (VanillaPlayer) owner.getController();
 			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) session.getEngine().getMaxPlayers());
 			owner.getSession().send(false, true, idMsg);
 			owner.getSession().setState(State.GAME);

@@ -131,11 +131,7 @@ public abstract class VanillaEntityController extends BasicController implements
 		if (deathTicks > 0) {
 			deathTicks--;
 			if (deathTicks == 0) {
-				if (this instanceof PlayerController) {
-					deathTicks = 30;
-				} else {
-					getParent().kill();
-				}
+				kill();
 			}
 			return;
 		}
@@ -145,7 +141,7 @@ public abstract class VanillaEntityController extends BasicController implements
 		// Check controller health, send messages to the client based on current state.
 		if (health <= 0) {
 			if (!hasDeathAnimation()) {
-				getParent().kill();
+				kill();
 			} else {
 				VanillaNetworkUtil.broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
 				deathTicks = 30;
@@ -188,6 +184,10 @@ public abstract class VanillaEntityController extends BasicController implements
 			getParent().getLastTransform().getPosition().getWorld().createAndSpawnEntity(getParent().getLastTransform().getPosition(), item);
 			// TODO: Drop experience
 		}
+	}
+
+	public void kill() {
+		getParent().kill();
 	}
 
 	@Override
@@ -503,6 +503,15 @@ public abstract class VanillaEntityController extends BasicController implements
 	 */
 	public int getMaxHealth() {
 		return maxHealth;
+	}
+	
+	/**
+	 * Returns true if the entity is equal to or less than zero health remaining
+	 * 
+	 * @return dead
+	 */
+	public boolean isDead() {
+		return health <= 0;
 	}
 
 	/**

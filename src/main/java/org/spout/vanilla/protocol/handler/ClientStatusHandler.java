@@ -68,18 +68,9 @@ public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 			//Set position for the server
 			Point point = event.getPoint();
 			player.setPosition(point);
-			player.getNetworkSynchronizer().setPositionDirty();
+			player.getNetworkSynchronizer().setRespawned();
 			VanillaPlayer controller = (VanillaPlayer) player.getController();
 			controller.setHealth(controller.getMaxHealth(), HealthChangeReason.SPAWN);
-
-			//Send respawn packet back to the client.
-			//TODO We need worlds associated with vanilla storing characteristics
-			int dimension = point.getWorld().getDataMap().get(VanillaData.DIMENSION).getId();
-			byte difficulty = point.getWorld().getDataMap().get(VanillaData.DIFFICULTY).getId();
-			byte gamemode = ((VanillaPlayer) player.getController()).getGameMode().getId();
-			String worldType = point.getWorld().getDataMap().get(VanillaData.WORLD_TYPE).toString();
-			RespawnMessage respawn = new RespawnMessage(dimension, difficulty, gamemode, 256, worldType);
-			session.send(false, respawn);
 
 			//send spawn to everyone else
 			EntityProtocol ep = controller.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);

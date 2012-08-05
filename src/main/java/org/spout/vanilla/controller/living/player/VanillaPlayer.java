@@ -39,6 +39,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
@@ -55,6 +56,7 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.event.player.PlayerFoodSaturationChangeEvent;
 import org.spout.vanilla.event.player.PlayerHungerChangeEvent;
 import org.spout.vanilla.inventory.player.PlayerInventory;
+import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.armor.Armor;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
@@ -406,12 +408,19 @@ public class VanillaPlayer extends Human implements PlayerController {
 			}
 		} else {
 			int totalDmg = (int) ((this.initialYFalling - getParent().getPosition().getY()) - 3);
-			if (totalDmg > 0) {
+			if (!isSwimming() && totalDmg > 0) {
 				setHealth(getHealth() - totalDmg, DamageCause.FALL);
 			}
 			this.initialYFalling = 0.0f;
 		}
 	}
+  
+  public boolean isSwimming() {
+    Point location = getParent().getPosition();
+    BlockMaterial first = location.getWorld().getBlockMaterial(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+    BlockMaterial second = location.getWorld().getBlockMaterial(location.getBlockX(), location.getBlockY()+1, location.getBlockZ());
+    return first instanceof Liquid && second instanceof Liquid;
+  }
 
 	public boolean isJumping() {
 		return jumping;

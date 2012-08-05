@@ -180,7 +180,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	public void setHealth(int health, Source source) {
 		super.setHealth(health, source);
 		playerDead = health <= 0;
-		sendUpdateHealth();
 	}
 
 	/**
@@ -205,7 +204,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 				this.foodSaturation = event.getFoodSaturation();
 			}
 		}
-		sendUpdateHealth();
 	}
 
 	/**
@@ -230,10 +228,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 				this.hunger = event.getHunger();
 			}
 		}
-		sendUpdateHealth();
 	}
 
-	public void sendUpdateHealth() {
+	public void updateHealth() {
 		sendPacket(getParent(), new UpdateHealthMessage((short) getHealth(), hunger, foodSaturation));
 	}
 

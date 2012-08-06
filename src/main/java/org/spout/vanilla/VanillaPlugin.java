@@ -156,8 +156,8 @@ public class VanillaPlugin extends CommonPlugin {
 		instance = this;
 		engine = getEngine();
 		config = new VanillaConfiguration(getDataFolder());
-		Spout.getFilesystem().registerLoader("mappalette", new MapPaletteLoader());
-		Spout.getFilesystem().registerLoader("recipe", new RecipeLoader());
+		Spout.getFilesystem().registerLoader(new MapPaletteLoader());
+		Spout.getFilesystem().registerLoader(new RecipeLoader());
 		Protocol.registerProtocol(new VanillaProtocol());
 
 		VanillaMaterials.initialize();

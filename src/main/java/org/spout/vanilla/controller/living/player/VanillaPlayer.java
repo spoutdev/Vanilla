@@ -73,6 +73,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 	private PingProcess pingProcess;
 	private EffectProcess effectProcess;
 	private SurvivalLogic survivalProcess;
+	private PlayerStepSoundLogic stepSoundProcess;
 	protected boolean flying;
 	protected boolean falling;
 	protected boolean jumping;
@@ -111,12 +112,12 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setPosition(spawn.getPosition());
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
-		pingProcess = new PingProcess(this, LogicPriority.HIGHEST);
-		effectProcess = new EffectProcess(this, LogicPriority.HIGHEST);
-		survivalProcess = new SurvivalLogic(this, LogicPriority.HIGHEST);
-		registerProcess(new PlayerStepSoundLogic(this, LogicPriority.NORMAL));
+
+		pingProcess = registerProcess(new PingProcess(this, LogicPriority.HIGHEST));
+		effectProcess = registerProcess(new EffectProcess(this, LogicPriority.HIGHEST));
+		stepSoundProcess = registerProcess(new PlayerStepSoundLogic(this, LogicPriority.NORMAL));
 		// Survival mode
-		registerProcess(new SurvivalLogic(this, LogicPriority.HIGHEST));
+		survivalProcess = registerProcess(new SurvivalLogic(this, LogicPriority.HIGHEST));
 		// Creative mode
 		registerProcess(new CreativeLogic(this, LogicPriority.HIGHEST));
 		super.onAttached();
@@ -128,7 +129,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (isDead()) {
 			return;
 		}
-		
+
 		Player player = getParent();
 		if (player == null || player.getSession() == null) {
 			return;
@@ -489,5 +490,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	public SurvivalLogic getSurvivalLogic() {
 		return survivalProcess;
+	}
+
+	public PlayerStepSoundLogic getStepSoundLogic() {
+		return stepSoundProcess;
 	}
 }

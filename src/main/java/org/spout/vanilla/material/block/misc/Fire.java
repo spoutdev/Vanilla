@@ -37,6 +37,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.VanillaData;
@@ -68,14 +69,14 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		if (!this.canPlace(block, block.getData(), BlockFace.BOTTOM, false)) {
+		if (!this.canPlace(block, block.getData())) {
 			this.onDestroy(block);
 		}
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace attachedFace, boolean isClickedBlock) {
-		if (super.canPlace(block, data, attachedFace, isClickedBlock)) {
+	public boolean canPlace(Block block, short data, BlockFace attachedFace, Vector3 clickedPos, boolean isClickedBlock) {
+		if (super.canPlace(block, data, attachedFace, clickedPos, isClickedBlock)) {
 			BlockMaterial mat = block.getMaterial();
 			for (BlockFace face : BlockFaces.BTNSWE) {
 				mat = block.translate(face).getMaterial();

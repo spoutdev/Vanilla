@@ -266,8 +266,8 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, isClickedBlock)) {
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
+		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
 			BlockFace facing = BlockFace.TOP;
 			if (block.getSource() instanceof Entity) {
 				facing = this.getPlacedFacing(block, (Entity) block.getSource());

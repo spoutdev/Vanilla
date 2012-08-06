@@ -29,7 +29,9 @@ package org.spout.vanilla;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
+
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 
@@ -52,6 +54,7 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.plugin.Platform;
+import org.spout.api.plugin.Plugin;
 import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.PortBinding;
@@ -93,16 +96,11 @@ public class VanillaPlugin extends CommonPlugin {
 	private Engine engine;
 	private VanillaConfiguration config;
 	private JmDNS jmdns = null;
+	private final Object jmdnsSync = new Object();
 
 	@Override
 	public void onDisable() {
-		if (jmdns != null) {
-			try {
-				jmdns.close();
-				this.getEngine().getLogger().info("Bonjour Service Discovery disabled");
-			} catch (IOException ignore) {
-			}
-		}
+		closeBonjour();
 		instance = null;
 		getLogger().info("disabled");
 	}
@@ -172,19 +170,45 @@ public class VanillaPlugin extends CommonPlugin {
 
 	private void setupBonjour() {
 		if (getEngine() instanceof Server && VanillaConfiguration.BONJOUR.getBoolean()) {
-			try {
-				jmdns = JmDNS.create();
-				for (PortBinding binding : ((Server) getEngine()).getBoundAddresses()) {
-					if (binding.getAddress() instanceof InetSocketAddress && binding.getProtocol() instanceof VanillaProtocol) {
-						int port = ((InetSocketAddress) binding.getAddress()).getPort();
-						ServiceInfo info = ServiceInfo.create("pipework._tcp.local.", "Spout Server", port, "");
-						jmdns.registerService(info);
-						this.getEngine().getLogger().info("Started Bonjour Service Discovery on port: " + port);
+			Spout.getEngine().getScheduler().scheduleAsyncTask(this, new Runnable() {
+				public void run() {
+					synchronized (jmdnsSync) {
+						try {
+							Spout.getEngine().getLogger().info("Starting Bonjour Service Discovery");
+							jmdns = JmDNS.create();
+							for (PortBinding binding : ((Server) getEngine()).getBoundAddresses()) {
+								if (binding.getAddress() instanceof InetSocketAddress && binding.getProtocol() instanceof VanillaProtocol) {
+									int port = ((InetSocketAddress) binding.getAddress()).getPort();
+									ServiceInfo info = ServiceInfo.create("pipework._tcp.local.", "Spout Server", port, "");
+									jmdns.registerService(info);
+									Spout.getEngine().getLogger().info("Started Bonjour Service Discovery on port: " + port);
+								}
+							}
+						} catch (IOException e) {
+							Spout.getEngine().getLogger().log(Level.WARNING, "Failed to start Bonjour Service Discovery Library", e);
+						}
 					}
 				}
-			} catch (IOException e) {
-				this.getEngine().getLogger().log(Level.WARNING, "Failed to start Bonjour Service Discovery Library", e);
-			}
+			});
+		}
+	}
+	
+	private void closeBonjour() {
+		if (jmdns != null) {
+			final JmDNS jmdns = this.jmdns;
+			final Plugin thisPlugin = this;
+			Spout.getEngine().getScheduler().scheduleAsyncTask(thisPlugin, new Runnable() {
+				public void run() {
+					synchronized (jmdnsSync) {
+						Spout.getEngine().getLogger().info("Shutting down Bonjour Service Discovery");
+						try {
+							jmdns.close();
+						} catch (IOException e) {
+						}
+					}
+					Spout.getEngine().getLogger().info("Bonjour Service Discovery disabled");
+				}
+			});
 		}
 	}
 

@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Spade;
@@ -34,7 +35,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 public class Dirt extends Solid implements Mineable {
 	public Dirt(String name, int id) {
 		super(name, id);
-		this.setHardness(0.5F).setResistance(0.8F);
+		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRAVEL);
 	}
 
 	@Override

@@ -32,7 +32,6 @@ import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.Source;
-import org.spout.api.Spout;
 import org.spout.api.entity.component.controller.PlayerController;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
@@ -49,23 +48,19 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.logic.gamemode.CreativeLogic;
 import org.spout.vanilla.controller.logic.gamemode.SurvivalLogic;
+import org.spout.vanilla.controller.logic.physics.PlayerStepSoundLogic;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.event.player.PlayerFoodSaturationChangeEvent;
-import org.spout.vanilla.event.player.PlayerHungerChangeEvent;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.armor.Armor;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
-import org.spout.vanilla.protocol.msg.KeepAliveMessage;
-import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.ItemUtil;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.window.DefaultWindow;
 import org.spout.vanilla.window.Window;
 
@@ -119,6 +114,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		pingProcess = new PingProcess(this, LogicPriority.HIGHEST);
 		effectProcess = new EffectProcess(this, LogicPriority.HIGHEST);
 		survivalProcess = new SurvivalLogic(this, LogicPriority.HIGHEST);
+		registerProcess(new PlayerStepSoundLogic(this, LogicPriority.NORMAL));
 		// Survival mode
 		registerProcess(new SurvivalLogic(this, LogicPriority.HIGHEST));
 		// Creative mode
@@ -132,7 +128,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		if (isDead()) {
 			return;
 		}
-
+		
 		Player player = getParent();
 		if (player == null || player.getSession() == null) {
 			return;

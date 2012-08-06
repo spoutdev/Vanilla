@@ -24,28 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.controller.logic.physics;
 
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Spade;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.Instrument;
+import org.spout.api.tickable.LogicPriority;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
-public class SoulSand extends Solid implements Mineable {
-	public SoulSand(String name, int id) {
-		super(name, id);
-		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_SAND);
+/**
+ * Plays a step sound effect while walking<br>
+ * Takes account of vanilla player states such as falling and flying
+ */
+public class PlayerStepSoundLogic extends StepSoundLogic {
+
+	public PlayerStepSoundLogic(VanillaPlayer parent, LogicPriority priority) {
+		super(parent, priority);
 	}
 
 	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
+	public VanillaPlayer getParent() {
+		return (VanillaPlayer) super.getParent();
 	}
 
 	@Override
-	public Instrument getInstrument() {
-		return Instrument.SNAREDRUM;
+	public boolean shouldRun(float dt) {
+		return super.shouldRun(dt) && !getParent().isCrouching() && !getParent().isFalling() && !getParent().isFlying();
 	}
 }

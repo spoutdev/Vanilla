@@ -70,6 +70,11 @@ public class SoundEffect extends Effect {
 		return this.name;
 	}
 
+	@Override
+	public String toString() {
+		return "Sound{" + this.name + "}";
+	}
+
 	/**
 	 * Gets all the Players nearby a certain Point that can receive this Effect
 	 * @param position of this Effect

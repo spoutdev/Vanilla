@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -36,7 +37,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 public class ClayBlock extends Solid implements Mineable, InitializableMaterial {
 	public ClayBlock(String name, int id) {
 		super(name, id);
-		this.setHardness(0.6F).setResistance(1.0F);
+		this.setHardness(0.6F).setResistance(1.0F).setStepSound(SoundEffects.STEP_GRAVEL);
 	}
 
 	@Override

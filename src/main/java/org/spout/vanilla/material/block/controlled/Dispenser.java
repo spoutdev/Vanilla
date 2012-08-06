@@ -168,8 +168,8 @@ public class Dispenser extends ControlledMaterial implements Directional, Mineab
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, isClickedBlock)) {
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
+		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
 			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
 			return true;
 		}

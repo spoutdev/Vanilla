@@ -61,8 +61,8 @@ public class FlintAndSteel extends InteractTool {
 
 				// Default fire placement
 				clickedface = clickedface.getOpposite();
-				if (VanillaMaterials.FIRE.canPlace(target, (short) 0, clickedface, false)) {
-					if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, clickedface, false)) {
+				if (VanillaMaterials.FIRE.canPlace(target, (short) 0)) {
+					if (VanillaMaterials.FIRE.onPlacement(target, (short) 0)) {
 						InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
 						if (inv != null) {
 							inv.addItemData(0, 1);

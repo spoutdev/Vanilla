@@ -126,13 +126,13 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Rand
 			Block newShroom = null;
 			for (int i = 0; i < 4; i++) {
 				newShroom = block.translate(rand.nextInt(3) - 1, rand.nextInt(2) - rand.nextInt(2), rand.nextInt(3) - 1);
-				if (newShroom.isMaterial(VanillaMaterials.AIR) && this.canPlace(newShroom, (short) 0, BlockFace.BOTTOM, false)) {
+				if (newShroom.isMaterial(VanillaMaterials.AIR) && this.canPlace(newShroom, (short) 0)) {
 					block = newShroom;
 				}
 			}
 			// try to place at last
-			if (block.isMaterial(VanillaMaterials.AIR) && this.canPlace(block, (short) 0, BlockFace.BOTTOM, false)) {
-				this.onPlacement(block, (short) 0, BlockFace.BOTTOM, false);
+			if (block.isMaterial(VanillaMaterials.AIR) && this.canPlace(block, (short) 0)) {
+				this.onPlacement(block, (short) 0);
 			}
 		}
 	}

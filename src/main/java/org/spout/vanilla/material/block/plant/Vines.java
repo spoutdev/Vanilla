@@ -39,6 +39,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.controller.living.Living;
@@ -180,7 +181,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace face, boolean isClicked) {
+	public boolean canPlace(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked) {
 		if (block.getMaterial().equals(VanillaMaterials.VINES)) {
 			return true;
 		} else if (face == BlockFace.BOTTOM) {
@@ -204,7 +205,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short dat, BlockFace face, boolean isClicked) {
+	public boolean onPlacement(Block block, short dat, BlockFace face, Vector3 clickedPos, boolean isClicked) {
 		if (block.getMaterial().equals(VanillaMaterials.VINES)) {
 			if (isClicked) {
 				face = getTracedFace(block);

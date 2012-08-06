@@ -30,6 +30,8 @@ import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.flag.ByteFlagContainer;
 
 import org.spout.vanilla.material.Mineable;
@@ -107,9 +109,9 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		if (!block.getMaterial().equals(this)) {
-			return super.canPlace(block, data, against, isClickedBlock);
+			return super.canPlace(block, data, against, clickedPos, isClickedBlock);
 		}
 
 		if (!isClickedBlock) {
@@ -124,12 +126,12 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		if (block.getMaterial().equals(this)) {
 			block.setMaterial(this.doubletype);
 		} else {
 			block.setMaterial(this);
-			this.setTop(block, against == BlockFace.TOP);
+			this.setTop(block, against == BlockFace.TOP || (BlockFaces.NESW.contains(against) && clickedPos.getY() > 0.5f));
 		}
 		return true;
 	}

@@ -154,10 +154,10 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				Block target;
 				BlockFace targetFace;
 
-				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, true)) {
+				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, message.getFace(), true)) {
 					target = clickedBlock;
 					targetFace = clickedFace;
-				} else if (toPlace.canPlace(alterBlock, placedData, alterFace, false)) {
+				} else if (toPlace.canPlace(alterBlock, placedData, alterFace, message.getFace(), false)) {
 					target = alterBlock;
 					targetFace = alterFace;
 				} else {
@@ -195,7 +195,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				}
 
 				// Perform actual placement
-				if (toPlace.onPlacement(target, placedData, targetFace, target == clickedBlock)) {
+				if (toPlace.onPlacement(target, placedData, targetFace, message.getFace(), target == clickedBlock)) {
 					// Play sound
 					BlockMaterial material = target.getMaterial();
 					SoundEffect sound;

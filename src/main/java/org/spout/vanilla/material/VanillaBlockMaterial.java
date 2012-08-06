@@ -43,6 +43,7 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.block.BlockSnapshot;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -133,7 +134,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		return !block.getMaterial().isPlacementObstacle();
 	}
 

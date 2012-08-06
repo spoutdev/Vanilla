@@ -33,6 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.Mineable;
@@ -110,7 +111,7 @@ public class FenceGate extends VanillaBlockMaterial implements Mineable, Openabl
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		block.setMaterial(this);
 		this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()));
 		return true;

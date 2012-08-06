@@ -68,8 +68,8 @@ public class LilyPad extends GroundAttachable implements Mineable {
 				return;
 			}
 			block = block.translate(BlockFace.TOP);
-			if (this.canPlace(block, (short) 0, BlockFace.BOTTOM, false)) {
-				this.onPlacement(block, (short) 0, BlockFace.BOTTOM, false);
+			if (this.canPlace(block, (short) 0)) {
+				this.onPlacement(block, (short) 0);
 
 				// Subtract item
 				if (!VanillaPlayerUtil.isSurvival(entity)) {

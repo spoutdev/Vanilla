@@ -32,6 +32,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.material.Fuel;
@@ -128,8 +129,8 @@ public class Chest extends ControlledMaterial implements Directional, Fuel, Mine
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (super.canPlace(block, data, against, isClickedBlock)) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
+		if (super.canPlace(block, data, against, clickedPos, isClickedBlock)) {
 			//no surrounding double-chest blocks?
 			int count = 0;
 			for (BlockFace face : BlockFaces.NESW) {
@@ -146,8 +147,8 @@ public class Chest extends ControlledMaterial implements Directional, Fuel, Mine
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, isClickedBlock)) {
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
+		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
 			BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource()).getOpposite();
 			//search for neighbor and align
 			Block neigh;

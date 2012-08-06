@@ -32,6 +32,7 @@ import java.util.Arrays;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.common.message.CustomDataMessage;
 import org.spout.api.util.Parameter;
@@ -141,7 +142,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerLookMessage(1F, 2F, false),
 			new PlayerPositionLookMessage(1, 2, 5, 3.62, 4, 3, false),
 			new PlayerDiggingMessage(PlayerDiggingMessage.STATE_START_DIGGING, 1, 2, 3, BlockFace.NORTH),
-			new PlayerBlockPlacementMessage(1, 2, 3, BlockFace.NORTH, 89, 2, 7, null, 9F, 19F, 20F),
+			new PlayerBlockPlacementMessage(1, 2, 3, BlockFace.NORTH, new Vector3(0.1875F, 0.5F, 0.0F)),
 			new HeldItemChangeMessage(4),
 			new LocalViewDistanceMessage("en_GB", LocalViewDistanceMessage.VIEW_NORMAL, (byte) 0, (byte) 0),
 			new TabCompleteMessage("behindcursor"),

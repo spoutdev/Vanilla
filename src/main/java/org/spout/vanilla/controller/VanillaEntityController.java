@@ -1,10 +1,9 @@
 /*
- * This file is part of Vanilla.
+ * This file is part of vanilla (http://www.spout.org/).
  *
- * Copyright (c) 2011-2012, VanillaDev <http://www.spout.org/>
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * vanilla is licensed under the SpoutDev License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
+ * vanilla is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -13,7 +12,7 @@
  * software, incorporating those changes, under the terms of the MIT license,
  * as described in the SpoutDev License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful,
+ * vanilla is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
@@ -504,10 +503,10 @@ public abstract class VanillaEntityController extends BasicController implements
 	public int getMaxHealth() {
 		return maxHealth;
 	}
-	
+
 	/**
 	 * Returns true if the entity is equal to or less than zero health remaining
-	 * 
+	 *
 	 * @return dead
 	 */
 	public boolean isDead() {

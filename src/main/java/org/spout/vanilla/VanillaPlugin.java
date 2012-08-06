@@ -131,6 +131,7 @@ public class VanillaPlugin extends CommonPlugin {
 		if (engine.debugMode()) {
 			engine.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
 		}
+		getEngine().getEventManager().registerEvents(new VanillaListener(this), this);
 
 		//Configuration
 		VanillaBlockMaterial.REDSTONE_POWER_MAX = (short) VanillaConfiguration.REDSTONE_MAX_RANGE.getInt();
@@ -192,7 +193,7 @@ public class VanillaPlugin extends CommonPlugin {
 			});
 		}
 	}
-	
+
 	private void closeBonjour() {
 		if (jmdns != null) {
 			final JmDNS jmdns = this.jmdns;

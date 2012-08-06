@@ -91,7 +91,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Constructs a new VanillaPlayer to use as a {@link PlayerController} for the given player.
-	 * 
+	 *
 	 * @param gameMode
 	 *            {@link GameMode} of the player.
 	 */
@@ -206,7 +206,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the position of player's compass target.
-	 * 
+	 *
 	 * @param compassTarget
 	 *            The new compass target position
 	 */
@@ -217,7 +217,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Gets the position of the player's compass target.
-	 * 
+	 *
 	 * @return
 	 */
 	public Point getCompassTarget() {
@@ -226,7 +226,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Makes the player a server operator.
-	 * 
+	 *
 	 * @param op
 	 */
 	public void setOp(boolean op) {
@@ -236,7 +236,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is a server operator.
-	 * 
+	 *
 	 * @return true if an operator.
 	 */
 	public boolean isOp() {
@@ -245,7 +245,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * The list displayed in the user list on the client when a client presses TAB.
-	 * 
+	 *
 	 * @return user list name
 	 */
 	public String getTabListName() {
@@ -254,7 +254,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the list displayed in the user list on the client when a client presses TAB.
-	 * 
+	 *
 	 * @param tabListName
 	 */
 	public void setTabListName(String tabListName) {
@@ -263,7 +263,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Returns the current game-mode the controller is in.
-	 * 
+	 *
 	 * @return game mode of controller
 	 */
 	public GameMode getGameMode() {
@@ -272,7 +272,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the current game-mode the controller is in.
-	 * 
+	 *
 	 * @param gameMode
 	 */
 	public void setGameMode(GameMode gameMode) {
@@ -282,7 +282,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the controller is in survival mode.
-	 * 
+	 *
 	 * @return true if in survival mode
 	 */
 	public boolean isSurvival() {
@@ -333,7 +333,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets and opens the new active {@link Window} for the player.
-	 * 
+	 *
 	 * @param activeWindow
 	 *            the window to open and set as the active window.
 	 */
@@ -357,7 +357,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Gets the {@link Window} currently opened. If no window is opened a {@link DefaultWindow} will be returned.
-	 * 
+	 *
 	 * @return the currently active window.
 	 */
 	public Window getActiveWindow() {
@@ -366,7 +366,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Gets the player's {@link PlayerInventory}.
-	 * 
+	 *
 	 * @return the player's inventory
 	 */
 	public PlayerInventory getInventory() {
@@ -410,7 +410,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Drops the item specified into a random direction
-	 * 
+	 *
 	 * @param item
 	 *            to drop
 	 */
@@ -423,7 +423,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Drops the item specified into the direction the player looks
-	 * 
+	 *
 	 * @param item
 	 *            to drop
 	 */

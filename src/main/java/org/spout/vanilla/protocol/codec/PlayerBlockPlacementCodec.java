@@ -31,11 +31,11 @@ import java.io.IOException;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.MessageCodec;
-
-import org.spout.nbt.CompoundMap;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
@@ -52,46 +52,26 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 		int z = buffer.readInt();
 		BlockFace direction = BlockFaces.BTEWNS.get(buffer.readUnsignedByte(), BlockFace.THIS);
 
-		int count = 0;
-		int damage = 0;
-		CompoundMap nbtData = null;
-
-		int id = buffer.readUnsignedShort();
-		if (id != 0xFFFF) {
-			count = buffer.readUnsignedByte();
-			damage = buffer.readShort();
-			nbtData = ChannelBufferUtils.readCompound(buffer);
-		}
+		ItemStack heldItem = ChannelBufferUtils.readItemStack(buffer);
 
 		float dx = ((float) (buffer.readByte() & 0xFF)) / 16.0F;
 		float dy = ((float) (buffer.readByte() & 0xFF)) / 16.0F;
 		float dz = ((float) (buffer.readByte() & 0xFF)) / 16.0F;
 
-		return new PlayerBlockPlacementMessage(x, y, z, direction, id, count, damage, nbtData, dx, dy, dz);
+		return new PlayerBlockPlacementMessage(x, y, z, direction, new Vector3(dx, dy, dz), heldItem);
 	}
 
 	@Override
 	public ChannelBuffer encode(PlayerBlockPlacementMessage message) throws IOException {
-		int id = message.getId();
-
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(message.getX());
 		buffer.writeByte(message.getY());
 		buffer.writeInt(message.getZ());
 		buffer.writeByte(BlockFaces.BTEWNS.indexOf(message.getDirection(), 255));
-		buffer.writeShort(id);
-		if (id != -1) {
-			buffer.writeByte(message.getCount());
-			buffer.writeShort(message.getDamage());
-			if (ChannelBufferUtils.hasNbtData(id)) {
-				ChannelBufferUtils.writeCompound(buffer, message.getNbtData());
-			} else {
-				buffer.writeShort(-1);
-			}
-		}
-		buffer.writeByte((int) (message.getDX() * 16.0F));
-		buffer.writeByte((int) (message.getDY() * 16.0F));
-		buffer.writeByte((int) (message.getDZ() * 16.0F));
+		ChannelBufferUtils.writeItemStack(buffer, message.getHeldItem());
+		buffer.writeByte((int) (message.getFace().getX() * 16.0F));
+		buffer.writeByte((int) (message.getFace().getY() * 16.0F));
+		buffer.writeByte((int) (message.getFace().getZ() * 16.0F));
 		return buffer;
 	}
 }

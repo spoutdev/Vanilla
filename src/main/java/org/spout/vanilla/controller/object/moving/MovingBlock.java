@@ -66,12 +66,12 @@ public class MovingBlock extends Substance {
 		Block block = getParent().getWorld().getBlock(getParent().getPosition(), getParent());
 		if (block.translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
 			//can we place here?
-			if (block.getMaterial().isPlacementObstacle() || !this.material.canPlace(block, this.material.getData(), BlockFace.BOTTOM, true)) {
+			if (block.getMaterial().isPlacementObstacle() || !this.material.canPlace(block, this.material.getData())) {
 				//spawn an item
 				ItemStack item = new ItemStack(this.material, this.material.getData(), 1);
 				ItemUtil.dropItemNaturally(block.getPosition(), item);
 			} else {
-				this.material.onPlacement(block, this.material.getData(), BlockFace.BOTTOM, true);
+				this.material.onPlacement(block, this.material.getData());
 			}
 			getParent().kill();
 		} else {

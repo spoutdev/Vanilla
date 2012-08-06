@@ -34,6 +34,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -68,7 +69,7 @@ public class VineDecorator extends Decorator {
 					} else {
 						faceCheck:
 						for (final BlockFace face : BlockFaces.NESW) {
-							if (VanillaMaterials.VINES.canPlace(block, (short) 0, face, false)) {
+							if (VanillaMaterials.VINES.canPlace(block, (short) 0, face, face.getOffset(), false)) {
 								block.setMaterial(VanillaMaterials.VINES);
 								VanillaMaterials.VINES.setFaceAttached(block, face, true);
 								break faceCheck;

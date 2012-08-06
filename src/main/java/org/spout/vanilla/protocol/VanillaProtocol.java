@@ -48,6 +48,8 @@ import org.spout.api.util.Named;
 
 import org.spout.vanilla.chat.style.VanillaStyleHandler;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.source.ControllerChangeReason;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
@@ -149,5 +151,13 @@ public class VanillaProtocol extends Protocol {
 		}
 
 		session.send(false, new CustomDataMessage("REGISTER", listBuilder.toString().getBytes(ChannelBufferUtils.CHARSET_UTF8)));
+	}
+
+	@Override
+	public void setPlayerController(Player player) {
+		VanillaPlayer vanillaPlayer = new VanillaPlayer(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
+		vanillaPlayer.setTitle(player.getDisplayName());
+
+		player.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
 	}
 }

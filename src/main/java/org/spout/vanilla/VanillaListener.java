@@ -65,12 +65,6 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void onPlayerLoad(PlayerLoadEvent event) {
-		// Set their mode
-		Player player = event.getPlayer();
-		VanillaPlayer vanillaPlayer = new VanillaPlayer(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
-		vanillaPlayer.setTitle(player.getDisplayName());
-
-		player.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
 	}
 
 	@EventHandler

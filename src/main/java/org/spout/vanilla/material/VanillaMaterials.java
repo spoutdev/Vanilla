@@ -578,6 +578,13 @@ public final class VanillaMaterials {
 		return reverseTable.get(minecraftId).getSubMaterial(data);
 	}
 
+	public static short getMinecraftData(Material material, short data) {
+		if (material instanceof VanillaMaterial) {
+			return ((VanillaMaterial) material).getMinecraftData(data);
+		}
+		return (short) (data & 0xf);
+	}
+
 	/**
 	 * Gets the minecraft id associated with the Spout material
 	 * @param material to convert
@@ -585,7 +592,7 @@ public final class VanillaMaterials {
 	 */
 	public static short getMinecraftId(Material material) {
 		if (!(material instanceof VanillaMaterial)) {
-			return BlockMaterial.AIR.getId();
+			return (short) 0;
 		}
 
 		return (short) ((VanillaMaterial) material).getMinecraftId();

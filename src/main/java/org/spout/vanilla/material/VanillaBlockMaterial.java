@@ -99,6 +99,11 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		return minecraftId;
 	}
 
+	@Override
+	public short getMinecraftData(short data) {
+		return (short) (data & 0xF);
+	}
+
 	/**
 	 * Called when this block is destroyed because of an explosion
 	 * @param block that got ignited

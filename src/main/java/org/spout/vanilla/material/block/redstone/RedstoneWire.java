@@ -62,6 +62,15 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 	}
 
 	@Override
+	public short getMinecraftData(short data) {
+		switch (VanillaBlockMaterial.REDSTONE_POWER_MAX) {
+			case 15 : return data;
+			case 0 : return (short) 0;
+			default : return (short) ((15 * data / VanillaBlockMaterial.REDSTONE_POWER_MAX) & 0xF);
+		}
+	}
+
+	@Override
 	public boolean hasPhysics() {
 		return true;
 	}
@@ -86,7 +95,7 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 			return;
 		}
 
-		if (block.getMaterial().equals(this)) {
+		if (block.isMaterial(this)) {
 			short receiving = this.getReceivingPower(block);
 			short current = this.getRedstonePower(block);
 			if (current == receiving) {

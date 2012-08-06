@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol;
 
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
 import gnu.trove.set.TIntSet;
 
 import java.util.ArrayList;
@@ -359,14 +360,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	public void updateBlock(Chunk chunk, int x, int y, int z, BlockMaterial material, short data) {
 		short id = getMinecraftId(material);
-		if ((data & 0xF) > 15) {
-			data = 0;
-		}
 		x += chunk.getBlockX();
 		y += chunk.getBlockY();
 		z += chunk.getBlockZ();
 		if (y >= 0 && y < chunk.getWorld().getHeight()) {
-			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id, data & 0xF);
+			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id, getMinecraftData(material, data));
 			session.send(false, BCM);
 		}
 	}
@@ -579,14 +577,27 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			byte[] fullChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 
 			int arrIndex = 0;
-			for (int i = 0; i < rawBlockIdArray.length; i++) {
-				short convert = getMinecraftId(rawBlockIdArray[i]);
-				fullChunkData[arrIndex++] = (byte) (convert & 0xFF);
+			BlockMaterial material1, material2;
+			for (int i = 0; i < rawBlockIdArray.length; i += 2) {
+				material1 = BlockMaterial.get(rawBlockIdArray[i]);
+				material2 = BlockMaterial.get(rawBlockIdArray[i + 1]);
+				// data
+				fullChunkData[arrIndex + rawBlockIdArray.length] = (byte) ((getMinecraftData(material2, rawBlockData[i + 1]) << 4) | (getMinecraftData(material1, rawBlockData[i])));
+				// id
+				fullChunkData[i] = (byte) (getMinecraftId(material1) & 0xFF);
+				fullChunkData[i + 1] = (byte) (getMinecraftId(material2) & 0xFF);
+
+				arrIndex++;
 			}
 
+			arrIndex = rawBlockIdArray.length + (rawBlockData.length >> 1);
+
+			// The old method which doesn't use the Minecraft data conversion function
+			/*
 			for (int i = 0; i < rawBlockData.length; i += 2) {
 				fullChunkData[arrIndex++] = (byte) ((rawBlockData[i + 1] << 4) | (rawBlockData[i] & 0xF));
 			}
+			*/
 
 			System.arraycopy(rawBlockLight, 0, fullChunkData, arrIndex, rawBlockLight.length);
 			arrIndex += rawBlockLight.length;

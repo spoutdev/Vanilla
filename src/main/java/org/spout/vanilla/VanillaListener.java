@@ -99,45 +99,44 @@ public class VanillaListener implements Listener {
 		}
 	}
 
-
 	@EventHandler(order = Order.MONITOR)
 	public void onEntitySpawn(EntitySpawnEvent event) {
 		if (event.isCancelled()) {
 			return;
 		}
 
-    Entity entity = event.getEntity();
-    Controller c = entity.getController();
-    if (c instanceof Sheep) {
-      Sheep sheep = (Sheep) c;
-      sheep.setTimeUntilAdult(100);
-    }
+		Entity entity = event.getEntity();
+		Controller c = entity.getController();
+		if (c instanceof Sheep) {
+			Sheep sheep = (Sheep) c;
+			sheep.setTimeUntilAdult(100);
+		}
 
-    if (c instanceof Ghast) {
-      Ghast ghast = (Ghast) c;
-      ghast.setRedEyes(true);
-    }
-  }
+		if (c instanceof Ghast) {
+			Ghast ghast = (Ghast) c;
+			ghast.setRedEyes(true);
+		}
+	}
 
-  @EventHandler(order = Order.EARLIEST)
-  public void onPermissionNode(PermissionNodeEvent event) {
-    if (VanillaConfiguration.OPS.isOp(event.getSubject().getName())) {
-      event.setResult(Result.ALLOW);
-    }
-  }
+	@EventHandler(order = Order.EARLIEST)
+	public void onPermissionNode(PermissionNodeEvent event) {
+		if (VanillaConfiguration.OPS.isOp(event.getSubject().getName())) {
+			event.setResult(Result.ALLOW);
+		}
+	}
 
-  @EventHandler
-  public void onHealthChange(EntityHealthChangeEvent event) {
-    if (event.getSource() == HealthChangeReason.SPAWN) {
-      return;
-    }
-    if (event.isCancelled()) {
-      return;
-    }
-    Controller c = event.getEntity().getController();
-    if (c instanceof VanillaPlayer && ((VanillaPlayer) c).isSurvival()) {
-      VanillaPlayer sp = (VanillaPlayer) c;
-      sp.updateHealth();
-    }
-  }
+	@EventHandler
+	public void onHealthChange(EntityHealthChangeEvent event) {
+		if (event.getSource() == HealthChangeReason.SPAWN) {
+			return;
+		}
+		if (event.isCancelled()) {
+			return;
+		}
+		Controller c = event.getEntity().getController();
+		if (c instanceof VanillaPlayer && ((VanillaPlayer) c).isSurvival()) {
+			VanillaPlayer sp = (VanillaPlayer) c;
+			sp.updateHealth();
+		}
+	}
 }

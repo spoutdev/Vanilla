@@ -29,7 +29,6 @@ package org.spout.vanilla;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 
 import javax.jmdns.JmDNS;

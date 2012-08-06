@@ -24,21 +24,44 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.handler;
+package org.spout.vanilla.event.player.network;
 
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.KeepAliveMessage;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.player.Player;
 
-public class KeepAliveMessageHandler extends MessageHandler<KeepAliveMessage> {
+public class PlayerPingChangedEvent extends PlayerEvent {
+	private static HandlerList handlers = new HandlerList();
+	private long oldPing, newPing;
+
+	public PlayerPingChangedEvent(Player p, long oldPing, long newPing) {
+		super(p);
+	}
+
+	/**
+	 * Gets the previous Ping time
+	 * 
+	 * @return previous ping time in Milliseconds
+	 */
+	public long getOldPing() {
+		return this.oldPing;
+	}
+
+	/**
+	 * Gets the current Ping time
+	 * 
+	 * @return current ping time in Milliseconds
+	 */
+	public long getPing() {
+		return this.newPing;
+	}
+
 	@Override
-	public void handleServer(Session session, KeepAliveMessage message) {
-		if (!session.hasPlayer() || (!(session.getPlayer().getController() instanceof VanillaPlayer))) {
-			return;
-		}
+	public HandlerList getHandlers() {
+		return handlers;
+	}
 
-		VanillaPlayer mp = (VanillaPlayer) session.getPlayer().getController();
-		mp.getPingProcess().resetTimeout(message.getPingId());
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

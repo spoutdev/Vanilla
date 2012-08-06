@@ -24,21 +24,35 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.handler;
+package org.spout.vanilla.event.player.network;
 
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.protocol.msg.KeepAliveMessage;
+import org.spout.api.event.Event;
+import org.spout.api.event.HandlerList;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-public class KeepAliveMessageHandler extends MessageHandler<KeepAliveMessage> {
+public class PlayerKeepAliveEvent extends Event implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private int hash;
+
+	public PlayerKeepAliveEvent(int hash) {
+		this.hash = hash;
+	}
+
+	/**
+	 * Gets the Hash code for this Keep Alive message
+	 * 
+	 * @return keep alive unique code
+	 */
+	public int getHash() {
+		return this.hash;
+	}
+
 	@Override
-	public void handleServer(Session session, KeepAliveMessage message) {
-		if (!session.hasPlayer() || (!(session.getPlayer().getController() instanceof VanillaPlayer))) {
-			return;
-		}
+	public HandlerList getHandlers() {
+		return handlers;
+	}
 
-		VanillaPlayer mp = (VanillaPlayer) session.getPlayer().getController();
-		mp.getPingProcess().resetTimeout(message.getPingId());
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

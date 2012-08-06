@@ -70,6 +70,8 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.event.block.BlockActionEvent;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
+import org.spout.vanilla.event.player.network.PlayerKeepAliveEvent;
+import org.spout.vanilla.event.player.network.PlayerUpdateUserListEvent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowPropertyEvent;
@@ -86,6 +88,7 @@ import org.spout.vanilla.protocol.msg.ExplosionMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.NamedSoundEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
+import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
@@ -108,9 +111,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private static final double STANCE = 1.6D;
 	@SuppressWarnings("unused")
 	private static final int POSITION_UPDATE_TICKS = 20;
-	private static final int TIMEOUT = 15000;
 	private boolean first = true;
-	private long lastKeepAlive = System.currentTimeMillis();
 	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initializedChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
 	private final ConcurrentLinkedQueue<Long> emptyColumns = new ConcurrentLinkedQueue<Long>();
 	private TSyncIntPairHashSet activeChunks = new TSyncIntPairHashSet();
@@ -340,15 +341,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	public void preSnapshot() {
-		long currentTime = System.currentTimeMillis();
-		if (currentTime > lastKeepAlive + TIMEOUT) {
-			KeepAliveMessage PingMsg = new KeepAliveMessage((int) currentTime);
-			lastKeepAlive = currentTime;
-			owner.getSession().send(false, true, PingMsg);
-		}
-		
 		super.preSnapshot();
-		
+
 		Long key;
 		while ((key = this.emptyColumns.poll()) != null) {
 			int x = IntPairHashed.key1(key);
@@ -496,7 +490,24 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return new BlockActionMessage(event.getBlock(), (short) id, event.getData1(), event.getData2());
 		}
 	}
-	
+
+	@EventHandler
+	public Message onPlayerKeepAlive(PlayerKeepAliveEvent event) {
+		return new KeepAliveMessage(event.getHash());
+	}
+
+	@EventHandler
+	public Message onPlayerUpdateUserList(PlayerUpdateUserListEvent event) {
+		Controller controller = event.getPlayer().getController();
+		String name;
+		if (controller instanceof VanillaPlayer) {
+			name = ((VanillaPlayer) controller).getTabListName();
+		} else {
+			name = event.getPlayer().getDisplayName();
+		}
+		return new PlayerListMessage(name, true, (short) event.getPingDelay());
+	}
+
 	public static enum ChunkInit {
 		CLIENT_SEL, FULL_COLUMN, HEIGHTMAP, EMPTY_COLUMN;
 		

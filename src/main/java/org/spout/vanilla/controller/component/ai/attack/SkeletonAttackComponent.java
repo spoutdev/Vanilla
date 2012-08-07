@@ -24,28 +24,29 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.logic.physics;
+package org.spout.vanilla.controller.component.ai.attack;
 
 import org.spout.api.tickable.LogicPriority;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.api.tickable.LogicRunnable;
+
+import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
 
 /**
- * Plays a step sound effect while walking<br>
- * Takes account of vanilla player states such as falling and flying
+ * The Skeleton's attack component which involves keeping a distance from the controller and
+ * shooting arrows.
  */
-public class PlayerStepSoundLogic extends StepSoundLogic {
-
-	public PlayerStepSoundLogic(VanillaPlayer parent, LogicPriority priority) {
+public class SkeletonAttackComponent extends LogicRunnable<Skeleton> {
+	public SkeletonAttackComponent(Skeleton parent, LogicPriority priority) {
 		super(parent, priority);
 	}
 
 	@Override
-	public VanillaPlayer getParent() {
-		return (VanillaPlayer) super.getParent();
+	public boolean shouldRun(float dt) {
+		return false; //TODO Should this extend AttackLogic and call super?
 	}
 
 	@Override
-	public boolean shouldRun(float dt) {
-		return super.shouldRun(dt) && !getParent().isCrouching() && !getParent().isFalling() && !getParent().isFlying();
+	public void run() {
+		//TODO Fire arrows at the player at a distance! Skeletons are rangers :P.
 	}
 }

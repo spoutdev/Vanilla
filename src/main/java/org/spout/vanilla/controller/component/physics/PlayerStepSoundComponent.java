@@ -24,28 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.logic.ai.attack;
+package org.spout.vanilla.controller.component.physics;
 
 import org.spout.api.tickable.LogicPriority;
-import org.spout.api.tickable.LogicRunnable;
 
-import org.spout.vanilla.controller.living.creature.neutral.Enderman;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
 /**
- * The Enderman's attack logic which involves a "hit and run" style of assault against a controller.
+ * Plays a step sound effect while walking<br>
+ * Takes account of vanilla player states such as falling and flying
  */
-public class EndermanAttackLogic extends LogicRunnable<Enderman>{
-	public EndermanAttackLogic(Enderman parent, LogicPriority priority) {
+public class PlayerStepSoundComponent extends StepSoundComponent {
+	public PlayerStepSoundComponent(VanillaPlayer parent, LogicPriority priority) {
 		super(parent, priority);
 	}
 
 	@Override
-	public boolean shouldRun(float dt) {
-		return false;
+	public VanillaPlayer getParent() {
+		return (VanillaPlayer) super.getParent();
 	}
 
 	@Override
-	public void run() {
-		//TODO Attack the player and randomly teleport away!
+	public boolean shouldRun(float dt) {
+		return super.shouldRun(dt) && !getParent().isCrouching() && !getParent().isFalling() && !getParent().isFlying();
 	}
 }

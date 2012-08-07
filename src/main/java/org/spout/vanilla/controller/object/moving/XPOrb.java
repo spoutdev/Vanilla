@@ -26,24 +26,50 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
+import org.spout.api.tickable.LogicPriority;
+
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.component.physics.DetectXPCollectorComponent;
 import org.spout.vanilla.controller.object.Substance;
+import org.spout.vanilla.data.VanillaData;
 
 public class XPOrb extends Substance {
-	private int amount;
+	private short experience;
+	private long timeDispersed;
 
-	public XPOrb(int amount) {
+	public XPOrb(short experience) {
 		super(VanillaControllerTypes.XP_ORB);
-		this.amount = amount;
+		this.experience = experience;
 	}
 
 	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
-		//TODO move to closest player
+	public void onAttached() {
+		super.onAttached();
+		experience = data().get(VanillaData.EXPERIENCE_AMOUNT);
+		timeDispersed = data().get(VanillaData.TIME_DISPERSED);
+		registerProcess(new DetectXPCollectorComponent(this, LogicPriority.NORMAL));
 	}
 
-	public int getExperienceAmount() {
-		return amount;
+	@Override
+	public void onSave() {
+		super.onSave();
+		data().put(VanillaData.EXPERIENCE_AMOUNT, experience);
+		data().put(VanillaData.TIME_DISPERSED, timeDispersed);
+	}
+
+	public short getExperience() {
+		return experience;
+	}
+
+	public void setExperience(short experience) {
+		this.experience = experience;
+	}
+
+	public void setTimeDispersed(long timeDispersed) {
+		this.timeDispersed = timeDispersed;
+	}
+
+	public long getTimeDispersed() {
+		return timeDispersed;
 	}
 }

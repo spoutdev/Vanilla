@@ -64,9 +64,12 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 	@Override
 	public short getMinecraftData(short data) {
 		switch (VanillaBlockMaterial.REDSTONE_POWER_MAX) {
-			case 15 : return data;
-			case 0 : return (short) 0;
-			default : return (short) ((15 * data / VanillaBlockMaterial.REDSTONE_POWER_MAX) & 0xF);
+			case 15:
+				return data;
+			case 0:
+				return (short) 0;
+			default:
+				return (short) ((15 * data / VanillaBlockMaterial.REDSTONE_POWER_MAX) & 0xF);
 		}
 	}
 

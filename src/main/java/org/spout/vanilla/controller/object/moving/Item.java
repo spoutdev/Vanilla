@@ -26,22 +26,18 @@
  */
 package org.spout.vanilla.controller.object.moving;
 
-import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.data.Data;
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
-import org.spout.api.player.Player;
+import org.spout.api.tickable.LogicPriority;
 
-import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.component.physics.DetectItemCollectorComponent;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.entity.EntityCollectItemMessage;
 
 import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacketsToNearbyPlayers;
 
@@ -49,10 +45,8 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacketsToNearbyPlaye
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).
  */
 public class Item extends Substance {
-	private final int distance = VanillaConfiguration.ITEM_PICKUP_RANGE.getInt();
 	private ItemStack is;
-	private int uncollectableTicks;
-
+	private DetectItemCollectorComponent itemDetectCollector;
 	/**
 	 * Creates an item controller. Intended for deserialization only.
 	 */
@@ -68,26 +62,24 @@ public class Item extends Substance {
 	public Item(ItemStack itemstack, Vector3 initial) {
 		super(VanillaControllerTypes.DROPPED_ITEM);
 		this.is = itemstack;
-		this.uncollectableTicks = 30;
 		setVelocity(initial);
 	}
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().getCollision().setStrategy(CollisionStrategy.SOFT);
 		if (data().containsKey(Data.HELD_ITEM)) {
 			is = data().get(Data.HELD_ITEM).clone();
 		}
-
-		uncollectableTicks = data().get(VanillaData.UNCOLLECTABLE_TICKS, uncollectableTicks);
+		//Attach components
+		itemDetectCollector = registerProcess(new DetectItemCollectorComponent(this, LogicPriority.NORMAL));
 	}
 
 	@Override
 	public void onSave() {
 		super.onSave();
 		data().put(Data.HELD_ITEM, is);
-		data().put(VanillaData.UNCOLLECTABLE_TICKS, uncollectableTicks);
+		data().put(VanillaData.UNCOLLECTABLE_TICKS, itemDetectCollector.getUnCollectibleTicks());
 	}
 
 	@Override
@@ -107,27 +99,6 @@ public class Item extends Substance {
 		}
 
 		//TODO: Block friction / burn damage / etc.
-
-		if (uncollectableTicks > 0) {
-			uncollectableTicks--;
-			return;
-		}
-
-		Player closestPlayer = getParent().getWorld().getNearestPlayer(getParent(), distance);
-		if (closestPlayer == null) {
-			return;
-		}
-
-		Entity entity = closestPlayer;
-		if (!(entity.getController() instanceof VanillaPlayer)) {
-			return;
-		}
-
-		int collected = getParent().getId();
-		int collector = entity.getId();
-		sendPacketsToNearbyPlayers(entity.getPosition(), entity.getViewDistance(), new EntityCollectItemMessage(collected, collector));
-		((VanillaPlayer) entity.getController()).getInventory().getMain().addItem(is, true, true);
-		getParent().kill();
 	}
 
 	/**
@@ -152,5 +123,13 @@ public class Item extends Substance {
 	 */
 	public short getData() {
 		return is.getData();
+	}
+
+	/**
+	 * Gets the ItemStack this Item Controller represents
+	 * @return The ItemStack of this Controller
+	 */
+	public ItemStack getItemStack() {
+		return is;
 	}
 }

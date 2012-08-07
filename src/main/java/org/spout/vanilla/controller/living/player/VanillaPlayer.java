@@ -46,9 +46,11 @@ import org.spout.api.tickable.LogicPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.logic.gamemode.CreativeLogic;
-import org.spout.vanilla.controller.logic.gamemode.SurvivalLogic;
-import org.spout.vanilla.controller.logic.physics.PlayerStepSoundLogic;
+import org.spout.vanilla.controller.component.effect.PoisonEffectComponent;
+import org.spout.vanilla.controller.component.gamemode.CreativeComponent;
+import org.spout.vanilla.controller.component.gamemode.SurvivalComponent;
+import org.spout.vanilla.controller.component.physics.PlayerStepSoundComponent;
+import org.spout.vanilla.controller.component.player.PingComponent;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.data.GameMode;
@@ -70,10 +72,10 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacket;
  * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
  */
 public class VanillaPlayer extends Human implements PlayerController {
-	private PingProcess pingProcess;
-	private EffectProcess effectProcess;
-	private SurvivalLogic survivalProcess;
-	private PlayerStepSoundLogic stepSoundProcess;
+	private PingComponent pingComponent;
+	private PoisonEffectComponent poisonEffectComponent;
+	private SurvivalComponent survivalProcess;
+	private PlayerStepSoundComponent stepSoundProcess;
 	protected boolean flying;
 	protected boolean falling;
 	protected boolean jumping;
@@ -84,12 +86,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 	protected String tabListName;
 	protected GameMode gameMode;
 	protected Point compassTarget;
-
+	private short experience = 0;
 	/**
 	 * Constructs a new VanillaPlayer to use as a {@link PlayerController} for the given player.
-	 *
-	 * @param gameMode
-	 *            {@link GameMode} of the player.
+	 * @param gameMode {@link GameMode} of the player.
 	 */
 	public VanillaPlayer(GameMode gameMode) {
 		this.gameMode = gameMode;
@@ -113,13 +113,13 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
 
-		pingProcess = registerProcess(new PingProcess(this, LogicPriority.HIGHEST));
-		effectProcess = registerProcess(new EffectProcess(this, LogicPriority.HIGHEST));
-		stepSoundProcess = registerProcess(new PlayerStepSoundLogic(this, LogicPriority.NORMAL));
+		pingComponent = registerProcess(new PingComponent(this, LogicPriority.HIGHEST));
+		poisonEffectComponent = registerProcess(new PoisonEffectComponent(this, LogicPriority.HIGHEST));
+		stepSoundProcess = registerProcess(new PlayerStepSoundComponent(this, LogicPriority.NORMAL));
 		// Survival mode
-		survivalProcess = registerProcess(new SurvivalLogic(this, LogicPriority.HIGHEST));
+		survivalProcess = registerProcess(new SurvivalComponent(this, LogicPriority.HIGHEST));
 		// Creative mode
-		registerProcess(new CreativeLogic(this, LogicPriority.HIGHEST));
+		registerProcess(new CreativeComponent(this, LogicPriority.HIGHEST));
 		super.onAttached();
 	}
 
@@ -203,9 +203,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the position of player's compass target.
-	 *
-	 * @param compassTarget
-	 *            The new compass target position
+	 * @param compassTarget The new compass target position
 	 */
 	public void setCompassTarget(Point compassTarget) {
 		this.compassTarget = compassTarget;
@@ -214,7 +212,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Gets the position of the player's compass target.
-	 *
 	 * @return
 	 */
 	public Point getCompassTarget() {
@@ -223,7 +220,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Makes the player a server operator.
-	 *
 	 * @param op
 	 */
 	public void setOp(boolean op) {
@@ -233,7 +229,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the player is a server operator.
-	 *
 	 * @return true if an operator.
 	 */
 	public boolean isOp() {
@@ -242,7 +237,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * The list displayed in the user list on the client when a client presses TAB.
-	 *
 	 * @return user list name
 	 */
 	public String getTabListName() {
@@ -251,7 +245,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the list displayed in the user list on the client when a client presses TAB.
-	 *
 	 * @param tabListName
 	 */
 	public void setTabListName(String tabListName) {
@@ -260,7 +253,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Returns the current game-mode the controller is in.
-	 *
 	 * @return game mode of controller
 	 */
 	public GameMode getGameMode() {
@@ -269,7 +261,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets the current game-mode the controller is in.
-	 *
 	 * @param gameMode
 	 */
 	public void setGameMode(GameMode gameMode) {
@@ -279,7 +270,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Whether or not the controller is in survival mode.
-	 *
 	 * @return true if in survival mode
 	 */
 	public boolean isSurvival() {
@@ -330,9 +320,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Sets and opens the new active {@link Window} for the player.
-	 *
-	 * @param activeWindow
-	 *            the window to open and set as the active window.
+	 * @param activeWindow the window to open and set as the active window.
 	 */
 	public void setWindow(Window activeWindow) {
 		Window old = this.activeWindow;
@@ -354,7 +342,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Gets the {@link Window} currently opened. If no window is opened a {@link DefaultWindow} will be returned.
-	 *
 	 * @return the currently active window.
 	 */
 	public Window getActiveWindow() {
@@ -363,7 +350,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Gets the player's {@link PlayerInventory}.
-	 *
 	 * @return the player's inventory
 	 */
 	public PlayerInventory getInventory() {
@@ -407,9 +393,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Drops the item specified into a random direction
-	 *
-	 * @param item
-	 *            to drop
+	 * @param item to drop
 	 */
 	public void dropItemRandom(ItemStack item) {
 		Random rand = new Random(getParent().getWorld().getAge());
@@ -420,9 +404,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	/**
 	 * Drops the item specified into the direction the player looks
-	 *
-	 * @param item
-	 *            to drop
+	 * @param item to drop
 	 */
 	public void dropItem(ItemStack item) {
 		Random rand = new Random(getParent().getWorld().getAge());
@@ -480,19 +462,27 @@ public class VanillaPlayer extends Human implements PlayerController {
 		this.healthDirty = dirty;
 	}
 
-	public PingProcess getPingProcess() {
-		return pingProcess;
+	public PingComponent getPingComponent() {
+		return pingComponent;
 	}
 
-	public EffectProcess getEffectProcess() {
-		return effectProcess;
+	public PoisonEffectComponent getPoisonEffectComponent() {
+		return poisonEffectComponent;
 	}
 
-	public SurvivalLogic getSurvivalLogic() {
+	public SurvivalComponent getSurvivalLogic() {
 		return survivalProcess;
 	}
 
-	public PlayerStepSoundLogic getStepSoundLogic() {
+	public PlayerStepSoundComponent getStepSoundLogic() {
 		return stepSoundProcess;
+	}
+
+	public short getExperience() {
+		return experience;
+	}
+
+	public void setExperience(short experience) {
+		this.experience = experience;
 	}
 }

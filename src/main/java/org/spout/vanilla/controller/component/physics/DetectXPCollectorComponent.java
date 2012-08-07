@@ -24,29 +24,41 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.logic.ai.attack;
+package org.spout.vanilla.controller.component.physics;
 
+import org.spout.api.player.Player;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
-import org.spout.vanilla.controller.living.creature.hostile.EnderDragon;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.object.moving.XPOrb;
 
-/**
- * The EnderDragon's attack logic which involves randomly flying around, setting up for a
- * potential "hit and run" against a controller.
- */
-public class EnderDragonAttackLogic extends LogicRunnable<EnderDragon>{
-	public EnderDragonAttackLogic(EnderDragon parent, LogicPriority priority) {
+public class DetectXPCollectorComponent extends LogicRunnable<XPOrb> {
+	private VanillaPlayer player;
+
+	public DetectXPCollectorComponent(XPOrb parent, LogicPriority priority) {
 		super(parent, priority);
 	}
 
 	@Override
-	public boolean shouldRun(float dt) {
-		return false; //TODO Should this extend AttackLogic and call super?
+	public boolean shouldRun(float v) {
+		if (getParent().getTimeDispersed() > 5000) {
+			getParent().kill();
+			return false;
+		}
+		Player closestPlayer = getParent().getParent().getWorld().getNearestPlayer(getParent().getParent(), 4); //TODO get the real value for distance range
+		if (closestPlayer == null || !(closestPlayer.getController() instanceof VanillaPlayer)) {
+			getParent().setTimeDispersed(getParent().getTimeDispersed() + 1);
+			return false;
+		}
+
+		player = (VanillaPlayer) closestPlayer.getController();
+		return true;
 	}
 
 	@Override
 	public void run() {
-		//TODO Watch the player and (most of the time) attack whenever their back is turned!
+		player.setExperience((short) (player.getExperience() + getParent().getExperience()));
+		getParent().kill();
 	}
 }

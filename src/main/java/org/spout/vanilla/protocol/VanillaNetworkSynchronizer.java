@@ -26,14 +26,12 @@
  */
 package org.spout.vanilla.protocol;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import gnu.trove.set.TIntSet;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import gnu.trove.set.TIntSet;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
@@ -61,6 +59,7 @@ import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
@@ -105,6 +104,9 @@ import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
 import org.spout.vanilla.window.DefaultWindow;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
 	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
@@ -144,7 +146,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		registerProtocolEvents(this);
 		chunkInit = ChunkInit.getChunkInit(VanillaConfiguration.CHUNK_INIT.getString("client"));
 	}
-	
+
 	@Override
 	protected void freeChunk(Point p) {
 		int x = (int) p.getX() >> Chunk.BLOCKS.BITS;
@@ -217,9 +219,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 		return heights;
 	}
-	
+
 	private static byte[] emptySkyChunkData;
 	private static byte[] emptyGroundChunkData;
+
 	static {
 		emptySkyChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 		emptyGroundChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
@@ -284,7 +287,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		return chunks;
 	}
-	
+
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
 		//TODO: Implement Spout Protocol
@@ -508,7 +511,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	public static enum ChunkInit {
 		CLIENT_SEL, FULL_COLUMN, HEIGHTMAP, EMPTY_COLUMN;
-		
+
 		public static ChunkInit getChunkInit(String init) {
 			if (init == null) {
 				return CLIENT_SEL;
@@ -527,11 +530,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				Spout.getLogger().info("fullcol    Sends full columns");
 				Spout.getLogger().info("heightmap  Sends a heightmap including the topmost block");
 				Spout.getLogger().info("empty      Sends empty columns");
-				
+
 				return CLIENT_SEL;
 			}
 		}
-		
+
 		public Collection<Chunk> getChunks(Chunk c) {
 			if (this.sendColumn()) {
 				int x = c.getX();
@@ -548,26 +551,31 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				return chunks;
 			}
 		}
-		
+
 		public boolean sendColumn() {
 			return this == CLIENT_SEL || this == FULL_COLUMN;
 		}
-		
+
 		public byte[] getChunkData(int[][] heights, BlockMaterial[][] materials, Point p) {
 			switch (this) {
-				case CLIENT_SEL: return getChunkFullColumn(heights, materials, p);
-				case FULL_COLUMN: return getChunkFullColumn(heights, materials, p);
-				case HEIGHTMAP: return getChunkHeightMap(heights, materials, p);
-				case EMPTY_COLUMN: return getEmptyChunk(heights, materials, p);
-				default: return getChunkFullColumn(heights, materials, p);
+				case CLIENT_SEL:
+					return getChunkFullColumn(heights, materials, p);
+				case FULL_COLUMN:
+					return getChunkFullColumn(heights, materials, p);
+				case HEIGHTMAP:
+					return getChunkHeightMap(heights, materials, p);
+				case EMPTY_COLUMN:
+					return getEmptyChunk(heights, materials, p);
+				default:
+					return getChunkFullColumn(heights, materials, p);
 			}
 		}
-		
+
 		private static byte[] getChunkFullColumn(int[][] heights, BlockMaterial[][] materials, Point p) {
 			Chunk c = p.getWorld().getChunkFromBlock(p);
 			return getChunkFullData(c);
 		}
-		
+
 		public static byte[] getChunkFullData(Chunk c) {
 			ChunkSnapshot snapshot = c.getSnapshot(SnapshotType.BOTH, EntityType.NO_ENTITIES, ExtraData.NO_EXTRA_DATA);
 			short[] rawBlockIdArray = snapshot.getBlockIds();
@@ -607,12 +615,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			arrIndex += rawSkyLight.length;
 			return fullChunkData;
 		}
-		
+
 		private static byte[] getEmptyChunk(int[][] heights, BlockMaterial[][] materials, Point p) {
 			int chunkY = p.getChunkY();
-			return chunkY <=4 ? emptyGroundChunkData : emptySkyChunkData;
+			return chunkY <= 4 ? emptyGroundChunkData : emptySkyChunkData;
 		}
-		
+
 		private static byte[] getChunkHeightMap(int[][] heights, BlockMaterial[][] materials, Point p) {
 			int chunkY = p.getChunkY();
 			byte[] packetChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
@@ -652,9 +660,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 			return packetChunkData;
 		}
-		
+
 		private static boolean isEqual(String in, String... args) {
-			
+
 			if (in == null) {
 				return false;
 			}

@@ -40,7 +40,6 @@ public class PlayerPingChangedEvent extends PlayerEvent {
 
 	/**
 	 * Gets the previous Ping time
-	 * 
 	 * @return previous ping time in Milliseconds
 	 */
 	public long getOldPing() {
@@ -49,7 +48,6 @@ public class PlayerPingChangedEvent extends PlayerEvent {
 
 	/**
 	 * Gets the current Ping time
-	 * 
 	 * @return current ping time in Milliseconds
 	 */
 	public long getPing() {

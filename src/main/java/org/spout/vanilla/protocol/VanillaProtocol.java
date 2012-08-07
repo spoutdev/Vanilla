@@ -52,8 +52,6 @@ import org.spout.vanilla.controller.source.ControllerChangeReason;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.msg.ChatMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
-import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class VanillaProtocol extends Protocol {
 	public final static DefaultedKey<String> SESSION_ID = new DefaultedKeyImpl<String>("sessionid", "0000000000000000");
@@ -133,7 +131,7 @@ public class VanillaProtocol extends Protocol {
 			// Set protocol and send packets
 			if (vanillaPlayer.isSurvival()) {
 				vanillaPlayer.updateHealth();
-      }
+			}
 		}
 
 		StringBuilder listBuilder = new StringBuilder();

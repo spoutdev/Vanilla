@@ -40,7 +40,6 @@ public class PlayerKeepAliveEvent extends Event implements ProtocolEvent {
 
 	/**
 	 * Gets the Hash code for this Keep Alive message
-	 * 
 	 * @return keep alive unique code
 	 */
 	public int getHash() {

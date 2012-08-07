@@ -131,6 +131,6 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
 
 	@Override
 	public String[] getExtensions() {
-		return new String[] { "yml" };
+		return new String[]{"yml"};
 	}
 }

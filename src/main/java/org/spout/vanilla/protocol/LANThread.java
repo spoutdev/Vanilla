@@ -38,19 +38,20 @@ import java.net.UnknownHostException;
 import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.protocol.PortBinding;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 
-public class LANThread extends Thread{
+public class LANThread extends Thread {
 	private final byte[] contents;
 	DatagramSocket socket;
 	SocketAddress address;
-	
+
 	public LANThread() {
 		super("LAN Discovery");
 		setDaemon(true);
 		InetSocketAddress vanillaSocket = getVanillaPort();
 		try {
-			this.contents = ("[MOTD]" + VanillaConfiguration.MOTD.getString() + "[/MOTD][AD]" + InetAddress.getLocalHost().getHostName() + ":"+ vanillaSocket.getPort() + "[/AD]").getBytes();
+			this.contents = ("[MOTD]" + VanillaConfiguration.MOTD.getString() + "[/MOTD][AD]" + InetAddress.getLocalHost().getHostName() + ":" + vanillaSocket.getPort() + "[/AD]").getBytes();
 		} catch (UnknownHostException e) {
 			throw new RuntimeException(e);
 		}
@@ -59,12 +60,12 @@ public class LANThread extends Thread{
 	private InetSocketAddress getVanillaPort() {
 		for (PortBinding binding : ((Server) Spout.getEngine()).getBoundAddresses()) {
 			if (binding.getProtocol() instanceof VanillaProtocol && binding.getAddress() instanceof InetSocketAddress) {
-				return ((InetSocketAddress)binding.getAddress());
+				return ((InetSocketAddress) binding.getAddress());
 			}
 		}
 		throw new IllegalStateException("No vanilla port found!");
 	}
-	
+
 	public void start() {
 		try {
 			socket = new DatagramSocket();
@@ -76,10 +77,10 @@ public class LANThread extends Thread{
 		}
 		super.start();
 	}
-	
+
 	@Override
 	public void run() {
-		while(!this.isInterrupted()) {
+		while (!this.isInterrupted()) {
 			try {
 				socket.send(new DatagramPacket(contents, contents.length, address));
 			} catch (IOException e) {
@@ -92,5 +93,4 @@ public class LANThread extends Thread{
 			}
 		}
 	}
-
 }

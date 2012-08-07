@@ -36,14 +36,12 @@ import org.spout.api.inventory.ItemStack;
  * Event which is called when a furnace finishes smelting an object, or a CraftingTable finishes crafting, or a player finishes crafting
  * todo implement event in CraftingInventory
  */
-public class CraftingResultEvent extends EntityEvent implements Cancellable{
-
+public class CraftingResultEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private Controller controller;
 	private ItemStack result;
 
-
-	public CraftingResultEvent (Controller controller, ItemStack result){
+	public CraftingResultEvent(Controller controller, ItemStack result) {
 		super(controller.getParent());
 		this.controller = controller;
 		this.result = result;
@@ -53,8 +51,7 @@ public class CraftingResultEvent extends EntityEvent implements Cancellable{
 	 * Returns the controller of this CraftingResultEvent
 	 * @return controller
 	 */
-
-	public Controller getController(){
+	public Controller getController() {
 		return controller;
 	}
 
@@ -62,11 +59,9 @@ public class CraftingResultEvent extends EntityEvent implements Cancellable{
 	 * Returns the result of this CraftingResultEvent
 	 * @return result
 	 */
-
-	public ItemStack getResult(){
+	public ItemStack getResult() {
 		return result;
 	}
-
 
 	@Override
 	public void setCancelled(boolean cancelled) {

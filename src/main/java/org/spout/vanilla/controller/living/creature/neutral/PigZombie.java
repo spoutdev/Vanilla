@@ -32,8 +32,8 @@ import java.util.Set;
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.hostile.Zombie;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;

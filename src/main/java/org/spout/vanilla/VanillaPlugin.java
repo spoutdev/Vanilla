@@ -26,13 +26,12 @@
  */
 package org.spout.vanilla;
 
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceInfo;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.logging.Level;
-
-import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceInfo;
 
 import org.spout.api.Engine;
 import org.spout.api.Server;
@@ -60,6 +59,7 @@ import org.spout.api.protocol.PortBinding;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.OutwardIterator;
+
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -314,7 +314,6 @@ public class VanillaPlugin extends CommonPlugin {
 
 	/**
 	 * Gets the running instance of VanillaPlugin
-	 *
 	 * @return the running instance of VanillaPlugin
 	 */
 	public static VanillaPlugin getInstance() {

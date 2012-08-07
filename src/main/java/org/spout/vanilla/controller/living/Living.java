@@ -32,8 +32,8 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -54,8 +54,6 @@ public abstract class Living extends VanillaEntityController {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		//registerAction(new GravityAction());
-		//registerAction(new WanderLogic());
 	}
 
 	@Override
@@ -68,6 +66,16 @@ public abstract class Living extends VanillaEntityController {
 			lastHeadYaw = headYaw;
 			headYawChanged = true;
 		}
+	}
+
+	@Override
+	public void updateAirTicks() {
+
+	}
+
+	@Override
+	public int getMaxAirTicks() {
+		return 300;
 	}
 
 	private int calculateHeadYaw() {
@@ -145,23 +153,6 @@ public abstract class Living extends VanillaEntityController {
 		return new BlockIterator(this.getParent().getWorld(), this.getHeadTransform(), maxDistance);
 	}
 
-	/**
-	 * Performs a collision test
-	 * @param iterator
-	 * @return the first block this Living entity collides with
-	 */
-	public Block hitTest() {
-		Block block;
-		for (BlockIterator iter = this.getHeadBlockView(); iter.hasNext(); ) {
-			block = iter.next();
-			//TODO: Hit box check
-			if (!block.getMaterial().isTransparent()) {
-				return block;
-			}
-		}
-		return null;
-	}
-
 	public int getHeadYaw() {
 		return headYaw;
 	}
@@ -178,35 +169,21 @@ public abstract class Living extends VanillaEntityController {
 		this.crouching = crouching;
 	}
 
-	@Override
-	public void updateAirTicks() {
-		// Handle drowning and suffocation damage
-		int airTicks = getAirTicks();
-		Point headPos = getHeadPosition();
-		if (getParent().isObserver() || headPos.getWorld().getChunkFromBlock(headPos, LoadOption.NO_LOAD) != null) {
-			Block head = getParent().getWorld().getBlock(headPos, getParent());
-			if (head.isMaterial(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
-				airTicks++;
-				if (head.isMaterial(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
-					// Drowning
-					if (airTicks >= getMaxAirTicks() && airTicks % 20 == 0) {
-						damage(2, DamageCause.DROWN);
-					}
-				} else {
-					// Suffocation
-					if (airTicks % 10 == 0) {
-						damage(1, DamageCause.SUFFOCATE);
-					}
-				}
-			} else {
-				airTicks = 0;
+	//TODO Need to remove this or do this better...
+	/**
+	 * Performs a collision test
+	 * @return the first block this Living entity collides with
+	 */
+	public Block hitTest() {
+		Block block;
+		for (BlockIterator iter = this.getHeadBlockView(); iter.hasNext(); ) {
+			block = iter.next();
+			//TODO: Hit box check
+			if (!block.getMaterial().isTransparent()) {
+				return block;
 			}
 		}
-		setAirTicks(airTicks);
+		return null;
 	}
 
-	@Override
-	public int getMaxAirTicks() {
-		return 300;
-	}
 }

@@ -24,20 +24,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.logic.ai;
+package org.spout.vanilla.controller.component.gamemode;
 
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
-import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.living.Creature;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 
 /**
- * Basic logic for VanillaEntityControllers that attack other controllers. VanillaEntityControllers that simply collide against the
- * other controller without doing anything else (ie Zombies) should use this logic.
+ * Basic component that applies Adventure-mode rules to VanillaPlayers.
  */
-public class AttackLogic extends LogicRunnable<VanillaEntityController>{
-	public AttackLogic(Creature parent, LogicPriority priority) {
+public class AdventureComponent extends LogicRunnable<VanillaPlayer> {
+	public AdventureComponent(VanillaPlayer parent, LogicPriority priority) {
 		super(parent, priority);
 	}
 

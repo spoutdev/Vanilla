@@ -37,34 +37,26 @@ import org.spout.api.event.Result;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
-import org.spout.api.event.storage.PlayerLoadEvent;
 import org.spout.api.event.world.RegionLoadEvent;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.player.Player;
 import org.spout.api.scheduler.TaskPriority;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.source.ControllerChangeReason;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.controller.world.RegionSpawner;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class VanillaListener implements Listener {
-
 	private final VanillaPlugin plugin;
 
 	public VanillaListener(VanillaPlugin plugin) {
 		this.plugin = plugin;
-	}
-
-	@EventHandler
-	public void onPlayerLoad(PlayerLoadEvent event) {
 	}
 
 	@EventHandler

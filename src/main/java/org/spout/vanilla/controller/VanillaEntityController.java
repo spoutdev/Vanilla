@@ -38,9 +38,10 @@ import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.controller.BasicController;
-import org.spout.api.entity.component.controller.PlayerController;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
@@ -53,6 +54,7 @@ import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityCombustEvent;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
@@ -507,7 +509,6 @@ public abstract class VanillaEntityController extends BasicController implements
 
 	/**
 	 * Returns true if the entity is equal to or less than zero health remaining
-	 *
 	 * @return dead
 	 */
 	public boolean isDead() {
@@ -520,7 +521,7 @@ public abstract class VanillaEntityController extends BasicController implements
 	 * @param source of the change
 	 */
 	public void setHealth(int health, Source source) {
-		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getParent(), source, health-this.health);
+		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getParent(), source, health - this.health);
 		Spout.getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
 			if (this.health + event.getChange() > maxHealth) {
@@ -556,7 +557,29 @@ public abstract class VanillaEntityController extends BasicController implements
 	}
 
 	public void updateAirTicks() {
-
+//		// Handle drowning and suffocation damage
+//		int airTicks = getAirTicks();
+//		Point headPos = getHeadPosition();
+//		if (getParent().isObserver() || headPos.getWorld().getChunkFromBlock(headPos, LoadOption.NO_LOAD) != null) {
+//			Block head = getParent().getWorld().getBlock(headPos, getParent());
+//			if (head.isMaterial(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+//				airTicks++;
+//				if (head.isMaterial(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+//					// Drowning
+//					if (airTicks >= getMaxAirTicks() && airTicks % 20 == 0) {
+//						damage(2, DamageCause.DROWN);
+//					}
+//				} else {
+//					// Suffocation
+//					if (airTicks % 10 == 0) {
+//						damage(1, DamageCause.SUFFOCATE);
+//					}
+//				}
+//			} else {
+//				airTicks = 0;
+//			}
+//		}
+//		setAirTicks(airTicks);
 	}
 
 	public int getMaxAirTicks() {

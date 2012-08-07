@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.controller.object;
 
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.vanilla.controller.VanillaEntityController;
 
 /**
  * Controller that is the base of all controllers that aren't living.

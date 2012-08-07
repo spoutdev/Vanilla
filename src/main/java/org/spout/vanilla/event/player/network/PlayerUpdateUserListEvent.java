@@ -42,7 +42,6 @@ public class PlayerUpdateUserListEvent extends PlayerEvent implements ProtocolEv
 
 	/**
 	 * Gets the network delay between the server and the player
-	 * 
 	 * @return Ping delay in milliseconds
 	 */
 	public long getPingDelay() {

@@ -24,51 +24,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.spout.vanilla.controller.living.player;
+package org.spout.vanilla.controller.component.gamemode;
 
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+
 /**
- *
- * @author ZNickq
+ * Basic component that applies Creative-mode rules to VanillaPlayers.
  */
-public class EffectProcess extends LogicRunnable<VanillaPlayer> {
-  private boolean poisoned;
-  
-  public EffectProcess(VanillaPlayer aThis, LogicPriority logicPriority) {
-    super(aThis, logicPriority);
-  }
-
-  @Override
-  public boolean shouldRun(float f) {
-    return true;
-  }
-
-  @Override
-  public void run() {
-  }
-  
-  
-
-	/**
-	 * Whether or not the controller is poisoned.
-	 * @return true if poisoned.
-	 */
-	public boolean isPoisoned() {
-		return poisoned;
+public class CreativeComponent extends LogicRunnable<VanillaPlayer> {
+	public CreativeComponent(VanillaPlayer parent, LogicPriority priority) {
+		super(parent, priority);
 	}
 
-	/**
-	 * Sets whether or not the controller is poisoned.
-	 * @param poisoned
-	 */
-	public void setPoisoned(boolean poisoned) {
-		this.poisoned = poisoned;
+	@Override
+	public boolean shouldRun(float dt) {
+		return false;
 	}
-  
+
+	@Override
+	public void run() {
+	}
 }

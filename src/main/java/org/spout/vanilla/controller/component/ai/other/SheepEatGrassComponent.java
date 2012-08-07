@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.logic.ai.other;
+package org.spout.vanilla.controller.component.ai.other;
 
 import java.util.Random;
 
@@ -39,9 +39,9 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 
 /**
- * Sheep logic for eating grass
+ * Sheep component for eating grass
  */
-public class SheepEatGrassLogic extends LogicRunnable<Sheep> {
+public class SheepEatGrassComponent extends LogicRunnable<Sheep> {
 	private static final int CHANCE_AS_ADULT = 1000;
 	private static final int CHANCE_AS_BABY = 50;
 
@@ -49,16 +49,16 @@ public class SheepEatGrassLogic extends LogicRunnable<Sheep> {
 	 * Create a LogicRunnable for Sheeps eating grass with normal priority.
 	 * @param parent the sheep eating grass.
 	 */
-	public SheepEatGrassLogic(Sheep parent) {
+	public SheepEatGrassComponent(Sheep parent) {
 		this(parent, LogicPriority.NORMAL);
 	}
 
 	/**
 	 * Create a LogicRunnable for Sheeps eating grass.
 	 * @param parent the sheep eating grass.
-	 * @param priority the priority of this logic.
+	 * @param priority the priority of this component.
 	 */
-	public SheepEatGrassLogic(Sheep parent, LogicPriority priority) {
+	public SheepEatGrassComponent(Sheep parent, LogicPriority priority) {
 		super(parent, priority);
 	}
 

@@ -39,8 +39,8 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;

@@ -24,25 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.object.misc;
+package org.spout.vanilla.controller.component.ai.attack;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.object.Substance;
-import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.api.tickable.LogicPriority;
+import org.spout.api.tickable.LogicRunnable;
 
-public class EnderCrystal extends Substance {
-	public EnderCrystal() {
-		super(VanillaControllerTypes.ENDER_CRYSTAL);
+import org.spout.vanilla.controller.living.creature.neutral.Enderman;
+
+/**
+ * The Enderman's attack component which involves a "hit and run" style of assault against a controller.
+ */
+public class EndermanAttackComponent extends LogicRunnable<Enderman> {
+	public EndermanAttackComponent(Enderman parent, LogicPriority priority) {
+		super(parent, priority);
 	}
 
 	@Override
-	public void onAttached() {
-		setMaxHealth(1);
-		setHealth(1, HealthChangeReason.SPAWN);
+	public boolean shouldRun(float dt) {
+		return false;
 	}
 
 	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
+	public void run() {
+		//TODO Attack the player and randomly teleport away!
 	}
 }

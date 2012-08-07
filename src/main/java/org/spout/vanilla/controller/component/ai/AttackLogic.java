@@ -24,45 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.logic.ai;
+package org.spout.vanilla.controller.component.ai;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.math.MathHelper;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
+import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
 import org.spout.vanilla.controller.VanillaEntityController;
+import org.spout.vanilla.controller.living.Creature;
 
 /**
- * Basic logic for VanillaEntityControllers that move around in the world.
+ * Basic component for VanillaEntityControllers that attack other controllers. VanillaEntityControllers that simply collide against the
+ * other controller without doing anything else (ie Zombies) should use this component.
  */
-public class WanderLogic extends LogicRunnable<VanillaEntityController> {
-	private static final int WANDER_FREQ = 25;
-
-	public WanderLogic(VanillaEntityController parent) {
-		super(parent);
+public class AttackLogic extends LogicRunnable<VanillaEntityController> {
+	public AttackLogic(Creature parent, LogicPriority priority) {
+		super(parent, priority);
 	}
 
 	@Override
 	public boolean shouldRun(float dt) {
-		return getParent().getRandom().nextInt(100) < WANDER_FREQ;
+		return false;
 	}
 
 	@Override
 	public void run() {
-		VanillaEntityController controller = getParent();
-		Entity entity = controller.getParent();
-		//Get the direction the entity is facing
-		Vector3 entityForward = MathHelper.getDirectionVector(entity.getRotation());
-		//Get somewhere we want to go.  Make sure it is length 1
-		Vector3 randomTarget = new Vector3(Math.random(), 0, Math.random()).normalize();
-		//Get the rotation to that target
-		Quaternion rotationTo = entityForward.rotationTo(randomTarget);
-		//Look at it
-		entity.setRotation(rotationTo);
-		//Move forward
-		controller.setVelocity(MathHelper.getDirectionVector(entity.getRotation()).multiply(0.5));
-		controller.move();
+
 	}
 }

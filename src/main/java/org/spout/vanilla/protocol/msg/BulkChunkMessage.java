@@ -32,13 +32,12 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
 public final class BulkChunkMessage extends Message {
-	
 	private final int[] x;
 	private final int[] z;
 	private final boolean[][] addData;
 	private final byte[][][] data;
 	private final byte[][] biomeData;
-	
+
 	public BulkChunkMessage(int[] x, int[] z, boolean[][] hasAdditionalData, byte[][][] data, byte[][] biomeData) {
 		int l = x.length;
 		if (l != z.length || l != hasAdditionalData.length || l != data.length || l != biomeData.length) {

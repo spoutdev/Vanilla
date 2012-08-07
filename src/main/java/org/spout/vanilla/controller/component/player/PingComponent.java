@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.player;
+package org.spout.vanilla.controller.component.player;
 
 import java.util.logging.Level;
 
@@ -32,12 +32,14 @@ import org.spout.api.Spout;
 import org.spout.api.player.Player;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.event.player.network.PlayerKeepAliveEvent;
 import org.spout.vanilla.event.player.network.PlayerPingChangedEvent;
 import org.spout.vanilla.event.player.network.PlayerUpdateUserListEvent;
 
-public class PingProcess extends LogicRunnable<VanillaPlayer> {
+public class PingComponent extends LogicRunnable<VanillaPlayer> {
 	private static final int MAX_USER_UPDATES = 40; // the maximum rate (in ticks) at which the user list is updated
 	private int maxUserListUpdateCounter = MAX_USER_UPDATES;
 	private int lastRequestHash = 0; // after log-in an initial keep-alive is sent with hash 0
@@ -45,7 +47,7 @@ public class PingProcess extends LogicRunnable<VanillaPlayer> {
 	private long lastResponseTime = System.currentTimeMillis();
 	private long ping = 0L;
 
-	public PingProcess(VanillaPlayer aThis, LogicPriority logicPriority) {
+	public PingComponent(VanillaPlayer aThis, LogicPriority logicPriority) {
 		super(aThis, logicPriority);
 	}
 
@@ -82,7 +84,6 @@ public class PingProcess extends LogicRunnable<VanillaPlayer> {
 
 	/**
 	 * Gets the Player Ping in Milliseconds
-	 * 
 	 * @return player ping in Milliseconds
 	 */
 	public long getPing() {
@@ -91,7 +92,6 @@ public class PingProcess extends LogicRunnable<VanillaPlayer> {
 
 	/**
 	 * Re-sets the Time out times by validating the received hash code
-	 * 
 	 * @param responseHash to validate against
 	 */
 	public void resetTimeout(int responseHash) {

@@ -33,7 +33,6 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.block.Furnace;
 
-
 /**
  * Event which is called when an fuel in the furnace is being burned.
  */
@@ -52,15 +51,15 @@ public class FurnaceBurnEvent extends Event implements Cancellable {
 	 * Returns the Furnace which caused the FurnaceBurnEvent
 	 * @return furnace
 	 */
-	public Furnace getFurnace(){
+	public Furnace getFurnace() {
 		return furnace;
 	}
 
 	/**
 	 * Returns the ItemStack which should be burned
-	 * @return  fuel
+	 * @return fuel
 	 */
-	public ItemStack getFuel(){
+	public ItemStack getFuel() {
 		return fuel;
 	}
 

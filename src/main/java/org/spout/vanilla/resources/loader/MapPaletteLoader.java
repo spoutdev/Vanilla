@@ -66,6 +66,6 @@ public class MapPaletteLoader extends BasicResourceLoader<MapPalette> {
 
 	@Override
 	public String[] getExtensions() {
-		return new String[] { "dat" };
+		return new String[]{"dat"};
 	}
 }

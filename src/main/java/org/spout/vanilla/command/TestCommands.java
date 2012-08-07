@@ -27,7 +27,6 @@
 package org.spout.vanilla.command;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Spout;

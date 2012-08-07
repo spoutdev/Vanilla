@@ -32,11 +32,11 @@ import java.util.Set;
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.VanillaEntityController;
+import org.spout.vanilla.controller.component.ai.other.TimedDropItemComponent;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.controller.logic.ai.other.ControllerTimedDropItemLogic;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -46,7 +46,7 @@ public class Chicken extends Creature implements Passive {
 	public static final int MAXIMUM_EGG_BREEDING_TIME = 12000;
 	public static final int NEVER = -1;
 	private boolean layingEggsEnabled = true;
-	private ControllerTimedDropItemLogic dropItemLogic;
+	private TimedDropItemComponent dropItemComponent;
 
 	public Chicken() {
 		super(VanillaControllerTypes.CHICKEN);
@@ -57,8 +57,8 @@ public class Chicken extends Creature implements Passive {
 		super.onAttached();
 		setMaxHealth(4);
 		setHealth(4, HealthChangeReason.SPAWN);
-		dropItemLogic = new ControllerTimedDropItemLogic(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
-		registerProcess(dropItemLogic);
+		dropItemComponent = new TimedDropItemComponent(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
+		registerProcess(dropItemComponent);
 		setDeathAnimation(true);
 	}
 
@@ -95,11 +95,11 @@ public class Chicken extends Creature implements Passive {
 	 * @param layingEggsEnabled
 	 */
 	public void setLayingEggsEnabled(boolean layingEggsEnabled) {
-		if (this.layingEggsEnabled && dropItemLogic != null) {
-			unregisterProcess(dropItemLogic);
+		if (this.layingEggsEnabled && dropItemComponent != null) {
+			unregisterProcess(dropItemComponent);
 			this.layingEggsEnabled = false;
 		} else {
-			registerProcess(dropItemLogic);
+			registerProcess(dropItemComponent);
 			this.layingEggsEnabled = layingEggsEnabled;
 		}
 	}

@@ -24,18 +24,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.logic.ai.attack;
+package org.spout.vanilla.controller.component.ai.attack;
 
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
-import org.spout.vanilla.controller.living.creature.hostile.Creeper;
+import org.spout.vanilla.controller.living.creature.hostile.EnderDragon;
 
 /**
- * The Creeper's attack logic which involves approaching a controller and exploding.
+ * The EnderDragon's attack component which involves randomly flying around, setting up for a
+ * potential "hit and run" against a controller.
  */
-public class CreeperAttackLogic extends LogicRunnable<Creeper>{
-	public CreeperAttackLogic(Creeper parent, LogicPriority priority) {
+public class EnderDragonAttackComponent extends LogicRunnable<EnderDragon> {
+	public EnderDragonAttackComponent(EnderDragon parent, LogicPriority priority) {
 		super(parent, priority);
 	}
 
@@ -46,6 +47,6 @@ public class CreeperAttackLogic extends LogicRunnable<Creeper>{
 
 	@Override
 	public void run() {
-		//TODO SSSSSSssssssssss boom!
+		//TODO Watch the player and (most of the time) attack whenever their back is turned!
 	}
 }

@@ -47,7 +47,6 @@ public class Human extends Living {
 	protected long diggingStartTime;
 	protected int miningDamagePosition = 0;
 	protected long previousDiggingTime = 0;
-	protected final Vector3 moveSpeed = new Vector3(10, 0, 0), horizSpeed = new Vector3(0, 0, -10);
 	protected int miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt(), miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt();
 	protected int[] miningDamage;
 	protected String title; //TODO title isn't really a good name...
@@ -56,23 +55,16 @@ public class Human extends Living {
 	public Human() {
 		super(VanillaControllerTypes.HUMAN);
 		setHeadHeight(1.62f);
-		miningDamage = new int[miningDamagePeriod];
 	}
 
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
-		if (isDigging && (getDiggingTicks() % 20) == 0) {
-			VanillaNetworkUtil.sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new EntityAnimationMessage(getParent().getId(), EntityAnimationMessage.ANIMATION_SWING_ARM));
-		}
 	}
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getParent().setCollision(new CollisionModel(new BoundingBox(1, 2, 1, 2, 2, 1))); //TODO Absolutely guessed here.
-		setMaxHealth(20);
-		setHealth(20, HealthChangeReason.SPAWN);
 		getParent().setObserver(true);
 	}
 

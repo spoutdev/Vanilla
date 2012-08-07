@@ -33,8 +33,10 @@ import java.util.zip.Inflater;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.protocol.MessageCodec;
+
 import org.spout.vanilla.protocol.msg.BulkChunkMessage;
 
 public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
@@ -47,19 +49,19 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 	@Override
 	public BulkChunkMessage decode(ChannelBuffer buffer) throws IOException {
 		int length = buffer.readShort() & 0xFFFF;
-		
+
 		int compressed = buffer.readInt();
-		
+
 		byte[] compressedDataFlat = new byte[compressed];
-		
+
 		buffer.readBytes(compressedDataFlat);
-		
+
 		int[] x = new int[length];
 		int[] z = new int[length];
 		byte[][][] data = new byte[length][][];
 		boolean[][] hasAdd = new boolean[length][];
 		byte[][] biomeData = new byte[length][];
-		
+
 		for (int i = 0; i < length; i++) {
 			x[i] = buffer.readInt();
 			z[i] = buffer.readInt();
@@ -68,7 +70,7 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 			data[i] = shortToByteByteArray(primaryBitmap, hasAdd[i]);
 			biomeData[i] = new byte[Chunk.BLOCKS.AREA];
 		}
-		
+
 		int flatLength = 0;
 
 		for (int i = 0; i < length; i++) {
@@ -78,7 +80,7 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 			}
 			flatLength += biomeData[i].length;
 		}
-		
+
 		byte[] uncompressedDataFlat = new byte[flatLength];
 
 		Inflater inflater = new Inflater();
@@ -97,12 +99,12 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 		} finally {
 			inflater.end();
 		}
-		
+
 		int pos = 0;
 		for (int i = 0; i < length; i++) {
 			byte[][] columnData = data[i];
 			for (int j = 0; j < columnData.length; j++) {
-				int l = columnData[j].length; 
+				int l = columnData[j].length;
 				System.arraycopy(uncompressedDataFlat, pos, columnData[j], 0, l);
 				pos += l;
 			}
@@ -110,7 +112,7 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 			System.arraycopy(uncompressedDataFlat, pos, biomeData[i], 0, l);
 			pos += l;
 		}
-		
+
 		if (pos != flatLength) {
 			throw new IllegalStateException("Flat data length miscalculated");
 		}
@@ -121,10 +123,10 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 	@Override
 	public ChannelBuffer encode(BulkChunkMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		
+
 		int length = message.getX().length;
 		buffer.writeShort(length);
-		
+
 		int dataLength = 0;
 		byte[][][] uncompressedData = message.getData();
 		byte[][] biomeData = message.getBiomeData();
@@ -138,7 +140,7 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 			}
 			dataLength += biomeData[i].length;
 		}
-		
+
 		byte[] uncompressedDataFlat = new byte[dataLength];
 		int pos = 0;
 		for (int i = 0; i < length; i++) {
@@ -154,7 +156,7 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 			System.arraycopy(biomeData[i], 0, uncompressedDataFlat, pos, biomeData[i].length);
 			pos += biomeData[i].length;
 		}
-		
+
 		if (pos != dataLength) {
 			throw new IllegalStateException("Flat data length miscalculated");
 		}
@@ -162,7 +164,7 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 		Deflater deflater = new Deflater(COMPRESSION_LEVEL);
 		deflater.setInput(uncompressedDataFlat);
 		deflater.finish();
-		
+
 		byte[] compressedDataFlat = new byte[uncompressedDataFlat.length + 1024];
 
 		int compressed = deflater.deflate(compressedDataFlat);
@@ -183,10 +185,10 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 			buffer.writeShort(byteByteArrayToShort(message.getData()[i]));
 			buffer.writeShort(booleanArrayToShort(message.hasAdditionalData()[i]));
 		}
-		
+
 		return buffer;
 	}
-	
+
 	private static short booleanArrayToShort(boolean[] array) {
 		short s = 0;
 		for (int i = 0; i < array.length; i++) {
@@ -196,7 +198,7 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 		}
 		return s;
 	}
-	
+
 	private static boolean[] shortToBooleanArray(short s) {
 		boolean[] array = new boolean[16];
 		for (int i = 0; i < 16; i++) {
@@ -208,7 +210,7 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 		}
 		return array;
 	}
-	
+
 	private static short byteByteArrayToShort(byte[][] array) {
 		short s = 0;
 		for (int i = 0; i < array.length; i++) {
@@ -218,7 +220,7 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 		}
 		return s;
 	}
-	
+
 	private static byte[][] shortToByteByteArray(short s, boolean[] add) {
 		byte[][] array = new byte[16][];
 		for (int i = 0; i < 16; i++) {
@@ -234,5 +236,4 @@ public final class BulkChunkCodec extends MessageCodec<BulkChunkMessage> {
 		}
 		return array;
 	}
-	
 }

@@ -32,8 +32,8 @@ import java.util.Set;
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class MagmaSlime extends Slime {

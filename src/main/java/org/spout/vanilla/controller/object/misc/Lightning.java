@@ -41,8 +41,6 @@ public class Lightning extends Substance {
 
 	@Override
 	public void onTick(float dt) {
-		if (getParent() != null && !getParent().isDead()) {
-			getParent().kill();
-		}
+		getParent().kill();
 	}
 }

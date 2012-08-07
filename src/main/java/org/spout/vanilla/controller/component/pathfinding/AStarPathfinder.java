@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.logic.pathfinding;
+package org.spout.vanilla.controller.component.pathfinding;
 
 import java.util.ArrayList;
 import java.util.HashSet;

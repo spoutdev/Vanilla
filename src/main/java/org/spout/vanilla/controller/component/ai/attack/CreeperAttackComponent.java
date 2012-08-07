@@ -24,19 +24,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.logic.ai.attack;
+package org.spout.vanilla.controller.component.ai.attack;
 
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
-import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
+import org.spout.vanilla.controller.living.creature.hostile.Creeper;
 
 /**
- * The Skeleton's attack logic which involves keeping a distance from the controller and
- * shooting arrows.
+ * The Creeper's attack component which involves approaching a controller and exploding.
  */
-public class SkeletonAttackLogic extends LogicRunnable<Skeleton> {
-	public SkeletonAttackLogic(Skeleton parent, LogicPriority priority) {
+public class CreeperAttackComponent extends LogicRunnable<Creeper> {
+	public CreeperAttackComponent(Creeper parent, LogicPriority priority) {
 		super(parent, priority);
 	}
 
@@ -47,6 +46,6 @@ public class SkeletonAttackLogic extends LogicRunnable<Skeleton> {
 
 	@Override
 	public void run() {
-		//TODO Fire arrows at the player at a distance! Skeletons are rangers :P.
+		//TODO SSSSSSssssssssss boom!
 	}
 }

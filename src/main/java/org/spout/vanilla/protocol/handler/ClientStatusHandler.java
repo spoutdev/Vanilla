@@ -39,11 +39,9 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.HealthChangeReason;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.ClientStatusMessage;
-import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {

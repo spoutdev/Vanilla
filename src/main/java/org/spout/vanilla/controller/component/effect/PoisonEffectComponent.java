@@ -24,28 +24,50 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.logic.gamemode;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.spout.vanilla.controller.component.effect;
 
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.controller.VanillaEntityController;
+import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.VanillaData;
 
-/**
- * Basic logic that applies Adventure-mode rules to VanillaPlayers.
- */
-public class AdventureLogic extends LogicRunnable<VanillaPlayer> {
-	public AdventureLogic(VanillaPlayer parent, LogicPriority priority) {
-		super(parent, priority);
+public class PoisonEffectComponent extends LogicRunnable<VanillaEntityController> {
+	private boolean poisoned;
+	private short poisonCount;
+
+	public PoisonEffectComponent(VanillaEntityController controller, LogicPriority logicPriority) {
+		super(controller, logicPriority);
 	}
 
 	@Override
-	public boolean shouldRun(float dt) {
-		return false;
+	public boolean shouldRun(float f) {
+		return poisoned && getParent().data().get(VanillaData.DIFFICULTY) != Difficulty.PEACEFUL;
 	}
 
 	@Override
 	public void run() {
 
+	}
+
+	/**
+	 * Whether or not the controller is poisoned.
+	 * @return true if poisoned.
+	 */
+	public boolean isPoisoned() {
+		return poisoned;
+	}
+
+	/**
+	 * Sets whether or not the controller is poisoned.
+	 * @param poisoned
+	 */
+	public void setPoisoned(boolean poisoned) {
+		this.poisoned = poisoned;
 	}
 }

@@ -86,8 +86,8 @@ public class Furnace extends VanillaWindowBlockController implements InventoryOw
 				if (craftTimeRemaining <= 0f) {
 					// finished crafting the item
 					ItemStack result = ((TimedCraftable) input.getMaterial()).getResult();
-					CraftingResultEvent craftingResultEvent = eventManager.callEvent(new CraftingResultEvent(this.getBlock().getController(),result));
-					if (!craftingResultEvent.isCancelled()){
+					CraftingResultEvent craftingResultEvent = eventManager.callEvent(new CraftingResultEvent(this.getBlock().getController(), result));
+					if (!craftingResultEvent.isCancelled()) {
 						if (output == null) {
 							output = result;
 						} else {
@@ -108,8 +108,8 @@ public class Furnace extends VanillaWindowBlockController implements InventoryOw
 		if (burnTimeRemaining <= 0) {
 			if (inventory.hasFuel() && inventory.hasIngredient()) {
 				ItemStack fuelStack = inventory.getFuel().getItem();
-				FurnaceBurnEvent furnaceBurnEvent = eventManager.callEvent(new FurnaceBurnEvent(this,fuelStack));
-				if (!furnaceBurnEvent.isCancelled()){
+				FurnaceBurnEvent furnaceBurnEvent = eventManager.callEvent(new FurnaceBurnEvent(this, fuelStack));
+				if (!furnaceBurnEvent.isCancelled()) {
 					// Start burning
 					Fuel fuel = (Fuel) fuelStack.getMaterial();
 					burnTimeRemaining = burnTimeTotal = fuel.getFuelTime();

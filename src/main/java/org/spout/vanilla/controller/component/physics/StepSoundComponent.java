@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.logic.physics;
+package org.spout.vanilla.controller.component.physics;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
@@ -32,6 +32,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
+
 import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -39,13 +40,13 @@ import org.spout.vanilla.material.VanillaMaterials;
 /**
  * Plays a step sound effect while walking
  */
-public class StepSoundLogic extends LogicRunnable<VanillaEntityController> {
+public class StepSoundComponent extends LogicRunnable<VanillaEntityController> {
 	private static final float SOUND_VOLUME = 0.15f;
 	private static final float SOUND_DISTANCE_INTERVAL = 1.667f;
 	private float walkedDistance = 0.0f;
 	private Point previousPosition = getParent().getParent().getPosition();
 
-	public StepSoundLogic(VanillaEntityController parent, LogicPriority priority) {
+	public StepSoundComponent(VanillaEntityController parent, LogicPriority priority) {
 		super(parent, priority);
 	}
 

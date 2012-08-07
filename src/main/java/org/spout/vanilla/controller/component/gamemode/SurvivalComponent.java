@@ -24,11 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.logic.gamemode;
+package org.spout.vanilla.controller.component.gamemode;
 
 import org.spout.api.Spout;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
+
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
@@ -39,14 +40,14 @@ import org.spout.vanilla.event.player.PlayerFoodSaturationChangeEvent;
 import org.spout.vanilla.event.player.PlayerHungerChangeEvent;
 
 /**
- * Basic logic that applies Survival-mode rules to a VanillaPlayer
+ * Basic component that applies Survival-mode rules to a VanillaPlayer
  */
-public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
+public class SurvivalComponent extends LogicRunnable<VanillaPlayer> {
 	private int foodTimer = 0;
 	private short maxHunger = 20, hunger = maxHunger;
 	private float foodSaturation = 5.0f, exhaustion = 0.0f;
 
-	public SurvivalLogic(VanillaPlayer parent, LogicPriority priority) {
+	public SurvivalComponent(VanillaPlayer parent, LogicPriority priority) {
 		super(parent, priority);
 	}
 
@@ -70,7 +71,7 @@ public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 		}
 
 		// TODO: Check for swimming, jumping, sprint jumping, block breaking, attacking, receiving damage for exhaustion level.
-		if (getParent().getEffectProcess().isPoisoned()) {
+		if (getParent().getPoisonEffectComponent().isPoisoned()) {
 			setExhaustion(getExhaustion() + ExhaustionLevel.FOOD_POISONING.getAmount());
 		}
 
@@ -86,7 +87,7 @@ public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 		if (getExhaustion() > 4.0) {
 			setExhaustion(getExhaustion() - 4.0f);
 			if (getFoodSaturation() > 0) {
-        setFoodSaturation(Math.max(getExhaustion() - 1f, 0));
+				setFoodSaturation(Math.max(getExhaustion() - 1f, 0));
 			} else {
 				getParent().setHealth(Math.max(getParent().getHealth() - 1, 0), DamageCause.STARVE); //TODO fix Source here, correct?
 			}
@@ -108,14 +109,13 @@ public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 				getParent().setHealth(Math.max(getParent().getHealth() - 1, maxDrop), DamageCause.STARVE);
 			}
 		} else if (getHunger() >= 18 && getParent().getHealth() < 20) {
-      getParent().setHealth(getParent().getHealth() + 1, HealthChangeReason.REGENERATION);
+			getParent().setHealth(getParent().getHealth() + 1, HealthChangeReason.REGENERATION);
 		}
-    if(getParent().isDirty()) {
-      getParent().updateHealth();
-    }
+		if (getParent().isDirty()) {
+			getParent().updateHealth();
+		}
 	}
-  
-  
+
 	/**
 	 * Returns the food saturation level of the player attached to the controller. The food bar "jitters" when the bar reaches 0.
 	 * @return food saturation level
@@ -137,7 +137,7 @@ public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 			} else {
 				this.foodSaturation = event.getFoodSaturation();
 			}
-      getParent().setDirty(true);
+			getParent().setDirty(true);
 		}
 	}
 
@@ -186,7 +186,7 @@ public class SurvivalLogic extends LogicRunnable<VanillaPlayer> {
 			} else {
 				this.hunger = event.getHunger();
 			}
-      getParent().setDirty(true);
+			getParent().setDirty(true);
 		}
 	}
 }

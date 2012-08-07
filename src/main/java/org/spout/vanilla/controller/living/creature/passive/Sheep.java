@@ -32,11 +32,11 @@ import java.util.Set;
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.VanillaEntityController;
+import org.spout.vanilla.controller.component.ai.other.SheepEatGrassComponent;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.controller.logic.ai.other.SheepEatGrassLogic;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -55,8 +55,8 @@ public class Sheep extends Creature implements Passive {
 		super.onAttached();
 		setMaxHealth(8);
 		setHealth(8, HealthChangeReason.SPAWN);
-		final SheepEatGrassLogic eatGrassLogic = new SheepEatGrassLogic(this);
-		registerProcess(eatGrassLogic);
+		final SheepEatGrassComponent eatGrassComponent = new SheepEatGrassComponent(this);
+		registerProcess(eatGrassComponent);
 		isSheared = data().get("sheep_sheared", false);
 		sheepColor = data().get("sheep_color", (short) 0);
 		setDeathAnimation(true);

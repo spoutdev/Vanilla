@@ -141,7 +141,7 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
+	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
 		if (!this.isPressed(block)) {
 			return;
 		}

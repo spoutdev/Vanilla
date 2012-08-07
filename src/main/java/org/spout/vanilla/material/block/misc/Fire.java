@@ -149,7 +149,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	}
 
 	@Override
-	public void onDynamicUpdate(Block b, Region r, long updateTime, long queuedTime, int data, Object hint) {
+	public void onDynamicUpdate(Block b, Region r, long updateTime, int data) {
 		Random rand = new Random();
 
 		// Make fire strength increase over time

@@ -129,7 +129,7 @@ public abstract class PressurePlate extends GroundAttachable implements Mineable
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
+	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
 		if (!this.isPressed(block)) {
 			block.dynamicUpdate(updateTime + TICK_DELAY);
 			return;

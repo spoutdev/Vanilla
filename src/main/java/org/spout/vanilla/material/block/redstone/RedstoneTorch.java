@@ -122,7 +122,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
+	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
 		boolean receiving = this.isReceivingPower(block);
 		if (this.isPowered() == receiving) {
 			this.setPowered(block, !receiving);

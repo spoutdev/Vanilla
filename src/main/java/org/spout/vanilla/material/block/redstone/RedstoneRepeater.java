@@ -124,7 +124,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 		boolean receiving = this.isReceivingPower(block);
 		System.out.println("RECEIVING: " + receiving);
 		if (this.isPowered() != receiving) {
-			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay(block), receiving ? 1 : 0, null);
+			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay(block), receiving ? 1 : 0);
 		}
 	}
 
@@ -189,7 +189,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
+	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
 		boolean receiving = this.isReceivingPower(block);
 		if ((data & 1) == 1) {
 			// Was receiving and should power up

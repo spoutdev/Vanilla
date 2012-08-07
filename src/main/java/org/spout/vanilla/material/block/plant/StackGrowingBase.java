@@ -148,7 +148,7 @@ public abstract class StackGrowingBase extends GroundAttachable implements Plant
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, long queuedTime, int data, Object hint) {
+	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
 		block.dynamicUpdate(r.getWorld().getAge() + getGrowTime(block));
 		Block below = block.translate(BlockFace.BOTTOM);
 		// Only fire dynamic updates for the bottom block

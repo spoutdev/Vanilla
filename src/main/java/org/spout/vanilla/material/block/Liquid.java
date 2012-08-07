@@ -283,7 +283,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
+	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
 		// Update flowing down state
 		if (this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
 			// Set non-source water blocks to flow down

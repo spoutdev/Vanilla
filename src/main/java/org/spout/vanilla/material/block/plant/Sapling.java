@@ -142,7 +142,7 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 	}
 
 	@Override
-	public void onDynamicUpdate(Block b, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
+	public void onDynamicUpdate(Block b, Region r, long updateTime, int data) {
 		short oldData = b.getData();
 		b.setMaterial(Log.DEFAULT);
 		b.setData(oldData & dataMask);

@@ -137,7 +137,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	}
 
 	@Override
-	public void onDynamicUpdate(Block b, Region r, long updateTime, long lastUpdateTime, int updateData, Object hint) {
+	public void onDynamicUpdate(Block b, Region r, long updateTime, int updateData) {
 		int data = b.getData() & 0xFFFF;
 		if ((data & aliveMask) == 0) {
 			return;

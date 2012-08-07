@@ -116,7 +116,7 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, long lastUpdateTime, int data, Object hint) {
+	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
 		if (!this.isPowering(block)) {
 			block.dynamicUpdate(updateTime + TICK_DELAY);
 			return;

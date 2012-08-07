@@ -58,4 +58,14 @@ public class MapPaletteLoader extends BasicResourceLoader<MapPalette> {
 	public String getFallbackResourceName() {
 		return "mappalette://Vanilla/resources/map/mapColorPalette.dat";
 	}
+
+	@Override
+	public String getProtocol() {
+		return "mappalette";
+	}
+
+	@Override
+	public String[] getExtensions() {
+		return new String[] { "dat" };
+	}
 }

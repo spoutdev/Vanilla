@@ -123,4 +123,14 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
 		recipes.remove(null);
 		return new RecipeYaml(recipes);
 	}
+
+	@Override
+	public String getProtocol() {
+		return "recipe";
+	}
+
+	@Override
+	public String[] getExtensions() {
+		return new String[] { "yml" };
+	}
 }

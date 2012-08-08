@@ -94,7 +94,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 				}
 				if (damage != 0) {
 					if (!damaged.getParent().isDead()) {
-						damaged.damage(damage, DamageCause.ATTACK, vPlayer, damage > 0);
+						damaged.getHealth().damage(damage, DamageCause.ATTACK, vPlayer, damage > 0);
 					}
 				}
 			}

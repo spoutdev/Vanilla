@@ -24,57 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.event.entity;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.api.protocol.Message;
-import org.spout.api.util.SpoutToStringStyle;
+public class EntityAnimationEvent extends EntityEvent implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private byte animation;
 
-public final class UpdateHealthMessage implements Message {
-	private final short health, food;
-	private final float foodSaturation;
-
-	public UpdateHealthMessage(short health, short food, float foodSaturation) {
-		this.health = health;
-		this.food = food;
-		this.foodSaturation = foodSaturation;
+	public EntityAnimationEvent(Entity e, byte animation) {
+		super(e);
+		this.animation = animation;
 	}
 
-	public short getHealth() {
-		return health;
-	}
-
-	public short getFood() {
-		return food;
-	}
-
-	public float getFoodSaturation() {
-		return foodSaturation;
+	public byte getAnimation() {
+		return this.animation;
 	}
 
 	@Override
-	public String toString() {
-		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("health", health)
-				.append("food", food)
-				.append("foodSaturation", foodSaturation)
-				.toString();
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final UpdateHealthMessage other = (UpdateHealthMessage) obj;
-		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.health, other.health)
-				.append(this.food, other.food)
-				.append(this.foodSaturation, other.foodSaturation)
-				.isEquals();
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

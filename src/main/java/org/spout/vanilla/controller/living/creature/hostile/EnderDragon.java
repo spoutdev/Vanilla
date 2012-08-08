@@ -37,7 +37,6 @@ import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Boss;
 import org.spout.vanilla.controller.living.creature.Hostile;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class EnderDragon extends Creature implements Hostile, Boss {
 	public EnderDragon() {
@@ -47,9 +46,7 @@ public class EnderDragon extends Creature implements Hostile, Boss {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setMaxHealth(200);
-		setHealth(200, HealthChangeReason.SPAWN);
-		setDeathAnimation(true);
+		getHealth().setSpawnHealth(200);
 	}
 
 	@Override

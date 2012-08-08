@@ -24,39 +24,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.passive;
+package org.spout.vanilla.protocol.codec;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.io.IOException;
 
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.api.protocol.MessageCodec;
 
-public class Squid extends Creature implements Passive {
-	public Squid() {
-		super(VanillaControllerTypes.SQUID);
+import org.spout.vanilla.protocol.msg.PlayerUpdateStatsMessage;
+
+public final class PlayerUpdateStatsCodec extends MessageCodec<PlayerUpdateStatsMessage> {
+	public PlayerUpdateStatsCodec() {
+		super(PlayerUpdateStatsMessage.class, 0x08);
 	}
 
 	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHealth().setSpawnHealth(10);
+	public PlayerUpdateStatsMessage decode(ChannelBuffer buffer) throws IOException {
+		short health = buffer.readShort();
+		short food = buffer.readShort();
+		float foodSaturation = buffer.readFloat();
+		return new PlayerUpdateStatsMessage(health, food, foodSaturation);
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(3) + 1;
-		if (count > 0) {
-			drops.add(new ItemStack(Dye.INK_SAC, count));
-		}
-
-		return drops;
+	public ChannelBuffer encode(PlayerUpdateStatsMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.buffer(8);
+		buffer.writeShort(message.getHealth());
+		buffer.writeShort(message.getFood());
+		buffer.writeFloat(message.getFoodSaturation());
+		return buffer;
 	}
 }

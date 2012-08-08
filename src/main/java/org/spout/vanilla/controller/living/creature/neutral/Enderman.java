@@ -39,7 +39,6 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Enderman extends Creature implements Neutral {
@@ -53,12 +52,10 @@ public class Enderman extends Creature implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setMaxHealth(40);
-		setHealth(40, HealthChangeReason.SPAWN);
+		getHealth().setSpawnHealth(40);
 		if (data().containsKey(Data.HELD_ITEM)) {
 			heldItem = data().get(Data.HELD_ITEM);
 		}
-		setDeathAnimation(true);
 		getParent().setCollision(new CollisionModel(new BoundingBox(1, 3, 1, 2, 3, 1)));
 	}
 

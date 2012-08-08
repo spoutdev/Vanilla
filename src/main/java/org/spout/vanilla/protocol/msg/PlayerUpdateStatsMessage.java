@@ -24,36 +24,57 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec;
+package org.spout.vanilla.protocol.msg;
 
-import java.io.IOException;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import org.spout.api.protocol.Message;
+import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.api.protocol.MessageCodec;
+public final class PlayerUpdateStatsMessage implements Message {
+	private final short health, food;
+	private final float foodSaturation;
 
-import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+	public PlayerUpdateStatsMessage(short health, short food, float foodSaturation) {
+		this.health = health;
+		this.food = food;
+		this.foodSaturation = foodSaturation;
+	}
 
-public final class UpdateHealthCodec extends MessageCodec<UpdateHealthMessage> {
-	public UpdateHealthCodec() {
-		super(UpdateHealthMessage.class, 0x08);
+	public short getHealth() {
+		return health;
+	}
+
+	public short getFood() {
+		return food;
+	}
+
+	public float getFoodSaturation() {
+		return foodSaturation;
 	}
 
 	@Override
-	public UpdateHealthMessage decode(ChannelBuffer buffer) throws IOException {
-		short health = buffer.readShort();
-		short food = buffer.readShort();
-		float foodSaturation = buffer.readFloat();
-		return new UpdateHealthMessage(health, food, foodSaturation);
+	public String toString() {
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("health", health)
+				.append("food", food)
+				.append("foodSaturation", foodSaturation)
+				.toString();
 	}
 
 	@Override
-	public ChannelBuffer encode(UpdateHealthMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(8);
-		buffer.writeShort(message.getHealth());
-		buffer.writeShort(message.getFood());
-		buffer.writeFloat(message.getFoodSaturation());
-		return buffer;
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final PlayerUpdateStatsMessage other = (PlayerUpdateStatsMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.health, other.health)
+				.append(this.food, other.food)
+				.append(this.foodSaturation, other.foodSaturation)
+				.isEquals();
 	}
 }

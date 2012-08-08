@@ -38,7 +38,6 @@ import org.spout.vanilla.controller.component.ai.other.SheepEatGrassComponent;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.DamageCause;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
 
@@ -53,13 +52,10 @@ public class Sheep extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setMaxHealth(8);
-		setHealth(8, HealthChangeReason.SPAWN);
+		getHealth().setSpawnHealth(8);
 		final SheepEatGrassComponent eatGrassComponent = new SheepEatGrassComponent(this);
 		registerProcess(eatGrassComponent);
 		isSheared = data().get("sheep_sheared", false);
-		sheepColor = data().get("sheep_color", (short) 0);
-		setDeathAnimation(true);
 	}
 
 	@Override

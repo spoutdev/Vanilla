@@ -34,7 +34,6 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.Command;
-import org.spout.api.entity.component.Controller;
 import org.spout.api.exception.UnknownPacketException;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
@@ -123,16 +122,6 @@ public class VanillaProtocol extends Protocol {
 	public void initializeSession(Session session) {
 		final Player player = session.getPlayer();
 		session.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, player));
-
-		Controller controller = player.getController();
-
-		if (controller instanceof VanillaPlayer) {
-			VanillaPlayer vanillaPlayer = (VanillaPlayer) controller;
-			// Set protocol and send packets
-			if (vanillaPlayer.isSurvival()) {
-				vanillaPlayer.updateHealth();
-			}
-		}
 
 		StringBuilder listBuilder = new StringBuilder();
 		for (Pair<Integer, String> item : getDynamicallyRegisteredPackets()) {

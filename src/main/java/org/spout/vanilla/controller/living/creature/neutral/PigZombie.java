@@ -37,7 +37,6 @@ import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.hostile.Zombie;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class PigZombie extends Zombie implements Neutral {
@@ -48,9 +47,7 @@ public class PigZombie extends Zombie implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setMaxHealth(20);
-		setHealth(20, HealthChangeReason.SPAWN);
-		setDeathAnimation(true);
+		getHealth().setSpawnHealth(20);
 	}
 
 	@Override

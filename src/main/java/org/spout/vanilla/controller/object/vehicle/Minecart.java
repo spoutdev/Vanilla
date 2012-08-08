@@ -90,8 +90,8 @@ public abstract class Minecart extends Substance implements Vehicle {
 		this.getBounds().set(-0.35f, 0.0f, -0.49f, 0.35f, 0.49f, 0.49f);
 		this.setVelocity(new Vector3(0, 0, 0.2)); //temporary!
 		this.setMaxSpeed(new Vector3(0.4, 0.4, 0.4)); //first two 0.4 need to be 0 - TODO: Use yaw instead?
-		setMaxHealth(6);
-		setHealth(6, HealthChangeReason.SPAWN);
+		getHealth().setSpawnHealth(6);
+		getHealth().setDeathAnimation(false);
 	}
 
 	@Override
@@ -136,10 +136,10 @@ public abstract class Minecart extends Substance implements Vehicle {
 		}
 
 		//update health to regenerate
-		int health = getHealth();
+		int health = getHealth().getHealth();
 		if (health < 6) {
 			if (regentick >= 7) {
-				setHealth(health + 1, HealthChangeReason.REGENERATION);
+				getHealth().setHealth(health + 1, HealthChangeReason.REGENERATION);
 				regentick = 0;
 			} else {
 				regentick++;

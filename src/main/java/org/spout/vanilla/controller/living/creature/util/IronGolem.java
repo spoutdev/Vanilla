@@ -36,7 +36,6 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Utility;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class IronGolem extends Creature implements Utility {
@@ -46,8 +45,8 @@ public class IronGolem extends Creature implements Utility {
 
 	@Override
 	public void onAttached() {
-		setHealth(100, HealthChangeReason.SPAWN);
-		setMaxHealth(100);
+		getHealth().setSpawnHealth(100);
+		getHealth().setDeathAnimation(false);
 		super.onAttached();
 	}
 

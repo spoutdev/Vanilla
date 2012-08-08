@@ -37,7 +37,6 @@ import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.DamageCause;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Pig extends Creature implements Passive {
@@ -48,9 +47,7 @@ public class Pig extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setMaxHealth(10);
-		setHealth(10, HealthChangeReason.SPAWN);
-		setDeathAnimation(true);
+		getHealth().setSpawnHealth(10);
 	}
 
 	@Override

@@ -27,7 +27,6 @@
 package org.spout.vanilla.controller.living.creature.hostile;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class CaveSpider extends Spider {
 	public CaveSpider() {
@@ -37,8 +36,6 @@ public class CaveSpider extends Spider {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setMaxHealth(12);
-		setHealth(12, HealthChangeReason.SPAWN);
-		setDeathAnimation(true);
+		getHealth().setSpawnHealth(12);
 	}
 }

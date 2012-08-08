@@ -54,16 +54,15 @@ import org.spout.vanilla.controller.component.gamemode.CreativeComponent;
 import org.spout.vanilla.controller.component.gamemode.SurvivalComponent;
 import org.spout.vanilla.controller.component.physics.PlayerStepSoundComponent;
 import org.spout.vanilla.controller.component.player.PingComponent;
+import org.spout.vanilla.controller.component.player.StatsUpdateComponent;
 import org.spout.vanilla.controller.living.Human;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.enchantment.Enchantments;
-import org.spout.vanilla.material.item.armor.Armor;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.window.DefaultWindow;
@@ -79,10 +78,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 	private PoisonEffectComponent poisonEffectComponent;
 	private SurvivalComponent survivalProcess;
 	private PlayerStepSoundComponent stepSoundProcess;
+	private StatsUpdateComponent statsUpdateProcess;
 	protected boolean flying;
 	protected boolean falling;
 	protected boolean jumping;
-	protected boolean healthDirty;
 	protected float initialYFalling = 0.0f;
 	protected final PlayerInventory playerInventory = new PlayerInventory(this);
 	protected Window activeWindow = new DefaultWindow(this);
@@ -108,6 +107,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		compassTarget = getParent().getWorld().getSpawnPoint().getPosition();
 		tabListName = getParent().getName();
 		Transform spawn = getParent().getWorld().getSpawnPoint();
@@ -115,7 +115,10 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setPosition(spawn.getPosition());
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
-
+		getHealth().setSpawnHealth(20);
+		getHealth().setDeathAnimation(false);
+		
+		statsUpdateProcess = registerProcess(new StatsUpdateComponent(this, LogicPriority.NORMAL));
 		pingComponent = registerProcess(new PingComponent(this, LogicPriority.HIGHEST));
 		poisonEffectComponent = registerProcess(new PoisonEffectComponent(this, LogicPriority.HIGHEST));
 		stepSoundProcess = registerProcess(new PlayerStepSoundComponent(this, LogicPriority.NORMAL));
@@ -123,15 +126,18 @@ public class VanillaPlayer extends Human implements PlayerController {
 		survivalProcess = registerProcess(new SurvivalComponent(this, LogicPriority.HIGHEST));
 		// Creative mode
 		registerProcess(new CreativeComponent(this, LogicPriority.HIGHEST));
-		super.onAttached();
 	}
 
 	@Override
 	public void onTick(float dt) {
-		super.onTick(dt);
-		if (isDead()) {
+		if (getHealth().isDying()) {
+			getHealth().run();
 			return;
 		}
+		if (getHealth().isDead()) {
+			return;
+		}
+		super.onTick(dt);
 
 		Player player = getParent();
 		if (player == null || player.getSession() == null) {
@@ -149,34 +155,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	@Override
 	public boolean isSavable() {
 		return false;
-	}
-
-	@Override
-	public void damage(int amount, DamageCause cause, VanillaEntityController damager, boolean sendHurtMessage) {
-		double amt = amount;
-		// Calculate damage reduction based on armor and enchantments
-		for (ItemStack item : getInventory().getArmor().getContents()) {
-			if (item != null && item.getMaterial() instanceof Armor) { // Ignore pumpkins
-				Armor armor = (Armor) item.getMaterial();
-				amt -= .04 * (armor.getBaseProtection() + armor.getProtection(item, cause)); // Each protection point reduces damage by 4%
-				// Remove durability from each piece of armor
-				short penalty = cause.getDurabilityPenalty();
-				getInventory().getQuickbar().getCurrentSlotInventory().addItemData(0, penalty);
-			}
-		}
-
-		super.damage((int) Math.ceil(amt), cause, damager, sendHurtMessage);
-	}
-
-	@Override
-	public void setHealth(int health, Source source) {
-		super.setHealth(health, source);
-		healthDirty = true;
-	}
-
-	public void updateHealth() {
-		sendPacket(getParent(), new UpdateHealthMessage((short) getHealth(), getSurvivalLogic().getHunger(), getSurvivalLogic().getFoodSaturation()));
-		healthDirty = false;
 	}
 
 	@Override
@@ -292,7 +270,7 @@ public class VanillaPlayer extends Human implements PlayerController {
 		} else {
 			int totalDmg = (int) ((this.initialYFalling - getParent().getPosition().getY()) - 3);
 			if (!isSwimming() && totalDmg > 0) {
-				setHealth(getHealth() - totalDmg, DamageCause.FALL);
+				getHealth().damage(totalDmg, DamageCause.FALL);
 			}
 			this.initialYFalling = 0.0f;
 		}
@@ -434,21 +412,16 @@ public class VanillaPlayer extends Human implements PlayerController {
 		return level == 0 ? 300 : level * 300;
 	}
 
-	//TODO Remove dirty stuff
-	public boolean isDirty() {
-		return healthDirty;
-	}
-
-	public void setDirty(boolean dirty) {
-		this.healthDirty = dirty;
-	}
-
 	public PingComponent getPingComponent() {
 		return pingComponent;
 	}
 
 	public PoisonEffectComponent getPoisonEffectComponent() {
 		return poisonEffectComponent;
+	}
+
+	public StatsUpdateComponent getStatsUpdateProcess() {
+		return statsUpdateProcess;
 	}
 
 	public SurvivalComponent getSurvivalLogic() {

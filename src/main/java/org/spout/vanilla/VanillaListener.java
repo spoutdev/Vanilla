@@ -34,7 +34,6 @@ import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
 import org.spout.api.event.Result;
-import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
@@ -47,8 +46,6 @@ import org.spout.vanilla.configuration.WorldConfigurationNode;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.creature.hostile.Ghast;
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.controller.world.RegionSpawner;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -108,21 +105,6 @@ public class VanillaListener implements Listener {
 	public void onPermissionNode(PermissionNodeEvent event) {
 		if (VanillaConfiguration.OPS.isOp(event.getSubject().getName())) {
 			event.setResult(Result.ALLOW);
-		}
-	}
-
-	@EventHandler
-	public void onHealthChange(EntityHealthChangeEvent event) {
-		if (event.getSource() == HealthChangeReason.SPAWN) {
-			return;
-		}
-		if (event.isCancelled()) {
-			return;
-		}
-		Controller c = event.getEntity().getController();
-		if (c instanceof VanillaPlayer && ((VanillaPlayer) c).isSurvival()) {
-			VanillaPlayer sp = (VanillaPlayer) c;
-			sp.updateHealth();
 		}
 	}
 }

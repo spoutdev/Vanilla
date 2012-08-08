@@ -28,7 +28,6 @@ package org.spout.vanilla.controller.object.misc;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.Substance;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class EnderCrystal extends Substance {
 	public EnderCrystal() {
@@ -37,8 +36,8 @@ public class EnderCrystal extends Substance {
 
 	@Override
 	public void onAttached() {
-		setMaxHealth(1);
-		setHealth(1, HealthChangeReason.SPAWN);
+		getHealth().setSpawnHealth(1);
+		getHealth().setDeathAnimation(false);
 	}
 
 	@Override

@@ -68,7 +68,7 @@ public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 			player.setPosition(point);
 			player.getNetworkSynchronizer().setRespawned();
 			VanillaPlayer controller = (VanillaPlayer) player.getController();
-			controller.setHealth(controller.getMaxHealth(), HealthChangeReason.SPAWN);
+			controller.getHealth().setHealth(controller.getHealth().getMaxHealth(), HealthChangeReason.SPAWN);
 
 			//send spawn to everyone else
 			EntityProtocol ep = controller.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);

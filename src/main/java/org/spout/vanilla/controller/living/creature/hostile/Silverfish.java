@@ -36,7 +36,6 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Silverfish extends Creature implements Hostile {
 	public Silverfish() {
@@ -46,9 +45,7 @@ public class Silverfish extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setMaxHealth(8);
-		setHealth(8, HealthChangeReason.SPAWN);
-		setDeathAnimation(true);
+		getHealth().setSpawnHealth(8);
 	}
 
 	@Override

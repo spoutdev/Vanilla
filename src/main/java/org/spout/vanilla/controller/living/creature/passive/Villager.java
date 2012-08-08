@@ -38,7 +38,6 @@ import org.spout.vanilla.controller.WindowController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.inventory.entity.VillagerInventory;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.entity.VillagerWindow;
@@ -54,9 +53,7 @@ public class Villager extends Creature implements Passive, WindowController, Inv
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setMaxHealth(20);
-		setHealth(20, HealthChangeReason.SPAWN);
-		setDeathAnimation(true);
+		getHealth().setSpawnHealth(20);
 	}
 
 	@Override

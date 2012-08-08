@@ -24,39 +24,39 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.passive;
+package org.spout.vanilla.controller.component.player;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.spout.api.tickable.LogicPriority;
+import org.spout.api.tickable.LogicRunnable;
+import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.event.player.network.PlayerUpdateStatsEvent;
 
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
+/**
+ * Updates health, hunger and food saturation states for the player
+ */
+public class StatsUpdateComponent extends LogicRunnable<VanillaPlayer> {
+	private int oldHealth = Integer.MIN_VALUE, oldHunger = Integer.MIN_VALUE;
+	private float oldFoodSat = Float.MIN_VALUE;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.material.item.misc.Dye;
-
-public class Squid extends Creature implements Passive {
-	public Squid() {
-		super(VanillaControllerTypes.SQUID);
+	public StatsUpdateComponent(VanillaPlayer parent, LogicPriority priority) {
+		super(parent, priority);
 	}
 
 	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHealth().setSpawnHealth(10);
+	public void run() {
+		oldHealth = getParent().getHealth().getHealth();
+		oldHunger = getParent().getSurvivalLogic().getHunger();
+		oldFoodSat = getParent().getSurvivalLogic().getFoodSaturation();
+		getParent().getParent().getNetworkSynchronizer().callProtocolEvent(new PlayerUpdateStatsEvent(getParent().getParent()));
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(3) + 1;
-		if (count > 0) {
-			drops.add(new ItemStack(Dye.INK_SAC, count));
+	public boolean shouldRun(float dt) {
+		if (!getParent().isSurvival()) {
+			return false;
 		}
-
-		return drops;
+		return oldHealth != getParent().getHealth().getHealth() ||
+				oldHunger != getParent().getSurvivalLogic().getHunger() ||
+				oldFoodSat != getParent().getSurvivalLogic().getFoodSaturation();
 	}
 }

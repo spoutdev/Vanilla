@@ -38,7 +38,6 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -69,9 +68,7 @@ public class Slime extends Creature implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		int health = size > 0 ? size * 4 : 1;
-		setMaxHealth(health);
-		setHealth(health, HealthChangeReason.SPAWN);
-		setDeathAnimation(true);
+		getHealth().setSpawnHealth(health);
 	}
 
 	@Override

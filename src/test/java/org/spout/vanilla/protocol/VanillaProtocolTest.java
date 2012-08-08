@@ -78,7 +78,7 @@ import org.spout.vanilla.protocol.msg.StatisticMessage;
 import org.spout.vanilla.protocol.msg.TabCompleteMessage;
 import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
 import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
-import org.spout.vanilla.protocol.msg.UpdateHealthMessage;
+import org.spout.vanilla.protocol.msg.PlayerUpdateStatsMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
@@ -135,7 +135,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntityEquipmentMessage(234, 3, new ItemStack(VanillaMaterials.PLANK, 3, 55)),
 			new SpawnPositionMessage(42, 42, 42),
 			new EntityInteractionMessage(1123, 4455, true),
-			new UpdateHealthMessage((short) 1, (short) 2, 3.4F),
+			new PlayerUpdateStatsMessage((short) 1, (short) 2, 3.4F),
 			new RespawnMessage(89, (byte) 0, (byte) 1, 128, "VERYFANCY"),
 			new GroundMessage(true),
 			new PlayerPositionMessage(128, 256, 512, 3.4D, true),

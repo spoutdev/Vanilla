@@ -38,10 +38,7 @@ import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.controller.BasicController;
-import org.spout.api.event.entity.EntityHealthChangeEvent;
-import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
@@ -50,18 +47,12 @@ import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.tickable.LogicPriority;
 
+import org.spout.vanilla.controller.component.basic.HealthComponent;
 import org.spout.vanilla.controller.component.physics.BlockCollisionComponent;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityCombustEvent;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
-import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
-import org.spout.vanilla.util.VanillaNetworkUtil;
-
-import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 
 /**
  * Controller that is the parent of all entity controllers.
@@ -74,7 +65,6 @@ public abstract class VanillaEntityController extends BasicController implements
 	private Transform lastClientTransform = new Transform();
 	// Controller flags
 	private boolean isFlammable = true;
-	private boolean hasDeathAnimation = false;
 	// Tick effects
 	private int fireTicks = 0;
 	private int positionTicks = 0;
@@ -84,15 +74,9 @@ public abstract class VanillaEntityController extends BasicController implements
 	private Vector3 velocity = Vector3.ZERO;
 	private Vector3 movementSpeed = Vector3.ZERO;
 	private Vector3 maxSpeed = new Vector3(0.4, 0.4, 0.4);
-	// Controller characteristics
-	private int health = 1;
-	private int maxHealth = 1;
-	private int deathTicks = -1;
-	// Damage
-	private Source lastDamage = DamageCause.UNKNOWN;
-	private VanillaEntityController lastDamager;
 	// Block collision handling
-	private BlockCollisionComponent blockCollProcess;
+	protected BlockCollisionComponent blockCollProcess;
+	protected HealthComponent healthProcess;
 
 	protected VanillaEntityController(VanillaControllerType type) {
 		super(type);
@@ -106,18 +90,18 @@ public abstract class VanillaEntityController extends BasicController implements
 		data().put(VanillaData.CONTROLLER_TYPE, getType().getMinecraftId());
 		this.lastClientTransform = getParent().getTransform();
 
+		healthProcess = registerProcess(new HealthComponent(this, LogicPriority.HIGHEST));
+		blockCollProcess = registerProcess(new BlockCollisionComponent(this, LogicPriority.HIGHEST));
+
 		// Load data
 		airTicks = data().get(VanillaData.AIR_TICKS);
 		fireTicks = data().get(VanillaData.FIRE_TICKS);
-		health = data().get(VanillaData.HEALTH);
 		isFlammable = data().get(VanillaData.FLAMMABLE);
-		maxHealth = data().get(VanillaData.MAX_HEALTH);
 		maxSpeed = data().get(VanillaData.MAX_SPEED, maxSpeed);
 		movementSpeed = data().get(VanillaData.MOVEMENT_SPEED, movementSpeed);
 		if (data().containsKey(VanillaData.VELOCITY)) {
 			velocity = data().get(VanillaData.VELOCITY);
 		}
-		blockCollProcess = registerProcess(new BlockCollisionComponent(this, LogicPriority.HIGHEST));
 	}
 
 	@Override
@@ -125,37 +109,24 @@ public abstract class VanillaEntityController extends BasicController implements
 		// Load data
 		data().put(VanillaData.AIR_TICKS, airTicks);
 		data().put(VanillaData.FIRE_TICKS, fireTicks);
-		data().put(VanillaData.HEALTH, health);
 		data().put(VanillaData.FLAMMABLE, isFlammable);
-		data().put(VanillaData.MAX_HEALTH, maxHealth);
 		data().put(VanillaData.MAX_SPEED, maxSpeed);
 		data().put(VanillaData.MOVEMENT_SPEED, movementSpeed);
 		data().put(VanillaData.VELOCITY, velocity);
+
+		//TODO: Put in the Health component
+		data().put(VanillaData.HEALTH, this.healthProcess.getHealth());
+		data().put(VanillaData.MAX_HEALTH, this.healthProcess.getMaxHealth());
 	}
 
 	@Override
 	public void onTick(float dt) {
-		if (deathTicks > 0) {
-			deathTicks--;
-			if (deathTicks == 0) {
-				kill();
-			}
+		if (this.healthProcess.isDying()) {
+			this.healthProcess.run();
 			return;
 		}
 		updateFireTicks();
 		updateAirTicks();
-
-		// Check controller health, send messages to the client based on current state.
-		if (health <= 0) {
-			if (!hasDeathAnimation()) {
-				kill();
-			} else {
-				VanillaNetworkUtil.broadcastPacket(new EntityStatusMessage(getParent().getId(), EntityStatusMessage.ENTITY_DEAD));
-				deathTicks = 30;
-			}
-
-			onDeath();
-		}
 
 		positionTicks++;
 		velocityTicks++;
@@ -183,7 +154,7 @@ public abstract class VanillaEntityController extends BasicController implements
 
 	@Override
 	public void onDeath() {
-		for (ItemStack drop : getDrops(lastDamage, lastDamager)) {
+		for (ItemStack drop : getDrops(getHealth().getLastDamageCause(), getHealth().getLastDamager())) {
 			if (drop == null) {
 				continue;
 			}
@@ -209,6 +180,15 @@ public abstract class VanillaEntityController extends BasicController implements
 	 */
 	public BlockCollisionComponent getCollisionComponent() {
 		return blockCollProcess;
+	}
+
+	/**
+	 * Gets the health component
+	 * 
+	 * @return entity health process
+	 */
+	public HealthComponent getHealth() {
+		return healthProcess;
 	}
 
 	/**
@@ -358,7 +338,7 @@ public abstract class VanillaEntityController extends BasicController implements
 			}
 
 			if (fireTicks % 20 == 0) {
-				damage(1, DamageCause.FIRE_CONTACT);
+				getHealth().damage(1, DamageCause.FIRE_CONTACT);
 			}
 
 			--fireTicks;
@@ -368,49 +348,6 @@ public abstract class VanillaEntityController extends BasicController implements
 	// =========================
 	// Controller helper methods
 	// =========================
-
-	/**
-	 * Damages this controller with the given {@link DamageCause}.
-	 * @param amount amount the controller will be damaged by, can be modified based on armor and enchantments
-	 */
-	public void damage(int amount) {
-		damage(amount, DamageCause.UNKNOWN);
-	}
-
-	/**
-	 * Damages this controller with the given {@link DamageCause}.
-	 * @param amount amount the controller will be damaged by, can be modified based on armor and enchantments
-	 * @param cause cause of this controller being damaged
-	 */
-	public void damage(int amount, DamageCause cause) {
-		damage(amount, cause, true);
-	}
-
-	/**
-	 * Damages this controller with the given {@link DamageCause}.
-	 * @param amount amount the controller will be damaged by, can be modified based on armor and enchantments
-	 * @param cause cause of this controller being damaged
-	 * @param sendHurtMessage whether to send the hurt packet to all players online
-	 */
-	public void damage(int amount, DamageCause cause, boolean sendHurtMessage) {
-		damage(amount, cause, null, sendHurtMessage);
-	}
-
-	/**
-	 * Damages this controller with the given {@link DamageCause} and damager.
-	 * @param amount amount the controller will be damaged by, can be modified based on armor and enchantments
-	 * @param cause cause of this controller being damaged
-	 * @param damager controller that damaged this controller
-	 * @param sendHurtMessage whether to send the hurt packet to all players online
-	 */
-	public void damage(int amount, DamageCause cause, VanillaEntityController damager, boolean sendHurtMessage) {
-		// TODO take potion effects into account
-		setHealth(getHealth() - amount, HealthChangeReason.DAMAGE);
-		lastDamager = damager;
-		if (sendHurtMessage) {
-			broadcastPacket(new EntityAnimationMessage(this.getParent().getId(), EntityAnimationMessage.ANIMATION_HURT), new EntityStatusMessage(this.getParent().getId(), EntityStatusMessage.ENTITY_HURT));
-		}
-	}
 
 	/**
 	 * Moves this controller.
@@ -503,63 +440,6 @@ public abstract class VanillaEntityController extends BasicController implements
 	 */
 	public Random getRandom() {
 		return rand;
-	}
-
-	/**
-	 * Gets the health of this controller (hitpoints)
-	 * @return the health value
-	 */
-	public int getHealth() {
-		return health;
-	}
-
-	/**
-	 * Gets the maximum health this controller can have
-	 * @return the maximum health
-	 */
-	public int getMaxHealth() {
-		return maxHealth;
-	}
-
-	/**
-	 * Returns true if the entity is equal to or less than zero health remaining
-	 * @return dead
-	 */
-	public boolean isDead() {
-		return health <= 0;
-	}
-
-	/**
-	 * Sets the current health value for this controller
-	 * @param health hitpoints value to set to
-	 * @param source of the change
-	 */
-	public void setHealth(int health, Source source) {
-		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getParent(), source, health - this.health);
-		Spout.getEngine().getEventManager().callEvent(event);
-		if (!event.isCancelled()) {
-			if (this.health + event.getChange() > maxHealth) {
-				this.health = maxHealth;
-			} else {
-				this.health = this.health + event.getChange();
-			}
-		}
-	}
-
-	/**
-	 * Sets the maximum health this controller can have
-	 * @param maxHealth to set to
-	 */
-	public void setMaxHealth(int maxHealth) {
-		this.maxHealth = maxHealth;
-	}
-
-	public boolean hasDeathAnimation() {
-		return hasDeathAnimation;
-	}
-
-	public void setDeathAnimation(boolean hasDeathAnimation) {
-		this.hasDeathAnimation = hasDeathAnimation;
 	}
 
 	public final int getAirTicks() {

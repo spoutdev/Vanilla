@@ -32,7 +32,6 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.Tameable;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 
 public class Wolf extends Creature implements Tameable, Neutral {
 	private Controller master;
@@ -46,13 +45,10 @@ public class Wolf extends Creature implements Tameable, Neutral {
 		super.onAttached();
 		// master = data().get("controlling_entity", master);
 		if (master != null) {
-			setMaxHealth(20);
-			setHealth(20, HealthChangeReason.SPAWN);
+			getHealth().setSpawnHealth(20);
 		} else {
-			setMaxHealth(8);
-			setHealth(8, HealthChangeReason.SPAWN);
+			getHealth().setSpawnHealth(8);
 		}
-		setDeathAnimation(true);
 	}
 
 	@Override

@@ -36,7 +36,6 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Ghast extends Creature implements Hostile {
@@ -47,9 +46,7 @@ public class Ghast extends Creature implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setMaxHealth(10);
-		setHealth(10, HealthChangeReason.SPAWN);
-		setDeathAnimation(true);
+		getHealth().setSpawnHealth(10);
 	}
 
 	@Override

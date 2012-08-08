@@ -89,11 +89,11 @@ public class SurvivalComponent extends LogicRunnable<VanillaPlayer> {
 			if (getFoodSaturation() > 0) {
 				setFoodSaturation(Math.max(getExhaustion() - 1f, 0));
 			} else {
-				getParent().setHealth(Math.max(getParent().getHealth() - 1, 0), DamageCause.STARVE); //TODO fix Source here, correct?
+				getParent().getHealth().damage(1, DamageCause.STARVE);
 			}
 		}
 
-		if (getHunger() <= 0 && getParent().getHealth() > 0) {
+		if (getHunger() <= 0 && !getParent().getHealth().isDead()) {
 			int maxDrop;
 			switch ((Difficulty) getParent().getParent().getWorld().get(VanillaData.DIFFICULTY)) {
 				case EASY:
@@ -105,14 +105,11 @@ public class SurvivalComponent extends LogicRunnable<VanillaPlayer> {
 				default:
 					maxDrop = 0;
 			}
-			if (maxDrop < getParent().getHealth()) {
-				getParent().setHealth(Math.max(getParent().getHealth() - 1, maxDrop), DamageCause.STARVE);
+			if (maxDrop < getParent().getHealth().getHealth()) {
+				getParent().getHealth().setHealth(Math.max(getParent().getHealth().getHealth() - 1, maxDrop), DamageCause.STARVE);
 			}
-		} else if (getHunger() >= 18 && getParent().getHealth() < 20) {
-			getParent().setHealth(getParent().getHealth() + 1, HealthChangeReason.REGENERATION);
-		}
-		if (getParent().isDirty()) {
-			getParent().updateHealth();
+		} else if (getHunger() >= 18 && getParent().getHealth().getHealth() < 20) {
+			getParent().getHealth().setHealth(getParent().getHealth().getHealth() + 1, HealthChangeReason.REGENERATION);
 		}
 	}
 
@@ -137,7 +134,6 @@ public class SurvivalComponent extends LogicRunnable<VanillaPlayer> {
 			} else {
 				this.foodSaturation = event.getFoodSaturation();
 			}
-			getParent().setDirty(true);
 		}
 	}
 
@@ -186,7 +182,6 @@ public class SurvivalComponent extends LogicRunnable<VanillaPlayer> {
 			} else {
 				this.hunger = event.getHunger();
 			}
-			getParent().setDirty(true);
 		}
 	}
 }

@@ -69,8 +69,11 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.event.block.BlockActionEvent;
+import org.spout.vanilla.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.event.player.network.PlayerKeepAliveEvent;
+import org.spout.vanilla.event.player.network.PlayerUpdateStatsEvent;
 import org.spout.vanilla.event.player.network.PlayerUpdateUserListEvent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
@@ -93,7 +96,10 @@ import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
+import org.spout.vanilla.protocol.msg.PlayerUpdateStatsMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
@@ -507,6 +513,25 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			name = event.getPlayer().getDisplayName();
 		}
 		return new PlayerListMessage(name, true, (short) event.getPingDelay());
+	}
+
+	@EventHandler
+	public Message onEntityAnimation(EntityAnimationEvent event) {
+		return new EntityAnimationMessage(event.getEntity().getId(), event.getAnimation());
+	}
+
+	@EventHandler
+	public Message onEntityStatus(EntityStatusEvent event) {
+		return new EntityStatusMessage(event.getEntity().getId(), event.getStatus());
+	}
+
+	@EventHandler
+	public Message onPlayerUpdateStats(PlayerUpdateStatsEvent event) {
+		if (event.getPlayer() != getOwner()) {
+			return null;
+		}
+		VanillaPlayer player = (VanillaPlayer) event.getPlayer().getController();
+		return new PlayerUpdateStatsMessage((short) player.getHealth().getHealth(), player.getSurvivalLogic().getHunger(), player.getSurvivalLogic().getFoodSaturation());
 	}
 
 	public static enum ChunkInit {

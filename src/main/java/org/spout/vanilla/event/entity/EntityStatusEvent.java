@@ -24,39 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.passive;
+package org.spout.vanilla.event.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
+public class EntityStatusEvent extends EntityEvent implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private byte status;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.material.item.misc.Dye;
+	public EntityStatusEvent(Entity e, byte status) {
+		super(e);
+		this.status = status;
+	}
 
-public class Squid extends Creature implements Passive {
-	public Squid() {
-		super(VanillaControllerTypes.SQUID);
+	public byte getStatus() {
+		return this.status;
 	}
 
 	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHealth().setSpawnHealth(10);
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(3) + 1;
-		if (count > 0) {
-			drops.add(new ItemStack(Dye.INK_SAC, count));
-		}
-
-		return drops;
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

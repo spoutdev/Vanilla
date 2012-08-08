@@ -68,7 +68,7 @@ import org.spout.vanilla.protocol.codec.StatisticCodec;
 import org.spout.vanilla.protocol.codec.TabCompleteCodec;
 import org.spout.vanilla.protocol.codec.TileEntityDataCodec;
 import org.spout.vanilla.protocol.codec.TimeUpdateCodec;
-import org.spout.vanilla.protocol.codec.UpdateHealthCodec;
+import org.spout.vanilla.protocol.codec.PlayerUpdateStatsCodec;
 import org.spout.vanilla.protocol.codec.UpdateSignCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityActionCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityAnimationCodec;
@@ -123,7 +123,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x07 */
 			bind(EntityInteractionCodec.class); //TODO rename Use Entity on the minecraft protocol page
 			/* 0x08 */
-			bind(UpdateHealthCodec.class);
+			bind(PlayerUpdateStatsCodec.class);
 			/* 0x09 */
 			bind(RespawnCodec.class);
 			/* 0x0A */

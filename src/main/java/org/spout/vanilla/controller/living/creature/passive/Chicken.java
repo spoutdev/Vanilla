@@ -38,7 +38,6 @@ import org.spout.vanilla.controller.component.ai.other.TimedDropItemComponent;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.DamageCause;
-import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Chicken extends Creature implements Passive {
@@ -55,11 +54,9 @@ public class Chicken extends Creature implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		setMaxHealth(4);
-		setHealth(4, HealthChangeReason.SPAWN);
+		getHealth().setSpawnHealth(4);
 		dropItemComponent = new TimedDropItemComponent(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
 		registerProcess(dropItemComponent);
-		setDeathAnimation(true);
 	}
 
 	@Override

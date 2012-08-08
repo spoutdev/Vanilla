@@ -37,7 +37,7 @@ import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
-public final class DestroyEntitiesMessage extends Message implements TransformableMessage {
+public final class DestroyEntitiesMessage implements TransformableMessage {
 	private int[] id;
 
 	public DestroyEntitiesMessage(int[] id) {

@@ -34,24 +34,24 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.LocalViewDistanceMessage;
+import org.spout.vanilla.protocol.msg.ClientSettingsMessage;
 
-public class LocaleViewDistanceCodec extends MessageCodec<LocalViewDistanceMessage> {
-	public LocaleViewDistanceCodec() {
-		super(LocalViewDistanceMessage.class, 0xCC);
+public class ClientSettingsCodec extends MessageCodec<ClientSettingsMessage> {
+	public ClientSettingsCodec() {
+		super(ClientSettingsMessage.class, 0xCC);
 	}
 
 	@Override
-	public LocalViewDistanceMessage decode(ChannelBuffer buffer) throws IOException {
+	public ClientSettingsMessage decode(ChannelBuffer buffer) throws IOException {
 		String locale = ChannelBufferUtils.readString(buffer);
 		byte viewDistance = buffer.readByte();
 		byte chatFlags = buffer.readByte();
 		byte difficulty = buffer.readByte();
-		return new LocalViewDistanceMessage(locale, viewDistance, chatFlags, difficulty);
+		return new ClientSettingsMessage(locale, viewDistance, chatFlags, difficulty);
 	}
 
 	@Override
-	public ChannelBuffer encode(LocalViewDistanceMessage message) throws IOException {
+	public ChannelBuffer encode(ClientSettingsMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		ChannelBufferUtils.writeString(buffer, message.getLocale());
 		buffer.writeByte(message.getViewDistance());

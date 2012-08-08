@@ -32,7 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class PlayEffectMessage extends Message {
+public final class PlayEffectMessage implements Message {
 	private final int id;
 	private final int x, y, z;
 	private final int data;

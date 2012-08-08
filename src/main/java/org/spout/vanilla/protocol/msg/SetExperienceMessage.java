@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public class SetExperienceMessage extends Message {
+public class SetExperienceMessage implements Message {
 	private final float barValue;
 	private final short level, totalExp;
 

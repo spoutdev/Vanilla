@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class StatisticMessage extends Message {
+public final class StatisticMessage implements Message {
 	private final int id;
 	private final byte amount;
 

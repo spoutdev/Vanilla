@@ -28,11 +28,10 @@ package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.RedirectMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class KickMessage extends Message implements RedirectMessage {
+public final class KickMessage implements RedirectMessage {
 	private final String reason;
 	private String hostname;
 	private int port;
@@ -82,15 +81,9 @@ public final class KickMessage extends Message implements RedirectMessage {
 			} catch (Exception e) {
 				portnum = -1;
 			}
-			;
 		} else if (split.length == 2) {
 			hostname = split[1].trim();
-			try {
-				portnum = 25565;
-			} catch (Exception e) {
-				portnum = -1;
-			}
-			;
+			portnum = 25565;
 		}
 
 		int commaPos = reason.indexOf(",");

@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class BulkChunkMessage extends Message {
+public final class BulkChunkMessage implements Message {
 	private final int[] x;
 	private final int[] z;
 	private final boolean[][] addData;

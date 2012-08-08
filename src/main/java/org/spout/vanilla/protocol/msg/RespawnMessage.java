@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class RespawnMessage extends Message {
+public final class RespawnMessage implements Message {
 	private final byte difficulty, mode;
 	private final int worldHeight, dimension;
 	private final String worldType;

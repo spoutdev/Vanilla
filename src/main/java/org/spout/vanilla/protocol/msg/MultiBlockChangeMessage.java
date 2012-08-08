@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class MultiBlockChangeMessage extends Message {
+public final class MultiBlockChangeMessage implements Message {
 	private final int chunkX, chunkZ;
 	private final short[] coordinates;
 	private final short[] types;

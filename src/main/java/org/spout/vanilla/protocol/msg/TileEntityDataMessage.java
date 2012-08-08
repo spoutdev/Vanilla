@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public class TileEntityDataMessage extends Message {
+public class TileEntityDataMessage implements Message {
 	private final int x, y, z, action, custom1, custom2, custom3;
 
 	public TileEntityDataMessage(int x, int y, int z, int action, int custom1, int custom2, int custom3) {

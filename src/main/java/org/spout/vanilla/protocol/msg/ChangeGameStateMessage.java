@@ -33,7 +33,7 @@ import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.data.GameMode;
 
-public final class ChangeGameStateMessage extends Message {
+public final class ChangeGameStateMessage implements Message {
 	public static final byte INVALID_BED = 0;
 	public static final byte BEGIN_RAINING = 1;
 	public static final byte END_RAINING = 2;

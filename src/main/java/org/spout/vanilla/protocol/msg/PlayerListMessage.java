@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public class PlayerListMessage extends Message {
+public class PlayerListMessage implements Message {
 	private final String playerName;
 	private final boolean playerOnline;
 	private final short ping;

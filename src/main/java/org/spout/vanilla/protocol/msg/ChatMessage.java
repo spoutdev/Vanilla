@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class ChatMessage extends Message {
+public final class ChatMessage implements Message {
 	private final String message;
 
 	public ChatMessage(String message) {

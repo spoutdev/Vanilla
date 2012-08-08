@@ -32,7 +32,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class ExplosionMessage extends Message {
+public final class ExplosionMessage implements Message {
 	private final double x, y, z;
 	private final float radius;
 	private final byte[] coordinates;

@@ -35,7 +35,7 @@ import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class ItemDataMessage extends Message {
+public class ItemDataMessage implements Message {
 	private final short type, id;
 	private final byte[] data;
 

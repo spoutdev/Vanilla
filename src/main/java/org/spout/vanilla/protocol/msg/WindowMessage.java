@@ -33,7 +33,7 @@ import org.spout.vanilla.window.Window;
 /**
  * An abstraction of messages meant for Windows
  */
-public abstract class WindowMessage extends Message {
+public abstract class WindowMessage implements Message {
 	private final int instanceId;
 
 	public WindowMessage(Window window) {

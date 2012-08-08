@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class CompressedChunkMessage extends Message {
+public final class CompressedChunkMessage implements Message {
 	private final int x, z;
 	private final boolean contiguous;
 	private final boolean[] hasAdditionalData;

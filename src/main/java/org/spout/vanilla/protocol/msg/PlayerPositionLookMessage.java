@@ -32,7 +32,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class PlayerPositionLookMessage extends Message {
+public final class PlayerPositionLookMessage implements Message {
 	private final PlayerPositionMessage position;
 	private final PlayerLookMessage rotation;
 

@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class UpdateSignMessage extends Message {
+public final class UpdateSignMessage implements Message {
 	private final int x, y, z;
 	private final String[] message;
 

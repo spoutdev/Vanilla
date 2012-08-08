@@ -33,7 +33,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class PlayerLookMessage extends Message {
+public final class PlayerLookMessage implements Message {
 	private final float yaw, pitch, roll;
 	private final boolean onGround;
 	private final Vector3 lookingAt;

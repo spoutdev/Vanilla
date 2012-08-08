@@ -34,7 +34,7 @@ import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public final class BlockChangeMessage extends Message {
+public final class BlockChangeMessage implements Message {
 	private final int x, y, z, metadata;
 	private final short type;
 

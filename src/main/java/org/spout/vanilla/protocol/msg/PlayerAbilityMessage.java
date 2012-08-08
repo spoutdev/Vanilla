@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public class PlayerAbilityMessage extends Message {
+public class PlayerAbilityMessage implements Message {
 	private final boolean godMode, isFlying, canFly, creativeMode;
 	private final byte flyingSpeed, walkingSpeed;
 

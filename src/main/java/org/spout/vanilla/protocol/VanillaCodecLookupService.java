@@ -34,6 +34,7 @@ import org.spout.vanilla.protocol.codec.BlockChangeCodec;
 import org.spout.vanilla.protocol.codec.BulkChunkCodec;
 import org.spout.vanilla.protocol.codec.ChangeGameStateCodec;
 import org.spout.vanilla.protocol.codec.ChatCodec;
+import org.spout.vanilla.protocol.codec.ClientSettingsCodec;
 import org.spout.vanilla.protocol.codec.ClientStatusCodec;
 import org.spout.vanilla.protocol.codec.CompressedChunkCodec;
 import org.spout.vanilla.protocol.codec.CreativeCodec;
@@ -48,7 +49,6 @@ import org.spout.vanilla.protocol.codec.HeldItemChangeCodec;
 import org.spout.vanilla.protocol.codec.ItemDataCodec;
 import org.spout.vanilla.protocol.codec.KeepAliveCodec;
 import org.spout.vanilla.protocol.codec.KickCodec;
-import org.spout.vanilla.protocol.codec.LocaleViewDistanceCodec;
 import org.spout.vanilla.protocol.codec.LoginRequestCodec;
 import org.spout.vanilla.protocol.codec.MultiBlockChangeCodec;
 import org.spout.vanilla.protocol.codec.NamedSoundEffectCodec;
@@ -241,7 +241,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0xCB */
 			bind(TabCompleteCodec.class);
 			/* 0xCC */
-			bind(LocaleViewDistanceCodec.class);
+			bind(ClientSettingsCodec.class);
 			/* 0xCD */
 			bind(ClientStatusCodec.class);
 			/* 0xFA */

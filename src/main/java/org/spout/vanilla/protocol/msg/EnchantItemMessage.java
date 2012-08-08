@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public class EnchantItemMessage extends Message {
+public class EnchantItemMessage implements Message {
 	private final int transaction, enchantment;
 
 	public EnchantItemMessage(int transaction, int enchantment) {

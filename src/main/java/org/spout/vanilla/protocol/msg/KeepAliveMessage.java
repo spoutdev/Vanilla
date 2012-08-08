@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class KeepAliveMessage extends Message {
+public final class KeepAliveMessage implements Message {
 	private final int pingId;
 
 	public KeepAliveMessage(int pingId) {

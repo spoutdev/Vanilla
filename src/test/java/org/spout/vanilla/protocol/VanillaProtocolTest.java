@@ -43,6 +43,7 @@ import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.ChatMessage;
+import org.spout.vanilla.protocol.msg.ClientSettingsMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.BulkChunkMessage;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
@@ -59,7 +60,6 @@ import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 import org.spout.vanilla.protocol.msg.ItemDataMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
-import org.spout.vanilla.protocol.msg.LocalViewDistanceMessage;
 import org.spout.vanilla.protocol.msg.MultiBlockChangeMessage;
 import org.spout.vanilla.protocol.msg.NamedSoundEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayEffectMessage;
@@ -118,13 +118,13 @@ import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
 
 public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
-	
+
 	static boolean[] allFalse = new boolean[16];
 	static byte[] chunkData = new byte[10240];
 	static byte[][] columnData = new byte[][] {chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData};
 	static byte[] biomeData1 = new byte[256];
 	static byte[] biomeData2 = new byte[256];
-	
+
 	private static final Message[] TEST_MESSAGES = new Message[]{
 			new KeepAliveMessage(42),
 			//new ClientLoginRequestMessage(),
@@ -144,7 +144,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerDiggingMessage(PlayerDiggingMessage.STATE_START_DIGGING, 1, 2, 3, BlockFace.NORTH),
 			new PlayerBlockPlacementMessage(1, 2, 3, BlockFace.NORTH, new Vector3(0.1875F, 0.5F, 0.0F)),
 			new HeldItemChangeMessage(4),
-			new LocalViewDistanceMessage("en_GB", LocalViewDistanceMessage.VIEW_NORMAL, (byte) 0, (byte) 0),
+			new ClientSettingsMessage("en_GB", ClientSettingsMessage.VIEW_NORMAL, (byte) 0, (byte) 0),
 			new TabCompleteMessage("behindcursor"),
 			new EntityUseBedMessage(0, 3, 42, 42, 42),
 			new EntityAnimationMessage(1234, EntityAnimationMessage.ANIMATION_HURT),
@@ -153,7 +153,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntitySpawnItemMessage(1234, 89, 3, (short) 4, 1, 2, 3, 34, 56, 55),
 			new EntityCollectItemMessage(1234, 5678),
 			new EntitySpawnVehicleMessage(1, 3, 3.0, 654.0, 1234.0, 77, 0.54, 0.23, 0.7),
-			new EntitySpawnMobMessage(123, 255, 1, 2, 4, 34, 55, 33, (short) 0, (short) 0, (short) 0, TEST_PARAMS),			
+			new EntitySpawnMobMessage(123, 255, 1, 2, 4, 34, 55, 33, (short) 0, (short) 0, (short) 0, TEST_PARAMS),
 			new EntitySpawnPaintingMessage(4, "KEBAB", 2, 3, 4, 56),
 			new EntitySpawnExperienceOrbMessage(34, 1, 2, 3, (short) 34),
 			new EntityVelocityMessage(1, 2, 3, 4),
@@ -202,7 +202,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerAbilityMessage(true, true, true, true, (byte) 0, (byte) 5),
 			new ClientStatusMessage((byte) 0)
 	};
-			
+
 	static {
 		for (Message msg : TEST_MESSAGES) {
 			if (msg instanceof CompressedChunkMessage) {

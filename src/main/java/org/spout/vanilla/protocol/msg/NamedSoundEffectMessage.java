@@ -32,7 +32,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public class NamedSoundEffectMessage extends Message {
+public class NamedSoundEffectMessage implements Message {
 	private final float x, y, z, volume, pitch;
 	private final String soundName;
 

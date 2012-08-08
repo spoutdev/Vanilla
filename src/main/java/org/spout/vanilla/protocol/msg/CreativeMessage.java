@@ -32,7 +32,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public class CreativeMessage extends Message {
+public class CreativeMessage implements Message {
 	private final short slot;
 	private final ItemStack item;
 

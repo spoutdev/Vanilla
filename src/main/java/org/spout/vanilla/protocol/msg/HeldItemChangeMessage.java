@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class HeldItemChangeMessage extends Message {
+public final class HeldItemChangeMessage implements Message {
 	private final int slot;
 
 	public HeldItemChangeMessage(int slot) {

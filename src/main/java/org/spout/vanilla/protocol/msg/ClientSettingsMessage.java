@@ -31,12 +31,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public class LocalViewDistanceMessage extends Message {
+public class ClientSettingsMessage implements Message {
 	public static byte VIEW_FAR = 0, VIEW_NORMAL = 1, VIEW_SHORT = 2, VIEW_TINY = 3;
 	private String locale;
 	private byte viewDistance, chatFlags, difficulty;
 
-	public LocalViewDistanceMessage(String locale, byte viewDistance, byte chatFlags, byte difficulty) {
+	public ClientSettingsMessage(String locale, byte viewDistance, byte chatFlags, byte difficulty) {
 		this.locale = locale;
 		this.viewDistance = viewDistance;
 		this.chatFlags = chatFlags;
@@ -61,7 +61,7 @@ public class LocalViewDistanceMessage extends Message {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final LocalViewDistanceMessage other = (LocalViewDistanceMessage) obj;
+		final ClientSettingsMessage other = (ClientSettingsMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.locale, other.locale)
 				.append(this.viewDistance, other.viewDistance)

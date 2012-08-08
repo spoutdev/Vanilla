@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class HandshakeMessage extends Message {
+public final class HandshakeMessage implements Message {
 	private final byte protoVersion;
 	private final String username, hostname;
 	private final int port;

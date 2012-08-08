@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public class ClientStatusMessage extends Message {
+public class ClientStatusMessage implements Message {
 	public static final byte INITIAL_SPAWN = 0;
 	public static final byte RESPAWN = 1;
 	private final byte status;

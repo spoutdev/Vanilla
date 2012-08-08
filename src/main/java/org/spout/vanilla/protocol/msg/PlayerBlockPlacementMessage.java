@@ -34,7 +34,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class PlayerBlockPlacementMessage extends Message {
+public final class PlayerBlockPlacementMessage implements Message {
 	private final int x, y, z;
 	private Vector3 face;
 	private BlockFace direction;

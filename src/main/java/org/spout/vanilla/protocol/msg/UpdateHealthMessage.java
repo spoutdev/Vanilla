@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
-public final class UpdateHealthMessage extends Message {
+public final class UpdateHealthMessage implements Message {
 	private final short health, food;
 	private final float foodSaturation;
 

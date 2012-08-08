@@ -68,9 +68,9 @@ public class VanillaProtocol extends Protocol {
 		if (command.getPreferredName().equals("kick")) {
 			return getKickMessage(args);
 		} else if (command.getPreferredName().equals("say")) {
-			return new ChatMessage(args.asString(VanillaStyleHandler.ID));
+			return new ChatMessage(args.asString(VanillaStyleHandler.ID) + "\u00a7r"); // The reset text is a workaround for a change in 1.3 -- Remove if fixed
 		} else {
-			return new ChatMessage('/' + command.getPreferredName() + args.asString(VanillaStyleHandler.ID));
+			return new ChatMessage('/' + command.getPreferredName() + ' ' + args.asString(VanillaStyleHandler.ID));
 		}
 	}
 

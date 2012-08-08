@@ -48,7 +48,9 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
+import org.spout.api.tickable.LogicPriority;
 
+import org.spout.vanilla.controller.component.physics.BlockCollisionComponent;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
@@ -89,6 +91,8 @@ public abstract class VanillaEntityController extends BasicController implements
 	// Damage
 	private Source lastDamage = DamageCause.UNKNOWN;
 	private VanillaEntityController lastDamager;
+	// Block collision handling
+	private BlockCollisionComponent blockCollProcess;
 
 	protected VanillaEntityController(VanillaControllerType type) {
 		super(type);
@@ -113,6 +117,7 @@ public abstract class VanillaEntityController extends BasicController implements
 		if (data().containsKey(VanillaData.VELOCITY)) {
 			velocity = data().get(VanillaData.VELOCITY);
 		}
+		blockCollProcess = registerProcess(new BlockCollisionComponent(this, LogicPriority.HIGHEST));
 	}
 
 	@Override
@@ -195,6 +200,15 @@ public abstract class VanillaEntityController extends BasicController implements
 	@Override
 	public VanillaControllerType getType() {
 		return type;
+	}
+
+	/**
+	 * Gets the block collision component
+	 * 
+	 * @return block collision process
+	 */
+	public BlockCollisionComponent getCollisionComponent() {
+		return blockCollProcess;
 	}
 
 	/**

@@ -24,36 +24,37 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec;
+package org.spout.vanilla.controller.component.physics;
 
-import java.io.IOException;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.tickable.LogicPriority;
+import org.spout.api.tickable.LogicRunnable;
+import org.spout.vanilla.controller.VanillaEntityController;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+/**
+ * Temporary component handling block collisions for entities
+ */
+public class BlockCollisionComponent extends LogicRunnable<VanillaEntityController> {
 
-import org.spout.api.protocol.MessageCodec;
-
-import org.spout.vanilla.protocol.msg.PlayerLookMessage;
-
-public final class PlayerLookCodec extends MessageCodec<PlayerLookMessage> {
-	public PlayerLookCodec() {
-		super(PlayerLookMessage.class, 0x0C);
+	public BlockCollisionComponent(VanillaEntityController parent, LogicPriority priority) {
+		super(parent, priority);
 	}
 
 	@Override
-	public PlayerLookMessage decode(ChannelBuffer buffer) throws IOException {
-		float yaw = -buffer.readFloat();
-		float pitch = buffer.readFloat();
-		boolean onGround = buffer.readByte() == 1;
-		return new PlayerLookMessage(yaw, pitch, onGround);
+	public void run() {
+		Point position = getParent().getParent().getPosition();
+		Block block = position.getWorld().getBlock(position, getParent().getParent());
+		BlockMaterial material = block.getMaterial();
+		if (material instanceof VanillaBlockMaterial) {
+			((VanillaBlockMaterial) material).onEntityCollision(getParent().getParent(), block);
+		}
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerLookMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(9);
-		buffer.writeFloat(-message.getYaw());
-		buffer.writeFloat(message.getPitch());
-		buffer.writeByte(message.isOnGround() ? 1 : 0);
-		return buffer;
+	public boolean shouldRun(float dt) {
+		return true;
 	}
 }

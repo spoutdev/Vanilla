@@ -26,7 +26,11 @@
  */
 package org.spout.vanilla.util;
 
+import java.util.Random;
+
 import org.spout.api.math.MathHelper;
+import org.spout.api.math.SinusHelper;
+import org.spout.api.math.Vector3;
 
 public class VanillaMathHelper {
 	/**
@@ -65,5 +69,41 @@ public class VanillaMathHelper {
 			celestial = 1.0f;
 		}
 		return 1.0f - celestial;
+	}
+
+	/**
+	 * Calculates a new random direction
+	 * 
+	 * @param maxXZForce of the direction
+	 * @param maxYForce of the direction
+	 * @return a random Vector3 direction
+	 */
+	public static Vector3 getRandomDirection(float maxXZForce, float maxYForce) {
+		Random rand = new Random();
+		float xzLength = maxXZForce * rand.nextFloat();
+		float yLength = maxYForce * (rand.nextFloat() - rand.nextFloat());
+		return SinusHelper.getRandom2DAxis(rand).multiply(xzLength).toVector3(yLength);
+	}
+
+	// TODO: Get these two functions working in the API!
+	public static float getLookAtYaw(Vector3 offset) {
+		float yaw = 0;
+		// Set yaw
+		if (offset.getX() != 0) {
+			// Set yaw start value based on dx
+			if (offset.getX() < 0) {
+				yaw = 270;
+			} else {
+				yaw = 90;
+			}
+			yaw -= Math.toDegrees(Math.atan(offset.getZ() / offset.getX()));
+		} else if (offset.getZ() < 0) {
+			yaw = 180;
+		}
+		return yaw;
+	}
+
+	public static float getLookAtPitch(Vector3 offset) {
+		return (float) -Math.toDegrees(Math.atan(offset.getY() / MathHelper.length(offset.getX(), offset.getZ())));
 	}
 }

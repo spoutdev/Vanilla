@@ -28,7 +28,6 @@ package org.spout.vanilla.controller.living.player;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.Source;
@@ -43,6 +42,10 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
 import org.spout.api.tickable.LogicPriority;
+
+import static org.spout.vanilla.util.VanillaMathHelper.getRandomDirection;
+import static org.spout.vanilla.util.VanillaMathHelper.getLookAtYaw;
+import static org.spout.vanilla.util.VanillaMathHelper.getLookAtPitch;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaEntityController;
@@ -365,54 +368,32 @@ public class VanillaPlayer extends Human implements PlayerController {
 		return trans;
 	}
 
-	// TODO: Get these two functions working in the API!
-	public static float getLookAtYaw(Vector3 offset) {
-		float yaw = 0;
-		// Set yaw
-		if (offset.getX() != 0) {
-			// Set yaw start value based on dx
-			if (offset.getX() < 0) {
-				yaw = 270;
-			} else {
-				yaw = 90;
-			}
-			yaw -= Math.toDegrees(Math.atan(offset.getZ() / offset.getX()));
-		} else if (offset.getZ() < 0) {
-			yaw = 180;
-		}
-		return yaw;
-	}
-
-	public static float getLookAtPitch(Vector3 offset) {
-		return (float) -Math.toDegrees(Math.atan(offset.getY() / MathHelper.length(offset.getX(), offset.getZ())));
-	}
-
-	private static Vector3 getRandomVelocity(Random rand, float force) {
-		return new Vector3(rand.nextFloat(), 0.0, rand.nextFloat()).normalize().multiply(force * rand.nextFloat());
-	}
-
 	/**
 	 * Drops the item specified into a random direction
+	 * 
 	 * @param item to drop
 	 */
 	public void dropItemRandom(ItemStack item) {
-		Random rand = new Random(getParent().getWorld().getAge());
-		Point position = this.getHeadPosition().subtract(0.0, 0.3, 0.0);
-		Vector3 velocity = getRandomVelocity(rand, 0.5f).add(0.0, 0.2, 0.0);
-		ItemUtil.dropItem(position, item, velocity);
+		dropItem(item, getRandomDirection(0.5f, 0.0f).add(0.0, 0.2, 0.0));
 	}
 
 	/**
 	 * Drops the item specified into the direction the player looks
+	 * 
 	 * @param item to drop
 	 */
 	public void dropItem(ItemStack item) {
-		Random rand = new Random(getParent().getWorld().getAge());
-		Point position = this.getHeadPosition().subtract(0.0, 0.3, 0.0);
-		Vector3 velocity = getLookingAt().multiply(0.3).add(0.0, 0.1, 0.0);
-		velocity = velocity.add(getRandomVelocity(rand, 0.02f));
-		velocity = velocity.add(0.0f, (rand.nextFloat() - rand.nextFloat()) * 0.1f, 0.0f);
-		ItemUtil.dropItem(position, item, velocity);
+		dropItem(item, getLookingAt().multiply(0.3).add(getRandomDirection(0.02f, 0.1f)).add(0.0, 0.1, 0.0));
+	}
+
+	/**
+	 * Drops the item at the velocity specified
+	 * 
+	 * @param item to drop
+	 * @param velocity to drop at
+	 */
+	public void dropItem(ItemStack item, Vector3 velocity) {
+		ItemUtil.dropItem(this.getHeadPosition().subtract(0.0, 0.3, 0.0), item, velocity);
 	}
 
 	/**

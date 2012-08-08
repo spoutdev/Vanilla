@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.spout.api.collision.CollisionStrategy;
+import org.spout.api.entity.Entity;
 import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
@@ -189,6 +190,16 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	@Override
 	public int getDamage() {
 		return this.meleeDamage;
+	}
+
+	/**
+	 * Temporary function to handle entities entering this Block<br>
+	 * <b>This is a STUB! Needs to be moved to SpoutAPI!</b>
+	 * 
+	 * @param entity that entered or moved
+	 * @param block of this material that got entered
+	 */
+	public void onEntityCollision(Entity entity, Block block) {
 	}
 
 	@Override

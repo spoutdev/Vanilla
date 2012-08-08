@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.DynamicMaterial;
@@ -35,6 +34,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
@@ -64,33 +64,16 @@ public abstract class PressurePlate extends GroundAttachable implements Mineable
 	 * @param pressed whether it is pressed
 	 */
 	public void setPressed(Block block, boolean pressed) {
-		this.setPressed(block, pressed, true);
-	}
-
-	/**
-	 * Sets whether this pressure plate is pressed down
-	 * @param block to set it of
-	 * @param pressed whether it is pressed
-	 * @param doPhysics whether to perform redstone physics
-	 */
-	public void setPressed(Block block, boolean pressed, boolean doPhysics) {
-		block.setDataBits(0x1, pressed);
-		if (doPhysics) {
-			block.queueUpdate(EffectRange.THIS_AND_BELOW);
+		if (this.isPressed(block) != pressed) {
+			block.setDataBits(0x1, pressed);
+			GeneralEffects.BLOCK_PRESS.playGlobal(block.getPosition(), pressed);
 		}
-	}
-
-	public void press(Block block) {
-		if (!this.isPressed(block)) {
-			this.setPressed(block, true);
-			block.resetDynamic();
-		}
+		block.resetDynamic();
 	}
 
 	@Override
-	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
-		super.onInteractBy(entity, block, type, clickedFace);
-		this.press(block); //TESTING ONLY - REMOVE AFTER
+	public void onEntityCollision(Entity entity, Block block) {
+		this.setPressed(block, true);
 	}
 
 	@Override
@@ -124,8 +107,8 @@ public abstract class PressurePlate extends GroundAttachable implements Mineable
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(currentTime + TICK_DELAY);
+	public void onPlacement(Block block, Region r, long currentTime) {
+		block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
 	}
 
 	@Override

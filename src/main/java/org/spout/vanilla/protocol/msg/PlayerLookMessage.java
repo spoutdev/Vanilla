@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.msg;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
@@ -38,17 +39,11 @@ public final class PlayerLookMessage extends Message {
 	private final Vector3 lookingAt;
 
 	public PlayerLookMessage(float yaw, float pitch, boolean onGround) {
+		this.roll = 0.0f; // There is no roll
 		this.yaw = yaw;
 		this.pitch = pitch;
 		this.onGround = onGround;
-		//Calculate looking Vector
-		double rp = Math.toRadians(pitch);
-		double ry = Math.toRadians(yaw);
-		float x = (float) (-Math.cos(rp) * Math.sin(ry));
-		float y = (float) (-Math.sin(rp));
-		float z = (float) (Math.cos(rp) * Math.cos(ry));
-		lookingAt = new Vector3(x, y, z);
-		roll = 0.0f; // There is no roll
+		this.lookingAt = SinusHelper.get3DAxis((float) Math.toRadians(yaw), (float) Math.toRadians(pitch));
 	}
 
 	public float getYaw() {

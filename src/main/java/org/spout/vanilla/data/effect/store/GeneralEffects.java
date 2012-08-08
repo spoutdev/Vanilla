@@ -28,6 +28,7 @@ package org.spout.vanilla.data.effect.store;
 
 import org.spout.vanilla.data.effect.BatchEffect;
 import org.spout.vanilla.data.effect.GeneralEffect;
+import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.type.BatchExplosionEffect;
 import org.spout.vanilla.data.effect.type.BreakBlockEffect;
 import org.spout.vanilla.data.effect.type.DoorEffect;
@@ -35,13 +36,15 @@ import org.spout.vanilla.data.effect.type.ExplosionEffect;
 import org.spout.vanilla.data.effect.type.LavaFizzEffect;
 import org.spout.vanilla.data.effect.type.MusicDiscEffect;
 import org.spout.vanilla.data.effect.type.NoteParticleEffect;
+import org.spout.vanilla.data.effect.type.PressBlockEffect;
 import org.spout.vanilla.data.effect.type.SmokeEffect;
 
 public class GeneralEffects {
 	public static final ExplosionEffect EXPLOSION_PARTICLES = new ExplosionEffect();
-	public static final GeneralEffect RANDOM_CLICK1 = new GeneralEffect(1000);
-	public static final GeneralEffect RANDOM_CLICK2 = new GeneralEffect(1001);
-	public static final GeneralEffect RANDOM_BOW = new GeneralEffect(1002);
+	public static final PressBlockEffect BLOCK_PRESS = new PressBlockEffect();
+	public static final SoundEffect RANDOM_CLICK1 = new SoundEffect(SoundEffects.RANDOM_CLICK, 1.0f, 1.0f); //1000
+	public static final SoundEffect RANDOM_CLICK2 = new SoundEffect(SoundEffects.RANDOM_CLICK, 1.0f, 1.2f); //1001
+	public static final SoundEffect RANDOM_BOW = new SoundEffect(SoundEffects.RANDOM_BOW, 1.0F, 1.2F); //1002
 	public static final GeneralEffect RANDOM_DOOR = new GeneralEffect(1003);
 	public static final GeneralEffect RANDOM_FIZZ = new GeneralEffect(1004);
 	public static final MusicDiscEffect MUSIC_DISC = new MusicDiscEffect(1005);

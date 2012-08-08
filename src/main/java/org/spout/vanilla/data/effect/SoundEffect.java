@@ -39,6 +39,10 @@ public class SoundEffect extends Effect {
 	private final String name;
 	private final float volume, pitch;
 
+	public SoundEffect(SoundEffect sound, float volume, float pitch) {
+		this(sound.getName(), volume, pitch, sound.getRange());
+	}
+
 	public SoundEffect(String name) {
 		this(name, 1.0f, 1.0f);
 	}

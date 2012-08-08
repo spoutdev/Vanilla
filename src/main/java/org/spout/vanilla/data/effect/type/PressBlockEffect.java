@@ -24,36 +24,47 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec;
+package org.spout.vanilla.data.effect.type;
 
-import java.io.IOException;
+import java.util.Set;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.player.Player;
+import org.spout.vanilla.data.effect.Effect;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 
-import org.spout.api.protocol.MessageCodec;
+public class PressBlockEffect extends Effect {
+	private static final int SOUND_RANGE = 16;
 
-import org.spout.vanilla.protocol.msg.PlayerLookMessage;
+	public PressBlockEffect() {
+		this(SOUND_RANGE);
+	}
 
-public final class PlayerLookCodec extends MessageCodec<PlayerLookMessage> {
-	public PlayerLookCodec() {
-		super(PlayerLookMessage.class, 0x0C);
+	public PressBlockEffect(int range) {
+		super(range);
 	}
 
 	@Override
-	public PlayerLookMessage decode(ChannelBuffer buffer) throws IOException {
-		float yaw = -buffer.readFloat();
-		float pitch = buffer.readFloat();
-		boolean onGround = buffer.readByte() == 1;
-		return new PlayerLookMessage(yaw, pitch, onGround);
+	public void play(Player player, Point position) {
+		this.play(player, position, true);
 	}
 
-	@Override
-	public ChannelBuffer encode(PlayerLookMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(9);
-		buffer.writeFloat(-message.getYaw());
-		buffer.writeFloat(message.getPitch());
-		buffer.writeByte(message.isOnGround() ? 1 : 0);
-		return buffer;
+	public void play(Player player, Point position, boolean pressed) {
+		SoundEffects.RANDOM_CLICK.play(player, position, 0.3f, pressed ? 0.6f : 0.5f);
+	}
+
+	public void play(Set<Player> players, Point position, boolean pressed) {
+		for (Player player : players) {
+			this.play(player, position, pressed);
+		}
+	}
+
+	public void playGlobal(Point position, boolean pressed) {
+		this.playGlobal(position, pressed, null);
+	}
+
+	public void playGlobal(Point position, boolean pressed, Entity ignore) {
+		this.play(getNearbyPlayers(position, ignore), position, pressed);
 	}
 }

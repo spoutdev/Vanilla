@@ -101,10 +101,7 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		if (type != Action.LEFT_CLICK || !VanillaPlayerUtil.isCreative(entity)) {
-			if (!this.isPressed(block)) {
-				this.setPressed(block, true);
-				GeneralEffects.RANDOM_CLICK2.playGlobal(block.getPosition(), entity);
-			}
+			this.setPressed(block, true);
 		}
 	}
 
@@ -123,7 +120,10 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	}
 
 	public void setPressed(Block block, boolean pressed) {
-		block.setDataBits(0x8, pressed);
+		if (this.isPressed(block) != pressed) {
+			block.setDataBits(0x8, pressed);
+			GeneralEffects.BLOCK_PRESS.playGlobal(block.getPosition(), pressed);
+		}
 	}
 
 	@Override
@@ -142,11 +142,7 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 
 	@Override
 	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
-		if (!this.isPressed(block)) {
-			return;
-		}
 		this.setPressed(block, false);
-		GeneralEffects.RANDOM_CLICK2.playGlobal(block.getPosition());
 	}
 
 	@Override

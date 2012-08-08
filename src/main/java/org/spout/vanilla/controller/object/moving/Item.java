@@ -32,14 +32,11 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 import org.spout.api.tickable.LogicPriority;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.component.physics.DetectItemCollectorComponent;
 import org.spout.vanilla.controller.object.Substance;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-
-import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacketsToNearbyPlayers;
 
 /**
  * Controller that serves as the base for all items that are not in an inventory (dispersed in the world).

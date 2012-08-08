@@ -27,7 +27,7 @@
 package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.CodecLookupService;
-import org.spout.api.protocol.common.codec.CustomDataCodec;
+import org.spout.vanilla.protocol.codec.CustomDataCodec;
 
 import org.spout.vanilla.protocol.codec.BlockActionCodec;
 import org.spout.vanilla.protocol.codec.BlockChangeCodec;

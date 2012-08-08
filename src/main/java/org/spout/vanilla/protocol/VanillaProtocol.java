@@ -42,7 +42,6 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.protocol.Session;
-import org.spout.api.protocol.common.message.CustomDataMessage;
 import org.spout.api.util.Named;
 
 import org.spout.vanilla.chat.style.VanillaStyleHandler;
@@ -50,6 +49,7 @@ import org.spout.vanilla.controller.living.player.VanillaPlayer;
 import org.spout.vanilla.controller.source.ControllerChangeReason;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.msg.ChatMessage;
+import org.spout.vanilla.protocol.msg.CustomDataMessage;
 import org.spout.vanilla.protocol.msg.KickMessage;
 
 public class VanillaProtocol extends Protocol {
@@ -110,7 +110,17 @@ public class VanillaProtocol extends Protocol {
 		return null;
 	}
 
-	private String getName(MessageCodec<?> codec) {
+	public static MessageCodec<?> getCodec(String name, Protocol activeProtocol) {
+		for (Pair<Integer, String> item : activeProtocol.getDynamicallyRegisteredPackets()) {
+			MessageCodec<?> codec = activeProtocol.getCodecLookupService().find(item.getLeft());
+			if (getName(codec).equalsIgnoreCase(name)) {
+				return codec;
+			}
+		}
+		return null;
+	}
+
+	private static String getName(MessageCodec<?> codec) {
 		if (codec instanceof Named) {
 			return ((Named) codec).getName();
 		} else {

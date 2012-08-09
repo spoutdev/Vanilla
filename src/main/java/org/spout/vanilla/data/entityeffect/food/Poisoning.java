@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.data.entityeffect.food;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
 
 public class Poisoning extends VanillaEntityFoodEffect {
-	public Poisoning(VanillaPlayer effected, float amount) {
+	public Poisoning(VanillaPlayerController effected, float amount) {
 		//Unused. Only to get the vPlayer
 		super(effected, 30, 0);
 	}

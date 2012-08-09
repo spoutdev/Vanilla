@@ -39,9 +39,9 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.controller.object.projectile.Arrow;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.object.moving.Item;
+import org.spout.vanilla.entity.object.projectile.Arrow;
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.Mineable;
@@ -74,8 +74,8 @@ public class Dispenser extends ControlledMaterial implements Directional, Mineab
 	}
 
 	@Override
-	public org.spout.vanilla.controller.block.Dispenser getController(Block block) {
-		return (org.spout.vanilla.controller.block.Dispenser) super.getController(block);
+	public org.spout.vanilla.entity.block.Dispenser getController(Block block) {
+		return (org.spout.vanilla.entity.block.Dispenser) super.getController(block);
 	}
 
 	@Override

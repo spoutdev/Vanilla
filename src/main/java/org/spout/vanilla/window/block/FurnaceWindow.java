@@ -28,8 +28,8 @@ package org.spout.vanilla.window.block;
 
 import org.spout.api.inventory.InventoryBase;
 
-import org.spout.vanilla.controller.block.Furnace;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.block.Furnace;
 import org.spout.vanilla.event.window.WindowPropertyEvent;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
@@ -44,7 +44,7 @@ public class FurnaceWindow extends TransactionWindow {
 	protected final FurnaceInventory furnaceInv;
 	private int lastProgress = -1, lastBurnTime = -1;
 
-	public FurnaceWindow(VanillaPlayer owner, Furnace furnace) {
+	public FurnaceWindow(VanillaPlayerController owner, Furnace furnace) {
 		super(WindowType.FURNACE, "Furnace", owner, 3, furnace);
 		this.furnaceInv = furnace.getInventory();
 		this.addInventory(this.furnaceInv, FURNACE_SLOTS);

@@ -26,15 +26,15 @@
  */
 package org.spout.vanilla.window;
 
-import org.spout.vanilla.controller.WindowController;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.WindowController;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.util.intmap.SlotIndexGrid;
 
 /**
  * This window contains the player inventory items with additional slots above
  */
 public class TransactionWindow extends Window {
-	public TransactionWindow(WindowType type, String title, VanillaPlayer owner, int transactionSize, WindowController... windowOwners) {
+	public TransactionWindow(WindowType type, String title, VanillaPlayerController owner, int transactionSize, WindowController... windowOwners) {
 		super(type, title, owner, windowOwners);
 		this.addInventory(owner.getInventory().getMain(), new SlotIndexGrid(9, 4, transactionSize));
 	}

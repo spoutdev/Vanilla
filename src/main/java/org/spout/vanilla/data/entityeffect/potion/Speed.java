@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.data.entityeffect.potion;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.entityeffect.VanillaEntityEffect;
 
 public class Speed extends VanillaEntityEffect {
-	public Speed(VanillaPlayer effected, float duration, int strength) {
+	public Speed(VanillaPlayerController effected, float duration, int strength) {
 		super(effected, 1, duration, strength);
 	}
 }

@@ -31,7 +31,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
@@ -65,7 +65,7 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 		 * //Figure out how much in X and Z the player has moved
 		 * Vector3 newPos = new Vector3(x,y,z);
 		 * newPos = newPos.normalize();
-		 * Vector3 pPos = controller.getPosition().normalize();
+		 * Vector3 pPos = entity.getPosition().normalize();
 		 * 
 		 * Vector3 difference = pPos.subtract(newPos);
 		 * //Figure out how much in Forward we have moved
@@ -85,7 +85,7 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 
 		// START Hunger / Damage falling implementation. Will probably have a better way to handle that when Collision is implemented
 		if (VanillaPlayerUtil.isSurvival(player)) {
-			VanillaPlayer vPlayer = (VanillaPlayer) player.getController();
+			VanillaPlayerController vPlayer = (VanillaPlayerController) player.getController();
 			if (ep.getY() > y) {
 				vPlayer.setFalling(true);
 			} else {

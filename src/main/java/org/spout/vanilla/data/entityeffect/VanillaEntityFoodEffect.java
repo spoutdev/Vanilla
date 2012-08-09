@@ -28,14 +28,14 @@ package org.spout.vanilla.data.entityeffect;
 
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 
 public abstract class VanillaEntityFoodEffect extends EntityEffect {
-	public VanillaEntityFoodEffect(VanillaPlayer effected, float amount) {
+	public VanillaEntityFoodEffect(VanillaPlayerController effected, float amount) {
 		super(effected, 0, 1, amount);
 	}
 
-	public VanillaEntityFoodEffect(VanillaPlayer effected, int duration, float amount) {
+	public VanillaEntityFoodEffect(VanillaPlayerController effected, int duration, float amount) {
 		super(effected, 0, duration, amount);
 	}
 

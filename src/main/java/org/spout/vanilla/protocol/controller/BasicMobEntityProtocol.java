@@ -36,8 +36,8 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.Living;
+import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.living.Living;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnMobMessage;
 
@@ -48,7 +48,7 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 
 	/**
 	 * Gets a list of parameters used for the creation of a mob spawn message
-	 * @param controller - The controller controller to obtain the parameters from
+	 * @param controller - The entity entity to obtain the parameters from
 	 * @return a list of parameters
 	 */
 	public List<Parameter<?>> getSpawnParameters(Controller controller) {

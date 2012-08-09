@@ -30,14 +30,14 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.entity.object.moving.Item;
 
 public class ItemUtil {
 	/**
 	 * Drops an item at the position with the item stack specified with a natural random velocity
 	 * @param position to spawn the item
 	 * @param itemStack to set to the item
-	 * @return the Item controller
+	 * @return the Item entity
 	 */
 	public static Item dropItemNaturally(Point position, ItemStack itemStack) {
 		Vector3 velocity = new Vector3(Math.random() * 0.2 - 0.1, 0.2, Math.random() * 0.2 - 0.1);
@@ -49,7 +49,7 @@ public class ItemUtil {
 	 * @param position to spawn the item
 	 * @param itemStack to set to the item
 	 * @param velocity to drop at
-	 * @return the Item controller
+	 * @return the Item entity
 	 */
 	public static Item dropItem(Point position, ItemStack itemStack, Vector3 velocity) {
 		Item item = new Item(itemStack, velocity);

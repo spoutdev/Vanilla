@@ -29,7 +29,7 @@ package org.spout.vanilla.protocol.controller.object;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.controller.object.misc.Lightning;
+import org.spout.vanilla.entity.object.misc.Lightning;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnLightningStrikeMessage;
 

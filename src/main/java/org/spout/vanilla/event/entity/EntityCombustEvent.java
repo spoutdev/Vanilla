@@ -40,7 +40,7 @@ public class EntityCombustEvent extends EntityEvent {
 	}
 
 	/**
-	 * Gets the time that the controller should burn for.
+	 * Gets the time that the entity should burn for.
 	 * @return The time in seconds.
 	 */
 	public int getDuration() {
@@ -48,7 +48,7 @@ public class EntityCombustEvent extends EntityEvent {
 	}
 
 	/**
-	 * Sets the time that the controller should burn for.
+	 * Sets the time that the entity should burn for.
 	 * @param duration The time in seconds.
 	 */
 	public void setDuration(int duration) {

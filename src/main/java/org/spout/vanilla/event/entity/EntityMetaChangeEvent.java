@@ -37,7 +37,7 @@ import org.spout.api.util.Parameter;
 public class EntityMetaChangeEvent extends EntityEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
 	private List<Parameter<?>> parameters;
-	
+
 	public EntityMetaChangeEvent(Entity e, List<Parameter<?>> parameters) {
 		super(e);
 		this.parameters = parameters;
@@ -45,7 +45,6 @@ public class EntityMetaChangeEvent extends EntityEvent implements ProtocolEvent 
 
 	/**
 	 * Gets the updates meta data parameters of the Entity
-	 * 
 	 * @return parameter list
 	 */
 	public List<Parameter<?>> getParameters() {

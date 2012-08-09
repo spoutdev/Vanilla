@@ -34,7 +34,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
@@ -66,9 +66,9 @@ public class Chest extends ControlledMaterial implements Directional, Fuel, Mine
 	@Override
 	public void onDestroyBlock(Block block) {
 		BlockController old = block.getController();
-		if (old != null && old instanceof org.spout.vanilla.controller.block.Chest) {
+		if (old != null && old instanceof org.spout.vanilla.entity.block.Chest) {
 			//Drop items
-			ItemStack[] items = ((org.spout.vanilla.controller.block.Chest) old).getInventory().getContents();
+			ItemStack[] items = ((org.spout.vanilla.entity.block.Chest) old).getInventory().getContents();
 			Point position = block.getPosition();
 			for (ItemStack item : items) {
 				if (item == null) {
@@ -81,8 +81,8 @@ public class Chest extends ControlledMaterial implements Directional, Fuel, Mine
 	}
 
 	@Override
-	public org.spout.vanilla.controller.block.Chest getController(Block block) {
-		return (org.spout.vanilla.controller.block.Chest) super.getController(block);
+	public org.spout.vanilla.entity.block.Chest getController(Block block) {
+		return (org.spout.vanilla.entity.block.Chest) super.getController(block);
 	}
 
 	@Override

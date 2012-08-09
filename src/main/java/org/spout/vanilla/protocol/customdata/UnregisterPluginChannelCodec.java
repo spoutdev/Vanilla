@@ -31,8 +31,10 @@ import java.util.Iterator;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Named;
+
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 
 public class UnregisterPluginChannelCodec extends MessageCodec<UnregisterPluginChannelMessage> implements Named {
@@ -43,7 +45,7 @@ public class UnregisterPluginChannelCodec extends MessageCodec<UnregisterPluginC
 	@Override
 	public ChannelBuffer encode(UnregisterPluginChannelMessage message) {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		for (Iterator<String> i = message.getTypes().iterator(); i.hasNext();) {
+		for (Iterator<String> i = message.getTypes().iterator(); i.hasNext(); ) {
 			buffer.writeBytes(i.next().getBytes(ChannelBufferUtils.CHARSET_UTF8));
 			if (i.hasNext()) {
 				buffer.writeByte(0);

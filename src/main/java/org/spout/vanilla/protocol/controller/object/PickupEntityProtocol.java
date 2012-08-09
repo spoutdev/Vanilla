@@ -30,7 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.entity.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnItemMessage;

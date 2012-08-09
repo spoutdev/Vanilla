@@ -37,8 +37,8 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.source.HealthChangeReason;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.ClientStatusMessage;
@@ -67,7 +67,7 @@ public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 			Point point = event.getPoint();
 			player.setPosition(point);
 			player.getNetworkSynchronizer().setRespawned();
-			VanillaPlayer controller = (VanillaPlayer) player.getController();
+			VanillaPlayerController controller = (VanillaPlayerController) player.getController();
 			controller.getHealth().setHealth(controller.getHealth().getMaxHealth(), HealthChangeReason.SPAWN);
 
 			//send spawn to everyone else

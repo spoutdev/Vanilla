@@ -32,8 +32,8 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -51,20 +51,20 @@ public class CraftingTable extends ControlledMaterial implements Mineable {
 	}
 
 	@Override
-	public org.spout.vanilla.controller.block.CraftingTable getController(Block block) {
-		return (org.spout.vanilla.controller.block.CraftingTable) super.getController(block);
+	public org.spout.vanilla.entity.block.CraftingTable getController(Block block) {
+		return (org.spout.vanilla.entity.block.CraftingTable) super.getController(block);
 	}
 
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
 		if (action == Action.RIGHT_CLICK) {
 			Controller controller = entity.getController();
-			if (!(controller instanceof VanillaPlayer)) {
+			if (!(controller instanceof VanillaPlayerController)) {
 				return;
 			}
 
 			// Open the crafting table
-			getController(block).open((VanillaPlayer) controller);
+			getController(block).open((VanillaPlayerController) controller);
 		}
 	}
 

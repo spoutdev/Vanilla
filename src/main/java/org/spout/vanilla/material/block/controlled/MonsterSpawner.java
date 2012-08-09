@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaControllerTypes;
 
 public class MonsterSpawner extends ControlledMaterial {
 	public MonsterSpawner(String name, int id) {

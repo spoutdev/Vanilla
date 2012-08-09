@@ -37,7 +37,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.controller.living.Human;
+import org.spout.vanilla.entity.living.Human;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 

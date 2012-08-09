@@ -30,7 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.controller.object.moving.XPOrb;
+import org.spout.vanilla.entity.object.moving.XPOrb;
 import org.spout.vanilla.protocol.controller.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnExperienceOrbMessage;
 

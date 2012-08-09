@@ -29,7 +29,6 @@ package org.spout.vanilla.protocol.msg;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.ChannelProcessor;
-import org.spout.api.protocol.Message;
 import org.spout.api.protocol.ProcessorHandler;
 import org.spout.api.protocol.ProcessorSetupMessage;
 import org.spout.api.util.SpoutToStringStyle;

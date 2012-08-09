@@ -37,7 +37,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.player.Player;
 import org.spout.api.tickable.BasicTickable;
 
-import org.spout.vanilla.controller.object.misc.Lightning;
+import org.spout.vanilla.entity.object.misc.Lightning;
 import org.spout.vanilla.data.Weather;
 
 public class LightningSimulator extends BasicTickable {

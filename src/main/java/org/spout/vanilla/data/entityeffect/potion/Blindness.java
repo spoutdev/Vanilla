@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.data.entityeffect.potion;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.entityeffect.VanillaEntityEffect;
 
 public class Blindness extends VanillaEntityEffect {
-	public Blindness(VanillaPlayer effected, float duration, int strength) {
+	public Blindness(VanillaPlayerController effected, float duration, int strength) {
 		super(effected, 15, duration, strength);
 	}
 }

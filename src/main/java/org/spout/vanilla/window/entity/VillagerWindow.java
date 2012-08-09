@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.window.entity;
 
-import org.spout.vanilla.controller.living.creature.passive.Villager;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.living.creature.passive.Villager;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.util.intmap.SlotIndexGrid;
 import org.spout.vanilla.util.intmap.SlotIndexMap;
@@ -38,7 +38,7 @@ public class VillagerWindow extends CraftingWindow {
 	private static final SlotIndexCollection MAIN_SLOTS = new SlotIndexGrid(9, 4, 3);
 	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexMap("0-2");
 
-	public VillagerWindow(VanillaPlayer owner, Villager villager) {
+	public VillagerWindow(VanillaPlayerController owner, Villager villager) {
 		super(WindowType.VILLAGER, "villager", owner, villager.getInventory(), villager);
 		this.addInventory(owner.getInventory().getMain(), MAIN_SLOTS);
 		this.addInventory(this.getCraftingGrid(), CRAFTING_SLOTS);

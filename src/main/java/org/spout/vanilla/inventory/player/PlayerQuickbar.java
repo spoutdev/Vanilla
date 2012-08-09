@@ -32,17 +32,17 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventoryRange;
 import org.spout.api.inventory.special.InventorySlot;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.event.player.PlayerSlotChangeEvent;
 
 public class PlayerQuickbar extends InventoryRange {
 	private static final long serialVersionUID = 1L;
 	public static final int QUICKBAR_SIZE = 9;
 	private final InventorySlot[] slots;
-	private final VanillaPlayer owner;
+	private final VanillaPlayerController owner;
 	private int currentSlot = 0;
 
-	public PlayerQuickbar(VanillaPlayer owner, InventoryBase main) {
+	public PlayerQuickbar(VanillaPlayerController owner, InventoryBase main) {
 		super(main, 0, QUICKBAR_SIZE);
 		this.owner = owner;
 		this.slots = new InventorySlot[QUICKBAR_SIZE];

@@ -48,8 +48,8 @@ import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
 
 import org.spout.vanilla.chat.style.VanillaStyleHandler;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.source.ControllerChangeReason;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.source.ControllerChangeReason;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.customdata.RegisterPluginChannelCodec;
 import org.spout.vanilla.protocol.customdata.RegisterPluginChannelMessage;
@@ -66,6 +66,7 @@ public class VanillaProtocol extends Protocol {
 	public final static DefaultedKey<Long> LOGIN_TIME = new DefaultedKeyImpl<Long>("handshake_time", -1L);
 	public static final DefaultedKey<ArrayList<String>> REGISTERED_CUSTOM_PACKETS = new DefaultedKey<ArrayList<String>>() {
 		private final List<String> defaultRestricted = Arrays.asList("REGISTER", "UNREGISTER");
+
 		public ArrayList<String> getDefaultValue() {
 			return new ArrayList<String>(defaultRestricted);
 		}
@@ -169,7 +170,7 @@ public class VanillaProtocol extends Protocol {
 
 	@Override
 	public void setPlayerController(Player player) {
-		VanillaPlayer vanillaPlayer = new VanillaPlayer(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
+		VanillaPlayerController vanillaPlayer = new VanillaPlayerController(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
 		vanillaPlayer.setTitle(player.getDisplayName());
 
 		player.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);

@@ -33,7 +33,7 @@ import org.spout.vanilla.inventory.VanillaInventory;
 
 /**
  * Represents a enchantment table inventory belonging to an enchantment table
- * controller.
+ * entity.
  */
 public class EnchantmentTableInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;

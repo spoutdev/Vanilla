@@ -63,7 +63,7 @@ import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
@@ -97,9 +97,9 @@ import org.spout.vanilla.protocol.msg.PlayEffectMessage;
 import org.spout.vanilla.protocol.msg.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
+import org.spout.vanilla.protocol.msg.PlayerUpdateStatsMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.PlayerUpdateStatsMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
@@ -315,7 +315,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	protected void worldChanged(World world) {
-		VanillaPlayer vc = (VanillaPlayer) owner.getController();
+		VanillaPlayerController vc = (VanillaPlayerController) owner.getController();
 
 		GameMode gamemode = world.getDataMap().get(VanillaData.GAMEMODE);
 		//The world the player is entering has a different gamemode...
@@ -512,8 +512,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public Message onPlayerUpdateUserList(PlayerUpdateUserListEvent event) {
 		Controller controller = event.getPlayer().getController();
 		String name;
-		if (controller instanceof VanillaPlayer) {
-			name = ((VanillaPlayer) controller).getTabListName();
+		if (controller instanceof VanillaPlayerController) {
+			name = ((VanillaPlayerController) controller).getTabListName();
 		} else {
 			name = event.getPlayer().getDisplayName();
 		}
@@ -535,7 +535,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (event.getPlayer() != getOwner()) {
 			return null;
 		}
-		VanillaPlayer player = (VanillaPlayer) event.getPlayer().getController();
+		VanillaPlayerController player = (VanillaPlayerController) event.getPlayer().getController();
 		return new PlayerUpdateStatsMessage((short) player.getHealth().getHealth(), player.getSurvivalLogic().getHunger(), player.getSurvivalLogic().getFoodSaturation());
 	}
 

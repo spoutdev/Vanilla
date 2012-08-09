@@ -97,7 +97,7 @@ public class Water extends Liquid implements RandomBlockMaterial {
 
 	@Override
 	public void onRandomTick(Block block) {
-		//TODO: This should really be in the tick task of the sky controller
+		//TODO: This should really be in the tick task of the sky entity
 		// Water freezing
 		if (!isSource(block)) {
 			return;

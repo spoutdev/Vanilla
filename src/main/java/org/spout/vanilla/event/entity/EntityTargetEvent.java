@@ -57,16 +57,16 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 	}
 
 	/**
-	 * Returns true if the controller has targeted.
-	 * @return True it the controller has targeted, false if not.
+	 * Returns true if the entity has targeted.
+	 * @return True it the entity has targeted, false if not.
 	 */
 	public boolean isTarget() {
 		return reason.isTarget();
 	}
 
 	/**
-	 * Returns true if the controller has untargeted.
-	 * @return True is the controller has untargeted, false if not.
+	 * Returns true if the entity has untargeted.
+	 * @return True is the entity has untargeted, false if not.
 	 */
 	public boolean isUntarget() {
 		return !reason.isTarget();

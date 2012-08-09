@@ -46,7 +46,7 @@ import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.Mineable;
@@ -80,7 +80,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		short minecraftID = VanillaMaterials.getMinecraftId(blockMaterial);
 		BlockFace clickedFace = message.getFace();
 
-		VanillaPlayer vp = ((VanillaPlayer) player.getController());
+		VanillaPlayerController vp = ((VanillaPlayerController) player.getController());
 
 		//Don't block protections if dropping an item, silly Notch...
 		if (state != PlayerDiggingMessage.STATE_DROP_ITEM) {
@@ -95,7 +95,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		}
 
 		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
-			((VanillaPlayer) player.getController()).dropItem();
+			((VanillaPlayerController) player.getController()).dropItem();
 			return;
 		}
 
@@ -129,7 +129,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				heldItem.getMaterial().onInteract(player, block, Action.LEFT_CLICK, clickedFace);
 				blockMaterial.onInteractBy(player, block, Action.LEFT_CLICK, clickedFace);
 			}
-			// Interaction with controller
+			// Interaction with entity
 			if (blockMaterial.hasController()) {
 				blockMaterial.getController(block).onInteract(player, Action.LEFT_CLICK);
 			}
@@ -155,7 +155,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			}
 
 			if (VanillaPlayerUtil.isSurvival(player)) {
-				((VanillaPlayer) player.getController()).getSurvivalLogic().setExhaustion(((VanillaPlayer) player.getController()).getSurvivalLogic().getExhaustion() + ExhaustionLevel.BREAK_BLOCK.getAmount());
+				((VanillaPlayerController) player.getController()).getSurvivalLogic().setExhaustion(((VanillaPlayerController) player.getController()).getSurvivalLogic().getExhaustion() + ExhaustionLevel.BREAK_BLOCK.getAmount());
 			}
 
 			long diggingTicks = vp.getDiggingTicks();

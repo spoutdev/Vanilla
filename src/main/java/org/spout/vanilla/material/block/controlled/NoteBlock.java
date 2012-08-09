@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block.controlled;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.tool.Axe;
@@ -67,8 +67,8 @@ public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
 	}
 
 	@Override
-	public org.spout.vanilla.controller.block.NoteBlock getController(Block block) {
-		return (org.spout.vanilla.controller.block.NoteBlock) super.getController(block);
+	public org.spout.vanilla.entity.block.NoteBlock getController(Block block) {
+		return (org.spout.vanilla.entity.block.NoteBlock) super.getController(block);
 	}
 
 	@Override

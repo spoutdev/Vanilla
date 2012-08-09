@@ -32,7 +32,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.controller.living.creature.passive.Sheep;
+import org.spout.vanilla.entity.living.creature.passive.Sheep;
 import org.spout.vanilla.material.block.solid.Wool.WoolColor;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.VanillaPlayerUtil;

@@ -43,10 +43,10 @@ import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.creature.hostile.Ghast;
-import org.spout.vanilla.controller.living.creature.passive.Sheep;
-import org.spout.vanilla.controller.world.RegionSpawner;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.living.creature.hostile.Ghast;
+import org.spout.vanilla.entity.living.creature.passive.Sheep;
+import org.spout.vanilla.entity.world.RegionSpawner;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class VanillaListener implements Listener {

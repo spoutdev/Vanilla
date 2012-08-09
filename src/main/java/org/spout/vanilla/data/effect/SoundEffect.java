@@ -72,7 +72,6 @@ public class SoundEffect extends Effect {
 
 	/**
 	 * Gets this Sound Effect with the volume and pitch adjusted
-	 * 
 	 * @param volume to set to
 	 * @param pitch to set to
 	 * @return a new sound effect with the new settings
@@ -83,7 +82,6 @@ public class SoundEffect extends Effect {
 
 	/**
 	 * Adds the amount of randomness in the pitch of this Sound
-	 * 
 	 * @param amount of randomness to add
 	 * @return a new sound effect with the new settings
 	 */

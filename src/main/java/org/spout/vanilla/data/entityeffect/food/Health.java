@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.data.entityeffect.food;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.source.HealthChangeReason;
 import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
 
 public class Health extends VanillaEntityFoodEffect {
-	public Health(VanillaPlayer effected, float amount) {
+	public Health(VanillaPlayerController effected, float amount) {
 		super(effected, amount);
 	}
 

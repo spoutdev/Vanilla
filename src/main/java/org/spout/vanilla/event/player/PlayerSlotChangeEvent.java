@@ -31,7 +31,7 @@ import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.player.Player;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 
 public class PlayerSlotChangeEvent extends PlayerEvent {
 	private static HandlerList handlers = new HandlerList();
@@ -45,11 +45,11 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 	}
 
 	/**
-	 * Gets the Vanilla Player controller of the player
-	 * @return Vanilla Player controller
+	 * Gets the Vanilla Player entity of the player
+	 * @return Vanilla Player entity
 	 */
-	public VanillaPlayer getController() {
-		return (VanillaPlayer) this.getPlayer().getController();
+	public VanillaPlayerController getController() {
+		return (VanillaPlayerController) this.getPlayer().getController();
 	}
 
 	/**

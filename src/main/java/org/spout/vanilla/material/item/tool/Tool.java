@@ -34,11 +34,11 @@ import java.util.Set;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.living.creature.hostile.Silverfish;
-import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
-import org.spout.vanilla.controller.living.creature.hostile.Spider;
-import org.spout.vanilla.controller.living.creature.hostile.Zombie;
+import org.spout.vanilla.entity.VanillaEntityController;
+import org.spout.vanilla.entity.living.creature.hostile.Silverfish;
+import org.spout.vanilla.entity.living.creature.hostile.Skeleton;
+import org.spout.vanilla.entity.living.creature.hostile.Spider;
+import org.spout.vanilla.entity.living.creature.hostile.Zombie;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;

@@ -73,7 +73,6 @@ public class VanillaMathHelper {
 
 	/**
 	 * Calculates a new random direction
-	 * 
 	 * @param maxXZForce of the direction
 	 * @param maxYForce of the direction
 	 * @return a random Vector3 direction

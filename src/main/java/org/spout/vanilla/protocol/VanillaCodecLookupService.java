@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.CodecLookupService;
-import org.spout.vanilla.protocol.codec.CustomDataCodec;
 
 import org.spout.vanilla.protocol.codec.BlockActionCodec;
 import org.spout.vanilla.protocol.codec.BlockChangeCodec;
@@ -38,6 +37,7 @@ import org.spout.vanilla.protocol.codec.ClientSettingsCodec;
 import org.spout.vanilla.protocol.codec.ClientStatusCodec;
 import org.spout.vanilla.protocol.codec.CompressedChunkCodec;
 import org.spout.vanilla.protocol.codec.CreativeCodec;
+import org.spout.vanilla.protocol.codec.CustomDataCodec;
 import org.spout.vanilla.protocol.codec.DestroyEntitiesCodec;
 import org.spout.vanilla.protocol.codec.EnchantItemCodec;
 import org.spout.vanilla.protocol.codec.EncryptionKeyRequestCodec;
@@ -60,6 +60,7 @@ import org.spout.vanilla.protocol.codec.PlayerListCodec;
 import org.spout.vanilla.protocol.codec.PlayerLookCodec;
 import org.spout.vanilla.protocol.codec.PlayerPositionCodec;
 import org.spout.vanilla.protocol.codec.PlayerPositionLookCodec;
+import org.spout.vanilla.protocol.codec.PlayerUpdateStatsCodec;
 import org.spout.vanilla.protocol.codec.RespawnCodec;
 import org.spout.vanilla.protocol.codec.ServerListPingCodec;
 import org.spout.vanilla.protocol.codec.SetExperienceCodec;
@@ -68,7 +69,6 @@ import org.spout.vanilla.protocol.codec.StatisticCodec;
 import org.spout.vanilla.protocol.codec.TabCompleteCodec;
 import org.spout.vanilla.protocol.codec.TileEntityDataCodec;
 import org.spout.vanilla.protocol.codec.TimeUpdateCodec;
-import org.spout.vanilla.protocol.codec.PlayerUpdateStatsCodec;
 import org.spout.vanilla.protocol.codec.UpdateSignCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityActionCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityAnimationCodec;

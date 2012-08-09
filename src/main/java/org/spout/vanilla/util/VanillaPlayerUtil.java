@@ -32,12 +32,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 
 public class VanillaPlayerUtil {
 	/**
-	 * Checks if the source is an entity with a vanilla player controller in survival mode
+	 * Checks if the source is an entity with a vanilla player entity in survival mode
 	 * @param source to check
 	 * @return True if vanilla survival player entity
 	 */
@@ -47,11 +47,11 @@ public class VanillaPlayerUtil {
 		}
 
 		Entity entity = (Entity) source;
-		return entity.getController() instanceof VanillaPlayer && ((VanillaPlayer) entity.getController()).isSurvival();
+		return entity.getController() instanceof VanillaPlayerController && ((VanillaPlayerController) entity.getController()).isSurvival();
 	}
 
 	/**
-	 * Checks if the source is an entity with a vanilla player controller in creative mode
+	 * Checks if the source is an entity with a vanilla player entity in creative mode
 	 * @param source to check
 	 * @return True if vanilla creative player entity
 	 */
@@ -61,7 +61,7 @@ public class VanillaPlayerUtil {
 		}
 
 		Entity entity = (Entity) source;
-		return entity.getController() instanceof VanillaPlayer && !((VanillaPlayer) entity.getController()).isSurvival();
+		return entity.getController() instanceof VanillaPlayerController && !((VanillaPlayerController) entity.getController()).isSurvival();
 	}
 
 	/**
@@ -85,8 +85,8 @@ public class VanillaPlayerUtil {
 	public static PlayerInventory getInventory(Source source) {
 		if (source instanceof Entity) {
 			Entity e = (Entity) source;
-			if (e.getController() instanceof VanillaPlayer) {
-				return ((VanillaPlayer) e.getController()).getInventory();
+			if (e.getController() instanceof VanillaPlayerController) {
+				return ((VanillaPlayerController) e.getController()).getInventory();
 			}
 		}
 		return null;

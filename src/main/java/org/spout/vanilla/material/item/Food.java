@@ -31,7 +31,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.special.InventorySlot;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Food extends VanillaItemMaterial {
@@ -50,7 +50,7 @@ public class Food extends VanillaItemMaterial {
 		if (VanillaPlayerUtil.isSurvival(entity)) {
 			System.out.println("EATING");
 			for (int i = 0; i < effects.length; i++) {
-				VanillaPlayer vPlayer = (VanillaPlayer) entity.getController();
+				VanillaPlayerController vPlayer = (VanillaPlayerController) entity.getController();
 				try {
 					effects[i].run(vPlayer);
 				} catch (InstantiationException e) {

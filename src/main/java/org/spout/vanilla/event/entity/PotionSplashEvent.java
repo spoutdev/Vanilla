@@ -35,7 +35,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.exception.InvalidControllerException;
 
-import org.spout.vanilla.controller.object.projectile.Potion;
+import org.spout.vanilla.entity.object.projectile.Potion;
 
 public class PotionSplashEvent extends ProjectileHitEvent {
 	private static HandlerList handlers = new HandlerList();
@@ -77,8 +77,8 @@ public class PotionSplashEvent extends ProjectileHitEvent {
 	}
 
 	/**
-	 * Gets the intensity of the potion effect for an controller.
-	 * @param entity The controller to get the intensity for
+	 * Gets the intensity of the potion effect for an entity.
+	 * @param entity The entity to get the intensity for
 	 * @return The intensity of the potion effect. 0.0 symbolizes no effect, 1.0 symbolizes full effect.
 	 */
 	public double getIntensityFor(Entity entity) {
@@ -90,8 +90,8 @@ public class PotionSplashEvent extends ProjectileHitEvent {
 	}
 
 	/**
-	 * Sets the intensity of the potion effect for an controller.
-	 * @param entity The controller that will have a new defined intensity.
+	 * Sets the intensity of the potion effect for an entity.
+	 * @param entity The entity that will have a new defined intensity.
 	 * @param intensity The intensity of the potion effect.
 	 */
 	public void setIntensityFor(Entity entity, double intensity) {

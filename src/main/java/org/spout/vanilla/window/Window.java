@@ -41,8 +41,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.player.Player;
 import org.spout.api.tickable.BasicTickable;
 
-import org.spout.vanilla.controller.WindowController;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.WindowController;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
@@ -55,14 +55,14 @@ public class Window extends BasicTickable implements InventoryViewer {
 	protected final WindowType type;
 	protected final int instanceId;
 	protected String title;
-	protected final VanillaPlayer owner;
+	protected final VanillaPlayerController owner;
 	protected final TIntObjectHashMap<ItemStack> queuedInventoryUpdates = new TIntObjectHashMap<ItemStack>(); // items to update
 	protected Map<InventoryBase, SlotIndexCollection> inventories = new HashMap<InventoryBase, SlotIndexCollection>();
 	protected ItemStack itemOnCursor;
 	protected boolean isOpen = false;
 	protected WindowController[] windowOwners;
 
-	public Window(WindowType type, String title, VanillaPlayer owner, WindowController... windowOwners) {
+	public Window(WindowType type, String title, VanillaPlayerController owner, WindowController... windowOwners) {
 		this.type = type;
 		this.title = title;
 		this.owner = owner;
@@ -158,10 +158,10 @@ public class Window extends BasicTickable implements InventoryViewer {
 	}
 
 	/**
-	 * Gets the Vanilla player controller owner of this Window
-	 * @return the owner player controller
+	 * Gets the Vanilla player entity owner of this Window
+	 * @return the owner player entity
 	 */
-	public VanillaPlayer getOwner() {
+	public VanillaPlayerController getOwner() {
 		return this.owner;
 	}
 

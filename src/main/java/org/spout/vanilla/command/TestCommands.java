@@ -52,10 +52,10 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.living.Human;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.source.HealthChangeReason;
+import org.spout.vanilla.entity.VanillaEntityController;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.living.Human;
+import org.spout.vanilla.entity.source.HealthChangeReason;
 import org.spout.vanilla.data.entityeffect.potion.Speed;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
@@ -77,8 +77,8 @@ public class TestCommands {
 
 		Entity entity = (Player) source;
 		Point position = entity.getPosition();
-		if (entity.getController() instanceof VanillaPlayer) {
-			position = position.add(((VanillaPlayer) entity.getController()).getLookingAt());
+		if (entity.getController() instanceof VanillaPlayerController) {
+			position = position.add(((VanillaPlayerController) entity.getController()).getLookingAt());
 		}
 
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
@@ -298,8 +298,8 @@ public class TestCommands {
 		}
 
 		Controller controller = ((Player) source).getController();
-		if (controller instanceof VanillaPlayer) {
-			((VanillaPlayer) controller).rollCredits();
+		if (controller instanceof VanillaPlayerController) {
+			((VanillaPlayerController) controller).rollCredits();
 		}
 	}
 
@@ -310,7 +310,7 @@ public class TestCommands {
 		}
 
 		Controller controller = ((Player) source).getController();
-		controller.registerProcess(new Speed((VanillaPlayer) controller, args.getInteger(0), args.getInteger(1)));
+		controller.registerProcess(new Speed((VanillaPlayerController) controller, args.getInteger(0), args.getInteger(1)));
 	}
 
 	@Command(aliases = "npc", desc = "Spawns an npc at your location", min = 1, max = 1)

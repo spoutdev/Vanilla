@@ -34,8 +34,8 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.controller.living.Living;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.living.Living;
 import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 
@@ -52,7 +52,7 @@ public final class EntityActionMessageHandler extends MessageHandler<EntityActio
 			return;
 		}
 
-		VanillaPlayer ve = (VanillaPlayer) player.getController();
+		VanillaPlayerController ve = (VanillaPlayerController) player.getController();
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
 		switch (message.getAction()) {

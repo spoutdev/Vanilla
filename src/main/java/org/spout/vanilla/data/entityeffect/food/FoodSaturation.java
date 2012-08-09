@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.data.entityeffect.food;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
 
 public class FoodSaturation extends VanillaEntityFoodEffect {
-	public FoodSaturation(VanillaPlayer effected, float amount) {
+	public FoodSaturation(VanillaPlayerController effected, float amount) {
 		super(effected, amount);
 	}
 

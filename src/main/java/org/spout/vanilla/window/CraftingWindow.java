@@ -30,14 +30,14 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 
-import org.spout.vanilla.controller.WindowController;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.WindowController;
 import org.spout.vanilla.inventory.CraftingInventory;
 
 public abstract class CraftingWindow extends Window {
 	protected final CraftingInventory craftingGrid;
 
-	public CraftingWindow(WindowType type, String title, VanillaPlayer owner, CraftingInventory craftingGrid, WindowController... windowOwners) {
+	public CraftingWindow(WindowType type, String title, VanillaPlayerController owner, CraftingInventory craftingGrid, WindowController... windowOwners) {
 		super(type, title, owner, windowOwners);
 		this.craftingGrid = craftingGrid;
 	}

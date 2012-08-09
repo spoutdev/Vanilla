@@ -29,16 +29,16 @@ package org.spout.vanilla.data.entityeffect;
 import org.spout.api.protocol.Message;
 import org.spout.api.tickable.TimedLogicRunnable;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 
 /**
  * Represents an entity effect that is applied to an entity.
  */
-public abstract class EntityEffect extends TimedLogicRunnable<VanillaPlayer> {
+public abstract class EntityEffect extends TimedLogicRunnable<VanillaPlayerController> {
 	protected int id;
 	protected float strength;
 
-	public EntityEffect(VanillaPlayer effected, int id, float duration, float strength) {
+	public EntityEffect(VanillaPlayerController effected, int id, float duration, float strength) {
 		super(effected, duration);
 		this.id = id;
 		this.strength = strength;

@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.data.entityeffect.potion;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.entityeffect.VanillaEntityEffect;
 
 public class NightVision extends VanillaEntityEffect {
-	public NightVision(VanillaPlayer effected, float duration, int strength) {
+	public NightVision(VanillaPlayerController effected, float duration, int strength) {
 		super(effected, 16, duration, strength);
 	}
 }

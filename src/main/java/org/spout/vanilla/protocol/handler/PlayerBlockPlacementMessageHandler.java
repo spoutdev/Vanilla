@@ -42,7 +42,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -184,7 +184,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 						//For now: simple distance checking
 						Point pos1 = player.getPosition();
-						Point pos2 = ((VanillaPlayer) player.getController()).getHeadPosition();
+						Point pos2 = ((VanillaPlayerController) player.getController()).getHeadPosition();
 						Point tpos = target.getPosition();
 
 						if (pos1.distance(tpos) < 0.6 || pos2.distance(tpos) < 0.6) {
@@ -207,7 +207,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 					sound.playGlobal(target.getPosition(), 0.8f, 0.8f);
 					//GeneralEffects.BREAKBLOCK.playGlobal(target.getPosition(), target.getMaterial());
 					// Remove block from inventory if not in creative mode.
-					if (!((VanillaPlayer) player.getController()).hasInfiniteResources()) {
+					if (!((VanillaPlayerController) player.getController()).hasInfiniteResources()) {
 						currentSlot.addItemAmount(0, -1);
 					}
 				} else {

@@ -29,13 +29,13 @@ package org.spout.vanilla.inventory.block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.special.InventorySlot;
 
-import org.spout.vanilla.controller.block.Furnace;
+import org.spout.vanilla.entity.block.Furnace;
 import org.spout.vanilla.inventory.VanillaInventory;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 
 /**
- * Represents a furnace inventory belonging to a furnace controller.
+ * Represents a furnace inventory belonging to a furnace entity.
  */
 public class FurnaceInventory extends Inventory implements VanillaInventory {
 	private static final long serialVersionUID = 1L;
@@ -53,8 +53,8 @@ public class FurnaceInventory extends Inventory implements VanillaInventory {
 	}
 
 	/**
-	 * Returns the furnace controller that this inventory belongs to.
-	 * @return owner the furnace controller
+	 * Returns the furnace entity that this inventory belongs to.
+	 * @return owner the furnace entity
 	 */
 	public Furnace getOwner() {
 		return owner;

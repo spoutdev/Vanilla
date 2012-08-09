@@ -35,8 +35,8 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.living.Living;
+import org.spout.vanilla.entity.VanillaEntityController;
+import org.spout.vanilla.entity.living.Living;
 import org.spout.vanilla.protocol.msg.DestroyEntitiesMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityRelativePositionMessage;

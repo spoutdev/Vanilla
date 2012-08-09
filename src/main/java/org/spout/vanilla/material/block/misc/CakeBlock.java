@@ -32,7 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
@@ -61,8 +61,8 @@ public class CakeBlock extends Solid implements Mineable {
 				setSize(block, CakeSize.getByData((short) (getSize(block).getData() + 1)));
 			}
 
-			if (entity.getController() instanceof VanillaPlayer) {
-				VanillaPlayer player = (VanillaPlayer) entity.getController();
+			if (entity.getController() instanceof VanillaPlayerController) {
+				VanillaPlayerController player = (VanillaPlayerController) entity.getController();
 				player.getSurvivalLogic().setHunger((short) (player.getSurvivalLogic().getHunger() + 2));
 			}
 		}

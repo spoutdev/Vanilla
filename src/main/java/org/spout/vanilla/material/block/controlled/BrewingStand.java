@@ -30,7 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -60,7 +60,7 @@ public class BrewingStand extends ControlledMaterial implements Mineable {
 		return 1;
 	}
 
-	public org.spout.vanilla.controller.block.BrewingStand getController(Block block) {
-		return (org.spout.vanilla.controller.block.BrewingStand) super.getController(block);
+	public org.spout.vanilla.entity.block.BrewingStand getController(Block block) {
+		return (org.spout.vanilla.entity.block.BrewingStand) super.getController(block);
 	}
 }

@@ -30,7 +30,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 
 public final class WindowCloseMessageHandler extends MessageHandler<WindowCloseMessage> {
@@ -42,7 +42,7 @@ public final class WindowCloseMessageHandler extends MessageHandler<WindowCloseM
 
 		Player player = session.getPlayer();
 
-		VanillaPlayer controller = (VanillaPlayer) player.getController();
+		VanillaPlayerController controller = (VanillaPlayerController) player.getController();
 		controller.closeWindow();
 	}
 }

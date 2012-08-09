@@ -30,13 +30,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.entity.object.moving.Item;
 import org.spout.vanilla.material.block.PressurePlate;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 
 public class StonePressurePlate extends PressurePlate {
-
 	public StonePressurePlate(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 0);

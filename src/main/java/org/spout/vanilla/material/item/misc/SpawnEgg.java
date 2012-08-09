@@ -33,9 +33,9 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.controller.VanillaControllerType;
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaControllerType;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -82,7 +82,7 @@ public class SpawnEgg extends VanillaItemMaterial {
 		}
 
 		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), controllerType.createController());
-		if (!((VanillaPlayer) entity.getController()).hasInfiniteResources()) {
+		if (!((VanillaPlayerController) entity.getController()).hasInfiniteResources()) {
 			InventoryBase inv = VanillaPlayerUtil.getCurrentSlot(entity);
 			if (inv != null) {
 				inv.addItemAmount(0, -1);

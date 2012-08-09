@@ -28,12 +28,12 @@ package org.spout.vanilla.data.entityeffect;
 
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.protocol.msg.entity.EntityEffectMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityRemoveEffectMessage;
 
 public abstract class VanillaEntityEffect extends EntityEffect {
-	public VanillaEntityEffect(VanillaPlayer effected, int id, float duration, int strength) {
+	public VanillaEntityEffect(VanillaPlayerController effected, int id, float duration, int strength) {
 		super(effected, id, duration, strength);
 	}
 

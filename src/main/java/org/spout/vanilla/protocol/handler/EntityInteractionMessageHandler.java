@@ -35,9 +35,9 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.source.DamageCause;
+import org.spout.vanilla.entity.VanillaEntityController;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.source.DamageCause;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -64,23 +64,23 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 			holdingMat = VanillaMaterials.AIR;
 		}
 		if (message.isPunching()) {
-			VanillaPlayer vPlayer = (VanillaPlayer) player.getController();
+			VanillaPlayerController vPlayer = (VanillaPlayerController) player.getController();
 			holdingMat.onInteract(player, clickedEntity, Action.LEFT_CLICK);
 			clickedEntity.getController().onInteract(player, Action.LEFT_CLICK);
 
-			if (clickedEntity.getController() instanceof VanillaPlayer && !VanillaConfiguration.PLAYER_PVP_ENABLED.getBoolean()) {
+			if (clickedEntity.getController() instanceof VanillaPlayerController && !VanillaConfiguration.PLAYER_PVP_ENABLED.getBoolean()) {
 				return;
 			}
 
 			if (clickedEntity.getController() instanceof VanillaEntityController) {
 				VanillaEntityController damaged = (VanillaEntityController) clickedEntity.getController();
-				if (clickedEntity.getController() instanceof VanillaPlayer && (!vPlayer.isSurvival() || !VanillaPlayerUtil.isSurvival(damaged.getParent()))) {
+				if (clickedEntity.getController() instanceof VanillaPlayerController && (!vPlayer.isSurvival() || !VanillaPlayerUtil.isSurvival(damaged.getParent()))) {
 					return;
 				}
 				vPlayer.getSurvivalLogic().addExhaustion(ExhaustionLevel.ATTACK_ENEMY.getAmount());
 
-				if (clickedEntity.getController() instanceof VanillaPlayer) {
-					((VanillaPlayer) clickedEntity.getController()).getSurvivalLogic().addExhaustion(ExhaustionLevel.RECEIVE_DAMAGE.getAmount());
+				if (clickedEntity.getController() instanceof VanillaPlayerController) {
+					((VanillaPlayerController) clickedEntity.getController()).getSurvivalLogic().addExhaustion(ExhaustionLevel.RECEIVE_DAMAGE.getAmount());
 				}
 
 				int damage = 1;

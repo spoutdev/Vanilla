@@ -41,7 +41,7 @@ public class VanillaEntityTeleportEvent extends EntityTeleportEvent {
 	}
 
 	/**
-	 * Gets the reason behind the teleport of the controller.
+	 * Gets the reason behind the teleport of the entity.
 	 * @return The reason behind the teleport.
 	 */
 	public TeleportReason getReason() {
@@ -49,8 +49,8 @@ public class VanillaEntityTeleportEvent extends EntityTeleportEvent {
 	}
 
 	/**
-	 * Sets the reason for the teleport of the controller.
-	 * @param reason The new reason for the teleport of the controller.
+	 * Sets the reason for the teleport of the entity.
+	 * @param reason The new reason for the teleport of the entity.
 	 */
 	public void setReason(TeleportReason reason) {
 		this.reason = reason;

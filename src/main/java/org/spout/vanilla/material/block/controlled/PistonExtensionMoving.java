@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block.controlled;
 import org.spout.vanilla.material.block.piston.PistonExtension;
 
 /**
- * A temporary block type with controller which animates the extension of the piston
+ * A temporary block type with entity which animates the extension of the piston
  */
 public class PistonExtensionMoving extends PistonExtension {
 	public PistonExtensionMoving(String name, int id) {

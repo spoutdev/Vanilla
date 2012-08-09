@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.window;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.util.intmap.SlotIndexGrid;
 import org.spout.vanilla.util.intmap.SlotIndexMap;
@@ -40,7 +40,7 @@ public class DefaultWindow extends CraftingWindow {
 	private static final SlotIndexCollection ARMOR_SLOTS = new SlotIndexRow(4, 5);
 	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexMap("1-4, 0");
 
-	public DefaultWindow(VanillaPlayer owner) {
+	public DefaultWindow(VanillaPlayerController owner) {
 		super(WindowType.DEFAULT, "Inventory", owner, owner.getInventory().getCraftingGrid());
 		this.addInventory(owner.getInventory().getMain(), MAIN_SLOTS);
 		this.addInventory(owner.getInventory().getCraftingGrid(), CRAFTING_SLOTS);

@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.customdata;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.VanillaProtocol;
 
 public class UnregisterPluginChannelMessageHandler extends MessageHandler<UnregisterPluginChannelMessage> {

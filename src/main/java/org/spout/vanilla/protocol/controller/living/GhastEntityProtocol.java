@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.controller.living.creature.hostile.Ghast;
+import org.spout.vanilla.entity.living.creature.hostile.Ghast;
 import org.spout.vanilla.protocol.controller.BasicMobEntityProtocol;
 
 public class GhastEntityProtocol extends BasicMobEntityProtocol {

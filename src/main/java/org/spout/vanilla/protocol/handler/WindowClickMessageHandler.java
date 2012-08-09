@@ -33,7 +33,7 @@ import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 import org.spout.vanilla.window.ClickArgs;
@@ -47,11 +47,11 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		}
 
 		Player player = session.getPlayer();
-		if (!(player.getController() instanceof VanillaPlayer)) {
+		if (!(player.getController() instanceof VanillaPlayerController)) {
 			return;
 		}
 
-		VanillaPlayer controller = (VanillaPlayer) player.getController();
+		VanillaPlayerController controller = (VanillaPlayerController) player.getController();
 		Window window = controller.getActiveWindow();
 		boolean result = false;
 		try {

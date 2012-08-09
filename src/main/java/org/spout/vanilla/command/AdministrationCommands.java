@@ -49,8 +49,8 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.controller.world.VanillaSky;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.world.VanillaSky;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -138,7 +138,7 @@ public class AdministrationCommands {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
 		}
-		VanillaPlayer vplayer = (VanillaPlayer) player.getController();
+		VanillaPlayerController vplayer = (VanillaPlayerController) player.getController();
 
 		short data = 0;
 		if (args.isInteger(index)) {
@@ -271,7 +271,7 @@ public class AdministrationCommands {
 			player = (Player) source;
 		}
 
-		if (!(player.getController() instanceof VanillaPlayer)) {
+		if (!(player.getController() instanceof VanillaPlayerController)) {
 			throw new CommandException("Invalid player!");
 		}
 
@@ -287,7 +287,7 @@ public class AdministrationCommands {
 		}
 
 		String message;
-		VanillaPlayer p = (VanillaPlayer) player.getController();
+		VanillaPlayerController p = (VanillaPlayerController) player.getController();
 		switch (mode) {
 			case 0:
 				p.setGameMode(GameMode.SURVIVAL);
@@ -430,9 +430,9 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("Don't be silly...you cannot kill yourself as the console.");
 			}
-			((VanillaPlayer) ((Player) source).getController()).getHealth().die(source);
+			((VanillaPlayerController) ((Player) source).getController()).getHealth().die(source);
 		} else {
-			VanillaPlayer victim = (VanillaPlayer) Spout.getEngine().getPlayer(args.getString(0), true).getController();
+			VanillaPlayerController victim = (VanillaPlayerController) Spout.getEngine().getPlayer(args.getString(0), true).getController();
 			if (victim != null) {
 				victim.getHealth().die(source);
 			}

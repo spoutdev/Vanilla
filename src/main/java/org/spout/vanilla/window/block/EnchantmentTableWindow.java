@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.window.block;
 
-import org.spout.vanilla.controller.block.EnchantmentTable;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.block.EnchantmentTable;
 import org.spout.vanilla.event.window.WindowPropertyEvent;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.util.intmap.SlotIndexRow;
@@ -37,7 +37,7 @@ import org.spout.vanilla.window.WindowType;
 public class EnchantmentTableWindow extends TransactionWindow {
 	private static final SlotIndexCollection ENCHANT_SLOTS = new SlotIndexRow(1);
 
-	public EnchantmentTableWindow(VanillaPlayer owner, EnchantmentTable table) {
+	public EnchantmentTableWindow(VanillaPlayerController owner, EnchantmentTable table) {
 		super(WindowType.ENCHANTMENTTABLE, "Enchant", owner, 1, table);
 		this.addInventory(table.getInventory(), ENCHANT_SLOTS);
 	}

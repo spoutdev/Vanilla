@@ -34,7 +34,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
-import org.spout.api.protocol.common.message.CustomDataMessage;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.data.GameMode;
@@ -47,6 +46,7 @@ import org.spout.vanilla.protocol.msg.ClientSettingsMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.BulkChunkMessage;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
+import org.spout.vanilla.protocol.msg.CustomDataMessage;
 import org.spout.vanilla.protocol.msg.EnchantItemMessage;
 import org.spout.vanilla.protocol.msg.EncryptionKeyRequestMessage;
 import org.spout.vanilla.protocol.msg.EncryptionKeyResponseMessage;

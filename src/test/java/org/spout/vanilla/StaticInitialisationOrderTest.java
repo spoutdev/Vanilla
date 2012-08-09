@@ -37,7 +37,7 @@ import org.spout.vanilla.material.block.solid.Stone;
 
 import static org.junit.Assert.fail;
 
-public class staticInitialisationOrderTest {
+public class StaticInitialisationOrderTest {
 	@Test
 	public void materialStaticInitialisationTest() {
 		try {

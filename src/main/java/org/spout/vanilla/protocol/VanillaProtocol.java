@@ -129,6 +129,7 @@ public class VanillaProtocol extends Protocol {
 	@Override
 	public Message getIntroductionMessage(String playerName) {
 		//return new HandshakeMessage(VanillaPlugin.MINECRAFT_PROTOCOL_ID, playerName); //TODO Fix this Raphfrk
+
 		return null;
 	}
 

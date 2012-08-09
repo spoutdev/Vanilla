@@ -26,14 +26,7 @@
  */
 package org.spout.vanilla.controller.living.creature.hostile;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class MagmaSlime extends Slime {
@@ -42,18 +35,16 @@ public class MagmaSlime extends Slime {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
+	public void onAttached() {
+		super.onAttached();
+	}
 
-		if (getSize() == 0) {
-			return drops;
+	@Override
+	public void setSize(byte size) {
+		super.setSize(size);
+		getDrops().remove(VanillaMaterials.SLIMEBALL);
+		if (size > 0) {
+			getDrops().addRange(VanillaMaterials.MAGMA_CREAM, -7, 1);
 		}
-		if (getRandom().nextInt(100) < 25) {
-			int count = getRandom().nextInt(2);
-			if (count > 0) {
-				drops.add(new ItemStack(VanillaMaterials.MAGMA_CREAM, count));
-			}
-		}
-		return drops;
 	}
 }

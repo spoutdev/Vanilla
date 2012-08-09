@@ -45,7 +45,7 @@ public class RedstoneLamp extends Solid implements Mineable, InitializableMateri
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.REDSTONE_LAMP_ON);
+		this.getDrops().add(VanillaMaterials.REDSTONE_LAMP_ON);
 	}
 
 	/**

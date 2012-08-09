@@ -31,12 +31,19 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.vehicle.Minecart;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class TransportMinecart extends Minecart {
 	private Controller passenger = null;
 
 	public TransportMinecart() {
 		super(VanillaControllerTypes.MINECART); // TODO: Per-minecart-VanillaControllerTypes
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		getDrops().add(VanillaMaterials.MINECART);
 	}
 
 	@Override

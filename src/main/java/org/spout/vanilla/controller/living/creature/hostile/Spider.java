@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.controller.living.creature.hostile;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
@@ -55,24 +54,18 @@ public class Spider extends Creature implements Hostile {
 		super.onAttached();
 		getHealth().setSpawnHealth(16);
 		getHealth().setHurtEffect(SoundEffects.MOB_SPIDER);
+		getDrops().addRange(VanillaMaterials.STRING, 2);
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-
-		int count = getRandom().nextInt(3);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.STRING, count));
-		}
-
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
 		if (lastDamager != null && lastDamager instanceof VanillaPlayer && getRandom().nextInt(100) < 33) {
-			count = getRandom().nextInt(2);
+			int count = getRandom().nextInt(2);
 			if (count > 0) {
 				drops.add(new ItemStack(VanillaMaterials.SPIDER_EYE, count));
 			}
 		}
-
 		return drops;
 	}
 }

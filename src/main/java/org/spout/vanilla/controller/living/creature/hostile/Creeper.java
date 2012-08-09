@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.controller.living.creature.hostile;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
@@ -50,16 +49,12 @@ public class Creeper extends Creature implements Hostile {
 		super.onAttached();
 		getHealth().setSpawnHealth(20);
 		getHealth().setHurtEffect(SoundEffects.MOB_CREEPER);
+		getDrops().addRange(VanillaMaterials.GUNPOWDER, 0, 2);
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(3);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.GUNPOWDER, count));
-		}
-
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
 		if (source == DamageCause.ARROW && lastDamager != null && lastDamager instanceof Skeleton) {
 			drops.add(new ItemStack(VanillaMaterials.getMaterial((short) (VanillaMaterials.GOLD_MUSIC_DISC.getId() + getRandom().nextInt(11))), 1));
 		}

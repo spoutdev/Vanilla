@@ -26,14 +26,7 @@
  */
 package org.spout.vanilla.controller.living.creature.passive;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.material.item.misc.Dye;
@@ -47,16 +40,6 @@ public class Squid extends Creature implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(10);
-	}
-
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(3) + 1;
-		if (count > 0) {
-			drops.add(new ItemStack(Dye.INK_SAC, count));
-		}
-
-		return drops;
+		getDrops().addRange(Dye.INK_SAC, 1, 3);
 	}
 }

@@ -46,7 +46,7 @@ public class LapisLazuliOre extends Ore implements TimedCraftable, Initializable
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(Dye.LAPIS_LAZULI, 2, 4);
+		this.getDrops().addRange(Dye.LAPIS_LAZULI, 2, 4);
 	}
 
 	@Override

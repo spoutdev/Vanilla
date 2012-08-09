@@ -78,7 +78,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.REDSTONE_REPEATER);
+		this.getDrops().add(VanillaMaterials.REDSTONE_REPEATER);
 	}
 
 	public boolean isPowered() {

@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.controller.living.creature.hostile;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
@@ -55,17 +54,12 @@ public class Zombie extends Creature implements Hostile {
 		super.onAttached();
 		getHealth().setSpawnHealth(20);
 		getHealth().setHurtEffect(SoundEffects.MOB_ZOMBIEHURT);
+		getDrops().addRange(VanillaMaterials.ROTTEN_FLESH, 2);
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-
-		int count = getRandom().nextInt(3);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.ROTTEN_FLESH, count));
-		}
-
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
 		if (lastDamager != null && lastDamager instanceof VanillaPlayer) {
 			if (getRandom().nextInt(25) == 0) {
 				drops.add(new ItemStack(VanillaMaterials.IRON_INGOT, 1));

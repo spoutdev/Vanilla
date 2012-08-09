@@ -27,6 +27,7 @@
 package org.spout.vanilla.controller.living.creature.passive;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.spout.api.Source;
@@ -59,17 +60,13 @@ public class Chicken extends Creature implements Passive {
 		getHealth().setHurtEffect(SoundEffects.MOB_CHICKENHURT);
 		dropItemComponent = new TimedDropItemComponent(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
 		registerProcess(dropItemComponent);
+		getDrops().add(VanillaMaterials.FEATHER, 2);
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(3);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.FEATHER, count));
-		}
-
-		count = getRandom().nextInt(2);
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
+		int count = getRandom().nextInt(2);
 		if (count > 0) {
 			if (source == DamageCause.BURN) {
 				drops.add(new ItemStack(VanillaMaterials.COOKED_CHICKEN, count));

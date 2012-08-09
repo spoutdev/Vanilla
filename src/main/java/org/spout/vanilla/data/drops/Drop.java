@@ -24,23 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.util;
+package org.spout.vanilla.data.drops;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.material.VanillaMaterials;
+import java.util.List;
+import java.util.Random;
 
-public class SnowGolem extends Creature implements Passive {
-	public SnowGolem() {
-		super(VanillaControllerTypes.SNOW_GOLEM);
-	}
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 
-	@Override
-	public void onAttached() {
-		getHealth().setSpawnHealth(6);
-		getHealth().setDeathAnimation(false);
-		super.onAttached();
-		getDrops().addRange(VanillaMaterials.SNOWBALL, 15);
-	}
+/**
+ * Contains one or more Drops
+ */
+public interface Drop {
+
+	/**
+	 * Gets the Drops
+	 * 
+	 * @param random to use
+	 * @return list of ItemStacks
+	 */
+	public List<ItemStack> getDrops(Random random);
+
+	/**
+	 * Tests if this Drop contains the Material specified
+	 * 
+	 * @param material to check
+	 * @return True if the material is contained, False if not
+	 */
+	public boolean containsDrop(Material material);
 }

@@ -26,16 +26,10 @@
  */
 package org.spout.vanilla.controller.living.creature.hostile;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.spout.api.Source;
 import org.spout.api.entity.Entity;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.data.VanillaData;
@@ -44,14 +38,17 @@ import org.spout.vanilla.material.VanillaMaterials;
 public class Slime extends Creature implements Hostile {
 	private byte size;
 
+	public Slime() {
+		this((byte) 0);
+	}
+
+	public Slime(VanillaControllerType type) {
+		this(type, (byte) 0);
+	}
+
 	public Slime(byte size) {
 		super(VanillaControllerTypes.SLIME);
 		this.size = size;
-	}
-
-	public Slime() {
-		super(VanillaControllerTypes.SLIME);
-		this.size = data().get(VanillaData.SLIME_SIZE);
 	}
 
 	public Slime(VanillaControllerType type, byte size) {
@@ -59,16 +56,11 @@ public class Slime extends Creature implements Hostile {
 		this.size = size;
 	}
 
-	public Slime(VanillaControllerType type) {
-		super(type);
-		this.size = data().get(VanillaData.SLIME_SIZE);
-	}
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		int health = size > 0 ? size * 4 : 1;
-		getHealth().setSpawnHealth(health);
+		setSize(data().get(VanillaData.SLIME_SIZE, this.size));
+		getHealth().setSpawnHealth(size > 0 ? size * 4 : 1);
 	}
 
 	@Override
@@ -89,21 +81,6 @@ public class Slime extends Creature implements Hostile {
 		}
 	}
 
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		if (getSize() == 0) {
-			return drops;
-		}
-
-		int count = getRandom().nextInt(3);
-		if (count > 0 && size <= 0) {
-			drops.add(new ItemStack(VanillaMaterials.SLIMEBALL, count));
-		}
-
-		return drops;
-	}
-
 	/**
 	 * Gets the size of the slime between 0 and 4.
 	 * @return slime's size.
@@ -120,7 +97,11 @@ public class Slime extends Creature implements Hostile {
 		if (size < 0 || size > 4) {
 			throw new IllegalArgumentException("A Slime's size must be between 0 and 4");
 		}
-
+		if (this.size == 0 && size > 0) {
+			getDrops().addRange(VanillaMaterials.SLIMEBALL, 2);
+		} else if (this.size > 0 && size == 0) {
+			getDrops().remove(VanillaMaterials.SLIMEBALL);
+		}
 		this.size = size;
 	}
 }

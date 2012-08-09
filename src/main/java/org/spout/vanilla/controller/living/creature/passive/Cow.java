@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.controller.living.creature.passive;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
@@ -55,18 +54,13 @@ public class Cow extends Creature implements Passive {
 		super.onAttached();
 		getHealth().setSpawnHealth(10);
 		getHealth().setHurtEffect(SoundEffects.MOB_COWHURT.adjust(0.4f, 1.0f));
+		getDrops().addRange(VanillaMaterials.LEATHER, 2);
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-
-		int count = getRandom().nextInt(3);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.LEATHER, count));
-		}
-
-		count = getRandom().nextInt(2) + 1;
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
+		int count = getRandom().nextInt(2) + 1;
 		if (count > 0) {
 			if (source == DamageCause.BURN) {
 				drops.add(new ItemStack(VanillaMaterials.STEAK, count));
@@ -74,7 +68,6 @@ public class Cow extends Creature implements Passive {
 				drops.add(new ItemStack(VanillaMaterials.RAW_BEEF, count));
 			}
 		}
-
 		return drops;
 	}
 }

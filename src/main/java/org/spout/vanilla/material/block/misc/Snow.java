@@ -51,7 +51,7 @@ public class Snow extends GroundAttachable implements Mineable, RandomBlockMater
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.SNOWBALL);
+		this.getDrops().add(VanillaMaterials.SNOWBALL);
 	}
 
 	@Override

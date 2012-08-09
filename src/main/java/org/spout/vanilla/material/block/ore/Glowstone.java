@@ -44,7 +44,7 @@ public class Glowstone extends Ore implements InitializableMaterial {
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.GLOWSTONE_DUST, 2, 4);
+		this.getDrops().addRange(VanillaMaterials.GLOWSTONE_DUST, 2, 4);
 	}
 
 	@Override

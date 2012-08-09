@@ -28,9 +28,16 @@ package org.spout.vanilla.controller.object.vehicle.minecart;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.vehicle.Minecart;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class StorageMinecart extends Minecart {
 	public StorageMinecart() {
 		super(VanillaControllerTypes.MINECART);
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		getDrops().add(VanillaMaterials.MINECART_CHEST);
 	}
 }

@@ -26,14 +26,7 @@
  */
 package org.spout.vanilla.controller.living.creature.hostile;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -49,23 +42,8 @@ public class Ghast extends Creature implements Hostile {
 		super.onAttached();
 		getHealth().setSpawnHealth(10);
 		getHealth().setHurtEffect(SoundEffects.MOB_GHAST_SCREAM);
-	}
-
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-
-		int count = getRandom().nextInt(3);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.GUNPOWDER, count));
-		}
-
-		count = getRandom().nextInt(2);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.GHAST_TEAR, count));
-		}
-
-		return drops;
+		getDrops().addRange(VanillaMaterials.GUNPOWDER, 2);
+		getDrops().addRange(VanillaMaterials.GHAST_TEAR, 1);
 	}
 
 	/**

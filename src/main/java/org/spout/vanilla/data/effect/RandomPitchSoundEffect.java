@@ -40,6 +40,16 @@ public class RandomPitchSoundEffect extends SoundEffect {
 	}
 
 	@Override
+	public SoundEffect adjust(float volume, float pitch) {
+		return new RandomPitchSoundEffect(super.adjust(volume, pitch), this.randomPitch);
+	}
+
+	@Override
+	public SoundEffect randomPitch(float amount) {
+		return new RandomPitchSoundEffect(this, this.randomPitch + amount);
+	}
+
+	@Override
 	public float getDefaultPitch() {
 		Random random = new Random();
 		return super.getDefaultPitch() + (random.nextFloat() - random.nextFloat()) * this.randomPitch;

@@ -24,23 +24,53 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.util;
+package org.spout.vanilla.data.drops.type;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.material.VanillaMaterials;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
-public class SnowGolem extends Creature implements Passive {
-	public SnowGolem() {
-		super(VanillaControllerTypes.SNOW_GOLEM);
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
+import org.spout.vanilla.data.drops.Drop;
+
+public class RandomRangeDrop implements Drop {
+	private final Material material;
+	private final int min, max;
+
+	public RandomRangeDrop(Material material, int min, int max) {
+		if (min >= max) {
+			throw new IllegalArgumentException("min must be less than max");
+		}
+		this.material = material;
+		this.min = min;
+		this.max = max;
+	}
+
+	public Material getMaterial() {
+		return this.material;
+	}
+
+	public int getMinAmount() {
+		return this.min;
+	}
+
+	public int getMaxAmount() {
+		return this.max;
 	}
 
 	@Override
-	public void onAttached() {
-		getHealth().setSpawnHealth(6);
-		getHealth().setDeathAnimation(false);
-		super.onAttached();
-		getDrops().addRange(VanillaMaterials.SNOWBALL, 15);
+	public List<ItemStack> getDrops(Random random) {
+		int amount = min + random.nextInt(max - min);
+		if (amount > 0) {
+			return Arrays.asList(new ItemStack(getMaterial(), amount));
+		} else {
+			return Arrays.asList();
+		}
+	}
+
+	@Override
+	public boolean containsDrop(Material material) {
+		return getMaterial().isMaterial(material);
 	}
 }

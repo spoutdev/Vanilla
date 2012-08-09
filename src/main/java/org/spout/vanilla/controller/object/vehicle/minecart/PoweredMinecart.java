@@ -31,6 +31,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.object.vehicle.Minecart;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class PoweredMinecart extends Minecart {
 	private int fuelTicks = 0;
@@ -38,6 +39,12 @@ public class PoweredMinecart extends Minecart {
 
 	public PoweredMinecart() {
 		super(VanillaControllerTypes.MINECART);
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		getDrops().add(VanillaMaterials.MINECART_FURNACE);
 	}
 
 	@Override

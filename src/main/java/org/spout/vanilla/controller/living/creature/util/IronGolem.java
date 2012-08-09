@@ -26,14 +26,7 @@
  */
 package org.spout.vanilla.controller.living.creature.util;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Utility;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -48,20 +41,7 @@ public class IronGolem extends Creature implements Utility {
 		getHealth().setSpawnHealth(100);
 		getHealth().setDeathAnimation(false);
 		super.onAttached();
-	}
-
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(3) + 3;
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.IRON_INGOT, count));
-		}
-
-		count = getRandom().nextInt(3);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.ROSE, count));
-		}
-		return drops;
+		getDrops().addRange(VanillaMaterials.IRON_INGOT, 3, 5);
+		getDrops().addRange(VanillaMaterials.ROSE, 2);
 	}
 }

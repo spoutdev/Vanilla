@@ -52,7 +52,7 @@ public abstract class SignBase extends AbstractAttachable implements Mineable, I
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.SIGN);
+		getDrops().add(VanillaMaterials.SIGN);
 	}
 
 	@Override

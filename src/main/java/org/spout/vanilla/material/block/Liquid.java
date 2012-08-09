@@ -49,7 +49,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		super(name, id);
 		this.flowing = flowing;
 		this.setLiquidObstacle(false).setHardness(100.0F).setResistance(166.7F).setOpacity(2).setCollision(CollisionStrategy.SOFT);
-		this.clearDropMaterials();
+		this.getDrops().clear();
 	}
 
 	@Override

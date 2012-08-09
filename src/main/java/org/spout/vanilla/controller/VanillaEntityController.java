@@ -26,9 +26,8 @@
  */
 package org.spout.vanilla.controller;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.logging.Level;
 
 import org.spout.api.Source;
@@ -54,6 +53,7 @@ import org.spout.vanilla.controller.component.basic.HealthComponent;
 import org.spout.vanilla.controller.component.physics.BlockCollisionComponent;
 import org.spout.vanilla.controller.object.moving.Item;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.drops.BundledDrops;
 
 /**
  * Controller that is the parent of all entity controllers.
@@ -62,6 +62,7 @@ public abstract class VanillaEntityController extends BasicController implements
 	private final VanillaControllerType type;
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();
+	private BundledDrops drops = new BundledDrops();
 	// Protocol: last known updated client transform
 	private Transform lastClientTransform = new Transform();
 	// Tick effects
@@ -290,8 +291,17 @@ public abstract class VanillaEntityController extends BasicController implements
 	 * @param lastDamager Controller that killed this controller, can be null if death was caused by natural sources such as drowning or burning
 	 * @return the drops to disperse.
 	 */
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		return new HashSet<ItemStack>();
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+		return this.getDrops().getDrops(this.rand);
+	}
+
+	/**
+	 * Gets the drops for this Entity
+	 * 
+	 * @return the drops
+	 */
+	public BundledDrops getDrops() {
+		return this.drops;
 	}
 
 	// =========================

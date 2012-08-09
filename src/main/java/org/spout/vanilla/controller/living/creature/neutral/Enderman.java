@@ -26,17 +26,12 @@
  */
 package org.spout.vanilla.controller.living.creature.neutral;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.spout.api.Source;
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.data.Data;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -57,6 +52,7 @@ public class Enderman extends Creature implements Neutral {
 			heldItem = data().get(Data.HELD_ITEM);
 		}
 		getParent().setCollision(new CollisionModel(new BoundingBox(1, 3, 1, 2, 3, 1)));
+		getDrops().addRange(VanillaMaterials.ENDER_PEARL, 1);
 	}
 
 	@Override
@@ -69,17 +65,6 @@ public class Enderman extends Creature implements Neutral {
 	public void finalizeTick() {
 		super.finalizeTick();
 		this.lastHeldItem = heldItem;
-	}
-
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(2);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.ENDER_PEARL, count));
-		}
-
-		return drops;
 	}
 
 	public ItemStack getPreviouslyHeldItem() {

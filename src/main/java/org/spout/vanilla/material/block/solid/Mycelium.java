@@ -44,7 +44,8 @@ public class Mycelium extends SpreadingSolid implements Mineable, InitializableM
 
 	@Override
 	public void initialize() {
-		this.setReplacedMaterial(VanillaMaterials.DIRT).setDropMaterial(VanillaMaterials.DIRT);
+		this.setReplacedMaterial(VanillaMaterials.DIRT);
+		this.getDrops().add(VanillaMaterials.DIRT);
 	}
 
 	@Override

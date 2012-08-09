@@ -64,9 +64,9 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 	@Override
 	public void initialize() {
 		if (this.isSticky()) {
-			this.setDropMaterial(VanillaMaterials.PISTON_STICKY_BASE);
+			this.getDrops().add(VanillaMaterials.PISTON_STICKY_BASE);
 		} else {
-			this.setDropMaterial(VanillaMaterials.PISTON_BASE);
+			this.getDrops().add(VanillaMaterials.PISTON_BASE);
 		}
 	}
 

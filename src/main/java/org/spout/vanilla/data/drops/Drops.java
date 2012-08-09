@@ -24,23 +24,35 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.util;
+package org.spout.vanilla.data.drops;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.api.material.Material;
 
-public class SnowGolem extends Creature implements Passive {
-	public SnowGolem() {
-		super(VanillaControllerTypes.SNOW_GOLEM);
-	}
+/**
+ * Contains multiple drops
+ */
+public interface Drops extends Drop {
 
-	@Override
-	public void onAttached() {
-		getHealth().setSpawnHealth(6);
-		getHealth().setDeathAnimation(false);
-		super.onAttached();
-		getDrops().addRange(VanillaMaterials.SNOWBALL, 15);
-	}
+	/**
+	 * Removes the given Drop Material from these drops
+	 * 
+	 * @param dropMaterial to remove
+	 * @return these Drops
+	 */
+	public Drops remove(Material dropMaterial);
+
+	/**
+	 * Removes all the Drops set
+	 * 
+	 * @return these Drops
+	 */
+	public Drops clear();
+
+	/**
+	 * Adds a drop to these drops
+	 * 
+	 * @param drop to add
+	 * @return these Drops
+	 */
+	public Drops add(Drop drop);
 }

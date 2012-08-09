@@ -337,11 +337,4 @@ public abstract class Minecart extends Substance implements Vehicle {
 	 */
 	public void onVelocityUpdated(float dt) {
 	}
-
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		drops.add(new ItemStack(VanillaMaterials.MINECART, 1));
-		return drops;
-	}
 }

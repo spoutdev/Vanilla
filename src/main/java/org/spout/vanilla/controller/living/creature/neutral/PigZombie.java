@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.controller.living.creature.neutral;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
@@ -48,21 +47,13 @@ public class PigZombie extends Zombie implements Neutral {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(20);
+		getDrops().addRange(VanillaMaterials.ROTTEN_FLESH, 1);
+		getDrops().addRange(VanillaMaterials.GOLD_NUGGET, 1);
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(2);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.ROTTEN_FLESH, count));
-		}
-
-		count = getRandom().nextInt(2);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.GOLD_NUGGET, count));
-		}
-
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
 		if (lastDamager != null && lastDamager instanceof VanillaPlayer) {
 			// TODO enchantments
 			if (getRandom().nextInt(25) == 0) {

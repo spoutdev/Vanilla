@@ -46,7 +46,7 @@ public class SnowBlock extends Solid implements Mineable, InitializableMaterial 
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.SNOW, 4);
+		this.getDrops().add(VanillaMaterials.SNOW, 4);
 	}
 
 	@Override

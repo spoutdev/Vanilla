@@ -26,13 +26,10 @@
  */
 package org.spout.vanilla.material;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.Random;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
@@ -46,6 +43,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.data.drops.BundledDrops;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
@@ -69,7 +67,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private MiningType miningType;
 	private boolean liquidObstacle = true;
 	private SoundEffect stepSound = SoundEffects.STEP_STONE;
-	private Map<Material, int[]> dropMaterials = new HashMap<Material, int[]>();
+	private final BundledDrops drops = new BundledDrops();
 
 	public VanillaBlockMaterial(String name, int id) {
 		this((short) 0, name, id);
@@ -82,7 +80,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.setTransparent();
 		this.setMiningLevel(0);
 		this.setMiningType(MiningType.PICKAXE);
-		this.setDropMaterial(this);
+		this.getDrops().add(this);
 	}
 
 	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent) {
@@ -92,7 +90,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.setTransparent();
 		this.setMiningLevel(0);
 		this.setMiningType(MiningType.PICKAXE);
-		this.setDropMaterial(this);
+		this.getDrops().add(this);
 	}
 
 	@Override
@@ -371,13 +369,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		if (canDrop(block, holding)) {
 			if (holding != null && EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH)) {
 				return Arrays.asList(new ItemStack(this, 1));
-			} else if (!this.dropMaterials.isEmpty()) {
-				ArrayList<ItemStack> drops = new ArrayList<ItemStack>(this.dropMaterials.size());
-				for (Material m : dropMaterials.keySet()) {
-					int[] amount = dropMaterials.get(m);
-					drops.add(new ItemStack(m, amount[(int) (Math.random() * amount.length)]));
-				}
-				return drops;
+			} else {
+				return this.drops.getDrops(new Random());
 			}
 		}
 		return Collections.<ItemStack>emptyList();
@@ -458,56 +451,12 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		return miningType;
 	}
 
-	public VanillaBlockMaterial removeDropMaterial(Material dropMaterial) {
-		dropMaterials.remove(dropMaterial);
-		return this;
-	}
-
-	public VanillaBlockMaterial clearDropMaterials() {
-		dropMaterials.clear();
-		return this;
-	}
-
-	public VanillaBlockMaterial addDropMaterial(Material dropMaterial) {
-		return addDropMaterial(dropMaterial, 1);
-	}
-
-	public VanillaBlockMaterial addDropMaterial(Material dropMaterial, int min, int max) {
-		if (min >= max) {
-			throw new IllegalArgumentException("min must be less than max");
-		}
-		int j = 0;
-		int[] amount = new int[(max - min) + 1];
-		for (int i = min; i <= max; i++) {
-			amount[j++] = i;
-		}
-		return addDropMaterial(dropMaterial, amount);
-	}
-
-	public VanillaBlockMaterial addDropMaterial(Material dropMaterial, int... amount) {
-		dropMaterials.put(dropMaterial, amount);
-		return this;
-	}
-
-	public VanillaBlockMaterial setDropMaterial(Material dropMaterial) {
-		return setDropMaterial(dropMaterial, 1);
-	}
-
-	public VanillaBlockMaterial setDropMaterial(Material dropMaterial, int min, int max) {
-		dropMaterials.clear();
-		return addDropMaterial(dropMaterial, min, max);
-	}
-
-	public VanillaBlockMaterial setDropMaterial(Material dropMaterial, int... amount) {
-		dropMaterials.clear();
-		return addDropMaterial(dropMaterial, amount);
-	}
-
-	public Set<Material> getDropMaterialsSet() {
-		return dropMaterials.keySet();
-	}
-
-	public Map<Material, int[]> getDropMaterialsMap() {
-		return dropMaterials;
+	/**
+	 * Gets the drops for this block material
+	 * 
+	 * @return the drops
+	 */
+	public BundledDrops getDrops() {
+		return this.drops;
 	}
 }

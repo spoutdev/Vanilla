@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.component.ai.attack;
 
+import org.spout.api.entity.BasicComponent;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
@@ -35,18 +36,6 @@ import org.spout.vanilla.controller.living.creature.hostile.EnderDragon;
  * The EnderDragon's attack component which involves randomly flying around, setting up for a
  * potential "hit and run" against a controller.
  */
-public class EnderDragonAttackComponent extends LogicRunnable<EnderDragon> {
-	public EnderDragonAttackComponent(EnderDragon parent, LogicPriority priority) {
-		super(parent, priority);
-	}
-
-	@Override
-	public boolean shouldRun(float dt) {
-		return false; //TODO Should this extend AttackLogic and call super?
-	}
-
-	@Override
-	public void run() {
-		//TODO Watch the player and (most of the time) attack whenever their back is turned!
-	}
+public class EnderDragonAttackComponent extends BasicComponent<EnderDragon> {
+	//TODO Override methods for this AI component!
 }

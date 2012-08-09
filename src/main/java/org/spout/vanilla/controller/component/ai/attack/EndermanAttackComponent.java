@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.component.ai.attack;
 
+import org.spout.api.entity.BasicComponent;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
@@ -34,18 +35,6 @@ import org.spout.vanilla.controller.living.creature.neutral.Enderman;
 /**
  * The Enderman's attack component which involves a "hit and run" style of assault against a controller.
  */
-public class EndermanAttackComponent extends LogicRunnable<Enderman> {
-	public EndermanAttackComponent(Enderman parent, LogicPriority priority) {
-		super(parent, priority);
-	}
-
-	@Override
-	public boolean shouldRun(float dt) {
-		return false;
-	}
-
-	@Override
-	public void run() {
-		//TODO Attack the player and randomly teleport away!
-	}
+public class EndermanAttackComponent extends BasicComponent<Enderman> {
+	//TODO Override methods for this AI component!
 }

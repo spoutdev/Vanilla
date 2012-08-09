@@ -26,26 +26,16 @@
  */
 package org.spout.vanilla.controller.component.ai.attack;
 
+import org.spout.api.entity.BasicComponent;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
+import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.controller.living.creature.hostile.Creeper;
 
 /**
  * The Creeper's attack component which involves approaching a controller and exploding.
  */
-public class CreeperAttackComponent extends LogicRunnable<Creeper> {
-	public CreeperAttackComponent(Creeper parent, LogicPriority priority) {
-		super(parent, priority);
-	}
-
-	@Override
-	public boolean shouldRun(float dt) {
-		return false; //TODO Should this extend AttackLogic and call super?
-	}
-
-	@Override
-	public void run() {
-		//TODO SSSSSSssssssssss boom!
-	}
+public class CreeperAttackComponent extends BasicComponent<Creeper> {
+	//TODO Override methods for this AI component!
 }

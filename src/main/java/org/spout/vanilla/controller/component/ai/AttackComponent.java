@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.component.ai;
 
+import org.spout.api.entity.BasicComponent;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
@@ -36,18 +37,5 @@ import org.spout.vanilla.controller.living.Creature;
  * Basic component for VanillaEntityControllers that attack other controllers. VanillaEntityControllers that simply collide against the
  * other controller without doing anything else (ie Zombies) should use this component.
  */
-public class AttackLogic extends LogicRunnable<VanillaEntityController> {
-	public AttackLogic(Creature parent, LogicPriority priority) {
-		super(parent, priority);
-	}
-
-	@Override
-	public boolean shouldRun(float dt) {
-		return false;
-	}
-
-	@Override
-	public void run() {
-
-	}
+public class AttackComponent extends BasicComponent<VanillaEntityController> {
 }

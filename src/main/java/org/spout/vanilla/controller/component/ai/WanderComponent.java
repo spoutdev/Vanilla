@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.component.ai;
 
+import org.spout.api.entity.BasicComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
@@ -37,20 +38,16 @@ import org.spout.vanilla.controller.VanillaEntityController;
 /**
  * Basic component for VanillaEntityControllers that move around in the world.
  */
-public class WanderLogic extends LogicRunnable<VanillaEntityController> {
+public class WanderComponent extends BasicComponent<VanillaEntityController> {
 	private static final int WANDER_FREQ = 25;
 
-	public WanderLogic(VanillaEntityController parent) {
-		super(parent);
-	}
-
 	@Override
-	public boolean shouldRun(float dt) {
+	public boolean canTick() {
 		return getParent().getRandom().nextInt(100) < WANDER_FREQ;
 	}
 
 	@Override
-	public void run() {
+	public void onTick(float dt) {
 		VanillaEntityController controller = getParent();
 		Entity entity = controller.getParent();
 		//Get the direction the entity is facing

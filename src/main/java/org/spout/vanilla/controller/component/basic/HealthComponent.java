@@ -28,9 +28,12 @@ package org.spout.vanilla.controller.component.basic;
 
 import org.spout.api.Source;
 import org.spout.api.Spout;
+import org.spout.api.entity.BasicComponent;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
+import org.spout.api.tickable.TickPriority;
+
 import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
@@ -45,7 +48,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 /**
  * A component handling health and death
  */
-public class HealthComponent extends LogicRunnable<VanillaEntityController> {
+public class HealthComponent extends BasicComponent<VanillaEntityController> {
 	private static final int DEATH_TIME_TICKS = 30;
 	private int deathTicks = -1;
 	private int health = 1;
@@ -56,20 +59,20 @@ public class HealthComponent extends LogicRunnable<VanillaEntityController> {
 	private DamageCause lastDamageCause = DamageCause.UNKNOWN;
 	private VanillaEntityController lastDamager;
 
-	public HealthComponent(VanillaEntityController parent, LogicPriority priority) {
-		super(parent, priority);
+	public HealthComponent(TickPriority priority) {
+		super(priority);
 	}
 
 	@Override
-	public void onRegistration() {
-		health = getParent().data().get(VanillaData.HEALTH);
-		maxHealth = getParent().data().get(VanillaData.MAX_HEALTH);
+	public void onAttached() {
+		health = getParent().getDataMap().get(VanillaData.HEALTH);
+		maxHealth = getParent().getDataMap().get(VanillaData.MAX_HEALTH);
 	}
 
 	@Override
-	public void onUnregistration() {
-		getParent().data().put(VanillaData.HEALTH, health);
-		getParent().data().put(VanillaData.MAX_HEALTH, maxHealth);
+	public void onDetached() {
+		getParent().getDataMap().put(VanillaData.HEALTH, health);
+		getParent().getDataMap().put(VanillaData.MAX_HEALTH, maxHealth);
 	}
 
 	/**
@@ -245,12 +248,12 @@ public class HealthComponent extends LogicRunnable<VanillaEntityController> {
 	}
 
 	@Override
-	public boolean shouldRun(float dt) {
+	public boolean canTick() {
 		return true;
 	}
 
 	@Override
-	public void run() {
+	public void onTick(float dt) {
 		if (this.isDying()) {
 			deathTicks--;
 			if (deathTicks == 0) {

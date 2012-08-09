@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.controller.component.ai.attack;
 
+import org.spout.api.entity.BasicComponent;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 
@@ -35,18 +36,6 @@ import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
  * The Skeleton's attack component which involves keeping a distance from the controller and
  * shooting arrows.
  */
-public class SkeletonAttackComponent extends LogicRunnable<Skeleton> {
-	public SkeletonAttackComponent(Skeleton parent, LogicPriority priority) {
-		super(parent, priority);
-	}
-
-	@Override
-	public boolean shouldRun(float dt) {
-		return false; //TODO Should this extend AttackLogic and call super?
-	}
-
-	@Override
-	public void run() {
-		//TODO Fire arrows at the player at a distance! Skeletons are rangers :P.
-	}
+public class SkeletonAttackComponent extends BasicComponent<Skeleton> {
+	//TODO Override methods for this AI component!
 }

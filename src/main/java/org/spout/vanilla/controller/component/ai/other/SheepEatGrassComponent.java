@@ -28,9 +28,9 @@ package org.spout.vanilla.controller.component.ai.other;
 
 import java.util.Random;
 
+import org.spout.api.entity.BasicComponent;
 import org.spout.api.math.Vector3;
-import org.spout.api.tickable.LogicPriority;
-import org.spout.api.tickable.LogicRunnable;
+import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.controller.living.creature.passive.Sheep;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -41,64 +41,27 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 /**
  * Sheep component for eating grass
  */
-public class SheepEatGrassComponent extends LogicRunnable<Sheep> {
+public class SheepEatGrassComponent extends BasicComponent<Sheep> {
 	private static final int CHANCE_AS_ADULT = 1000;
 	private static final int CHANCE_AS_BABY = 50;
 
 	/**
-	 * Create a LogicRunnable for Sheeps eating grass with normal priority.
-	 * @param parent the sheep eating grass.
-	 */
-	public SheepEatGrassComponent(Sheep parent) {
-		this(parent, LogicPriority.NORMAL);
-	}
-
-	/**
-	 * Create a LogicRunnable for Sheeps eating grass.
-	 * @param parent the sheep eating grass.
+	 * Creates a Component for Sheeps eating grass.
 	 * @param priority the priority of this component.
 	 */
-	public SheepEatGrassComponent(Sheep parent, LogicPriority priority) {
-		super(parent, priority);
+	public SheepEatGrassComponent(TickPriority priority) {
+		super(priority);
 	}
 
 	@Override
-	public void run() {
-		final Vector3 position = parent.getPreviousPosition();
+	public boolean canTick() {
+		final Random random = getParent().getRandom();
+		final Vector3 position = getParent().getPreviousPosition();
 		final int x = position.getFloorX();
 		final int y = position.getFloorY() - 1;
 		final int z = position.getFloorZ();
-		if (isBlockEatableTallGrass(x, y, z)) {
-			parent.getParent().getWorld().setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, parent.getParent());
-			onGrassEaten();
-		} else if (parent.getParent().getWorld().getBlockMaterial(x, y, z) == VanillaMaterials.GRASS) {
-			parent.getParent().getWorld().setBlockMaterial(x, y, z, VanillaMaterials.DIRT, (short) 0, parent.getParent());
-			onGrassEaten();
-		}
-	}
-
-	/**
-	 * Is called when the sheep eats grass. Applies the bonuses to the sheep.
-	 */
-	private void onGrassEaten() {
-		broadcastPacket(new EntityStatusMessage(parent.getParent().getId(), EntityStatusMessage.SHEEP_EAT_GRASS));
-		parent.setSheared(false);
-		long newTimeUntilAdult = parent.getGrowing().getTimeUntilAdult() - 1200;
-		if (newTimeUntilAdult < 0) {
-			newTimeUntilAdult = 0;
-		}
-		parent.getGrowing().setTimeUntilAdult(newTimeUntilAdult);
-	}
-
-	@Override
-	public boolean shouldRun(float dt) {
-		final Random random = parent.getRandom();
-		final Vector3 position = parent.getPreviousPosition();
-		final int x = position.getFloorX();
-		final int y = position.getFloorY() - 1;
-		final int z = position.getFloorZ();
-		int maxInt = 0;
-		if (parent.getGrowing().isBaby()) {
+		int maxInt;
+		if (getParent().getGrowing().isBaby()) {
 			maxInt = CHANCE_AS_BABY;
 		} else {
 			maxInt = CHANCE_AS_ADULT;
@@ -109,10 +72,38 @@ public class SheepEatGrassComponent extends LogicRunnable<Sheep> {
 		if (isBlockEatableTallGrass(x, y, z)) {
 			return true;
 		}
-		return parent.getParent().getWorld().getBlockMaterial(x, y, z) == VanillaMaterials.GRASS;
+		return getParent().getParent().getWorld().getBlockMaterial(x, y, z) == VanillaMaterials.GRASS;
+	}
+
+	@Override
+	public void onTick(float dt) {
+		final Vector3 position = getParent().getParent().getLastTransform().getPosition();
+		final int x = position.getFloorX();
+		final int y = position.getFloorY() - 1;
+		final int z = position.getFloorZ();
+		if (isBlockEatableTallGrass(x, y, z)) {
+			getParent().getParent().getWorld().setBlockMaterial(x, y, z, VanillaMaterials.AIR, (short) 0, getParent().getParent());
+			onGrassEaten();
+		} else if (getParent().getParent().getWorld().getBlockMaterial(x, y, z) == VanillaMaterials.GRASS) {
+			getParent().getParent().getWorld().setBlockMaterial(x, y, z, VanillaMaterials.DIRT, (short) 0, getParent().getParent());
+			onGrassEaten();
+		}
+	}
+
+	/**
+	 * Is called when the sheep eats grass. Applies the bonuses to the sheep.
+	 */
+	private void onGrassEaten() {
+		broadcastPacket(new EntityStatusMessage(getParent().getParent().getId(), EntityStatusMessage.SHEEP_EAT_GRASS));
+		getParent().setSheared(false);
+		long newTimeUntilAdult = getParent().getGrowing().getTimeUntilAdult() - 1200;
+		if (newTimeUntilAdult < 0) {
+			newTimeUntilAdult = 0;
+		}
+		getParent().getGrowing().setTimeUntilAdult(newTimeUntilAdult);
 	}
 
 	private boolean isBlockEatableTallGrass(int x, int y, int z) {
-		return parent.getParent().getWorld().getBlockMaterial(x, y, z) == VanillaMaterials.TALL_GRASS && parent.getParent().getWorld().getBlockData(x, y, z) == 1;
+		return getParent().getParent().getWorld().getBlockMaterial(x, y, z) == VanillaMaterials.TALL_GRASS && getParent().getParent().getWorld().getBlockData(x, y, z) == 1;
 	}
 }

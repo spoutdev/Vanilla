@@ -39,6 +39,7 @@ import org.spout.api.entity.component.Controller;
 import org.spout.api.event.EventHandler;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.cuboid.ChunkSnapshot.EntityType;
@@ -69,7 +70,9 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.event.block.BlockActionEvent;
+import org.spout.vanilla.event.block.SignUpdateEvent;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.event.player.network.PlayerKeepAliveEvent;
@@ -97,8 +100,10 @@ import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.PlayerUpdateStatsMessage;
+import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
@@ -532,6 +537,17 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 		VanillaPlayer player = (VanillaPlayer) event.getPlayer().getController();
 		return new PlayerUpdateStatsMessage((short) player.getHealth().getHealth(), player.getSurvivalLogic().getHunger(), player.getSurvivalLogic().getFoodSaturation());
+	}
+
+	@EventHandler
+	public Message onEntityMetaChange(EntityMetaChangeEvent event) {
+		return new EntityMetadataMessage(event.getEntity().getId(), event.getParameters());
+	}
+
+	@EventHandler
+	public Message onSignUpdate(SignUpdateEvent event) {
+		Block block = event.getSign().getBlock();
+		return new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), event.getLines());
 	}
 
 	public static enum ChunkInit {

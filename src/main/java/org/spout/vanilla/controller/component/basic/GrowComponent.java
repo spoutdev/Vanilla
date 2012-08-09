@@ -34,8 +34,8 @@ import org.spout.api.tickable.LogicRunnable;
 import org.spout.api.util.Parameter;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 
 /**
  * Provides a baby state and allows the entity to grow over time
@@ -86,8 +86,8 @@ public class GrowComponent extends LogicRunnable<Creature> {
 		growthTicks++;
 		if (growthTicks >= 0) {
 			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-			parameters.add(EntityMetadataMessage.Parameters.META_BABYANIMALSTAGE.get());
-			VanillaNetworkUtil.broadcastPacket(new EntityMetadataMessage(getParent().getParent().getId(), parameters));
+			parameters.add(EntityMetadataMessage.Parameters.META_BREEDANIMALSTAGE.get());
+			getParent().callProtocolEvent(new EntityMetaChangeEvent(getParent().getParent(), parameters));
 		}
 	}
 

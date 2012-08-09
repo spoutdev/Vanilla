@@ -37,9 +37,8 @@ import org.spout.api.player.Player;
 import org.spout.vanilla.controller.VanillaBlockController;
 import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.event.block.SignChangeEvent;
+import org.spout.vanilla.event.block.SignUpdateEvent;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.UpdateSignMessage;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class Sign extends VanillaBlockController {
 	private String[] text = new String[4];
@@ -137,7 +136,8 @@ public class Sign extends VanillaBlockController {
 	}
 
 	private void update() {
-		Block block = getBlock();
-		VanillaNetworkUtil.sendPacket(dirty.toArray(new Player[dirty.size()]), new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), text));
+		for (Player player : dirty) {
+			player.getNetworkSynchronizer().callProtocolEvent(new SignUpdateEvent(this, text));
+		}
 	}
 }

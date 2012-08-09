@@ -29,8 +29,6 @@ package org.spout.vanilla.controller.component.basic;
 import org.spout.api.Source;
 import org.spout.api.Spout;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.player.Player;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
 import org.spout.vanilla.controller.VanillaEntityController;
@@ -232,12 +230,9 @@ public class HealthComponent extends LogicRunnable<VanillaEntityController> {
 		lastDamager = damager;
 		lastDamageCause = cause;
 		if (sendHurtMessage) {
-			Point position = getParent().getParent().getPosition();
-			for (Player player : position.getWorld().getNearbyPlayers(position, 128)) {
-				player.getNetworkSynchronizer().callProtocolEvent(new EntityAnimationEvent(getParent().getParent(), EntityAnimationMessage.ANIMATION_HURT));
-				player.getNetworkSynchronizer().callProtocolEvent(new EntityStatusEvent(getParent().getParent(), EntityStatusMessage.ENTITY_HURT));
-			}
-			getHurtEffect().playGlobal(position);
+			getParent().callProtocolEvent(new EntityAnimationEvent(getParent().getParent(), EntityAnimationMessage.ANIMATION_HURT));
+			getParent().callProtocolEvent(new EntityStatusEvent(getParent().getParent(), EntityStatusMessage.ENTITY_HURT));
+			getHurtEffect().playGlobal(getParent().getParent().getPosition());
 		}
 	}
 
@@ -264,10 +259,7 @@ public class HealthComponent extends LogicRunnable<VanillaEntityController> {
 		} else if (this.getHealth() <= 0) {
 			if (this.hasDeathAnimation()) {
 				deathTicks = DEATH_TIME_TICKS;
-				Point position = getParent().getParent().getPosition();
-				for (Player player : position.getWorld().getNearbyPlayers(position, 128)) {
-					player.getNetworkSynchronizer().callProtocolEvent(new EntityStatusEvent(getParent().getParent(), EntityStatusMessage.ENTITY_DEAD));
-				}
+				getParent().callProtocolEvent(new EntityStatusEvent(getParent().getParent(), EntityStatusMessage.ENTITY_DEAD));
 			} else {
 				getParent().kill();
 			}

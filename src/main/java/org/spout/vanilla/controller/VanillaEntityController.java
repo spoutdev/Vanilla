@@ -45,6 +45,8 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
+import org.spout.api.player.Player;
+import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.tickable.LogicPriority;
 
 import org.spout.vanilla.controller.component.basic.FireDamageComponent;
@@ -157,7 +159,14 @@ public abstract class VanillaEntityController extends BasicController implements
 	public VanillaControllerType getType() {
 		return type;
 	}
-	
+
+	@Override
+	public void callProtocolEvent(ProtocolEvent event) {
+		for (Player player : getParent().getWorld().getNearbyPlayers(getParent(), 160)) {
+			player.getNetworkSynchronizer().callProtocolEvent(event);
+		}
+	}
+
 	/**
 	 * Gets the fire damage component
 	 * 

@@ -24,25 +24,37 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller;
+package org.spout.vanilla.event.block;
 
-import org.spout.api.entity.component.controller.BlockController;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.player.Player;
+import org.spout.api.event.Event;
+import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.vanilla.controller.block.Sign;
 
-/**
- * A controller that is always at a fixed position handling Block logic a Block material can't do
- */
-public abstract class VanillaBlockController extends BlockController implements VanillaController {
-	protected VanillaBlockController(VanillaControllerType type, BlockMaterial blockMaterial) {
-		super(type, blockMaterial);
+public class SignUpdateEvent extends Event implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private Sign sign;
+	private String[] newLines;
+
+	public SignUpdateEvent(Sign sign, String[] newLines) {
+		this.sign = sign;
+		this.newLines = newLines;
+	}
+
+	public Sign getSign() {
+		return sign;
+	}
+
+	public String[] getLines() {
+		return newLines;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 
 	@Override
-	public void callProtocolEvent(ProtocolEvent event) {
-		for (Player player : getParent().getWorld().getNearbyPlayers(getParent(), 160)) {
-			player.getNetworkSynchronizer().callProtocolEvent(event);
-		}
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 }

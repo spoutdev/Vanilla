@@ -24,25 +24,47 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller;
+package org.spout.vanilla.controller.component.basic;
 
-import org.spout.api.entity.component.controller.BlockController;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.player.Player;
-import org.spout.api.protocol.event.ProtocolEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * A controller that is always at a fixed position handling Block logic a Block material can't do
- */
-public abstract class VanillaBlockController extends BlockController implements VanillaController {
-	protected VanillaBlockController(VanillaControllerType type, BlockMaterial blockMaterial) {
-		super(type, blockMaterial);
+import org.spout.api.tickable.LogicPriority;
+import org.spout.api.tickable.LogicRunnable;
+import org.spout.api.util.Parameter;
+import org.spout.vanilla.controller.VanillaEntityController;
+import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
+
+public class MetaDataComponent extends LogicRunnable<VanillaEntityController> {
+	private List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+	private boolean dirty = false;
+
+	public MetaDataComponent(VanillaEntityController parent, LogicPriority priority) {
+		super(parent, priority);
+	}
+
+	public void setData(List<Parameter<?>> parameters) {
+		this.parameters = parameters;
+		dirty = true;
+	}
+
+	public List<Parameter<?>> getData() {
+		return parameters;
+	}
+
+	public void addData(Parameter<?> parameter) {
+		parameters.add(parameter);
+		dirty = true;
+	}
+	
+	@Override
+	public void run() {
+		dirty = false;
+		getParent().callProtocolEvent(new EntityMetaChangeEvent(getParent().getParent(), getData()));
 	}
 
 	@Override
-	public void callProtocolEvent(ProtocolEvent event) {
-		for (Player player : getParent().getWorld().getNearbyPlayers(getParent(), 160)) {
-			player.getNetworkSynchronizer().callProtocolEvent(event);
-		}
+	public boolean shouldRun(float dt) {
+		return dirty;
 	}
 }

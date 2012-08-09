@@ -24,46 +24,50 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.hostile;
+package org.spout.vanilla.controller.component.basic;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.VanillaEntityController;
+import org.spout.api.tickable.LogicPriority;
 import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Hostile;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.material.VanillaMaterials;
 
-public class Blaze extends Creature implements Hostile {
-	public Blaze() {
-		super(VanillaControllerTypes.BLAZE);
+public class CreatureHealthComponent extends HealthComponent {
+	private SoundEffect babyHurtEffect = SoundEffects.NONE;
+	private SoundEffect adultHurtEffect = SoundEffects.NONE;
+
+	public SoundEffect getAdultHurtEffect() {
+		return adultHurtEffect;
+	}
+
+	public SoundEffect getBabyHurtEffect() {
+		return babyHurtEffect;
+	}
+
+	public void setAdultHurtEffect(SoundEffect effect) {
+		adultHurtEffect = effect;
+	}
+
+	public void setBabyHurtEffect(SoundEffect effect) {
+		babyHurtEffect = effect;
 	}
 
 	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHealth().setSpawnHealth(20);
-		getHealth().setHurtEffect(SoundEffects.MOB_BLAZE_HIT);
+	public void setHurtEffect(SoundEffect effect) {
+		adultHurtEffect = effect.randomPitch(0.2f);
+		babyHurtEffect = effect.adjust(effect.getDefaultVolume(), effect.getDefaultPitch() + 0.5f).randomPitch(0.2f);
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		if (lastDamager == null || !(lastDamager instanceof VanillaPlayer)) {
-			return super.getDrops(source, lastDamager);
-		}
+	public SoundEffect getHurtEffect() {
+		return getParent().getGrowing().isBaby() ? babyHurtEffect : adultHurtEffect;
+	}
 
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(2);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.BLAZE_ROD, count));
-		}
+	public CreatureHealthComponent(Creature parent, LogicPriority priority) {
+		super(parent, priority);
+	}
 
-		return drops;
+	@Override
+	public Creature getParent() {
+		return (Creature) super.getParent();
 	}
 }

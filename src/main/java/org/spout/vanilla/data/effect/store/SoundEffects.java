@@ -27,9 +27,11 @@
 package org.spout.vanilla.data.effect.store;
 
 import org.spout.vanilla.data.effect.SoundEffect;
+import org.spout.vanilla.data.effect.type.NoSoundEffect;
 import org.spout.vanilla.data.effect.type.NoteSoundEffect;
 
 public class SoundEffects {
+	public static final SoundEffect NONE = new NoSoundEffect();
 	public static final SoundEffect AMBIENT_CAVE_CAVE = new SoundEffect("ambient.cave.cave");
 	public static final SoundEffect AMBIENT_WEATHER_RAIN = new SoundEffect("ambient.weather.rain");
 	public static final SoundEffect AMBIENT_WEATHER_THUNDER = new SoundEffect("ambient.weather.thunder");

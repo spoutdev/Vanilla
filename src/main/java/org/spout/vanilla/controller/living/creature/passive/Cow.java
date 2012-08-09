@@ -38,6 +38,7 @@ import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.DamageCause;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Cow extends Creature implements Passive {
@@ -53,6 +54,7 @@ public class Cow extends Creature implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(10);
+		getHealth().setHurtEffect(SoundEffects.MOB_COWHURT.adjust(0.4f, 1.0f));
 	}
 
 	@Override

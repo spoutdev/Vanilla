@@ -38,6 +38,7 @@ import org.spout.vanilla.controller.component.ai.other.SheepEatGrassComponent;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.DamageCause;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
 
@@ -56,6 +57,7 @@ public class Sheep extends Creature implements Passive {
 		final SheepEatGrassComponent eatGrassComponent = new SheepEatGrassComponent(this);
 		registerProcess(eatGrassComponent);
 		isSheared = data().get("sheep_sheared", false);
+		getHealth().setHurtEffect(SoundEffects.MOB_SHEEP);
 	}
 
 	@Override

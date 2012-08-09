@@ -83,11 +83,11 @@ public class SheepEatGrassComponent extends LogicRunnable<Sheep> {
 	private void onGrassEaten() {
 		broadcastPacket(new EntityStatusMessage(parent.getParent().getId(), EntityStatusMessage.SHEEP_EAT_GRASS));
 		parent.setSheared(false);
-		long newTimeUntilAdult = parent.getTimeUntilAdult() - 1200;
+		long newTimeUntilAdult = parent.getGrowing().getTimeUntilAdult() - 1200;
 		if (newTimeUntilAdult < 0) {
 			newTimeUntilAdult = 0;
 		}
-		parent.setTimeUntilAdult(newTimeUntilAdult);
+		parent.getGrowing().setTimeUntilAdult(newTimeUntilAdult);
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class SheepEatGrassComponent extends LogicRunnable<Sheep> {
 		final int y = position.getFloorY() - 1;
 		final int z = position.getFloorZ();
 		int maxInt = 0;
-		if (parent.isBaby()) {
+		if (parent.getGrowing().isBaby()) {
 			maxInt = CHANCE_AS_BABY;
 		} else {
 			maxInt = CHANCE_AS_ADULT;

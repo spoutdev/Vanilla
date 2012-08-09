@@ -49,6 +49,7 @@ import static org.spout.vanilla.util.VanillaMathHelper.getLookAtPitch;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.controller.VanillaEntityController;
+import org.spout.vanilla.controller.component.basic.PlayerSuffocationComponent;
 import org.spout.vanilla.controller.component.effect.PoisonEffectComponent;
 import org.spout.vanilla.controller.component.gamemode.CreativeComponent;
 import org.spout.vanilla.controller.component.gamemode.SurvivalComponent;
@@ -60,10 +61,8 @@ import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
-import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.window.DefaultWindow;
 import org.spout.vanilla.window.Window;
@@ -117,7 +116,9 @@ public class VanillaPlayer extends Human implements PlayerController {
 		getParent().setScale(spawn.getScale());
 		getHealth().setSpawnHealth(20);
 		getHealth().setDeathAnimation(false);
-		
+
+		unregisterProcess(suffocationProcess);
+		suffocationProcess = registerProcess(new PlayerSuffocationComponent(this, LogicPriority.HIGHEST));
 		statsUpdateProcess = registerProcess(new StatsUpdateComponent(this, LogicPriority.NORMAL));
 		pingComponent = registerProcess(new PingComponent(this, LogicPriority.HIGHEST));
 		poisonEffectComponent = registerProcess(new PoisonEffectComponent(this, LogicPriority.HIGHEST));
@@ -393,23 +394,6 @@ public class VanillaPlayer extends Human implements PlayerController {
 	 */
 	public void rollCredits() {
 		getParent().getSession().send(false, new ChangeGameStateMessage(ChangeGameStateMessage.ENTER_CREDITS));
-	}
-
-	@Override
-	public void updateAirTicks() {
-		if (this.isSurvival()) {
-			super.updateAirTicks();
-		}
-	}
-
-	@Override
-	public int getMaxAirTicks() {
-		ItemStack helmet = getInventory().getArmor().getHelmet().getItem();
-		int level = 0;
-		if (helmet != null && EnchantmentUtil.hasEnchantment(helmet, Enchantments.RESPIRATION)) {
-			level = EnchantmentUtil.getEnchantmentLevel(helmet, Enchantments.RESPIRATION);
-		}
-		return level == 0 ? 300 : level * 300;
 	}
 
 	public PingComponent getPingComponent() {

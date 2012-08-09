@@ -27,6 +27,7 @@
 package org.spout.vanilla.controller.living.creature.hostile;
 
 import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 
 public class CaveSpider extends Spider {
 	public CaveSpider() {
@@ -37,5 +38,6 @@ public class CaveSpider extends Spider {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(12);
+		getHealth().setHurtEffect(SoundEffects.MOB_SPIDER);
 	}
 }

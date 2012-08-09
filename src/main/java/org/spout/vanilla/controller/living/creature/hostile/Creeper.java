@@ -37,6 +37,7 @@ import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.source.DamageCause;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Creeper extends Creature implements Hostile {
@@ -48,6 +49,7 @@ public class Creeper extends Creature implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(20);
+		getHealth().setHurtEffect(SoundEffects.MOB_CREEPER);
 	}
 
 	@Override

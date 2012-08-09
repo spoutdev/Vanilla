@@ -47,12 +47,11 @@ import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.tickable.LogicPriority;
 
+import org.spout.vanilla.controller.component.basic.FireDamageComponent;
 import org.spout.vanilla.controller.component.basic.HealthComponent;
 import org.spout.vanilla.controller.component.physics.BlockCollisionComponent;
 import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.entity.EntityCombustEvent;
 
 /**
  * Controller that is the parent of all entity controllers.
@@ -63,13 +62,9 @@ public abstract class VanillaEntityController extends BasicController implements
 	private static Random rand = new Random();
 	// Protocol: last known updated client transform
 	private Transform lastClientTransform = new Transform();
-	// Controller flags
-	private boolean isFlammable = true;
 	// Tick effects
-	private int fireTicks = 0;
 	private int positionTicks = 0;
 	private int velocityTicks = 0;
-	private int airTicks = 0;
 	// Velocity-related
 	private Vector3 velocity = Vector3.ZERO;
 	private Vector3 movementSpeed = Vector3.ZERO;
@@ -77,6 +72,7 @@ public abstract class VanillaEntityController extends BasicController implements
 	// Block collision handling
 	protected BlockCollisionComponent blockCollProcess;
 	protected HealthComponent healthProcess;
+	protected FireDamageComponent fireDamageProcess;
 
 	protected VanillaEntityController(VanillaControllerType type) {
 		super(type);
@@ -92,11 +88,9 @@ public abstract class VanillaEntityController extends BasicController implements
 
 		healthProcess = registerProcess(new HealthComponent(this, LogicPriority.HIGHEST));
 		blockCollProcess = registerProcess(new BlockCollisionComponent(this, LogicPriority.HIGHEST));
+		fireDamageProcess = registerProcess(new FireDamageComponent(this, LogicPriority.HIGHEST));
 
 		// Load data
-		airTicks = data().get(VanillaData.AIR_TICKS);
-		fireTicks = data().get(VanillaData.FIRE_TICKS);
-		isFlammable = data().get(VanillaData.FLAMMABLE);
 		maxSpeed = data().get(VanillaData.MAX_SPEED, maxSpeed);
 		movementSpeed = data().get(VanillaData.MOVEMENT_SPEED, movementSpeed);
 		if (data().containsKey(VanillaData.VELOCITY)) {
@@ -107,16 +101,9 @@ public abstract class VanillaEntityController extends BasicController implements
 	@Override
 	public void onSave() {
 		// Load data
-		data().put(VanillaData.AIR_TICKS, airTicks);
-		data().put(VanillaData.FIRE_TICKS, fireTicks);
-		data().put(VanillaData.FLAMMABLE, isFlammable);
 		data().put(VanillaData.MAX_SPEED, maxSpeed);
 		data().put(VanillaData.MOVEMENT_SPEED, movementSpeed);
 		data().put(VanillaData.VELOCITY, velocity);
-
-		//TODO: Put in the Health component
-		data().put(VanillaData.HEALTH, this.healthProcess.getHealth());
-		data().put(VanillaData.MAX_HEALTH, this.healthProcess.getMaxHealth());
 	}
 
 	@Override
@@ -125,8 +112,6 @@ public abstract class VanillaEntityController extends BasicController implements
 			this.healthProcess.run();
 			return;
 		}
-		updateFireTicks();
-		updateAirTicks();
 
 		positionTicks++;
 		velocityTicks++;
@@ -171,6 +156,15 @@ public abstract class VanillaEntityController extends BasicController implements
 	@Override
 	public VanillaControllerType getType() {
 		return type;
+	}
+	
+	/**
+	 * Gets the fire damage component
+	 * 
+	 * @return entity fire damage process
+	 */
+	public FireDamageComponent getFireDamage() {
+		return fireDamageProcess;
 	}
 
 	/**
@@ -291,60 +285,6 @@ public abstract class VanillaEntityController extends BasicController implements
 		return new HashSet<ItemStack>();
 	}
 
-	/**
-	 * Checks to see if the controller is combustible.
-	 * @return true is combustible, false if not
-	 */
-	public boolean isFlammable() {
-		return isFlammable;
-	}
-
-	/**
-	 * Sets if the controller is combustible or not.
-	 * @param isFlammable flag representing combustible status.
-	 */
-	public void setFlammable(boolean isFlammable) {
-		this.isFlammable = isFlammable;
-	}
-
-	/**
-	 * Gets the amount of ticks the controller has been on fire.
-	 * @return amount of ticks
-	 */
-	public int getFireTicks() {
-		return fireTicks;
-	}
-
-	/**
-	 * Sets the amount of ticks the controller has been on fire.
-	 * @param fireTicks the new amount of ticks the controller has been on fire for.
-	 */
-	public void setFireTicks(int fireTicks) {
-		if (fireTicks > 0) {
-			EntityCombustEvent event = Spout.getEventManager().callEvent(new EntityCombustEvent(getParent(), fireTicks));
-			fireTicks = event.getDuration();
-		}
-		this.fireTicks = fireTicks;
-	}
-
-	private void updateFireTicks() {
-		if (fireTicks > 0) {
-			if (!isFlammable) {
-				fireTicks -= 4;
-				if (fireTicks < 0) {
-					fireTicks = 0;
-				}
-				return;
-			}
-
-			if (fireTicks % 20 == 0) {
-				getHealth().damage(1, DamageCause.FIRE_CONTACT);
-			}
-
-			--fireTicks;
-		}
-	}
-
 	// =========================
 	// Controller helper methods
 	// =========================
@@ -440,43 +380,5 @@ public abstract class VanillaEntityController extends BasicController implements
 	 */
 	public Random getRandom() {
 		return rand;
-	}
-
-	public final int getAirTicks() {
-		return airTicks;
-	}
-
-	public final void setAirTicks(int ticks) {
-		this.airTicks = ticks;
-	}
-
-	public void updateAirTicks() {
-//		// Handle drowning and suffocation damage
-//		int airTicks = getAirTicks();
-//		Point headPos = getHeadPosition();
-//		if (getParent().isObserver() || headPos.getWorld().getChunkFromBlock(headPos, LoadOption.NO_LOAD) != null) {
-//			Block head = getParent().getWorld().getBlock(headPos, getParent());
-//			if (head.isMaterial(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
-//				airTicks++;
-//				if (head.isMaterial(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
-//					// Drowning
-//					if (airTicks >= getMaxAirTicks() && airTicks % 20 == 0) {
-//						damage(2, DamageCause.DROWN);
-//					}
-//				} else {
-//					// Suffocation
-//					if (airTicks % 10 == 0) {
-//						damage(1, DamageCause.SUFFOCATE);
-//					}
-//				}
-//			} else {
-//				airTicks = 0;
-//			}
-//		}
-//		setAirTicks(airTicks);
-	}
-
-	public int getMaxAirTicks() {
-		return 300;
 	}
 }

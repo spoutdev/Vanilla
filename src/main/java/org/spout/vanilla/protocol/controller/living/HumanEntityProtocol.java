@@ -65,7 +65,7 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 				item = hand.getMaterial().getId();
 			}
 
-			int percentAirLeft = 100 - (mcp.getAirTicks() * 100 / mcp.getMaxAirTicks());
+			int percentAirLeft = 100 - (mcp.getSuffocation().getAirTicks() * 100 / mcp.getSuffocation().getMaxAirTicks());
 			int airLeft = MathHelper.clamp(percentAirLeft * MC_FULL_AIR, 0, MC_FULL_AIR);
 
 			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();

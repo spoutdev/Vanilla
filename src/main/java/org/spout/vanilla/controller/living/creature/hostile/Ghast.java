@@ -36,6 +36,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Ghast extends Creature implements Hostile {
@@ -47,6 +48,7 @@ public class Ghast extends Creature implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(10);
+		getHealth().setHurtEffect(SoundEffects.MOB_GHAST_SCREAM);
 	}
 
 	@Override

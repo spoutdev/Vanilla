@@ -26,19 +26,16 @@
  */
 package org.spout.vanilla.controller.living;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.spout.api.util.Parameter;
+import org.spout.api.tickable.LogicPriority;
 
 import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.vanilla.controller.component.basic.CreatureHealthComponent;
+import org.spout.vanilla.controller.component.basic.GrowComponent;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public abstract class Creature extends Living {
-	private long growthTicks = 0;
 	private int lineOfSight = 1;
+	protected GrowComponent growProcess;
 
 	protected Creature(VanillaControllerType type) {
 		super(type);
@@ -47,54 +44,26 @@ public abstract class Creature extends Living {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		growthTicks = data().get(VanillaData.GROWTH_TICKS);
+
+		unregisterProcess(healthProcess);
+		healthProcess = registerProcess(new CreatureHealthComponent(this, LogicPriority.HIGHEST));
+		growProcess = registerProcess(new GrowComponent(this, LogicPriority.HIGHEST));
 		lineOfSight = data().get(VanillaData.LINE_OF_SIGHT);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
-
-		// Keep track of growth
-		if (growthTicks < 0) {
-			growthTicks++;
-			if (growthTicks >= 0) {
-				List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-				parameters.add(EntityMetadataMessage.Parameters.META_BABYANIMALSTAGE.get());
-				VanillaNetworkUtil.broadcastPacket(new EntityMetadataMessage(getParent().getId(), parameters));
-			}
-		}
 	}
 
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put(VanillaData.GROWTH_TICKS, growthTicks);
 		data().put(VanillaData.LINE_OF_SIGHT, lineOfSight);
 	}
 
-	/**
-	 * Whether or not the creature is a baby.
-	 * @return true if a baby
-	 */
-	public boolean isBaby() {
-		return growthTicks < 0;
+	@Override
+	public CreatureHealthComponent getHealth() {
+		return (CreatureHealthComponent) healthProcess;
 	}
 
-	/**
-	 * Returns the amount of time until the baby is an adult. Fully grown is 0 and not grown is 23999.
-	 * @return time until adult
-	 */
-	public long getTimeUntilAdult() {
-		return Math.abs(growthTicks);
-	}
-
-	/**
-	 * Sets the time until the entity is an adult. Fully grown is 0 and not grown is 23999.
-	 * @param timeUntilAdult
-	 */
-	public void setTimeUntilAdult(long timeUntilAdult) {
-		this.growthTicks -= timeUntilAdult;
+	public GrowComponent getGrowing() {
+		return growProcess;
 	}
 
 	/**

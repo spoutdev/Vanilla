@@ -53,7 +53,7 @@ public class Shears extends Tool {
 			}
 
 			Sheep sheep = (Sheep) other.getController();
-			if (sheep.isSheared() || sheep.isBaby()) {
+			if (sheep.isSheared() || sheep.getGrowing().isBaby()) {
 				System.out.println("Debug");
 				return;
 			}

@@ -32,6 +32,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Neutral;
 import org.spout.vanilla.controller.living.creature.Tameable;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 
 public class Wolf extends Creature implements Tameable, Neutral {
 	private Controller master;
@@ -49,6 +50,7 @@ public class Wolf extends Creature implements Tameable, Neutral {
 		} else {
 			getHealth().setSpawnHealth(8);
 		}
+		getHealth().setHurtEffect(SoundEffects.MOB_WOLF_HURT);
 	}
 
 	@Override

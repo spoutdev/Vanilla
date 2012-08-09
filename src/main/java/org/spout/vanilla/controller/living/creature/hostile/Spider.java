@@ -38,6 +38,7 @@ import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Hostile;
 import org.spout.vanilla.controller.living.player.VanillaPlayer;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Spider extends Creature implements Hostile {
@@ -53,6 +54,7 @@ public class Spider extends Creature implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(16);
+		getHealth().setHurtEffect(SoundEffects.MOB_SPIDER);
 	}
 
 	@Override

@@ -32,6 +32,7 @@ import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.living.creature.Tameable;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 
 public class Ocelot extends Creature implements Tameable, Passive {
 	private Controller master;

@@ -24,46 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.hostile;
+package org.spout.vanilla.data.effect.type;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.player.Player;
+import org.spout.vanilla.data.effect.SoundEffect;
 
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
+public class NoSoundEffect extends SoundEffect {
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Hostile;
-import org.spout.vanilla.controller.living.player.VanillaPlayer;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.material.VanillaMaterials;
-
-public class Blaze extends Creature implements Hostile {
-	public Blaze() {
-		super(VanillaControllerTypes.BLAZE);
+	public NoSoundEffect() {
+		super("none");
 	}
 
 	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHealth().setSpawnHealth(20);
-		getHealth().setHurtEffect(SoundEffects.MOB_BLAZE_HIT);
+	public void play(Player player, Point position, float volume, float pitch) {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		if (lastDamager == null || !(lastDamager instanceof VanillaPlayer)) {
-			return super.getDrops(source, lastDamager);
-		}
+	public void playGlobal(Point position, Entity ignore) {
+	}
 
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(2);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.BLAZE_ROD, count));
-		}
-
-		return drops;
+	@Override
+	public void playGlobal(Point position, float volume, float pitch, Entity ignore) {
 	}
 }

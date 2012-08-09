@@ -38,6 +38,7 @@ import org.spout.vanilla.controller.component.ai.other.TimedDropItemComponent;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
 import org.spout.vanilla.controller.source.DamageCause;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Chicken extends Creature implements Passive {
@@ -55,6 +56,7 @@ public class Chicken extends Creature implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(4);
+		getHealth().setHurtEffect(SoundEffects.MOB_CHICKENHURT);
 		dropItemComponent = new TimedDropItemComponent(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
 		registerProcess(dropItemComponent);
 	}

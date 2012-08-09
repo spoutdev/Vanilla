@@ -92,7 +92,7 @@ public class VanillaListener implements Listener {
 		Controller c = entity.getController();
 		if (c instanceof Sheep) {
 			Sheep sheep = (Sheep) c;
-			sheep.setTimeUntilAdult(100);
+			sheep.getGrowing().setTimeUntilAdult(100);
 		}
 
 		if (c instanceof Ghast) {

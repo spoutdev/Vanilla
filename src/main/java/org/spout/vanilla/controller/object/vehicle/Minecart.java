@@ -129,12 +129,6 @@ public abstract class Minecart extends Substance implements Vehicle {
 	public void onTick(float dt) {
 		super.onTick(dt);
 
-		//update fire ticks
-		int fireticks = this.getFireTicks();
-		if (fireticks > 0) {
-			this.setFireTicks(fireticks - 1);
-		}
-
 		//update health to regenerate
 		int health = getHealth().getHealth();
 		if (health < 6) {

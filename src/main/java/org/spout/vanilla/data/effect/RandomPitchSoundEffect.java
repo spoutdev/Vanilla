@@ -24,46 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.controller.living.creature.passive;
+package org.spout.vanilla.data.effect;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Random;
 
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
+/**
+ * Randomizes the pitch level by the amount set
+ */
+public class RandomPitchSoundEffect extends SoundEffect {
+	private final float randomPitch;
 
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Passive;
-import org.spout.vanilla.controller.source.DamageCause;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.material.VanillaMaterials;
-
-public class Pig extends Creature implements Passive {
-	public Pig() {
-		super(VanillaControllerTypes.PIG);
+	public RandomPitchSoundEffect(SoundEffect sound, float randomPitch) {
+		super(sound, sound.getDefaultVolume(), sound.getDefaultPitch());
+		this.randomPitch = randomPitch;
 	}
 
 	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHealth().setSpawnHealth(10);
-		getHealth().setHurtEffect(SoundEffects.MOB_PIG);
-	}
-
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(3);
-		if (count > 0) {
-			if (source == DamageCause.BURN) {
-				drops.add(new ItemStack(VanillaMaterials.COOKED_PORKCHOP, count));
-			} else {
-				drops.add(new ItemStack(VanillaMaterials.RAW_PORKCHOP, count));
-			}
-		}
-
-		return drops;
+	public float getDefaultPitch() {
+		Random random = new Random();
+		return super.getDefaultPitch() + (random.nextFloat() - random.nextFloat()) * this.randomPitch;
 	}
 }

@@ -26,18 +26,18 @@
  */
 package org.spout.vanilla.controller.living;
 
-import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
+import org.spout.api.tickable.LogicPriority;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.source.DamageCause;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.controller.component.basic.SuffocationComponent;
 
 public abstract class Living extends VanillaEntityController {
+	protected SuffocationComponent suffocationProcess;
 	private Point headPos = null;
 	private int headYaw = 0;
 	private int lastHeadYaw = 0;
@@ -54,6 +54,16 @@ public abstract class Living extends VanillaEntityController {
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		suffocationProcess = registerProcess(new SuffocationComponent(this, LogicPriority.HIGHEST));
+	}
+
+	/**
+	 * Gets the suffocation component (air)
+	 * 
+	 * @return entity suffocation process
+	 */
+	public SuffocationComponent getSuffocation() {
+		return suffocationProcess;
 	}
 
 	@Override
@@ -66,16 +76,6 @@ public abstract class Living extends VanillaEntityController {
 			lastHeadYaw = headYaw;
 			headYawChanged = true;
 		}
-	}
-
-	@Override
-	public void updateAirTicks() {
-
-	}
-
-	@Override
-	public int getMaxAirTicks() {
-		return 300;
 	}
 
 	private int calculateHeadYaw() {

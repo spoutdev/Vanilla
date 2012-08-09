@@ -37,6 +37,8 @@ import org.spout.vanilla.controller.VanillaEntityController;
 import org.spout.vanilla.controller.source.DamageCause;
 import org.spout.vanilla.controller.source.HealthChangeReason;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.effect.SoundEffect;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
@@ -51,6 +53,7 @@ public class HealthComponent extends LogicRunnable<VanillaEntityController> {
 	private int health = 1;
 	private int maxHealth = 1;
 	private boolean hasDeathAnimation = true;
+	private SoundEffect hurtEffect = SoundEffects.NONE;
 	// Damage
 	private DamageCause lastDamageCause = DamageCause.UNKNOWN;
 	private VanillaEntityController lastDamager;
@@ -67,7 +70,6 @@ public class HealthComponent extends LogicRunnable<VanillaEntityController> {
 
 	@Override
 	public void onUnregistration() {
-		//TODO: Verify that this saves properly?
 		getParent().data().put(VanillaData.HEALTH, health);
 		getParent().data().put(VanillaData.MAX_HEALTH, maxHealth);
 	}
@@ -116,6 +118,24 @@ public class HealthComponent extends LogicRunnable<VanillaEntityController> {
 	public void setSpawnHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
 		this.setHealth(maxHealth, HealthChangeReason.SPAWN);
+	}
+
+	/**
+	 * Sets the Effect played when this Entity is hurt
+	 * 
+	 * @param effect to play
+	 */
+	public void setHurtEffect(SoundEffect effect) {
+		hurtEffect = effect;
+	}
+
+	/**
+	 * Gets the Effect played when this Entity is hurt
+	 * 
+	 * @return effect played
+	 */
+	public SoundEffect getHurtEffect() {
+		return hurtEffect;
 	}
 
 	/**
@@ -217,6 +237,7 @@ public class HealthComponent extends LogicRunnable<VanillaEntityController> {
 				player.getNetworkSynchronizer().callProtocolEvent(new EntityAnimationEvent(getParent().getParent(), EntityAnimationMessage.ANIMATION_HURT));
 				player.getNetworkSynchronizer().callProtocolEvent(new EntityStatusEvent(getParent().getParent(), EntityStatusMessage.ENTITY_HURT));
 			}
+			getHurtEffect().playGlobal(position);
 		}
 	}
 
@@ -237,7 +258,7 @@ public class HealthComponent extends LogicRunnable<VanillaEntityController> {
 	public void run() {
 		if (this.isDying()) {
 			deathTicks--;
-			if (deathTicks-- == 0) {
+			if (deathTicks == 0) {
 				getParent().kill();
 			}
 		} else if (this.getHealth() <= 0) {

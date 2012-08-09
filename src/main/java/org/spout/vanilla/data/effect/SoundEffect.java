@@ -70,6 +70,27 @@ public class SoundEffect extends Effect {
 		return this.pitch;
 	}
 
+	/**
+	 * Gets this Sound Effect with the volume and pitch adjusted
+	 * 
+	 * @param volume to set to
+	 * @param pitch to set to
+	 * @return a new sound effect with the new settings
+	 */
+	public SoundEffect adjust(float volume, float pitch) {
+		return new SoundEffect(this, volume, pitch);
+	}
+
+	/**
+	 * Adds the amount of randomness in the pitch of this Sound
+	 * 
+	 * @param amount of randomness to add
+	 * @return a new sound effect with the new settings
+	 */
+	public SoundEffect randomPitch(float amount) {
+		return new RandomPitchSoundEffect(this, amount);
+	}
+
 	public String getName() {
 		return this.name;
 	}

@@ -27,8 +27,6 @@
 package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.HandlerLookupService;
-import org.spout.api.protocol.common.handler.CustomDataMessageHandler;
-import org.spout.api.protocol.common.message.CustomDataMessage;
 
 import org.spout.vanilla.protocol.handler.AnimationMessageHandler;
 import org.spout.vanilla.protocol.handler.ChatMessageHandler;
@@ -107,7 +105,6 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(PlayerAbilityMessage.class, PlayerAbilityMessageHandler.class);
 			bind(ServerListPingMessage.class, BootstrapPingMessageHandler.class);
 			bind(ClientStatusMessage.class, ClientStatusHandler.class);
-			bind(CustomDataMessage.class, CustomDataMessageHandler.class);
 			bind(EncryptionKeyResponseMessage.class, BootstrapEncryptionKeyResponseMessageHandler.class);
 			bind(TabCompleteMessage.class, TabCompleteMessageHandler.class);
 		} catch (Exception ex) {

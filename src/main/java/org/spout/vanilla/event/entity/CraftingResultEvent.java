@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.event.entity;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.BasicController;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
@@ -38,10 +38,10 @@ import org.spout.api.inventory.ItemStack;
  */
 public class CraftingResultEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private Controller controller;
+	private BasicController controller;
 	private ItemStack result;
 
-	public CraftingResultEvent(Controller controller, ItemStack result) {
+	public CraftingResultEvent(BasicController controller, ItemStack result) {
 		super(controller.getParent());
 		this.controller = controller;
 		this.result = result;
@@ -51,7 +51,7 @@ public class CraftingResultEvent extends EntityEvent implements Cancellable {
 	 * Returns the entity of this CraftingResultEvent
 	 * @return entity
 	 */
-	public Controller getController() {
+	public BasicController getController() {
 		return controller;
 	}
 

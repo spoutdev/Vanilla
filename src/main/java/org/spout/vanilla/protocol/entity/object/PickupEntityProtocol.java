@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.protocol.entity.object;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.BasicController;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 
@@ -41,7 +41,7 @@ public class PickupEntityProtocol extends VanillaEntityProtocol {
 		if (entity == null || entity.getController() == null) {
 			return null;
 		}
-		Controller c = entity.getController();
+		BasicController c = entity.getController();
 		int id = entity.getId();
 		int x = (int) (entity.getPosition().getX() * 32);
 		int y = (int) (entity.getPosition().getY() * 32);

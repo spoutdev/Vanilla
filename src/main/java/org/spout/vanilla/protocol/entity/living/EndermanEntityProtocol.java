@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.entity.living;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.BasicController;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
@@ -41,7 +41,7 @@ public class EndermanEntityProtocol extends BasicMobEntityProtocol {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
+	public List<Parameter<?>> getSpawnParameters(BasicController controller) {
 		if (controller instanceof Enderman) {
 			Enderman enderman = (Enderman) controller;
 			ItemStack held = enderman.getHeldItem();

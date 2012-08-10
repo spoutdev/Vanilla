@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.BasicController;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
@@ -51,7 +51,7 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 	 * @param controller - The entity entity to obtain the parameters from
 	 * @return a list of parameters
 	 */
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
+	public List<Parameter<?>> getSpawnParameters(BasicController controller) {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
 		if (controller instanceof Creature) {
 			Creature creature = (Creature) controller;
@@ -63,7 +63,7 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
-		Controller c = entity.getController();
+		BasicController c = entity.getController();
 		if (c == null) {
 			return null;
 		}

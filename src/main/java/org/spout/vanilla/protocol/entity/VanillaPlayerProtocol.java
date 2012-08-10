@@ -31,7 +31,7 @@ import java.util.List;
 
 import net.royawesome.jlibnoise.MathHelper;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.BasicController;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
@@ -45,7 +45,7 @@ public class VanillaPlayerProtocol extends VanillaEntityProtocol {
 
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
-		Controller c = entity.getController();
+		BasicController c = entity.getController();
 		if (c == null) {
 			return null;
 		}

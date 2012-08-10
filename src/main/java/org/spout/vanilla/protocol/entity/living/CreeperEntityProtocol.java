@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.entity.living;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.BasicController;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
@@ -39,7 +39,7 @@ public class CreeperEntityProtocol extends BasicMobEntityProtocol {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
+	public List<Parameter<?>> getSpawnParameters(BasicController controller) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
 		//TODO: index 16 (byte): Status. Depends on the fuse.
 		//TODO: Index 17 (byte): Charged. 1 if the creeper has been hit by lightning, 0 otherwise.

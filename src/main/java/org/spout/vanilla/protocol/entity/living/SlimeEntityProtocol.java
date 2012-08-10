@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.entity.living;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.BasicController;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.entity.living.creature.hostile.Slime;
@@ -40,7 +40,7 @@ public class SlimeEntityProtocol extends BasicMobEntityProtocol {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
+	public List<Parameter<?>> getSpawnParameters(BasicController controller) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
 		if (controller instanceof Slime) {
 			Slime slime = (Slime) controller;

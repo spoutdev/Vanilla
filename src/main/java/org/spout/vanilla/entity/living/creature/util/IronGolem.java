@@ -26,23 +26,10 @@
  */
 package org.spout.vanilla.entity.living.creature.util;
 
-<<<<<<<HEAD:src/main/java/org/spout/vanilla/entity/living/creature/util/IronGolem.java
-		import java.util.HashSet;
-import java.util.Set;
-
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Utility;
-=======
-		import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Utility;
->>>>>>>origin:src/main/java/org/spout/vanilla/controller/living/creature/util/IronGolem.java
-		import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class IronGolem extends Creature implements Utility {
 	public IronGolem() {

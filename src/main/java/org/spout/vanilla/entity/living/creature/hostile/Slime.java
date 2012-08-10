@@ -35,10 +35,6 @@ import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Hostile;
 import org.spout.vanilla.material.VanillaMaterials;
 
-<<<<<<<HEAD:src/main/java/org/spout/vanilla/entity/living/creature/hostile/Slime.java
-		=======
-		>>>>>>>origin:src/main/java/org/spout/vanilla/controller/living/creature/hostile/Slime.java
-
 public class Slime extends Creature implements Hostile {
 	private byte size;
 

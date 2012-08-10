@@ -29,6 +29,7 @@ package org.spout.vanilla.entity.living.creature.passive;
 import java.util.List;
 
 import org.spout.api.Source;
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -58,7 +59,7 @@ public class Cow extends Creature implements Passive {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
 		List<ItemStack> drops = super.getDrops(source, lastDamager);
 		int count = getRandom().nextInt(2) + 1;
 		if (count > 0) {

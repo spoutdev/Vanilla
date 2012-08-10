@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.Source;
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -54,8 +55,8 @@ public class Blaze extends Creature implements Hostile {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		if (lastDamager == null || !(lastDamager instanceof VanillaPlayerController)) {
+	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
+		if (lastDamager == null || !(lastDamager.getController() instanceof VanillaPlayerController)) {
 			return new ArrayList<ItemStack>(0);
 		}
 		return super.getDrops(source, lastDamager);

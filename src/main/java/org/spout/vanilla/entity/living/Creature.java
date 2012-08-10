@@ -27,15 +27,17 @@
 package org.spout.vanilla.entity.living;
 
 import org.spout.api.tickable.LogicPriority;
+import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaControllerType;
 import org.spout.vanilla.entity.component.basic.CreatureHealthComponent;
 import org.spout.vanilla.entity.component.basic.GrowComponent;
+import org.spout.vanilla.entity.component.basic.HealthComponent;
 
 public abstract class Creature extends Living {
 	private int lineOfSight = 1;
-	protected GrowComponent growProcess;
+	protected GrowComponent growComponent;
 
 	protected Creature(VanillaControllerType type) {
 		super(type);
@@ -45,16 +47,16 @@ public abstract class Creature extends Living {
 	public void onAttached() {
 		super.onAttached();
 
-		unregisterProcess(healthProcess);
-		healthProcess = registerProcess(new CreatureHealthComponent(this, LogicPriority.HIGHEST));
-		growProcess = registerProcess(new GrowComponent(this, LogicPriority.HIGHEST));
-		lineOfSight = data().get(VanillaData.LINE_OF_SIGHT);
+		removeComponent(HealthComponent.class);
+		healthComponent = (HealthComponent) addComponent(new CreatureHealthComponent(TickPriority.HIGHEST)).getClass();
+		growComponent = (GrowComponent) addComponent(new GrowComponent(TickPriority.HIGHEST).getClass());
+		lineOfSight = getDataMap().get(VanillaData.LINE_OF_SIGHT);
 	}
 
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put(VanillaData.LINE_OF_SIGHT, lineOfSight);
+		getDataMap().put(VanillaData.LINE_OF_SIGHT, lineOfSight);
 	}
 
 	@Override

@@ -46,6 +46,6 @@ public class PlayerStepSoundComponent extends StepSoundComponent {
 
 	@Override
 	public boolean canTick() {
-		return super.canTick() && !getParent().isCrouching() && !getParent().isFalling() && !getParent().isFlying();
+		return super.canTick() && !((VanillaPlayerController) getParent()).isCrouching() && !getParent().isFalling() && !getParent().isFlying();
 	}
 }

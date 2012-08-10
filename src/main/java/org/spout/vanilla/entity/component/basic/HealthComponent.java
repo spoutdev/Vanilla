@@ -29,6 +29,7 @@ package org.spout.vanilla.entity.component.basic;
 import org.spout.api.Source;
 import org.spout.api.Spout;
 import org.spout.api.entity.BasicComponent;
+import org.spout.api.entity.Entity;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.tickable.TickPriority;
 
@@ -55,7 +56,7 @@ public class HealthComponent extends BasicComponent<VanillaEntityController> {
 	private SoundEffect hurtEffect = SoundEffects.NONE;
 	// Damage
 	private DamageCause lastDamageCause = DamageCause.UNKNOWN;
-	private VanillaEntityController lastDamager;
+	private Entity lastDamager;
 
 	public HealthComponent(TickPriority priority) {
 		super(priority);
@@ -85,7 +86,7 @@ public class HealthComponent extends BasicComponent<VanillaEntityController> {
 	 * Gets the last entity that damages this entity
 	 * @return last damager
 	 */
-	public VanillaEntityController getLastDamager() {
+	public Entity getLastDamager() {
 		return lastDamager;
 	}
 
@@ -213,7 +214,7 @@ public class HealthComponent extends BasicComponent<VanillaEntityController> {
 	 * @param damager entity that damaged this entity
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
-	public void damage(int amount, DamageCause cause, VanillaEntityController damager, boolean sendHurtMessage) {
+	public void damage(int amount, DamageCause cause, Entity damager, boolean sendHurtMessage) {
 		// TODO take potion effects into account
 		setHealth(getHealth() - amount, HealthChangeReason.DAMAGE);
 		lastDamager = damager;

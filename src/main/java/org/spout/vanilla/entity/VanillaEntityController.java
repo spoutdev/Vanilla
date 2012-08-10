@@ -37,6 +37,7 @@ import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
@@ -269,7 +270,7 @@ public abstract class VanillaEntityController extends Controller implements Vani
 	 * @param lastDamager Controller that killed this entity, can be null if death was caused by natural sources such as drowning or burning
 	 * @return the drops to disperse.
 	 */
-	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
 		return this.getDrops().getDrops(this.rand, new HashSet<DropFlagSingle>());
 	}
 

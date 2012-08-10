@@ -29,6 +29,7 @@ package org.spout.vanilla.entity.living.creature.hostile;
 import java.util.List;
 
 import org.spout.api.Source;
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -58,9 +59,9 @@ public class Zombie extends Creature implements Hostile {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
 		List<ItemStack> drops = super.getDrops(source, lastDamager);
-		if (lastDamager != null && lastDamager instanceof VanillaPlayerController) {
+		if (lastDamager != null && lastDamager.getController() instanceof VanillaPlayerController) {
 			if (getRandom().nextInt(25) == 0) {
 				drops.add(new ItemStack(VanillaMaterials.IRON_INGOT, 1));
 			}

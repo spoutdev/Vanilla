@@ -27,8 +27,6 @@
 package org.spout.vanilla.entity.component.player;
 
 import org.spout.api.entity.BasicComponent;
-import org.spout.api.tickable.LogicPriority;
-import org.spout.api.tickable.LogicRunnable;
 import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.entity.VanillaPlayerController;
@@ -51,15 +49,15 @@ public class StatsUpdateComponent extends BasicComponent<VanillaPlayerController
 			return false;
 		}
 		return oldHealth != getParent().getHealth().getHealth() ||
-				oldHunger != getParent().getSurvivalLogic().getHunger() ||
-				oldFoodSat != getParent().getSurvivalLogic().getFoodSaturation();
+				oldHunger != getParent().getSurvivalComponent().getHunger() ||
+				oldFoodSat != getParent().getSurvivalComponent().getFoodSaturation();
 	}
 
 	@Override
 	public void onTick(float dt) {
 		oldHealth = getParent().getHealth().getHealth();
-		oldHunger = getParent().getSurvivalLogic().getHunger();
-		oldFoodSat = getParent().getSurvivalLogic().getFoodSaturation();
+		oldHunger = getParent().getSurvivalComponent().getHunger();
+		oldFoodSat = getParent().getSurvivalComponent().getFoodSaturation();
 		getParent().getParent().getNetworkSynchronizer().callProtocolEvent(new PlayerUpdateStatsEvent(getParent().getParent()));
 	}
 }

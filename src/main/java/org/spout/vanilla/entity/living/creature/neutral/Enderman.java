@@ -36,10 +36,6 @@ import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Neutral;
 import org.spout.vanilla.material.VanillaMaterials;
 
-<<<<<<<HEAD:src/main/java/org/spout/vanilla/entity/living/creature/neutral/Enderman.java
-		=======
-		>>>>>>>origin:src/main/java/org/spout/vanilla/controller/living/creature/neutral/Enderman.java
-
 public class Enderman extends Creature implements Neutral {
 	private ItemStack heldItem;
 	private ItemStack lastHeldItem;

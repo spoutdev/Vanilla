@@ -29,6 +29,7 @@ package org.spout.vanilla.entity.living.creature.hostile;
 import java.util.List;
 
 import org.spout.api.Source;
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -58,9 +59,9 @@ public class Spider extends Creature implements Hostile {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
 		List<ItemStack> drops = super.getDrops(source, lastDamager);
-		if (lastDamager != null && lastDamager instanceof VanillaPlayerController && getRandom().nextInt(100) < 33) {
+		if (lastDamager != null && lastDamager.getController() instanceof VanillaPlayerController && getRandom().nextInt(100) < 33) {
 			int count = getRandom().nextInt(2);
 			if (count > 0) {
 				drops.add(new ItemStack(VanillaMaterials.SPIDER_EYE, count));

@@ -29,6 +29,7 @@ package org.spout.vanilla.entity.living.creature.neutral;
 import java.util.List;
 
 import org.spout.api.Source;
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.entity.VanillaControllerTypes;
@@ -52,9 +53,9 @@ public class PigZombie extends Zombie implements Neutral {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
 		List<ItemStack> drops = super.getDrops(source, lastDamager);
-		if (lastDamager != null && lastDamager instanceof VanillaPlayerController) {
+		if (lastDamager != null && lastDamager.getController() instanceof VanillaPlayerController) {
 			// TODO enchantments
 			if (getRandom().nextInt(25) == 0) {
 				drops.add(new ItemStack(VanillaMaterials.GOLD_INGOT, 1));

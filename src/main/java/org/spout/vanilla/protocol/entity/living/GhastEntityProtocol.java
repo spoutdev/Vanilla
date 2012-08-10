@@ -24,20 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.living;
+package org.spout.vanilla.protocol.entity.living;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.protocol.EntityProtocol;
+import java.util.List;
 
-import org.spout.vanilla.entity.VanillaControllerType;
+import org.spout.api.entity.component.Controller;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.entity.living.creature.hostile.Ghast;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
-public class MobControllerType extends VanillaControllerType {
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name) {
-		this(id, controllerClass, name, new BasicMobEntityProtocol(id));
+public class GhastEntityProtocol extends BasicMobEntityProtocol {
+	public GhastEntityProtocol() {
+		super(56);
 	}
 
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
-		super(id, controllerClass, name, protocol);
+	@Override
+	public List<Parameter<?>> getSpawnParameters(Controller controller) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
+		if (controller instanceof Ghast) {
+			Ghast ghast = (Ghast) controller;
+			byte data = ghast.hasRedEyes() ? (byte) 1 : 0;
+			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
+		}
+
+		return parameters;
 	}
 }

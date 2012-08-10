@@ -42,7 +42,6 @@ import org.spout.vanilla.entity.block.MonsterSpawner;
 import org.spout.vanilla.entity.block.MovingPiston;
 import org.spout.vanilla.entity.block.NoteBlock;
 import org.spout.vanilla.entity.block.Sign;
-import org.spout.vanilla.entity.living.Human;
 import org.spout.vanilla.entity.living.MobControllerType;
 import org.spout.vanilla.entity.living.creature.hostile.Blaze;
 import org.spout.vanilla.entity.living.creature.hostile.CaveSpider;
@@ -85,27 +84,27 @@ import org.spout.vanilla.entity.object.projectile.GhastFireball;
 import org.spout.vanilla.entity.object.projectile.Snowball;
 import org.spout.vanilla.entity.object.vehicle.Boat;
 import org.spout.vanilla.entity.object.vehicle.minecart.TransportMinecart;
-import org.spout.vanilla.protocol.controller.BasicObjectEntityProtocol;
-import org.spout.vanilla.protocol.controller.BasicProjectileEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.BlazeEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.CreeperEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.EnderDragonEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.EndermanEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.GhastEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.HumanEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.MagmaCubeEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.PigEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.SheepEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.SlimeEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.SpiderEntityProtocol;
-import org.spout.vanilla.protocol.controller.living.WolfEntityProtocol;
-import org.spout.vanilla.protocol.controller.object.FallingBlockProtocol;
-import org.spout.vanilla.protocol.controller.object.LightningEntityProtocol;
-import org.spout.vanilla.protocol.controller.object.PaintingEntityProtocol;
-import org.spout.vanilla.protocol.controller.object.PickupEntityProtocol;
-import org.spout.vanilla.protocol.controller.object.XPOrbEntityProtocol;
-import org.spout.vanilla.protocol.controller.object.vehicle.BoatEntityProtocol;
-import org.spout.vanilla.protocol.controller.object.vehicle.TransportMinecartEntityProtocol;
+import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.BasicProjectileEntityProtocol;
+import org.spout.vanilla.protocol.entity.VanillaPlayerProtocol;
+import org.spout.vanilla.protocol.entity.living.BlazeEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.CreeperEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.EnderDragonEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.GhastEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.MagmaCubeEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.PigEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.SlimeEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.SpiderEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.WolfEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
+import org.spout.vanilla.protocol.entity.object.LightningEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.PaintingEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.PickupEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.XPOrbEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.vehicle.BoatEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.vehicle.TransportMinecartEntityProtocol;
 
 /**
  * A lookup for all controllers in Vanilla.
@@ -152,7 +151,7 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType IRON_GOLEM = new MobControllerType(99, IronGolem.class, "Iron Golem");
 	public static final VanillaControllerType ENDER_CRYSTAL = new VanillaControllerType(200, EnderCrystal.class, "Ender Crystal", new BasicObjectEntityProtocol(51));
 	public static final VanillaControllerType PAINTINGS = new VanillaControllerType(-1, Painting.class, "Painting", new PaintingEntityProtocol());
-	public static final VanillaControllerType HUMAN = new VanillaControllerType(-1, Human.class, "Human", new HumanEntityProtocol());
+	public static final VanillaControllerType VANILLA_PLAYER = new VanillaControllerType(-1, VanillaPlayerController.class, "Vanilla Player", new VanillaPlayerProtocol());
 	// World
 	public static final VanillaControllerType LIGHTNING = new VanillaControllerType(-7, Lightning.class, "Lightning", new LightningEntityProtocol());
 	// Block

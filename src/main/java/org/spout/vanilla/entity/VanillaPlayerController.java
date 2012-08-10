@@ -41,6 +41,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.player.Player;
+import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.tickable.LogicPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -71,7 +72,7 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacket;
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
  */
-public class VanillaPlayerController extends PlayerController {
+public class VanillaPlayerController extends PlayerController implements VanillaController {
 	private PingComponent pingComponent;
 	private PoisonEffectComponent poisonEffectComponent;
 	private SurvivalComponent survivalProcess;
@@ -407,5 +408,10 @@ public class VanillaPlayerController extends PlayerController {
 
 	public void setExperience(short experience) {
 		this.experience = experience;
+	}
+
+	@Override
+	public void callProtocolEvent(ProtocolEvent event) {
+		//To change body of implemented methods use File | Settings | File Templates.
 	}
 }

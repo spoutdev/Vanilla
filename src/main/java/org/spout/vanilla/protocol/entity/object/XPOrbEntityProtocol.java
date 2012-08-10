@@ -24,20 +24,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.living;
+package org.spout.vanilla.protocol.entity.object;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.component.Controller;
+import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.entity.VanillaControllerType;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.entity.object.moving.XPOrb;
+import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnExperienceOrbMessage;
 
-public class MobControllerType extends VanillaControllerType {
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name) {
-		this(id, controllerClass, name, new BasicMobEntityProtocol(id));
-	}
-
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
-		super(id, controllerClass, name, protocol);
+public class XPOrbEntityProtocol extends VanillaEntityProtocol {
+	@Override
+	public Message[] getSpawnMessage(Entity entity) {
+		Controller c = entity.getController();
+		if (c == null || !(c instanceof XPOrb)) {
+			return null;
+		}
+		int id = entity.getId();
+		int x = (int) (entity.getPosition().getX() * 32);
+		int y = (int) (entity.getPosition().getY() * 32);
+		int z = (int) (entity.getPosition().getZ() * 32);
+		return new Message[]{new EntitySpawnExperienceOrbMessage(id, x, y, z, ((XPOrb) c).getExperience())};
 	}
 }

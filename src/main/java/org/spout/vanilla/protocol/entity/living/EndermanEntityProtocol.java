@@ -24,20 +24,35 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.living;
+package org.spout.vanilla.protocol.entity.living;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.protocol.EntityProtocol;
+import java.util.List;
 
-import org.spout.vanilla.entity.VanillaControllerType;
+import org.spout.api.entity.component.Controller;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.entity.living.creature.neutral.Enderman;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
-public class MobControllerType extends VanillaControllerType {
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name) {
-		this(id, controllerClass, name, new BasicMobEntityProtocol(id));
+public class EndermanEntityProtocol extends BasicMobEntityProtocol {
+	public EndermanEntityProtocol() {
+		super(58);
 	}
 
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
-		super(id, controllerClass, name, protocol);
+	@Override
+	public List<Parameter<?>> getSpawnParameters(Controller controller) {
+		if (controller instanceof Enderman) {
+			Enderman enderman = (Enderman) controller;
+			ItemStack held = enderman.getHeldItem();
+			if (held != null && !held.getMaterial().equals(enderman.getPreviouslyHeldItem().getMaterial())) {
+				List<Parameter<?>> parameters = super.getSpawnParameters(controller);
+				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) held.getMaterial().getId()));
+				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte) held.getData()));
+				return parameters;
+			}
+		}
+
+		return super.getSpawnParameters(controller);
 	}
 }

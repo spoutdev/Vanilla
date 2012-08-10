@@ -24,20 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.living;
+package org.spout.vanilla.protocol.entity.object;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.entity.Entity;
+import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.entity.VanillaControllerType;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.entity.object.misc.Lightning;
+import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnLightningStrikeMessage;
 
-public class MobControllerType extends VanillaControllerType {
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name) {
-		this(id, controllerClass, name, new BasicMobEntityProtocol(id));
-	}
-
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
-		super(id, controllerClass, name, protocol);
+public class LightningEntityProtocol extends VanillaEntityProtocol {
+	@Override
+	public Message[] getSpawnMessage(Entity entity) {
+		if (entity.getController() == null) {
+			return null;
+		}
+		if (!(entity.getController() instanceof Lightning)) {
+			return null;
+		}
+		Message[] toSend = new Message[1];
+		toSend[0] = new EntitySpawnLightningStrikeMessage(entity.getId(), entity.getPosition().getBlockX(), entity.getPosition().getBlockY(), entity.getPosition().getBlockZ());
+		return toSend;
 	}
 }

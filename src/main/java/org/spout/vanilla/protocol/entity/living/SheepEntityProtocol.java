@@ -24,20 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.living;
+package org.spout.vanilla.protocol.entity.living;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.protocol.EntityProtocol;
+import java.util.List;
 
-import org.spout.vanilla.entity.VanillaControllerType;
+import org.spout.api.entity.component.Controller;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.entity.living.creature.passive.Sheep;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
-public class MobControllerType extends VanillaControllerType {
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name) {
-		this(id, controllerClass, name, new BasicMobEntityProtocol(id));
+public class SheepEntityProtocol extends BasicMobEntityProtocol {
+	public SheepEntityProtocol() {
+		super(91);
 	}
 
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
-		super(id, controllerClass, name, protocol);
+	@Override
+	public List<Parameter<?>> getSpawnParameters(Controller controller) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
+		if (controller instanceof Sheep) {
+			Sheep sheep = (Sheep) controller;
+			byte data = 0;
+			data |= (sheep.isSheared() ? 1 : 0) << 4;
+			data |= sheep.getColor().getData() & 0x0F;
+			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
+		}
+
+		return parameters;
 	}
 }

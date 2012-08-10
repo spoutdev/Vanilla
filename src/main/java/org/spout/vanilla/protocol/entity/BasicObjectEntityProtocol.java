@@ -24,20 +24,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.living;
+package org.spout.vanilla.protocol.entity;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.component.Controller;
+import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.entity.VanillaControllerType;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;
 
-public class MobControllerType extends VanillaControllerType {
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name) {
-		this(id, controllerClass, name, new BasicMobEntityProtocol(id));
+public class BasicObjectEntityProtocol extends BasicEntityProtocol {
+	public BasicObjectEntityProtocol(int spawnID) {
+		super(spawnID);
 	}
 
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
-		super(id, controllerClass, name, protocol);
+	@Override
+	public Message[] getSpawnMessage(Entity entity) {
+		Controller c = entity.getController();
+		if (c == null) {
+			return null;
+		}
+
+		int id = entity.getId();
+		return new Message[]{new EntitySpawnVehicleMessage(id, this.getSpawnID(), entity.getPosition())};
 	}
 }

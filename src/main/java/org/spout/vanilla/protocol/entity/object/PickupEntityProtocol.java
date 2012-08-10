@@ -24,20 +24,38 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.living;
+package org.spout.vanilla.protocol.entity.object;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.protocol.EntityProtocol;
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.component.Controller;
+import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.entity.VanillaControllerType;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.entity.object.moving.Item;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnItemMessage;
 
-public class MobControllerType extends VanillaControllerType {
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name) {
-		this(id, controllerClass, name, new BasicMobEntityProtocol(id));
-	}
+public class PickupEntityProtocol extends VanillaEntityProtocol {
+	@Override
+	public Message[] getSpawnMessage(Entity entity) {
+		if (entity == null || entity.getController() == null) {
+			return null;
+		}
+		Controller c = entity.getController();
+		int id = entity.getId();
+		int x = (int) (entity.getPosition().getX() * 32);
+		int y = (int) (entity.getPosition().getY() * 32);
+		int z = (int) (entity.getPosition().getZ() * 32);
+		int r = (int) (entity.getYaw() * 32);
+		int p = (int) (entity.getPitch() * 32);
+		if (c instanceof Item) {
+			Item pi = (Item) c;
+			if (pi.getMaterial() == null) {
+				return null;
+			}
+			return new Message[]{new EntitySpawnItemMessage(id, VanillaMaterials.getMinecraftId(pi.getMaterial()), pi.getAmount(), pi.getData(), x, y, z, r, p, (int) pi.getParent().getRoll())};
+		}
 
-	public MobControllerType(int id, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
-		super(id, controllerClass, name, protocol);
+		return null;
 	}
 }

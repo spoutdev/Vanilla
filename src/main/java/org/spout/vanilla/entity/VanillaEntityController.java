@@ -38,6 +38,7 @@ import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
@@ -45,9 +46,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
-import org.spout.api.player.Player;
 import org.spout.api.protocol.event.ProtocolEvent;
-import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.entity.component.basic.FireDamageComponent;
@@ -86,33 +85,33 @@ public abstract class VanillaEntityController extends Controller implements Vani
 	public void onAttached() {
 		getParent().setCollision(new CollisionModel(area));
 		getParent().getCollision().setStrategy(CollisionStrategy.SOLID);
-		data().put(VanillaData.CONTROLLER_TYPE, getType().getMinecraftId());
+		getDataMap().put(VanillaData.CONTROLLER_TYPE, getType().getMinecraftId());
 		this.lastClientTransform = getParent().getTransform();
 
-		healthProcess = getParent().addComponent(new HealthComponent(this, TickPriority.HIGHEST)).;
-		blockCollProcess = registerProcess(new BlockCollisionComponent(this, LogicPriority.HIGHEST));
-		fireDamageProcess = registerProcess(new FireDamageComponent(this, LogicPriority.HIGHEST));
+		healthComponent = (HealthComponent) addComponent(new HealthComponent(TickPriority.HIGHEST).getClass());
+		blockCollisionComponent = (BlockCollisionComponent) addComponent(new BlockCollisionComponent(TickPriority.HIGHEST).getClass());
+		fireDamageComponent = (FireDamageComponent) addComponent(new FireDamageComponent(TickPriority.HIGHEST).getClass());
 
 		// Load data
-		maxSpeed = data().get(VanillaData.MAX_SPEED, maxSpeed);
-		movementSpeed = data().get(VanillaData.MOVEMENT_SPEED, movementSpeed);
-		if (data().containsKey(VanillaData.VELOCITY)) {
-			velocity = data().get(VanillaData.VELOCITY);
+		maxSpeed = getDataMap().get(VanillaData.MAX_SPEED, maxSpeed);
+		movementSpeed = getDataMap().get(VanillaData.MOVEMENT_SPEED, movementSpeed);
+		if (getDataMap().containsKey(VanillaData.VELOCITY)) {
+			velocity = getDataMap().get(VanillaData.VELOCITY);
 		}
 	}
 
 	@Override
 	public void onSave() {
 		// Load data
-		data().put(VanillaData.MAX_SPEED, maxSpeed);
-		data().put(VanillaData.MOVEMENT_SPEED, movementSpeed);
-		data().put(VanillaData.VELOCITY, velocity);
+		getDataMap().put(VanillaData.MAX_SPEED, maxSpeed);
+		getDataMap().put(VanillaData.MOVEMENT_SPEED, movementSpeed);
+		getDataMap().put(VanillaData.VELOCITY, velocity);
 	}
 
 	@Override
 	public void onTick(float dt) {
-		if (this.healthProcess.isDying()) {
-			this.healthProcess.run();
+		if (this.healthComponent.isDying()) {
+			this.healthComponent.onTick(dt);
 			return;
 		}
 
@@ -173,7 +172,7 @@ public abstract class VanillaEntityController extends Controller implements Vani
 	 * @return entity fire damage process
 	 */
 	public FireDamageComponent getFireDamage() {
-		return fireDamageProcess;
+		return fireDamageComponent;
 	}
 
 	/**
@@ -181,7 +180,7 @@ public abstract class VanillaEntityController extends Controller implements Vani
 	 * @return block collision process
 	 */
 	public BlockCollisionComponent getCollisionComponent() {
-		return blockCollProcess;
+		return blockCollisionComponent;
 	}
 
 	/**
@@ -189,7 +188,7 @@ public abstract class VanillaEntityController extends Controller implements Vani
 	 * @return entity health process
 	 */
 	public HealthComponent getHealth() {
-		return healthProcess;
+		return healthComponent;
 	}
 
 	/**

@@ -35,7 +35,6 @@ import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.component.ai.other.SheepEatGrassComponent;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Passive;

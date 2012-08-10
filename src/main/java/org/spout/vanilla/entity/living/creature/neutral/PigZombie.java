@@ -33,7 +33,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.living.creature.Neutral;
 import org.spout.vanilla.entity.living.creature.hostile.Zombie;

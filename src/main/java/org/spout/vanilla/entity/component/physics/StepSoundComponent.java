@@ -34,8 +34,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.tickable.TickPriority;
 
-import org.spout.vanilla.entity.VanillaController;
-import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 

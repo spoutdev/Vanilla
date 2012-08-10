@@ -77,10 +77,10 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 				if (clickedEntity.getController() instanceof VanillaPlayerController && (!vPlayer.isSurvival() || !VanillaPlayerUtil.isSurvival(damaged.getParent()))) {
 					return;
 				}
-				vPlayer.getSurvivalLogic().addExhaustion(ExhaustionLevel.ATTACK_ENEMY.getAmount());
+				vPlayer.getSurvivalComponent().addExhaustion(ExhaustionLevel.ATTACK_ENEMY.getAmount());
 
 				if (clickedEntity.getController() instanceof VanillaPlayerController) {
-					((VanillaPlayerController) clickedEntity.getController()).getSurvivalLogic().addExhaustion(ExhaustionLevel.RECEIVE_DAMAGE.getAmount());
+					((VanillaPlayerController) clickedEntity.getController()).getSurvivalComponent().addExhaustion(ExhaustionLevel.RECEIVE_DAMAGE.getAmount());
 				}
 
 				int damage = 1;
@@ -94,7 +94,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 				}
 				if (damage != 0) {
 					if (!damaged.getParent().isDead()) {
-						damaged.getHealth().damage(damage, DamageCause.ATTACK, vPlayer, damage > 0);
+						damaged.getHealth().damage(damage, DamageCause.ATTACK, vPlayer.getParent(), damage > 0);
 					}
 				}
 			}

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.entity.living;
 
-import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.data.VanillaData;
@@ -48,7 +47,7 @@ public abstract class Creature extends Living {
 		super.onAttached();
 
 		removeComponent(HealthComponent.class);
-		healthComponent = (HealthComponent) addComponent(new CreatureHealthComponent(TickPriority.HIGHEST)).getClass();
+		healthComponent = (HealthComponent) addComponent(new CreatureHealthComponent(TickPriority.HIGHEST).getClass());
 		growComponent = (GrowComponent) addComponent(new GrowComponent(TickPriority.HIGHEST).getClass());
 		lineOfSight = getDataMap().get(VanillaData.LINE_OF_SIGHT);
 	}
@@ -61,11 +60,11 @@ public abstract class Creature extends Living {
 
 	@Override
 	public CreatureHealthComponent getHealth() {
-		return (CreatureHealthComponent) healthProcess;
+		return (CreatureHealthComponent) healthComponent;
 	}
 
 	public GrowComponent getGrowing() {
-		return growProcess;
+		return growComponent;
 	}
 
 	/**

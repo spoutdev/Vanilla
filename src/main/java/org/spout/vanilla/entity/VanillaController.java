@@ -29,7 +29,7 @@ package org.spout.vanilla.entity;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-public interface VanillaController extends Controller {
+public interface VanillaController {
 	/**
 	 * Sends a protocol events to all players within range of this Entity
 	 * @param event to send

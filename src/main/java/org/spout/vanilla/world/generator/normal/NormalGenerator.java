@@ -94,7 +94,8 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 		short shift = 0;
 		final BiomeSelector selector = getSelector();
 		while (LogicUtil.equalsAny(selector.pickBiome(shift, 0, world.getSeed()),
-				VanillaBiomes.OCEAN, VanillaBiomes.BEACH, VanillaBiomes.RIVER) && shift < 1600) {
+				VanillaBiomes.OCEAN, VanillaBiomes.BEACH, VanillaBiomes.RIVER, VanillaBiomes.SWAMP)
+				&& shift < 1600) {
 			shift += 16;
 		}
 		final Random random = new Random();

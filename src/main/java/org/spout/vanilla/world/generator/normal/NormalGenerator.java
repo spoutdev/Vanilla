@@ -27,12 +27,13 @@
 package org.spout.vanilla.world.generator.normal;
 
 import java.util.Random;
-import org.spout.api.generator.biome.BiomePopulator;
 
+import org.spout.api.generator.biome.BiomePopulator;
 import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.util.LogicUtil;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
@@ -90,21 +91,19 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 
 	@Override
 	public Point getSafeSpawn(World world) {
-		final Random random = new Random();
-
-		//Moves the spawn out of the ocean (and likely on to a beach, as in MC).
-		int shift = 0;
+		short shift = 0;
 		final BiomeSelector selector = getSelector();
-		while (selector.pickBiome(shift, 0, world.getSeed()) == VanillaBiomes.OCEAN && shift < 16000) {
+		while (LogicUtil.equalsAny(selector.pickBiome(shift, 0, world.getSeed()),
+				VanillaBiomes.OCEAN, VanillaBiomes.BEACH, VanillaBiomes.RIVER) && shift < 1600) {
 			shift += 16;
 		}
-
-		for (byte attempts = 0; attempts < 10; attempts++) {
-			final int x = random.nextInt(31) - 15;
-			final int z = random.nextInt(31) - 15;
-			final int y = getHighestSolidBlock(world, x + shift, z);
+		final Random random = new Random();
+		for (byte attempts = 0; attempts < 32; attempts++) {
+			final int x = random.nextInt(256) - 127 + shift;
+			final int z = random.nextInt(256) - 127;
+			final int y = getHighestSolidBlock(world, x, z);
 			if (y != -1) {
-				return new Point(world, x + shift, y + 0.5f, z);
+				return new Point(world, x, y + 0.5f, z);
 			}
 		}
 		return new Point(world, shift, 80, 0);

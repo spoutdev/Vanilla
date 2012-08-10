@@ -36,7 +36,7 @@ import org.spout.api.tickable.TickPriority;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.entity.VanillaEntityController;
+import org.spout.vanilla.entity.component.HealthOwner;
 import org.spout.vanilla.entity.source.DamageCause;
 import org.spout.vanilla.entity.source.HealthChangeReason;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
@@ -47,7 +47,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 /**
  * A component handling health and death
  */
-public class HealthComponent extends BasicComponent<VanillaEntityController> {
+public class HealthComponent extends BasicComponent<HealthOwner> {
 	private static final int DEATH_TIME_TICKS = 30;
 	private int deathTicks = -1;
 	private int health = 1;
@@ -244,14 +244,14 @@ public class HealthComponent extends BasicComponent<VanillaEntityController> {
 		if (this.isDying()) {
 			deathTicks--;
 			if (deathTicks == 0) {
-				getParent().kill();
+				getParent().getParent().kill();
 			}
 		} else if (this.getHealth() <= 0) {
 			if (this.hasDeathAnimation()) {
 				deathTicks = DEATH_TIME_TICKS;
 				getParent().callProtocolEvent(new EntityStatusEvent(getParent().getParent(), EntityStatusMessage.ENTITY_DEAD));
 			} else {
-				getParent().kill();
+				getParent().getParent().kill();
 			}
 			getParent().onDeath();
 		}

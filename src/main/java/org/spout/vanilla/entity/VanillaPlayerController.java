@@ -45,6 +45,14 @@ import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.entity.component.HeadOwner;
+import org.spout.vanilla.entity.component.HealthOwner;
+import org.spout.vanilla.entity.component.SuffocationOwner;
+import org.spout.vanilla.entity.component.basic.HeadComponent;
+import org.spout.vanilla.entity.component.basic.HealthComponent;
+import org.spout.vanilla.entity.component.basic.PlayerHeadComponent;
+import org.spout.vanilla.entity.component.basic.PlayerSuffocationComponent;
+import org.spout.vanilla.entity.component.basic.SuffocationComponent;
 import org.spout.vanilla.entity.component.effect.PoisonEffectComponent;
 import org.spout.vanilla.entity.component.gamemode.CreativeComponent;
 import org.spout.vanilla.entity.component.gamemode.SurvivalComponent;
@@ -66,15 +74,19 @@ import static org.spout.vanilla.util.VanillaMathHelper.getRandomDirection;
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
  */
-public class VanillaPlayerController extends PlayerController implements VanillaController {
+public class VanillaPlayerController extends PlayerController implements VanillaController, HealthOwner, SuffocationOwner, HeadOwner {
 	private PingComponent pingComponent;
 	private PoisonEffectComponent poisonEffectComponent;
 	private SurvivalComponent survivalComponent;
 	private PlayerStepSoundComponent stepSoundComponent;
 	private StatsUpdateComponent statsUpdateComponent;
+	private HealthComponent healthComponent;
+	private PlayerSuffocationComponent suffocationComponent;
+	private PlayerHeadComponent headComponent;
 	protected boolean flying;
 	protected boolean falling;
 	protected boolean jumping;
+	protected boolean crouching;
 	protected float initialYFalling = 0.0f;
 	protected final PlayerInventory playerInventory = new PlayerInventory(this);
 	protected Window activeWindow = new DefaultWindow(this);
@@ -104,6 +116,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		getHealth().setSpawnHealth(20);
 		getHealth().setDeathAnimation(false);
 
+		headComponent = addComponent(new PlayerHeadComponent());
 		statsUpdateComponent = addComponent(new StatsUpdateComponent(TickPriority.NORMAL));
 		pingComponent = addComponent(new PingComponent(TickPriority.HIGHEST));
 		poisonEffectComponent = addComponent(new PoisonEffectComponent(TickPriority.HIGHEST));
@@ -115,7 +128,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	@Override
 	public void onTick(float dt) {
 		if (getHealth().isDying()) {
-			getHealth().run();
+			getHealth().onTick(dt);
 			return;
 		}
 		if (getHealth().isDead()) {
@@ -130,6 +143,21 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 
 		// Update window
 		this.getActiveWindow().onTick(dt);
+	}
+
+	@Override
+	public SuffocationComponent getSuffocation() {
+		return this.suffocationComponent;
+	}
+
+	@Override
+	public HealthComponent getHealth() {
+		return this.healthComponent;
+	}
+
+	@Override
+	public HeadComponent getHead() {
+		return this.headComponent;
 	}
 
 	public void kill() {
@@ -320,14 +348,13 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	public PlayerInventory getInventory() {
 		return playerInventory;
 	}
+	
+	public boolean isCrouching() {
+		return crouching;
+	}
 
-	@Override
-	public Transform getHeadTransform() {
-		Transform trans = new Transform();
-		trans.setPosition(this.getHeadPosition());
-		Vector3 offset = this.getLookingAt();
-		trans.setRotation(MathHelper.rotation(getLookAtPitch(offset), getLookAtYaw(offset), 0.0f));
-		return trans;
+	public void setCrouching(boolean crouching) {
+		this.crouching = crouching;
 	}
 
 	/**
@@ -343,7 +370,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	 * @param item to drop
 	 */
 	public void dropItem(ItemStack item) {
-		dropItem(item, getLookingAt().multiply(0.3).add(getRandomDirection(0.02f, 0.1f)).add(0.0, 0.1, 0.0));
+		dropItem(item, getHead().getLookingAt().multiply(0.3).add(getRandomDirection(0.02f, 0.1f)).add(0.0, 0.1, 0.0));
 	}
 
 	/**
@@ -352,7 +379,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	 * @param velocity to drop at
 	 */
 	public void dropItem(ItemStack item, Vector3 velocity) {
-		ItemUtil.dropItem(this.getHeadPosition().subtract(0.0, 0.3, 0.0), item, velocity);
+		ItemUtil.dropItem(this.getHead().getPosition().subtract(0.0, 0.3, 0.0), item, velocity);
 	}
 
 	/**

@@ -29,7 +29,7 @@ package org.spout.vanilla.data.effect;
 import java.util.Set;
 
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 
 /**
  * Plays all set Effects when playing

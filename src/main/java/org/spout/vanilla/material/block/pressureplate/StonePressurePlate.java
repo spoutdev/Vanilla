@@ -35,10 +35,6 @@ import org.spout.vanilla.material.block.PressurePlate;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 
-<<<<<<<HEAD
-		=======
-		>>>>>>>origin
-
 public class StonePressurePlate extends PressurePlate {
 	public StonePressurePlate(String name, int id) {
 		super(name, id);

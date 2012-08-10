@@ -271,7 +271,7 @@ public abstract class VanillaEntityController extends BasicController implements
 	 * @return the drops to disperse.
 	 */
 	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
-		return this.getDrops().getDrops(this.rand, new HashSet<DropFlagSingle>());
+		return this.getDrops().getDrops(rand, new HashSet<DropFlagSingle>());
 	}
 
 	/**

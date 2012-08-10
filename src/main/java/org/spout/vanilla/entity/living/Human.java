@@ -38,7 +38,6 @@ import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;
 
 public class Human extends Living {
-	protected Vector3 lookingAt;
 	protected boolean isDigging, onGround, sprinting;
 	protected Point diggingPosition;
 	protected long diggingStartTime;
@@ -51,18 +50,13 @@ public class Human extends Living {
 
 	public Human() {
 		super(VanillaControllerTypes.HUMAN);
-		setHeadHeight(1.62f);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
 	}
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		getParent().setObserver(true);
+		getHead().setHeight(1.62f);
 	}
 
 	@Override
@@ -157,22 +151,6 @@ public class Human extends Living {
 	 */
 	public boolean isOnGround() {
 		return onGround;
-	}
-
-	/**
-	 * Sets the position where the player should look.
-	 * @param lookingAt {@link org.spout.api.math.Vector3} to look at
-	 */
-	public void setLookingAtVector(Vector3 lookingAt) {
-		this.lookingAt = lookingAt;
-	}
-
-	/**
-	 * Gets the {@link Vector3} the player is currently looking at.
-	 * @return position the player is looking at
-	 */
-	public Vector3 getLookingAt() {
-		return lookingAt;
 	}
 
 	/**

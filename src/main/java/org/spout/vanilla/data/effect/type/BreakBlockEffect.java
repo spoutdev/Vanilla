@@ -31,7 +31,7 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 
 import org.spout.vanilla.data.effect.GeneralEffect;
 import org.spout.vanilla.material.VanillaMaterials;

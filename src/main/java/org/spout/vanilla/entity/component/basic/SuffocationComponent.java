@@ -34,11 +34,11 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.entity.living.Living;
+import org.spout.vanilla.entity.component.SuffocationOwner;
 import org.spout.vanilla.entity.source.DamageCause;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class SuffocationComponent extends BasicComponent<Living> {
+public class SuffocationComponent extends BasicComponent<SuffocationOwner> {
 	private int airTicks = 0;
 	private int maxAirTicks = 300;
 
@@ -82,7 +82,7 @@ public class SuffocationComponent extends BasicComponent<Living> {
 		// Handle drowning and suffocation damage
 		Entity e = getParent().getParent();
 		int airTicks = getAirTicks();
-		Point headPos = getParent().getHeadPosition();
+		Point headPos = getParent().getHead().getPosition();
 		if (e.isObserver() || headPos.getWorld().getChunkFromBlock(headPos, LoadOption.NO_LOAD) != null) {
 			Block head = e.getWorld().getBlock(headPos, e);
 			if (head.isMaterial(VanillaMaterials.GRAVEL, VanillaMaterials.SAND, VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {

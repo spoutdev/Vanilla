@@ -28,7 +28,6 @@ package org.spout.vanilla.entity.component.gamemode;
 
 import org.spout.api.entity.BasicComponent;
 import org.spout.api.tickable.TickPriority;
-
 import org.spout.vanilla.entity.VanillaPlayerController;
 
 /**
@@ -46,6 +45,5 @@ public class AdventureComponent extends BasicComponent<VanillaPlayerController> 
 
 	@Override
 	public void onTick(float dt) {
-
 	}
 }

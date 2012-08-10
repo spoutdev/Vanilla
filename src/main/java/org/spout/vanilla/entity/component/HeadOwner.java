@@ -24,48 +24,15 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.effect.type;
+package org.spout.vanilla.entity.component;
 
-import java.util.Set;
+import org.spout.vanilla.entity.component.basic.HeadComponent;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.entity.Player;
-
-import org.spout.vanilla.data.effect.Effect;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-
-public class PressBlockEffect extends Effect {
-	private static final int SOUND_RANGE = 16;
-
-	public PressBlockEffect() {
-		this(SOUND_RANGE);
-	}
-
-	public PressBlockEffect(int range) {
-		super(range);
-	}
-
-	@Override
-	public void play(Player player, Point position) {
-		this.play(player, position, true);
-	}
-
-	public void play(Player player, Point position, boolean pressed) {
-		SoundEffects.RANDOM_CLICK.play(player, position, 0.3f, pressed ? 0.6f : 0.5f);
-	}
-
-	public void play(Set<Player> players, Point position, boolean pressed) {
-		for (Player player : players) {
-			this.play(player, position, pressed);
-		}
-	}
-
-	public void playGlobal(Point position, boolean pressed) {
-		this.playGlobal(position, pressed, null);
-	}
-
-	public void playGlobal(Point position, boolean pressed, Entity ignore) {
-		this.play(getNearbyPlayers(position, ignore), position, pressed);
-	}
+public interface HeadOwner extends ComponentOwner {
+	/**
+	 * Gets the Head component of this Controller
+	 * 
+	 * @return Head component
+	 */
+	public HeadComponent getHead();
 }

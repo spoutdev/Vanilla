@@ -50,10 +50,6 @@ import org.spout.vanilla.material.block.Spreading;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 
-<<<<<<<HEAD
-		=======
-		>>>>>>>origin
-
 public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, RandomBlockMaterial {
 	private static final EffectRange VINE_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
 	private static final int MAX_PER_GROUP = 5;

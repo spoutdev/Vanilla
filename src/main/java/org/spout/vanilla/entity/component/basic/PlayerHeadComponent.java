@@ -24,48 +24,38 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.effect.type;
+package org.spout.vanilla.entity.component.basic;
 
-import java.util.Set;
+import static org.spout.vanilla.util.VanillaMathHelper.getLookAtPitch;
+import static org.spout.vanilla.util.VanillaMathHelper.getLookAtYaw;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.entity.Player;
+import org.spout.api.geo.discrete.Transform;
+import org.spout.api.math.MathHelper;
+import org.spout.api.math.Vector3;
+import org.spout.vanilla.entity.VanillaPlayerController;
 
-import org.spout.vanilla.data.effect.Effect;
-import org.spout.vanilla.data.effect.store.SoundEffects;
+public class PlayerHeadComponent extends HeadComponent {
 
-public class PressBlockEffect extends Effect {
-	private static final int SOUND_RANGE = 16;
-
-	public PressBlockEffect() {
-		this(SOUND_RANGE);
-	}
-
-	public PressBlockEffect(int range) {
-		super(range);
+	@Override
+	public VanillaPlayerController getParent() {
+		return (VanillaPlayerController) super.getParent();
 	}
 
 	@Override
-	public void play(Player player, Point position) {
-		this.play(player, position, true);
-	}
-
-	public void play(Player player, Point position, boolean pressed) {
-		SoundEffects.RANDOM_CLICK.play(player, position, 0.3f, pressed ? 0.6f : 0.5f);
-	}
-
-	public void play(Set<Player> players, Point position, boolean pressed) {
-		for (Player player : players) {
-			this.play(player, position, pressed);
+	public float getHeight() {
+		float height = super.getHeight();
+		if (this.getParent().isCrouching()) {
+			height -= 0.08f;
 		}
+		return height;
 	}
 
-	public void playGlobal(Point position, boolean pressed) {
-		this.playGlobal(position, pressed, null);
-	}
-
-	public void playGlobal(Point position, boolean pressed, Entity ignore) {
-		this.play(getNearbyPlayers(position, ignore), position, pressed);
+	@Override
+	public Transform getTransform() {
+		Transform trans = new Transform();
+		trans.setPosition(this.getPosition());
+		Vector3 offset = this.getLookingAt();
+		trans.setRotation(MathHelper.rotation(getLookAtPitch(offset), getLookAtYaw(offset), 0.0f));
+		return trans;
 	}
 }

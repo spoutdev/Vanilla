@@ -29,22 +29,18 @@ package org.spout.vanilla.entity.living;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.tickable.LogicPriority;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.entity.VanillaControllerType;
 import org.spout.vanilla.entity.VanillaEntityController;
+import org.spout.vanilla.entity.component.HeadOwner;
+import org.spout.vanilla.entity.component.SuffocationOwner;
+import org.spout.vanilla.entity.component.basic.HeadComponent;
 import org.spout.vanilla.entity.component.basic.SuffocationComponent;
 
-public abstract class Living extends VanillaEntityController {
+public abstract class Living extends VanillaEntityController implements HeadOwner, SuffocationOwner {
 	protected SuffocationComponent suffocationProcess;
-	private Point headPos = null;
-	private int headYaw = 0;
-	private int lastHeadYaw = 0;
-	private int nextHeadYaw = 0;
-	private boolean headYawChanged;
-	private float headHeight = 1.0f;
-	private int reach = 5;
+	protected HeadComponent headProcess;
 	protected boolean crouching;
 
 	protected Living(VanillaControllerType type) {
@@ -54,7 +50,8 @@ public abstract class Living extends VanillaEntityController {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		suffocationProcess = registerProcess(new SuffocationComponent(this, LogicPriority.HIGHEST));
+		headProcess = this.addComponent(HeadComponent.class);
+		suffocationProcess = this.addComponent(SuffocationComponent.class);
 	}
 
 	/**
@@ -65,100 +62,7 @@ public abstract class Living extends VanillaEntityController {
 		return suffocationProcess;
 	}
 
-	@Override
-	public void onTick(float dt) {
-		headPos = null;
-		super.onTick(dt);
-		headYawChanged = false;
-		headYaw = calculateHeadYaw();
-		if (lastHeadYaw != headYaw) {
-			lastHeadYaw = headYaw;
-			headYawChanged = true;
-		}
-	}
 
-	private int calculateHeadYaw() {
-		if (nextHeadYaw == 0) {
-			nextHeadYaw = (int) (getParent().getYaw());
-		}
-		int tmp = nextHeadYaw;
-		nextHeadYaw = 0;
-		return tmp;
-	}
-
-	/**
-	 * Sets the maximum distance this Living Entity can interact at
-	 * @param reach distance
-	 */
-	public void setReach(int reach) {
-		this.reach = reach;
-	}
-
-	/**
-	 * Gets the maximum distance this Living Entity can interact at
-	 * @return reach distance
-	 */
-	public int getReach() {
-		return this.reach;
-	}
-
-	/**
-	 * Sets the yaw of a entity's head for the next tick.
-	 * @param headYaw
-	 */
-	public void setHeadYaw(int headYaw) {
-		this.nextHeadYaw = headYaw;
-	}
-
-	/**
-	 * Sets the current height of the head above the main position
-	 * @param height
-	 */
-	public void setHeadHeight(float height) {
-		this.headHeight = height;
-	}
-
-	/**
-	 * Gets the current height of the head above the main position
-	 * @return the head height
-	 */
-	public float getHeadHeight() {
-		return this.headHeight;
-	}
-
-	/**
-	 * Gets the position of the head of this living entity
-	 * @return the head position
-	 */
-	public Point getHeadPosition() {
-		if (headPos == null) {
-			headPos = this.getParent().getPosition().add(0.0f, this.getHeadHeight(), 0.0f);
-		}
-		return headPos;
-	}
-
-	public Transform getHeadTransform() {
-		Transform trans = new Transform();
-		trans.setPosition(this.getHeadPosition());
-		trans.setRotation(this.getParent().getRotation());
-		return trans;
-	}
-
-	public BlockIterator getHeadBlockView() {
-		return getHeadBlockView(this.getReach());
-	}
-
-	public BlockIterator getHeadBlockView(int maxDistance) {
-		return new BlockIterator(this.getParent().getWorld(), this.getHeadTransform(), maxDistance);
-	}
-
-	public int getHeadYaw() {
-		return headYaw;
-	}
-
-	public boolean headYawChanged() {
-		return headYawChanged;
-	}
 
 	public boolean isCrouching() {
 		return crouching;
@@ -169,20 +73,4 @@ public abstract class Living extends VanillaEntityController {
 	}
 
 	//TODO Need to remove this or do this better...
-
-	/**
-	 * Performs a collision test
-	 * @return the first block this Living entity collides with
-	 */
-	public Block hitTest() {
-		Block block;
-		for (BlockIterator iter = this.getHeadBlockView(); iter.hasNext(); ) {
-			block = iter.next();
-			//TODO: Hit box check
-			if (!block.getMaterial().isTransparent()) {
-				return block;
-			}
-		}
-		return null;
-	}
 }

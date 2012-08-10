@@ -29,6 +29,7 @@ package org.spout.vanilla.entity.component.gamemode;
 import org.spout.api.Spout;
 import org.spout.api.entity.BasicComponent;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.data.Difficulty;
@@ -47,9 +48,11 @@ public class SurvivalComponent extends BasicComponent<VanillaPlayerController> {
 	private int foodTimer = 0;
 	private short maxHunger = 20, hunger = maxHunger;
 	private float foodSaturation = 5.0f, exhaustion = 0.0f;
+	private Point previousWalkPosition;
 
 	public SurvivalComponent(TickPriority priority) {
 		super(priority);
+		this.previousWalkPosition = getParent().getParent().getPosition();
 	}
 
 	@Override

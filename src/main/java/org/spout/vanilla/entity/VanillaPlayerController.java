@@ -104,12 +104,12 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		getHealth().setSpawnHealth(20);
 		getHealth().setDeathAnimation(false);
 
-		statsUpdateComponent = (StatsUpdateComponent) addComponent(new StatsUpdateComponent(TickPriority.NORMAL).getClass());
-		pingComponent = (PingComponent) addComponent(new PingComponent(TickPriority.HIGHEST).getClass());
-		poisonEffectComponent = (PoisonEffectComponent) addComponent(new PoisonEffectComponent(TickPriority.HIGHEST).getClass());
-		stepSoundComponent = (PlayerStepSoundComponent) addComponent(new PlayerStepSoundComponent(TickPriority.NORMAL).getClass());
-		survivalComponent = (SurvivalComponent) addComponent(new SurvivalComponent(TickPriority.HIGHEST).getClass());
-		addComponent(new CreativeComponent(TickPriority.HIGHEST).getClass());
+		statsUpdateComponent = addComponent(new StatsUpdateComponent(TickPriority.NORMAL));
+		pingComponent = addComponent(new PingComponent(TickPriority.HIGHEST));
+		poisonEffectComponent = addComponent(new PoisonEffectComponent(TickPriority.HIGHEST));
+		stepSoundComponent = addComponent(new PlayerStepSoundComponent(TickPriority.NORMAL));
+		survivalComponent = addComponent(new SurvivalComponent(TickPriority.HIGHEST));
+		addComponent(new CreativeComponent(TickPriority.HIGHEST));
 	}
 
 	@Override

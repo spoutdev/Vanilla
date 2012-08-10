@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.event.player;
 
-import org.spout.api.entity.BasicController;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;

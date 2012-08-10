@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.entity.object;
 
 import java.util.Arrays;
 
-import org.spout.api.entity.BasicController;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;

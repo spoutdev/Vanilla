@@ -47,8 +47,8 @@ public abstract class Creature extends Living {
 		super.onAttached();
 
 		removeComponent(HealthComponent.class);
-		healthComponent = (HealthComponent) addComponent(new CreatureHealthComponent(TickPriority.HIGHEST).getClass());
-		growComponent = (GrowComponent) addComponent(new GrowComponent(TickPriority.HIGHEST).getClass());
+		healthComponent = addComponent(new CreatureHealthComponent(TickPriority.HIGHEST));
+		growComponent = addComponent(new GrowComponent(TickPriority.HIGHEST));
 		lineOfSight = getDataMap().get(VanillaData.LINE_OF_SIGHT);
 	}
 

@@ -26,31 +26,21 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 
 public class IronBarsBlock extends Solid implements Mineable {
 	public IronBarsBlock(String name, int id) {
 		super(name, id);
-		this.setHardness(5.0F).setResistance(10.0F).setOpacity((byte) 1);
+		this.setHardness(5.0F).setResistance(10.0F).setTransparent();
+		getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.WOOD_UP);
 	}
 
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return 0; // TODO this
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial() instanceof Pickaxe) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
 	}
 }

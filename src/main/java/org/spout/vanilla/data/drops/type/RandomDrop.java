@@ -26,15 +26,16 @@
  */
 package org.spout.vanilla.data.drops.type;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.vanilla.data.drops.Drop;
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 
-public class RandomDrop implements Drop {
+public class RandomDrop extends Drop {
 	private final Material material;
 	private final int[] amounts;
 
@@ -48,13 +49,14 @@ public class RandomDrop implements Drop {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(Random random) {
-		int amount = amounts[random.nextInt(amounts.length)];
-		if (amount > 0) {
-			return Arrays.asList(new ItemStack(getMaterial(), amount));
-		} else {
-			return Arrays.asList();
+	public List<ItemStack> getDrops(Random random, Set<DropFlagSingle> flags, List<ItemStack> drops) {
+		if (this.canDrop(random, flags)) {
+			int amount = amounts[random.nextInt(amounts.length)];
+			if (amount > 0) {
+				drops.add(new ItemStack(getMaterial(), amount));
+			}
 		}
+		return drops;
 	}
 
 	@Override

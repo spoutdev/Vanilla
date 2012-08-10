@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.material.block.ore;
 
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.Furnace;
 import org.spout.vanilla.material.item.misc.Dye;
@@ -42,6 +42,7 @@ public class LapisLazuliOre extends Ore implements TimedCraftable, Initializable
 	public LapisLazuliOre(String name, int id) {
 		super(name, id);
 		this.setHardness(3.0F).setResistance(5.0F);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.STONE_UP);
 	}
 
 	@Override
@@ -62,14 +63,5 @@ public class LapisLazuliOre extends Ore implements TimedCraftable, Initializable
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.isMaterial(VanillaMaterials.STONE_PICKAXE, VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
 	}
 }

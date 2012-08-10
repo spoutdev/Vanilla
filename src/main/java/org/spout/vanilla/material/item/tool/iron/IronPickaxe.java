@@ -26,11 +26,13 @@
  */
 package org.spout.vanilla.material.item.tool.iron;
 
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class IronPickaxe extends IronTool implements Pickaxe {
 	public IronPickaxe(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setDamage(4);
+		this.addDropFlags(ToolTypeFlags.PICKAXE);
 	}
 }

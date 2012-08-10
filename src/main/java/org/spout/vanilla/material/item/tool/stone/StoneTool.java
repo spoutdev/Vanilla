@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.item.tool.stone;
 
+import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MiningType;
 
@@ -34,5 +35,6 @@ public abstract class StoneTool extends Tool {
 		super(name, id, durability);
 		this.setEnchantability(5);
 		this.setMiningLevel(MiningType.MiningLevel.STONE);
+		this.addDropFlags(ToolLevelFlags.STONE);
 	}
 }

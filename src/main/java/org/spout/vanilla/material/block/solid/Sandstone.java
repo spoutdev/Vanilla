@@ -26,10 +26,9 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.source.DataSource;
 
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.item.tool.Pickaxe;
@@ -45,12 +44,14 @@ public class Sandstone extends Solid implements Mineable {
 		super((short) 0x0003, name, 24);
 		this.type = SandstoneType.SANDSTONE;
 		this.setHardness(0.8F).setResistance(1.3F);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	private Sandstone(String name, SandstoneType type, Sandstone parent) {
 		super(name, 24, type.getData(), parent);
 		this.type = type;
 		this.setHardness(0.8F).setResistance(1.3F);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	public SandstoneType getType() {
@@ -65,15 +66,6 @@ public class Sandstone extends Solid implements Mineable {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial() instanceof Pickaxe) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
 	}
 
 	public static enum SandstoneType implements DataSource {

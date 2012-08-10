@@ -26,24 +26,126 @@
  */
 package org.spout.vanilla.data.drops;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.vanilla.data.drops.flag.DropFlag;
 
 /**
  * Contains one or more Drops
  */
-public interface Drop {
+public abstract class Drop {
+	private final List<DropFlag> flags = new ArrayList<DropFlag>();
+	private double chance = 1.0;
+
+	/**
+	 * Checks if this Drop matches all the flags given
+	 * 
+	 * @param flags to match against
+	 * @return True if matched, False if not
+	 */
+	public boolean matchFlags(Set<DropFlagSingle> flags) {
+		if (flags.contains(DropFlagSingle.NO_DROPS)) {
+			return false;
+		}
+		for (DropFlag flag : this.flags) {
+			if (!flag.evaluate(flags)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Tests if a drop is possible
+	 * 
+	 * @param random to use
+	 * @param dropFlags to check against
+	 * @return True if a drop can be performed, False if not
+	 */
+	public boolean canDrop(Random random, Set<DropFlagSingle> dropFlags) {
+		if (this.hasChance() && random.nextDouble() >= this.getChance()) {
+			return false;
+		}
+		return this.matchFlags(dropFlags);
+	}
+
+	/**
+	 * Gets if chance is involved when this Drop is activated
+	 * 
+	 * @return True if it has chance set, False if not
+	 */
+	public boolean hasChance() {
+		return this.chance < 1.0;
+	}
+
+	/**
+	 * Sets the chance for this Drop to be activated<br>
+	 * 
+	 * @param chance to set to, value from 0 to 1
+	 */
+	public Drop setChance(double chance) {
+		this.chance = chance;
+		return this;
+	}
+
+	/**
+	 * Gets the chance for this Drop to be activated
+	 * 
+	 * @return chance
+	 */
+	public double getChance() {
+		return this.chance;
+	}
+
+	/**
+	 * Adds all the flags for these drops<br>
+	 * All flags set for these drops need to be set to make these drops function
+	 * 
+	 * @param flags to add (can be a DropFlag and DropFlagBundle)
+	 * @return these Drops
+	 */
+	public Drop addFlags(DropFlag... dropFlags) {
+		this.flags.addAll(Arrays.asList(dropFlags));
+		return this;
+	}
+
+	/**
+	 * Gets all the flags set for these drops<br>
+	 * All flags set for these drops need to be set to make these drops function
+	 * 
+	 * @return drop flags
+	 */
+	public List<DropFlag> getFlags() {
+		return this.flags;
+	}
+
+	/**
+	 * Fills a list with the Drops
+	 * 
+	 * @param random to use
+	 * @param flags to evaluate against (contains no inverted flags)
+	 * @param drops list to fill
+	 * @return the inputed list of drops
+	 */
+	public abstract List<ItemStack> getDrops(Random random, Set<DropFlagSingle> flags, List<ItemStack> drops);
 
 	/**
 	 * Gets the Drops
 	 * 
 	 * @param random to use
+	 * @param flags to evaluate against (contains no inverted flags)
 	 * @return list of ItemStacks
 	 */
-	public List<ItemStack> getDrops(Random random);
+	public final List<ItemStack> getDrops(Random random, Set<DropFlagSingle> flags) {
+		return getDrops(random, flags, new ArrayList<ItemStack>());
+	}
 
 	/**
 	 * Tests if this Drop contains the Material specified
@@ -51,5 +153,5 @@ public interface Drop {
 	 * @param material to check
 	 * @return True if the material is contained, False if not
 	 */
-	public boolean containsDrop(Material material);
+	public abstract boolean containsDrop(Material material);
 }

@@ -26,11 +26,13 @@
  */
 package org.spout.vanilla.material.item.tool.gold;
 
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.item.tool.Axe;
 
 public class GoldAxe extends GoldTool implements Axe {
 	public GoldAxe(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setDamage(3);
+		this.addDropFlags(ToolTypeFlags.AXE);
 	}
 }

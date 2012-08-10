@@ -32,12 +32,14 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.controller.object.projectile.Arrow;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.item.RangedWeapon;
 
 public class Bow extends RangedWeapon {
 	public Bow(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setRangedDamage(9).setEnchantability(1);
+		this.addDropFlags(ToolTypeFlags.BOW);
 	}
 
 	@Override

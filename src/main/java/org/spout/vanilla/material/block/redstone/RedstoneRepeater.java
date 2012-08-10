@@ -90,10 +90,6 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 		return powered ? (byte) 9 : (byte) 0;
 	}
 
-	public void onDestroy(Block block, double dropChance) {
-		super.onDestroy(block, dropChance);
-	}
-
 	public void setPowered(Block block, boolean powered) {
 		block.setMaterial(powered ? VanillaMaterials.REDSTONE_REPEATER_ON : VanillaMaterials.REDSTONE_REPEATER_OFF, block.getData());
 	}

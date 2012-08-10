@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.material.item.tool;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -39,6 +41,7 @@ import org.spout.vanilla.controller.living.creature.hostile.Silverfish;
 import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
 import org.spout.vanilla.controller.living.creature.hostile.Spider;
 import org.spout.vanilla.controller.living.creature.hostile.Zombie;
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
@@ -51,6 +54,7 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	private int enchantability;
 	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
 	private int miningLevel;
+	private final HashSet<DropFlagSingle> dropFlags = new HashSet<DropFlagSingle>();
 
 	public Tool(String name, int id, short durability) {
 		super(name, id);
@@ -115,6 +119,26 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	@Override
 	public boolean hasNBTData() {
 		return true;
+	}
+
+	/**
+	 * Gets all the drop flags this tool adds
+	 * 
+	 * @return tool flags
+	 */
+	public Set<DropFlagSingle> getDropFlags() {
+		return this.dropFlags;
+	}
+
+	/**
+	 * Adds all the drop flags to this tool
+	 * 
+	 * @param dropFlags to add
+	 * @return this Tool
+	 */
+	public Tool addDropFlags(DropFlagSingle... dropFlags) {
+		this.dropFlags.addAll(Arrays.asList(dropFlags));
+		return this;
 	}
 
 	public int getDamageBonus(VanillaEntityController damaged, ItemStack heldItem) {

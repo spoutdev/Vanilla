@@ -26,11 +26,13 @@
  */
 package org.spout.vanilla.material.item.tool.diamond;
 
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.item.tool.Axe;
 
 public class DiamondAxe extends DiamondTool implements Axe {
 	public DiamondAxe(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setDamage(6);
+		this.addDropFlags(ToolTypeFlags.AXE);
 	}
 }

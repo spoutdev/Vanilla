@@ -26,18 +26,19 @@
  */
 package org.spout.vanilla.data.drops.type;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.vanilla.data.drops.Drop;
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 
 /**
  * A drop of a fixed amount
  */
-public class FixedDrop implements Drop {
+public class FixedDrop extends Drop {
 	private final Material material;
 	private final int amount;
 
@@ -55,8 +56,11 @@ public class FixedDrop implements Drop {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(Random random) {
-		return Arrays.asList(new ItemStack(getMaterial(), getAmount()));
+	public List<ItemStack> getDrops(Random random, Set<DropFlagSingle> flags, List<ItemStack> drops) {
+		if (this.canDrop(random, flags)) {
+			drops.add(new ItemStack(getMaterial(), getAmount()));
+		}
+		return drops;
 	}
 
 	@Override

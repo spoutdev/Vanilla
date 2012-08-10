@@ -26,11 +26,14 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
+import java.util.Set;
+
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.controller.VanillaControllerType;
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.material.block.Solid;
 
 public abstract class ControlledMaterial extends Solid {
@@ -40,6 +43,12 @@ public abstract class ControlledMaterial extends Solid {
 		super(name, id);
 		this.type = type;
 		this.setController(type);
+	}
+
+	@Override
+	public void onDestroy(Block block, Set<DropFlagSingle> dropFlags) {
+		block.getWorld().setBlockController(block.getX(), block.getY(), block.getZ(), null);
+		super.onDestroy(block, dropFlags);
 	}
 
 	@Override

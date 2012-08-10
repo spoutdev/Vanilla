@@ -26,9 +26,10 @@
  */
 package org.spout.vanilla.material.block.ore;
 
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -44,6 +45,7 @@ public class RedstoneOre extends Ore implements TimedCraftable, InitializableMat
 		super(name, id);
 		this.glowing = glowing;
 		this.setHardness(3.0F).setResistance(5.0F);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.IRON_UP);
 	}
 
 	@Override
@@ -69,15 +71,6 @@ public class RedstoneOre extends Ore implements TimedCraftable, InitializableMat
 	@Override
 	public byte getLightLevel(short data) {
 		return glowing ? (byte) 13 : (byte) 0;
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.isMaterial(VanillaMaterials.IRON_PICKAXE, VanillaMaterials.DIAMOND_PICKAXE)) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
 	}
 
 	/**

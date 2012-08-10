@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.item.tool.wood;
 
+import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MiningType;
 
@@ -34,5 +35,6 @@ public abstract class WoodenTool extends Tool {
 		super(name, id, durability);
 		this.setEnchantability(15);
 		this.setMiningLevel(MiningType.MiningLevel.WOOD);
+		this.addDropFlags(ToolLevelFlags.WOOD);
 	}
 }

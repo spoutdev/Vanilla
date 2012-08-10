@@ -26,24 +26,13 @@
  */
 package org.spout.vanilla.material.block.stair;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.Stairs;
-import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class NetherBrickStairs extends Stairs {
 	public NetherBrickStairs(String name, int id) {
 		super(name, id);
 		this.setHardness(2.0F).setResistance(10.0F);
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial() instanceof Pickaxe) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 }

@@ -26,30 +26,25 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.data.drops.SwitchDrops;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.Burnable;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.SignBase;
-import org.spout.vanilla.material.enchantment.Enchantments;
-import org.spout.vanilla.material.item.misc.Shears;
+import org.spout.vanilla.material.item.tool.Shears;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.EnchantmentUtil;
 
-public class Leaves extends Solid implements Mineable, Burnable {
+public class Leaves extends Solid implements Mineable, Burnable, InitializableMaterial {
 	public static final Leaves DEFAULT = new Leaves("Leaves");
 	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 1, DEFAULT);
 	public static final Leaves BIRCH = new Leaves("Birch Leaves", 2, DEFAULT);
 	public static final Leaves JUNGLE = new Leaves("Jungle Leaves", 3, DEFAULT);
-	private Random rand = new Random();
 
 	private Leaves(String name) {
 		super((short) 0x0003, name, 18);
@@ -59,6 +54,14 @@ public class Leaves extends Solid implements Mineable, Burnable {
 	private Leaves(String name, int data, Leaves parent) {
 		super(name, 18, data, parent);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
+	}
+
+	@Override
+	public void initialize() {
+		SwitchDrops drops = getDrops().DEFAULT.clear().addSwitch(ToolTypeFlags.SHEARS);
+		drops.TRUE.add(this);
+		drops.FALSE.add(VanillaMaterials.SAPLING).setChance(0.05);
+		drops.FALSE.add(VanillaMaterials.RED_APPLE).setChance(0.005);
 	}
 
 	@Override
@@ -88,21 +91,6 @@ public class Leaves extends Solid implements Mineable, Burnable {
 	@Override
 	public boolean isTransparent() {
 		return false;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (holding != null && (holding.isMaterial(VanillaMaterials.SHEARS) || EnchantmentUtil.hasEnchantment(holding, Enchantments.SILK_TOUCH))) {
-			drops.add(new ItemStack(this, 1));
-		} else {
-			if (rand.nextInt(20) == 0) {
-				drops.add(new ItemStack(VanillaMaterials.SAPLING, 1));
-			} else if (rand.nextInt(200) == 0) {
-				drops.add(new ItemStack(VanillaMaterials.RED_APPLE, 1));
-			}
-		}
-		return drops;
 	}
 
 	// TODO: Decay

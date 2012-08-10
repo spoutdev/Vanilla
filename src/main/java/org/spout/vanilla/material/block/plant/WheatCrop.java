@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -37,6 +37,9 @@ import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.data.drops.flag.BlockFlags;
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.Growing;
@@ -47,10 +50,31 @@ import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class WheatCrop extends GroundAttachable implements Growing, Crop, RandomBlockMaterial {
+public class WheatCrop extends GroundAttachable implements Growing, Crop, RandomBlockMaterial, InitializableMaterial {
+
 	public WheatCrop(String name, int id) {
 		super(name, id);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
+	}
+
+	@Override
+	public void initialize() {
+		getDrops().DEFAULT.clear();
+		getDrops().DEFAULT.add(VanillaMaterials.WHEAT).addFlags(BlockFlags.FULLY_GROWN);
+		getDrops().DEFAULT.add(VanillaMaterials.SEEDS).addFlags(BlockFlags.SEEDS);
+	}
+
+	@Override
+	public Set<DropFlagSingle> getDropFlags(Block block, Set<DropFlagSingle> flags) {
+		flags = super.getDropFlags(block, flags);
+		Random rand = new Random();
+		if (rand.nextInt(15) <= getGrowthStage(block)) {
+			flags.add(BlockFlags.SEEDS);
+		}
+		if (this.isFullyGrown(block)) {
+			flags.add(BlockFlags.FULLY_GROWN);
+		}
+		return flags;
 	}
 
 	@Override
@@ -96,19 +120,6 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Random
 				this.setGrowthStage(block, 0x7);
 			}
 		}
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		int stage = getGrowthStage(block);
-		//final stage
-		//TODO Make a nice enum of this...
-		//TODO Drop seeds based on growth stage
-		if (stage == 8) {
-			drops.add(new ItemStack(VanillaMaterials.WHEAT, 1));
-		}
-		return drops;
 	}
 
 	// TODO: Trampling

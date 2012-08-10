@@ -59,11 +59,6 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	}
 
 	@Override
-	public void onDestroy(Block block, double dropChance) {
-		super.onDestroy(block, dropChance);
-	}
-
-	@Override
 	public byte getLightLevel(short data) {
 		return powered ? (byte) 7 : (byte) 0;
 	}

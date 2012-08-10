@@ -24,22 +24,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.drops;
+package org.spout.vanilla.data.drops.flag;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.Set;
 
-import org.spout.api.inventory.ItemStack;
-
-public class SelectedDrop extends BundledDrops {
-
-	@Override
-	public List<ItemStack> getDrops(Random random) {
-		List<Drop> drops = this.getAll();
-		if (drops.isEmpty()) {
-			return Arrays.asList();
-		}
-		return drops.get(random.nextInt(drops.size())).getDrops(random);
-	}
+public interface DropFlag {
+	/**
+	 * Checks if this Flag evaluates one of the flags set
+	 * 
+	 * @param flags to test against
+	 * @return True if successful, False if not
+	 */
+	public boolean evaluate(Set<DropFlagSingle> flags);
 }

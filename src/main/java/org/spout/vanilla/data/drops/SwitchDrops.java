@@ -24,48 +24,43 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.data.drops;
 
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.vanilla.data.drops.flag.DropFlag;
 
-import org.spout.vanilla.controller.living.creature.passive.Sheep;
-import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.VanillaPlayerUtil;
+/**
+ * If all flags match, it drops the first segment, else the other<br>
+ * If a chance is set, this Chance also defines what mode is used
+ */
+public class SwitchDrops extends Drops {
+	public final Drops TRUE = new Drops();
+	public final Drops FALSE = new Drops();
 
-public class Shears extends Tool {
-	private Random rand = new Random();
-
-	public Shears(String name, int id, short durability) {
-		super(name, id, durability);
+	@Override
+	public List<ItemStack> getDrops(Random random, Set<DropFlagSingle> flags, List<ItemStack> drops) {
+		if (this.canDrop(random, flags)) {
+			drops = this.TRUE.getDrops(random, flags, drops);
+		} else {
+			drops = this.FALSE.getDrops(random, flags, drops);
+		}
+		return drops;
 	}
 
 	@Override
-	public void onInteract(Entity entity, Entity other, Action action) {
-		if (action == Action.RIGHT_CLICK) {
-			if (!(other.getController() instanceof Sheep)) {
-				return;
-			}
+	public SwitchDrops addFlags(DropFlag... dropFlags) {
+		super.addFlags(dropFlags);
+		return this;
+	}
 
-			Sheep sheep = (Sheep) other.getController();
-			if (sheep.isSheared() || sheep.getGrowing().isBaby()) {
-				System.out.println("Debug");
-				return;
-			}
-
-			sheep.setSheared(true);
-			short col = sheep.getColor().getData();
-
-			other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1), other.getPosition().normalize()));
-
-			if (VanillaPlayerUtil.isSurvival(entity)) {
-				VanillaPlayerUtil.getCurrentSlot(entity).addItemData(0, 1);
-			}
-		}
+	@Override
+	public SwitchDrops setChance(double chance) {
+		super.setChance(chance);
+		return this;
 	}
 }

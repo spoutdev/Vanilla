@@ -26,12 +26,9 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 
@@ -39,20 +36,12 @@ public class Web extends VanillaBlockMaterial implements Mineable {
 	public Web(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false).setHardness(4.0F).setResistance(20.0F).setTransparent();
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.SWORD, ToolTypeFlags.SHEARS);
 	}
 
 	@Override
 	public boolean isTransparent() {
 		return false;
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial() instanceof Sword || holding.isMaterial(VanillaMaterials.SHEARS)) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
 	}
 
 	@Override

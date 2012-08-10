@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.protocol.handler;
 
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
@@ -45,6 +45,6 @@ public final class PlayerLookMessageHandler extends MessageHandler<PlayerLookMes
 		player.setPitch(message.getPitch());
 		player.setYaw(message.getYaw());
 		player.setRoll(message.getRoll());
-		((VanillaPlayerController) player.getController()).setLookingAtVector(message.getLookingAtVector());
+		((VanillaPlayerController) player.getController()).getHead().setLooking(message.getLookingAtVector());
 	}
 }

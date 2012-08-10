@@ -30,11 +30,12 @@ import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaControllerType;
+import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.component.basic.CreatureHealthComponent;
 import org.spout.vanilla.entity.component.basic.GrowComponent;
 import org.spout.vanilla.entity.component.basic.HealthComponent;
 
-public abstract class Creature extends Living {
+public abstract class Creature extends VanillaEntityController {
 	private int lineOfSight = 1;
 	protected GrowComponent growComponent;
 

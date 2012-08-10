@@ -38,7 +38,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
@@ -184,7 +184,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 						//For now: simple distance checking
 						Point pos1 = player.getPosition();
-						Point pos2 = ((VanillaPlayerController) player.getController()).getHeadPosition();
+						Point pos2 = ((VanillaPlayerController) player.getController()).getHead().getPosition();
 						Point tpos = target.getPosition();
 
 						if (pos1.distance(tpos) < 0.6 || pos2.distance(tpos) < 0.6) {

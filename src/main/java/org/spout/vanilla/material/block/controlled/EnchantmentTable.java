@@ -38,10 +38,6 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 
-<<<<<<<HEAD
-		=======
-		>>>>>>>origin
-
 public class EnchantmentTable extends ControlledMaterial implements Directional, Mineable {
 	public EnchantmentTable(String name, int id) {
 		super(VanillaControllerTypes.ENCHANTMENT_TABLE, name, id);

@@ -56,6 +56,12 @@ public class SurvivalComponent extends BasicComponent<VanillaPlayerController> {
 	}
 
 	@Override
+	public void onAttached() {
+		super.onAttached();
+		previousWalkPosition = getParent().getParent().getPosition();
+	}
+
+	@Override
 	public boolean canTick() {
 		if (getParent().isSurvival()) {
 			return true;
@@ -66,8 +72,12 @@ public class SurvivalComponent extends BasicComponent<VanillaPlayerController> {
 	@Override
 	public void onTick(float dt) {
 		float distanceMoved = 0f;
-		if ((distanceMoved += getParent().getPreviousPosition().distanceSquared(getParent().getPreviousPosition())) >= 1) {
+		Point position = getParent().getParent().getPosition();
+		distanceMoved += position.distanceSquared(this.previousWalkPosition);
+		this.previousWalkPosition = position;
+		if (distanceMoved >= 1) {
 			setExhaustion(getExhaustion() + ExhaustionLevel.WALKING.getAmount());
+			distanceMoved = 0.0f;
 		}
 
 		if (getParent().isSprinting()) {

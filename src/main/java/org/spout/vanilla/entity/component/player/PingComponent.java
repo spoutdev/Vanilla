@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.entity.component.player;
 
+import java.util.Random;
 import java.util.logging.Level;
 
 import org.spout.api.Spout;
@@ -47,6 +48,7 @@ public class PingComponent extends BasicComponent<VanillaPlayerController> {
 	private long lastResponseTime = System.currentTimeMillis();
 	private long ping = 0L;
 	private boolean hasTimeOutMsg = true; //temporary to prevent massive kick notify messages
+	private Random random = new Random();
 
 	public PingComponent(TickPriority priority) {
 		super(priority);
@@ -64,7 +66,7 @@ public class PingComponent extends BasicComponent<VanillaPlayerController> {
 
 		// Send a new request message after half the time-out time has passed
 		if ((time - lastRequestTime) > (VanillaConfiguration.PLAYER_TIMEOUT_MS.getInt() / 2)) {
-			lastRequestHash = getParent().getRandom().nextInt();
+			lastRequestHash = random.nextInt();
 			lastRequestTime = time;
 			getParent().getParent().getNetworkSynchronizer().callProtocolEvent(new PlayerKeepAliveEvent(lastRequestHash));
 		}

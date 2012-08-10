@@ -26,14 +26,9 @@
  */
 package org.spout.vanilla.entity.object.vehicle.minecart;
 
-<<<<<<<HEAD:src/main/java/org/spout/vanilla/entity/object/vehicle/minecart/StorageMinecart.java
-		import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.object.vehicle.Minecart;
-=======
-		import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.object.vehicle.Minecart;
 import org.spout.vanilla.material.VanillaMaterials;
->>>>>>>origin:src/main/java/org/spout/vanilla/controller/object/vehicle/minecart/StorageMinecart.java
 
 public class StorageMinecart extends Minecart {
 	public StorageMinecart() {

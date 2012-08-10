@@ -27,7 +27,7 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.chat.ChatArguments;
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 

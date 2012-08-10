@@ -60,11 +60,9 @@ public abstract class VanillaEntityFoodEffect extends EntityEffect {
 	}
 
 	@Override
-	public abstract void onRegistration();
+	public abstract void onAttached();
 
 	@Override
-	public void run() {
+	public void onTick(float dt) {
 	}
-
-	;
 }

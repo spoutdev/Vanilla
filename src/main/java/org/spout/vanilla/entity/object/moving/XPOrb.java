@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.entity.object.moving;
 
-import org.spout.api.tickable.LogicPriority;
+import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaControllerTypes;
@@ -45,16 +45,16 @@ public class XPOrb extends Substance {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		experience = data().get(VanillaData.EXPERIENCE_AMOUNT);
-		timeDispersed = data().get(VanillaData.TIME_DISPERSED);
-		registerProcess(new DetectXPCollectorComponent(this, LogicPriority.NORMAL));
+		experience = getDataMap().get(VanillaData.EXPERIENCE_AMOUNT);
+		timeDispersed = getDataMap().get(VanillaData.TIME_DISPERSED);
+		addComponent(new DetectXPCollectorComponent(TickPriority.NORMAL));
 	}
 
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put(VanillaData.EXPERIENCE_AMOUNT, experience);
-		data().put(VanillaData.TIME_DISPERSED, timeDispersed);
+		getDataMap().put(VanillaData.EXPERIENCE_AMOUNT, experience);
+		getDataMap().put(VanillaData.TIME_DISPERSED, timeDispersed);
 	}
 
 	public short getExperience() {

@@ -36,12 +36,12 @@ public class Poisoning extends VanillaEntityFoodEffect {
 	}
 
 	@Override
-	public void onRegistration() {
+	public void onAttached() {
 		this.getParent().getPoisonEffectComponent().setPoisoned(true);
 	}
 
 	@Override
-	public void run() {
+	public void onTick(float dt) {
 		this.getParent().getPoisonEffectComponent().setPoisoned(false);
 	}
 }

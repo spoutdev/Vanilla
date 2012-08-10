@@ -29,12 +29,12 @@ package org.spout.vanilla.entity.component.gamemode;
 import org.spout.api.entity.BasicComponent;
 import org.spout.api.tickable.TickPriority;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.component.GameModeOwner;
 
 /**
  * Basic component that applies Creative-mode rules to VanillaPlayers.
  */
-public class CreativeComponent extends BasicComponent<VanillaPlayerController> {
+public class CreativeComponent extends BasicComponent<GameModeOwner> {
 	public CreativeComponent(TickPriority priority) {
 		super(priority);
 	}

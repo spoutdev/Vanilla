@@ -43,7 +43,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -67,7 +67,7 @@ import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
-	private void breakBlock(BlockMaterial blockMaterial, Block block, VanillaPlayer player) {
+	private void breakBlock(BlockMaterial blockMaterial, Block block, VanillaPlayerController player) {
 		if (blockMaterial instanceof VanillaBlockMaterial) {
 			HashSet<DropFlagSingle> flags = new HashSet<DropFlagSingle>();
 			if (player.isSurvival()) {
@@ -174,7 +174,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 					VanillaMaterials.FIRE.onDestroy(neigh);
 					GeneralEffects.RANDOM_FIZZ.playGlobal(block.getPosition());
 				} else if (vp.isSurvival() && blockMaterial.getHardness() != 0.0f) {
-					vp.startDigging(new Point(w, x, y, z));
+					vp.getDiggingLogic().startDigging(new Point(w, x, y, z));
 				} else {
 					// insta-break
 					breakBlock(blockMaterial, block, vp);
@@ -182,20 +182,16 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
-			if (!vp.stopDigging(new Point(w, x, y, z)) || !isInteractable) {
+			if (!vp.getDiggingLogic().stopDigging(new Point(w, x, y, z)) || !isInteractable) {
 				return;
 			}
 
-			<<<<<<<HEAD
 			if (VanillaPlayerUtil.isSurvival(player)) {
-				((VanillaPlayerController) player.getController()).getSurvivalLogic().setExhaustion(((VanillaPlayerController) player.getController()).getSurvivalLogic().getExhaustion() + ExhaustionLevel.BREAK_BLOCK.getAmount());
-				=======
 				if (vp.isSurvival()) {
 					vp.getSurvivalLogic().addExhaustion(ExhaustionLevel.BREAK_BLOCK.getAmount());
-					>>>>>>>origin
 				}
 
-				long diggingTicks = vp.getDiggingTicks();
+				long diggingTicks = vp.getDiggingLogic().getDiggingTicks();
 				int damageDone;
 				int totalDamage;
 
@@ -227,3 +223,4 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			}
 		}
 	}
+}

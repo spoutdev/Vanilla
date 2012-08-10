@@ -33,8 +33,8 @@ import org.spout.vanilla.material.item.misc.PaintingItem.PaintingStyle;
 public class Painting extends Substance {
 	public Painting(PaintingStyle style, int face) {
 		super(VanillaControllerTypes.PAINTINGS);
-		data().put("PaintingStyle", style);
-		data().put("PaintingFace", face);
+		getDataMap().put("PaintingStyle", style);
+		getDataMap().put("PaintingFace", face);
 	}
 
 	@Override
@@ -43,10 +43,10 @@ public class Painting extends Substance {
 	}
 
 	public PaintingStyle getPaintingStyle() {
-		return (PaintingStyle) data().get("PaintingStyle");
+		return (PaintingStyle) getDataMap().get("PaintingStyle");
 	}
 
 	public int getFace() {
-		return (Integer) data().get("PaintingFace");
+		return (Integer) getDataMap().get("PaintingFace");
 	}
 }

@@ -35,10 +35,6 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 
-<<<<<<<HEAD
-		=======
-		>>>>>>>origin
-
 public class BrewingStand extends ControlledMaterial implements Mineable {
 	public BrewingStand(String name, int id) {
 		super(VanillaControllerTypes.BREWING_STAND, name, id);

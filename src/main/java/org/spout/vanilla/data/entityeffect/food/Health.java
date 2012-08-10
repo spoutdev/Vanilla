@@ -36,7 +36,7 @@ public class Health extends VanillaEntityFoodEffect {
 	}
 
 	@Override
-	public void onRegistration() {
+	public void onAttached() {
 		this.getParent().getHealth().setHealth((int) (this.getParent().getHealth().getHealth() + this.getStrength()), HealthChangeReason.EATING);
 	}
 }

@@ -28,7 +28,7 @@ package org.spout.vanilla.material.block.controlled;
 
 import java.util.Random;
 
-import org.spout.api.entity.component.Controller;
+import org.spout.api.entity.Controller;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;

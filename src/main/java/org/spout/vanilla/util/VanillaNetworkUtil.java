@@ -33,7 +33,7 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.protocol.VanillaProtocol;

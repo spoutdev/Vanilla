@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.entity.component.controller.BlockController;
+import org.spout.api.entity.controller.BlockController;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;

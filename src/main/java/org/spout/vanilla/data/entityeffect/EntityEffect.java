@@ -26,22 +26,23 @@
  */
 package org.spout.vanilla.data.entityeffect;
 
+import org.spout.api.entity.BasicComponent;
 import org.spout.api.protocol.Message;
-import org.spout.api.tickable.TimedLogicRunnable;
 
 import org.spout.vanilla.entity.VanillaPlayerController;
 
 /**
  * Represents an entity effect that is applied to an entity.
  */
-public abstract class EntityEffect extends TimedLogicRunnable<VanillaPlayerController> {
+public abstract class EntityEffect extends BasicComponent<VanillaPlayerController> {
 	protected int id;
 	protected float strength;
 
 	public EntityEffect(VanillaPlayerController effected, int id, float duration, float strength) {
-		super(effected, duration);
 		this.id = id;
 		this.strength = strength;
+		this.setDelay(duration);
+		this.setRunOnce(true);
 	}
 
 	/**
@@ -93,17 +94,17 @@ public abstract class EntityEffect extends TimedLogicRunnable<VanillaPlayerContr
 	}
 
 	@Override
-	public void onRegistration() {
+	public void onAttached() {
 		getParent().getParent().getSession().send(false, getApplianceMessage());
 	}
 
 	@Override
-	public boolean shouldRun(float dt) {
-		return super.shouldRun(dt);
+	public boolean canTick() {
+		return super.canTick();
 	}
 
 	@Override
-	public void run() {
+	public void onTick(float dt) {
 		getParent().getParent().getSession().send(false, getRemovalMessage());
 	}
 }

@@ -50,6 +50,7 @@ import org.spout.api.tickable.TickPriority;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.Drops;
 import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.vanilla.entity.component.HealthOwner;
 import org.spout.vanilla.entity.component.basic.FireDamageComponent;
 import org.spout.vanilla.entity.component.basic.HealthComponent;
 import org.spout.vanilla.entity.component.physics.BlockCollisionComponent;
@@ -58,7 +59,7 @@ import org.spout.vanilla.entity.object.moving.Item;
 /**
  * Controller that is the parent of all entity controllers.
  */
-public abstract class VanillaEntityController extends BasicController implements VanillaController {
+public abstract class VanillaEntityController extends BasicController implements VanillaController, HealthOwner {
 	private final VanillaControllerType type;
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();

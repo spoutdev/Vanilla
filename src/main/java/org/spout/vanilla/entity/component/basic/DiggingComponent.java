@@ -24,133 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.living;
+package org.spout.vanilla.entity.component.basic;
 
-import org.spout.api.data.Data;
+import org.spout.api.entity.BasicComponent;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
-import org.spout.api.math.Vector3;
-
+import org.spout.api.tickable.TickPriority;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 
-public class Human extends Living {
-	protected boolean isDigging, onGround, sprinting;
+public class DiggingComponent extends BasicComponent<VanillaPlayerController> {
+	private boolean isDigging;
 	protected Point diggingPosition;
 	protected long diggingStartTime;
 	protected int miningDamagePosition = 0;
 	protected long previousDiggingTime = 0;
 	protected int miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt(), miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt();
 	protected int[] miningDamage;
-	protected String title; //TODO title isn't really a good name...
-	protected ItemStack renderedItemInHand;
 
-	public Human() {
-		super(VanillaControllerTypes.HUMAN);
-	}
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getParent().setObserver(true);
-		getHead().setHeight(1.62f);
-	}
-
-	@Override
-	public void onSave() {
-		super.onSave();
-		data().put(Data.TITLE, title);
-	}
-
-	@Override
-	public boolean isSavable() {
-		return true;
-	}
-
-	@Override
-	public float getHeadHeight() {
-		float height = super.getHeadHeight();
-		if (this.crouching) {
-			height -= 0.08f;
-		}
-		return height;
-	}
-
-	@Override
-	public boolean needsPositionUpdate() {
-		return true;
-	}
-
-	@Override
-	public boolean needsVelocityUpdate() {
-		return true;
-	}
-
-	/**
-	 * Gets the item rendered in the human's hand; not neccassaily the actual item in the human's hand.
-	 * @return rendered item in hand
-	 */
-	public ItemStack getRenderedItemInHand() {
-		return renderedItemInHand;
-	}
-
-	/**
-	 * Sets the item rendered in the human's hand; not neccassaily the actual item in the human's hand.
-	 * @param renderedItemInHand
-	 */
-	public void setRenderedItemInHand(ItemStack renderedItemInHand) {
-		this.renderedItemInHand = renderedItemInHand;
-	}
-
-	/**
-	 * Gets the name displayed above the human's head.
-	 * @return title name
-	 */
-	public String getTitle() {
-		return title;
-	}
-
-	/**
-	 * Sets the name displayed above the human's head.
-	 * @param title
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	/**
-	 * Sets whether or not th player is
-	 * @param sprinting
-	 */
-	public void setSprinting(boolean sprinting) {
-		this.sprinting = sprinting;
-	}
-
-	/**
-	 * Whether or not the player is sprinting.
-	 * @return true if sprinting
-	 */
-	public boolean isSprinting() {
-		return sprinting;
-	}
-
-	/**
-	 * Sets whether or not the player is perceived by the client as being on the ground.
-	 * @param onGround
-	 */
-	public void setOnGround(boolean onGround) {
-		this.onGround = onGround;
-	}
-
-	/**
-	 * Whether or not the player is on the ground.
-	 * @return true if on ground.
-	 */
-	public boolean isOnGround() {
-		return onGround;
+	public DiggingComponent(TickPriority priority) {
+		super(priority);
 	}
 
 	/**
@@ -166,7 +61,7 @@ public class Human extends Living {
 	 * @return true if successful
 	 */
 	public boolean startDigging(Point position) {
-		if (getParent().getPosition().getDistance(position) > 6) { // TODO: Actually get block reach from somewhere instead of just using 6
+		if (getParent().getParent().getPosition().getDistance(position) > 6) { // TODO: Actually get block reach from somewhere instead of just using 6
 			return false;
 		}
 		isDigging = true;
@@ -185,7 +80,7 @@ public class Human extends Living {
 		}
 		previousDiggingTime = getDiggingTime();
 		isDigging = false;
-		VanillaNetworkUtil.sendPacketsToNearbyPlayers(getParent(), getParent().getViewDistance(), new EntityAnimationMessage(getParent().getId(), EntityAnimationMessage.ANIMATION_NONE));
+		getParent().callProtocolEvent(new EntityAnimationEvent(getParent().getParent(), EntityAnimationMessage.ANIMATION_NONE));
 		if (!position.equals(diggingPosition)) {
 			return false;
 		}

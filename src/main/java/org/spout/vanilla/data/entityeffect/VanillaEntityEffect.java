@@ -49,7 +49,7 @@ public abstract class VanillaEntityEffect extends EntityEffect {
 
 	@Override
 	public Message getApplianceMessage() {
-		return new EntityEffectMessage(getParent().getParent().getId(), (byte) id, (byte) strength, (byte) delay);
+		return new EntityEffectMessage(getParent().getParent().getId(), (byte) id, (byte) strength, (byte) (getDelay() * 20));
 	}
 
 	@Override

@@ -26,10 +26,12 @@
  */
 package org.spout.vanilla.entity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.Source;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.entity.controller.PlayerController;
 import org.spout.api.geo.discrete.Point;
@@ -37,7 +39,6 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.event.ProtocolEvent;
@@ -45,15 +46,18 @@ import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.entity.component.GameModeOwner;
 import org.spout.vanilla.entity.component.HeadOwner;
 import org.spout.vanilla.entity.component.HealthOwner;
 import org.spout.vanilla.entity.component.SuffocationOwner;
+import org.spout.vanilla.entity.component.basic.DiggingComponent;
 import org.spout.vanilla.entity.component.basic.HeadComponent;
 import org.spout.vanilla.entity.component.basic.HealthComponent;
 import org.spout.vanilla.entity.component.basic.PlayerHeadComponent;
 import org.spout.vanilla.entity.component.basic.PlayerSuffocationComponent;
 import org.spout.vanilla.entity.component.basic.SuffocationComponent;
 import org.spout.vanilla.entity.component.effect.PoisonEffectComponent;
+import org.spout.vanilla.entity.component.gamemode.AdventureComponent;
 import org.spout.vanilla.entity.component.gamemode.CreativeComponent;
 import org.spout.vanilla.entity.component.gamemode.SurvivalComponent;
 import org.spout.vanilla.entity.component.physics.PlayerStepSoundComponent;
@@ -67,26 +71,30 @@ import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.window.DefaultWindow;
 import org.spout.vanilla.window.Window;
 
-import static org.spout.vanilla.util.VanillaMathHelper.getLookAtPitch;
-import static org.spout.vanilla.util.VanillaMathHelper.getLookAtYaw;
 import static org.spout.vanilla.util.VanillaMathHelper.getRandomDirection;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
  */
-public class VanillaPlayerController extends PlayerController implements VanillaController, HealthOwner, SuffocationOwner, HeadOwner {
+public class VanillaPlayerController extends PlayerController implements VanillaController, HealthOwner, SuffocationOwner, HeadOwner, GameModeOwner {
 	private PingComponent pingComponent;
 	private PoisonEffectComponent poisonEffectComponent;
-	private SurvivalComponent survivalComponent;
 	private PlayerStepSoundComponent stepSoundComponent;
 	private StatsUpdateComponent statsUpdateComponent;
 	private HealthComponent healthComponent;
 	private PlayerSuffocationComponent suffocationComponent;
 	private PlayerHeadComponent headComponent;
+	private DiggingComponent diggingComponent;
+	private SurvivalComponent survivalComponent;
+	private CreativeComponent creativeComponent;
+	private AdventureComponent adventureComponent;
 	protected boolean flying;
 	protected boolean falling;
 	protected boolean jumping;
 	protected boolean crouching;
+	protected boolean onGround, sprinting;
+	protected ItemStack renderedItemInHand;
+	protected String title; //TODO title isn't really a good name...
 	protected float initialYFalling = 0.0f;
 	protected final PlayerInventory playerInventory = new PlayerInventory(this);
 	protected Window activeWindow = new DefaultWindow(this);
@@ -110,19 +118,23 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		tabListName = getParent().getName();
 		Transform spawn = getParent().getWorld().getSpawnPoint();
 		Quaternion rotation = spawn.getRotation();
+		getParent().setObserver(true);
 		getParent().setPosition(spawn.getPosition());
 		getParent().setRotation(rotation);
 		getParent().setScale(spawn.getScale());
 		getHealth().setSpawnHealth(20);
 		getHealth().setDeathAnimation(false);
+		getHead().setHeight(1.62f);
 
 		headComponent = addComponent(new PlayerHeadComponent());
-		statsUpdateComponent = addComponent(new StatsUpdateComponent(TickPriority.NORMAL));
-		pingComponent = addComponent(new PingComponent(TickPriority.HIGHEST));
-		poisonEffectComponent = addComponent(new PoisonEffectComponent(TickPriority.HIGHEST));
-		stepSoundComponent = addComponent(new PlayerStepSoundComponent(TickPriority.NORMAL));
-		survivalComponent = addComponent(new SurvivalComponent(TickPriority.HIGHEST));
-		addComponent(new CreativeComponent(TickPriority.HIGHEST));
+		statsUpdateComponent = addComponent(new StatsUpdateComponent(TickPriority.HIGHEST));
+		pingComponent = addComponent(new PingComponent(TickPriority.HIGH));
+		poisonEffectComponent = addComponent(new PoisonEffectComponent(TickPriority.HIGH));
+		stepSoundComponent = addComponent(new PlayerStepSoundComponent(TickPriority.HIGHEST));
+		diggingComponent = addComponent(new DiggingComponent(TickPriority.HIGH));
+		survivalComponent = addComponent(new SurvivalComponent(TickPriority.HIGH));
+		creativeComponent = addComponent(new CreativeComponent(TickPriority.HIGH));
+		adventureComponent = addComponent(new AdventureComponent(TickPriority.HIGH));
 	}
 
 	@Override
@@ -143,6 +155,25 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 
 		// Update window
 		this.getActiveWindow().onTick(dt);
+	}
+
+	public DiggingComponent getDiggingLogic() {
+		return this.diggingComponent;
+	}
+
+	@Override
+	public SurvivalComponent getSurvivalLogic() {
+		return this.survivalComponent;
+	}
+
+	@Override
+	public CreativeComponent getCreativeLogic() {
+		return this.creativeComponent;
+	}
+
+	@Override
+	public AdventureComponent getAdventureLogic() {
+		return this.adventureComponent;
 	}
 
 	@Override
@@ -186,9 +217,8 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		return gameMode.equals(GameMode.CREATIVE);
 	}
 
-	@Override
-	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		List<ItemStack> drops = super.getDrops(source, lastDamager);
+	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
+		List<ItemStack> drops = new ArrayList<ItemStack>(); // super.getDrops(source, lastDamager);
 		ItemStack[] contents = this.getInventory().getMain().getContents();
 		drops.addAll(Arrays.asList(contents));
 		return drops;
@@ -312,6 +342,54 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	}
 
 	/**
+	 * Gets the name displayed above the human's head.
+	 * @return title name
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * Sets the name displayed above the human's head.
+	 * @param title
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
+	 * Sets whether or not th player is
+	 * @param sprinting
+	 */
+	public void setSprinting(boolean sprinting) {
+		this.sprinting = sprinting;
+	}
+
+	/**
+	 * Whether or not the player is sprinting.
+	 * @return true if sprinting
+	 */
+	public boolean isSprinting() {
+		return sprinting;
+	}
+
+	/**
+	 * Sets whether or not the player is perceived by the client as being on the ground.
+	 * @param onGround
+	 */
+	public void setOnGround(boolean onGround) {
+		this.onGround = onGround;
+	}
+
+	/**
+	 * Whether or not the player is on the ground.
+	 * @return true if on ground.
+	 */
+	public boolean isOnGround() {
+		return onGround;
+	}
+
+	/**
 	 * Sets and opens the new active {@link Window} for the player.
 	 * @param activeWindow the window to open and set as the active window.
 	 */
@@ -355,6 +433,22 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 
 	public void setCrouching(boolean crouching) {
 		this.crouching = crouching;
+	}
+
+	/**
+	 * Gets the item rendered in the human's hand; not neccassaily the actual item in the human's hand.
+	 * @return rendered item in hand
+	 */
+	public ItemStack getRenderedItemInHand() {
+		return renderedItemInHand;
+	}
+
+	/**
+	 * Sets the item rendered in the human's hand; not neccassaily the actual item in the human's hand.
+	 * @param renderedItemInHand
+	 */
+	public void setRenderedItemInHand(ItemStack renderedItemInHand) {
+		this.renderedItemInHand = renderedItemInHand;
 	}
 
 	/**
@@ -433,6 +527,8 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 
 	@Override
 	public void callProtocolEvent(ProtocolEvent event) {
-		//To change body of implemented methods use File | Settings | File Templates.
+		for (Player player : getParent().getWorld().getNearbyPlayers(getParent(), getParent().getViewDistance())) {
+			player.getNetworkSynchronizer().callProtocolEvent(event);
+		}
 	}
 }

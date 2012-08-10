@@ -36,7 +36,7 @@ import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.entity.VanillaEntityController;
-import org.spout.vanilla.entity.living.Living;
+import org.spout.vanilla.entity.component.HeadOwner;
 import org.spout.vanilla.protocol.msg.DestroyEntitiesMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityRelativePositionMessage;
@@ -110,10 +110,10 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 				messages.add(new EntityVelocityMessage(entity.getId(), vaController.getVelocity()));
 			}
 
-			if (controller instanceof Living) {
-				Living living = (Living) controller;
-				if (living.headYawChanged()) {
-					messages.add(new EntityHeadYawMessage(entity.getId(), protocolifyRotation(living.getHeadYaw())));
+			if (controller instanceof HeadOwner) {
+				HeadOwner headOwner = (HeadOwner) controller;
+				if (headOwner.getHead().yawChanged()) {
+					messages.add(new EntityHeadYawMessage(entity.getId(), protocolifyRotation(headOwner.getHead().getYaw())));
 				}
 			}
 		}

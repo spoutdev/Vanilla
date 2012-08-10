@@ -35,12 +35,12 @@ import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.data.Data;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.component.Controller;
-import org.spout.api.entity.component.controller.BlockController;
-import org.spout.api.entity.component.controller.PlayerController;
-import org.spout.api.entity.component.controller.type.ControllerRegistry;
-import org.spout.api.entity.component.controller.type.ControllerType;
+import org.spout.api.entity.controller.BlockController;
+import org.spout.api.entity.controller.PlayerController;
+import org.spout.api.entity.controller.type.ControllerRegistry;
+import org.spout.api.entity.controller.type.ControllerType;
 import org.spout.api.entity.spawn.DiscSpawnArrangement;
 import org.spout.api.entity.spawn.SpawnArrangement;
 import org.spout.api.entity.spawn.SpiralSpawnArrangement;
@@ -49,13 +49,12 @@ import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.entityeffect.potion.Speed;
 import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.entity.living.Human;
 import org.spout.vanilla.entity.source.HealthChangeReason;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
@@ -78,7 +77,7 @@ public class TestCommands {
 		Entity entity = (Player) source;
 		Point position = entity.getPosition();
 		if (entity.getController() instanceof VanillaPlayerController) {
-			position = position.add(((VanillaPlayerController) entity.getController()).getLookingAt());
+			position = position.add(((VanillaPlayerController) entity.getController()).getHead().getLookingAt());
 		}
 
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
@@ -310,7 +309,7 @@ public class TestCommands {
 		}
 
 		Controller controller = ((Player) source).getController();
-		controller.registerProcess(new Speed((VanillaPlayerController) controller, args.getInteger(0), args.getInteger(1)));
+		controller.addComponent(new Speed((VanillaPlayerController) controller, args.getInteger(0), args.getInteger(1)));
 	}
 
 	@Command(aliases = "npc", desc = "Spawns an npc at your location", min = 1, max = 1)
@@ -319,9 +318,12 @@ public class TestCommands {
 			throw new CommandException("Only a player may spawn an npc");
 		}
 		Player spawner = (Player) source;
+		// TODO: Needs implementation!
+		/*
 		Human npc = new Human();
 		String title = npc.data().get(Data.TITLE);
 		npc.setTitle(title.equals("") ? "Steve" : title);
 		spawner.getWorld().createAndSpawnEntity(spawner.getPosition(), npc);
+		*/
 	}
 }

@@ -34,9 +34,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import gnu.trove.set.TIntSet;
 
 import org.spout.api.Spout;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.entity.component.Controller;
 import org.spout.api.event.EventHandler;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;

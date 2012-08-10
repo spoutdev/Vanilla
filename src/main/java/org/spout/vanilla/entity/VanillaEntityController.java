@@ -122,24 +122,6 @@ public abstract class VanillaEntityController extends Controller implements Vani
 	}
 
 	@Override
-	public void onCollide(Block block) {
-		setVelocity(Vector3.ZERO);
-	}
-
-	@Override
-	public void onCollide(Entity entity) {
-		// push entities apart
-		// TODO: Ignore if this entity is a passenger?
-		Vector2 diff = entity.getPosition().subtract(this.getParent().getPosition()).toVector2();
-		float distance = diff.length();
-		if (distance > 0.1f) {
-			double factor = Math.min(1f / distance, 1f) / distance * 0.05;
-			diff = diff.multiply(factor);
-			setVelocity(getVelocity().add(diff.toVector3()));
-		}
-	}
-
-	@Override
 	public void onDeath() {
 		for (ItemStack drop : getDrops(getHealth().getLastDamageCause(), getHealth().getLastDamager())) {
 			if (drop == null) {

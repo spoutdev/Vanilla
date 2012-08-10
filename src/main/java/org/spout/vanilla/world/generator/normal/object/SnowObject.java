@@ -60,7 +60,7 @@ public class SnowObject extends RandomObject implements Source {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		Biome biome = w.getBiomeType(x, y, z);
+		final Biome biome = w.getBiomeType(x, y, z);
 		return biome instanceof VanillaBiome && ((VanillaBiome) biome).getClimate().hasSnowfall();
 	}
 
@@ -70,9 +70,9 @@ public class SnowObject extends RandomObject implements Source {
 	 * @returns if snow has been placed.
 	 */
 	public boolean fall(World world, IntVector3 position) {
-		Block current = world.getBlock(position.getX(), position.getY(), position.getZ(), this);
-		Block under = current.translate(BlockFace.BOTTOM);
-		BlockMaterial underMat = under.getMaterial();
+		final Block current = world.getBlock(position.getX(), position.getY(), position.getZ(), this);
+		final Block under = current.translate(BlockFace.BOTTOM);
+		final BlockMaterial underMat = under.getMaterial();
 		if (underMat.equals(VanillaMaterials.ICE)) {
 			return true;
 		} else if (underMat.isMaterial(VanillaMaterials.AIR, VanillaMaterials.SNOW)) {
@@ -89,9 +89,9 @@ public class SnowObject extends RandomObject implements Source {
 				// In 1 out of 6 times, stack the existing pile.
 				if (random.nextInt(6) != 0 && newSnowHeight < 15) {
 					// Collect neighbors
-					ArrayList<IntVector3> slopes = new ArrayList<IntVector3>();
+					final ArrayList<IntVector3> slopes = new ArrayList<IntVector3>();
 					for (IntVector3 neighbor : NEIGHBORS) {
-						Block n = current.translate(neighbor);
+						final Block n = current.translate(neighbor);
 						if (n.isMaterial(VanillaMaterials.AIR) && Climate.get(n).hasSnowfall()) { // probably more types
 							slopes.add(neighbor);
 						}
@@ -133,7 +133,7 @@ public class SnowObject extends RandomObject implements Source {
 	 */
 	@Override
 	public void placeObject(World world, int x, int y, int z) {
-		IntVector3 position = new IntVector3(x, 0, z);
+		final IntVector3 position = new IntVector3(x, 0, z);
 		if (!this.setHighestWorkableBlock(world, position)) {
 			return;
 		}
@@ -154,8 +154,7 @@ public class SnowObject extends RandomObject implements Source {
 				return false;
 			}
 		}
-		y++;
-		y++;
+		y += 2;
 		position.setY(y);
 		return true;
 	}

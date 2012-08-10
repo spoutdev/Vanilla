@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.normal.biome.basic;
 
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.decorator.EmeraldOreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
@@ -39,8 +40,9 @@ public class MountainsBiome extends GrassyBiome {
 	public MountainsBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()),
-				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
-		setMinMax((byte) 67, (byte) 107);
+				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator(),
+				new EmeraldOreDecorator());
+		setMinMax((byte) 64, (byte) 104);
 	}
 
 	@Override

@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator.normal.populator;
 import java.util.Random;
 
 import org.spout.api.generator.Populator;
-import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -45,6 +44,10 @@ import org.spout.vanilla.material.block.liquid.Water;
 public class CavePopulator extends Populator {
 	private static final byte OVERLAP = 8;
 
+	public CavePopulator() {
+		super(true);
+	}
+	
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
@@ -53,9 +56,13 @@ public class CavePopulator extends Populator {
 		final World world = chunk.getWorld();
 		final int chunkX = chunk.getX();
 		final int chunkZ = chunk.getZ();
-		for (int cx = chunkX - 8; cx <= chunkX + 8; cx++) {
-			for (int cz = chunkZ - 8; cz <= chunkZ + 8; cz++) {
-				final Random chunkRandom = WorldGeneratorUtils.getRandom(world, cx, 4, cz, 9001);
+		final long worldSeed = world.getSeed();
+		final Random worldRandom = new Random(worldSeed);
+		final long firstSeed = worldRandom.nextLong();
+		final long secondSeed = worldRandom.nextLong();
+		for (int cx = chunkX - OVERLAP; cx <= chunkX + OVERLAP; cx++) {
+			for (int cz = chunkZ - OVERLAP; cz <= chunkZ + OVERLAP; cz++) {
+				final Random chunkRandom = new Random((cx * firstSeed) ^ (cz * secondSeed) ^ worldSeed);
 				generateCave(world.getChunk(cx, 4, cz), chunk, chunkRandom);
 			}
 		}
@@ -94,7 +101,7 @@ public class CavePopulator extends Populator {
 	}
 
 	private void generateCaveBranch(Chunk chunk, Point target, float horizontalScale, float verticalScale,
-									float horizontalAngle, float verticalAngle, int startingNode, int nodeAmount, Random random) {
+			float horizontalAngle, float verticalAngle, int startingNode, int nodeAmount, Random random) {
 
 		final Vector3 middle = new Vector3(chunk.getBlockX(8), 0, chunk.getBlockZ(8));
 		float horizontalOffset = 0;
@@ -193,7 +200,7 @@ public class CavePopulator extends Populator {
 		private final float horizontalSize;
 
 		private CaveNode(Chunk chunk, Point start, Point end, Point target,
-						 float verticalSize, float horizontalSize) {
+				float verticalSize, float horizontalSize) {
 			this.world = chunk.getWorld();
 			this.chunk = chunk;
 			this.start = clamp(start);

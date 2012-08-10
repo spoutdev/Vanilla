@@ -24,18 +24,31 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.special;
+package org.spout.vanilla.world.generator.normal.decorator;
 
-import org.spout.vanilla.world.generator.normal.biome.basic.MushroomBiome;
+import java.util.Random;
+import org.spout.api.generator.biome.Decorator;
+import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Chunk;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class MushroomShoreBiome extends MushroomBiome {
-	public MushroomShoreBiome(int biomeId) {
-		super(biomeId);
-		setMinMax((byte) 60, (byte) 63);
-	}
-
+public class EmeraldOreDecorator extends Decorator {
 	@Override
-	public String getName() {
-		return "Mushroom Island Shore";
+	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() != 4) {
+			return;
+		}
+		final World world = chunk.getWorld();
+		final byte amount = (byte) (random.nextInt(6) + 3);
+		for (byte count = 0; count < amount; count++) {
+			final int x = chunk.getBlockX(random);
+			final int y = random.nextInt(28) + 4;
+			final int z = chunk.getBlockZ(random);
+			final Block block = world.getBlock(x, y, z, world);
+			if (block.isMaterial(VanillaMaterials.STONE)) {
+				block.setMaterial(VanillaMaterials.EMERALD_ORE);
+			}
+		}
 	}
 }

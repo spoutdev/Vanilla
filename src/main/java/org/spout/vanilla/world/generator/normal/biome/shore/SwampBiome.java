@@ -39,6 +39,7 @@ import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 import org.spout.vanilla.world.generator.normal.object.tree.SwampTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class SwampBiome extends GrassyBiome {
 	public SwampBiome(int biomeId) {
@@ -46,7 +47,7 @@ public class SwampBiome extends GrassyBiome {
 				new TallGrassDecorator(new NormalTallGrassFactory()), new DeadBushDecorator(), new LilyPadDecorator(),
 				new MushroomDecorator((byte) 1, (byte) 3), new SugarCaneDecorator((byte) 6, (byte) 25, (byte) 2),
 				new PumpkinDecorator());
-		setMinMax((byte) 61, (byte) 64);
+		setMinMax((byte) 57, (byte) 60);
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class SwampBiome extends GrassyBiome {
 
 		@Override
 		public TreeObject make(Random random) {
-			return new SwampTreeObject(random);
+			return VanillaObjects.SWAMP_TREE;
 		}
 	}
 }

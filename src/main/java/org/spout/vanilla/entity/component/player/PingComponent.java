@@ -29,9 +29,9 @@ package org.spout.vanilla.entity.component.player;
 import java.util.logging.Level;
 
 import org.spout.api.Spout;
-import org.spout.api.player.Player;
-import org.spout.api.tickable.LogicPriority;
-import org.spout.api.tickable.LogicRunnable;
+import org.spout.api.entity.BasicComponent;
+import org.spout.api.entity.Player;
+import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.VanillaPlayerController;
@@ -39,27 +39,26 @@ import org.spout.vanilla.event.player.network.PlayerKeepAliveEvent;
 import org.spout.vanilla.event.player.network.PlayerPingChangedEvent;
 import org.spout.vanilla.event.player.network.PlayerUpdateUserListEvent;
 
-public class PingComponent extends LogicRunnable<VanillaPlayerController> {
+public class PingComponent extends BasicComponent<VanillaPlayerController> {
 	private static final int MAX_USER_UPDATES = 40; // the maximum rate (in ticks) at which the user list is updated
 	private int maxUserListUpdateCounter = MAX_USER_UPDATES;
 	private int lastRequestHash = 0; // after log-in an initial keep-alive is sent with hash 0
 	private long lastRequestTime = System.currentTimeMillis();
 	private long lastResponseTime = System.currentTimeMillis();
 	private long ping = 0L;
+	private boolean hasTimeOutMsg = true; //temporary to prevent massive kick notify messages
 
-	public PingComponent(VanillaPlayerController aThis, LogicPriority logicPriority) {
-		super(aThis, logicPriority);
+	public PingComponent(TickPriority priority) {
+		super(priority);
 	}
 
 	@Override
-	public boolean shouldRun(float f) {
+	public boolean canTick() {
 		return true;
 	}
 
-	private boolean hasTimeOutMsg = true; //temporary to prevent massive kick notify messages
-
 	@Override
-	public void run() {
+	public void onTick(float dt) {
 		maxUserListUpdateCounter++;
 		long time = System.currentTimeMillis();
 

@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.Source;
+import org.spout.api.entity.Player;
 import org.spout.api.entity.controller.PlayerController;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
@@ -39,13 +40,11 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
-import org.spout.api.player.Player;
 import org.spout.api.protocol.event.ProtocolEvent;
-import org.spout.api.tickable.LogicPriority;
+import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.entity.component.basic.PlayerSuffocationComponent;
 import org.spout.vanilla.entity.component.effect.PoisonEffectComponent;
 import org.spout.vanilla.entity.component.gamemode.CreativeComponent;
 import org.spout.vanilla.entity.component.gamemode.SurvivalComponent;
@@ -56,7 +55,6 @@ import org.spout.vanilla.entity.source.DamageCause;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
-import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.window.DefaultWindow;
 import org.spout.vanilla.window.Window;
@@ -64,7 +62,6 @@ import org.spout.vanilla.window.Window;
 import static org.spout.vanilla.util.VanillaMathHelper.getLookAtPitch;
 import static org.spout.vanilla.util.VanillaMathHelper.getLookAtYaw;
 import static org.spout.vanilla.util.VanillaMathHelper.getRandomDirection;
-import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacket;
 
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
@@ -72,9 +69,9 @@ import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacket;
 public class VanillaPlayerController extends PlayerController implements VanillaController {
 	private PingComponent pingComponent;
 	private PoisonEffectComponent poisonEffectComponent;
-	private SurvivalComponent survivalProcess;
-	private PlayerStepSoundComponent stepSoundProcess;
-	private StatsUpdateComponent statsUpdateProcess;
+	private SurvivalComponent survivalComponent;
+	private PlayerStepSoundComponent stepSoundComponent;
+	private StatsUpdateComponent statsUpdateComponent;
 	protected boolean flying;
 	protected boolean falling;
 	protected boolean jumping;
@@ -86,13 +83,17 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	protected Point compassTarget;
 	private short experience = 0;
 
+	public VanillaPlayerController() {
+		this(GameMode.SURVIVAL);
+	}
+
 	public VanillaPlayerController(GameMode mode) {
-		super(VanillaControllerTypes.HUMAN);
+		super(VanillaControllerTypes.VANILLA_PLAYER);
+		setGameMode(mode);
 	}
 
 	@Override
 	public void onAttached() {
-		super.onAttached();
 		compassTarget = getParent().getWorld().getSpawnPoint().getPosition();
 		tabListName = getParent().getName();
 		Transform spawn = getParent().getWorld().getSpawnPoint();
@@ -103,16 +104,12 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		getHealth().setSpawnHealth(20);
 		getHealth().setDeathAnimation(false);
 
-		unregisterProcess(suffocationProcess);
-		suffocationProcess = registerProcess(new PlayerSuffocationComponent(this, LogicPriority.HIGHEST));
-		statsUpdateProcess = registerProcess(new StatsUpdateComponent(this, LogicPriority.NORMAL));
-		pingComponent = registerProcess(new PingComponent(this, LogicPriority.HIGHEST));
-		poisonEffectComponent = registerProcess(new PoisonEffectComponent(this, LogicPriority.HIGHEST));
-		stepSoundProcess = registerProcess(new PlayerStepSoundComponent(this, LogicPriority.NORMAL));
-		// Survival mode
-		survivalProcess = registerProcess(new SurvivalComponent(this, LogicPriority.HIGHEST));
-		// Creative mode
-		registerProcess(new CreativeComponent(this, LogicPriority.HIGHEST));
+		statsUpdateComponent = (StatsUpdateComponent) addComponent(new StatsUpdateComponent(TickPriority.NORMAL).getClass());
+		pingComponent = (PingComponent) addComponent(new PingComponent(TickPriority.HIGHEST).getClass());
+		poisonEffectComponent = (PoisonEffectComponent) addComponent(new PoisonEffectComponent(TickPriority.HIGHEST).getClass());
+		stepSoundComponent = (PlayerStepSoundComponent) addComponent(new PlayerStepSoundComponent(TickPriority.NORMAL).getClass());
+		survivalComponent = (SurvivalComponent) addComponent(new SurvivalComponent(TickPriority.HIGHEST).getClass());
+		addComponent(new CreativeComponent(TickPriority.HIGHEST).getClass());
 	}
 
 	@Override
@@ -175,7 +172,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	 */
 	public void setCompassTarget(Point compassTarget) {
 		this.compassTarget = compassTarget;
-		sendPacket(getParent(), new SpawnPositionMessage(compassTarget.getBlockX(), compassTarget.getBlockY(), compassTarget.getBlockZ()));
+		//sendPacket(getParent(), new SpawnPositionMessage(compassTarget.getBlockX(), compassTarget.getBlockY(), compassTarget.getBlockZ()));
 	}
 
 	/**
@@ -233,7 +230,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	 */
 	public void setGameMode(GameMode gameMode) {
 		this.gameMode = gameMode;
-		sendPacket(getParent(), new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, gameMode));
+		//sendPacket(getParent(), new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, gameMode));
 	}
 
 	/**
@@ -387,16 +384,16 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		return poisonEffectComponent;
 	}
 
-	public StatsUpdateComponent getStatsUpdateProcess() {
-		return statsUpdateProcess;
+	public StatsUpdateComponent getStatsUpdateComponent() {
+		return statsUpdateComponent;
 	}
 
-	public SurvivalComponent getSurvivalLogic() {
-		return survivalProcess;
+	public SurvivalComponent getSurvivalComponent() {
+		return survivalComponent;
 	}
 
-	public PlayerStepSoundComponent getStepSoundLogic() {
-		return stepSoundProcess;
+	public PlayerStepSoundComponent getStepSoundComponent() {
+		return stepSoundComponent;
 	}
 
 	public short getExperience() {

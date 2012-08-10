@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.entity.component.player;
 
+import org.spout.api.entity.BasicComponent;
 import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.LogicRunnable;
+import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.event.player.network.PlayerUpdateStatsEvent;
@@ -35,29 +37,29 @@ import org.spout.vanilla.event.player.network.PlayerUpdateStatsEvent;
 /**
  * Updates health, hunger and food saturation states for the player
  */
-public class StatsUpdateComponent extends LogicRunnable<VanillaPlayerController> {
+public class StatsUpdateComponent extends BasicComponent<VanillaPlayerController> {
 	private int oldHealth = Integer.MIN_VALUE, oldHunger = Integer.MIN_VALUE;
 	private float oldFoodSat = Float.MIN_VALUE;
 
-	public StatsUpdateComponent(VanillaPlayerController parent, LogicPriority priority) {
-		super(parent, priority);
+	public StatsUpdateComponent(TickPriority priority) {
+		super(priority);
 	}
 
 	@Override
-	public void run() {
-		oldHealth = getParent().getHealth().getHealth();
-		oldHunger = getParent().getSurvivalLogic().getHunger();
-		oldFoodSat = getParent().getSurvivalLogic().getFoodSaturation();
-		getParent().getParent().getNetworkSynchronizer().callProtocolEvent(new PlayerUpdateStatsEvent(getParent().getParent()));
-	}
-
-	@Override
-	public boolean shouldRun(float dt) {
+	public boolean canTick() {
 		if (!getParent().isSurvival()) {
 			return false;
 		}
 		return oldHealth != getParent().getHealth().getHealth() ||
 				oldHunger != getParent().getSurvivalLogic().getHunger() ||
 				oldFoodSat != getParent().getSurvivalLogic().getFoodSaturation();
+	}
+
+	@Override
+	public void onTick(float dt) {
+		oldHealth = getParent().getHealth().getHealth();
+		oldHunger = getParent().getSurvivalLogic().getHunger();
+		oldFoodSat = getParent().getSurvivalLogic().getFoodSaturation();
+		getParent().getParent().getNetworkSynchronizer().callProtocolEvent(new PlayerUpdateStatsEvent(getParent().getParent()));
 	}
 }

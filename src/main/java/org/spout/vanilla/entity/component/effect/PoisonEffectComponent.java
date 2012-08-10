@@ -31,9 +31,14 @@
 package org.spout.vanilla.entity.component.effect;
 
 import org.spout.api.entity.BasicComponent;
+import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.entity.VanillaEntityController;
 
 public class PoisonEffectComponent extends BasicComponent<VanillaEntityController> {
 	//TODO implement methods and do this!
+
+	public PoisonEffectComponent(TickPriority priority) {
+		super(priority);
+	}
 }

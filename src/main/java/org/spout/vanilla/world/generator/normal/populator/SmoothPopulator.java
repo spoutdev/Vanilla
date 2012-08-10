@@ -35,6 +35,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
@@ -42,9 +43,9 @@ import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
 import org.spout.vanilla.world.generator.normal.biome.SnowyBiome;
 
 public class SmoothPopulator extends Populator {
-	private static final byte CHUNK_SIZE = 16;
+	private static final byte CHUNK_SIZE = (byte) Chunk.BLOCKS.SIZE;
 	private static final byte SMOOTH_SIZE = 5;
-	private static final byte TOTAL_SIZE = CHUNK_SIZE + SMOOTH_SIZE * 2;
+	private static final byte TOTAL_SIZE = (byte) (CHUNK_SIZE + SMOOTH_SIZE * 2);
 
 	public SmoothPopulator() {
 		super(true);
@@ -61,81 +62,72 @@ public class SmoothPopulator extends Populator {
 		final int x = chunk.getBlockX();
 		final int z = chunk.getBlockZ();
 		// build the biome map
-		final NormalBiome[] biomeMap = new NormalBiome[TOTAL_SIZE * TOTAL_SIZE];
-		for (byte xx = 0; xx < TOTAL_SIZE; xx++) {
-			for (byte zz = 0; zz < TOTAL_SIZE; zz++) {
-				final Biome biome = world.getBiomeType(x + xx - SMOOTH_SIZE, 64, z + zz - SMOOTH_SIZE);
+		final TIntPairObjectHashMap<NormalBiome> biomeMap = new TIntPairObjectHashMap<NormalBiome>(TOTAL_SIZE * TOTAL_SIZE);
+		for (byte xx = -SMOOTH_SIZE; xx < CHUNK_SIZE + SMOOTH_SIZE; xx++) {
+			for (byte zz = -SMOOTH_SIZE; zz < CHUNK_SIZE + SMOOTH_SIZE; zz++) {
+				final Biome biome = world.getBiomeType(x + xx, 64, z + zz);
 				if (biome instanceof NormalBiome) {
-					biomeMap[xx + zz * TOTAL_SIZE] = (NormalBiome) biome;
+					biomeMap.put(xx, zz, (NormalBiome) biome);
 				}
 			}
 		}
-		// build a chunk sized biome map with smooth biomes at seams
-		final NormalBiome[] smoothBiomeMap = new NormalBiome[CHUNK_SIZE * CHUNK_SIZE];
+		// find the biomes to smooth
+		final TIntPairObjectHashMap<NormalBiome> smoothBiomeMap = new TIntPairObjectHashMap<NormalBiome>(CHUNK_SIZE * CHUNK_SIZE);
 		for (byte xx = 0; xx < CHUNK_SIZE; xx++) {
 			for (byte zz = 0; zz < CHUNK_SIZE; zz++) {
-				final NormalBiome current = biomeMap[xx + SMOOTH_SIZE + (zz + SMOOTH_SIZE) * TOTAL_SIZE];
+				final NormalBiome current = biomeMap.get(xx, zz);
 				nearbyCheck:
-				for (byte sx = (byte) (xx - SMOOTH_SIZE); sx <= xx + SMOOTH_SIZE; sx++) {
-					for (byte sz = (byte) (zz - SMOOTH_SIZE); sz <= zz + SMOOTH_SIZE; sz++) {
-						final NormalBiome nearby = biomeMap[sx + SMOOTH_SIZE + (sz + SMOOTH_SIZE) * TOTAL_SIZE];
-						if (current != nearby) {
+				for (byte sx = -SMOOTH_SIZE; sx <= SMOOTH_SIZE; sx++) {
+					for (byte sz = -SMOOTH_SIZE; sz <= SMOOTH_SIZE; sz++) {
+						if (current != biomeMap.get(xx + sx, zz + sz)) {
 							if (current instanceof GrassyBiome) {
-								final GrassySmoothBiome smoothBiome = new GrassySmoothBiome();
-								smoothBiome.setTopCover(((GrassyBiome) current).getTopCover());
-								smoothBiomeMap[xx + zz * CHUNK_SIZE] = smoothBiome;
+								final GrassySmoothBiome grassySmoothBiome = new GrassySmoothBiome();
+								grassySmoothBiome.setTopCover(((GrassyBiome) current).getTopCover());
+								smoothBiomeMap.put(xx, zz, grassySmoothBiome);
 							} else if (current instanceof SandyBiome) {
-								smoothBiomeMap[xx + zz * CHUNK_SIZE] = new SandySmoothBiome();
+								smoothBiomeMap.put(xx, zz, new SandySmoothBiome());
 							} else if (current instanceof SnowyBiome) {
-								smoothBiomeMap[xx + zz * CHUNK_SIZE] = new IcySmoothBiome();
+								smoothBiomeMap.put(xx, zz, new IcySmoothBiome());
 							} else {
-								smoothBiomeMap[xx + zz * CHUNK_SIZE] = current;
+								smoothBiomeMap.put(xx, zz, current);
 							}
 							break nearbyCheck;
 						}
 					}
 				}
-				if (smoothBiomeMap[xx + zz * CHUNK_SIZE] == null) {
-					smoothBiomeMap[xx + zz * CHUNK_SIZE] = current;
+				if (!smoothBiomeMap.containsKey(xx, zz)) {
+					smoothBiomeMap.put(xx, zz, current);
 				}
 			}
 		}
 		// change the values of the smooth biomes to averages
 		for (byte xx = 0; xx < CHUNK_SIZE; xx++) {
 			for (byte zz = 0; zz < CHUNK_SIZE; zz++) {
-				final NormalBiome biome = smoothBiomeMap[xx + zz * CHUNK_SIZE];
-				if (!(biome instanceof GrassySmoothBiome)
-						&& !(biome instanceof SandySmoothBiome)
-						&& !(biome instanceof IcySmoothBiome)) {
+				final NormalBiome biome = smoothBiomeMap.get(xx, zz);
+				if (!(biome instanceof SmoothBiome)) {
 					continue;
 				}
-				short minTotal = 0;
-				short maxTotal = 0;
+				float minTotal = 0;
+				float maxTotal = 0;
 				short counter = 0;
-				for (byte sx = (byte) (xx - SMOOTH_SIZE); sx < xx + SMOOTH_SIZE; sx++) {
-					for (byte sz = (byte) (zz - SMOOTH_SIZE); sz < zz + SMOOTH_SIZE; sz++) {
-						final NormalBiome nearby = biomeMap[sx + SMOOTH_SIZE + (sz + SMOOTH_SIZE) * TOTAL_SIZE];
+				for (byte sx = -SMOOTH_SIZE; sx <= SMOOTH_SIZE; sx++) {
+					for (byte sz = -SMOOTH_SIZE; sz <= SMOOTH_SIZE; sz++) {
+						final NormalBiome nearby = biomeMap.get(xx + sx, zz + sz);
 						minTotal += nearby.getMin();
 						maxTotal += nearby.getMax();
 						counter++;
 					}
 				}
-				if (biome instanceof GrassySmoothBiome) {
-					((GrassySmoothBiome) biome).setMinMax((byte) Math.round(minTotal / counter), (byte) Math.round(maxTotal / counter));
-				} else if (biome instanceof SandySmoothBiome) {
-					((SandySmoothBiome) biome).setMinMax((byte) Math.round(minTotal / counter), (byte) Math.round(maxTotal / counter));
-				} else if (biome instanceof IcySmoothBiome) {
-					((IcySmoothBiome) biome).setMinMax((byte) Math.round(minTotal / counter), (byte) Math.round(maxTotal / counter));
+				if (biome instanceof SmoothBiome) {
+					((SmoothBiome) biome).setMinMax(minTotal / counter, maxTotal / counter);
 				}
 			}
 		}
 		// apply the changes by regenerating terrain with the new averaged values
 		for (byte xx = 0; xx < CHUNK_SIZE; xx++) {
 			for (byte zz = 0; zz < CHUNK_SIZE; zz++) {
-				final NormalBiome biome = smoothBiomeMap[xx + zz * CHUNK_SIZE];
-				if (!(biome instanceof GrassySmoothBiome)
-						&& !(biome instanceof SandySmoothBiome)
-						&& !(biome instanceof IcySmoothBiome)) {
+				final NormalBiome biome = smoothBiomeMap.get(xx, zz);
+				if (!(biome instanceof SmoothBiome)) {
 					continue;
 				}
 				final int lx = x + xx;
@@ -149,7 +141,11 @@ public class SmoothPopulator extends Populator {
 		}
 	}
 
-	private static class GrassySmoothBiome extends GrassyBiome {
+	private interface SmoothBiome {
+		public void setMinMax(float min, float max);
+	}
+
+	private static class GrassySmoothBiome extends GrassyBiome implements SmoothBiome {
 		public GrassySmoothBiome() {
 			super(1001);
 		}
@@ -160,7 +156,7 @@ public class SmoothPopulator extends Populator {
 		}
 
 		@Override
-		public void setMinMax(byte min, byte max) {
+		public void setMinMax(float min, float max) {
 			this.min = min;
 			this.max = max;
 		}
@@ -170,7 +166,7 @@ public class SmoothPopulator extends Populator {
 		}
 	}
 
-	private static class SandySmoothBiome extends SandyBiome {
+	private static class SandySmoothBiome extends SandyBiome implements SmoothBiome {
 		public SandySmoothBiome() {
 			super(1002);
 		}
@@ -181,13 +177,13 @@ public class SmoothPopulator extends Populator {
 		}
 
 		@Override
-		public void setMinMax(byte min, byte max) {
+		public void setMinMax(float min, float max) {
 			this.min = min;
 			this.max = max;
 		}
 	}
 
-	private static class IcySmoothBiome extends SnowyBiome {
+	private static class IcySmoothBiome extends SnowyBiome implements SmoothBiome {
 		public IcySmoothBiome() {
 			super(1003);
 		}
@@ -198,7 +194,7 @@ public class SmoothPopulator extends Populator {
 		}
 
 		@Override
-		public void setMinMax(byte min, byte max) {
+		public void setMinMax(float min, float max) {
 			this.min = min;
 			this.max = max;
 		}

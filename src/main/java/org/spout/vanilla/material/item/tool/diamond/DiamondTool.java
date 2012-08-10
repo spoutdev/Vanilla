@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.item.tool.diamond;
 
+import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MiningType;
 
@@ -34,5 +35,6 @@ public abstract class DiamondTool extends Tool {
 		super(name, id, durability);
 		this.setEnchantability(10);
 		this.setMiningLevel(MiningType.MiningLevel.DIAMOND);
+		this.addDropFlags(ToolLevelFlags.DIAMOND);
 	}
 }

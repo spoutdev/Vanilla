@@ -29,14 +29,26 @@ package org.spout.vanilla.entity.object.vehicle.minecart;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.math.Vector3;
 
+<<<<<<< HEAD:src/main/java/org/spout/vanilla/entity/object/vehicle/minecart/TransportMinecart.java
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.object.vehicle.Minecart;
+=======
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.object.vehicle.Minecart;
+import org.spout.vanilla.material.VanillaMaterials;
+>>>>>>> origin:src/main/java/org/spout/vanilla/controller/object/vehicle/minecart/TransportMinecart.java
 
 public class TransportMinecart extends Minecart {
 	private Controller passenger = null;
 
 	public TransportMinecart() {
 		super(VanillaControllerTypes.MINECART); // TODO: Per-minecart-VanillaControllerTypes
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		getDrops().add(VanillaMaterials.MINECART);
 	}
 
 	@Override

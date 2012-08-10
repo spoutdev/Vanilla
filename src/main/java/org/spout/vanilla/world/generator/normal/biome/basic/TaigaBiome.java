@@ -39,13 +39,14 @@ import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 import org.spout.vanilla.world.generator.normal.object.tree.PineTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SpruceTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class TaigaBiome extends SnowyBiome {
 	public TaigaBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new TaigaTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()), new MushroomDecorator(),
 				new SugarCaneDecorator(), new PumpkinDecorator());
-		setMinMax((byte) 67, (byte) 76);
+		setMinMax((byte) 64, (byte) 73);
 	}
 
 	@Override
@@ -62,9 +63,9 @@ public class TaigaBiome extends SnowyBiome {
 		@Override
 		public TreeObject make(Random random) {
 			if (random.nextInt(3) == 0) {
-				return new SpruceTreeObject(random);
+				return VanillaObjects.SPRUCE_TREE;
 			}
-			return new PineTreeObject(random);
+			return VanillaObjects.PINE_TREE;
 		}
 	}
 }

@@ -62,11 +62,6 @@ public class Lever extends AbstractAttachable implements Mineable, RedstoneSourc
 	}
 
 	@Override
-	public void onDestroy(Block block, double dropChance) {
-		super.onDestroy(block, dropChance);
-	}
-
-	@Override
 	public boolean isPlacementSuppressed() {
 		return true;
 	}

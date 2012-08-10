@@ -27,6 +27,7 @@
 package org.spout.vanilla.entity.living.creature.passive;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.spout.api.Source;
@@ -41,9 +42,10 @@ import org.spout.vanilla.entity.living.creature.Passive;
 import org.spout.vanilla.entity.source.DamageCause;
 import org.spout.vanilla.material.VanillaMaterials;
 
+//TODO Make drop item for a Chicken?
 public class Chicken extends Creature implements Passive {
-	public static final int MINIMUM_EGG_BREEDING_TIME = 6000;
-	public static final int MAXIMUM_EGG_BREEDING_TIME = 12000;
+	public static final float MINIMUM_EGG_BREEDING_TIME = 6000;
+	public static final float MAXIMUM_EGG_BREEDING_TIME = 12000;
 	public static final int NEVER = -1;
 	private boolean layingEggsEnabled = true;
 	private TimedDropItemComponent dropItemComponent;
@@ -57,19 +59,14 @@ public class Chicken extends Creature implements Passive {
 		super.onAttached();
 		getHealth().setSpawnHealth(4);
 		getHealth().setHurtEffect(SoundEffects.MOB_CHICKENHURT);
-		dropItemComponent = new TimedDropItemComponent(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
-		registerProcess(dropItemComponent);
+		//dropItemComponent = new TimedDropItemComponent(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
+		getDrops().add(VanillaMaterials.FEATHER, 2);
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(3);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.FEATHER, count));
-		}
-
-		count = getRandom().nextInt(2);
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
+		int count = getRandom().nextInt(2);
 		if (count > 0) {
 			if (source == DamageCause.BURN) {
 				drops.add(new ItemStack(VanillaMaterials.COOKED_CHICKEN, count));
@@ -94,12 +91,12 @@ public class Chicken extends Creature implements Passive {
 	 * @param layingEggsEnabled
 	 */
 	public void setLayingEggsEnabled(boolean layingEggsEnabled) {
-		if (this.layingEggsEnabled && dropItemComponent != null) {
-			unregisterProcess(dropItemComponent);
-			this.layingEggsEnabled = false;
-		} else {
-			registerProcess(dropItemComponent);
-			this.layingEggsEnabled = layingEggsEnabled;
-		}
+//		if (this.layingEggsEnabled && dropItemComponent != null) {
+//			unregisterProcess(dropItemComponent);
+//			this.layingEggsEnabled = false;
+//		} else {
+//			registerProcess(dropItemComponent);
+//			this.layingEggsEnabled = layingEggsEnabled;
+//		}
 	}
 }

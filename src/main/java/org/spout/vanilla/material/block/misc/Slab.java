@@ -26,14 +26,17 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import java.util.Set;
+
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.flag.ByteFlagContainer;
 
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
@@ -56,12 +59,14 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 		super((short) 0x0007, name, 44);
 		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
 		this.setCollision(CollisionStrategy.SOLID);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	private Slab(String name, int data, Slab parent) {
 		super(name, 44, data, parent);
 		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
 		this.setCollision(CollisionStrategy.SOLID);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	public Slab setDoubleType(DoubleSlab doubletype) {
@@ -102,9 +107,9 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	}
 
 	@Override
-	public void onDestroy(Block block, double dropChance) {
-		if (!block.getMaterial().equals(this.doubletype)) {
-			super.onDestroy(block, dropChance);
+	public void onDestroy(Block block, Set<DropFlagSingle> dropFlags) {
+		if (!block.isMaterial(this.doubletype)) {
+			super.onDestroy(block, dropFlags);
 		}
 	}
 
@@ -139,15 +144,6 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial() instanceof Pickaxe) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
 	}
 
 	@Override

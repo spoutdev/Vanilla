@@ -53,7 +53,7 @@ public class Ice extends SpreadingSolid implements Mineable, InitializableMateri
 	public Ice(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setOcclusion((short) 0, BlockFaces.NONE).setOpacity((byte) 2);
-		this.clearDropMaterials();
+		this.getDrops().clear();
 	}
 
 	@Override

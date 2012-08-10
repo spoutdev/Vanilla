@@ -27,10 +27,14 @@
 package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
+<<<<<<< HEAD
 import org.spout.vanilla.entity.VanillaControllerTypes;
+=======
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+>>>>>>> origin
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.item.tool.Pickaxe;
@@ -42,6 +46,7 @@ public class EnchantmentTable extends ControlledMaterial implements Directional,
 	public EnchantmentTable(String name, int id) {
 		super(VanillaControllerTypes.ENCHANTMENT_TABLE, name, id);
 		this.setHardness(5.0F).setResistance(2000.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	@Override
@@ -71,14 +76,5 @@ public class EnchantmentTable extends ControlledMaterial implements Directional,
 
 	@Override
 	public void setFacing(Block block, BlockFace facing) {
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial() instanceof Pickaxe) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
 	}
 }

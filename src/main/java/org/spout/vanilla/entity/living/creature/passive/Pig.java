@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.entity.living.creature.passive;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
@@ -53,8 +52,8 @@ public class Pig extends Creature implements Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
 		int count = getRandom().nextInt(3);
 		if (count > 0) {
 			if (source == DamageCause.BURN) {
@@ -63,7 +62,6 @@ public class Pig extends Creature implements Passive {
 				drops.add(new ItemStack(VanillaMaterials.RAW_PORKCHOP, count));
 			}
 		}
-
 		return drops;
 	}
 }

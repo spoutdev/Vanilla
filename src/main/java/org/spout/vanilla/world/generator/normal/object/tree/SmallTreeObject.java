@@ -30,7 +30,11 @@ import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
@@ -44,6 +48,7 @@ public class SmallTreeObject extends TreeObject {
 	// extras
 	private boolean addLeavesVines = false;
 	private boolean addLogVines = false;
+	private boolean addCocoaPlants = false;
 
 	public SmallTreeObject() {
 		this(null);
@@ -115,47 +120,39 @@ public class SmallTreeObject extends TreeObject {
 				}
 			}
 		}
+		if (addCocoaPlants) {
+			if (totalHeight >= 6 && random.nextInt(5) == 0) {
+				for (byte yy = 0; yy < 2; yy++) {
+					final byte odd = (byte) (4 - yy);
+					final Vector3 position = new Vector3(x, y + yy, z);
+					for (BlockFace face : BlockFaces.NSEW) {
+						if (random.nextInt(odd) != 0) {
+							continue;
+						}
+						final Block block = w.getBlock(position.add(face.getOffset()), w);
+						//TODO: place the cocoa plant (waiting on its implementation)
+					}
+				}
+			}
+		}
 	}
 
 	private void placeVines(World w, int x, int y, int z, byte faceOdd, boolean grow) {
-		if (w.getBlockMaterial(x + 1, y, z) == VanillaMaterials.AIR && random.nextInt(faceOdd) == 0) {
-			if (grow) {
-				growVines(w, x + 1, y, z, (short) 2);
-			} else {
-				w.setBlockMaterial(x + 1, y, z, VanillaMaterials.VINES, (short) 2, w);
+		for (BlockFace face : BlockFaces.NSEW) {
+			if (random.nextInt(faceOdd) != 0) {
+				continue;
 			}
-		}
-		if (w.getBlockMaterial(x - 1, y, z) == VanillaMaterials.AIR && random.nextInt(faceOdd) == 0) {
-			if (grow) {
-				growVines(w, x - 1, y, z, (short) 8);
-			} else {
-				w.setBlockMaterial(x - 1, y, z, VanillaMaterials.VINES, (short) 8, w);
+			final BlockFace facing = face.getOpposite();
+			final byte lenght = (byte) (grow ? 5 : 1);
+			for (byte yy = 0; yy < lenght; yy++) {
+				final Block block = w.getBlock(face.getOffset().add(x, y - yy, z), w);
+				if (block.isMaterial(VanillaMaterials.AIR)) {
+					block.setMaterial(VanillaMaterials.VINES);
+					VanillaMaterials.VINES.setFaceAttached(block, facing, true);
+				} else {
+					break;
+				}
 			}
-		}
-		if (w.getBlockMaterial(x, y, z + 1) == VanillaMaterials.AIR && random.nextInt(faceOdd) == 0) {
-			if (grow) {
-				growVines(w, x, y, z + 1, (short) 4);
-			} else {
-				w.setBlockMaterial(x, y, z + 1, VanillaMaterials.VINES, (short) 4, w);
-			}
-		}
-		if (w.getBlockMaterial(x, y, z - 1) == VanillaMaterials.AIR && random.nextInt(faceOdd) == 0) {
-			if (grow) {
-				growVines(w, x, y, z - 1, (short) 1);
-			} else {
-				w.setBlockMaterial(x, y, z - 1, VanillaMaterials.VINES, (short) 1, w);
-			}
-		}
-	}
-
-	private void growVines(World world, int x, int y, int z, short facing) {
-		for (byte yy = 0; yy < 5; yy++) {
-			Block block = world.getBlock(x, y - yy, z, world);
-			if (!block.isMaterial(VanillaMaterials.AIR)) {
-				return;
-			}
-
-			block.setMaterial(VanillaMaterials.VINES, facing);
 		}
 	}
 
@@ -167,7 +164,11 @@ public class SmallTreeObject extends TreeObject {
 		this.addLeavesVines = addLeavesVines;
 	}
 
-	public void setLeavesRadiusIncreaseXZ(byte radiusIncrease) {
+	public void setLeavesXZRadiusIncrease(byte radiusIncrease) {
 		this.radiusIncrease = radiusIncrease;
+	}
+
+	public void addCocoaPlants(boolean addCocoaPlants) {
+		this.addCocoaPlants = addCocoaPlants;
 	}
 }

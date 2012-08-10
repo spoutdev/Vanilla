@@ -44,13 +44,14 @@ import org.spout.vanilla.world.generator.normal.object.tree.HugeTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class JungleBiome extends GrassyBiome {
 	public JungleBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new JungleTreeWGOFactory()),
 				new FlowerDecorator((byte) 4), new TallGrassDecorator(new JungleTallGrassFactory(), (byte) 15),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator(), new VineDecorator());
-		setMinMax((byte) 67, (byte) 76);
+		setMinMax((byte) 64, (byte) 73);
 	}
 
 	@Override
@@ -67,20 +68,15 @@ public class JungleBiome extends GrassyBiome {
 		@Override
 		public TreeObject make(Random random) {
 			if (random.nextInt(10) == 0) {
-				return new BigTreeObject(random);
+				return VanillaObjects.BIG_OAK_TREE;
 			}
 			if (random.nextInt(2) == 0) {
-				return new ShrubObject(random);
+				return VanillaObjects.JUNGLE_SHRUB;
 			}
 			if (random.nextInt(3) == 0) {
-				return new HugeTreeObject(random);
+				return VanillaObjects.HUGE_JUNGLE_TREE;
 			}
-			final SmallTreeObject smallJungleTree = new SmallTreeObject(random);
-			smallJungleTree.setTreeType(TreeObject.TreeType.JUNGLE);
-			smallJungleTree.setBaseHeight((byte) 4);
-			smallJungleTree.setRandomHeight((byte) 10);
-			smallJungleTree.addLogVines(true);
-			return smallJungleTree;
+			return VanillaObjects.SMALL_JUNGLE_TREE;
 		}
 	}
 

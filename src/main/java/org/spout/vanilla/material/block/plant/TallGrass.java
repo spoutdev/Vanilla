@@ -26,18 +26,17 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.data.drops.SwitchDrops;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.Burnable;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class TallGrass extends DeadBush implements Burnable {
+public class TallGrass extends DeadBush implements Burnable, InitializableMaterial {
 	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass");
 	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, DEAD_GRASS);
 	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS);
@@ -48,6 +47,14 @@ public class TallGrass extends DeadBush implements Burnable {
 
 	private TallGrass(String name, int data, TallGrass parent) {
 		super(name, 31, data, parent);
+	}
+
+	@Override
+	public void initialize() {
+		getDrops().DEFAULT.clear();
+		SwitchDrops drops = getDrops().DEFAULT.addSwitch(ToolTypeFlags.SHEARS);
+		drops.TRUE.add(this);
+		drops.FALSE.add(VanillaMaterials.SEEDS).setChance(0.15);
 	}
 
 	@Override
@@ -76,19 +83,5 @@ public class TallGrass extends DeadBush implements Burnable {
 			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT);
 		}
 		return false;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (holding != null && holding.isMaterial(VanillaMaterials.SHEARS)) {
-			drops.add(new ItemStack(this, 1));
-		} else {
-			Random rand = new Random();
-			if (rand.nextInt(100) < (8 + rand.nextInt(7))) {
-				drops.add(new ItemStack(VanillaMaterials.SEEDS, 1));
-			}
-		}
-		return drops;
 	}
 }

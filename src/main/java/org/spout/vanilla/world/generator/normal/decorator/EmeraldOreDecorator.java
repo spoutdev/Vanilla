@@ -24,47 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.world.generator.normal.decorator;
 
 import java.util.Random;
-
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.entity.living.creature.passive.Sheep;
-import org.spout.vanilla.entity.object.moving.Item;
+import org.spout.api.generator.biome.Decorator;
+import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Shears extends Tool {
-	private Random rand = new Random();
-
-	public Shears(String name, int id, short durability) {
-		super(name, id, durability);
-	}
-
+public class EmeraldOreDecorator extends Decorator {
 	@Override
-	public void onInteract(Entity entity, Entity other, Action action) {
-		if (action == Action.RIGHT_CLICK) {
-			if (!(other.getController() instanceof Sheep)) {
-				return;
-			}
-
-			Sheep sheep = (Sheep) other.getController();
-			if (sheep.isSheared() || sheep.getGrowing().isBaby()) {
-				System.out.println("Debug");
-				return;
-			}
-
-			sheep.setSheared(true);
-			short col = sheep.getColor().getData();
-
-			other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1), other.getPosition().normalize()));
-
-			if (VanillaPlayerUtil.isSurvival(entity)) {
-				VanillaPlayerUtil.getCurrentSlot(entity).addItemData(0, 1);
+	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() != 4) {
+			return;
+		}
+		final World world = chunk.getWorld();
+		final byte amount = (byte) (random.nextInt(6) + 3);
+		for (byte count = 0; count < amount; count++) {
+			final int x = chunk.getBlockX(random);
+			final int y = random.nextInt(28) + 4;
+			final int z = chunk.getBlockZ(random);
+			final Block block = world.getBlock(x, y, z, world);
+			if (block.isMaterial(VanillaMaterials.STONE)) {
+				block.setMaterial(VanillaMaterials.EMERALD_ORE);
 			}
 		}
 	}

@@ -56,7 +56,7 @@ public class FallingLiquidPopulator extends Populator {
 		List<Block> liquids = new ArrayList<Block>();
 		for (byte count = 0; count < WATER_ATTEMPTS; count++) {
 			final int x = chunk.getBlockX(random);
-			final int y = random.nextInt(height) + 8;
+			final int y = random.nextInt(height - 8) + 8;
 			final int z = chunk.getBlockZ(random);
 			final Block block = world.getBlock(x, y, z, world);
 			if (isValidSourcePoint(block)) {
@@ -66,7 +66,7 @@ public class FallingLiquidPopulator extends Populator {
 		}
 		for (byte count = 0; count < LAVA_ATTEMPTS; count++) {
 			final int x = chunk.getBlockX(random);
-			final int y = random.nextInt(height) + 8;
+			final int y = random.nextInt(height - 8) + 8;
 			final int z = chunk.getBlockZ(random);
 			final Block block = world.getBlock(x, y, z, world);
 			if (isValidSourcePoint(block)) {

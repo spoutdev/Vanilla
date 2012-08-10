@@ -38,7 +38,7 @@ public class SwampTreeObject extends SmallTreeObject {
 	public SwampTreeObject(Random random) {
 		super(random);
 		addLeavesVines(true);
-		setLeavesRadiusIncreaseXZ((byte) 1);
+		setLeavesXZRadiusIncrease((byte) 1);
 	}
 
 	public SwampTreeObject() {

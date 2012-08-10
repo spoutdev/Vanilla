@@ -48,7 +48,7 @@ public class WoodenDoorBlock extends DoorBlock implements InitializableMaterial 
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.WOODEN_DOOR);
+		getDrops().add(VanillaMaterials.WOODEN_DOOR);
 	}
 
 	@Override

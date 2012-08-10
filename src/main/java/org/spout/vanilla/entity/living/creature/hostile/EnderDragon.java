@@ -26,14 +26,7 @@
  */
 package org.spout.vanilla.entity.living.creature.hostile;
 
-import java.util.Collections;
-import java.util.Set;
-
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Boss;
 import org.spout.vanilla.entity.living.creature.Hostile;
@@ -47,10 +40,5 @@ public class EnderDragon extends Creature implements Hostile, Boss {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(200);
-	}
-
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		return Collections.emptySet();
 	}
 }

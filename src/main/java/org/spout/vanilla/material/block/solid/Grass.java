@@ -46,7 +46,8 @@ public class Grass extends SpreadingSolid implements Mineable, RandomBlockMateri
 
 	@Override
 	public void initialize() {
-		this.setReplacedMaterial(VanillaMaterials.DIRT).setDropMaterial(VanillaMaterials.DIRT);
+		this.setReplacedMaterial(VanillaMaterials.DIRT);
+		this.getDrops().add(VanillaMaterials.DIRT);
 	}
 
 	@Override

@@ -26,9 +26,7 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
@@ -41,25 +39,16 @@ public class SnowBlock extends Solid implements Mineable, InitializableMaterial 
 	public SnowBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.2F).setResistance(0.3F).setStepSound(SoundEffects.STEP_CLOTH);
-		;
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.SPADE);
 	}
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.SNOW, 4);
+		this.getDrops().add(VanillaMaterials.SNOW, 4);
 	}
 
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Spade ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial() instanceof Spade) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
 	}
 }

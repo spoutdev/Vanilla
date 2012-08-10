@@ -33,9 +33,10 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class DungeonPopulator extends Populator {
-	private static final DungeonObject DUNGEON = new DungeonObject();
+	private static final DungeonObject DUNGEON = VanillaObjects.DUNGEON;
 	private static final byte ATTEMPTS = 8;
 
 	@Override

@@ -27,8 +27,8 @@
 package org.spout.vanilla.entity;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.logging.Level;
 
 import org.spout.api.Source;
@@ -47,6 +47,8 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.drops.Drops;
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.entity.component.basic.FireDamageComponent;
 import org.spout.vanilla.entity.component.basic.HealthComponent;
 import org.spout.vanilla.entity.component.physics.BlockCollisionComponent;
@@ -59,6 +61,7 @@ public abstract class VanillaEntityController extends Controller implements Vani
 	private final VanillaControllerType type;
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();
+	private Drops drops = new Drops();
 	// Protocol: last known updated client transform
 	private Transform lastClientTransform = new Transform();
 	// Tick effects
@@ -266,8 +269,17 @@ public abstract class VanillaEntityController extends Controller implements Vani
 	 * @param lastDamager Controller that killed this entity, can be null if death was caused by natural sources such as drowning or burning
 	 * @return the drops to disperse.
 	 */
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		return new HashSet<ItemStack>();
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+		return this.getDrops().getDrops(this.rand, new HashSet<DropFlagSingle>());
+	}
+
+	/**
+	 * Gets the drops for this Entity
+	 * 
+	 * @return the drops
+	 */
+	public Drops getDrops() {
+		return this.drops;
 	}
 
 	// =========================

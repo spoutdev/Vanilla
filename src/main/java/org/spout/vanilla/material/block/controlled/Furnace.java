@@ -27,12 +27,16 @@
 package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+<<<<<<< HEAD
 import org.spout.vanilla.entity.VanillaControllerTypes;
+=======
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+>>>>>>> origin
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
@@ -49,6 +53,7 @@ public class Furnace extends ControlledMaterial implements Directional, Mineable
 		super(VanillaControllerTypes.FURNACE, name, id);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	@Override
@@ -106,14 +111,5 @@ public class Furnace extends ControlledMaterial implements Directional, Mineable
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial() instanceof Pickaxe) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
 	}
 }

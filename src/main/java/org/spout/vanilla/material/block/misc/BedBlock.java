@@ -48,7 +48,7 @@ public class BedBlock extends VanillaBlockMaterial implements Mineable, Initiali
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.BED);
+		this.getDrops().add(VanillaMaterials.BED);
 	}
 
 	@Override

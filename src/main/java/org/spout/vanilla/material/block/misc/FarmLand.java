@@ -53,7 +53,7 @@ public class FarmLand extends VanillaBlockMaterial implements Mineable, Initiali
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.DIRT);
+		this.getDrops().add(VanillaMaterials.DIRT);
 	}
 
 	@Override

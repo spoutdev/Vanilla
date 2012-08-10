@@ -27,10 +27,12 @@
 package org.spout.vanilla.entity.living.creature.passive;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.entity.VanillaControllerTypes;
@@ -54,17 +56,17 @@ public class Sheep extends Creature implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(8);
-		final SheepEatGrassComponent eatGrassComponent = new SheepEatGrassComponent(this);
-		registerProcess(eatGrassComponent);
-		isSheared = data().get("sheep_sheared", false);
+		final SheepEatGrassComponent eatGrassComponent = new SheepEatGrassComponent(TickPriority.NORMAL);
+		addComponent(eatGrassComponent.getClass());
+		isSheared = getDataMap().get("sheep_sheared", false);
 		getHealth().setHurtEffect(SoundEffects.MOB_SHEEP);
 	}
 
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put("sheep_sheared", isSheared);
-		data().put("sheep_color", sheepColor);
+		getDataMap().put("sheep_sheared", isSheared);
+		getDataMap().put("sheep_color", sheepColor);
 	}
 
 	/**
@@ -100,8 +102,8 @@ public class Sheep extends Creature implements Passive {
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
 		if (!isSheared()) {
 			if (source == DamageCause.BURN) {
 				drops.add(new ItemStack(Wool.GRAY_WOOL, 1));
@@ -109,7 +111,6 @@ public class Sheep extends Creature implements Passive {
 				drops.add(new ItemStack(VanillaMaterials.WOOL.getSubMaterial(sheepColor), 1));
 			}
 		}
-
 		return drops;
 	}
 }

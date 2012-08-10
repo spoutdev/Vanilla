@@ -26,15 +26,8 @@
  */
 package org.spout.vanilla.entity.living.creature.hostile;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.spout.api.Source;
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Hostile;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -49,23 +42,8 @@ public class Ghast extends Creature implements Hostile {
 		super.onAttached();
 		getHealth().setSpawnHealth(10);
 		getHealth().setHurtEffect(SoundEffects.MOB_GHAST_SCREAM);
-	}
-
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-
-		int count = getRandom().nextInt(3);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.GUNPOWDER, count));
-		}
-
-		count = getRandom().nextInt(2);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.GHAST_TEAR, count));
-		}
-
-		return drops;
+		getDrops().addRange(VanillaMaterials.GUNPOWDER, 2);
+		getDrops().addRange(VanillaMaterials.GHAST_TEAR, 1);
 	}
 
 	/**
@@ -73,7 +51,7 @@ public class Ghast extends Creature implements Hostile {
 	 * @return true if it has red eyes
 	 */
 	public boolean hasRedEyes() {
-		return data().containsKey("red_eyes");
+		return getDataMap().containsKey("red_eyes");
 	}
 
 	/**
@@ -81,6 +59,6 @@ public class Ghast extends Creature implements Hostile {
 	 * @param redEyes
 	 */
 	public void setRedEyes(boolean redEyes) {
-		data().put("red_eyes", redEyes);
+		getDataMap().put("red_eyes", redEyes);
 	}
 }

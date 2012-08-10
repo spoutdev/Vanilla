@@ -26,10 +26,12 @@
  */
 package org.spout.vanilla.material.item.tool.gold;
 
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.item.tool.Spade;
 
 public class GoldSpade extends GoldTool implements Spade {
 	public GoldSpade(String name, int id, short durability) {
 		super(name, id, durability);
+		this.addDropFlags(ToolTypeFlags.SPADE);
 	}
 }

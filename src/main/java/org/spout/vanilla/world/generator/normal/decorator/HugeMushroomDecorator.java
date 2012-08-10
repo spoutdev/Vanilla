@@ -34,7 +34,7 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
-import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class HugeMushroomDecorator extends Decorator {
 	private final byte amount;
@@ -53,8 +53,8 @@ public class HugeMushroomDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		final HugeMushroomObject mushroom = new HugeMushroomObject(random,
-				random.nextBoolean() ? HugeMushroomType.BROWN : HugeMushroomType.RED);
+		final HugeMushroomObject mushroom = random.nextBoolean() ? VanillaObjects.HUGE_BROWN_MUSHROOM : VanillaObjects.HUGE_RED_MUSHROOM;
+		mushroom.setRandom(random);
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);

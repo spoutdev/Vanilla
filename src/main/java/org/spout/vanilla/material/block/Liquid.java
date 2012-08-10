@@ -30,7 +30,6 @@ import org.spout.api.Source;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.Material;
@@ -49,7 +48,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		super(name, id);
 		this.flowing = flowing;
 		this.setLiquidObstacle(false).setHardness(100.0F).setResistance(166.7F).setOpacity(2).setCollision(CollisionStrategy.SOFT);
-		this.clearDropMaterials();
+		this.getDrops().clear();
 	}
 
 	@Override
@@ -62,11 +61,6 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 		super.onUpdate(oldMaterial, block);
 		block.syncResetDynamic();
 		block.dynamicUpdate(block.getWorld().getAge() + this.getFlowDelay());
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		return false;
 	}
 
 	/**

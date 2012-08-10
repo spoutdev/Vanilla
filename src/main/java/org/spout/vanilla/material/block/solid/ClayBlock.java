@@ -42,7 +42,7 @@ public class ClayBlock extends Solid implements Mineable, InitializableMaterial 
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.CLAY, 4);
+		this.getDrops().add(VanillaMaterials.CLAY, 4);
 	}
 
 	@Override

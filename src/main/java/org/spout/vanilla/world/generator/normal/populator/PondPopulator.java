@@ -33,14 +33,14 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.world.generator.normal.object.PondObject;
-import org.spout.vanilla.world.generator.normal.object.PondObject.PondType;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class PondPopulator extends Populator {
 	private static final byte WATER_ODD = 4;
 	private static final byte LAVA_ODD = 8;
 	private static final byte LAVA_SURFACE_ODD = 10;
-	private static final PondObject WATER_POND = new PondObject(PondType.WATER);
-	private static final PondObject LAVA_POND = new PondObject(PondType.LAVA);
+	private static final PondObject WATER_POND = VanillaObjects.WATER_POND;
+	private static final PondObject LAVA_POND = VanillaObjects.LAVA_POND;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {

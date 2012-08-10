@@ -36,19 +36,14 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.world.generator.normal.object.BlockPatchObject;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class SandAndClayDecorator extends Decorator {
 	private static final byte FIRST_SAND_ROUND = 3;
 	private static final byte SECOND_SAND_ROUND = 1;
 	private static final byte CLAY_ROUND = 1;
-	private static final BlockPatchObject SAND = new BlockPatchObject(VanillaMaterials.SAND);
-	private static final BlockPatchObject CLAY = new BlockPatchObject(VanillaMaterials.CLAY_BLOCK);
-
-	static {
-		CLAY.setHeightRadius((byte) 1);
-		CLAY.getOverridableMaterials().clear();
-		CLAY.getOverridableMaterials().add(VanillaMaterials.DIRT);
-	}
+	private static final BlockPatchObject SAND = VanillaObjects.SAND_PATCH;
+	private static final BlockPatchObject CLAY = VanillaObjects.CLAY_PATCH;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -62,6 +57,7 @@ public class SandAndClayDecorator extends Decorator {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);
+			SAND.randomize();
 			if (y != -1 && SAND.canPlaceObject(world, x, y, z)) {
 				SAND.placeObject(world, x, y, z);
 			}
@@ -70,6 +66,7 @@ public class SandAndClayDecorator extends Decorator {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);
+			CLAY.randomize();
 			if (y != -1 && CLAY.canPlaceObject(world, x, y, z)) {
 				CLAY.placeObject(world, x, y, z);
 			}
@@ -78,6 +75,7 @@ public class SandAndClayDecorator extends Decorator {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);
+			SAND.randomize();
 			if (y != -1 && SAND.canPlaceObject(world, x, y, z)) {
 				SAND.placeObject(world, x, y, z);
 			}

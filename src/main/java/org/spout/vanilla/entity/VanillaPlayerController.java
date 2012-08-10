@@ -27,8 +27,7 @@
 package org.spout.vanilla.entity;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.spout.api.Source;
 import org.spout.api.entity.controller.PlayerController;
@@ -163,8 +162,8 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
 		ItemStack[] contents = this.getInventory().getMain().getContents();
 		drops.addAll(Arrays.asList(contents));
 		return drops;

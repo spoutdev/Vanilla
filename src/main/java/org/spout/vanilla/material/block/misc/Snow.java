@@ -27,11 +27,11 @@
 package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
@@ -47,11 +47,12 @@ public class Snow extends GroundAttachable implements Mineable, RandomBlockMater
 		super(name, id);
 		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.SPADE);
 	}
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.SNOWBALL);
+		this.getDrops().add(VanillaMaterials.SNOWBALL);
 	}
 
 	@Override
@@ -67,15 +68,6 @@ public class Snow extends GroundAttachable implements Mineable, RandomBlockMater
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Spade ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial() instanceof Spade) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
 	}
 
 	@Override

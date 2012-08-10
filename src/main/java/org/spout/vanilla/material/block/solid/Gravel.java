@@ -26,13 +26,9 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.data.drops.SwitchDrops;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SolidMoving;
@@ -40,13 +36,17 @@ import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class Gravel extends SolidMoving implements Mineable {
-	private Random rand = new Random();
-
+public class Gravel extends SolidMoving implements Mineable, InitializableMaterial {
 	public Gravel(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(1.0F).setStepSound(SoundEffects.STEP_GRAVEL);
-		;
+	}
+
+	@Override
+	public void initialize() {
+		SwitchDrops drops = getDrops().DEFAULT.clear().addSwitch().setChance(0.1);
+		drops.TRUE.add(VanillaMaterials.FLINT);
+		drops.FALSE.add(this);
 	}
 
 	@Override
@@ -57,16 +57,5 @@ public class Gravel extends SolidMoving implements Mineable {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.SNAREDRUM;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (rand.nextInt(10) == 0) {
-			drops.add(new ItemStack(VanillaMaterials.FLINT, 1));
-		} else {
-			drops.add(new ItemStack(this, 1));
-		}
-		return drops;
 	}
 }

@@ -55,12 +55,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.REDSTONE_TORCH_ON);
-	}
-
-	@Override
-	public void onDestroy(Block block, double dropChance) {
-		super.onDestroy(block, dropChance);
+		this.getDrops().add(VanillaMaterials.REDSTONE_TORCH_ON);
 	}
 
 	@Override

@@ -26,11 +26,13 @@
  */
 package org.spout.vanilla.material.item.tool.iron;
 
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.item.weapon.Sword;
 
 public class IronSword extends IronTool implements Sword {
 	public IronSword(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setDamage(6);
+		this.addDropFlags(ToolTypeFlags.SWORD);
 	}
 }

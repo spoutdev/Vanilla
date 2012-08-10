@@ -79,7 +79,7 @@ public class VanillaObjects {
 	public static final OreObject LAPIS_LAZULI_ORE = new OreObject(OreType.LAPIS_LAZULI);
 	public static final PondObject LAVA_POND = new PondObject(PondType.LAVA);
 	public static final PondObject WATER_POND = new PondObject(PondType.WATER);
-	public static final ShrubObject SHRUB = new ShrubObject();
+	public static final ShrubObject JUNGLE_SHRUB = new ShrubObject();
 	public static final SmallTreeObject SMALL_OAK_TREE = new SmallTreeObject();
 	public static final SmallTreeObject SMALL_BIRCH_TREE = new SmallTreeObject();
 	public static final SmallTreeObject SMALL_JUNGLE_TREE = new SmallTreeObject();
@@ -87,13 +87,13 @@ public class VanillaObjects {
 	public static final PineTreeObject PINE_TREE = new PineTreeObject();
 	public static final SpruceTreeObject SPRUCE_TREE = new SpruceTreeObject();
 	public static final SugarCaneStackObject SUGAR_CANE_STACK = new SugarCaneStackObject();
-	public static final WellObject WELL = new WellObject();
-	public static final SpireObject SPIRE = new SpireObject();
+	public static final WellObject DESERT_WELL = new WellObject();
+	public static final SpireObject THE_END_SPIRE = new SpireObject();
 	public static final NetherPortalObject NETHER_PORTAL = new NetherPortalObject();
-	public static final BlockPatchObject SAND = new BlockPatchObject(VanillaMaterials.SAND);
-	public static final BlockPatchObject CLAY = new BlockPatchObject(VanillaMaterials.CLAY_BLOCK);
+	public static final BlockPatchObject SAND_PATCH = new BlockPatchObject(VanillaMaterials.SAND);
+	public static final BlockPatchObject CLAY_PATCH = new BlockPatchObject(VanillaMaterials.CLAY_BLOCK);
 	public static final LootChestObject LOOT_CHEST = new LootChestObject();
-	public static final SnowObject SNOW = new SnowObject();
+	public static final SnowObject FALLING_SNOW = new SnowObject();
 	public static final Mineshaft MINESHAFT = new Mineshaft();
 	// for the '/obj' test command
 	private static final Map<String, WorldGeneratorObject> BY_NAME = new HashMap<String, WorldGeneratorObject>();
@@ -104,16 +104,17 @@ public class VanillaObjects {
 		SMALL_JUNGLE_TREE.setBaseHeight((byte) 4);
 		SMALL_JUNGLE_TREE.setRandomHeight((byte) 10);
 		SMALL_JUNGLE_TREE.addLogVines(true);
-		CLAY.setHeightRadius((byte) 1);
-		CLAY.getOverridableMaterials().clear();
-		CLAY.getOverridableMaterials().add(VanillaMaterials.DIRT);
+		SMALL_JUNGLE_TREE.addCocoaPlants(true);
+		CLAY_PATCH.setHeightRadius((byte) 1);
+		CLAY_PATCH.getOverridableMaterials().clear();
+		CLAY_PATCH.getOverridableMaterials().add(VanillaMaterials.DIRT);
 		// for the '/obj' test command
 		for (Field objectField : VanillaObjects.class.getDeclaredFields()) {
 			objectField.setAccessible(true);
 			try {
-				Object o = objectField.get(null);
-				if (o instanceof WorldGeneratorObject) {
-					BY_NAME.put(objectField.getName().toLowerCase(), (WorldGeneratorObject) o);
+				Object object = objectField.get(null);
+				if (object instanceof WorldGeneratorObject) {
+					BY_NAME.put(objectField.getName().toLowerCase(), (WorldGeneratorObject) object);
 				}
 			} catch (Exception ex) {
 				System.out.println("Could not properly reflect VanillaObjects! Unexpected behaviour may occur, please report to http://issues.spout.org!");

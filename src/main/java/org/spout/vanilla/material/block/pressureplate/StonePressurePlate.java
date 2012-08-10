@@ -28,9 +28,13 @@ package org.spout.vanilla.material.block.pressureplate;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 
+<<<<<<< HEAD
 import org.spout.vanilla.entity.object.moving.Item;
+=======
+import org.spout.vanilla.controller.object.moving.Item;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+>>>>>>> origin
 import org.spout.vanilla.material.block.PressurePlate;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -39,20 +43,12 @@ public class StonePressurePlate extends PressurePlate {
 	public StonePressurePlate(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 0);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial() instanceof Pickaxe) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
 	}
 
 	@Override

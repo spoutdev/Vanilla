@@ -26,9 +26,8 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
-
+import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.misc.Slab;
@@ -58,11 +57,13 @@ public class DoubleSlab extends Solid implements Mineable {
 	private DoubleSlab(String name, Slab slab) {
 		super((short) 0x0007, name, 43);
 		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F);
+		getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.WOOD_UP);
 	}
 
 	private DoubleSlab(String name, int data, DoubleSlab parent, Slab slab) {
 		super(name, 43, data, parent);
 		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F);
+		getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.WOOD_UP);
 	}
 
 	@Override
@@ -73,14 +74,5 @@ public class DoubleSlab extends Solid implements Mineable {
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
-	}
-
-	@Override
-	public boolean canDrop(Block block, ItemStack holding) {
-		if (holding != null && holding.getMaterial() instanceof Pickaxe) {
-			return super.canDrop(block, holding);
-		} else {
-			return false;
-		}
 	}
 }

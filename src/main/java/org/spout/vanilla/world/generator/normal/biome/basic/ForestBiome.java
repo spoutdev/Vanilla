@@ -36,13 +36,15 @@ import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class ForestBiome extends GrassyBiome {
 	public ForestBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new ForestTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory(), (byte) 5),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
-		setMinMax((byte) 67, (byte) 75);
+		setMinMax((byte) 64, (byte) 72);
 	}
 
 	@Override
@@ -51,6 +53,14 @@ public class ForestBiome extends GrassyBiome {
 	}
 
 	private static class ForestTreeWGOFactory extends NormalTreeWGOFactory {
+		@Override
+		public TreeObject make(Random random) {
+			if (random.nextInt(5) == 0) {
+				return VanillaObjects.SMALL_BIRCH_TREE;
+			}
+			return super.make(random);
+		}
+
 		@Override
 		public byte amount(Random random) {
 			return (byte) (10 + super.amount(random));

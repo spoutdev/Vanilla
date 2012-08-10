@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.entity.living.creature.util;
 
+<<<<<<< HEAD:src/main/java/org/spout/vanilla/entity/living/creature/util/SnowGolem.java
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,6 +37,11 @@ import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Passive;
+=======
+import org.spout.vanilla.controller.VanillaControllerTypes;
+import org.spout.vanilla.controller.living.Creature;
+import org.spout.vanilla.controller.living.creature.Passive;
+>>>>>>> origin:src/main/java/org/spout/vanilla/controller/living/creature/util/SnowGolem.java
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class SnowGolem extends Creature implements Passive {
@@ -48,16 +54,6 @@ public class SnowGolem extends Creature implements Passive {
 		getHealth().setSpawnHealth(6);
 		getHealth().setDeathAnimation(false);
 		super.onAttached();
-	}
-
-	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(16);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.SNOWBALL, count));
-		}
-
-		return drops;
+		getDrops().addRange(VanillaMaterials.SNOWBALL, 15);
 	}
 }

@@ -78,7 +78,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.REDSTONE_REPEATER);
+		this.getDrops().add(VanillaMaterials.REDSTONE_REPEATER);
 	}
 
 	public boolean isPowered() {
@@ -88,10 +88,6 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, M
 	@Override
 	public byte getLightLevel(short data) {
 		return powered ? (byte) 9 : (byte) 0;
-	}
-
-	public void onDestroy(Block block, double dropChance) {
-		super.onDestroy(block, dropChance);
 	}
 
 	public void setPowered(Block block, boolean powered) {

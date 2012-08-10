@@ -40,7 +40,7 @@ public class Glass extends Solid implements Mineable {
 	public Glass(String name, int id) {
 		super(name, id);
 		this.setHardness(0.3F).setResistance(0.5F).setTransparent();
-		this.clearDropMaterials();
+		this.getDrops().clear();
 	}
 
 	@Override

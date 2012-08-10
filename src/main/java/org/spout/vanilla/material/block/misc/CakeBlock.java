@@ -43,7 +43,7 @@ public class CakeBlock extends Solid implements Mineable {
 	public CakeBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
-		this.clearDropMaterials();
+		this.getDrops().clear();
 	}
 
 	@Override

@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.handler;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
@@ -39,6 +40,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.player.Player;
@@ -47,18 +49,49 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.data.ExhaustionLevel;
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.vanilla.data.drops.flag.PlayerFlags;
+import org.spout.vanilla.data.drops.flag.ToolEnchantFlags;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
+import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
+
+	private void breakBlock(BlockMaterial blockMaterial, Block block, VanillaPlayer player) {
+		if (blockMaterial instanceof VanillaBlockMaterial) {
+			HashSet<DropFlagSingle> flags = new HashSet<DropFlagSingle>();
+			if (player.isSurvival()) {
+				flags.add(PlayerFlags.SURVIVAL);
+			} else {
+				flags.add(PlayerFlags.CREATIVE);
+			}
+			ItemStack heldItem = player.getInventory().getQuickbar().getCurrentItem();
+			if (heldItem != null) {
+				if (EnchantmentUtil.hasEnchantment(heldItem, Enchantments.SILK_TOUCH)) {
+					flags.add(ToolEnchantFlags.SILK_TOUCH);
+				}
+				Material heldMaterial = heldItem.getMaterial();
+				if (heldMaterial instanceof Tool) {
+					flags.addAll(((Tool) heldMaterial).getDropFlags());
+				}
+			}
+			((VanillaBlockMaterial) blockMaterial).onDestroy(block, flags);
+		} else {
+			blockMaterial.onDestroy(block);
+		}
+	}
+
 	@Override
 	public void handleServer(Session session, PlayerDiggingMessage message) {
 		if (!session.hasPlayer()) {
@@ -145,7 +178,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 					vp.startDigging(new Point(w, x, y, z));
 				} else {
 					// insta-break
-					blockMaterial.onDestroy(block);
+					breakBlock(blockMaterial, block, vp);
 					GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
 				}
 			}
@@ -154,8 +187,13 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				return;
 			}
 
+<<<<<<< HEAD
 			if (VanillaPlayerUtil.isSurvival(player)) {
 				((VanillaPlayerController) player.getController()).getSurvivalLogic().setExhaustion(((VanillaPlayerController) player.getController()).getSurvivalLogic().getExhaustion() + ExhaustionLevel.BREAK_BLOCK.getAmount());
+=======
+			if (vp.isSurvival()) {
+				vp.getSurvivalLogic().addExhaustion(ExhaustionLevel.BREAK_BLOCK.getAmount());
+>>>>>>> origin
 			}
 
 			long diggingTicks = vp.getDiggingTicks();
@@ -178,7 +216,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 			totalDamage = ((int) blockMaterial.getHardness() - damageDone);
 			if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
-				blockMaterial.onDestroy(block);
+				breakBlock(blockMaterial, block, vp);
 			}
 			if (block.getMaterial() != VanillaMaterials.AIR) {
 				GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);

@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.entity.living.creature.hostile;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
@@ -50,20 +50,14 @@ public class Blaze extends Creature implements Hostile {
 		super.onAttached();
 		getHealth().setSpawnHealth(20);
 		getHealth().setHurtEffect(SoundEffects.MOB_BLAZE_HIT);
+		getDrops().addRange(VanillaMaterials.BLAZE_ROD, 0, 1);
 	}
 
 	@Override
-	public Set<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
+	public List<ItemStack> getDrops(Source source, VanillaEntityController lastDamager) {
 		if (lastDamager == null || !(lastDamager instanceof VanillaPlayerController)) {
-			return super.getDrops(source, lastDamager);
+			return new ArrayList<ItemStack>(0);
 		}
-
-		Set<ItemStack> drops = new HashSet<ItemStack>();
-		int count = getRandom().nextInt(2);
-		if (count > 0) {
-			drops.add(new ItemStack(VanillaMaterials.BLAZE_ROD, count));
-		}
-
-		return drops;
+		return super.getDrops(source, lastDamager);
 	}
 }

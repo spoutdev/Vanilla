@@ -26,12 +26,10 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -42,7 +40,12 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
+<<<<<<< HEAD
 import org.spout.vanilla.entity.living.Living;
+=======
+import org.spout.vanilla.controller.living.Living;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+>>>>>>> origin
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -59,6 +62,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 		super(name, id);
 		this.setLiquidObstacle(false);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
+		this.getDrops().DEFAULT.clear().add(this).addFlags(ToolTypeFlags.SHEARS);
 	}
 
 	@Override
@@ -261,15 +265,6 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	@Override
 	public boolean isPlacementObstacle() {
 		return false;
-	}
-
-	@Override
-	public ArrayList<ItemStack> getDrops(Block block, ItemStack holding) {
-		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		if (holding != null && holding.isMaterial(VanillaMaterials.SHEARS)) {
-			drops.add(new ItemStack(this, 1));
-		}
-		return drops;
 	}
 
 	@Override

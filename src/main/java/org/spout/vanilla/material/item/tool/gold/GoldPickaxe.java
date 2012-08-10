@@ -26,11 +26,13 @@
  */
 package org.spout.vanilla.material.item.tool.gold;
 
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 
 public class GoldPickaxe extends GoldTool implements Pickaxe {
 	public GoldPickaxe(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setDamage(2);
+		this.addDropFlags(ToolTypeFlags.PICKAXE);
 	}
 }

@@ -26,11 +26,13 @@
  */
 package org.spout.vanilla.material.item.tool.stone;
 
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.item.tool.Axe;
 
 public class StoneAxe extends StoneTool implements Axe {
 	public StoneAxe(String name, int id, short durability) {
 		super(name, id, durability);
 		this.setDamage(3);
+		this.addDropFlags(ToolTypeFlags.AXE);
 	}
 }

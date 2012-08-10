@@ -40,7 +40,7 @@ public class MelonBlock extends Ore implements InitializableMaterial {
 
 	@Override
 	public void initialize() {
-		this.setDropMaterial(VanillaMaterials.MELON_SLICE, 1, 3);
+		this.getDrops().addRange(VanillaMaterials.MELON_SLICE, 1, 3);
 	}
 
 	@Override

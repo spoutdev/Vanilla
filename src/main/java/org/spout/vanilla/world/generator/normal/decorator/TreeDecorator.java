@@ -48,11 +48,13 @@ public class TreeDecorator extends Decorator {
 		if (chunk.getY() != 4) {
 			return;
 		}
+		final World world = chunk.getWorld();
 		final Biome decorating = chunk.getBiomeType(7, 7, 7);
 		final byte amount = factory.amount(random);
 		for (byte count = 0; count < amount; count++) {
 			final TreeObject tree = factory.make(random);
-			final World world = chunk.getWorld();
+			tree.setRandom(random);
+			tree.randomize();
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);

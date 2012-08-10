@@ -33,21 +33,21 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.world.generator.normal.object.OreObject;
-import org.spout.vanilla.world.generator.normal.object.OreObject.OreType;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class OrePopulator extends Populator {
 	private static final OreObject[] ORES;
 
 	static {
 		ORES = new OreObject[]{
-				new OreObject(OreType.DIRT),
-				new OreObject(OreType.GRAVEL),
-				new OreObject(OreType.COAL),
-				new OreObject(OreType.IRON),
-				new OreObject(OreType.REDSTONE),
-				new OreObject(OreType.LAPIS_LAZULI),
-				new OreObject(OreType.GOLD),
-				new OreObject(OreType.DIAMOND)
+			VanillaObjects.DIRT_ORE,
+			VanillaObjects.GRAVEL_ORE,
+			VanillaObjects.COAL_ORE,
+			VanillaObjects.IRON_ORE,
+			VanillaObjects.REDSTONE_ORE,
+			VanillaObjects.LAPIS_LAZULI_ORE,
+			VanillaObjects.GOLD_ORE,
+			VanillaObjects.DIAMOND_ORE
 		};
 	}
 
@@ -57,13 +57,16 @@ public class OrePopulator extends Populator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		for (OreObject object : ORES) {
-			object.setRandom(random);
-			for (byte i = 0; i < object.getAmount(); i++) {
+		for (OreObject ore : ORES) {
+			ore.setRandom(random);
+			for (byte i = 0; i < ore.getAmount(); i++) {
 				final int x = chunk.getBlockX(random);
-				final int y = random.nextInt(object.getMaxHeight());
+				final int y = random.nextInt(ore.getMaxHeight());
 				final int z = chunk.getBlockZ(random);
-				object.placeObject(world, x, y, z);
+				ore.randomize();
+				if (ore.canPlaceObject(world, x, y, z)) {
+					ore.placeObject(world, x, y, z);
+				}
 			}
 		}
 	}

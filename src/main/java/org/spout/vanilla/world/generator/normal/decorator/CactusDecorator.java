@@ -34,10 +34,11 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.largeplant.CactusStackObject;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class CactusDecorator extends Decorator {
 	private static final byte AMOUNT = 2;
-	private static final CactusStackObject CACTUS = new CactusStackObject();
+	private static final CactusStackObject CACTUS_STACK = VanillaObjects.CACTUS_STACK;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -45,14 +46,14 @@ public class CactusDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		CACTUS.setRandom(random);
+		CACTUS_STACK.setRandom(random);
 		for (byte count = 0; count < AMOUNT; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);
-			CACTUS.randomize();
-			if (y != -1 && CACTUS.canPlaceObject(world, x, y, z)) {
-				CACTUS.placeObject(world, x, y, z);
+			CACTUS_STACK.randomize();
+			if (y != -1 && CACTUS_STACK.canPlaceObject(world, x, y, z)) {
+				CACTUS_STACK.placeObject(world, x, y, z);
 			}
 		}
 	}

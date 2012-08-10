@@ -34,12 +34,13 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.largeplant.SugarCaneStackObject;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 /**
  * Decorator that decorates a biome with sugar canes.
  */
 public class SugarCaneDecorator extends Decorator {
-	private static final SugarCaneStackObject CANES = new SugarCaneStackObject();
+	private static final SugarCaneStackObject CANES = VanillaObjects.SUGAR_CANE_STACK;
 	private final byte maxClusterSize;
 	private final byte clusterPlaceAttempts;
 	private final byte numberOfClusters;

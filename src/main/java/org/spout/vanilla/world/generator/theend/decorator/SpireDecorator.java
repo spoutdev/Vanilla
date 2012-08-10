@@ -33,9 +33,11 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
 public class SpireDecorator extends Decorator {
+	private static final SpireObject SPIRE = VanillaObjects.THE_END_SPIRE;
 	// Generation odds, chunk per 'ODD' chunk
 	private static final byte ODD = 5;
 
@@ -54,9 +56,10 @@ public class SpireDecorator extends Decorator {
 		if (y == -1) {
 			return;
 		}
-		final SpireObject spire = new SpireObject(random);
-		if (spire.canPlaceObject(world, x, y, z)) {
-			spire.placeObject(world, x, y, z);
+		SPIRE.setRandom(random);
+		SPIRE.randomize();
+		if (SPIRE.canPlaceObject(world, x, y, z)) {
+			SPIRE.placeObject(world, x, y, z);
 		}
 	}
 

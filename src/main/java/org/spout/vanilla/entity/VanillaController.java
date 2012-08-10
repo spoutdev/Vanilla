@@ -27,7 +27,6 @@
 package org.spout.vanilla.entity;
 
 import org.spout.api.entity.Controller;
-import org.spout.api.entity.component.Controller;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 public interface VanillaController extends Controller {

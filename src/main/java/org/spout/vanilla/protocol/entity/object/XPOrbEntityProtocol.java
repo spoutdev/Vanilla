@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.entity.object;
 
 import org.spout.api.entity.BasicController;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 
@@ -37,7 +38,7 @@ import org.spout.vanilla.protocol.msg.entity.EntitySpawnExperienceOrbMessage;
 public class XPOrbEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
-		BasicController c = entity.getController();
+		final Controller c = entity.getController();
 		if (c == null || !(c instanceof XPOrb)) {
 			return null;
 		}

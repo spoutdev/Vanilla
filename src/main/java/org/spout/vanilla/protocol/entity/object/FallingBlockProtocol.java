@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.entity.object;
 import java.util.Arrays;
 
 import org.spout.api.entity.BasicController;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
@@ -50,7 +51,7 @@ public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
-		final BasicController controller = entity.getController();
+		final Controller controller = entity.getController();
 		if (controller instanceof MovingBlock) {
 			int spawnId;
 			BlockMaterial mat = ((MovingBlock) controller).getMaterial();

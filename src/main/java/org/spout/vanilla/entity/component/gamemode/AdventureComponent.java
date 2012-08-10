@@ -26,26 +26,26 @@
  */
 package org.spout.vanilla.entity.component.gamemode;
 
-import org.spout.api.tickable.LogicPriority;
-import org.spout.api.tickable.LogicRunnable;
+import org.spout.api.entity.BasicComponent;
+import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.entity.VanillaPlayerController;
 
 /**
  * Basic component that applies Adventure-mode rules to VanillaPlayers.
  */
-public class AdventureComponent extends LogicRunnable<VanillaPlayerController> {
-	public AdventureComponent(VanillaPlayerController parent, LogicPriority priority) {
-		super(parent, priority);
+public class AdventureComponent extends BasicComponent<VanillaPlayerController> {
+	public AdventureComponent(TickPriority priority) {
+		super(priority);
 	}
 
 	@Override
-	public boolean shouldRun(float dt) {
+	public boolean canTick() {
 		return false;
 	}
 
 	@Override
-	public void run() {
+	public void onTick(float dt) {
 
 	}
 }

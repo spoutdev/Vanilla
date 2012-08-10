@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.entity;
 
 import org.spout.api.entity.BasicController;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 
@@ -39,7 +40,7 @@ public class BasicObjectEntityProtocol extends BasicEntityProtocol {
 
 	@Override
 	public Message[] getSpawnMessage(Entity entity) {
-		BasicController c = entity.getController();
+		Controller c = entity.getController();
 		if (c == null) {
 			return null;
 		}

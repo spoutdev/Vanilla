@@ -27,6 +27,7 @@
 package org.spout.vanilla.entity.living.creature.passive;
 
 import org.spout.api.entity.BasicController;
+import org.spout.api.entity.Controller;
 
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.living.Creature;
@@ -34,7 +35,7 @@ import org.spout.vanilla.entity.living.creature.Passive;
 import org.spout.vanilla.entity.living.creature.Tameable;
 
 public class Ocelot extends Creature implements Tameable, Passive {
-	private BasicController master;
+	private Controller master;
 
 	public Ocelot() {
 		super(VanillaControllerTypes.OCELOT);
@@ -54,7 +55,7 @@ public class Ocelot extends Creature implements Tameable, Passive {
 	}
 
 	@Override
-	public void controlledBy(BasicController master) {
+	public void controlledBy(Controller master) {
 		this.master = master;
 	}
 

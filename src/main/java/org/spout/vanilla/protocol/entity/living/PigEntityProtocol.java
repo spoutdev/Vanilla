@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.entity.living;
 import java.util.List;
 
 import org.spout.api.entity.BasicController;
+import org.spout.api.entity.Controller;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
@@ -39,7 +40,7 @@ public class PigEntityProtocol extends BasicMobEntityProtocol {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(BasicController controller) {
+	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
 		//TODO: Index 16 (byte): 1 if saddled, 0 otherwise
 		return parameters;

@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.entity.living.creature;
 
-import org.spout.api.entity.BasicController;
+import org.spout.api.entity.Controller;
 
 public interface Tameable {
-	public void controlledBy(BasicController master);
+	public void controlledBy(Controller master);
 
 	public boolean isControlled();
 }

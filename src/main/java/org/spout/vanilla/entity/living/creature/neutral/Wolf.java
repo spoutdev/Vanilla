@@ -27,6 +27,7 @@
 package org.spout.vanilla.entity.living.creature.neutral;
 
 import org.spout.api.entity.BasicController;
+import org.spout.api.entity.Controller;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.entity.VanillaControllerTypes;
@@ -35,7 +36,7 @@ import org.spout.vanilla.entity.living.creature.Neutral;
 import org.spout.vanilla.entity.living.creature.Tameable;
 
 public class Wolf extends Creature implements Tameable, Neutral {
-	private BasicController master;
+	private Controller master;
 
 	public Wolf() {
 		super(VanillaControllerTypes.WOLF);
@@ -60,7 +61,7 @@ public class Wolf extends Creature implements Tameable, Neutral {
 	}
 
 	@Override
-	public void controlledBy(BasicController master) {
+	public void controlledBy(Controller master) {
 		this.master = master;
 	}
 

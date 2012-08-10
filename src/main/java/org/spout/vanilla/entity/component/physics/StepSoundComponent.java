@@ -27,7 +27,7 @@
 package org.spout.vanilla.entity.component.physics;
 
 import org.spout.api.entity.BasicComponent;
-import org.spout.api.entity.BasicController;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
@@ -40,7 +40,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 /**
  * Plays a step sound effect while walking
  */
-public class StepSoundComponent extends BasicComponent<BasicController> {
+public class StepSoundComponent extends BasicComponent<Controller> {
 	private static final float SOUND_VOLUME = 0.15f;
 	private static final float SOUND_DISTANCE_INTERVAL = 1.667f;
 	private float walkedDistance = 0.0f;

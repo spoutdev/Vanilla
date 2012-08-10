@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.entity;
 
-import org.spout.api.entity.BasicController;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.controller.type.EmptyConstructorControllerType;
 import org.spout.api.protocol.EntityProtocol;
 
@@ -35,11 +35,11 @@ import org.spout.vanilla.VanillaPlugin;
 public class VanillaControllerType extends EmptyConstructorControllerType {
 	private final int id;
 
-	public VanillaControllerType(final int id, Class<? extends BasicController> controllerClass, String name) {
+	public VanillaControllerType(final int id, Class<? extends Controller> controllerClass, String name) {
 		this(id, controllerClass, name, null);
 	}
 
-	public VanillaControllerType(final int id, Class<? extends BasicController> controllerClass, String name, EntityProtocol protocol) {
+	public VanillaControllerType(final int id, Class<? extends Controller> controllerClass, String name, EntityProtocol protocol) {
 		super(controllerClass, name);
 		this.id = id;
 		if (protocol != null) {

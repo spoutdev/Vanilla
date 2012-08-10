@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.BasicController;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.EntityProtocol;
@@ -55,7 +56,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 	}
 
 	public Message[] getUpdateMessage(Entity entity) {
-		BasicController controller = entity.getController();
+		Controller controller = entity.getController();
 		if (!(controller instanceof VanillaEntityController)) {
 			return new Message[0];
 		}

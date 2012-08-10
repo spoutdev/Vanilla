@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.entity.living;
 import java.util.List;
 
 import org.spout.api.entity.BasicController;
+import org.spout.api.entity.Controller;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.entity.living.creature.passive.Sheep;
@@ -40,7 +41,7 @@ public class SheepEntityProtocol extends BasicMobEntityProtocol {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(BasicController controller) {
+	public List<Parameter<?>> getSpawnParameters(Controller controller) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
 		if (controller instanceof Sheep) {
 			Sheep sheep = (Sheep) controller;

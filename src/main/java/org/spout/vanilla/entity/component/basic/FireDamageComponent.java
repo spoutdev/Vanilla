@@ -30,9 +30,9 @@ import org.spout.api.Spout;
 import org.spout.api.entity.BasicComponent;
 import org.spout.api.tickable.TickPriority;
 
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.source.DamageCause;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityCombustEvent;
 
 public class FireDamageComponent extends BasicComponent<VanillaEntityController> {

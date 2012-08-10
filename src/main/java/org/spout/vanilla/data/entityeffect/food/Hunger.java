@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.data.entityeffect.food;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+import org.spout.vanilla.entity.VanillaPlayerController;
 
 public class Hunger extends VanillaEntityFoodEffect {
 	public Hunger(VanillaPlayerController effected, float amount) {

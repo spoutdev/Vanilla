@@ -28,8 +28,8 @@ package org.spout.vanilla.entity.world.sky;
 
 import org.spout.api.geo.World;
 
-import org.spout.vanilla.entity.world.VanillaSky;
 import org.spout.vanilla.data.Weather;
+import org.spout.vanilla.entity.world.VanillaSky;
 
 public class NetherSky extends VanillaSky {
 	public NetherSky(World world) {

@@ -28,8 +28,8 @@ package org.spout.vanilla.window.block;
 
 import org.spout.api.inventory.InventoryBase;
 
-import org.spout.vanilla.entity.block.BrewingStand;
 import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.block.BrewingStand;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.util.intmap.SlotIndexMap;
 import org.spout.vanilla.window.ClickArgs;

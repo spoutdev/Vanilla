@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.data.entityeffect.potion;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.entityeffect.VanillaEntityEffect;
+import org.spout.vanilla.entity.VanillaPlayerController;
 
 public class MiningFatigue extends VanillaEntityEffect {
 	public MiningFatigue(VanillaPlayerController effected, float duration, int strength) {

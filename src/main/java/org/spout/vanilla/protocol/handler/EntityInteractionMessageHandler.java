@@ -27,18 +27,18 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
-import org.spout.api.player.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.source.DamageCause;
-import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;

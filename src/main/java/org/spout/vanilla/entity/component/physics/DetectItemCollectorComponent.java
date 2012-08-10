@@ -31,9 +31,9 @@ import org.spout.api.entity.Player;
 import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.object.moving.Item;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.msg.entity.EntityCollectItemMessage;
 
 import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacketsToNearbyPlayers;

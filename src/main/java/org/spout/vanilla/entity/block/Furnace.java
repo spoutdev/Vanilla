@@ -30,10 +30,10 @@ import org.spout.api.Spout;
 import org.spout.api.event.EventManager;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.InventoryOwner;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.block.FurnaceBurnEvent;
 import org.spout.vanilla.event.entity.CraftingResultEvent;
 import org.spout.vanilla.inventory.block.FurnaceInventory;

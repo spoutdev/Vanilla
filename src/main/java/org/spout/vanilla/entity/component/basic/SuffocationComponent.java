@@ -33,9 +33,9 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.tickable.TickPriority;
 
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.living.Living;
 import org.spout.vanilla.entity.source.DamageCause;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class SuffocationComponent extends BasicComponent<Living> {

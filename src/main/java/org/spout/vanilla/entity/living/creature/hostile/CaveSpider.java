@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.entity.living.creature.hostile;
 
-import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.entity.VanillaControllerTypes;
 
 public class CaveSpider extends Spider {
 	public CaveSpider() {

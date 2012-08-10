@@ -33,14 +33,11 @@ import net.royawesome.jlibnoise.MathHelper;
 
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.component.Controller;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.entity.living.Human;
-import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 
 public class VanillaPlayerProtocol extends VanillaEntityProtocol {

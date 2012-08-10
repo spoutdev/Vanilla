@@ -45,8 +45,7 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.tickable.LogicPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.VanillaEntityController;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.entity.component.basic.PlayerSuffocationComponent;
 import org.spout.vanilla.entity.component.effect.PoisonEffectComponent;
 import org.spout.vanilla.entity.component.gamemode.CreativeComponent;
@@ -55,7 +54,6 @@ import org.spout.vanilla.entity.component.physics.PlayerStepSoundComponent;
 import org.spout.vanilla.entity.component.player.PingComponent;
 import org.spout.vanilla.entity.component.player.StatsUpdateComponent;
 import org.spout.vanilla.entity.source.DamageCause;
-import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;

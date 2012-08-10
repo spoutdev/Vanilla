@@ -33,12 +33,12 @@ import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaControllerType;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Hostile;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Slime extends Creature implements Hostile {

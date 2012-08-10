@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.entity.living;
 
 import java.util.List;
 
-import org.spout.api.entity.component.Controller;
+import org.spout.api.entity.Controller;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 

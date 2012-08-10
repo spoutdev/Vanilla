@@ -31,8 +31,8 @@ import java.util.Random;
 import org.spout.api.geo.World;
 import org.spout.api.tickable.BasicTickable;
 
-import org.spout.vanilla.entity.world.VanillaSky;
 import org.spout.vanilla.data.Weather;
+import org.spout.vanilla.entity.world.VanillaSky;
 
 public class WeatherSimulator extends BasicTickable {
 	private final VanillaSky sky;

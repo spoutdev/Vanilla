@@ -28,11 +28,11 @@ package org.spout.vanilla.entity.living.creature.neutral;
 
 import org.spout.api.entity.component.Controller;
 
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Neutral;
 import org.spout.vanilla.entity.living.creature.Tameable;
-import org.spout.vanilla.data.effect.store.SoundEffects;
 
 public class Wolf extends Creature implements Tameable, Neutral {
 	private Controller master;

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.entity.component.physics;
 
-import org.spout.api.tickable.LogicPriority;
 import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.entity.VanillaPlayerController;

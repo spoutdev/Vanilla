@@ -29,8 +29,8 @@ package org.spout.vanilla.protocol.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.component.Controller;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;

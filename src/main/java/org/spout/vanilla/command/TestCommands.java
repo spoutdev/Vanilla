@@ -52,11 +52,11 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.player.Player;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.data.entityeffect.potion.Speed;
 import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.living.Human;
 import org.spout.vanilla.entity.source.HealthChangeReason;
-import org.spout.vanilla.data.entityeffect.potion.Speed;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;

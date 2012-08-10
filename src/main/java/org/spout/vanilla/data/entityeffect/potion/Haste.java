@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.data.entityeffect.potion;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.entityeffect.VanillaEntityEffect;
+import org.spout.vanilla.entity.VanillaPlayerController;
 
 public class Haste extends VanillaEntityEffect {
 	public Haste(VanillaPlayerController effected, float duration, int strength) {

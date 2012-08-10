@@ -32,12 +32,12 @@ import org.spout.api.entity.BasicComponent;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 import org.spout.api.tickable.TickPriority;
 
-import org.spout.vanilla.entity.VanillaEntityController;
-import org.spout.vanilla.entity.source.DamageCause;
-import org.spout.vanilla.entity.source.HealthChangeReason;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.entity.VanillaEntityController;
+import org.spout.vanilla.entity.source.DamageCause;
+import org.spout.vanilla.entity.source.HealthChangeReason;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;

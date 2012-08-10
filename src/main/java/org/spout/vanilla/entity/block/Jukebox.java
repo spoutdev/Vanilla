@@ -35,10 +35,10 @@ import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.entity.VanillaBlockController;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.object.moving.Item;
-import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.inventory.block.JukeboxInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.misc.MusicDisc;

@@ -35,8 +35,8 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.entity.VanillaBlockController;
 import org.spout.vanilla.entity.VanillaControllerType;
-import org.spout.vanilla.entity.WindowController;
 import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.WindowController;
 import org.spout.vanilla.window.Window;
 
 public abstract class VanillaWindowBlockController extends VanillaBlockController implements WindowController {

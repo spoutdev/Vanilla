@@ -28,10 +28,10 @@ package org.spout.vanilla.entity.object.moving;
 
 import org.spout.api.tickable.LogicPriority;
 
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.component.physics.DetectXPCollectorComponent;
 import org.spout.vanilla.entity.object.Substance;
-import org.spout.vanilla.data.VanillaData;
 
 public class XPOrb extends Substance {
 	private short experience;

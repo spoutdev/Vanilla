@@ -37,10 +37,10 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.Command;
+import org.spout.api.entity.Player;
 import org.spout.api.exception.UnknownPacketException;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
-import org.spout.api.player.Player;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
@@ -48,9 +48,9 @@ import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
 
 import org.spout.vanilla.chat.style.VanillaStyleHandler;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.source.ControllerChangeReason;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.customdata.RegisterPluginChannelCodec;
 import org.spout.vanilla.protocol.customdata.RegisterPluginChannelMessage;
 import org.spout.vanilla.protocol.customdata.RegisterPluginChannelMessageHandler;

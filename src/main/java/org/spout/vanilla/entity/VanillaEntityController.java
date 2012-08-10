@@ -37,23 +37,20 @@ import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionModel;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Controller;
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.tickable.TickPriority;
 
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.component.basic.FireDamageComponent;
 import org.spout.vanilla.entity.component.basic.HealthComponent;
 import org.spout.vanilla.entity.component.physics.BlockCollisionComponent;
 import org.spout.vanilla.entity.object.moving.Item;
-import org.spout.vanilla.data.VanillaData;
 
 /**
  * Controller that is the parent of all entity controllers.

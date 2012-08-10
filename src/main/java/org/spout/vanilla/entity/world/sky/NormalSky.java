@@ -29,9 +29,9 @@ package org.spout.vanilla.entity.world.sky;
 import org.spout.api.Spout;
 import org.spout.api.geo.World;
 
-import org.spout.vanilla.entity.world.VanillaSky;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;
+import org.spout.vanilla.entity.world.VanillaSky;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
 import org.spout.vanilla.util.VanillaMathHelper;

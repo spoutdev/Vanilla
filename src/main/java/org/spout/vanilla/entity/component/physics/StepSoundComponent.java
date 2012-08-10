@@ -31,8 +31,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.tickable.LogicPriority;
-import org.spout.api.tickable.LogicRunnable;
 import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.entity.VanillaEntityController;

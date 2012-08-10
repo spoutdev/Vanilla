@@ -28,10 +28,10 @@ package org.spout.vanilla.entity.living;
 
 import org.spout.api.tickable.LogicPriority;
 
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaControllerType;
 import org.spout.vanilla.entity.component.basic.CreatureHealthComponent;
 import org.spout.vanilla.entity.component.basic.GrowComponent;
-import org.spout.vanilla.data.VanillaData;
 
 public abstract class Creature extends Living {
 	private int lineOfSight = 1;

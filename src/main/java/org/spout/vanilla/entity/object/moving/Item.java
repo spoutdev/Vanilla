@@ -33,10 +33,10 @@ import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 import org.spout.api.tickable.LogicPriority;
 
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.component.physics.DetectItemCollectorComponent;
 import org.spout.vanilla.entity.object.Substance;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 
 /**

@@ -31,12 +31,12 @@ import org.spout.api.entity.BasicComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.tickable.TickPriority;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.entity.source.DamageCause;
-import org.spout.vanilla.entity.source.HealthChangeReason;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.source.DamageCause;
+import org.spout.vanilla.entity.source.HealthChangeReason;
 import org.spout.vanilla.event.player.PlayerFoodSaturationChangeEvent;
 import org.spout.vanilla.event.player.PlayerHungerChangeEvent;
 

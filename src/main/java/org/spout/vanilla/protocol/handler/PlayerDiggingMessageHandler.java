@@ -46,9 +46,9 @@ import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;

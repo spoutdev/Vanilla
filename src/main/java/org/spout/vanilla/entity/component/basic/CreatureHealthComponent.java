@@ -27,6 +27,7 @@
 package org.spout.vanilla.entity.component.basic;
 
 import org.spout.api.tickable.LogicPriority;
+import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -35,6 +36,10 @@ import org.spout.vanilla.entity.living.Creature;
 public class CreatureHealthComponent extends HealthComponent {
 	private SoundEffect babyHurtEffect = SoundEffects.NONE;
 	private SoundEffect adultHurtEffect = SoundEffects.NONE;
+
+	public CreatureHealthComponent(TickPriority priority) {
+		super(priority);
+	}
 
 	public SoundEffect getAdultHurtEffect() {
 		return adultHurtEffect;
@@ -61,10 +66,6 @@ public class CreatureHealthComponent extends HealthComponent {
 	@Override
 	public SoundEffect getHurtEffect() {
 		return getParent().getGrowing().isBaby() ? babyHurtEffect : adultHurtEffect;
-	}
-
-	public CreatureHealthComponent(Creature parent, LogicPriority priority) {
-		super(parent, priority);
 	}
 
 	@Override

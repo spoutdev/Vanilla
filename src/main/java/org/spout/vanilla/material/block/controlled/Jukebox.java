@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.controlled;
 
 import java.util.Set;
 
-import org.spout.api.entity.controller.BlockController;
 import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.data.drops.flag.DropFlagSingle;
@@ -50,11 +49,13 @@ public class Jukebox extends ControlledMaterial implements Fuel, Mineable {
 
 	@Override
 	public void onDestroy(Block block, Set<DropFlagSingle> dropFlags) {
-		BlockController controller = block.getController();
-		if (controller instanceof org.spout.vanilla.controller.block.Jukebox) {
-			((org.spout.vanilla.controller.block.Jukebox) controller).stopMusic();
-		}
+		this.getController(block).stopMusic();
 		super.onDestroy(block, dropFlags);
+	}
+
+	@Override
+	public org.spout.vanilla.entity.block.Jukebox getController(Block block) {
+		return (org.spout.vanilla.entity.block.Jukebox) super.getController(block);
 	}
 
 	@Override

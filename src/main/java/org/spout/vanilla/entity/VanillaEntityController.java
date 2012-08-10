@@ -167,10 +167,7 @@ public abstract class VanillaEntityController extends BasicController implements
 		return blockCollisionComponent;
 	}
 
-	/**
-	 * Gets the health component
-	 * @return entity health process
-	 */
+	@Override
 	public HealthComponent getHealth() {
 		return healthComponent;
 	}

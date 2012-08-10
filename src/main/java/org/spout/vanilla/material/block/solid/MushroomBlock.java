@@ -52,7 +52,7 @@ public class MushroomBlock extends Solid implements Fuel, Mineable, Initializabl
 			getDrops().DEFAULT.addRange(VanillaMaterials.BROWN_MUSHROOM, -7, 2);
 		}
 	}
-	
+
 	@Override
 	public float getFuelTime() {
 		return BURN_TIME;

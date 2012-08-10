@@ -51,7 +51,6 @@ import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class WheatCrop extends GroundAttachable implements Growing, Crop, RandomBlockMaterial, InitializableMaterial {
-
 	public WheatCrop(String name, int id) {
 		super(name, id);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();

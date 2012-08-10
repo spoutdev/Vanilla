@@ -329,7 +329,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets all the drop flags for a Block
-	 * 
 	 * @param flags to fill
 	 * @return the flags parameter
 	 */
@@ -340,7 +339,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	/**
 	 * Gets all the drops for this block<br>
 	 * To provide Block-specific rules, override getDropFlags.
-	 * 
 	 * @param block that needs drops
 	 * @param flags to initially use
 	 * @return list of ItemStack drops
@@ -408,7 +406,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Gets the drops for this block material
-	 * 
 	 * @return the drops
 	 */
 	public BlockDrops getDrops() {

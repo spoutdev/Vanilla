@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.event.player.network;
 
+import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.player.Player;
 
 public class PlayerPingChangedEvent extends PlayerEvent {
 	private static HandlerList handlers = new HandlerList();

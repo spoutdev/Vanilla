@@ -40,12 +40,8 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
-<<<<<<< HEAD
-import org.spout.vanilla.entity.living.Living;
-=======
-import org.spout.vanilla.controller.living.Living;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
->>>>>>> origin
+import org.spout.vanilla.entity.living.Living;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -53,6 +49,10 @@ import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Spreading;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
+
+<<<<<<<HEAD
+		=======
+		>>>>>>>origin
 
 public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, RandomBlockMaterial {
 	private static final EffectRange VINE_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);

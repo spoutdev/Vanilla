@@ -39,10 +39,6 @@ import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.VineDecorator;
-import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.HugeTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
-import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 

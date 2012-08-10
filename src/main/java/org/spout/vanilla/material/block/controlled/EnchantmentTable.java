@@ -29,18 +29,18 @@ package org.spout.vanilla.material.block.controlled;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-<<<<<<< HEAD
-import org.spout.vanilla.entity.VanillaControllerTypes;
-=======
-import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
->>>>>>> origin
+import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
+
+<<<<<<<HEAD
+		=======
+		>>>>>>>origin
 
 public class EnchantmentTable extends ControlledMaterial implements Directional, Mineable {
 	public EnchantmentTable(String name, int id) {

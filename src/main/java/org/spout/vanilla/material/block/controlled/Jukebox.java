@@ -30,18 +30,18 @@ import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
 
-<<<<<<< HEAD
-import org.spout.vanilla.entity.VanillaControllerTypes;
-=======
-import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.data.drops.flag.DropFlagSingle;
->>>>>>> origin
+import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
+
+<<<<<<<HEAD
+		=======
+		>>>>>>>origin
 
 public class Jukebox extends ControlledMaterial implements Fuel, Mineable {
 	public final float BURN_TIME = 15.f;
@@ -52,34 +52,35 @@ public class Jukebox extends ControlledMaterial implements Fuel, Mineable {
 	}
 
 	@Override
-<<<<<<< HEAD
+	<<<<<<<HEAD
+
 	public void onDestroy(Block block, double dropChance) {
 		((org.spout.vanilla.entity.block.Jukebox) block.getController()).stopMusic();
 		super.onDestroy(block, dropChance);
-=======
-	public void onDestroy(Block block, Set<DropFlagSingle> dropFlags) {
-		((org.spout.vanilla.controller.block.Jukebox) block.getController()).stopMusic();
-		super.onDestroy(block, dropFlags);
->>>>>>> origin
-	}
+		=======
+		public void onDestroy (Block block, Set < DropFlagSingle > dropFlags){
+			((org.spout.vanilla.controller.block.Jukebox) block.getController()).stopMusic();
+			super.onDestroy(block, dropFlags);
+			>>>>>>>origin
+		}
 
-	@Override
-	public MoveReaction getMoveReaction(Block block) {
-		return MoveReaction.DENY;
-	}
+		@Override
+		public MoveReaction getMoveReaction (Block block){
+			return MoveReaction.DENY;
+		}
 
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
-	}
+		@Override
+		public Instrument getInstrument () {
+			return Instrument.BASSGUITAR;
+		}
 
-	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
-	}
+		@Override
+		public float getFuelTime () {
+			return BURN_TIME;
+		}
 
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
+		@Override
+		public short getDurabilityPenalty (Tool tool){
+			return tool instanceof Axe ? (short) 1 : (short) 2;
+		}
 	}
-}

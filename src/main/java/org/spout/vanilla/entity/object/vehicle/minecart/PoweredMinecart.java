@@ -29,14 +29,13 @@ package org.spout.vanilla.entity.object.vehicle.minecart;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
-<<<<<<< HEAD:src/main/java/org/spout/vanilla/entity/object/vehicle/minecart/PoweredMinecart.java
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.object.vehicle.Minecart;
-=======
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.object.vehicle.Minecart;
 import org.spout.vanilla.material.VanillaMaterials;
->>>>>>> origin:src/main/java/org/spout/vanilla/controller/object/vehicle/minecart/PoweredMinecart.java
+
+<<<<<<<HEAD:src/main/java/org/spout/vanilla/entity/object/vehicle/minecart/PoweredMinecart.java
+		=======
+		>>>>>>>origin:src/main/java/org/spout/vanilla/controller/object/vehicle/minecart/PoweredMinecart.java
 
 public class PoweredMinecart extends Minecart {
 	private int fuelTicks = 0;

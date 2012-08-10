@@ -27,5 +27,4 @@
 package org.spout.vanilla.data.drops.flag;
 
 public class HeldItemFlags {
-	
 }

@@ -34,8 +34,9 @@ import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+
 import org.spout.vanilla.data.drops.flag.DropFlag;
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 
 /**
  * Contains one or more Drops
@@ -46,7 +47,6 @@ public abstract class Drop {
 
 	/**
 	 * Checks if this Drop matches all the flags given
-	 * 
 	 * @param flags to match against
 	 * @return True if matched, False if not
 	 */
@@ -64,7 +64,6 @@ public abstract class Drop {
 
 	/**
 	 * Tests if a drop is possible
-	 * 
 	 * @param random to use
 	 * @param dropFlags to check against
 	 * @return True if a drop can be performed, False if not
@@ -78,7 +77,6 @@ public abstract class Drop {
 
 	/**
 	 * Gets if chance is involved when this Drop is activated
-	 * 
 	 * @return True if it has chance set, False if not
 	 */
 	public boolean hasChance() {
@@ -87,7 +85,6 @@ public abstract class Drop {
 
 	/**
 	 * Sets the chance for this Drop to be activated<br>
-	 * 
 	 * @param chance to set to, value from 0 to 1
 	 */
 	public Drop setChance(double chance) {
@@ -97,7 +94,6 @@ public abstract class Drop {
 
 	/**
 	 * Gets the chance for this Drop to be activated
-	 * 
 	 * @return chance
 	 */
 	public double getChance() {
@@ -107,8 +103,7 @@ public abstract class Drop {
 	/**
 	 * Adds all the flags for these drops<br>
 	 * All flags set for these drops need to be set to make these drops function
-	 * 
-	 * @param flags to add (can be a DropFlag and DropFlagBundle)
+	 * @param dropflags to add (can be a DropFlag and DropFlagBundle)
 	 * @return these Drops
 	 */
 	public Drop addFlags(DropFlag... dropFlags) {
@@ -119,7 +114,6 @@ public abstract class Drop {
 	/**
 	 * Gets all the flags set for these drops<br>
 	 * All flags set for these drops need to be set to make these drops function
-	 * 
 	 * @return drop flags
 	 */
 	public List<DropFlag> getFlags() {
@@ -128,7 +122,6 @@ public abstract class Drop {
 
 	/**
 	 * Fills a list with the Drops
-	 * 
 	 * @param random to use
 	 * @param flags to evaluate against (contains no inverted flags)
 	 * @param drops list to fill
@@ -138,7 +131,6 @@ public abstract class Drop {
 
 	/**
 	 * Gets the Drops
-	 * 
 	 * @param random to use
 	 * @param flags to evaluate against (contains no inverted flags)
 	 * @return list of ItemStacks
@@ -149,7 +141,6 @@ public abstract class Drop {
 
 	/**
 	 * Tests if this Drop contains the Material specified
-	 * 
 	 * @param material to check
 	 * @return True if the material is contained, False if not
 	 */

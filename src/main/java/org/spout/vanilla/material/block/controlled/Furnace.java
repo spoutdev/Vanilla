@@ -31,12 +31,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-<<<<<<< HEAD
-import org.spout.vanilla.entity.VanillaControllerTypes;
-=======
-import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
->>>>>>> origin
+import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
@@ -44,6 +40,10 @@ import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
+
+<<<<<<<HEAD
+		=======
+		>>>>>>>origin
 
 public class Furnace extends ControlledMaterial implements Directional, Mineable {
 	public static final float SMELT_TIME = 10.f;

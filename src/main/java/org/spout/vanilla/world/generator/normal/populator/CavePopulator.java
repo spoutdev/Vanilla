@@ -47,7 +47,7 @@ public class CavePopulator extends Populator {
 	public CavePopulator() {
 		super(true);
 	}
-	
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
@@ -101,7 +101,7 @@ public class CavePopulator extends Populator {
 	}
 
 	private void generateCaveBranch(Chunk chunk, Point target, float horizontalScale, float verticalScale,
-			float horizontalAngle, float verticalAngle, int startingNode, int nodeAmount, Random random) {
+									float horizontalAngle, float verticalAngle, int startingNode, int nodeAmount, Random random) {
 
 		final Vector3 middle = new Vector3(chunk.getBlockX(8), 0, chunk.getBlockZ(8));
 		float horizontalOffset = 0;
@@ -200,7 +200,7 @@ public class CavePopulator extends Populator {
 		private final float horizontalSize;
 
 		private CaveNode(Chunk chunk, Point start, Point end, Point target,
-				float verticalSize, float horizontalSize) {
+						 float verticalSize, float horizontalSize) {
 			this.world = chunk.getWorld();
 			this.chunk = chunk;
 			this.start = clamp(start);

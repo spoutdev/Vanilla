@@ -31,7 +31,6 @@ import java.util.Set;
 public interface DropFlag {
 	/**
 	 * Checks if this Flag evaluates one of the flags set
-	 * 
 	 * @param flags to test against
 	 * @return True if successful, False if not
 	 */

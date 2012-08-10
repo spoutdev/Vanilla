@@ -31,11 +31,11 @@ import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+
 import org.spout.vanilla.data.drops.flag.DropFlag;
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 
 public class SelectedDrops extends Drops {
-
 	@Override
 	public List<ItemStack> getDrops(Random random, Set<DropFlagSingle> flags, List<ItemStack> drops) {
 		if (!this.canDrop(random, flags) || this.isEmpty()) {

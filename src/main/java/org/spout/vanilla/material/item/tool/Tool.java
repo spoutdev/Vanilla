@@ -36,25 +36,21 @@ import java.util.Set;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 
-<<<<<<< HEAD
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.living.creature.hostile.Silverfish;
 import org.spout.vanilla.entity.living.creature.hostile.Skeleton;
 import org.spout.vanilla.entity.living.creature.hostile.Spider;
 import org.spout.vanilla.entity.living.creature.hostile.Zombie;
-=======
-import org.spout.vanilla.controller.VanillaEntityController;
-import org.spout.vanilla.controller.living.creature.hostile.Silverfish;
-import org.spout.vanilla.controller.living.creature.hostile.Skeleton;
-import org.spout.vanilla.controller.living.creature.hostile.Spider;
-import org.spout.vanilla.controller.living.creature.hostile.Zombie;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
->>>>>>> origin
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.EnchantmentUtil;
+
+<<<<<<<HEAD
+		=======
+		>>>>>>>origin
 
 public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	private final Random rand = new Random();
@@ -131,7 +127,6 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 
 	/**
 	 * Gets all the drop flags this tool adds
-	 * 
 	 * @return tool flags
 	 */
 	public Set<DropFlagSingle> getDropFlags() {
@@ -140,7 +135,6 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 
 	/**
 	 * Adds all the drop flags to this tool
-	 * 
 	 * @param dropFlags to add
 	 * @return this Tool
 	 */

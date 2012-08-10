@@ -26,13 +26,13 @@
  */
 package org.spout.vanilla.event.player;
 
+import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.player.Player;
 
 public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();

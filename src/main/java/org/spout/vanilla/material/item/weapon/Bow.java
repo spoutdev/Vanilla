@@ -31,13 +31,13 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-<<<<<<< HEAD
-import org.spout.vanilla.entity.object.projectile.Arrow;
-=======
-import org.spout.vanilla.controller.object.projectile.Arrow;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
->>>>>>> origin
+import org.spout.vanilla.entity.object.projectile.Arrow;
 import org.spout.vanilla.material.item.RangedWeapon;
+
+<<<<<<<HEAD
+		=======
+		>>>>>>>origin
 
 public class Bow extends RangedWeapon {
 	public Bow(String name, int id, short durability) {

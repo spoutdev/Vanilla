@@ -27,10 +27,12 @@
 package org.spout.vanilla.world.generator.normal.decorator;
 
 import java.util.Random;
+
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class EmeraldOreDecorator extends Decorator {

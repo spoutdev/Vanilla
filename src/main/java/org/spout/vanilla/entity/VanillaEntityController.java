@@ -275,7 +275,6 @@ public abstract class VanillaEntityController extends Controller implements Vani
 
 	/**
 	 * Gets the drops for this Entity
-	 * 
 	 * @return the drops
 	 */
 	public Drops getDrops() {

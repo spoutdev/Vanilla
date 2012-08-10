@@ -26,9 +26,7 @@
  */
 package org.spout.vanilla.entity.living.creature.passive;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.spout.api.Source;
 import org.spout.api.inventory.ItemStack;
@@ -91,12 +89,12 @@ public class Chicken extends Creature implements Passive {
 	 * @param layingEggsEnabled
 	 */
 	public void setLayingEggsEnabled(boolean layingEggsEnabled) {
-//		if (this.layingEggsEnabled && dropItemComponent != null) {
-//			unregisterProcess(dropItemComponent);
-//			this.layingEggsEnabled = false;
-//		} else {
-//			registerProcess(dropItemComponent);
-//			this.layingEggsEnabled = layingEggsEnabled;
-//		}
+		//		if (this.layingEggsEnabled && dropItemComponent != null) {
+		//			unregisterProcess(dropItemComponent);
+		//			this.layingEggsEnabled = false;
+		//		} else {
+		//			registerProcess(dropItemComponent);
+		//			this.layingEggsEnabled = layingEggsEnabled;
+		//		}
 	}
 }

@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.entity.living.creature.util;
 
-<<<<<<< HEAD:src/main/java/org/spout/vanilla/entity/living/creature/util/SnowGolem.java
-import java.util.HashSet;
+<<<<<<<HEAD:src/main/java/org/spout/vanilla/entity/living/creature/util/SnowGolem.java
+		import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Source;
@@ -38,11 +38,11 @@ import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Passive;
 =======
-import org.spout.vanilla.controller.VanillaControllerTypes;
+		import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.controller.living.Creature;
 import org.spout.vanilla.controller.living.creature.Passive;
->>>>>>> origin:src/main/java/org/spout/vanilla/controller/living/creature/util/SnowGolem.java
-import org.spout.vanilla.material.VanillaMaterials;
+>>>>>>>origin:src/main/java/org/spout/vanilla/controller/living/creature/util/SnowGolem.java
+		import org.spout.vanilla.material.VanillaMaterials;
 
 public class SnowGolem extends Creature implements Passive {
 	public SnowGolem() {

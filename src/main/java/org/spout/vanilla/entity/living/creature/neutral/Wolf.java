@@ -27,7 +27,6 @@
 package org.spout.vanilla.entity.living.creature.neutral;
 
 import org.spout.api.entity.Controller;
-import org.spout.api.entity.component.Controller;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.entity.VanillaControllerTypes;

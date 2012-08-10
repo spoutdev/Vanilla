@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.event.player.network;
 
+import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.player.Player;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 public class PlayerUpdateStatsEvent extends PlayerEvent implements ProtocolEvent {

@@ -32,16 +32,15 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
 
-<<<<<<< HEAD:src/main/java/org/spout/vanilla/material/item/misc/Shears.java
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.entity.living.creature.passive.Sheep;
 import org.spout.vanilla.entity.object.moving.Item;
-=======
-import org.spout.vanilla.controller.living.creature.passive.Sheep;
-import org.spout.vanilla.controller.object.moving.Item;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
->>>>>>> origin:src/main/java/org/spout/vanilla/material/item/tool/Shears.java
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
+
+<<<<<<<HEAD:src/main/java/org/spout/vanilla/material/item/misc/Shears.java
+		=======
+		>>>>>>>origin:src/main/java/org/spout/vanilla/material/item/tool/Shears.java
 
 public class Shears extends Tool {
 	private Random rand = new Random();

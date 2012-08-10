@@ -26,13 +26,8 @@
  */
 package org.spout.vanilla.entity.object.vehicle;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.spout.api.Source;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
@@ -40,7 +35,6 @@ import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.entity.VanillaControllerType;
-import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.object.Substance;
 import org.spout.vanilla.entity.source.HealthChangeReason;
 import org.spout.vanilla.material.VanillaMaterials;

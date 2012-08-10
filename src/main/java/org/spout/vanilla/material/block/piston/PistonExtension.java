@@ -33,18 +33,18 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-<<<<<<< HEAD
-import org.spout.vanilla.entity.VanillaControllerTypes;
-=======
-import org.spout.vanilla.controller.VanillaControllerTypes;
 import org.spout.vanilla.data.drops.flag.DropFlagSingle;
->>>>>>> origin
+import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.controlled.ControlledMaterial;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.MoveReaction;
+
+<<<<<<<HEAD
+		=======
+		>>>>>>>origin
 
 public class PistonExtension extends ControlledMaterial implements Directional, Mineable {
 	public PistonExtension(String name, int id) {

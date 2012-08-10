@@ -28,20 +28,16 @@ package org.spout.vanilla.entity.living.creature.hostile;
 
 import org.spout.api.entity.Entity;
 
-<<<<<<< HEAD:src/main/java/org/spout/vanilla/entity/living/creature/hostile/Slime.java
-=======
-import org.spout.vanilla.controller.VanillaControllerType;
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Hostile;
->>>>>>> origin:src/main/java/org/spout/vanilla/controller/living/creature/hostile/Slime.java
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaControllerType;
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Hostile;
 import org.spout.vanilla.material.VanillaMaterials;
+
+<<<<<<<HEAD:src/main/java/org/spout/vanilla/entity/living/creature/hostile/Slime.java
+		=======
+		>>>>>>>origin:src/main/java/org/spout/vanilla/controller/living/creature/hostile/Slime.java
 
 public class Slime extends Creature implements Hostile {
 	private byte size;

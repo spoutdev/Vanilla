@@ -32,13 +32,13 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-<<<<<<< HEAD
-import org.spout.vanilla.entity.VanillaControllerType;
-=======
-import org.spout.vanilla.controller.VanillaControllerType;
 import org.spout.vanilla.data.drops.flag.DropFlagSingle;
->>>>>>> origin
+import org.spout.vanilla.entity.VanillaControllerType;
 import org.spout.vanilla.material.block.Solid;
+
+<<<<<<<HEAD
+		=======
+		>>>>>>>origin
 
 public abstract class ControlledMaterial extends Solid {
 	private final VanillaControllerType type;

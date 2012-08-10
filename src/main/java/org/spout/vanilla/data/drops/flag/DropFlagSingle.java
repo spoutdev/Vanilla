@@ -33,7 +33,6 @@ public class DropFlagSingle implements DropFlag {
 	 * No drops should be spawned at all
 	 */
 	public static final DropFlagSingle NO_DROPS = new DropFlagSingle();
-
 	private final boolean notState;
 	/**
 	 * The inverted version for this flag, the NOT<br><br>
@@ -53,7 +52,6 @@ public class DropFlagSingle implements DropFlag {
 
 	/**
 	 * Gets whether the flag is inverted
-	 * 
 	 * @return True if the flag is inverted, False if not
 	 */
 	public boolean isNot() {

@@ -31,8 +31,9 @@ import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+
 import org.spout.vanilla.data.drops.flag.DropFlag;
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 
 /**
  * If all flags match, it drops the first segment, else the other<br>

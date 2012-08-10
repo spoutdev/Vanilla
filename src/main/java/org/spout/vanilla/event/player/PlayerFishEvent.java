@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.event.player;
 
-import org.spout.api.entity.component.Controller;
+import org.spout.api.entity.Controller;
+import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.player.Player;
 
 public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();

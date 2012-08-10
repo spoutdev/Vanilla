@@ -31,17 +31,14 @@ import org.spout.api.collision.CollisionModel;
 import org.spout.api.data.Data;
 import org.spout.api.inventory.ItemStack;
 
-<<<<<<< HEAD:src/main/java/org/spout/vanilla/entity/living/creature/neutral/Enderman.java
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.living.Creature;
 import org.spout.vanilla.entity.living.creature.Neutral;
-=======
-import org.spout.vanilla.controller.VanillaControllerTypes;
-import org.spout.vanilla.controller.living.Creature;
-import org.spout.vanilla.controller.living.creature.Neutral;
->>>>>>> origin:src/main/java/org/spout/vanilla/controller/living/creature/neutral/Enderman.java
 import org.spout.vanilla.material.VanillaMaterials;
+
+<<<<<<<HEAD:src/main/java/org/spout/vanilla/entity/living/creature/neutral/Enderman.java
+		=======
+		>>>>>>>origin:src/main/java/org/spout/vanilla/controller/living/creature/neutral/Enderman.java
 
 public class Enderman extends Creature implements Neutral {
 	private ItemStack heldItem;

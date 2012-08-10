@@ -67,7 +67,6 @@ import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
-
 	private void breakBlock(BlockMaterial blockMaterial, Block block, VanillaPlayer player) {
 		if (blockMaterial instanceof VanillaBlockMaterial) {
 			HashSet<DropFlagSingle> flags = new HashSet<DropFlagSingle>();
@@ -187,44 +186,44 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				return;
 			}
 
-<<<<<<< HEAD
+			<<<<<<<HEAD
 			if (VanillaPlayerUtil.isSurvival(player)) {
 				((VanillaPlayerController) player.getController()).getSurvivalLogic().setExhaustion(((VanillaPlayerController) player.getController()).getSurvivalLogic().getExhaustion() + ExhaustionLevel.BREAK_BLOCK.getAmount());
-=======
-			if (vp.isSurvival()) {
-				vp.getSurvivalLogic().addExhaustion(ExhaustionLevel.BREAK_BLOCK.getAmount());
->>>>>>> origin
-			}
-
-			long diggingTicks = vp.getDiggingTicks();
-			int damageDone;
-			int totalDamage;
-
-			if (heldItem != null) {
-				if (heldItem.getMaterial() instanceof Tool && blockMaterial instanceof Mineable) {
-					short penalty = ((Tool) heldItem.getMaterial()).getDurabilityPenalty((Mineable) blockMaterial, heldItem);
-					currentSlot.addItemData(penalty);
+				=======
+				if (vp.isSurvival()) {
+					vp.getSurvivalLogic().addExhaustion(ExhaustionLevel.BREAK_BLOCK.getAmount());
+					>>>>>>>origin
 				}
-			}
-			if (heldItem == null) {
-				damageDone = ((int) diggingTicks * 1);
-			} else {
-				damageDone = ((int) diggingTicks * ((VanillaMaterial) heldItem.getMaterial()).getDamage());
-			}
-			// TODO: Take into account EFFICIENCY enchantment
-			// TODO: Digging is slower while under water, on ladders, etc. AQUA_AFFINITY enchantment speeds up underwater digging
 
-			totalDamage = ((int) blockMaterial.getHardness() - damageDone);
-			if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
-				breakBlock(blockMaterial, block, vp);
-			}
-			if (block.getMaterial() != VanillaMaterials.AIR) {
-				GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
-			}
-		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
-			if (heldItem.getMaterial() instanceof Food) {
-				((Food) heldItem.getMaterial()).onEat(player, currentSlot);
+				long diggingTicks = vp.getDiggingTicks();
+				int damageDone;
+				int totalDamage;
+
+				if (heldItem != null) {
+					if (heldItem.getMaterial() instanceof Tool && blockMaterial instanceof Mineable) {
+						short penalty = ((Tool) heldItem.getMaterial()).getDurabilityPenalty((Mineable) blockMaterial, heldItem);
+						currentSlot.addItemData(penalty);
+					}
+				}
+				if (heldItem == null) {
+					damageDone = ((int) diggingTicks * 1);
+				} else {
+					damageDone = ((int) diggingTicks * ((VanillaMaterial) heldItem.getMaterial()).getDamage());
+				}
+				// TODO: Take into account EFFICIENCY enchantment
+				// TODO: Digging is slower while under water, on ladders, etc. AQUA_AFFINITY enchantment speeds up underwater digging
+
+				totalDamage = ((int) blockMaterial.getHardness() - damageDone);
+				if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
+					breakBlock(blockMaterial, block, vp);
+				}
+				if (block.getMaterial() != VanillaMaterials.AIR) {
+					GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
+				}
+			} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
+				if (heldItem.getMaterial() instanceof Food) {
+					((Food) heldItem.getMaterial()).onEat(player, currentSlot);
+				}
 			}
 		}
 	}
-}

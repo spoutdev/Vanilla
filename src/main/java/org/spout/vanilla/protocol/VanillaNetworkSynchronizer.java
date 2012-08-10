@@ -35,6 +35,7 @@ import gnu.trove.set.TIntSet;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.entity.component.Controller;
 import org.spout.api.event.EventHandler;
 import org.spout.api.generator.biome.Biome;
@@ -49,7 +50,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Quaternion;
-import org.spout.api.player.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;

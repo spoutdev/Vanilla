@@ -34,9 +34,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.object.moving.Item;
-import org.spout.vanilla.protocol.msg.entity.EntityCollectItemMessage;
-
-import static org.spout.vanilla.util.VanillaNetworkUtil.sendPacketsToNearbyPlayers;
+import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 
 public class DetectItemCollectorComponent extends BasicComponent<Item> {
 	private final int DISTANCE = VanillaConfiguration.ITEM_PICKUP_RANGE.getInt();
@@ -50,6 +48,11 @@ public class DetectItemCollectorComponent extends BasicComponent<Item> {
 	@Override
 	public void onAttached() {
 		unCollectibleTicks = getParent().getDataMap().get(VanillaData.UNCOLLECTABLE_TICKS);
+	}
+
+	@Override
+	public void onDetached() {
+		getParent().getDataMap().put(VanillaData.UNCOLLECTABLE_TICKS, getUnCollectibleTicks());
 	}
 
 	@Override
@@ -69,10 +72,7 @@ public class DetectItemCollectorComponent extends BasicComponent<Item> {
 
 	@Override
 	public void onTick(float dt) {
-		int collected = getParent().getParent().getId();
-		int collector = player.getId();
-		//TODO Put this in VNS
-		sendPacketsToNearbyPlayers(player.getPosition(), player.getViewDistance(), new EntityCollectItemMessage(collected, collector));
+		getParent().callProtocolEvent(new EntityCollectItemEvent(player, getParent().getParent()));
 		//TODO Handle other controllers within other protocols
 		if (player.getController() instanceof VanillaPlayerController) {
 			((VanillaPlayerController) player.getController()).getInventory().getMain().addItem(getParent().getItemStack(), true, true);

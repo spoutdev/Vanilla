@@ -101,7 +101,7 @@ import org.spout.vanilla.protocol.entity.living.WolfEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
 import org.spout.vanilla.protocol.entity.object.LightningEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.PaintingEntityProtocol;
-import org.spout.vanilla.protocol.entity.object.PickupEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ItemEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.XPOrbEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.vehicle.BoatEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.vehicle.TransportMinecartEntityProtocol;
@@ -111,7 +111,7 @@ import org.spout.vanilla.protocol.entity.object.vehicle.TransportMinecartEntityP
  */
 public class VanillaControllerTypes {
 	// Entity
-	public static final VanillaControllerType DROPPED_ITEM = new VanillaControllerType(1, Item.class, "Item", new PickupEntityProtocol());
+	public static final VanillaControllerType DROPPED_ITEM = new VanillaControllerType(1, Item.class, "Item", new ItemEntityProtocol());
 	public static final VanillaControllerType XP_ORB = new VanillaControllerType(2, XPOrb.class, "XP Orb", new XPOrbEntityProtocol());
 	public static final VanillaControllerType SHOT_ARROW = new VanillaControllerType(10, Arrow.class, "Arrow", new BasicProjectileEntityProtocol(60));
 	public static final VanillaControllerType THROWN_SNOWBALL = new VanillaControllerType(11, Snowball.class, "Snowball", new BasicProjectileEntityProtocol(61));

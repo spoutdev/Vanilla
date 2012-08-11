@@ -39,12 +39,12 @@ public class SnowBlock extends Solid implements Mineable, InitializableMaterial 
 	public SnowBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.2F).setResistance(0.3F).setStepSound(SoundEffects.STEP_CLOTH);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.SPADE);
 	}
 
 	@Override
 	public void initialize() {
-		this.getDrops().add(VanillaMaterials.SNOW, 4);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.SPADE);
+		this.getDrops().DEFAULT.clear().add(VanillaMaterials.SNOW, 4);
 	}
 
 	@Override

@@ -24,38 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.object;
+package org.spout.vanilla.event.entity;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
-import org.spout.api.protocol.Message;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.entity.object.moving.Item;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnItemMessage;
+public class EntityCollectItemEvent extends EntityEvent implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private Entity collected;
+	
+	public EntityCollectItemEvent(Entity e, Entity collected) {
+		super(e);
+		this.collected = collected;
+	}
 
-public class PickupEntityProtocol extends VanillaEntityProtocol {
+	public Entity getCollected() {
+		return this.collected;
+	}
+
 	@Override
-	public Message[] getSpawnMessage(Entity entity) {
-		if (entity == null || entity.getController() == null) {
-			return null;
-		}
-		final Controller c = entity.getController();
-		int id = entity.getId();
-		int x = (int) (entity.getPosition().getX() * 32);
-		int y = (int) (entity.getPosition().getY() * 32);
-		int z = (int) (entity.getPosition().getZ() * 32);
-		int r = (int) (entity.getYaw() * 32);
-		int p = (int) (entity.getPitch() * 32);
-		if (c instanceof Item) {
-			Item pi = (Item) c;
-			if (pi.getMaterial() == null) {
-				return null;
-			}
-			return new Message[]{new EntitySpawnItemMessage(id, VanillaMaterials.getMinecraftId(pi.getMaterial()), pi.getAmount(), pi.getData(), x, y, z, r, p, (int) pi.getParent().getRoll())};
-		}
+	public HandlerList getHandlers() {
+		return handlers;
+	}
 
-		return null;
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

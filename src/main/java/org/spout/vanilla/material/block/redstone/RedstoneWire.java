@@ -58,7 +58,7 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 
 	@Override
 	public void initialize() {
-		this.getDrops().add(VanillaMaterials.REDSTONE_DUST);
+		this.getDrops().DEFAULT.clear().add(VanillaMaterials.REDSTONE_DUST);
 	}
 
 	@Override

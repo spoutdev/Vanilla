@@ -36,7 +36,7 @@ public class Bedrock extends Solid {
 	public Bedrock(String name, int id) {
 		super(name, id);
 		this.setResistance(6000000.0F).setHardness(-1.0F);
-		this.getDrops().clear();
+		getDrops().DEFAULT.clear();
 	}
 
 	@Override

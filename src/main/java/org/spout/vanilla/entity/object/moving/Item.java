@@ -33,7 +33,6 @@ import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 import org.spout.api.tickable.TickPriority;
 
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.component.physics.DetectItemCollectorComponent;
 import org.spout.vanilla.entity.object.Substance;
@@ -50,7 +49,7 @@ public class Item extends Substance {
 	 * Creates an item entity. Intended for deserialization only.
 	 */
 	protected Item() {
-		this(new ItemStack(VanillaMaterials.AIR, 1), Vector3.ZERO);
+		this(new ItemStack(VanillaMaterials.STONE, 1), Vector3.ZERO);
 	}
 
 	/**
@@ -70,15 +69,21 @@ public class Item extends Substance {
 		if (getDataMap().containsKey(Data.HELD_ITEM)) {
 			is = getDataMap().get(Data.HELD_ITEM).clone();
 		}
+		if (is == null || is.isMaterial(VanillaMaterials.AIR)) {
+			getParent().kill();
+		}
 		//Attach components
-		//itemDetectCollector = addComponent(new DetectItemCollectorComponent(TickPriority.NORMAL));
+		itemDetectCollector = addComponent(new DetectItemCollectorComponent(TickPriority.NORMAL));
+	}
+
+	public DetectItemCollectorComponent getItemDetector() {
+		return this.itemDetectCollector;
 	}
 
 	@Override
 	public void onSave() {
 		super.onSave();
 		getDataMap().put(Data.HELD_ITEM, is);
-		//getDataMap().put(VanillaData.UNCOLLECTABLE_TICKS, itemDetectCollector.getUnCollectibleTicks());
 	}
 
 	@Override

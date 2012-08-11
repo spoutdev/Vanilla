@@ -147,6 +147,9 @@ public abstract class VanillaEntityController extends BasicController implements
 	@Override
 	public void callProtocolEvent(ProtocolEvent event) {
 		for (Player player : getParent().getWorld().getNearbyPlayers(getParent(), 160)) {
+			if (player == null || player.getNetworkSynchronizer() == null) {
+				continue;
+			}
 			player.getNetworkSynchronizer().callProtocolEvent(event);
 		}
 	}

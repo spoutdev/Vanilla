@@ -32,13 +32,13 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.tickable.TickPriority;
 
-import org.spout.vanilla.entity.VanillaEntityController;
+import org.spout.vanilla.entity.VanillaController;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 /**
  * Temporary component handling block collisions for entities
  */
-public class BlockCollisionComponent extends BasicComponent<VanillaEntityController> {
+public class BlockCollisionComponent extends BasicComponent<VanillaController> {
 	public BlockCollisionComponent(TickPriority priority) {
 		super(priority);
 	}

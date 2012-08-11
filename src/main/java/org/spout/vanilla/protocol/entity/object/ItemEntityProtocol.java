@@ -24,33 +24,41 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.protocol.entity.object;
 
-import org.spout.api.collision.CollisionStrategy;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
+import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
+import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.block.controlled.SignBase;
-import org.spout.vanilla.material.block.misc.Torch;
+import org.spout.vanilla.entity.object.moving.Item;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
+import org.spout.vanilla.protocol.msg.entity.EntitySpawnItemMessage;
 
-public abstract class Fence extends VanillaBlockMaterial implements Mineable {
-	public Fence(String name, int id) {
-		super(name, id);
-		this.setCollision(CollisionStrategy.SOLID);
-	}
-
+public class ItemEntityProtocol extends VanillaEntityProtocol {
 	@Override
-	public boolean canSupport(BlockMaterial material, BlockFace face) {
-		if (material instanceof SignBase) {
-			return true;
+	public Message[] getSpawnMessage(Entity entity) {
+		if (entity == null || entity.getController() == null) {
+			return null;
 		}
-		if (face == BlockFace.TOP) {
-			if (material instanceof Torch || material instanceof PressurePlate) {
-				return true;
+		final Controller c = entity.getController();
+		int id = entity.getId();
+		int x = (int) (entity.getPosition().getX() * 32);
+		int y = (int) (entity.getPosition().getY() * 32);
+		int z = (int) (entity.getPosition().getZ() * 32);
+		int r = (int) (entity.getYaw() * 32);
+		int p = (int) (entity.getPitch() * 32);
+		if (c instanceof Item) {
+			Item pi = (Item) c;
+			if (pi.getMaterial() == null) {
+				return null;
+			}
+			int typeId = VanillaMaterials.getMinecraftId(pi.getMaterial());
+			if (typeId > 0) {
+				return new Message[] {new EntitySpawnItemMessage(id, typeId, pi.getAmount(), pi.getData(), x, y, z, r, p, (int) pi.getParent().getRoll())};
 			}
 		}
-		return false;
+
+		return null;
 	}
 }

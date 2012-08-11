@@ -60,6 +60,7 @@ import org.spout.vanilla.entity.component.effect.PoisonEffectComponent;
 import org.spout.vanilla.entity.component.gamemode.AdventureComponent;
 import org.spout.vanilla.entity.component.gamemode.CreativeComponent;
 import org.spout.vanilla.entity.component.gamemode.SurvivalComponent;
+import org.spout.vanilla.entity.component.physics.BlockCollisionComponent;
 import org.spout.vanilla.entity.component.physics.PlayerStepSoundComponent;
 import org.spout.vanilla.entity.component.player.PingComponent;
 import org.spout.vanilla.entity.component.player.StatsUpdateComponent;
@@ -88,6 +89,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	private SurvivalComponent survivalComponent;
 	private CreativeComponent creativeComponent;
 	private AdventureComponent adventureComponent;
+	protected BlockCollisionComponent blockCollisionComponent;
 	protected boolean flying;
 	protected boolean falling;
 	protected boolean jumping;
@@ -122,6 +124,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		poisonEffectComponent = addComponent(new PoisonEffectComponent(TickPriority.HIGH));
 		stepSoundComponent = addComponent(new PlayerStepSoundComponent(TickPriority.HIGHEST));
 		diggingComponent = addComponent(new DiggingComponent(TickPriority.HIGH));
+		blockCollisionComponent = addComponent(new BlockCollisionComponent(TickPriority.HIGHEST));
 		survivalComponent = addComponent(new SurvivalComponent(TickPriority.HIGH));
 		creativeComponent = addComponent(new CreativeComponent(TickPriority.HIGH));
 		adventureComponent = addComponent(new AdventureComponent(TickPriority.HIGH));
@@ -526,6 +529,9 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	@Override
 	public void callProtocolEvent(ProtocolEvent event) {
 		for (Player player : getParent().getWorld().getNearbyPlayers(getParent(), getParent().getViewDistance())) {
+			if (player == null || player.getNetworkSynchronizer() == null) {
+				continue;
+			}
 			player.getNetworkSynchronizer().callProtocolEvent(event);
 		}
 	}

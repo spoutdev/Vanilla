@@ -44,7 +44,8 @@ public class Stone extends Solid implements Mineable, InitializableMaterial {
 
 	@Override
 	public void initialize() {
-		this.getDrops().add(VanillaMaterials.COBBLESTONE);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+		this.getDrops().DEFAULT.clear().add(VanillaMaterials.COBBLESTONE);
 	}
 
 	@Override

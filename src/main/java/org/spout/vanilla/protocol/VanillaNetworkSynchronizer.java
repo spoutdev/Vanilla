@@ -72,6 +72,7 @@ import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.event.block.BlockActionEvent;
 import org.spout.vanilla.event.block.SignUpdateEvent;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
@@ -102,6 +103,7 @@ import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityCollectItemMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
@@ -548,6 +550,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public Message onSignUpdate(SignUpdateEvent event) {
 		Block block = event.getSign().getBlock();
 		return new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), event.getLines());
+	}
+
+	@EventHandler
+	public Message onEntityCollectItem(EntityCollectItemEvent event) {
+		return new EntityCollectItemMessage(event.getCollected().getId(), event.getEntity().getId());
 	}
 
 	public static enum ChunkInit {

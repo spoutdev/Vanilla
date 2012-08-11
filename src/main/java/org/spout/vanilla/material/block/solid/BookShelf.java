@@ -49,7 +49,7 @@ public class BookShelf extends Solid implements Mineable, Fuel, InitializableMat
 
 	@Override
 	public void initialize() {
-		this.getDrops().add(VanillaMaterials.BOOK, 3);
+		this.getDrops().DEFAULT.add(VanillaMaterials.BOOK, 3);
 	}
 
 	@Override

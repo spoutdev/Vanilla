@@ -244,6 +244,13 @@ public class Window implements InventoryViewer, Tickable {
 		}
 	}
 
+	@Override
+	public final void tick(float dt) {
+		if(canTick()) {
+			onTick(dt);
+		}
+	}
+
 	/**
 	 * Sends a Window Protocol event to the owner of this Window
 	 * @param event to send

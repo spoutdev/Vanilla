@@ -62,9 +62,9 @@ public class VanillaBiomeSelector extends BiomeSelector {
 	private static final float CONTINENTS_THRESHOLD = -0.3f;
 	private static final float LAND_THRESHOLD = 0;
 	private static final float SWAMP_THRESHOLD = 0;
-	private static final float SMALL_MOUNTAIN_THRESHOLD = 0.75f;
-	private static final float MOUNTAIN_THRESHOLD = 0.8f;
-	private static final float RIVER_THRESHOLD = 0.7f;
+	private static final float SMALL_MOUNTAIN_THRESHOLD = 0.675f;
+	private static final float MOUNTAIN_THRESHOLD = 0.71f;
+	private static final float RIVER_THRESHOLD = 0.82f;
 	private static final float PLAINS_THRESHOLD = 2;
 	private static final float FOREST_THRESHOLD = 1;
 	private static final float FOREST_HILLS_THRESHOLD = 0.5f;
@@ -78,7 +78,7 @@ public class VanillaBiomeSelector extends BiomeSelector {
 	private static final float TUNDRA_HILLS_THRESHOLD = 0.5f;
 	private static final float FROZEN_OCEAN_THRESHOLD = 0.4f;
 	private static final float MUSHROOM_THRESHOLD = 0.85f;
-	private static final float MUSHROOM_SHORE_THRESHOLD = 0.8f;
+	private static final float MUSHROOM_SHORE_THRESHOLD = 0.78f;
 	//
 	private final Perlin continentsBase = new Perlin();
 	private final Turbulence continents = new Turbulence();
@@ -97,7 +97,7 @@ public class VanillaBiomeSelector extends BiomeSelector {
 
 	public VanillaBiomeSelector(float scale) {
 		continentsBase.setFrequency(0.007 / scale);
-		continentsBase.setOctaveCount(1);
+		continentsBase.setOctaveCount(2);
 
 		continents.SetSourceModule(0, continentsBase);
 		continents.setFrequency(0.0125);
@@ -120,7 +120,7 @@ public class VanillaBiomeSelector extends BiomeSelector {
 		rivers.setPower(100);
 		//
 		detailBase.setFrequency(0.01 / scale);
-		detailBase.setOctaveCount(1);
+		detailBase.setOctaveCount(2);
 
 		detail.SetSourceModule(0, detailBase);
 		detail.setFrequency(0.0125);

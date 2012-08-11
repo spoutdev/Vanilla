@@ -57,8 +57,8 @@ public abstract class NormalBiome extends VanillaBiome {
 	private static final Perlin DETAIL = new Perlin();
 	// a turbulent version of the modified master, used for density gen
 	private static final Turbulence TURBULENT_MASTER = new Turbulence();
-	// a scaled version of the elevation for block replacing
-	protected static final ScalePoint BLOCK_REPLACER = new ScalePoint();
+	// a perlin for determining groud cover depth
+	protected static final Perlin BLOCK_REPLACER = new Perlin();
 	// height settings
 	protected float min;
 	protected float max;
@@ -95,13 +95,14 @@ public abstract class NormalBiome extends VanillaBiome {
 		MASTER.setyScale(0.04);
 		MASTER.setzScale(0.06);
 
-		BLOCK_REPLACER.SetSourceModule(0, ELEVATION);
-		BLOCK_REPLACER.setxScale(4);
-		BLOCK_REPLACER.setyScale(1);
-		BLOCK_REPLACER.setzScale(4);
+		BLOCK_REPLACER.setFrequency(0.35);
+		BLOCK_REPLACER.setLacunarity(1);
+		BLOCK_REPLACER.setNoiseQuality(NoiseQuality.FAST);
+		BLOCK_REPLACER.setPersistence(0.7);
+		BLOCK_REPLACER.setOctaveCount(1);
 
 		TURBULENT_MASTER.SetSourceModule(0, MASTER);
-		TURBULENT_MASTER.setFrequency(0.005);
+		TURBULENT_MASTER.setFrequency(0.01);
 		TURBULENT_MASTER.setPower(8);
 		TURBULENT_MASTER.setRoughness(1);
 	}

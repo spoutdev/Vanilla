@@ -26,39 +26,24 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
+import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.block.CraftingTable;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.util.MoveReaction;
-import org.spout.vanilla.util.RedstoneUtil;
 
-public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
-	public final float BURN_TIME = 15.f;
-
-	public NoteBlock(String name, int id) {
-		super(VanillaControllerTypes.NOTE_BLOCK, name, id);
-		this.setHardness(0.8F).setResistance(1.3F);
-	}
-
-	@Override
-	public boolean hasPhysics() {
-		return true;
-	}
-
-	@Override
-	public boolean isPlacementSuppressed() {
-		return true;
-	}
-
-	@Override
-	public MoveReaction getMoveReaction(Block block) {
-		return MoveReaction.DENY;
+public class CraftingTableBlock extends ControlledMaterial implements Mineable {
+	public CraftingTableBlock(String name, int id) {
+		super(VanillaControllerTypes.CRAFTING_TABLE, name, id);
+		this.setHardness(4.2F);
 	}
 
 	@Override
@@ -67,27 +52,30 @@ public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
 	}
 
 	@Override
-	public org.spout.vanilla.entity.block.NoteBlock getController(Block block) {
-		return (org.spout.vanilla.entity.block.NoteBlock) super.getController(block);
+	public CraftingTable getController(Block block) {
+		return (CraftingTable) super.getController(block);
 	}
 
 	@Override
-	public void onUpdate(BlockMaterial oldMaterial, Block block) {
-		super.onUpdate(oldMaterial, block);
-		getController(block).setPowered(isReceivingPower(block));
-	}
+	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
+		if (action == Action.RIGHT_CLICK) {
+			Controller controller = entity.getController();
+			if (!(controller instanceof VanillaPlayerController)) {
+				return;
+			}
 
-	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
-	}
-
-	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isReceivingPower(block);
+			// Open the crafting table
+			getController(block).open((VanillaPlayerController) controller);
+		}
 	}
 
 	@Override
 	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Axe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
 	}
 }

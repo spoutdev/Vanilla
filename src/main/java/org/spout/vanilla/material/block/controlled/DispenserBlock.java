@@ -42,6 +42,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.block.Dispenser;
 import org.spout.vanilla.entity.object.moving.Item;
 import org.spout.vanilla.entity.object.projectile.Arrow;
 import org.spout.vanilla.material.Mineable;
@@ -56,8 +57,8 @@ import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Dispenser extends ControlledMaterial implements Directional, Mineable, RedstoneTarget {
-	public Dispenser(String name, int id) {
+public class DispenserBlock extends ControlledMaterial implements Directional, Mineable, RedstoneTarget {
+	public DispenserBlock(String name, int id) {
 		super(VanillaControllerTypes.DISPENSER, name, id);
 		this.setHardness(3.5F).setResistance(5.8F);
 	}
@@ -74,8 +75,8 @@ public class Dispenser extends ControlledMaterial implements Directional, Mineab
 	}
 
 	@Override
-	public org.spout.vanilla.entity.block.Dispenser getController(Block block) {
-		return (org.spout.vanilla.entity.block.Dispenser) super.getController(block);
+	public Dispenser getController(Block block) {
+		return (Dispenser) super.getController(block);
 	}
 
 	@Override

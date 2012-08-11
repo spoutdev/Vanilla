@@ -36,6 +36,6 @@ public class Hunger extends VanillaEntityFoodEffect {
 
 	@Override
 	public void onAttached() {
-		this.getParent().getSurvivalLogic().setHunger((short) (this.getParent().getSurvivalLogic().getHunger() + this.getStrength()));
+		this.getParent().getSurvivalComponent().setHunger((short) (this.getParent().getSurvivalComponent().getHunger() + this.getStrength()));
 	}
 }

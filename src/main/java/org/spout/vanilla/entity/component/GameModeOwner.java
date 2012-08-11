@@ -32,9 +32,9 @@ import org.spout.vanilla.entity.component.gamemode.SurvivalComponent;
 
 public interface GameModeOwner extends ComponentOwner {
 
-	public SurvivalComponent getSurvivalLogic();
+	public SurvivalComponent getSurvivalComponent();
 
-	public CreativeComponent getCreativeLogic();
+	public CreativeComponent getCreativeComponent();
 
-	public AdventureComponent getAdventureLogic();
+	public AdventureComponent getAdventureComponent();
 }

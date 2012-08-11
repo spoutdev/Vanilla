@@ -536,7 +536,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return null;
 		}
 		VanillaPlayerController player = (VanillaPlayerController) event.getPlayer().getController();
-		return new PlayerUpdateStatsMessage((short) player.getHealth().getHealth(), player.getSurvivalLogic().getHunger(), player.getSurvivalLogic().getFoodSaturation());
+		return new PlayerUpdateStatsMessage((short) player.getHealth().getHealth(), player.getSurvivalComponent().getHunger(), player.getSurvivalComponent().getFoodSaturation());
 	}
 
 	@EventHandler

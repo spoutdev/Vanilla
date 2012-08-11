@@ -26,11 +26,56 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.vanilla.entity.VanillaControllerTypes;
+import java.util.Set;
 
-public class MonsterSpawner extends ControlledMaterial {
-	public MonsterSpawner(String name, int id) {
-		super(VanillaControllerTypes.MONSTER_SPAWNER, name, id);
-		this.setHardness(5.0F).setResistance(8.3F).setTransparent();
+import org.spout.api.geo.cuboid.Block;
+
+import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.block.Jukebox;
+import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.Mineable;
+import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.MoveReaction;
+
+public class JukeboxBlock extends ControlledMaterial implements Fuel, Mineable {
+	public final float BURN_TIME = 15.f;
+
+	public JukeboxBlock(String name, int id) {
+		super(VanillaControllerTypes.JUKEBOX, name, id);
+		this.setHardness(2.0F).setResistance(10.0F);
+	}
+
+	@Override
+	public void onDestroy(Block block, Set<DropFlagSingle> dropFlags) {
+		this.getController(block).stopMusic();
+		super.onDestroy(block, dropFlags);
+	}
+
+	@Override
+	public Jukebox getController(Block block) {
+		return (Jukebox) super.getController(block);
+	}
+
+	@Override
+	public MoveReaction getMoveReaction (Block block){
+		return MoveReaction.DENY;
+	}
+
+	@Override
+	public Instrument getInstrument () {
+		return Instrument.BASSGUITAR;
+	}
+
+	@Override
+	public float getFuelTime () {
+		return BURN_TIME;
+	}
+
+	@Override
+	public short getDurabilityPenalty (Tool tool){
+		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

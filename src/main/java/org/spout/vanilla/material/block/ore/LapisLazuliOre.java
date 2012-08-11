@@ -33,7 +33,7 @@ import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.block.Ore;
-import org.spout.vanilla.material.block.controlled.Furnace;
+import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -57,7 +57,7 @@ public class LapisLazuliOre extends Ore implements TimedCraftable, Initializable
 
 	@Override
 	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+		return FurnaceBlock.SMELT_TIME;
 	}
 
 	@Override

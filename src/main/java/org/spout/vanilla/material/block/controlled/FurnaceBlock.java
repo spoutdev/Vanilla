@@ -33,6 +33,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.block.Furnace;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
@@ -41,11 +42,11 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Furnace extends ControlledMaterial implements Directional, Mineable {
+public class FurnaceBlock extends ControlledMaterial implements Directional, Mineable {
 	public static final float SMELT_TIME = 10.f;
 	private final boolean burning;
 
-	public Furnace(String name, int id, boolean burning) {
+	public FurnaceBlock(String name, int id, boolean burning) {
 		super(VanillaControllerTypes.FURNACE, name, id);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);
@@ -63,6 +64,11 @@ public class Furnace extends ControlledMaterial implements Directional, Mineable
 	 */
 	public boolean isBurning() {
 		return this.burning;
+	}
+
+	@Override
+	public Furnace getController(Block block) {
+		return (Furnace) super.getController(block);
 	}
 
 	/**

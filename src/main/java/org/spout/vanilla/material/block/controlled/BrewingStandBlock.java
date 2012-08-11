@@ -31,12 +31,13 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.block.BrewingStand;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 
-public class BrewingStand extends ControlledMaterial implements Mineable {
-	public BrewingStand(String name, int id) {
+public class BrewingStandBlock extends ControlledMaterial implements Mineable {
+	public BrewingStandBlock(String name, int id) {
 		super(VanillaControllerTypes.BREWING_STAND, name, id);
 		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
@@ -52,7 +53,7 @@ public class BrewingStand extends ControlledMaterial implements Mineable {
 		return 1;
 	}
 
-	public org.spout.vanilla.entity.block.BrewingStand getController(Block block) {
-		return (org.spout.vanilla.entity.block.BrewingStand) super.getController(block);
+	public BrewingStand getController(Block block) {
+		return (BrewingStand) super.getController(block);
 	}
 }

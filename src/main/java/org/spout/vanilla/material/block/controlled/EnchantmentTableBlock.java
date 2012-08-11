@@ -38,8 +38,8 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 
-public class EnchantmentTable extends ControlledMaterial implements Directional, Mineable {
-	public EnchantmentTable(String name, int id) {
+public class EnchantmentTableBlock extends ControlledMaterial implements Directional, Mineable {
+	public EnchantmentTableBlock(String name, int id) {
 		super(VanillaControllerTypes.ENCHANTMENT_TABLE, name, id);
 		this.setHardness(5.0F).setResistance(2000.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);

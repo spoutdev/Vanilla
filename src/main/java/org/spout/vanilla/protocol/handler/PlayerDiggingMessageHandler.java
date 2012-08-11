@@ -188,7 +188,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 			if (VanillaPlayerUtil.isSurvival(player)) {
 				if (vp.isSurvival()) {
-					vp.getSurvivalLogic().addExhaustion(ExhaustionLevel.BREAK_BLOCK.getAmount());
+					vp.getSurvivalComponent().addExhaustion(ExhaustionLevel.BREAK_BLOCK.getAmount());
 				}
 
 				long diggingTicks = vp.getDiggingLogic().getDiggingTicks();

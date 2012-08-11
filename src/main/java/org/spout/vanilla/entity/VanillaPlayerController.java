@@ -162,17 +162,17 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	}
 
 	@Override
-	public SurvivalComponent getSurvivalLogic() {
+	public SurvivalComponent getSurvivalComponent() {
 		return this.survivalComponent;
 	}
 
 	@Override
-	public CreativeComponent getCreativeLogic() {
+	public CreativeComponent getCreativeComponent() {
 		return this.creativeComponent;
 	}
 
 	@Override
-	public AdventureComponent getAdventureLogic() {
+	public AdventureComponent getAdventureComponent() {
 		return this.adventureComponent;
 	}
 
@@ -507,10 +507,6 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 
 	public StatsUpdateComponent getStatsUpdateComponent() {
 		return statsUpdateComponent;
-	}
-
-	public SurvivalComponent getSurvivalComponent() {
-		return survivalComponent;
 	}
 
 	public PlayerStepSoundComponent getStepSoundComponent() {

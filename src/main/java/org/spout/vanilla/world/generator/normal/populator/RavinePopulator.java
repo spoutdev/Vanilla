@@ -112,7 +112,7 @@ public class RavinePopulator extends Populator {
 		for (; startingNode < nodeAmount; startingNode++) {
 			float horizontalSize = (float) (1.5 + SinusHelper.sin(startingNode * (float) Math.PI / nodeAmount) * horizontalScale);
 			float verticalSize = horizontalSize * verticalScale;
-			target = target.add(SinusHelper.get3DAxis(horizontalSize, verticalSize));
+			target = target.add(SinusHelper.get3DAxis(horizontalAngle, verticalAngle));
 
 			horizontalSize *= random.nextFloat() * 0.25 + 0.75;
 			verticalSize *= random.nextFloat() * 0.25 + 0.75;

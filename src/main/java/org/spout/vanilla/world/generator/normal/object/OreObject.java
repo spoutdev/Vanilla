@@ -125,7 +125,7 @@ public class OreObject extends RandomObject {
 	@Override
 	public void placeObject(World world, int originX, int originY, int originZ) {
 		final float angle = random.nextFloat() * (float) Math.PI;
-		Vector2 offset = SinusHelper.get2DAxis(angle).multiply(clusterSize / 8);
+		Vector2 offset = SinusHelper.get2DAxis(angle).multiply(clusterSize).divide(8);
 		final float x1 = ((originX + 8) + offset.getX());
 		final float x2 = ((originX + 8) - offset.getX());
 		final float z1 = ((originZ + 8) + offset.getY());

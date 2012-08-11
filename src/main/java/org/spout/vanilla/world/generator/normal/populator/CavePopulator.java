@@ -126,7 +126,7 @@ public class CavePopulator extends Populator {
 		for (; startingNode < nodeAmount; startingNode++) {
 			final float horizontalSize = (float) (1.5 + SinusHelper.sin(startingNode * (float) Math.PI / nodeAmount) * horizontalScale);
 			final float verticalSize = horizontalSize * verticalScale;
-			target = target.add(SinusHelper.get3DAxis(horizontalSize, verticalSize));
+			target = target.add(SinusHelper.get3DAxis(horizontalAngle, verticalAngle));
 
 			if (extraVerticalScale) {
 				verticalAngle *= 0.92;

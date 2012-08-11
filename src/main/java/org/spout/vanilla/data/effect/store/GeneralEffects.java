@@ -45,6 +45,7 @@ public class GeneralEffects {
 	public static final SoundEffect RANDOM_CLICK1 = new SoundEffect(SoundEffects.RANDOM_CLICK, 1.0f, 1.0f); //1000
 	public static final SoundEffect RANDOM_CLICK2 = new SoundEffect(SoundEffects.RANDOM_CLICK, 1.0f, 1.2f); //1001
 	public static final SoundEffect RANDOM_BOW = new SoundEffect(SoundEffects.RANDOM_BOW, 1.0F, 1.2F); //1002
+	public static final SoundEffect TRIPWIRE_SNAP = new SoundEffect(SoundEffects.RANDOM_BOWHIT, 0.4f, 1.21f).randomPitch(0.12f);
 	public static final GeneralEffect RANDOM_DOOR = new GeneralEffect(1003);
 	public static final GeneralEffect RANDOM_FIZZ = new GeneralEffect(1004);
 	public static final MusicDiscEffect MUSIC_DISC = new MusicDiscEffect(1005);

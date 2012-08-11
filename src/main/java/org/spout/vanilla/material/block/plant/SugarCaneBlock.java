@@ -51,7 +51,7 @@ public class SugarCaneBlock extends StackGrowingBase implements InitializableMat
 
 	@Override
 	public void initialize() {
-		this.getDrops().add(VanillaMaterials.SUGAR_CANE);
+		this.getDrops().DEFAULT.clear().add(VanillaMaterials.SUGAR_CANE);
 	}
 
 	@Override

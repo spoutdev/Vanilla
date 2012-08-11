@@ -109,7 +109,7 @@ public abstract class PressurePlate extends GroundAttachable implements Mineable
 
 	@Override
 	public void onPlacement(Block block, Region r, long currentTime) {
-		block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
+		block.dynamicUpdate(currentTime + TICK_DELAY);
 	}
 
 	@Override

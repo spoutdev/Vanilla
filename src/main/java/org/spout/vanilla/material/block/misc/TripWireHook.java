@@ -27,16 +27,60 @@
 package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.material.range.EffectRange;
+import org.spout.api.material.range.PlusEffectRange;
 
-import org.spout.vanilla.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.data.effect.store.GeneralEffects;
+import org.spout.vanilla.material.Toggleable;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.AttachedRedstoneSource;
+import org.spout.vanilla.util.RedstonePowerMode;
 
-public class TripWireHook extends AbstractAttachable {
+public class TripWireHook extends AttachedRedstoneSource implements Toggleable, DynamicMaterial {
+	private static final EffectRange dynamicRange = new PlusEffectRange(TripWire.MAX_DISTANCE, false);
+	private static final long TICK_DELAY = 500;
+
 	public TripWireHook(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESW);
 		this.setHardness(0.0f).setResistance(0.0f).setTransparent();
+	}
+
+	@Override
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		boolean hasHook = VanillaMaterials.TRIPWIRE.findHook(block, getAttachedFace(block).getOpposite()) != null;
+		if (!hasHook && !this.isToggled(block) && block.isDataBitSet(0x4)) {
+			// play sound of wire snapping
+			GeneralEffects.TRIPWIRE_SNAP.playGlobal(block.getPosition());
+		}
+		block.setDataBits(0x4, hasHook);
+	}
+
+	@Override
+	public boolean isToggled(Block block) {
+		return block.isDataBitSet(0x8);
+	}
+
+	@Override
+	public void setToggled(Block block, boolean toggled) {
+		if (this.isToggled(block) != toggled) {
+			block.setDataBits(0x8, toggled);
+			GeneralEffects.BLOCK_PRESS.playGlobal(block.getPosition(), toggled);
+		}
+		block.resetDynamic();
+	}
+
+	@Override
+	public boolean toggle(Block block) {
+		boolean toggled = !this.isToggled(block);
+		this.setToggled(block, toggled);
+		return toggled;
 	}
 
 	@Override
@@ -46,6 +90,33 @@ public class TripWireHook extends AbstractAttachable {
 
 	@Override
 	public BlockFace getAttachedFace(short data) {
-		return BlockFaces.ESWN.get(data);
+		return BlockFaces.ESWN.get(data & 0x3);
+	}
+
+	@Override
+	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.isToggled(block);
+	}
+
+	@Override
+	public EffectRange getDynamicRange() {
+		return dynamicRange;
+	}
+
+	@Override
+	public void onPlacement(Block b, Region r, long currentTime) {
+		b.dynamicUpdate(currentTime + TICK_DELAY);
+	}
+
+	@Override
+	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
+		if (this.isToggled(block)) {
+			BlockFace direction = getAttachedFace(block).getOpposite();
+			this.setToggled(block, false);
+			block = VanillaMaterials.TRIPWIRE.findHook(block, direction);
+			if (block != null) {
+				this.setToggled(block, false);
+			}
+		}
 	}
 }

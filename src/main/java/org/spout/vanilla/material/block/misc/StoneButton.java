@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import java.util.EnumMap;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
@@ -37,27 +35,18 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.material.range.ListEffectRange;
 
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.material.block.AttachedRedstoneSource;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
-import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class StoneButton extends AbstractAttachable implements Mineable, PointAttachable, RedstoneSource, DynamicMaterial {
+public class StoneButton extends AttachedRedstoneSource implements Mineable, PointAttachable, DynamicMaterial {
 	public static final int TICK_DELAY = 1000;
-	private static EnumMap<BlockFace, EffectRange> physicsRanges = new EnumMap<BlockFace, EffectRange>(BlockFace.class);
-
-	static {
-		for (BlockFace face : BlockFaces.NESW) {
-			physicsRanges.put(face, new ListEffectRange(EffectRange.THIS_AND_NEIGHBORS, EffectRange.THIS_AND_NEIGHBORS.translate(face)));
-		}
-	}
 
 	public StoneButton(String name, int id) {
 		super(name, id);
@@ -65,23 +54,8 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	}
 
 	@Override
-	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
-		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
-	}
-
-	@Override
 	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
 		return this.isPressed(block);
-	}
-
-	@Override
-	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
-		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
-	}
-
-	@Override
-	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
-		return this.getAttachedFace(block) == direction && this.isPressed(block);
 	}
 
 	@Override
@@ -148,10 +122,5 @@ public class StoneButton extends AbstractAttachable implements Mineable, PointAt
 	@Override
 	public EffectRange getDynamicRange() {
 		return EffectRange.THIS;
-	}
-
-	@Override
-	public EffectRange getPhysicsRange(short data) {
-		return physicsRanges.get(getAttachedFace(data));
 	}
 }

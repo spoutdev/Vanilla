@@ -51,8 +51,7 @@ public class TallGrass extends DeadBush implements Burnable, InitializableMateri
 
 	@Override
 	public void initialize() {
-		getDrops().DEFAULT.clear();
-		SwitchDrops drops = getDrops().DEFAULT.addSwitch(ToolTypeFlags.SHEARS);
+		SwitchDrops drops = getDrops().DEFAULT.clear().addSwitch(ToolTypeFlags.SHEARS);
 		drops.TRUE.add(this);
 		drops.FALSE.add(VanillaMaterials.SEEDS).setChance(0.15);
 	}

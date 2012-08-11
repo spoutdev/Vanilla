@@ -48,17 +48,14 @@ public class SurvivalComponent extends BasicComponent<VanillaPlayerController> {
 	private int foodTimer = 0;
 	private short maxHunger = 20, hunger = maxHunger;
 	private float foodSaturation = 5.0f, exhaustion = 0.0f;
-	private Point previousWalkPosition;
 
 	public SurvivalComponent(TickPriority priority) {
 		super(priority);
-		this.previousWalkPosition = getParent().getParent().getPosition();
 	}
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		previousWalkPosition = getParent().getParent().getPosition();
 	}
 
 	@Override
@@ -72,9 +69,9 @@ public class SurvivalComponent extends BasicComponent<VanillaPlayerController> {
 	@Override
 	public void onTick(float dt) {
 		float distanceMoved = 0f;
+		//Current position
 		Point position = getParent().getParent().getPosition();
-		distanceMoved += position.distanceSquared(this.previousWalkPosition);
-		this.previousWalkPosition = position;
+		distanceMoved += position.distanceSquared(getParent().getParent().getLastTransform().getPosition());
 		if (distanceMoved >= 1) {
 			setExhaustion(getExhaustion() + ExhaustionLevel.WALKING.getAmount());
 			distanceMoved = 0.0f;

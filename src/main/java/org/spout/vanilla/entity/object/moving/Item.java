@@ -71,14 +71,14 @@ public class Item extends Substance {
 			is = getDataMap().get(Data.HELD_ITEM).clone();
 		}
 		//Attach components
-		itemDetectCollector = addComponent(new DetectItemCollectorComponent(TickPriority.NORMAL));
+		//itemDetectCollector = addComponent(new DetectItemCollectorComponent(TickPriority.NORMAL));
 	}
 
 	@Override
 	public void onSave() {
 		super.onSave();
 		getDataMap().put(Data.HELD_ITEM, is);
-		getDataMap().put(VanillaData.UNCOLLECTABLE_TICKS, itemDetectCollector.getUnCollectibleTicks());
+		//getDataMap().put(VanillaData.UNCOLLECTABLE_TICKS, itemDetectCollector.getUnCollectibleTicks());
 	}
 
 	@Override

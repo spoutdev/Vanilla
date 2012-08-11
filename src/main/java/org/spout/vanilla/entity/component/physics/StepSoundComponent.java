@@ -44,10 +44,15 @@ public class StepSoundComponent extends BasicComponent<Controller> {
 	private static final float SOUND_VOLUME = 0.15f;
 	private static final float SOUND_DISTANCE_INTERVAL = 1.667f;
 	private float walkedDistance = 0.0f;
-	private Point previousPosition = getParent().getParent().getPosition();
+	private Point previousPosition;
 
 	public StepSoundComponent(TickPriority priority) {
 		super(priority);
+	}
+
+	@Override
+	public void onAttached() {
+		previousPosition = getParent().getParent().getPosition();
 	}
 
 	@Override

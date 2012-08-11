@@ -114,6 +114,18 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 
 	@Override
 	public void onAttached() {
+		//Components
+		healthComponent = addComponent(new HealthComponent(TickPriority.HIGHEST));
+		headComponent = addComponent(new PlayerHeadComponent());
+		statsUpdateComponent = addComponent(new StatsUpdateComponent(TickPriority.HIGHEST));
+		pingComponent = addComponent(new PingComponent(TickPriority.HIGH));
+		poisonEffectComponent = addComponent(new PoisonEffectComponent(TickPriority.HIGH));
+		stepSoundComponent = addComponent(new PlayerStepSoundComponent(TickPriority.HIGHEST));
+		diggingComponent = addComponent(new DiggingComponent(TickPriority.HIGH));
+		survivalComponent = addComponent(new SurvivalComponent(TickPriority.HIGH));
+		creativeComponent = addComponent(new CreativeComponent(TickPriority.HIGH));
+		adventureComponent = addComponent(new AdventureComponent(TickPriority.HIGH));
+
 		compassTarget = getParent().getWorld().getSpawnPoint().getPosition();
 		tabListName = getParent().getName();
 		Transform spawn = getParent().getWorld().getSpawnPoint();
@@ -125,16 +137,6 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		getHealth().setSpawnHealth(20);
 		getHealth().setDeathAnimation(false);
 		getHead().setHeight(1.62f);
-
-		headComponent = addComponent(new PlayerHeadComponent());
-		statsUpdateComponent = addComponent(new StatsUpdateComponent(TickPriority.HIGHEST));
-		pingComponent = addComponent(new PingComponent(TickPriority.HIGH));
-		poisonEffectComponent = addComponent(new PoisonEffectComponent(TickPriority.HIGH));
-		stepSoundComponent = addComponent(new PlayerStepSoundComponent(TickPriority.HIGHEST));
-		diggingComponent = addComponent(new DiggingComponent(TickPriority.HIGH));
-		survivalComponent = addComponent(new SurvivalComponent(TickPriority.HIGH));
-		creativeComponent = addComponent(new CreativeComponent(TickPriority.HIGH));
-		adventureComponent = addComponent(new AdventureComponent(TickPriority.HIGH));
 	}
 
 	@Override

@@ -43,6 +43,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
 
 public class Sheep extends Creature implements Passive {
+	protected SheepEatGrassComponent eatGrassComponent;
 	private boolean isSheared = false;
 	private short sheepColor = 0;
 
@@ -54,8 +55,7 @@ public class Sheep extends Creature implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(8);
-		final SheepEatGrassComponent eatGrassComponent = new SheepEatGrassComponent(TickPriority.NORMAL);
-		addComponent(eatGrassComponent.getClass());
+		eatGrassComponent = addComponent(new SheepEatGrassComponent(TickPriority.NORMAL));
 		isSheared = getDataMap().get("sheep_sheared", false);
 		getHealth().setHurtEffect(SoundEffects.MOB_SHEEP);
 	}

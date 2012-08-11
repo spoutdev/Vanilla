@@ -33,7 +33,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SolidMoving;
-import org.spout.vanilla.material.block.controlled.Furnace;
+import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.material.item.tool.Spade;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
@@ -51,7 +51,7 @@ public class Sand extends SolidMoving implements Mineable, TimedCraftable {
 
 	@Override
 	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+		return FurnaceBlock.SMELT_TIME;
 	}
 
 	@Override

@@ -34,7 +34,7 @@ import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.controlled.Furnace;
+import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
@@ -53,7 +53,7 @@ public class Cobblestone extends Solid implements Mineable, TimedCraftable {
 
 	@Override
 	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+		return FurnaceBlock.SMELT_TIME;
 	}
 
 	@Override

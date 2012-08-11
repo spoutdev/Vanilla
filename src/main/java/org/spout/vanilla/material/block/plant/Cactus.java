@@ -39,7 +39,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.controlled.Furnace;
+import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
@@ -106,7 +106,7 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 
 	@Override
 	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+		return FurnaceBlock.SMELT_TIME;
 	}
 
 	@Override

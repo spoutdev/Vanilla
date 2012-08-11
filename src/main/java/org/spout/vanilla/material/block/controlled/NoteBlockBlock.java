@@ -26,61 +26,69 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import java.util.Set;
-
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.block.NoteBlock;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.item.tool.Axe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
+import org.spout.vanilla.util.RedstoneUtil;
 
-<<<<<<<HEAD
-		=======
-		>>>>>>>origin
-
-public class Jukebox extends ControlledMaterial implements Fuel, Mineable {
+public class NoteBlockBlock extends ControlledMaterial implements Fuel, Mineable {
 	public final float BURN_TIME = 15.f;
 
-	public Jukebox(String name, int id) {
-		super(VanillaControllerTypes.JUKEBOX, name, id);
-		this.setHardness(2.0F).setResistance(10.0F);
+	public NoteBlockBlock(String name, int id) {
+		super(VanillaControllerTypes.NOTE_BLOCK, name, id);
+		this.setHardness(0.8F).setResistance(1.3F);
 	}
 
 	@Override
-	<<<<<<<HEAD
-
-	public void onDestroy(Block block, double dropChance) {
-		((org.spout.vanilla.entity.block.Jukebox) block.getController()).stopMusic();
-		super.onDestroy(block, dropChance);
-		=======
-		public void onDestroy (Block block, Set < DropFlagSingle > dropFlags){
-			((org.spout.vanilla.controller.block.Jukebox) block.getController()).stopMusic();
-			super.onDestroy(block, dropFlags);
-			>>>>>>>origin
-		}
-
-		@Override
-		public MoveReaction getMoveReaction (Block block){
-			return MoveReaction.DENY;
-		}
-
-		@Override
-		public Instrument getInstrument () {
-			return Instrument.BASSGUITAR;
-		}
-
-		@Override
-		public float getFuelTime () {
-			return BURN_TIME;
-		}
-
-		@Override
-		public short getDurabilityPenalty (Tool tool){
-			return tool instanceof Axe ? (short) 1 : (short) 2;
-		}
+	public boolean hasPhysics() {
+		return true;
 	}
+
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
+	}
+
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
+	}
+
+	@Override
+	public NoteBlock getController(Block block) {
+		return (NoteBlock) super.getController(block);
+	}
+
+	@Override
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		getController(block).setPowered(isReceivingPower(block));
+	}
+
+	@Override
+	public float getFuelTime() {
+		return BURN_TIME;
+	}
+
+	public boolean isReceivingPower(Block block) {
+		return RedstoneUtil.isReceivingPower(block);
+	}
+
+	@Override
+	public short getDurabilityPenalty(Tool tool) {
+		return tool instanceof Axe ? (short) 1 : (short) 2;
+	}
+}

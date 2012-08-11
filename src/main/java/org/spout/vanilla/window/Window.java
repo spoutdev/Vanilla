@@ -35,11 +35,11 @@ import java.util.Set;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+import org.spout.api.entity.Player;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.player.Player;
-import org.spout.api.tickable.BasicTickable;
+import org.spout.api.tickable.Tickable;
 
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.WindowController;
@@ -51,7 +51,7 @@ import org.spout.vanilla.event.window.WindowSetSlotsEvent;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 
-public class Window extends BasicTickable implements InventoryViewer {
+public class Window implements InventoryViewer, Tickable {
 	protected final WindowType type;
 	protected final int instanceId;
 	protected String title;
@@ -216,6 +216,11 @@ public class Window extends BasicTickable implements InventoryViewer {
 			}
 		}
 		this.sendEvent(new WindowSetSlotsEvent(this, items));
+	}
+
+	@Override
+	public boolean canTick() {
+		return this.isOpen();
 	}
 
 	@Override

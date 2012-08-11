@@ -35,7 +35,7 @@ public class FoodSaturation extends VanillaEntityFoodEffect {
 	}
 
 	@Override
-	public void onRegistration() {
-		this.getParent().getSurvivalLogic().setFoodSaturation(this.getParent().getSurvivalLogic().getFoodSaturation() + this.getStrength());
+	public void onAttached() {
+		this.getParent().getSurvivalComponent().setFoodSaturation(this.getParent().getSurvivalComponent().getFoodSaturation() + this.getStrength());
 	}
 }

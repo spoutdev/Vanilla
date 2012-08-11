@@ -36,8 +36,8 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.entity.component.HeadOwner;
 import org.spout.vanilla.entity.living.Creature;
-import org.spout.vanilla.entity.living.Living;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnMobMessage;
 
@@ -73,8 +73,8 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 		int r = (int) (entity.getYaw() * 32);
 		int p = (int) (entity.getPitch() * 32);
 		int headyaw = 0;
-		if (c instanceof Living) {
-			headyaw = ((Living) c).getHeadYaw();
+		if (c instanceof HeadOwner) {
+			headyaw = ((HeadOwner) c).getHead().getYaw();
 		}
 		List<Parameter<?>> parameters = this.getSpawnParameters(c);
 		//TODO: Is there a Velocity in a entity class?

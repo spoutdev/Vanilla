@@ -31,7 +31,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
-import org.spout.api.tickable.LogicPriority;
+import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.VanillaControllerTypes;
@@ -67,18 +67,18 @@ public class Item extends Substance {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		if (data().containsKey(Data.HELD_ITEM)) {
-			is = data().get(Data.HELD_ITEM).clone();
+		if (getDataMap().containsKey(Data.HELD_ITEM)) {
+			is = getDataMap().get(Data.HELD_ITEM).clone();
 		}
 		//Attach components
-		itemDetectCollector = registerProcess(new DetectItemCollectorComponent(this, LogicPriority.NORMAL));
+		itemDetectCollector = addComponent(new DetectItemCollectorComponent(TickPriority.NORMAL));
 	}
 
 	@Override
 	public void onSave() {
 		super.onSave();
-		data().put(Data.HELD_ITEM, is);
-		data().put(VanillaData.UNCOLLECTABLE_TICKS, itemDetectCollector.getUnCollectibleTicks());
+		getDataMap().put(Data.HELD_ITEM, is);
+		getDataMap().put(VanillaData.UNCOLLECTABLE_TICKS, itemDetectCollector.getUnCollectibleTicks());
 	}
 
 	@Override

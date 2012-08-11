@@ -30,7 +30,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.controlled.Furnace;
+import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Clay extends VanillaItemMaterial implements TimedCraftable {
@@ -45,6 +45,6 @@ public class Clay extends VanillaItemMaterial implements TimedCraftable {
 
 	@Override
 	public float getCraftTime() {
-		return Furnace.SMELT_TIME;
+		return FurnaceBlock.SMELT_TIME;
 	}
 }

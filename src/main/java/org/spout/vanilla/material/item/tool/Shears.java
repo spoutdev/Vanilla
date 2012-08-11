@@ -38,10 +38,6 @@ import org.spout.vanilla.entity.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-<<<<<<<HEAD:src/main/java/org/spout/vanilla/material/item/misc/Shears.java
-		=======
-		>>>>>>>origin:src/main/java/org/spout/vanilla/material/item/tool/Shears.java
-
 public class Shears extends Tool {
 	private Random rand = new Random();
 

@@ -41,7 +41,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.entity.living.Living;
+import org.spout.vanilla.entity.component.HeadOwner;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -152,8 +152,8 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 		if (block.getMaterial().equals(VanillaMaterials.VINES) && block.getSource() instanceof Entity) {
 			//get block by block tracing from the player view
 			Entity entity = (Entity) block.getSource();
-			if (entity.getController() instanceof Living) {
-				BlockIterator iter = ((Living) entity.getController()).getHeadBlockView(7);
+			if (entity.getController() instanceof HeadOwner) {
+				BlockIterator iter = ((HeadOwner) entity.getController()).getHead().getBlockView();
 				Block next;
 				while (iter.hasNext()) {
 					next = iter.next();

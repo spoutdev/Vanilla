@@ -28,12 +28,12 @@ package org.spout.vanilla.entity.component.gamemode;
 
 import org.spout.api.entity.BasicComponent;
 import org.spout.api.tickable.TickPriority;
-import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.component.GameModeOwner;
 
 /**
  * Basic component that applies Adventure-mode rules to VanillaPlayers.
  */
-public class AdventureComponent extends BasicComponent<VanillaPlayerController> {
+public class AdventureComponent extends BasicComponent<GameModeOwner> {
 	public AdventureComponent(TickPriority priority) {
 		super(priority);
 	}

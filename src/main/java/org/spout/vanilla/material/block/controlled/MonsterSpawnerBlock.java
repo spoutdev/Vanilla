@@ -24,36 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.handler;
+package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.entity.Player;
-import org.spout.api.entity.controller.BlockController;
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.vanilla.entity.VanillaControllerTypes;
 
-import org.spout.vanilla.entity.block.Sign;
-import org.spout.vanilla.protocol.msg.UpdateSignMessage;
-
-public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
-	@Override
-	public void handleServer(Session session, UpdateSignMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-
-		Player player = session.getPlayer();
-
-		BlockController controller = player.getWorld().getBlockController(message.getX(), message.getY(), message.getZ());
-		if (controller == null || !(controller instanceof Sign)) {
-			return;
-		}
-
-		String[] text = message.getMessage();
-		if (text.length != 4) {
-			return;
-		}
-
-		Sign sign = (Sign) controller;
-		sign.setText(player, text);
+public class MonsterSpawnerBlock extends ControlledMaterial {
+	public MonsterSpawnerBlock(String name, int id) {
+		super(VanillaControllerTypes.MONSTER_SPAWNER, name, id);
+		this.setHardness(5.0F).setResistance(8.3F).setTransparent();
 	}
 }

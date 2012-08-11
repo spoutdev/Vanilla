@@ -45,6 +45,6 @@ public class FoodEffect {
 	}
 
 	public void run(VanillaPlayerController vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.registerProcess(effect.getConstructor(new Class[]{VanillaPlayerController.class, float.class}).newInstance(vPlayer, amount));
+		vPlayer.addComponent(effect.getConstructor(new Class[]{VanillaPlayerController.class, float.class}).newInstance(vPlayer, amount));
 	}
 }

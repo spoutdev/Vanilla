@@ -29,13 +29,12 @@ package org.spout.vanilla.protocol.handler;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.entity.living.Living;
 import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 
@@ -48,7 +47,7 @@ public final class EntityActionMessageHandler extends MessageHandler<EntityActio
 
 		Player player = session.getPlayer();
 
-		if (!(player.getController() instanceof Living)) {
+		if (!(player.getController() instanceof VanillaPlayerController)) {
 			return;
 		}
 

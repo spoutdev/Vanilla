@@ -35,10 +35,6 @@ import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.entity.object.projectile.Arrow;
 import org.spout.vanilla.material.item.RangedWeapon;
 
-<<<<<<<HEAD
-		=======
-		>>>>>>>origin
-
 public class Bow extends RangedWeapon {
 	public Bow(String name, int id, short durability) {
 		super(name, id, durability);

@@ -33,7 +33,7 @@ import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.entity.living.Living;
+import org.spout.vanilla.entity.component.HeadOwner;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.liquid.Water;
@@ -62,8 +62,8 @@ public class LilyPad extends GroundAttachable implements Mineable {
 	@Override
 	public void onInteract(Entity entity, Action type) {
 		super.onInteract(entity, type);
-		if (type == Action.RIGHT_CLICK && entity.getController() instanceof Living) {
-			Block block = ((Living) entity.getController()).hitTest();
+		if (type == Action.RIGHT_CLICK && entity.getController() instanceof HeadOwner) {
+			Block block = ((HeadOwner) entity.getController()).getHead().hitTest();
 			if (block == null) {
 				return;
 			}

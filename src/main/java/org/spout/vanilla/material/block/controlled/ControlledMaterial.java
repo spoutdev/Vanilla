@@ -36,10 +36,6 @@ import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.entity.VanillaControllerType;
 import org.spout.vanilla.material.block.Solid;
 
-<<<<<<<HEAD
-		=======
-		>>>>>>>origin
-
 public abstract class ControlledMaterial extends Solid {
 	private final VanillaControllerType type;
 

@@ -37,8 +37,17 @@ import org.spout.vanilla.entity.VanillaEntityController;
 
 public class PoisonEffectComponent extends BasicComponent<VanillaEntityController> {
 	//TODO implement methods and do this!
-
+	private boolean poisoned;
+	
 	public PoisonEffectComponent(TickPriority priority) {
 		super(priority);
+	}
+
+	public void setPoisoned(boolean poisoned) {
+		this.poisoned = poisoned;
+	}
+
+	public boolean isPoisoned() {
+		return this.poisoned;
 	}
 }

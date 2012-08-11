@@ -48,10 +48,6 @@ import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.EnchantmentUtil;
 
-<<<<<<<HEAD
-		=======
-		>>>>>>>origin
-
 public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	private final Random rand = new Random();
 	private short durability;

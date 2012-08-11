@@ -27,33 +27,22 @@
 package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
-import org.spout.vanilla.util.RedstoneUtil;
 
-public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
-	public final float BURN_TIME = 15.f;
-
-	public NoteBlock(String name, int id) {
-		super(VanillaControllerTypes.NOTE_BLOCK, name, id);
-		this.setHardness(0.8F).setResistance(1.3F);
-	}
-
-	@Override
-	public boolean hasPhysics() {
-		return true;
-	}
-
-	@Override
-	public boolean isPlacementSuppressed() {
-		return true;
+public class EnchantmentTableBlock extends ControlledMaterial implements Directional, Mineable {
+	public EnchantmentTableBlock(String name, int id) {
+		super(VanillaControllerTypes.ENCHANTMENT_TABLE, name, id);
+		this.setHardness(5.0F).setResistance(2000.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	@Override
@@ -62,32 +51,26 @@ public class NoteBlock extends ControlledMaterial implements Fuel, Mineable {
 	}
 
 	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
-	}
-
-	@Override
-	public org.spout.vanilla.entity.block.NoteBlock getController(Block block) {
-		return (org.spout.vanilla.entity.block.NoteBlock) super.getController(block);
-	}
-
-	@Override
-	public void onUpdate(BlockMaterial oldMaterial, Block block) {
-		super.onUpdate(oldMaterial, block);
-		getController(block).setPowered(isReceivingPower(block));
-	}
-
-	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
-	}
-
-	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isReceivingPower(block);
-	}
-
-	@Override
 	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
+		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSDRUM;
+	}
+
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
+	}
+
+	@Override
+	public BlockFace getFacing(Block block) {
+		return BlockFace.TOP;
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
 	}
 }

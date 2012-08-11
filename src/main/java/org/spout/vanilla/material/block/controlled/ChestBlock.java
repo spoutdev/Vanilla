@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.entity.component.controller.BlockController;
+import org.spout.api.entity.controller.BlockController;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.block.Chest;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
@@ -45,10 +46,10 @@ import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Chest extends ControlledMaterial implements Directional, Fuel, Mineable {
+public class ChestBlock extends ControlledMaterial implements Directional, Fuel, Mineable {
 	public final float BURN_TIME = 15.f;
 
-	public Chest(String name, int id) {
+	public ChestBlock(String name, int id) {
 		super(VanillaControllerTypes.CHEST, name, id);
 		this.setHardness(2.5F).setResistance(4.2F).setTransparent();
 	}
@@ -81,8 +82,8 @@ public class Chest extends ControlledMaterial implements Directional, Fuel, Mine
 	}
 
 	@Override
-	public org.spout.vanilla.entity.block.Chest getController(Block block) {
-		return (org.spout.vanilla.entity.block.Chest) super.getController(block);
+	public Chest getController(Block block) {
+		return (Chest) super.getController(block);
 	}
 
 	@Override

@@ -29,12 +29,12 @@ package org.spout.vanilla.world;
 import java.util.Random;
 
 import org.spout.api.geo.World;
-import org.spout.api.tickable.BasicTickable;
+import org.spout.api.tickable.Tickable;
 
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.entity.world.VanillaSky;
 
-public class WeatherSimulator extends BasicTickable {
+public class WeatherSimulator implements Tickable {
 	private final VanillaSky sky;
 	protected final Random random = new Random();
 	protected Weather weather = Weather.CLEAR, forecast = Weather.CLEAR;
@@ -138,5 +138,10 @@ public class WeatherSimulator extends BasicTickable {
 		if (this.hasLightning()) {
 			this.lightning.onTick(dt);
 		}
+	}
+
+	@Override
+	public boolean canTick() {
+		return true;
 	}
 }

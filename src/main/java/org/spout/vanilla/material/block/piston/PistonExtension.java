@@ -42,10 +42,6 @@ import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.MoveReaction;
 
-<<<<<<<HEAD
-		=======
-		>>>>>>>origin
-
 public class PistonExtension extends ControlledMaterial implements Directional, Mineable {
 	public PistonExtension(String name, int id) {
 		super(VanillaControllerTypes.PISTON_MOVING, name, id);

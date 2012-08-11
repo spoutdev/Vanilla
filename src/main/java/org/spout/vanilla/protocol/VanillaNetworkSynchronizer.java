@@ -34,9 +34,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import gnu.trove.set.TIntSet;
 
 import org.spout.api.Spout;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.entity.component.Controller;
 import org.spout.api.event.EventHandler;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
@@ -536,7 +536,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return null;
 		}
 		VanillaPlayerController player = (VanillaPlayerController) event.getPlayer().getController();
-		return new PlayerUpdateStatsMessage((short) player.getHealth().getHealth(), player.getSurvivalLogic().getHunger(), player.getSurvivalLogic().getFoodSaturation());
+		return new PlayerUpdateStatsMessage((short) player.getHealth().getHealth(), player.getSurvivalComponent().getHunger(), player.getSurvivalComponent().getFoodSaturation());
 	}
 
 	@EventHandler

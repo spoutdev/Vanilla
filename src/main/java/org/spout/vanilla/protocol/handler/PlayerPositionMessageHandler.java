@@ -27,7 +27,7 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.player.Player;
+import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
@@ -102,7 +102,7 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 					if (vPlayer.isSprinting()) {
 						level = ExhaustionLevel.SPRINT_JUMP.getAmount();
 					}
-					vPlayer.getSurvivalLogic().setExhaustion(vPlayer.getSurvivalLogic().getExhaustion() + level);
+					vPlayer.getSurvivalComponent().setExhaustion(vPlayer.getSurvivalComponent().getExhaustion() + level);
 				}
 			} else {
 				vPlayer.setJumping(false);

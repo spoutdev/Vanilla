@@ -39,7 +39,7 @@ import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.entity.living.Living;
+import org.spout.vanilla.entity.component.HeadOwner;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -64,8 +64,8 @@ public class EmptyContainer extends BlockItem {
 	@Override
 	public void onInteract(Entity entity, Action type) {
 		super.onInteract(entity, type);
-		if (type == Action.RIGHT_CLICK && entity.getController() instanceof Living) {
-			Block block = ((Living) entity.getController()).hitTest();
+		if (type == Action.RIGHT_CLICK && entity.getController() instanceof HeadOwner) {
+			Block block = ((HeadOwner) entity.getController()).getHead().hitTest();
 			if (block == null) {
 				return;
 			}

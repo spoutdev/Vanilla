@@ -35,7 +35,6 @@ import org.spout.api.util.BlockIterator;
 import org.spout.vanilla.entity.component.HeadOwner;
 
 public class HeadComponent extends BasicComponent<HeadOwner> {
-	private Point headPos = null;
 	private Vector3 lookingAt = Vector3.ZERO;
 	private int headYaw = 0;
 	private int lastHeadYaw = 0;
@@ -56,6 +55,11 @@ public class HeadComponent extends BasicComponent<HeadOwner> {
 			lastHeadYaw = headYaw;
 			headYawChanged = true;
 		}
+	}
+
+	@Override
+	public boolean canTick() {
+		return true;
 	}
 
 	/**
@@ -104,7 +108,6 @@ public class HeadComponent extends BasicComponent<HeadOwner> {
 	 */
 	public void setHeight(float height) {
 		this.headHeight = height;
-		this.headPos = null;
 	}
 
 	/**
@@ -120,10 +123,7 @@ public class HeadComponent extends BasicComponent<HeadOwner> {
 	 * @return the head position
 	 */
 	public Point getPosition() {
-		if (headPos == null) {
-			headPos = this.getParent().getParent().getPosition().add(0.0f, this.getHeight(), 0.0f);
-		}
-		return headPos;
+		return this.getParent().getParent().getPosition().add(0.0f, this.getHeight(), 0.0f);
 	}
 
 	public Transform getTransform() {

@@ -34,16 +34,22 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
-public class TripWire extends GroundAttachable {
+public class TripWire extends GroundAttachable implements InitializableMaterial {
 	public static final int MAX_DISTANCE = 42;
 	public static final int MAX_DISTANCE_SQUARED = MAX_DISTANCE * MAX_DISTANCE;
 
 	public TripWire(String name, int id) {
 		super(name, id);
 		this.setHardness(0.0f).setResistance(0.0f).setTransparent();
+	}
+
+	@Override
+	public void initialize() {
+		getDrops().DEFAULT.clear().add(VanillaMaterials.STRING);
 	}
 
 	@Override

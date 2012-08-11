@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.piston;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -64,9 +63,9 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 	@Override
 	public void initialize() {
 		if (this.isSticky()) {
-			this.getDrops().add(VanillaMaterials.PISTON_STICKY_BASE);
+			this.getDrops().DEFAULT.clear().add(VanillaMaterials.PISTON_STICKY_BASE);
 		} else {
-			this.getDrops().add(VanillaMaterials.PISTON_BASE);
+			this.getDrops().DEFAULT.clear().add(VanillaMaterials.PISTON_BASE);
 		}
 	}
 
@@ -251,28 +250,10 @@ public class Piston extends VanillaBlockMaterial implements Directional, Mineabl
 		block.setData(BTEWNS.indexOf(facing, 1));
 	}
 
-	public BlockFace getPlacedFacing(Block pistonBlock, Entity entity) {
-		Vector3 diff = pistonBlock.getPosition().subtract(entity.getPosition());
-		diff = diff.subtract(0.0f, 0.2f, 0.0f);
-		Vector3 diffabs = diff.abs();
-		if (diffabs.getX() < 2.0f && diffabs.getZ() < 2.0f) {
-			if (diff.getY() < 0.0f) {
-				return BlockFace.TOP;
-			} else if (diff.getY() > 2.0f) {
-				return BlockFace.BOTTOM;
-			}
-		}
-		return VanillaPlayerUtil.getFacing(entity).getOpposite();
-	}
-
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
-			BlockFace facing = BlockFace.TOP;
-			if (block.getSource() instanceof Entity) {
-				facing = this.getPlacedFacing(block, (Entity) block.getSource());
-			}
-			this.setFacing(block, facing);
+			this.setFacing(block, VanillaPlayerUtil.getBlockFacing(block));
 			return true;
 		}
 		return false;

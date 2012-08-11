@@ -94,6 +94,7 @@ import org.spout.vanilla.material.block.ore.RedstoneOre;
 import org.spout.vanilla.material.block.piston.Piston;
 import org.spout.vanilla.material.block.piston.PistonExtension;
 import org.spout.vanilla.material.block.plant.Cactus;
+import org.spout.vanilla.material.block.plant.CocoaPlant;
 import org.spout.vanilla.material.block.plant.DeadBush;
 import org.spout.vanilla.material.block.plant.Flower;
 import org.spout.vanilla.material.block.plant.LilyPad;
@@ -369,6 +370,7 @@ public final class VanillaMaterials {
 	public static final RedstoneLamp REDSTONE_LAMP_ON = new RedstoneLamp("Redstone Lamp (On)", 124, true);
 	public static final TripWireHook TRIPWIRE_HOOK = new TripWireHook("Trip Wire Hook", 131);
 	public static final TripWire TRIPWIRE = new TripWire("Trip Wire", 132);
+	public static final CocoaPlant COCOA_PLANT = new CocoaPlant("Cocoa Plant", 127);
 	/*
 	 * Items
 	 */

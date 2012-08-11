@@ -27,12 +27,17 @@
 package org.spout.vanilla.util;
 
 import org.spout.api.Source;
+import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.component.HeadOwner;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 
 public class VanillaPlayerUtil {
@@ -65,6 +70,46 @@ public class VanillaPlayerUtil {
 	}
 
 	/**
+	 * Gets the required facing for a Block to look at a possible Entity in the Source
+	 * 
+	 * @param block to get the facing for
+	 * @return The block facing
+	 */
+	public static BlockFace getBlockFacing(Block block) {
+		if (block.getSource() instanceof Entity) {
+			return getBlockFacing(block, (Entity) block.getSource());
+		} else {
+			return BlockFace.TOP;
+		}
+	}
+
+	/**
+	 * Gets the required facing for a Block to look at an Entity
+	 * 
+	 * @param block to get the facing for
+	 * @param entity to look at
+	 * @return The block facing
+	 */
+	public static BlockFace getBlockFacing(Block block, Entity entity) {
+		Controller controller = entity.getController();
+		Point position;
+		if (controller instanceof HeadOwner) {
+			position = ((HeadOwner) controller).getHead().getPosition();
+		} else {
+			position = entity.getPosition();
+		}
+		Vector3 diff = position.subtract(block.getX(), block.getY(), block.getZ());
+		if (Math.abs(diff.getX()) < 2.0f && Math.abs(diff.getZ()) < 2.0f) {
+			if (diff.getY() > 1.8f) {
+				return BlockFace.TOP;
+			} else if (diff.getY() < -0.2f) {
+				return BlockFace.BOTTOM;
+			}
+		}
+		return getFacing(entity).getOpposite();
+	}
+
+	/**
 	 * Tries to find the facing direction by inspecting the source<br>
 	 * If no facing can be found, NORTH is returned
 	 * @param source to get it of
@@ -72,7 +117,14 @@ public class VanillaPlayerUtil {
 	 */
 	public static BlockFace getFacing(Source source) {
 		if (source instanceof Entity) {
-			return BlockFace.fromYaw(((Entity) source).getYaw());
+			Entity e = (Entity) source;
+			float yaw;
+			if (e.getController() instanceof HeadOwner) {
+				yaw = ((HeadOwner) e.getController()).getHead().getYaw();
+			} else {
+				yaw = e.getYaw();
+			}
+			return BlockFace.fromYaw(yaw);
 		}
 		return BlockFace.NORTH;
 	}

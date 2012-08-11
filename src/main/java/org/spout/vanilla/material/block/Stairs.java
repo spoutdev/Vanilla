@@ -89,7 +89,6 @@ public abstract class Stairs extends VanillaBlockMaterial implements Mineable, D
 		block.setMaterial(this);
 		this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
 		this.setTop(block, against == BlockFace.TOP || (BlockFaces.NESW.contains(against) && clickedPos.getY() > 0.5f));
-		block.queueUpdate(EffectRange.THIS);
 		return true;
 	}
 

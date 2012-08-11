@@ -28,16 +28,21 @@ package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
+import org.spout.api.material.Placeable;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.entity.living.creature.passive.Sheep;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool.WoolColor;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Dye extends VanillaItemMaterial {
+public class Dye extends VanillaItemMaterial implements Placeable {
 	public static final Dye INK_SAC = new Dye("Ink Sac");
 	public static final Dye ROSE_RED = new Dye("Rose Red", DyeColor.RED, INK_SAC);
 	public static final Dye CACTUS_GREEN = new Dye("Cactus Green", DyeColor.GREEN, INK_SAC);
@@ -96,6 +101,26 @@ public class Dye extends VanillaItemMaterial {
 	}
 
 	@Override
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
+		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.canPlace(block, data, against, clickedPos, isClickedBlock);
+	}
+
+	@Override
+	public boolean canPlace(Block block, short data) {
+		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.canPlace(block, data);
+	}
+
+	@Override
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
+		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.onPlacement(block, data, against, clickedPos, isClickedBlock);
+	}
+
+	@Override
+	public boolean onPlacement(Block block, short data) {
+		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.onPlacement(block, data);
+	}
+
+	@Override
 	public void onInteract(Entity entity, Entity other, Action action) {
 		if (action == Action.RIGHT_CLICK) {
 			if (!(other.getController() instanceof Sheep)) {
@@ -125,4 +150,5 @@ public class Dye extends VanillaItemMaterial {
 	public Dye getParentMaterial() {
 		return (Dye) super.getParentMaterial();
 	}
+
 }

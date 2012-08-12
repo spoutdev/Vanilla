@@ -43,7 +43,7 @@ public class BookShelf extends Solid implements Fuel, InitializableMaterial, Bur
 
 	public BookShelf(String name, int id) {
 		super(name, id);
-		this.setHardness(1.5F).setResistance(2.5F).setMiningType(ToolType.AXE, ToolLevel.WOOD);
+		this.setHardness(1.5F).setResistance(2.5F).addMiningType(ToolType.AXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	@Override

@@ -30,20 +30,20 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-import org.spout.api.util.flag.ByteFlagContainer;
+import org.spout.api.util.bytebit.ByteBitSet;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public abstract class Stairs extends VanillaBlockMaterial implements Directional {
-	private final ByteFlagContainer[] occlusion;
+	private final ByteBitSet[] occlusion;
 
 	public Stairs(String name, int id) {
 		super(name, id);
-		this.occlusion = new ByteFlagContainer[8];
+		this.occlusion = new ByteBitSet[8];
 		for (int i = 0; i < 4; i++) {
-			this.occlusion[i] = new ByteFlagContainer(BlockFaces.NSEW.get(i).getOpposite(), BlockFace.BOTTOM);
-			this.occlusion[i | 0x4] = new ByteFlagContainer(BlockFaces.NSEW.get(i).getOpposite(), BlockFace.TOP);
+			this.occlusion[i] = new ByteBitSet(BlockFaces.NSEW.get(i).getOpposite(), BlockFace.BOTTOM);
+			this.occlusion[i | 0x4] = new ByteBitSet(BlockFaces.NSEW.get(i).getOpposite(), BlockFace.TOP);
 		}
 	}
 
@@ -84,7 +84,7 @@ public abstract class Stairs extends VanillaBlockMaterial implements Directional
 	}
 
 	@Override
-	public ByteFlagContainer getOcclusion(short data) {
+	public ByteBitSet getOcclusion(short data) {
 		return this.occlusion[data & 0x7];
 	}
 }

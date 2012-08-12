@@ -24,26 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.drops.flag;
+package org.spout.vanilla.data.drops.type;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
-public class DropFlagBundle implements DropFlag {
-	private final List<DropFlag> flags;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
+import org.spout.api.util.flag.Flag;
+import org.spout.vanilla.data.drops.Drop;
+import org.spout.vanilla.data.drops.flag.DropFlags;
 
-	public DropFlagBundle(DropFlag... dropFlags) {
-		this.flags = Arrays.asList(dropFlags);
+public class ContentsDrop extends Drop {
+
+	@Override
+	public List<ItemStack> getDrops(Random random, Set<Flag> flags, List<ItemStack> drops) {
+		ItemStack[] contents = DropFlags.CONTENTS.getData(flags);
+		if (contents != null) {
+			drops.addAll(Arrays.asList(contents));
+		}
+		return drops;
 	}
 
 	@Override
-	public boolean evaluate(Set<DropFlagSingle> flags) {
-		for (DropFlag flag : this.flags) {
-			if (flag.evaluate(flags)) {
-				return true;
-			}
-		}
+	public boolean containsDrop(Material material) {
 		return false;
 	}
 }

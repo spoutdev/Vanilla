@@ -47,10 +47,10 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.tickable.TickPriority;
 import org.spout.api.util.Profiler;
+import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.Drops;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.entity.component.HealthOwner;
 import org.spout.vanilla.entity.component.basic.FireDamageComponent;
 import org.spout.vanilla.entity.component.basic.HealthComponent;
@@ -274,7 +274,7 @@ public abstract class VanillaEntityController extends BasicController implements
 	 * @return the drops to disperse.
 	 */
 	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
-		return this.getDrops().getDrops(rand, new HashSet<DropFlagSingle>());
+		return this.getDrops().getDrops(rand, new HashSet<Flag>());
 	}
 
 	/**

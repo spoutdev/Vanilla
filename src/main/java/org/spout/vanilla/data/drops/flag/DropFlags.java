@@ -26,15 +26,17 @@
  */
 package org.spout.vanilla.data.drops.flag;
 
-import java.util.Set;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.flag.FlagData;
+import org.spout.api.util.flag.FlagSingle;
 
-/**
- * A type of flag that always evaluates True or False, no matter what input
- */
-public class DropFlagTrue extends DropFlagSingle {
-
-	@Override
-	public boolean evaluate(Set<DropFlagSingle> flags) {
-		return !this.isNot();
-	}
+public class DropFlags {
+	/**
+	 * No drops should be spawned at all
+	 */
+	public static final FlagSingle NO_DROPS = new FlagSingle();
+	/**
+	 * Contents are passed in
+	 */
+	public static final FlagData<ItemStack[]> CONTENTS = new FlagData<ItemStack[]>();
 }

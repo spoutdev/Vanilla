@@ -91,7 +91,7 @@ public abstract class ExplosionModel {
 				if (material instanceof VanillaBlockMaterial) {
 					((VanillaBlockMaterial) material).onIgnite(block);
 				} else {
-					material.onDestroy(block);
+					material.destroy(block);
 				}
 				block.setMaterial(VanillaMaterials.AIR);
 			}

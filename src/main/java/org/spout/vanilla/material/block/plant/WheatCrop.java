@@ -36,9 +36,9 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.data.drops.flag.BlockFlags;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
@@ -62,8 +62,8 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Random
 	}
 
 	@Override
-	public Set<DropFlagSingle> getDropFlags(Block block, Set<DropFlagSingle> flags) {
-		flags = super.getDropFlags(block, flags);
+	public void getBlockFlags(Block block, Set<Flag> flags) {
+		super.getBlockFlags(block, flags);
 		Random rand = new Random();
 		if (rand.nextInt(15) <= getGrowthStage(block)) {
 			flags.add(BlockFlags.SEEDS);
@@ -71,7 +71,6 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Random
 		if (this.isFullyGrown(block)) {
 			flags.add(BlockFlags.FULLY_GROWN);
 		}
-		return flags;
 	}
 
 	@Override

@@ -37,7 +37,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.liquid.Water;
-import org.spout.vanilla.util.ToolLevel;
 import org.spout.vanilla.util.ToolType;
 import org.spout.vanilla.util.VanillaBlockUtil;
 
@@ -48,7 +47,7 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 	public FarmLand(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(1.0F).setOpaque();
-		this.setMiningType(ToolType.SPADE, ToolLevel.NONE);
+		this.addMiningType(ToolType.SPADE);
 	}
 
 	@Override

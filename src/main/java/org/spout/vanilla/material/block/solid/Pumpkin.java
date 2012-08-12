@@ -33,7 +33,6 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.ToolLevel;
 import org.spout.vanilla.util.ToolType;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -43,7 +42,7 @@ public class Pumpkin extends Solid implements Directional {
 	public Pumpkin(String name, int id, boolean lantern) {
 		super(name, id);
 		this.lantern = lantern;
-		this.setHardness(1.0F).setResistance(1.7F).setMiningType(ToolType.AXE, ToolLevel.NONE);
+		this.setHardness(1.0F).setResistance(1.7F).addMiningType(ToolType.AXE);
 	}
 
 	@Override

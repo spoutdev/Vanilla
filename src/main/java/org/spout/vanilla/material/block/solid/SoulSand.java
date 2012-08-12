@@ -36,7 +36,7 @@ public class SoulSand extends Solid {
 	public SoulSand(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_SAND);
-		this.setMiningType(ToolType.SPADE, ToolLevel.WOOD);
+		this.addMiningType(ToolType.SPADE);
 	}
 
 	@Override

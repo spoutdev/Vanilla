@@ -53,12 +53,12 @@ public class DoubleSlab extends Solid {
 
 	private DoubleSlab(String name, Slab slab) {
 		super((short) 0x0007, name, 43);
-		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
+		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	private DoubleSlab(String name, int data, DoubleSlab parent, Slab slab) {
 		super(name, 43, data, parent);
-		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
+		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	@Override

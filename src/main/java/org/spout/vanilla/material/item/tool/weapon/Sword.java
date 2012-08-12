@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.item.tool.weapon;
 
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.ToolLevel;
 import org.spout.vanilla.util.ToolType;
@@ -35,7 +34,6 @@ public class Sword extends Tool {
 
 	public Sword(String name, int id, ToolLevel toolLevel) {
 		super(name, id, toolLevel.getMaxDurability(), ToolType.SWORD);
-		this.addDropFlags(ToolTypeFlags.SWORD);
 		this.setDamage(4 + toolLevel.getDamageBonus());
 	}
 }

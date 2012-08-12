@@ -69,7 +69,7 @@ public abstract class DoorBlock extends GroundAttachable implements Openable, Re
 	}
 
 	@Override
-	public void onDestroyBlock(Block block) {
+	public void onDestroy(Block block) {
 		Block top = getCorrectHalf(block, true);
 		Block bottom = getCorrectHalf(block, false);
 		top.setMaterial(VanillaMaterials.AIR);

@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.util;
 
-import org.spout.vanilla.data.drops.flag.DropFlag;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.api.util.flag.Flag;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 
 public class ToolType {
@@ -42,9 +41,9 @@ public class ToolType {
 	public static final ToolType SPADE = new ToolType(ToolTypeFlags.SPADE);
 	public static final ToolType HOE = new ToolType(ToolTypeFlags.HOE);
 
-	private final DropFlagSingle toolFlag;
+	private final Flag toolFlag;
 
-	public ToolType(DropFlagSingle toolFlag) {
+	public ToolType(Flag toolFlag) {
 		this.toolFlag = toolFlag;
 	}
 
@@ -53,7 +52,7 @@ public class ToolType {
 	 * 
 	 * @return tool flag
 	 */
-	public DropFlagSingle getToolFlag() {
+	public Flag getToolFlag() {
 		return this.toolFlag;
 	}
 
@@ -62,7 +61,7 @@ public class ToolType {
 	 * 
 	 * @return drop flag
 	 */
-	public DropFlag getDropFlag() {
+	public Flag getDropFlag() {
 		return this.toolFlag;
 	}
 }

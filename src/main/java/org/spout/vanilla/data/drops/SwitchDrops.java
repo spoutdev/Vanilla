@@ -31,9 +31,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.data.drops.flag.DropFlag;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.api.util.flag.Flag;
 
 /**
  * If all flags match, it drops the first segment, else the other<br>
@@ -44,7 +42,7 @@ public class SwitchDrops extends Drops {
 	public final Drops FALSE = new Drops();
 
 	@Override
-	public List<ItemStack> getDrops(Random random, Set<DropFlagSingle> flags, List<ItemStack> drops) {
+	public List<ItemStack> getDrops(Random random, Set<Flag> flags, List<ItemStack> drops) {
 		if (this.canDrop(random, flags)) {
 			drops = this.TRUE.getDrops(random, flags, drops);
 		} else {
@@ -54,7 +52,7 @@ public class SwitchDrops extends Drops {
 	}
 
 	@Override
-	public SwitchDrops addFlags(DropFlag... dropFlags) {
+	public SwitchDrops addFlags(Flag... dropFlags) {
 		super.addFlags(dropFlags);
 		return this;
 	}

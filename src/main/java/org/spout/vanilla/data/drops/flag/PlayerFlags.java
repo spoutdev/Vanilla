@@ -26,13 +26,15 @@
  */
 package org.spout.vanilla.data.drops.flag;
 
+import org.spout.api.util.flag.FlagSingle;
+
 public class PlayerFlags {
 	/**
 	 * The player that caused the drops is in Creative mode
 	 */
-	public static final DropFlagSingle CREATIVE = new DropFlagSingle();
+	public static final FlagSingle CREATIVE = new FlagSingle();
 	/**
 	 * The player that caused the drops is in Survival mode
 	 */
-	public static final DropFlagSingle SURVIVAL = new DropFlagSingle();
+	public static final FlagSingle SURVIVAL = new FlagSingle();
 }

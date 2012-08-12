@@ -33,6 +33,6 @@ import org.spout.vanilla.util.ToolType;
 public class IronBlock extends Solid {
 	public IronBlock(String name, int id) {
 		super(name, id);
-		this.setHardness(5.0F).setResistance(10.0F).setMiningType(ToolType.PICKAXE, ToolLevel.STONE);
+		this.setHardness(5.0F).setResistance(10.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.STONE);
 	}
 }

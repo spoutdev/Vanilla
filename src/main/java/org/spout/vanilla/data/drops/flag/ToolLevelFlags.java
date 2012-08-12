@@ -28,6 +28,10 @@ package org.spout.vanilla.data.drops.flag;
 
 public class ToolLevelFlags {
 	/**
+	 * An unknown type was used, always evaluates True
+	 */
+	public static final DropFlagSingle NONE = new DropFlagTrue();
+	/**
 	 * A wooden tool or weapon was used
 	 */
 	public static final DropFlagSingle WOOD = new DropFlagSingle();
@@ -47,6 +51,10 @@ public class ToolLevelFlags {
 	 * A diamond tool or weapon was used
 	 */
 	public static final DropFlagSingle DIAMOND = new DropFlagSingle();
+	/**
+	 * Any type of level
+	 */
+	public static final DropFlagBundle NONE_UP = new DropFlagBundle(NONE);
 	/**
 	 * A wooden or higher tool or weapon level
 	 */

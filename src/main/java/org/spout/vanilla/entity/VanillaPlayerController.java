@@ -65,6 +65,7 @@ import org.spout.vanilla.entity.component.physics.PlayerStepSoundComponent;
 import org.spout.vanilla.entity.component.player.PingComponent;
 import org.spout.vanilla.entity.component.player.StatsUpdateComponent;
 import org.spout.vanilla.entity.source.DamageCause;
+import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
@@ -106,12 +107,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	private short experience = 0;
 
 	public VanillaPlayerController() {
-		this(GameMode.SURVIVAL);
-	}
-
-	public VanillaPlayerController(GameMode mode) {
 		super(VanillaControllerTypes.VANILLA_PLAYER);
-		setGameMode(mode);
 	}
 
 	@Override
@@ -293,7 +289,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	 */
 	public void setGameMode(GameMode gameMode) {
 		this.gameMode = gameMode;
-		//sendPacket(getParent(), new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, gameMode));
+		getParent().getNetworkSynchronizer().callProtocolEvent(new PlayerGameStateEvent(getParent(), ChangeGameStateMessage.CHANGE_GAME_MODE, gameMode));
 	}
 
 	/**

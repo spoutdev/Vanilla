@@ -49,9 +49,10 @@ import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.ItemUtil;
-import org.spout.vanilla.util.MiningType;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstonePowerMode;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
 	public static short REDSTONE_POWER_MAX = 15;
@@ -59,11 +60,11 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private final int minecraftId;
 	private float resistance;
 	private int meleeDamage = 1;
-	private int miningLevel;
-	private MiningType miningType;
 	private boolean liquidObstacle = true;
 	private SoundEffect stepSound = SoundEffects.STEP_STONE;
 	private final BlockDrops drops = new BlockDrops();
+	private ToolType miningType = null;
+	private ToolLevel miningLevel = ToolLevel.WOOD;
 
 	public VanillaBlockMaterial(String name, int id) {
 		this((short) 0, name, id);
@@ -74,8 +75,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.minecraftId = id;
 		this.setCollision(CollisionStrategy.NOCOLLIDE);
 		this.setTransparent();
-		this.setMiningLevel(0);
-		this.setMiningType(MiningType.PICKAXE);
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
 	}
@@ -85,8 +84,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.minecraftId = id;
 		this.setCollision(CollisionStrategy.NOCOLLIDE);
 		this.setTransparent();
-		this.setMiningLevel(0);
-		this.setMiningType(MiningType.PICKAXE);
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
 	}
@@ -367,43 +364,51 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	/**
-	 * Sets the mining level required for this block to spawn drops
-	 * @param miningLevel to set to
-	 * @return this material
-	 */
-	public VanillaBlockMaterial setMiningLevel(int miningLevel) {
-		this.miningLevel = miningLevel;
-		return this;
-	}
-
-	/**
-	 * Gets the mining level required for this block to spawn drops
-	 * @return mining level
-	 */
-	public int getMiningLevel() {
-		return miningLevel;
-	}
-
-	/**
 	 * Sets the mining type of this Block material<br>
-	 * This type is used when checking for drops
-	 * @param miningType to set to
+	 * This type is used when checking for drops and when calculating digging time
+	 * 
+	 * @param miningType to set to, can be null to disable
+	 * @param miningLevel that has to be met to spawn drops
 	 * @return this material
 	 */
-	public VanillaBlockMaterial setMiningType(MiningType miningType) {
+	public VanillaBlockMaterial setMiningType(ToolType miningType, ToolLevel miningLevel) {
+		if (this.miningType != null) {
+			this.drops.NOT_CREATIVE.removeFlags(this.miningType.getDropFlag()); // remove old drop type flags
+		}
 		this.miningType = miningType;
+		if (this.miningType != null) {
+			this.drops.NOT_CREATIVE.addFlags(this.miningType.getDropFlag()); // add new drop type flags
+		}
+		if (this.miningLevel != null) {
+			this.drops.NOT_CREATIVE.removeFlags(this.miningLevel.getDropFlag()); // remove old drop level flags
+		}
+		this.miningLevel = miningLevel;
+		if (this.miningLevel != null) {
+			this.drops.NOT_CREATIVE.addFlags(this.miningLevel.getDropFlag()); // add new drop level flags
+		}
 		return this;
 	}
 
 	/**
 	 * Gets the mining type of this Block material<br>
-	 * This type is used when checking for drops
-	 * @return the mining type
+	 * This type is used when checking for drops and when calculating digging time
+	 * 
+	 * @return the mining type, can be null if none is set
 	 */
-	public MiningType getMiningType() {
+	public ToolType getMiningType() {
 		return miningType;
 	}
 
+	/**
+	 * Gets the mining level requires for this BlockMaterial<br>
+	 * This level has to be met to spawn drops
+	 * 
+	 * @return mining level
+	 */
+	public ToolLevel getMiningLevel() {
+		return miningLevel;
+	}
+	
 	/**
 	 * Gets the drops for this block material
 	 * @return the drops

@@ -24,15 +24,39 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.tool.stone;
+package org.spout.vanilla.event.player.network;
 
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.api.entity.Player;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.vanilla.data.GameMode;
 
-public class StoneAxe extends StoneTool implements Axe {
-	public StoneAxe(String name, int id, short durability) {
-		super(name, id, durability);
-		this.setDamage(3);
-		this.addDropFlags(ToolTypeFlags.AXE);
+public class PlayerGameStateEvent extends PlayerEvent implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private byte reason;
+	private GameMode gameMode;
+
+	public PlayerGameStateEvent(Player p, byte reason, GameMode gameMode) {
+		super(p);
+		this.reason = reason;
+		this.gameMode = gameMode;
+	}
+
+	public byte getReason() {
+		return this.reason;
+	}
+
+	public GameMode getGameMode() {
+		return this.gameMode;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

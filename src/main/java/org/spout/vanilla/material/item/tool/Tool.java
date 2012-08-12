@@ -46,18 +46,21 @@ import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.EnchantmentUtil;
+import org.spout.vanilla.util.ToolType;
 
 public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	private final Random rand = new Random();
 	private short durability;
 	private int enchantability;
 	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
-	private int miningLevel;
 	private final HashSet<DropFlagSingle> dropFlags = new HashSet<DropFlagSingle>();
+	private ToolType toolType;
 
-	public Tool(String name, int id, short durability) {
+	public Tool(String name, int id, short durability, ToolType toolType) {
 		super(name, id);
 		this.durability = durability;
+		this.toolType = toolType;
+		this.addDropFlags(this.toolType.getToolFlag());
 	}
 
 	public short getDurabilityPenalty(ItemStack item) {
@@ -68,6 +71,15 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 			}
 		}
 		return (short) 1;
+	}
+
+	/**
+	 * Gets the type of tool
+	 * 
+	 * @return tool type
+	 */
+	public ToolType getToolType() {
+		return this.toolType;
 	}
 
 	public short getMaxDurability() {
@@ -93,15 +105,6 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 
 	public Set<BlockMaterial> getStrengthModifiedBlocks() {
 		return strengthModifiers.keySet();
-	}
-
-	public int getMiningLevel() {
-		return miningLevel;
-	}
-
-	public Tool setMiningLevel(int miningLevel) {
-		this.miningLevel = miningLevel;
-		return this;
 	}
 
 	@Override

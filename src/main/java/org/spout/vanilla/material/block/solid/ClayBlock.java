@@ -30,15 +30,18 @@ import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class ClayBlock extends Solid implements InitializableMaterial {
 	public ClayBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(1.0F).setStepSound(SoundEffects.STEP_GRAVEL);
+		this.setMiningType(ToolType.SPADE, ToolLevel.WOOD);
 	}
 
 	@Override
 	public void initialize() {
-		this.getDrops().add(VanillaMaterials.CLAY, 4);
+		this.getDrops().DEFAULT.clear().add(VanillaMaterials.CLAY, 4);
 	}
 }

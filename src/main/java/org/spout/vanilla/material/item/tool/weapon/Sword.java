@@ -24,15 +24,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.tool.diamond;
+package org.spout.vanilla.material.item.tool.weapon;
 
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.item.tool.Axe;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
-public class DiamondAxe extends DiamondTool implements Axe {
-	public DiamondAxe(String name, int id, short durability) {
-		super(name, id, durability);
-		this.setDamage(6);
-		this.addDropFlags(ToolTypeFlags.AXE);
+public class Sword extends Tool {
+
+	public Sword(String name, int id, ToolLevel toolLevel) {
+		super(name, id, toolLevel.getMaxDurability(), ToolType.SWORD);
+		this.addDropFlags(ToolTypeFlags.SWORD);
+		this.setDamage(4 + toolLevel.getDamageBonus());
 	}
 }

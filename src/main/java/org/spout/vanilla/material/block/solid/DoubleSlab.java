@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.misc.Slab;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class DoubleSlab extends Solid {
 	public static final DoubleSlab STONE_SLAB = new DoubleSlab("Stone Double Slab", Slab.STONE_SLAB);
@@ -53,14 +53,12 @@ public class DoubleSlab extends Solid {
 
 	private DoubleSlab(String name, Slab slab) {
 		super((short) 0x0007, name, 43);
-		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F);
-		getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.WOOD_UP);
+		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
 	}
 
 	private DoubleSlab(String name, int data, DoubleSlab parent, Slab slab) {
 		super(name, 43, data, parent);
-		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F);
-		getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.WOOD_UP);
+		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
 	}
 
 	@Override

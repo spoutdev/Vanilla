@@ -103,11 +103,23 @@ public abstract class Drop {
 	/**
 	 * Adds all the flags for these drops<br>
 	 * All flags set for these drops need to be set to make these drops function
+	 * 
 	 * @param dropflags to add (can be a DropFlag and DropFlagBundle)
 	 * @return these Drops
 	 */
 	public Drop addFlags(DropFlag... dropFlags) {
 		this.flags.addAll(Arrays.asList(dropFlags));
+		return this;
+	}
+
+	/**
+	 * Removes all the flags for these drops
+	 * 
+	 * @param dropflags to remove (can be a DropFlag and DropFlagBundle)
+	 * @return these Drops
+	 */
+	public Drop removeFlags(DropFlag... dropFlags) {
+		this.flags.removeAll(Arrays.asList(dropFlags));
 		return this;
 	}
 

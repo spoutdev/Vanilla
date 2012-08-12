@@ -32,11 +32,13 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SpreadingSolid;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class Mycelium extends SpreadingSolid implements InitializableMaterial {
 	public Mycelium(String name, int id) {
 		super(name, id);
-		this.setHardness(0.6F).setResistance(0.8F);
+		this.setHardness(0.6F).setResistance(0.8F).setMiningType(ToolType.SPADE, ToolLevel.NONE);
 	}
 
 	@Override

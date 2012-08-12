@@ -40,6 +40,6 @@ public class IronDoorBlock extends DoorBlock implements InitializableMaterial {
 
 	@Override
 	public void initialize() {
-		getDrops().add(VanillaMaterials.IRON_DOOR);
+		getDrops().DEFAULT.clear().add(VanillaMaterials.IRON_DOOR);
 	}
 }

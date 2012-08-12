@@ -31,11 +31,12 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class Snow extends GroundAttachable implements RandomBlockMaterial, InitializableMaterial {
 	private static final byte MIN_MELT_LIGHT = 11;
@@ -44,12 +45,12 @@ public class Snow extends GroundAttachable implements RandomBlockMaterial, Initi
 		super(name, id);
 		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.SPADE);
+		this.setMiningType(ToolType.SPADE, ToolLevel.WOOD);
 	}
 
 	@Override
 	public void initialize() {
-		this.getDrops().add(VanillaMaterials.SNOWBALL);
+		this.getDrops().DEFAULT.clear().add(VanillaMaterials.SNOWBALL);
 	}
 
 	@Override

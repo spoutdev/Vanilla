@@ -61,14 +61,12 @@ public class Wool extends Solid implements Burnable {
 		super((short) 0x000F, name, 35);
 		this.color = WoolColor.WHITE;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_CLOTH);
-		;
 	}
 
 	private Wool(String name, WoolColor color, Wool parent) {
 		super(name, 35, color.getData(), parent);
 		this.color = color;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_CLOTH);
-		;
 	}
 
 	@Override

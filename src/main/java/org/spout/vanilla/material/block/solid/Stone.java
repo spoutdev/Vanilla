@@ -26,22 +26,21 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class Stone extends Solid implements InitializableMaterial {
 	public Stone(String name, int id) {
 		super(name, id);
-		this.setHardness(1.5F).setResistance(10.0F);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+		this.setHardness(1.5F).setResistance(10.0F).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
 	}
 
 	@Override
 	public void initialize() {
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 		this.getDrops().DEFAULT.clear().add(VanillaMaterials.COBBLESTONE);
 	}
 

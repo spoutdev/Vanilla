@@ -28,13 +28,13 @@ package org.spout.vanilla.material.block.ore;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.FurnaceBlock;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class RedstoneOre extends Ore implements TimedCraftable, InitializableMaterial {
 	private final boolean glowing;
@@ -42,8 +42,7 @@ public class RedstoneOre extends Ore implements TimedCraftable, InitializableMat
 	public RedstoneOre(String name, int id, boolean glowing) {
 		super(name, id);
 		this.glowing = glowing;
-		this.setHardness(3.0F).setResistance(5.0F);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.IRON_UP);
+		this.setHardness(3.0F).setResistance(5.0F).setMiningType(ToolType.PICKAXE, ToolLevel.IRON);
 	}
 
 	@Override

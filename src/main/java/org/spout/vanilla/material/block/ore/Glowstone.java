@@ -37,7 +37,7 @@ import org.spout.vanilla.material.block.controlled.SignBase;
 public class Glowstone extends Ore implements InitializableMaterial {
 	public Glowstone(String name, int id) {
 		super(name, id);
-		this.setHardness(0.3F).setResistance(0.5F).setOpacity((byte) 0);
+		this.setHardness(0.3F).setResistance(0.5F);
 	}
 
 	@Override

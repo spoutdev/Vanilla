@@ -76,6 +76,7 @@ import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
+import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.event.player.network.PlayerKeepAliveEvent;
 import org.spout.vanilla.event.player.network.PlayerUpdateStatsEvent;
 import org.spout.vanilla.event.player.network.PlayerUpdateUserListEvent;
@@ -90,6 +91,7 @@ import org.spout.vanilla.event.world.PlaySoundEffectEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
+import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.CompressedChunkMessage;
 import org.spout.vanilla.protocol.msg.ExplosionMessage;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
@@ -555,6 +557,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@EventHandler
 	public Message onEntityCollectItem(EntityCollectItemEvent event) {
 		return new EntityCollectItemMessage(event.getCollected().getId(), event.getEntity().getId());
+	}
+
+	@EventHandler
+	public Message onPlayerGameState(PlayerGameStateEvent event) {
+		return new ChangeGameStateMessage(event.getReason(), event.getGameMode());
 	}
 
 	public static enum ChunkInit {

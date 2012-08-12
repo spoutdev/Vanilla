@@ -28,20 +28,18 @@ package org.spout.vanilla.material.block.ore;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.FurnaceBlock;
-import org.spout.vanilla.util.MiningType;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class EmeraldOre extends Ore implements InitializableMaterial, TimedCraftable {
 	public EmeraldOre(String name, int id) {
 		super(name, id);
-		this.setHardness(3.0F).setResistance(5.0F).setMiningType(MiningType.PICKAXE).setMiningLevel(MiningType.MiningLevel.IRON);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.IRON_UP);
+		this.setHardness(3.0F).setResistance(5.0F).setMiningType(ToolType.PICKAXE, ToolLevel.IRON);
 	}
 
 	@Override

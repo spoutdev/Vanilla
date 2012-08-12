@@ -28,6 +28,10 @@ package org.spout.vanilla.data.drops.flag;
 
 public class ToolTypeFlags {
 	/**
+	 * A tool other than the one displayed here was used
+	 */
+	public static final DropFlagSingle OTHER = new DropFlagSingle();
+	/**
 	 * A pickaxe was used
 	 */
 	public static final DropFlagSingle PICKAXE = new DropFlagSingle();
@@ -59,4 +63,8 @@ public class ToolTypeFlags {
 	 * Shears were used
 	 */
 	public static final DropFlagSingle SHEARS = new DropFlagSingle();
+	/**
+	 * A fishing rod was used
+	 */
+	public static final DropFlagSingle FISHING_ROD = new DropFlagSingle();
 }

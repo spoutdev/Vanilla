@@ -170,9 +170,10 @@ public class VanillaProtocol extends Protocol {
 
 	@Override
 	public void setPlayerController(Player player) {
-		VanillaPlayerController vanillaPlayer = new VanillaPlayerController(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
+		VanillaPlayerController vanillaPlayer = new VanillaPlayerController();
 		vanillaPlayer.setTitle(player.getDisplayName());
-
 		player.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
+		// Set game mode
+		vanillaPlayer.setGameMode(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
 	}
 }

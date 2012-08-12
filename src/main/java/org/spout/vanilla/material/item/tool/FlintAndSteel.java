@@ -34,11 +34,12 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.ToolType;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class FlintAndSteel extends InteractTool {
 	public FlintAndSteel(String name, int id, short durability) {
-		super(name, id, durability);
+		super(name, id, durability, ToolType.FLINT_AND_STEEL);
 	}
 
 	@Override

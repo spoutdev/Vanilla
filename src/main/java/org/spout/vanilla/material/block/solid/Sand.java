@@ -34,11 +34,14 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SolidMoving;
 import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class Sand extends SolidMoving implements TimedCraftable {
 	public Sand(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_SAND);
+		this.setMiningType(ToolType.SPADE, ToolLevel.NONE);
 	}
 
 	@Override

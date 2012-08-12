@@ -31,11 +31,14 @@ import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class SnowBlock extends Solid implements InitializableMaterial {
 	public SnowBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.2F).setResistance(0.3F).setStepSound(SoundEffects.STEP_CLOTH);
+		this.setMiningType(ToolType.SPADE, ToolLevel.WOOD);
 	}
 
 	@Override

@@ -24,17 +24,42 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.tool.gold;
+package org.spout.vanilla.material.item.tool;
 
-import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.MiningType;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
-public abstract class GoldTool extends Tool {
-	protected GoldTool(String name, int id, short durability) {
-		super(name, id, durability);
-		this.setEnchantability(22);
-		this.setMiningLevel(MiningType.MiningLevel.GOLD);
-		this.addDropFlags(ToolLevelFlags.GOLD);
+/**
+ * A type of tool that allows you to mine certain blocks faster
+ */
+public class MiningTool extends Tool {
+	private float diggingSpeed;
+
+	public MiningTool(String name, int id, ToolLevel toolLevel, ToolType toolType) {
+		super(name, id, toolLevel.getMaxDurability(), toolType);
+		this.addDropFlags(toolLevel.getToolFlag());
+		this.diggingSpeed = toolLevel.getDiggingSpeed();
+	}
+
+	/**
+	 * Gets the time this type of tool subtracts from the digging time<br>
+	 * The default digging speed without tool is 1.0
+	 * 
+	 * @return digging time
+	 */
+	public float getDiggingSpeed() {
+		return this.diggingSpeed;
+	}
+
+	/**
+	 * Sets the time this type of tool subtracts from the digging time<br>
+	 * The default digging speed without tool is 1.0
+	 * 
+	 * @param diggingTime to set to
+	 * @return this Mining Tool
+	 */
+	public MiningTool setDiggingSpeed(float diggingSpeed) {
+		this.diggingSpeed = diggingSpeed;
+		return this;
 	}
 }

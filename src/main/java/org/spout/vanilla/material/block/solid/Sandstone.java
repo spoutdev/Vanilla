@@ -28,8 +28,9 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class Sandstone extends Solid {
 	public static final Sandstone SANDSTONE = new Sandstone("Sandstone");
@@ -40,15 +41,13 @@ public class Sandstone extends Solid {
 	private Sandstone(String name) {
 		super((short) 0x0003, name, 24);
 		this.type = SandstoneType.SANDSTONE;
-		this.setHardness(0.8F).setResistance(1.3F);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+		this.setHardness(0.8F).setResistance(1.3F).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
 	}
 
 	private Sandstone(String name, SandstoneType type, Sandstone parent) {
 		super(name, 24, type.getData(), parent);
 		this.type = type;
-		this.setHardness(0.8F).setResistance(1.3F);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+		this.setHardness(0.8F).setResistance(1.3F).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
 	}
 
 	public SandstoneType getType() {

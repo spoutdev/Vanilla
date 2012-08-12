@@ -36,6 +36,8 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class Plank extends Solid implements Fuel, Burnable {
 	public static final Plank PLANK = new Plank("Oak Plank");
@@ -49,12 +51,14 @@ public class Plank extends Solid implements Fuel, Burnable {
 		super((short) 0x0003, name, 05);
 		this.type = WoodType.OAK;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_WOOD);
+		this.setMiningType(ToolType.AXE, ToolLevel.NONE);
 	}
 
 	public Plank(String name, WoodType type, Plank parent) {
 		super(name, 05, type.getData(), parent);
 		this.type = type;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_WOOD);
+		this.setMiningType(ToolType.AXE, ToolLevel.NONE);
 	}
 
 	@Override

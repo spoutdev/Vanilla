@@ -206,29 +206,13 @@ import org.spout.vanilla.material.item.misc.StringItem;
 import org.spout.vanilla.material.item.tool.FishingRod;
 import org.spout.vanilla.material.item.tool.FlintAndSteel;
 import org.spout.vanilla.material.item.tool.Hoe;
+import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Shears;
-import org.spout.vanilla.material.item.tool.diamond.DiamondAxe;
-import org.spout.vanilla.material.item.tool.diamond.DiamondPickaxe;
-import org.spout.vanilla.material.item.tool.diamond.DiamondSpade;
-import org.spout.vanilla.material.item.tool.diamond.DiamondSword;
-import org.spout.vanilla.material.item.tool.gold.GoldAxe;
-import org.spout.vanilla.material.item.tool.gold.GoldPickaxe;
-import org.spout.vanilla.material.item.tool.gold.GoldSpade;
-import org.spout.vanilla.material.item.tool.gold.GoldSword;
-import org.spout.vanilla.material.item.tool.iron.IronAxe;
-import org.spout.vanilla.material.item.tool.iron.IronPickaxe;
-import org.spout.vanilla.material.item.tool.iron.IronSpade;
-import org.spout.vanilla.material.item.tool.iron.IronSword;
-import org.spout.vanilla.material.item.tool.stone.StoneAxe;
-import org.spout.vanilla.material.item.tool.stone.StonePickaxe;
-import org.spout.vanilla.material.item.tool.stone.StoneSpade;
-import org.spout.vanilla.material.item.tool.stone.StoneSword;
-import org.spout.vanilla.material.item.tool.wood.WoodenAxe;
-import org.spout.vanilla.material.item.tool.wood.WoodenPickaxe;
-import org.spout.vanilla.material.item.tool.wood.WoodenSpade;
-import org.spout.vanilla.material.item.tool.wood.WoodenSword;
-import org.spout.vanilla.material.item.weapon.Bow;
+import org.spout.vanilla.material.item.tool.weapon.Bow;
+import org.spout.vanilla.material.item.tool.weapon.Sword;
 import org.spout.vanilla.util.Music;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 // TODO: Remove all casts and separate remaining "set" methods out into each material's init() method
 public final class VanillaMaterials {
@@ -375,29 +359,29 @@ public final class VanillaMaterials {
 	 * Items
 	 */
 	// == Swords ==
-	public static final WoodenSword WOODEN_SWORD = new WoodenSword("Wooden Sword", 268, (short) 60);
-	public static final GoldSword GOLD_SWORD = new GoldSword("Gold Sword", 283, (short) 33);
-	public static final StoneSword STONE_SWORD = new StoneSword("Stone Sword", 272, (short) 132);
-	public static final IronSword IRON_SWORD = new IronSword("Iron Sword", 267, (short) 251);
-	public static final DiamondSword DIAMOND_SWORD = new DiamondSword("Diamond Sword", 276, (short) 1562);
+	public static final Sword WOODEN_SWORD = new Sword("Wooden Sword", 268, ToolLevel.WOOD);
+	public static final Sword GOLD_SWORD = new Sword("Gold Sword", 283, ToolLevel.GOLD);
+	public static final Sword STONE_SWORD = new Sword("Stone Sword", 272, ToolLevel.STONE);
+	public static final Sword IRON_SWORD = new Sword("Iron Sword", 267, ToolLevel.IRON);
+	public static final Sword DIAMOND_SWORD = new Sword("Diamond Sword", 276, ToolLevel.DIAMOND);
 	// == Spades ==
-	public static final GoldSpade GOLD_SPADE = new GoldSpade("Gold Shovel", 284, (short) 33);
-	public static final WoodenSpade WOODEN_SPADE = new WoodenSpade("Wooden Shovel", 269, (short) 60);
-	public static final StoneSpade STONE_SPADE = new StoneSpade("Stone Shovel", 273, (short) 132);
-	public static final IronSpade IRON_SPADE = new IronSpade("Iron Shovel", 256, (short) 251);
-	public static final DiamondSpade DIAMOND_SPADE = new DiamondSpade("Diamond Shovel", 277, (short) 1562);
+	public static final MiningTool GOLD_SPADE = new MiningTool("Gold Shovel", 284, ToolLevel.GOLD, ToolType.SPADE);
+	public static final MiningTool WOODEN_SPADE = new MiningTool("Wooden Shovel", 269, ToolLevel.WOOD, ToolType.SPADE);
+	public static final MiningTool STONE_SPADE = new MiningTool("Stone Shovel", 273, ToolLevel.STONE, ToolType.SPADE);
+	public static final MiningTool IRON_SPADE = new MiningTool("Iron Shovel", 256, ToolLevel.IRON, ToolType.SPADE);
+	public static final MiningTool DIAMOND_SPADE = new MiningTool("Diamond Shovel", 277, ToolLevel.DIAMOND, ToolType.SPADE);
 	// == Pickaxes ==
-	public static final GoldPickaxe GOLD_PICKAXE = new GoldPickaxe("Gold Pickaxe", 285, (short) 33);
-	public static final WoodenPickaxe WOODEN_PICKAXE = new WoodenPickaxe("Wooden Pickaxe", 270, (short) 60);
-	public static final StonePickaxe STONE_PICKAXE = new StonePickaxe("Stone Pickaxe", 274, (short) 132);
-	public static final IronPickaxe IRON_PICKAXE = new IronPickaxe("Iron Pickaxe", 257, (short) 251);
-	public static final DiamondPickaxe DIAMOND_PICKAXE = new DiamondPickaxe("Diamond Pickaxe", 278, (short) 1562);
+	public static final MiningTool GOLD_PICKAXE = new MiningTool("Gold Pickaxe", 285, ToolLevel.GOLD, ToolType.PICKAXE);
+	public static final MiningTool WOODEN_PICKAXE = new MiningTool("Wooden Pickaxe", 270, ToolLevel.WOOD, ToolType.PICKAXE);
+	public static final MiningTool STONE_PICKAXE = new MiningTool("Stone Pickaxe", 274, ToolLevel.STONE, ToolType.PICKAXE);
+	public static final MiningTool IRON_PICKAXE = new MiningTool("Iron Pickaxe", 257, ToolLevel.IRON, ToolType.PICKAXE);
+	public static final MiningTool DIAMOND_PICKAXE = new MiningTool("Diamond Pickaxe", 278, ToolLevel.DIAMOND, ToolType.PICKAXE);
 	// == Axes ==
-	public static final GoldAxe GOLD_AXE = new GoldAxe("Gold Axe", 286, (short) 33);
-	public static final WoodenAxe WOODEN_AXE = new WoodenAxe("Wooden Axe", 271, (short) 60);
-	public static final StoneAxe STONE_AXE = new StoneAxe("Stone Axe", 275, (short) 132);
-	public static final IronAxe IRON_AXE = new IronAxe("Iron Axe", 258, (short) 251);
-	public static final DiamondAxe DIAMOND_AXE = new DiamondAxe("Diamond Axe", 279, (short) 1562);
+	public static final MiningTool GOLD_AXE = new MiningTool("Gold Axe", 286, ToolLevel.GOLD, ToolType.AXE);
+	public static final MiningTool WOODEN_AXE = new MiningTool("Wooden Axe", 271, ToolLevel.WOOD, ToolType.AXE);
+	public static final MiningTool STONE_AXE = new MiningTool("Stone Axe", 275, ToolLevel.STONE, ToolType.AXE);
+	public static final MiningTool IRON_AXE = new MiningTool("Iron Axe", 258, ToolLevel.IRON, ToolType.AXE);
+	public static final MiningTool DIAMOND_AXE = new MiningTool("Diamond Axe", 279, ToolLevel.DIAMOND, ToolType.AXE);
 	// == Hoes ==
 	public static final Hoe GOLD_HOE = new Hoe("Gold Hoe", 294, (short) 33);
 	public static final Hoe WOODEN_HOE = new Hoe("Wooden Hoe", 290, (short) 60);

@@ -36,18 +36,19 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.flag.ByteFlagContainer;
 
 import org.spout.vanilla.data.drops.flag.DropFlagSingle;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class Slab extends VanillaBlockMaterial {
-	public static final Slab STONE_SLAB = new Slab("Stone Slab");
-	public static final Slab SANDSTONE_SLAB = new Slab("Sandstone Slab", 1, STONE_SLAB);
-	public static final Slab WOOD_SLAB = new Slab("Wooden Slab", 2, STONE_SLAB);
-	public static final Slab COBBLESTONE_SLAB = new Slab("Cobblestone Slab", 3, STONE_SLAB);
-	public static final Slab BRICK_SLAB = new Slab("Brick Slab", 4, STONE_SLAB);
-	public static final Slab STONE_BRICK_SLAB = new Slab("Stone Brick Slab", 5, STONE_SLAB);
+	public static final Slab STONE_SLAB = new Slab("Stone Slab").setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
+	public static final Slab SANDSTONE_SLAB = new Slab("Sandstone Slab", 1, STONE_SLAB).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
+	public static final Slab WOOD_SLAB = new Slab("Wooden Slab", 2, STONE_SLAB).setMiningType(ToolType.AXE, ToolLevel.WOOD);
+	public static final Slab COBBLESTONE_SLAB = new Slab("Cobblestone Slab", 3, STONE_SLAB).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
+	public static final Slab BRICK_SLAB = new Slab("Brick Slab", 4, STONE_SLAB).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
+	public static final Slab STONE_BRICK_SLAB = new Slab("Stone Brick Slab", 5, STONE_SLAB).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
 	private DoubleSlab doubletype;
 	private final ByteFlagContainer occlusionTop = new ByteFlagContainer(BlockFace.TOP);
 	private final ByteFlagContainer occlusionBottom = new ByteFlagContainer(BlockFace.BOTTOM);
@@ -56,18 +57,22 @@ public class Slab extends VanillaBlockMaterial {
 		super((short) 0x0007, name, 44);
 		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
 		this.setCollision(CollisionStrategy.SOLID);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	private Slab(String name, int data, Slab parent) {
 		super(name, 44, data, parent);
 		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
 		this.setCollision(CollisionStrategy.SOLID);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	public Slab setDoubleType(DoubleSlab doubletype) {
 		this.doubletype = doubletype;
+		return this;
+	}
+
+	@Override
+	public Slab setMiningType(ToolType miningType, ToolLevel miningLevel) {
+		super.setMiningType(miningType, miningLevel);
 		return this;
 	}
 

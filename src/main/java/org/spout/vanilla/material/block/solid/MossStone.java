@@ -26,15 +26,15 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class MossStone extends Solid {
 	public MossStone(String name, int id) {
 		super(name, id);
-		this.setHardness(2.0F).setResistance(10.0F);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+		this.setHardness(2.0F).setResistance(10.0F).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
 	}
 
 	@Override

@@ -26,14 +26,13 @@
  */
 package org.spout.vanilla.material.block.ore;
 
-import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.ToolLevel;
+import org.spout.vanilla.util.ToolType;
 
 public class DiamondBlock extends Solid {
 	public DiamondBlock(String name, int id) {
 		super(name, id);
-		this.setHardness(5.0F).setResistance(10.0F);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.IRON_UP);
+		this.setHardness(5.0F).setResistance(10.0F).setMiningType(ToolType.PICKAXE, ToolLevel.IRON);
 	}
 }

@@ -27,10 +27,10 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.Spout;
+import org.spout.api.entity.Player;
 import org.spout.api.event.Event;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.entity.Player;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageHandler;

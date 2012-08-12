@@ -29,10 +29,8 @@ package org.spout.vanilla.material;
 import org.spout.api.geo.cuboid.Block;
 
 public interface Toggleable {
-
 	/**
 	 * Gets if the Material is toggled on
-	 * 
 	 * @param block of this Material
 	 * @return True if toggled, False if not
 	 */
@@ -40,7 +38,6 @@ public interface Toggleable {
 
 	/**
 	 * Sets if the Material is toggled on
-	 * 
 	 * @param block of this Material
 	 * @param toggled state to set to
 	 */
@@ -48,7 +45,6 @@ public interface Toggleable {
 
 	/**
 	 * Toggles the Material between on and off states
-	 * 
 	 * @param block to toggle
 	 * @return the new On state
 	 */

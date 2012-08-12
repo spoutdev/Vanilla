@@ -26,14 +26,10 @@
  */
 package org.spout.vanilla.entity.object.moving;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.object.Substance;
-import org.spout.vanilla.util.ItemUtil;
 
 /**
  * Represents a block that can move, such as sand or gravel.<br>
@@ -63,23 +59,23 @@ public class MovingBlock extends Substance {
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
-//		Block block = getParent().getWorld().getBlock(getParent().getPosition(), getParent());
-//		if (block.translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
-//			//can we place here?
-//			if (block.getMaterial().isPlacementObstacle() || !this.material.canPlace(block, this.material.getData())) {
-//				//spawn an item
-//				ItemStack item = new ItemStack(this.material, this.material.getData(), 1);
-//				ItemUtil.dropItemNaturally(block.getPosition(), item);
-//			} else {
-//				this.material.onPlacement(block, this.material.getData());
-//			}
-			getParent().kill();
-//		} else {
-//			// gravity
-//			this.setVelocity(this.getVelocity().subtract(0, 0.04, 0));
-//			this.move();
-//			// slow-down
-//			this.setVelocity(this.getVelocity().multiply(0.98));
-//		}
+		//		Block block = getParent().getWorld().getBlock(getParent().getPosition(), getParent());
+		//		if (block.translate(BlockFace.BOTTOM).getMaterial().isSolid()) {
+		//			//can we place here?
+		//			if (block.getMaterial().isPlacementObstacle() || !this.material.canPlace(block, this.material.getData())) {
+		//				//spawn an item
+		//				ItemStack item = new ItemStack(this.material, this.material.getData(), 1);
+		//				ItemUtil.dropItemNaturally(block.getPosition(), item);
+		//			} else {
+		//				this.material.onPlacement(block, this.material.getData());
+		//			}
+		getParent().kill();
+		//		} else {
+		//			// gravity
+		//			this.setVelocity(this.getVelocity().subtract(0, 0.04, 0));
+		//			this.move();
+		//			// slow-down
+		//			this.setVelocity(this.getVelocity().multiply(0.98));
+		//		}
 	}
 }

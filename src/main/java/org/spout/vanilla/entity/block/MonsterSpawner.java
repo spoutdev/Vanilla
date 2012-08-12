@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.entity.block;
 
+import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -65,7 +65,7 @@ public class MonsterSpawner extends VanillaBlockController {
 	@Override
 	public void onTick(float dt) {
 		Block block = getBlock();
-		Set<Player> nearbyPlayers = block.getWorld().getNearbyPlayers(block.getPosition(), range);
+		List<Player> nearbyPlayers = block.getWorld().getNearbyPlayers(block.getPosition(), range);
 		if (nearbyPlayers == null || nearbyPlayers.isEmpty()) {
 			return;
 		}
@@ -140,7 +140,7 @@ public class MonsterSpawner extends VanillaBlockController {
 				case 5:
 					return VanillaControllerTypes.ZOMBIE;
 				case 6:
-					Set<Player> nearbyPlayers = block.getWorld().getNearbyPlayers(block.getPosition(), 5);
+					List<Player> nearbyPlayers = block.getWorld().getNearbyPlayers(block.getPosition(), 5);
 					if (nearbyPlayers == null || nearbyPlayers.isEmpty()) {
 						return VanillaControllerTypes.SILVERFISH;
 					}

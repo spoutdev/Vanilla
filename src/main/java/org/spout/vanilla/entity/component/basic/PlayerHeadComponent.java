@@ -26,16 +26,16 @@
  */
 package org.spout.vanilla.entity.component.basic;
 
-import static org.spout.vanilla.util.VanillaMathHelper.getLookAtPitch;
-import static org.spout.vanilla.util.VanillaMathHelper.getLookAtYaw;
-
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.entity.VanillaPlayerController;
 
-public class PlayerHeadComponent extends HeadComponent {
+import static org.spout.vanilla.util.VanillaMathHelper.getLookAtPitch;
+import static org.spout.vanilla.util.VanillaMathHelper.getLookAtYaw;
 
+public class PlayerHeadComponent extends HeadComponent {
 	@Override
 	public VanillaPlayerController getParent() {
 		return (VanillaPlayerController) super.getParent();

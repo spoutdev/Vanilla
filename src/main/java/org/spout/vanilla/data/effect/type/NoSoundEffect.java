@@ -27,8 +27,8 @@
 package org.spout.vanilla.data.effect.type;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.data.effect.SoundEffect;
 

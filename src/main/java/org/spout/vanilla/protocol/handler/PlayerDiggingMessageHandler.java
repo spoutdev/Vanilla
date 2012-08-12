@@ -31,6 +31,7 @@ import java.util.HashSet;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
+import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.Protection;
@@ -43,7 +44,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.entity.Player;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;

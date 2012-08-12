@@ -32,6 +32,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
+
 import org.spout.vanilla.entity.component.HeadOwner;
 
 public class HeadComponent extends BasicComponent<HeadOwner> {
@@ -151,7 +152,6 @@ public class HeadComponent extends BasicComponent<HeadOwner> {
 
 	/**
 	 * Performs a collision test
-	 * 
 	 * @return the first block this Living entity collides with
 	 */
 	public Block hitTest() {

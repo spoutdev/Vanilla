@@ -31,7 +31,6 @@ import org.spout.vanilla.entity.component.basic.SuffocationComponent;
 public interface SuffocationOwner extends HealthOwner, HeadOwner {
 	/**
 	 * Gets the Suffocation component of this Controller
-	 * 
 	 * @return Suffocation component
 	 */
 	public SuffocationComponent getSuffocation();

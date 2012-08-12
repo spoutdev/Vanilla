@@ -55,7 +55,7 @@ public class ItemEntityProtocol extends VanillaEntityProtocol {
 			}
 			int typeId = VanillaMaterials.getMinecraftId(pi.getMaterial());
 			if (typeId > 0) {
-				return new Message[] {new EntitySpawnItemMessage(id, typeId, pi.getAmount(), pi.getData(), x, y, z, r, p, (int) pi.getParent().getRoll())};
+				return new Message[]{new EntitySpawnItemMessage(id, typeId, pi.getAmount(), pi.getData(), x, y, z, r, p, (int) pi.getParent().getRoll())};
 			}
 		}
 

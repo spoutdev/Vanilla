@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.entity.world;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -93,7 +94,7 @@ public class RegionSpawner implements Runnable {
 	public void spawn(Chunk chunk) {
 		for (Entry<ControllerType, SpawnInformation> entry : spawnableTypes.entrySet()) {
 			SpawnInformation info = entry.getValue();
-			Set<Entity> existing = region.getAll(entry.getKey().getControllerClass());
+			List<Entity> existing = region.getAll(entry.getKey().getControllerClass());
 			if (existing.size() < info.amount) {
 				int randX = this.rand.nextInt(Chunk.BLOCKS.SIZE);
 				int randY = this.rand.nextInt(Chunk.BLOCKS.SIZE);

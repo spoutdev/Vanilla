@@ -431,7 +431,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	public PlayerInventory getInventory() {
 		return playerInventory;
 	}
-	
+
 	public boolean isCrouching() {
 		return crouching;
 	}

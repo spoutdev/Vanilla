@@ -27,7 +27,7 @@
 package org.spout.vanilla.command;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
@@ -36,6 +36,7 @@ import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.entity.controller.BlockController;
 import org.spout.api.entity.controller.PlayerController;
 import org.spout.api.entity.controller.type.ControllerRegistry;
@@ -48,7 +49,6 @@ import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.entity.Player;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.entityeffect.potion.Speed;
@@ -269,7 +269,7 @@ public class TestCommands {
 		if (world == null) {
 			world = ((Player) source).getWorld();
 		}
-		Set<Entity> entities = world.getAll();
+		List<Entity> entities = world.getAll();
 		int count = 0;
 		for (Entity entity : entities) {
 			if (entity.getController() instanceof PlayerController || (!(entity.getController() instanceof VanillaEntityController))) {

@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.data.effect;
 
+import java.util.List;
 import java.util.Set;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.event.world.PlayParticleEffectEvent;
 
@@ -78,7 +79,7 @@ public class GeneralEffect extends Effect {
 		player.getSession().getNetworkSynchronizer().callProtocolEvent(new PlayParticleEffectEvent(position, this, data));
 	}
 
-	public void play(Set<Player> players, Point position, int data) {
+	public void play(List<Player> players, Point position, int data) {
 		for (Player player : players) {
 			this.play(player, position, data);
 		}

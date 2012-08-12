@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.protocol.handler;
 
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 

@@ -44,7 +44,6 @@ import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Lever extends AttachedRedstoneSource implements Mineable, Toggleable {
-
 	public Lever(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESWB).setLiquidObstacle(false).setHardness(0.5F).setResistance(1.7F).setTransparent();

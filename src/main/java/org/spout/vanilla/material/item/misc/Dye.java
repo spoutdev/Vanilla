@@ -150,5 +150,4 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 	public Dye getParentMaterial() {
 		return (Dye) super.getParentMaterial();
 	}
-
 }

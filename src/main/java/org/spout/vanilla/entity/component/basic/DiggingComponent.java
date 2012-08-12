@@ -30,6 +30,7 @@ import org.spout.api.entity.BasicComponent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 import org.spout.api.tickable.TickPriority;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;

@@ -60,22 +60,22 @@ public class JukeboxBlock extends ControlledMaterial implements Fuel, Mineable {
 	}
 
 	@Override
-	public MoveReaction getMoveReaction (Block block){
+	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
 	}
 
 	@Override
-	public Instrument getInstrument () {
+	public Instrument getInstrument() {
 		return Instrument.BASSGUITAR;
 	}
 
 	@Override
-	public float getFuelTime () {
+	public float getFuelTime() {
 		return BURN_TIME;
 	}
 
 	@Override
-	public short getDurabilityPenalty (Tool tool){
+	public short getDurabilityPenalty(Tool tool) {
 		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

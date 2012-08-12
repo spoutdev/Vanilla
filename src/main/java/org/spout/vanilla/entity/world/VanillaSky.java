@@ -28,8 +28,8 @@ package org.spout.vanilla.entity.world;
 
 import java.util.HashMap;
 
-import org.spout.api.geo.World;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.World;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.data.Weather;

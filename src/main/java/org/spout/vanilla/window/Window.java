@@ -246,7 +246,7 @@ public class Window implements InventoryViewer, Tickable {
 
 	@Override
 	public final void tick(float dt) {
-		if(canTick()) {
+		if (canTick()) {
 			onTick(dt);
 		}
 	}

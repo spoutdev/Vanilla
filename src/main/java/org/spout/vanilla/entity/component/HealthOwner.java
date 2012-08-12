@@ -31,7 +31,6 @@ import org.spout.vanilla.entity.component.basic.HealthComponent;
 public interface HealthOwner extends ComponentOwner {
 	/**
 	 * Gets the health component of this Controller
-	 * 
 	 * @return health component
 	 */
 	public HealthComponent getHealth();

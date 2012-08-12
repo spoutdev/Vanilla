@@ -71,7 +71,6 @@ public class VanillaPlayerUtil {
 
 	/**
 	 * Gets the required facing for a Block to look at a possible Entity in the Source
-	 * 
 	 * @param block to get the facing for
 	 * @return The block facing
 	 */
@@ -85,7 +84,6 @@ public class VanillaPlayerUtil {
 
 	/**
 	 * Gets the required facing for a Block to look at an Entity
-	 * 
 	 * @param block to get the facing for
 	 * @param entity to look at
 	 * @return The block facing

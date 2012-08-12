@@ -31,7 +31,6 @@ import org.spout.vanilla.entity.component.basic.HeadComponent;
 public interface HeadOwner extends ComponentOwner {
 	/**
 	 * Gets the Head component of this Controller
-	 * 
 	 * @return Head component
 	 */
 	public HeadComponent getHead();

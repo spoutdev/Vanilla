@@ -29,13 +29,13 @@ package org.spout.vanilla.material.block.plant;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.solid.Log;
 import org.spout.vanilla.material.item.tool.Tool;
 
 public class CocoaPlant extends AbstractAttachable implements Plant {
-
 	public CocoaPlant(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESW);

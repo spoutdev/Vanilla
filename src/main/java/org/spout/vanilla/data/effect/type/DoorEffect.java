@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.data.effect.type;
 
+import java.util.List;
 import java.util.Set;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
@@ -56,7 +57,7 @@ public class DoorEffect extends Effect {
 		}
 	}
 
-	public void play(Set<Player> players, Point position, boolean open) {
+	public void play(List<Player> players, Point position, boolean open) {
 		for (Player player : players) {
 			this.play(player, position, open);
 		}
@@ -67,6 +68,6 @@ public class DoorEffect extends Effect {
 	}
 
 	public void playGlobal(Point position, boolean open, Entity ignore) {
-		this.play(getNearbyPlayers(position, ignore), position);
+		this.play(getNearbyPlayers(position, ignore), position, open);
 	}
 }

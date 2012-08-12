@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.data.effect;
 
+import java.util.List;
 import java.util.Set;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.event.world.PlaySoundEffectEvent;
 
@@ -104,7 +105,7 @@ public class SoundEffect extends Effect {
 	 * @param ignore Entity to ignore
 	 * @return a Set of nearby Players
 	 */
-	public Set<Player> getNearbyPlayers(Point position, Entity ignore, float volume) {
+	public List<Player> getNearbyPlayers(Point position, Entity ignore, float volume) {
 		int range = this.getRange();
 		if (volume > 1.0f) {
 			// Multiply range for different volumes
@@ -122,7 +123,7 @@ public class SoundEffect extends Effect {
 		player.getSession().getNetworkSynchronizer().callProtocolEvent(new PlaySoundEffectEvent(position, this, volume, pitch));
 	}
 
-	public void play(Set<Player> players, Point position, float volume, float pitch) {
+	public void play(List<Player> players, Point position, float volume, float pitch) {
 		for (Player player : players) {
 			this.play(player, position, volume, pitch);
 		}

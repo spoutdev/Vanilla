@@ -31,7 +31,6 @@ import org.spout.vanilla.entity.component.gamemode.CreativeComponent;
 import org.spout.vanilla.entity.component.gamemode.SurvivalComponent;
 
 public interface GameModeOwner extends ComponentOwner {
-
 	public SurvivalComponent getSurvivalComponent();
 
 	public CreativeComponent getCreativeComponent();

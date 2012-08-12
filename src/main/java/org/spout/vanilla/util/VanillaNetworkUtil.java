@@ -27,13 +27,12 @@
 package org.spout.vanilla.util;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.entity.Player;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.protocol.VanillaProtocol;
@@ -116,8 +115,7 @@ public class VanillaNetworkUtil {
 	 * @param messages The messages that should be sent to the discovered nearest player.
 	 */
 	public static void sendPacketsToNearbyPlayers(Point position, Entity ignore, int range, Message... messages) {
-		Set<Player> players = position.getWorld().getNearbyPlayers(position, ignore, range);
-		for (Player plr : players) {
+		for (Player plr : position.getWorld().getNearbyPlayers(position, ignore, range)) {
 			plr.getSession().sendAll(false, messages);
 		}
 	}
@@ -129,8 +127,7 @@ public class VanillaNetworkUtil {
 	 * @param messages The messages that should be sent to the discovered nearest player.
 	 */
 	public static void sendPacketsToNearbyPlayers(Point position, int range, Message... messages) {
-		Set<Player> players = position.getWorld().getNearbyPlayers(position, range);
-		for (Player plr : players) {
+		for (Player plr : position.getWorld().getNearbyPlayers(position, range)) {
 			plr.getSession().sendAll(false, messages);
 		}
 	}
@@ -145,8 +142,7 @@ public class VanillaNetworkUtil {
 		if (entity == null || entity.getRegion() == null) {
 			return;
 		}
-		Set<Player> players = entity.getWorld().getNearbyPlayers(entity, range);
-		for (Player plr : players) {
+		for (Player plr : entity.getWorld().getNearbyPlayers(entity, range)) {
 			plr.getSession().sendAll(false, messages);
 		}
 	}

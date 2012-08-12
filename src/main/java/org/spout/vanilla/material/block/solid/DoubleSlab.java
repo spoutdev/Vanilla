@@ -28,14 +28,11 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.misc.Slab;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class DoubleSlab extends Solid implements Mineable {
+public class DoubleSlab extends Solid {
 	public static final DoubleSlab STONE_SLAB = new DoubleSlab("Stone Double Slab", Slab.STONE_SLAB);
 	public static final DoubleSlab SANDSTONE_SLAB = new DoubleSlab("Sandstone Double Slab", 1, STONE_SLAB, Slab.SANDSTONE_SLAB);
 	public static final DoubleSlab WOOD_SLAB = new DoubleSlab("Wooden Double Slab", 2, STONE_SLAB, Slab.WOOD_SLAB);
@@ -69,10 +66,5 @@ public class DoubleSlab extends Solid implements Mineable {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.BASSDRUM;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

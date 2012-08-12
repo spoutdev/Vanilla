@@ -37,14 +37,11 @@ import org.spout.api.util.flag.ByteFlagContainer;
 
 import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class Slab extends VanillaBlockMaterial implements Mineable {
+public class Slab extends VanillaBlockMaterial {
 	public static final Slab STONE_SLAB = new Slab("Stone Slab");
 	public static final Slab SANDSTONE_SLAB = new Slab("Sandstone Slab", 1, STONE_SLAB);
 	public static final Slab WOOD_SLAB = new Slab("Wooden Slab", 2, STONE_SLAB);
@@ -139,11 +136,6 @@ public class Slab extends VanillaBlockMaterial implements Mineable {
 			this.setTop(block, against == BlockFace.TOP || (BlockFaces.NESW.contains(against) && clickedPos.getY() > 0.5f));
 		}
 		return true;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 
 	@Override

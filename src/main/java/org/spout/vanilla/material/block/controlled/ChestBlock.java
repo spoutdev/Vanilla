@@ -37,16 +37,13 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.block.Chest;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class ChestBlock extends ControlledMaterial implements Directional, Fuel, Mineable {
+public class ChestBlock extends ControlledMaterial implements Directional, Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public ChestBlock(String name, int id) {
@@ -84,11 +81,6 @@ public class ChestBlock extends ControlledMaterial implements Directional, Fuel,
 	@Override
 	public Chest getController(Block block) {
 		return (Chest) super.getController(block);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 
 	@Override

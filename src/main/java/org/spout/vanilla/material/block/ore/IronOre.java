@@ -34,8 +34,6 @@ import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.FurnaceBlock;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 
 public class IronOre extends Ore implements TimedCraftable {
 	public IronOre(String name, int id) {
@@ -52,10 +50,5 @@ public class IronOre extends Ore implements TimedCraftable {
 	@Override
 	public float getCraftTime() {
 		return FurnaceBlock.SMELT_TIME;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

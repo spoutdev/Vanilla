@@ -42,7 +42,6 @@ import org.spout.vanilla.entity.living.creature.hostile.Silverfish;
 import org.spout.vanilla.entity.living.creature.hostile.Skeleton;
 import org.spout.vanilla.entity.living.creature.hostile.Spider;
 import org.spout.vanilla.entity.living.creature.hostile.Zombie;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
@@ -61,15 +60,14 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 		this.durability = durability;
 	}
 
-	public short getDurabilityPenalty(Mineable mineable, ItemStack item) {
-		short penalty = mineable.getDurabilityPenalty(this);
+	public short getDurabilityPenalty(ItemStack item) {
 		if (EnchantmentUtil.hasEnchantment(item, Enchantments.UNBREAKING)) {
 			// Level 1 = 50%, Level 2 = 67%, Level 3 = 75% chance to not consume durability
 			if (100 - (100 / (EnchantmentUtil.getEnchantmentLevel(item, Enchantments.UNBREAKING) + 1)) > rand.nextInt(100)) {
-				penalty = 0;
+				return (short) 0;
 			}
 		}
-		return penalty;
+		return (short) 1;
 	}
 
 	public short getMaxDurability() {

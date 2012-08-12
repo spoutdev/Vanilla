@@ -34,13 +34,10 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.item.tool.Spade;
-import org.spout.vanilla.material.item.tool.Tool;
 
-public class Snow extends GroundAttachable implements Mineable, RandomBlockMaterial, InitializableMaterial {
+public class Snow extends GroundAttachable implements RandomBlockMaterial, InitializableMaterial {
 	private static final byte MIN_MELT_LIGHT = 11;
 
 	public Snow(String name, int id) {
@@ -63,11 +60,6 @@ public class Snow extends GroundAttachable implements Mineable, RandomBlockMater
 	@Override
 	public boolean isPlacementObstacle() {
 		return false;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
 	}
 
 	@Override

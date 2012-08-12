@@ -26,7 +26,5 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.Mineable;
-
-public interface Plant extends Mineable {
+public interface Plant {
 }

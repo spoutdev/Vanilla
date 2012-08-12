@@ -46,8 +46,6 @@ import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Spreading;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
@@ -104,11 +102,6 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Rand
 			return under.isMaterial(VanillaMaterials.MYCELIUM) || block.getLight() <= 12 && under.getMaterial().isOpaque();
 		}
 		return false;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 
 	@Override

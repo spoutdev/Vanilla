@@ -32,14 +32,11 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.block.NoteBlock;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class NoteBlockBlock extends ControlledMaterial implements Fuel, Mineable {
+public class NoteBlockBlock extends ControlledMaterial implements Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public NoteBlockBlock(String name, int id) {
@@ -85,10 +82,5 @@ public class NoteBlockBlock extends ControlledMaterial implements Fuel, Mineable
 
 	public boolean isReceivingPower(Block block) {
 		return RedstoneUtil.isReceivingPower(block);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

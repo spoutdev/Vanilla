@@ -33,7 +33,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.solid.Log;
-import org.spout.vanilla.material.item.tool.Tool;
 
 public class CocoaPlant extends AbstractAttachable implements Plant {
 	public CocoaPlant(String name, int id) {
@@ -54,10 +53,5 @@ public class CocoaPlant extends AbstractAttachable implements Plant {
 	@Override
 	public BlockFace getAttachedFace(short data) {
 		return BlockFaces.WNES.get(data & 0x3);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return (short) 1;
 	}
 }

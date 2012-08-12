@@ -28,14 +28,11 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.Instrument;
 
-public class MushroomBlock extends Solid implements Fuel, Mineable, InitializableMaterial {
+public class MushroomBlock extends Solid implements Fuel, InitializableMaterial {
 	public final float BURN_TIME = 15.f;
 
 	public MushroomBlock(String name, int id) {
@@ -61,10 +58,5 @@ public class MushroomBlock extends Solid implements Fuel, Mineable, Initializabl
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.BASSGUITAR;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

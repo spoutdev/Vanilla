@@ -35,14 +35,11 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.controlled.ControlledMaterial;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.MoveReaction;
 
-public class PistonExtension extends ControlledMaterial implements Directional, Mineable {
+public class PistonExtension extends ControlledMaterial implements Directional {
 	public PistonExtension(String name, int id) {
 		super(VanillaControllerTypes.PISTON_MOVING, name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
@@ -82,10 +79,5 @@ public class PistonExtension extends ControlledMaterial implements Directional, 
 	@Override
 	public void setFacing(Block block, BlockFace facing) {
 		block.setData(Piston.BTEWNS.indexOf(facing, 1));
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

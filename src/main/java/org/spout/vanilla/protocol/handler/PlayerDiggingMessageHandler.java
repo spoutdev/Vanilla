@@ -54,7 +54,6 @@ import org.spout.vanilla.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.data.drops.flag.ToolEnchantFlags;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -195,11 +194,8 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				int damageDone;
 				int totalDamage;
 
-				if (heldItem != null) {
-					if (heldItem.getMaterial() instanceof Tool && blockMaterial instanceof Mineable) {
-						short penalty = ((Tool) heldItem.getMaterial()).getDurabilityPenalty((Mineable) blockMaterial, heldItem);
-						currentSlot.addItemData(penalty);
-					}
+				if (heldItem != null && heldItem.getMaterial() instanceof Tool) {
+					currentSlot.addItemData(((Tool) heldItem.getMaterial()).getDurabilityPenalty(heldItem));
 				}
 				if (heldItem == null) {
 					damageDone = ((int) diggingTicks * 1);

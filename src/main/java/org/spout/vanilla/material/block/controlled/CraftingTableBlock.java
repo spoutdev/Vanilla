@@ -35,12 +35,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.block.CraftingTable;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class CraftingTableBlock extends ControlledMaterial implements Mineable {
+public class CraftingTableBlock extends ControlledMaterial {
 	public CraftingTableBlock(String name, int id) {
 		super(VanillaControllerTypes.CRAFTING_TABLE, name, id);
 		this.setHardness(4.2F);
@@ -67,11 +64,6 @@ public class CraftingTableBlock extends ControlledMaterial implements Mineable {
 			// Open the crafting table
 			getController(block).open((VanillaPlayerController) controller);
 		}
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 
 	@Override

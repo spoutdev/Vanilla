@@ -35,12 +35,11 @@ import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 
 import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.util.RedstonePowerMode;
 
-public abstract class PressurePlate extends GroundAttachable implements Mineable, RedstoneSource, DynamicMaterial {
+public abstract class PressurePlate extends GroundAttachable implements RedstoneSource, DynamicMaterial {
 	public static final int TICK_DELAY = 1000;
 	private static final EffectRange physicsRange = new CubicEffectRange(1);
 

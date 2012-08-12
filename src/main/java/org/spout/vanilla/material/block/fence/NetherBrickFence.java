@@ -28,8 +28,6 @@ package org.spout.vanilla.material.block.fence;
 
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.Fence;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
 public class NetherBrickFence extends Fence {
@@ -42,10 +40,5 @@ public class NetherBrickFence extends Fence {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.BASSDRUM;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

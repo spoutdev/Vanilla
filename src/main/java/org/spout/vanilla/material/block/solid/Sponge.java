@@ -26,17 +26,10 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Tool;
 
-public class Sponge extends Solid implements Mineable {
+public class Sponge extends Solid {
 	public Sponge(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return 1;
 	}
 }

@@ -32,20 +32,12 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.block.BrewingStand;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 
-public class BrewingStandBlock extends ControlledMaterial implements Mineable {
+public class BrewingStandBlock extends ControlledMaterial {
 	public BrewingStandBlock(String name, int id) {
 		super(VanillaControllerTypes.BREWING_STAND, name, id);
 		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 
 	@Override

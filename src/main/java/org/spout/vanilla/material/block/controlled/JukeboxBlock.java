@@ -34,13 +34,10 @@ import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.block.Jukebox;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.Mineable;
-import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 
-public class JukeboxBlock extends ControlledMaterial implements Fuel, Mineable {
+public class JukeboxBlock extends ControlledMaterial implements Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public JukeboxBlock(String name, int id) {
@@ -72,10 +69,5 @@ public class JukeboxBlock extends ControlledMaterial implements Fuel, Mineable {
 	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

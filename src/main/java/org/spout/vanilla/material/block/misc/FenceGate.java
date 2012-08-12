@@ -36,17 +36,14 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Openable;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class FenceGate extends VanillaBlockMaterial implements Mineable, Openable, RedstoneTarget {
+public class FenceGate extends VanillaBlockMaterial implements Openable, RedstoneTarget {
 	public FenceGate(String name, int id) {
 		super(name, id);
 		this.setHardness(2.0F).setResistance(3.0F).setTransparent();
@@ -125,10 +122,5 @@ public class FenceGate extends VanillaBlockMaterial implements Mineable, Openabl
 	@Override
 	public boolean isReceivingPower(Block block) {
 		return RedstoneUtil.isReceivingPower(block);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

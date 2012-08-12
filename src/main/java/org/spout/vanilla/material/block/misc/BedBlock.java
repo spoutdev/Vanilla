@@ -33,14 +33,11 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class BedBlock extends VanillaBlockMaterial implements Mineable, InitializableMaterial {
+public class BedBlock extends VanillaBlockMaterial implements InitializableMaterial {
 	public BedBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
@@ -172,10 +169,5 @@ public class BedBlock extends VanillaBlockMaterial implements Mineable, Initiali
 			}
 		}
 		return bedBlock;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

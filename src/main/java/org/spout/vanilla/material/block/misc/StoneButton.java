@@ -37,15 +37,12 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 
 import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.AttachedRedstoneSource;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class StoneButton extends AttachedRedstoneSource implements Mineable, PointAttachable, DynamicMaterial {
+public class StoneButton extends AttachedRedstoneSource implements PointAttachable, DynamicMaterial {
 	public static final int TICK_DELAY = 1000;
 
 	public StoneButton(String name, int id) {
@@ -103,11 +100,6 @@ public class StoneButton extends AttachedRedstoneSource implements Mineable, Poi
 	@Override
 	public boolean isPlacementSuppressed() {
 		return true;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 
 	@Override

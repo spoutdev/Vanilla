@@ -28,14 +28,11 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class Stone extends Solid implements Mineable, InitializableMaterial {
+public class Stone extends Solid implements InitializableMaterial {
 	public Stone(String name, int id) {
 		super(name, id);
 		this.setHardness(1.5F).setResistance(10.0F);
@@ -46,11 +43,6 @@ public class Stone extends Solid implements Mineable, InitializableMaterial {
 	public void initialize() {
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 		this.getDrops().DEFAULT.clear().add(VanillaMaterials.COBBLESTONE);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 
 	@Override

@@ -39,8 +39,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 
 public class NetherWartBlock extends GroundAttachable implements Plant, Growing, RandomBlockMaterial {
@@ -93,11 +91,6 @@ public class NetherWartBlock extends GroundAttachable implements Plant, Growing,
 			return block.isMaterial(VanillaMaterials.SOUL_SAND);
 		}
 		return false;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 
 	@Override

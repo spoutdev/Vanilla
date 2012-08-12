@@ -34,15 +34,12 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.block.Furnace;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class FurnaceBlock extends ControlledMaterial implements Directional, Mineable {
+public class FurnaceBlock extends ControlledMaterial implements Directional {
 	public static final float SMELT_TIME = 10.f;
 	private final boolean burning;
 
@@ -108,10 +105,5 @@ public class FurnaceBlock extends ControlledMaterial implements Directional, Min
 	@Override
 	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

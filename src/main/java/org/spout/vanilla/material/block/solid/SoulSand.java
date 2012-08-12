@@ -27,21 +27,13 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Spade;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class SoulSand extends Solid implements Mineable {
+public class SoulSand extends Solid {
 	public SoulSand(String name, int id) {
 		super(name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_SAND);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
 	}
 
 	@Override

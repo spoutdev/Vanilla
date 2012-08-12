@@ -29,13 +29,10 @@ package org.spout.vanilla.material.block.solid;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Spade;
-import org.spout.vanilla.material.item.tool.Tool;
 
-public class SnowBlock extends Solid implements Mineable, InitializableMaterial {
+public class SnowBlock extends Solid implements InitializableMaterial {
 	public SnowBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.2F).setResistance(0.3F).setStepSound(SoundEffects.STEP_CLOTH);
@@ -45,10 +42,5 @@ public class SnowBlock extends Solid implements Mineable, InitializableMaterial 
 	public void initialize() {
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.SPADE);
 		this.getDrops().DEFAULT.clear().add(VanillaMaterials.SNOW, 4);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Spade ? (short) 1 : (short) 2;
 	}
 }

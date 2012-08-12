@@ -33,14 +33,11 @@ import org.spout.api.material.source.DataSource;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class Plank extends Solid implements Fuel, Mineable, Burnable {
+public class Plank extends Solid implements Fuel, Burnable {
 	public static final Plank PLANK = new Plank("Oak Plank");
 	public static final Plank PINE = new Plank("Pine Plank", WoodType.PINE, PLANK);
 	public static final Plank BIRCH = new Plank("Birch Plank", WoodType.BIRCH, PLANK);
@@ -81,11 +78,6 @@ public class Plank extends Solid implements Fuel, Mineable, Burnable {
 	@Override
 	public Plank getParentMaterial() {
 		return (Plank) super.getParentMaterial();
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 
 	public static enum WoodType implements DataSource {

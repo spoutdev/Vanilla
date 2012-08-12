@@ -27,8 +27,6 @@
 package org.spout.vanilla.material.block.pressureplate;
 
 import org.spout.vanilla.material.block.PressurePlate;
-import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
 public class WoodenPressurePlate extends PressurePlate {
@@ -40,10 +38,5 @@ public class WoodenPressurePlate extends PressurePlate {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.BASSGUITAR;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

@@ -37,15 +37,13 @@ import org.spout.api.material.range.PlusEffectRange;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class RedstoneWire extends GroundAttachable implements Mineable, RedstoneSource, RedstoneTarget, InitializableMaterial {
+public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget, InitializableMaterial {
 	private static final EffectRange physicsRange = new ListEffectRange(
 			new PlusEffectRange(2, false),
 			new CubicEffectRange(1));
@@ -247,11 +245,6 @@ public class RedstoneWire extends GroundAttachable implements Mineable, Redstone
 			default:
 				return false;
 		}
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return 1;
 	}
 
 	@Override

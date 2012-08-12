@@ -32,13 +32,10 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.flag.ByteFlagContainer;
 
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public abstract class Stairs extends VanillaBlockMaterial implements Mineable, Directional {
+public abstract class Stairs extends VanillaBlockMaterial implements Directional {
 	private final ByteFlagContainer[] occlusion;
 
 	public Stairs(String name, int id) {
@@ -48,11 +45,6 @@ public abstract class Stairs extends VanillaBlockMaterial implements Mineable, D
 			this.occlusion[i] = new ByteFlagContainer(BlockFaces.NSEW.get(i).getOpposite(), BlockFace.BOTTOM);
 			this.occlusion[i | 0x4] = new ByteFlagContainer(BlockFaces.NSEW.get(i).getOpposite(), BlockFace.TOP);
 		}
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 
 	/**

@@ -45,8 +45,6 @@ import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -122,11 +120,6 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Random
 	}
 
 	// TODO: Trampling
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
-	}
 
 	@Override
 	public void onRandomTick(Block block) {

@@ -35,13 +35,10 @@ import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 
-public class Wool extends Solid implements Mineable, Burnable {
+public class Wool extends Solid implements Burnable {
 	public static final Wool WHITE_WOOL = new Wool("White Wool");
 	public static final Wool ORANGE_WOOL = new Wool("Orange Wool", WoolColor.ORANGE, WHITE_WOOL);
 	public static final Wool MAGENTA_WOOL = new Wool("Magenta Wool", WoolColor.MAGENTA, WHITE_WOOL);
@@ -100,11 +97,6 @@ public class Wool extends Solid implements Mineable, Burnable {
 		} else {
 			return super.canSupport(material, face);
 		}
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 
 	public static enum WoolColor implements DataSource {

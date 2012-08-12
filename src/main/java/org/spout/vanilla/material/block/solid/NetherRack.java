@@ -27,20 +27,12 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 
-public class NetherRack extends Solid implements Mineable {
+public class NetherRack extends Solid {
 	public NetherRack(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(0.6F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

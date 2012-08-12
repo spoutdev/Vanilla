@@ -33,15 +33,12 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.MinecartTrackLogic;
 import org.spout.vanilla.util.RailsState;
 
-public abstract class RailBase extends GroundAttachable implements Mineable {
+public abstract class RailBase extends GroundAttachable {
 	public RailBase(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false).setHardness(0.7F).setResistance(1.2F).setTransparent().setCollision(CollisionStrategy.NOCOLLIDE);
@@ -168,10 +165,5 @@ public abstract class RailBase extends GroundAttachable implements Mineable {
 
 		this.doTrackLogic(block);
 		return true;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

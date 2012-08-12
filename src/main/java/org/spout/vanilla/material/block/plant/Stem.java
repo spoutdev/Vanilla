@@ -43,8 +43,6 @@ import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -116,11 +114,6 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Ra
 				this.setGrowthStage(block, 0x7);
 			}
 		}
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 
 	@Override

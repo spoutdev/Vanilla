@@ -30,12 +30,9 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 
-public class Ladder extends AbstractAttachable implements Mineable {
+public class Ladder extends AbstractAttachable {
 	public Ladder(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.WESN).setHardness(0.4F).setResistance(0.7F).setTransparent();
@@ -49,10 +46,5 @@ public class Ladder extends AbstractAttachable implements Mineable {
 	@Override
 	public BlockFace getAttachedFace(short data) {
 		return BlockFaces.WESN.get(data - 2);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

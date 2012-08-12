@@ -33,8 +33,6 @@ import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.SignBase;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 
 public class Glowstone extends Ore implements InitializableMaterial {
 	public Glowstone(String name, int id) {
@@ -60,10 +58,5 @@ public class Glowstone extends Ore implements InitializableMaterial {
 	@Override
 	public byte getLightLevel(short data) {
 		return 15;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

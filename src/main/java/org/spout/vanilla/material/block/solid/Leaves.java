@@ -33,14 +33,11 @@ import org.spout.vanilla.data.drops.SwitchDrops;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.SignBase;
-import org.spout.vanilla.material.item.tool.Shears;
-import org.spout.vanilla.material.item.tool.Tool;
 
-public class Leaves extends Solid implements Mineable, Burnable, InitializableMaterial {
+public class Leaves extends Solid implements Burnable, InitializableMaterial {
 	public static final Leaves DEFAULT = new Leaves("Leaves");
 	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 1, DEFAULT);
 	public static final Leaves BIRCH = new Leaves("Birch Leaves", 2, DEFAULT);
@@ -94,9 +91,4 @@ public class Leaves extends Solid implements Mineable, Burnable, InitializableMa
 	}
 
 	// TODO: Decay
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Shears ? (short) 1 : (short) 2;
-	}
 }

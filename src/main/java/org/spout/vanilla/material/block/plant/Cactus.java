@@ -41,8 +41,6 @@ import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 
 public class Cactus extends StackGrowingBase implements TimedCraftable {
 	private Set<BlockMaterial> deniedNeighbours = new HashSet<BlockMaterial>();
@@ -107,10 +105,5 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 	@Override
 	public float getCraftTime() {
 		return FurnaceBlock.SMELT_TIME;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

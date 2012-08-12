@@ -36,17 +36,15 @@ import org.spout.api.material.range.EffectRange;
 
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SpreadingSolid;
 import org.spout.vanilla.material.enchantment.Enchantments;
-import org.spout.vanilla.material.item.tool.Pickaxe;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
-public class Ice extends SpreadingSolid implements Mineable, InitializableMaterial {
+public class Ice extends SpreadingSolid implements InitializableMaterial {
 	private static final byte MIN_MELT_LIGHT = 11;
 	private static final EffectRange ICE_SPREAD_RANGE = new CubicEffectRange(1);
 
@@ -83,11 +81,6 @@ public class Ice extends SpreadingSolid implements Mineable, InitializableMateri
 			}
 		}
 		block.setMaterial(VanillaMaterials.AIR);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 
 	@Override

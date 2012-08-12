@@ -35,15 +35,12 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.Toggleable;
 import org.spout.vanilla.material.block.AttachedRedstoneSource;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Lever extends AttachedRedstoneSource implements Mineable, Toggleable {
+public class Lever extends AttachedRedstoneSource implements Toggleable {
 	public Lever(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESWB).setLiquidObstacle(false).setHardness(0.5F).setResistance(1.7F).setTransparent();
@@ -61,7 +58,6 @@ public class Lever extends AttachedRedstoneSource implements Mineable, Toggleabl
 			return;
 		}
 		this.toggle(block);
-		GeneralEffects.RANDOM_CLICK1.playGlobal(block.getPosition(), entity);
 	}
 
 	@Override
@@ -76,7 +72,10 @@ public class Lever extends AttachedRedstoneSource implements Mineable, Toggleabl
 
 	@Override
 	public void setToggled(Block block, boolean toggled) {
-		block.setDataBits(0x8, toggled);
+		if (this.isToggled(block) != toggled) {
+			block.setDataBits(0x8, toggled);
+			GeneralEffects.BLOCK_PRESS.playGlobal(block.getPosition(), toggled);
+		}
 	}
 
 	@Override
@@ -111,10 +110,5 @@ public class Lever extends AttachedRedstoneSource implements Mineable, Toggleabl
 	@Override
 	public BlockFace getAttachedFace(short data) {
 		return BlockFaces.NSEWB.get((data & 0x7) - 1);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

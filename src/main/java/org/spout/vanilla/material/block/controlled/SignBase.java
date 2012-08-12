@@ -37,14 +37,11 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.entity.block.Sign;
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.MoveReaction;
 
-public abstract class SignBase extends AbstractAttachable implements Mineable, InitializableMaterial {
+public abstract class SignBase extends AbstractAttachable implements InitializableMaterial {
 	public SignBase(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setOpacity((byte) 1);
@@ -92,9 +89,4 @@ public abstract class SignBase extends AbstractAttachable implements Mineable, I
 
 	@Override
 	public abstract boolean canSupport(BlockMaterial material, BlockFace face);
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
-	}
 }

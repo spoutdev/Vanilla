@@ -27,13 +27,10 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 
-public class RedstoneLamp extends Solid implements Mineable, InitializableMaterial {
+public class RedstoneLamp extends Solid implements InitializableMaterial {
 	private final boolean on;
 
 	public RedstoneLamp(String name, int id, boolean on) {
@@ -59,10 +56,5 @@ public class RedstoneLamp extends Solid implements Mineable, InitializableMateri
 	@Override
 	public byte getLightLevel(short data) {
 		return on ? (byte) 15 : (byte) 0;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

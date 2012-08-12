@@ -31,14 +31,11 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 
-public class EnchantmentTableBlock extends ControlledMaterial implements Directional, Mineable {
+public class EnchantmentTableBlock extends ControlledMaterial implements Directional {
 	public EnchantmentTableBlock(String name, int id) {
 		super(VanillaControllerTypes.ENCHANTMENT_TABLE, name, id);
 		this.setHardness(5.0F).setResistance(2000.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
@@ -48,11 +45,6 @@ public class EnchantmentTableBlock extends ControlledMaterial implements Directi
 	@Override
 	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 
 	@Override

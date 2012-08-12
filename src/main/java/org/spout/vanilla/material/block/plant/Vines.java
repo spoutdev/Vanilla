@@ -47,8 +47,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Spreading;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 
 public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, RandomBlockMaterial {
 	private static final EffectRange VINE_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
@@ -261,11 +259,6 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	@Override
 	public boolean isPlacementObstacle() {
 		return false;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 
 	@Override

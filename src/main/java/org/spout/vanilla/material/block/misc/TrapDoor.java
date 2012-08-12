@@ -36,15 +36,12 @@ import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Openable;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class TrapDoor extends AbstractAttachable implements Fuel, Mineable, Openable, RedstoneTarget {
+public class TrapDoor extends AbstractAttachable implements Fuel, Openable, RedstoneTarget {
 	public final float BURN_TIME = 15.f;
 
 	public TrapDoor(String name, int id) {
@@ -110,10 +107,5 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Mineable, Open
 	@Override
 	public BlockFace getAttachedFace(short data) {
 		return BlockFaces.WESN.get(data & 0x3);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

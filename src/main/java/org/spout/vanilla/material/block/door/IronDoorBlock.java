@@ -30,8 +30,6 @@ import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.DoorBlock;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 
 public class IronDoorBlock extends DoorBlock implements InitializableMaterial {
 	public IronDoorBlock(String name, int id) {
@@ -43,10 +41,5 @@ public class IronDoorBlock extends DoorBlock implements InitializableMaterial {
 	@Override
 	public void initialize() {
 		getDrops().add(VanillaMaterials.IRON_DOOR);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

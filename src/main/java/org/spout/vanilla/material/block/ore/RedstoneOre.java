@@ -35,8 +35,6 @@ import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.FurnaceBlock;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 
 public class RedstoneOre extends Ore implements TimedCraftable, InitializableMaterial {
 	private final boolean glowing;
@@ -61,11 +59,6 @@ public class RedstoneOre extends Ore implements TimedCraftable, InitializableMat
 	@Override
 	public float getCraftTime() {
 		return FurnaceBlock.SMELT_TIME;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 
 	@Override

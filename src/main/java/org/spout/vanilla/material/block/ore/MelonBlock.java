@@ -29,8 +29,6 @@ package org.spout.vanilla.material.block.ore;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 
 public class MelonBlock extends Ore implements InitializableMaterial {
 	public MelonBlock(String name, int id) {
@@ -41,10 +39,5 @@ public class MelonBlock extends Ore implements InitializableMaterial {
 	@Override
 	public void initialize() {
 		this.getDrops().addRange(VanillaMaterials.MELON_SLICE, 1, 3);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

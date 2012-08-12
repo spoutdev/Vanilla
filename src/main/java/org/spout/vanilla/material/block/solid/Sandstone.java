@@ -29,12 +29,9 @@ package org.spout.vanilla.material.block.solid;
 import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 
-public class Sandstone extends Solid implements Mineable {
+public class Sandstone extends Solid {
 	public static final Sandstone SANDSTONE = new Sandstone("Sandstone");
 	public static final Sandstone DECORATIVE = new Sandstone("Decorative Sandstone", SandstoneType.DECORATIVE, SANDSTONE);
 	public static final Sandstone SMOOTH = new Sandstone("Smooth Sandstone", SandstoneType.SMOOTH, SANDSTONE);
@@ -61,11 +58,6 @@ public class Sandstone extends Solid implements Mineable {
 	@Override
 	public Sandstone getParentMaterial() {
 		return (Sandstone) super.getParentMaterial();
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 
 	public static enum SandstoneType implements DataSource {

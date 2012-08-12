@@ -41,7 +41,6 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
@@ -49,12 +48,10 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.item.misc.Coal;
-import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable, Burnable, Mineable, Directional {
+public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable, Burnable, Directional {
 	public static final Log DEFAULT = new Log("Wood", Sapling.DEFAULT);
 	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT, Sapling.SPRUCE);
 	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT, Sapling.BIRCH);
@@ -117,11 +114,6 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	@Override
 	public float getCraftTime() {
 		return FurnaceBlock.SMELT_TIME;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 
 	@Override

@@ -28,20 +28,12 @@ package org.spout.vanilla.material.block.ore;
 
 import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Pickaxe;
-import org.spout.vanilla.material.item.tool.Tool;
 
-public class EmeraldBlock extends Solid implements Mineable {
+public class EmeraldBlock extends Solid {
 	public EmeraldBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(5.0F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.IRON_UP);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Pickaxe ? (short) 1 : (short) 2;
 	}
 }

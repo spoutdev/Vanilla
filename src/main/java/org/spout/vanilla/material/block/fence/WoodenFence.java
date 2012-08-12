@@ -33,8 +33,6 @@ import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Fence;
-import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
 public class WoodenFence extends Fence implements Fuel, Burnable {
@@ -73,10 +71,5 @@ public class WoodenFence extends Fence implements Fuel, Burnable {
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

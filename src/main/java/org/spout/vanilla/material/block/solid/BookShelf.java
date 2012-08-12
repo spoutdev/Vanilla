@@ -32,14 +32,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.item.tool.Axe;
-import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.util.Instrument;
 
-public class BookShelf extends Solid implements Mineable, Fuel, InitializableMaterial, Burnable {
+public class BookShelf extends Solid implements Fuel, InitializableMaterial, Burnable {
 	public final float BURN_TIME = 15.f;
 
 	public BookShelf(String name, int id) {
@@ -79,10 +76,5 @@ public class BookShelf extends Solid implements Mineable, Fuel, InitializableMat
 		} else {
 			return super.canSupport(material, face);
 		}
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Axe ? (short) 1 : (short) 2;
 	}
 }

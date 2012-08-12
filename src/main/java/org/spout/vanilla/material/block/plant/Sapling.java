@@ -46,8 +46,6 @@ import org.spout.vanilla.material.block.Spreading;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.solid.Log;
 import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
@@ -147,10 +145,5 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 		b.setMaterial(Log.DEFAULT);
 		b.setData(oldData & dataMask);
 		b.setDataBits(Log.aliveMask);
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

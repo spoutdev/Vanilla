@@ -27,12 +27,9 @@
 package org.spout.vanilla.material.block.misc;
 
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.material.item.weapon.Sword;
 
-public class Web extends VanillaBlockMaterial implements Mineable {
+public class Web extends VanillaBlockMaterial {
 	public Web(String name, int id) {
 		super(name, id);
 		this.setLiquidObstacle(false).setHardness(4.0F).setResistance(20.0F).setTransparent();
@@ -42,10 +39,5 @@ public class Web extends VanillaBlockMaterial implements Mineable {
 	@Override
 	public boolean isTransparent() {
 		return false;
-	}
-
-	@Override
-	public short getDurabilityPenalty(Tool tool) {
-		return tool instanceof Sword ? (short) 2 : (short) 1;
 	}
 }

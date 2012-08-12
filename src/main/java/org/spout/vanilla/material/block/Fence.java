@@ -30,12 +30,11 @@ import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.Mineable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.controlled.SignBase;
 import org.spout.vanilla.material.block.misc.Torch;
 
-public abstract class Fence extends VanillaBlockMaterial implements Mineable {
+public abstract class Fence extends VanillaBlockMaterial {
 	public Fence(String name, int id) {
 		super(name, id);
 		this.setCollision(CollisionStrategy.SOLID);

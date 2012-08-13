@@ -24,14 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.basic;
+package org.spout.vanilla.world.generator.normal.biome.icy;
 
-import org.spout.vanilla.world.generator.normal.biome.SnowyBiome;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
-public class TundraBiome extends SnowyBiome {
+public class TundraBiome extends IcyBiome {
 	public TundraBiome(int id) {
 		super(id, new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
 				new MushroomDecorator());

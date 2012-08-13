@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome;
+package org.spout.vanilla.world.generator.normal.biome.sandy;
 
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.math.MathHelper;
@@ -33,6 +33,7 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public abstract class SandyBiome extends NormalBiome {
 	public SandyBiome(int biomeId, Decorator... decorators) {

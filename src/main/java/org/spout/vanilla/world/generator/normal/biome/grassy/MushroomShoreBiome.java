@@ -24,9 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.special;
-
-import org.spout.vanilla.world.generator.normal.biome.basic.MushroomBiome;
+package org.spout.vanilla.world.generator.normal.biome.grassy;
 
 public class MushroomShoreBiome extends MushroomBiome {
 	public MushroomShoreBiome(int biomeId) {

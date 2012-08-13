@@ -24,9 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.hills;
-
-import org.spout.vanilla.world.generator.normal.biome.basic.DesertBiome;
+package org.spout.vanilla.world.generator.normal.biome.sandy;
 
 public class DesertHillsBiome extends DesertBiome {
 	public DesertHillsBiome(int biomeId) {

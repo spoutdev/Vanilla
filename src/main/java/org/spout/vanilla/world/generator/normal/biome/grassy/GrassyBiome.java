@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome;
+package org.spout.vanilla.world.generator.normal.biome.grassy;
 
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.material.BlockMaterial;
@@ -33,6 +33,7 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public abstract class GrassyBiome extends NormalBiome {
 	protected BlockMaterial topCover = VanillaMaterials.GRASS;

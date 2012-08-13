@@ -35,9 +35,9 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
-import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
-import org.spout.vanilla.world.generator.normal.biome.SnowyBiome;
+import org.spout.vanilla.world.generator.normal.biome.grassy.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.biome.sandy.SandyBiome;
+import org.spout.vanilla.world.generator.normal.biome.icy.IcyBiome;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
 public class PondObject extends RandomObject {
@@ -155,7 +155,7 @@ public class PondObject extends RandomObject {
 							block.setMaterial(top);
 						} else if (material == VanillaMaterials.STATIONARY_WATER
 								&& block.translate(0, 1, 0).isMaterial(VanillaMaterials.AIR)) {
-							if (block.getBiomeType() instanceof SnowyBiome) {
+							if (block.getBiomeType() instanceof IcyBiome) {
 								block.setMaterial(VanillaMaterials.ICE);
 							}
 						}
